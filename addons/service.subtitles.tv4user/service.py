@@ -140,8 +140,17 @@ def lies_serien():
 
 # Ueberschriften von Neuen Threads Holen da dort die Qualitaets typen drin stehen        
 def get_uberschriften_new(content):
-  match=re.compile('<td>([^<]+)</td>', re.DOTALL).findall(content)
-  return match
+  returnarray=[]
+  match=re.compile('<td([^>]*)>([^<]+)</td>', re.DOTALL).findall(content)
+  for cols,text in match:
+     if "colspan" in cols:
+        matchx=re.compile('colspan="([^"]+)"',re.DOTALL).findall(cols)
+        col=int(matchx[0])
+        for nr in range(0,col):          
+          returnarray.append(text)
+     else:
+        returnarray.append(text)
+  return returnarray
  
 # Neuen Thread Holen              
 def newthread (url)  :
@@ -189,17 +198,17 @@ def get_content(content,lang ):
     untertitel_qualitaet=[]
     untertitel_lang=[]
     folge_array=[]    
-    zeile = content.split('</tr')
+    zeile = content.split('<tr')
     #Einlesen der ueberschriften Erste Zeile
-    ueberschrift=get_uberschriften_new(zeile[0])        
+    ueberschrift=get_uberschriften_new(zeile[1])
     # Ab der Zweiten Zeile sind Folgen
-    for zeilenr in range(1, len(zeile), 1):
+    for zeilenr in range(2, len(zeile), 1):
       entry = zeile[zeilenr]
       match=re.compile('<td class="nr">([0-9]+) -', re.DOTALL).findall(entry)
       if not match:
         break
       folge=match[0]     
-      spalte = entry.split('<td>')
+      spalte = entry.split('<td')
       for spaltennr in range(1, len(spalte), 1):
           entry = spalte[spaltennr]
           if 'href="' in entry:
@@ -208,7 +217,7 @@ def get_content(content,lang ):
                debug("Untertitel: Folgenr: "+ folge)
                debug("Untertitel: Folge: " + untertitel[untertitelnr][0])
                debug("Untertitel: Release: " + untertitel[untertitelnr][1])
-               debug("Untertitel: Qualität: " + ueberschrift[spaltennr-1])
+               debug("Untertitel: Qualität: " + ueberschrift[spaltennr])
                debug("Untertitel: Sprache: " + lang)
                debug("------------------")               
                untertitel_link_array.append(untertitel[untertitelnr][0])
@@ -339,6 +348,7 @@ def get_staffeln(id):
              debug("suche staffel:"+ video['season']+"X")
              if video['season']:
                 # Wenn Gefunden Lsite für die Staffel alle Folgen
+                debug("YYY"+video['season'])
                 if int(staffel.strip()) == int( video['season'].strip()):
                     gefunden=1
                     list_folgen(link) 
@@ -400,8 +410,8 @@ def resivefile():
   except:
      pass
   if video['episode']=="":
-    matchDir=re.compile('\\.s(.+?)e(.+?)\\.', re.DOTALL).findall(dirName)
-    matchFile=re.compile('\\.s(.+?)e(.+?)\\.', re.DOTALL).findall(fileName)
+    matchDir=re.compile('\\.s([0-9]+?)e([0-9]+?)\\.', re.DOTALL).findall(dirName)
+    matchFile=re.compile('\\.s([0-9]+?)e([0-9]+?)\\.', re.DOTALL).findall(fileName)
     if len(matchDir)>0:
       video['season'] =matchDir[0][0]
       video['episode']=matchDir[0][1]
