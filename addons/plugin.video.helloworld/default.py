@@ -72,7 +72,7 @@ def playlive(url):
     listitem = xbmcgui.ListItem(path=match[0][0] + match[0][1] + " swfUrl=http://www.arte.tv/flash/mediaplayer/mediaplayer.swf live=1 swfVfy=1")        
     xbmcplugin.setResolvedUrl(addon_handle, True, listitem)
     addLink("Testvideo" , url="rtmp://artestras.fc.llnwd.net/artestras app=artestras swfUrl=http://www.arte.tv/arte_vp/jwplayer6/jwplayer.flash.6.11.4923.swf pageURL=http://www.arte.tv/guide/de/live", mode="playlive", iconimage="",duration="",desc="")    
-    xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
+    xbmcplugin.setResolvedUrl(addon_handle, True, listitem)
 
 def parameters_string_to_dict(parameters):
 	paramDict = {}
