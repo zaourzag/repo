@@ -197,7 +197,7 @@ def newthread (url)  :
       if end > 0:
         contentEN = contentEN[:end]  
       else:
-         contentEN = contentEN[:contentEN.find('<span class="copy">')]
+         contentEN = contentEN[:contentEN.find('</table>')]
       folge,untertitel_qualitaet,untertitel_release,untertitel_link,lang_array=get_content(contentEN,"en")
       if video['episode']:
         for folge_zeile in range(0, len(folge), 1):

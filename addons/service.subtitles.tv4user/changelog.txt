@@ -1,3 +1,5 @@
+0.8.3
+- Master Of Sex Error Corrected
 0.8.2
 - Serien Mit Minus gehen
 - Alkatras gefixed
