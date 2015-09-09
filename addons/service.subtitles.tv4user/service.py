@@ -235,7 +235,7 @@ def get_content(content,lang ):
       for spaltennr in range(1, len(spalte), 1):
           entry = spalte[spaltennr]
           if 'href="' in entry:
-            untertitel=re.compile('href="([^"]+)">([^<]+)</a>', re.DOTALL).findall(entry)
+            untertitel=re.compile('href="([^"]+Attachment[^"]+)">([^<]+)</a>', re.DOTALL).findall(entry)
             for untertitelnr in range(0, len(untertitel), 1):
                debug("Untertitel: Folgenr: "+ folge)
                debug("Untertitel: Folge: " + untertitel[untertitelnr][0])
