@@ -227,7 +227,7 @@ def get_content(content,lang ):
     # Ab der Zweiten Zeile sind Folgen
     for zeilenr in range(2, len(zeile), 1):
       entry = zeile[zeilenr]
-      match=re.compile('<td class="nr">([0-9]+) -', re.DOTALL).findall(entry)
+      match=re.compile('<td class="nr">([^ ]+) -', re.DOTALL).findall(entry)
       if not match:
         break
       folge=match[0]     
