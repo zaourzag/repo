@@ -183,6 +183,8 @@ def newthread (url)  :
       # Video bei dem es die Episoden Nummer gibt ,diese folge raussuchen
       if video['episode']:
         for folge_zeile in range(0, len(folgede), 1):
+          if  folgede[folge_zeile]=="SP":
+              folgede[folge_zeile]=0
           if int(folgede[folge_zeile]) == int(video['episode']):            
             addLink("Staffel "+ video['season'] + " Folge "+video['episode']+" "+ untertitel_releasede[folge_zeile]+" ( "+ untertitel_qualitaetde[folge_zeile] + " ) ", untertitel_linkde[folge_zeile], "download", duration="", desc="", genre='', lang=lang_arrayde[folge_zeile])
             gefunden=1           
