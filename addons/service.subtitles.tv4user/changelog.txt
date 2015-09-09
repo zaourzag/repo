@@ -1,3 +1,6 @@
+0.8.2
+- Serien Mit Minus gehen
+- Alkatras gefixed
 0.8.1
 - Fehlerhaften HTML COde bei Mr Robot eingelesen
 0.8.0

@@ -58,6 +58,12 @@ def log(msg, level=xbmc.LOGNOTICE):
     addonID = addon.getAddonInfo('id')
     xbmc.log('%s: %s' % (addonID, msg), level) 
 
+def ersetze(inhalt):
+   inhalt=inhalt.replace('&#39;','\'')  
+   inhalt=inhalt.replace('&quot;','"')    
+   inhalt=inhalt.replace('&gt;','>')      
+   inhalt=inhalt.replace('&amp;','&') 
+   return inhalt
     
 # Einstellungen Lesen    
 def getSettings():
@@ -116,6 +122,7 @@ def clean_serie(title):
         title=title.lower().replace('the ','') 
         title=title.replace('.','')
         title=title.replace("'","")
+        title=title.replace("&amp;","")
         return title
 
 # Liste Aller Serien Holen        
@@ -133,7 +140,7 @@ def lies_serien():
           threadIDs.append(id)
           # Clean wird gebraucht damit "The und ohen The Serien Matchen"
           threadNamesclean.append(clean_serie(title))   
-          threadNames.append(title) 
+          threadNames.append(ersetze(title)) 
         threadIDs, threadNames,threadNamesclean = (list(x) for x in zip(*sorted(zip(threadNames, threadIDs,threadNamesclean))))
         return threadIDs, threadNames,threadNamesclean
 
@@ -160,9 +167,17 @@ def newthread (url)  :
     folge=[]
     folgede=[]
     # Deutsch
-    if "<!-- Deutsche Untertitel -->" in content:
-      contentDE = content[content.find("<!-- Deutsche Untertitel -->")+1:]
-      contentDE = contentDE[:contentDE.find("<!-- Englische Untertitel -->")]    
+    if "<!-- Deutsche Untertitel -->" in content or "<h2>Deutsche Untertitel</h2>" in content :
+      start=content.find("<!-- Deutsche Untertitel -->")      
+      if start >0 :
+        contentDE = content[start+1:]
+      else :
+        contentDE = content[content.find("<h2>Deutsche Untertitel</h2>")+1:]
+      end=contentDE.find("<!-- Englische Untertitel -->")
+      if end > 0 :
+        contentDE = contentDE[:end]   
+      else :
+         contentDE = contentDE[:content.find("<h2>Englische Untertitel</h2>")]
       # Holt alle Folgen aus einem Thread
       folgede,untertitel_qualitaetde,untertitel_releasede,untertitel_linkde,lang_arrayde=get_content(contentDE,"de")
       # Video bei dem es die Episoden Nummer gibt ,diese folge raussuchen
@@ -172,9 +187,17 @@ def newthread (url)  :
             addLink("Staffel "+ video['season'] + " Folge "+video['episode']+" "+ untertitel_releasede[folge_zeile]+" ( "+ untertitel_qualitaetde[folge_zeile] + " ) ", untertitel_linkde[folge_zeile], "download", duration="", desc="", genre='', lang=lang_arrayde[folge_zeile])
             gefunden=1           
      # Englisch
-    if "<!-- Englische Untertitel -->" in content:
-      contentEN = content[content.find("<!-- Englische Untertitel -->")+1:]
-      contentEN = contentEN[:contentEN.find("<!-- Copyright oder Subberinteresse -->")]  
+    if "<!-- Englische Untertitel -->" in content or "<h2>Englische Untertitel</h2>" in content:
+      start=content.find("<!-- Englische Untertitel -->")
+      if start >0:
+         contentEN = content[start+1:]
+      else:
+           contentEN = content[content.find("<h2>Englische Untertitel</h2>")+1:]
+      end=contentEN.find("<!-- Copyright oder Subberinteresse -->")
+      if end > 0:
+        contentEN = contentEN[:end]  
+      else:
+         contentEN = contentEN[:contentEN.find('<span class="copy">')]
       folge,untertitel_qualitaet,untertitel_release,untertitel_link,lang_array=get_content(contentEN,"en")
       if video['episode']:
         for folge_zeile in range(0, len(folge), 1):
@@ -324,7 +347,7 @@ def addLink(name, url, mode, icon="", duration="", desc="", genre='',lang=""):
 def list_folgen(url):
   debug("list_folgen: "+ url)
   content=getUrl(url)
-  if "<!-- Englische Untertitel -->" in content:
+  if "<!-- Englische Untertitel -->" in content or "<h2>Englische Untertitel</h2>" in content:
     newthread(url)
   else :
      oldthread(url)
@@ -333,6 +356,7 @@ def list_folgen(url):
 # Alle Staffeln Holen    
 def get_staffeln(id):
     serienpage=mainUrl+"/serien/board"+id+"-1.html"
+    debug("get_staffeln URL:"+ serienpage)
     content=getUrl(serienpage)
     content = content[content.find('<div class="smallPages">')+1:]
     content = content[:content.find('<div class="contentFooter">')]
@@ -343,7 +367,7 @@ def get_staffeln(id):
     for i in range(1, len(spl), 1):
         entry = spl[i]
         if "[Untertitel]" in entry :
-           match = re.compile('<a href="([^"]+)">([^-]+)[\ ]+-[\ ]+Staffel ([0-9]+)[^<]+</a>', re.DOTALL).findall(entry)
+           match = re.compile('<a href="([^"]+)">(.+)[\ ]+-[\ ]+Staffel ([0-9]+)[^<]+</a>', re.DOTALL).findall(entry)
            for link,dummy,staffel in match:
              debug("suche staffel:"+ video['season']+"X")
              if video['season']:
