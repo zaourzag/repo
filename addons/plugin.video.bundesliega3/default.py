@@ -123,7 +123,7 @@ def watchlive(url,meldung=""):
           if url=="WDR":
             urlnew="http://wdr_fs_geo-lh.akamaihd.net/i/wdrfs_geogeblockt@112044/master.m3u8"             
           if url=="NDR":
-            urlnew="http://www.ndr.de/resources/metadaten/ndr_fs_nds_hi_wmv.asx"             
+            urlnew="http://ndr_fs-lh.akamaihd.net/i/ndrfs_nds@119224/master.m3u8"            
           if urlnew :         
              listitem = xbmcgui.ListItem(path=urlnew) 
              xbmcplugin.setResolvedUrl(addon_handle,True, listitem)
