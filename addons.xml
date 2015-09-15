@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addons>
+
 <addon id="plugin.audio.einslive_de" name="1LIVE.de" version="1.0.7" provider-name="AddonScriptorDE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
@@ -442,6 +443,22 @@
         <email>andreas at vogler dot name</email>
         <website>http://repo.l0re.com</website>
         <source>http://repo.l0re.com/data/plugin.video.orftvthek4de</source>
+    </extension>
+</addon>
+
+<addon id="plugin.video.putpat" name="Putpat.tv" version="0.8" provider-name="Johannes">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="de">Putpat.tv Musikvideos</summary>
+        <summary lang="en">Putpat.tv music videos</summary>
+        <description lang="de">Dieses Plugin spielt Musikvideos von putpat.tv ab.</description>
+        <description lang="en">This plugin plays music videos from putpat.tv.</description>
     </extension>
 </addon>
 

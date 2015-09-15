@@ -1,0 +1,5 @@
+<settings>
+   <setting id="quality" type="enum" lvalues="30005|30006|30007" label="30004" default="2"/>
+   <setting id="mail" label="30008" type="text" default=""/>
+   <setting id="password" label="30009" type="text" option="hidden" default=""/>
+</settings>
