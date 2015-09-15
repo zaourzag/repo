@@ -2,7 +2,12 @@
 import xbmc, xbmcplugin, xbmcgui, xbmcaddon
 import os.path
 import urllib, urllib2, cookielib
-import re, simplejson, time, string
+import re,time, string
+
+try:
+	import json
+except:
+	import simplejson as json
 
 
 addon = xbmcaddon.Addon(id='plugin.video.putpat')
@@ -101,7 +106,7 @@ def showVeequalizerPresets():
 		if title is None:
 			title = 'Custom'
 		
-		slidersString = simplejson.dumps(veequalizerPreset['entries'])
+		slidersString = json.dumps(veequalizerPreset['entries'])
 		
 		addLink(title.encode("utf-8"), slidersString.encode("utf-8"), MODE_VEEQUALIZER_PLAY, '', authenticityToken)
 		
@@ -130,7 +135,7 @@ def getJsonObject(url, postJson = None):
 	postData = None
 	
 	if postJson != None:
-		postData = simplejson.dumps(postJson, separators=(',',':'))
+		postData = json.dumps(postJson, separators=(',',':'))
 	
 	request = urllib2.Request(url, postData, {'Content-Type': 'application/json'})
 	response = urllib2.urlopen(request)
@@ -143,7 +148,7 @@ def getJsonObject(url, postJson = None):
 	result = None
 	
 	try:
-		result = simplejson.loads(data)
+		result = json.loads(data)
 	except: pass
 	
 	return result
@@ -289,7 +294,7 @@ def play(url):
 
 def veequalizerPlay(slidersString):
 	
-	sliders = simplejson.loads(slidersString)
+	sliders = json.loads(slidersString)
 	clips = getVeequalizerClips(sliders)
 	playlist = clearPlaylistAndStart(clips)
 	monitorPlayback(playlist, clips = clips, sliders = sliders)
