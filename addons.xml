@@ -95,7 +95,7 @@
   </extension>
 </addon>
 
-<addon id="plugin.video.bundesliega3" name="3 Bundesliega" version="0.1.6" provider-name="L0RE">
+<addon id="plugin.video.bundesliega3" name="3 Bundesliega" version="0.1.7" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
     </requires>
