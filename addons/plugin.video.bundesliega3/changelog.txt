@@ -1,4 +1,6 @@
-﻿0.1.8
+﻿0.1.9
+- Fehler bei Laufenden Spielen
+0.1.8
 - Fehlende Spalten dazu
 0.1.7
 - Neues Logo

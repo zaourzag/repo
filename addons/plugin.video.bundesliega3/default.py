@@ -127,27 +127,27 @@ def watchlive(url,meldung=""):
    urlnew=""
    if not meldung == "" :
         dialog = xbmcgui.Dialog()
-        nr=dialog.yesno("Läuft nicht", "Dieses Spielt läuft noch nicht trotzdem versuchen?")
+        nr=dialog.yesno("Läuft nicht", "Dieses Spielt läuft noch nicht trotzdem versuchen?")        
         if not nr:
           listitem = xbmcgui.ListItem(path=url) 
           xbmcplugin.setResolvedUrl(addon_handle,False, listitem) 
           get_spiele()
-        else:
-          if "MDR" in url:
-            urlnew="http://mdr_sa_hls-lh.akamaihd.net/i/livetvmdrsachsenanhalt_de@106901/master.m3u8"       
-          if url=="mdr.de":
-            urlnew="http://mdr_event1_hls-lh.akamaihd.net/i/livetvmdrevent1_de@106904/index_1728_av-p.m3u8?sd=10&rebase=on"    
-          if url=="WDR":
-            urlnew="http://wdr_fs_geo-lh.akamaihd.net/i/wdrfs_geogeblockt@112044/master.m3u8"             
-          if url=="NDR":
-            urlnew="http://ndr_fs-lh.akamaihd.net/i/ndrfs_nds@119224/master.m3u8"            
-          if urlnew :         
-             listitem = xbmcgui.ListItem(path=urlnew) 
-             xbmcplugin.setResolvedUrl(addon_handle,True, listitem)
-          else :
-             nr=dialog.ok("Sender nicht bekannt", "Zu Diesem sender fehlt der stream")
-             listitem = xbmcgui.ListItem(path=url) 
-             xbmcplugin.setResolvedUrl(addon_handle,False, listitem) 
+          return
+   if "MDR" in url:
+      urlnew="http://mdr_sa_hls-lh.akamaihd.net/i/livetvmdrsachsenanhalt_de@106901/master.m3u8"       
+   if url=="mdr.de":
+      urlnew="http://mdr_event1_hls-lh.akamaihd.net/i/livetvmdrevent1_de@106904/index_1728_av-p.m3u8?sd=10&rebase=on"    
+   if url=="WDR":
+      urlnew="http://wdr_fs_geo-lh.akamaihd.net/i/wdrfs_geogeblockt@112044/master.m3u8"             
+   if url=="NDR":
+      urlnew="http://ndr_fs-lh.akamaihd.net/i/ndrfs_nds@119224/master.m3u8"         
+   if urlnew :         
+      listitem = xbmcgui.ListItem(path=urlnew) 
+      xbmcplugin.setResolvedUrl(addon_handle,True, listitem)
+   else :
+      nr=dialog.ok("Sender nicht bekannt", "Zu Diesem sender fehlt der stream")
+      listitem = xbmcgui.ListItem(path=url) 
+      xbmcplugin.setResolvedUrl(addon_handle,False, listitem) 
   
   
 params = parameters_string_to_dict(sys.argv[2])
