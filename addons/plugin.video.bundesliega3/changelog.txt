@@ -1,8 +1,10 @@
-﻿0.1
-- Initial
-0.1.2
-- Patch des xml
-0.1.3
-- Add NDR
+﻿0.1.6
+- Monate umgestellt,da language settings bei android nicht geht
 0.1.4
 - New Url vor NDR
+0.1.3
+- Add NDR
+0.1.2
+- Patch des xml
+0.1
+- Initial

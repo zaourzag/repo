@@ -13,17 +13,28 @@ import locale
 from datetime import datetime
 
 
-if  (sys.platform  == 'win32'):
-  locale.setlocale(locale.LC_ALL, 'deu_deu')
-else :
-  locale.setlocale(locale.LC_TIME, locale.normalize("de"))
-
 base_url = sys.argv[0]
 addon_handle = int(sys.argv[1])
 args = urlparse.parse_qs(sys.argv[2][1:])
 addon = xbmcaddon.Addon()
 # Lade Sprach Variablen
 translation = addon.getLocalizedString
+
+Monate = {
+           "Januar":1,
+           "Februar":2,
+           "März":3,
+           "April":4,
+           "Mai":5,
+           "Juni":6,
+           "Juli":7,
+           "August":8,
+           "September":9,
+           "Oktober":10,
+           "November":11,
+           "Dezember":12
+}
+
 
 def debug(content):
     log(content, xbmc.LOGDEBUG)
@@ -92,8 +103,12 @@ def get_spiele():
     sender=ar_sender[0]
     lt = time.localtime()
     jahr=time.strftime("%Y", lt)
-    zeitstring=datum + " "+jahr + " " + zeit
-    zeitobjekt=time.strptime(zeitstring , "%A, %d. %B %Y %H:%M Uhr")
+    datum_reg=re.compile('.+, ([0-9]+)\. (.+)', re.DOTALL).findall(datum)
+    month=datum_reg[0][1]
+    day=datum_reg[0][0]
+    monat=Monate[month]
+    zeitstring=day+"."+str(monat) +"."+jahr + " " + zeit
+    zeitobjekt=time.strptime(zeitstring , "%d.%m.%Y %H:%M Uhr")
     neuzeit=time.strftime("%d. %B %H:%M",zeitobjekt)
     debug("BL3 :" + datum +" # "+ zeit + " # "+ spiel + " # " + sender)    
     now=time.time()
