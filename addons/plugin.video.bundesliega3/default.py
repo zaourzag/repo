@@ -82,13 +82,14 @@ def get_spiele():
   content=geturl(URL)
   kurz_inhalt = content[content.find('wp-table-reloaded wp-table-reloaded-id-8')+1:]
   kurz_inhalt = kurz_inhalt[:kurz_inhalt.find('</tbody>')]
-  spl=kurz_inhalt.split('<td class="column-1">')
-  for i in range(1,len(spl)-1,1):
+  spl=kurz_inhalt.split('<tr class="row')
+  for i in range(2,len(spl)-1,1):
     element=spl[i]
-    ar_datum=re.compile('<td class="column-2">([^<]+)</td>', re.DOTALL).findall(element)    
-    ar_zeit=re.compile('<td class="column-3">([^<]+)</td>', re.DOTALL).findall(element)    
-    ar_spiel=re.compile('<td class="column-4">([^<]+)</td>', re.DOTALL).findall(element)
-    ar_sender=re.compile('<td class="column-5">([^<]+)</td>', re.DOTALL).findall(element)
+    debug ("Element :" + element)
+    ar_datum=re.compile('<td class="column-2[^>]*>([^<]+)</td>', re.DOTALL).findall(element)    
+    ar_zeit=re.compile('<td class="column-3[^>]*>([^<]+)</td>', re.DOTALL).findall(element)    
+    ar_spiel=re.compile('<td class="column-4[^>]*>([^<]+)</td>', re.DOTALL).findall(element)
+    ar_sender=re.compile('<td class="column-5[^>]*>([^<]+)</td>', re.DOTALL).findall(element)
     if ar_datum:
      datum=ar_datum[0]
      datum_old=datum
@@ -103,6 +104,7 @@ def get_spiele():
     sender=ar_sender[0]
     lt = time.localtime()
     jahr=time.strftime("%Y", lt)
+    debug("datum"+datum)
     datum_reg=re.compile('.+, ([0-9]+)\. (.+)', re.DOTALL).findall(datum)
     month=datum_reg[0][1]
     day=datum_reg[0][0]
