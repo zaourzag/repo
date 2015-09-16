@@ -30,3 +30,6 @@
 - Added Bonus Matrial in Settings
 0.7.1
 - All Live Streams
+0.7.2
+- Fanart added
+
