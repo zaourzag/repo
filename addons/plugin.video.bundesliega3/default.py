@@ -141,6 +141,8 @@ def watchlive(url,meldung=""):
       urlnew="http://wdr_fs_geo-lh.akamaihd.net/i/wdrfs_geogeblockt@112044/master.m3u8"             
    if url=="NDR":
       urlnew="http://ndr_fs-lh.akamaihd.net/i/ndrfs_nds@119224/master.m3u8"         
+   if url=="br.de":
+      urlnew="http://brevent1hds-lh.akamaihd.net/i/br_event04isma@111250/index_1_av-b.m3u8"         
    if urlnew :         
       listitem = xbmcgui.ListItem(path=urlnew) 
       xbmcplugin.setResolvedUrl(addon_handle,True, listitem)

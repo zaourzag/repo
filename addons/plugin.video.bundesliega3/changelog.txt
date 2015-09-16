@@ -1,4 +1,6 @@
-﻿0.1.9
+﻿0.1.10
+- Add Bayern Fersehen Event Stream
+0.1.9
 - Fehler bei Laufenden Spielen
 0.1.8
 - Fehlende Spalten dazu
