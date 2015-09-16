@@ -188,7 +188,7 @@ def jsonurl(url) :
         debug("dauer:"+str(dauer))
       if not start_datum=="":
          if starttime <  nowtime  and  endtime >  nowtime() :  
-          dauer=str((endtime-nowtime)/60)
+           dauer=str((endtime-nowtime)/60)
            title=title +" ( [COLOR red] Läuft [/COLOR])"
          else:
            title=title +" ( "+  time.strftime("%d/%m/%Y %H:%M",startobj)  +" Uhr)"
