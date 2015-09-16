@@ -32,4 +32,5 @@
 - All Live Streams
 0.7.2
 - Fanart added
-
+0.7.3
+- Dauer bei Lifestream besser

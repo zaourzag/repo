@@ -183,11 +183,11 @@ def jsonurl(url) :
         endtime=time.mktime(endobj)
         startobj=time.strptime(start_datum +" "+ start_zeit,"%Y-%m-%d %H:%M")
         starttime=time.mktime(startobj)
-        
-        dauer=str((endtime-starttime)/60)
+        nowtime=time.mktime(datetime.now().timetuple())
+        dauer=str((endtime-nowtime)/60)
         debug("dauer:"+str(dauer))
       if not start_datum=="":
-         if starttime <  time.mktime(datetime.now().timetuple())  and  endtime >  time.mktime(datetime.now().timetuple()) :  
+         if starttime <  nowtime  and  endtime >  nowtime() :  
            title=title +" ( [COLOR red] Läuft [/COLOR])"
          else:
            title=title +" ( "+  time.strftime("%d/%m/%Y %H:%M",startobj)  +" Uhr)"
