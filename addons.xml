@@ -597,6 +597,21 @@ Orginal Code was from AddonScriptorDE</disclaimer>
     </extension>
 </addon>
 
+<addon id="plugin.video.wiesn" name="Oktoberfest" version="0.1.0" provider-name="L0RE">
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Livestreams from the Oktoberfest</summary>
+    <summary lang="de">Livestreams vom Oktoberfest</summary>
+    <description lang="en">Livestreams from the Oktoberfest</description>
+    <description lang="de">Livestreams from the Oktoberfest</description>
+    <website></website>
+    <email>andreas at vogler dot name</email>
+    <platform>all</platform>
+  </extension>
+</addon>
+
 <addon id="plugin.video.zdf_de_lite" name="ZDF Mediathek" version="2.2.2" provider-name="AddonScriptorDE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
