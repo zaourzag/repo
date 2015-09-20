@@ -55,3 +55,5 @@
 - Search enabled
 3.2.8
 - Blackcharts,Dancechart geädded, sind aber nur wenig Videos Da
+3.2.12
+-Unicode Folgennamen Korregiert

@@ -18,6 +18,17 @@ forceViewMode = addon.getSetting("forceViewMode") == "true"
 useThumbAsFanart = addon.getSetting("useThumbAsFanart") == "true"
 viewMode = str(addon.getSetting("viewMode"))
 
+def debug(content):
+    log(content, xbmc.LOGDEBUG)
+    
+def notice(content):
+    log(content, xbmc.LOGNOTICE)
+
+def log(msg, level=xbmc.LOGNOTICE):
+    addon = xbmcaddon.Addon()
+    addonID = addon.getAddonInfo('id')
+    xbmc.log('%s: %s' % (addonID, msg), level) 
+    
 def index():
         artistsFavsCount=0
         if os.path.exists(artistsFavsFile):
@@ -219,7 +230,7 @@ def listShow(url):
           listVideos_new(url)
 
 def listVideos_new(url):
-        xbmc.log("URL:: "+ url)
+        debug("listVideos_new URL:: "+ url)
         contentTitles=""
         if os.path.exists(titlesListFile):
           fh = open(titlesListFile, 'r')
@@ -231,12 +242,14 @@ def listVideos_new(url):
           contentBlacklist=fh.read()
           fh.close()
         content = getUrl(url)
+        debug(content)
         content=content.replace("\/","/")
         struktur = json.loads(content)
         so=struktur['seasons']
         for nr,wert in so.items():
-          for element in wert['playlist']:
-            title=element['title'] +" ( "+ element['subtitle'] + " )"
+          for element in wert['playlist']:            
+            title=element['title'] +" ( "+ element['subtitle'] + " )"            
+            title = unicode(title).encode('utf-8')
             try:
               thumb="http://images.mtvnn.com/"+ str(element['riptide_image_id']) +"/306x172_"
             except: 
@@ -424,7 +437,7 @@ def getUrl(url):
         req = urllib2.Request(url)
         req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:38.0) Gecko/20100101 Firefox/38.0')
         response = urllib2.urlopen(req,timeout=60)
-        link=response.read()
+        link=response.read()        
         response.close()
         return link
 
