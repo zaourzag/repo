@@ -323,7 +323,10 @@ def listVideos_old(url):
               if int(sort_charto[element])==0 :
                  nr="[COLOR green] "+ str(sort_chartn[element]) +". ( NEU ) [/COLOR]"
               elif int(sort_charto[element])==-1  or sort_chartn[element] > 500 :
-                 nr=""
+                 if int(sort_charto[element])==-1 :
+                   nr =str(sort_chartn[element]) +"."
+                 else:
+                   nr=""
               elif sort_chartn[element] < sort_charto[element]:
                  nr="[COLOR green] "+ str(sort_chartn[element]) +". ( + "+ str(int(sort_charto[element])-int(sort_chartn[element])) +" ) [/COLOR]"
               elif sort_chartn[element] > sort_charto[element] :
