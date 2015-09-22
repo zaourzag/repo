@@ -1,4 +1,8 @@
-﻿0.1.10
+﻿0.2.0
+- Addd ndr.de
+0.1.11
+- Added rbb.de
+0.1.10
 - Add Bayern Fersehen Event Stream
 0.1.9
 - Fehler bei Laufenden Spielen

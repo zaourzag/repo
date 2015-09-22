@@ -58,8 +58,8 @@ def parameters_string_to_dict(parameters):
 				paramDict[paramSplits[0]] = paramSplits[1]
 	return paramDict
   
-def addLink(name, url, mode,meldung=""):
-	u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&meldung="+ str(meldung)
+def addLink(name, url, mode,meldung="",spiel=""):
+	u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&meldung="+ str(meldung)+"&spiel="+ spiel
 	liz = xbmcgui.ListItem(name)
 	liz.setProperty('IsPlayable', 'true')
 	xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
@@ -111,19 +111,33 @@ def get_spiele():
     monat=Monate[month]
     zeitstring=day+"."+str(monat) +"."+jahr + " " + zeit
     zeitobjekt=time.strptime(zeitstring , "%d.%m.%Y %H:%M Uhr")
-    neuzeit=time.strftime("%d. %B %H:%M",zeitobjekt)
-    debug("BL3 :" + datum +" # "+ zeit + " # "+ spiel + " # " + sender)    
+    neuzeit=time.strftime("%d. %B %H:%M",zeitobjekt)   
     now=time.time()
 
     if time.mktime(zeitobjekt) > time.mktime(lt) :
-       meldung="Läuft noch nicht"
-       debug ("XXXXXXXXXX Meldung")
+       meldung="Läuft noch nicht"       
     else:
        meldung=""
-    addLink(name=neuzeit +" : "+ spiel, url=sender , mode="Watch",meldung=meldung)
+    addLink(name=neuzeit +" : "+ spiel, url=sender , mode="Watch",meldung=meldung,spiel=spiel)
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
-  
-def watchlive(url,meldung=""):
+def getUrl(url):
+        
+        debug("TV4User: Get Url")
+        req = urllib2.Request(url)
+        req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; rv:23.0) Gecko/20100101 Firefox/23.0')
+        response = urllib2.urlopen(req)
+        content=response.read()
+        response.close()
+        return content
+def maschaftfinden(manschaft,spiel):
+        found=0
+        sp1 = manschaft.split(' ') 
+        for i in range(1, len(sp1), 1): 
+          entry=sp1[i]
+          if entry in spiel:
+            found=1
+        return found        
+def watchlive(url,meldung="",spiel=""):
    urlnew=""
    if not meldung == "" :
         dialog = xbmcgui.Dialog()
@@ -142,7 +156,29 @@ def watchlive(url,meldung=""):
    if url=="NDR":
       urlnew="http://ndr_fs-lh.akamaihd.net/i/ndrfs_nds@119224/master.m3u8"         
    if url=="br.de":
-      urlnew="http://brevent1hds-lh.akamaihd.net/i/br_event04isma@111250/index_1_av-b.m3u8"         
+      urlnew="http://brevent1hds-lh.akamaihd.net/i/br_event04isma@111250/index_1_av-b.m3u8"  
+   if url=="rbb-online.de":
+      urlnew="http://rbb_event-lh.akamaihd.net/i/rbbevent_nongeo@107643/index_1728_av-p.m3u8?sd=10&rebase=on"
+   if url=="ndr.de":
+      debug("spiel" +spiel)
+      
+      match = re.compile('([^-]+) - ([^-]+)', re.DOTALL).findall(spiel)
+      name1=match[0][0]
+      name2=match[0][1]
+      debug("name2"+ name2)
+      debug("name1"+ name1)
+      url="https://www.ndr.de/sport/live/livecenter104.html"
+      content=getUrl(url)      
+      spl = content.split('playlist: [')    
+      urlnew=""      
+      for i in range(1, len(spl), 1):
+        entry=spl[i]   
+        match = re.compile('title: "([^"]+)"', re.DOTALL).findall(entry)        
+        debug("+++ match[0] :" + match[0])        
+        if maschaftfinden(name1, match[0]) ==1 or maschaftfinden(name2, match[0])==1  :   
+           match = re.compile('src:\'([^\']+)\', type:"application/x-mpegURL"', re.DOTALL).findall(entry)        
+           urlnew=match[0]
+           debug("urlnew :------- "+ urlnew)                    
    if urlnew :         
       listitem = xbmcgui.ListItem(path=urlnew) 
       xbmcplugin.setResolvedUrl(addon_handle,True, listitem)
@@ -157,12 +193,13 @@ mode = urllib.unquote_plus(params.get('mode', ''))
 url = urllib.unquote_plus(params.get('url', ''))
 name = urllib.unquote_plus(params.get('name', ''))
 meldung = urllib.unquote_plus(params.get('meldung', ''))
+spiel = urllib.unquote_plus(params.get('spiel', ''))
   
   
 if mode is '':
     get_spiele()
 if mode == 'Watch':
-    watchlive(url=url,meldung=meldung)
+    watchlive(url=url,meldung=meldung,spiel=spiel)
   
   
 
