@@ -265,6 +265,7 @@ def listVideos_new(url):
         if forceViewMode:
           xbmc.executebuiltin('Container.SetViewMode('+viewMode+')')
 def listVideos_old(url):
+        debug("URL :"+ url)
         content = getUrl(url)
         ids=[]
         title=[]
@@ -314,22 +315,23 @@ def listVideos_old(url):
                 chartn[id_video]=int(chartnew)
                 charto[id_video]=int(chartold)
              except:
-                debug("Kein Video zu :" +id)           
-        sort_chartn,sort_ids,sort_title,sort_subtitle,sort_mrss,sort_charto,sort_riptide_image_id = (list(x) for x in zip(*sorted(zip(chartn,ids,title,subtitle,mrss,charto,riptide_image_id))))
-        anzahl=len(sort_ids)
-        for element in range (0,anzahl):
-          if int(sort_charto[element])==0 :
-             nr="[COLOR green] "+ str(sort_chartn[element]) +". ( NEU ) [/COLOR]"
-          elif int(sort_charto[element])==-1 :
-             nr=""
-          elif sort_chartn[element] < sort_charto[element]:
-             nr="[COLOR green] "+ str(sort_chartn[element]) +". ( + "+ str(int(sort_charto[element])-int(sort_chartn[element])) +" ) [/COLOR]"
-          elif sort_chartn[element] > sort_charto[element] :
-             nr="[COLOR red] "+ str(sort_chartn[element]) +". ( - "+ str(int(sort_chartn[element])-int(sort_charto[element])) +" ) [/COLOR]"
-          else :
-             nr=str(sort_chartn[element]) +". ( - )"
-          title_video=nr +sort_title[element] + " - "+ sort_subtitle[element]          
-          addLink(title_video,sort_mrss[element],'playVideo',sort_riptide_image_id[element])  
+                debug("Kein Video zu :" +id)    
+        if len(chartn) >0 :
+            sort_chartn,sort_ids,sort_title,sort_subtitle,sort_mrss,sort_charto,sort_riptide_image_id = (list(x) for x in zip(*sorted(zip(chartn,ids,title,subtitle,mrss,charto,riptide_image_id))))
+            anzahl=len(sort_ids)
+            for element in range (0,anzahl):
+              if int(sort_charto[element])==0 :
+                 nr="[COLOR green] "+ str(sort_chartn[element]) +". ( NEU ) [/COLOR]"
+              elif int(sort_charto[element])==-1  or sort_chartn[element] > 500 :
+                 nr=""
+              elif sort_chartn[element] < sort_charto[element]:
+                 nr="[COLOR green] "+ str(sort_chartn[element]) +". ( + "+ str(int(sort_charto[element])-int(sort_chartn[element])) +" ) [/COLOR]"
+              elif sort_chartn[element] > sort_charto[element] :
+                 nr="[COLOR red] "+ str(sort_chartn[element]) +". ( - "+ str(int(sort_chartn[element])-int(sort_charto[element])) +" ) [/COLOR]"
+              else :
+                 nr=str(sort_chartn[element]) +". ( - )"
+              title_video=nr +sort_title[element] + " - "+ sort_subtitle[element]          
+              addLink(title_video,sort_mrss[element],'playVideo',sort_riptide_image_id[element])  
         xbmcplugin.endOfDirectory(pluginhandle)
         #xbmc.executebuiltin('XBMC.RunScript(special://home/addons/'+addonID+'/titles.py,'+urllib.quote_plus(newTitles)+')')
         if forceViewMode:
