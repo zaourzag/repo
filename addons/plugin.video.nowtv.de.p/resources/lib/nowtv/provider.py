@@ -112,7 +112,7 @@ class Provider(kodion.AbstractProvider):
         result = []
 
         # show only free videos if not logged in or or the setting is enabled
-        show_only_free_videos = not self.is_logged_in() or context.get_settings().get_bool('nowtv.videos.only_free',
+        show_only_free_videos = not self.is_logged_in() and context.get_settings().get_bool('nowtv.videos.only_free',
                                                                                            False)
         for video in videos:
             if show_only_free_videos and not video['free'] and not video['payed']:
