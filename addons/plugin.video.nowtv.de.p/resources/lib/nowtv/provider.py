@@ -324,7 +324,7 @@ class Provider(kodion.AbstractProvider):
         formats = json_formats.get('items', [])
 
         # show only free videos if not logged in or or the setting is enabled
-        show_only_free_videos = not self.is_logged_in() or context.get_settings().get_bool('nowtv.videos.only_free',
+        show_only_free_videos = self.is_logged_in() or not context.get_settings().get_bool('nowtv.videos.only_free',
                                                                                            False)
 
         for format_data in formats:
