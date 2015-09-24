@@ -1,4 +1,4 @@
-1.0.22
+1.0.23
 - Only Free error Fix
 1.0.19
 - Lower Python Version for Aplle TV
