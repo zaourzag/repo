@@ -1,3 +1,5 @@
+1.0.25
+- Added Bitrate ask
 1.0.24
 - Only Free error Fix
 1.0.19
