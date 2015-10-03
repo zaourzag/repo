@@ -147,7 +147,41 @@ def watchlive(url,meldung="",spiel=""):
           xbmcplugin.setResolvedUrl(addon_handle,False, listitem) 
           get_spiele()
           return
-   if "MDR" in url:
+   if "mdr.de" in url:
+      urlnew="http://mdr_event1_hls-lh.akamaihd.net/i/livetvmdrevent1_de@106904/index_1728_av-p.m3u8?sd=10&rebase=on"    
+   elif "ndr.de" in url:
+      debug("spiel" +spiel)    
+      match = re.compile('([^-]+) - ([^-]+)', re.DOTALL).findall(spiel)
+      name1=match[0][0]
+      name2=match[0][1]
+      debug("name2"+ name2)
+      debug("name1"+ name1)
+      url="https://www.ndr.de/sport/live/livecenter104.html"
+      content=getUrl(url)   
+      kurz_inhalt = content[content.find('<div class="container w100">')+1:]
+      kurz_inhalt = kurz_inhalt[:kurz_inhalt.find('<iframe')]      
+      spl = kurz_inhalt.split('<div class="videolinks">')    
+      urlnew=""      
+      for i in range(1, len(spl), 1):
+        entry=spl[i]   
+        debug("ENTRY + "+ entry)
+        match = re.compile('span class="icon icon_video"></span>([^<]+)<', re.DOTALL).findall(entry)        
+        debug("+++ match[0] :" + match[0])        
+        if maschaftfinden(name1, match[0]) ==1 or maschaftfinden(name2, match[0])==1  :   
+           match = re.compile('data-streamurl="([^"]+)"', re.DOTALL).findall(entry)        
+           urlreg=match[0]           
+           #/sport/fussball/eventlivestream2272-player_image-fc9e58f1-26f4-441e-ac26-2c356f85bff4_theme-ndr.html
+           urlreg=urlreg.replace('player_image','ppjson_image') 
+           urlreg=urlreg.replace('_theme-ndr.html','.json')             
+           urljson="https://www.ndr.de"+urlreg           
+           debug("urljson:" +urljson)
+           content=getUrl(urljson)   
+           #debug("content : " + content)
+           match = re.compile('"([^"]+)\.m3u8', re.DOTALL).findall(content)   
+           urlnew=match[0]+".m3u8"
+           debug("urlnew :------- "+ urlnew)
+           break           
+   elif "MDR" in url:
       urlnew="http://mdr_sa_hls-lh.akamaihd.net/i/livetvmdrsachsenanhalt_de@106901/master.m3u8"       
    if url=="mdr.de":
       urlnew="http://mdr_event1_hls-lh.akamaihd.net/i/livetvmdrevent1_de@106904/index_1728_av-p.m3u8?sd=10&rebase=on"    
@@ -161,30 +195,41 @@ def watchlive(url,meldung="",spiel=""):
       urlnew="http://rbb_event-lh.akamaihd.net/i/rbbevent_nongeo@107643/index_1728_av-p.m3u8?sd=10&rebase=on"
    if url=="hessenschau.de":
       urlnew="http://hrevent-lh.akamaihd.net/i/hr_event@309239/master.m3u8"
-   if url=="ndr.de":
-      debug("spiel" +spiel)
-      
+   if url=="swr.de":
+      debug("spiel" +spiel)          
       match = re.compile('([^-]+) - ([^-]+)', re.DOTALL).findall(spiel)
       name1=match[0][0]
       name2=match[0][1]
-      debug("name2"+ name2)
-      debug("name1"+ name1)
-      url="https://www.ndr.de/sport/live/livecenter104.html"
+      url="http://swrmediathek.de/content/live.htm"
       content=getUrl(url)      
-      spl = content.split('playlist: [')    
-      urlnew=""      
+      kurz_inhalt = content[content.find('<h2 class="rasterHeadline">Nächster Livestream</h2>')+1:]
+      kurz_inhalt = kurz_inhalt[:kurz_inhalt.find('<div class="section sectionB hasTitle">')]
+      spl = kurz_inhalt.split('<div class="box">')         
       for i in range(1, len(spl), 1):
         entry=spl[i]   
-        match = re.compile('title: "([^"]+)"', re.DOTALL).findall(entry)        
-        debug("+++ match[0] :" + match[0])        
-        if maschaftfinden(name1, match[0]) ==1 or maschaftfinden(name2, match[0])==1  :   
-           match = re.compile('src:\'([^\']+)\', type:"application/x-mpegURL"', re.DOTALL).findall(entry)        
-           urlnew=match[0]
-           debug("urlnew :------- "+ urlnew)                    
+        debug ("ENtry:"+ entry)
+        match = re.compile('title="([^"]+)"', re.DOTALL).findall(entry)   
+        title  = match[0]
+        match = re.compile('<a href="/player.htm\?show=([^"]+)"', re.DOTALL).findall(entry)   
+        urlpart=match[0]        
+        if maschaftfinden(name1, title) ==1 or maschaftfinden(name2, title)==1  :   
+          urla="http://swrmediathek.de/AjaxEntry?callback=js&ekey="+urlpart+"&rand=Sat"    
+          debug("URLA : "+urla)          
+          content=getUrl(urla) 
+          debug ("content:"+ content)
+          if "m3u8" in content:
+            match = re.compile('"([^"]+)\.m3u8"', re.DOTALL).findall(content)   
+            urlnew=match[0]+".m3u8"                   
+            debug("TITLE:"+ title)
+            debug("URL: "+ urlnew)
+            break
+          else:
+              urlnew=""  
    if urlnew :         
       listitem = xbmcgui.ListItem(path=urlnew) 
       xbmcplugin.setResolvedUrl(addon_handle,True, listitem)
    else :
+      dialog = xbmcgui.Dialog()
       nr=dialog.ok("Sender nicht bekannt", "Zu Diesem sender fehlt der stream")
       listitem = xbmcgui.ListItem(path=url) 
       xbmcplugin.setResolvedUrl(addon_handle,False, listitem) 
