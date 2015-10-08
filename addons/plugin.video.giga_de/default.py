@@ -111,9 +111,9 @@ def playVideos(url):
           entry=match1[nr][0]
     else:
         if  maxVideoQuality=="Max":
-          entry=match1[-1][0] 
+          entry=match1[0][0] 
         else:
-          entry=match1[1][0]
+          entry=match1[-1][0]
     debug("Entry"+ entry)    
     listitem = xbmcgui.ListItem(path=entry)    
     xbmcplugin.setResolvedUrl(pluginhandle,True, listitem)  
