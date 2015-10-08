@@ -24,10 +24,20 @@ translation = settings.getLocalizedString
 useThumbAsFanart = addon.getSetting("useThumbAsFanart") == "true"
 forceViewMode = settings.getSetting("forceView") == "true"
 viewMode = str(settings.getSetting("viewID"))
-maxVideoQuality = settings.getSetting("maxVideoQuality")
-qual = ["360p", "720p"]
-maxVideoQuality = qual[int(maxVideoQuality)]
+maxVideoQuality = settings.getSetting("maxVideoQuality")            
 
+
+def debug(content):
+    log(content, xbmc.LOGDEBUG)
+    
+def notice(content):
+    log(content, xbmc.LOGNOTICE)
+
+def log(msg, level=xbmc.LOGNOTICE):
+    addon = xbmcaddon.Addon()
+    addonID = addon.getAddonInfo('id')
+    xbmc.log('%s: %s' % (addonID, msg), level) 
+    
 
 def index():
     addDir(translation(30001), "http://www.giga.de/tv/alle-videos/", 'listVideos', icon)
@@ -63,7 +73,7 @@ def listVideos(url):
         match = re.compile('src="(.+?)"', re.DOTALL).findall(entry)
         if match:
             thumb = match[0].replace("-300x190.jpg",".jpg")
-        addDir(title, url, 'playVideos', thumb)
+        addLink(title, url, 'playVideos', thumb)
     if "/page/" in mainUrl:
         match = re.compile('/page/(.+?)/', re.DOTALL).findall(mainUrl)
         nr = str(int(match[0])+1)
@@ -79,55 +89,35 @@ def listVideos(url):
 
 
 def playVideos(url):
+    debug ("PLAYVIDEOS: "+ url)
     playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
     playlist.clear()
+    inhalt = getUrl(url)    
+    kurz_inhalt = inhalt[inhalt.find('<div class="current">')+1:]
+    kurz_inhalt = kurz_inhalt[:kurz_inhalt.find('<div class="playlist" data-role="playlist">')]
+    debug("kurz_inhalt : "+kurz_inhalt)
+    match = re.compile('<iframe src="([^"]+)".+</div>', re.DOTALL).findall(kurz_inhalt)
+    url=match[0]
+    debug("URL2 :"+url)
     content = getUrl(url)
-    i = 1
-    ids = []
-    match = re.compile('iframe.+?src="/videoplayer/jwplayer/#v=(.+?)&', re.DOTALL).findall(content)
-    for videoID in match:
-        if not videoID in ids:
-            ids.append(videoID)
-            url="plugin://plugin.video.giga_de/?url="+str(videoID)+"&mode=playVideo"
-            listitem = xbmcgui.ListItem("Part: "+str(i))
-            playlist.add(url, listitem)
-            i+=1
-    xbmc.Player().play(playlist)
+    match1 = re.compile('file: "([^"]+)", label: "([^"]+)"', re.DOTALL).findall(content)    
+    debug ("maxVideoQuality:"+ maxVideoQuality)
+    if maxVideoQuality=="Select":         
+          q=[]
+          for url,qual in match1:
+            q.append(qual)
+            dialog = xbmcgui.Dialog()
+          nr=dialog.select("Bitrate", q)                
+          entry=match1[nr][0]
+    else:
+        if  maxVideoQuality=="Max":
+          entry=match1[-1][0] 
+        else:
+          entry=match1[1][0]
+    debug("Entry"+ entry)    
+    listitem = xbmcgui.ListItem(path=entry)    
+    xbmcplugin.setResolvedUrl(pluginhandle,True, listitem)  
     
-
-
-def playVideo(url):
-    if "http" in url:
-        content = getUrl(url)
-        match = re.compile('data-video-id="(.+?)"', re.DOTALL).findall(content)
-        matchYT0 = re.compile('data-youtube-id="(.+?)"', re.DOTALL).findall(content)
-        matchYT1 = re.compile('youtube.com/v/(.+?)\\?', re.DOTALL).findall(content)
-        matchYT2 = re.compile('youtube.com/watch\\?v=(.+?)"', re.DOTALL).findall(content)
-        matchYT3 = re.compile('youtube.com/embed/(.+?)"', re.DOTALL).findall(content)
-        url = ""
-    if not "http" in url:
-        content = getUrl("http://video.giga.de/xml/"+url+".xml")
-    elif match:
-        content = getUrl("http://video.giga.de/xml/"+match[0]+".xml")
-    if not "http" in url or match:
-        match1 = re.compile('<high.+?<filename>(.+?)</filename>', re.DOTALL).findall(content)
-        match2 = re.compile('<medium.+?<filename>(.+?)</filename>', re.DOTALL).findall(content)
-        if match1 and maxVideoQuality == "720p":
-            url = "http://video.giga.de/data/"+match1[0]
-        elif match2:
-            url = "http://video.giga.de/data/"+match2[0]
-    elif matchYT0:
-        url = getYoutubeUrl(matchYT0[0])
-    elif matchYT1:
-        url = getYoutubeUrl(matchYT1[0])
-    elif matchYT2:
-        url = getYoutubeUrl(matchYT2[0])
-    elif matchYT3:
-        url = getYoutubeUrl(matchYT3[0])
-    if url:
-        listitem = xbmcgui.ListItem(path=url)
-        xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
-
 
 def queueVideo(url, name):
     playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
@@ -189,6 +179,8 @@ def addDir(name, url, mode, iconimage):
     liz.setInfo(type="Video", infoLabels={"Title": name})
     ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
     return ok
+
+
 
 params = parameters_string_to_dict(sys.argv[2])
 mode = urllib.unquote_plus(params.get('mode', ''))
