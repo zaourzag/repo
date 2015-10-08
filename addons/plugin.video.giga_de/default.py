@@ -24,7 +24,7 @@ translation = settings.getLocalizedString
 useThumbAsFanart = addon.getSetting("useThumbAsFanart") == "true"
 forceViewMode = settings.getSetting("forceView") == "true"
 viewMode = str(settings.getSetting("viewID"))
-maxVideoQuality = settings.getSetting("maxVideoQuality")            
+Quality = settings.getSetting("Quality")            
 
 
 def debug(content):
@@ -101,8 +101,8 @@ def playVideos(url):
     debug("URL2 :"+url)
     content = getUrl(url)
     match1 = re.compile('file: "([^"]+)", label: "([^"]+)"', re.DOTALL).findall(content)    
-    debug ("maxVideoQuality:"+ maxVideoQuality)
-    if maxVideoQuality=="Select":         
+    debug ("Quality:"+ Quality)
+    if Quality=="Select":         
           q=[]
           for url,qual in match1:
             q.append(qual)
@@ -110,7 +110,7 @@ def playVideos(url):
           nr=dialog.select("Bitrate", q)                
           entry=match1[nr][0]
     else:
-        if  maxVideoQuality=="Max":
+        if  Quality=="Max":
           entry=match1[0][0] 
         else:
           entry=match1[-1][0]
