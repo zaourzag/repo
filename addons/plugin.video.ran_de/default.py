@@ -10,21 +10,18 @@ import xbmcplugin
 import xbmcaddon
 import xbmcgui
 
-"""
-todo:
-  - endDate livestream
-  - livestream sortorder
-"""
-
 path = os.path.dirname(os.path.realpath(__file__))
 icon = os.path.join(path, 'icon.png')
 addon = xbmcaddon.Addon(id='plugin.video.ran_de')
-height = [270, 396, 480, 540, 720][int(addon.getSetting('maxVideoQuality'))]
+try:
+    height = [270, 396, 480, 540, 720][int(addon.getSetting('maxVideoQuality'))]
+except:
+    height = 540
 
 # http://www.ran.de/static/ran-app/configuration.json
 ran_api_base = 'http://contentapi.sim-technik.de'
 
-def play_video(resource = '/ran-app/v1/livestreams/show/ran:191811.json', height = 720):
+def play_video(resource = '/ran-app/v1/*.json', height = 720):
     try:
         json_url = ran_api_base + resource
         html = urllib2.urlopen(json_url).read()
@@ -35,6 +32,7 @@ def play_video(resource = '/ran-app/v1/livestreams/show/ran:191811.json', height
         elif video_info['type'] == 'video':
             id = str(video_info['video_id'])
             url = get_stream_url(id, height)
+        else: return False
         xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, xbmcgui.ListItem(path=url))
         return True
     except: return False
@@ -84,7 +82,7 @@ def list_videos(resource = '/ran-app/v1/videos.json'):
                     timestamp_now = time.time()
                     if stream_date_ende >= timestamp_now:
                         if stream_date_start <= timestamp_now: 
-                            date = '[COLOR red]JETZT LIVE[/COLOR]'
+                            date = '[COLOR red]%s[/COLOR]' % translation(30104).upper()
                             duration_in_seconds = stream_date_ende - timestamp_now
                             playable = 'true'
                     else: continue
@@ -92,9 +90,10 @@ def list_videos(resource = '/ran-app/v1/videos.json'):
                 title = video['teaser']['title']
                 thumb = video['teaser']['image'].replace('ran_app_1280x720', 'ran_app_512x288')
                 desc = video['teaser']['image_alt']
-                link = sys.argv[0] + "?resource=" + urllib.quote_plus(resource) + "&mode=" + 'play-video'
+                link = sys.argv[0] + '?resource=' + urllib.quote_plus(resource) + '&mode=play-video'
                 item = xbmcgui.ListItem('%s - %s' % (date, title), iconImage=icon, thumbnailImage=thumb)
-                item.setInfo(type='Video', infoLabels={'Title' : title, 'Plot' : desc, 'Duration' : duration_in_seconds})
+                item.setInfo(type='Video', infoLabels={'Title' : title, 'Plot' : desc})
+                item.addStreamInfo('video', {'duration': duration_in_seconds})
                 item.setProperty('IsPlayable', playable)
                 if xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=link, listitem=item): item_added = True
             except: continue
@@ -147,7 +146,6 @@ def get_stream_url(clip_id = '', height = 720):
 def add_category(title, mode, resource, thumb = ''):
     link = sys.argv[0] + '?mode=' + mode + '&resource=' + urllib.quote_plus(resource)
     liz = xbmcgui.ListItem(title, iconImage=icon, thumbnailImage=thumb)
-    liz.setInfo(type='Video', infoLabels={'Title': title})
     return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=link, listitem=liz, isFolder=True)
  
 def parameters_string_to_dict(parameters):
@@ -162,21 +160,24 @@ def parameters_string_to_dict(parameters):
     
 def warning(text, title = 'ran', time = 4500):
     xbmc.executebuiltin('Notification(%s, %s, %d, %s)' % (title, text, time, icon))
+
+def translation(id):
+    return addon.getLocalizedString(id).encode('utf-8')
     
 params = parameters_string_to_dict(sys.argv[2])
 mode = urllib.unquote_plus(params.get('mode', ''))
 resource = urllib.unquote_plus(params.get('resource', ''))
 
 if mode == 'play-video':
-    if not play_video(resource, height): warning('Das Video konnte nicht abgespielt werden!')
+    if not play_video(resource, height): warning(translation(30102))
 elif mode == 'list-videos':
-    if not list_videos(resource): warning('Es konnten keine Videos aufgelistet werden!')
+    if not list_videos(resource): warning(translation(30103))
 else:
-    add_category('Livestreams', 'list-videos', '/ran-app/v1/livestreams.json')
-    add_category('Neueste Videos', 'list-videos', '/ran-app/v1/videos.json')
-    add_category('Fussball', 'list-videos', '/ran-app/v1/videos/fussball.json')
-    add_category('Tennis', 'list-videos', '/ran-app/v1/videos/tennis.json')
-    add_category('NFL', 'list-videos', '/ran-app/v1/videos/us-sport.json')
-    add_category('Boxen', 'list-videos', '/ran-app/v1/videos/boxen.json')
-    add_category('Golf', 'list-videos', '/ran-app/v1/videos/golf.json')
+    add_category(translation(30105), 'list-videos', '/ran-app/v1/livestreams.json')
+    add_category(translation(30106), 'list-videos', '/ran-app/v1/videos.json')
+    add_category(translation(30107), 'list-videos', '/ran-app/v1/videos/fussball.json')
+    add_category(translation(30108), 'list-videos', '/ran-app/v1/videos/tennis.json')
+    add_category(translation(30109), 'list-videos', '/ran-app/v1/videos/us-sport.json')
+    add_category(translation(30110), 'list-videos', '/ran-app/v1/videos/boxen.json')
+    add_category(translation(30111), 'list-videos', '/ran-app/v1/videos/golf.json')
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
