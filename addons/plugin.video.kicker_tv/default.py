@@ -42,7 +42,7 @@ def list_videos(category = '', current_page = 0):
                 counter += 1
                 if counter > max: break
                 thumb = item['img']
-                title = item['title']
+                title = item['title'].replace("\\'", "'")
                 video_id = item['id']
                 if add_video(title, str(video_id), thumb, 'play-video'): item_added = True
             except:
