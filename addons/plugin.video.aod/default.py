@@ -110,6 +110,7 @@ def login(url):
     global cj
     global username
     global password
+    userAgent = "Mozilla/5.0 (Windows NT 6.2; WOW64; rv:23.0) Gecko/20100101 Firefox/23.0"
     opener.addheaders = [('User-Agent', userAgent)]
     content=opener.open(baseurl+"/users/sign_in").read()
     match = re.compile('ame="authenticity_token" value="([^"]+)"', re.DOTALL).findall(content)
