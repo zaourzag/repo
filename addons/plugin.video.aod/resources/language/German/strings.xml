@@ -5,8 +5,10 @@
   <string id="30103">Password</string> 
   <string id="30104">A-Z</string> 
   <string id="30105">Categorie</string> 
-  <string id="30106">Sprach</string> 
+  <string id="30106">Sprache</string> 
   <string id="30107">All</string> 
   <string id="30108">Settings</string>  
- <string id="30109">Films</string>  
+ <string id="30109">Filme</string>  
+  <string id="30110">User oder Password inkorrekt</string>  
+  <string id="30111">Naechste mal neu Einloggen</string> 
 </strings>

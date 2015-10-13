@@ -184,21 +184,24 @@ def Folge(url,csrftoken):
   global cj
   global username
   global password
-        
-  opener.addheaders = [('X-CSRF-Token', csrftoken),
+  try :        
+    opener.addheaders = [('X-CSRF-Token', csrftoken),
                      ('X-Requested-With', "XMLHttpRequest"),
-                     ('Accept', "application/json, text/javascript, */*; q=0.01")]
-  content=opener.open(url).read()
-  match = re.compile('"streamurl":"([^"]+)"', re.DOTALL).findall(content)
-  stream=match[0]  
-  match = re.compile('(.+)mp4:(.+)', re.DOTALL).findall(stream)  
-  path="mp4:"+match[0][1]
-  server=match[0][0]
-  debug("SERVER: "+ server)
-  debug("PATH: "+path)
-  listitem = xbmcgui.ListItem (path=server +"swfUrl=https://ssl.p.jwpcdn.com/6/12/jwplayer.flash.swf playpath="+path+" token=83nqamH3#i3j app=aodrelaunch/ swfVfy=true")
-  xbmcplugin.setResolvedUrl(addon_handle,True, listitem)    
-  debug(content)
+                     ('Accept', "application/json, text/javascript, */*; q=0.01")]      
+    content=opener.open(url).read()
+    match = re.compile('"streamurl":"([^"]+)"', re.DOTALL).findall(content)
+    stream=match[0]  
+    match = re.compile('(.+)mp4:(.+)', re.DOTALL).findall(stream)  
+    path="mp4:"+match[0][1]
+    server=match[0][0] 
+    listitem = xbmcgui.ListItem (path=server +"swfUrl=https://ssl.p.jwpcdn.com/6/12/jwplayer.flash.swf playpath="+path+" token=83nqamH3#i3j app=aodrelaunch/ swfVfy=true")
+    xbmcplugin.setResolvedUrl(addon_handle,True, listitem)    
+    debug(content)
+  except IOError, e:          
+        if e.code == 401:
+            dialog = xbmcgui.Dialog()
+            dialog.ok("Login",translation(30110))
+       
 
    
 def geturl(url):   
@@ -274,14 +277,25 @@ def abisz():
 		addDir(letter.upper(), baseurl+"/animes/begins_with/"+letter.upper(), 'catall', "")
   xbmcplugin.endOfDirectory(addon_handle)
 
-
-if mode is '':
+def menu():
+    addDir(translation(30107), translation(30107), 'All', "") 
     addDir(translation(30104), translation(30104), 'AZ', "")
     addDir(translation(30105), translation(30105), 'cat', "")
-    addDir(translation(30106), translation(30106), 'lang', "")    
-    addDir(translation(30107), translation(30107), 'All', "") 
+    addDir(translation(30106), translation(30106), 'lang', "")     
+    #addDir(translation(30111), translation(30111), 'cookies', "") 
     addDir(translation(30108), translation(30108), 'Settings', "") 
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
+
+def cookies():
+  if xbmcvfs.exists(temp):
+    shutil.rmtree(temp)
+  xbmcvfs.mkdirs(temp)
+  menu()
+
+    
+if mode is '':
+ menu()
+
 else:
   # Wenn Settings ausgewählt wurde
   if mode == 'Settings':
@@ -301,5 +315,7 @@ else:
           all(url)
   if mode == 'AZ':
           abisz()
+  if mode == 'cookies':
+          cookies()
   if mode == 'getcontent_search':
           getcontent_search(url)             
