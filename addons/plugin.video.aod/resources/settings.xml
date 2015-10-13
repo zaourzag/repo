@@ -1,0 +1,6 @@
+<settings>
+   <setting id="quality" type="select" label="30101" default="Max" values="sd|hd" />
+   <setting id="user" type="text" label="30102" default=""/>
+   <setting id="pass" type="text" label="30103" default=""/>
+   <setting id="movies" type="bool" label="30109" default="false"/>
+</settings>
