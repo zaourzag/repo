@@ -102,6 +102,8 @@ def all(url=""):
         link=baseurl+match[0]
         match=re.compile('<p class="animebox-shorttext">.+</p>', re.DOTALL).findall(entry)
         desc=match[0]
+        desc=desc.replace('<p class="episodebox-shorttext">','')  
+        desc=desc.replace("</p>",'')   
         addDir(name=ersetze(title), url=link, mode="Serie", iconimage=img, desc=desc)
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
    
