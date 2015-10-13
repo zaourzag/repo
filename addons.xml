@@ -202,6 +202,26 @@
     </extension>
 </addon>
 
+<addon id="plugin.video.eurosport" name="Eurosport" version="1.0.0" provider-name="PUR3">
+	<requires>
+		<import addon="xbmc.python" version="2.1.0"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">Eurosport media library</summary>
+		<summary lang="de">Eurosport Mediathek</summary>
+		<description lang="en">Watch highlights, interviews, analysis and other videos from Eurosport</description>
+		<description lang="de">Schauen Sie Zusammenfassungen, Interviews, Analysen und sonstige Videos von Eurosport</description>
+		<disclaimer lang="en"></disclaimer>
+		<language>de</language>
+		<platform>all</platform>
+        <license>GNU General Public License v2.0</license>
+		<website>www.video.eurosport.com</website>
+	</extension>
+</addon>
+
 <addon id="plugin.video.fernsehkritik_tv" name="Fernsehkritik.tv" version="2.1.3" provider-name="AddonScriptorDE">
     <requires>
         <import addon="xbmc.python" version="2.19.0"/>
@@ -276,7 +296,7 @@
     </extension>
 </addon>
 
-<addon id="plugin.video.kicker_tv" name="Kicker.tv" version="1.0.0" provider-name="PUR3">
+<addon id="plugin.video.kicker_tv" name="Kicker.tv" version="1.0.1" provider-name="PUR3">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
 	</requires>
@@ -481,7 +501,7 @@
     </extension>
 </addon>
 
-<addon id="plugin.video.ran_de" name="ran" version="2.0.0" provider-name="PUR3">
+<addon id="plugin.video.ran_de" name="ran" version="2.0.2" provider-name="PUR3">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
     </requires>
@@ -491,7 +511,9 @@
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
         <summary lang="de">Livestreams und Videos von ran.de</summary>
-        <description lang="de">Dieses Addon ermöglicht es euch, alle Videos und Livestreams von ran.de zu schauen.</description>
+        <summary lang="en">Livestreams and videos from ran.de</summary>
+        <description lang="de">Dieses Addon ermöglicht es euch, die neusten Videos und Livestreams von ran.de zu schauen.</description>
+        <description lang="en">Watch livestreams and the latest videos from ran.de.</description>
     </extension>
 </addon>
 
@@ -538,6 +560,23 @@
         <email>andreas at vogler dot name</email>
         <website>http://www.sesamstrasse.de</website>
     </extension>
+</addon>
+
+<addon id="plugin.video.sky_mediathek" name="Sky Mediathek" version="1.0.1" provider-name="PUR3">
+	<requires>
+		<import addon="xbmc.python" version="2.1.0"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de">Sky Mediathek</summary>
+		<description lang="de">Neueste Videos aus der Sky Mediathek anschauen.</description>
+		<language>de</language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<website>www.sky.de/mediathek</website>
+	</extension>
 </addon>
 
 <addon id="plugin.video.spiegel_tv" name="Spiegel.tv" version="1.1.4" provider-name="L0RE">
