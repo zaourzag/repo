@@ -136,7 +136,80 @@ def maschaftfinden(manschaft,spiel):
           entry=sp1[i]
           if entry in spiel:
             found=1
-        return found        
+        return found 
+
+def folge(url):
+    inhalt = geturl(url)
+    inhalt=inhalt.replace("'",'"')         
+    kurz_inhalt = inhalt[inhalt.find('<div class="clearFix">')+1:]
+    kurz_inhalt = kurz_inhalt[:kurz_inhalt.find('<span class="playBtn ir">Video starten</span>')]   
+    match=re.compile('dataURL:"([^"]+)"', re.DOTALL).findall(kurz_inhalt)
+    xmlfile="http://www.br.de/"+match[0]
+    xbmc.log("BR xmlfile: "+ xmlfile )
+    inhalt = geturl(xmlfile) 
+    inhalt=ersetze(inhalt)    
+    inhalt = inhalt[:inhalt.find('<asset type="HDS')]  
+    spl=inhalt.split('<asset ')
+    debug("split")
+    if "Live HLS" in inhalt:
+       debug("LIVE")
+       was=spl[3]
+       debug ("Live: "+ was)         
+    debug("XXX was"+ was)          
+    match=re.compile('<downloadUrl\>([^<]+)</downloadUrl>', re.DOTALL).findall(was)
+    if match :
+      video=match[0]
+    else :
+       match=re.compile('<url>([^<]+)</url', re.DOTALL).findall(was)
+       video=match[0]
+    debug("XXX video url:"+ video)    
+    return video
+
+def live():
+      url="http://www.br.de/mediathek/video/livestreams-100.html"
+      inhalt = geturl(url)
+      match=re.compile('data-filter_entire_broadcasts_url="([^"]+)"', re.DOTALL).findall(inhalt)
+      json_url=match[0]
+      debug("Jsonurl="+json_url)
+      urlnew=jsonurl("http://www.br.de/"+json_url) 
+      urlnew=folge(urlnew)
+      return urlnew
+      
+def ersetze(inhalt):
+   inhalt=inhalt.replace('&#39;','\'')  
+   inhalt=inhalt.replace('&quot;','"')    
+   inhalt=inhalt.replace('&gt;','>')      
+   inhalt=inhalt.replace('&amp;','&') 
+   return inhalt
+   
+def jsonurl(url) :   
+    newurl=""
+    debug("Json Url "+ url)
+    inhalt = geturl(url)
+    inhalt=ersetze(inhalt)
+    spl=inhalt.split('<article ')
+    for i in range(1,len(spl),1):
+      entry=spl[i].replace('\\"','"') 
+      entry=entry.replace('\\/','/') 
+      
+      match=re.compile('<a href="([^"]+)"', re.DOTALL).findall(entry)      
+      url="http://www.br.de/"+match[0]     
+      
+      match=re.compile('<span class="episode">([^<]+)</span>', re.DOTALL).findall(entry)      
+      title=match[0]       
+      
+      debug("URL : " + url)       
+      debug("Spiel: " + spiel)
+      debug("Title: " + title)
+      debug("----------------")
+      match = re.compile('([^-]+) - ([^-]+)', re.DOTALL).findall(spiel)
+      name1=match[0][0]
+      name2=match[0][1]            
+      if maschaftfinden(name1, title) ==1 or maschaftfinden(name2, title)==1  :   
+         newurl=url     
+    return newurl   
+
+    
 def watchlive(url,meldung="",spiel=""):
    urlnew=""
    if not meldung == "" :
@@ -195,6 +268,8 @@ def watchlive(url,meldung="",spiel=""):
       urlnew="http://rbb_event-lh.akamaihd.net/i/rbbevent_nongeo@107643/index_1728_av-p.m3u8?sd=10&rebase=on"
    if url=="hessenschau.de":
       urlnew="http://hrevent-lh.akamaihd.net/i/hr_event@309239/master.m3u8"
+   if url=="br.de":
+       urlnew=live()
    if url=="swr.de":
       debug("spiel" +spiel)          
       match = re.compile('([^-]+) - ([^-]+)', re.DOTALL).findall(spiel)
@@ -225,6 +300,30 @@ def watchlive(url,meldung="",spiel=""):
             break
           else:
               urlnew=""  
+   if url=="sportschau.de":
+       debug("spiel" +spiel)          
+       match = re.compile('([^-]+) - ([^-]+)', re.DOTALL).findall(spiel)
+       name1=match[0][0]
+       name2=match[0][1]
+       url="http://www.sportschau.de/fussball/bundesliga3/dritteligalivestreams100.html"
+       content=getUrl(url)   
+       kurz_inhalt = content[content.find('<div class="media mediaA videoLink live">')+1:]
+       kurz_inhalt = kurz_inhalt[:kurz_inhalt.find('<!-- teaser -->')]
+       match = re.compile('mcUrl&#039;:&#039;([^&]+)&', re.DOTALL).findall(kurz_inhalt)
+       url=match[0]
+       match = re.compile('<h4 class="headline">(.+)</h4>', re.DOTALL).findall(kurz_inhalt)
+       match = re.compile('<a href="[^"]+" >([^<]+)', re.DOTALL).findall(match[0])       
+       name=match[0].strip()
+       debug("URL: "+ url)
+       debug("totle: "+ name)
+       if maschaftfinden(name1, name) ==1 or maschaftfinden(name2, name)==1  : 
+           debug("Gefunden")          
+           urljson="http://www.sportschau.de/"+url                     
+           content=getUrl(urljson)   
+           #debug("content : " + content)
+           match = re.compile('"([^"]+)\.m3u8', re.DOTALL).findall(content)   
+           urlnew=match[0]+".m3u8"
+           debug ("urlnew :"+ urlnew)
    if urlnew :         
       listitem = xbmcgui.ListItem(path=urlnew) 
       xbmcplugin.setResolvedUrl(addon_handle,True, listitem)
@@ -233,8 +332,8 @@ def watchlive(url,meldung="",spiel=""):
       nr=dialog.ok("Sender nicht bekannt", "Zu Diesem sender fehlt der stream")
       listitem = xbmcgui.ListItem(path=url) 
       xbmcplugin.setResolvedUrl(addon_handle,False, listitem) 
-  
-  
+
+    
 params = parameters_string_to_dict(sys.argv[2])
 mode = urllib.unquote_plus(params.get('mode', ''))
 url = urllib.unquote_plus(params.get('url', ''))
