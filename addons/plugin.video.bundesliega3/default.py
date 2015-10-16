@@ -264,8 +264,6 @@ def watchlive(url,meldung="",spiel=""):
       urlnew="http://ndr_fs-lh.akamaihd.net/i/ndrfs_nds@119224/master.m3u8"         
    if url=="rbb-online.de":
       urlnew="http://rbb_event-lh.akamaihd.net/i/rbbevent_nongeo@107643/index_1728_av-p.m3u8?sd=10&rebase=on"
-   if url=="hessenschau.de":
-      urlnew="http://hrevent-lh.akamaihd.net/i/hr_event@309239/master.m3u8"
    if url=="br.de":
        urlnew=live()
    if url=="hessenschau.de":
