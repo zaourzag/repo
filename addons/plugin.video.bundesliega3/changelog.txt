@@ -1,4 +1,6 @@
-﻿0.2.3
+﻿0.2.4 
+- Added Hessenschau
+0.2.3
 - Added schportschau
 - Added Bayern3
 0.2.2

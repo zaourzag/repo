@@ -270,6 +270,24 @@ def watchlive(url,meldung="",spiel=""):
       urlnew="http://hrevent-lh.akamaihd.net/i/hr_event@309239/master.m3u8"
    if url=="br.de":
        urlnew=live()
+   if url=="hessenschau.de":
+      urlN="http://hessenschau.de/sport/index.html"
+      match = re.compile('([^-]+) - ([^-]+)', re.DOTALL).findall(spiel)
+      name1=match[0][0]
+      name2=match[0][1]
+      content=getUrl(urlN) 
+      kurz_inhalt = content[content.find('<span class="teaser__topline text__topline">3. Liga </span>')+1:]
+      kurz_inhalt = kurz_inhalt[:kurz_inhalt.find('</article>')]
+      match = re.compile('span class="teaser__headline text__headline">([^<]+)</span>', re.DOTALL).findall(kurz_inhalt)
+      title= match[0]
+      match = re.compile('<a href="([^"]+)"', re.DOTALL).findall(kurz_inhalt)
+      urlM=match[0]
+      if maschaftfinden(name1, title) ==1 or maschaftfinden(name2, title)==1  :
+            urlpage=urlM
+            content=getUrl(urlM) 
+            match = re.compile('"streamUrl": "([^"]+)"', re.DOTALL).findall(content)
+            urlnew=match[0]   
+            debug("URL hessen: " + urlnew)            
    if url=="swr.de":
       debug("spiel" +spiel)          
       match = re.compile('([^-]+) - ([^-]+)', re.DOTALL).findall(spiel)
