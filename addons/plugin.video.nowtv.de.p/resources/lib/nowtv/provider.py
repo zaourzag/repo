@@ -1,6 +1,7 @@
 import datetime
 import time
-
+import xbmcaddon
+import xbmc
 __author__ = 'bromix'
 
 from resources.lib import kodion
@@ -8,7 +9,16 @@ from resources.lib.kodion.items import DirectoryItem, VideoItem, UriItem
 from resources.lib.kodion.utils import datetime_parser
 from resources.lib.kodion.exceptions import KodionException
 from .client import Client, UnsupportedStreamException
+def debug(content):
+    log(content, xbmc.LOGDEBUG)
+    
+def notice(content):
+    log(content, xbmc.LOGNOTICE)
 
+def log(msg, level=xbmc.LOGNOTICE):
+    addon = xbmcaddon.Addon()
+    addonID = addon.getAddonInfo('id')
+    xbmc.log('%s: %s' % (addonID, msg), level) 
 
 class Provider(kodion.AbstractProvider):
     def __init__(self):
@@ -112,8 +122,7 @@ class Provider(kodion.AbstractProvider):
         result = []
 
         # show only free videos if not logged in or or the setting is enabled
-        show_only_free_videos = not self.is_logged_in() and context.get_settings().get_bool('nowtv.videos.only_free',
-                                                                                           False)
+        show_only_free_videos = not self.is_logged_in() and context.get_settings().get_bool('nowtv.videos.only_free', False)
         for video in videos:
             if show_only_free_videos and not video['free'] and not video['payed']:
                 continue
@@ -133,15 +142,16 @@ class Provider(kodion.AbstractProvider):
             video_item = VideoItem(title, context.create_uri([video['channel'], 'play'], video_params))
             duration = datetime_parser.parse(video['duration'])
             video_item.set_duration(duration.hour, duration.minute, duration.second)
-
             published = datetime_parser.parse(video['published'])
             video_item.set_aired_from_datetime(published)
             video_item.set_date_from_datetime(published)
             video_item.set_year_from_datetime(published)
-
             video_item.set_studio(video['format'])
             video_item.add_artist(video['format'])
-            video_item.set_episode(video['episode'])
+            if(video['episode']==None):
+              video_item.set_episode(0)            
+            else:
+              video_item.set_episode(video['episode'])
             video_item.set_season(video['season'])
             video_item.set_plot(video['plot'])
             video_item.set_image(video['images']['thumb'])

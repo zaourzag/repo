@@ -1,3 +1,5 @@
+1.0.26
+- Patch fuer shopping queen
 1.0.25
 - Added Bitrate ask
 1.0.24
