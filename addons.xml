@@ -141,28 +141,6 @@
     </extension>
 
 </addon>
-<addon id="plugin.video.bundesliega3" name="3 Bundesliega" version="0.2.8" provider-name="L0RE">
-    <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <summary lang="de">Livestreams der 3. Bundesliga</summary>
-        <summary lang="en">Livestreams of 3. Bundesliga</summary>
-        <language>de</language>
-        <description lang="de">Livestreams der 3. Bundesliga</description>
-        <description lang="en">Livestreams of 3. Bundesliga</description>
-        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-        <source>://github.com/kodinerds/repo/tree/master/addons/plugin.video.bundesliga3</source>
-        <forum>http://www.kodinerds.net/index.php/Thread/47175-Suche-guten-Browser-f%C3%BCr-die-fire-Box/</forum>
-        <email>andreas at vogler dot name</email>
-        <website>http://www.liga3-online.de/live-spiele/</website>
-    </extension>
-
-</addon>
 
 <addon id="plugin.video.chefkoch_de" name="Chefkoch.de" version="2.0.7" provider-name="L0RE">
     <requires>
@@ -419,7 +397,7 @@
     </extension>
 </addon>
 
-<addon id="plugin.video.mtv_de" name="MTV.de" version="3.3.3" provider-name="L0RE">
+<addon id="plugin.video.mtv_de" name="MTV.de" version="3.3.4" provider-name="L0RE">
 
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>

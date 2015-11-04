@@ -18,6 +18,9 @@ forceViewMode = addon.getSetting("forceViewMode") == "true"
 useThumbAsFanart = addon.getSetting("useThumbAsFanart") == "true"
 viewMode = str(addon.getSetting("viewMode"))
 
+global playit
+playit=0
+
 def debug(content):
     log(content, xbmc.LOGDEBUG)
     
@@ -247,9 +250,11 @@ def listVideos_new(url):
         struktur = json.loads(content)
         so=struktur['seasons']
         for nr,wert in so.items():
-          for element in wert['playlist']:            
-            title=element['title'] +" ( "+ element['subtitle'] + " )"            
-            title = unicode(title).encode('utf-8')
+          for element in wert['playlist']:     
+            title_e = unicode(element['title']).encode('utf-8')          
+            subtitle_e = unicode(element['subtitle']).encode('utf-8')          
+            title=title_e +" ( "+ subtitle_e + " )"            
+            #title = unicode(title).encode('utf-8')
             try:
               thumb="http://images.mtvnn.com/"+ str(element['riptide_image_id']) +"/306x172_"
             except: 
@@ -273,7 +278,8 @@ def listVideos_old(url):
         mrss=[]
         chartn=[]
         charto=[]
-        
+        playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
+        playlist.clear()
         riptide_image_id=[]
         jsonlist = content[content.find("window.pagePlaylist ="):]
         jsonlist = jsonlist[jsonlist.find("["):]
@@ -334,8 +340,15 @@ def listVideos_old(url):
               else :
                  nr=str(sort_chartn[element]) +". ( - )"
               title_video=nr +sort_title[element] + " - "+ sort_subtitle[element]          
-              addLink(title_video,sort_mrss[element],'playVideo',sort_riptide_image_id[element])  
+              addLink(title_video,sort_mrss[element],'playVideo',sort_riptide_image_id[element]) 
+              
+              uri=sys.argv[0]+"?url="+urllib.quote_plus(sort_mrss[element])+"&mode=playVideo"
+              listitem = xbmcgui.ListItem(title_video, thumbnailImage=sort_riptide_image_id[element])
+              playlist.add(uri, listitem)              
+        
         xbmcplugin.endOfDirectory(pluginhandle)
+        if playit==1 :
+           xbmc.Player().play(playlist)
         #xbmc.executebuiltin('XBMC.RunScript(special://home/addons/'+addonID+'/titles.py,'+urllib.quote_plus(newTitles)+')')
         if forceViewMode:
           xbmc.executebuiltin('Container.SetViewMode('+viewMode+')')
@@ -385,9 +398,10 @@ def playShow(id):
         playVideoMain(match[0][1])
 
 def playVideo(url):      
+        playit==1
         content = getUrl(url)
         match=re.compile("<media:content duration='(.+?)' isDefault='true' type='text/xml' url='(.+?)'></media:content>", re.DOTALL).findall(content)
-        playVideoMain(match[0][1])
+        playVideoMain(match[0][1])        
 def SearchUrl(url):
          content = getUrl(url)
          content = content[:content.find("window.pagePlaylist")]
