@@ -2,6 +2,27 @@
 # Author: L0RE
 # This Script Generates a new Inventory for a new Version or New Plugin
 REPO=/www/repo/git
+if [ "$1" != "" ]
+then
+    REPO="$1"
+fi
+if [ -f "$(pwd)/addons.xml" ]
+then
+    REPO="$(pwd)"
+fi
+if [ ! -f "$REPO/addons.xml" ]
+then
+    echo "repo path nicht korrekt"
+    exit 0
+fi
+ZIP="$(command -v zip)"
+if [ "$ZIP" = "" ]
+then
+    echo "zip fehlt. eg: apt-get install zip"
+    exit 0
+fi
+
+
 cd $REPO/addons
 echo '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' >$REPO/addons.xml
 echo '<addons>' >> $REPO/addons.xml
