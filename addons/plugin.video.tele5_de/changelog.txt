@@ -7,3 +7,5 @@
 - Fixed playback for some videos
 1.0.3
 - Fixed RAW
+1.0.4
+- removed rtmp code and changed to http. now seeking is working. 
