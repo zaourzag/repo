@@ -92,7 +92,8 @@ def playVideo(url):
         finalUrl = ""
         for stream, bitrate in matchStream:
             if int(bitrate)>max:
-                finalUrl = matchBase[0]+" playpath="+stream
+                #finalUrl = matchBase[0]+" playpath="+stream
+                finalUrl ="http://dl.mnac-p-000000102.c.nmdn.net/mnac-p-000000102/"+re.compile('mp4:(.+?)/', re.DOTALL).findall(stream)[0]+"/0/"+re.compile('/0/(.*)', re.DOTALL).findall(stream)[0]+".mp4"
                 max = int(bitrate)
     listitem = xbmcgui.ListItem(path=finalUrl)
     xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
