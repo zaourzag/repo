@@ -326,7 +326,7 @@ def watchlive(url,meldung="",spiel=""):
        match = re.compile('mcUrl&#039;:&#039;([^&]+)&', re.DOTALL).findall(kurz_inhalt)
        url=match[0]
        match = re.compile('<h4 class="headline">(.+)</h4>', re.DOTALL).findall(kurz_inhalt)
-       match = re.compile('<a href="[^"]+" >([^<]+)', re.DOTALL).findall(match[0])       
+       match = re.compile('<a href="[^"]+"[^>]+>([^<]+)', re.DOTALL).findall(match[0])     
        name=match[0].strip()
        debug("URL: "+ url)
        debug("totle: "+ name)
