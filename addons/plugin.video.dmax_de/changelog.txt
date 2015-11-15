@@ -22,3 +22,5 @@
 - Until 1.1.1 Owned by AddonScriptor
 - New Version was Patched by mcflay
 - Maintained by L0RE
+1.1.4
+- Bug fixes

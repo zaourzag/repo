@@ -113,7 +113,7 @@ def listVideosLatest(type):
     content = opener.open(baseUrl+"/videos/").read()
     content = content[content.find('<div class="tab-module-header">'+type+'</div>'):]
     content = content[:content.find('</section>	</div>')]
-    spl = content.split('<section class="pagetype-video">')
+    spl = content.split('<section class="pagetype-video" >')
     for i in range(1, len(spl), 1):
         entry = spl[i]
         match = re.compile('alt="(.+?)"', re.DOTALL).findall(entry)
