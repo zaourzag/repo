@@ -106,6 +106,7 @@ def login():
 # Url einlesen  
 def getUrl(url,data="X"):
         url=url.replace("http://www.subcentral.de/","")        
+        url=url.replace("https://www.subcentral.de/https://www.subcentral.de/","https://www.subcentral.de/")        
         debug("Subcentral: Get Url: " +url)
         opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
         userAgent = "Mozilla/5.0 (Windows NT 6.2; WOW64; rv:23.0) Gecko/20100101 Firefox/23.0"
