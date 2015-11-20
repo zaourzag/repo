@@ -41,7 +41,8 @@ def log(msg, level=xbmc.LOGNOTICE):
 
 def index():
     addDir(translation(30001), "http://www.giga.de/tv/alle-videos/", 'listVideos', icon)
-    addDir("Android", "http://www.giga.de/android/videos-podcasts/", 'listVideos', icon)
+    addDir(translation(30105), "http://www.giga.de/android/videos-podcasts/", 'listVideos', icon)
+    addDir(translation(30106), "http://www.giga.de/windows/videos/", 'listVideos', icon)
     content = getUrl("http://www.giga.de/games/videos/")
     content = content[content.find('<section class="channels">'):]
     content = content[:content.find('</section>')]
