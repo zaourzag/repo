@@ -787,7 +787,7 @@ Orginal Code was from AddonScriptorDE</disclaimer>
   </extension>
 </addon>
 
-<addon id="service.subtitles.subcentral" name="Subcentral.de Patch" version="0.3" provider-name="L0RE">
+<addon id="service.subtitles.subcentral" name="Subcentral.de" version="0.4" provider-name="L0RE">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
     <import addon="script.subcentral_de" version="1.0"/>
@@ -795,7 +795,7 @@ Orginal Code was from AddonScriptorDE</disclaimer>
   <extension point="xbmc.subtitle.module"
              library="service.py" />
   <extension point="xbmc.addon.metadata">
-    <summary lang="en">SubcentralWorkaround</summary>
+    <summary lang="en">Subcentral</summary>
     <description lang="en">Try to embed Subcentral into the Menu</description>
     <disclaimer lang="en"></disclaimer>
     <platform>all</platform>
