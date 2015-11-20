@@ -152,15 +152,18 @@ def oldthread(url,staffel,old=1):
     episode_ar=[]
     name_ar=[]
     file_ar=[]
+    doofe_treads=0
     gruppe_ar=[]
     sprache_ar=[]
     folge_ar=[]
     qualitaet_ar=[]
     content=getUrl(url)
-    if old==0:    
-      content = content[content.find('<!-- /Imformationsmodul -->'):]        
+    contentx = content[content.find('<!-- /Imformationsmodul -->'):]        
+    if len(contentx)>10:
+      content=contentx
     else:
-       content = content[content.find('<!-- Hier Bilderserie (Bilder-Modul) einfügen. [Optinal] -->'):]
+       content = content[content.find('<!-- Hier Bilderserie (Bilder-Modul) einfügen. [Optinal] -->'):]    
+    debug("________"+ content)
     content = content[content.find('<div class="baseSC">'):]
     content = content[:content.find('<div class="bhinweis">')]
     content = content[:content.find('<div class="txtb afgtxtb">')]
@@ -210,12 +213,14 @@ def oldthread(url,staffel,old=1):
              sub_array=re.compile('<a href="([^"]+)">([^<]+)', re.DOTALL).findall(s_element)             
              if sub_array:
                for file,gruppe in sub_array:              
+                  if zeile-old==0:
+                     doofe_treads=1
                   episode_ar.append(zeile)
                   name_ar.append(name)
                   file_ar.append(mainUrl+"/"+file)
                   gruppe_ar.append(gruppe)
-                  sprache_ar.append(sprache)
-                  folge_ar.append(zeile-old)
+                  sprache_ar.append(sprache)                  
+                  folge_ar.append(zeile-old+doofe_treads)
                   if video['episode']:
                     if int(video['episode'])==zeile-1:
                       gefunden=1
