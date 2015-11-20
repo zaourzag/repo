@@ -147,6 +147,7 @@ def lies_serien():
       
 # Einlesen der Alten Threads    
 def oldthread(url,staffel,old=1):
+    debug("Starte oldtread mit : "+ url +" staffel "+ str(staffel) + " old "+str(old))
     episode_ar=[]
     name_ar=[]
     file_ar=[]
@@ -288,7 +289,9 @@ def list_folgen(url,staffel):
                     data=getUrl(urln)
                     debug("++++\n"+ data)
                     content=getUrl(url)
-  if "<!-- Englische Untertitel -->" in content or "<h2>Englische Untertitel:</h2>" in content:
+  if "reative/bilder/flags" in content :
+     oldthread(url,staffel,1)
+  elif "<!-- Englische Untertitel -->" in content or "<h2>Englische Untertitel:</h2>" in content:
     oldthread(url,staffel,0)
   else :
      oldthread(url,staffel,1)
