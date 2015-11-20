@@ -24,7 +24,7 @@ translation = settings.getLocalizedString
 useThumbAsFanart = addon.getSetting("useThumbAsFanart") == "true"
 forceViewMode = settings.getSetting("forceView") == "true"
 viewMode = str(settings.getSetting("viewID"))
-Quality = settings.getSetting("Quality")            
+Quality = settings.getSetting("maxVideoQuality")
 
 
 def debug(content):
