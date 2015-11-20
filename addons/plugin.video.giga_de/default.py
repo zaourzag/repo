@@ -24,7 +24,7 @@ translation = settings.getLocalizedString
 useThumbAsFanart = addon.getSetting("useThumbAsFanart") == "true"
 forceViewMode = settings.getSetting("forceView") == "true"
 viewMode = str(settings.getSetting("viewID"))
-maxVideoQuality = settings.getSetting("maxVideoQuality")            
+Quality = settings.getSetting("Quality")            
 
 
 def debug(content):
@@ -41,6 +41,7 @@ def log(msg, level=xbmc.LOGNOTICE):
 
 def index():
     addDir(translation(30001), "http://www.giga.de/tv/alle-videos/", 'listVideos', icon)
+    addDir("Android", "http://www.giga.de/android/videos-podcasts/", 'listVideos', icon)
     content = getUrl("http://www.giga.de/games/videos/")
     content = content[content.find('<section class="channels">'):]
     content = content[:content.find('</section>')]
@@ -60,7 +61,7 @@ def index():
 def listVideos(url):
     mainUrl = url
     content = getUrl(url)
-    spl = content.split('<article class="videos smallimg">')
+    spl = content.split('<!-- article headline and teasertext -->')
     for i in range(1, len(spl), 1):
         entry = spl[i]
         match = re.compile('href="(.+?)"', re.DOTALL).findall(entry)
@@ -101,8 +102,8 @@ def playVideos(url):
     debug("URL2 :"+url)
     content = getUrl(url)
     match1 = re.compile('file: "([^"]+)", label: "([^"]+)"', re.DOTALL).findall(content)    
-    debug ("maxVideoQuality:"+ maxVideoQuality)
-    if maxVideoQuality=="Select":         
+    debug ("Quality:"+ Quality)
+    if Quality=="Select":         
           q=[]
           for url,qual in match1:
             q.append(qual)
@@ -110,10 +111,10 @@ def playVideos(url):
           nr=dialog.select("Bitrate", q)                
           entry=match1[nr][0]
     else:
-        if  maxVideoQuality=="Max":
-          entry=match1[-1][0] 
+        if  Quality=="Max":
+          entry=match1[0][0] 
         else:
-          entry=match1[1][0]
+          entry=match1[-1][0]
     debug("Entry"+ entry)    
     listitem = xbmcgui.ListItem(path=entry)    
     xbmcplugin.setResolvedUrl(pluginhandle,True, listitem)  
