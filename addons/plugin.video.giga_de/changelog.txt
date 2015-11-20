@@ -24,9 +24,6 @@
 - Corrected for Playback
 - Orginal Source from AddonScriptorDE'
 - New Version from L0RE
-2.1.5
-- Neu WebSite Fix
-2.1.6
-- Quality Settings renamed
-
+2.1.7
+- Patch
 
