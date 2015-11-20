@@ -180,7 +180,7 @@ def oldthread(url,staffel,old=1):
        sprache=""
        for i2 in range(1, len(h1), 1):         
          ele=h1[i2]             
-         if "creative/bilder/flags/usa.png" in ele or "creative/bilder/flags/ca.png" in elei or "creative/bilder/flags/uk.png" in ele:
+         if "creative/bilder/flags/usa.png" in ele or "creative/bilder/flags/ca.png" in ele or "creative/bilder/flags/uk.png" in ele:
              sprache="en"
          if "creative/bilder/flags/de.png" in ele  :
              sprache="de"             
