@@ -117,10 +117,10 @@ def get_spiele():
        jahr=str(int(jahr)+1)
     zeitstring=day+"."+str(monat) +"."+jahr + " " + zeit
     zeitobjekt=time.strptime(zeitstring , "%d.%m.%Y %H:%M Uhr")   
-    if str(jahr_now)==str(jahr) and str(day)==str(tag_now) and str(monat_now)==str(monat):
-     neuzeit="[COLOR yellow]Heute [/COLOR]"+ zeit
-    elif time.mktime(zeitobjekt) <= time.mktime(lt):
+    if time.mktime(zeitobjekt) <= time.mktime(lt):
       neuzeit=time.strftime("[COLOR red]Läuft [/COLOR]",zeitobjekt)         
+    elif str(jahr_now)==str(jahr) and str(day)==str(tag_now) and str(monat_now)==str(monat):
+     neuzeit="[COLOR yellow]Heute [/COLOR]"+ zeit
     else:
       neuzeit=time.strftime("%d. %B %H:%M",zeitobjekt)   
 
