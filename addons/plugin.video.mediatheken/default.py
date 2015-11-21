@@ -47,7 +47,6 @@ def index():
     addDir("Servus TV","plugin://plugin.video.servustv_com", iconSTV)
     addDir("NOW","plugin://plugin.video.nowtv.de.p", iconNOW)
     addDir("7TV","plugin://plugin.video.7tv", icon7TV)
-    addDir("NOW","plugin://plugin.video.nowtv.de.p", iconNOW)
     addDir("BR3","plugin://plugin.video.br3", iconBR3)
     xbmcplugin.endOfDirectory(pluginhandle)
 
