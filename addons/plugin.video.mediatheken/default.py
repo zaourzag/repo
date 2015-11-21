@@ -24,6 +24,7 @@ iconTT=xbmc.translatePath('special://home/addons/'+addonID+'/iconTT.png')
 icon7TV=xbmc.translatePath('special://home/addons/'+addonID+'/icon7TV.png')
 iconTLC=xbmc.translatePath('special://home/addons/'+addonID+'/iconTLC.png')
 iconSTV=xbmc.translatePath('special://home/addons/'+addonID+'/iconSTV.png')
+iconBR3=xbmc.translatePath('special://home/addons/'+addonID+'/iconBR3.png')
 
 
 def index():
@@ -41,11 +42,13 @@ def index():
     addDir("Welt der Wunder","plugin://plugin.video.welt_der_wunder",iconWeltDerWunder)
     addDir("ZDF","plugin://plugin.video.zdf_de_lite",iconZDF)
     addDir("Tele 5","plugin://plugin.video.tele5_de",iconTele5)
-    addDir("NOW","plugin://plugin.video.nowtv.de", iconNOW)
     addDir("TV Today - Best of Mediatheken","plugin://plugin.video.tvtoday_de", iconTT)
-    addDir("7TV","plugin://plugin.video.prosiebensat1_media", icon7TV)
     addDir("TLC","plugin://plugin.video.tlc_de", iconTLC)
     addDir("Servus TV","plugin://plugin.video.servustv_com", iconSTV)
+    addDir("NOW","plugin://plugin.video.nowtv.de.p", iconNOW)
+    addDir("7TV","plugin://plugin.video.7tv", icon7TV)
+    addDir("NOW","plugin://plugin.video.nowtv.de.p", iconNOW)
+    addDir("BR3","plugin://plugin.video.br3", iconBR3)
     xbmcplugin.endOfDirectory(pluginhandle)
 
 

@@ -20,3 +20,5 @@
 - Removed VevoTV
 1.0.8
 - Now Plugin Auf Bromix Plugin geendert das das von Addonscriptor nicht geht
+1.0.12
+- Now und 7Now aangepasst
