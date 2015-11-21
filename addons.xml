@@ -788,7 +788,7 @@ Orginal Code was from AddonScriptorDE</disclaimer>
   </extension>
 </addon>
 
-<addon id="service.subtitles.subcentral" name="Subcentral.de" version="0.4.5" provider-name="L0RE">
+<addon id="service.subtitles.subcentral" name="Subcentral.de" version="0.4.6" provider-name="L0RE">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
     <import addon="script.subcentral_de" version="1.0"/>

@@ -181,7 +181,7 @@ def oldthread(url,staffel,old=1):
        h1 = header.split('<th')
        namenliste= []
        sprache=""
-       for i2 in range(1, len(h1), 1):         
+       for i2 in range(2, len(h1), 1):         
          ele=h1[i2]             
          if "creative/bilder/flags/usa.png" in ele or "creative/bilder/flags/ca.png" in ele or "creative/bilder/flags/uk.png" in ele:
              sprache="en"
