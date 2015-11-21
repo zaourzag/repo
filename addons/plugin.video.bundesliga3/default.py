@@ -266,7 +266,7 @@ def watchlive(url,meldung="",spiel=""):
            break           
    elif "MDR" in url:
       urlnew="http://mdr_sa_hls-lh.akamaihd.net/i/livetvmdrsachsenanhalt_de@106901/master.m3u8"    
-   elif url in "RBB":
+   elif "RBB" in url:
       urlnew="http://rbb_live-lh.akamaihd.net/i/rbb_berlin@108248/master.m3u8?bkup=off"      
    if url=="mdr.de":
       urlnew="http://mdr_event1_hls-lh.akamaihd.net/i/livetvmdrevent1_de@106904/index_1728_av-p.m3u8?sd=10&rebase=on"    
