@@ -256,6 +256,8 @@ def watchlive(url,meldung="",spiel=""):
            break           
    elif "MDR" in url:
       urlnew="http://mdr_sa_hls-lh.akamaihd.net/i/livetvmdrsachsenanhalt_de@106901/master.m3u8"       
+   elif "RBB" in url:
+      urlnew="http://rbb_live-lh.akamaihd.net/i/rbb_berlin@108248/master.m3u8?bkup=off"
    if url=="mdr.de":
       urlnew="http://mdr_event1_hls-lh.akamaihd.net/i/livetvmdrevent1_de@106904/index_1728_av-p.m3u8?sd=10&rebase=on"    
    if url=="WDR":
@@ -264,8 +266,6 @@ def watchlive(url,meldung="",spiel=""):
       urlnew="http://ndr_fs-lh.akamaihd.net/i/ndrfs_nds@119224/master.m3u8"         
    if url=="rbb-online.de":
       urlnew="http://rbb_event-lh.akamaihd.net/i/rbbevent_nongeo@107643/index_1728_av-p.m3u8?sd=10&rebase=on"
-   if url=="RBB":
-      urlnew="http://rbb_live-lh.akamaihd.net/i/rbb_berlin@108248/master.m3u8?bkup=off"
    if url=="br.de":
        urlnew=live()
    if url=="hessenschau.de":
