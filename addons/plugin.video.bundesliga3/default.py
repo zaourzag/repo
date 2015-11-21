@@ -109,15 +109,25 @@ def get_spiele():
     month=datum_reg[0][1]
     day=datum_reg[0][0]
     monat=Monate[month]
+    jahr_now= time.strftime("%Y", lt)
+    tag_now= time.strftime("%d", lt)
+    monat_now= time.strftime("%m", lt)
+    debug("------"+ str(jahr_now) +"=="+ str(jahr) +": "+ str(day) +"=="+ str(tag_now) +":"+ str(monat_now) +"=="+ str(monat))
+    if int(monat_now) > int(monat):
+       jahr=str(int(jahr)+1)
     zeitstring=day+"."+str(monat) +"."+jahr + " " + zeit
-    zeitobjekt=time.strptime(zeitstring , "%d.%m.%Y %H:%M Uhr")
-    neuzeit=time.strftime("%d. %B %H:%M",zeitobjekt)   
-    now=time.time()
+    zeitobjekt=time.strptime(zeitstring , "%d.%m.%Y %H:%M Uhr")   
+    if str(jahr_now)==str(jahr) and str(day)==str(tag_now) and str(monat_now)==str(monat):
+     neuzeit="[COLOR yellow]Heute [/COLOR]"+ zeit
+    elif time.mktime(zeitobjekt) <= time.mktime(lt):
+      neuzeit=time.strftime("[COLOR red]Läuft [/COLOR]",zeitobjekt)         
+    else:
+      neuzeit=time.strftime("%d. %B %H:%M",zeitobjekt)   
 
     if time.mktime(zeitobjekt) > time.mktime(lt) :
        meldung="Läuft noch nicht"       
     else:
-       meldung=""
+       meldung=""      
     addLink(name=neuzeit +" : "+ spiel, url=sender , mode="Watch",meldung=meldung,spiel=spiel)
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 def getUrl(url):
@@ -255,9 +265,9 @@ def watchlive(url,meldung="",spiel=""):
            debug("urlnew :------- "+ urlnew)
            break           
    elif "MDR" in url:
-      urlnew="http://mdr_sa_hls-lh.akamaihd.net/i/livetvmdrsachsenanhalt_de@106901/master.m3u8"       
-   elif "RBB" in url:
-      urlnew="http://rbb_live-lh.akamaihd.net/i/rbb_berlin@108248/master.m3u8?bkup=off"
+      urlnew="http://mdr_sa_hls-lh.akamaihd.net/i/livetvmdrsachsenanhalt_de@106901/master.m3u8"    
+   elif url in "RBB":
+      urlnew="http://rbb_live-lh.akamaihd.net/i/rbb_berlin@108248/master.m3u8?bkup=off"      
    if url=="mdr.de":
       urlnew="http://mdr_event1_hls-lh.akamaihd.net/i/livetvmdrevent1_de@106904/index_1728_av-p.m3u8?sd=10&rebase=on"    
    if url=="WDR":

@@ -1,4 +1,7 @@
-﻿0.3.2
+﻿0.3.4
+- Bugfixes
+- Optische verbesserung
+0.3.2
 - Added RBB
 0.2.5 
 - Corrected error
