@@ -2,6 +2,7 @@
 <addon id="plugin.video.arte_tv" name="Arte.tv" version="2.9.5" provider-name="PUR3">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="repository.lost-and-found" version="1.1.5"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>

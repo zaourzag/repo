@@ -63,6 +63,7 @@
 <addon id="plugin.video.arte_tv" name="Arte.tv" version="2.9.5" provider-name="PUR3">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="repository.lost-and-found" version="1.1.5"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
@@ -766,24 +767,6 @@ Orginal Code was from AddonScriptorDE</disclaimer>
 		<summary lang="de">Screensaver für Animexx Fanarts</summary>
         <description lang="de">Screensaver ,zum Anzeigen von Fanarts von Animexx.de</description>
     </extension>
-</addon>
-
-<addon id="script.subcentral_de" name="SubCentral.de" version="1.1.6" provider-name="L0RE">
-  <extension point="xbmc.python.pluginsource" library="default.py">
-    <provides>executable</provides>
-  </extension>
-  <extension point="xbmc.python.subtitles" library="default.py" />
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en">SubCentral.de - Quality subtitles for TV-Shows (DE/EN)</summary>
-    <summary lang="de">SubCentral.de - Hochwertige Untertitel für TV-Serien (DE/EN)</summary>
-    <description lang="en">SubCentral.de - Quality subtitles for TV-Shows (DE/EN)</description>
-    <description lang="de">SubCentral.de - Hochwertige Untertitel für TV-Serien (DE/EN)</description>
-    <website></website>
-    <source>http://repo.l0re.com/data/script.subcentral_de/</source>
-    <forum>http://forum.xbmc.org/showthread.php?tid=157479</forum>
-    <email>AddonScriptorDE at yahoo dot de</email>
-    <platform>all</platform>
-  </extension>
 </addon>
 
 <addon id="service.subtitles.subcentral" name="Subcentral.de" version="0.4.6" provider-name="L0RE">
