@@ -152,7 +152,6 @@ def oldthread(url,staffel,old=1):
     episode_ar=[]
     name_ar=[]
     file_ar=[]
-    doofe_treads=0
     gruppe_ar=[]
     sprache_ar=[]
     folge_ar=[]
@@ -213,21 +212,26 @@ def oldthread(url,staffel,old=1):
              sub_array=re.compile('<a href="([^"]+)">([^<]+)', re.DOTALL).findall(s_element)             
              if sub_array:
                for file,gruppe in sub_array:              
-                  if zeile-old==0:
-                     doofe_treads=1
-                  episode_ar.append(zeile)
+                     
+                  folge_extract=re.compile('E([0-9]+) -.*', re.DOTALL).findall(name)     
+                  if(folge_extract) :
+                     folgee_nr=int(folge_extract[0])
+                  else :
+                      folge_extract=re.compile('([^-]+) -.*', re.DOTALL).findall(name)
+                      folgee_nr=folge_extract[0]
+                  episode_ar.append(folgee_nr)
                   name_ar.append(name)
                   file_ar.append(mainUrl+"/"+file)
                   gruppe_ar.append(gruppe)
                   sprache_ar.append(sprache)                  
-                  folge_ar.append(zeile-old+doofe_treads)
+                  folge_ar.append(folgee_nr)
                   if video['episode']:
-                    if int(video['episode'])==zeile-1:
+                    if int(video['episode'])==folgee_nr:
                       gefunden=1
                   debug("-------")
                   debug("Liste :" +str(i))
                   debug("gruppe :"+gruppe)
-                  debug("Folge: "+ str(zeile-old))
+                  debug("Folge: "+ str(folgee_nr))
                   debug("Sprache: "+ sprache)
                   debug("file : "+ file)
                   debug("name: "+ name)                  
