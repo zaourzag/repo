@@ -1,3 +1,4 @@
+1.0.28 Patch fuer Apple
 1.0.26
 - Patch fuer shopping queen
 1.0.25
