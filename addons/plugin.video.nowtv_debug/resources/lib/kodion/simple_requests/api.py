@@ -5,6 +5,7 @@ import urllib2
 from StringIO import StringIO
 import gzip
 import xbmc
+import xbmcaddon
 
 import json as real_json
 from ..utils import to_utf8
