@@ -64,7 +64,7 @@ def _request(method, url,
     if not headers:
         headers = {}
         pass
-
+    url=url.replace("https://","http://")
     url = urllib.quote(url, safe="%/:=&?~#+!$,;'@()*[]")
 
     handlers = []
