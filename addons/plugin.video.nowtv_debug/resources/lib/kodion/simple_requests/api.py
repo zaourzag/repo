@@ -4,9 +4,21 @@ import urllib
 import urllib2
 from StringIO import StringIO
 import gzip
+import xbmc
 
 import json as real_json
 from ..utils import to_utf8
+def debug(content):
+    log(content, xbmc.LOGDEBUG)
+    
+def notice(content):
+    log(content, xbmc.LOGNOTICE)
+
+def log(msg, level=xbmc.LOGNOTICE):
+    addon = xbmcaddon.Addon()
+    addonID = addon.getAddonInfo('id')
+    xbmc.log('%s: %s' % (addonID, msg), level) 
+
 
 class ErrorHandler(urllib2.HTTPDefaultErrorHandler):
     def http_error_default(self, req, fp, code, msg, hdrs):
@@ -174,16 +186,19 @@ def _request(method, url,
 
 
 def get(url, **kwargs):
+    debug("GET URL:"+ url)
     kwargs.setdefault('allow_redirects', True)
     return _request('GET', url, **kwargs)
 
 
 def post(url, data=None, json=None, **kwargs):
+    debug("POST URL:"+ url)
     kwargs.setdefault('allow_redirects', True)
     return _request('POST', url, data=data, json=json, **kwargs)
 
 
 def put(url, data=None, json=None, **kwargs):
+    debug("PUT URL:"+ url)
     return _request('PUT', url, data=data, json=json, **kwargs)
 
 
