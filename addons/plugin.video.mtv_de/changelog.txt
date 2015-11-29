@@ -63,3 +63,5 @@
 - Bugfix
 3.3.4
 - Bugfix wegen zeichensetze
+0.3.5
+- Added Support for MTV.ch

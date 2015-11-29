@@ -18,6 +18,9 @@ forceViewMode = addon.getSetting("forceViewMode") == "true"
 useThumbAsFanart = addon.getSetting("useThumbAsFanart") == "true"
 viewMode = str(addon.getSetting("viewMode"))
 
+
+
+
 global playit
 playit=0
 
@@ -30,9 +33,9 @@ def notice(content):
 def log(msg, level=xbmc.LOGNOTICE):
     addon = xbmcaddon.Addon()
     addonID = addon.getAddonInfo('id')
-    xbmc.log('%s: %s' % (addonID, msg), level) 
-    
+    xbmc.log('%s: %s' % (addonID, msg), level)   
 def index():
+        country = addon.getSetting("country") 
         artistsFavsCount=0
         if os.path.exists(artistsFavsFile):
           fh = open(artistsFavsFile, 'r')
@@ -50,13 +53,23 @@ def index():
           else:
             titlesCount = len(fh.readlines())
           fh.close()
-        addDir("TV-Shows","http://www.mtv.de/shows/async_data.json?sort=playable",'listShows',"")
-        addDir(translation(30007),"http://www.mtv.de/musik?expanded=true",'listVideos_old',"")
-        addDir(translation(30001),"http://www.mtv.de/charts/5-hitlist-germany-top-100?expanded=true",'listVideos_old',"")
-        addDir(translation(30004),"http://www.mtv.de/charts/8-mtv-de-videocharts?expanded=true",'listVideos_old',"")
-        addDir(translation(30003),"http://www.mtv.de/charts/199-top-100-single-jahrescharts-2013?expanded=true",'listVideos_old',"")
-        addDir(translation(30212),"http://www.mtv.de/charts/9-deutsche-black-charts?expanded=true",'listVideos_old',"")
-        addDir(translation(30211),"http://www.mtv.de/charts/6-dance-charts?expanded=true",'listVideos_old',"")
+        debug("COntry :"+ country)
+        if country=="0":
+           addDir("TV-Shows","http://www.mtv.de/shows/async_data.json?sort=playable",'listShows',"")
+           addDir(translation(30007),"http://www.mtv.de/musik?expanded=true",'listVideos_old',"")
+           
+           addDir(translation(30001),"http://www.mtv.de/charts/5-hitlist-germany-top-100?expanded=true",'listVideos_old',"")
+           addDir(translation(30004),"http://www.mtv.de/charts/8-mtv-de-videocharts?expanded=true",'listVideos_old',"")
+           addDir(translation(30003),"http://www.mtv.de/charts/199-top-100-single-jahrescharts-2013?expanded=true",'listVideos_old',"")
+           addDir(translation(30212),"http://www.mtv.de/charts/9-deutsche-black-charts?expanded=true",'listVideos_old',"")
+           addDir(translation(30211),"http://www.mtv.de/charts/6-dance-charts?expanded=true",'listVideos_old',"")        
+        if country=="1":
+             addDir("TV-Shows","http://www.mtv.ch/shows/async_data.json?sort=playable",'listShows',"")
+             addDir(translation(30007),"http://www.mtv.ch/musik?expanded=true",'listVideos_old',"")
+           
+             addDir(translation(30216),"http://www.mtv.ch/charts/11-single-top-50",'listVideos_old',"")
+             addDir(translation(30217),"http://www.mtv.ch/news/72401",'listVideos_old',"")
+             addDir(translation(30218),"http://www.mtv.ch/charts/206-mtv-ch-videocharts",'listVideos_old',"")             
         addDir(str(translation(30009))+" ("+str(artistsFavsCount)+")","ARTISTSFAVS",'artistsFavs',"")
         #addTCDir(str(translation(30010))+" ("+str(titlesCount)+")","ARTISTS",'titles',"")
         addDir(translation(30008),"ARTISTS_AZ",'artists',"")
