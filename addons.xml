@@ -110,6 +110,7 @@
     <description lang="en">Videos der Mediathek von Bayrischen Fernsehen</description>
     <description lang="de">Video From Bavarian Television</description>
     <website></website>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
     <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.br3</source>
     <forum>http://www.kodinerds.net/index.php/Thread/46598-Bayrisches-Fernsehen/</forum>
     <email>andreas at vogler dot name</email>
@@ -395,7 +396,7 @@
     </extension>
 </addon>
 
-<addon id="plugin.video.mtv_de" name="MTV.de" version="3.3.5" provider-name="L0RE">
+<addon id="plugin.video.mtv_de" name="MTV.de" version="3.3.6" provider-name="L0RE">
 
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>

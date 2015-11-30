@@ -63,6 +63,7 @@ def index():
            addDir(translation(30003),"http://www.mtv.de/charts/199-top-100-single-jahrescharts-2013?expanded=true",'listVideos_old',"")
            addDir(translation(30212),"http://www.mtv.de/charts/9-deutsche-black-charts?expanded=true",'listVideos_old',"")
            addDir(translation(30211),"http://www.mtv.de/charts/6-dance-charts?expanded=true",'listVideos_old',"")        
+           addDir(translation(30217),"http://www.mtv.ch/musik",'listVideos_old',"")
         if country=="1":
              addDir("TV-Shows","http://www.mtv.ch/shows/async_data.json?sort=playable",'listShows',"")
              addDir(translation(30007),"http://www.mtv.ch/musik?expanded=true",'listVideos_old',"")
