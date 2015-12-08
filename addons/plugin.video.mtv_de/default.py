@@ -415,7 +415,9 @@ def playVideo(url):
         playit==1
         content = getUrl(url)
         match=re.compile("<media:content duration='(.+?)' isDefault='true' type='text/xml' url='(.+?)'></media:content>", re.DOTALL).findall(content)
-        playVideoMain(match[0][1])        
+        playurl=match[0][1]
+        playurl=playurl.replace("video:mtvni.com","video:mtv.de")     
+        playVideoMain(playurl)        
 def SearchUrl(url):
          content = getUrl(url)
          content = content[:content.find("window.pagePlaylist")]

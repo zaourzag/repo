@@ -396,7 +396,7 @@
     </extension>
 </addon>
 
-<addon id="plugin.video.mtv_de" name="MTV.de" version="3.3.6" provider-name="L0RE">
+<addon id="plugin.video.mtv_de" name="MTV.de" version="3.3.7" provider-name="L0RE">
 
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
