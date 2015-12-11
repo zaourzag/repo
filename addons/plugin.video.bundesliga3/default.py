@@ -270,6 +270,8 @@ def watchlive(url,meldung="",spiel=""):
       urlnew="http://rbb_live-lh.akamaihd.net/i/rbb_berlin@108248/master.m3u8?bkup=off"      
    if url=="mdr.de":
       urlnew="http://mdr_event1_hls-lh.akamaihd.net/i/livetvmdrevent1_de@106904/index_1728_av-p.m3u8?sd=10&rebase=on"    
+   if url=="SWR":
+      urlnew="http://swrbw-lh.akamaihd.net/i/swrbw_live@196738/master.m3u8"
    if url=="WDR":
       urlnew="http://wdr_fs_geo-lh.akamaihd.net/i/wdrfs_geogeblockt@112044/master.m3u8"             
    if url=="NDR":

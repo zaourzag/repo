@@ -1,4 +1,6 @@
-﻿0.3.7
+﻿0.3.8
+SWF Added
+0.3.7
 - Bugfix
 0.3.5
 - Bugfix
