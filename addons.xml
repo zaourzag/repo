@@ -396,7 +396,7 @@
     </extension>
 </addon>
 
-<addon id="plugin.video.mtv_de" name="MTV.de" version="3.3.7" provider-name="L0RE">
+<addon id="plugin.video.mtv_de" name="MTV.de" version="3.3.8" provider-name="L0RE">
 
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
@@ -458,29 +458,6 @@
     </extension>
 </addon>
 
-<addon id="plugin.video.nowtv.de.p" name="NOW TV PATCH" version="1.0.29" provider-name="L0RE">
-        <requires>
-                <import addon="xbmc.python" version="2.14.0"/>
-                <import addon="repository.lost-and-found" version="1.1.5"/>
-        </requires>
-        <extension point="xbmc.python.pluginsource" library="default.py">
-                <provides>video</provides>
-        </extension>
-        <extension point="xbmc.addon.metadata">
-                <summary lang="en">NOW TV media library</summary>
-                <summary lang="de">Mediathek für NOW TV</summary>
-                <description lang="en">With NOW TV many series, shows, documentaries and magazines can be seen from the program of RTL, RTL II, VOX, N-TV, RTL Nitro and Super RTL.</description>
-                <description lang="de">Mit NOW TV können viele Serien, Shows, Dokumentationen und Magazine aus dem Programm von RTL, RTL II, VOX, N-TV, RTL Nitro und Super RTL geschaut werden.</description>
-                <disclaimer lang="en"></disclaimer>
-                <language>de</language>
-                <platform>all</platform>
-                <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-                <forum></forum>
-                <website>http://nowtv.de</website>
-		<email> andreas at vogler dot name</email>
-                <source>http://repo.l0re.com/data/plugin.video.nowtv.de.p/</source>
-        </extension>
-</addon>
 
 <addon id="plugin.video.orftvthek4de" name="ORF TVthek 4 de" version="0.4.8" provider-name="L0RE">
     <requires>
