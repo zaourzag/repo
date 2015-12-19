@@ -283,8 +283,10 @@ def listVideos_new(url):
         xbmc.executebuiltin('XBMC.RunScript(special://home/addons/'+addonID+'/titles.py,'+urllib.quote_plus(title.encode('utf-8'))+')')
         if forceViewMode:
           xbmc.executebuiltin('Container.SetViewMode('+viewMode+')')
+          
+
 def listVideos_old(url):
-        debug("URL :"+ url)
+        debug("listVideos_old URL :"+ url)
         content = getUrl(url)
         ids=[]
         title=[]
@@ -305,7 +307,7 @@ def listVideos_old(url):
             ids.append(struktur[element]['id'])
             title.append(unicode(struktur[element]['title']).encode('utf-8'))
             subtitle.append(unicode(struktur[element]['subtitle']).encode('utf-8'))
-            mrss.append(struktur[element]['mrss'])
+            mrss.append(struktur[element]['mrss']+struktur[element]['mrssvars'].replace("\u0026","&"))            
             try:
               riptide_image_id.append("http://images.mtvnn.com/"+str(struktur[element]['riptide_image_id']) +"/306x172_")
             except:
@@ -413,11 +415,46 @@ def playShow(id):
 
 def playVideo(url):      
         playit==1
+        debug("-----> "+ url)
         content = getUrl(url)
         match=re.compile("<media:content duration='(.+?)' isDefault='true' type='text/xml' url='(.+?)'></media:content>", re.DOTALL).findall(content)
-        playurl=match[0][1]
-        playurl=playurl.replace("video:mtvni.com","video:mtv.de")     
-        playVideoMain(playurl)        
+        try:
+          playurl=match[0][1]
+          #playurl=playurl.replace("video:mtvni.com","video:mtv.de")
+          content = getUrl(playurl)
+          if content.find("/www/custom/intl/errorslates/video_error.flv")>=0 or content.find("/www/custom/intl/errorslates/copyright_error.flv")>=0 or content.find('<error message="uri not found" />')>=0:
+            xbmc.executebuiltin('XBMC.Notification(Info:,'+str(translation(30209))+',5000)')
+          else:
+            match=re.compile('type="video/mp4" bitrate="(.+?)">\n<src>(.+?)</src>', re.DOTALL).findall(content)
+            match2=re.compile('type="video/mp4" bitrate="(.+?)">\n[ ]+?<src>(.+?)</src>', re.DOTALL).findall(content)
+            match3=re.compile('type="video/x-flv" bitrate="(.+?)">\n<src>(.+?)</src>', re.DOTALL).findall(content)
+            match4=re.compile('type="video/x-flv" bitrate="(.+?)">\n        <src>(.+?)</src>', re.DOTALL).findall(content)
+            urlNew=""
+            bitrate=0
+            if len(match)>0:
+              pass
+            elif len(match2)>0:
+              match=match2
+            elif len(match3)>0:
+              match=match3
+            elif len(match4)>0:
+              match=match4
+            for br,url in match:
+              if int(br)>bitrate:
+                bitrate=int(br)
+                urlNew=url
+            if urlNew!="":
+              if urlNew.find("http://")==0:
+                listitem = xbmcgui.ListItem(path=urlNew)
+              elif urlNew.find("rtmp://")==0 or urlNew.find("rtmpe://")==0:    
+                playVideoMain(urlNew)               
+        except:                
+          content=content.replace("\n"," ")        
+          match=re.compile("<src>([^<]+)</src>", re.DOTALL).findall(content)
+          playurl=match[0]
+          debug("-----> "+ playurl)
+          #playurl=playurl.replace("video:mtvni.com","video:mtv.de")     
+          playVideoMain(playurl)        
 def SearchUrl(url):
          content = getUrl(url)
          content = content[:content.find("window.pagePlaylist")]
@@ -429,33 +466,7 @@ def SearchUrl(url):
          playVideo(video)
          
 def playVideoMain(url):
-        content = getUrl(url)
-        if content.find("/www/custom/intl/errorslates/video_error.flv")>=0 or content.find("/www/custom/intl/errorslates/copyright_error.flv")>=0 or content.find('<error message="uri not found" />')>=0:
-          xbmc.executebuiltin('XBMC.Notification(Info:,'+str(translation(30209))+',5000)')
-        else:
-          match=re.compile('type="video/mp4" bitrate="(.+?)">\n<src>(.+?)</src>', re.DOTALL).findall(content)
-          match2=re.compile('type="video/mp4" bitrate="(.+?)">\n[ ]+?<src>(.+?)</src>', re.DOTALL).findall(content)
-          match3=re.compile('type="video/x-flv" bitrate="(.+?)">\n<src>(.+?)</src>', re.DOTALL).findall(content)
-          match4=re.compile('type="video/x-flv" bitrate="(.+?)">\n        <src>(.+?)</src>', re.DOTALL).findall(content)
-          urlNew=""
-          bitrate=0
-          if len(match)>0:
-            pass
-          elif len(match2)>0:
-            match=match2
-          elif len(match3)>0:
-            match=match3
-          elif len(match4)>0:
-            match=match4
-          for br,url in match:
-            if int(br)>bitrate:
-              bitrate=int(br)
-              urlNew=url
-          if urlNew!="":
-            if urlNew.find("http://")==0:
-              listitem = xbmcgui.ListItem(path=urlNew)
-            elif urlNew.find("rtmp://")==0 or urlNew.find("rtmpe://")==0:
-              listitem = xbmcgui.ListItem(path=urlNew+" swfVfy=1 swfUrl=http://media.mtvnservices.com/player/prime/mediaplayerprime.1.8.1.swf")
+            listitem = xbmcgui.ListItem(path=url+" swfVfy=1 swfUrl=http://media.mtvnservices.com/player/prime/mediaplayerprime.1.8.1.swf")
             return xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
 
 def search(SEARCHTYPE):
@@ -500,6 +511,7 @@ def search(SEARCHTYPE):
           xbmcplugin.endOfDirectory(pluginhandle)
 
 def getUrl(url):
+        debug("URL :"+ url)
         req = urllib2.Request(url)
         req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 6.3; WOW64; rv:38.0) Gecko/20100101 Firefox/38.0')
         response = urllib2.urlopen(req,timeout=60)
