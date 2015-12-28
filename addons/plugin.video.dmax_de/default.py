@@ -38,6 +38,18 @@ opener = urllib2.build_opener()
 userAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:30.0) Gecko/20100101 Firefox/30.0"
 opener.addheaders = [('User-Agent', userAgent)]
 
+def debug(content):
+    log(content, xbmc.LOGDEBUG)
+    
+def notice(content):
+    log(content, xbmc.LOGNOTICE)
+
+def log(msg, level=xbmc.LOGNOTICE):
+    addon = xbmcaddon.Addon()
+    addonID = addon.getAddonInfo('id')
+    xbmc.log('%s: %s' % (addonID, msg), level) 
+    
+
 if not os.path.isdir(userDataFolder):
     os.mkdir(userDataFolder)
 
@@ -52,22 +64,27 @@ def index():
 
 
 def listVideosMain(url, thumb):
+    debug("listVideosMain :"+ url)
     content = opener.open(url).read()
-    matchShowID = re.compile('id="dni_listing_post_id" value="(.+?)"', re.DOTALL).findall(content)
-    matchFE = re.compile('<h2>GANZE FOLGEN</h2>.+?id="listing-container-(.+?)"', re.DOTALL).findall(content)
-    matchMV = re.compile('<h2>MEIST GESEHEN</h2>.+?id="listing-container-(.+?)"', re.DOTALL).findall(content)
-    matchClips = re.compile('<h2>CLIPS</h2>.+?id="listing-container-(.+?)"', re.DOTALL).findall(content)
-    matchEpisodes = re.compile('<a href="(.+?)".*?><span>(.+?)<', re.DOTALL).findall(content)
+    matchShowID = re.compile('id="dni_listing_post_id" value="(.+?)"', re.DOTALL).findall(content)  
+    matchFE = re.compile('<h2>GANZE FOLGEN</h2>.+?id="listing-container-(.+?)"', re.DOTALL).findall(content)    
+    matchMV = re.compile('<h2>MEIST GESEHEN</h2>.+?id="listing-container-(.+?)"', re.DOTALL).findall(content)    
+    matchClips = re.compile('<h2>CLIPS</h2>.+?id="listing-container-(.+?)"', re.DOTALL).findall(content)    
+    matchEpisodes = re.compile('<a href="([^"]+)"[^>]*?><span>(.+?)<', re.DOTALL).findall(content)
     showID = matchShowID[0]
+    debug("match")
     if matchFE:
         for url, title in matchEpisodes:
             if title=="Episoden":
+                debug("Add episode")
                 addDir(translation(30006), url, 'listSeasons', thumb, "")
                 break
         addDir(translation(30008), baseUrl+"/wp-content/plugins/dni_plugin_core/ajax.php?action=dni_listing_items_filter&letter=&page=1&id="+matchFE[0]+"&post_id="+showID, 'listVideos', thumb, "")
     if matchMV:
+        debug("matchMV")
         addDir(translation(30005), baseUrl+"/wp-content/plugins/dni_plugin_core/ajax.php?action=dni_listing_items_filter&letter=&page=1&id="+matchMV[0]+"&post_id="+showID, 'listVideos', thumb, "")
     if matchClips:
+        debug("matchClips")
         addDir(translation(30007), baseUrl+"/wp-content/plugins/dni_plugin_core/ajax.php?action=dni_listing_items_filter&letter=&page=1&id="+matchClips[0]+"&post_id="+showID, 'listVideos', thumb, "")
     xbmcplugin.endOfDirectory(pluginhandle)
     if forceViewMode:
@@ -75,6 +92,7 @@ def listVideosMain(url, thumb):
 
 
 def listVideos(urlMain):
+    debug("listVideos :"+ urlMain)
     content = opener.open(urlMain).read()
     content = content.replace("\\", "")
     spl = content.split('<a')
@@ -213,6 +231,7 @@ def listSeasons(urlMain, thumb):
 
 
 def listEpisodes(url, thumb):
+    debug("listEpisodes" +url)
     content = opener.open(url).read()
     spl = content.split('<a class="dni-episode-browser-item pagetype-video"')
     for i in range(1, len(spl), 1):

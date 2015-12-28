@@ -201,7 +201,7 @@
     </extension>
 </addon>
 
-<addon id="plugin.video.dmax_de" name="DMAX.de" version="1.1.4" provider-name="L0RE">
+<addon id="plugin.video.dmax_de" name="DMAX.de" version="1.1.5" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="script.module.pyamf" version="0.6.1"/>
@@ -458,7 +458,6 @@
     </extension>
 </addon>
 
-
 <addon id="plugin.video.orftvthek4de" name="ORF TVthek 4 de" version="0.4.8" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
@@ -665,6 +664,26 @@ Orginal Code was from AddonScriptorDE</disclaimer>
         <forum>http://forum.xbmc.org/showthread.php?tid=132563</forum>
         <email>AddonScriptorDE at yahoo dot de</email>
         <website>http://www.tivi.de</website>
+    </extension>
+</addon>
+
+<addon id="plugin.video.tvtoday_de" name="TV Today - Best of Mediatheken" version="1.1.0" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="en">Best of german media libraries</summary>
+        <language>de</language>
+        <description lang="en">Best of german media libraries</description>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <source>https://github.com/AddonScriptorDE/plugin.video.tvtoday_de</source>
+        <forum>http://forum.xbmc.org/showthread.php?tid=132563</forum>
+        <email>AddonScriptorDE at yahoo dot de</email>
+        <website>http://www.tvtoday.de/mediathek</website>
     </extension>
 </addon>
 
