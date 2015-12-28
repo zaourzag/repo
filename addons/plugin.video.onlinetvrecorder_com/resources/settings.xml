@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Document   : settings.xml
+    Package    : OTR Integration to XBMC
+    Author     : Frank Epperlein
+    Copyright  : 2012, Frank Epperlein, DE
+    License    : Gnu General Public License 2
+    Description: Settings for OTR integration
+-->
+<settings>
+    <category label="30100">
+        <setting id="otrUsername" type="text" label="30101" />
+        <setting id="otrPassword" type="text" label="30102" option="hidden" />
+        <setting type="sep" />
+        <setting id="otrTimeout" type="slider" label="30103" range="10,10,120" default="60" option="int"/>
+        <setting type="sep" />
+        <setting id="otrAskSchedule"  type="bool" default="false" label="30104" />	
+        <setting id="otrAskDelete"  type="bool" default="false" label="30105" />
+        <setting id="otrAskDeleteLocal"  type="bool" default="false" label="30110" />
+        <setting type="sep" />
+        <setting id="otrChannelsHidden"  type="text" default="" label="30106" />
+        <setting id="otrLanguagesHidden" type="text" default="RU,FR,EN,IT,TR,PL,ES" label="30107" />
+        <setting type="sep" />
+        <setting id="otrAskPlayAfterDownload"  type="bool" default="true" label="30108" />	
+	<setting id="otrDownloadFolder" type="folder" source="" label="30109" />
+    </category>
+    <category label="30200">
+        <setting id="otrPreferHD"  type="bool" default="false" label="30201" />	
+        <setting id="otrPreferHQ"  type="bool" default="true" label="30202" />	
+        <setting id="otrPreferCut" type="bool" default="true" label="30203" />	
+        <setting id="otrAcceptAVI" type="bool" default="true" label="30205" />
+        <setting type="sep" />
+        <setting id="otrPreferPrio" type="bool" default="false" label="30204" />
+        <setting type="sep" />
+        <setting id="otrShowUnsupported" type="bool" default="false" label="30206" />
+    </category>
+</settings>
