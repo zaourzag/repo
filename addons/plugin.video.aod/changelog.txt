@@ -8,3 +8,5 @@
 - Beschreibungs text verbessert
 0.4.1
 - Bad Login Meldung
+0.4.2
+- Fix Fuer Filme

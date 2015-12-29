@@ -18,6 +18,8 @@ global quality
 quality=addon.getSetting("quality")
 username=addon.getSetting("user")
 password=addon.getSetting("pass")
+global movies
+movies=addon.getSetting("movies")
 
 
 
@@ -268,7 +270,7 @@ params = parameters_string_to_dict(sys.argv[2])
 mode = urllib.unquote_plus(params.get('mode', ''))
 url = urllib.unquote_plus(params.get('url', ''))
 csrftoken = urllib.unquote_plus(params.get('csrftoken', ''))
-movies = urllib.unquote_plus(params.get('movies', ''))
+
 
 def abisz():
   addDir("0-9", baseurl+"/animes/begins_with/0-9", 'catall', "")
