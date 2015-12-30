@@ -79,7 +79,7 @@ def listVideos(type):
     for i in range(1, len(spl), 1):
         entry = spl[i]
         if "sat1-programm" not in entry:
-            match = re.compile('<strong>(.+?)</strong>.+?<span>(.+?)</span>', re.DOTALL).findall(entry)
+            match = re.compile('<strong>([^<]*)</strong>.+?<span>(.+?)</span>', re.DOTALL).findall(entry)
             title = cleanTitle(match[0][0].strip())+" - "+cleanTitle(match[0][1].strip())
             title = title.replace("<wbr/>","").replace("<br />"," -")
             match = re.compile('href="(.+?)"', re.DOTALL).findall(entry)

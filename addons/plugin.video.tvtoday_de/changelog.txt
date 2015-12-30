@@ -12,3 +12,5 @@
 - Author bisher Addonscriptor.de
 - Ab jetzt Übernommen durch L0RE
 - Patch für ARD
+1.1.1
+- Fix für dokus
