@@ -138,9 +138,14 @@ def Serie(url):
   global username
   global password
   
+  debug ("#############################################################################################")
+  debug ("URL : " + url)
   userAgent = "Mozilla/5.0 (Windows NT 6.2; WOW64; rv:23.0) Gecko/20100101 Firefox/23.0"
   opener.addheaders = [('User-Agent', userAgent)]
   content=opener.open(url).read()  
+  debug("COntent :")
+  debug("-------------------------------")
+  debug(content)
   if not '<a href="/users/edit">Benutzerkonto</a>' in content :    
     content=login(url)
   cj.save(cookie,ignore_discard=True, ignore_expires=True)
@@ -149,13 +154,23 @@ def Serie(url):
   kurz_inhalt = content[content.find('<div class="three-box-container">')+1:]                                      
   kurz_inhalt = kurz_inhalt[:kurz_inhalt.find('<div class="l-contentcontainer l-navigationscontainer">')]
   spl=kurz_inhalt.split('<div class="three-box episodebox flip-container">')
+  debug("------------------------------")
+  debug ("Kurzinhalt:")
+  debug (kurz_inhalt)  
   for i in range(1,len(spl),1):
     try:
-      entry=spl[i]          
+      entry=spl[i]    
+      entry=entry.replace("<br />"," - ")                        
+      debug("------------------------------")
+      debug("Entry:")
+      debug(entry)    
       match=re.compile('<h3 class="episodebox-title" title="[^"]*">([^<]+)</h3>', re.DOTALL).findall(entry)
-      title=match[0]       
+      title=match[0]  
+      debug ("-------------------------------")
+      debug("Title :"+ title)      
       match=re.compile('src="([^"]+)"', re.DOTALL).findall(entry)
       img=baseurl+match[0]
+      debug("img :"+ img)
       match=re.compile('title="([^"]+)" data-stream="([^"]+)"', re.DOTALL).findall(entry)
       found=0      
       linka=""
@@ -171,7 +186,7 @@ def Serie(url):
          link=linko
       if link :
          link=baseurl+link
-         debug("####### LINK # "+ link)      
+         debug("Link: "+ link)      
          match=re.compile('<p class="episodebox-shorttext">.+</p>', re.DOTALL).findall(entry)
          desc=match[0]    
          desc=desc.replace('<p class="episodebox-shorttext">','')  
@@ -179,6 +194,7 @@ def Serie(url):
          addLink(name=ersetze(title), url=link, mode="Folge", iconimage=img, desc=desc,csrftoken=csrftoken)      
     except :
        error=1
+  debug ("#############################################################################")
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)  
 
 def Folge(url,csrftoken):

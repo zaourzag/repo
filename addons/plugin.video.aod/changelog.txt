@@ -10,3 +10,7 @@
 - Bad Login Meldung
 0.4.2
 - Fix Fuer Filme
+0.4.3
+- Fix bei einigen Serien
+0.4.4
+- Debugging eingebaut wegen Filmen
