@@ -152,7 +152,7 @@ def Serie(url):
   for i in range(1,len(spl),1):
     try:
       entry=spl[i]          
-      match=re.compile('title="([^"]+)">', re.DOTALL).findall(entry)
+      match=re.compile('<h3 class="episodebox-title" title="[^"]*">([^<]+)</h3>', re.DOTALL).findall(entry)
       title=match[0]       
       match=re.compile('src="([^"]+)"', re.DOTALL).findall(entry)
       img=baseurl+match[0]
