@@ -14,3 +14,5 @@
 - Fix bei einigen Serien
 0.4.4
 - Debugging eingebaut wegen Filmen
+0.4.5
+- Fix fuer Filme

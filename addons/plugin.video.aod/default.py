@@ -137,7 +137,6 @@ def Serie(url):
   global cj
   global username
   global password
-  
   debug ("#############################################################################################")
   debug ("URL : " + url)
   userAgent = "Mozilla/5.0 (Windows NT 6.2; WOW64; rv:23.0) Gecko/20100101 Firefox/23.0"
@@ -153,29 +152,30 @@ def Serie(url):
   csrftoken=match[0]
   kurz_inhalt = content[content.find('<div class="three-box-container">')+1:]                                      
   kurz_inhalt = kurz_inhalt[:kurz_inhalt.find('<div class="l-contentcontainer l-navigationscontainer">')]
-  spl=kurz_inhalt.split('<div class="three-box episodebox flip-container">')
+  if '<div class="three-box episodebox flip-container">' in kurz_inhalt:
+     spl=kurz_inhalt.split('<div class="three-box episodebox flip-container">')
+  else:
+     spl=kurz_inhalt.split('<div class="l-off-canvas-container">')
   debug("------------------------------")
   debug ("Kurzinhalt:")
   debug (kurz_inhalt)  
   for i in range(1,len(spl),1):
     try:
-      entry=spl[i]    
-      entry=entry.replace("<br />"," - ")                        
+      entry=spl[i]                        
       debug("------------------------------")
       debug("Entry:")
-      debug(entry)    
-      match=re.compile('<h3 class="episodebox-title" title="[^"]*">([^<]+)</h3>', re.DOTALL).findall(entry)
-      title=match[0]  
-      debug ("-------------------------------")
-      debug("Title :"+ title)      
+      debug(entry)          
+      debug ("-------------------------------")     
       match=re.compile('src="([^"]+)"', re.DOTALL).findall(entry)
       img=baseurl+match[0]
       debug("img :"+ img)
-      match=re.compile('title="([^"]+)" data-stream="([^"]+)"', re.DOTALL).findall(entry)
+      match=re.compile('title="([^"]+)" data-stream="([^"]+)" data-dialog-header="([^"]+)"', re.DOTALL).findall(entry)
+      title=match[0][2]        
+      debug("Title :"+ title)       
       found=0      
       linka=""
       linko=""
-      for qua,linka in match:        
+      for qua,linka,name in match:        
         titl=quality+ "-Stream"         
         if titl.lower() in qua.lower():
             link=linka
@@ -186,11 +186,15 @@ def Serie(url):
          link=linko
       if link :
          link=baseurl+link
-         debug("Link: "+ link)      
-         match=re.compile('<p class="episodebox-shorttext">.+</p>', re.DOTALL).findall(entry)
+         debug("Link: "+ link)
+         if '<p class="episodebox-shorttext">' in entry:
+           match=re.compile('<p class="episodebox-shorttext">(.+)</p>', re.DOTALL).findall(entry)
+         else:
+           match=re.compile('<div itemprop="description">(.+)</p>', re.DOTALL).findall(entry)
          desc=match[0]    
-         desc=desc.replace('<p class="episodebox-shorttext">','')  
-         desc=desc.replace("</p>",'')          
+         desc=desc.replace("<br />","") 
+         desc=desc.replace("<p>","") 
+         debug("csrftoken : "+csrftoken)
          addLink(name=ersetze(title), url=link, mode="Folge", iconimage=img, desc=desc,csrftoken=csrftoken)      
     except :
        error=1
