@@ -68,7 +68,7 @@ def getVideourl(url):
 		xbmc.executebuiltin('XBMC.Notification(Info:,Folge ist noch nicht verfügbar!,5000,'+icon+')')
 	else:
 		print 'weiter'
-		match=re.findall('<source type="video/.*?" src="(.*?)">',content,re.S)
+		match=re.findall('type: "video/mp4",src:  "([^"]+)"',content,re.S)
 		if match:
 			video_url=match[0]
 			return video_url

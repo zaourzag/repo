@@ -27,3 +27,5 @@
 -change to episodes viewmode to access plot information
 -add fanart
 -add download option over context menue
+2.1.4
+- Fix New VideoUrl
