@@ -33,29 +33,56 @@ def index():
         url = match[0]
         match = re.compile('src="(.+?)"', re.DOTALL).findall(entry)
         thumb = match[0]
-        addDir(title, url, 'listVideos', thumb)
+        addDir(title, url, 'listSeasons', thumb)
     xbmcplugin.endOfDirectory(pluginhandle)
 
+def listSeasons(url):
+    print 'Funktion listSeasons aufgerufen'
+    content = getUrl(url)
+    contentCategory = content.split('<h2 class="module_title">')
+    if '<form class="mod_custom_select">' in content:
+        print 'Mehrere Staffeln gefunden'
+        content = content[content.find('<form class="mod_custom_select">'):]
+        content = content[:content.find('</select>')]
+        spl = content.split('<option')
+        for i in range(1, len(spl), 1):
+            entry = spl[i]
+            match = re.compile('/">(.+?)</', re.DOTALL).findall(entry)
+            title = match[0]
+#            title = cleanTitle(title)
+            match = re.compile('value="(.+?)"', re.DOTALL).findall(entry)
+            url = match[0]
+            addDir(title, url, 'listVideos', "")
+        xbmcplugin.endOfDirectory(pluginhandle)
+    else:
+        listVideos(url)
+
+def listCategories(url):
+    return
 
 def listVideos(url):
+    print 'Funktion listVideos aufgerufen'
     content = getUrl(url)
     contentMain = content
+    contentCategory = content.split('<h2 class="module_title">')
 #    if 'class="teaser_list"' in content:
 #        content = content[content.find('class="teaser_list"'):]
 #        content = content[:content.find('</ul>')]
     spl = content.split('class="teaser"')
     for i in range(1, len(spl), 1):
         entry = spl[i]
-        match = re.compile('href="(.+?)"', re.DOTALL).findall(entry)
-        url = match[0]
-        match = re.compile('class="title">(.+?)<', re.DOTALL).findall(entry)
-        title = cleanTitle(match[0])
-        match = re.compile('src="(.+?)"', re.DOTALL).findall(entry)
-        thumb = match[0].replace("&amp;","&")
-        match = re.compile('<div class="media(.+?)"', re.DOTALL).findall(entry)
-        mediaType = match[0].replace(" ","")
-        if (mediaType == 'video'):
-            addLink(title, url, 'playVideo', thumb)
+        if '<div class="media' in entry: #Abfrage ob es sich in Code-Fragment tatsächlich Content befindet
+            print entry
+            match = re.compile('href="(.+?)"', re.DOTALL).findall(entry)
+            url = match[0]
+            match = re.compile('class="title">(.+?)<', re.DOTALL).findall(entry)
+            title = cleanTitle(match[0])
+            match = re.compile('src="(.+?)"', re.DOTALL).findall(entry)
+            thumb = match[0].replace("&amp;","&")
+            match = re.compile('<div class="media(.+?)"', re.DOTALL).findall(entry)
+            mediaType = match[0].replace(" ","")
+            if (mediaType == 'video'): #Abfrage ob es sich um ein Video handelt (bei Foto gibt es sonst Fehler)
+                addLink(title, url, 'playVideo', thumb)
     match = re.compile('jsb_MoreTeasersButton" data-jsb="url=(.+?)"', re.DOTALL).findall(contentMain)
     if match:
         addDir(translation(30001), urllib.unquote_plus(match[0]), 'listVideos', "")
@@ -140,6 +167,10 @@ if isinstance(url, type(str())):
 
 if mode == 'listVideos':
     listVideos(url)
+elif mode == 'listCategories':
+    listCategories(url)
+elif mode == 'listSeasons':
+    listSeasons(url)
 elif mode == 'playVideo':
     playVideo(url)
 else:

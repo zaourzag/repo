@@ -11,5 +11,5 @@
 - Fixed video playback
 2.0.5.1
 - Fixed show/video listing
-2.0.6
-- Neue Version damit nur 3 Stellig ist
+2.0.5.2
+-Added Season selection
