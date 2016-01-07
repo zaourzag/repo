@@ -871,18 +871,22 @@ Orginal Code was from AddonScriptorDE</disclaimer>
   </extension>
 </addon>
 
-<addon id="service.twitterfeed"
-       name="TV Tweets"
-       version="0.1"
-       provider-name="L0RE">
-  <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
-	<import addon="script.module.pyxbmct" version="1.1.4"/>
-  </requires>
-  <extension point="xbmc.service" library="service.py" start="login" />
-  <extension point="xbmc.addon.metadata">
+<addon id="service.twitterfeed" name="Bayrisches Fernsehen" version="0.1.1" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="script.module.pyxbmct" version="1.1.4"/>
+    </requires>
+    <extension point="xbmc.service" library="service.py" start="login" />
+    <extension point="xbmc.addon.metadata">
+    <summary lang="en">Show Twitter hastag of the Show and the TV Station</summary>
+    <summary lang="de">Zeigt Hashtags von Sender und Senungen vom Tv via Subtitle an</summary>
+    <description lang="en">Show Twitter hastag of the Show and the TV Station</description>
+    <description lang="de">Zeigt Hashtags von Sender und Senungen vom Tv via Subtitle an</description>
+    <website></website>
+    <source>https://github.com/kodinerds/repo/tree/master/addons/service.livetv.twitter</source>
+    <forum>http://www.kodinerds.net/index.php/Thread/46939-Repo-Lost-Found/</forum>
+    <email>andreas at vogler dot name</email>
     <platform>all</platform>
-    <summary lang="en">Tweets for the Sender and Series</summary>
   </extension>
 </addon>
 
