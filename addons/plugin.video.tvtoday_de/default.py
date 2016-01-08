@@ -107,8 +107,22 @@ def playVideo(urlMain):
         match = re.compile("/beitrag/video/(.+?)/", re.DOTALL).findall(url)
         if match:
             finalUrl = getPluginUrl("plugin.video.zdf_de_lite")+"/?mode=playVideo&url="+urllib.quote_plus(match[0])
-    elif url.startswith("http://videos.arte.tv"):
-        finalUrl = getPluginUrl("plugin.video.arte_tv")+"/?mode=playVideoNew&url="+urllib.quote_plus(url)
+    elif url.startswith("http://www.arte.tv"):
+        match = re.compile("http://www.arte.tv/guide/de/([^/]+?)/", re.DOTALL).findall(url)
+        id=match[0]
+        try:            
+            xbmcaddon.Addon('plugin.video.arte_tv')
+            finalUrl = getPluginUrl("plugin.video.arte_tv")+"/?mode=play-video&id="+id
+        except:
+             pass
+        try:
+               xbmcaddon.Addon('plugin.video.arteplussept')
+               finalUrl = getPluginUrl("plugin.video.arteplussept")+"/play/"+urllib.quote_plus(id)               
+        except:
+                xbmc.log("Kein Arte Plugin vorhanden")
+        #http://www.arte.tv/guide/de/064098-001/arte-junior-das-magazin
+
+        print "##X## "+ id                
     elif url.startswith("http://mediathek.daserste.de/"):
         m = re.compile('documentId=([0-9]+)', re.DOTALL).findall(content)        
         url = m[0]        
