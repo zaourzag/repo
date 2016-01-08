@@ -56,16 +56,29 @@ categories = {
     'volleyball'        : '&Order=6&sportid=62',
     'horse'             : '&Order=6&sportid=70',
     'others'            : '&Order=6&sportid=95',
+    } 
+    
+def get_stream_url(page_url):
+    import json
+    try: html = urllib2.urlopen(page_url).read()
+    except: return ''
+    video_id = re.findall('data-video-id="(.+?)"', html)[0]
+    api_url = 'https://edge.api.brightcove.com/playback/v1/accounts/4358179179001/videos/' + video_id
+    headers = {
+        'Accept' : 'application/json;pk=BCpkADawqM3MZvB5-O3gVHFfCea9YnT314U4Vjbwcf9hFiUk2DFZJ8JjDOL45ZKNEzOg8LmAlSfReKWd2ifTkAkceEvw2E-Urd3iVVfEsM_2_mZS5alk6FDmv53Azghb59_jb-ORRHXHfJwi',
+        'User-Agent' : 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101 Firefox/38.0',
+        'Referer' : page_url,
+        'Connection' : 'keep-alive'
     }
-
-def get_stream_url(webpage):
-    regex_get_stream = 'name="twitter:player:stream".*?content="(.+?)"'
     try:
-        html = urllib2.urlopen(webpage).read()
-        stream_url = re.findall(regex_get_stream, html)[0]
-    except: return False
-    if hd: return stream_url.replace('-700-512-288', '-2300-1024-576')
-    return stream_url
+        req = urllib2.Request(api_url, None, headers)
+        json_data = urllib2.urlopen(req).read()
+        streams = json.loads(json_data)['sources']
+    except: return ''
+    for stream in streams:
+        if stream['height'] >= 576:
+            if hd: return stream['src']
+            return stream['src'].replace('-2300-1024-576', '-700-512-288')
 
 def list_videos(url_body, date = '', current_page = 1):
     if date:
