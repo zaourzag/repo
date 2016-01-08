@@ -1,0 +1,3 @@
+<settings>
+   <setting id="inhalt" type="select" label="30002" default="TV" values="Timeline|TV" />
+</settings>
