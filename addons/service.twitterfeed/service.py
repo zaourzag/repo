@@ -28,13 +28,13 @@ oauth_token_secret=""
 __addon__ = xbmcaddon.Addon()
 __addonname__ = __addon__.getAddonInfo('name')
 __addondir__    = xbmc.translatePath( __addon__.getAddonInfo('path') )
-__background__ = os.path.join(__addondir__,"bg.png")
 inhalt=__addon__.getSetting("inhalt")
 blackList = [];
 if inhalt=="TV":
-  ratlimit=math.floor(60/180*15)+1
+#60/180*15
+  ratlimit=7
 else :
-  ratlimit=math.floor(16/15*15)+1
+  ratlimit=62
   
 def showTweet(tweet):
     xbmc.log("showTweet start")
@@ -144,26 +144,34 @@ if __name__ == '__main__':
     xbmc.log("oauth_token ::"+ oauth_token+"#")
     xbmc.log("oauth_token_secret ::"+ oauth_token_secret+"#")
     xbmc.log("consumer_key ::"+ consumer_key+"#")
-    xbmc.log("consumer_secret ::"+ consumer_secret +"#")
-    index = 0    
+    xbmc.log("consumer_secret ::"+ consumer_secret +"#")   
     api = twitter.Api(consumer_key=consumer_key,consumer_secret=consumer_secret,access_token_key=oauth_token,access_token_secret=oauth_token_secret)
     sinceid=0
     while not monitor.abortRequested():
     # Sleep/wait for abort for 5 seconds
-      if monitor.waitForAbort(ratlimit):
-        break
+      xbmc.log("RATE : " + str(ratlimit))      
       xbmc.log("[CPT] running %s" % time.time())
       if xbmc.getCondVisibility('Pvr.IsPlayingTv'):
         now = xbmc.getInfoLabel('Player.Title')
         channel = xbmc.getInfoLabel('VideoPlayer.ChannelName')        
+        
         if "Erste" in channel:
            channel="ard"
-        
+        if "WDR" in channel:
+           channel="WDR" 
+        channel=channel.replace(" HD","")
+        channel=channel.replace(" ","")        
+        channel=channel.replace(".","")   
+        channel=channel.replace("_","")   
+        channel=channel.replace("-","")   
+           
         if "DeutschlandsuchtdenSuperstar" in now:
             now="dsds"
         if "Alleswaszält" in now:
             now="awz"
-        
+        if "Gute Zeiten,schlechte Zeiten" in now:
+            now="gzsz"
+            
         match=re.compile('([^-]+)', re.DOTALL).findall(now)        
         if match:
           now=match[0]
@@ -172,42 +180,39 @@ if __name__ == '__main__':
           now=match[0]
         now=now.replace(" ","")        
         now=now.replace("ä","ae") 
-        channel=channel.replace(" HD","")
-        channel=channel.replace(" ","")        
+
         if now :
           search="#"+ channel +" OR "+ "#"+ now
         else:
-           search="#"+ channel                
-        if index is 0:
-          xbmc.log("SEARCH :"+ search + " ID: " +str(sinceid))
-          xbmc.log("[CPT] loading new data")         
-          xbmc.log("inhalt :"+ inhalt)
-          try:
-            if sinceid==0:
-                if inhalt=="TV":
-                  tweets=api.GetSearch(search,count=2)
-                else :
-                   tweets = api.GetHomeTimeline()
-            else:
-               if inhalt=="TV":
-                  tweets=api.GetSearch(search,since_id=sinceid)
-               else:
-                  tweets = api.GetHomeTimeline(since_id=sinceid)             
-            for tweet in tweets:
-              #print name.text
-              if not tweet.text in blackList:
-                xbmc.log("--")
-                text= tweet.user.name +":"+ tweet.text.replace("\n"," ")
-                sinceid=tweet.id
-                xbmc.log("######" + str(sinceid))
-                showTweet(text)              
-                blackList.append(tweet.text)
-                time.sleep(6)
-                break
-          except ValueError, e:
-                xbmc.log("Invalid : %s" % e)
-        index = index + 1
+           search="#"+ channel                        
+        xbmc.log("SEARCH :"+ search + " ID: " +str(sinceid))
+        xbmc.log("[CPT] loading new data")         
+        xbmc.log("inhalt :"+ inhalt)
+        try:
+          if sinceid==0:
+              if inhalt=="TV":
+                tweets=api.GetSearch(search,count=2)
+              else :
+                 tweets = api.GetHomeTimeline()
+          else:
+             if inhalt=="TV":
+                tweets=api.GetSearch(search,since_id=sinceid)
+             else:
+                tweets = api.GetHomeTimeline(since_id=sinceid)             
+          for tweet in tweets:
+            #print name.text
+            if not tweet.text in blackList:
+              xbmc.log("--")
+              text= tweet.user.name +":"+ tweet.text.replace("\n"," ")
+              sinceid=tweet.id
+              xbmc.log("######" + str(sinceid))
+              showTweet(text)              
+              blackList.append(tweet.text)
+              time.sleep(6)
+              break
+        except ValueError, e:
+              xbmc.log("Invalid : %s" % e)        
       else:
          sinceid=0
-      if index>6:
-        index = 0
+      if monitor.waitForAbort(ratlimit):
+        break
