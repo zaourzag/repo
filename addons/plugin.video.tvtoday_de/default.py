@@ -114,11 +114,10 @@ def playVideo(urlMain):
             xbmcaddon.Addon('plugin.video.arte_tv')
             finalUrl = getPluginUrl("plugin.video.arte_tv")+"/?mode=play-video&id="+id
         except:
-             pass
-        try:
+          try:
                xbmcaddon.Addon('plugin.video.arteplussept')
                finalUrl = getPluginUrl("plugin.video.arteplussept")+"/play/"+urllib.quote_plus(id)               
-        except:
+          except:
                 xbmc.log("Kein Arte Plugin vorhanden")
         #http://www.arte.tv/guide/de/064098-001/arte-junior-das-magazin
 
