@@ -14,3 +14,6 @@
 - Patch für ARD
 1.1.1
 - Fix für dokus
+1.1.4
+- Fix fuer Arte
+- RTL ausgebaut

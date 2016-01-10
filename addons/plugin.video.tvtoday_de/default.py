@@ -51,7 +51,7 @@ def listVideosAll():
     entries = []
     for i in range(1, len(spl), 1):
         entry = spl[i]
-        if "sat1-programm" not in entry:
+        if "rtl2-programm" not in entry and "rtl-programm" not in entry and "vox-programm" not in entry and "super-programm" not in entry:
             match1 = re.compile('class="heading">(.+?)<', re.DOTALL).findall(entry)
             match2 = re.compile('title="(.+?)"', re.DOTALL).findall(entry)
             if match1:
