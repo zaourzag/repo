@@ -28,13 +28,36 @@ oauth_token_secret=""
 __addon__ = xbmcaddon.Addon()
 __addonname__ = __addon__.getAddonInfo('name')
 __addondir__    = xbmc.translatePath( __addon__.getAddonInfo('path') )
+__background__ = os.path.join(__addondir__,"bg.png")
 inhalt=__addon__.getSetting("inhalt")
-blackList = [];
+profile    = xbmc.translatePath( __addon__.getAddonInfo('profile') ).decode("utf-8")
+temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
+
 if inhalt=="TV":
-#60/180*15
-  ratlimit=7
+  ratlimit=math.floor(60/180*15)+1
 else :
-  ratlimit=62
+  ratlimit=math.floor(16/15*15)+1
+
+
+def parameters_string_to_dict(parameters):
+	paramDict = {}
+	if parameters:
+		paramPairs = parameters[1:].split("&")
+		for paramsPair in paramPairs:
+			paramSplits = paramsPair.split('=')
+			if (len(paramSplits)) == 2:
+				paramDict[paramSplits[0]] = paramSplits[1]
+	return paramDict
+
+if len(sys.argv) > 1:
+    params = parameters_string_to_dict(sys.argv[2])
+    mode = urllib.unquote_plus(params.get('mode', ''))
+    if mode=="clear":
+      xbmc.log("CLEARY")      
+      __addon__.setSetting(id='clear', value='CLEARIT')
+      dialog2 = xbmcgui.Dialog()      
+      ok = xbmcgui.Dialog().ok( "Neu Configuration", "Nach verlassen des Einstellungen wird Twitter neu Configuriert" )   
+      exit()
   
 def showTweet(tweet):
     xbmc.log("showTweet start")
@@ -59,9 +82,7 @@ def showTweet(tweet):
         xbmc.Player(xbmc.PLAYER_CORE_AUTO).setSubtitles(temp+"/tweet.ass")        
         time.sleep(10)
         xbmc.Player(xbmc.PLAYER_CORE_AUTO).showSubtitles(False)
-         
 
-    
 def get_access_token(consumer_key, consumer_secret,browser="no"):
     oauth_client = OAuth1Session(consumer_key, client_secret=consumer_secret)
 
@@ -121,57 +142,47 @@ def get_access_token(consumer_key, consumer_secret,browser="no"):
 if __name__ == '__main__':
     senderold=""
     x=0    
-    profile    = xbmc.translatePath( __addon__.getAddonInfo('profile') ).decode("utf-8")
-    temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
     if not xbmcvfs.exists(temp):       
        xbmcvfs.mkdirs(temp)
-    if not xbmcvfs.exists(temp+"/init.ok"):
-      dialog = xbmcgui.Dialog()
-      if dialog.yesno("message", "Twitter Auth im Browser?"):
-        browser="yes"
-      else:
-        browser="no"      
-      x=get_access_token(consumer_key, consumer_secret,browser)        
-    else:
-      f=xbmcvfs.File(temp+"/init.ok","r")   
-      daten=f.read()
-      match=re.compile('oauth_token: ([^#]+)', re.DOTALL).findall(daten)
-      oauth_token=match[0]
-      match=re.compile('oauth_token_secret: ([^#]+)', re.DOTALL).findall(daten)
-      oauth_token_secret=match[0]
     monitor = xbmc.Monitor()
-    xbmc.log("[CPT] CouchPotatoTweets starting")
-    xbmc.log("oauth_token ::"+ oauth_token+"#")
-    xbmc.log("oauth_token_secret ::"+ oauth_token_secret+"#")
-    xbmc.log("consumer_key ::"+ consumer_key+"#")
-    xbmc.log("consumer_secret ::"+ consumer_secret +"#")   
-    api = twitter.Api(consumer_key=consumer_key,consumer_secret=consumer_secret,access_token_key=oauth_token,access_token_secret=oauth_token_secret)
-    sinceid=0
+    sinceid=0  
     while not monitor.abortRequested():
-    # Sleep/wait for abort for 5 seconds
-      xbmc.log("RATE : " + str(ratlimit))      
-      xbmc.log("[CPT] running %s" % time.time())
+     
+      if not xbmcvfs.exists(temp+"/init.ok") or __addon__.getSetting("clear")=="CLEARIT":
+        __addon__.setSetting(id='clear', value='')
+        dialog = xbmcgui.Dialog()
+        if dialog.yesno("message", "Twitter Auth im Browser?"):
+          browser="yes"
+        else:
+          browser="no"      
+        x=get_access_token(consumer_key, consumer_secret,browser)       
+      else:
+        f=xbmcvfs.File(temp+"/init.ok","r")   
+        daten=f.read()
+        match=re.compile('oauth_token: ([^#]+)', re.DOTALL).findall(daten)
+        oauth_token=match[0]
+        match=re.compile('oauth_token_secret: ([^#]+)', re.DOTALL).findall(daten)
+        oauth_token_secret=match[0]
+              
+      xbmc.log("starting")      
+      index = 0    
+      api = twitter.Api(consumer_key=consumer_key,consumer_secret=consumer_secret,access_token_key=oauth_token,access_token_secret=oauth_token_secret) 
+      # Sleep/wait for abort for 5 seconds
+      if monitor.waitForAbort(ratlimit):
+        break      
       if xbmc.getCondVisibility('Pvr.IsPlayingTv'):
         now = xbmc.getInfoLabel('Player.Title')
-        channel = xbmc.getInfoLabel('VideoPlayer.ChannelName')        
-        
+        channel = xbmc.getInfoLabel('VideoPlayer.ChannelName')
+        if channel=="" :
+             break
         if "Erste" in channel:
            channel="ard"
-        if "WDR" in channel:
-           channel="WDR" 
-        channel=channel.replace(" HD","")
-        channel=channel.replace(" ","")        
-        channel=channel.replace(".","")   
-        channel=channel.replace("_","")   
-        channel=channel.replace("-","")   
-           
+        
         if "DeutschlandsuchtdenSuperstar" in now:
             now="dsds"
         if "Alleswaszält" in now:
             now="awz"
-        if "Gute Zeiten,schlechte Zeiten" in now:
-            now="gzsz"
-            
+        
         match=re.compile('([^-]+)', re.DOTALL).findall(now)        
         if match:
           now=match[0]
@@ -180,39 +191,56 @@ if __name__ == '__main__':
           now=match[0]
         now=now.replace(" ","")        
         now=now.replace("ä","ae") 
-
+        channel=channel.replace(" HD","")
+        channel=channel.replace(" ","")        
         if now :
           search="#"+ channel +" OR "+ "#"+ now
         else:
-           search="#"+ channel                        
-        xbmc.log("SEARCH :"+ search + " ID: " +str(sinceid))
-        xbmc.log("[CPT] loading new data")         
-        xbmc.log("inhalt :"+ inhalt)
-        try:
-          if sinceid==0:
-              if inhalt=="TV":
-                tweets=api.GetSearch(search,count=2)
-              else :
-                 tweets = api.GetHomeTimeline()
-          else:
-             if inhalt=="TV":
-                tweets=api.GetSearch(search,since_id=sinceid)
-             else:
-                tweets = api.GetHomeTimeline(since_id=sinceid)             
-          for tweet in tweets:
-            #print name.text
-            if not tweet.text in blackList:
-              xbmc.log("--")
-              text= tweet.user.name +":"+ tweet.text.replace("\n"," ")
-              sinceid=tweet.id
-              xbmc.log("######" + str(sinceid))
-              showTweet(text)              
-              blackList.append(tweet.text)
-              time.sleep(6)
-              break
-        except ValueError, e:
-              xbmc.log("Invalid : %s" % e)        
+           search="#"+ channel                
+        if index is 0:
+          xbmc.log("SEARCH :"+ search + " ID: " +str(sinceid))
+          xbmc.log("loading new data")         
+          xbmc.log("inhalt :"+ inhalt)
+          try:
+            if sinceid==0:
+                if inhalt=="TV":
+                  tweets=api.GetSearch(search,count=2)
+                else :
+                   tweets = api.GetHomeTimeline()
+            else:
+               if inhalt=="TV":
+                  tweets=api.GetSearch(search,since_id=sinceid)
+               else:
+                  tweets = api.GetHomeTimeline(since_id=sinceid)             
+            for tweet in tweets:
+               #print name.text              
+                xbmc.log("--")
+                text= tweet.user.name +" : "+ tweet.text.replace("\n"," ")
+                sinceid=tweet.id
+                xbmc.log("######" + str(sinceid))
+                
+                block=0
+                blockwort=""
+                blacklist=__addon__.getSetting("blacklist")
+                xbmc.log("Blacklist"+ blacklist)
+                blacklist=blacklist.split(",")
+                if blacklist:
+                  for blocked in blacklist:
+                    xbmc.log("Block Wort " + blocked +" Suchen")
+                    if blocked.lower() in text.encode('utf-8').lower() and not blocked == "":
+                       block=1
+                       blockwort=blockwort +","+ blocked
+                
+                if block==0:
+                   showTweet(text) 
+                else :
+                    xbmc.log("Blocked : "+ blockwort + "Text :"+ text.encode('utf-8'))
+                time.sleep(6)
+                break
+          except ValueError, e:
+                xbmc.log("Invalid : %s" % e)
+        index = index + 1
       else:
          sinceid=0
-      if monitor.waitForAbort(ratlimit):
-        break
+      if index>6:
+        index = 0
