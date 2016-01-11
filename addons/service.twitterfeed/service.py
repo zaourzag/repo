@@ -34,9 +34,9 @@ profile    = xbmc.translatePath( __addon__.getAddonInfo('profile') ).decode("utf
 temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
 
 if inhalt=="TV":
-  ratlimit=math.floor(60/180*15)+1
+  ratlimit=8
 else :
-  ratlimit=math.floor(16/15*15)+1
+  ratlimit=60
 
 
 def parameters_string_to_dict(parameters):
