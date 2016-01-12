@@ -1,2 +1,4 @@
 0.1
 * Initial Release
+0.3.2
+* Added GZSZ

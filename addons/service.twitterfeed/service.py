@@ -182,6 +182,8 @@ if __name__ == '__main__':
             now="dsds"
         if "Alleswaszält" in now:
             now="awz"
+        if "GuteZeiten,schlechteZeiten" in now:
+            now="#gzsz"
         
         match=re.compile('([^-]+)', re.DOTALL).findall(now)        
         if match:
