@@ -140,6 +140,7 @@ def get_access_token(consumer_key, consumer_secret,browser="no"):
 
 
 if __name__ == '__main__':
+    xbmc.log("Initiere Twitter Plugin")
     senderold=""
     x=0    
     if not xbmcvfs.exists(temp):       
@@ -198,20 +199,23 @@ if __name__ == '__main__':
         if now :
           search="#"+ channel +" OR "+ "#"+ now
         else:
-           search="#"+ channel                
+           search="#"+ channel       
         if index is 0:
           xbmc.log("SEARCH :"+ search + " ID: " +str(sinceid))
           xbmc.log("loading new data")         
           xbmc.log("inhalt :"+ inhalt)
           try:
+            country=__addon__.getSetting("country").lower()        
+            limit=__addon__.getSetting("limit")   
+            xbmc.log("LIMIT" + limit +" Lang : "+ country)            
             if sinceid==0:
-                if inhalt=="TV":
-                  tweets=api.GetSearch(search,count=2)
+                if inhalt=="TV":                            
+                  tweets=api.GetSearch(search,count=limit,lang=country,result_type="recent")
                 else :
                    tweets = api.GetHomeTimeline()
             else:
                if inhalt=="TV":
-                  tweets=api.GetSearch(search,since_id=sinceid)
+                  tweets=api.GetSearch(search,since_id=sinceid,lang=country,result_type="recent")
                else:
                   tweets = api.GetHomeTimeline(since_id=sinceid)             
             for tweet in tweets:
@@ -237,8 +241,7 @@ if __name__ == '__main__':
                    showTweet(text) 
                 else :
                     xbmc.log("Blocked : "+ blockwort + "Text :"+ text.encode('utf-8'))
-                time.sleep(6)
-                break
+                time.sleep(6)                
           except ValueError, e:
                 xbmc.log("Invalid : %s" % e)
         index = index + 1

@@ -1,6 +1,8 @@
 <settings>
    <setting id="inhalt" type="select" label="30002" default="TV" values="Timeline|TV" />
-   <setting label="30001" type="text" id="blacklist" />
+   <setting label="30001" type="text" id="blacklist" />   
+   <setting label="30003" type="text" id="country" />
+   <setting label="30004" type="slider" id="limit" default="2" range="1,1,20" option="int" />
    <setting label="30005" type="action" action="RunPlugin(plugin://service.twitterfeed/?mode=clear)"/>
    <setting label="dummy" type="text" id="clear" visible=false />
 </settings>
