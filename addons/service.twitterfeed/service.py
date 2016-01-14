@@ -206,6 +206,8 @@ if __name__ == '__main__':
           xbmc.log("inhalt :"+ inhalt)
           try:
             country=__addon__.getSetting("country").lower()        
+            if   country=="" :
+                country=None    
             limit=__addon__.getSetting("limit")   
             xbmc.log("LIMIT" + limit +" Lang : "+ country)            
             if sinceid==0:
