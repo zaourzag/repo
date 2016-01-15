@@ -2,3 +2,5 @@
 * Initial Release
 0.3.2
 * Added GZSZ
+0.5
+- Complete Redesign

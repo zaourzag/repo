@@ -4,5 +4,8 @@
   <string id="30002">Welche Tweets nicht</string> 
   <string id="30003">Ländercode (z.b. DE)</string> 
   <string id="30004">Initial Tweets</string> 
-  <string id="30005">Neu Configurieren</string> 
+  <string id="30005">Authentifizierung Löschen</string> 
+  <string id="30006">Tweets überall anzeigen</string> 
+  <string id="30007">Suchwort</string> 
+  <string id="30008">Avatar Bild</string> 
 </strings>
