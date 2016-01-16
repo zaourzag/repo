@@ -114,7 +114,7 @@ def showTweet(tweet,image=""):
         
         
 # Get Token        
-def get_access_token(consumer_key, consumer_secret,browser="no"):
+def get_access_token(consumer_key, consumer_secret):
     oauth_client = OAuth1Session(consumer_key, client_secret=consumer_secret)
     xbmc.log("Twitter: Requesting temp token from Twitter")
     try:
@@ -193,7 +193,7 @@ if __name__ == '__main__':
     while not monitor.abortRequested():
       # Wenn kein Token oder Authentifizerung löschen wurde Neu Authentifizieren
       if not xbmcvfs.exists(temp+"/init.ok") or __addon__.getSetting("clear")=="CLEARIT":        
-        x=get_access_token(consumer_key, consumer_secret,browser)       
+        x=get_access_token(consumer_key, consumer_secret)       
         auth=0
       else:         
         if auth==0:
