@@ -252,6 +252,7 @@ if __name__ == '__main__':
       alles_anzeige=__addon__.getSetting("alles_anzeige")   
       hashtag=__addon__.getSetting("hashtag") 
       bild=__addon__.getSetting("bild") 
+      inhalt=__addon__.getSetting("inhalt")
       xbmc.log("Tweeter : hashtag="+ hashtag)
       if inhalt=="Hash":
           if hashtag:
