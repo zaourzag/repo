@@ -60,10 +60,11 @@ def index():
 
 
 def listVideos(url):
+    debug("listVideos URL:"+ url)
     mainUrl = url
     content = getUrl(url)
-    spl = content.split('<!-- article headline and teasertext -->')
-    for i in range(1, len(spl), 1):
+    spl = content.split('<hgroup>')
+    for i in range(2, len(spl), 1):
         entry = spl[i]
         match = re.compile('href="(.+?)"', re.DOTALL).findall(entry)
         url = match[0]
