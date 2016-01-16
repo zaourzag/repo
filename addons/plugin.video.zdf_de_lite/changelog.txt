@@ -49,4 +49,6 @@
 2.2.1
 - Fixed subtitle support
 2.2.2
-- Fixed by L0RE . Filtering with Video Lenth now Workes
+- Fixed by L0RE . Filtering with Video Length now Workes
+- Until 2.2.2 Maintained by AddonScriptorde
+- New Maintainer L0RE
