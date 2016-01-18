@@ -222,12 +222,6 @@ if __name__ == '__main__':
         if "Erste" in channel:
            channel="ard"
         
-        if "DeutschlandsuchtdenSuperstar" in now:
-            now="dsds"
-        if "Alleswaszält" in now:
-            now="awz"
-        if "GuteZeiten,schlechteZeiten" in now:
-            now="#gzsz"
         
         match=re.compile('([^-]+)', re.DOTALL).findall(now)        
         if match:
@@ -237,6 +231,21 @@ if __name__ == '__main__':
           now=match[0]
         now=now.replace(" ","")        
         now=now.replace("ä","ae") 
+        now=now.replace("ö","oe") 
+        now=now.replace("ü","ue") 
+        now=now.replace("?","") 
+        now=now.replace(",","") 
+        now=now.replace("1","") 
+
+        if "WerwirdMillionaer" in now:
+           now="#wwm"
+        if "DeutschlandsuchtdenSuperstar" in now:
+            now="dsds"
+        if "Alleswaszält" in now:
+            now="awz"
+        if "GuteZeitenschlechteZeiten" in now:
+            now="#gzsz"
+
         channel=channel.replace(" HD","")
         channel=channel.replace(" ","")        
         if now :
@@ -278,7 +287,7 @@ if __name__ == '__main__':
               text= tweet.user.name +" : "+ tweet.text.replace("\n"," ")
               if  tweet.id > sinceid :
                  sinceid=tweet.id              
-              xbmc.log("######" + str(sinceid))
+              xbmc.log("######" + str(tweet.id))
               
               block=0
               blockwort=""
