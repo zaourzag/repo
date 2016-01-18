@@ -276,7 +276,8 @@ if __name__ == '__main__':
              #print name.text              
               xbmc.log("--")
               text= tweet.user.name +" : "+ tweet.text.replace("\n"," ")
-              since_id=tweet.id              
+              if  tweet.id > sinceid :
+                 sinceid=tweet.id              
               xbmc.log("######" + str(sinceid))
               
               block=0
