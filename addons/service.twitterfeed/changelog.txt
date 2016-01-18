@@ -13,3 +13,5 @@
 - Patch
 0.5.8
 - Match fuer zulange zeilen
+0.6.0
+- Bugfix

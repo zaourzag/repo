@@ -260,7 +260,7 @@ if __name__ == '__main__':
            now="#wwm"
         if "deutschlandsuchtdensuperstar" in now:
             now="dsds"
-        if "alleswaszält" in now:
+        if "alleswaszaelt" in now:
             now="awz"
         if "gutezeitenschlechtezeiten" in now:
             now="#gzsz"
