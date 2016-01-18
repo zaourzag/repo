@@ -4,3 +4,6 @@
 * Added GZSZ
 0.5
 - Complete Redesign
+0.5.4
+- Patches
+- New Logo Thanks Barney Stinsen
