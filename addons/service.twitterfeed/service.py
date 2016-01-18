@@ -90,25 +90,34 @@ def showTweetsub(tweet,image=""):
         xbmc.Player(xbmc.PLAYER_CORE_AUTO).showSubtitles(True)
         xbmc.Player(xbmc.PLAYER_CORE_AUTO).setSubtitles(temp+"/tweet.ass")        
         time.sleep(10)
-        xbmc.Player(xbmc.PLAYER_CORE_AUTO).showSubtitles(False)
+        xbmc.Player(xbmc.PLAYER_CORE_AUTO).showSubtitles(False)        
 
 def showTweet(tweet,image=""):
     global alles_anzeige
     xbmc.log("Twitter : showTweet start")
     if xbmc.getCondVisibility('Pvr.IsPlayingTv') or alles_anzeige=="true" :   
         global window
-        tw=unicode(tweet).encode('utf-8')      
+        tw=unicode(tweet).encode('utf-8')          
         xbmc.log("Tweet:" +tw)        
         wid = xbmcgui.getCurrentWindowId()        
         window=xbmcgui.Window(wid)
-        res=window.getResolution()
-        twitterlabel=xbmcgui.ControlLabel (110, 50, 3000, 100, tw)
+        res=window.getResolution()                      
+        twitterlabel1=xbmcgui.ControlLabel (111, 31, 3000, 100, tw[:80],textColor='0xFF000000')
+        twitterlabel2=xbmcgui.ControlLabel (110, 30, 3000, 100, tw[:80],textColor='0xFFFFFFFF')        
+        #twitterlabel3=xbmcgui.ControlLabel (111, 61, 3000, 100, tw[80:],textColor='0xFF000000')        
+        #twitterlabel4=xbmcgui.ControlLabel (110, 60, 3000, 100, tw[80:],textColor='0xFFFFFFFF')               
         avatar=xbmcgui.ControlImage(0,10,100,100,"")
         avatar.setImage(image)
-        window.addControl(twitterlabel)        
+        window.addControl(twitterlabel1)
+        window.addControl(twitterlabel2)
+        #window.addControl(twitterlabel3)
+        #window.addControl(twitterlabel4)
         window.addControl(avatar)        
         time.sleep(6)
-        window.removeControl(twitterlabel)
+        window.removeControl(twitterlabel1)
+        window.removeControl(twitterlabel2)
+        #window.removeControl(twitterlabel3)
+        #window.removeControl(twitterlabel4)
         window.removeControl(avatar)
         
         
@@ -227,7 +236,7 @@ if __name__ == '__main__':
         if match:
           now=match[0]
         match=re.compile('([^:]+)', re.DOTALL).findall(now)
-        if match:
+        if match:        
           now=match[0]
         now=now.replace(" ","")        
         now=now.replace("ä","ae") 
@@ -235,16 +244,22 @@ if __name__ == '__main__':
         now=now.replace("ü","ue") 
         now=now.replace("?","") 
         now=now.replace(",","") 
-        now=now.replace("1","") 
+        now=now.replace("’","")         
+        now=now.lower()
 
-        if "WerwirdMillionaer" in now:
+        if "werwirdmillionaer" in now:
            now="#wwm"
-        if "DeutschlandsuchtdenSuperstar" in now:
+        if "deutschlandsuchtdensuperstar" in now:
             now="dsds"
-        if "Alleswaszält" in now:
+        if "alleswaszält" in now:
             now="awz"
-        if "GuteZeitenschlechteZeiten" in now:
+        if "gutezeitenschlechtezeiten" in now:
             now="#gzsz"
+        if "ichbineinstar" in now:
+            now="#ibes"
+        if "germanysnexttopmodel" in now:
+            now="#gntm"
+       
 
         channel=channel.replace(" HD","")
         channel=channel.replace(" ","")        
