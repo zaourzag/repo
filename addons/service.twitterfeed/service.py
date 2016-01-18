@@ -101,23 +101,32 @@ def showTweet(tweet,image=""):
         xbmc.log("Tweet:" +tw)        
         wid = xbmcgui.getCurrentWindowId()        
         window=xbmcgui.Window(wid)
-        res=window.getResolution()                      
-        twitterlabel1=xbmcgui.ControlLabel (111, 31, 3000, 100, tw[:80],textColor='0xFF000000')
-        twitterlabel2=xbmcgui.ControlLabel (110, 30, 3000, 100, tw[:80],textColor='0xFFFFFFFF')        
-        #twitterlabel3=xbmcgui.ControlLabel (111, 61, 3000, 100, tw[80:],textColor='0xFF000000')        
-        #twitterlabel4=xbmcgui.ControlLabel (110, 60, 3000, 100, tw[80:],textColor='0xFFFFFFFF')               
-        avatar=xbmcgui.ControlImage(0,10,100,100,"")
-        avatar.setImage(image)
+        res=window.getResolution()      
+
+        bis=100
+        for i in range(90,110):        
+          if tw[i]==' ':
+            bis=i
+        twitterlabel1=xbmcgui.ControlLabel (111, 31, 3000, 100, tw[:bis],textColor='0xFF000000')
+        twitterlabel2=xbmcgui.ControlLabel (110, 30, 3000, 100, tw[:bis],textColor='0xFFFFFFFF')
         window.addControl(twitterlabel1)
         window.addControl(twitterlabel2)
-        #window.addControl(twitterlabel3)
-        #window.addControl(twitterlabel4)
+        
+        if len(tw) > 100:
+         twitterlabel3=xbmcgui.ControlLabel (111, 61, 3000, 100, tw[bis:],textColor='0xFF000000')        
+         twitterlabel4=xbmcgui.ControlLabel (110, 60, 3000, 100, tw[bis:],textColor='0xFFFFFFFF') 
+         window.addControl(twitterlabel3)
+         window.addControl(twitterlabel4)         
+        avatar=xbmcgui.ControlImage(0,10,100,100,"")
+        avatar.setImage(image)
+
         window.addControl(avatar)        
         time.sleep(6)
         window.removeControl(twitterlabel1)
         window.removeControl(twitterlabel2)
-        #window.removeControl(twitterlabel3)
-        #window.removeControl(twitterlabel4)
+        if len(tw) > 100:
+           window.removeControl(twitterlabel3)
+           window.removeControl(twitterlabel4)
         window.removeControl(avatar)
         
         
