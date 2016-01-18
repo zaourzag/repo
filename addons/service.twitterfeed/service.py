@@ -276,7 +276,7 @@ if __name__ == '__main__':
              #print name.text              
               xbmc.log("--")
               text= tweet.user.name +" : "+ tweet.text.replace("\n"," ")
-              sinceid=tweet.id              
+              since_id=tweet.id              
               xbmc.log("######" + str(sinceid))
               
               block=0
@@ -300,7 +300,7 @@ if __name__ == '__main__':
               else :
                   xbmc.log("Blocked : "+ blockwort + "Text :"+ text.encode('utf-8'))
               time.sleep(6)                
-        except ValueError, e:
-                xbmc.log("Invalid : %s" % e)        
+        except :
+                xbmc.log("Errror")        
       else:
          sinceid=None      
