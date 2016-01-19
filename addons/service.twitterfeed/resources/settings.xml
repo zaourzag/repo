@@ -7,6 +7,7 @@
 		<setting label="30012" type="slider" id="lesezeit" default="6" range="1,1,60" option="int" />
 	    <setting label="30005" type="action" action="RunPlugin(plugin://service.twitterfeed/?mode=clear)"/>	
 		<setting label="dummy" type="text" id="clear" visible=false />
+		<setting label="30013" type="bool" id="greyout" default="true"  />
    </category>
    <category label="30010">	
         <setting label="30001" type="text" id="blacklist" />   

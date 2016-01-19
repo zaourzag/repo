@@ -4,7 +4,6 @@
 import time, sys, os, urlparse
 import xbmc ,xbmcgui, xbmcaddon,xbmcvfs
 import urllib2,urllib, zlib,json
-import pyxbmct.addonwindow as pyxbmct 
 import twitter,shutil
 import webbrowser
 import re
@@ -28,7 +27,7 @@ oauth_token_secret=""
 __addon__ = xbmcaddon.Addon()
 __addonname__ = __addon__.getAddonInfo('name')
 __addondir__    = xbmc.translatePath( __addon__.getAddonInfo('path') )
-__background__ = os.path.join(__addondir__,"bg.png")
+background = os.path.join(__addondir__,"bg.png")
 inhalt=__addon__.getSetting("inhalt")
 profile    = xbmc.translatePath( __addon__.getAddonInfo('profile') ).decode("utf-8")
 temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
@@ -73,6 +72,8 @@ def showTweet(tweet,image=""):
     global alles_anzeige
     global urlfilter
     global lesezeit
+    global background
+    global greyout
     xbmc.log("Twitter : showTweet start")    
     if xbmc.getCondVisibility('Pvr.IsPlayingTv') or alles_anzeige=="true" :   
         global window
@@ -96,8 +97,13 @@ def showTweet(tweet,image=""):
                bis=i
         else:
             bis=len(tw)
+        if greyout=="true":
+           bg=xbmcgui.ControlImage(0,10,3000,100,"")
+           bg.setImage(background)
+           window.addControl(bg) 
+           
         twitterlabel1=xbmcgui.ControlLabel (111, 31, 3000, 100, tw[:bis],textColor='0xFF000000')
-        twitterlabel2=xbmcgui.ControlLabel (110, 30, 3000, 100, tw[:bis],textColor='0xFFFFFFFF')
+        twitterlabel2=xbmcgui.ControlLabel (110, 30, 3000, 100, tw[:bis],textColor='0xFFFFFFFF')        
         window.addControl(twitterlabel1)
         window.addControl(twitterlabel2)
         
@@ -108,15 +114,17 @@ def showTweet(tweet,image=""):
          window.addControl(twitterlabel4)         
         avatar=xbmcgui.ControlImage(0,10,100,100,"")
         avatar.setImage(image)
-
         window.addControl(avatar)        
         time.sleep(lesezeit)
+        
         window.removeControl(twitterlabel1)
         window.removeControl(twitterlabel2)
         if len(tw) > 100:
            window.removeControl(twitterlabel3)
            window.removeControl(twitterlabel4)
         window.removeControl(avatar)
+        if greyout=="true":
+           window.removeControl(bg)
         
         
         
@@ -277,6 +285,7 @@ if __name__ == '__main__':
       inhalt=__addon__.getSetting("inhalt")
       urlfilter=__addon__.getSetting("urls")
       lesezeit=__addon__.getSetting("lesezeit")
+      greyout=__addon__.getSetting("greyout")
       if inhalt=="Hash":
           if hashtag :
              if inhalt=="Hash":
