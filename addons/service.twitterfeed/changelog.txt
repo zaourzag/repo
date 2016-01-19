@@ -27,3 +27,5 @@
 - Alles Was zaehlt verschieben
 0.6.5
 - Patch
+0.6.6
+-Patch wegen Zeit Einstellung

@@ -115,7 +115,7 @@ def showTweet(tweet,image=""):
         avatar=xbmcgui.ControlImage(0,10,100,100,"")
         avatar.setImage(image)
         window.addControl(avatar)        
-        time.sleep(lesezeit)
+        time.sleep(int(lesezeit))
         
         window.removeControl(twitterlabel1)
         window.removeControl(twitterlabel2)
@@ -333,7 +333,7 @@ if __name__ == '__main__':
                  showTweet(text,userimage) 
               else :
                   xbmc.log("Blocked : "+ blockwort + "Text :"+ text.encode('utf-8'))
-              time.sleep(lesezeit)                
+              time.sleep(int(lesezeit))
         except :
                 xbmc.log("Errror")        
       else:
