@@ -78,6 +78,7 @@ def showTweet(tweet,image=""):
     if xbmc.getCondVisibility('Pvr.IsPlayingTv') or alles_anzeige=="true" :   
         global window
         tw=unicode(tweet).encode('utf-8')    
+        tw=tw.replace("&amp;","&")         
         xbmc.log("showTweet")
         if urlfilter=="true":
              xbmc.log("Filter URLS")
@@ -252,7 +253,6 @@ if __name__ == '__main__':
         now=now.replace("?","") 
         now=now.replace(",","") 
         now=now.replace("’","")         
-        now=now.replace("&amp;","&")         
         now=now.replace("der","")         
         now=now.replace("die","")         
         now=now.replace("das","")         
