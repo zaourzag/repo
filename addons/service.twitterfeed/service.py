@@ -279,7 +279,7 @@ if __name__ == '__main__':
         channel=channel.replace(" CH","")  
         channel=channel.replace(" A","")  
         channel=channel.replace(" ","")        
-        if "Erste" in channel:
+        if "erste" in channel:
            channel="ard"
         channel=channel.replace("ProSieben","pro7")
         if "wdr" in channel:

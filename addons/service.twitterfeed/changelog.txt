@@ -38,3 +38,5 @@
 - Fix for Sat1
 0.6.10
 - New Tags
+0.6.11
+- Fix
