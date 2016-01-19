@@ -234,12 +234,8 @@ if __name__ == '__main__':
         channel = xbmc.getInfoLabel('VideoPlayer.ChannelName')
         if channel=="" :
              break
-        if "Erste" in channel:
-           channel="ard"
-        if "ProSieben" in channel:
-           channel="pro7"
+    
         
-        channel=channel.replace(".","")  
 
         match=re.compile('([^-]+)', re.DOTALL).findall(now)        
         if match:
@@ -272,8 +268,27 @@ if __name__ == '__main__':
             now="simpsons"
        
 
+        channel=channel.lower()
         channel=channel.replace(" HD","")
+        channel=channel.replace(" SD","")
+        channel=channel.replace(".","")  
+        channel=channel.replace("_","")  
+        channel=channel.replace("-","")  
+        channel=channel.replace("austria","")  
+        channel=channel.replace(" AT","")  
+        channel=channel.replace(" CH","")  
+        channel=channel.replace(" A","")  
         channel=channel.replace(" ","")        
+        if "Erste" in channel:
+           channel="ard"
+        channel=channel.replace("ProSieben","pro7")
+        if "wdr" in channel:
+            channel="wdr"
+        if "mdr" in channel:
+            channel="mdr"
+        if "kabeleins" in channel:
+            channel="kabel1"
+
         if now :
           search="#"+ channel +" OR "+ "#"+ now
         else:
