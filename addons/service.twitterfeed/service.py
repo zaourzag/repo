@@ -252,6 +252,7 @@ if __name__ == '__main__':
         now=now.replace("?","") 
         now=now.replace(",","") 
         now=now.replace("’","")         
+        now=now.replace("&amp;","&")         
         now=now.replace("der","")         
         now=now.replace("die","")         
         now=now.replace("das","")         
