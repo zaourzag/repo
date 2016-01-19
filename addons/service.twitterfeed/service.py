@@ -254,17 +254,17 @@ if __name__ == '__main__':
         now=now.lower()
 
         if "werwirdmillionaer" in now:
-           now="#wwm"
+           now="wwm"
         if "deutschlandsuchtdensuperstar" in now:
-            now="#dsds"
+            now="dsds"
         if "alleswaszaehlt" in now:
-            now="#awz"
+            now="awz"
         if "gutezeitenschlechtezeiten" in now:
-            now="#gzsz"
+            now="gzsz"
         if "ichbineinstar" in now:
-            now="#ibes"
+            now="ibes"
         if "germanysnexttopmodel" in now:
-            now="#gntm"
+            now="gntm"
        
 
         channel=channel.replace(" HD","")

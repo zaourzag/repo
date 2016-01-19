@@ -25,3 +25,5 @@
 0.6.4
 - Hash Tags bei einigen Tags vergessen
 - Alles Was zaehlt verschieben
+0.6.5
+- Patch
