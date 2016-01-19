@@ -256,9 +256,9 @@ if __name__ == '__main__':
         if "werwirdmillionaer" in now:
            now="#wwm"
         if "deutschlandsuchtdensuperstar" in now:
-            now="dsds"
-        if "alleswaszaelt" in now:
-            now="awz"
+            now="#dsds"
+        if "alleswaszaehlt" in now:
+            now="#awz"
         if "gutezeitenschlechtezeiten" in now:
             now="#gzsz"
         if "ichbineinstar" in now:

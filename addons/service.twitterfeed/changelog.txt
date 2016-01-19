@@ -22,3 +22,6 @@
 - Added Lesezeit
 0.6.3
 - Added Abdunkeln
+0.6.4
+- Hash Tags bei einigen Tags vergessen
+- Alles Was zaehlt verschieben
