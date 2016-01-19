@@ -236,6 +236,8 @@ if __name__ == '__main__':
              break
         if "Erste" in channel:
            channel="ard"
+        if "ProSieben" in channel:
+           channel="pro7"
         
         
         match=re.compile('([^-]+)', re.DOTALL).findall(now)        
@@ -265,6 +267,8 @@ if __name__ == '__main__':
             now="ibes"
         if "germanysnexttopmodel" in now:
             now="gntm"
+        if "diesimpsons" in now:
+            now="simpsons"
        
 
         channel=channel.replace(" HD","")
