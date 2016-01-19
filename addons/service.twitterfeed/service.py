@@ -94,19 +94,30 @@ def showTweetsub(tweet,image=""):
 
 def showTweet(tweet,image=""):
     global alles_anzeige
-    xbmc.log("Twitter : showTweet start")
+    global urlfilter
+    xbmc.log("Twitter : showTweet start")    
     if xbmc.getCondVisibility('Pvr.IsPlayingTv') or alles_anzeige=="true" :   
         global window
-        tw=unicode(tweet).encode('utf-8')          
+        tw=unicode(tweet).encode('utf-8')    
+        xbmc.log("showTweet")
+        if urlfilter=="true":
+             xbmc.log("Filter URLS")
+             match=re.compile('(http[s]*://[^ ]+)', re.DOTALL).findall(tw)
+             if match:
+               for furl in match:
+                 tw=tw.replace(furl,"")
+                 xbmc.log("Filter Url : "+ furl)            
         xbmc.log("Tweet:" +tw)        
         wid = xbmcgui.getCurrentWindowId()        
         window=xbmcgui.Window(wid)
         res=window.getResolution()      
-
-        bis=100
-        for i in range(90,110):        
-          if tw[i]==' ':
-            bis=i
+        if len(tw) > 100 :
+           bis=100
+           for i in range(90,110):        
+             if tw[i]==' ':
+               bis=i
+        else:
+            bis=len(tw)
         twitterlabel1=xbmcgui.ControlLabel (111, 31, 3000, 100, tw[:bis],textColor='0xFF000000')
         twitterlabel2=xbmcgui.ControlLabel (110, 30, 3000, 100, tw[:bis],textColor='0xFFFFFFFF')
         window.addControl(twitterlabel1)
@@ -281,28 +292,29 @@ if __name__ == '__main__':
         xbmc.log("inhalt :"+ inhalt)
       xbmc.log("Hole Umgebung")
       country=__addon__.getSetting("country").lower()        
-      limit=__addon__.getSetting("limit")   
+      limit=__addon__.getSetting("limit")         
       alles_anzeige=__addon__.getSetting("alles_anzeige")   
       hashtag=__addon__.getSetting("hashtag") 
       bild=__addon__.getSetting("bild") 
       inhalt=__addon__.getSetting("inhalt")
-      xbmc.log("Tweeter : hashtag="+ hashtag)
+      urlfilter=__addon__.getSetting("urls")
       if inhalt=="Hash":
-          if hashtag:
-             xbmc.log("#Hastag :" + hashtag)
-             search=hashtag
+          if hashtag :
+             if inhalt=="Hash":
+                 xbmc.log("#Hastag :" + hashtag)
+                 search=hashtag
           else:
              xbmc.log("Setze Kodi")
              search="kodi"
       if xbmc.getCondVisibility('Pvr.IsPlayingTv') or alles_anzeige=="true" :
         xbmc.log("Suche Tweets")
-        try:
-
-          
+        try:          
           if   country=="" :
-              country=None                            
+              country=None   
           if inhalt=="TV" or inhalt=="Hash":
-              tweets=api.GetSearch(search,since_id=sinceid,lang=country,result_type="recent")
+               xbmc.log("SEARCH:")
+               xbmc.log("SEARCH:   "+search)
+               tweets=api.GetSearch(search,since_id=sinceid,lang=country,result_type="recent")
           else:
               tweets = api.GetHomeTimeline(since_id=sinceid)             
           for tweet in tweets:

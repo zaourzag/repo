@@ -15,3 +15,6 @@
 - Match fuer zulange zeilen
 0.6.0
 - Bugfix
+0.6.1
+- Bugfix 
+- Url Filtern moeglich
