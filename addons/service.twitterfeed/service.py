@@ -232,6 +232,7 @@ if __name__ == '__main__':
         xbmc.log("Hole Ferseh tweets")
         now = xbmc.getInfoLabel('Player.Title')
         channel = xbmc.getInfoLabel('VideoPlayer.ChannelName')
+        channelold=channel
         if channel=="" :
              break
     
@@ -269,7 +270,9 @@ if __name__ == '__main__':
             now="gntm"
         if "diesimpsons" in now:
             now="simpsons"
-       
+        if "markuslanz" in now:
+            now="markuslanz OR #lanz"
+          
 
         channel=channel.lower()
         channel=channel.replace(" hd","")
@@ -291,6 +294,8 @@ if __name__ == '__main__':
             channel="mdr"
         if "kabeleins" in channel:
             channel="kabel1"
+        if "rtli" in channel:
+            channel="rtl2"
 
         if now :
           search="#"+ channel +" OR "+ "#"+ now
@@ -329,6 +334,8 @@ if __name__ == '__main__':
           else:
               tweets = api.GetHomeTimeline(since_id=sinceid)             
           for tweet in tweets:
+             if not xbmc.getInfoLabel('VideoPlayer.ChannelName')==channelold
+                break
              #print name.text              
               xbmc.log("--")
               text= tweet.user.name +" : "+ tweet.text.replace("\n"," ")
