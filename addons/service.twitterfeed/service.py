@@ -251,6 +251,9 @@ if __name__ == '__main__':
         now=now.replace("?","") 
         now=now.replace(",","") 
         now=now.replace("’","")         
+        now=now.replace("der","")         
+        now=now.replace("die","")         
+        now=now.replace("das","")         
 
         if "werwirdmillionaer" in now:
            now="wwm"
@@ -278,10 +281,10 @@ if __name__ == '__main__':
         channel=channel.replace(" at","")  
         channel=channel.replace(" ch","")  
         channel=channel.replace(" a","")  
+        channel=channel.replace("prosieben","pro7")
         channel=channel.replace(" ","")        
         if "erste" in channel:
            channel="ard"
-        channel=channel.replace("ProSieben","pro7")
         if "wdr" in channel:
             channel="wdr"
         if "mdr" in channel:
