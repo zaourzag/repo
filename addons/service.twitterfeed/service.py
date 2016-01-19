@@ -334,7 +334,7 @@ if __name__ == '__main__':
           else:
               tweets = api.GetHomeTimeline(since_id=sinceid)             
           for tweet in tweets:
-             if not xbmc.getInfoLabel('VideoPlayer.ChannelName')==channelold
+              if not xbmc.getInfoLabel('VideoPlayer.ChannelName')==channelold:
                 break
              #print name.text              
               xbmc.log("--")
