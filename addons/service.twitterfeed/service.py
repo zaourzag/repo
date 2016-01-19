@@ -243,6 +243,7 @@ if __name__ == '__main__':
         match=re.compile('([^:]+)', re.DOTALL).findall(now)
         if match:        
           now=match[0]
+        now=now.lower()
         now=now.replace(" ","")        
         now=now.replace("ä","ae") 
         now=now.replace("ö","oe") 
@@ -250,7 +251,6 @@ if __name__ == '__main__':
         now=now.replace("?","") 
         now=now.replace(",","") 
         now=now.replace("’","")         
-        now=now.lower()
 
         if "werwirdmillionaer" in now:
            now="wwm"
@@ -269,15 +269,15 @@ if __name__ == '__main__':
        
 
         channel=channel.lower()
-        channel=channel.replace(" HD","")
-        channel=channel.replace(" SD","")
+        channel=channel.replace(" hd","")
+        channel=channel.replace(" sd","")
         channel=channel.replace(".","")  
         channel=channel.replace("_","")  
         channel=channel.replace("-","")  
         channel=channel.replace("austria","")  
-        channel=channel.replace(" AT","")  
-        channel=channel.replace(" CH","")  
-        channel=channel.replace(" A","")  
+        channel=channel.replace(" at","")  
+        channel=channel.replace(" ch","")  
+        channel=channel.replace(" a","")  
         channel=channel.replace(" ","")        
         if "erste" in channel:
            channel="ard"
