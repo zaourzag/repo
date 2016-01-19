@@ -68,33 +68,11 @@ if len(sys.argv) > 1:
       ok = xbmcgui.Dialog().ok( "Neu Configuration", "Nach verlassen des Einstellungen wird Twitter neu Configuriert" )   
       exit()
   
-# Zeigt ein Tweed an
-def showTweetsub(tweet,image=""):
-    xbmc.log("Twitter : showTweet start")
-    if xbmc.getCondVisibility('Pvr.IsPlayingTv'):   
-        xbmc.Player(xbmc.PLAYER_CORE_AUTO).setSubtitles(temp+"/x.ass")
-        f = open(temp+"/tweet.ass", 'w')            
-        f.write("﻿[Script Info]\n")
-        f.write("﻿Title: Twitter\n")
-        f.write("﻿ScriptType: v4.00+ \n")
-        f.write("[V4+ Styles]\n")
-        f.write("Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding\n")
-        f.write("Style: Default,Arial,12,&H00FFFFFF,&H000000FF,&H00000000,&H00000000,0,0,0,0,100,100,0,0,1,2,1,2,10,10,10,1\n")
-        f.write("[Events]\n")
-        f.write("Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text\n")
-        tw=unicode(tweet).encode('utf-8')      
-        xbmc.log("Tweet:" +tw)        
-        f.write("Dialogue: 0,0:0:5.00,9:1:50.00,Default,,0000,0000,0000,,{\\a6}"+tw+"\n")            
-        f.write("Dialogue: 0,1:0:5.00,1:0:50.00,Default,,0000,0000,0000,,{\\a6}end\n")            
-        f.close()        
-        xbmc.Player(xbmc.PLAYER_CORE_AUTO).showSubtitles(True)
-        xbmc.Player(xbmc.PLAYER_CORE_AUTO).setSubtitles(temp+"/tweet.ass")        
-        time.sleep(10)
-        xbmc.Player(xbmc.PLAYER_CORE_AUTO).showSubtitles(False)        
 
 def showTweet(tweet,image=""):
     global alles_anzeige
     global urlfilter
+    global lesezeit
     xbmc.log("Twitter : showTweet start")    
     if xbmc.getCondVisibility('Pvr.IsPlayingTv') or alles_anzeige=="true" :   
         global window
@@ -132,7 +110,7 @@ def showTweet(tweet,image=""):
         avatar.setImage(image)
 
         window.addControl(avatar)        
-        time.sleep(6)
+        time.sleep(lesezeit)
         window.removeControl(twitterlabel1)
         window.removeControl(twitterlabel2)
         if len(tw) > 100:
@@ -298,6 +276,7 @@ if __name__ == '__main__':
       bild=__addon__.getSetting("bild") 
       inhalt=__addon__.getSetting("inhalt")
       urlfilter=__addon__.getSetting("urls")
+      lesezeit=__addon__.getSetting("lesezeit")
       if inhalt=="Hash":
           if hashtag :
              if inhalt=="Hash":
@@ -345,7 +324,7 @@ if __name__ == '__main__':
                  showTweet(text,userimage) 
               else :
                   xbmc.log("Blocked : "+ blockwort + "Text :"+ text.encode('utf-8'))
-              time.sleep(6)                
+              time.sleep(lesezeit)                
         except :
                 xbmc.log("Errror")        
       else:

@@ -16,5 +16,7 @@
 0.6.0
 - Bugfix
 0.6.1
-- Bugfix 
-- Url Filtern moeglich
+- Bugfix
+- Added Url Filter
+0.6.2
+- Added Lesezeit
