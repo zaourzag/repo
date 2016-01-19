@@ -34,3 +34,4 @@
 0.6.8
 - Pro7
 - Simpson
+0.6.9 Fix for Sat1

@@ -239,7 +239,8 @@ if __name__ == '__main__':
         if "ProSieben" in channel:
            channel="pro7"
         
-        
+        channel=channel.replace(".","")  
+
         match=re.compile('([^-]+)', re.DOTALL).findall(now)        
         if match:
           now=match[0]
