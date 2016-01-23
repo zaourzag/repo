@@ -205,6 +205,7 @@ if __name__ == '__main__':
     oldusername=""
     oldpassword=""    
     oldurl=""
+    sid=""
     # Starte Service
     monitor = xbmc.Monitor()    
     # Solange der Service läuft
@@ -233,7 +234,9 @@ if __name__ == '__main__':
       videooff=__addon__.getSetting("videooff")   
       videooff_id=__addon__.getSetting("idvideooff")          
       # Nur wenn ein Fernsehnder an ist      
-      if xbmc.getCondVisibility('Pvr.IsPlayingTv'):             
+      if sid == "":
+        break
+      if xbmc.getCondVisibility('Pvr.IsPlayingTv') :             
              status=tvon 
              thisid=tvon_id
              if tvon=="Ein":

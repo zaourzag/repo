@@ -1,2 +1,4 @@
+0.1.1
+* SID Fehler wenn sender aber nicht authentifiziert
 0.1
 * Initial Release
