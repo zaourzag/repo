@@ -273,8 +273,6 @@ if __name__ == '__main__':
             now="simpsons"
         if "markuslanz" in now:
             now="markuslanz OR #lanz"
-        if "skybundesliga" in now:
-            now="bundesliga"
           
 
         channel=channel.lower()
@@ -299,6 +297,8 @@ if __name__ == '__main__':
             channel="kabel1"
         if "rtli" in channel:
             channel="rtl2"
+        if "skybundesliga" in channel:
+            channel="bundesliga"
 
         if now :
           search="#"+ channel +" OR "+ "#"+ now
