@@ -40,3 +40,5 @@
 - New Tags
 0.6.11
 - Fix
+0.6.17
+- Added Sky Bundesliga Alias

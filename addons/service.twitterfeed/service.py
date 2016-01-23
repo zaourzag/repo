@@ -273,6 +273,8 @@ if __name__ == '__main__':
             now="simpsons"
         if "markuslanz" in now:
             now="markuslanz OR #lanz"
+        if "skybundesliga" in now:
+            now="bundesliga"
           
 
         channel=channel.lower()
