@@ -14,6 +14,7 @@ import cookielib
 __addon__ = xbmcaddon.Addon()
 __addonname__ = __addon__.getAddonInfo('name')
 __addondir__    = xbmc.translatePath( __addon__.getAddonInfo('path') )
+idname=__addon__.getAddonInfo('id')
 cj = cookielib.CookieJar()
 
 # inhalt=__addon__.getSetting("inhalt")
@@ -31,7 +32,8 @@ def log(msg, level=xbmc.LOGNOTICE):
     addonID = addon.getAddonInfo('id')
     xbmc.log('%s: %s' % (addonID, msg), level) 
     
-  
+
+
 # Einlesen von Parametern, Notwendig für Reset der Twitter API
 def parameters_string_to_dict(parameters):
 	paramDict = {}
@@ -71,37 +73,47 @@ def parameters_string_to_dict(parameters):
 	return paramDict
   
 def getSessionID(baseuri, username, password, sid = None):
+  debug("GetSessionId")
+  debug("baseuri : "+ baseuri )
+  debug("username : "+ username)
+  debug("password : "+ password)
   if sid == None:
     uri = baseuri + "/login_sid.lua"
   else:
     uri = baseuri + "/login_sid.lua?sid="+sid
-
+  debug("uri : "+ uri)
   req = urllib2.urlopen(uri)
   data = req.read()
   #print "data from checking sid:"
   #print data
-
+  
   xml = parseString(data)
   sid = xml.getElementsByTagName("SID").item(0).firstChild.data
-
+  debug("SID ist :"+ sid)
   #print "sid",sid
   if sid != "0000000000000000":
     return sid
   else:
     challenge = xml.getElementsByTagName("Challenge").item(0).firstChild.data
+    debug("Challange :"+ challenge)
     #print "challenge",challenge
     uri = baseuri + "/login_sid.lua"
     post_data = urllib.urlencode({'username' : username, 'response' : createResponse(challenge,password), 'page' : ''})
     #print "req uri:",uri, post_data
+    debug("getSessionID url :"+ uri)
+    debug("Post Data :" + post_data)
     req = urllib2.urlopen(uri, post_data)
-    data = req.read()
-    #print "data from login:"
-    #print req.info()
-    #print data
+    data = req.read()    
+    debug ("data from login:")
+    debug (req.info())
+    debug(data)
     xml = parseString(data)
     sid = xml.getElementsByTagName("SID").item(0).firstChild.data
-    #print "sid",sid
-    if sid == "0000000000000000": raise FritzError("login to fritzbox failed")
+    debug("Nach Login SID :"+ sid)
+    if sid == "0000000000000000": 
+       debug("Login Failed")
+    else:
+       debug("Sid : "+ sid)
     return sid
 
 def createResponse(challenge, password):
@@ -143,7 +155,7 @@ def readids():
             aktion="videooff"
             aktionid="idvideooff"
          baseurl="http://"+ip             
-         sid=getSessionID(baseurl,"",password)
+         sid=getSessionID(baseurl,username,password)
          debug("SID : "+sid)
          url=baseurl +"/webservices/homeautoswitch.lua?switchcmd=getdevicelistinfos&sid="+sid
          content=getUrl(url)
