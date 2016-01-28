@@ -6,3 +6,5 @@
 -- New Version Maintained by L0RE
 -1.0.2
 -- Add minLength setting
+-1.0.3
+-- Fix FOr Min Length
