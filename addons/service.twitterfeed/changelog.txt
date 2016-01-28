@@ -46,3 +46,5 @@
 - Code Complett umgeschrieben. damit er wartbarer und lesbarer ist
 - Vorbereitet das ich später externe Alias Listen einbaun Kann
 - Twitter Feeds von Videos eingefuegt
+0.7.1
+- Cut - or : on Videos

@@ -348,6 +348,12 @@ if __name__ == '__main__':
              if title=="":
                  continue             
          title=title.lower()
+         match=re.compile('([^-]+)', re.DOTALL).findall(title)
+         if match:
+            title=match[0]
+         match=re.compile('([^:]+)', re.DOTALL).findall(title)
+         if match:
+            title=match[0]
          title=title.replace(".","")                
          title=title.replace("the","")
          title=title.replace(" ","")
