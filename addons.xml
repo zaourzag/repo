@@ -696,7 +696,7 @@ Orginal Code was from AddonScriptorDE</disclaimer>
     </extension>
 </addon>
 
-<addon id="plugin.video.tivi_de" name="ZDF tivi" version="1.0.1" provider-name="L0RE">
+<addon id="plugin.video.tivi_de" name="ZDF tivi" version="1.0.2" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
     </requires>
