@@ -5,16 +5,16 @@ import urllib2
 import socket
 import sys
 import re
-import os
 import xbmcplugin
 import xbmcgui
 import xbmcaddon
 
-addon = xbmcaddon.Addon()
+#addon = xbmcaddon.Addon()
+#addonID = addon.getAddonInfo('id')
+addonID = 'plugin.video.tivi_de'
+addon = xbmcaddon.Addon(id=addonID)
 socket.setdefaulttimeout(30)
 pluginhandle = int(sys.argv[1])
-addonID = 'plugin.video.tivi_de'
-#addonID = addon.getAddonInfo('id')
 forceViewMode = addon.getSetting("forceViewMode") == "true"
 useThumbAsFanart = addon.getSetting("useThumbAsFanart") == "true"
 viewMode = str(addon.getSetting("viewMode"))
@@ -23,7 +23,9 @@ icon = xbmc.translatePath('special://home/addons/'+addonID+'/icon.png')
 urlMain = "http://www.tivi.de"
 opener = urllib2.build_opener()
 opener.addheaders = [('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; rv:25.0) Gecko/20100101 Firefox/25.0')]
-
+minLength = addon.getSetting("minLength")
+mins = [0, 5, 10, 20, 30]
+minLength = mins[int(minLength)]
 
 def index():
     addDir(translation(30001), urlMain+"/tiviVideos/rueckblick?view=flashXml", 'listVideos', icon)
@@ -60,7 +62,8 @@ def listVideos(url):
         thumb = urlMain+match[0]
         thumb = thumb[:thumb.rfind('/')].replace('tiviTeaserbild', 'tivi9teaserbild')
         if "7-Tage-R%C3%BCckblick" not in url:
-            addLink(title, url, 'playVideo', thumb, desc, duration)
+            if int(duration) >= int(minLength):
+                addLink(title, url, 'playVideo', thumb, desc, duration)
     xbmcplugin.endOfDirectory(pluginhandle)
     if forceViewMode:
         xbmc.executebuiltin('Container.SetViewMode('+viewMode+')')
@@ -68,16 +71,9 @@ def listVideos(url):
 
 def listShows():
     xbmcplugin.addSortMethod(pluginhandle, xbmcplugin.SORT_METHOD_LABEL)
-    content = opener.open(urlMain+"/tiviVideos/navigation?view=flashXml").read()                            
-    content=content.replace("\n","")
-    content=content.replace("</ns2:node>","</ns2:node>\n")
-    print content
-    match = re.compile('label="([^"]+)" +?image="([^"]+)" +?type="broadcast">([^<]+)', re.DOTALL).findall(content)
-    print match
-    x=0
+    content = opener.open(urlMain+"/tiviVideos/navigation?view=flashXml").read()
+    match = re.compile('<ns2:node.+?id=".+?".+?label="(.+?)".+?image="(.+?)".+?type="broadcast">(.+?)</ns2:node>', re.DOTALL).findall(content)
     for title, thumb, url in match:
-        x=x+1
-        print "XXXXX", str(x)
         thumb = urlMain+thumb[:thumb.rfind('/')]
         addDir(title, urlMain+url, 'listVideos', thumb)
     xbmcplugin.endOfDirectory(pluginhandle)
