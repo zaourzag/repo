@@ -42,3 +42,7 @@
 - Fix
 0.6.17
 - Added Sky Bundesliga Alias
+0.7.0
+- Code Complett umgeschrieben. damit er wartbarer und lesbarer ist
+- Vorbereitet das ich später externe Alias Listen einbaun Kann
+- Twitter Feeds von Videos eingefuegt

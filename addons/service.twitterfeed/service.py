@@ -28,14 +28,11 @@ __addon__ = xbmcaddon.Addon()
 __addonname__ = __addon__.getAddonInfo('name')
 __addondir__    = xbmc.translatePath( __addon__.getAddonInfo('path') )
 background = os.path.join(__addondir__,"bg.png")
-inhalt=__addon__.getSetting("inhalt")
+
 profile    = xbmc.translatePath( __addon__.getAddonInfo('profile') ).decode("utf-8")
 temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
 
-if inhalt=="TV" or inhalt=="Hash":
-  ratlimit=8
-else :
-  ratlimit=60
+
 
   
   
@@ -93,7 +90,7 @@ def showTweet(tweet,image=""):
         res=window.getResolution()      
         if len(tw) > 100 :
            bis=100
-           for i in range(90,110):        
+           for i in range(90,100):        
              if tw[i]==' ':
                bis=i
         else:
@@ -128,6 +125,17 @@ def showTweet(tweet,image=""):
            window.removeControl(bg)
         
         
+def debug(content):
+    log(content, xbmc.LOGDEBUG)
+    
+def notice(content):
+    log(content, xbmc.LOGNOTICE)
+
+def log(msg, level=xbmc.LOGNOTICE):
+    addon = xbmcaddon.Addon()
+    addonID = addon.getAddonInfo('id')
+    xbmc.log('%s: %s' % (addonID, msg), level) 
+    
         
 # Get Token        
 def get_access_token(consumer_key, consumer_secret):
@@ -189,13 +197,87 @@ def get_access_token(consumer_key, consumer_secret):
     f.close()    
 
 
-    
+def repace_channels(channel)    :
+    channel=channel.lower()
+    channel=channel.replace(" hd","")
+    channel=channel.replace(" sd","")
+    hannel=channel.replace(".","")  
+    channel=channel.replace("_","")  
+    channel=channel.replace("-","")  
+    channel=channel.replace("austria","")  
+    channel=channel.replace(" at","")  
+    channel=channel.replace(" ch","")  
+    channel=channel.replace(" a","")  
+    channel=channel.replace("prosieben","pro7")
+    channel=channel.replace(" ","")        
+    if "erste" in channel:
+        channel="ard"
+    if "wdr" in channel:
+        channel="wdr"
+    if "mdr" in channel:
+        channel="mdr"
+    if "kabeleins" in channel:
+        channel="kabel1"
+    if "rtli" in channel:
+        channel="rtl2"
+    if "skybundesliga" in channel:
+        channel="bundesliga"
+    return channel
+def repace_sendung(now):  
+  match=re.compile('([^-]+)', re.DOTALL).findall(now)        
+  if match:
+     now=match[0]
+  match=re.compile('([^:]+)', re.DOTALL).findall(now)
+  if match:        
+     now=match[0]
+  now=now.lower()
+  now=now.replace(" ","")        
+  now=now.replace("ä","ae") 
+  now=now.replace("ö","oe") 
+  now=now.replace("ü","ue") 
+  now=now.replace("?","") 
+  now=now.replace(",","") 
+  now=now.replace("’","")         
+  now=now.replace("der","")         
+  now=now.replace("die","")         
+  now=now.replace("das","")         
 
+  if "werwirdmillionaer" in now:
+     now="wwm"
+  if "deutschlandsuchtdensuperstar" in now:
+     now="dsds"
+  if "alleswaszaehlt" in now:
+     now="awz"
+  if "gutezeitenschlechtezeiten" in now:
+     now="gzsz"
+  if "ichbineinstar" in now:
+     now="ibes"
+  if "germanysnexttopmodel" in now:
+     now="gntm"
+  if "diesimpsons" in now:
+     now="simpsons"
+  if "markuslanz" in now:
+     now="markuslanz OR #lanz"
+  return(now)
+
+def block(text,blacklist) :           
+    text=text.encode('utf-8')
+    debug("Blacklist"+ blacklist)
+    debug("Text zu durchsuchen ist :" +text)
+    blacklist_array=blacklist.split(",")
+    if blacklist and blacklist!="":
+       for blocked in blacklist_array:
+           debug("Block Wort " + blocked + "#")
+           if blocked.lower() in text.lower() and not blocked == "":
+              debug("Gebloggt wegen : "+ blocked)
+              return True
+    return False
+                     
 
 if __name__ == '__main__':
     xbmc.log("Twitter:  Starte Plugin")
         
-    x=0   
+    start=1   
     
     #Directory für Token Anlegen
     if not xbmcvfs.exists(temp):       
@@ -204,109 +286,9 @@ if __name__ == '__main__':
     monitor = xbmc.Monitor()
     
     sinceid=None
-    auth=0
+    
     # Solange der Service läuft
     while not monitor.abortRequested():
-      # Wenn kein Token oder Authentifizerung löschen wurde Neu Authentifizieren
-      if not xbmcvfs.exists(temp+"/init.ok") or __addon__.getSetting("clear")=="CLEARIT":        
-        x=get_access_token(consumer_key, consumer_secret)       
-        auth=0
-      else:         
-        if auth==0:
-          # Alten Token Laden
-          f=xbmcvfs.File(temp+"/init.ok","r")   
-          daten=f.read()
-          match=re.compile('oauth_token: ([^#]+)', re.DOTALL).findall(daten)
-          oauth_token=match[0]
-          match=re.compile('oauth_token_secret: ([^#]+)', re.DOTALL).findall(daten)
-          oauth_token_secret=match[0]              
-      if auth==0 :
-         xbmc.log("Twitter: Starte Auth")                  
-         api = twitter.Api(consumer_key=consumer_key,consumer_secret=consumer_secret,access_token_key=oauth_token,access_token_secret=oauth_token_secret)       
-         auth=1
-      # Warten damit wir nicht zuviel absetzen
-      xbmc.log("Sleep")
-      if monitor.waitForAbort(ratlimit):
-        break      
-      # Nur wenn ein Fernsehnder an ist      
-      if xbmc.getCondVisibility('Pvr.IsPlayingTv'):
-        xbmc.log("Hole Ferseh tweets")
-        now = xbmc.getInfoLabel('Player.Title')
-        channel = xbmc.getInfoLabel('VideoPlayer.ChannelName')
-        channelold=channel
-        if channel=="" :
-             break
-    
-        
-
-        match=re.compile('([^-]+)', re.DOTALL).findall(now)        
-        if match:
-          now=match[0]
-        match=re.compile('([^:]+)', re.DOTALL).findall(now)
-        if match:        
-          now=match[0]
-        now=now.lower()
-        now=now.replace(" ","")        
-        now=now.replace("ä","ae") 
-        now=now.replace("ö","oe") 
-        now=now.replace("ü","ue") 
-        now=now.replace("?","") 
-        now=now.replace(",","") 
-        now=now.replace("’","")         
-        now=now.replace("der","")         
-        now=now.replace("die","")         
-        now=now.replace("das","")         
-
-        if "werwirdmillionaer" in now:
-           now="wwm"
-        if "deutschlandsuchtdensuperstar" in now:
-            now="dsds"
-        if "alleswaszaehlt" in now:
-            now="awz"
-        if "gutezeitenschlechtezeiten" in now:
-            now="gzsz"
-        if "ichbineinstar" in now:
-            now="ibes"
-        if "germanysnexttopmodel" in now:
-            now="gntm"
-        if "diesimpsons" in now:
-            now="simpsons"
-        if "markuslanz" in now:
-            now="markuslanz OR #lanz"
-          
-
-        channel=channel.lower()
-        channel=channel.replace(" hd","")
-        channel=channel.replace(" sd","")
-        channel=channel.replace(".","")  
-        channel=channel.replace("_","")  
-        channel=channel.replace("-","")  
-        channel=channel.replace("austria","")  
-        channel=channel.replace(" at","")  
-        channel=channel.replace(" ch","")  
-        channel=channel.replace(" a","")  
-        channel=channel.replace("prosieben","pro7")
-        channel=channel.replace(" ","")        
-        if "erste" in channel:
-           channel="ard"
-        if "wdr" in channel:
-            channel="wdr"
-        if "mdr" in channel:
-            channel="mdr"
-        if "kabeleins" in channel:
-            channel="kabel1"
-        if "rtli" in channel:
-            channel="rtl2"
-        if "skybundesliga" in channel:
-            channel="bundesliga"
-
-        if now :
-          search="#"+ channel +" OR "+ "#"+ now
-        else:
-           search="#"+ channel               
-        xbmc.log("SEARCH :"+ search + " ID: " +str(sinceid))
-        xbmc.log("loading new data")         
-        xbmc.log("inhalt :"+ inhalt)
       xbmc.log("Hole Umgebung")
       country=__addon__.getSetting("country").lower()        
       limit=__addon__.getSetting("limit")         
@@ -314,9 +296,82 @@ if __name__ == '__main__':
       hashtag=__addon__.getSetting("hashtag") 
       bild=__addon__.getSetting("bild") 
       inhalt=__addon__.getSetting("inhalt")
+      tv=__addon__.getSetting("tv")
+      video=__addon__.getSetting("video")
       urlfilter=__addon__.getSetting("urls")
       lesezeit=__addon__.getSetting("lesezeit")
       greyout=__addon__.getSetting("greyout")
+      blacklist=__addon__.getSetting("blacklist")
+      if inhalt=="Video" or inhalt=="Hash":
+            ratlimit=8
+      else :
+            ratlimit=60      
+            
+      # Wenn kein Token oder Authentifizerung löschen wurde Neu Authentifizieren
+      if not xbmcvfs.exists(temp+"/init.ok") or __addon__.getSetting("clear")=="CLEARIT": 
+        debug("Starte neue Authentifizierung")
+        try:      
+          get_access_token(consumer_key, consumer_secret)       
+          continue
+        except :
+          debug("Neue Token Holen Fehlgeschlagen")
+          continue
+      else:         
+          # Alten Token Laden
+          debug("Lese Token aus File")
+          f=xbmcvfs.File(temp+"/init.ok","r")   
+          daten=f.read()
+          match=re.compile('oauth_token: ([^#]+)', re.DOTALL).findall(daten)
+          oauth_token=match[0]
+          match=re.compile('oauth_token_secret: ([^#]+)', re.DOTALL).findall(daten)
+          oauth_token_secret=match[0]              
+          
+          debug("Twitter: Starte Auth")  
+          try:         
+            api = twitter.Api(consumer_key=consumer_key,consumer_secret=consumer_secret,access_token_key=oauth_token,access_token_secret=oauth_token_secret)                 
+          except :
+            debug("ERROR Authentifizierung klappt nicht")   
+            continue            
+      
+      if start==0:
+        debug("Pause wegen Rate Limit")
+        if monitor.waitForAbort(ratlimit):
+          break      
+      start=0
+
+      if inhalt=="Video" and  video=="true" and xbmc.getCondVisibility('Player.HasMedia') and not xbmc.getCondVisibility('Pvr.IsPlayingTv'):
+         title=""
+         title=xbmc.getInfoLabel('VideoPlayer.TVShowTitle') 
+         debug("Title :" + title)
+         if title=="":           
+             title=xbmc.getInfoLabel('VideoPlayer.Title') 
+             if title=="":
+                 continue             
+         title=title.lower()
+         title=title.replace(".","")                
+         title=title.replace("the","")
+         title=title.replace(" ","")
+         search="#" + title
+         debug("Video:")
+         debug ("Search : "+ search)
+      if inhalt=="Video" and  tv=="true" and xbmc.getCondVisibility('Pvr.IsPlayingTv'):
+        # Nur wenn ein Fernsehnder an ist          
+        xbmc.log("Hole Ferseh tweets")
+        
+        now = xbmc.getInfoLabel('Player.Title')
+        channel = xbmc.getInfoLabel('VideoPlayer.ChannelName')        
+        
+        if channel=="" :
+             continue
+             
+        channel=repace_channels(channel)
+        now=repace_sendung(now)      
+        
+        if now :
+          search="#"+ channel +" OR "+ "#"+ now
+        else:
+           search="#"+ channel                     
+      
       if inhalt=="Hash":
           if hashtag :
              if inhalt=="Hash":
@@ -325,49 +380,39 @@ if __name__ == '__main__':
           else:
              xbmc.log("Setze Kodi")
              search="kodi"
-      if xbmc.getCondVisibility('Pvr.IsPlayingTv') or alles_anzeige=="true" :
-        xbmc.log("Suche Tweets")
-        try:          
-          if   country=="" :
-              country=None   
-          if inhalt=="TV" or inhalt=="Hash":
-               xbmc.log("SEARCH:")
-               xbmc.log("SEARCH:   "+search)
+      
+      if   country=="" :
+           country=None    
+                 
+      try:       
+         if search:
+            debug ("Search: " +search)
+         debug ("-------")
+         if inhalt=="Video" and tv=="true" and xbmc.getCondVisibility('Pvr.IsPlayingTv'):   
                tweets=api.GetSearch(search,since_id=sinceid,lang=country,result_type="recent")
-          else:
+         if inhalt=="Hash":
+               tweets=api.GetSearch(search,since_id=sinceid,lang=country,result_type="recent")
+         if inhalt=="Video" and video=="true":               
+               tweets=api.GetSearch(search,since_id=sinceid,lang=country,result_type="recent")
+         if inhalt=="Timeline":
               tweets = api.GetHomeTimeline(since_id=sinceid)             
-          for tweet in tweets:
-              if not xbmc.getInfoLabel('VideoPlayer.ChannelName')==channelold:
-                break
-             #print name.text              
-              xbmc.log("--")
-              text= tweet.user.name +" : "+ tweet.text.replace("\n"," ")
-              if  tweet.id > sinceid :
-                 sinceid=tweet.id              
-              xbmc.log("######" + str(tweet.id))
-              
-              block=0
-              blockwort=""
-              blacklist=__addon__.getSetting("blacklist")
-              xbmc.log("Blacklist"+ blacklist)
-              blacklist=blacklist.split(",")
-              if blacklist:
-                for blocked in blacklist:
-                  xbmc.log("Block Wort " + blocked +" Suchen")
-                  if blocked.lower() in text.encode('utf-8').lower() and not blocked == "":
-                     block=1
-                     blockwort=blockwort +","+ blocked
-              
-              if block==0:
-                 if bild=="true":
+      except:
+          debug("Tweets Holen Fehlerhaft")
+          continue     
+      for tweet in tweets:                  
+         text= tweet.user.name +" : "+ tweet.text.replace("\n"," ")
+         if  tweet.id > sinceid :
+             sinceid=tweet.id              
+             debug("Neue Tweet ID " + str(tweet.id))
+         
+         if not block(text,blacklist) : 
+               debug("Tweet ok")         
+               if bild=="true":
                    userimage=tweet.user.profile_image_url    
-                 else :
-                    userimage=""                   
-                 showTweet(text,userimage) 
-              else :
-                  xbmc.log("Blocked : "+ blockwort + "Text :"+ text.encode('utf-8'))
-              time.sleep(int(lesezeit))
-        except :
-                xbmc.log("Errror")        
-      else:
-         sinceid=None      
+               else :
+                   userimage=""                   
+               showTweet(text,userimage)                      
+         else:
+             debug("Gebannt Thread")
+           
+      
