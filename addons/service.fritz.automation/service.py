@@ -137,8 +137,10 @@ def readids():
        Menu1=[]
        Menu1.append("TV is Running")
        Menu1.append("TV is not Running")
+       Menu1.append("TV is Paused")
        Menu1.append("Video is Running")
        Menu1.append("Video is not Running")
+       Menu1.append("Video is Paused")
        dialog = xbmcgui.Dialog()
        nr=dialog.select("Select Action", Menu1)
        if nr>=0:
@@ -149,11 +151,17 @@ def readids():
             aktion="tvoff"
             aktionid="idtvoff"
          if nr==2 :
+            aktion="pausetv"
+            aktionid="idpausetv"            
+         if nr==3 :
             aktion="videoon"
             aktionid="idvideoon"
-         if nr==3 :
+         if nr==4 :
             aktion="videooff"
             aktionid="idvideooff"
+         if nr==5 :
+            aktion="pausevideo"
+            aktionid="idpausevideo"
          baseurl="http://"+ip             
          sid=getSessionID(baseurl,username,password)
          debug("SID : "+sid)
@@ -180,9 +188,9 @@ def readids():
              nr=dialog.select("Select Strom", Menu3)
              if nr >=0:
                 if nr==0 :
-                  zustand="Ein"
+                  zustand="setswitchon"
                 if nr==1 :
-                  zustand="Aus"
+                  zustand="setswitchoff"
                 __addon__.setSetting(id=aktion, value=zustand)                
                 __addon__.setSetting(id=aktionid, value=ids)                                
          else:
@@ -204,15 +212,27 @@ if len(sys.argv) > 1:
       videoon_id=__addon__.getSetting("idvideovon")         
       videooff=__addon__.getSetting("videooff")   
       videooff_id=__addon__.getSetting("idvideooff")               
+      pausetv=__addon__.getSetting("pausetv")     
+      pausetv_id=__addon__.getSetting("idpausetv")     
+      pausevideo=__addon__.getSetting("pausevideo")     
+      pausevideo_id=__addon__.getSetting("idpausevideo")   
       readids()
        
 #      dialog2 = xbmcgui.Dialog()      
  #     ok = xbmcgui.Dialog().ok( "Neu Configuration", "Nach verlassen des Einstellungen wird Twitter neu Configuriert" )   
  #     exit()            
-
-
+def is_playback_paused():
+   try:
+    start_time = xbmc.Player().getTime()
+    time.sleep(1)
+    if xbmc.Player().getTime() != start_time:
+        return False
+    else:
+        return True
+   except:
+        return False
 if __name__ == '__main__':
-    xbmc.log("Twitter:  Starte Plugin")
+    xbmc.log("Twitter:  Starte Plugin")    
     oldip=""
     oldusername=""
     oldpassword=""    
@@ -245,37 +265,42 @@ if __name__ == '__main__':
       videoon_id=__addon__.getSetting("idvideoon")         
       videooff=__addon__.getSetting("videooff")   
       videooff_id=__addon__.getSetting("idvideooff")          
+      pausetv=__addon__.getSetting("pausetv")     
+      pausetv_id=__addon__.getSetting("idpausetv")     
+      pausevideo=__addon__.getSetting("pausevideo")     
+      pausevideo_id=__addon__.getSetting("idpausevideo")     
       # Nur wenn ein Fernsehnder an ist      
       if sid == "":
         break
-      if xbmc.getCondVisibility('Pvr.IsPlayingTv') :             
-             status=tvon 
-             thisid=tvon_id
-             if tvon=="Ein":
-               url=baseurl +"/webservices/homeautoswitch.lua?ain="+tvon_id+"&switchcmd=setswitchon&sid="+sid               
-             else:
-               url=baseurl +"/webservices/homeautoswitch.lua?ain=" +tvon_id +"&switchcmd=setswitchoff&sid="+sid
-             xbmc.log("TV Läuft")
-      elif not xbmc.Player().isPlaying() :
-             status=tvoff
-             thisid=tvoff_id
-             if tvoff=="Ein":
-              url=baseurl +"/webservices/homeautoswitch.lua?ain="+tvoff_id+"&switchcmd=setswitchon&sid="+sid
-             else:
-              url=baseurl +"/webservices/homeautoswitch.lua?ain="+tvoff_id+"&switchcmd=setswitchoff&sid="+sid   
+      if xbmc.Player().isPlaying() :
+         pause=is_playback_paused()
+      else: 
+         pause=False
          
-      if xbmc.Player().isPlaying() and not xbmc.getCondVisibility('Pvr.IsPlayingTv'):             
-          if videoon=="Ein":
-             url=baseurl +"/webservices/homeautoswitch.lua?ain="+videoon_id+"&switchcmd=setswitchon&sid="+sid               
-          else:
-             url=baseurl +"/webservices/homeautoswitch.lua?ain=" +videoon_id +"&switchcmd=setswitchoff&sid="+sid
-             xbmc.log("TV Läuft")
-      elif not xbmc.getCondVisibility('Pvr.IsPlayingTv'):
-          if videooff=="Ein":
-               url=baseurl +"/webservices/homeautoswitch.lua?ain="+videooff_id+"&switchcmd=setswitchon&sid="+sid
-          else:
-               url=baseurl +"/webservices/homeautoswitch.lua?ain="+videooff_id+"&switchcmd=setswitchoff&sid="+sid                    
-               
+      url=""
+      # Video läuft nicht 
+      if not xbmc.Player().isPlaying() : 
+         if videooff_id!="" and videooff!="":                         
+             url=baseurl +"/webservices/homeautoswitch.lua?ain="+videooff_id+"&switchcmd="+ videooff +"&sid="+sid               
+      # TV läuft nicht              
+      if not xbmc.getCondVisibility('Pvr.IsPlayingTv') : 
+         if tvoff_id!="" and tvoff!="":                         
+             url=baseurl +"/webservices/homeautoswitch.lua?ain="+tvoff_id+"&switchcmd="+ tvoff +"&sid="+sid                      
+      #        
+      if xbmc.Player().isPlaying() :
+          if videoon_id!="" and videoon!="":       
+             url=baseurl +"/webservices/homeautoswitch.lua?ain="+videoon_id+"&switchcmd="+ videoon +"&sid="+sid       
+      if xbmc.getCondVisibility('Pvr.IsPlayingTv'):
+          if tvon_id!="" and tvon!="": 
+             url=baseurl +"/webservices/homeautoswitch.lua?ain="+tvon_id+"&switchcmd="+ tvon +"&sid="+sid                    
+      
+      if xbmc.Player().isPlaying() and pause:
+          if pausevideo_id!="" and pausevideo!="": 
+             url=baseurl +"/webservices/homeautoswitch.lua?ain="+pausevideo_id+"&switchcmd="+ pausevideo +"&sid="+sid          
+      if xbmc.getCondVisibility('Pvr.IsPlayingTv') and pause:
+          if pausetv_id!="" and pausetv!="": 
+             url=baseurl +"/webservices/homeautoswitch.lua?ain="+pausetv_id+"&switchcmd="+ pausetv +"&sid="+sid                       
+             
       if not oldurl==url:
          content=getUrl(url)             
          oldurl=url
