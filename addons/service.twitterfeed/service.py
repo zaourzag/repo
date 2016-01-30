@@ -391,8 +391,6 @@ if __name__ == '__main__':
            country=None    
                  
       try:       
-         if search:
-            debug ("Search: " +search)
          debug ("-------")
          if inhalt=="Video" and tv=="true" and xbmc.getCondVisibility('Pvr.IsPlayingTv'):   
                tweets=api.GetSearch(search,since_id=sinceid,lang=country,result_type="recent")
@@ -402,6 +400,9 @@ if __name__ == '__main__':
                tweets=api.GetSearch(search,since_id=sinceid,lang=country,result_type="recent")
          if inhalt=="Timeline":
               tweets = api.GetHomeTimeline(since_id=sinceid)             
+              search=""
+         if search:
+            debug ("Search: " +search)
       except:
           debug("Tweets Holen Fehlerhaft")
           continue     
