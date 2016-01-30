@@ -122,6 +122,20 @@ def createResponse(challenge, password):
   res = "%s-%s" % (challenge, hashlib.md5(text).hexdigest())
   #print "md5: [%s]" % res
   return res
+
+def getdevices():
+    global sid
+    global baseurl
+    global ip
+    baseurl="http://"+ip             
+    sid=getSessionID(baseurl,username,password)
+    debug("SID : "+sid)
+    url=baseurl +"/webservices/homeautoswitch.lua?switchcmd=getdevicelistinfos&sid="+sid
+    content=getUrl(url)
+    xml = parseString(content)
+    devices = xml.getElementsByTagName("device")
+    return devices 
+        
 def readids():
      deviceids=[]
      deviceids.append("")
@@ -162,13 +176,8 @@ def readids():
          if nr==5 :
             aktion="pausevideo"
             aktionid="idpausevideo"
-         baseurl="http://"+ip             
-         sid=getSessionID(baseurl,username,password)
-         debug("SID : "+sid)
-         url=baseurl +"/webservices/homeautoswitch.lua?switchcmd=getdevicelistinfos&sid="+sid
-         content=getUrl(url)
-         xml = parseString(content)
-         devices = xml.getElementsByTagName("device")
+         devices=getdevices()         
+         
          for device in devices:
           namexml=device.getElementsByTagName("name")[0]
           name=namexml.firstChild.data
@@ -196,27 +205,96 @@ def readids():
          else:
                 __addon__.setSetting(id=aktion, value="")                
                 __addon__.setSetting(id=aktionid, value="")         
+
+def login(oldip,oldusername,oldpassword):
+  global ip
+  global username
+  global password
+  global sid
+  global baseurl
+  ip=__addon__.getSetting("ip")  
+  username=__addon__.getSetting("username")  
+  password=__addon__.getSetting("password") 
+  baseurl="http://"+ip       
+  if oldpassword!=password or oldusername!=username or oldip!=ip:
+         debug("Es hat sich was geändert")
+         if password!="" and ip!="" :
+           debug ("Authentifiziere")           
+           sid=getSessionID(baseurl,username,password)                      
+         oldpassword=password
+         oldusername=username
+         oldip=ip  
+  yield oldip
+  yield oldusername
+  yield oldpassword
+         
+def einausschalten()  :
+   deviceids=[]
+   deviceids.append("")
+   devicenames=[]
+   allstrings=[]   
+   oldpassword=""
+   oldusername=""
+   oldip=""
+   oldurl=""
+   global sid
+   allstrings.append("Keine Aktion")
+   devicenames.append("Keine Aktion")
+   devices=getdevices()      
+   for device in devices:
+      namexml=device.getElementsByTagName("name")[0]
+      name=namexml.firstChild.data
+      devid=device.getAttribute('identifier')
+      devicenames.append(name)
+      deviceids.append(devid)
+      allstrings.append(name + "( "+ devid +" )")        
+      dialog = xbmcgui.Dialog()
+      nr=dialog.select("Menu", allstrings)
+      if nr>=1:
+        name=devicenames[nr]
+        ids=deviceids[nr]           
+        Menu3=[]
+        Menu3.append("Einschalten")
+        Menu3.append("Auschalten")
+        dialog = xbmcgui.Dialog()
+        nr=dialog.select("Select Strom", Menu3)  
+        login(oldip,oldusername,oldpassword)        
+        if nr==0:
+             url=baseurl +"/webservices/homeautoswitch.lua?ain="+ids+"&switchcmd=setswitchon&sid="+sid    
+             debug("URL EINAUS: "+ url)             
+             content=getUrl(url)    
+        if nr==1:
+             url=baseurl +"/webservices/homeautoswitch.lua?ain="+ids+"&switchcmd=setswitchoff&sid="+sid             
+             debug("URL EINAUS: "+ url)             
+             content=getUrl(url)                      
+                
 if len(sys.argv) > 1:
     params = parameters_string_to_dict(sys.argv[2])
     mode = urllib.unquote_plus(params.get('mode', ''))
+    ip=__addon__.getSetting("ip")  
+    username=__addon__.getSetting("username")  
+    password=__addon__.getSetting("password")  
+    tvon=__addon__.getSetting("tvon")        
+    tvon_id=__addon__.getSetting("idtvon")         
+    tvoff=__addon__.getSetting("tvoff")   
+    tvoff_id=__addon__.getSetting("idtvoff")
+    videoon=__addon__.getSetting("videoon")        
+    videoon_id=__addon__.getSetting("idvideovon")         
+    videooff=__addon__.getSetting("videooff")   
+    videooff_id=__addon__.getSetting("idvideooff")               
+    pausetv=__addon__.getSetting("pausetv")     
+    pausetv_id=__addon__.getSetting("idpausetv")     
+    pausevideo=__addon__.getSetting("pausevideo")     
+    pausevideo_id=__addon__.getSetting("idpausevideo")   
     if mode=="clear":      
-      xbmc.log("Starte Settings")                              
-      ip=__addon__.getSetting("ip")  
-      username=__addon__.getSetting("username")  
-      password=__addon__.getSetting("password")  
-      tvon=__addon__.getSetting("tvon")        
-      tvon_id=__addon__.getSetting("idtvon")         
-      tvoff=__addon__.getSetting("tvoff")   
-      tvoff_id=__addon__.getSetting("idtvoff")
-      videoon=__addon__.getSetting("videoon")        
-      videoon_id=__addon__.getSetting("idvideovon")         
-      videooff=__addon__.getSetting("videooff")   
-      videooff_id=__addon__.getSetting("idvideooff")               
-      pausetv=__addon__.getSetting("pausetv")     
-      pausetv_id=__addon__.getSetting("idpausetv")     
-      pausevideo=__addon__.getSetting("pausevideo")     
-      pausevideo_id=__addon__.getSetting("idpausevideo")   
+      xbmc.log("Starte Settings")                                   
       readids()
+      exit(0)
+    else: 
+       einausschalten()
+       exit(0)
+       
+    
        
 #      dialog2 = xbmcgui.Dialog()      
  #     ok = xbmcgui.Dialog().ok( "Neu Configuration", "Nach verlassen des Einstellungen wird Twitter neu Configuriert" )   
@@ -231,6 +309,8 @@ def is_playback_paused():
         return True
    except:
         return False
+
+         
 if __name__ == '__main__':
     xbmc.log("Twitter:  Starte Plugin")    
     oldip=""
@@ -238,23 +318,14 @@ if __name__ == '__main__':
     oldpassword=""    
     oldurl=""
     sid=""
+    baseurl=""
+    
     # Starte Service
     monitor = xbmc.Monitor()    
     # Solange der Service läuft
     while not monitor.abortRequested():  
     
-      ip=__addon__.getSetting("ip")  
-      username=__addon__.getSetting("username")  
-      password=__addon__.getSetting("password") 
-      baseurl="http://"+ip       
-      if oldpassword!=password or oldusername!=username or oldip!=ip:
-         debug("Es hat sich was geändert")
-         if password!="" and ip!="" :
-           debug ("Authentifiziere")           
-           sid=getSessionID(baseurl,username,password)                      
-         oldpassword=password
-         oldusername=username
-         oldip=ip            
+      oldip,oldusername,oldpassword=login(oldip,oldusername,oldpassword)        
       if monitor.waitForAbort(5):
         break            
       tvon=__addon__.getSetting("tvon")        

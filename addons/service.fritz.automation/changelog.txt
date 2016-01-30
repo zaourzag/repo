@@ -1,5 +1,6 @@
-0.1.3
-* Pause Eingebaut
+0.2.0
+* Added Pause Funktion
+* Added Manual Switching
 0.1.2
 * More Debugging
 0.1.1
