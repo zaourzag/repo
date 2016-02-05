@@ -57,9 +57,9 @@ if not os.path.isdir(userDataFolder):
 def index():
     addDir(translation(30002), "", 'listAZ', icon, '')
     addDir(translation(30010), "", 'listShowsFavs', icon, '')
-    addDir(translation(30003), "NEU", 'listVideosLatest', icon, '')
-    addDir(translation(30004), "BELIEBT", 'listVideosLatest', icon, '')
-    addDir(translation(30007), "KURZE CLIPS", 'listVideosLatest', icon, '')
+    addDir(translation(30003), "NEUE FOLGEN", 'listVideosLatest', icon, '')
+    addDir(translation(30004), "BELIEBTE VIDEOS", 'listVideosLatest', icon, '')
+    addDir(translation(30007), "CLIPS AUS DEN SENDUNGEN", 'listVideosLatest', icon, '')
     xbmcplugin.endOfDirectory(pluginhandle)
 
 
@@ -156,7 +156,7 @@ def listVideosLatest(type):
 def listAZ():
     letters = [chr(i) for i in xrange(ord('a'), ord('z')+1)]
     for letter in letters:
-        url = baseUrl+"/wp-content/plugins/dni_plugin_core/ajax.php?action=dni_listing_items_filter&letter="+letter.upper()+"&page=1&id=1b0&post_id=2178"
+        url = baseUrl+"/wp-content/plugins/dni_plugin_core/ajax.php?action=dni_listing_items_filter&letter="+letter.upper()+"&page=1&id=bc4&post_id=2178"
         addDir(letter.upper(), url, 'listShows', icon, "")
     xbmcplugin.endOfDirectory(pluginhandle)
     if forceViewMode:

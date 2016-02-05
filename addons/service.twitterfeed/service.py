@@ -116,6 +116,7 @@ def showTweet(tweet,image=""):
         time.sleep(int(lesezeit))
         
         window.removeControl(twitterlabel1)
+w
         window.removeControl(twitterlabel2)
         if len(tw) > 100:
            window.removeControl(twitterlabel3)
