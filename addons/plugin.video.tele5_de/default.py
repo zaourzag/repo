@@ -9,6 +9,7 @@ import os
 import xbmcplugin
 import xbmcgui
 import xbmcaddon
+import HTMLParser
 
 #addon = xbmcaddon.Addon()
 #addonID = addon.getAddonInfo('id')
@@ -23,12 +24,22 @@ baseUrl = "http://www.tele5.de"
 opener = urllib2.build_opener()
 opener.addheaders = [('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; rv:25.0) Gecko/20100101 Firefox/25.0')]
 
+def debug(content):
+    log(content, xbmc.LOGDEBUG)
+    
+def notice(content):
+    log(content, xbmc.LOGNOTICE)
+
+def log(msg, level=xbmc.LOGNOTICE):
+    addon = xbmcaddon.Addon()
+    addonID = addon.getAddonInfo('id')
+    xbmc.log('%s: %s' % (addonID, msg), level) 
 
 def index():
-    content = opener.open(baseUrl+"/was-verpasst/sendungen.html").read()
-    content = content[content.find('class="videosGesamt"'):]
-    content = content[:content.find('</section>')]
-    match = re.compile('href="http://www.tele5.de/(.+?)".+?src="(.+?)".+?<h3>(.+?)</h3>', re.DOTALL).findall(content)
+    content = opener.open(baseUrl+"/re-play.html").read()
+    content = content[content.find('<div class="mainContent">'):]
+    content = content[:content.find('<!-- MAINCONTENT -->')]
+    match = re.compile('title=.+?href="http://www.tele5.de/(.+?)".+?src="(.+?)".+?<h3>(.+?)</h3>', re.DOTALL).findall(content)
     for url, thumb, title in match:
         addDir(title, baseUrl+"/"+url, 'listVideos', thumb)
     xbmcplugin.endOfDirectory(pluginhandle)
@@ -36,12 +47,16 @@ def index():
 
 
 def listVideos(urlMain):
+    h = HTMLParser.HTMLParser()
+    debug("listVideos urlMain :"+ urlMain)    
     content = opener.open(urlMain).read()
-    content = content[content.find('<!--TYPO3SEARCH_begin-->'):]
-    content = content[:content.find('</section>')]
+    content = content[content.find('<div class="videosGesamt">'):]
+    content = content[:content.find('<!-- FOOTER -->')]  
+    debug("content :"+content)
     spl = content.split('<a ')
     VIDEOSFOUND=0
-    for i in range(1, len(spl), 1):
+    for i in range(1, len(spl)-1, 1):
+        debug("SP :"+spl[i])
         VIDEOSFOUND=1
         entry = spl[i]
         match = re.compile('<h3>(.+?)</h3>', re.DOTALL).findall(entry)
@@ -58,12 +73,18 @@ def listVideos(urlMain):
     if VIDEOSFOUND == 0:
         content = opener.open(urlMain).read()
         content = content[content.find('<!--TYPO3SEARCH_begin-->'):]
-        content = content[:content.find('</section>')]
-        title = re.compile('<h3 class="bg-headline">(.+?)</h3>', re.DOTALL).findall(content)[0]
-        thumb = re.compile('<span itemprop="thumbnail" content="(.+?)"></span>', re.DOTALL).findall(content)[0]
+        content = content[:content.find('<!--TYPO3SEARCH_end-->')]
+
+        debug ("CONTENT : "+ content)
+        title = re.compile('<h3 class="bg-headline">(.+?)</h3>', re.DOTALL).findall(content)
+        if '<span itemprop="thumbnail" content="' in content:
+           thumb = re.compile('<span itemprop="thumbnail" content="(.+?)"></span>', re.DOTALL).findall(content)
+        else:
+           thumb = re.compile('<img src="(.+?)"', re.DOTALL).findall(content)
+        for i in range(0, len(title), 1):
         #desc = re.compile('class="csc-frame csc-frame-indent"><p>(.+?)</p></div>', re.DOTALL).findall(content)[0]
-        url = urlMain
-        addLink(title, url, 'playVideo', thumb, 'desc')
+          url = urlMain
+          addLink(h.unescape(title[i]), url, 'playVideo', thumb[i], 'desc')
     xbmcplugin.endOfDirectory(pluginhandle)
 
 

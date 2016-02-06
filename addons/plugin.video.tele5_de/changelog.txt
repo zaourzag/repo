@@ -9,3 +9,5 @@
 - Fixed RAW
 1.0.4
 - removed rtmp code and changed to http. now seeking is working. 
+1.0.5
+- Fix
