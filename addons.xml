@@ -83,10 +83,9 @@
   </extension>
 </addon>
 
-<addon id="plugin.video.arte_tv" name="Arte.tv" version="2.9.5" provider-name="PUR3">
+<addon id="plugin.video.arte_tv" name="Arte.tv" version="2.9.6" provider-name="PUR3">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
-        <import addon="repository.lost-and-found" version="1.1.5"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
@@ -802,6 +801,22 @@ Orginal Code was from AddonScriptorDE</disclaimer>
         <forum>http://forum.xbmc.org/showthread.php?tid=132563</forum>
         <email>andreas at vogler dot name</email>
         <website>http://www.weltderwunder.tv</website>
+    </extension>
+</addon>
+
+<addon id="plugin.video.zattoo_com" name="Zattoo Live TV" version="1.0.0" provider-name="PUR3">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="de">Über 75 TV-Sender als Livestreams auf dem Gerät deiner Wahl ansehen.</summary>
+        <description lang="de">Fußball, Serien, Filme, Dokus und Reportagen laufen mit Zattoo im Livestream. Alles was du brauchst, ist eine Internetverbindung und schon läuft das Fernsehprogramm mit mehr als 75-TV-Sendern kostenlos auf dem Gerät deiner Wahl.</description>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <website>http://www.zattoo.com</website>
     </extension>
 </addon>
 

@@ -46,13 +46,8 @@ def get_stream_url(api_url, language = 'de', bitrate = 2200):
             stream_url = quality['VUR']
             if quality['VQU'] == quality_code: break
     return stream_url
-
-# vector in {ARTEPLUS7|TVGUIDE|CREATIVE|CINEMA|FUTURE|ALW|INFO|TRACKS|EXTERNAL|PRESSE_D|PRESSE_F|ARTETV|HABILLAGE|OPERA|PRG_ANG|PRG_ESP}
-def get_stream_url_by_id(id = '060793-000-A', language = 'de', bitrate = 2200, vector = 'ARTEPLUS7'):
-    """
-    Requires working ssl module
-    """
-    api_url = 'https://api.arte.tv/api/player/v1/config/%s/%s?vector=%s' % (language, id, vector)
+    
+def get_vp_stream_url(api_url, bitrate = 2200):
     try: 
         json_data = urllib2.urlopen(api_url).read()
     except: return -1 # no network
@@ -75,6 +70,23 @@ def get_stream_url_by_id(id = '060793-000-A', language = 'de', bitrate = 2200, v
             if video['VSR'][quality]['quality'] == quality_code: break
     except: pass
     return stream_url
+
+# vector in {ARTEPLUS7|TVGUIDE|CREATIVE|CINEMA|FUTURE|ALW|INFO|TRACKS|EXTERNAL|PRESSE_D|PRESSE_F|ARTETV|HABILLAGE|OPERA|PRG_ANG|PRG_ESP}
+def get_stream_url_by_id(id = '060793-000-A', language = 'de', bitrate = 2200, vector = 'ARTEPLUS7'):
+    """
+    Requires working ssl module
+    """
+    api_url = 'https://api.arte.tv/api/player/v1/config/%s/%s?vector=%s' % (language, id, vector)
+    return get_vp_stream_url(api_url, bitrate)
+    
+def get_vp_api_url(url):
+    from re import findall
+    try:
+        html = urllib2.urlopen(url).read()
+        regex_api_url = 'arte_vp_url="(.+?)"'
+        return findall(regex_api_url, html)[0]
+    except:
+        return ''
     
 def play_video(url):
-    return xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, xbmcgui.ListItem(path=url))
+    xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, xbmcgui.ListItem(path=url))

@@ -2,7 +2,7 @@
 import urllib
 import xbmcaddon
 import xbmc
-from resources.lib.functions import translate
+from resources.lib.functions import translate, parameters_string_to_dict
 
 addon = xbmcaddon.Addon(id = 'plugin.video.arte_tv')
 language = ('de', 'fr', 'en', 'es')[int(addon.getSetting('language'))]
@@ -10,16 +10,6 @@ details = ('L2', 'L3')[1 if addon.getSetting('loadExtraDetails') == 'true' else 
 items_per_page = (10, 15, 20, 25, 50)[int(addon.getSetting('videosPerPage'))]
 thumb_as_fanart = addon.getSetting('useThumbAsFanart') == 'true'
 bitrate = (300, 800, 1500, 2200)[int(addon.getSetting('prefVideoQuality'))]
-
-def parameters_string_to_dict(parameters):
-    paramDict = {}
-    if parameters:
-        paramPairs = parameters[1:].split('&')
-        for paramsPair in paramPairs:
-            paramSplits = paramsPair.split('=')
-            if (len(paramSplits)) == 2:
-                paramDict[paramSplits[0]] = paramSplits[1]
-    return paramDict
 
 params = parameters_string_to_dict(sys.argv[2])
 mode = urllib.unquote_plus(params.get('mode', ''))
@@ -48,6 +38,27 @@ if mode == 'highlights':
             list_highlight_videos('http://www.arte.tv/videofeed/CREATIVE/%s/most_recent.json', language, 'CREATIVE', bitrate)
         else:
             list_highlight_videos('http://www.arte.tv/videofeed/FUTURE/%s/most_recent.json', language, 'FUTURE', bitrate)
+elif mode == 'concert':
+    from resources.lib.concert import list_collections, list_concert_index
+    site = urllib.unquote_plus(params.get('site', ''))
+    if site:
+        list_collections(language, type = site)
+    else:
+        list_concert_index(language)
+elif mode == 'concert-search':
+    import xbmc
+    from resources.lib.concert import *
+    keyboard = xbmc.Keyboard('', translate(30005))
+    keyboard.doModal()
+    if keyboard.isConfirmed():
+        search_string = keyboard.getText()
+        concert_search(language, search_string, page = 0)
+elif mode == 'list-concert-videos':
+    from resources.lib.concert import *
+    site = urllib.unquote_plus(params.get('site', ''))
+    sort = urllib.unquote_plus(params.get('sort', '')) or 'latest'
+    page = int(urllib.unquote_plus(params.get('page', '')) or 0)
+    list_concert_videos(language, site, page, sort=sort)
 elif mode == 'plus7':
     from resources.lib.plus7 import list_index
     list_index()
@@ -72,21 +83,27 @@ elif mode == 'live-tv':
     play_livestream(language)
 elif mode == 'play-video':
     from resources.lib.player import *
-    player_url = urllib.unquote_plus(params.get('stream', ''))
-    if player_url:
-        stream_url = get_stream_url(player_url, language, bitrate)
+    page = urllib.unquote_plus(params.get('page', ''))
+    if page:
+        vp_api_url = get_vp_api_url(page)
+        stream = get_vp_stream_url(vp_api_url, bitrate)
+        play_video(stream)
     else:
-        id = urllib.unquote_plus(params.get('id', ''))
-        vector = urllib.unquote_plus(params.get('vector', '')) or 'ARTEPLUS7'
-        stream_url = get_stream_url_by_id(id, language, bitrate, vector)
-    title = urllib.unquote_plus(params.get('title', ''))
-    if title:
-        import xbmcgui
-        thumb = urllib.unquote_plus(params.get('thumb', ''))
-        item = xbmcgui.ListItem(title, thumbnailImage=thumb)
-        xbmc.Player().play(stream_url, item)
-    else:
-        play_video(stream_url)
+        player_url = urllib.unquote_plus(params.get('stream', ''))
+        if player_url:
+            stream_url = get_stream_url(player_url, language, bitrate)
+        else:
+            id = urllib.unquote_plus(params.get('id', ''))
+            vector = urllib.unquote_plus(params.get('vector', '')) or 'ARTEPLUS7'
+            stream_url = get_stream_url_by_id(id, language, bitrate, vector)
+        title = urllib.unquote_plus(params.get('title', ''))
+        if title:
+            import xbmcgui
+            thumb = urllib.unquote_plus(params.get('thumb', ''))
+            item = xbmcgui.ListItem(title, thumbnailImage=thumb)
+            xbmc.Player().play(stream_url, item)
+        else:
+            play_video(stream_url)
 elif mode == 'list-videos':
     from resources.lib.plus7 import list_videos
     lmt = int( urllib.unquote_plus(params.get('limit', '')) or items_per_page )
