@@ -233,6 +233,10 @@ msgctxt "#30120"
 msgid "Clear"
 msgstr "Leeren"
 
+msgctxt "#30121"
+msgid "usethump"
+msgstr "Thumbnail als Fanart"
+
 msgctxt "#30500"
 msgid "DRM protected streams are not supported"
 msgstr "Mit DRM geschützte Videos werden nicht unterstützt"

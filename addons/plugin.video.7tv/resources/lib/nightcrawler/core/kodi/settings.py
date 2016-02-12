@@ -16,6 +16,7 @@ class KodiSettings(AbstractSettings):
 
     def _convert(self, context):
         convert_map = {'kodion.fanart.show': self.ADDON_SHOW_FANART,
+                       'kodion.fanart.thumb': self.ADDON_SHOW_THUMB,
                        'kodion.content.max_per_page': self.ADDON_ITEMS_PER_PAGE,
                        'kodion.search.size': self.ADDON_SEARCH_SIZE,
                        'kodion.cache.size': self.ADDON_CACHE_SIZE,

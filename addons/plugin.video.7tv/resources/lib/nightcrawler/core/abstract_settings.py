@@ -11,6 +11,7 @@ class AbstractSettings(object):
     ADDON_CACHE_CLEAR = 'addon.cache.clear'  # (bool)
     ADDON_CACHE_SIZE = 'addon.cache.size'  # (int)
     ADDON_SHOW_FANART = 'addon.fanart.show'  # (bool)
+    ADDON_SHOW_THUMB = 'addon.fanart.thumb'  # (bool)
     ADDON_SEARCH_SIZE = 'addon.search.size'  # (int)
     ADDON_ITEMS_PER_PAGE = 'addon.items.per_page'  # (int)
 
@@ -92,7 +93,10 @@ class AbstractSettings(object):
 
     def show_fanart(self):
         return self.get_bool(self.ADDON_SHOW_FANART, True)
-
+        
+    def show_tumbfanart(self):
+        return self.get_bool(self.ADDON_SHOW_THUMB, True)
+        
     def get_search_history_size(self):
         return self.get_int(self.ADDON_SEARCH_SIZE, 50, lambda x: x * 10)
 
