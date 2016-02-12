@@ -1,3 +1,6 @@
+3.1.2 (2016-02-12)
+[fix] Fanart
+
 3.1.1 (2016-02-11)
 [fix] playback (by Jin)
 [upd] Bis 3.0 Entwickelt von Bromix ab 3.1 Maintained by L0RE

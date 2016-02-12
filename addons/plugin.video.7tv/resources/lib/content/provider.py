@@ -115,7 +115,7 @@ class Provider(nightcrawler.Provider):
                 item['title'] = '%s - %s' % (item['format'], item['title'])
                 pass
 
-            item['images']['fanart'] = self.get_fanart(context)
+            #item['images']['fanart'] = self.get_fanart(context)
             item['uri'] = context.create_uri('play', {'video_id': item['id']})
 
             item['context-menu'] = {'items': [(context.localize(self.LOCAL_WATCH_LATER),
