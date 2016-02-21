@@ -48,3 +48,5 @@
 - Twitter Feeds von Videos eingefuegt
 0.7.1
 - Cut - or : on Videos
+0.8.0
+- Alias Via URL or file

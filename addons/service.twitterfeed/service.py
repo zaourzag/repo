@@ -11,6 +11,8 @@ from requests_oauthlib import OAuth1Session
 from thread import start_new_thread
 from requests.packages import urllib3
 import math
+import socket, cookielib
+import time
 
 urllib3.disable_warnings()
 
@@ -116,7 +118,6 @@ def showTweet(tweet,image=""):
         time.sleep(int(lesezeit))
         
         window.removeControl(twitterlabel1)
-w
         window.removeControl(twitterlabel2)
         if len(tw) > 100:
            window.removeControl(twitterlabel3)
@@ -137,6 +138,12 @@ def log(msg, level=xbmc.LOGNOTICE):
     addonID = addon.getAddonInfo('id')
     xbmc.log('%s: %s' % (addonID, msg), level) 
     
+def geturl(url):
+   cj = cookielib.CookieJar()
+   opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
+   req = urllib2.Request(url)
+   inhalt = urllib2.urlopen(req).read()   
+   return inhalt    
         
 # Get Token        
 def get_access_token(consumer_key, consumer_secret):
@@ -198,69 +205,19 @@ def get_access_token(consumer_key, consumer_secret):
     f.close()    
 
 
-def repace_channels(channel)    :
-    channel=channel.lower()
-    channel=channel.replace(" hd","")
-    channel=channel.replace(" sd","")
-    hannel=channel.replace(".","")  
-    channel=channel.replace("_","")  
-    channel=channel.replace("-","")  
-    channel=channel.replace("austria","")  
-    channel=channel.replace(" at","")  
-    channel=channel.replace(" ch","")  
-    channel=channel.replace(" a","")  
-    channel=channel.replace("prosieben","pro7")
-    channel=channel.replace(" ","")        
-    if "erste" in channel:
-        channel="ard"
-    if "wdr" in channel:
-        channel="wdr"
-    if "mdr" in channel:
-        channel="mdr"
-    if "kabeleins" in channel:
-        channel="kabel1"
-    if "rtli" in channel:
-        channel="rtl2"
-    if "skybundesliga" in channel:
-        channel="bundesliga"
-    return channel
-def repace_sendung(now):  
-  match=re.compile('([^-]+)', re.DOTALL).findall(now)        
-  if match:
-     now=match[0]
-  match=re.compile('([^:]+)', re.DOTALL).findall(now)
-  if match:        
-     now=match[0]
-  now=now.lower()
-  now=now.replace(" ","")        
-  now=now.replace("ä","ae") 
-  now=now.replace("ö","oe") 
-  now=now.replace("ü","ue") 
-  now=now.replace("?","") 
-  now=now.replace(",","") 
-  now=now.replace("’","")         
-  now=now.replace("der","")         
-  now=now.replace("die","")         
-  now=now.replace("das","")         
-
-  if "werwirdmillionaer" in now:
-     now="wwm"
-  if "deutschlandsuchtdensuperstar" in now:
-     now="dsds"
-  if "alleswaszaehlt" in now:
-     now="awz"
-  if "gutezeitenschlechtezeiten" in now:
-     now="gzsz"
-  if "ichbineinstar" in now:
-     now="ibes"
-  if "germanysnexttopmodel" in now:
-     now="gntm"
-  if "diesimpsons" in now:
-     now="simpsons"
-  if "markuslanz" in now:
-     now="markuslanz OR #lanz"
-  return(now)
-
+def repace_it(was,replace_array,search_array)   :    
+    was=was.lower()
+    for  suche,ersetze in replace_array:
+      was=was.replace(suche,ersetze)
+    debug("1. repace_channels :" + was)
+    for  suche,ersetze in search_array:
+      debug("suche :"+ suche)
+      debug("ersetze :"+ ersetze)
+      if  suche in was:
+        was=ersetze
+    debug("2.repace_channels :" + was)
+    return was
+    
 def block(text,blacklist) :           
     text=text.encode('utf-8')
     debug("Blacklist"+ blacklist)
@@ -273,21 +230,60 @@ def block(text,blacklist) :
               debug("Gebloggt wegen : "+ blocked)
               return True
     return False
-                     
-
+def readersetzen():
+  global listtype
+  global listurl
+  global listfile
+  debug("Start Readersetzen")
+  channelr=[]
+  channels=[]
+  sendungs=[]
+  sendungr=[]
+  videos=[]
+  videor=[]
+  content=""
+  if listtype=="File":
+    if not listfile == "":  
+      fp=open(listfile,"r")      
+    else:
+       filename = os.path.join(__addondir__,"liste.txt")
+       fp=open(filename,"r") 
+    content=fp.read()
+  else :
+    content=geturl(listurl)
+  if not content=="":
+    debug("Content Da")
+    match=re.compile(':([^:]+):([^:]+):"([^"]*)"="([^"]*)"', re.DOTALL).findall(content)  
+    for type,mode,suche,ersetze in match:
+       debug("XXXXY #"+ type +"# --> #"+ mode + "# WAS: "+ suche + "-->"+ ersetze)
+       if type=="channel" and mode=="replace" :
+         channelr.append([suche,ersetze])         
+       if type=="channel" and mode=="isin" :
+         channels.append([suche,ersetze])                  
+       if type=="show" and mode=="replace" :
+         sendungr.append([suche,ersetze])              
+       if type=="show" and mode=="isin" :
+         sendungr.append([suche,ersetze])   
+       if type=="video" and mode=="replace" :
+         videor.append([suche,ersetze])              
+       if type=="video" and mode=="isin" :
+         videor.append([suche,ersetze])                  
+  return channelr,channels,sendungr,sendungs,videor,videos
+    
+  
+    
 if __name__ == '__main__':
     xbmc.log("Twitter:  Starte Plugin")
         
     start=1   
-    
+    heute=0
     #Directory für Token Anlegen
     if not xbmcvfs.exists(temp):       
        xbmcvfs.mkdirs(temp)
     # Starte Service
     monitor = xbmc.Monitor()
     
-    sinceid=None
-    
+    sinceid=None    
     # Solange der Service läuft
     while not monitor.abortRequested():
       xbmc.log("Hole Umgebung")
@@ -303,6 +299,13 @@ if __name__ == '__main__':
       lesezeit=__addon__.getSetting("lesezeit")
       greyout=__addon__.getSetting("greyout")
       blacklist=__addon__.getSetting("blacklist")
+      listtype=__addon__.getSetting("listtype")
+      listurl=__addon__.getSetting("listurl")
+      listfile=__addon__.getSetting("listfile")  
+      old_heute=heute         
+      heute=time.localtime(time.time())[2]      
+      if heute!= old_heute:
+         channelr,channels,sendungr,sendungs,videor,videos=readersetzen()         
       if inhalt=="Video" or inhalt=="Hash":
             ratlimit=8
       else :
@@ -355,9 +358,7 @@ if __name__ == '__main__':
          match=re.compile('([^:]+)', re.DOTALL).findall(title)
          if match:
             title=match[0]
-         title=title.replace(".","")                
-         title=title.replace("the","")
-         title=title.replace(" ","")
+         title=repace_it(title,videor,videoss)  
          search="#" + title
          debug("Video:")
          debug ("Search : "+ search)
@@ -371,8 +372,8 @@ if __name__ == '__main__':
         if channel=="" :
              continue
              
-        channel=repace_channels(channel)
-        now=repace_sendung(now)      
+        channel=repace_it(channel,channelr,channels)
+        now=repace_it(now,sendungr,sendungs)     
         
         if now :
           search="#"+ channel +" OR "+ "#"+ now
@@ -411,14 +412,14 @@ if __name__ == '__main__':
          text= tweet.user.name +" : "+ tweet.text.replace("\n"," ")
          if  tweet.id > sinceid :
              sinceid=tweet.id              
-             debug("Neue Tweet ID " + str(tweet.id))
-         
+             debug("Neue Tweet ID " + str(tweet.id))         
          if not block(text,blacklist) : 
                debug("Tweet ok")         
                if bild=="true":
                    userimage=tweet.user.profile_image_url    
                else :
-                   userimage=""                   
+                   userimage=""   
+               debug("Tweet ID " + str(tweet.id))                   
                showTweet(text,userimage)                      
          else:
              debug("Gebannt Thread")
