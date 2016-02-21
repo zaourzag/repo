@@ -50,5 +50,5 @@
 - Cut - or : on Videos
 0.8.0
 - Alias Via URL or file
-0.8.1
+0.8.2
 - Bugfix
