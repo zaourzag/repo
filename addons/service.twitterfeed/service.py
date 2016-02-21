@@ -246,7 +246,7 @@ def readersetzen():
     if not listfile == "":  
       fp=open(listfile,"r")      
     else:
-       filename = os.path.join(__addondir__,"liste.txt")
+       filename = os.path.join(__addondir__,"filter.txt")
        fp=open(filename,"r") 
     content=fp.read()
   else :
