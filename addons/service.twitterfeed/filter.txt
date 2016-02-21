@@ -25,6 +25,7 @@
 :show:replace:"der"=""
 :show:replace:"die"=""
 :show:replace:"das"=""
+:show:replace:"live"=""
 :show:isin:"werwirdmillionaer"="wwm"
 :show:isin:"deutschlandsuchtdensuperstar"="dsds"
 :show:isin:"alleswaszaehlt"="awz"
