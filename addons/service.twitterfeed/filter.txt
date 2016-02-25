@@ -34,7 +34,7 @@
 :show:isin:"germanysnexttopmodel"="gntm"
 :show:isin:"diesimpsons"="simpsons"
 :show:isin:"markuslanz"="markuslanz OR #lanz"
-:show:isin:"eurovision"="esc or #esc2016 or #ulfs"
+:show:replace:"eurovision"="esc or #esc2016 or #ulfs"
 :video:replace:"."=""
 :video:replace:"the"=""
 :video:replace:" "=""
