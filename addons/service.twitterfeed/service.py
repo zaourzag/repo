@@ -358,7 +358,7 @@ if __name__ == '__main__':
          match=re.compile('([^:]+)', re.DOTALL).findall(title)
          if match:
             title=match[0]
-         title=repace_it(title,videor,videoss)  
+         title=repace_it(title,videor,videos)  
          search="#" + title
          debug("Video:")
          debug ("Search : "+ search)

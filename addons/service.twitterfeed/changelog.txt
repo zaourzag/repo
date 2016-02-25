@@ -1,4 +1,4 @@
-0.8.4 
+0.8.5 
 - Fix for Shows Replacement
 0.8.3
 - Changes for official release
