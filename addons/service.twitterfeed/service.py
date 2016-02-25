@@ -263,7 +263,7 @@ def readersetzen():
        if type=="show" and mode=="replace" :
          sendungr.append([suche,ersetze])              
        if type=="show" and mode=="isin" :
-         sendungr.append([suche,ersetze])   
+         sendungs.append([suche,ersetze])   
        if type=="video" and mode=="replace" :
          videor.append([suche,ersetze])              
        if type=="video" and mode=="isin" :
@@ -396,10 +396,13 @@ if __name__ == '__main__':
          debug ("-------")
          if inhalt=="Video" and tv=="true" and xbmc.getCondVisibility('Pvr.IsPlayingTv'):   
                tweets=api.GetSearch(search,since_id=sinceid,lang=country,result_type="recent")
+               debug("Search: "+ search)
          if inhalt=="Hash":
                tweets=api.GetSearch(search,since_id=sinceid,lang=country,result_type="recent")
+               debug("Search: "+ search)
          if inhalt=="Video" and video=="true":               
                tweets=api.GetSearch(search,since_id=sinceid,lang=country,result_type="recent")
+               debug("Search: "+ search)
          if inhalt=="Timeline":
               tweets = api.GetHomeTimeline(since_id=sinceid)             
               search=""
