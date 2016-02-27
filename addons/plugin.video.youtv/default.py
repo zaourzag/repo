@@ -128,7 +128,16 @@ def login():
         
 def getThemen(url,filter):
    token=login()
-   content=getUrl(url,token=token)  
+   if filter=="channels" :
+     dialog = xbmcgui.Dialog()
+     d = dialog.input(translation(30009), type=xbmcgui.INPUT_DATE)
+     d=d.replace(' ','0')  
+     d= d[6:] + "-" + d[3:5] + "-" + d[:2]
+     datum="&date="+d
+   else:
+     datum=""
+   content=getUrl(url,token=token)     
+   debug("+X:"+ content)
    struktur = json.loads(content)
    themen=struktur[filter]   
    for name in themen:
@@ -136,14 +145,20 @@ def getThemen(url,filter):
       id=name["id"]
       if filter=="filters" :
          mode="listtop"
+         logo=""
       if filter=="genres" :
          mode="listgenres"
+         logo=""
       if filter=="channels" :
-         mode="listtv"         
-      addDir(namen, namen, mode,"",ids=str(id))
+         mode="listtv"       
+         logo=name["logo"][0]["url"]
+      addDir(namen, namen, mode+datum,logo,ids=str(id))
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 
 def liste(url,filter):
+   datums = urllib.unquote_plus(params.get('date', ''))
+   if  datums!="":
+     url=url+"&date="+ datums
    debug("+++- :"+ url)
    token=login()
    content=getUrl(url,token=token) 
@@ -198,7 +213,6 @@ params = parameters_string_to_dict(sys.argv[2])
 mode = urllib.unquote_plus(params.get('mode', ''))
 url = urllib.unquote_plus(params.get('url', ''))
 ids = urllib.unquote_plus(params.get('ids', ''))
-
 def search(url=""):
    filter="broadcasts"
    dialog = xbmcgui.Dialog()
