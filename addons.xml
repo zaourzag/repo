@@ -804,6 +804,26 @@ Orginal Code was from AddonScriptorDE</disclaimer>
     </extension>
 </addon>
 
+<addon id="plugin.video.youtv" name="Youtv" version="0.1" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Youtv</summary>
+    <summary lang="de">Youtv</summary>
+    <description lang="en">Youtv</description>
+    <description lang="de">Youtv</description>
+    <website></website>
+    <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.youtv/source>
+    <forum>http://www.kodinerds.net/</forum>
+    <email>andreas at vogler dot name</email>
+    <platform>all</platform>
+  </extension>
+</addon>
+
 <addon id="plugin.video.zattoo_com" name="Zattoo Live TV" version="1.0.0" provider-name="PUR3">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
