@@ -9,6 +9,8 @@ import xbmcaddon
 import xbmc
 import xbmcvfs
 import urllib, urllib2, socket, cookielib, re, os, shutil,json
+import time
+from datetime import datetime
 
 
 
@@ -149,15 +151,28 @@ def liste(url,filter):
    struktur = json.loads(content)   
    themen=struktur[filter]   
    for name in themen:
+     #2016-02-26T21:15:00.000+01:00
+     
+     endtime=unicode(name["ends_at"]).encode("utf-8")
+     match=re.compile('(.+?)\..+', re.DOTALL).findall(endtime)
+     endtime=match[0]
+     debug(":::: "+endtime)
+     timeString  = time.strptime(endtime,"%Y-%m-%dT%H:%M:%S")
+     enttime=time.mktime(timeString)
+     nowtime=time.mktime(datetime.now().timetuple())
      title=unicode(name["title"]).encode("utf-8")
      id=str(name["id"])
      bild=unicode(name["image"][0]["url"]).encode("utf-8")
      duration=str(name["duration"])
      genres=unicode(name["genre"]["name"]).encode("utf-8") 
-     addLink(title, id, "playvideo", bild, duration=duration, desc="", genre=genres)
+     if enttime < nowtime:
+         addLink(title, id, "playvideo", bild, duration=duration, desc="", genre=genres)
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 
 def playvideo(id):  
+  quaname=[]
+  qalfile=[]
+  bitrate=addon.getSetting("bitrate")
   debug("ID :::"+ id)
   token=login()
   content=getUrl("https://www.youtv.de/api/v2/broadcast_files/"+ str(id) +".json?platform=ios",token=token)
@@ -165,11 +180,17 @@ def playvideo(id):
   struktur = json.loads(content) 
   qulitaet=struktur["files"]  
   for name in qulitaet:  
-     qulitaet=name["quality"]  
-     file=name["file"]  
-     if qulitaet=="hq":
-       videofile=file
-  listitem = xbmcgui.ListItem(path=videofile)  
+     quaname.append(name["quality_description"])
+     qalfile.append(name["file"])
+  if bitrate=="Min":
+    file=qalfile[0]
+  if bitrate=="Max":
+    file=qalfile[-1]
+  if bitrate=="Select":
+     dialog = xbmcgui.Dialog()
+     nr=dialog.select("Bitrate", quaname)      
+     file=qalfile[nr]  
+  listitem = xbmcgui.ListItem(path=file)  
   xbmcplugin.setResolvedUrl(addon_handle,True, listitem)  
   print("####"+   content)
    
@@ -178,13 +199,31 @@ mode = urllib.unquote_plus(params.get('mode', ''))
 url = urllib.unquote_plus(params.get('url', ''))
 ids = urllib.unquote_plus(params.get('ids', ''))
 
+def search(url=""):
+   filter="broadcasts"
+   dialog = xbmcgui.Dialog()
+   d = dialog.input(translation(30010), type=xbmcgui.INPUT_ALPHANUM)
+   token=login()
+   content=getUrl("https://www.youtv.de/api/v2/broadcasts/search.json?q="+ d +"&platform=ios",token=token)
+   struktur = json.loads(content)   
+   themen=struktur[filter]   
+   for name in themen:
+     title=unicode(name["title"]).encode("utf-8")
+     id=str(name["id"])
+     bild=unicode(name["image"][0]["url"]).encode("utf-8")
+     duration=str(name["duration"])
+     genres=unicode(name["genre"]["name"]).encode("utf-8") 
+     addLink(title, id, "playvideo", bild, duration=duration, desc="", genre=genres)
+   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 # Haupt Menu Anzeigen      
 if mode is '':
     addDir(translation(30103), translation(30001), 'TOP', "")
     addDir(translation(30104), translation(30005), 'Genres',"")
     addDir(translation(30105), translation(30006), 'Sender', "")   
-    addDir(translation(30106), translation(30106), 'Settings', "")   
-    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
+    addDir(translation(30107), translation(30107), 'Search', "")  
+    addDir(translation(30108), translation(30108), 'Archive',"")  
+    addDir(translation(30106), translation(30106), 'Settings', "")        
+    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
 else:
   # Wenn Settings ausgewählt wurde
   if mode == 'Settings':
@@ -205,5 +244,11 @@ else:
   if mode == 'listtop':
           #date=2016-02-26&
           liste("https://www.youtv.de/api/v2/filters/"+ ids +"/broadcasts.json?platform=ios","broadcasts")                           
+  if mode == 'Archive':
+          #date=2016-02-26&
+          liste("https://www.youtv.de/api/v2/archived_broadcasts.json?platform=ios","archived_broadcasts")                      
   if mode == 'playvideo':  
           playvideo(url)  
+  if mode == 'Search':  
+          search(url)           
+      
