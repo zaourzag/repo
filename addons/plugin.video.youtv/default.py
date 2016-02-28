@@ -18,6 +18,7 @@ from datetime import datetime
 global debuging
 base_url = sys.argv[0]
 addon_handle = int(sys.argv[1])
+
 args = urlparse.parse_qs(sys.argv[2][1:])
 addon = xbmcaddon.Addon()
 # Lade Sprach Variablen
@@ -45,6 +46,8 @@ def log(msg, level=xbmc.LOGNOTICE):
     addonID = addon.getAddonInfo('id')
     xbmc.log('%s: %s' % (addonID, msg), level) 
 
+  
+    
 def addDir(name, url, mode, iconimage, desc="",ids=""):
 	u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&ids="+str(ids)
 	ok = True
@@ -60,17 +63,23 @@ def addDir(name, url, mode, iconimage, desc="",ids=""):
 	return ok
   
 def addLink(name, url, mode, iconimage, duration="", desc="", genre=''):
-	u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
-	ok = True
-	liz = xbmcgui.ListItem(name, iconImage=defaultThumb, thumbnailImage=iconimage)
-	liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Genre": genre})
-	liz.setProperty('IsPlayable', 'true')
-	liz.addStreamInfo('video', { 'duration' : duration })
-	liz.setProperty("fanart_image", iconimage)
-	#liz.setProperty("fanart_image", defaultBackground)
-	xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
-	ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
-	return ok
+  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
+  ok = True
+  liz = xbmcgui.ListItem(name, iconImage=defaultThumb, thumbnailImage=iconimage)
+  liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Genre": genre})
+  liz.setProperty('IsPlayable', 'true')
+  liz.addStreamInfo('video', { 'duration' : duration })
+  liz.setProperty("fanart_image", iconimage)
+  #liz.setProperty("fanart_image", defaultBackground)
+  commands = []
+  finaladd = "plugin://plugin.video.youtv/?mode=addit&url="+urllib.quote_plus(url)
+  finaldel = "plugin://plugin.video.youtv/?mode=delit&url="+urllib.quote_plus(url)
+  commands.append(( 'Add to Archive', 'XBMC.RunPlugin('+ finaladd +')'))   
+  commands.append(( 'Del from Archive', 'XBMC.RunPlugin('+ finaldel +')'))   
+  liz.addContextMenuItems( commands )
+  xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
+  ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
+  return ok
   
 def parameters_string_to_dict(parameters):
 	paramDict = {}
@@ -236,6 +245,34 @@ def search(url=""):
      addLink(title, id, "playvideo", bild, duration=duration, desc="", genre=genres)
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 # Haupt Menu Anzeigen      
+
+def addit(id):
+  token=login()                  
+#  content=getUrl("https://www.youtv.de/api/v2/broadcasts/"+ str(id) +".json?platform=ios",token=token)
+#  debug(content)  
+#  struktur = json.loads(content) 
+#  sendung=struktur["broadcast"]  
+#https://www.youtv.de/api/v2/archived_broadcasts.json?platform=ios		  archived_broadcast[id]:  299501
+  values = {
+         'archived_broadcast[id]' : id         
+  }
+  data = urllib.urlencode(values)
+  content=getUrl("https://www.youtv.de/api/v2/archived_broadcasts.json?platform=ios",token=token,data=data)
+def delit(id):
+  token=login() 
+  mytoken="Token token="+ token
+  userAgent = "YOUTV/1.2.7 CFNetwork/758.2.8 Darwin/15.0.0"  
+  query_url = "https://www.youtv.de/api/v2/archived_broadcasts/"+ str(id)+".json?platform=ios"
+  headers = {
+      'User-Agent': userAgent,
+      'Authorization': mytoken
+  }        
+  debug(headers)  
+  opener = urllib2.build_opener(urllib2.HTTPHandler)
+  req = urllib2.Request(query_url, None, headers)
+  req.get_method = lambda: 'DELETE' 
+  url = urllib2.urlopen(req) 
+  
 if mode is '':
     addDir(translation(30103), translation(30001), 'TOP', "")
     addDir(translation(30104), translation(30005), 'Genres',"")
@@ -271,4 +308,7 @@ else:
           playvideo(url)  
   if mode == 'Search':  
           search(url)           
-      
+  if mode == 'addit':  
+          addit(url)
+  if mode == 'delit':  
+          delit(url)          
