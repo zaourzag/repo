@@ -272,6 +272,7 @@ def delit(id):
   req = urllib2.Request(query_url, None, headers)
   req.get_method = lambda: 'DELETE' 
   url = urllib2.urlopen(req) 
+  xbmc.executebuiltin("Container.Refresh")
   
 if mode is '':
     addDir(translation(30103), translation(30001), 'TOP', "")
