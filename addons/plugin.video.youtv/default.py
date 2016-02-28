@@ -168,12 +168,18 @@ def liste(url,filter):
    for name in themen:
      #2016-02-26T21:15:00.000+01:00
      
-     endtime=unicode(name["ends_at"]).encode("utf-8")
+     endtime=unicode(name["ends_at"]).encode("utf-8")     
      match=re.compile('(.+?)\..+', re.DOTALL).findall(endtime)
      endtime=match[0]
-     debug(":::: "+endtime)
      timeString  = time.strptime(endtime,"%Y-%m-%dT%H:%M:%S")
      enttime=time.mktime(timeString)
+     
+     starttime=unicode(name["starts_at"]).encode("utf-8")
+     match=re.compile('(.+?)-(.+?)-(.+?)T(.+?):(.+?):', re.DOTALL).findall(starttime)
+     times=match[0][2] +"."+ match[0][1] +"."+ match[0][0] +" "+ match[0][3] +":"+match[0][4] +" "
+
+
+     
      nowtime=time.mktime(datetime.now().timetuple())
      title=unicode(name["title"]).encode("utf-8")
      id=str(name["id"])
@@ -181,7 +187,7 @@ def liste(url,filter):
      duration=str(name["duration"])
      genres=unicode(name["genre"]["name"]).encode("utf-8") 
      if enttime < nowtime:
-         addLink(title, id, "playvideo", bild, duration=duration, desc="", genre=genres)
+         addLink(times+title, id, "playvideo", bild, duration=duration, desc="", genre=genres)
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 
 def playvideo(id):  
