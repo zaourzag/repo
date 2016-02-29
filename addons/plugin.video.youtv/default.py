@@ -10,7 +10,7 @@ import xbmc
 import xbmcvfs
 import urllib, urllib2, socket, cookielib, re, os, shutil,json
 import time
-from datetime import datetime
+import datetime
 
 
 
@@ -134,15 +134,57 @@ def login():
       f.close()    
    
    return token
-        
+   
+def Genres():
+   url="https://www.youtv.de/api/v2/genres.json?platform=ios"
+   token=login()  
+   content=getUrl(url,token=token)        
+   struktur = json.loads(content)
+   themen=struktur["genres"]   
+   for name in themen:
+      namen=unicode(name["name"]).encode("utf-8")
+      id=name["id"]   
+      addDir(namen, namen, "Subgeneres","",ids=str(id))
+   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)   
+   
+def subgenres(ids):
+  debug("IDS: "+ ids)
+  url="https://www.youtv.de/api/v2/genres.json?platform=ios"  
+  token=login()  
+  content=getUrl(url,token=token)        
+  struktur = json.loads(content)
+  themen=struktur["genres"]   
+  for name in themen:
+      id=name["id"]  
+      debug("ID: "+ str(id))
+      if str(id)==str(ids) :         
+         subgen=name["genres"] 
+         addDir("Alle", "Alle", "listgenres","",ids=str(id))         
+         for subname in subgen:
+            namen=unicode(subname["name"]).encode("utf-8")
+            id=subname["id"]    
+            addDir(namen, namen, "listgenres","",ids=str(id))
+         break
+  xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
+   
 def getThemen(url,filter):
    token=login()
    if filter=="channels" :
+     datuma=["Gestern","Heute","Früher"]     
      dialog = xbmcgui.Dialog()
-     d = dialog.input(translation(30009), type=xbmcgui.INPUT_DATE)
-     d=d.replace(' ','0')  
-     d= d[6:] + "-" + d[3:5] + "-" + d[:2]
-     datum="&date="+d
+     nr=dialog.select("Datum", datuma)
+     if nr==2:
+       dialog = xbmcgui.Dialog()
+       d = dialog.input(translation(30009), type=xbmcgui.INPUT_DATE)
+       d=d.replace(' ','0')  
+       d= d[6:] + "-" + d[3:5] + "-" + d[:2]
+       datum="&date="+d
+     if nr==0:
+        yesterday=datetime.datetime.strftime(datetime.datetime.now()-datetime.timedelta(1),'%Y-%m-%d')
+        datum="&date="+yesterday
+     if nr==1:
+        heute=datetime.datetime.strftime(datetime.datetime.now(),'%Y-%m-%d')
+        datum="&date="+heute        
    else:
      datum=""
    content=getUrl(url,token=token)     
@@ -154,9 +196,6 @@ def getThemen(url,filter):
       id=name["id"]
       if filter=="filters" :
          mode="listtop"
-         logo=""
-      if filter=="genres" :
-         mode="listgenres"
          logo=""
       if filter=="channels" :
          mode="listtv"       
@@ -189,7 +228,7 @@ def liste(url,filter):
 
 
      
-     nowtime=time.mktime(datetime.now().timetuple())
+     nowtime=time.mktime(datetime.datetime.now().timetuple())
      title=unicode(name["title"]).encode("utf-8")
      id=str(name["id"])
      bild=unicode(name["image"][0]["url"]).encode("utf-8")
@@ -260,6 +299,7 @@ params = parameters_string_to_dict(sys.argv[2])
 mode = urllib.unquote_plus(params.get('mode', ''))
 url = urllib.unquote_plus(params.get('url', ''))
 ids = urllib.unquote_plus(params.get('ids', ''))
+genid = urllib.unquote_plus(params.get('genid', ''))
 def search(url=""):
    filter="broadcasts"
    dialog = xbmcgui.Dialog()
@@ -322,7 +362,7 @@ else:
   if mode == 'TOP':
           getThemen("https://www.youtv.de/api/v2/filters.json?platform=ios","filters")
   if mode == 'Genres':
-          getThemen("https://www.youtv.de/api/v2/genres.json?platform=ios","genres")   
+          Genres()  
   if mode == 'Sender':
           getThemen("https://www.youtv.de/api/v2/channels.json?platform=ios ","channels")             
   if mode == 'listtv':
@@ -345,3 +385,5 @@ else:
           addit(url)
   if mode == 'delit':  
           delit(url)          
+  if mode == 'Subgeneres':  
+          subgenres(ids)
