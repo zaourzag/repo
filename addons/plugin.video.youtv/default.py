@@ -202,20 +202,52 @@ def liste(url,filter):
 def playvideo(id):  
   quaname=[]
   qalfile=[]
+  qname=[]
   bitrate=addon.getSetting("bitrate")
   debug("ID :::"+ id)
   token=login()
   content=getUrl("https://www.youtv.de/api/v2/broadcast_files/"+ str(id) +".json?platform=ios",token=token)
   debug("+X+ :"+ content)
   struktur = json.loads(content) 
-  qulitaet=struktur["files"]  
+  qulitaet=struktur["files"]
+  nq=""
+  hq=""
+  hd=""
+
   for name in qulitaet:  
      quaname.append(name["quality_description"])
-     qalfile.append(name["file"])
+     qalfile.append(name["file"])  
+
+     # Normal 
+     if name["quality"]=="nq" :        
+        nq=name["file"]        
+
+     # High Quality 
+     if name["quality"]=="hq" :
+        hq=name["file"]     
+
+     # HD
+     if name["quality"]=="hd" :
+        hd=name["file"]
+
+  #MAX      
+  if hd!="":
+      max=hd
+  elif hq!="":
+      max=hq
+  else :
+      max=nq  
+  #MIN
+  if nq!="":
+    min=nq
+  elif hq!="":
+    min=hq
+  else:
+    min=hd
   if bitrate=="Min":
-    file=qalfile[0]
+    file=min      
   if bitrate=="Max":
-    file=qalfile[-1]
+     file=max
   if bitrate=="Select":
      dialog = xbmcgui.Dialog()
      nr=dialog.select("Bitrate", quaname)      
