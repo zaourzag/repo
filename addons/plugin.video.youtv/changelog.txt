@@ -1,2 +1,4 @@
-﻿0.2.8
+﻿0.3.0
+- Neu Serien Aufnahmen
+0.2.8
 - New Funktions
