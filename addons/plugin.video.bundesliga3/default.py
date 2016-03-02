@@ -231,7 +231,7 @@ def watchlive(url,meldung="",spiel=""):
           get_spiele()
           return
    if "mdr.de" in url:
-      urlnew="http://mdr_event1_hls-lh.akamaihd.net/i/livetvmdrevent1_de@106904/index_1728_av-p.m3u8?sd=10&rebase=on"    
+       urlnew="http://mdr_event1_hls-lh.akamaihd.net/i/livetvmdrevent1_de@106904/index_3871_av-p.m3u8?sd=10&rebase=on"    
    elif "ndr.de" in url:
       debug("spiel" +spiel)    
       match = re.compile('([^-]+) - ([^-]+)', re.DOTALL).findall(spiel)
@@ -268,8 +268,6 @@ def watchlive(url,meldung="",spiel=""):
       urlnew="http://mdr_sa_hls-lh.akamaihd.net/i/livetvmdrsachsenanhalt_de@106901/master.m3u8"    
    elif "RBB" in url:
       urlnew="http://rbb_live-lh.akamaihd.net/i/rbb_berlin@108248/master.m3u8?bkup=off"      
-   if url=="mdr.de":
-      urlnew="http://mdr_event1_hls-lh.akamaihd.net/i/livetvmdrevent1_de@106904/index_1728_av-p.m3u8?sd=10&rebase=on"    
    if url=="SWR":
       urlnew="http://swrbw-lh.akamaihd.net/i/swrbw_live@196738/master.m3u8"
    if url=="WDR":
