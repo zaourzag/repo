@@ -212,21 +212,15 @@ def subgenres(ids):
 def getThemen(url,filter):
    token=login()
    if filter=="channels" :
-     datuma=["Gestern","Heute","Früher"]     
+     datuma=["Heute","Gestern"]     
+     for i in xrange(2, 7):
+        Tag=datetime.datetime.strftime(datetime.datetime.now()-datetime.timedelta(i),'%A')
+        datuma.append(Tag)
      dialog = xbmcgui.Dialog()
      nr=dialog.select("Datum", datuma)
-     if nr==2:
-       dialog = xbmcgui.Dialog()
-       d = dialog.input(translation(30009), type=xbmcgui.INPUT_DATE)
-       d=d.replace(' ','0')  
-       d= d[6:] + "-" + d[3:5] + "-" + d[:2]
-       datum="&date="+d
-     if nr==0:
-        yesterday=datetime.datetime.strftime(datetime.datetime.now()-datetime.timedelta(1),'%Y-%m-%d')
-        datum="&date="+yesterday
-     if nr==1:
-        heute=datetime.datetime.strftime(datetime.datetime.now(),'%Y-%m-%d')
-        datum="&date="+heute        
+     tagit=datetime.datetime.strftime(datetime.datetime.now()-datetime.timedelta(nr),'%Y-%m-%d')
+     datum="&date="+tagit
+     
    else:
      datum=""
    content=getUrl(url,token=token)     
