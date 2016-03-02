@@ -551,7 +551,9 @@ class creator:
                 singleday = weekstart + datetime.timedelta(days=day)
                 weekday_name = _(singleday.date().strftime("%A"))
                 month_name = _(singleday.date().strftime("%B"))
-                listitem = xbmcgui.ListItem(label=singleday.date().strftime(weekday_name + " (%d. " + month_name + " %Y)"))
+                stringdate=weekday_name + " (%d. " + month_name + " %Y)"
+                stringdate=unicode(stringdate).encode("utf-8")               
+                listitem = xbmcgui.ListItem(label=singleday.date().strftime(stringdate))
                 contextmenueitems = [tuple((
                     _('show all channels'),
                     "Container.Update(%s,True)" % call.format(params={'showall': True}, update=True) ))]
