@@ -13,7 +13,6 @@ import time
 import datetime
 
 
-
 # Setting Variablen Des Plugins
 global debuging
 base_url = sys.argv[0]
@@ -30,6 +29,7 @@ temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("ut
 #Directory für Token Anlegen
 if not xbmcvfs.exists(temp):       
        xbmcvfs.mkdirs(temp)
+       
 
 icon = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')+'/icon.png').decode('utf-8')
 useThumbAsFanart=addon.getSetting("useThumbAsFanart") == "true"
@@ -85,7 +85,26 @@ def addLink(name, url, mode, iconimage, duration="", desc="", genre=''):
   xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
   ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
   return ok
-
+def addLinkarchive(name, url, mode, iconimage, duration="", desc="", genre=''):
+  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
+  ok = True
+  liz = xbmcgui.ListItem(name, iconImage=defaultThumb, thumbnailImage=iconimage)
+  liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Genre": genre})
+  liz.setProperty('IsPlayable', 'true')
+  liz.addStreamInfo('video', { 'duration' : duration })
+  liz.setProperty("fanart_image", iconimage)
+  #liz.setProperty("fanart_image", defaultBackground)
+  commands = []
+  download = "plugin://plugin.video.youtv/?mode=download&url="+urllib.quote_plus(url)    
+  finaldel = "plugin://plugin.video.youtv/?mode=delit&url="+urllib.quote_plus(url)    
+  commands.append(( 'Del from Archive', 'XBMC.RunPlugin('+ finaldel +')'))   
+  commands.append(( 'Download', 'XBMC.RunPlugin('+ download +')'))   
+  liz.addContextMenuItems( commands )
+  xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
+  ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
+  return ok
+  
+  
 def addLinkSeries(name, url, mode, iconimage, duration="", desc="", genre=''):
   u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
   ok = True
@@ -96,8 +115,8 @@ def addLinkSeries(name, url, mode, iconimage, duration="", desc="", genre=''):
   liz.setProperty("fanart_image", iconimage)
   #liz.setProperty("fanart_image", defaultBackground)
   commands = []
-  seriendel = "plugin://plugin.video.youtv/?mode=sdeldirekt&url="+urllib.quote_plus(url)
-  commands.append(( 'Delete Serie', 'XBMC.RunPlugin('+ seriendel +')'))     
+  seriendel = "plugin://plugin.video.youtv/?mode=sdeldirekt&url="+urllib.quote_plus(url)  
+  commands.append(( 'Delete Serie', 'XBMC.RunPlugin('+ seriendel +')'))         
   liz.addContextMenuItems( commands )
   xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
   ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
@@ -248,8 +267,6 @@ def liste(url,filter):
      starttime=unicode(name["starts_at"]).encode("utf-8")
      match=re.compile('(.+?)-(.+?)-(.+?)T(.+?):(.+?):', re.DOTALL).findall(starttime)
      times=match[0][2] +"."+ match[0][1] +"."+ match[0][0] +" "+ match[0][3] +":"+match[0][4] +" "
-
-
      
      nowtime=time.mktime(datetime.datetime.now().timetuple())
      title=unicode(name["title"]).encode("utf-8")
@@ -258,9 +275,112 @@ def liste(url,filter):
      duration=str(name["duration"])
      genres=unicode(name["genre"]["name"]).encode("utf-8") 
      if enttime < nowtime:
-         addLink(times+title, id, "playvideo", bild, duration=duration, desc="", genre=genres)
+         if filter!="archived_broadcasts":
+            addLink(times+title, id, "playvideo", bild, duration=duration, desc="", genre=genres)
+         else:
+            addLinkarchive(times+title, id, "playvideo", bild, duration=duration, desc="", genre=genres)
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 
+   
+   
+def download(id):  
+  download_dir=addon.getSetting("download_dir")    
+  if download_dir=="":
+       dialog = xbmcgui.Dialog()
+       dialog.ok("Error", "Es ist keine Download Ordner eingestellt")  
+       return 0
+  quaname=[]
+  qalfile=[]
+  qname=[]
+  bitrate=addon.getSetting("bitrate")
+  debug("ID :::"+ id)
+  token=login()
+  content=getUrl("https://www.youtv.de/api/v2/broadcast_files/"+ str(id) +".json?platform=ios",token=token)
+  debug("+X+ :"+ content)
+  struktur = json.loads(content) 
+  qulitaet=struktur["files"]
+  nq=""
+  hq=""
+  hd=""
+
+  for name in qulitaet:  
+     quaname.append(name["quality_description"])
+     qalfile.append(name["file"])  
+
+     # Normal 
+     if name["quality"]=="nq" :        
+        nq=name["file"]        
+
+     # High Quality 
+     if name["quality"]=="hq" :
+        hq=name["file"]     
+
+     # HD
+     if name["quality"]=="hd" :
+        hd=name["file"]
+
+  #MAX      
+  if hd!="":
+      max=hd
+  elif hq!="":
+      max=hq
+  else :
+      max=nq  
+  #MIN
+  if nq!="":
+    min=nq
+  elif hq!="":
+    min=hq
+  else:
+    min=hd
+  if bitrate=="Min":
+    file=min      
+  if bitrate=="Max":
+     file=max
+  if bitrate=="Select":
+     dialog = xbmcgui.Dialog()
+     nr=dialog.select("Bitrate", quaname)      
+     file=qalfile[nr]  
+     
+  file_name = file.split('/')[-1]     
+  progress = xbmcgui.DialogProgress()
+  progress.create("Youtv","Downloading File",file_name)
+  u = urllib2.urlopen(file)
+  f = open(download_dir + file_name, 'wb')
+  meta = u.info()
+  file_size = int(meta.getheaders("Content-Length")[0])
+  #print "Downloading: %s Bytes: %s" % (file_name, file_size)
+
+  file_size_dl = 0
+  block_sz = 16384
+  while True:
+    buffer = u.read(block_sz)
+    if not buffer:
+        break
+
+    file_size_dl += len(buffer)
+    f.write(buffer)
+    process= int( file_size_dl * 100. / file_size)
+    progress.update(process)
+    if progress.iscanceled():         
+        progress.close()
+        f.close()
+        break
+  f.close()
+  
+  
+  
+  progress.create('Progress', 'This is a progress bar.')     
+  #urllib.urlretrieve (file, temp+"/mp3.mp3")
+  print("####"+   content)
+   
+params = parameters_string_to_dict(sys.argv[2])
+mode = urllib.unquote_plus(params.get('mode', ''))
+url = urllib.unquote_plus(params.get('url', ''))
+ids = urllib.unquote_plus(params.get('ids', ''))
+genid = urllib.unquote_plus(params.get('genid', ''))
+
+   
    
 #List Serien Einträge   
 def Series(url,filter):
@@ -489,5 +609,7 @@ else:
           serienadd_direkt(url) 
   if mode == 'sdeldirekt':              
           seriendel_direkt(url)
+  if mode == 'download':              
+          download(url)
 
           
