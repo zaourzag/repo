@@ -264,6 +264,9 @@ def liste(url,filter):
      
      nowtime=time.mktime(datetime.datetime.now().timetuple())
      title=unicode(name["title"]).encode("utf-8")
+     subtitle=unicode(name["subtitle"]).encode("utf-8")
+     if subtitle!= "None":
+       title=title+" ( "+subtitle +" )"
      id=str(name["id"])
      bild=unicode(name["image"][0]["url"]).encode("utf-8")
      duration=str(name["duration"])
@@ -272,7 +275,7 @@ def liste(url,filter):
          if filter!="archived_broadcasts":
             addLink(times+title, id, "playvideo", bild, duration=duration, desc="", genre=genres)
          else:
-            addLinkarchive(times+title, id, "playvideo", bild, duration=duration, desc="", genre=genres)
+            addLinkarchive(times+title  , id, "playvideo", bild, duration=duration, desc="", genre=genres)
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 
    
@@ -461,10 +464,14 @@ def search(url=""):
    d = dialog.input(translation(30010), type=xbmcgui.INPUT_ALPHANUM)
    token=login()
    content=getUrl("https://www.youtv.de/api/v2/broadcasts/search.json?q="+ d +"&platform=ios",token=token)
+   debug("Content")
    struktur = json.loads(content)   
    themen=struktur[filter]   
    for name in themen:
      title=unicode(name["title"]).encode("utf-8")
+     subtitle=unicode(name["subtitle"]).encode("utf-8")
+     if subtitle!= "None":
+       title=title+" ( "+subtitle +" )"
      id=str(name["id"])
      bild=unicode(name["image"][0]["url"]).encode("utf-8")
      duration=str(name["duration"])
@@ -556,7 +563,7 @@ if mode is '':
     addDir(translation(30105), translation(30006), 'Sender', "")   
     addDir(translation(30107), translation(30107), 'Search', "")  
     addDir(translation(30108), translation(30108), 'Archive',"")  
-    addDir("Series", "Series", 'Series',"")  
+    addDir("Serien Aufnamen", "Serien Aufnamen", 'Series',"")  
     addDir(translation(30106), translation(30106), 'Settings', "")        
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
 else:
