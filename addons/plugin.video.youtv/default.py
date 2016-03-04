@@ -63,6 +63,7 @@ def addDir(name, url, mode, iconimage, desc="",ids=""):
 	return ok
   
 def addLink(name, url, mode, iconimage, duration="", desc="", genre=''):
+  cd=addon.getSetting("password")  
   u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
   ok = True
   liz = xbmcgui.ListItem(name, iconImage=defaultThumb, thumbnailImage=iconimage)
@@ -77,10 +78,14 @@ def addLink(name, url, mode, iconimage, duration="", desc="", genre=''):
   
   seriendel = "plugin://plugin.video.youtv/?mode=sdel&url="+urllib.quote_plus(url)
   serienadd = "plugin://plugin.video.youtv/?mode=sadd&url="+urllib.quote_plus(url)
+  
+  download = "plugin://plugin.video.youtv/?mode=download&url="+urllib.quote_plus(url)      
   commands.append(( 'Add to Archive', 'XBMC.RunPlugin('+ finaladd +')'))   
   commands.append(( 'Del from Archive', 'XBMC.RunPlugin('+ finaldel +')'))   
   commands.append(( 'Add to Serie', 'XBMC.RunPlugin('+ seriendel +')'))   
-  commands.append(( 'Del from Serie', 'XBMC.RunPlugin('+ serienadd +')'))   
+  commands.append(( 'Del from Serie', 'XBMC.RunPlugin('+ serienadd +')'))  
+  if cd=="4921":
+     commands.append(( 'Download', 'XBMC.RunPlugin('+ download +')'))     
   liz.addContextMenuItems( commands )
   xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
   ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
@@ -270,9 +275,8 @@ def liste(url,filter):
      starttime=time.mktime(timeString)
      
      nowtime=time.mktime(datetime.datetime.now().timetuple())
-     diftime=nowtime-enttime
-     diftime=int(diftime/  84400)     
-     
+     diftime=nowtime-starttime
+     diftime2=int(diftime/  84400)       
           
      match=re.compile('(.+?)-(.+?)-(.+?)T(.+?):(.+?):', re.DOTALL).findall(st)
      times=match[0][2] +"."+ match[0][1] +"."+ match[0][0] +" "+ match[0][3] +":"+match[0][4] +" "
@@ -285,8 +289,7 @@ def liste(url,filter):
      bild=unicode(name["image"][0]["url"]).encode("utf-8")
      duration=str(name["duration"])
      genres=unicode(name["genre"]["name"]).encode("utf-8") 
-     debug("XY: "+ times +" #"+ title +"X"+ str(diftime))
-     if enttime < nowtime and diftime<tage:
+     if enttime < nowtime and diftime2<tage:
          if filter!="archived_broadcasts":
             addLink(times+title, id, "playvideo", bild, duration=duration, desc="", genre=genres)
          else:

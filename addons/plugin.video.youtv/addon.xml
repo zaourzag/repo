@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.youtv" name="Youtv" version="0.3.4" provider-name="L0RE">
+<addon id="plugin.video.youtv" name="Youtv" version="0.3.5" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
     </requires>
@@ -13,7 +13,7 @@
     <description lang="de">Youtv</description>
     <website></website>
     <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.youtv</source>
-    <forum>http://www.kodinerds.net/index.php/Thread/49934-Release-Youtv</forum>
+    <forum>http://www.kodinerds.net/</forum>
     <email>andreas at vogler dot name</email>
     <platform>all</platform>
   </extension>
