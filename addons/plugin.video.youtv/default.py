@@ -210,7 +210,7 @@ def subgenres(ids):
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
    
 def getThemen(url,filter):
-   token=login()
+   token=login()   
    if filter=="channels" :
      datuma=["Heute","Gestern"]     
      for i in xrange(2, 7):
@@ -245,6 +245,10 @@ def liste(url,filter):
      url=url+"&date="+ datums    
    debug("+++- :"+ url)
    token=login()
+   content=getUrl("https://www.youtv.de/api/v2/subscription.json?platform=ios",token=token)
+   struktur = json.loads(content) 
+   tage=struktur["subscription"]["history_days"]
+      
    content=getUrl(url,token=token) 
    debug("+X:"+ content)
    struktur = json.loads(content)   
@@ -254,15 +258,25 @@ def liste(url,filter):
      
      endtime=unicode(name["ends_at"]).encode("utf-8")     
      match=re.compile('(.+?)\..+', re.DOTALL).findall(endtime)
-     endtime=match[0]
+     endtime=match[0]     
      timeString  = time.strptime(endtime,"%Y-%m-%dT%H:%M:%S")
      enttime=time.mktime(timeString)
      
-     starttime=unicode(name["starts_at"]).encode("utf-8")
-     match=re.compile('(.+?)-(.+?)-(.+?)T(.+?):(.+?):', re.DOTALL).findall(starttime)
-     times=match[0][2] +"."+ match[0][1] +"."+ match[0][0] +" "+ match[0][3] +":"+match[0][4] +" "
+     st=unicode(name["starts_at"]).encode("utf-8")
+     starttime=st
+     match=re.compile('(.+?)\..+', re.DOTALL).findall(starttime)
+     starttime=match[0]  
+     timeString  = time.strptime(starttime,"%Y-%m-%dT%H:%M:%S")     
+     starttime=time.mktime(timeString)
      
      nowtime=time.mktime(datetime.datetime.now().timetuple())
+     diftime=nowtime-enttime
+     diftime=int(diftime/  84400)     
+     
+          
+     match=re.compile('(.+?)-(.+?)-(.+?)T(.+?):(.+?):', re.DOTALL).findall(st)
+     times=match[0][2] +"."+ match[0][1] +"."+ match[0][0] +" "+ match[0][3] +":"+match[0][4] +" "
+          
      title=unicode(name["title"]).encode("utf-8")
      subtitle=unicode(name["subtitle"]).encode("utf-8")
      if subtitle!= "None":
@@ -271,7 +285,8 @@ def liste(url,filter):
      bild=unicode(name["image"][0]["url"]).encode("utf-8")
      duration=str(name["duration"])
      genres=unicode(name["genre"]["name"]).encode("utf-8") 
-     if enttime < nowtime:
+     debug("XY: "+ times +" #"+ title +"X"+ str(diftime))
+     if enttime < nowtime and diftime<tage:
          if filter!="archived_broadcasts":
             addLink(times+title, id, "playvideo", bild, duration=duration, desc="", genre=genres)
          else:
