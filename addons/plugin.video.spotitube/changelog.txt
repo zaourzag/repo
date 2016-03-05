@@ -24,4 +24,6 @@
 1.0.7 by skatulskijean
 -Fix Beatport (regex)
 -Fix Hype Maschine
+1.0.8 by L0RE
+- Fix for Empty Playlists
 

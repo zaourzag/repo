@@ -356,13 +356,31 @@ def listSpotifyVideos(type, url, limit):
         playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
         playlist.clear()
     content = cache("https://embed.spotify.com/?uri="+url, 1)
-    spl=content.split('music-paused item')
+    if '<div class="ppbtn"></div>' in content:    
+       spl=content.split('music-paused item')
+       x=0
+       
+    else:
+       kurz_inhalt = content[content.find('<ul class="track-list">')+1:]
+       kurz_inhalt = kurz_inhalt[:kurz_inhalt.find('<button id')]
+       spl=kurz_inhalt.split('"track-row"')
+       x=1
     pos = 1
     for i in range(1,len(spl),1):
         entry=spl[i]
-        match=re.compile('class="artist.+?>(.+?)<', re.DOTALL).findall(entry)
-        artist=match[0]
-        match=re.compile('class="track-title.+?>(.+?)<', re.DOTALL).findall(entry)
+        print "+++++++++"
+        print entry
+        print "+++++++++"
+        if x==0:
+           match=re.compile('class="artist.+?>(.+?)<', re.DOTALL).findall(entry)
+        else:
+           match=re.compile('data-artists="(.+?)"', re.DOTALL).findall(entry)
+        
+        artist=match[0]        
+        if x==0:
+           match=re.compile('class="track-title.+?>(.+?)<', re.DOTALL).findall(entry)
+        else:
+           match=re.compile('data-name="(.+?)"', re.DOTALL).findall(entry)
         videoTitle=match[0]
         videoTitle=videoTitle[videoTitle.find(".")+1:].strip()
         if " - " in videoTitle:
@@ -372,7 +390,10 @@ def listSpotifyVideos(type, url, limit):
         if "," in artist:
             artist = artist.split(",")[0]
         title=cleanTitle(artist+" - "+videoTitle)
-        match=re.compile('data-ca="(.+?)"', re.DOTALL).findall(entry)
+        if x==0:
+           match=re.compile('data-ca="(.+?)"', re.DOTALL).findall(entry)
+        else:
+           match=re.compile('data-size-[0-9]+="(.+?)"', re.DOTALL).findall(entry)
         thumb=match[0]
         filtered = False
         for entry2 in blacklist:
