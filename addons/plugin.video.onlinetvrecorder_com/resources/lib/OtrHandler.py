@@ -352,6 +352,7 @@ class OtrHandler:
         if not expected:    requrl += "&show_expected=false"
         if not removed:     requrl += "&show_removed=false"
         if not unknownstation: requrl += "&unknownstation=false"
+        print "::::::XX::::" + requrl
         resp = self.__session = self.__getUrl(requrl)
         return resp.read()
 

@@ -241,8 +241,10 @@ class Archive:
 
         try:
             # eigentliche Liste abfragen
-            recordings = otr.getRecordListDict(orderby="time_desc")
-
+             if __addon__.getSetting('ortSort') == 'Zeit' :
+                recordings = otr.getRecordListDict(orderby="time_desc")
+             else:
+                recordings = otr.getRecordListDict(orderby="title")
         except Exception, e:
             print "loading recording list failed (%s)" % str(e)
             prdialog.close()
