@@ -3,7 +3,7 @@
 
 import time, sys, os, urlparse
 import xbmc ,xbmcgui, xbmcaddon,xbmcvfs
-import urllib2,urllib, zlib,json
+import urllib2,urllib,json
 import twitter,shutil
 import webbrowser
 import re
@@ -12,7 +12,6 @@ from thread import start_new_thread
 from requests.packages import urllib3
 import math
 import socket, cookielib
-import time
 
 urllib3.disable_warnings()
 
@@ -38,7 +37,7 @@ temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("ut
 
   
   
-wid = xbmcgui.getCurrentWindowId()        
+wid = xbmcgui.getCurrentWindowId()
 window=xbmcgui.Window(wid)
 window.show()  
   
@@ -58,11 +57,11 @@ if len(sys.argv) > 1:
     params = parameters_string_to_dict(sys.argv[2])
     mode = urllib.unquote_plus(params.get('mode', ''))
     if mode=="clear":      
-      xbmc.log("Twitter : CLEAR AUTH")            
+      xbmc.log("Twitter : CLEAR AUTH")
       # ES wird mit dem Service ueber ein Verstecktes Feld Kommuiniziert
       __addon__.setSetting(id='clear', value='CLEARIT')
       # Meldung das der Settings gelöscht werden
-      dialog2 = xbmcgui.Dialog()      
+      dialog2 = xbmcgui.Dialog()
       ok = xbmcgui.Dialog().ok( "Neu Configuration", "Nach verlassen des Einstellungen wird Twitter neu Configuriert" )   
       exit()
   
@@ -85,11 +84,11 @@ def showTweet(tweet,image=""):
              if match:
                for furl in match:
                  tw=tw.replace(furl,"")
-                 xbmc.log("Filter Url : "+ furl)            
+                 xbmc.log("Filter Url : "+ furl)
         xbmc.log("Tweet:" +tw)        
-        wid = xbmcgui.getCurrentWindowId()        
+        wid = xbmcgui.getCurrentWindowId()
         window=xbmcgui.Window(wid)
-        res=window.getResolution()      
+        res=window.getResolution()
         if len(tw) > 100 :
            bis=100
            for i in range(90,100):        
@@ -100,18 +99,18 @@ def showTweet(tweet,image=""):
         if greyout=="true":
            bg=xbmcgui.ControlImage(0,10,3000,100,"")
            bg.setImage(background)
-           window.addControl(bg) 
-           
+           window.addControl(bg)
+
         twitterlabel1=xbmcgui.ControlLabel (111, 31, 3000, 100, tw[:bis],textColor='0xFF000000')
         twitterlabel2=xbmcgui.ControlLabel (110, 30, 3000, 100, tw[:bis],textColor='0xFFFFFFFF')        
         window.addControl(twitterlabel1)
         window.addControl(twitterlabel2)
         
         if len(tw) > 100:
-         twitterlabel3=xbmcgui.ControlLabel (111, 61, 3000, 100, tw[bis:],textColor='0xFF000000')        
-         twitterlabel4=xbmcgui.ControlLabel (110, 60, 3000, 100, tw[bis:],textColor='0xFFFFFFFF') 
+         twitterlabel3=xbmcgui.ControlLabel (111, 61, 3000, 100, tw[bis:],textColor='0xFF000000')
+         twitterlabel4=xbmcgui.ControlLabel (110, 60, 3000, 100, tw[bis:],textColor='0xFFFFFFFF')
          window.addControl(twitterlabel3)
-         window.addControl(twitterlabel4)         
+         window.addControl(twitterlabel4)
         avatar=xbmcgui.ControlImage(0,10,100,100,"")
         avatar.setImage(image)
         window.addControl(avatar)        
@@ -145,7 +144,7 @@ def geturl(url):
    inhalt = urllib2.urlopen(req).read()   
    return inhalt    
         
-# Get Token        
+# Get Token 
 def get_access_token(consumer_key, consumer_secret):
     oauth_client = OAuth1Session(consumer_key, client_secret=consumer_secret)
     xbmc.log("Twitter: Requesting temp token from Twitter")
@@ -156,7 +155,7 @@ def get_access_token(consumer_key, consumer_secret):
         return
     url = oauth_client.authorization_url(AUTHORIZATION_URL)
 
-    # Will der User das gleich ein Browser aufgerufen wird    
+    # Will der User das gleich ein Browser aufgerufen wird
     __addon__.setSetting(id='clear', value='')
     dialog = xbmcgui.Dialog()
     if dialog.yesno("message", "Twitter Auth im Browser?"):
@@ -186,7 +185,7 @@ def get_access_token(consumer_key, consumer_secret):
     try:
         resp = oauth_client.fetch_access_token(ACCESS_TOKEN_URL)
     except ValueError, e:  
-         return 1   
+         return 1
     xbmc.log("Twitter: Setze oauth"   )
     xbmc.log("Twitter Token : " + resp.get('oauth_token'))
     xbmc.log("Twitter Secret : "+ resp.get('oauth_token_secret'))
@@ -194,13 +193,13 @@ def get_access_token(consumer_key, consumer_secret):
     global oauth_token
     global oauth_token_secret
     oauth_token= resp.get('oauth_token')
-    oauth_token_secret=resp.get('oauth_token_secret') 
+    oauth_token_secret=resp.get('oauth_token_secret')
     
     #Speicher Token fürs naechste mal
     f = open(temp+"init.ok", 'w')        
     zeile="oauth_token: "+ oauth_token +"#"    
     f.write(zeile)    
-    zeile="oauth_token_secret: "+ oauth_token_secret +"#"    
+    zeile="oauth_token_secret: "+ oauth_token_secret +"#"
     f.write(zeile)
     f.close()    
 
