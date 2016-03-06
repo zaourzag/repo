@@ -11,7 +11,7 @@ __addonname__ = addon.getAddonInfo('name')
 __addondir__    = xbmc.translatePath( addon.getAddonInfo('path') )
 background = os.path.join(__addondir__,"bg.png")
 
-profiles    = xbmc.translatePath( addon.getAddonInfo('profiles') ).decode("utf-8")
+profiles    = xbmc.translatePath( addon.getAddonInfo('profile') ).decode("utf-8")
 temp       = xbmc.translatePath( os.path.join( profiles, 'temp', '') ).decode("utf-8")
 #Directory für Token Anlegen
 if not xbmcvfs.exists(temp):
