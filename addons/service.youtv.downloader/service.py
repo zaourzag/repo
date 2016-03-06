@@ -1,11 +1,10 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import time, sys, os, urlparse
+import time, sys, os
 import xbmc ,xbmcgui, xbmcaddon,xbmcvfs
-import urllib2,urllib, zlib,json
-import re
-import socket, cookielib
+import urllib2,urllib, json
+import cookielib
 
 addon = xbmcaddon.Addon()
 __addonname__ = addon.getAddonInfo('name')
@@ -17,7 +16,7 @@ temp       = xbmc.translatePath( os.path.join( profiles, 'temp', '') ).decode("u
 #Directory für Token Anlegen
 if not xbmcvfs.exists(temp):
        xbmcvfs.mkdirs(temp)
-  
+
 # Einlesen von Parametern, Notwendig für Reset der Twitter API
 def parameters_string_to_dict(parameters):
 	paramDict = {}
@@ -45,15 +44,15 @@ def log(msg, level=xbmc.LOGNOTICE):
 def delit(id):
   token=login()
   mytoken="Token token="+ token
-  userAgent = "YOUTV/1.2.7 CFNetwork/758.2.8 Darwin/15.0.0"  
+  userAgent = "YOUTV/1.2.7 CFNetwork/758.2.8 Darwin/15.0.0"
   query_url = "https://www.youtv.de/api/v2/archived_broadcasts/"+ str(id)+".json?platform=ios"
   headers = {
       'User-Agent': userAgent,
       'Authorization': mytoken
   }        
-  debug(headers)  
+  debug(headers)
   req = urllib2.Request(query_url, None, headers)
-  req.get_method = lambda: 'DELETE' 
+  req.get_method = lambda: 'DELETE'
   url = urllib2.urlopen(req) 
   xbmc.executebuiltin("Container.Refresh")
 
@@ -83,7 +82,7 @@ def login():
      f=xbmcvfs.File(temp+"/token","r")
      token=f.read()
    else:
-      user=addon.getSetting("user")        
+      user=addon.getSetting("user")
       password=addon.getSetting("pw")
       print("User :"+ user)
       values = {
@@ -95,18 +94,17 @@ def login():
       struktur = json.loads(content)   
       token=struktur['token']
       f = open(temp+"token", 'w')
-      f.write(token)        
-      f.close()    
-   return token   
+      f.write(token)
+      f.close()
+   return token
   
-def download(id,token):  
+def download(id,token):
   print("Start Download")
-  download_dir=addon.getSetting("downloaddir")    
+  download_dir=addon.getSetting("downloaddir")
   if download_dir=="":
        return 0
   quaname=[]
   qalfiles=[]
-  qname=[]
   bitrate=addon.getSetting("bitrate")
   print("ID :::"+ id)
   token=login()
@@ -118,17 +116,17 @@ def download(id,token):
   hq=""
   hd=""
 
-  for name in qulitaet:  
+  for name in qulitaet:
      quaname.append(name["quality_description"])
      qalfiles.append(name["files"])  
 
-     # Normal 
+     # Normal
      if name["quality"]=="nq" :
-        nq=name["files"]        
+        nq=name["files"]
 
-     # High Quality 
+     # High Quality
      if name["quality"]=="hq" :
-        hq=name["files"]     
+        hq=name["files"]
 
      # HD
      if name["quality"]=="hd" :
@@ -158,12 +156,12 @@ def download(id,token):
   
 if __name__ == '__main__':
    # Starte Service
-   monitor = xbmc.Monitor()        
+   monitor = xbmc.Monitor()
    # Solange der Service läuft
-   while not monitor.abortRequested():                     
-      downloaddir=addon.getSetting("downloaddir") 
-      bitrate=addon.getSetting("bitrate")  
-      delete=addon.getSetting("delete") 
+   while not monitor.abortRequested():
+      downloaddir=addon.getSetting("downloaddir")
+      bitrate=addon.getSetting("bitrate")
+      delete=addon.getSetting("delete")
       url="https://www.youtv.de/api/v2/archived_broadcasts.json?platform=ios"
       downloaddir=addon.getSetting("downloaddir")
       if downloaddir!="":
@@ -173,11 +171,11 @@ if __name__ == '__main__':
          content=getUrl(url,token=token)
          print("XX :"+content)
          struktur = json.loads(content)   
-         themen=struktur["archived_broadcasts"]   
-         for name in themen:              
+         themen=struktur["archived_broadcasts"]
+         for name in themen:
              title=unicode(name["title"]).encode("utf-8")
              print("File : "+ title)
-             id=str(name["id"])     
+             id=str(name["id"])
              download(id,token)
              delit(id)
       if monitor.waitForAbort(86400):

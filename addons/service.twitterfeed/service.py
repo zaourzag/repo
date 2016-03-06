@@ -10,7 +10,6 @@ import re
 from requests_oauthlib import OAuth1Session
 from thread import start_new_thread
 from requests.packages import urllib3
-import math
 import socket, cookielib
 
 urllib3.disable_warnings()
@@ -39,7 +38,7 @@ temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("ut
   
 wid = xbmcgui.getCurrentWindowId()
 window=xbmcgui.Window(wid)
-window.show()  
+window.show()
   
 # Einlesen von Parametern, Notwendig für Reset der Twitter API
 def parameters_string_to_dict(parameters):
@@ -62,7 +61,7 @@ if len(sys.argv) > 1:
       __addon__.setSetting(id='clear', value='CLEARIT')
       # Meldung das der Settings gelöscht werden
       dialog2 = xbmcgui.Dialog()
-      ok = xbmcgui.Dialog().ok( "Neu Configuration", "Nach verlassen des Einstellungen wird Twitter neu Configuriert" )   
+      ok = xbmcgui.Dialog().ok( "Neu Configuration", "Nach verlassen des Einstellungen wird Twitter neu Configuriert" )
       exit()
   
 
@@ -72,11 +71,11 @@ def showTweet(tweet,image=""):
     global lesezeit
     global background
     global greyout
-    xbmc.log("Twitter : showTweet start")    
+    xbmc.log("Twitter : showTweet start")
     if xbmc.getCondVisibility('Pvr.IsPlayingTv') or alles_anzeige=="true" :   
         global window
-        tw=unicode(tweet).encode('utf-8')    
-        tw=tw.replace("&amp;","&")         
+        tw=unicode(tweet).encode('utf-8')
+        tw=tw.replace("&amp;","&")
         xbmc.log("showTweet")
         if urlfilter=="true":
              xbmc.log("Filter URLS")
@@ -91,7 +90,7 @@ def showTweet(tweet,image=""):
         res=window.getResolution()
         if len(tw) > 100 :
            bis=100
-           for i in range(90,100):        
+           for i in range(90,100):
              if tw[i]==' ':
                bis=i
         else:
@@ -138,13 +137,11 @@ def log(msg, level=xbmc.LOGNOTICE):
     xbmc.log('%s: %s' % (addonID, msg), level) 
     
 def geturl(url):
-   cj = cookielib.CookieJar()
-   opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
    req = urllib2.Request(url)
    inhalt = urllib2.urlopen(req).read()   
    return inhalt    
         
-# Get Token 
+# Get Token
 def get_access_token(consumer_key, consumer_secret):
     oauth_client = OAuth1Session(consumer_key, client_secret=consumer_secret)
     xbmc.log("Twitter: Requesting temp token from Twitter")
@@ -160,7 +157,7 @@ def get_access_token(consumer_key, consumer_secret):
     dialog = xbmcgui.Dialog()
     if dialog.yesno("message", "Twitter Auth im Browser?"):
         webbrowser.open(url)
-    else:                 
+    else:
         xbmc.log("Twitter: URL ---> "+url)
         # Zeige Url als Text an
         dialog = xbmcgui.Dialog()
@@ -184,7 +181,7 @@ def get_access_token(consumer_key, consumer_secret):
     )
     try:
         resp = oauth_client.fetch_access_token(ACCESS_TOKEN_URL)
-    except ValueError, e:  
+    except ValueError, e:
          return 1
     xbmc.log("Twitter: Setze oauth"   )
     xbmc.log("Twitter Token : " + resp.get('oauth_token'))
@@ -196,15 +193,15 @@ def get_access_token(consumer_key, consumer_secret):
     oauth_token_secret=resp.get('oauth_token_secret')
     
     #Speicher Token fürs naechste mal
-    f = open(temp+"init.ok", 'w')        
+    f = open(temp+"init.ok", 'w')
     zeile="oauth_token: "+ oauth_token +"#"    
-    f.write(zeile)    
+    f.write(zeile)
     zeile="oauth_token_secret: "+ oauth_token_secret +"#"
     f.write(zeile)
     f.close()    
 
 
-def repace_it(was,replace_array,search_array)   :    
+def repace_it(was,replace_array,search_array):
     was=was.lower()
     for  suche,ersetze in replace_array:
       was=was.replace(suche,ersetze)
@@ -217,7 +214,7 @@ def repace_it(was,replace_array,search_array)   :
     debug("2.repace_channels :" + was)
     return was
     
-def block(text,blacklist) :           
+def block(text,blacklist):
     text=text.encode('utf-8')
     debug("Blacklist"+ blacklist)
     debug("Text zu durchsuchen ist :" +text)
@@ -242,8 +239,8 @@ def readersetzen():
   videor=[]
   content=""
   if listtype=="File":
-    if not listfile == "":  
-      fp=open(listfile,"r")      
+    if not listfile == "":
+      fp=open(listfile,"r")
     else:
        filename = os.path.join(__addondir__,"filter.txt")
        fp=open(filename,"r") 
@@ -256,17 +253,17 @@ def readersetzen():
     for type,mode,suche,ersetze in match:
        debug("XXXXY #"+ type +"# --> #"+ mode + "# WAS: "+ suche + "-->"+ ersetze)
        if type=="channel" and mode=="replace" :
-         channelr.append([suche,ersetze])         
+         channelr.append([suche,ersetze])
        if type=="channel" and mode=="isin" :
-         channels.append([suche,ersetze])                  
+         channels.append([suche,ersetze])
        if type=="show" and mode=="replace" :
-         sendungr.append([suche,ersetze])              
+         sendungr.append([suche,ersetze])
        if type=="show" and mode=="isin" :
-         sendungs.append([suche,ersetze])   
+         sendungs.append([suche,ersetze])
        if type=="video" and mode=="replace" :
-         videor.append([suche,ersetze])              
+         videor.append([suche,ersetze])
        if type=="video" and mode=="isin" :
-         videor.append([suche,ersetze])                  
+         videor.append([suche,ersetze])
   return channelr,channels,sendungr,sendungs,videor,videos
     
   
