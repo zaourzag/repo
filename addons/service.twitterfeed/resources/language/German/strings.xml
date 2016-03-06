@@ -4,7 +4,7 @@
   <string id="30002">Welche Art von Tweets</string> 
   <string id="30003">Ländercode (z.b. DE)</string> 
   <string id="30004">Initial Tweets</string> 
-  <string id="30005">Authentifizierung Löschen</string> 
+  <string id="30005">Authentifizieren</string> 
   <string id="30006">Tweets überall anzeigen</string> 
   <string id="30007">Suchwort</string> 
   <string id="30008">Avatar Bild</string> 
@@ -18,9 +18,12 @@
   <string id="30016">Alias List Type</string>
   <string id="30017">Url</string>
   <string id="30018">File</string>
-  <string id="30019">Twitter Auth im Localen  Browser?</string>
+  <string id="30019">Twitter Auth im Lokalen  Browser?</string>
   <string id="30020">Twitter Auth im Externen Brwoser?</string>
   <string id="30021">Abbrechen</string>
   <string id="30022">Twitter: Pin Eingeben</string>
+  <string id="30023">Please enter this URL in a Browser</string>
+  <string id="30024">Neu Configuration</string>
+  <string id="30025">Nach verlassen des Einstellungen wird Twitter neu Configuriert</string>
 </strings>
   

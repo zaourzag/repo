@@ -4,7 +4,7 @@
   <string id="30002">Conent</string> 
   <string id="30003">Countrycode (Exampe DE)</string>     
   <string id="30004">Initial Tweets</string> 
-  <string id="30005">Clear Authentification</string> 
+  <string id="30005">Authentificate</string> 
   <string id="30006">Show Twets Always</string> 
   <string id="30007">Search for</string> 
   <string id="30008">Avatar Picture</string> 
@@ -23,5 +23,7 @@
   <string id="30021">Cancel</string>
   <string id="30022">Twitter: Enter the Pin</string> 
   <string id="30023">Please enter this URL in a Browser</string>  
+  <string id="30024">New Configuration</string>
+  <string id="30025">After Leaving the Settings, Twitteraddon will Authentificate again</string>
 </strings>
  

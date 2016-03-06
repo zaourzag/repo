@@ -37,4 +37,5 @@
 :show:isin:"eurovision"="esc or #esc2016"
 :video:replace:"."=""
 :video:replace:"the"=""
+:video:replace:"100"="the100"
 :video:replace:" "=""

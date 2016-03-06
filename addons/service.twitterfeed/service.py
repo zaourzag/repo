@@ -61,7 +61,7 @@ if len(sys.argv) > 1:
       __addon__.setSetting(id='clear', value='CLEARIT')
       # Meldung das der Settings gelöscht werden
       dialog2 = xbmcgui.Dialog()
-      ok = xbmcgui.Dialog().ok( "Neu Configuration", "Nach verlassen des Einstellungen wird Twitter neu Configuriert" )
+      ok = xbmcgui.Dialog().ok( translation(30024), translation(30025) )
       exit()
   
 
@@ -164,8 +164,6 @@ def get_access_token(consumer_key, consumer_secret):
            dialog = xbmcgui.Dialog()
            dialog.ok(translation(30023), url[:40] +"\n"+ url[40:80] +"\n" +url[80:120] )
     if dl==2:
-            f = open(temp+"init.ok", 'w')    
-            f.close() 
             return 1
     # Eingabe des Pins
     keyboard = xbmc.Keyboard('')
@@ -177,7 +175,7 @@ def get_access_token(consumer_key, consumer_secret):
       PIN='0000'
     if  PIN=='0000':
        return 1
-    xbmc.log("PIn: "+ PIN)
+    xbmc.log("Pin: "+ PIN)
     oauth_client = OAuth1Session(consumer_key, client_secret=consumer_secret,
                                  resource_owner_key=resp.get('oauth_token'),
                                  resource_owner_secret=resp.get('oauth_token_secret'),
@@ -274,13 +272,16 @@ def readersetzen():
     
 if __name__ == '__main__':
     xbmc.log("Twitter:  Starte Plugin")
-        
+
     start=1   
     heute=0
     #Directory für Token Anlegen
     if not xbmcvfs.exists(temp):       
        xbmcvfs.mkdirs(temp)
-    # Starte Service
+    if not xbmcvfs.exists(temp+"/init.ok") and  __addon__.getSetting("clear")!="CLEARIT": 
+       f = open(temp+"init.ok", 'w')    
+       f.close() 
+    # Starte Service    
     monitor = xbmc.Monitor()
     
     sinceid=None    
