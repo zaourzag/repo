@@ -31,7 +31,7 @@ background = os.path.join(__addondir__,"bg.png")
 
 profile    = xbmc.translatePath( __addon__.getAddonInfo('profile') ).decode("utf-8")
 temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
-
+translation = __addon__.getLocalizedString
 
 
   
@@ -155,17 +155,21 @@ def get_access_token(consumer_key, consumer_secret):
     # Will der User das gleich ein Browser aufgerufen wird
     __addon__.setSetting(id='clear', value='')
     dialog = xbmcgui.Dialog()
-    if dialog.yesno("message", "Twitter Auth im Browser?"):
+    dl=dialog.select("Twitter",[ translation(30019),translation(30020),translation(30021)] )
+    if dl==0:
         webbrowser.open(url)
-    else:
-        xbmc.log("Twitter: URL ---> "+url)
-        # Zeige Url als Text an
-        dialog = xbmcgui.Dialog()
-        dialog.ok("Bitte URL im Browser Aufrufen", url[:40] +"\n"+ url[40:80] +"\n" +url[80:120] )
-    
+    if dl==1:
+           xbmc.log("Twitter: URL ---> "+url)
+           # Zeige Url als Text an
+           dialog = xbmcgui.Dialog()
+           dialog.ok(translation(30023), url[:40] +"\n"+ url[40:80] +"\n" +url[80:120] )
+    if dl==2:
+            f = open(temp+"init.ok", 'w')    
+            f.close() 
+            return 1
     # Eingabe des Pins
     keyboard = xbmc.Keyboard('')
-    keyboard.setHeading('Twitter: Pin Eingeben')
+    keyboard.setHeading(translation(30022))
     keyboard.doModal()
     if (keyboard.isConfirmed()):
       PIN=keyboard.getText()
@@ -298,6 +302,9 @@ if __name__ == '__main__':
       listtype=__addon__.getSetting("listtype")
       listurl=__addon__.getSetting("listurl")
       listfile=__addon__.getSetting("listfile")  
+      if listfile=="":
+         filename = os.path.join(__addondir__,"filter.txt")
+         __addon__.setSetting(id="listfile", value=filename)
       old_heute=heute         
       heute=time.localtime(time.time())[2]      
       if heute!= old_heute:
@@ -306,7 +313,14 @@ if __name__ == '__main__':
             ratlimit=8
       else :
             ratlimit=60      
-            
+
+
+      if start==0:
+        debug("Pause wegen Rate Limit")
+        if monitor.waitForAbort(ratlimit):
+          break      
+      start=0
+      
       # Wenn kein Token oder Authentifizerung löschen wurde Neu Authentifizieren
       if not xbmcvfs.exists(temp+"/init.ok") or __addon__.getSetting("clear")=="CLEARIT": 
         debug("Starte neue Authentifizierung")
@@ -321,6 +335,8 @@ if __name__ == '__main__':
           debug("Lese Token aus File")
           f=xbmcvfs.File(temp+"/init.ok","r")   
           daten=f.read()
+          if daten=="":
+            continue
           match=re.compile('oauth_token: ([^#]+)', re.DOTALL).findall(daten)
           oauth_token=match[0]
           match=re.compile('oauth_token_secret: ([^#]+)', re.DOTALL).findall(daten)
@@ -333,11 +349,7 @@ if __name__ == '__main__':
             debug("ERROR Authentifizierung klappt nicht")   
             continue            
       
-      if start==0:
-        debug("Pause wegen Rate Limit")
-        if monitor.waitForAbort(ratlimit):
-          break      
-      start=0
+
 
       if inhalt=="Video" and  video=="true" and xbmc.getCondVisibility('Player.HasMedia') and not xbmc.getCondVisibility('Pvr.IsPlayingTv'):
          title=""

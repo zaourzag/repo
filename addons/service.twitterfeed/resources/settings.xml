@@ -7,11 +7,11 @@
 		<setting label="30007" type="text" id="hashtag" default="" visible='eq(-4,Hash)' />
 		<setting label="30004" type="slider" id="limit" default="2" range="1,1,20" option="int" />
 		<setting label="30012" type="slider" id="lesezeit" default="6" range="1,1,60" option="int" />
-		<setting id="listtype" type="select" label="30016" default="Url" values="Url|File" />
+		<setting id="listtype" type="select" label="30016" default="File" values="Url|File" />
 		<setting id="listurl" type="text" label="30017" default="https://raw.githubusercontent.com/kodinerds/repo/master/addons/service.twitterfeed/filter.txt" visible='eq(-1,Url)'/>
-		<setting id="listfile" type="file" label="30018"  visible='eq(-2,File)'/>
+		<setting id="listfile" type="file" label="30018"  default="" visible='eq(-2,File)'/>
 	    <setting label="30005" type="action" action="RunPlugin(plugin://service.twitterfeed/?mode=clear)"/>	
-		<setting label="dummy" type="text" id="clear" visible=false />
+		<setting label="dummy" type="text" id="clear" visible="false" />
 		<setting label="30013" type="bool" id="greyout" default="true"  />
    </category>
    <category label="30010">	
