@@ -42,7 +42,7 @@ class ServiceApplicationClient(Client):
         :param private_key: Private key used for signing and encrypting.
                             Must be given as a string.
 
-        :param subject: The principal that is the subject of the JWT, i.e. 
+        :param subject: The principal that is the subject of the JWT, i.e.
                         which user is the token requested on behalf of.
                         For example, ``foo@example.com.
 
@@ -69,7 +69,7 @@ class ServiceApplicationClient(Client):
                              subject=None, 
                              issuer=None, 
                              audience=None, 
-                             expires_at=None, 
+                             expires_at=None,
                              issued_at=None,
                              extra_claims=None,
                              body='', 

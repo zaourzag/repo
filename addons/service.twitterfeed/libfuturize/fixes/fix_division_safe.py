@@ -51,7 +51,7 @@ class FixDivisionSafe(fixer_base.BaseFix):
         Since the tree needs to be fixed once and only once if and only if it
         matches, we can start discarding matches after the first.
         """
-        if (node.type == self.syms.term and 
+        if (node.type == self.syms.term and
                     len(node.children) == 3 and
                     match_division(node.children[1])):
             expr1, expr2 = node.children[0], node.children[2]

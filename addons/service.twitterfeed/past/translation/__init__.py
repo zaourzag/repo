@@ -28,7 +28,7 @@ You can unregister the hook using::
     >>> from past.translation import remove_hooks
     >>> remove_hooks()
 
-Author: Ed Schofield. 
+Author: Ed Schofield.
 Inspired by and based on ``uprefix`` by Vinay M. Sajip.
 """
 

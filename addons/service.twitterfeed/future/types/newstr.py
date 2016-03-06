@@ -37,7 +37,7 @@ Note that ``str()`` (and ``print()``) would then normally call the
 ``__unicode__`` method on objects in Python 2. To define string
 representations of your objects portably across Py3 and Py2, use the
 :func:`python_2_unicode_compatible` decorator in  :mod:`future.utils`.
-    
+
 """
 
 from collections import Iterable

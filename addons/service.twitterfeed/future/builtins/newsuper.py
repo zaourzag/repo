@@ -51,7 +51,7 @@ def newsuper(typ=_SENTINEL, type_or_obj=_SENTINEL, framedepth=1):
     #  Infer the correct call if used without arguments.
     if typ is _SENTINEL:
         # We'll need to do some frame hacking.
-        f = sys._getframe(framedepth)    
+        f = sys._getframe(framedepth)
 
         try:
             # Get the function's first positional argument.

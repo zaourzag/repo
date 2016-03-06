@@ -371,7 +371,7 @@ class newbytes(with_metaclass(BaseNewBytes, _builtin_bytes)):
         """
         Strip trailing bytes contained in the argument.
         If the argument is omitted, strip trailing ASCII whitespace.
-        """        
+        """
         return newbytes(super(newbytes, self).rstrip(bytes_to_strip))
 
     @no(unicode)
