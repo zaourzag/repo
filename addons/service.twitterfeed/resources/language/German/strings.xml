@@ -18,9 +18,9 @@
   <string id="30016">Alias List Type</string>
   <string id="30017">Url</string>
   <string id="30018">File</string>
-  <string id="30019">Twitter Auth in the Browser?</string>
-  <string id="30020">Show Auth Url in Browser</string>
-  <string id="30021">Cancel</string>
+  <string id="30019">Twitter Auth im Localen  Browser?</string>
+  <string id="30020">Twitter Auth im Externen Brwoser?</string>
+  <string id="30021">Abbrechen</string>
   <string id="30022">Twitter: Pin Eingeben</string>
 </strings>
   
