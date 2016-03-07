@@ -50,13 +50,10 @@ def listVideos(url):
 
 def playVideo(url):
     content = getUrl(url)
-    matchBase = re.compile('videoFlashconnectionUrl = "(.+?)"', re.DOTALL).findall(content)
+    matchBase = re.compile('ProgressiveVideoSource = "(.+?)"', re.DOTALL).findall(content)
     matchPlaypath = re.compile('videoFlashSource = "(.+?)"', re.DOTALL).findall(content)
     if matchPlaypath:
-      if url == "http://www.n24.de/n24/Mediathek/Live/":
-          filename = matchBase[0] + " playpath="+matchPlaypath[0] + " swfUrl=http://www.n24.de/_swf/HomePlayer.swf live=true timeout=60"
-      else:
-          filename = matchBase[0] + " playpath="+matchPlaypath[0] + " swfUrl=http://www.n24.de/_swf/HomePlayer.swf"
+      filename = matchBase[0]
       listitem = xbmcgui.ListItem(path=filename)
       xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
     else:
