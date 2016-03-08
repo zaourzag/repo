@@ -201,6 +201,7 @@ class creator:
 
 
     def _createRecordingList(self, otr): 
+
         """
         wrapper um createList fuer recordings aufzurufen
 
@@ -209,7 +210,8 @@ class creator:
         """
 
         def get_recording_list_item(archive, recording):
-
+            xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_TITLE)
+            xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_DATE)
             li = xbmcgui.ListItem(
                 recording['label'],
                 recording['filename'],
