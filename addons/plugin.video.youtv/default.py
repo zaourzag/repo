@@ -33,7 +33,8 @@ if not xbmcvfs.exists(temp):
 
 icon = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')+'/icon.png').decode('utf-8')
 useThumbAsFanart=addon.getSetting("useThumbAsFanart") == "true"
-
+xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_DATEADDED)
+xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
 
 def debug(content):
     log(content, xbmc.LOGDEBUG)
@@ -62,12 +63,12 @@ def addDir(name, url, mode, iconimage, desc="",ids=""):
 	ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
 	return ok
   
-def addLink(name, url, mode, iconimage, duration="", desc="", genre=''):
+def addLink(name, url, mode, iconimage, duration="", desc="", genre='',shortname="",zeit="",production_year=""):
   cd=addon.getSetting("password")  
   u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
   ok = True
   liz = xbmcgui.ListItem(name, iconImage=defaultThumb, thumbnailImage=iconimage)
-  liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Genre": genre})
+  liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Genre": genre,"Sorttitle":shortname,"Dateadded":zeit,"year":production_year })
   liz.setProperty('IsPlayable', 'true')
   liz.addStreamInfo('video', { 'duration' : duration })
   liz.setProperty("fanart_image", iconimage)
@@ -90,11 +91,11 @@ def addLink(name, url, mode, iconimage, duration="", desc="", genre=''):
   xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
   ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
   return ok
-def addLinkarchive(name, url, mode, iconimage, duration="", desc="", genre=''):
+def addLinkarchive(name, url, mode, iconimage, duration="", desc="", genre='',shortname="",zeit="",production_year=""):
   u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
   ok = True
   liz = xbmcgui.ListItem(name, iconImage=defaultThumb, thumbnailImage=iconimage)
-  liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Genre": genre})
+  liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Genre": genre,"Sorttitle":shortname,"Dateadded":zeit})
   liz.setProperty('IsPlayable', 'true')
   liz.addStreamInfo('video', { 'duration' : duration })
   liz.setProperty("fanart_image", iconimage)
@@ -285,7 +286,7 @@ def liste(url,filter):
           
      match=re.compile('(.+?)-(.+?)-(.+?)T(.+?):(.+?):', re.DOTALL).findall(st)
      times=match[0][2] +"."+ match[0][1] +"."+ match[0][0] +" "+ match[0][3] +":"+match[0][4] +" "
-          
+     start=match[0][0] +"."+ match[0][1] +"."+ match[0][2] +" "+ match[0][3] +":"+match[0][4] +":00"
      title=unicode(name["title"]).encode("utf-8")
      subtitle=unicode(name["subtitle"]).encode("utf-8")
      if subtitle!= "None":
@@ -294,11 +295,12 @@ def liste(url,filter):
      bild=unicode(name["image"][0]["url"]).encode("utf-8")
      duration=str(name["duration"])
      genres=unicode(name["genre"]["name"]).encode("utf-8") 
+     production_year=unicode(name["production_year"]).encode("utf-8") 
      if enttime < nowtime and diftime2<tage:
          if filter!="archived_broadcasts":
-            addLink(times+title, id, "playvideo", bild, duration=duration, desc="", genre=genres)
+           addLink(times+title, id, "playvideo", bild, duration=duration, desc="", genre=genres,shortname=title,zeit=start,production_year=production_year)
          else:
-            addLinkarchive(times+title  , id, "playvideo", bild, duration=duration, desc="", genre=genres)
+           addLinkarchive(times+title  , id, "playvideo", bild, duration=duration, desc="", genre=genres,shortname=title,zeit=st)
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 
    
