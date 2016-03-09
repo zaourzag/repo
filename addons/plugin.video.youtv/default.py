@@ -33,8 +33,7 @@ if not xbmcvfs.exists(temp):
 
 icon = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')+'/icon.png').decode('utf-8')
 useThumbAsFanart=addon.getSetting("useThumbAsFanart") == "true"
-xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_DATEADDED)
-xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
+
 
 def debug(content):
     log(content, xbmc.LOGDEBUG)
@@ -63,13 +62,12 @@ def addDir(name, url, mode, iconimage, desc="",ids=""):
 	ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
 	return ok
   
-def addLink(name, url, mode, iconimage, duration="", desc="", genre='',shortname="",zeit="",production_year=""):
+def addLink(name, url, mode, iconimage, duration="", desc="", genre=''):
   cd=addon.getSetting("password")  
   u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
   ok = True
   liz = xbmcgui.ListItem(name, iconImage=defaultThumb, thumbnailImage=iconimage)
-  debug ("Sorttitle"+shortname +" Dateadded"+zeit)  
-  liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Genre": genre,"Sorttitle":shortname,"Dateadded":zeit,"year":production_year })
+  liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Genre": genre})
   liz.setProperty('IsPlayable', 'true')
   liz.addStreamInfo('video', { 'duration' : duration })
   liz.setProperty("fanart_image", iconimage)
@@ -82,21 +80,21 @@ def addLink(name, url, mode, iconimage, duration="", desc="", genre='',shortname
   serienadd = "plugin://plugin.video.youtv/?mode=sadd&url="+urllib.quote_plus(url)
   
   download = "plugin://plugin.video.youtv/?mode=download&url="+urllib.quote_plus(url)      
-  commands.append(( 'Add to Archive', 'XBMC.RunPlugin('+ finaladd +')'))   
-  commands.append(( 'Del from Archive', 'XBMC.RunPlugin('+ finaldel +')'))   
-  commands.append(( 'Add to Serie', 'XBMC.RunPlugin('+ seriendel +')'))   
-  commands.append(( 'Del from Serie', 'XBMC.RunPlugin('+ serienadd +')'))  
+  commands.append(( translation(30112), 'XBMC.RunPlugin('+ finaladd +')'))   
+  commands.append(( translation(30113), 'XBMC.RunPlugin('+ finaldel +')'))   
+  commands.append(( translation(30114), 'XBMC.RunPlugin('+ seriendel +')'))   
+  commands.append(( translation(30115), 'XBMC.RunPlugin('+ serienadd +')'))  
   if cd=="4921":
      commands.append(( 'Download', 'XBMC.RunPlugin('+ download +')'))     
   liz.addContextMenuItems( commands )
   xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
   ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
   return ok
-def addLinkarchive(name, url, mode, iconimage, duration="", desc="", genre='',shortname="",zeit="",production_year=""):
+def addLinkarchive(name, url, mode, iconimage, duration="", desc="", genre=''):
   u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
   ok = True
   liz = xbmcgui.ListItem(name, iconImage=defaultThumb, thumbnailImage=iconimage)
-  liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Genre": genre,"Sorttitle":shortname,"Dateadded":zeit})
+  liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Genre": genre})
   liz.setProperty('IsPlayable', 'true')
   liz.addStreamInfo('video', { 'duration' : duration })
   liz.setProperty("fanart_image", iconimage)
@@ -104,8 +102,8 @@ def addLinkarchive(name, url, mode, iconimage, duration="", desc="", genre='',sh
   commands = []
   download = "plugin://plugin.video.youtv/?mode=download&url="+urllib.quote_plus(url)    
   finaldel = "plugin://plugin.video.youtv/?mode=delit&url="+urllib.quote_plus(url)    
-  commands.append(( 'Del from Archive', 'XBMC.RunPlugin('+ finaldel +')'))   
-  commands.append(( 'Download', 'XBMC.RunPlugin('+ download +')'))   
+  commands.append(( translation(30113), 'XBMC.RunPlugin('+ finaldel +')'))   
+  commands.append(( translation(30116), 'XBMC.RunPlugin('+ download +')'))   
   liz.addContextMenuItems( commands )
   xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
   ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
@@ -123,7 +121,7 @@ def addLinkSeries(name, url, mode, iconimage, duration="", desc="", genre=''):
   #liz.setProperty("fanart_image", defaultBackground)
   commands = []
   seriendel = "plugin://plugin.video.youtv/?mode=sdeldirekt&url="+urllib.quote_plus(url)  
-  commands.append(( 'Delete Serie', 'XBMC.RunPlugin('+ seriendel +')'))         
+  commands.append(( translation(30116), 'XBMC.RunPlugin('+ seriendel +')'))         
   liz.addContextMenuItems( commands )
   xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
   ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
@@ -218,9 +216,14 @@ def subgenres(ids):
    
 def getThemen(url,filter):
    token=login()   
+   content=getUrl("https://www.youtv.de/api/v2/subscription.json?platform=ios",token=token)
+   debug("Subcription: ")
+   debug(content)
+   struktur = json.loads(content)       
+   tage=struktur["subscription"]["history_days"]         
    if filter=="channels" :
-     datuma=["Heute","Gestern"]     
-     for i in xrange(2, 7):
+     datuma=[translation(30121),translation(30122)]     
+     for i in xrange(2, tage):
         Tag=datetime.datetime.strftime(datetime.datetime.now()-datetime.timedelta(i),'%A')
         datuma.append(Tag)
      dialog = xbmcgui.Dialog()
@@ -282,7 +285,7 @@ def liste(url,filter):
           
      match=re.compile('(.+?)-(.+?)-(.+?)T(.+?):(.+?):', re.DOTALL).findall(st)
      times=match[0][2] +"."+ match[0][1] +"."+ match[0][0] +" "+ match[0][3] +":"+match[0][4] +" "
-     start=match[0][0] +"."+ match[0][1] +"."+ match[0][2] +" "+ match[0][3] +":"+match[0][4] +":00"
+          
      title=unicode(name["title"]).encode("utf-8")
      subtitle=unicode(name["subtitle"]).encode("utf-8")
      if subtitle!= "None":
@@ -291,12 +294,11 @@ def liste(url,filter):
      bild=unicode(name["image"][0]["url"]).encode("utf-8")
      duration=str(name["duration"])
      genres=unicode(name["genre"]["name"]).encode("utf-8") 
-     production_year=unicode(name["production_year"]).encode("utf-8") 
      if enttime < nowtime and diftime2<tage:
          if filter!="archived_broadcasts":
-            addLink(times+title, id, "playvideo", bild, duration=duration, desc="", genre=genres,shortname=title,zeit=start,production_year=production_year)
+            addLink(times+title, id, "playvideo", bild, duration=duration, desc="", genre=genres)
          else:
-            addLinkarchive(times+title  , id, "playvideo", bild, duration=duration, desc="", genre=genres,shortname=title,zeit=st)
+            addLinkarchive(times+title  , id, "playvideo", bild, duration=duration, desc="", genre=genres)
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 
    
@@ -305,7 +307,7 @@ def download(id):
   download_dir=addon.getSetting("download_dir")    
   if download_dir=="":
        dialog = xbmcgui.Dialog()
-       dialog.ok("Error", "Es ist keine Download Ordner eingestellt")  
+       dialog.ok(translation(30117), translation(30118)  )
        return 0
   quaname=[]
   qalfile=[]
@@ -362,7 +364,7 @@ def download(id):
      
   file_name = file.split('/')[-1]     
   progress = xbmcgui.DialogProgress()
-  progress.create("Youtv","Downloading File",file_name)
+  progress.create("Youtv",translation(30119),file_name)
   u = urllib2.urlopen(file)
   f = open(download_dir + file_name, 'wb')
   meta = u.info()
@@ -540,7 +542,7 @@ def delit(id):
     serie=serien["series_id"]
     if serie==None:
        dialog = xbmcgui.Dialog()
-       dialog.ok("Error", "Es ist keine Serie")    
+       dialog.ok(translation(30117), translation(30120))    
     else:
        serienadd_direkt(serie)    
     

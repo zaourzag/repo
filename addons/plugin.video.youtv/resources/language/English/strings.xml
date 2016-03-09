@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <strings>
   <string id="30101">User</string>
   <string id="30102">Password</string>
@@ -10,5 +10,16 @@
   <string id="30108">Archive</string>
   <string id="30109">Bitrate</string>  
   <string id="30110">Select Date</string>
-  <string id="30111">Download Folder</string>    
+  <string id="30111">Download Ordner</string>    
+  <string id="30112">Add to Archive</string> 
+  <string id="30113">Del from Archive</string> 
+  <string id="30114">Add to Serie</string> 
+  <string id="30115">Del from Serie</string> 
+  <string id="30116">Download</string> 
+  <string id="30117">Error</string> 
+  <string id="30118">Es ist keine Download Ordner eingestellt</string> 
+  <string id="30119">Downloading File</string> 
+  <string id="30120">Diese Sendung ist keine Serie</string> 
+  <string id="30121">Heute</string> 
+  <string id="30122">Gestern</string> 
 </strings>
