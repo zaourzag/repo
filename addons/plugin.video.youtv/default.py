@@ -47,7 +47,16 @@ def log(msg, level=xbmc.LOGNOTICE):
     addonID = addon.getAddonInfo('id')
     xbmc.log('%s: %s' % (addonID, msg), level) 
 
-  
+def holejson(url,token=""):  
+  empty=[]
+  if token=="":
+    token=login()
+  content=getUrl(url,token=token)
+  if content=="":
+    return empty
+  else:
+    struktur = json.loads(content) 
+    return struktur
     
 def addDir(name, url, mode, iconimage, desc="",ids=""):
 	u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&ids="+str(ids)
@@ -157,7 +166,16 @@ def getUrl(url,data="x",token=""):
           else:
              content=opener.open(url).read()
         except urllib2.HTTPError as e:
-             print e
+             #print e.code   
+             cc=e.read()  
+             struktur = json.loads(cc)  
+             error=struktur["errors"][0] 
+             error=unicode(error).encode("utf-8")
+             debug("ERROR : " + error)
+             dialog = xbmcgui.Dialog()
+             nr=dialog.ok("Error", error)
+             return ""
+             
         opener.close()
         return content
 
@@ -314,7 +332,7 @@ def download(id):
   download_dir=addon.getSetting("download_dir")    
   if download_dir=="":
        dialog = xbmcgui.Dialog()
-       dialog.ok(translation(30117), translation(30118)  )
+       dialog.select(translation(30117), translation(30118)  )
        return 0
   quaname=[]
   qalfile=[]
@@ -431,10 +449,11 @@ def playvideo(id):
   qname=[]
   bitrate=addon.getSetting("bitrate")
   debug("ID :::"+ id)
-  token=login()
-  content=getUrl("https://www.youtv.de/api/v2/broadcast_files/"+ str(id) +".json?platform=ios",token=token)
-  debug("+X+ :"+ content)
-  struktur = json.loads(content) 
+  url="https://www.youtv.de/api/v2/broadcast_files/"+ str(id) +".json?platform=ios"
+  struktur=holejson(url)  
+  debug(struktur)
+  if len(struktur)==0:
+     return 1   
   qulitaet=struktur["files"]
   nq=""
   hq=""
@@ -480,7 +499,6 @@ def playvideo(id):
      file=qalfile[nr]  
   listitem = xbmcgui.ListItem(path=file)  
   xbmcplugin.setResolvedUrl(addon_handle,True, listitem)  
-  print("####"+   content)
    
 params = parameters_string_to_dict(sys.argv[2])
 mode = urllib.unquote_plus(params.get('mode', ''))
