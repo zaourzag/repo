@@ -310,7 +310,7 @@ def liste(url,filter):
      diftime=nowtime-starttime
      diftime2=int(diftime/  84400)       
      match=re.compile('(.+?)-(.+?)-(.+?)T(.+?):(.+?):', re.DOTALL).findall(st)
-     if zeigedate=="false": 
+     if zeigedate!="false": 
        times=match[0][2] +"."+ match[0][1] +"."+ match[0][0] +" "+ match[0][3] +":"+match[0][4] +" "
      else:
        times=match[0][3] +":"+match[0][4] +" "
