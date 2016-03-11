@@ -254,6 +254,8 @@ def getThemen(url,filter):
         datuma.append(Tag)
      dialog = xbmcgui.Dialog()
      nr=dialog.select("Datum", datuma)
+     if nr==-1:
+        return 1
      tagit=datetime.datetime.strftime(datetime.datetime.now()-datetime.timedelta(nr),'%Y-%m-%d')
      datum="&date="+tagit
      
