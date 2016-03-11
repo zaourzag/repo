@@ -289,6 +289,7 @@ def liste(url,filter):
    debug("+X:"+ content)
    struktur = json.loads(content)   
    themen=struktur[filter]   
+   zeigedate=addon.getSetting("zeigedate")
    for name in themen:
      #2016-02-26T21:15:00.000+01:00
      
@@ -308,10 +309,11 @@ def liste(url,filter):
      nowtime=time.mktime(datetime.datetime.now().timetuple())
      diftime=nowtime-starttime
      diftime2=int(diftime/  84400)       
-          
      match=re.compile('(.+?)-(.+?)-(.+?)T(.+?):(.+?):', re.DOTALL).findall(st)
-     #times=match[0][2] +"."+ match[0][1] +"."+ match[0][0] +" "+ match[0][3] +":"+match[0][4] +" "
-     times=match[0][3] +":"+match[0][4] +" "
+     if zeigedate=="false": 
+       times=match[0][2] +"."+ match[0][1] +"."+ match[0][0] +" "+ match[0][3] +":"+match[0][4] +" "
+     else:
+       times=match[0][3] +":"+match[0][4] +" "
      start=match[0][0] +"."+ match[0][1] +"."+ match[0][2] +" "+ match[0][3] +":"+match[0][4] +":00"
      title=unicode(name["title"]).encode("utf-8")
      subtitle=unicode(name["subtitle"]).encode("utf-8")
