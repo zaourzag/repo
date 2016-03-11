@@ -297,35 +297,19 @@ def watchlive(url,meldung="",spiel=""):
             urlnew=match[0]   
             debug("URL hessen: " + urlnew)            
    if url=="swr.de":
-      debug("spiel" +spiel)          
-      match = re.compile('([^-]+) - ([^-]+)', re.DOTALL).findall(spiel)
-      name1=match[0][0]
-      name2=match[0][1]
-      url="http://swrmediathek.de/content/live.htm"
+      url="http://swrmediathek.de/assets/pages/fussball.html"
       content=getUrl(url)      
-      kurz_inhalt = content[content.find('<h2 class="rasterHeadline">Nächster Livestream</h2>')+1:]
-      kurz_inhalt = kurz_inhalt[:kurz_inhalt.find('<div class="section sectionB hasTitle">')]
-      spl = kurz_inhalt.split('<div class="box">')         
-      for i in range(1, len(spl), 1):
-        entry=spl[i]   
-        debug ("ENtry:"+ entry)
-        match = re.compile('title="([^"]+)"', re.DOTALL).findall(entry)   
-        title  = match[0]
-        match = re.compile('<a href="/player.htm\?show=([^"]+)"', re.DOTALL).findall(entry)   
-        urlpart=match[0]        
-        if maschaftfinden(name1, title) ==1 or maschaftfinden(name2, title)==1  :   
-          urla="http://swrmediathek.de/AjaxEntry?callback=js&ekey="+urlpart+"&rand=Sat"    
-          debug("URLA : "+urla)          
-          content=getUrl(urla) 
-          debug ("content:"+ content)
-          if "m3u8" in content:
+      match = re.compile('http://swrmediathek.de/player.htm\?show=(.+?)"', re.DOTALL).findall(content)   
+      urlpart=match[0]        
+      urla="http://swrmediathek.de/AjaxEntry?callback=js&ekey="+urlpart+"&rand=Sat"    
+      debug("URLA : "+urla)          
+      content=getUrl(urla) 
+      debug ("content:"+ content)
+      if "m3u8" in content:
             match = re.compile('"([^"]+)\.m3u8"', re.DOTALL).findall(content)   
-            urlnew=match[0]+".m3u8"                   
-            debug("TITLE:"+ title)
-            debug("URL: "+ urlnew)
-            break
-          else:
-              urlnew=""  
+            urlnew=match[0]+".m3u8"                               
+      else:
+            urlnew=""  
    if url=="sportschau.de":
        debug("spiel" +spiel)          
        match = re.compile('([^-]+) - ([^-]+)', re.DOTALL).findall(spiel)
