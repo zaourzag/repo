@@ -326,9 +326,9 @@ def liste(url,filter):
      production_year=unicode(name["production_year"]).encode("utf-8") 
      if enttime < nowtime and diftime2<tage:
          if filter!="archived_broadcasts":
-           addLink(times+title, id, "playvideo", bild, duration=duration, desc="", genre=genres,shortname=title,zeit=start,production_year=production_year,abo=tage)
+           addLink(times + " - " + title, id, "playvideo", bild, duration=duration, desc="", genre=genres,shortname=title,zeit=start,production_year=production_year,abo=tage)
          else:
-           addLinkarchive(times+title  , id, "playvideo", bild, duration=duration, desc="", genre=genres,shortname=title,zeit=st,abo=tage)
+           addLinkarchive(times + " - " + title  , id, "playvideo", bild, duration=duration, desc="", genre=genres,shortname=title,zeit=st,abo=tage)
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 
    
