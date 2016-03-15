@@ -311,9 +311,9 @@ def liste(url,filter):
      diftime2=int(diftime/  84400)       
      match=re.compile('(.+?)-(.+?)-(.+?)T(.+?):(.+?):', re.DOTALL).findall(st)
      if zeigedate!="false": 
-       times=match[0][2] +"."+ match[0][1] +"."+ match[0][0] +" "+ match[0][3] +":"+match[0][4] +" "
+       times=match[0][2] +"."+ match[0][1] +"."+ match[0][0] +" "+ match[0][3] +":"+match[0][4]
      else:
-       times=match[0][3] +":"+match[0][4] +" "
+       times=match[0][3] +":"+match[0][4]
      start=match[0][0] +"."+ match[0][1] +"."+ match[0][2] +" "+ match[0][3] +":"+match[0][4] +":00"
      title=unicode(name["title"]).encode("utf-8")
      subtitle=unicode(name["subtitle"]).encode("utf-8")
