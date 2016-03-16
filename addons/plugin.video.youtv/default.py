@@ -35,6 +35,8 @@ icon = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')+'/icon.png').de
 useThumbAsFanart=addon.getSetting("useThumbAsFanart") == "true"
 xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_DATEADDED)
 xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
+xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_UNSORTED)
+
 
 def debug(content):
     log(content, xbmc.LOGDEBUG)
@@ -265,16 +267,22 @@ def getThemen(url,filter):
    debug("+X:"+ content)
    struktur = json.loads(content)
    themen=struktur[filter]   
+   namenliste=[]
+   idliste=[]
+   logoliste=[]
    for name in themen:
-      namen=unicode(name["name"]).encode("utf-8")
-      id=name["id"]
+      namenliste.append(name["name"])
+      idliste.append(name["id"])       
       if filter=="filters" :
          mode="listtop"
          logo=""
       if filter=="channels" :
          mode="listtv"       
-         logo=name["logo"][0]["url"]
-      addDir(namen, namen, mode+datum,logo,ids=str(id))
+         logo=name["logo"][0]["url"]   
+      logoliste.append(logo)  
+   namenliste, idliste,logoliste = ( list(x) for x in zip(*sorted(zip(namenliste, idliste,logoliste))))
+   for i in range(len(namenliste)):
+      addDir(namenliste[i], namenliste[i], mode+datum,logoliste[i],ids=str(idliste[i]))
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 
 def liste(url,filter):
