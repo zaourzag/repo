@@ -270,7 +270,9 @@ def getThemen(url,filter):
    namenliste=[]
    idliste=[]
    logoliste=[]
+   sortnamen=[]
    for name in themen:
+      sortnamen.append(name["name"].lower())
       namenliste.append(name["name"])
       idliste.append(name["id"])       
       if filter=="filters" :
@@ -280,7 +282,7 @@ def getThemen(url,filter):
          mode="listtv"       
          logo=name["logo"][0]["url"]   
       logoliste.append(logo)  
-   namenliste, idliste,logoliste = ( list(x) for x in zip(*sorted(zip(namenliste, idliste,logoliste))))
+   sortnamen,namenliste, idliste,logoliste = ( list(x) for x in zip(*sorted(zip(sortnamen,namenliste, idliste,logoliste))))
    for i in range(len(namenliste)):
       addDir(namenliste[i], namenliste[i], mode+datum,logoliste[i],ids=str(idliste[i]))
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
