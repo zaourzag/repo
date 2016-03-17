@@ -406,7 +406,7 @@ def download(id):
   progress = xbmcgui.DialogProgress()
   progress.create("Youtv",translation(30119),file_name)
   u = urllib2.urlopen(file)
-  f = open(download_dir + file_name, 'wb')
+  f = open(os.path.join(download_dir, file_name), 'wb')
   meta = u.info()
   file_size = int(meta.getheaders("Content-Length")[0])
   #print "Downloading: %s Bytes: %s" % (file_name, file_size)
