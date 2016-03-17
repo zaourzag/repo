@@ -607,7 +607,7 @@ def delit(id):
   xbmc.executebuiltin("Container.Refresh")
 
 
-  def serienadd(ids):
+def serienadd(ids):
     token=login()   
     content=getUrl("https://www.youtv.de/api/v2/broadcasts/"+ str(ids) +".json?platform=ios",token=token)
     debug("content :"+content)
