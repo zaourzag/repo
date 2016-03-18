@@ -61,18 +61,19 @@ def holejson(url,token=""):
     return struktur
     
 def addDir(name, url, mode, iconimage, desc="",ids=""):
-	u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&ids="+str(ids)
-	ok = True
-	liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=iconimage)
-	liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc})
-	if useThumbAsFanart:
-		if not iconimage or iconimage==icon or iconimage==defaultThumb:
-			iconimage = defaultBackground
-		liz.setProperty("fanart_image", iconimage)
-	else:
-		liz.setProperty("fanart_image", defaultBackground)
-	ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
-	return ok
+  url=unicode(url).encode("utf-8")
+  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&ids="+str(ids)
+  ok = True
+  liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=iconimage)
+  liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc})
+  if useThumbAsFanart:
+    if not iconimage or iconimage==icon or iconimage==defaultThumb:
+      iconimage = defaultBackground
+    liz.setProperty("fanart_image", iconimage)
+  else:
+    liz.setProperty("fanart_image", defaultBackground)
+  ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
+  return ok
   
 def addLink(name, url, mode, iconimage, duration="", desc="", genre='',shortname="",zeit="",production_year="",abo=1):
   cd=addon.getSetting("password")  
@@ -142,14 +143,14 @@ def addLinkSeries(name, url, mode, iconimage, duration="", desc="", genre=''):
 
   
 def parameters_string_to_dict(parameters):
-	paramDict = {}
-	if parameters:
-		paramPairs = parameters[1:].split("&")
-		for paramsPair in paramPairs:
-			paramSplits = paramsPair.split('=')
-			if (len(paramSplits)) == 2:
-				paramDict[paramSplits[0]] = paramSplits[1]
-	return paramDict
+  paramDict = {}
+  if parameters:
+    paramPairs = parameters[1:].split("&")
+    for paramsPair in paramPairs:
+      paramSplits = paramsPair.split('=')
+      if (len(paramSplits)) == 2:
+        paramDict[paramSplits[0]] = paramSplits[1]
+  return paramDict
   
   
 def getUrl(url,data="x",token=""):
@@ -338,7 +339,7 @@ def liste(url,filter):
          if filter!="archived_broadcasts":
            addLink(times + " - " + title, id, "playvideo", bild, duration=duration, desc="", genre=genres,shortname=title,zeit=start,production_year=production_year,abo=tage)
          else:
-           addLinkarchive(times + " - " + title  , id, "playvideo", bild, duration=duration, desc="", genre=genres,shortname=title,zeit=st,abo=tage)
+           addLinkarchive(times + " - " + title  , id, "playvideo", bild, duration=duration, desc="", genre=genres,shortname=title,zeit=st)
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 
    
@@ -583,7 +584,7 @@ def addit(id):
 #  debug(content)  
 #  struktur = json.loads(content) 
 #  sendung=struktur["broadcast"]  
-#https://www.youtv.de/api/v2/archived_broadcasts.json?platform=ios		  archived_broadcast[id]:  299501
+#https://www.youtv.de/api/v2/archived_broadcasts.json?platform=ios      archived_broadcast[id]:  299501
   values = {
          'archived_broadcast[id]' : id         
   }
