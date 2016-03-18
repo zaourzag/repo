@@ -11,7 +11,7 @@ import xbmcvfs
 import urllib, urllib2, socket, cookielib, re, os, shutil,json
 import time
 import datetime
-
+import locale
 
 # Setting Variablen Des Plugins
 global debuging
@@ -252,7 +252,13 @@ def getThemen(url,filter):
    tage=abodauer(token)
    if filter=="channels" :
      datuma=[translation(30121),translation(30122)]     
-     for i in xrange(2, tage):
+     sprache=xbmc.getLanguage(xbmc.ISO_639_1)
+     if sprache=="de":
+        try:           
+           locale.setlocale(locale.LC_ALL, 'de_DE')
+        except:
+           locale.setlocale(locale.LC_ALL, 'deu_deu')       
+     for i in xrange(2, tage):        
         Tag=datetime.datetime.strftime(datetime.datetime.now()-datetime.timedelta(i),'%A')
         datuma.append(Tag)
      dialog = xbmcgui.Dialog()
@@ -334,11 +340,11 @@ def liste(url,filter):
      bild=unicode(name["image"][0]["url"]).encode("utf-8")
      duration=str(name["duration"])
      genres=unicode(name["genre"]["name"]).encode("utf-8") 
-     production_year=unicode(name["production_year"]).encode("utf-8") 
-     if enttime < nowtime and diftime2<tage:
-         if filter!="archived_broadcasts":
+     production_year=unicode(name["production_year"]).encode("utf-8")      
+     if filter!="archived_broadcasts":
+        if enttime < nowtime and diftime2<tage:
            addLink(times + " - " + title, id, "playvideo", bild, duration=duration, desc="", genre=genres,shortname=title,zeit=start,production_year=production_year,abo=tage)
-         else:
+        else:
            addLinkarchive(times + " - " + title  , id, "playvideo", bild, duration=duration, desc="", genre=genres,shortname=title,zeit=st)
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 
