@@ -61,7 +61,6 @@ def holejson(url,token=""):
     return struktur
     
 def addDir(name, url, mode, iconimage, desc="",ids=""):
-  url=unicode(url).encode("utf-8")
   u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&ids="+str(ids)
   ok = True
   liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=iconimage)
