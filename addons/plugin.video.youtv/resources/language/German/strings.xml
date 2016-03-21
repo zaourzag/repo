@@ -13,8 +13,8 @@
   <string id="30111">Download-Ordner</string>  
   <string id="30112">Zu Archiv hinzufügen</string> 
   <string id="30113">Aus Archiv entfernen</string> 
-  <string id="30114">Zu Serie hinzufügen</string> 
-  <string id="30115">Aus Serie entfernen</string> 
+  <string id="30114">Zu Serien hinzufügen</string> 
+  <string id="30115">Aus Serien entfernen</string> 
   <string id="30116">Herunterladen</string> 
   <string id="30117">Fehler</string> 
   <string id="30118">Es wurde kein Download-Ordner festgelegt.</string> 
@@ -22,6 +22,13 @@
   <string id="30120">Diese Sendung ist keine Serie.</string> 
   <string id="30121">Heute</string> 
   <string id="30122">Gestern</string> 
-  <string id="30123">Serien Aufnahmen</string> 
+  <string id="30123">Meine Serien</string> 
   <string id="30124">Datum im Titel</string> 
+  <string id="30130">Sonntag</string> 
+  <string id="30131">Montag</string> 
+  <string id="30132">Dienstag</string> 
+  <string id="30133">Mittwoch</string> 
+  <string id="30134">Donnerstag</string> 
+  <string id="30135">Freitag</string> 
+  <string id="30136">Samstag</string> 
 </strings>

@@ -11,7 +11,6 @@ import xbmcvfs
 import urllib, urllib2, socket, cookielib, re, os, shutil,json
 import time
 import datetime
-import locale
 
 # Setting Variablen Des Plugins
 global debuging
@@ -91,18 +90,21 @@ def addLink(name, url, mode, iconimage, duration="", desc="", genre='',shortname
   seriendel = "plugin://plugin.video.youtv/?mode=sdel&url="+urllib.quote_plus(url)
   serienadd = "plugin://plugin.video.youtv/?mode=sadd&url="+urllib.quote_plus(url)
   
-  download = "plugin://plugin.video.youtv/?mode=download&url="+urllib.quote_plus(url)      
-  if abo >1 :
+  download = "plugin://plugin.video.youtv/?mode=download&url="+urllib.quote_plus(url) 
+  # Langzeitarchiv/Serien erst ab Pro-Account
+  if abo >3 :
     commands.append(( translation(30112), 'XBMC.RunPlugin('+ finaladd +')'))   
     commands.append(( translation(30113), 'XBMC.RunPlugin('+ finaldel +')'))   
-    commands.append(( translation(30114), 'XBMC.RunPlugin('+ seriendel +')'))   
-    commands.append(( translation(30115), 'XBMC.RunPlugin('+ serienadd +')'))  
+    commands.append(( translation(30114), 'XBMC.RunPlugin('+ serienadd +')'))   
+    commands.append(( translation(30115), 'XBMC.RunPlugin('+ seriendel +')'))  
+  # Download erst ab Basic-Account
   if cd=="4921" or abo>1:
-     commands.append(( 'Download', 'XBMC.RunPlugin('+ download +')'))     
+     commands.append(( translation(30116), 'XBMC.RunPlugin('+ download +')'))     
   liz.addContextMenuItems( commands )
   xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
   ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
   return ok
+
 def addLinkarchive(name, url, mode, iconimage, duration="", desc="", genre='',shortname="",zeit="",production_year=""):
   u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
   ok = True
@@ -115,7 +117,9 @@ def addLinkarchive(name, url, mode, iconimage, duration="", desc="", genre='',sh
   commands = []
   download = "plugin://plugin.video.youtv/?mode=download&url="+urllib.quote_plus(url)    
   finaldel = "plugin://plugin.video.youtv/?mode=delit&url="+urllib.quote_plus(url)    
+  serienadd = "plugin://plugin.video.youtv2/?mode=sadd&url="+urllib.quote_plus(url)
   commands.append(( translation(30113), 'XBMC.RunPlugin('+ finaldel +')'))   
+  commands.append(( translation(30114), 'XBMC.RunPlugin('+ serienadd +')'))
   commands.append(( translation(30116), 'XBMC.RunPlugin('+ download +')'))   
   liz.addContextMenuItems( commands )
   xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
@@ -134,7 +138,7 @@ def addLinkSeries(name, url, mode, iconimage, duration="", desc="", genre=''):
   #liz.setProperty("fanart_image", defaultBackground)
   commands = []
   seriendel = "plugin://plugin.video.youtv/?mode=sdeldirekt&url="+urllib.quote_plus(url)  
-  commands.append(( translation(30116), 'XBMC.RunPlugin('+ seriendel +')'))         
+  commands.append(( translation(30115), 'XBMC.RunPlugin('+ seriendel +')'))         
   liz.addContextMenuItems( commands )
   xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
   ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
@@ -250,16 +254,23 @@ def getThemen(url,filter):
    token=login()   
    tage=abodauer(token)
    if filter=="channels" :
-     datuma=[translation(30121),translation(30122)]     
+     datuma=[translation(30121),translation(30122)]    
      sprache=xbmc.getLanguage(xbmc.ISO_639_1)
-     if sprache=="de":
-        try:           
-           locale.setlocale(locale.LC_ALL, 'de_DE')
-        except:
-           locale.setlocale(locale.LC_ALL, 'deu_deu')       
+     # ---------------------------------------
+     # locale bei OPENELEC nicht installiert !
+     # ---------------------------------------
+     #if sprache=="de":
+        #try:           
+        #   locale.setlocale(locale.LC_ALL, 'de_DE')
+        #except:
+        #   locale.setlocale(locale.LC_ALL, 'deu_deu')       
      for i in xrange(2, tage):        
-        Tag=datetime.datetime.strftime(datetime.datetime.now()-datetime.timedelta(i),'%A')
-        datuma.append(Tag)
+       if sprache=="de":
+         Tag=datetime.datetime.strftime(datetime.datetime.now()-datetime.timedelta(i),'%w')
+         datuma.append(translation(30130 + int(Tag)))
+       else:
+         Tag=datetime.datetime.strftime(datetime.datetime.now()-datetime.timedelta(i),'%A')
+         datuma.append(Tag)
      dialog = xbmcgui.Dialog()
      nr=dialog.select("Datum", datuma)
      if nr==-1:
@@ -278,8 +289,9 @@ def getThemen(url,filter):
    logoliste=[]
    sortnamen=[]
    for name in themen:
-      sortnamen.append(name["name"].lower())
-      namenliste.append(name["name"])
+      namen=unicode(name["name"]).encode("utf-8")
+      sortnamen.append(namen.lower())
+      namenliste.append(namen)
       idliste.append(name["id"])       
       if filter=="filters" :
          mode="listtop"
@@ -340,11 +352,14 @@ def liste(url,filter):
      duration=str(name["duration"])
      genres=unicode(name["genre"]["name"]).encode("utf-8") 
      production_year=unicode(name["production_year"]).encode("utf-8")      
-     if filter!="archived_broadcasts":
-        if enttime < nowtime and diftime2<tage:
+     if enttime < nowtime:
+       if filter!="archived_broadcasts":
+         if diftime2 < tage:
+	   # Mediathek begrenzt durch Abodauer (Free = 1 Tag, Basic-Abo = 3 Tage, Pro-Abo = 7 Tage)
            addLink(times + " - " + title, id, "playvideo", bild, duration=duration, desc="", genre=genres,shortname=title,zeit=start,production_year=production_year,abo=tage)
-        else:
-           addLinkarchive(times + " - " + title  , id, "playvideo", bild, duration=duration, desc="", genre=genres,shortname=title,zeit=st)
+       else:
+	 # Langzeitarchiv ohne Begrenzung durch Abodauer
+         addLinkarchive(times + " - " + title, id, "playvideo", bild, duration=duration, desc="", genre=genres, shortname=title, zeit=start, production_year=production_year)
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 
    
@@ -436,15 +451,16 @@ def download(id):
   
   
   
-  progress.create('Progress', 'This is a progress bar.')     
+  #progress.create('Progress', 'This is a progress bar.')     
   #urllib.urlretrieve (file, temp+"/mp3.mp3")
-  print("####"+   content)
-   
-params = parameters_string_to_dict(sys.argv[2])
-mode = urllib.unquote_plus(params.get('mode', ''))
-url = urllib.unquote_plus(params.get('url', ''))
-ids = urllib.unquote_plus(params.get('ids', ''))
-genid = urllib.unquote_plus(params.get('genid', ''))
+  #print("####"+   content)
+
+# - Bereits definiert -
+#params = parameters_string_to_dict(sys.argv[2])
+#mode = urllib.unquote_plus(params.get('mode', ''))
+#url = urllib.unquote_plus(params.get('url', ''))
+#ids = urllib.unquote_plus(params.get('ids', ''))
+#genid = urllib.unquote_plus(params.get('genid', ''))
 
    
    
@@ -538,6 +554,7 @@ def search(url=""):
    debug("Content")
    struktur = json.loads(content)   
    themen=struktur[filter]      
+   zeigedate=addon.getSetting("zeigedate")
    for name in themen:
      title=unicode(name["title"]).encode("utf-8")
      subtitle=unicode(name["subtitle"]).encode("utf-8")
@@ -567,7 +584,10 @@ def search(url=""):
      diftime2=int(diftime/  84400)       
           
      match=re.compile('(.+?)-(.+?)-(.+?)T(.+?):(.+?):', re.DOTALL).findall(st)
-     times=match[0][2] +"."+ match[0][1] +"."+ match[0][0] +" "+ match[0][3] +":"+match[0][4] +" "
+     if zeigedate!="false": 
+       times=match[0][2] +"."+ match[0][1] +"."+ match[0][0] +" "+ match[0][3] +":"+match[0][4] +" "
+     else:
+       times=match[0][3] +":"+match[0][4] +" "
      start=match[0][0] +"."+ match[0][1] +"."+ match[0][2] +" "+ match[0][3] +":"+match[0][4] +":00"
      title=unicode(name["title"]).encode("utf-8")
      subtitle=unicode(name["subtitle"]).encode("utf-8")
@@ -579,7 +599,7 @@ def search(url=""):
      genres=unicode(name["genre"]["name"]).encode("utf-8") 
      production_year=unicode(name["production_year"]).encode("utf-8")      
      if enttime < nowtime and diftime2<tage:     
-       addLink(times+title, id, "playvideo", bild, duration=duration, desc="", genre=genres,zeit=start,production_year=production_year,abo=tage)
+       addLink(times + " - " + title, id, "playvideo", bild, duration=duration, desc="", genre=genres,shortname=title,zeit=start,production_year=production_year,abo=tage)
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 # Haupt Menu Anzeigen      
 
@@ -666,7 +686,8 @@ if mode is '':
     addDir(translation(30104), translation(30005), 'Genres',"")
     addDir(translation(30105), translation(30006), 'Sender', "")   
     addDir(translation(30107), translation(30107), 'Search', "")  
-    if tage!=1:
+    # Langzeitarchiv / Serienaufnahme erst ab Pro-Abo
+    if tage > 3:
        addDir(translation(30108), translation(30108), 'Archive',"")  
        addDir(translation(30123), translation(30123), 'Series',"")  
     addDir(translation(30106), translation(30106), 'Settings', "")        
@@ -708,9 +729,9 @@ else:
   if mode == 'Subgeneres':  
           subgenres(ids)
   if mode == 'sadd':  
-          seriendel(url)
-  if mode == 'sdel':  
           serienadd(url)    
+  if mode == 'sdel':  
+          seriendel(url)
   if mode == 'sadddirekt':  
           serienadd_direkt(url) 
   if mode == 'sdeldirekt':              
