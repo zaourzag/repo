@@ -67,18 +67,19 @@ def listVideosMain(url, thumb):
     debug("listVideosMain :"+ url)
     content = opener.open(url).read()
     matchShowID = re.compile('id="dni_listing_post_id" value="(.+?)"', re.DOTALL).findall(content)  
-    matchFE = re.compile('<h2>GANZE FOLGEN</h2>.+?id="listing-container-(.+?)"', re.DOTALL).findall(content)    
-    matchMV = re.compile('<h2>MEIST GESEHEN</h2>.+?id="listing-container-(.+?)"', re.DOTALL).findall(content)    
-    matchClips = re.compile('<h2>CLIPS</h2>.+?id="listing-container-(.+?)"', re.DOTALL).findall(content)    
-    matchEpisodes = re.compile('<a href="([^"]+)"[^>]*?><span>(.+?)<', re.DOTALL).findall(content)
-    showID = matchShowID[0]
+    matchFE = re.compile('<h2>GANZE FOLGEN</h2>.+?id="dni-listing(.+?)"', re.DOTALL).findall(content)    
+    matchMV = re.compile('<h2>MEIST GESEHEN</h2>.+?id="dni-listing(.+?)"', re.DOTALL).findall(content)    
+    matchClips = re.compile('<h2>CLIPS</h2>.+?id="dni-listing(.+?)"', re.DOTALL).findall(content)    
+    matchEpisodes = re.compile('title":"([^"]+)","url":"([^"]+)"', re.DOTALL).findall(content)
+    debug("------#")
+    debug(matchFE)
+    showID="0"
+    if matchShowID:
+       showID = matchShowID[0]
     debug("match")
     if matchFE:
-        for url, title in matchEpisodes:
-            if title=="Episoden":
-                debug("Add episode")
+        for title,url in matchEpisodes:
                 addDir(translation(30006), url, 'listSeasons', thumb, "")
-                break
         addDir(translation(30008), baseUrl+"/wp-content/plugins/dni_plugin_core/ajax.php?action=dni_listing_items_filter&letter=&page=1&id="+matchFE[0]+"&post_id="+showID, 'listVideos', thumb, "")
     if matchMV:
         debug("matchMV")
@@ -164,21 +165,23 @@ def listAZ():
 
 
 def listShows(urlMain):
+    debug("listshows URL:"+urlMain)
     content = opener.open(urlMain).read()
     content = content.replace("\\", "")
     spl = content.split('<a')
     for i in range(1, len(spl), 1):
         entry = spl[i]
+        debug("ENTRY: "+entry)
         match = re.compile('<h3>(.+?)<\/h3>', re.DOTALL).findall(entry)
         title = match[0]
-        if " - Videos" in title:
-            title = title[:title.rfind(" - Videos")].strip()
+        if " - VIDEOS" in title:
+            title = title[:title.rfind(" - VIDEOS")].strip()
         title = cleanTitle(title)
         match = re.compile('href="(.+?)"', re.DOTALL).findall(entry)
         url = match[0]
         match = re.compile('src="(.+?)"', re.DOTALL).findall(entry)
         thumb = cleanTitle(match[0]).replace("_thumb", "")
-        addShowDir(title, url, 'listVideosMain', thumb, title)
+        addShowDir(title, url, 'listEpisodes', thumb, title)
     try:
         matchCurrent = re.compile('"current_page":"(.+?)",', re.DOTALL).findall(content)
         matchTotal = re.compile('"total_pages":(.+?),', re.DOTALL).findall(content)
@@ -233,32 +236,13 @@ def listSeasons(urlMain, thumb):
 def listEpisodes(url, thumb):
     debug("listEpisodes" +url)
     content = opener.open(url).read()
-    spl = content.split('<a class="dni-episode-browser-item pagetype-video"')
-    for i in range(1, len(spl), 1):
-        entry = spl[i]
-        match1 = re.compile('<h3 class="item-title">(.+?)<', re.DOTALL).findall(entry)
-        match2 = re.compile('alt="(.+?)"', re.DOTALL).findall(entry)
-        if match1:
-            title = match1[0]
-        elif match2:
-            title = match2[0]
-        if "(" in title:
-            title = title[:title.rfind("(")].strip()
-        if title.endswith("Teil 1"):
-            title = title[:title.rfind("Teil 1")]
-        if title.endswith(" 1") and not title.endswith("Episode 1"):
-            title = title[:title.rfind(" 1")]
-        title = cleanTitle(title)
-        match = re.compile('href="(.+?)"', re.DOTALL).findall(entry)
-        url = match[0]
-        match = re.compile('<p>(.+?)</p>', re.DOTALL).findall(entry)
-        desc = ""
-        if match:
-            desc = cleanTitle(match[0])
-        match = re.compile('src="(.+?)"', re.DOTALL).findall(entry)
-        if match:
-            thumb = cleanTitle(match[0]).replace("_thumb", "")
-        addDir(title, url, 'playVideo', thumb, title, desc)
+    content=content.replace("\/","/")
+    content = content[content.find('var dniListingData ='):]
+    content = content[:content.find('})(window)')]
+    matchEpisodes = re.compile('title":"([^"]+)","url":"([^"]+)","image":"([^"]+)"', re.DOTALL).findall(content)
+    for title,url,thumb in matchEpisodes:
+        debug("Thumb:"+thumb)
+        addDir(title, url, 'playVideo', thumb, title)
     xbmcplugin.endOfDirectory(pluginhandle)
     if forceViewMode:
         xbmc.executebuiltin('Container.SetViewMode('+viewMode+')')
