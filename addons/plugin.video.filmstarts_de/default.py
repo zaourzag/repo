@@ -64,6 +64,7 @@ def showSortDirection(url):
 def listVideos(urlFull):    
     xbmcplugin.setContent(pluginhandle, "movies")
     content = getUrl(urlFull)
+    content = content[:content.find('<!--/col_main-->')]
     currentPage = -1
     maxPage = -1
     try:
