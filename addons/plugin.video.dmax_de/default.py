@@ -11,6 +11,7 @@ import socket
 import xbmcgui
 import xbmcaddon
 import xbmcplugin
+import HTMLParser
 from pyamf import remoting
 
 #addon = xbmcaddon.Addon()
@@ -95,7 +96,7 @@ def listVideosMain(url, thumb):
 def listVideos(urlMain):
     debug("listVideos :"+ urlMain)
     content = opener.open(urlMain).read()
-    content = content.replace("\\", "")
+    #content = content.replace("\\", "")
     spl = content.split('<a')
     for i in range(1, len(spl), 1):
         entry = spl[i]
@@ -167,12 +168,13 @@ def listAZ():
 def listShows(urlMain):
     debug("listshows URL:"+urlMain)
     content = opener.open(urlMain).read()
-    content = content.replace("\\", "")
+    content = content.replace("\/", "/")
+    content = content.replace("\\\"", "\"")
     spl = content.split('<a')
     for i in range(1, len(spl), 1):
         entry = spl[i]
-        debug("ENTRY: "+entry)
-        match = re.compile('<h3>(.+?)<\/h3>', re.DOTALL).findall(entry)
+        debug("ENTRY: "+entry)        
+        match = re.compile('<h3>(.+?)</h3>', re.DOTALL).findall(entry)
         title = match[0]
         if " - VIDEOS" in title:
             title = title[:title.rfind(" - VIDEOS")].strip()
@@ -242,6 +244,7 @@ def listEpisodes(url, thumb):
     matchEpisodes = re.compile('title":"([^"]+)","url":"([^"]+)","image":"([^"]+)"', re.DOTALL).findall(content)
     for title,url,thumb in matchEpisodes:
         debug("Thumb:"+thumb)
+        title=cleanTitle(title)
         addDir(title, url, 'playVideo', thumb, title)
     xbmcplugin.endOfDirectory(pluginhandle)
     if forceViewMode:
@@ -356,11 +359,11 @@ def favs(param):
             xbmc.executebuiltin("Container.Refresh")
 
 
+
+
 def cleanTitle(title):
-    title = title.replace("&lt;", "<").replace("&gt;", ">").replace("&amp;", "&").replace("&#039;", "'").replace("&quot;", "\"").replace("&szlig;", "ß").replace("&ndash;", "-")
-    title = title.replace("&Auml;", "Ä").replace("&Uuml;", "Ü").replace("&Ouml;", "Ö").replace("&auml;", "ä").replace("&uuml;", "ü").replace("&ouml;", "ö")
-    title = title.replace("u00c4", "Ä").replace("u00e4", "ä").replace("u00d6", "Ö").replace("u00f6", "ö").replace("u00dc", "Ü").replace("u00fc", "ü").replace("u00df", "ß").replace("u2013", "–")
-    title = title.strip()
+    title = title.decode('unicode_escape').encode("utf-8")
+    title = title.strip()    
     return title
 
 
