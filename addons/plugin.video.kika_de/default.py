@@ -45,7 +45,7 @@ def kikaninchen():
     spl = content.split('<multiMediaLink id="">')
     for i in range(1, len(spl), 1):
         entry = spl[i]
-        match = re.compile('<description><!\\[CDATA\\[(.+?)\\]\\]></description>', re.DOTALL).findall(entry)
+        match = re.compile('<description>(.+?)</description>', re.DOTALL).findall(entry)
         desc = match[0]
         desc = cleanTitle(desc)
         match = re.compile('<path type="intern" target="flashapp">(.+?)</path>', re.DOTALL).findall(entry)
