@@ -11,7 +11,7 @@ import socket
 import xbmcgui
 import xbmcaddon
 import xbmcplugin
-import HTMLParser
+import HTMLParser,json
 from pyamf import remoting
 
 #addon = xbmcaddon.Addon()
@@ -183,7 +183,7 @@ def listShows(urlMain):
         url = match[0]
         match = re.compile('src="(.+?)"', re.DOTALL).findall(entry)
         thumb = cleanTitle(match[0]).replace("_thumb", "")
-        addShowDir(title, url, 'listEpisodes', thumb, title)
+        addShowDir(title, url, 'listSeasons', thumb, title)
     try:
         matchCurrent = re.compile('"current_page":"(.+?)",', re.DOTALL).findall(content)
         matchTotal = re.compile('"total_pages":(.+?),', re.DOTALL).findall(content)
@@ -218,40 +218,56 @@ def listShowsFavs():
         xbmc.executebuiltin('Container.SetViewMode('+viewMode+')')
 
 
-def listSeasons(urlMain, thumb):
+def listSeasons(urlMain):
     content = opener.open(urlMain).read()
-    matchIDs = re.compile('data-module-id="cfct-module-(.+?)" data-post-id="(.+?)"', re.DOTALL).findall(content)
-    if '<select name="season"' in content:
-        content = content[content.find('<select name="season"'):]
-        content = content[:content.find('</select>')]
-        matchSeasons = re.compile('<option value="(.+?)">(.+?)</option>', re.DOTALL).findall(content)
-        for seasonID, title in matchSeasons:
-            url = baseUrl+"/wp-content/plugins/dni_plugin_core/ajax.php?action=dni_episode_browser_get_season&post="+matchIDs[0][1]+"&module=cfct-module-"+matchIDs[0][0]+"&season="+seasonID
-            addDir(title.replace("Season", "Staffel"), url, 'listEpisodes', thumb, "")
-        xbmcplugin.endOfDirectory(pluginhandle)
-        if forceViewMode:
-            xbmc.executebuiltin('Container.SetViewMode('+viewMode+')')
-    else:
-        listEpisodes(urlMain, thumb)
-
-
-def listEpisodes(url, thumb):
-    debug("listEpisodes" +url)
-    content = opener.open(url).read()
-    content=content.replace("\/","/")
-    content = content[content.find('var dniListingData ='):]
-    content = content[:content.find('})(window)')]
-    matchEpisodes = re.compile('title":"([^"]+)","url":"([^"]+)","image":"([^"]+)"', re.DOTALL).findall(content)
-    for title,url,thumb in matchEpisodes:
-        debug("Thumb:"+thumb)
-        title=cleanTitle(title)
-        addDir(title, url, 'playVideo', thumb, title)
+    videos = content.split('\"cfct-module dni-listing\"')
+    for i in range(1,len(videos),1):  
+      name_reg = re.compile('<div class="tab-module-header">(.+?)</div>', re.DOTALL).findall(videos[i])
+      name=name_reg[0]
+      addDir(name, urlMain, 'listEpisodes',"","",text=name)
+    videos = content.split('\"cfct-module dni-content-grid\"')
+    for i in range(1,len(videos),1):  
+      name_reg = re.compile('<div class="tab-module-header">(.+?)</div>', re.DOTALL).findall(videos[i])
+      name=name_reg[0]
+      addDir(name, urlMain, 'listEpisodes',"","",text=name)            
     xbmcplugin.endOfDirectory(pluginhandle)
     if forceViewMode:
-        xbmc.executebuiltin('Container.SetViewMode('+viewMode+')')
+            xbmc.executebuiltin('Container.SetViewMode('+viewMode+')')
+
+
+def listEpisodes(url, text):
+        debug("URL listepisodes :" + url)
+        debug("text listepisodes :" + text)
+        content = opener.open(url).read()
+        videos = content.split('\"cfct-module dni-listing\"')                      
+        for i in range(1,len(videos),1):
+           debug("####### "+ videos[i])
+           name_reg = re.compile('<div class="tab-module-header">(.+?)</div>', re.DOTALL).findall(videos[i])
+           namel=name_reg[0]
+           if namel==text:
+            json_reg = re.compile('dniListingData = {(.+?)};', re.DOTALL).findall(videos[i])        
+            jsonstring="{"+json_reg[0]+"}"
+            debug("----" + jsonstring)
+            struktur = json.loads(jsonstring)
+            for name in struktur["raw"]:  
+                title=unicode(name["title"]).encode("utf-8")            
+                addDir(title, name["url"], 'playVideo',name["image"], title)  
+        videos = content.split('\"cfct-module dni-content-grid\"')                      
+        for i in range(1,len(videos),1):
+           debug("####### "+ videos[i])
+           name_reg = re.compile('<div class="tab-module-header">(.+?)</div>', re.DOTALL).findall(videos[i])
+           namel=name_reg[0]
+           if namel==text:
+            names_reg = re.compile('<a href="(.+?)" target="" onClick=".+?">.+?<img class="" src="(.+?)" alt=".+?" ><h3>(.+?)</h3></div></a>', re.DOTALL).findall(videos[i])                                    
+            for url,img,name in names_reg:            
+               addDir(name, url, 'playVideo',img, name)                   
+        xbmcplugin.endOfDirectory(pluginhandle)
+        if forceViewMode:
+          xbmc.executebuiltin('Container.SetViewMode('+viewMode+')')
 
 
 def playVideo(url, title, thumb):
+    debug("playVideo url : "+ url)
     content = opener.open(url).read()
     matchMulti = re.compile('<li data-number="(.+?)" data-guid="(.+?)"', re.DOTALL).findall(content)
     matchSingle = re.compile('name="@videoPlayer" value="(.+?)"', re.DOTALL).findall(content)
@@ -259,10 +275,12 @@ def playVideo(url, title, thumb):
         addDir(title+": Alle Teile", url, "playVideoAll", thumb, title)
         for part, videoID in matchMulti:
             addLink(title+": Teil "+part, videoID, "playBrightCoveStream", thumb, title, "no")
+            debug("matchMulti : "+ videoID)
         xbmcplugin.endOfDirectory(pluginhandle)
         if forceViewMode:
             xbmc.executebuiltin('Container.SetViewMode('+viewMode+')')
     elif matchSingle:
+        debug("matchSingle : "+ matchSingle[0])
         playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
         playlist.clear()
         playBrightCoveStream(matchSingle[0], title, thumb, "yes")
@@ -298,7 +316,7 @@ def playBrightCoveStream(bc_videoID, title, thumb, isSingle):
     for item in sorted(response['renditions'], key=lambda item: item['encodingRate'], reverse=False):
         encRate = item['encodingRate']
         if encRate < maxBitRate:
-            streamUrl = item['defaultURL']
+            streamUrl = item['defaultURL']    
     if not streamUrl:
         streamUrl = response['FLVFullLengthURL']
     if streamUrl:
@@ -316,11 +334,10 @@ def playBrightCoveStream(bc_videoID, title, thumb, isSingle):
                 xbmc.sleep(100)
             xbmc.sleep(500)
             while xbmc.getCondVisibility("Player.Paused"):
-                if xbmc.Player().isPlaying():
+               if xbmc.Player().isPlaying():
                     xbmc.Player().pause()
                     break
-                xbmc.sleep(100)
-
+               xbmc.sleep(100)
 
 def queueVideo(url, name, thumb):
     playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
@@ -393,8 +410,10 @@ def addLink(name, url, mode, iconimage, title, isSingle="no", desc="", duration=
     return ok
 
 
-def addDir(name, url, mode, iconimage, title, desc=""):
+def addDir(name, url, mode, iconimage, title, desc="",text=""):
     u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&title="+urllib.quote_plus(title)+"&thumb="+urllib.quote_plus(iconimage)
+    if text!="":
+      u=u+"&text="+urllib.quote_plus(text)
     ok = True
     liz = xbmcgui.ListItem(name, iconImage="DefaultFolder.png", thumbnailImage=iconimage)
     liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc})
@@ -441,6 +460,7 @@ url = urllib.unquote_plus(params.get('url', ''))
 isSingle = urllib.unquote_plus(params.get('isSingle', 'yes'))
 thumb = urllib.unquote_plus(params.get('thumb', ''))
 title = urllib.unquote_plus(params.get('title', ''))
+text = urllib.unquote_plus(params.get('text', ''))
 
 if mode == 'listVideos':
     listVideos(url)
@@ -453,9 +473,9 @@ elif mode == 'listAZ':
 elif mode == 'listShows':
     listShows(url)
 elif mode == 'listSeasons':
-    listSeasons(url, thumb)
+    listSeasons(url)
 elif mode == 'listEpisodes':
-    listEpisodes(url, thumb)
+    listEpisodes(url,text)
 elif mode == 'playVideo':
     playVideo(url, title, thumb)
 elif mode == 'queueVideo':
