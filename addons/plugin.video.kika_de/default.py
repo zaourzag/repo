@@ -161,7 +161,7 @@ def listEpisodeFormats(url):
     match = re.compile('dataURL:\'([^\']*)\'', re.DOTALL).findall(content)
     xmlUrl = ""
     if match:
-        xmlUrl = urlMain + match[0]
+        xmlUrl = match[0]
 
     if not xmlUrl == "":
         xbmc.log("listing episode formats from xml: "+xmlUrl)
