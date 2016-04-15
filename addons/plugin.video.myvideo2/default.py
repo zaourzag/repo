@@ -15,6 +15,7 @@ import binascii
 import time
 from datetime import datetime
 import hashlib
+import random
 
 # Setting Variablen Des Plugins
 global debuging
@@ -133,7 +134,7 @@ def Buchstabe(url):
     title=unicode(video["title"]).encode("utf-8")
     thump= video["thumbnail"]
     thump=thump.replace("ez","mv")
-    addDir(title, "http://www.myvideo.de"+url, 'Serie', thump,desc)
+    addDir(title, "http://www.myvideo.de"+url, 'Staffel', thump,desc)
   try:            
       match=re.compile('<a href="([^"]+)" class="button as-next">', re.DOTALL).findall(content)
       vor=match[0]
@@ -142,38 +143,41 @@ def Buchstabe(url):
       pass
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 
+  
+def Staffel(url):
+    content=geturl(url)
+    match=re.compile('data-list-name="season_tab([^"]+)" data-url="(.+?)"', re.DOTALL).findall(content)
+    for staffel,url in match:      
+       try:
+          xy=int(staffel)
+          staffel= "Staffel "+staffel
+       except:
+          pass
+       addDir(staffel, "http://www.myvideo.de"+url, 'Serie',"","")
+    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 def Serie(url):
   content=geturl(url)
-  debug("----------------------------")
-  debug(content)
-  debug("----------------------------")
-                    #MV.config.playlists.firstVideo
-  match=re.compile('MV\..+? = \{(.+?)\};', re.DOTALL).findall(content)
-  for jf in match:
-    try:
-      jsonfile="{"+ jf +"}"
-      jsonfile=jsonfile.replace('items:','"items":')
-      debug("JSON :"+ jsonfile)
-      struktur = json.loads(jsonfile)
-      for name in struktur["items"]:  
-        id=name["id"]
-        thumbnail=name["thumbnail"]
-        href="http://www.myvideo.de"+name["href"]         
-        if name["title"] == "Clip":
-           namen=name["subtitle"] 
-        else:
-           namen=name["title"]+" ( "+ name["subtitle"] + " )"
-        desc=name["description"]        
-        addLink(namen, href, 'playvideo',thumbnail,"",desc=desc,id=id)
-    except:
-       pass
+  debug("URL :" + url)
+  folgen = content.split('<div class="videolist--item">')
+  for i in range(1, len(folgen), 1):
+    folge=folgen[i]                   
+    match=re.compile('href="(.+?)"', re.DOTALL).findall(folge)  
+    url=match[0]
+    match=re.compile('title="(.+?)"', re.DOTALL).findall(folge)
+    name=match[0]
+    match=re.compile('src="(.+?)"', re.DOTALL).findall(folge)
+    thumnail=match[0]
+    match=re.compile('"thumbnail--subtitle">(.+?)</div>', re.DOTALL).findall(folge)   
+    sub=match[0]
+    addLink(name + " ( "+ sub +" )", "http://www.myvideo.de"+url, 'playvideo',thumnail,"")
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
   
-def playvideo(url,id):  
+def playvideo(url):  
  
  debug("-----------")
  debug(" URL : "+url)
- video_id=id
+ match=re.compile('.+?-m-(.+)', re.DOTALL).findall(url)
+ video_id=match[0]
  salt = "dfCc3ca+3baf2e8%beGa508!cbcdbG0f"
  client_location = urllib.quote_plus(url)
  access_token = "MVKolibri"
@@ -210,9 +214,26 @@ def playvideo(url,id):
  content=geturl(url)
  struktur = json.loads(content)
  struct=struktur["sources"]
+ urlm3u8=""
  for name in struct:
-     if name["mime_type"]=="application/x-mpegURL":
+     if name["mime_type"]=="application/x-mpegURL" :
         urlm3u8=name["url"]
+ if urlm3u8=="":
+   for name in struct:
+      debug(name)
+      debug("-----")
+      if name["mime_type"]=="video/mp4" :
+         stream=name["url"]
+         reg_str = re.compile('rtmpe?://(.*?)/(.*?)/(.*)', re.DOTALL).findall(stream)         
+         server=reg_str[0][0]
+         pfad=reg_str[0][1]
+         datei=reg_str[0][2]
+         swf = "http://component.p7s1.com/kolibri/2.12.9/myvideo/premium/kolibri.swf";
+         urlm3u8="rtmp://"+ server +"/"+pfad +"/ swfVfy=1 swfUrl=" + swf +" playpath="+ datei
+         debug("-+-+-+")
+         debug(urlm3u8)
+         
+   
  listitem = xbmcgui.ListItem(title, path=urlm3u8, thumbnailImage="")
  xbmcplugin.setResolvedUrl(addon_handle, True, listitem)
  debug(" ENDE : "+ urlm3u8)
@@ -239,5 +260,7 @@ else:
           Buchstabe(url)
   if mode == 'Serie':
           Serie(url)
+  if mode == 'Staffel':
+          Staffel(url)          
   if mode == 'playvideo':
-          playvideo(url,id)
+          playvideo(url)
