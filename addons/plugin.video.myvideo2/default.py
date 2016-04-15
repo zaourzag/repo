@@ -222,7 +222,7 @@ def playvideo(url):
    for name in struct:
       debug(name)
       debug("-----")
-      if name["mime_type"]=="video/mp4" or name["mime_type"]=="video/x-flv" :
+      if name["mime_type"]=="video/x-flv" :
          stream=name["url"]
          reg_str = re.compile('rtmpe?://(.*?)/(.*?)/(.*)', re.DOTALL).findall(stream)         
          server=reg_str[0][0]
@@ -238,6 +238,36 @@ def playvideo(url):
  xbmcplugin.setResolvedUrl(addon_handle, True, listitem)
  debug(" ENDE : "+ urlm3u8)
 
+def allfilms(url):
+ content=geturl(url)
+ try:      
+      match=re.compile('<a href="([^"]+)" class="button as-prev">', re.DOTALL).findall(content)
+      zurueck=match[0]
+      addDir("Zurueck", "http://www.myvideo.de"+zurueck, 'allfilms',"")
+ except:
+      pass
+ folgen = content.split('<div class="grid--item as-dvd-cover is-video">')
+ for i in range(1, len(folgen), 1):
+     try:
+      debug("-----")
+      debug(folgen[i])
+      folge=folgen[i]
+      match=re.compile('<img class="thumbnail--pic" src=".+?" data-src="(.+?)"', re.DOTALL).findall(folge) 
+      thump=match[0]
+      match=re.compile('<a href="(.+?)" class="grid--item-title">(.+?)</a> ', re.DOTALL).findall(folge) 
+      name=match[0][1]
+      url=match[0][0]
+      laenge="<use xlink:href="#icon-duration"></use> </svg> 49:41</div>"
+      addLink(name , "http://www.myvideo.de"+url, 'playvideo',thump,"")
+     except:
+       pass
+ try:            
+      match=re.compile('<a href="([^"]+)" class="button as-next">', re.DOTALL).findall(content)
+      vor=match[0]
+      addDir("Vor", "http://www.myvideo.de"+vor, 'allfilms',"")
+ except:
+      pass
+ xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)     
   
 params = parameters_string_to_dict(sys.argv[2])
 mode = urllib.unquote_plus(params.get('mode', ''))
@@ -247,7 +277,7 @@ id = urllib.unquote_plus(params.get('id', ''))
 
 if mode is '':
     addDir("Alle Serien", "Alle Serien", 'abisz', "")
-    #addDir("Alle Film", "Alle Film", 'allfilms', "")
+    addDir("Alle Film", "http://www.myvideo.de/filme/alle_filme", 'allfilms', "")
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 else:
   # Wenn Settings ausgewählt wurde
@@ -264,3 +294,5 @@ else:
           Staffel(url)          
   if mode == 'playvideo':
           playvideo(url)
+  if mode == 'allfilms':
+          allfilms(url)          
