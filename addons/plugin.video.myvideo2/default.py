@@ -222,7 +222,7 @@ def playvideo(url):
    for name in struct:
       debug(name)
       debug("-----")
-      if name["mime_type"]=="video/mp4" :
+      if name["mime_type"]=="video/mp4" or name["mime_type"]=="video/x-flv" :
          stream=name["url"]
          reg_str = re.compile('rtmpe?://(.*?)/(.*?)/(.*)', re.DOTALL).findall(stream)         
          server=reg_str[0][0]
