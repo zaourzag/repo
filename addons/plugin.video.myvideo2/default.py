@@ -99,7 +99,13 @@ def geturl(url):
    req = urllib2.Request(url)
    inhalt = urllib2.urlopen(req).read()   
    return inhalt
-
+   
+def cleanTitle(title):
+    title = title.replace("&lt;", "<").replace("&gt;", ">").replace("&amp;", "&").replace("&#039;", "\'").replace("&quot;", "\"").replace("&szlig;", "ß").replace("&ndash;", "-")
+    title = title.replace("&Auml;", "Ä").replace("&Uuml;", "Ü").replace("&Ouml;", "Ö").replace("&auml;", "ä").replace("&uuml;", "ü").replace("&ouml;", "ö")
+    title = title.strip()    
+    return title
+    
 def abisz():
   letters = [chr(i) for i in xrange(ord('a'), ord('z')+1)]
   for letter in letters:
@@ -164,7 +170,7 @@ def Serie(url):
     match=re.compile('href="(.+?)"', re.DOTALL).findall(folge)  
     url=match[0]
     match=re.compile('title="(.+?)"', re.DOTALL).findall(folge)
-    name=match[0]
+    name=cleanTitle(match[0])
     match=re.compile('src="(.+?)"', re.DOTALL).findall(folge)
     thumnail=match[0]
     match=re.compile('"thumbnail--subtitle">(.+?)</div>', re.DOTALL).findall(folge)   
@@ -250,15 +256,20 @@ def allfilms(url):
  for i in range(1, len(folgen), 1):
      try:
       debug("-----")
-      debug(folgen[i])
       folge=folgen[i]
       match=re.compile('<img class="thumbnail--pic" src=".+?" data-src="(.+?)"', re.DOTALL).findall(folge) 
       thump=match[0]
       match=re.compile('<a href="(.+?)" class="grid--item-title">(.+?)</a> ', re.DOTALL).findall(folge) 
-      name=match[0][1]
+      name=cleanTitle(match[0][1])
       url=match[0][0]
-      laenge="<use xlink:href="#icon-duration"></use> </svg> 49:41</div>"
-      addLink(name , "http://www.myvideo.de"+url, 'playvideo',thump,"")
+      try:
+        match=re.compile('<use xlink:href="#icon-duration">.+?([0-9]+?)h ([0-9]+?)m</div>', re.DOTALL).findall(folge) 
+        std=match[0][0]
+        min=match[0][1]
+        laenge=int(std)*60*60 + int(min)*60     
+      except:
+        laenge=""
+      addLink(name , "http://www.myvideo.de"+url, 'playvideo',thump,duration=laenge)
      except:
        pass
  try:            
@@ -268,7 +279,86 @@ def allfilms(url):
  except:
       pass
  xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)     
-  
+
+def  top100():
+  addDir("Top Music Genres", "Top Music Genres", 'topgenres', "")
+  addDir("Top100 Music Clips", "http://www.myvideo.de/top_100/top_100_musik_clips", 'top_zeit', "")  
+  addDir("Top 25 Single Charts", "http://www.myvideo.de/top_100/top_100_single_charts", 'topliste', "")  
+  addDir("Top 100 Entertainment", "http://www.myvideo.de/top_100/top_100_entertainment", 'top_zeit', "")
+  addDir("Top 100 Serien", "http://www.myvideo.de/top_100/top_100_serien", 'top_zeit', "")
+  addDir("Top 100 Filme", "http://www.myvideo.de/filme/top_100_filme", 'allfilms', "")
+  xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
+def topgenres():
+  addDir("Top 100 Pop", "http://www.myvideo.de/top_100/top_100_pop", 'topliste', "")
+  addDir("Top 100 Rock", "http://www.myvideo.de/top_100/top_100_rock", 'topliste', "")
+  addDir("Top 100 Hip Hop", "http://www.myvideo.de/top_100/top_100_hiphop", 'topliste', "")
+  addDir("Top 100 Electro", "http://www.myvideo.de/top_100/top_100_elektro", 'topliste', "")
+  addDir("Top 100 Schlager", "http://www.myvideo.de/top_100/top_100_schlager", 'topliste', "")
+  addDir("Top 100 Metal", "http://www.myvideo.de/top_100/top_100_metal", 'topliste', "")
+  addDir("Top 100 RnB", "http://www.myvideo.de/top_100/top_100_rnb", 'topliste', "")
+  addDir("Top 100 Indie", "http://www.myvideo.de/top_100/top_100_indie", 'topliste', "")
+  addDir("Top 100 Jazz", "http://www.myvideo.de/top_100/top_100_jazz", 'topliste', "")
+  xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
+
+def filme_menu():
+   addDir("Alle Filme", "http://www.myvideo.de/filme/alle_filme", 'allfilms', "")
+   addDir("Alle Filme - Datum", "http://www.myvideo.de/filme/alle_filme/datum", 'allfilms', "")
+   addDir("Top Filme", "http://www.myvideo.de/filme/top_100_filme", 'allfilms', "")
+   addDir("Film Genres", "Film Genres", 'filmgenres', "")
+   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
+   
+def filmgenres():
+   addDir("Action", "http://www.myvideo.de/filme/action", 'allfilms', "")
+   addDir("Horror", "http://www.myvideo.de/filme/horror", 'allfilms', "")
+   addDir("Sci-Fi", "http://www.myvideo.de/filme/sci-fi", 'allfilms', "")
+   addDir("Thriller", "http://www.myvideo.de/filme/thriller", 'allfilms', "")
+   addDir("Drama", "http://www.myvideo.de/filme/drama", 'allfilms', "")
+   addDir("Comedy", "http://www.myvideo.de/filme/comedy", 'allfilms', "")
+   addDir("Western", "http://www.myvideo.de/filme/western", 'allfilms', "")
+   addDir("Dokumentationen", "http://www.myvideo.de/filme/dokumentation", 'allfilms', "")
+   addDir("Erotik", "http://www.myvideo.de/filme/erotik", 'allfilms', "")
+   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
+   
+def top_zeit(url):
+  addDir("Heute", url, 'topliste', "")
+  addDir("Woche", url+"/woche", 'topliste', "")
+  addDir("Monat",  url+"/monat", 'topliste', "")
+  addDir("Ewig",  url+"/ewig", 'topliste', "")
+  xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
+
+def topliste(url):  
+   content=geturl(url)
+   videos = content.split('<div class="chartlist--videolist-item">')
+   for i in range(1, len(videos), 1):
+     video=videos[i]
+     debug("-------------->")
+     debug(video)
+     debug("-------------->")
+     match=re.compile('<div class="chartlist--videolist-item-position"> (.+?) </div>', re.DOTALL).findall(video) 
+     nr=match[0]
+     match=re.compile('href="(.+?)"', re.DOTALL).findall(video) 
+     url=match[0]
+     match=re.compile('title="(.+?)"', re.DOTALL).findall(video) 
+     title=cleanTitle(match[0])
+     match=re.compile('data-src="(.+?)"', re.DOTALL).findall(video) 
+     thump=match[0]
+     try:
+       match=re.compile('</svg>Zur Serie: (.+?) </a>', re.DOTALL).findall(video) 
+       serie=cleanTitle(match[0])
+     except:
+       serie=""
+     try:
+        match=re.compile('icon-duration"></use> </svg> ([0-9]+?):([0-9]+?) </span>', re.DOTALL).findall(video) 
+        min=match[0][0]
+        sek=match[0][1]
+        laenge=int(min)*60 + int(sek)        
+     except:
+         laenge=""       
+     if serie!="":
+       addLink(nr +". "+serie +" ( "+ title +" )" , "http://www.myvideo.de"+url, 'playvideo',thump,duration=laenge)
+     else:
+       addLink(nr +". "+title , "http://www.myvideo.de"+url, 'playvideo',thump,duration=laenge)
+   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 params = parameters_string_to_dict(sys.argv[2])
 mode = urllib.unquote_plus(params.get('mode', ''))
 url = urllib.unquote_plus(params.get('url', ''))
@@ -277,7 +367,8 @@ id = urllib.unquote_plus(params.get('id', ''))
 
 if mode is '':
     addDir("Alle Serien", "Alle Serien", 'abisz', "")
-    addDir("Alle Film", "http://www.myvideo.de/filme/alle_filme", 'allfilms', "")
+    addDir("Filme", "Filme", 'filme_menu', "")
+    addDir("Top Listen", "Top 100", 'top100', "top10")
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 else:
   # Wenn Settings ausgewählt wurde
@@ -296,3 +387,15 @@ else:
           playvideo(url)
   if mode == 'allfilms':
           allfilms(url)          
+  if mode == 'top100':
+          top100()               
+  if mode == 'topliste':
+          topliste(url)   
+  if mode == 'topgenres':
+          topgenres()                       
+  if mode == 'top_zeit':
+          top_zeit(url)       
+  if mode == 'filme_menu':
+          filme_menu()                 
+  if mode == 'filmgenres':
+          filmgenres()                           
