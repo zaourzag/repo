@@ -530,6 +530,7 @@ def tvmenu():
     addDir("Sat 1 Gold", "http://www.myvideo.de/serien/sat_1_gold", 'mischseite', "")    
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 def themenmenu():
+    addDir("Aktuelles", "http://www.myvideo.de/themen", 'mischseite', "")
     addDir("WWE", "http://www.myvideo.de/themen/wwe", 'mischseite', "")
     addDir("Webstars", "http://www.myvideo.de/webstars", 'mischseite', "")
     addDir("Fußball", "http://www.myvideo.de/themen/sport/fussball", 'mischseite', "")
