@@ -370,9 +370,12 @@ def topliste(url):
    
    
 def mischseite(url):
-   debug("URL: "+url)
+   debug("URL: mischseite"+url)
    content=geturl(url)
-   namen=re.compile('<span class="tabs--tab.+?> ([^<]+?) </span>', re.DOTALL).findall(content)   
+   namen=re.compile('>([^>]+?)</a> <span class="tabs--tab', re.DOTALL).findall(content)      
+   if len(namen)==0:
+      namen=re.compile('<span class="tabs--tab.+?> ([^<]+?) </span>', re.DOTALL).findall(content)      
+   debug(namen)
    nr=0
    liste=[]
    for name in namen:
@@ -383,8 +386,11 @@ def mischseite(url):
        if not name in liste:         
          liste.append(name)       
          addDir(name, url, 'misch_tab', "",tab=nr)
-         nr=nr+1
-   match=re.compile('sushibar.+?-url="(.+?)"', re.DOTALL).findall(content)    
+         nr=nr+1  
+   match2=re.compile('</use> </svg>([^<]+?)</h3> <div class="videolist.+?data-url="(.+?)"', re.DOTALL).findall(content)    
+   for name, urll in match2:
+      addDir(cleanTitle(name), "http://www.myvideo.de"+ urll, 'misch_cat_auto', "",offset=0)
+   match=re.compile('sushibar.+?-url="(.+?)"', re.DOTALL).findall(content)     
    for urll in match:
       if "_partial"in urll:
          debug("--- URLL :"+urll)
@@ -394,6 +400,9 @@ def mischseite(url):
          if "sushi--title-link" in name:
            match=re.compile('>(.+?)</a>', re.DOTALL).findall(name)           
            name=cleanTitle(match[0])
+         if "</svg>" in name:
+            match=re.compile('\<\/svg\>(.+)', re.DOTALL).findall(name)       
+            name=match[0]            
          if "icon-label-live" in name:
              continue
          if not name in liste:
@@ -408,7 +417,7 @@ def misch_tab(url,tab):
    debug(" misch_tab url "+ url)
    debug(" misch_tab tab "+ str(tab))
    content=geturl(url)   
-   if '<div class="tabs--content">' in content:
+   if '<div class="tabs--content' in content:
        Tabs = content.split('<div class="tabs--content">')
    else:
        Tabs = content.split('<div class="videolist')   
@@ -435,30 +444,59 @@ def misch_tab(url,tab):
          if "-m-" in url:
            addLink(name , url, 'playvideo',thump)
          else:
-           addLink(name , url, 'playvideo',thump)
+           addDir(name , url, 'mischseite',thump)
          
 
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
    #<div class="sushibar
    #data-url="/_partial/sushibar/11932"
    #<h2 class="sushi--title"> DVD/BluRay </h2>
-
+def misch_cat_auto(url,offset):
+   urln=url+"?ajaxoffset="+ offset
+   debug("URL misch_cat_auto: "+ urln)
+   content=geturl(urln)
+   folgen = content.split('<a class')
+   i=0
+   for i in range(1, len(folgen), 1):
+        folge=folgen[i]
+        match=re.compile('href="(.+?)" title="(.+?)"', re.DOTALL).findall(folge)
+        urlname=match[0][0]
+        name=cleanTitle(match[0][1])
+        try:
+          match=re.compile('src="(.+?)"', re.DOTALL).findall(folge)
+          thump=match[0]
+        except:
+          thump=""        
+        if  not "http://www.myvideo.de" in urlname:
+            urlname="http://www.myvideo.de"+urlname
+        if "-m-" in urlname:
+           addLink(name , urlname, 'playvideo',thump)
+        else:
+           addDir(name , urlname, 'mischseite',thump)
+   addDir("Next" , url, 'misch_cat_auto',"",offset=str(int(offset)+i+1))
+   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
+   
+   
 def misch_cat(url,offset):
    urln=url+"?ajaxoffset="+ offset
-   debug("URL : "+ urln)
+   debug("misch_cat URL : "+ urln)
    content=geturl(urln)
    match=re.compile('data-preloaded="(.+?)"', re.DOTALL).findall(content)   
    anz=int(match[0])
-   folgen = content.split('<a class="thumbnail')
+   folgen = content.split('<a class=')
    i=0
    for i in range(1, len(folgen), 1):
         debug("---------")
         debug(folgen[i])
         debug("---------")
         folge=folgen[i]
-        match=re.compile('href="(.+?)" title="(.+?)"', re.DOTALL).findall(folge)
-        urlname=match[0][0]
-        name=cleanTitle(match[0][1])
+        match=re.compile('href="(.+?)"', re.DOTALL).findall(folge)
+        urlname=match[0]
+        try:
+          match=re.compile('alt="(.+?)"', re.DOTALL).findall(folge)        
+          name=cleanTitle(match[0])
+        except:
+           continue
         try:
           match=re.compile('data-src="(.+?)"', re.DOTALL).findall(folge)
           thump=match[0]
@@ -499,9 +537,20 @@ def tvmenu():
 def themenmenu():
     addDir("WWE", "http://www.myvideo.de/themen/wwe", 'mischseite', "")
     addDir("Webstars", "http://www.myvideo.de/webstars", 'mischseite', "")
-    #addDir("Fußball", "http://www.myvideo.de/themen/sport/fussball", 'mischseite', "")
-    addDir("Fashion", "http://www.myvideo.de/themen/videofashion", 'mischseite', "")
-    #addDir("Auto &Motor", "http://www.myvideo.de/themen/auto-und-motor", 'mischseite', "")
+    addDir("Fußball", "http://www.myvideo.de/themen/sport/fussball", 'mischseite', "")
+    addDir("Fashion", "http://www.myvideo.de/themen/videofashion", 'mischseite', "")    
+    addDir("Auto &Motor", "http://www.myvideo.de/themen/auto-und-motor", 'mischseite', "")
+    addDir("TV und Film", "http://www.myvideo.de/themen/tv-und-film", 'mischseite', "")
+    addDir("Games", "http://www.myvideo.de/games", 'mischseite', "")
+    addDir("Infotainment", "http://www.myvideo.de/themen/infotainment", 'mischseite', "")
+    addDir("Sport", "http://www.myvideo.de/themen/sport", 'mischseite', "")
+    addDir("Comedy", "http://www.myvideo.de/themen/comedy", 'mischseite', "")
+    addDir("Webisodes", "http://www.myvideo.de/themen/webisodes", 'mischseite', "")
+    addDir("Telente", "http://www.myvideo.de/themen/talente", 'mischseite', "")
+    addDir("Livestyle", "http://www.myvideo.de/themen/lifestyle", 'mischseite', "")
+    addDir("Sexy", "http://www.myvideo.de/themen/sexy", 'mischseite', "")
+    addDir("Erotik", "http://www.myvideo.de/Erotik", 'mischseite', "")
+    #addDir("Rock", "http://www.myvideo.de/musik/rock", 'mischseite', "")
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)    
 params = parameters_string_to_dict(sys.argv[2])
 mode = urllib.unquote_plus(params.get('mode', ''))
@@ -549,7 +598,9 @@ else:
   if mode == 'mischseite':
           mischseite(url)    
   if mode == 'misch_cat':
-          misch_cat(url,offset)  
+          misch_cat(url,offset) 
+  if mode == 'misch_cat_auto':
+          misch_cat_auto(url,offset)                   
   if mode == 'misch_tab':
           misch_tab(url,tab)   
   if mode == 'tvmenu':
