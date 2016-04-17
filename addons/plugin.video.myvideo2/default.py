@@ -359,33 +359,48 @@ def topliste(url):
         sek=match[0][1]
         laenge=int(min)*60 + int(sek)        
      except:
-         laenge=""       
+         laenge=""    
+     if  not "http://www.myvideo.de" in url:
+       url="http://www.myvideo.de"+url
      if serie!="":
-       addLink(nr +". "+serie +" ( "+ title +" )" , "http://www.myvideo.de"+url, 'playvideo',thump,duration=laenge)
+       addLink(nr +". "+serie +" ( "+ title +" )" , url, 'playvideo',thump,duration=laenge)
      else:
-       addLink(nr +". "+title , "http://www.myvideo.de"+url, 'playvideo',thump,duration=laenge)
+       addLink(nr +". "+title , url, 'playvideo',thump,duration=laenge)
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
    
    
 def mischseite(url):
+   debug("URL: "+url)
    content=geturl(url)
    namen=re.compile('<span class="tabs--tab.+?> ([^<]+?) </span>', re.DOTALL).findall(content)   
    nr=0
+   liste=[]
    for name in namen:
-       addDir(name, url, 'misch_tab', "",tab=nr)
-       nr=nr+1
-   match=re.compile('<div class="sushibar.+?" data-url="(.+?)".+?sushi--title"> (.+?)</h2>', re.DOTALL).findall(content)    
-   for urlv,name in match:
-      debug("---------")
-      debug("url : " + urlv)
-      if "title" in name:
-        match=re.compile('title="(.+?)"', re.DOTALL).findall(name)                
-        name=match[0]
-      if "</svg>" in name:
-           match=re.compile('</svg>(.+)', re.DOTALL).findall(name)  
-           name=match[0]  
-      name=cleanTitle(name)           
-      addDir(name, "http://www.myvideo.de" + urlv, 'misch_cat', "",offset=0)
+       if "{{{" in name:
+         continue
+       if "Facebook" in name:
+         continue        
+       if not name in liste:         
+         liste.append(name)       
+         addDir(name, url, 'misch_tab', "",tab=nr)
+         nr=nr+1
+   match=re.compile('sushibar.+?-url="(.+?)"', re.DOTALL).findall(content)    
+   for urll in match:
+      if "_partial"in urll:
+         debug("--- URLL :"+urll)
+         content2=geturl( "http://www.myvideo.de"+urll)
+         match=re.compile('<h2 class="sushi--title">(.+?)</h2>', re.DOTALL).findall(content2)           
+         name=cleanTitle(match[0])
+         if "sushi--title-link" in name:
+           match=re.compile('>(.+?)</a>', re.DOTALL).findall(name)           
+           name=cleanTitle(match[0])
+         if "icon-label-live" in name:
+             continue
+         if not name in liste:
+           liste.append(name) 
+           if  not "http://www.myvideo.de" in urll:
+              urll="http://www.myvideo.de"+urll
+           addDir(name, urll, 'misch_cat', "",offset=0)
 
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 
@@ -393,13 +408,19 @@ def misch_tab(url,tab):
    debug(" misch_tab url "+ url)
    debug(" misch_tab tab "+ str(tab))
    content=geturl(url)   
-   Tabs = content.split('<div class="tabs--content">')
+   if '<div class="tabs--content">' in content:
+       Tabs = content.split('<div class="tabs--content">')
+   else:
+       Tabs = content.split('<div class="videolist')   
    liste=Tabs[int(tab)]
-   videos = liste.split('<a class="thumbnail is-video sushi--item')
+   if '<a class="thumbnail is-video sushi--item' in liste:
+      videos = liste.split('<a class="thumbnail is-video sushi--item')
+   else :
+      videos = liste.split('<div class="videolist--item">')   
    for i in range(1, len(videos), 1): 
          url_reg=re.compile('href="(.+?)"', re.DOTALL).findall(videos[i])            
          url=url_reg[0]
-         thump_reg=re.compile('data-src="(.+?)"', re.DOTALL).findall(videos[i])   
+         thump_reg=re.compile('src="(.+?)"', re.DOTALL).findall(videos[i])   
          thump=thump_reg[0]
          namen=re.compile('<div class="thumbnail--maintitle">(.+?)</div>', re.DOTALL).findall(videos[i])   
          name=cleanTitle(namen[0])
@@ -409,7 +430,13 @@ def misch_tab(url,tab):
            name=name +" ( "+ sub +" )"
          except:
            pass
-         addLink(name , "http://www.myvideo.de"+url, 'playvideo',thump)
+         if  not "http://www.myvideo.de" in url:
+             url="http://www.myvideo.de"+url
+         if "-m-" in url:
+           addLink(name , url, 'playvideo',thump)
+         else:
+           addLink(name , url, 'playvideo',thump)
+         
 
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
    #<div class="sushibar
@@ -442,12 +469,13 @@ def misch_cat(url,offset):
           sub=cleanTitle(match[0])
           name= name +" ( "+ sub +" )"        
         except:
-          pass
-        
+          pass           
+        if  not "http://www.myvideo.de" in urlname:
+            urlname="http://www.myvideo.de"+urlname
         if "-m-" in urlname:
-           addLink(name , "http://www.myvideo.de"+urlname, 'playvideo',thump)
+           addLink(name , urlname, 'playvideo',thump)
         else:
-           addDir(name , "http://www.myvideo.de"+urlname, 'Staffel',thump)
+           addDir(name , urlname, 'mischseite',thump)
    if i>=anz:
         addDir("Next" , url, 'misch_cat',"",offset=str(int(offset)+i+1))
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
@@ -468,7 +496,13 @@ def tvmenu():
     addDir("Kabel Eins", "http://www.myvideo.de/serien/kabel_eins", 'mischseite', "")    
     addDir("Sat 1 Gold", "http://www.myvideo.de/serien/sat_1_gold", 'mischseite', "")    
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
-    
+def themenmenu():
+    addDir("WWE", "http://www.myvideo.de/themen/wwe", 'mischseite', "")
+    addDir("Webstars", "http://www.myvideo.de/webstars", 'mischseite', "")
+    #addDir("Fußball", "http://www.myvideo.de/themen/sport/fussball", 'mischseite', "")
+    addDir("Fashion", "http://www.myvideo.de/themen/videofashion", 'mischseite', "")
+    #addDir("Auto &Motor", "http://www.myvideo.de/themen/auto-und-motor", 'mischseite', "")
+    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)    
 params = parameters_string_to_dict(sys.argv[2])
 mode = urllib.unquote_plus(params.get('mode', ''))
 url = urllib.unquote_plus(params.get('url', ''))
@@ -480,7 +514,8 @@ tab = urllib.unquote_plus(params.get('tab', ''))
 if mode is '':    
     addDir("Filme", "Filme", 'filme_menu', "")
     addDir("Top Listen", "Top 100", 'top100', "top10")
-    addDir("TV & Serien", "TV & Serien", 'tvmenu', "")    
+    addDir("TV & Serien", "TV & Serien", 'tvmenu', "")   
+    addDir("Themen", "Themen", 'themenmenu', "")          
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 else:
   # Wenn Settings ausgewählt wurde
@@ -519,3 +554,5 @@ else:
           misch_tab(url,tab)   
   if mode == 'tvmenu':
           tvmenu()       
+  if mode == 'themenmenu':
+          themenmenu()               
