@@ -462,6 +462,11 @@ def misch_cat_auto(url,offset):
           thump=match[0]
         except:
           thump=""        
+        try:
+           match=re.compile('class="thumbnail--subtitle">(.+?)</div>', re.DOTALL).findall(folge)
+           name= name + " ( "+ cleanTitle(match[0]) + " )"
+        except:
+           pass
         if  not "http://www.myvideo.de" in urlname:
             urlname="http://www.myvideo.de"+urlname
         if "-m-" in urlname:
@@ -534,7 +539,7 @@ def themenmenu():
     addDir("WWE", "http://www.myvideo.de/themen/wwe", 'mischseite', "")
     addDir("Webstars", "http://www.myvideo.de/webstars", 'mischseite', "")
     addDir("Fußball", "http://www.myvideo.de/themen/sport/fussball", 'mischseite', "")
-    addDir("Fashion", "http://www.myvideo.de/themen/videofashion", 'mischseite', "")    
+    addDir("Fashion", "http://www.myvideo.de/service/editorcontentlist/themen/videofashion/creationDate?page=1", 'misch_cat_auto', "",offset=0)    
     addDir("Auto &Motor", "http://www.myvideo.de/themen/auto-und-motor", 'mischseite', "")
     addDir("TV und Film", "http://www.myvideo.de/themen/tv-und-film", 'mischseite', "")
     addDir("Games", "http://www.myvideo.de/games", 'mischseite', "")
