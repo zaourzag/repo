@@ -375,27 +375,15 @@ def topliste(url):
 def mischseite(url):
    debug("URL: mischseite"+url)
    content=geturl(url)
-   namen=re.compile('>([^>]+?)</a> <span class="tabs--tab', re.DOTALL).findall(content)      
-   if len(namen)==0:
-      namen=re.compile('<span class="tabs--tab.+?> ([^<]+?) </span>', re.DOTALL).findall(content)      
-   debug(namen)
-   nr=0
    liste=[]
-   for name in namen:
-       if "{{{" in name:
-         continue
-       if "Facebook" in name:
-         continue        
-       if not name in liste:         
-         liste.append(name)       
-         addDir(cleanTitle(name), url, 'misch_tab', "",tab=nr)
-         nr=nr+1  
    match2=re.compile('</use> </svg>([^<]+?)</h3> <div class="videolist.+?data-url="(.+?)"', re.DOTALL).findall(content)    
-   for name, urll in match2:
+   for name, urll in match2:       
+      debug("mschseiten misch_cat_auto: " + name +" URL: "+ url)
       addDir(cleanTitle(name), "http://www.myvideo.de"+ urll, 'misch_cat_auto', "",offset=0)
-   match=re.compile('sushibar.+?-url="(.+?)"', re.DOTALL).findall(content)     
+      nr=nr+1 
+   match=re.compile('sushibar.+?-url="(.+?)"', re.DOTALL).findall(content)        
    for urll in match:
-      if "_partial"in urll:
+      if "_partial" in urll:
          debug("--- URLL :"+urll)
          content2=geturl( "http://www.myvideo.de"+urll)
          match=re.compile('<h2 class="sushi--title">(.+?)</h2>', re.DOTALL).findall(content2)           
@@ -406,6 +394,9 @@ def mischseite(url):
          if "</svg>" in name:
             match=re.compile('\<\/svg\>(.+)', re.DOTALL).findall(name)       
             name=match[0]            
+         if '<h2 class="sushi--title">' in name:
+           match=re.compile('<h2 class="sushi--title">(.+?)</h2>', re.DOTALL).findall(name)           
+           name=cleanTitle(match[0])            
          if "icon-label-live" in name:
              continue
          if not name in liste:
@@ -413,6 +404,7 @@ def mischseite(url):
            if  not "http://www.myvideo.de" in urll:
               urll="http://www.myvideo.de"+urll
            name=cleanTitle(name)
+           debug("mschseiten misch_tab: "+ name +" URL: "+ urll)
            addDir(name, urll, 'misch_cat', "",offset=0)
 
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
