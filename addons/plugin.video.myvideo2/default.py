@@ -380,7 +380,6 @@ def mischseite(url):
    for name, urll in match2:       
       debug("mschseiten misch_cat_auto: " + name +" URL: "+ url)
       addDir(cleanTitle(name), "http://www.myvideo.de"+ urll, 'misch_cat_auto', "",offset=0)
-      nr=nr+1 
    match=re.compile('sushibar.+?-url="(.+?)"', re.DOTALL).findall(content)        
    for urll in match:
       if "_partial" in urll:
