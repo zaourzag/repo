@@ -110,14 +110,14 @@ def cleanTitle(title):
     title = title.strip()    
     return title
     
-def abisz():
+def abisz(url):
   letters = [chr(i) for i in xrange(ord('a'), ord('z')+1)]
   for letter in letters:
     if letter=="a":
      lettern=""
     else:
       lettern=letter
-    url="http://www.myvideo.de/serien/alle_serien_a-z/"+lettern
+    url=url+lettern
     addDir(letter.lower(), url, 'Buchstabe', "")
   addDir("0-9", "0-9", 'Buchstabe', "")
   xbmcplugin.endOfDirectory(addon_handle)
@@ -144,7 +144,10 @@ def Buchstabe(url):
     title=unicode(video["title"]).encode("utf-8")
     thump= video["thumbnail"]
     thump=thump.replace("ez","mv")
-    addDir(title, "http://www.myvideo.de"+url, 'Staffel', thump,desc)
+    if "musik" in url:
+       addDir(title, "http://www.myvideo.de"+url, 'mischseite', thump,desc)
+    else:
+       addDir(title, "http://www.myvideo.de"+url, 'Staffel', thump,desc)
   try:            
       match=re.compile('<a href="([^"]+)" class="button as-next">', re.DOTALL).findall(content)
       vor=match[0]
@@ -257,7 +260,7 @@ def allfilms(url):
       addDir("Zurueck", "http://www.myvideo.de"+zurueck, 'allfilms',"")
  except:
       pass
- folgen = content.split('<div class="grid--item as-dvd-cover is-video">')
+ folgen = content.split('<div class="grid--item as-')
  for i in range(1, len(folgen), 1):
      try:
       debug("-----")
@@ -385,7 +388,7 @@ def mischseite(url):
          continue        
        if not name in liste:         
          liste.append(name)       
-         addDir(name, url, 'misch_tab', "",tab=nr)
+         addDir(cleanTitle(name), url, 'misch_tab', "",tab=nr)
          nr=nr+1  
    match2=re.compile('</use> </svg>([^<]+?)</h3> <div class="videolist.+?data-url="(.+?)"', re.DOTALL).findall(content)    
    for name, urll in match2:
@@ -409,6 +412,7 @@ def mischseite(url):
            liste.append(name) 
            if  not "http://www.myvideo.de" in urll:
               urll="http://www.myvideo.de"+urll
+           name=cleanTitle(name)
            addDir(name, urll, 'misch_cat', "",offset=0)
 
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
@@ -519,7 +523,7 @@ def misch_cat(url,offset):
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 
 def tvmenu():
-    addDir("Alle Serien", "Alle Serien", 'abisz', "")
+    addDir("Alle Serien", "http://www.myvideo.de/serien/alle_serien_a-z/", 'abisz', "")
     addDir("Anime", "http://www.myvideo.de/serien/anime_tv", 'mischseite', "")
     addDir("Top 100 Serien", "http://www.myvideo.de/top_100/top_100_serien", 'top_zeit', "")
     addDir("Serien Highlight", "http://www.myvideo.de/serien/weitere_serien", 'mischseite', "")    
@@ -550,8 +554,23 @@ def themenmenu():
     addDir("Livestyle", "http://www.myvideo.de/themen/lifestyle", 'mischseite', "")
     addDir("Sexy", "http://www.myvideo.de/themen/sexy", 'mischseite', "")
     addDir("Erotik", "http://www.myvideo.de/Erotik", 'mischseite', "")
-    #addDir("Rock", "http://www.myvideo.de/musik/rock", 'mischseite', "")
+    
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)    
+def musikmenu():
+    addDir("Neueste Musik Videos", "http://www.myvideo.de/musik/neue_musik_videos", 'allfilms', "")
+    addDir("Music Charts", "http://www.myvideo.de/top_100/top_100_single_charts", 'top_zeit', "")
+    addDir("Alle Künstler", "http://www.myvideo.de/musik/musik_kuenstler", 'abisz', "")
+    addDir("Rock", "http://www.myvideo.de/musik/rock", 'mischseite', "")
+    addDir("Pop", "http://www.myvideo.de/musik/pop", 'mischseite', "")
+    addDir("Hip Hop", "http://www.myvideo.de/musik/hiphop", 'mischseite', "")
+    addDir("Electro", "http://www.myvideo.de/musik/elektro", 'mischseite', "")
+    addDir("Schlager", "http://www.myvideo.de/musik/schlager", 'mischseite', "")
+    addDir("Metal", "http://www.myvideo.de/musik/metal", 'mischseite', "")
+    addDir("RNB", "http://www.myvideo.de/musik/rnb", 'mischseite', "")
+    addDir("Indie", "http://www.myvideo.de/musik/indie", 'mischseite', "")
+    addDir("Jazz und Klasik", "http://www.myvideo.de/musik/jazzklassik", 'mischseite', "")
+    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)    
+    
 params = parameters_string_to_dict(sys.argv[2])
 mode = urllib.unquote_plus(params.get('mode', ''))
 url = urllib.unquote_plus(params.get('url', ''))
@@ -564,7 +583,8 @@ if mode is '':
     addDir("Filme", "Filme", 'filme_menu', "")
     addDir("Top Listen", "Top 100", 'top100', "top10")
     addDir("TV & Serien", "TV & Serien", 'tvmenu', "")   
-    addDir("Themen", "Themen", 'themenmenu', "")          
+    addDir("Themen", "Themen", 'themenmenu', "")    
+    addDir("Musik", "Musik", 'musikmenu', "")     
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 else:
   # Wenn Settings ausgewählt wurde
@@ -572,7 +592,7 @@ else:
           addon.openSettings()
   # Wenn Kategory ausgewählt wurde
   if mode == 'abisz':
-          abisz()
+          abisz(url)
   if mode == 'Buchstabe':
           Buchstabe(url)
   if mode == 'Serie':
@@ -606,4 +626,6 @@ else:
   if mode == 'tvmenu':
           tvmenu()       
   if mode == 'themenmenu':
-          themenmenu()               
+          themenmenu()    
+  if mode == 'musikmenu':
+          musikmenu()
