@@ -117,8 +117,8 @@ def abisz(url):
      lettern=""
     else:
       lettern=letter
-    url=url+lettern
-    addDir(letter.lower(), url, 'Buchstabe', "")
+    urln=url+lettern+"/"
+    addDir(letter.lower(), urln, 'Buchstabe', "")
   addDir("0-9", "0-9", 'Buchstabe', "")
   xbmcplugin.endOfDirectory(addon_handle)
   
@@ -559,7 +559,7 @@ def themenmenu():
 def musikmenu():
     addDir("Neueste Musik Videos", "http://www.myvideo.de/musik/neue_musik_videos", 'allfilms', "")
     addDir("Music Charts", "http://www.myvideo.de/top_100/top_100_single_charts", 'top_zeit', "")
-    addDir("Alle Künstler", "http://www.myvideo.de/musik/musik_kuenstler", 'abisz', "")
+    addDir("Alle Künstler", "http://www.myvideo.de/musik/musik_kuenstler/", 'abisz', "")
     addDir("Rock", "http://www.myvideo.de/musik/rock", 'mischseite', "")
     addDir("Pop", "http://www.myvideo.de/musik/pop", 'mischseite', "")
     addDir("Hip Hop", "http://www.myvideo.de/musik/hiphop", 'mischseite', "")
