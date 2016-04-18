@@ -480,8 +480,11 @@ def misch_cat(url,offset):
    urln=url+"?ajaxoffset="+ offset
    debug("misch_cat URL : "+ urln)
    content=geturl(urln)
-   match=re.compile('data-preloaded="(.+?)"', re.DOTALL).findall(content)   
-   anz=int(match[0])
+   try:
+     match=re.compile('data-page-size="(.+?)"', re.DOTALL).findall(content)   
+     anz=int(match[0])
+   except:
+     anz=1
    folgen = content.split('<a class=')
    i=0
    for i in range(1, len(folgen), 1):
