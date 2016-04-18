@@ -320,13 +320,14 @@ def filmgenres():
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
    
 def top_zeit(url):
-  addDir("Heute", url, 'topliste', "")
+  addDir("Heute", url, 'topliste', "")  
   addDir("Woche", url+"/woche", 'topliste', "")
   addDir("Monat",  url+"/monat", 'topliste', "")
   addDir("Ewig",  url+"/ewig", 'topliste', "")
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 
-def topliste(url):  
+def topliste(url): 
+   debug(" topliste url :"+url)
    content=geturl(url)
    videos = content.split('<div class="chartlist--videolist-item">')
    for i in range(1, len(videos), 1):
@@ -397,7 +398,7 @@ def mischseite(url):
            debug("mschseiten misch_cat: "+ name +" URL: "+ urll)
            addDir(name, urll, 'misch_cat', "",offset=0)
    namen_comedy=re.compile('<span class="tabs--tab.+?" data-linkout-label="" data-linkout-url="" >(.+?)</span>', re.DOTALL).findall(content)   
-   url_comedy=re.compile('data-list-name="channelVideos" data-url="(.+?)"', re.DOTALL).findall(content)   
+   url_comedy=re.compile('data-list-name=".+Videos" data-url="(.+?)"', re.DOTALL).findall(content)   
    debug(url_comedy)
    for i in range(0, len(url_comedy), 1): 
        name=cleanTitle(namen_comedy[i])
@@ -554,7 +555,7 @@ def themenmenu():
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)    
 def musikmenu():
     addDir("Neueste Musik Videos", "http://www.myvideo.de/musik/neue_musik_videos", 'allfilms', "")
-    addDir("Music Charts", "http://www.myvideo.de/top_100/top_100_single_charts", 'top_zeit', "")
+    addDir("Music Charts", "http://www.myvideo.de/top_100/top_100_single_charts", 'topliste', "")
     addDir("Alle Künstler", "http://www.myvideo.de/musik/musik_kuenstler/", 'abisz', "")
     addDir("Rock", "http://www.myvideo.de/musik/rock", 'mischseite', "")
     addDir("Pop", "http://www.myvideo.de/musik/pop", 'mischseite', "")
