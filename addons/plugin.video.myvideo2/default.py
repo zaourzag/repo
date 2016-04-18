@@ -581,7 +581,7 @@ tab = urllib.unquote_plus(params.get('tab', ''))
 
 if mode is '':    
     addDir("Filme", "Filme", 'filme_menu', "")
-    addDir("Top Listen", "Top 100", 'top100', "top10")
+    addDir("Top Listen", "Top 100", 'top100', "")
     addDir("TV & Serien", "TV & Serien", 'tvmenu', "")   
     addDir("Themen", "Themen", 'themenmenu', "")    
     addDir("Musik", "Musik", 'musikmenu', "")     
