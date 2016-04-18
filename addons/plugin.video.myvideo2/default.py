@@ -125,12 +125,6 @@ def abisz(url):
 def Buchstabe(url):
   debug(url)
   content=geturl(url)
-  try:      
-      match=re.compile('<a href="([^"]+)" class="button as-prev">', re.DOTALL).findall(content)
-      zurueck=match[0]
-      addDir("Zurueck", "http://www.myvideo.de"+zurueck, 'Buchstabe',"")
-  except:
-      pass
   match=re.compile('window.MV.contentListTooltipData = {(.+?)};', re.DOTALL).findall(content)
   jsonf=match[0]
   struktur = json.loads("{"+jsonf+"}") 
@@ -151,7 +145,8 @@ def Buchstabe(url):
   try:            
       match=re.compile('<a href="([^"]+)" class="button as-next">', re.DOTALL).findall(content)
       vor=match[0]
-      addDir("Vor", "http://www.myvideo.de"+vor, 'Buchstabe',"")
+      addDir("Haupt Menu", "Haupt Menu", '', "")
+      addDir("Next", "http://www.myvideo.de"+vor, 'Buchstabe',"")      
   except:
       pass
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
@@ -254,12 +249,6 @@ def playvideo(url):
 
 def allfilms(url):
  content=geturl(url)
- try:      
-      match=re.compile('<a href="([^"]+)" class="button as-prev">', re.DOTALL).findall(content)
-      zurueck=match[0]
-      addDir("Zurueck", "http://www.myvideo.de"+zurueck, 'allfilms',"")
- except:
-      pass
  folgen = content.split('<div class="grid--item as-')
  for i in range(1, len(folgen), 1):
      try:
@@ -283,7 +272,9 @@ def allfilms(url):
  try:            
       match=re.compile('<a href="([^"]+)" class="button as-next">', re.DOTALL).findall(content)
       vor=match[0]
-      addDir("Vor", "http://www.myvideo.de"+vor, 'allfilms',"")
+      addDir("Haupt Menu", "Haupt Menu", '', "")
+      addDir("Next", "http://www.myvideo.de"+vor, 'allfilms',"")
+      
  except:
       pass
  xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)     
@@ -403,9 +394,15 @@ def mischseite(url):
            if  not "http://www.myvideo.de" in urll:
               urll="http://www.myvideo.de"+urll
            name=cleanTitle(name)
-           debug("mschseiten misch_tab: "+ name +" URL: "+ urll)
+           debug("mschseiten misch_cat: "+ name +" URL: "+ urll)
            addDir(name, urll, 'misch_cat', "",offset=0)
-
+   namen_comedy=re.compile('<span class="tabs--tab.+?" data-linkout-label="" data-linkout-url="" >(.+?)</span>', re.DOTALL).findall(content)   
+   url_comedy=re.compile('data-list-name="channelVideos" data-url="(.+?)"', re.DOTALL).findall(content)   
+   debug(url_comedy)
+   for i in range(0, len(url_comedy), 1): 
+       name=cleanTitle(namen_comedy[i])
+       urll="http://www.myvideo.de"+url_comedy[i]
+       addDir(name, urll, 'misch_cat_auto', "",offset=0)
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 
 def misch_tab(url,tab): 
@@ -473,7 +470,8 @@ def misch_cat_auto(url,offset):
            addLink(name , urlname, 'playvideo',thump)
         else:
            addDir(name , urlname, 'mischseite',thump)
-   addDir("Next" , url, 'misch_cat_auto',"",offset=str(int(offset)+i+1))
+   addDir("Haupt Menu", "Haupt Menu", '', "")
+   addDir("Next" , url, 'misch_cat_auto',"",offset=str(int(offset)+i+1))   
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
    
    
@@ -515,7 +513,8 @@ def misch_cat(url,offset):
         else:
            addDir(name , urlname, 'mischseite',thump)
    if i>=anz:
-        addDir("Next" , url, 'misch_cat',"",offset=str(int(offset)+i+1))
+        addDir("Haupt Menu", "Haupt Menu", '', "")        
+        addDir("Next" , url, 'misch_cat',"",offset=str(int(offset)+i+1))                
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 
 def tvmenu():
@@ -565,7 +564,7 @@ def musikmenu():
     addDir("Metal", "http://www.myvideo.de/musik/metal", 'mischseite', "")
     addDir("RNB", "http://www.myvideo.de/musik/rnb", 'mischseite', "")
     addDir("Indie", "http://www.myvideo.de/musik/indie", 'mischseite', "")
-    addDir("Jazz und Klasik", "http://www.myvideo.de/musik/jazzklassik", 'mischseite', "")
+    addDir("Jazz und Klasik", "http://www.myvideo.de/musik/jazzklassik", 'mischseite', "")        
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)    
     
 params = parameters_string_to_dict(sys.argv[2])
