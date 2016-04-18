@@ -4,5 +4,6 @@
    <setting id="bitrate" type="select" label="30109" default="Select" values="Min|Max|Select" />
    <setting label="30111" type="folder" id="download_dir" value="" /> 
    <setting label="30124" type="bool" id="zeigedate" default="true" /> 
+   <setting label="Ja Ich will mein Password in Klarschrift übertragen!" type="bool" id="https" default="false" /> 
    <setting id="password" type="text" label="Password" visible="false" />
 </settings>

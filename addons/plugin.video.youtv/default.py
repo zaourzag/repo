@@ -157,6 +157,9 @@ def parameters_string_to_dict(parameters):
   
   
 def getUrl(url,data="x",token=""):
+        https=addon.getSetting("https")
+        if https=="true":
+           url=url.replace("https","http")
         print("Get Url: " +url)
         opener = urllib2.build_opener(urllib2.HTTPCookieProcessor())
         userAgent = "YOUTV/1.2.7 CFNetwork/758.2.8 Darwin/15.0.0"
