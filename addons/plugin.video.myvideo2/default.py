@@ -155,7 +155,7 @@ def Buchstabe(url):
 def Staffel(url):
     debug("Staffel : "+ url)
     content=geturl(url)
-    match=re.compile('data-list-name="season_tab([^"]+)" data-url="(.+?)"', re.DOTALL).findall(content)
+    match=re.compile('data-list-name="season_tab([^"]+)" data-url="(.+?)"', re.DOTALL).findall(content)  
     for staffel,url in match:      
        try:
           xy=int(staffel)
@@ -438,10 +438,16 @@ def misch_cat_auto(url,offset):
         if  not "http://www.myvideo.de" in urlname:
             urlname="http://www.myvideo.de"+urlname
         count=count+1
+        debug("urlname: "+urlname)
+        if "/serien/" in urlname:
+             type="Staffel"
+             
+        else:        
+             type="mischseite"
         if "-m-" in urlname:
            addLink(name , urlname, 'playvideo',thump)
         else:
-           addDir(name , urlname, 'mischseite',thump)
+           addDir(name , urlname, type,thump)
    addDir("Haupt Menu", "Haupt Menu", '', "")
    addDir("Next" , url, 'misch_cat_auto',"",offset=str(int(offset)+count))   
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
@@ -456,7 +462,10 @@ def misch_cat(url,offset):
      anz=int(match[0])
    except:
      anz=0
-   folgen = content.split('list-item">')
+   if '"ist-item">' in content:
+     folgen = content.split('list-item">')
+   else :
+     folgen = content.split('<a class')
    i=0
    count=0
    for i in range(1, len(folgen), 1):
@@ -476,7 +485,8 @@ def misch_cat(url,offset):
           match=re.compile('data-src="(.+?)"', re.DOTALL).findall(folge)
           thump=match[0]
         except:
-          thump=""
+          match=re.compile('src="(.+?)"', re.DOTALL).findall(folge)
+          thump=match[0]
         try:
           match=re.compile('<div class="thumbnail--subtitle">(.+?)</div>', re.DOTALL).findall(folge)
           sub=cleanTitle(match[0])
@@ -494,13 +504,19 @@ def misch_cat(url,offset):
         if  not "http://www.myvideo.de" in urlname:
             urlname="http://www.myvideo.de"+urlname           
         count=count+1
+        debug("urlname: "+urlname)
+        if "/serien/" in urlname:
+             type="Staffel"
+             
+        else:        
+             type="mischseite"
         if "-m-" in urlname:
            addLink(name , urlname, 'playvideo',thump)
         else:
-           addDir(name , urlname, 'mischseite',thump)
+           addDir(name , urlname, type,thump) 
    if i>=anz:
-        addDir("Haupt Menu", "Haupt Menu", '', "")        
-        addDir("Next" , url, 'misch_cat',"",offset=str(int(offset)+count))                
+       addDir("Haupt Menu", "Haupt Menu", '', "")        
+       addDir("Next" , url, 'misch_cat',"",offset=str(int(offset)+count))                
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 
 def tvmenu():
