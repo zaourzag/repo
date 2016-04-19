@@ -331,7 +331,7 @@ def topliste(url):
    content=geturl(url)   
    match=re.compile('data-list-name="chartlist".+?data-url="(.+?)"', re.DOTALL).findall(content) 
    url="http://www.myvideo.de"+match[0]
-   misch_cat(url,"0")
+   misch_cat(url,0)
    
 def mischseite(url):
    debug("URL: mischseite"+url)
@@ -454,7 +454,10 @@ def misch_cat_auto(url,offset):
    
    
 def misch_cat(url,offset):
-   urln=url+"?ajaxoffset="+ offset + "&_format=ajax"
+   if "http://www.myvideo.de/search" not in url:
+     urln=url+"?ajaxoffset="+ str(offset) + "&_format=ajax"
+   else:
+     urln=url+"&start="+str(offset)
    debug("misch_cat URL : "+ urln)
    content=geturl(urln)
    try:
@@ -568,7 +571,23 @@ def musikmenu():
     addDir("Indie", "http://www.myvideo.de/musik/indie", 'mischseite', "")
     addDir("Jazz und Klasik", "http://www.myvideo.de/musik/jazzklassik", 'mischseite', "")        
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)    
-    
+
+
+def searchmenu():
+  addDir("Search Musik", "MUSIK", 'search', "")
+  addDir("Search Tv", "TV", 'search', "")
+  addDir("Search Film", "FILM", 'search', "")
+  addDir("Search Channel", "CHANNEL", 'search', "")
+  addDir("Search All", "ALL", 'search', "")
+  xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)   
+
+def search(url):
+  urlname="http://www.myvideo.de/search?sortField=&category=" + url +"&rows=10&spellCheckRejected=true&nextButtonCounter=1"
+  dialog = xbmcgui.Dialog()
+  d = dialog.input(translation(30010), type=xbmcgui.INPUT_ALPHANUM)
+  url=urlname+"&q=" + d
+  misch_cat(url,offset=0)
+  
 params = parameters_string_to_dict(sys.argv[2])
 mode = urllib.unquote_plus(params.get('mode', ''))
 url = urllib.unquote_plus(params.get('url', ''))
@@ -582,7 +601,8 @@ if mode is '':
     addDir("Top Listen", "Top 100", 'top100', "")
     addDir("TV & Serien", "TV & Serien", 'tvmenu', "")   
     addDir("Themen", "Themen", 'themenmenu', "")    
-    addDir("Musik", "Musik", 'musikmenu', "")     
+    addDir("Musik", "Musik", 'musikmenu', "")  
+    addDir("Suche", "Suche", 'searchmenu', "",offset=0)     
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 else:
   # Wenn Settings ausgewählt wurde
@@ -627,3 +647,7 @@ else:
           themenmenu()    
   if mode == 'musikmenu':
           musikmenu()
+  if mode == 'searchmenu':
+          searchmenu()          
+  if mode == 'search':
+          search(url)              
