@@ -281,7 +281,7 @@ def allfilms(url):
 
 def  top100():
   addDir("Top Music Genres", "Top Music Genres", 'topgenres', "")
-  addDir("Top100 Music Clips", "http://www.myvideo.de/top_100/top_100_musik_clips", 'top_zeit', "")  
+  addDir("Top 100 Music Clips", "http://www.myvideo.de/top_100/top_100_musik_clips", 'top_zeit', "")  
   addDir("Top 25 Single Charts", "http://www.myvideo.de/top_100/top_100_single_charts", 'topliste', "")  
   addDir("Top 100 Entertainment", "http://www.myvideo.de/top_100/top_100_entertainment", 'top_zeit', "")
   addDir("Top 100 Serien", "http://www.myvideo.de/top_100/top_100_serien", 'top_zeit', "")
