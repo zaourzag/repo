@@ -462,7 +462,7 @@ def misch_cat(url,offset):
      anz=int(match[0])
    except:
      anz=0
-   if '"ist-item">' in content:
+   if 'list-item">' in content:
      folgen = content.split('list-item">')
    else :
      folgen = content.split('<a class')
