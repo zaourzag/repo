@@ -27,7 +27,7 @@ addon = xbmcaddon.Addon()
 translation = addon.getLocalizedString
 debuging=""
 # Es geht um Videos
-xbmcplugin.setContent(addon_handle, 'movies')
+xbmcplugin.setContent(addon_handle, 'episodes')
 baseurl="http://www.myvideo.de"
 icon = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')+'/icon.png').decode('utf-8')
 useThumbAsFanart=addon.getSetting("useThumbAsFanart") == "true"
