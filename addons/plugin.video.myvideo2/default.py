@@ -16,6 +16,7 @@ import time
 from datetime import datetime
 import hashlib
 import random
+import os
 
 # Setting Variablen Des Plugins
 global debuging
@@ -38,8 +39,8 @@ defaultThumb = ""
 profile    = xbmc.translatePath( addon.getAddonInfo('profile') ).decode("utf-8")
 temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
 
-if xbmcvfs.exists(temp):
-  shutil.rmtree(temp)
+#if xbmcvfs.exists(temp):
+#  shutil.rmtree(temp)
 xbmcvfs.mkdirs(temp)
 
 def debug(content):
@@ -53,8 +54,8 @@ def log(msg, level=xbmc.LOGNOTICE):
     addonID = addon.getAddonInfo('id')
     xbmc.log('%s: %s' % (addonID, msg), level)    
    
-def addDir(name, url, mode, iconimage, desc="",offset="",tab=""):
-  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
+def addDir(name, url, mode, iconimage, desc="",offset="",tab="",genre="",id="",duration="",filename=""):
+  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&filename="+filename
   if offset!="":
      u=u+"&offset="+str(offset)
   if tab!="":
@@ -68,13 +69,21 @@ def addDir(name, url, mode, iconimage, desc="",offset="",tab=""):
     liz.setProperty("fanart_image", iconimage)
   else:
     liz.setProperty("fanart_image", defaultBackground)
+  commands = []
+  filename=temp+"/favorit.txt"
+  addfav = "plugin://plugin.video.myvideo2/?mode=addfav&url="+urllib.quote_plus(url)+"&modus="+ mode  +"&iconimage="+iconimage +"&desc=" +desc+ "&name="+name +"&tab=" +str(tab) +"&offset="+ str(offset)+"&duration="+ str(duration)+"&genre="+genre +"&id="+str(id)+"&funktion=addDir&filename="+filename
+  delfav = "plugin://plugin.video.myvideo2/?mode=delfav&url="+urllib.quote_plus(url)+"&modus="+ mode  +"&iconimage="+iconimage +"&desc=" +desc+ "&name="+name +"&tab=" +str(tab) +"&offset="+ str(offset)+"&duration="+ str(duration)+"&genre="+genre +"&id="+str(id)+"&funktion=addDir&filename="+filename
+  commands.append(( "Favoriten Hinzufügen", 'XBMC.RunPlugin('+ addfav +')'))   
+  commands.append(( "von Favoriten löschen" , 'XBMC.RunPlugin('+ delfav +')')) 
+  liz.addContextMenuItems( commands )    
   ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
   return ok
   
-def addLink(name, url, mode, iconimage, duration="", desc="", genre='',id=""):
-  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
+def addLink(name, url, mode, iconimage, duration="", desc="", genre='',id="",offset="",tab="",filename=""):
+  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&filename="+filename
   if id != "" :
     u=u+"&id="+str(id)
+    
   ok = True
   liz = xbmcgui.ListItem(name, iconImage=defaultThumb, thumbnailImage=iconimage)
   liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Genre": genre})
@@ -83,6 +92,13 @@ def addLink(name, url, mode, iconimage, duration="", desc="", genre='',id=""):
   liz.setProperty("fanart_image", iconimage)
   #liz.setProperty("fanart_image", defaultBackground)
   xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
+  commands = []
+  file=temp+"/favorit.txt"
+  addfav = "plugin://plugin.video.myvideo2/?mode=addfav&url="+urllib.quote_plus(url)+"&modus="+ mode  +"&iconimage="+iconimage +"&desc=" +desc+ "&name="+name +"&tab=" +str(tab) +"&offset="+ str(offset)+"&duration="+ str(duration)+"&genre="+genre +"&id="+str(id)+"&funktion=addLink&filename="+filename
+  delfav = "plugin://plugin.video.myvideo2/?mode=delfav&url="+urllib.quote_plus(url)+"&modus="+ mode  +"&iconimage="+iconimage +"&desc=" +desc+ "&name="+name +"&tab=" +str(tab) +"&offset="+ str(offset)+"&duration="+ str(duration)+"&genre="+genre +"&id="+str(id)+"&funktion=addLink&filename="+filename
+  commands.append(( "Favoriten Hinzufügen", 'XBMC.RunPlugin('+ addfav +')'))   
+  commands.append(( "von Favoriten löschen" , 'XBMC.RunPlugin('+ delfav +')')) 
+  liz.addContextMenuItems( commands )
   ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
   return ok
   
@@ -601,13 +617,75 @@ def search(url):
   d = dialog.input(translation(30010), type=xbmcgui.INPUT_ALPHANUM)
   url=urlname+"&q=" + d
   misch_cat(url,offset=0)
-  
+def  addfav(filename,url,modus,iconimage,desc,name,tab,offset,genre,id,funktion,duration):   
+   zeilen=[]
+   if xbmcvfs.exists(filename):
+        f=open(filename,'r') 
+        for line in f:
+            if not url in line:
+                zeilen.append(line)
+        f.close() 
+   f=open(filename,'w') 
+   for line in zeilen:   
+       f.write(line)
+   f.write(url+","+modus+","+iconimage+","+desc+","+name+","+tab+","+offset+","+genre+","+id+","+funktion +","+ duration+"\n") 
+   f.close()  
+
+def delfav(filename,url,modus,iconimage,desc,name,tab,offset,genre,id,funktion,duration):
+   if xbmcvfs.exists(filename):
+     zeilen=[]
+     f=open(filename,'r') 
+     for line in f:
+      if not url in line:
+         zeilen.append(line)
+     f.close() 
+   f=open(filename,'w') 
+   for line in zeilen:   
+       f.write(line)
+   f.close() 
+   xbmc.executebuiltin("Container.Refresh")
+def Favoriten(filename):
+   debug("++++"+filename)
+   f=open(filename) 
+   for line in f:
+       debug("ZEILE:")
+       felder = line.split(",")
+       url=felder[0]
+       mode=felder[1]
+       iconimage=felder[2]
+       desc=felder[3]
+       name=felder[4]
+       tab=felder[5]
+       offset=felder[6]
+       genre=felder[7]
+       id=felder[8]
+       funktion=felder[9]
+       debug("-----" + funktion)
+       if funktion=="addDir" :
+         debug ("addDir("+name+","+ url+","+ mode+","+ iconimage+","+ desc+","+offset+","+tab+","+genre+","+id+","+duration+")")
+         addDir(name, url, mode, iconimage, desc,offset,tab,genre,id,duration)
+       if funktion=="addLink" :
+         debug ("addLink("+ name +","+ url +","+ mode +","+ iconimage +","+ duration +","+ desc +","+ genre +","+ id +","+ offset+ ","+tab+")")
+         addLink(name, url, mode, iconimage, duration, desc, genre,id,offset,tab)
+   f.close() 
+   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)   
+
 params = parameters_string_to_dict(sys.argv[2])
 mode = urllib.unquote_plus(params.get('mode', ''))
 url = urllib.unquote_plus(params.get('url', ''))
 id = urllib.unquote_plus(params.get('id', ''))
 offset = urllib.unquote_plus(params.get('offset', ''))
 tab = urllib.unquote_plus(params.get('tab', ''))
+modus = urllib.unquote_plus(params.get('modus', ''))
+iconimage=urllib.unquote_plus(params.get('iconimage', ''))
+desc=urllib.unquote_plus(params.get('desc', ''))
+name=urllib.unquote_plus(params.get('name', ''))
+tab=urllib.unquote_plus(params.get('tab', ''))
+genre=urllib.unquote_plus(params.get('genre', ''))
+funktion=urllib.unquote_plus(params.get('funktion', ''))
+duration=urllib.unquote_plus(params.get('duration', ''))
+filename=urllib.unquote_plus(params.get('filename', ''))
+debug("Filename"+filename)
 # Haupt Menu Anzeigen      
 
 if mode is '':    
@@ -616,7 +694,9 @@ if mode is '':
     addDir("TV & Serien", "TV & Serien", 'tvmenu', "")   
     addDir("Themen", "Themen", 'themenmenu', "")    
     addDir("Musik", "Musik", 'musikmenu', "")  
-    addDir("Suche", "Suche", 'searchmenu', "",offset=0)     
+    addDir("Suche", "Suche", 'searchmenu', "",offset=0)  
+    filenamen=temp+"/favorit.txt"    
+    addDir("Favoriten", "Favoriten", 'Favoriten', "",filename=filenamen)    
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 else:
   # Wenn Settings ausgewählt wurde
@@ -665,3 +745,9 @@ else:
           searchmenu()          
   if mode == 'search':
           search(url)              
+  if mode == 'addfav':
+          addfav(url=url,modus=modus,iconimage=iconimage,desc=desc,name=name,tab=tab,offset=offset,genre=genre,id=id,funktion=funktion,duration=duration,filename=filename)
+  if mode == 'delfav':
+          delfav(url=url,modus=modus,iconimage=iconimage,desc=desc,name=name,tab=tab,offset=offset,genre=genre,id=id,funktion=funktion,duration=duration,filename=filename)       
+  if mode == 'Favoriten':
+          Favoriten(filename=filename)                        
