@@ -71,15 +71,15 @@ def addDir(name, url, mode, iconimage, desc="",offset="",tab="",genre="",id="",d
     liz.setProperty("fanart_image", defaultBackground)
   commands = []
   filename=temp+"/favorit.txt"
-  addfav = "plugin://plugin.video.myvideo2/?mode=addfav&url="+urllib.quote_plus(url)+"&modus="+ mode  +"&iconimage="+iconimage +"&desc=" +desc+ "&name="+name +"&tab=" +str(tab) +"&offset="+ str(offset)+"&duration="+ str(duration)+"&genre="+genre +"&id="+str(id)+"&funktion=addDir&filename="+filename
-  delfav = "plugin://plugin.video.myvideo2/?mode=delfav&url="+urllib.quote_plus(url)+"&modus="+ mode  +"&iconimage="+iconimage +"&desc=" +desc+ "&name="+name +"&tab=" +str(tab) +"&offset="+ str(offset)+"&duration="+ str(duration)+"&genre="+genre +"&id="+str(id)+"&funktion=addDir&filename="+filename
+  addfav = "plugin://plugin.video.myvideo2/?mode=addfav&url="+urllib.quote_plus(url)+"&modus="+ mode  +"&iconimage="+iconimage +"&desc=" +desc+ "&name="+urllib.quote_plus(name) +"&tab=" +str(tab) +"&offset="+ str(offset)+"&duration="+ str(duration)+"&genre="+genre +"&id="+str(id)+"&funktion=addDir&filename="+filename
+  delfav = "plugin://plugin.video.myvideo2/?mode=delfav&url="+urllib.quote_plus(url)+"&modus="+ mode  +"&iconimage="+iconimage +"&desc=" +desc+ "&name="+urllib.quote_plus(name) +"&tab=" +str(tab) +"&offset="+ str(offset)+"&duration="+ str(duration)+"&genre="+genre +"&id="+str(id)+"&funktion=addDir&filename="+filename
   commands.append(( "Favoriten Hinzufügen", 'XBMC.RunPlugin('+ addfav +')'))   
   commands.append(( "von Favoriten löschen" , 'XBMC.RunPlugin('+ delfav +')')) 
   liz.addContextMenuItems( commands )    
   ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
   return ok
   
-def addLink(name, url, mode, iconimage, duration="", desc="", genre='',id="",offset="",tab="",filename=""):
+def addLink(name, url, mode, iconimage, duration="", desc="", genre='',id="",offset="",tab="",filename=""):  
   u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&filename="+filename
   if id != "" :
     u=u+"&id="+str(id)
