@@ -457,9 +457,23 @@ def misch_cat(url,offset):
    if "http://www.myvideo.de/search" not in url:
      urln=url+"?ajaxoffset="+ str(offset) + "&_format=ajax"
    else:
-     urln=url+"&start="+str(offset)
-   debug("misch_cat URL : "+ urln)
+     urln=url+"&start="+str(offset)+ "&_format=ajax"
+   debug("misch_cat URL : "+ urln)   
    content=geturl(urln)
+   try:
+       debug("Except falsche suche")
+       match=re.compile('Ergebnisse für <a href="/search.+?">(.+?)</a>', re.DOTALL).findall(content)
+       neusuch=match[0]
+       debug("NEU :"+neusuch)
+       match=re.compile('q=([^&]+)', re.DOTALL).findall(url)
+       oldsuch=match[0]     
+       debug("Oldsuch :"+oldsuch)              
+       if oldsuch!=neusuch:
+          addDir("Kein Ergebnis", "Suche", 'searchmenu', "",offset=0) 
+          xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
+          return
+   except:
+       pass   
    try:
      match=re.compile('data-page-size="(.+?)"', re.DOTALL).findall(content)   
      anz=int(match[0])
@@ -574,7 +588,7 @@ def musikmenu():
 
 
 def searchmenu():
-  addDir("Search Musik", "MUSIK", 'search', "")
+  addDir("Search Musik", "MUSIC", 'search', "")
   addDir("Search Tv", "TV", 'search', "")
   addDir("Search Film", "FILM", 'search', "")
   addDir("Search Channel", "CHANNEL", 'search', "")
