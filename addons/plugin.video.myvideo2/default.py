@@ -98,6 +98,12 @@ def addLink(name, url, mode, iconimage, duration="", desc="", genre='',id="",off
   delfav = "plugin://plugin.video.myvideo2/?mode=delfav&url="+urllib.quote_plus(url)+"&modus="+ mode  +"&iconimage="+iconimage +"&desc=" +urllib.quote_plus(desc)+ "&name="+name +"&tab=" +str(tab) +"&offset="+ str(offset)+"&duration="+ str(duration)+"&genre="+genre +"&id="+str(id)+"&funktion=addLink&filename="+filename
   commands.append(( "Favoriten Hinzufügen", 'XBMC.RunPlugin('+ addfav +')'))   
   commands.append(( "von Favoriten löschen" , 'XBMC.RunPlugin('+ delfav +')')) 
+  if "musik" in url:
+    kuenstler_reg=match=re.compile('http://www.myvideo.de/musik/(.+?)/', re.DOTALL).findall(url)
+    kuenstler=kuenstler_reg[0]
+    musikurl="http://www.myvideo.de/musik/"+ kuenstler
+    mehr = "plugin://plugin.video.myvideo2/?mode=mischseite&url="+urllib.quote_plus(musikurl)
+    commands.append(( "Mehr vom Künstler" , 'ActivateWindow(Videos,'+ mehr +')'))     
   liz.addContextMenuItems( commands )
   ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
   return ok
@@ -343,14 +349,14 @@ def top_zeit(url):
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 
 def topliste(url): 
-   debug(" topliste url :"+url)
+   debug(" topliste url : "+url)
    content=geturl(url)   
    match=re.compile('data-list-name="chartlist".+?data-url="(.+?)"', re.DOTALL).findall(content) 
    url="http://www.myvideo.de"+match[0]
    misch_cat(url,0)
    
 def mischseite(url):
-   debug("URL: mischseite"+url)
+   debug("URL: mischseite :"+url)
    content=geturl(url)
    liste=[]
    match2=re.compile('</use> </svg>([^<]+?)</h3> <div class="videolist.+?data-url="(.+?)"', re.DOTALL).findall(content)    
@@ -389,7 +395,8 @@ def mischseite(url):
        name=cleanTitle(namen_comedy[i])
        urll="http://www.myvideo.de"+url_comedy[i]
        addDir(name, urll, 'misch_cat_auto', "",offset=0)
-   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
+   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)  
+   debug("Mischseite Ende")
 
 def misch_tab(url,tab): 
    debug(" misch_tab url "+ url)
@@ -523,7 +530,7 @@ def misch_cat(url,offset):
         try:
           match=re.compile('<div class="thumbnail--subtitle">(.+?)</div>', re.DOTALL).findall(folge)
           sub=cleanTitle(match[0])
-          name= name +" ( "+ sub +" )"        
+          name= sub +" -- "+ name
         except:
           pass  
         try:
