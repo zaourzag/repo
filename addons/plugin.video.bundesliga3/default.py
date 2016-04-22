@@ -231,7 +231,22 @@ def watchlive(url,meldung="",spiel=""):
           get_spiele()
           return
    if "mdr.de" in url:
-       urlnew="http://mdr_event1_hls-lh.akamaihd.net/i/livetvmdrevent1_de@106904/index_3871_av-p.m3u8?sd=10&rebase=on"    
+       match = re.compile('([^-]+) - ([^-]+)', re.DOTALL).findall(spiel)
+       name1=match[0][0]
+       name2=match[0][1]
+       urlstart="http://www.mdr.de/sport/livestreams/sport_livestreams100.html"
+       content=getUrl(urlstart)
+       match = re.compile('href="([^"]+?)" class="headline" title="">Livestream: ([^<]+?) - ([^<]+?)</a>', re.DOTALL).findall(content)
+       for urln,spieler1,spieler2 in match:
+           if maschaftfinden(name1, name1) ==1 or maschaftfinden(name2, name1)==1  :   
+                url= urln
+       content=getUrl(urln)
+       match = re.compile("'playerXml':'(.+?)'", re.DOTALL).findall(content)       
+       xmlurl= match[0].replace("\/","/")
+       content=getUrl("http://www.mdr.de"+xmlurl)
+       match = re.compile("<adaptiveHttpStreamingRedirectorUrl>(.+?)</adaptiveHttpStreamingRedirectorUrl>", re.DOTALL).findall(content)  
+       urlnew=match[0]
+       debug("XMLURL :"+ xmlurl)
    elif "ndr.de" in url:
       debug("spiel" +spiel)    
       match = re.compile('([^-]+) - ([^-]+)', re.DOTALL).findall(spiel)
@@ -264,6 +279,8 @@ def watchlive(url,meldung="",spiel=""):
            urlnew=match[0]+".m3u8"
            debug("urlnew :------- "+ urlnew)
            break           
+   elif "NDR" in url:
+      urlnew="http://ndr_fs-lh.akamaihd.net/i/ndrfs_nds@119224/master.m3u8"                    
    elif "MDR" in url:
       urlnew="http://mdr_sa_hls-lh.akamaihd.net/i/livetvmdrsachsenanhalt_de@106901/master.m3u8"    
    elif "RBB" in url:
@@ -272,8 +289,6 @@ def watchlive(url,meldung="",spiel=""):
       urlnew="http://swrbw-lh.akamaihd.net/i/swrbw_live@196738/master.m3u8"
    if url=="WDR":
       urlnew="http://wdr_fs_geo-lh.akamaihd.net/i/wdrfs_geogeblockt@112044/master.m3u8"             
-   if url=="NDR":
-      urlnew="http://ndr_fs-lh.akamaihd.net/i/ndrfs_nds@119224/master.m3u8"         
    if url=="rbb-online.de":
       urlnew="http://rbb_event-lh.akamaihd.net/i/rbbevent_nongeo@107643/index_1728_av-p.m3u8?sd=10&rebase=on"
    if url=="br.de":
