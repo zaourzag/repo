@@ -17,6 +17,7 @@ from datetime import datetime
 import hashlib
 import random
 import os
+import md5
 
 # Setting Variablen Des Plugins
 global debuging
@@ -53,7 +54,25 @@ def log(msg, level=xbmc.LOGNOTICE):
     addon = xbmcaddon.Addon()
     addonID = addon.getAddonInfo('id')
     xbmc.log('%s: %s' % (addonID, msg), level)    
-   
+
+def rename_name(name,url):
+  m = md5.new()
+  m.update(url)
+  urlnr=m.hexdigest()
+  fname=temp+"/"+urlnr
+  if xbmcvfs.exists(fname):
+        f=open(fname,'r') 
+        for line in f:           
+           if urlnr in line:           
+              felder = line.split(",")
+              mode=felder[0]
+              hash=felder[1]
+              new_name=felder[2]
+              new_name=new_name[:-1]
+              if mode=="=":
+                name=new_name           
+  return name   
+  
 def addDir(name, url, mode, iconimage, desc="",offset="",tab="",genre="",id="",duration="",filename=""):
   u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&filename="+filename
   if offset!="":
@@ -61,6 +80,7 @@ def addDir(name, url, mode, iconimage, desc="",offset="",tab="",genre="",id="",d
   if tab!="":
      u=u+"&tab="+str(tab)
   ok = True
+  name=rename_name(name,url)
   liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=iconimage)
   liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc})
   if useThumbAsFanart:
@@ -73,9 +93,12 @@ def addDir(name, url, mode, iconimage, desc="",offset="",tab="",genre="",id="",d
   filename=temp+"/favorit.txt"
   addfav = "plugin://plugin.video.myvideo2/?mode=addfav&url="+urllib.quote_plus(url)+"&modus="+ mode  +"&iconimage="+iconimage +"&desc=" +urllib.quote_plus(desc)+ "&name="+urllib.quote_plus(name) +"&tab=" +str(tab) +"&offset="+ str(offset)+"&duration="+ str(duration)+"&genre="+genre +"&id="+str(id)+"&funktion=addDir&filename="+filename
   delfav = "plugin://plugin.video.myvideo2/?mode=delfav&url="+urllib.quote_plus(url)+"&modus="+ mode  +"&iconimage="+iconimage +"&desc=" +urllib.quote_plus(desc)+ "&name="+urllib.quote_plus(name) +"&tab=" +str(tab) +"&offset="+ str(offset)+"&duration="+ str(duration)+"&genre="+genre +"&id="+str(id)+"&funktion=addDir&filename="+filename
+  rename = "plugin://plugin.video.myvideo2/?mode=rename&url="+urllib.quote_plus(url)+"&name="+name
   commands.append(( "Favoriten Hinzufügen", 'XBMC.RunPlugin('+ addfav +')'))   
   commands.append(( "von Favoriten löschen" , 'XBMC.RunPlugin('+ delfav +')')) 
-  liz.addContextMenuItems( commands )    
+  commands.append(( "Rename" , 'XBMC.RunPlugin('+ rename +')'))
+  liz.addContextMenuItems( commands )  
+           
   ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
   return ok
   
@@ -85,6 +108,7 @@ def addLink(name, url, mode, iconimage, duration="", desc="", genre='',id="",off
     u=u+"&id="+str(id)
     
   ok = True
+  name=rename_name(name,url)
   liz = xbmcgui.ListItem(name, iconImage=defaultThumb, thumbnailImage=iconimage)
   liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Genre": genre})
   liz.setProperty('IsPlayable', 'true')
@@ -96,8 +120,10 @@ def addLink(name, url, mode, iconimage, duration="", desc="", genre='',id="",off
   file=temp+"/favorit.txt"
   addfav = "plugin://plugin.video.myvideo2/?mode=addfav&url="+urllib.quote_plus(url)+"&modus="+ mode  +"&iconimage="+iconimage +"&desc=" +urllib.quote_plus(desc)+ "&name="+name +"&tab=" +str(tab) +"&offset="+ str(offset)+"&duration="+ str(duration)+"&genre="+genre +"&id="+str(id)+"&funktion=addLink&filename="+filename
   delfav = "plugin://plugin.video.myvideo2/?mode=delfav&url="+urllib.quote_plus(url)+"&modus="+ mode  +"&iconimage="+iconimage +"&desc=" +urllib.quote_plus(desc)+ "&name="+name +"&tab=" +str(tab) +"&offset="+ str(offset)+"&duration="+ str(duration)+"&genre="+genre +"&id="+str(id)+"&funktion=addLink&filename="+filename
+  rename = "plugin://plugin.video.myvideo2/?mode=rename&url="+urllib.quote_plus(url)+"&name="+name
   commands.append(( "Favoriten Hinzufügen", 'XBMC.RunPlugin('+ addfav +')'))   
   commands.append(( "von Favoriten löschen" , 'XBMC.RunPlugin('+ delfav +')')) 
+  commands.append(( "Rename" , 'XBMC.RunPlugin('+ rename +')')) 
   if "musik" in url:
     kuenstler_reg=match=re.compile('http://www.myvideo.de/musik/(.+?)/', re.DOTALL).findall(url)
     kuenstler=kuenstler_reg[0]
@@ -677,6 +703,28 @@ def Favoriten(filename):
    f.close() 
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)   
 
+def rename(url,name):
+   debug("Start rename")
+   m = md5.new()
+   m.update(url)
+   urlnr=m.hexdigest()
+   dialog = xbmcgui.Dialog()
+   d = dialog.input("Umbenennen",name, type=xbmcgui.INPUT_ALPHANUM)
+   zeilen=[]
+   filename=temp+"/"+urlnr
+   if xbmcvfs.exists(filename):
+        f=open(filename,'r') 
+        for line in f:
+            if not "=,"+urlnr in line:
+                zeilen.append(line)
+        f.close() 
+   f=open(filename,'w')
+   for line in zeilen:   
+       f.write(line)
+   f.write("=,"+urlnr+","+d+"\n") 
+   f.close()  
+   xbmc.executebuiltin("Container.Refresh")
+
 params = parameters_string_to_dict(sys.argv[2])
 mode = urllib.unquote_plus(params.get('mode', ''))
 url = urllib.unquote_plus(params.get('url', ''))
@@ -758,3 +806,5 @@ else:
           delfav(url=url,modus=modus,iconimage=iconimage,desc=desc,name=name,tab=tab,offset=offset,genre=genre,id=id,funktion=funktion,duration=duration,filename=filename)       
   if mode == 'Favoriten':
           Favoriten(filename=filename)                        
+  if mode == 'rename':
+          rename(url,name) 
