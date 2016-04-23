@@ -339,7 +339,7 @@ def liste(url,filter):
      
      nowtime=time.mktime(datetime.datetime.now().timetuple())
      diftime=nowtime-starttime
-     diftime2=int(diftime/  84400)       
+     diftime2=int(diftime/  86400)       
      match=re.compile('(.+?)-(.+?)-(.+?)T(.+?):(.+?):', re.DOTALL).findall(st)
      if zeigedate!="false": 
        times=match[0][2] +"."+ match[0][1] +"."+ match[0][0] +" "+ match[0][3] +":"+match[0][4]
