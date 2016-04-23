@@ -52,24 +52,32 @@ def listVideos(urlMain):
     content = opener.open(urlMain).read()
     content = content[content.find('<div class="videosGesamt">'):]
     content = content[:content.find('<!-- FOOTER -->')]  
+    content = content[:content.find('<!--TYPO3SEARCH_end-->')]  
     debug("content :"+content)
     spl = content.split('<a ')
     VIDEOSFOUND=0
-    for i in range(1, len(spl)-1, 1):
+    for i in range(1, len(spl), 1):
         debug("SP :"+spl[i])
         VIDEOSFOUND=1
         entry = spl[i]
-        match = re.compile('<h3>(.+?)</h3>', re.DOTALL).findall(entry)
+        
+        entry1 = entry.replace("<br>",": ")
+        match = re.compile('<h3>(.+?)<', re.DOTALL).findall(entry1)
         title = match[0].replace("<br>",": ")
+        
         match = re.compile('<p>(.+?)</p>', re.DOTALL).findall(entry)
         desc = match[0]
         desc = desc[:desc.find('<')]
+        debug("DESC :"+ desc)
         title = cleanTitle(title)
         match = re.compile('href="(.+?)"', re.DOTALL).findall(entry)
         url = match[0]
         match = re.compile('src="(.+?)"', re.DOTALL).findall(entry)
         thumb = match[0]
-        addLink(title, url, 'playVideo', thumb, desc)
+        if "http://www.tele5.de/re-play/sendungen.html" in urlMain:
+          addDir(title, url, 'listVideos', thumb, desc=desc)        
+        else:
+          addLink(title, url, 'playVideo', thumb, desc=desc)
     if VIDEOSFOUND == 0:
         content = opener.open(urlMain).read()
         content = content[content.find('<!--TYPO3SEARCH_begin-->'):]
@@ -84,7 +92,10 @@ def listVideos(urlMain):
         for i in range(0, len(title), 1):
         #desc = re.compile('class="csc-frame csc-frame-indent"><p>(.+?)</p></div>', re.DOTALL).findall(content)[0]
           url = urlMain
-          addLink(h.unescape(title[i]), url, 'playVideo', thumb[i], 'desc')
+          if "http://www.tele5.de/re-play/sendungen.html" in urlMain:
+             addDir(h.unescape(title[i]), url, 'listVideos', thumb[i], desc)
+          else:
+             addLink(h.unescape(title[i]), url, 'playVideo', thumb[i], desc)
     xbmcplugin.endOfDirectory(pluginhandle)
 
 
