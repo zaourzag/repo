@@ -404,7 +404,7 @@ def playAdvancedChannel(channel):
 
 def playVideo(id):
     try:
-        content = opener.open("http://videoplayer.vevo.com/VideoService/AuthenticateVideo?isrc="+id).read()
+        content = opener.open("http://api.vevo.com/VideoService/AuthenticateVideo?isrc="+id).read()
         content = str(json.loads(content))
         match = re.compile('<rendition name="HTTP Live Streaming" url="(.+?)"', re.DOTALL).findall(content)
         fullUrl = ""
