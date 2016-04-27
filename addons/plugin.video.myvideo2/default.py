@@ -16,7 +16,6 @@ import time
 from datetime import datetime
 import hashlib
 import random
-import os
 import md5
 
 # Setting Variablen Des Plugins
@@ -72,8 +71,27 @@ def rename_name(name,url):
               if mode=="=":
                 name=new_name           
   return name   
+def delete_name(url,orgurlnow):
+  m = md5.new()
+  m.update(url)
+  urlnr=m.hexdigest()
+  fname=temp+"/"+urlnr
+  if xbmcvfs.exists(fname):
+        f=open(fname,'r') 
+        for line in f:           
+           if urlnr in line:           
+              felder = line.split(",")
+              mode=felder[0]
+              hash=felder[1]
+              orgurl=felder[2].replace("\n","")  
+              debug (":orgurl  :"+orgurl+"#")
+              debug (":orgurlnow :"+orgurlnow+"#")              
+              if mode=="-" and orgurl==orgurlnow:
+                debug("Ist zu löschen")
+                return 0       
+  return 1   
   
-def addDir(name, url, mode, iconimage, desc="",offset="",tab="",genre="",id="",duration="",filename=""):
+def addDir(name, url, mode, iconimage, desc="",offset="",tab="",genre="",id="",duration="",filename="",orgurl=""):
   u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&filename="+filename
   if offset!="":
      u=u+"&offset="+str(offset)
@@ -81,6 +99,8 @@ def addDir(name, url, mode, iconimage, desc="",offset="",tab="",genre="",id="",d
      u=u+"&tab="+str(tab)
   ok = True
   name=rename_name(name,url)
+  if delete_name(url,orgurl)==0:
+     return 
   liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=iconimage)
   liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc})
   if useThumbAsFanart:
@@ -93,22 +113,31 @@ def addDir(name, url, mode, iconimage, desc="",offset="",tab="",genre="",id="",d
   filename=temp+"/favorit.txt"
   addfav = "plugin://plugin.video.myvideo2/?mode=addfav&url="+urllib.quote_plus(url)+"&modus="+ mode  +"&iconimage="+iconimage +"&desc=" +urllib.quote_plus(desc)+ "&name="+urllib.quote_plus(name) +"&tab=" +str(tab) +"&offset="+ str(offset)+"&duration="+ str(duration)+"&genre="+genre +"&id="+str(id)+"&funktion=addDir&filename="+filename
   delfav = "plugin://plugin.video.myvideo2/?mode=delfav&url="+urllib.quote_plus(url)+"&modus="+ mode  +"&iconimage="+iconimage +"&desc=" +urllib.quote_plus(desc)+ "&name="+urllib.quote_plus(name) +"&tab=" +str(tab) +"&offset="+ str(offset)+"&duration="+ str(duration)+"&genre="+genre +"&id="+str(id)+"&funktion=addDir&filename="+filename
-  rename = "plugin://plugin.video.myvideo2/?mode=rename&url="+urllib.quote_plus(url)+"&name="+name
+  delete = "plugin://plugin.video.myvideo2/?mode=delete&url="+urllib.quote_plus(url)+"&modus="+ mode  +"&iconimage="+iconimage +"&desc=" +urllib.quote_plus(desc)+ "&name="+urllib.quote_plus(name) +"&tab=" +str(tab) +"&offset="+ str(offset)+"&duration="+ str(duration)+"&genre="+genre +"&id="+str(id)+"&funktion=addDir&filename="+filename+"&orgurl="+orgurl
+  undelete = "plugin://plugin.video.myvideo2/?mode=undelete&url="+urllib.quote_plus(url)+"&modus="+ mode  +"&iconimage="+iconimage +"&desc=" +urllib.quote_plus(desc)+ "&name="+urllib.quote_plus(name) +"&tab=" +str(tab) +"&offset="+ str(offset)+"&duration="+ str(duration)+"&genre="+genre +"&id="+str(id)+"&funktion=addDir&filename="+filename+"&orgurl="+orgurl
+  rename = "plugin://plugin.video.myvideo2/?mode=rename&url="+urllib.quote_plus(url)+"&name="+name+"&orgurl="+orgurl
   commands.append(( "Favoriten Hinzufügen", 'XBMC.RunPlugin('+ addfav +')'))   
   commands.append(( "von Favoriten löschen" , 'XBMC.RunPlugin('+ delfav +')')) 
   commands.append(( "Rename" , 'XBMC.RunPlugin('+ rename +')'))
+  if orgurl=="deltemenu":
+     commands.append(( "Undelete" , 'XBMC.RunPlugin('+ undelete +')'))
+  
+  else:
+     commands.append(( "Delete" , 'XBMC.RunPlugin('+ delete +')'))
   liz.addContextMenuItems( commands )  
            
   ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
   return ok
-  
-def addLink(name, url, mode, iconimage, duration="", desc="", genre='',id="",offset="",tab="",filename=""):  
+ 
+def addLink(name, url, mode, iconimage, duration="", desc="", genre='',id="",offset="",tab="",filename="",orgurl=""):  
   u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&filename="+filename
   if id != "" :
     u=u+"&id="+str(id)
     
   ok = True
   name=rename_name(name,url)
+  if delete_name(url,orgurl)==0:
+     return 
   liz = xbmcgui.ListItem(name, iconImage=defaultThumb, thumbnailImage=iconimage)
   liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Genre": genre})
   liz.setProperty('IsPlayable', 'true')
@@ -120,10 +149,12 @@ def addLink(name, url, mode, iconimage, duration="", desc="", genre='',id="",off
   file=temp+"/favorit.txt"
   addfav = "plugin://plugin.video.myvideo2/?mode=addfav&url="+urllib.quote_plus(url)+"&modus="+ mode  +"&iconimage="+iconimage +"&desc=" +urllib.quote_plus(desc)+ "&name="+name +"&tab=" +str(tab) +"&offset="+ str(offset)+"&duration="+ str(duration)+"&genre="+genre +"&id="+str(id)+"&funktion=addLink&filename="+filename
   delfav = "plugin://plugin.video.myvideo2/?mode=delfav&url="+urllib.quote_plus(url)+"&modus="+ mode  +"&iconimage="+iconimage +"&desc=" +urllib.quote_plus(desc)+ "&name="+name +"&tab=" +str(tab) +"&offset="+ str(offset)+"&duration="+ str(duration)+"&genre="+genre +"&id="+str(id)+"&funktion=addLink&filename="+filename
-  rename = "plugin://plugin.video.myvideo2/?mode=rename&url="+urllib.quote_plus(url)+"&name="+name
+  delete = "plugin://plugin.video.myvideo2/?mode=delete&url="+urllib.quote_plus(url)+"&modus="+ mode  +"&iconimage="+iconimage +"&desc=" +urllib.quote_plus(desc)+ "&name="+name +"&tab=" +str(tab) +"&offset="+ str(offset)+"&duration="+ str(duration)+"&genre="+genre +"&id="+str(id)+"&funktion=addLink&filename="+filename+"&orgurl="+orgurl
+  rename = "plugin://plugin.video.myvideo2/?mode=rename&url="+urllib.quote_plus(url)+"&name="+name+"&orgurl="+orgurl
   commands.append(( "Favoriten Hinzufügen", 'XBMC.RunPlugin('+ addfav +')'))   
   commands.append(( "von Favoriten löschen" , 'XBMC.RunPlugin('+ delfav +')')) 
-  commands.append(( "Rename" , 'XBMC.RunPlugin('+ rename +')')) 
+  commands.append(( "Rename" , 'XBMC.RunPlugin('+ rename +')'))
+  commands.append(( "Delete" , 'XBMC.RunPlugin('+ delete +')'))  
   if "musik" in url:
     kuenstler_reg=match=re.compile('http://www.myvideo.de/musik/(.+?)/', re.DOTALL).findall(url)
     kuenstler=kuenstler_reg[0]
@@ -166,7 +197,7 @@ def abisz(url):
     else:
       lettern=letter
     urln=url+lettern+"/"
-    addDir(letter.lower(), urln, 'Buchstabe', "")
+    addDir(letter.lower(), urln, 'Buchstabe', "",orgurl=url)
   addDir("0-9", "0-9", 'Buchstabe', "")
   xbmcplugin.endOfDirectory(addon_handle)
   
@@ -187,14 +218,14 @@ def Buchstabe(url):
     thump= video["thumbnail"]
     thump=thump.replace("ez","mv")
     if "musik" in url:
-       addDir(title, "http://www.myvideo.de"+url, 'mischseite', thump,desc)
+       addDir(title, "http://www.myvideo.de"+url, 'mischseite', thump,desc,orgurl=url)
     else:
-       addDir(title, "http://www.myvideo.de"+url, 'Staffel', thump,desc)
+       addDir(title, "http://www.myvideo.de"+url, 'Staffel', thump,desc,orgurl=url)
   try:            
       match=re.compile('<a href="([^"]+)" class="button as-next">', re.DOTALL).findall(content)
       vor=match[0]
       addDir("Haupt Menu", "Haupt Menu", '', "")
-      addDir("Next", "http://www.myvideo.de"+vor, 'Buchstabe',"")      
+      addDir("Next", "http://www.myvideo.de"+vor, 'Buchstabe',"",orgurl=url)      
   except:
       pass
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
@@ -210,7 +241,7 @@ def Staffel(url):
           staffel= "Staffel "+staffel
        except:
           pass
-       addDir(staffel, "http://www.myvideo.de"+url, 'Serie',"","")
+       addDir(staffel, "http://www.myvideo.de"+url, 'Serie',"","",orgurl=url)
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 def Serie(url):
   content=geturl(url)
@@ -226,7 +257,7 @@ def Serie(url):
     thumnail=match[0]
     match=re.compile('"thumbnail--subtitle">(.+?)</div>', re.DOTALL).findall(folge)   
     sub=match[0]
-    addLink(name + " ( "+ sub +" )", "http://www.myvideo.de"+url, 'playvideo',thumnail,"")
+    addLink(name + " ( "+ sub +" )", "http://www.myvideo.de"+url, 'playvideo',thumnail,"",orgurl=url)
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
   
 def playvideo(url):  
@@ -314,64 +345,64 @@ def allfilms(url):
         laenge=int(std)*60*60 + int(min)*60     
       except:
         laenge=""
-      addLink(name , "http://www.myvideo.de"+url, 'playvideo',thump,duration=laenge)
+      addLink(name , "http://www.myvideo.de"+url, 'playvideo',thump,duration=laenge,orgurl=url)
      except:
        pass
  try:            
       match=re.compile('<a href="([^"]+)" class="button as-next">', re.DOTALL).findall(content)
       vor=match[0]
-      addDir("Haupt Menu", "Haupt Menu", '', "")
-      addDir("Next", "http://www.myvideo.de"+vor, 'allfilms',"")
+      addDir("Haupt Menu", "Haupt Menu", '', "",orgurl=url)
+      addDir("Next", "http://www.myvideo.de"+vor, 'allfilms',"",orgurl=url)
       
  except:
       pass
  xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)     
 
 def  top100():
-  addDir("Top Music Genres", "Top Music Genres", 'topgenres', "")
-  addDir("Top 100 Music Clips", "http://www.myvideo.de/top_100/top_100_musik_clips", 'top_zeit', "")  
-  addDir("Top 25 Single Charts", "http://www.myvideo.de/top_100/top_100_single_charts", 'topliste', "")  
-  addDir("Top 100 Entertainment", "http://www.myvideo.de/top_100/top_100_entertainment", 'top_zeit', "")
-  addDir("Top 100 Serien", "http://www.myvideo.de/top_100/top_100_serien", 'top_zeit', "")
-  addDir("Top 100 Filme", "http://www.myvideo.de/filme/top_100_filme", 'allfilms', "")
+  addDir("Top Music Genres", "Top Music Genres", 'topgenres', "",orgurl="top100")
+  addDir("Top 100 Music Clips", "http://www.myvideo.de/top_100/top_100_musik_clips", 'top_zeit', "",orgurl="top100")  
+  addDir("Top 25 Single Charts", "http://www.myvideo.de/top_100/top_100_single_charts", 'topliste', "",orgurl="top100")  
+  addDir("Top 100 Entertainment", "http://www.myvideo.de/top_100/top_100_entertainment", 'top_zeit', "",orgurl="top100")
+  addDir("Top 100 Serien", "http://www.myvideo.de/top_100/top_100_serien", 'top_zeit', "",orgurl="top100")
+  addDir("Top 100 Filme", "http://www.myvideo.de/filme/top_100_filme", 'allfilms', "",orgurl="top100")
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 def topgenres():
-  addDir("Top 100 Pop", "http://www.myvideo.de/top_100/top_100_pop", 'topliste', "")
-  addDir("Top 100 Rock", "http://www.myvideo.de/top_100/top_100_rock", 'topliste', "")
-  addDir("Top 100 Hip Hop", "http://www.myvideo.de/top_100/top_100_hiphop", 'topliste', "")
-  addDir("Top 100 Electro", "http://www.myvideo.de/top_100/top_100_elektro", 'topliste', "")
-  addDir("Top 100 Schlager", "http://www.myvideo.de/top_100/top_100_schlager", 'topliste', "")
-  addDir("Top 100 Metal", "http://www.myvideo.de/top_100/top_100_metal", 'topliste', "")
-  addDir("Top 100 RnB", "http://www.myvideo.de/top_100/top_100_rnb", 'topliste', "")
-  addDir("Top 100 Indie", "http://www.myvideo.de/top_100/top_100_indie", 'topliste', "")
-  addDir("Top 100 Jazz", "http://www.myvideo.de/top_100/top_100_jazz", 'topliste', "")
+  addDir("Top 100 Pop", "http://www.myvideo.de/top_100/top_100_pop", 'topliste', "",orgurl="topgenres")
+  addDir("Top 100 Rock", "http://www.myvideo.de/top_100/top_100_rock", 'topliste', "",orgurl="topgenres")
+  addDir("Top 100 Hip Hop", "http://www.myvideo.de/top_100/top_100_hiphop", 'topliste', "",orgurl="topgenres")
+  addDir("Top 100 Electro", "http://www.myvideo.de/top_100/top_100_elektro", 'topliste', "",orgurl="topgenres")
+  addDir("Top 100 Schlager", "http://www.myvideo.de/top_100/top_100_schlager", 'topliste', "",orgurl="topgenres")
+  addDir("Top 100 Metal", "http://www.myvideo.de/top_100/top_100_metal", 'topliste', "",orgurl="topgenres")
+  addDir("Top 100 RnB", "http://www.myvideo.de/top_100/top_100_rnb", 'topliste', "",orgurl="topgenres")
+  addDir("Top 100 Indie", "http://www.myvideo.de/top_100/top_100_indie", 'topliste', "",orgurl="topgenres")
+  addDir("Top 100 Jazz", "http://www.myvideo.de/top_100/top_100_jazz", 'topliste', "",orgurl="topgenres")
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 
 def filme_menu():
-   addDir("Alle Filme", "http://www.myvideo.de/filme/alle_filme", 'allfilms', "")
-   addDir("Alle Filme - Datum", "http://www.myvideo.de/filme/alle_filme/datum", 'allfilms', "")
-   addDir("Top Filme", "http://www.myvideo.de/filme/top_100_filme", 'allfilms', "")
-   addDir("Kino Trailer", "http://www.myvideo.de/filme/kino-dvd-trailer", 'mischseite', "")
-   addDir("Film Genres", "Film Genres", 'filmgenres', "")
+   addDir("Alle Filme", "http://www.myvideo.de/filme/alle_filme", 'allfilms', "",orgurl="filme_menu")
+   addDir("Alle Filme - Datum", "http://www.myvideo.de/filme/alle_filme/datum", 'allfilms', "",orgurl="filme_menu")
+   addDir("Top Filme", "http://www.myvideo.de/filme/top_100_filme", 'allfilms', "",orgurl="filme_menu")
+   addDir("Kino Trailer", "http://www.myvideo.de/filme/kino-dvd-trailer", 'mischseite', "",orgurl="filme_menu")
+   addDir("Film Genres", "Film Genres", 'filmgenres', "",orgurl="filme_menu")
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
    
 def filmgenres():
-   addDir("Action", "http://www.myvideo.de/filme/action", 'allfilms', "")
-   addDir("Horror", "http://www.myvideo.de/filme/horror", 'allfilms', "")
-   addDir("Sci-Fi", "http://www.myvideo.de/filme/sci-fi", 'allfilms', "")
-   addDir("Thriller", "http://www.myvideo.de/filme/thriller", 'allfilms', "")
-   addDir("Drama", "http://www.myvideo.de/filme/drama", 'allfilms', "")
-   addDir("Comedy", "http://www.myvideo.de/filme/comedy", 'allfilms', "")
-   addDir("Western", "http://www.myvideo.de/filme/western", 'allfilms', "")
-   addDir("Dokumentationen", "http://www.myvideo.de/filme/dokumentation", 'allfilms', "")
-   addDir("Erotik", "http://www.myvideo.de/filme/erotik", 'allfilms', "")
+   addDir("Action", "http://www.myvideo.de/filme/action", 'allfilms', "",orgurl="filmgenres")
+   addDir("Horror", "http://www.myvideo.de/filme/horror", 'allfilms', "",orgurl="filmgenres")
+   addDir("Sci-Fi", "http://www.myvideo.de/filme/sci-fi", 'allfilms', "",orgurl="filmgenres")
+   addDir("Thriller", "http://www.myvideo.de/filme/thriller", 'allfilms', "",orgurl="filmgenres")
+   addDir("Drama", "http://www.myvideo.de/filme/drama", 'allfilms', "",orgurl="filmgenres")
+   addDir("Comedy", "http://www.myvideo.de/filme/comedy", 'allfilms', "",orgurl="filmgenres")
+   addDir("Western", "http://www.myvideo.de/filme/western", 'allfilms', "",orgurl="filmgenres")
+   addDir("Dokumentationen", "http://www.myvideo.de/filme/dokumentation", 'allfilms', "",orgurl="filmgenres")
+   addDir("Erotik", "http://www.myvideo.de/filme/erotik", 'allfilms', "",orgurl="filmgenres")
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
    
 def top_zeit(url):
-  addDir("Heute", url, 'topliste', "")  
-  addDir("Woche", url+"/woche", 'topliste', "")
-  addDir("Monat",  url+"/monat", 'topliste', "")
-  addDir("Ewig",  url+"/ewig", 'topliste', "")
+  addDir("Heute", url, 'topliste', "",orgurl="top_zeit")  
+  addDir("Woche", url+"/woche", 'topliste', "",orgurl="top_zeit")
+  addDir("Monat",  url+"/monat", 'topliste', "",orgurl="top_zeit")
+  addDir("Ewig",  url+"/ewig", 'topliste', "",orgurl="top_zeit")
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 
 def topliste(url): 
@@ -388,7 +419,7 @@ def mischseite(url):
    match2=re.compile('</use> </svg>([^<]+?)</h3> <div class="videolist.+?data-url="(.+?)"', re.DOTALL).findall(content)    
    for name, urll in match2:       
       debug("mschseiten misch_cat_auto: " + name +" URL: "+ url)
-      addDir(cleanTitle(name), "http://www.myvideo.de"+ urll, 'misch_cat_auto', "",offset=0)
+      addDir(cleanTitle(name), "http://www.myvideo.de"+ urll, 'misch_cat_auto', "",offset=0,orgurl=url)
    match=re.compile('sushibar.+?-url="(.+?)"', re.DOTALL).findall(content)        
    for urll in match:
       if "_partial" in urll:
@@ -413,18 +444,19 @@ def mischseite(url):
               urll="http://www.myvideo.de"+urll
            name=cleanTitle(name)
            debug("mschseiten misch_cat: "+ name +" URL: "+ urll)
-           addDir(name, urll, 'misch_cat', "",offset=0)
+           addDir(name, urll, 'misch_cat', "",offset=0,orgurl=url)
    namen_comedy=re.compile('<span class="tabs--tab.+?" data-linkout-label="" data-linkout-url="" >(.+?)</span>', re.DOTALL).findall(content)   
    url_comedy=re.compile('data-list-name=".+Videos" data-url="(.+?)"', re.DOTALL).findall(content)   
    debug(url_comedy)
    for i in range(0, len(url_comedy), 1): 
        name=cleanTitle(namen_comedy[i])
        urll="http://www.myvideo.de"+url_comedy[i]
-       addDir(name, urll, 'misch_cat_auto', "",offset=0)
+       addDir(name, urll, 'misch_cat_auto', "",offset=0,orgurl=url)
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)  
    debug("Mischseite Ende")
 
 def misch_tab(url,tab): 
+   orgurl=url
    debug(" misch_tab url "+ url)
    debug(" misch_tab tab "+ str(tab))
    content=geturl(url)   
@@ -453,9 +485,9 @@ def misch_tab(url,tab):
          if  not "http://www.myvideo.de" in url:
              url="http://www.myvideo.de"+url
          if "-m-" in url:
-           addLink(name , url, 'playvideo',thump)
+           addLink(name , url, 'playvideo',thump,orgurl=orgurl)
          else:
-           addDir(name , url, 'mischseite',thump)
+           addDir(name , url, 'mischseite',thump,orgurl=orgurl)
          
 
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
@@ -494,9 +526,9 @@ def misch_cat_auto(url,offset):
         else:        
              type="mischseite"
         if "-m-" in urlname:
-           addLink(name , urlname, 'playvideo',thump)
+           addLink(name , urlname, 'playvideo',thump,orgurl=url)
         else:
-           addDir(name , urlname, type,thump)
+           addDir(name , urlname, type,thump,orgurl=url)
    addDir("Haupt Menu", "Haupt Menu", '', "")
    addDir("Next" , url, 'misch_cat_auto',"",offset=str(int(offset)+count))   
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
@@ -518,7 +550,7 @@ def misch_cat(url,offset):
        oldsuch=match[0]     
        debug("Oldsuch :"+oldsuch)              
        if oldsuch!=neusuch:
-          addDir("Kein Ergebnis", "Suche", 'searchmenu', "",offset=0) 
+          addDir("Kein Ergebnis", "Suche", 'searchmenu', "",offset=0,orgurl=url) 
           xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
           return
    except:
@@ -577,71 +609,71 @@ def misch_cat(url,offset):
         else:        
              type="mischseite"
         if "-m-" in urlname:
-           addLink(name , urlname, 'playvideo',thump)
+           addLink(name , urlname, 'playvideo',thump,orgurl=url)
         else:
-           addDir(name , urlname, type,thump) 
+           addDir(name , urlname, type,thump,orgurl=url) 
    if i>=anz:
-       addDir("Haupt Menu", "Haupt Menu", '', "")        
-       addDir("Next" , url, 'misch_cat',"",offset=str(int(offset)+count))                
+       addDir("Haupt Menu", "Haupt Menu", '', "",orgurl=url)        
+       addDir("Next" , url, 'misch_cat',"",offset=str(int(offset)+count),orgurl=url)                
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 
 def tvmenu():
-    addDir("Alle Serien", "http://www.myvideo.de/serien/alle_serien_a-z/", 'abisz', "")
-    addDir("Anime", "http://www.myvideo.de/serien/anime_tv", 'mischseite', "")
-    addDir("Top 100 Serien", "http://www.myvideo.de/top_100/top_100_serien", 'top_zeit', "")
-    addDir("Serien Highlight", "http://www.myvideo.de/serien/weitere_serien", 'mischseite', "")    
-    addDir("Serien in OV", "http://www.myvideo.de/serien/serien-in-ov", 'mischseite', "") 
-    addDir("Kids", "http://www.myvideo.de/serien/kids", 'mischseite', "") 
-    addDir("BBC", "http://www.myvideo.de/serien/bbc", 'mischseite', "")    
-    addDir("Pro 7", "http://www.myvideo.de/serien/prosieben", 'mischseite', "")    
-    addDir("Sat 1", "http://www.myvideo.de/serien/sat_1", 'mischseite', "")    
-    addDir("Sixx", "http://www.myvideo.de/serien/sixx", 'mischseite', "")    
-    addDir("Pro 7 Maxx", "http://www.myvideo.de/serien/prosieben_maxx", 'mischseite', "")    
-    addDir("Pro 7 Maxx Anime", "http://www.myvideo.de/serien/prosieben_maxx_anime", 'mischseite', "")    
-    addDir("Kabel Eins", "http://www.myvideo.de/serien/kabel_eins", 'mischseite', "")    
-    addDir("Sat 1 Gold", "http://www.myvideo.de/serien/sat_1_gold", 'mischseite', "")    
+    addDir("Alle Serien", "http://www.myvideo.de/serien/alle_serien_a-z/", 'abisz', "",orgurl="tvmenu")
+    addDir("Anime", "http://www.myvideo.de/serien/anime_tv", 'mischseite', "",orgurl="tvmenu")
+    addDir("Top 100 Serien", "http://www.myvideo.de/top_100/top_100_serien", 'top_zeit', "",orgurl="tvmenu")
+    addDir("Serien Highlight", "http://www.myvideo.de/serien/weitere_serien", 'mischseite', "",orgurl="tvmenu")    
+    addDir("Serien in OV", "http://www.myvideo.de/serien/serien-in-ov", 'mischseite', "",orgurl="tvmenu") 
+    addDir("Kids", "http://www.myvideo.de/serien/kids", 'mischseite', "",orgurl="tvmenu") 
+    addDir("BBC", "http://www.myvideo.de/serien/bbc", 'mischseite', "",orgurl="tvmenu")    
+    addDir("Pro 7", "http://www.myvideo.de/serien/prosieben", 'mischseite', "",orgurl="tvmenu")    
+    addDir("Sat 1", "http://www.myvideo.de/serien/sat_1", 'mischseite', "",orgurl="tvmenu")    
+    addDir("Sixx", "http://www.myvideo.de/serien/sixx", 'mischseite', "",orgurl="tvmenu")    
+    addDir("Pro 7 Maxx", "http://www.myvideo.de/serien/prosieben_maxx", 'mischseite', "",orgurl="tvmenu")    
+    addDir("Pro 7 Maxx Anime", "http://www.myvideo.de/serien/prosieben_maxx_anime", 'mischseite', "",orgurl="tvmenu")    
+    addDir("Kabel Eins", "http://www.myvideo.de/serien/kabel_eins", 'mischseite', "",orgurl="tvmenu")    
+    addDir("Sat 1 Gold", "http://www.myvideo.de/serien/sat_1_gold", 'mischseite', "",orgurl="tvmenu")    
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 def themenmenu():
-    addDir("Aktuelles", "http://www.myvideo.de/themen", 'mischseite', "")
-    addDir("WWE", "http://www.myvideo.de/themen/wwe", 'mischseite', "")
-    addDir("Webstars", "http://www.myvideo.de/webstars", 'mischseite', "")
-    addDir("Fußball", "http://www.myvideo.de/themen/sport/fussball", 'mischseite', "")
-    addDir("Fashion", "http://www.myvideo.de/service/editorcontentlist/themen/videofashion/creationDate?page=1", 'misch_cat_auto', "",offset=0)    
-    addDir("Auto &Motor", "http://www.myvideo.de/themen/auto-und-motor", 'mischseite', "")
-    addDir("TV und Film", "http://www.myvideo.de/themen/tv-und-film", 'mischseite', "")
-    addDir("Games", "http://www.myvideo.de/games", 'mischseite', "")
-    addDir("Infotainment", "http://www.myvideo.de/themen/infotainment", 'mischseite', "")
-    addDir("Sport", "http://www.myvideo.de/themen/sport", 'mischseite', "")
-    addDir("Comedy", "http://www.myvideo.de/themen/comedy", 'mischseite', "")
-    addDir("Webisodes", "http://www.myvideo.de/themen/webisodes", 'mischseite', "")
-    addDir("Telente", "http://www.myvideo.de/themen/talente", 'mischseite', "")
-    addDir("Livestyle", "http://www.myvideo.de/themen/lifestyle", 'mischseite', "")
-    addDir("Sexy", "http://www.myvideo.de/themen/sexy", 'mischseite', "")
-    addDir("Erotik", "http://www.myvideo.de/Erotik", 'mischseite', "")
+    addDir("Aktuelles", "http://www.myvideo.de/themen", 'mischseite', "",orgurl="themenmenu")
+    addDir("WWE", "http://www.myvideo.de/themen/wwe", 'mischseite', "",orgurl="themenmenu")
+    addDir("Webstars", "http://www.myvideo.de/webstars", 'mischseite', "",orgurl="themenmenu")
+    addDir("Fußball", "http://www.myvideo.de/themen/sport/fussball", 'mischseite', "",orgurl="themenmenu")
+    addDir("Fashion", "http://www.myvideo.de/service/editorcontentlist/themen/videofashion/creationDate?page=1", 'misch_cat_auto', "",offset=0,orgurl="themenmenu")    
+    addDir("Auto &Motor", "http://www.myvideo.de/themen/auto-und-motor", 'mischseite', "",orgurl="themenmenu")
+    addDir("TV und Film", "http://www.myvideo.de/themen/tv-und-film", 'mischseite', "",orgurl="themenmenu")
+    addDir("Games", "http://www.myvideo.de/games", 'mischseite', "",orgurl="themenmenu")
+    addDir("Infotainment", "http://www.myvideo.de/themen/infotainment", 'mischseite', "",orgurl="themenmenu")
+    addDir("Sport", "http://www.myvideo.de/themen/sport", 'mischseite', "",orgurl="themenmenu")
+    addDir("Comedy", "http://www.myvideo.de/themen/comedy", 'mischseite', "",orgurl="themenmenu")
+    addDir("Webisodes", "http://www.myvideo.de/themen/webisodes", 'mischseite', "",orgurl="themenmenu")
+    addDir("Telente", "http://www.myvideo.de/themen/talente", 'mischseite', "",orgurl="themenmenu")
+    addDir("Livestyle", "http://www.myvideo.de/themen/lifestyle", 'mischseite', "",orgurl="themenmenu")
+    addDir("Sexy", "http://www.myvideo.de/themen/sexy", 'mischseite', "",orgurl="themenmenu")
+    addDir("Erotik", "http://www.myvideo.de/Erotik", 'mischseite', "",orgurl="themenmenu")
     
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)    
 def musikmenu():
-    addDir("Neueste Musik Videos", "http://www.myvideo.de/musik/neue_musik_videos", 'allfilms', "")
-    addDir("Music Charts", "http://www.myvideo.de/top_100/top_100_single_charts", 'topliste', "")
-    addDir("Alle Künstler", "http://www.myvideo.de/musik/musik_kuenstler/", 'abisz', "")
-    addDir("Rock", "http://www.myvideo.de/musik/rock", 'mischseite', "")
-    addDir("Pop", "http://www.myvideo.de/musik/pop", 'mischseite', "")
-    addDir("Hip Hop", "http://www.myvideo.de/musik/hiphop", 'mischseite', "")
-    addDir("Electro", "http://www.myvideo.de/musik/elektro", 'mischseite', "")
-    addDir("Schlager", "http://www.myvideo.de/musik/schlager", 'mischseite', "")
-    addDir("Metal", "http://www.myvideo.de/musik/metal", 'mischseite', "")
-    addDir("RNB", "http://www.myvideo.de/musik/rnb", 'mischseite', "")
-    addDir("Indie", "http://www.myvideo.de/musik/indie", 'mischseite', "")
-    addDir("Jazz und Klasik", "http://www.myvideo.de/musik/jazzklassik", 'mischseite', "")        
+    addDir("Neueste Musik Videos", "http://www.myvideo.de/musik/neue_musik_videos", 'allfilms', "",orgurl="musikmenu")
+    addDir("Music Charts", "http://www.myvideo.de/top_100/top_100_single_charts", 'topliste', "",orgurl="musikmenu")
+    addDir("Alle Künstler", "http://www.myvideo.de/musik/musik_kuenstler/", 'abisz', "",orgurl="musikmenu")
+    addDir("Rock", "http://www.myvideo.de/musik/rock", 'mischseite', "",orgurl="musikmenu")
+    addDir("Pop", "http://www.myvideo.de/musik/pop", 'mischseite', "",orgurl="musikmenu")
+    addDir("Hip Hop", "http://www.myvideo.de/musik/hiphop", 'mischseite', "",orgurl="musikmenu")
+    addDir("Electro", "http://www.myvideo.de/musik/elektro", 'mischseite', "",orgurl="musikmenu")
+    addDir("Schlager", "http://www.myvideo.de/musik/schlager", 'mischseite', "",orgurl="musikmenu")
+    addDir("Metal", "http://www.myvideo.de/musik/metal", 'mischseite', "",orgurl="musikmenu")
+    addDir("RNB", "http://www.myvideo.de/musik/rnb", 'mischseite', "",orgurl="musikmenu")
+    addDir("Indie", "http://www.myvideo.de/musik/indie", 'mischseite', "",orgurl="musikmenu")
+    addDir("Jazz und Klasik", "http://www.myvideo.de/musik/jazzklassik", 'mischseite', "",orgurl="musikmenu")        
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)    
 
 
 def searchmenu():
-  addDir("Search Musik", "MUSIC", 'search', "")
-  addDir("Search Tv", "TV", 'search', "")
-  addDir("Search Film", "FILM", 'search', "")
-  addDir("Search Channel", "CHANNEL", 'search', "")
-  addDir("Search All", "ALL", 'search', "")
+  addDir("Search Musik", "MUSIC", 'search', "",orgurl="searchmenu")
+  addDir("Search Tv", "TV", 'search', "",orgurl="searchmenu")
+  addDir("Search Film", "FILM", 'search', "",orgurl="searchmenu")
+  addDir("Search Channel", "CHANNEL", 'search', "",orgurl="searchmenu")
+  addDir("Search All", "ALL", 'search', "",orgurl="searchmenu")
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)   
 
 def search(url):
@@ -677,7 +709,8 @@ def delfav(filename,url,modus,iconimage,desc,name,tab,offset,genre,id,funktion,d
        f.write(line)
    f.close() 
    xbmc.executebuiltin("Container.Refresh")
-def Favoriten(filename):
+def Favoriten(filename,orgurl=""):
+   orgurln="Favoriten"
    debug("++++"+filename)
    f=open(filename) 
    for line in f:
@@ -692,14 +725,16 @@ def Favoriten(filename):
        offset=felder[6]
        genre=felder[7]
        id=felder[8]
-       funktion=felder[9]
+       funktion=felder[9]       
+       if (orgurl!="deltemenu"):
+           orgurln="deltemenu"
        debug("-----" + funktion)
        if funktion=="addDir" :
          debug ("addDir("+name+","+ url+","+ mode+","+ iconimage+","+ desc+","+offset+","+tab+","+genre+","+id+","+duration+")")
-         addDir(name, url, mode, iconimage, desc,offset,tab,genre,id,duration)
+         addDir(name, url, mode, iconimage, desc,offset,tab,genre,id,duration,orgurl=orgurln)
        if funktion=="addLink" :
          debug ("addLink("+ name +","+ url +","+ mode +","+ iconimage +","+ duration +","+ desc +","+ genre +","+ id +","+ offset+ ","+tab+")")
-         addLink(name, url, mode, iconimage, duration, desc, genre,id,offset,tab)
+         addLink(name, url, mode, iconimage, duration, desc, genre,id,offset,tab,orgurl=orgurln)
    f.close() 
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)   
 
@@ -724,7 +759,78 @@ def rename(url,name):
    f.write("=,"+urlnr+","+d+"\n") 
    f.close()  
    xbmc.executebuiltin("Container.Refresh")
+   
+   
+def delete(filename,url,modus,iconimage,desc,name,tab,offset,genre,id,funktion,duration,orgurl):
+   debug("Start delte")
+   m = md5.new()
+   m.update(url)   
+   urlnr=m.hexdigest()
+   filename=temp+"/"+urlnr
+   zeilen=[]
+   if xbmcvfs.exists(filename):
+        f=open(filename,'r') 
+        for line in f:
+            if not "-,"+urlnr in line:
+                zeilen.append(line)
+        f.close() 
+   f=open(filename,'w')
+   for line in zeilen:   
+       f.write(line)
+   f.write("-,"+urlnr+","+orgurl+"\n") 
+   f.close()    
+   zeilen=[]
+   filename=temp+"/"+"delete.ordner"
+   if xbmcvfs.exists(filename):
+        f=open(filename,'r') 
+        for line in f:
+            if not url in line:
+                zeilen.append(line)
+        f.close() 
+   f=open(filename,'w') 
+   for line in zeilen:   
+       f.write(line)
+   f.write(url+","+modus+","+iconimage+","+desc+","+name+","+tab+","+offset+","+genre+","+id+","+funktion +","+ duration+"\n") 
+   f.close()  
+   xbmc.executebuiltin("Container.Refresh")
 
+   
+def undelete(filename,url,modus,iconimage,desc,name,tab,offset,genre,id,funktion,duration,orgurl):
+   debug("Start delte")
+   m = md5.new()
+   m.update(url)   
+   urlnr=m.hexdigest()
+   filename=temp+"/"+urlnr
+   xbmcvfs.delete(filename)
+   xbmc.executebuiltin("Container.Refresh")
+   filename=temp+"/"+"delete.ordner"
+   zeilen=[]
+   if xbmcvfs.exists(filename):
+        f=open(filename,'r') 
+        for line in f:
+            if not url in line:
+                zeilen.append(line)
+        f.close() 
+   f=open(filename,'w') 
+   for line in zeilen:   
+         f.write(line)            
+   xbmc.executebuiltin("Container.Refresh")
+def showdeletemenu():
+  filename=temp+"/"+"delete.ordner"
+  if xbmcvfs.exists(filename):
+      zeilen=[]
+      f=open(filename,'r') 
+      for line in f:           
+                zeilen.append(line)
+      f.close() 
+      if len(zeilen) >0:
+          return 1
+      else :
+          return 0
+  else:
+    return 0
+  
+  
 params = parameters_string_to_dict(sys.argv[2])
 mode = urllib.unquote_plus(params.get('mode', ''))
 url = urllib.unquote_plus(params.get('url', ''))
@@ -740,18 +846,22 @@ genre=urllib.unquote_plus(params.get('genre', ''))
 funktion=urllib.unquote_plus(params.get('funktion', ''))
 duration=urllib.unquote_plus(params.get('duration', ''))
 filename=urllib.unquote_plus(params.get('filename', ''))
+orgurl=urllib.unquote_plus(params.get('orgurl', ''))
 debug("Filename"+filename)
 # Haupt Menu Anzeigen      
 
 if mode is '':    
-    addDir("Filme", "Filme", 'filme_menu', "")
-    addDir("Top Listen", "Top 100", 'top100', "")
-    addDir("TV & Serien", "TV & Serien", 'tvmenu', "")   
-    addDir("Themen", "Themen", 'themenmenu', "")    
-    addDir("Musik", "Musik", 'musikmenu', "")  
-    addDir("Suche", "Suche", 'searchmenu', "",offset=0)  
+    addDir("Filme", "Filme", 'filme_menu', "",orgurl="myvideo2")
+    addDir("Top Listen", "Top 100", 'top100', "",orgurl="myvideo2")
+    addDir("TV & Serien", "TV & Serien", 'tvmenu', "",orgurl="myvideo2")   
+    addDir("Themen", "Themen", 'themenmenu', "",orgurl="myvideo2")    
+    addDir("Musik", "Musik", 'musikmenu', "",orgurl="myvideo2")  
+    addDir("Suche", "Suche", 'searchmenu', "",offset=0,orgurl="myvideo2")          
     filenamen=temp+"/favorit.txt"    
-    addDir("Favoriten", "Favoriten", 'Favoriten', "",filename=filenamen)    
+    addDir("Favoriten", "Favoriten", 'Favoriten', "",filename=filenamen,orgurl="myvideo2")     
+    if showdeletemenu()==1:
+      filenamen=temp+"/"+"delete.ordner"    
+      addDir("Delete Menu", "Delete Menu", 'Favoriten', "",filename=filenamen,orgurl="deltemenu") 
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 else:
   # Wenn Settings ausgewählt wurde
@@ -805,6 +915,10 @@ else:
   if mode == 'delfav':
           delfav(url=url,modus=modus,iconimage=iconimage,desc=desc,name=name,tab=tab,offset=offset,genre=genre,id=id,funktion=funktion,duration=duration,filename=filename)       
   if mode == 'Favoriten':
-          Favoriten(filename=filename)                        
+          Favoriten(filename=filename,orgurl=orgurl)                        
   if mode == 'rename':
           rename(url,name) 
+  if mode == 'delete':
+          delete(url=url,modus=modus,iconimage=iconimage,desc=desc,name=name,tab=tab,offset=offset,genre=genre,id=id,funktion=funktion,duration=duration,filename=filename,orgurl=orgurl)       
+  if mode == 'undelete':
+          undelete(url=url,modus=modus,iconimage=iconimage,desc=desc,name=name,tab=tab,offset=offset,genre=genre,id=id,funktion=funktion,duration=duration,filename=filename,orgurl=orgurl)                     
