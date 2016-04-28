@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.doku.cc" name="Doku.cc" version="0.0.3" provider-name="skatulskijean">
+<addon id="plugin.video.doku.cc" name="Doku.cc (veraltet neu: Doku5)" version="0.0.4" provider-name="skatulskijean">
 	<requires>
 		<import addon="xbmc.python" version="2.19.0"/>
+                <import addon="plugin.video.doku5.com" version="0.1.0"/>
 		<import addon="script.module.requests" version="2.7.0"/>
 	</requires>
 	<extension point="xbmc.python.pluginsource" library="addon.py">
