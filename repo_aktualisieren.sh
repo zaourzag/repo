@@ -23,10 +23,10 @@ then
 fi
 
 
-cd $REPO/addons
+cd $REPO
 echo '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>' >$REPO/addons.xml
 echo '<addons>' >> $REPO/addons.xml
-for name in *; do 
+for name in `find . -maxdepth 1 -type d |grep -v \.git|grep -v addons|egrep -v "^\.$"`; do 
    VERSION=`cat $name/addon.xml|grep \<addon|grep $name |sed 's/.*version="\([^"]*\)"*.*/\1/g'`
      if [ ! -f "$name/$name-$VERSION.zip" ]; then
        zip -r $name/$name-$VERSION.zip $name -x \*.zip
