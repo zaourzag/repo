@@ -66,7 +66,7 @@ if debuging=="true":
 if playlist.getposition()>=0:
   if debuging=="true":
     xbmc.log("Subcentral: Lese Titel des Videos ein")
-  currentTitle = playlist[playlist.getposition()].getdescription()
+  currentTitle = playlist[playlist.getposition()].getLabel()
 
 if debuging=="true":
   xbmc.log("Subcentral: Lese Aktuelles VideoFile ein")
