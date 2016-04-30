@@ -1076,7 +1076,7 @@ Orginal Code was from AddonScriptorDE</disclaimer>
   </extension>
 </addon>
 
-<addon id="service.subtitles.subcentral" name="Subcentral.de" version="0.5.0" provider-name="L0RE">
+<addon id="service.subtitles.subcentral" name="Subcentral.de" version="0.5.1" provider-name="L0RE">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
   </requires>
@@ -1084,14 +1084,15 @@ Orginal Code was from AddonScriptorDE</disclaimer>
              library="service.py" />
   <extension point="xbmc.addon.metadata">
     <summary lang="en">Subcentral</summary>
-    <description lang="en">Try to embed Subcentral into the Menu</description>
+    <description lang="en">German Subtitles from subcentral Webpage for TV Series</description>
+    <description lang="de">Untertitel aus dem Forum Subcentral für TV Serien</description>
     <disclaimer lang="en"></disclaimer>
     <platform>all</platform>
     <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-    <forum></forum>
-    <website></website>
-    <email></email>
-    <source></source>    
+    <forum>www.kodinerds.net/index.php/Thread/24416-RELEASE-SubCentral-de-Hochwertige-Untertitel-für-TV-Serien</forum>
+    <website>https://www.subcentral.de/</website>
+    <email>andreas at vogler dot name</email>
+    <source>https://github.com/kodinerds/repo/tree/master/service.subtitles.subcentral</source>    
   </extension>
 </addon>
 
