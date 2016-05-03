@@ -547,7 +547,7 @@
     </extension>
 </addon>
 
-<addon id="plugin.video.myvideo2" name="My Video (new)" version="0.6.3" provider-name="L0RE">
+<addon id="plugin.video.myvideo2" name="MyVideo" version="0.6.4" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
     </requires>
@@ -567,7 +567,7 @@
   </extension>
 </addon>
 
-<addon id="plugin.video.myvideo_de" name="MyVideo.de" version="1.0.2" provider-name="L0RE">
+<addon id="plugin.video.myvideo_de" name="MyVideo (old)" version="1.0.3" provider-name="L0RE">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
         <import addon="script.module.requests" version="2.3.0"/>
@@ -993,29 +993,6 @@ Orginal Code was from AddonScriptorDE</disclaimer>
         <description lang="de">Fußball, Serien, Filme, Dokus und Reportagen laufen mit Zattoo im Livestream. Alles was du brauchst, ist eine Internetverbindung und schon läuft das Fernsehprogramm mit mehr als 75-TV-Sendern kostenlos auf dem Gerät deiner Wahl.</description>
         <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
         <website>http://www.zattoo.com</website>
-    </extension>
-</addon>
-
-<addon id="plugin.video.zdf_de_lite" name="ZDF Mediathek" version="2.2.2" provider-name="L0RE">
-    <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <summary lang="de">ZDF, ZDFneo, ZDFkultur, ZDFinfo und 3sat Mediathek</summary>
-        <summary lang="en">ZDF, ZDFneo, ZDFkultur, ZDFinfo and 3sat Media Library</summary>
-        <language>de</language>
-        <description lang="de">ZDF, ZDFneo, ZDFkultur, ZDFinfo und 3sat Mediathek</description>
-        <description lang="en">ZDF, ZDFneo, ZDFkultur, ZDFinfo and 3sat Media Library</description>
-        <disclaimer lang="en">Some parts of this addon may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
-        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-        <source>https://github.com/AddonScriptorDE/plugin.video.zdf_de_lite</source>
-        <forum>http://forum.xbmc.org/showthread.php?tid=132563</forum>
-        <email>andreas at vogler dot name</email>
-        <website>http://www.zdf.de/ZDFmediathek</website>
     </extension>
 </addon>
 
