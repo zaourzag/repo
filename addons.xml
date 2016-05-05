@@ -327,7 +327,7 @@
     </extension>
 </addon>
 
-<addon id="plugin.video.doku5.com" name="Doku5.com" version="0.1.0" provider-name="skatulskijean/SLiX">
+<addon id="plugin.video.doku5.com" name="Doku5.com" version="0.1.1" provider-name="skatulskijean/SLiX">
 	<requires>
 		<import addon="xbmc.python" version="2.19.0"/>
 		<import addon="script.module.requests" version="2.7.0"/>
@@ -568,50 +568,6 @@
         <disclaimer lang="en">Some parts of this addon may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
     <platform>all</platform>
     </extension>
-</addon>
-
-<addon id="plugin.video.myvideo2" name="MyVideo" version="0.6.4" provider-name="L0RE">
-    <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en">Versuch die Mediathek von Myvideo in Kodi abzublden</summary>
-    <summary lang="de">The Videos from myvideo broght to Kodi</summary>
-    <description lang="en">Zeigt Videos von Myvideo an dazu gehören (TV Serien, B Movies, WWE, Onlineshows, Fußball, Auto,.....</description>
-    <description lang="de">All Videos from the Webpage myvideo.de including TV Shows,Movies, WWe,OnlineShows , Soccer, Cars,erotic,.....</description>
-    <website>www.myvideo.de</website>
-    <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.myvideo2</source>
-    <forum>http://www.kodinerds.net/index.php/Thread/50716-WIP-Myvideo/</forum>
-    <email>andreas at vogler dot name</email>
-    <platform>all</platform>
-  </extension>
-</addon>
-
-<addon id="plugin.video.myvideo_de" name="MyVideo (old)" version="1.0.3" provider-name="L0RE">
-	<requires>
-		<import addon="xbmc.python" version="2.1.0"/>
-        <import addon="script.module.requests" version="2.3.0"/>
-	</requires>
-	<extension point="xbmc.python.pluginsource" library="default.py">
-		<provides>video</provides>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="en">Free television with MyVideo.de: Music, Shows and Movies</summary>
-		<summary lang="de">Gratis fernsehen mit MyVideo.de: Musik, Serien und Filme</summary>
-		<description lang="en">Free television with MyVideo.de: music, tv shows and movies. The best series, shows, music videos, movies, anime series, TV shows and gaming live streams for free. The most popular TV highlights of ProSieben, Sat.1, kabel eins and Sixx free and legal.</description>
-		<description lang="de">Gratis fernsehen mit MyVideo.de: Musik, Serien und Filme. Die besten Serien, Shows, Musik-Videos, Filme, Anime-Serien, TV-Sendungen und Gaming-live-Streams kostenlos. Die beliebtesten TV-Highlights von ProSieben, Sat.1, kabeleins und Sixx gratis und legal.</description>
-		<disclaimer lang="en"></disclaimer>
-		<language>de</language>
-		<platform>all</platform>
-		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-		<forum></forum>
-		<website>http://www.myvideo.de/</website>
-		<email>andreas at vogler dot name</email>
-		<source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.myvideo_de</source>
-	</extension>
 </addon>
 
 <addon id="plugin.video.n24_de" name="N24.de" version="2.0.12" provider-name="AddonScriptorDE">
