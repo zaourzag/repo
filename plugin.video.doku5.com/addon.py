@@ -7,7 +7,7 @@ import xbmcaddon
 import os
 import urlparse
 from urllib import quote, unquote_plus, unquote, urlencode, quote_plus, urlretrieve
-from resources import pafy
+
 
 pluginhandle = int(sys.argv[1])
 title = 'Doku5'
@@ -82,13 +82,13 @@ def index(url):
         url = item['youtubeId']
         desc = item['description']
         name = item['title']
-        thumb = item['thumb'].replace('thumb','p_images')
+        thumb = item['thumb'].replace('thumb', 'p_images')
         duration = item['length']
         date = cleandate(item['date'])
         source = get_item_src(item['dokuSrc'])
         perc = get_item_perc(item['voting']['voteCountInPerc'])
         vote = get_item_vote(item['voting']['voteCountAll'])
-        desc = '%s      %s  bei  %s       %s\n%s' % (
+        desc = '%s       %s  bei  %s \n%s\n%s' % (
         date, perc, vote, source, desc)
         addLink(name, url, 'play', thumb, desc, duration)
     try:
@@ -106,7 +106,7 @@ def index(url):
 
 def play(url):
     try:
-        video_url = ((pafy.new(url)).getbest()).url
+        video_url = "plugin://plugin.video.youtube/?path=/root/video&action=play_video&videoid="+url
         listitem = xbmcgui.ListItem(path=video_url)
         xbmcplugin.setResolvedUrl(pluginhandle, succeeded=True, listitem=listitem)
     except ValueError:
@@ -176,8 +176,8 @@ def cleandate(date):
 def get_item_src(source):
     if show_doku_src == 'true':
         if source.upper() != 'PROGRAMM' and len(source) > 2:
-            if len(source) > 10:
-                source = source[0:10]
+            if len(source) > 15:
+                source = source[0:14]
             source = 'von: ' + source
         else:
             source = ''
