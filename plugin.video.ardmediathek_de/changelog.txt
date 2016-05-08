@@ -33,5 +33,11 @@
 4.0.0
 - Redone menu structure
 - Show thumbnails will be cached at the highest available quality
-- Rewrote subtitle support
-- Misc fixes
+- Rewrote support for old subtitles
+4.0.1
+- Fixed newline on some subtitles
+- Fixed a rare error
+- Added categories
+- Changed some strings
+4.0.2
+- Small fix

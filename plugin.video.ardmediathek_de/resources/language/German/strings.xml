@@ -19,7 +19,7 @@
   <string id="30017">Netz & Tech</string>
   <string id="30018">Info</string>
   <string id="30019">Spaß & Fiktion</string>
-  <string id="30020">Sendung verpasst?</string>
+  <string id="30020">Sendungen nach Datum</string>
   <string id="30028">Zu Addon Favs hinzufügen</string>
   <string id="30029">Aus Addon Favs entfernen</string>
   <string id="30030">Alternative Stream-Url abspielen</string>
@@ -28,6 +28,31 @@
   <string id="30033">Satire & Unterhaltung</string>
   <string id="30034">Wissen</string>
   <string id="30035">Serien & Soaps</string>
+  <string id="30036">Comedy</string>
+  <string id="30037">Videos für Kinder</string>
+  <string id="30038">Sport</string>
+  <string id="30039">Fußball</string>
+  <string id="30040">Heute</string>
+  <string id="30041">Gestern</string>
+  
+  <string id="30080">Eintracht Frankfurt</string>
+  <string id="30081">Schalke 04</string>
+  <string id="30082">VfB Stuttgart</string>
+  <string id="30083">Hoffenheim</string>
+  <string id="30084">Paderborn</string>
+  <string id="30085">Freiburg</string>
+  <string id="30086">Hannover</string>
+  <string id="30087">Bremen</string>
+  <string id="30088">Leverkusen</string>
+  <string id="30089">Wolfsburg</string>
+  <string id="30090">Hamburger-SV</string>
+  <string id="30091">Mainz</string>
+  <string id="30092">FC Bayern</string>
+  <string id="30093">Köln</string>
+  <string id="30094">M'gladbach</string>
+  <string id="30095">Hertha</string>
+  <string id="30096">Augsburg</string>
+  <string id="30097">Borussia Dortmund</string>
   
   <string id="30100">Allgemein</string>
   <string id="30101">View erzwingen</string>

@@ -14,14 +14,18 @@ subFile = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('profile')+'/sub.srt
 baseUrl = "http://www.ardmediathek.de"
 coloredSubtitles = addon.getSetting("coloredSubtitles") == "true"
 	
-def setSubtitle(uri,offset=0):
+def setSubtitle(uri,writeOnly=False,offset=0):
 	if offset != 0:
 		print offset
-	print baseUrl+uri
+		print baseUrl+uri
 	if uri.startswith('/subtitle'):
 		_newSubtitle(baseUrl+uri)
 	else:
 		_oldSubtitle(baseUrl+uri)
+	
+	if not writeOnly:
+		xbmc.sleep(1000)
+		xbmc.Player().setSubtitles(subFile)
 
 def _newSubtitle(url):
 	#if os.path.exists(subFile):
@@ -40,7 +44,7 @@ def _newSubtitle(url):
 		buffer = ''
 		for part in p:
 			if '<tt:span' in part:
-				part = part.replace('begin="1','begin="0').replace('end="1','end="0').replace('\n','').replace('<tt:br/>','\n')
+				part = part.replace('begin="1','begin="0').replace('end="1','end="0').replace('\n','').replace('<tt:br/>','\n').replace('<tt:br />','\n')
 				begin = re.compile('begin="(.+?)"').findall(part)[0]
 				begin = begin.replace(".",",")[:-1]
 				end = re.compile('end="(.+?)"').findall(part)[0]
@@ -73,8 +77,6 @@ def _newSubtitle(url):
 		f = xbmcvfs.File(subFile, 'w')
 		f.write(buffer)
 		f.close()
-		xbmc.sleep(1000)
-		xbmc.Player().setSubtitles(subFile)
 
 def _oldSubtitle(url):
 	if os.path.exists(subFile):
@@ -115,8 +117,7 @@ def _oldSubtitle(url):
 			
 			count+=1
 		f.close()
-		xbmc.sleep(1000)
-		xbmc.Player().setSubtitles(subFile)
+
 """	
 def _oldSubtitle(url):
 	if os.path.exists(subFile):

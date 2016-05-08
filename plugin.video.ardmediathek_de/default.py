@@ -13,17 +13,30 @@ import os
 import json
 import resources.lib.subtitle as subtitle
 #from resources.lib.listcache import listcache
+from resources.lib.rssparser import parser as rssParser
+from resources.lib.listing import getAZ# as getAZ
+from resources.lib.listing import getAllAZ# as getAllAZ
+from resources.lib.listing import getVideosXml# as getVideosXml
+#import resources.lib.scraper
+
+#import f4mproxy
+#import ardlib
+#from ardlib import parser as rssParser
+#from ardlib import getAZ as getAZ
+#from ardlib import getAllAZ as getAllAZ
+#from ardlib import getVideosXml as getVideosXml
 import string
 import random
 import time
-import urllib
 #import f4mproxy
 
+#resources.lib.scraper()
 
 #addon = xbmcaddon.Addon()
 #addonID = addon.getAddonInfo('id')
 addonID = 'plugin.video.ardmediathek_de'
 addon = xbmcaddon.Addon(id=addonID)
+subFile = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('profile')+'/sub.srt').decode('utf-8')
 if addon.getSetting("firstrun") != 'false':
   addon.setSetting("firstrun", 'false')
 socket.setdefaulttimeout(30)
@@ -46,34 +59,26 @@ icon = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')+'/icon.png').de
 mdrHd = int(addon.getSetting("videoQuality")) == 3
 videoQuality = int(addon.getSetting("videoQuality"))
 listLive = addon.getSetting("listLive") == "true"
+helix=True
+helix=False
 
-def debug(content):
-    log(content, xbmc.LOGDEBUG)
-    
-def notice(content):
-    log(content, xbmc.LOGNOTICE)
-
-def log(msg, level=xbmc.LOGNOTICE):
-    addon = xbmcaddon.Addon()
-    addonID = addon.getAddonInfo('id')
-    xbmc.log('%s: %s' % (addonID, msg), level)    
-   
 def index():
   #addDir(translation(30011), "", 'listShowsFavs', "")
-  addDir(translation(30001), baseUrl+"/tv/Neueste-Videos/mehr?documentId=21282466"+'&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
+  #addDir(translation(30001), baseUrl+"/tv/Neueste-Videos/mehr?documentId=21282466"+'&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
+  addDir(translation(30001), baseUrl+"/tv/Neueste-Videos/mehr?documentId=23644268"+'&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)#listet auch zukünftige sendungen
   addDir(translation(30002), baseUrl+"/tv/Meistabgerufene-Videos/mehr?documentId=21282514"+'&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
   addDir(translation(30005), "", 'listShowsAZMain', "")
   addDir(translation(30020), "", 'listChannels', "")
   addDir(translation(30006), "mehr", 'listCats', "")
   addDir(translation(30007), baseUrl+"/tv/Dossiers/mehr?documentId=21301810&rss=true", 'listDirRss', "")
-  #addDir(translation(30014), "", 'listEinsLike', "")
+  addDir(translation(30014), "", 'listEinsLike', "")
+  addDir(translation(30039), "", 'listFootball', "")
   addDir(translation(30008), "", 'search', "")
   if listLive:
     addDir(translation(30013), "", 'listLiveChannels', "")
   xbmcplugin.endOfDirectory(pluginhandle)
 
 def listVideos(url,page=1):
-  debug("ListVideos")
   content = getUrl(url)
   spl = content.split('<div class="teaser" data-ctrl')
   for i in range(1, len(spl), 1):
@@ -121,24 +126,11 @@ def listVideos(url,page=1):
     xbmc.executebuiltin('Container.SetViewMode('+viewMode+')')
     
 def listVideosXml(videoId):
-  debug("listVideosXml")
-  content = getUrl(baseUrl+'/ard/servlet/export/collection/collectionId='+videoId+'/index.xml')
-  match = re.compile('<content>(.+?)</content>', re.DOTALL).findall(content)
-  for item in match:
-    clip = re.compile('<clip(.+?)>', re.DOTALL).findall(item)[0]
-    if 'isAudio="false"' in clip:
-      name = re.compile('<name>(.+?)</name>', re.DOTALL).findall(item)[0]
-      length = re.compile('<length>(.+?)</length>', re.DOTALL).findall(item)[0]
-      if not '<mediadata:images/>' in item:
-        thumb = re.compile('<image.+?url="(.+?)"', re.DOTALL).findall(item)[-1]
-      else:
-        thumb = ''
-      id = re.compile(' id="(.+?)"', re.DOTALL).findall(clip)[0]
-      addLink(name, id, 'playVideo', thumb, runtimeToInt(length), '')
+  for name,id,thumb,length in getVideosXml(videoId):
+    addLink(name, id, 'playVideo', thumb, runtimeToInt(length), '')
   xbmcplugin.endOfDirectory(pluginhandle)
-      
+  
 def listDirRss(url):
-  debug("listDirRss")
   content = getUrl(url)
   for title,pubDate,thumb,plot,link,documentId,category,runtime in rssParser(content):
     if not checkLive(pubDate):
@@ -146,7 +138,6 @@ def listDirRss(url):
   xbmcplugin.endOfDirectory(pluginhandle)
 
 def listVideosRss(url,showName,hideShowName,nextPage,einsLike):
-  debug("listVideosRss")
   content = getUrl(url)
   c = rssParser(content)
   for title,pubDate,thumb,plot,link,documentId,category,runtime in c:
@@ -154,7 +145,7 @@ def listVideosRss(url,showName,hideShowName,nextPage,einsLike):
       title = title.replace(showName+' - ','')
     if not checkLive(pubDate) and not '/Audio-Podcast?' in link and not '/Video-Podcast?' in link:
       thumb = thumb.replace('/384','/448')
-      addLink(cleanTitle(title[0].upper()+title[1:]),link,'playVideoUrl',thumb,runtime,desc=plot,genre=category,)
+      addLink(cleanTitle(title[0].upper()+title[1:]),link,'playVideoUrl',thumb,runtime,desc=plot,genre=category)
       
   if len(c) > 45 and nextPage:#ARD Webseite ist buggy, darum nicht 50 oder 54
     if einsLike:#einslike next page "hack"
@@ -164,7 +155,7 @@ def listVideosRss(url,showName,hideShowName,nextPage,einsLike):
     if not nextPageUrlBit in url:
       url += nextPageUrlBit+'2'
     else:
-      url = url.replace(nextPageUrlBit+url.split(nextPageUrlBit)[-1],nextPageUrlBit+str(int(url.split(nextPageUrlBit)[-1])+1))      
+      url = url.replace(nextPageUrlBit+url.split(nextPageUrlBit)[-1],nextPageUrlBit+str(int(url.split(nextPageUrlBit)[-1])+1))
     if hideShowName:
       addShowDir(translation(30009).encode("utf-8"), url, 'listVideosRss', "", showName)
     elif einsLike: 
@@ -176,56 +167,19 @@ def listVideosRss(url,showName,hideShowName,nextPage,einsLike):
   if forceViewMode:
     xbmc.executebuiltin('Container.SetViewMode('+viewMode+')')
 
-def rssParser(data):
-  debug("rssParser")
-  list = []
-  match = re.compile('<item>(.+?)</item>', re.DOTALL).findall(data)
-  for item in match:
-    title = re.compile('<title>(.+?)</title>', re.DOTALL).findall(item)[0]
-    pubDate = re.compile('<pubDate>(.+?)</pubDate>', re.DOTALL).findall(item)[0]
-    description = re.compile('<description>(.+?)</description>', re.DOTALL).findall(item)[0]
-    if '<category>' in item:
-      category = cleanTitle(re.compile('<category>(.+?)</category>', re.DOTALL).findall(item)[-1])
-    else:
-      category = ''
-    thumb = re.compile('img src="(.+?)"', re.DOTALL).findall(description)[0]
-    infos = re.compile('&lt;p&gt;(.*?)&lt;/p&gt;', re.DOTALL).findall(description)
-    
-    if infos[1] == '' or infos[1].endswith('...') and len(infos[1]) < len(title):
-      plot = title +'\n\n'+ infos[2]
-    else:
-      plot = infos[1].replace('\n','')+'\n\n'+infos[2]
-    link = re.compile('<link>(.+?)</link>', re.DOTALL).findall(item)[0]
-    documentId = link.split('documentId=')[1]
-    if '&' in documentId:
-      documentId = documentId.split('&')[0]
-    split = infos[2].split('|')
-    runtime = 0
-    for part in split:
-      if 'Min' in part or 'min' in part:
-        runtime = runtimeToInt(part)
-    list.append([title,pubDate,thumb,plot,link,documentId,category,runtime])
-  return list
-
 def runtimeToInt(runtime):
-  debug("runtimeToInt")
   t = runtime.replace('Min','').replace('min','').replace('.','').replace(' ','')
   HHMM = t.split(':')
-  try:
-       zeit=int(HHMM[0])*60 + int(HHMM[1])
-  except:
-       zeit=int(HHMM[0])
-  return zeit
+  return int(HHMM[0])*60 + int(HHMM[1])
 
 def checkLive(date):
-  debug("checkLive")
   date = date.replace(' '+date.split(' ')[-1],'')#python 2.7 doesnt support %z
   #dateEpoch = time.mktime(time.strptime(date,"%a, %d %b %Y %H:%M:%S %z"))
   dateEpoch = time.mktime(time.strptime(date,"%a, %d %b %Y %H:%M:%S"))+3600
-  return time.time() < dateEpoch
+  #return time.time() < dateEpoch
+  return False
   
 def listChannelVideos(url):
-  debug("listChannelVideos")
   content = getUrl(url)
   spl = content.split('class="headline" data-ctrl')
   for i in range(1, len(spl), 1):
@@ -244,7 +198,6 @@ def listChannelVideos(url):
 
 
 def listLiveChannels():
-  debug("listLiveChannels")
   addLink("Das Erste", "", "playLiveARD", "http://m-service.daserste.de/appservice/1.4.1/image/broadcast/fallback/jpg/512")
   content = getUrl(baseUrl+"/tv/live?kanal=Alle")
   spl = content.split('<div class="teaser" data-ctrl')
@@ -264,7 +217,6 @@ def listLiveChannels():
 
 
 def listShowsAZMain():
-  debug("listShowsAZMain")
   addDir("0-9", "0-9", 'listShowsAZ', "")
   letters = [chr(i) for i in xrange(ord('a'), ord('z')+1)]
   for letter in letters:
@@ -273,25 +225,19 @@ def listShowsAZMain():
 
 
 def listShowsAZ(letter):
-  debug("listShowsAZ")
-  content = getUrl(baseUrl+"/tv/sendungen-a-z?buchstabe="+letter)
-  spl = content.split('<div class="teaser" data-ctrl')
-  for i in range(1, len(spl), 1):
-    entry = spl[i]
-    match = re.compile('href="(.+?)"', re.DOTALL).findall(entry)
-    url = match[0].replace("&amp;","&")
-    match = re.compile('class="headline">(.+?)<', re.DOTALL).findall(entry)
-    title = match[0]
-    match = re.compile('/image/(.+?)/16x9/', re.DOTALL).findall(entry)
-    thumb = baseUrl+"/image/"+match[0]+"/16x9/0"
+  items = getAllAZ(letter)
+  xbmcplugin.addDirectoryItems(int(sys.argv[1]), items)
+  xbmcplugin.endOfDirectory(pluginhandle)
+  if forceViewMode:
+    xbmc.executebuiltin('Container.SetViewMode('+viewModeShows+')')
+  """
+  for title,url,thumb in getAZ(letter):
     addShowDir(cleanTitle(title), baseUrl+url+'&m23644322=quelle.tv&rss=true', 'listVideosRss', thumb, cleanTitle(title))
   xbmcplugin.endOfDirectory(pluginhandle)
   if forceViewMode:
     xbmc.executebuiltin('Container.SetViewMode('+viewModeShows+')')
-
-
+  """
 def listShowsFavs():
-  debug("listShowsFavs")
   xbmcplugin.addSortMethod(pluginhandle, xbmcplugin.SORT_METHOD_LABEL)
   if os.path.exists(channelFavsFile):
     fh = open(channelFavsFile, 'r')
@@ -342,8 +288,8 @@ def listChannels():
 
 
 def listChannel(channel):
-  addDir("Heute", baseUrl+"/tv/sendungVerpasst?kanal="+channel+"&tag=0", 'listChannelVideos', "")
-  addDir("Gestern", baseUrl+"/tv/sendungVerpasst?kanal="+channel+"&tag=1", 'listChannelVideos', "")
+  addDir(translation(30040), baseUrl+"/tv/sendungVerpasst?kanal="+channel+"&tag=0", 'listChannelVideos', "")
+  addDir(translation(30041), baseUrl+"/tv/sendungVerpasst?kanal="+channel+"&tag=1", 'listChannelVideos', "")
   addDir((datetime.date.today()-datetime.timedelta(days=2)).strftime("%b %d, %Y"), baseUrl+"/tv/sendungVerpasst?kanal="+channel+"&tag=2", 'listChannelVideos', "")
   addDir((datetime.date.today()-datetime.timedelta(days=3)).strftime("%b %d, %Y"), baseUrl+"/tv/sendungVerpasst?kanal="+channel+"&tag=3", 'listChannelVideos', "")
   addDir((datetime.date.today()-datetime.timedelta(days=4)).strftime("%b %d, %Y"), baseUrl+"/tv/sendungVerpasst?kanal="+channel+"&tag=4", 'listChannelVideos', "")
@@ -353,33 +299,56 @@ def listChannel(channel):
 
 
 def listCats(type):
+  addDir(translation(30036), baseUrl+"/tv/Comedy-Satire/mehr?documentId=26405766"           + '&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
   addDir(translation(30004), baseUrl+"/tv/Film-Highlights/mehr?documentId=21301808"         + '&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
-  addDir(translation(30018), baseUrl+"/einslike/Info/mehr?documentId=21301900"              + '&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
+  addDir(translation(30018), baseUrl+"/tv/Info/mehr?documentId=21301900"                    + '&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
   addDir(translation(30031), baseUrl+"/tv/Kinder-Familie/mehr?documentId=21282542"          + '&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
   addDir(translation(30032), baseUrl+"/tv/Kultur/mehr?documentId=21282546"                  + '&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
-  addDir(translation(30016), baseUrl+"/einslike/Leben/mehr?documentId=21301896"             + '&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
-  addDir(translation(30015), baseUrl+"/einslike/Musik/mehr?documentId=21301894"             + '&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
-  addDir(translation(30017), baseUrl+"/einslike/Netz-Tech/mehr?documentId=21301898"         + '&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
-  addDir(translation(30003), baseUrl+"/tv/Reportage-Doku/mehr?documentId=21301806"          + '&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
+  addDir(translation(30016), baseUrl+"/tv/Leben/mehr?documentId=21301896"                   + '&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
+  addDir(translation(30015), baseUrl+"/tv/Musik/mehr?documentId=21301894"                   + '&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
+  addDir(translation(30017), baseUrl+"/tv/Netz-Tech/mehr?documentId=21301898"               + '&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
+  #addDir(translation(30003), baseUrl+"/tv/Reportage-Doku/mehr?documentId=21301806"          + '&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
+  addDir(translation(30003), baseUrl+"/tv/Reportage-Dokumentation/mehr?documentId=22651276" + '&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
   addDir(translation(30033), baseUrl+"/tv/Satire-Unterhaltung/mehr?documentId=21282544"     + '&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
   addDir(translation(30035), baseUrl+"/tv/Serien-Soaps/mehr?documentId=21282548"            + '&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
-  addDir(translation(30019), baseUrl+"/einslike/Spa%C3%9F-Fiktion/mehr?documentId=21301902" + '&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
+  addDir(translation(30019), baseUrl+"/tv/Spa%C3%9F-Fiktion/mehr?documentId=21301902"       + '&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
+  addDir(translation(30038), baseUrl+"/tv/Sport-in-der-Mediathek/mehr?documentId=26439062"  + '&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
+  addDir(translation(30037), baseUrl+"/tv/Videos-für-Kinder/mehr?documentId=22651194"       + '&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
   addDir(translation(30034), baseUrl+"/tv/Wissen/mehr?documentId=21282530"                  + '&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
-  
-  #addDir(translation(30001), baseUrl+"/einslike/Neueste-Videos/mehr?documentId=21282466"+'&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
-  #addDir(translation(30002), baseUrl+"/einslike/Meistabgerufene-Videos/mehr?documentId=21282464"+'&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
+  xbmcplugin.endOfDirectory(pluginhandle)
+  if forceViewMode:
+    xbmc.executebuiltin('Container.SetViewMode('+viewModeShows+')')
+
+
+def listFootball():
+  addDir(translation(30080), baseUrl+"/tv/Alle-Videos-zu-Eintracht-Frankfurt/mehr?documentId=22775344"           + '&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
+  addDir(translation(30081), baseUrl+"/tv/Alle-Videos-zu-Schalke-04/mehr?documentId=22775352"                    + '&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
+  addDir(translation(30082), baseUrl+"/tv/Alle-Videos-zum-VfB-Stuttgart/mehr?documentId=22775376"                + '&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
+  addDir(translation(30083), baseUrl+"/tv/Alle-Videos-zu-1899-Hoffenheim/mehr?documentId=22775328"               + '&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
+  addDir(translation(30084), baseUrl+"/tv/Alle-Videos-zum-SC-Paderborn/mehr?documentId=22775372"                 + '&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
+  addDir(translation(30085), baseUrl+"/tv/Alle-Videos-zum-SC-Freiburg/mehr?documentId=22552050"                  + '&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
+  addDir(translation(30086), baseUrl+"/tv/Alle-Videos-zu-Hannover-96/mehr?documentId=22775360"                   + '&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
+  addDir(translation(30087), baseUrl+"/tv/Alle-Videos-zu-Werder-Bremen/mehr?documentId=22775384"                 + '&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
+  addDir(translation(30088), baseUrl+"/tv/Alle-Videos-zu-Bayer-Leverkusen/mehr?documentId=22775332"              + '&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
+  addDir(translation(30089), baseUrl+"/tv/Alle-Videos-zum-VfL-Wolfsburg/mehr?documentId=22775380"                + '&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
+  addDir(translation(30090), baseUrl+"/tv/Alle-Videos-zum-Hamburger-SV/mehr?documentId=22775356"                 + '&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
+  addDir(translation(30091), baseUrl+"/tv/Alle-Videos-zum-FSV-Mainz-05/mehr?documentId=22775368"                 + '&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
+  addDir(translation(30092), baseUrl+"/tv/Alle-Videos-zu-Bayern-M%C3%BCnchen/mehr?documentId=22775336"           + '&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
+  addDir(translation(30093), baseUrl+"/tv/Alle-Videos-zum-1-FC-K%C3%B6ln/mehr?documentId=22775294"               + '&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
+  addDir(translation(30094), baseUrl+"/tv/Alle-Videos-zu-Borussia-M%C3%B6nchengladbach/mehr?documentId=22775340" + '&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
+  addDir(translation(30095), baseUrl+"/tv/Alle-Videos-zu-Hertha-BSC/mehr?documentId=22775364"                    + '&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
+  addDir(translation(30096), baseUrl+"/tv/Alle-Videos-zum-FC-Augsburg/mehr?documentId=22775348"                  + '&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
+  addDir(translation(30097), baseUrl+"/tv/Alle-Videos-zu-Borussia-Dortmund/mehr?documentId=22552316"             + '&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
+  xbmcplugin.addSortMethod(pluginhandle, sortMethod=xbmcplugin.SORT_METHOD_LABEL_IGNORE_THE)
   xbmcplugin.endOfDirectory(pluginhandle)
   if forceViewMode:
     xbmc.executebuiltin('Container.SetViewMode('+viewModeShows+')')
 
 
 def playVideo(videoID):
-  debug("playVideo")
   playVideoUrl(baseUrl+"/tv/?documentId="+videoID,videoID)
 
 def playVideoUrl(url,videoID=False):
-  debug("playVideoUrl")
-  url=cleanTitle(url)
   if not videoID:
     videoID = url.split('documentId=')[1]
     if '&' in videoID:
@@ -453,27 +422,27 @@ def playVideoUrl(url,videoID=False):
       """
     if streamType == 'httprtmp':
       listitem = xbmcgui.ListItem(path=url)
+      if showSubtitles and subtitleUrl and helix:
+        subtitle.setSubtitle(subtitleUrl,True,subtitleOffset)
+        listitem.setSubtitles(subFile)
       xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
-      if showSubtitles and subtitleUrl:
-        subtitle.setSubtitle(subtitleUrl,subtitleOffset)
+      if showSubtitles and subtitleUrl and not helix:
+        subtitle.setSubtitle(subtitleUrl,False,subtitleOffset)
 
 
 def queueVideo(url, name):
-  debug("queueVideo")
   playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
   listitem = xbmcgui.ListItem(name)
   playlist.add(url, listitem)
 
 
 def playLive(liveID):
-  debug("playLive")
   content = getUrl(baseUrl+"/tv/live?kanal="+liveID)
   match = re.compile('/play/media/(.+?)&', re.DOTALL).findall(content)
   playVideo(match[0])
 
 
 def playLiveARD():
-  debug("playLiveARD")
   content = getUrl("http://live.daserste.de/de/livestream.xml")
   match = re.compile('<asset type=".*?Live HLS">.+?<fileName>(.+?)</fileName>', re.DOTALL).findall(content)
   url = ""
@@ -486,7 +455,6 @@ def playLiveARD():
 
 
 def search():
-  debug("search")
   keyboard = xbmc.Keyboard('', translation(30008))
   keyboard.doModal()
   if keyboard.isConfirmed() and keyboard.getText():
@@ -495,7 +463,6 @@ def search():
 
 
 def cleanTitle(title):
-  debug("cleanTitle")
   title = title.replace("&lt;", "<").replace("&gt;", ">").replace("&amp;", "&").replace("&#034;", "\"").replace("&#039;", "'").replace("&quot;", "\"").replace("&szlig;", "ß").replace("&ndash;", "-")
   title = title.replace("&Auml;", "Ä").replace("&Uuml;", "Ü").replace("&Ouml;", "Ö").replace("&auml;", "ä").replace("&uuml;", "ü").replace("&ouml;", "ö").replace("&eacute;", "é").replace("&egrave;", "è")
   title = title.replace("&#x00c4;","Ä").replace("&#x00e4;","ä").replace("&#x00d6;","Ö").replace("&#x00f6;","ö").replace("&#x00dc;","Ü").replace("&#x00fc;","ü").replace("&#x00df;","ß")
@@ -503,7 +470,6 @@ def cleanTitle(title):
   return title
 
 def char_gen(size=1, chars=string.ascii_uppercase):
-  debug("char_gen")
   return ''.join(random.choice(chars) for x in range(size))
 
 def getUrl(url):
@@ -653,6 +619,8 @@ elif mode == 'listChannelVideos':
   listChannelVideos(url)
 elif mode == 'listEinsLike':
   listEinsLike()
+elif mode == 'listFootball':
+  listFootball()
 elif mode == 'listShowsFavs':
   listShowsFavs()
 elif mode == 'listChannel':
