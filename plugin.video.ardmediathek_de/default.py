@@ -149,6 +149,7 @@ def listDirRss(url):
   xbmcplugin.endOfDirectory(pluginhandle)
 
 def listVideosRss(url,showName,hideShowName,nextPage,einsLike):
+  debug("listVideosRss url :"+ url)
   content = getUrl(url)
   c = rssParser(content)
   for title,pubDate,thumb,plot,link,documentId,category,runtime in c:
@@ -452,7 +453,7 @@ def playVideoUrl(url,videoID=False):
       subtitleOffset = decoded['_subtitleOffset']
     except:
       subtitleUrl = False
-    debug("playVideoUrl subtitleUrl: "+ subtitleUrl)
+    #debug("playVideoUrl subtitleUrl: "+ subtitleUrl)
     mediaArrays = decoded['_mediaArray']
     streamType = False
     savedQuality = -1

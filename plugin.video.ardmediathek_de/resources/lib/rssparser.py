@@ -24,15 +24,16 @@ def parser(data):
         plot = infos[1].replace('\n','')+'\n\n'+infos[2]
       link = re.compile('<link>(.+?)</link>', re.DOTALL).findall(item)[0]
       link = cleanTitle(link)
-      documentId = link.split('documentId=')[1]
-      if '&' in documentId:
-        documentId = documentId.split('&')[0]
-      split = infos[2].split('|')
-      runtime = 0
-      for part in split:
-        if 'Min' in part or 'min' in part:
-          runtime = runtimeToInt(part)
-      list.append([title,pubDate,thumb,plot,link,documentId,category,runtime])
+      if "documentId=" in link:
+         documentId = link.split('documentId=')[1]
+         if '&' in documentId:
+             documentId = documentId.split('&')[0]
+         split = infos[2].split('|')
+         runtime = 0
+         for part in split:
+            if 'Min' in part or 'min' in part:
+                runtime = runtimeToInt(part)
+         list.append([title,pubDate,thumb,plot,link,documentId,category,runtime])
   return list
   
 def cleanTitle(title):

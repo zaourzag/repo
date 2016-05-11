@@ -42,7 +42,8 @@
 4.0.2
 - Small fix
 4.0.4
-- Fix fuer ach Datum (Kleine Videos)
+- Fix fuer Video nach datum, wenn mehre Videos gibt
 4.0.5
-- Untertitel Fix
-
+- Fix Fuer Untertitel
+4.0.6
+- Fix Fuer Kategorie Wissen
