@@ -61,7 +61,17 @@ videoQuality = int(addon.getSetting("videoQuality"))
 listLive = addon.getSetting("listLive") == "true"
 helix=True
 helix=False
+def debug(content):
+    log(content, xbmc.LOGDEBUG)
+    
+def notice(content):
+    log(content, xbmc.LOGNOTICE)
 
+def log(msg, level=xbmc.LOGNOTICE):
+    addon = xbmcaddon.Addon()
+    addonID = addon.getAddonInfo('id')
+    xbmc.log('%s: %s' % (addonID, msg), level) 
+    
 def index():
   #addDir(translation(30011), "", 'listShowsFavs', "")
   #addDir(translation(30001), baseUrl+"/tv/Neueste-Videos/mehr?documentId=21282466"+'&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
@@ -178,20 +188,97 @@ def checkLive(date):
   dateEpoch = time.mktime(time.strptime(date,"%a, %d %b %Y %H:%M:%S"))+3600
   #return time.time() < dateEpoch
   return False
-  
+
+def videovontag(content):
+        entry=content
+        bild=""
+        for i2 in range(1, len(entry), 1):
+                entrylink = '<a href="/'+ entry[i2] 
+                debug("---------------")                
+                debug(entrylink)                
+                debug("---------------")                
+                if "mediaLink"  in entrylink:
+                  bild=""
+                  match = re.compile('urlScheme&#039;:&#039;(.+?)#', re.DOTALL).findall(entrylink)
+                  bild="http://www.ardmediathek.de/"+ match[0] +"640"
+                if "textLink"   in entrylink:
+                     videoID=""
+                     match = re.compile('documentId=(.+?)"', re.DOTALL).findall(entrylink)
+                     if match:
+                       videoID = match[0]  
+                       debug ("videoID: "+ videoID)
+                     match = re.compile('<h4 class="headline">(.+?)</h4>', re.DOTALL).findall(entrylink)    
+                     if match:
+                       titlev=match[0]
+                       debug ("titlev: "+ titlev)
+                       debug ("bild: "+ bild)
+                     match = re.compile('<p class="subtitle">([0-9]+)', re.DOTALL).findall(entrylink)    
+                     if match:
+                       debug("DAUER:" + match[0])
+                       duration=int(match[0])*60                       
+                     else:
+                        duration=0
+                     if videoID:
+                        debug("Addlink")
+                        addLink(cleanTitle(titlev), videoID, 'playVideo', bild,duration=duration) 
+def toeteenden(LISTE,content,zeiten):
+   for  zeiten2 in LISTE:
+            teile2='<div class="entry" data-ctrl-'+zeiten+"collapse-entry="
+            content = content[:content.find(teile2)]
+   content = content[:content.find('<div class="section onlyWithJs sectionA">')]           
+   content = content[:content.find('<div class="box" data-ctrl-timeRangecollapse')]  
+   return content
+    
 def listChannelVideos(url):
-  content = getUrl(url)
-  spl = content.split('class="headline" data-ctrl')
-  for i in range(1, len(spl), 1):
-    entry = spl[i]
-    match = re.compile('documentId=(.+?)&', re.DOTALL).findall(entry)
-    if match:
-      videoID = match[0]
-      match = re.compile('class="titel">(.+?)<', re.DOTALL).findall(entry)
-      title = match[0]
-      match = re.compile('class="date">(.+?)<', re.DOTALL).findall(entry)
-      title = match[0]+" - "+title
-      addLink(cleanTitle(title), videoID, 'playVideo', icon)
+  LISTE=["MORGEN","NACHMITTAG","VORABEND","ABEND"]
+  content = getUrl(url)  
+  
+  for  zeiten in LISTE:
+    debug("** "+zeiten +" **")
+    teile='<div class="entry" data-ctrl-'+zeiten+"collapse-entry="    
+    spl = content.split(teile)
+    for i in range(1, len(spl), 1):
+        entry = spl[i]
+        if '<div class="entry" data-ctrl-' in entry:
+          entry=toeteenden(LISTE,entry,zeiten)                                 
+          match = re.compile('class="titel">(.+?)<', re.DOTALL).findall(entry)           
+          title = match[0]
+          match = re.compile('class="date">(.+?)<', re.DOTALL).findall(entry)
+          datum = match[0]
+          titleshow = datum +" - "+ title
+          spl2 = entry.split('<a href="/')
+          if len(spl2) >3:            
+             addDir(cleanTitle(titleshow), url, 'listfilesofshow', icon,title=title)
+          else:
+            videovontag(spl2)           
+  xbmcplugin.endOfDirectory(pluginhandle)
+  if forceViewMode:
+    xbmc.executebuiltin('Container.SetViewMode('+viewMode+')')
+         
+  
+def listfilesofshow(url,title):
+  LISTE=["MORGEN","NACHMITTAG","VORABEND","ABEND"]
+  content = getUrl(url)    
+  for  zeiten in LISTE:
+    debug("** "+zeiten +" **")
+    teile='<div class="entry" data-ctrl-'+zeiten+"collapse-entry="    
+    spl = content.split(teile)
+    for i in range(1, len(spl), 1):
+        entry = spl[i]
+        if '<div class="entry" data-ctrl-' in entry:
+          entry=toeteenden(LISTE,entry,zeiten)                                  
+          #debug("--------------")
+          #debug(entry)
+          #debug("--------------")
+          match = re.compile('class="titel">(.+?)<', re.DOTALL).findall(entry)           
+          titleshow = match[0]
+          
+          debug("### ####"+ title)
+          debug("### ####"+ titleshow)
+          if titleshow==title:           
+            spl2 = entry.split('<a href="/')
+            videovontag(spl2)                         
+  debug("#####:")
   xbmcplugin.endOfDirectory(pluginhandle)
   if forceViewMode:
     xbmc.executebuiltin('Container.SetViewMode('+viewMode+')')
@@ -524,8 +611,10 @@ def parameters_string_to_dict(parameters):
   return paramDict
 
 
-def addLink(name, url, mode, iconimage, duration="", desc="", genre=''):
+def addLink(name, url, mode, iconimage, duration="", desc="", genre='',title=""):
   u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
+  if title!="":
+    u=u+"&title="+title
   ok = True
   liz = xbmcgui.ListItem(name, iconImage=defaultThumb, thumbnailImage=iconimage)
   #liz.setInfo(type="Video", infoLabels={"Title": name, "Duration": duration, "Plot": desc, "Genre": genre})
@@ -544,8 +633,10 @@ def addLink(name, url, mode, iconimage, duration="", desc="", genre=''):
   return ok
 
 
-def addDir(name, url, mode, iconimage, desc="", nextPage=False, einsLike=False):
+def addDir(name, url, mode, iconimage, desc="", nextPage=False, einsLike=False,title=""):
   u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
+  if title!="":
+    u=u+"&title="+title  
   if nextPage:
     u += "&nextpage=True"
   if einsLike:
@@ -602,6 +693,7 @@ params = parameters_string_to_dict(sys.argv[2])
 mode = urllib.unquote_plus(params.get('mode', ''))
 url = urllib.unquote_plus(params.get('url', ''))
 name = urllib.unquote_plus(params.get('name', ''))
+title = urllib.unquote_plus(params.get('title', ''))
 showName = urllib.unquote_plus(params.get('showName', ''))
 hideShowName = urllib.unquote_plus(params.get('hideshowname', '')) == 'True'
 nextPage = urllib.unquote_plus(params.get('nextpage', '')) == 'True'
@@ -649,5 +741,7 @@ elif mode == 'search':
   search()
 elif mode == 'favs':
   favs(url)
+elif mode == 'listfilesofshow':
+  listfilesofshow(url,title)
 else:
   index()
