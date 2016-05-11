@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addons>
-<addon id="plugin.video.zdf_de_lite" name="ZDF Mediathek" version="2.2.5" provider-name="membrane">
+<addon id="plugin.video.zdf_de_lite" name="ZDF Mediathek" version="2.2.6" provider-name="membrane">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
     </requires>

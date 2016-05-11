@@ -64,3 +64,5 @@
 2.2.5
 - Fixed playback
 - Misc changes
+2.2.6
+- Fix fuer Datum Heute

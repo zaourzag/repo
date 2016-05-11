@@ -88,7 +88,7 @@ def listVerpasst(url):
 	content = getUrl(url)
 	content = content[content.find('<ul class="subNavi">'):]
 	content = content[:content.find('</ul>')]
-	match = re.compile('<a href="(.+?)">(.+?)</a>', re.DOTALL).findall(content)
+	match = re.compile('<a href="(.+?)"[^>]*>(.+?)</a>', re.DOTALL).findall(content)
 	for url, title in match:
 		addDir(title[2:], baseUrl+url, 'listVideos', "")
 	xbmcplugin.endOfDirectory(pluginhandle)
