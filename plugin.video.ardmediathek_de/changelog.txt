@@ -41,3 +41,8 @@
 - Changed some strings
 4.0.2
 - Small fix
+4.0.4
+- Fix fuer ach Datum (Kleine Videos)
+4.0.5
+- Untertitel Fix
+

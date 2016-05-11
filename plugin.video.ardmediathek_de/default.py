@@ -61,6 +61,7 @@ videoQuality = int(addon.getSetting("videoQuality"))
 listLive = addon.getSetting("listLive") == "true"
 helix=True
 helix=False
+
 def debug(content):
     log(content, xbmc.LOGDEBUG)
     
@@ -193,14 +194,11 @@ def videovontag(content):
         entry=content
         bild=""
         for i2 in range(1, len(entry), 1):
-                entrylink = '<a href="/'+ entry[i2] 
-                debug("---------------")                
-                debug(entrylink)                
-                debug("---------------")                
+                entrylink = '<a href="/'+ entry[i2]                 
                 if "mediaLink"  in entrylink:
                   bild=""
                   match = re.compile('urlScheme&#039;:&#039;(.+?)#', re.DOTALL).findall(entrylink)
-                  bild="http://www.ardmediathek.de/"+ match[0] +"640"
+                  bild=baseUrl+ match[0] +"640"
                 if "textLink"   in entrylink:
                      videoID=""
                      match = re.compile('documentId=(.+?)"', re.DOTALL).findall(entrylink)
@@ -440,11 +438,13 @@ def playVideoUrl(url,videoID=False):
     videoID = url.split('documentId=')[1]
     if '&' in videoID:
       videoID = videoID.split('&')[0]
+  debug("playVideoUrl url :"+url)
   content = getUrl(url)
   match = re.compile('<div class="box fsk.*?class="teasertext">(.+?)</p>', re.DOTALL).findall(content)
   if match:
     xbmc.executebuiltin('XBMC.Notification(Info:,'+match[0].strip()+',15000)')
   else:
+    debug("playVideoUrl url2: "+baseUrl+"/play/media/"+videoID+"?devicetype=pc&features=flash")
     content = getUrl(baseUrl+"/play/media/"+videoID+"?devicetype=pc&features=flash")
     decoded = json.loads(content)
     try:
@@ -452,6 +452,7 @@ def playVideoUrl(url,videoID=False):
       subtitleOffset = decoded['_subtitleOffset']
     except:
       subtitleUrl = False
+    debug("playVideoUrl subtitleUrl: "+ subtitleUrl)
     mediaArrays = decoded['_mediaArray']
     streamType = False
     savedQuality = -1
