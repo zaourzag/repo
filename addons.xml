@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addons>
-<addon id="plugin.video.zdf_de_lite" name="ZDF Mediathek" version="2.2.6" provider-name="membrane">
+<addon id="plugin.video.zdf_de_lite" name="ZDF Mediathek" version="2.2.7" provider-name="membrane">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="repository.membrane" version="1.9.0"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
@@ -1116,5 +1117,19 @@ Orginal Code was from AddonScriptorDE</disclaimer>
     <platform>all</platform>
   </extension>
 </addon>
+
+<addon id="repository.membrane" name="membrane's KODI Add-ons" version="1.9.0" provider-name="membrane">
+	<extension point="xbmc.addon.repository" name="membrane's XBMC Add-on Repository">
+		<info compressed="false">http://github.com/prof-membrane/repository.membrane/raw/master/addons.xml</info>
+		<checksum>http://github.com/prof-membrane/repository.membrane/raw/master/addons.xml.md5</checksum>
+		<datadir zip="true">http://github.com/prof-membrane/repository.membrane/raw/master/</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary>Install membrane's Add-ons</summary>
+		<description>Download and install addons by membrane</description>
+		<platform>all</platform>
+	</extension>
+</addon>
+
 
 </addons>
