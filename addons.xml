@@ -24,7 +24,7 @@
     </extension>
 </addon>
 
-<addon id="plugin.video.euronews_com" name="euronews.com" version="2.0.7" provider-name="AddonScriptorDE,L0RE">
+<addon id="plugin.video.euronews_com" name="euronews.com" version="2.0.8" provider-name="AddonScriptorDE,L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
     </requires>

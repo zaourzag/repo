@@ -70,7 +70,10 @@ def index():
 
 
 def newsMain():
-    addDir(translation(30003), "http://"+language2+".euronews.com/news/", 'listVideos', "")
+    if language2=="de":
+        addDir(translation(30003), "http://de.euronews.com/nachrichten/", 'listVideos', "")
+    else:
+        addDir(translation(30003), "http://"+language2+".euronews.com/news/", 'listVideos', "")
     content = getUrl("http://"+language2+".euronews.com")
     content = content[content.find('<ol class="lhsMenu">'):]
     content = content[:content.find('</ol>')]
