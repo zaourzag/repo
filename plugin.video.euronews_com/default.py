@@ -192,14 +192,15 @@ def search():
     if keyboard.isConfirmed() and keyboard.getText():
         search_string = keyboard.getText().replace(" ", "+")
         content = getUrl("http://"+language2+".euronews.com/search/", data="q="+search_string)
-        content = content[content.find('<ol class="searchRes">'):]
-        content = content[:content.find('</ol>')]
+        content = content[content.find('<h1>Such-Resultate</h1>'):]
+        content = content[:content.find('<script type="text/javascript">')]
         spl = content.split('<li')
         for i in range(1, len(spl), 1):
             entry = spl[i]
+            debug("entry :"+entry)
             match = re.compile('href="(.+?)"', re.DOTALL).findall(entry)
             url = "http://"+language2+".euronews.com"+match[0]
-            match = re.compile('<em>(.+?)</em>', re.DOTALL).findall(entry)
+            match = re.compile('title="(.+?)"', re.DOTALL).findall(entry)
             title = match[0].replace("<strong>", "").replace("</strong>", "").replace("<br />", "")
             title = cleanTitle(title)
             match = re.compile('src="(.+?)"', re.DOTALL).findall(entry)
@@ -232,21 +233,9 @@ def queueVideo(url, name):
 
 
 def playLive():
-    content = getUrl("http://euronews.hexaglobe.com/json/")
-    struktur = json.loads(content)    
-    werte=struktur["primary"][language]["rtmp_flash"]["750"]
-    #  path="rtmpe://s3pwwozuj5hrsa.cloudfront.net/cfx/st/ swfVfy=1 swfUrl=http://prod-static.spiegel.tv/embedplayer.swf playpath="+playpath)
-    url=werte["server"]+werte["name"]+" swfUrl=http://ssl.p.jwpcdn.com/player/v/7.4.2/jwplayer.flash.swf  swfVfy=1 live=true"
-    debug("### "+ url)
-    #content = content[content.find('"'+language+'":'):]
-    #match = re.compile('"server":"(.+?)"', re.DOTALL).findall(content)
-    #server = match[0].replace("\\", "")
-    #match = re.compile('video750_rtp.sdp?(.+?)"', re.DOTALL).findall(content)    
-    #id=match[0]
-    #url = server.replace("rtmp","rtsp")+language+"_video750_rtp.sdp?"+id
-    #url=url.replace("rtmp","rtsp")
-    #swfUrl=http://ssl.p.jwpcdn.com/player/v/7.4.2/jwplayer.flash.swf  pageURL=http://de.euronews.com/nachrichten/livestream/ playpath=RT_3 live=true
-    #url="rtmp://fr-par-10-stream-relay.hexaglobe.net/rtpeuronewsrtmplive/ swfUrl=http://ssl.p.jwpcdn.com/player/v/7.4.2/jwplayer.flash.swf  app=rtpeuronewslive de_video750_rtp.sdp?bbf356693862b26c0f22be6b8d6a2b91#5734fadb live=true"
+    #content = getUrl("http://euronews.hexaglobe.com/json/")
+    #struktur = json.loads(content)        
+    url="http://fr-par-iphone-1.cdn.hexaglobe.net/streaming/euronews_ewns/iphone_"+language+".m3u8"
     listitem = xbmcgui.ListItem(path=url)
     xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
 
