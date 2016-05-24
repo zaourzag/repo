@@ -58,9 +58,9 @@ if not os.path.isdir(userDataFolder):
 def index():
     addDir(translation(30002), "", 'listAZ', icon, '')
     addDir(translation(30010), "", 'listShowsFavs', icon, '')
-    addDir(translation(30003), "NEUE FOLGEN", 'listVideosLatest', icon, '')
-    addDir(translation(30004), "BELIEBTE VIDEOS", 'listVideosLatest', icon, '')
-    addDir(translation(30007), "CLIPS AUS DEN SENDUNGEN", 'listVideosLatest', icon, '')
+    addDir(translation(30003), "NEU", 'listVideosLatest', icon, '')
+    addDir(translation(30004), "BELIEBTE", 'listVideosLatest', icon, '')
+    addDir(translation(30007), "KURZE CLIPS", 'listVideosLatest', icon, '')
     xbmcplugin.endOfDirectory(pluginhandle)
 
 
@@ -149,6 +149,7 @@ def listVideosLatest(type):
         url = match[0]
         match = re.compile('src="(.+?)"', re.DOTALL).findall(entry)
         thumb = cleanTitle(match[0]).replace("_thumb", "")
+        unicode(title).encode("utf-8") 
         addDir(title, url, 'playVideo', thumb, title)
     xbmcplugin.endOfDirectory(pluginhandle)
     if forceViewMode:
@@ -413,7 +414,7 @@ def addLink(name, url, mode, iconimage, title, isSingle="no", desc="", duration=
 def addDir(name, url, mode, iconimage, title, desc="",text=""):
     u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&title="+urllib.quote_plus(title)+"&thumb="+urllib.quote_plus(iconimage)
     if text!="":
-      u=u+"&text="+urllib.quote_plus(text)
+        u=u+"&text="+urllib.quote_plus(text)
     ok = True
     liz = xbmcgui.ListItem(name, iconImage="DefaultFolder.png", thumbnailImage=iconimage)
     liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc})
