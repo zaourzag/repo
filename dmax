@@ -1,0 +1,15 @@
+
+# Bitte geben Sie eine Commit-Beschreibung für Ihre Änderungen ein. Zeilen,
+# die mit '#' beginnen, werden ignoriert, und eine leere Beschreibung
+# bricht den Commit ab.
+# Auf Branch master
+# Ihr Branch ist auf dem selben Stand wie 'origin/master'.
+#
+# zum Commit vorgemerkte Änderungen:
+#	geändert:               addons.xml
+#	geändert:               addons.xml.md5
+#	geändert:               plugin.video.dmax_de/addon.xml
+#	geändert:               plugin.video.dmax_de/changelog.txt
+#	geändert:               plugin.video.dmax_de/default.py
+#	neue Datei:             plugin.video.dmax_de/plugin.video.dmax_de-1.1.10.zip
+#
