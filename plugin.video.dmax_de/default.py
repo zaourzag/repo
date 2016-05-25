@@ -128,6 +128,10 @@ def listVideos(urlMain):
     if forceViewMode:
         xbmc.executebuiltin('Container.SetViewMode('+viewMode+')')
 
+def cleanit(title):
+    title = title.replace("Ã¼", "ü").replace("Ã¤","ä").replace("ÃŸ","ß").replace("Ã¶","ö")
+    title = title.strip()    
+    return title        
 
 def listVideosLatest(type):
     content = opener.open(baseUrl+"/videos/").read()
@@ -149,7 +153,8 @@ def listVideosLatest(type):
         url = match[0]
         match = re.compile('src="(.+?)"', re.DOTALL).findall(entry)
         thumb = cleanTitle(match[0]).replace("_thumb", "")
-        unicode(title).encode("utf-8") 
+        title=cleanit(title)
+        debug("- ::: :"+title)
         addDir(title, url, 'playVideo', thumb, title)
     xbmcplugin.endOfDirectory(pluginhandle)
     if forceViewMode:
