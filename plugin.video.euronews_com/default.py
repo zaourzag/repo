@@ -231,18 +231,20 @@ def artikeltext(text):
     text = text.replace("&#8217;", "\'")
     text = text.replace("&#9632;", "")
     text = text.replace("&#8226;", "-")
+    text = text.replace('<span class="caps">', "")
+    text = text.replace('</span>', "")
     return text
     
 class Infowindow(pyxbmct.AddonDialogWindow):
     bild=""
-    nurbild=""
+    nur_bild=""
     text=""
     pos=0
     def __init__(self, title='',text='',image='',nurbild=0):
         super(Infowindow, self).__init__(title)
         self.setGeometry(600,600,8,8)
         self.bild=image
-        self.nurbild=nurbild
+        self.nur_bild=nurbild
         self.text=text        
         self.set_info_controls()
         # Connect a key action (Backspace) to close the window.
@@ -251,12 +253,12 @@ class Infowindow(pyxbmct.AddonDialogWindow):
     def set_info_controls(self):
       self.textbox=pyxbmct.TextBox()  
       self.image = pyxbmct.Image(self.bild)           
-      if   self.nurbild==0:
+      if self.nur_bild==0:
         self.placeControl(self.image, 0, 0,columnspan=2,rowspan=2)
         self.placeControl(self.textbox, 2, 0, columnspan=8,rowspan=6)                  
       else:
-        self.placeControl(self.image, 0, 0,columnspan=2,rowspan=2)
-        self.placeControl(self.textbox, 2, 0,columnspan=8,rowspan=6)     
+        self.placeControl(self.image, 0, 0,columnspan=6,rowspan=6)
+        self.placeControl(self.textbox, 6, 0,columnspan=8,rowspan=2)     
       self.textbox.setText(self.text)
       self.connectEventList(
              [pyxbmct.ACTION_MOVE_UP,
@@ -313,7 +315,8 @@ def playVideo(url):
             bild=match[0]
             nurbild=1
        debug("BILD :"+bild) 
-       window = Infowindow('Artikel',text=text,image=bild,nurbild=0)
+       debug("nurbild :"+str(nurbild))
+       window = Infowindow('Artikel',text=text,image=bild,nurbild=nurbild)
        window.doModal()
        del window
        
