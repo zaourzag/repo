@@ -9,6 +9,7 @@ import re
 import xbmcplugin
 import xbmcaddon
 import xbmcgui,json
+import pyxbmct
 from HTMLParser import HTMLParser
 
 
@@ -54,10 +55,9 @@ def index():
     spl = content.split('<a')
     for i in range(2, len(spl), 1):
         entry = spl[i]
-        match = re.compile('href="(.+?)"', re.DOTALL).findall(entry)
-        url = "http://"+language2+".euronews.com"+match[0]
-        match = re.compile('title="(.+?)"', re.DOTALL).findall(entry)
-        title = match[0]
+        match = re.compile('href="(.+?)">(.+?)</a>', re.DOTALL).findall(entry)
+        url = "http://"+language2+".euronews.com"+match[0][0]       
+        title = match[0][1]
         title = cleanTitle(title)
         if "/nocomment/" in url:
             addDir(title, url, 'listNoComment', "")
@@ -105,8 +105,10 @@ def listVideos(url):
     thumb =  match[0]
     match = re.compile('<p>(.+?)</p>', re.DOTALL).findall(titletop)
     desc=match[0]
+    debug("TITLE: " + title)
+    debug("URL: " + url)
     addLink(title, url, 'playVideo', thumb, desc)
-    spl = content.split('<span class="artDate">')
+    spl = content.split('<li class="clearAfter fixedHeight">')
     for i in range(1, len(spl), 1):      
         element=spl[i]
         sp2 = element.split('<a title="INSIDERS"')
@@ -213,8 +215,27 @@ def search():
         if forceViewMode == "true":
             xbmc.executebuiltin('Container.SetViewMode('+viewMode+')')
 
-
+def artikeltext(text):
+    text=text.replace ("</p>","").replace("<p>","").replace("<div id='articleTranscript'>","").replace("<br />","").replace('<div id="image-caption">',"").replace("	","")
+    text = text.replace("&quot;", "\"")
+    text = text.replace("&apos;", "'")
+    text = text.replace("&amp;", "&")
+    text = text.replace("&lt;", "<")
+    text = text.replace("&gt;", ">")
+    text = text.replace("&laquo;", "<<")
+    text = text.replace("&raquo;", ">>")
+    text = text.replace("&#039;", "'")
+    text = text.replace("&#8220;", "\"")
+    text = text.replace("&#8221;", "\"")
+    text = text.replace("&#8216;", "\'")
+    text = text.replace("&#8217;", "\'")
+    text = text.replace("&#9632;", "")
+    text = text.replace("&#8226;", "-")
+    return text
+    
 def playVideo(url):
+    debug("Playvideo URL : " + url)
+    fullUrl=""
     content = getUrl(url)
     match = re.compile('file: "(.+?)"', re.DOTALL).findall(content)
     matchYT = re.compile('youtube.com/embed/(.+?)"', re.DOTALL).findall(content)
@@ -225,8 +246,44 @@ def playVideo(url):
             fullUrl = "plugin://video/YouTube/?path=/root/video&action=play_video&videoid=" + matchYT[0]
         else:
             fullUrl = "plugin://plugin.video.youtube/?path=/root/video&action=play_video&videoid=" + matchYT[0] 
-    listitem = xbmcgui.ListItem(path=fullUrl)
-    xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
+    if fullUrl!="":
+      listitem = xbmcgui.ListItem(path=fullUrl)
+      xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
+    else:
+       listitem = xbmcgui.ListItem(path="")       
+       xbmcplugin.setResolvedUrl(pluginhandle, False, listitem)
+       window = pyxbmct.AddonDialogWindow('Artikel')
+       window.setGeometry(600, 600, 4,4)
+       textbox=pyxbmct.TextBox()  
+       match = re.compile('og:image" content="(.+?)"', re.DOTALL).findall(content)
+       if match:       
+         text = content[content.find("<div id='articleTranscript'>"):]
+         text = text[:text.find('<blockquote class="twitter-tweet"')]
+         text = text[:text.find('</div>')]
+         text=artikeltext(text)
+         debug("Text :" + text)
+         bild=match[0]
+         image = pyxbmct.Image(bild)
+         window.placeControl(image, 0, 0)
+         window.placeControl(textbox, 1, 0, columnspan=4,rowspan=3)      
+       else:
+            fototext = content[content.find('<div id="potd-wrap" class="col-m-b clear">'):]
+            fototext = fototext[:fototext.find('</div>')]
+            text = fototext[fototext.find('<div id="image-caption">'):]
+            text=artikeltext(text)
+            match = re.compile('<img src="(.+?)"', re.DOTALL).findall(fototext)
+            bild=match[0]            
+            image = pyxbmct.Image(bild)
+            window.placeControl(image, 0, 0,columnspan=3,rowspan=3)
+            window.placeControl(textbox, 3, 0,columnspan=4)      
+       debug("BILD :"+bild) 
+       textbox.setText(text)       
+       textbox.autoScroll(1000, 1000, 1000)
+       # Show the created window.
+       window.doModal()
+       # Delete the window instance when it is no longer used.
+       del window
+       
 
 
 def queueVideo(url, name):
