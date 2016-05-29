@@ -216,7 +216,7 @@ def search():
             xbmc.executebuiltin('Container.SetViewMode('+viewMode+')')
 
 def artikeltext(text):
-    text=text.replace ("</p>","").replace("<p>","").replace("<div id='articleTranscript'>","").replace("<br />","").replace('<div id="image-caption">',"").replace("	","")
+    text=text.replace ("</p>","").replace("<p>","").replace("<div id='articleTranscript'>","").replace("<br />","").replace('<div id="image-caption">',"").replace("	","").replace("<p","")
     text = text.replace("&quot;", "\"")
     text = text.replace("&apos;", "'")
     text = text.replace("&amp;", "&")
@@ -233,6 +233,50 @@ def artikeltext(text):
     text = text.replace("&#8226;", "-")
     return text
     
+class Infowindow(pyxbmct.AddonDialogWindow):
+    bild=""
+    nurbild=""
+    text=""
+    pos=0
+    def __init__(self, title='',text='',image='',nurbild=0):
+        super(Infowindow, self).__init__(title)
+        self.setGeometry(600,600,8,8)
+        self.bild=image
+        self.nurbild=nurbild
+        self.text=text        
+        self.set_info_controls()
+        # Connect a key action (Backspace) to close the window.
+        self.connect(pyxbmct.ACTION_NAV_BACK, self.close)
+
+    def set_info_controls(self):
+      self.textbox=pyxbmct.TextBox()  
+      self.image = pyxbmct.Image(self.bild)           
+      if   self.nurbild==0:
+        self.placeControl(self.image, 0, 0,columnspan=2,rowspan=2)
+        self.placeControl(self.textbox, 2, 0, columnspan=8,rowspan=6)                  
+      else:
+        self.placeControl(self.image, 0, 0,columnspan=2,rowspan=2)
+        self.placeControl(self.textbox, 2, 0,columnspan=8,rowspan=6)     
+      self.textbox.setText(self.text)
+      self.connectEventList(
+             [pyxbmct.ACTION_MOVE_UP,
+             pyxbmct.ACTION_MOUSE_WHEEL_UP],
+            self.hoch)         
+      self.connectEventList(
+            [pyxbmct.ACTION_MOVE_DOWN,
+             pyxbmct.ACTION_MOUSE_WHEEL_DOWN],
+            self.runter)                  
+      self.setFocus(self.textbox)            
+    def hoch(self):
+        self.pos=self.pos-1
+        if self.pos < 0:
+          self.pos=0
+        self.textbox.scroll(self.pos)
+    def runter(self):
+        self.pos=self.pos+1
+        self.textbox.scroll(self.pos)
+        debug("POSITION : "+ str(self.pos))
+              
 def playVideo(url):
     debug("Playvideo URL : " + url)
     fullUrl=""
@@ -251,37 +295,26 @@ def playVideo(url):
       xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
     else:
        listitem = xbmcgui.ListItem(path="")       
-       xbmcplugin.setResolvedUrl(pluginhandle, False, listitem)
-       window = pyxbmct.AddonDialogWindow('Artikel')
-       window.setGeometry(600, 600, 4,4)
-       textbox=pyxbmct.TextBox()  
+       xbmcplugin.setResolvedUrl(pluginhandle, False, listitem)       
        match = re.compile('og:image" content="(.+?)"', re.DOTALL).findall(content)
        if match:       
          text = content[content.find("<div id='articleTranscript'>"):]
          text = text[:text.find('<blockquote class="twitter-tweet"')]
          text = text[:text.find('</div>')]
-         text=artikeltext(text)
-         debug("Text :" + text)
-         bild=match[0]
-         image = pyxbmct.Image(bild)
-         window.placeControl(image, 0, 0)
-         window.placeControl(textbox, 1, 0, columnspan=4,rowspan=3)      
+         text=artikeltext(text)         
+         bild=match[0]         
+         nurbild=0
        else:
             fototext = content[content.find('<div id="potd-wrap" class="col-m-b clear">'):]
             fototext = fototext[:fototext.find('</div>')]
             text = fototext[fototext.find('<div id="image-caption">'):]
             text=artikeltext(text)
             match = re.compile('<img src="(.+?)"', re.DOTALL).findall(fototext)
-            bild=match[0]            
-            image = pyxbmct.Image(bild)
-            window.placeControl(image, 0, 0,columnspan=3,rowspan=3)
-            window.placeControl(textbox, 3, 0,columnspan=4)      
+            bild=match[0]
+            nurbild=1
        debug("BILD :"+bild) 
-       textbox.setText(text)       
-       textbox.autoScroll(1000, 1000, 1000)
-       # Show the created window.
+       window = Infowindow('Artikel',text=text,image=bild,nurbild=0)
        window.doModal()
-       # Delete the window instance when it is no longer used.
        del window
        
 
