@@ -105,12 +105,18 @@ def listVideos(url):
     thumb =  match[0]
     match = re.compile('<p>(.+?)</p>', re.DOTALL).findall(titletop)
     desc=match[0]
+    match = re.compile('([0-9]+/[0-9]+ [0-9]+:[0-9]+) CET', re.DOTALL).findall(contenttop)
+    datum= match[0]
     debug("TITLE: " + title)
     debug("URL: " + url)
-    addLink(title, url, 'playVideo', thumb, desc)
+    addLink(datum +" - "+title, url, 'playVideo', thumb, desc)
     spl = content.split('<li class="clearAfter fixedHeight">')
-    for i in range(1, len(spl), 1):      
+    
+    for i in range(1, len(spl), 1):   
         element=spl[i]
+        match = re.compile('([0-9]+/[0-9]+ [0-9]+:[0-9]+) CET', re.DOTALL).findall(element)
+        datum= match[0]
+        debug("++++++++ "+ datum)
         sp2 = element.split('<a title="INSIDERS"')
         for i2 in range(0, len(sp2), 1):
             element=sp2[i2]
@@ -136,7 +142,7 @@ def listVideos(url):
             debug("URL :" + url)
             title=HTMLParser().unescape(title.decode('utf-8'))
             title=title.encode('utf-8')
-            addLink( title, url, 'playVideo', thumb, desc)
+            addLink( datum +" - "+title, url, 'playVideo', thumb, desc)
     xbmcplugin.endOfDirectory(pluginhandle)
     if forceViewMode == "true":
         xbmc.executebuiltin('Container.SetViewMode('+viewMode+')')
@@ -299,7 +305,12 @@ def playVideo(url):
       xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
     else:
        listitem = xbmcgui.ListItem(path="")       
-       xbmcplugin.setResolvedUrl(pluginhandle, False, listitem)       
+       xbmcplugin.setResolvedUrl(pluginhandle, False, listitem)
+       match = re.compile('<meta name="date.updated" content="(.+?)"/>', re.DOTALL).findall(content)   
+       datum=match[0]      
+       match = re.compile('<meta property="og:title" content="(.+?)"/>', re.DOTALL).findall(content)   
+       title_artikel=match[0] 
+       title_artikel=datum + " "+ title_artikel
        match = re.compile('og:image" content="(.+?)"', re.DOTALL).findall(content)
        if match:       
          text = content[content.find("<div id='articleTranscript'>"):]
@@ -318,7 +329,7 @@ def playVideo(url):
             nurbild=1
        debug("BILD :"+bild) 
        debug("nurbild :"+str(nurbild))
-       window = Infowindow('Artikel',text=text,image=bild,nurbild=nurbild)
+       window = Infowindow(title=title_artikel,text=text,image=bild,nurbild=nurbild)
        window.doModal()
        del window
        
