@@ -227,6 +227,7 @@ def artikeltext(text):
     text = text.replace("&#039;", "'")
     text = text.replace("&#8220;", "\"")
     text = text.replace("&#8221;", "\"")
+    text = text.replace("&#8211;", "-")
     text = text.replace("&#8216;", "\'")
     text = text.replace("&#8217;", "\'")
     text = text.replace("&#9632;", "")
@@ -275,9 +276,10 @@ class Infowindow(pyxbmct.AddonDialogWindow):
           self.pos=0
         self.textbox.scroll(self.pos)
     def runter(self):
-        self.pos=self.pos+1
+        self.pos=self.pos+1        
         self.textbox.scroll(self.pos)
-        debug("POSITION : "+ str(self.pos))
+        posnew=self.textbox.getPosition()
+        debug("POSITION : "+ str(posnew))
               
 def playVideo(url):
     debug("Playvideo URL : " + url)
