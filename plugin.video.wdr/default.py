@@ -63,19 +63,21 @@ def ersetze(inhalt):
    inhalt=inhalt.strip()
    return inhalt
    
-def addDir(name, url, mode, iconimage, desc=""):
-	u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
-	ok = True
-	liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=iconimage)
-	liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc})
-	if useThumbAsFanart:
-		if not iconimage or iconimage==icon or iconimage==defaultThumb:
-			iconimage = defaultBackground
-		liz.setProperty("fanart_image", iconimage)
-	else:
-		liz.setProperty("fanart_image", defaultBackground)
-	ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
-	return ok
+def addDir(name, url, mode, iconimage, desc="",page=0):
+  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
+  if page>0 :
+      u=u+"&page="+str(page)
+  ok = True
+  liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=iconimage)
+  liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc})
+  if useThumbAsFanart:
+    if not iconimage or iconimage==icon or iconimage==defaultThumb:
+      iconimage = defaultBackground
+    liz.setProperty("fanart_image", iconimage)
+  else:
+    liz.setProperty("fanart_image", defaultBackground)
+  ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
+  return ok
   
 def addLink(name, url, mode, iconimage, duration="", desc="", genre=''):
 	u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
@@ -143,82 +145,6 @@ def getbuchstabe(url):
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 
 
-def jsonurl(url) :   
-
-    debug("Json Url "+ url)
-    inhalt = geturl(url)
-    inhalt=ersetze(inhalt)
-    spl=inhalt.split('<article ')
-    for i in range(1,len(spl),1):
-      entry=spl[i].replace('\\"','"') 
-      entry=entry.replace('\\/','/') 
-      debug("Entry:"+ entry)
-        
-      match=re.compile('<a href="([^"]+)"', re.DOTALL).findall(entry)      
-      url=baseurl+match[0]
-      match=re.compile('data-src-m="([^"]+)"', re.DOTALL).findall(entry)      
-      image=baseurl+match[0]
-      match=re.compile('<span class="episode">([^<]+)</span>', re.DOTALL).findall(entry)      
-      title=match[0]       
-      match=re.compile('<time class=\"duration\" datetime=\"[^\"]+\">([0-9]+) Min.</time>', re.DOTALL).findall(entry)  
-      if match:
-         dauer=match[0]
-      else:
-         dauer="1"
-      match=re.compile('responsive.png\" alt=\"([^"]+)"', re.DOTALL).findall(entry)  
-      if match:
-         inhaltstext=match[0]
-      else:
-          inhaltstext=""
-      
-      match=re.compile('ata-broadcast_start_date="([^T]+)T([0-9]+:[0-9]+)+', re.DOTALL).findall(entry)
-      if match:
-        start_datum=match[0][0]
-        start_zeit=match[0][1]
-      else:
-        start_datum=""
-        start_zeit=""
-      if not start_zeit=="":
-        match=re.compile('ata-broadcast_end_date="([^T]+)T([0-9]+:[0-9]+)+', re.DOTALL).findall(entry)
-        end_datum=match[0][0]
-        end_zeit=match[0][1]
-        endobj=time.strptime (end_datum +" "+ end_zeit,"%Y-%m-%d %H:%M")
-        endtime=time.mktime(endobj)
-        startobj=time.strptime(start_datum +" "+ start_zeit,"%Y-%m-%d %H:%M")
-        starttime=time.mktime(startobj)
-        nowtime=time.mktime(datetime.now().timetuple())
-        dauer=str((endtime-starttime)/60)
-        debug("dauer:"+str(dauer))
-      if not start_datum=="":
-         if starttime <  nowtime  and  endtime >  nowtime :  
-           dauer=str((endtime-nowtime)/60)
-           title=title +" ( [COLOR red] Läuft [/COLOR])"
-         else:
-           title=title +" ( "+  time.strftime("%d/%m/%Y %H:%M",startobj)  +" Uhr)"
-         senderarry=re.compile('<p class="welleLive ir sprite">([^<]+)</p>', re.DOTALL).findall(entry)
-         if senderarry:
-            sender=senderarry[0]
-         else:
-            sender=""
-         sender=sender.replace("Bayerisches Fernsehen",'BR')         
-         regionarray=re.compile('<p class=\"region\">([^<]+)</p>', re.DOTALL).findall(entry)
-         if regionarray:
-            region=regionarray[0]
-         else:
-            region=""
-         region=region.replace("Regionalprogramm",'')      
-         if not sender=="":         
-           title=sender +" "+ region + " - "+ title          
-      debug("URL : " + url)       
-      debug("iconimage : " + image)   
-      debug("duration : " + dauer)   
-      debug("desc : " + inhaltstext)   
-      addLink(name=title, url=url, mode="folge", iconimage=image,duration=dauer,desc=inhaltstext)      
-    if '"next":' in inhalt:
-       match=re.compile('"next": "([^"]+)"', re.DOTALL).findall(inhalt) 
-       next=baseurl+match[0]
-       addDir(name="Next", url=next, mode="jsonurl", iconimage="" )  
-    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 
 def list_serie(url):
     global icon
@@ -312,9 +238,6 @@ def getcontent_search(d,page):
    spl=inhalt.split('<div class="media mediaA">')
    for i in range(1,len(spl),1):
        entry=spl[i]
-       debug("1-------")
-       debug(entry)
-       debug("-------")
        match=re.compile('<img.+?src="([^"]+)"', re.DOTALL).findall(entry) 
        img=baseurl+match[0]            
        entry = entry[entry.find('<h3 class="headline">')+1:]
@@ -326,10 +249,12 @@ def getcontent_search(d,page):
        url=match[0][0]
        name=match[0][1]         
        addLink(name=name, url=url, mode="folge", iconimage=img) 
+   anz=len(spl)
+   if anz>=11:
+      page=int(page)+1
+      addDir(name="Next", url=d, mode="getcontent_search", iconimage="",page=page)   
    #debug(inhalt)       
    match=re.compile('<a class="sprite ir" href="([^"]+)"', re.DOTALL).findall(inhalt)       
-   if match:
-     addDir(name="Next", url=baseurl+match[0], mode="getcontent_search", iconimage="" )   
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)   
 
    
@@ -339,6 +264,7 @@ params = parameters_string_to_dict(sys.argv[2])
 mode = urllib.unquote_plus(params.get('mode', ''))
 url = urllib.unquote_plus(params.get('url', ''))
 name = urllib.unquote_plus(params.get('name', ''))
+page = urllib.unquote_plus(params.get('page', ''))
 showName = urllib.unquote_plus(params.get('showName', ''))
 hideShowName = urllib.unquote_plus(params.get('hideshowname', '')) == 'True'
 nextPage = urllib.unquote_plus(params.get('nextpage', '')) == 'True'
@@ -364,9 +290,7 @@ else:
   if mode == 'Buchstabe':
           getbuchstabe(url)
   if mode == 'list_serie':
-          list_serie(url)          
-  if mode == 'jsonurl':
-          jsonurl(url)   
+          list_serie(url)            
   if mode == 'folge':
           folge(url)      
   if mode == 'live':
@@ -374,4 +298,4 @@ else:
   if mode == 'Search':
           search()             
   if mode == 'getcontent_search':
-          getcontent_search(url)             
+          getcontent_search(url,page)             
