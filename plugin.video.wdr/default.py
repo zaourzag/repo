@@ -169,11 +169,14 @@ def list_serie(url):
        debug("list_serie url : "+ url)   
        debug("list_serie title : "+ title)   
        debug("list_serie img : "+ img)   
-       addLink(name=title, url=baseurl+url, mode="folge", iconimage=baseurl+img)  
+       addLink(name=ersetze(title), url=baseurl+url, mode="folge", iconimage=baseurl+img)  
     kurz_inhalt = inhalt[inhalt.find('<div class="mod modA modGlossar shortNews"')+1:]
-    match=re.compile('<a href="([^"]+?)" data-extension="{.+?title="([^"]+?)">', re.DOTALL).findall(kurz_inhalt)   
-    for url,name in match:         
-          addLink(name=name, url=baseurl+url, mode="folge", iconimage=icon)             
+    match=re.compile('<a href="([^"]+?)" data-extension="{[^<]+?title="([^"]+?)">', re.DOTALL).findall(kurz_inhalt)   
+    for url,name in match:   
+          debug("_----------")    
+          debug("url" + url)
+          debug("name" + name)
+          addLink(name=ersetze(name), url=baseurl+url, mode="folge", iconimage=icon)             
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
     
 def folge(url):
