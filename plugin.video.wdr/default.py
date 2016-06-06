@@ -124,9 +124,9 @@ def getbuchstabe(url):
     kurz_inhalt = inhalt[inhalt.find('<h2 class="conHeadline hidden">Neuer Abschnitt</h2>')+1:]
     kurz_inhalt = kurz_inhalt[:kurz_inhalt.find('<div class="section sectionA" >')]
     spl=kurz_inhalt.split('</li>')
-    la=len(spl)-1
+    la=len(spl)
     debug("LA : "+ str(la))
-    for i in range(1,len(spl)-2,1):
+    for i in range(0,len(spl),1):
       entry=spl[i]
       error=0
       try:
@@ -136,8 +136,8 @@ def getbuchstabe(url):
         serien_title=match[0]
         match=re.compile('<img.+?src="([^"]+)"', re.DOTALL).findall(entry)
         serien_bild=baseurl+match[0]       
-        if serien_title[0].upper()==url:
-          addDir(name=serien_title, url=serien_url, mode="list_serie", iconimage=serien_bild )
+     
+        addDir(name=serien_title, url=serien_url, mode="list_serie", iconimage=serien_bild )
        
       except :
          error=1
