@@ -171,12 +171,32 @@ def list_serie(url):
        debug("list_serie img : "+ img)   
        addLink(name=ersetze(title), url=baseurl+url, mode="folge", iconimage=baseurl+img)  
     kurz_inhalt = inhalt[inhalt.find('<div class="mod modA modGlossar shortNews"')+1:]
-    match=re.compile('<a href="([^"]+?)" data-extension="{[^<]+?title="([^"]+?)">', re.DOTALL).findall(kurz_inhalt)   
-    for url,name in match:   
-          debug("_----------")    
-          debug("url" + url)
-          debug("name" + name)
-          addLink(name=ersetze(name), url=baseurl+url, mode="folge", iconimage=icon)             
+    spl=inhalt.split('<h3 class="headline"')
+    for i in range(1,len(spl),1):
+       entry=spl[i]  
+       debug("-------------------")
+       debug(entry)
+       debug("-------------------")
+       match=re.compile('<a href="([^"]+?)" data-extension="{[^<]+?title="([^"]+?)">', re.DOTALL).findall(entry)   
+       try:
+           url=match[0][0]       
+           title=ersetze(match[0][1])
+       except:
+           continue 
+       try:           
+           match=re.compile('<img .+?src="(.+?)"/>', re.DOTALL).findall(entry) 
+           img=match[0]
+       except:
+            img=icon
+       debug("list_serie url : "+ url)   
+       debug("list_serie title : "+ title)   
+       debug("list_serie img : "+ img)   
+       addLink(name=ersetze(title), url=baseurl+url, mode="folge", iconimage=baseurl+img)     
+    
+    
+    
+    
+              
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
     
 def folge(url):
