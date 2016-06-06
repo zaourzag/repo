@@ -145,7 +145,7 @@ def getbuchstabe(url):
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 
 
-
+ 
 def list_serie(url):
     global icon
     debug("listserie : url "+url)
@@ -153,7 +153,7 @@ def list_serie(url):
     spl=inhalt.split('<div class="teaser hideTeasertext">')
     for i in range(1,len(spl),1):
        entry=spl[i]
-       entry = entry[:entry.find('</p>')]
+       entry = entry[:entry.find('<div class="box"')]
        debug("-------------------")
        debug(entry)
        debug("-------------------")
@@ -166,10 +166,33 @@ def list_serie(url):
            continue           
        match=re.compile('<img .+?src="(.+?)"/>', re.DOTALL).findall(entry) 
        img=match[0]
+       try:
+         match=re.compile('<p class="teasertext">([^<]+)', re.DOTALL).findall(entry) 
+         desc=ersetze(match[0])
+       except:
+         desc=0 
+       try:                           
+         match=re.compile('<p class="programInfo">(.+?) .+?<span class="hidden">L&auml;nge: </span>(.+?)<', re.DOTALL).findall(entry) 
+         datum=match[0][0]
+         laufzeit=match[0][1]
+         debug("Laufzeit1 :"+laufzeit)
+         sp1=laufzeit.split(":")
+         debug("Laenge: "+ str(len(sp1)))
+         if len(sp1) == 3 :
+            laufzeit=int(sp1[0])*3600+int(sp1[1])*60+int(sp1[2])
+         if len(sp1) == 2 :
+            laufzeit=int(sp1[0])*60+int(sp1[1])
+         if len(sp1) == 1 :
+            laufzeit=int(sp1[0])
+         debug("Laufzeit2 : "+str(laufzeit))          
+       except:
+         datum=0    
+         laufzeit=0       
+       debug("list_serie desc : "+ desc)   
        debug("list_serie url : "+ url)   
        debug("list_serie title : "+ title)   
        debug("list_serie img : "+ img)   
-       addLink(name=ersetze(title), url=baseurl+url, mode="folge", iconimage=baseurl+img)  
+       addLink(name=ersetze(title), url=baseurl+url, mode="folge", iconimage=baseurl+img,desc=desc,duration=laufzeit)  
     kurz_inhalt = inhalt[inhalt.find('<div class="mod modA modGlossar shortNews"')+1:]
     spl=inhalt.split('<h3 class="headline"')
     for i in range(1,len(spl),1):
@@ -188,10 +211,15 @@ def list_serie(url):
            img=match[0]
        except:
             img=icon
+       try:
+         match=re.compile('<p class="teasertext">([^<]+)', re.DOTALL).findall(entry) 
+         desc=ersetze(match[0])
+       except:
+         desc=0       
        debug("list_serie url : "+ url)   
        debug("list_serie title : "+ title)   
        debug("list_serie img : "+ img)   
-       addLink(name=ersetze(title), url=baseurl+url, mode="folge", iconimage=baseurl+img)     
+       addLink(name=ersetze(title), url=baseurl+url, mode="folge", iconimage=baseurl+img,desc=desc)     
     
     
     
