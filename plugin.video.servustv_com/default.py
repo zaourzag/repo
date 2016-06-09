@@ -79,12 +79,10 @@ def listGenres():
 
 def listVideos(url):
     xbmc.log("XXX listVideos url :"+ url)
-    content = opener.open(url).read()
-    if 'class="white-background video-liste"' in content:
-        content = content[content.find('class="white-background video-liste"'):]
-    elif 'result-container' in content:
-        content = content[content.find('result-container'):]
-    spl = content.split('class="mol teaser large-')
+    debug("listVideos url : "+url)
+    content = opener.open(url).read()    
+    content = content[content.find('<div class="Flow-block">'):]
+    spl = content.split('<div class="mol teaser')
     for i in range(1, len(spl), 1):
         entry = spl[i]
         if 'class="ato btn playbutton"' in entry:
@@ -103,6 +101,7 @@ def listVideos(url):
                     duration = match[0]
                 match = re.compile('src="(.+?)"', re.DOTALL).findall(entry)
                 thumb = urlMain+match[0].replace("_stvd_teaser_small.jpg",".jpg").replace("_stvd_teaser_large.jpg",".jpg")
+                debug("listVideos title : "+title)
                 addLink(title, url, 'playVideo', thumb, "", duration)
     match = re.compile('class="next-site">.+?href="(.+?)"', re.DOTALL).findall(content)
     if match:        
