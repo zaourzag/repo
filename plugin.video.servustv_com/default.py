@@ -35,7 +35,16 @@ icon = xbmc.translatePath('special://home/addons/'+addonID+'/icon.png')
 opener = urllib2.build_opener()
 opener.addheaders = [('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; rv:30.0) Gecko/20100101 Firefox/30.0')]
 urlMain = "http://www.servustv.com"
+def debug(content):
+    log(content, xbmc.LOGDEBUG)
+    
+def notice(content):
+    log(content, xbmc.LOGNOTICE)
 
+def log(msg, level=xbmc.LOGNOTICE):
+    addon = xbmcaddon.Addon()
+    addonID = addon.getAddonInfo('id')
+    xbmc.log('%s: %s' % (addonID, msg), level) 
 
 def index():
     content = opener.open(urlMain+"/"+siteVersion+"/Videos").read()
@@ -47,6 +56,7 @@ def index():
     addDir(translation(30001), "", 'listGenres', defaultFanart)
     addDir(translation(30002), "", 'search', defaultFanart)
     addLink(translation(30004), "", 'playLiveStream', defaultFanart)
+    addDir(translation(30107), translation(30107), 'Settings', "")  
     xbmcplugin.endOfDirectory(pluginhandle)
 
 
@@ -134,15 +144,17 @@ def runCommand(args):
             return proc
     
 def playLiveStream():
-    #streamUrl=" http://hdiosstv-f.akamaihd.net/i/servustvhdde_1@75540/master.m3u8?b=0-1500"    
-    #http://hdiosstv-f.akamaihd.net/i/servustvhdde_1@75540/index_912_av-b.m3u8?sd=10&b=0-1500&rebase=on
-    xbmc.log("XXX uRL: " + qualityLive)
-    if qualityLive=="1": 
-      streamUrl="http://hdiosstv-f.akamaihd.net/i/servustvhdde_1@75540/index_1112_av-p.m3u8?sd=10&b=0-1500&rebase=on"
-    else :
-       streamUrl="http://hdiosstv-f.akamaihd.net/i/servustvhdde_1@75540/index_912_av-p.m3u8?sd=10&b=0-1500&rebase=on"
-    xbmc.log("XXX uRLx: " + streamUrl)
-    listitem = xbmcgui.ListItem(path=streamUrl)
+    if siteVersion=="de":    
+                streamUrl=" http://hdiosstv-f.akamaihd.net/i/servustvhdde_1@75540/master.m3u8?b=0-1500"    
+    else: 
+                streamUrl="http://hdiosstv-f.akamaihd.net/i/servustvhd_1@51229/master.m3u8"
+    content = opener.open(streamUrl).read()
+    match = re.compile('RESOLUTION=(.+?)x([0-9]+?).+?\n(.+?)\n', re.DOTALL).findall(content)
+    for resX, resY, url in match:
+        debug("resX"+resX)
+        if int(resY)<=quality:
+            finalURL=url      
+    listitem = xbmcgui.ListItem(path=url)
     xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
 
 
@@ -219,5 +231,7 @@ elif mode == 'queueVideo':
     queueVideo(url, name, thumb)
 elif mode == 'search':
     search()
+elif mode == 'Settings':
+          addon.openSettings()
 else:
     index()
