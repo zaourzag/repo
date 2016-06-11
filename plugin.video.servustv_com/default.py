@@ -47,34 +47,41 @@ def log(msg, level=xbmc.LOGNOTICE):
     xbmc.log('%s: %s' % (addonID, msg), level) 
 
 def index():
-    content = opener.open(urlMain+"/"+siteVersion+"/Videos").read()
-    match = re.compile('<section id="block-.+?<a href="(.+?)".*?>(.+?)<', re.DOTALL).findall(content)
-    for url, title in match:
+    addDir(translation(30001), urlMain+"/"+siteVersion, 'listGenres', defaultFanart)
+    addDir(translation(30002), urlMain+"/"+siteVersion+"/Videos", 'listGenres', defaultFanart)
+    addDir(translation(30008), urlMain+"/"+siteVersion+"/Themen", 'listGenres', defaultFanart)
+    addDir(translation(30010), "", 'search', defaultFanart)
+    addLink(translation(30011), "", 'playLiveStream', defaultFanart)
+    addDir(translation(30007), translation(30107), 'Settings', "")     
+    xbmcplugin.endOfDirectory(pluginhandle)
+
+
+def listGenres(url):
+    debug("listGenres url "+url)
+    xbmcplugin.addSortMethod(pluginhandle, xbmcplugin.SORT_METHOD_LABEL)
+    content = opener.open(url).read()
+    debug("------------------")
+    debug(content)
+    match = re.compile('h1 class="ato headline[^<]+<a href="(.+?)" >([^<]+?)<', re.DOTALL).findall(content)
+    found=0
+    for url2, title in match:        
+        debug("URL : "+url)
         title = cleanTitle(title)
         if title:
-            addDir(cleanTitle(title), urlMain+url, 'listVideos', defaultFanart)
-    addDir(translation(30001), "", 'listGenres', defaultFanart)
-    addDir(translation(30002), "", 'search', defaultFanart)
-    addLink(translation(30004), "", 'playLiveStream', defaultFanart)
-    addDir(translation(30107), translation(30107), 'Settings', "")  
-    xbmcplugin.endOfDirectory(pluginhandle)
-
-
-def listGenres():
-    genres = []
-    xbmcplugin.addSortMethod(pluginhandle, xbmcplugin.SORT_METHOD_LABEL)
-    content = opener.open(urlMain+"/"+siteVersion+"/Videos/Themen").read()
-    content = content[content.find('class="slider-videorubiken-head-container"'):]
-    match = re.compile('class="inner-teaser teaser-videorubriken">.+?href="(.+?)".*?>.*?src="(.+?)".*?class="ato text.*?">(.+?)<', re.DOTALL).findall(content)
-    for url, thumb, title in match:
+            found=1
+            addDir(cleanTitle(title), urlMain+url2, 'listGenres', defaultFanart)
+    if found==0:
+     match = re.compile('h2 class="ato headline[^<]+<a href="(.+?)" >([^<]+?)<', re.DOTALL).findall(content)    
+     for url2, title in match:        
+        debug("URL : "+url)
         title = cleanTitle(title)
-        thumb = urlMain+thumb.replace("_stvd_teaser_small.jpg",".jpg").replace("_stvd_teaser_large.jpg",".jpg")
-        if "/img/fallback_" in thumb:
-            thumb = defaultFanart
-        if title and not url in genres:
-            addDir(cleanTitle(title), urlMain+url, 'listVideos', thumb)
-            genres.append(url)
-    xbmcplugin.endOfDirectory(pluginhandle)
+        if title:
+            found=1
+            addDir(cleanTitle(title), urlMain+url2, 'listGenres', defaultFanart)
+    if found==0:
+      listVideos(url)
+    else:
+      xbmcplugin.endOfDirectory(pluginhandle)
 
 
 def listVideos(url):
@@ -221,7 +228,9 @@ thumb = urllib.unquote_plus(params.get('thumb', ''))
 if mode == 'listVideos':
     listVideos(url)
 elif mode == 'listGenres':
-    listGenres()
+    listGenres(url)
+elif mode == 'Sendungen':
+    Sendungen(url)
 elif mode == 'playVideo':
     playVideo(url,name)
 elif mode == 'playLiveStream':
