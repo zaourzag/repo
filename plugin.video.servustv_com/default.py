@@ -52,7 +52,7 @@ def index():
     addDir(translation(30008), urlMain+"/"+siteVersion+"/Themen", 'listGenres', defaultFanart)
     addDir(translation(30010), "", 'search', defaultFanart)
     addLink(translation(30011), "", 'playLiveStream', defaultFanart)
-    addDir(translation(30007), translation(30107), 'Settings', "")     
+    addDir(translation(30107), translation(30107), 'Settings', "")     
     xbmcplugin.endOfDirectory(pluginhandle)
 
 
