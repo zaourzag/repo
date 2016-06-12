@@ -58,7 +58,25 @@ def holejson(url,token=""):
   else:
     struktur = json.loads(content) 
     return struktur
-    
+
+def addDir_fav(name, url, mode, iconimage, desc="",ids=""):
+  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&ids="+str(ids)
+  ok = True
+  liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=iconimage)
+  liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc})
+  if useThumbAsFanart:
+    if not iconimage or iconimage==icon or iconimage==defaultThumb:
+      iconimage = defaultBackground
+    liz.setProperty("fanart_image", iconimage)
+  else:
+    liz.setProperty("fanart_image", defaultBackground)
+  commands = []
+  favdel= "plugin://plugin.video.youtv/?mode=favdel&ids="+urllib.quote_plus(str(ids))
+  commands.append(( translation(30139), 'XBMC.RunPlugin('+ favdel +')'))   
+  liz.addContextMenuItems( commands )
+  ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
+  return ok
+  
 def addDir(name, url, mode, iconimage, desc="",ids=""):
   u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&ids="+str(ids)
   ok = True
@@ -319,7 +337,7 @@ def liste(url,filter):
    content=getUrl(url,token=token) 
    debug("+X:"+ content)
    struktur = json.loads(content)   
-   themen=struktur[filter]   
+   themen=struktur[filter]    
    zeigedate=addon.getSetting("zeigedate")
    for name in themen:
      #2016-02-26T21:15:00.000+01:00
@@ -619,11 +637,17 @@ def addit(id):
   data = urllib.urlencode(values)
   content=getUrl("https://www.youtv.de/api/v2/archived_broadcasts.json?platform=ios",token=token,data=data)
 
-def delit(id):
+def delit(id=0,url=""):
+  debug("----- id :" +str(id))
+  debug("---- URL ;"+str(url))
   token=login() 
   mytoken="Token token="+ token
   userAgent = "YOUTV/1.2.7 CFNetwork/758.2.8 Darwin/15.0.0"  
-  query_url = "https://www.youtv.de/api/v2/archived_broadcasts/"+ str(id)+".json?platform=ios"
+  if id>0:
+    query_url = "https://www.youtv.de/api/v2/archived_broadcasts/"+ str(id)+".json?platform=ios"
+  else:
+     query_url ="https://www.youtv.de/api/v2/search_texts/"+str(url)+".json?locale=de&platform=android&version_code=9&platform_version=21"    
+  debug("---- query_url :"+query_url)
   headers = {
       'User-Agent': userAgent,
       'Authorization': mytoken
@@ -682,13 +706,46 @@ def seriendel_direkt(serie):
     url = urllib2.urlopen(req) 
     xbmc.executebuiltin("Container.Refresh")
 
+def Favoritenfiner():
+   token=login()
+   content=getUrl("https://www.youtv.de/api/v2/search_texts.json?locale=de&platform=android&version_code=9&platform_version=21",token=token)
+   addDir(translation(30138), translation(30138), 'AddFav', "")
+   struktur = json.loads(content)    
+   for element in struktur["search_texts"]:
+       debug("-------")
+       debug(element)
+       debug("-------")
+       text=element["text"]
+       url=element["broadcasts_url"]
+       id=element["id"]
+       debug(element)
+       addDir_fav(text, url, 'ListFav', "",ids=id)               
+   #Text=struktur{"search_texts"}["Text"]
+   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
 
+def AddFav():
+   dialog = xbmcgui.Dialog()
+   d = dialog.input(translation(30010), type=xbmcgui.INPUT_ALPHANUM)
+   d=urllib.quote(d, safe='')
+   token=login()
+   values = {
+         'search_text[text]' : d,
+   }
+   data = urllib.urlencode(values)
+   content=getUrl("https://www.youtv.de/api/v2/search_texts.json?locale=de&platform=android&version_code=9&platform_version=21",token=token,data=data)
+   xbmc.executebuiltin("Container.Refresh")
+
+def favdel(ids):
+   debug("2. IDS"+ str(ids))  
+   delit(url=ids)
+   
 if mode is '':
     tage=abodauer()
     addDir(translation(30103), translation(30001), 'TOP', "")
     addDir(translation(30104), translation(30005), 'Genres',"")
     addDir(translation(30105), translation(30006), 'Sender', "")   
     addDir(translation(30107), translation(30107), 'Search', "")  
+    addDir(translation(30137), translation(30137), 'Favoritenfiner', "")  
     # Langzeitarchiv / Serienaufnahme erst ab Pro-Abo
     if tage > 3:
        addDir(translation(30108), translation(30108), 'Archive',"")  
@@ -728,7 +785,7 @@ else:
   if mode == 'addit':  
           addit(url)
   if mode == 'delit':  
-          delit(url)          
+          delit(ids=url)          
   if mode == 'Subgeneres':  
           subgenres(ids)
   if mode == 'sadd':  
@@ -739,6 +796,15 @@ else:
           serienadd_direkt(url) 
   if mode == 'sdeldirekt':              
           seriendel_direkt(url)
+  if mode == 'Favoritenfiner':              
+          Favoritenfiner()        
+  if mode == 'ListFav':              
+          liste(url,"broadcasts")
+  if mode == 'AddFav':              
+          AddFav()
+  if mode == 'favdel': 
+          debug("1. IDS" + str(ids)) 
+          favdel(ids)          
   if mode == 'download':              
           download(url)
 
