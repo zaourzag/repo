@@ -1,0 +1,239 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
+import sys
+import urlparse
+import xbmcgui
+import xbmcplugin
+import xbmcaddon
+import xbmc
+import xbmcvfs
+import urllib, urllib2, socket, cookielib, re, os, shutil,json
+import time
+import datetime
+
+# Setting Variablen Des Plugins
+global debuging
+base_url = sys.argv[0]
+addon_handle = int(sys.argv[1])
+
+args = urlparse.parse_qs(sys.argv[2][1:])
+addon = xbmcaddon.Addon()
+# Lade Sprach Variablen
+translation = addon.getLocalizedString
+defaultBackground = ""
+defaultThumb = ""
+profile    = xbmc.translatePath( addon.getAddonInfo('profile') ).decode("utf-8")
+temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
+#Directory für Token Anlegen
+if not xbmcvfs.exists(temp):       
+       xbmcvfs.mkdirs(temp)
+       
+
+icon = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')+'/icon.png').decode('utf-8')
+useThumbAsFanart=addon.getSetting("useThumbAsFanart") == "true"
+
+
+
+def debug(content):
+    log(content, xbmc.LOGDEBUG)
+    
+def notice(content):
+    log(content, xbmc.LOGNOTICE)
+
+def log(msg, level=xbmc.LOGNOTICE):
+    addon = xbmcaddon.Addon()
+    addonID = addon.getAddonInfo('id')
+    xbmc.log('%s: %s' % (addonID, msg), level) 
+
+def parameters_string_to_dict(parameters):
+  paramDict = {}
+  if parameters:
+    paramPairs = parameters[1:].split("&")
+    for paramsPair in paramPairs:
+      paramSplits = paramsPair.split('=')
+      if (len(paramSplits)) == 2:
+        paramDict[paramSplits[0]] = paramSplits[1]
+  return paramDict
+  
+    
+def addDir(name, url, mode, iconimage, desc=""):
+  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
+  ok = True
+  liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=iconimage)
+  liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc})
+  if useThumbAsFanart:
+    if not iconimage or iconimage==icon or iconimage==defaultThumb:
+      iconimage = defaultBackground
+    liz.setProperty("fanart_image", iconimage)
+  else:
+    liz.setProperty("fanart_image", defaultBackground)
+  ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
+  return ok
+  
+def addLink(name, url, mode, iconimage, duration="", desc="",artist_id="",genre="",shortname="",production_year=0,zeit=0):
+  cd=addon.getSetting("password")  
+  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
+  ok = True
+  liz = xbmcgui.ListItem(name, iconImage=defaultThumb, thumbnailImage=iconimage)
+  liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Genre": genre,"Sorttitle":shortname,"Dateadded":zeit,"year":production_year })
+  liz.setProperty('IsPlayable', 'true')
+  liz.addStreamInfo('video', { 'duration' : duration })
+  liz.setProperty("fanart_image", iconimage)
+  xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
+  ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
+  return ok
+
+
+def getUrl(url,data="x"):        
+        print("Get Url: " +url)
+        opener = urllib2.build_opener(urllib2.HTTPCookieProcessor())
+        userAgent = "Dalvik/2.1.0 (Linux; U; Android 5.0;)"
+        opener.addheaders = [('User-Agent', userAgent)]
+        try:
+          if data!="x" :
+             content=opener.open(url,data=data).read()
+          else:
+             content=opener.open(url).read()
+        except urllib2.HTTPError as e:
+             #print e.code   
+             cc=e.read()  
+             struktur = json.loads(cc)  
+             error=struktur["errors"][0] 
+             error=unicode(error).encode("utf-8")
+             debug("ERROR : " + error)
+             dialog = xbmcgui.Dialog()
+             nr=dialog.ok("Error", error)
+             return ""
+             
+        opener.close()
+        return content
+
+
+      #addDir(namenliste[i], namenliste[i], mode+datum,logoliste[i],ids=str(idliste[i]))
+   #xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)   
+
+def ListeChannels(url):
+  content=getUrl(url)
+  struktur = json.loads(content)
+  for element in struktur:   
+    title=element["asset"]["title"]
+    kuenstler_name=element["asset"]["display_artist_title"]
+    kuenstler_id=element["asset"]["artist_id"]
+    video_file_id=element["asset"]["video_file_id"]
+    Token=element["asset"]["token"]
+    duration=element["asset"]["duration"]
+    iconimage=getbild(video_file_id)
+
+    
+    
+    debug("VIDEOID: "+str(video_file_id))
+    debug("iconimage :"+iconimage)
+    
+    
+    addLink(title +"("+kuenstler_name+")", Token, "playvideo", iconimage, duration=duration, desc="",artist_id=kuenstler_id)
+    debug("--------------")
+  xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)   
+
+def getbild(video_file_id):
+    longid="%07d"%video_file_id
+    einsbisdrei=str(longid)[0:5]
+    iconimage="http://files.putpat.tv/artwork/posterframes/"+ einsbisdrei +"/" + longid +"/v"+longid+"_posterframe_putpat_large.jpg"
+    return iconimage
+    
+def ListeVideos(url):
+  content=getUrl(url)
+  struktur = json.loads(content)
+  for element in struktur:   
+    title=element["asset"]["title"]
+    kuenstler_name=element["asset"]["display_artist_title"]
+    kuenstler_id=element["asset"]["artist_id"]
+    video_file_id=element["asset"]["video_file_id"]
+    Token=element["asset"]["token"]
+    #duration=element["asset"]["duration"]
+    iconimage=getbild(video_file_id)
+    
+    
+    debug("VIDEOID: "+str(video_file_id))
+    debug("iconimage :"+iconimage)
+    
+    
+    addLink(title +"("+kuenstler_name+")", Token, "playvideo", iconimage, desc="",artist_id=kuenstler_id)
+    debug("--------------")
+  xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)   
+
+def Playvideo(token):
+  file="https://www.putpat.tv/ws.json?method=Asset.getClipForToken&token="+token+"&streaming_method=http&client=android_phone&player_id=2"
+  content=getUrl(file)
+  struktur = json.loads(content)
+  file2=struktur[0]["clip"]["tokens"]["medium"]
+  debug("File2 : "+file2)
+  listitem = xbmcgui.ListItem(path=file2)  
+  xbmcplugin.setResolvedUrl(addon_handle,True, listitem)  
+
+def Listekanaele(url):
+  content=getUrl(url)
+  struktur = json.loads(content)
+  for name in struktur:
+   debug("....")
+   debug(name["channel"])
+   debug("....")
+   id=name["channel"]["id"]
+   title=name["channel"]["title"]
+   addLink(title , str(id), "playKanal", "http://files.putpat.tv/artwork/channelgraphics/"+str(id)+"/channellogo_150.png")
+  xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
+   
+def playKanal(url,id):
+    content=getUrl(url)
+    struktur = json.loads(content)
+    playlist = xbmc.PlayList(1)
+    playlist.clear()    
+    for name in struktur:
+      id=name["channel"]["id"]
+      if id==int(id):
+        for clip in name["channel"]["clips"]:
+           debug("------------")    
+           debug(clip)           
+           urln=clip["clip"]["tokens"]["medium"]
+           debug(urln)
+           artist=clip["clip"]["asset"]["artist"]["title"]
+           title=clip["clip"]["asset"]["title"] 
+           clipid=clip["clip"]["video_file_id"]
+           bild=getbild(clipid)
+           listItem = xbmcgui.ListItem(artist + ' - ' + title, thumbnailImage = bild)
+           playlist.add(urln, listItem)
+    listItem = xbmcgui.ListItem('', thumbnailImage = '')
+    xbmcplugin.setResolvedUrl(handle=int(sys.argv[1]), succeeded=False, listitem=listItem)
+    xbmc.Player().play(playlist)    
+params = parameters_string_to_dict(sys.argv[2])
+mode = urllib.unquote_plus(params.get('mode', ''))
+url = urllib.unquote_plus(params.get('url', ''))
+
+if mode is '':
+    addDir(translation(30102), translation(30002), 'Home', "")
+    addDir(translation(30103), translation(30003), 'Top',"")
+    addDir(translation(30104), translation(30004), 'New', "")   
+    addDir(translation(30105), translation(30105), 'Empfehlungen', "")  
+    addDir(translation(30106), translation(30106), 'Kanaele', "")  
+    addDir(translation(30107), translation(30107), 'Suche', "")  
+    addDir(translation(30108), translation(30108), 'Settings', "")        
+    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
+else:
+  # Wenn Settings ausgewählt wurde
+  if mode == 'Settings':
+          addon.openSettings()
+  # Wenn Kategory ausgewählt wurde
+  if mode == 'Top':
+          ListeVideos("https://www.putpat.tv/ws.json?method=Asset.collection&type=top_rated&client=android_phone&player_id=2") 
+  if mode == 'New':
+          ListeVideos("https://www.putpat.tv/ws.json?method=Asset.collection&type=new&client=android_phone&player_id=2") 
+  if mode == 'Empfehlungen':
+          ListeVideos("https://www.putpat.tv/ws.json?method=Asset.similarAssets&limit=20&assetId=1&client=android_phone&player_id=2")    
+  if mode == 'Kanaele':
+          Listekanaele("https://www.putpat.tv/ws.json?method=Channel.allWithClips&streamingMethod=http&client=android_phone&player_id=2")           
+  if mode == 'playvideo':
+          Playvideo(token=url) 
+  if mode == 'Kanaele':
+          Listekanaele("https://www.putpat.tv/ws.json?method=Channel.allWithClips&streamingMethod=http&client=android_phone&player_id=2")              
+  if mode == 'playKanal':
+          playKanal("https://www.putpat.tv/ws.json?method=Channel.allWithClips&streamingMethod=http&client=android_phone&player_id=2",id=url)              

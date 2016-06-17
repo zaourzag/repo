@@ -1174,4 +1174,24 @@ Orginal Code was from AddonScriptorDE</disclaimer>
 </addon>
 
 
+<addon id="plugin.video.ampya" name="Ampya (Work in Progress)" version="0.1" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Ampya</summary>
+    <summary lang="de">Ampya</summary>
+    <description lang="en">Ampya</description>
+    <description lang="de">Ampya</description>
+    <website></website>
+    <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.ampya</source>
+    <forum>http://www.kodinerds.net/</forum>
+    <email>andreas at vogler dot name</email>
+    <platform>all</platform>
+  </extension>
+</addon>
+
 </addons>
