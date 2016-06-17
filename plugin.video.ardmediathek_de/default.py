@@ -386,7 +386,7 @@ def listChannel(channel):
 
 def listCats(type):
   addDir(translation(30036), baseUrl+"/tv/Comedy-Satire/mehr?documentId=26405766"           + '&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
-  addDir(translation(30004), baseUrl+"/tv/Film-Highlights/mehr?documentId=21301808"         + '&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
+  addDir(translation(30004), baseUrl+"/tv/Ausgewählte-Filme/mehr?documentId=33649088"         + '&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
   addDir(translation(30018), baseUrl+"/tv/Info/mehr?documentId=21301900"                    + '&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
   addDir(translation(30031), baseUrl+"/tv/Kinder-Familie/mehr?documentId=21282542"          + '&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
   addDir(translation(30032), baseUrl+"/tv/Kultur/mehr?documentId=21282546"                  + '&m23644322=quelle.tv&rss=true', 'listVideosRss', "", nextPage=True, einsLike=True)
