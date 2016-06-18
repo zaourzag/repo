@@ -186,6 +186,7 @@ def Listekanaele(url):
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
   
 def monitor_playlist(cliplist,playlist,url,id)   :
+    counter=0
     while xbmc.Player().isPlaying():
         if counter > 120:
            debug("Suche neue Clips")
@@ -202,8 +203,12 @@ def clipseinlesen(playlist,url,id):
     global cliplist
     global filelist
     for name in struktur:
-      id=name["channel"]["id"]
-      if id==int(id):
+      debug("-------")
+      #debug(name["channel"])
+      debug("Such iD : "+ id)
+      ids=name["channel"]["id"]
+      debug("iD : "+ str(ids))
+      if int(id)==int(ids):
         for clip in name["channel"]["clips"]:
            debug("------------")    
            debug(clip)           
