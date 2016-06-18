@@ -23,6 +23,8 @@ addon = xbmcaddon.Addon()
 translation = addon.getLocalizedString
 defaultBackground = ""
 defaultThumb = ""
+cliplist=[]
+filelist=[]
 profile    = xbmc.translatePath( addon.getAddonInfo('profile') ).decode("utf-8")
 temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
 #Directory für Token Anlegen
@@ -182,12 +184,23 @@ def Listekanaele(url):
    title=name["channel"]["title"]
    addLink(title , str(id), "playKanal", "http://files.putpat.tv/artwork/channelgraphics/"+str(id)+"/channellogo_150.png")
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
-   
-def playKanal(url,id):
+  
+def monitor_playlist(cliplist,playlist,url,id)   :
+    while xbmc.Player().isPlaying():
+        if counter > 120:
+           debug("Suche neue Clips")
+           clipseinlesen(playlist,url,id)        
+           counter=0
+        time.sleep(1)
+        counter=counter+1    
+
+      
+        
+def clipseinlesen(playlist,url,id):
     content=getUrl(url)
     struktur = json.loads(content)
-    playlist = xbmc.PlayList(1)
-    playlist.clear()    
+    global cliplist
+    global filelist
     for name in struktur:
       id=name["channel"]["id"]
       if id==int(id):
@@ -196,15 +209,29 @@ def playKanal(url,id):
            debug(clip)           
            urln=clip["clip"]["tokens"]["medium"]
            debug(urln)
-           artist=clip["clip"]["asset"]["artist"]["title"]
-           title=clip["clip"]["asset"]["title"] 
-           clipid=clip["clip"]["video_file_id"]
+           artist=clip["clip"]["asset"]["artist"]["title"].encode("utf-8")
+           title=clip["clip"]["asset"]["title"] .encode("utf-8")
+           clipid=clip["clip"]["video_file_id"]           
            bild=getbild(clipid)
-           listItem = xbmcgui.ListItem(artist + ' - ' + title, thumbnailImage = bild)
-           playlist.add(urln, listItem)
+           if not clipid in cliplist:
+             debug("Adde Clib : "+artist + ' - ' + title)
+             listItem = xbmcgui.ListItem(artist + ' - ' + title, thumbnailImage = bild)
+             playlist.add(urln, listItem)
+             cliplist.append(clipid)   
+             filelist.append(url)
+           
+def playKanal(url,id):
+    global cliplist        
+    playlist = xbmc.PlayList(1)
+    playlist.clear() 
+    cliplist=[]
+    debug("Playliste gelöscht")
+    clipseinlesen(playlist,url,id)    
     listItem = xbmcgui.ListItem('', thumbnailImage = '')
     xbmcplugin.setResolvedUrl(handle=int(sys.argv[1]), succeeded=False, listitem=listItem)
-    xbmc.Player().play(playlist)    
+    xbmc.Player().play(playlist) 
+    monitor_playlist(cliplist,playlist,url,id)    
+
 params = parameters_string_to_dict(sys.argv[2])
 mode = urllib.unquote_plus(params.get('mode', ''))
 url = urllib.unquote_plus(params.get('url', ''))
