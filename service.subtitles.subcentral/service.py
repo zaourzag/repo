@@ -161,7 +161,11 @@ def oldthread(url,staffel,old=1):
     if len(contentx)>10:
       content=contentx
     else:
-       content = content[content.find('<!-- Hier Bilderserie (Bilder-Modul) einfügen. [Optinal] -->'):]    
+       contentx = content[content.find('<!-- Hier Bilderserie (Bilder-Modul) einfügen. [Optinal] -->'):]   
+       if len(contentx)>10:
+           content=contentx
+       else:
+         contentx = content[content.find('<div class="messageFooterRight">'):]         
     debug("________"+ content)
     content = content[content.find('<div class="baseSC">'):]
     content = content[:content.find('<div class="bhinweis">')]
@@ -171,9 +175,9 @@ def oldthread(url,staffel,old=1):
     else:
        spl = content.split('<div class="baseSC">')
     gefunden=0
-    for i in range(1, len(spl), 1):
-       
+    for i in range(1, len(spl), 1):       
        element=spl[i]         
+       debug("Zeile A:"+element)
        #HEADER
        header=element[element.find('<thead>')+1:]
        header = header[:header.find('</thead>')]
@@ -199,7 +203,7 @@ def oldthread(url,staffel,old=1):
        subs_element = subs_element[:subs_element.find('<!-- /Tabellen-Modul -->')]
        zeilen = subs_element.split('<tr')
        
-       for zeile in range(1, len(zeilen), 1):              
+       for zeile in range(1, len(zeilen), 1):           
            z_elemet=zeilen[zeile]
            spalten = z_elemet.split('<td')
            for spalte in range(0, len(spalten)-1, 1):                
@@ -299,7 +303,7 @@ def list_folgen(url,staffel):
                     data=getUrl(urln)
                     debug("++++\n"+ data)
                     content=getUrl(url)
-  if "reative/bilder/flags" in content :
+  if "creative/bilder/flags" in content:
      oldthread(url,staffel,1)
   elif "<!-- Englische Untertitel -->" in content or "<h2>Englische Untertitel:</h2>" in content:
     oldthread(url,staffel,0)
