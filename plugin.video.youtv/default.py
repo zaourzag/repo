@@ -91,7 +91,9 @@ def addDir(name, url, mode, iconimage, desc="",ids=""):
   ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
   return ok
   
-def addLink(name, url, mode, iconimage, duration="", desc="", genre='',shortname="",zeit="",production_year="",abo=1):
+def addLink(name, url, mode, iconimage, duration="", desc="", genre='',shortname="",zeit="",production_year="",abo=1,search=""):
+  debug ("addLink abo " + str(abo))
+  debug ("addLink abo " + str(shortname))
   cd=addon.getSetting("password")  
   u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
   ok = True
@@ -109,18 +111,24 @@ def addLink(name, url, mode, iconimage, duration="", desc="", genre='',shortname
   serienadd = "plugin://plugin.video.youtv/?mode=sadd&url="+urllib.quote_plus(url)
   
   download = "plugin://plugin.video.youtv/?mode=download&url="+urllib.quote_plus(url) 
+  search = "plugin://plugin.video.youtv/?mode=Search&wort="+urllib.quote_plus(search)+"&url="
   # Langzeitarchiv/Serien erst ab Pro-Account
+  commands.append(( translation(30143), 'ActivateWindow(Videos,'+ search +')'))
   if abo >3 :
     commands.append(( translation(30112), 'XBMC.RunPlugin('+ finaladd +')'))   
     commands.append(( translation(30113), 'XBMC.RunPlugin('+ finaldel +')'))   
     commands.append(( translation(30114), 'XBMC.RunPlugin('+ serienadd +')'))   
-    commands.append(( translation(30115), 'XBMC.RunPlugin('+ seriendel +')'))  
+    commands.append(( translation(30115), 'XBMC.RunPlugin('+ seriendel +')'))      
   # Download erst ab Basic-Account
   if cd=="4921" or abo>1:
-     commands.append(( translation(30116), 'XBMC.RunPlugin('+ download +')'))     
+     commands.append(( translation(30116), 'XBMC.RunPlugin('+ download +')'))    
+  debug("1.")     
   liz.addContextMenuItems( commands )
+  debug("2.")     
   xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
-  ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
+  debug("3.")     
+  ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)  
+  debug("4.")     
   return ok
 
 def addLinkarchive(name, url, mode, iconimage, duration="", desc="", genre='',shortname="",zeit="",production_year=""):
@@ -205,7 +213,13 @@ def getUrl(url,data="x",token=""):
              
         opener.close()
         return content
-
+def cachelear():
+    if xbmcvfs.exists(temp+"/token")  :
+      xbmcvfs.delete(temp+"/token")
+      if not xbmcvfs.exists(temp+"/token")  :
+         dialog2 = xbmcgui.Dialog()
+         ok = xbmcgui.Dialog().ok( translation(30142), translation(30142) )
+    
 def login():
    global addon   
    if xbmcvfs.exists(temp+"/token")  :
@@ -365,6 +379,7 @@ def liste(url,filter):
        times=match[0][3] +":"+match[0][4]
      start=match[0][0] +"."+ match[0][1] +"."+ match[0][2] +" "+ match[0][3] +":"+match[0][4] +":00"
      title=unicode(name["title"]).encode("utf-8")
+     search=unicode(name["title"]).encode("utf-8")
      subtitle=unicode(name["subtitle"]).encode("utf-8")
      if subtitle!= "None":
        title=title+" ( "+subtitle +" )"
@@ -377,7 +392,7 @@ def liste(url,filter):
        if filter!="archived_broadcasts":
          if diftime2 < tage:
 	   # Mediathek begrenzt durch Abodauer (Free = 1 Tag, Basic-Abo = 3 Tage, Pro-Abo = 7 Tage)
-           addLink(times + " - " + title, id, "playvideo", bild, duration=duration, desc="", genre=genres,shortname=title,zeit=start,production_year=production_year,abo=tage)
+           addLink(times + " - " + title, id, "playvideo", bild, duration=duration, desc="", genre=genres,shortname=title,zeit=start,production_year=production_year,abo=tage,search=search)
        else:
 	 # Langzeitarchiv ohne Begrenzung durch Abodauer
          addLinkarchive(times + " - " + title, id, "playvideo", bild, duration=duration, desc="", genre=genres, shortname=title, zeit=start, production_year=production_year)
@@ -563,12 +578,17 @@ mode = urllib.unquote_plus(params.get('mode', ''))
 url = urllib.unquote_plus(params.get('url', ''))
 ids = urllib.unquote_plus(params.get('ids', ''))
 genid = urllib.unquote_plus(params.get('genid', ''))
-
-def search(url=""):
+wort=""
+wort = urllib.unquote_plus(params.get('wort', ''))
+def search(url="",wort=""):
+   debug("SEARCH URL :"+url)
    filter="broadcasts"
-   dialog = xbmcgui.Dialog()
-   d = dialog.input(translation(30010), type=xbmcgui.INPUT_ALPHANUM)
-   d=urllib.quote(d, safe='')
+   if wort=="":
+     dialog = xbmcgui.Dialog()
+     d = dialog.input(translation(30010), type=xbmcgui.INPUT_ALPHANUM)
+     d=urllib.quote(d, safe='')
+   else:
+     d=urllib.quote(wort, safe='')
    token=login()
    tage=abodauer(token)
    content=getUrl("https://www.youtv.de/api/v2/broadcasts/search.json?q="+ d +"&platform=ios",token=token)
@@ -611,6 +631,7 @@ def search(url=""):
        times=match[0][3] +":"+match[0][4] +" "
      start=match[0][0] +"."+ match[0][1] +"."+ match[0][2] +" "+ match[0][3] +":"+match[0][4] +":00"
      title=unicode(name["title"]).encode("utf-8")
+     search=unicode(name["title"]).encode("utf-8")
      subtitle=unicode(name["subtitle"]).encode("utf-8")
      if subtitle!= "None":
        title=title+" ( "+subtitle +" )"
@@ -619,8 +640,9 @@ def search(url=""):
      duration=str(name["duration"])
      genres=unicode(name["genre"]["name"]).encode("utf-8") 
      production_year=unicode(name["production_year"]).encode("utf-8")      
-     if enttime < nowtime and diftime2<tage:     
-       addLink(times + " - " + title, id, "playvideo", bild, duration=duration, desc="", genre=genres,shortname=title,zeit=start,production_year=production_year,abo=tage)
+     if enttime < nowtime and diftime2<tage:             
+       debug("Adde Link")
+       addLink(times + " - " + title, id, "playvideo", bild, duration=duration, desc="", genre=genres,shortname=title,zeit=start,production_year=production_year,abo=tage,search=search)
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 # Haupt Menu Anzeigen      
 
@@ -781,11 +803,11 @@ else:
   if mode == 'playvideo':  
           playvideo(url)  
   if mode == 'Search':  
-          search(url)           
+          search(url,wort=wort)           
   if mode == 'addit':  
           addit(url)
   if mode == 'delit':  
-          delit(ids=url)          
+          delit(id=url)          
   if mode == 'Subgeneres':  
           subgenres(ids)
   if mode == 'sadd':  
@@ -807,5 +829,6 @@ else:
           favdel(ids)          
   if mode == 'download':              
           download(url)
-
+  if mode == 'cachelear':              
+          cachelear()
           

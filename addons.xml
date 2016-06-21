@@ -663,22 +663,6 @@
   </requires>
 </addon>
 
-<addon id="plugin.video.putpat" name="Putpat.tv" version="0.8" provider-name="Johannes">
-    <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <summary lang="de">Putpat.tv Musikvideos</summary>
-        <summary lang="en">Putpat.tv music videos</summary>
-        <description lang="de">Dieses Plugin spielt Musikvideos von putpat.tv ab.</description>
-        <description lang="en">This plugin plays music videos from putpat.tv.</description>
-    </extension>
-</addon>
-
 <addon id="plugin.video.ran_de" name="ran" version="2.0.2" provider-name="PUR3">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
@@ -965,7 +949,7 @@ Orginal Code was from AddonScriptorDE</disclaimer>
 	</extension>
 </addon>
 
-<addon id="plugin.video.youtv" name="Youtv" version="0.4.22" provider-name="L0RE">
+<addon id="plugin.video.youtv" name="Youtv" version="0.4.23" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
     </requires>
