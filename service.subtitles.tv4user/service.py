@@ -245,14 +245,20 @@ def get_content(content,lang ):
                debug("Untertitel: Folgenr: "+ folge)
                debug("Untertitel: Folge: " + untertitel[untertitelnr][0])
                debug("Untertitel: Release: " + untertitel[untertitelnr][1])
-               debug("Untertitel: Qualität: " + ueberschrift[spaltennr])
+               try:
+                 debug("Untertitel: Qualität: " + ueberschrift[spaltennr])
+               except:
+                 pass
                debug("Untertitel: Sprache: " + lang)
                debug("------------------")               
                untertitel_link_array.append(untertitel[untertitelnr][0])
                untertitel_release_array.append(untertitel[untertitelnr][1])
-               untertitel_qualitaet.append(ueberschrift[spaltennr-1])
+               try:
+                   untertitel_qualitaet.append(ueberschrift[spaltennr-1])
+               except:
+                    untertitel_qualitaet.append("")
                untertitel_lang.append(lang)
-               if untertitel[untertitelnr][0] and untertitel[untertitelnr][1] and ueberschrift[spaltennr-1] and lang :
+               if untertitel[untertitelnr][0] and untertitel[untertitelnr][1]  and lang :
                   folge_array.append(folge)
     # Wenn alles Gefüllt ist sortieren, wenn nicht, werden nur die Leeren Arrays zurueckgegeben
     if folge_array and untertitel_qualitaet and untertitel_release_array and untertitel_link_array and untertitel_lang:
@@ -491,7 +497,8 @@ def clearSubTempDir(pfad):
             pass
 #Neue Untertitel Holen            
 def setSubtitle(subUrl):  
-        subtitle_list = []    
+        subtitle_list = []   
+        filelist = []
         debug("SUB: " + subUrl)  
         downloadfile=xbmc.translatePath(subdownload+subtitlefile)
         clearSubTempDir(subdownload)
@@ -509,12 +516,19 @@ def setSubtitle(subUrl):
         debug("Versuche file zu entpacken in "+ subdir)
         xbmc.executebuiltin("XBMC.Extract("+Paket+", "+subdir+")",True)
         for file in xbmcvfs.listdir(subdir)[1]:
+           filelist.append(file)
            file = os.path.join(subdir, file)
            subtitle_list.append(file)
-        for sub in subtitle_list:
+        if len(subtitle_list) > 1:
+            dialog = xbmcgui.Dialog()
+            nr=dialog.select("TV4User.de", filelist)
+            sub=subtitle_list[nr]
+            listitem = xbmcgui.ListItem(label=sub)
+        else:
+           for sub in subtitle_list:
              debug("XXYX: "+ sub)
              listitem = xbmcgui.ListItem(label=sub)
-             xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=sub,listitem=listitem,isFolder=False)
+        xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=sub,listitem=listitem,isFolder=False)
         xbmcplugin.endOfDirectory(addon_handle)
 
 
