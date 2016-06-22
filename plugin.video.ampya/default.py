@@ -237,6 +237,51 @@ def playKanal(url,id):
     xbmc.Player().play(playlist) 
     monitor_playlist(cliplist,playlist,url,id)    
 
+def Search():
+     dialog = xbmcgui.Dialog()
+     d = dialog.input(translation(30010), type=xbmcgui.INPUT_ALPHANUM)
+     d=urllib.quote(d, safe='')
+     content=getUrl("https://www.putpat.tv/ws.json?method=Asset.quickbarSearch&searchterm="+d+"&client=android_phone&player_id=2")
+     struktur = json.loads(content)
+     result=struktur["quickbar_search"]
+     videos=result["music_videos"]  
+     artists=result["artists"]     
+     if len(artists)>0:
+       addDir("Künstler",d, "list_artists", "")           
+     if len(videos)>0:
+        addDir("Lieder",d, "list_songs", "")    
+     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)  
+     
+def list_songs(url):     
+    debug("list_artists")
+    content=getUrl("https://www.putpat.tv/ws.json?method=Asset.quickbarSearch&searchterm="+url+"&client=android_phone&player_id=2")
+    struktur = json.loads(content)
+    result=struktur["quickbar_search"]
+    videos=result["music_videos"]    
+    for video in videos:     
+      Token=video["token"]
+      kuenstler_name=video["display_artist_title"]
+      title=video["title"]
+      kuenstler_id=video["artist_id"]
+      video_file_id=video["video_file_id"]
+      iconimage=getbild(video_file_id)
+      addLink(title +"("+kuenstler_name+")", Token, "playvideo", iconimage, desc="",artist_id=kuenstler_id)      
+    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)      
+     
+def list_artists(url):     
+    debug("list_artists")
+    content=getUrl("https://www.putpat.tv/ws.json?method=Asset.quickbarSearch&searchterm="+url+"&client=android_phone&player_id=2")
+    struktur = json.loads(content)
+    result=struktur["quickbar_search"]
+    videos=result["music_videos"]
+    artists=result["artists"]
+    for artist in artists:     
+        addDir(artist["title"],str(artist["id"]), "songs_from_artist", "")        
+    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)   
+def songs_from_artist(id):
+    ListeVideos("https://www.putpat.tv/ws.json?method=Artist.assetsByArtistId&artistId="+id+"&client=android_phone&player_id=2")
+    
+
 params = parameters_string_to_dict(sys.argv[2])
 mode = urllib.unquote_plus(params.get('mode', ''))
 url = urllib.unquote_plus(params.get('url', ''))
@@ -265,7 +310,15 @@ else:
           Listekanaele("https://www.putpat.tv/ws.json?method=Channel.allWithClips&streamingMethod=http&client=android_phone&player_id=2")           
   if mode == 'playvideo':
           Playvideo(token=url) 
+  if mode == 'Suche':
+          Search() 
   if mode == 'Kanaele':
           Listekanaele("https://www.putpat.tv/ws.json?method=Channel.allWithClips&streamingMethod=http&client=android_phone&player_id=2")              
   if mode == 'playKanal':
           playKanal("https://www.putpat.tv/ws.json?method=Channel.allWithClips&streamingMethod=http&client=android_phone&player_id=2",id=url)              
+if mode == 'list_artists':
+          list_artists(url) 
+if mode == 'list_songs':
+          list_songs(url) 
+if mode == 'songs_from_artist':     
+     songs_from_artist(url)
