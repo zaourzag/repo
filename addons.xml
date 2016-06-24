@@ -1158,7 +1158,7 @@ Orginal Code was from AddonScriptorDE</disclaimer>
 </addon>
 
 
-<addon id="plugin.video.ampya" name="Ampya" version="0.1.4" provider-name="L0RE">
+<addon id="plugin.video.ampya" name="Ampya" version="0.1.5" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
     </requires>

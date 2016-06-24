@@ -187,13 +187,19 @@ def Listekanaele(url):
   
 def monitor_playlist(cliplist,playlist,url,id)   :
     counter=0
-    while xbmc.Player().isPlaying():
-        if counter > 120:
-           debug("Suche neue Clips")
-           clipseinlesen(playlist,url,id)        
-           counter=0
+    counter2=0
+    while counter2<5:
+        while xbmc.Player().isPlaying():
+            counter2=0
+            if counter > 120:
+                debug("Suche neue Clips")
+                clipseinlesen(playlist,url,id)        
+                counter=0
+            time.sleep(1)
+            counter=counter+1    
         time.sleep(1)
-        counter=counter+1    
+        counter2=counter2+1    
+        
 
       
         
