@@ -62,6 +62,16 @@ def getUrl(url,data="X"):
         opener.close()
         return content
         
+def parameters_string_to_dict(parameters):
+	paramDict = {}
+	if parameters:
+		paramPairs = parameters[1:].split("&")
+		for paramsPair in paramPairs:
+			paramSplits = paramsPair.split('=')
+			if (len(paramSplits)) == 2:
+				paramDict[paramSplits[0]] = paramSplits[1]
+	return paramDict
+  
 def getSessionID(baseuri, username, password, sid = None):
   debug("GetSessionId")
   debug("baseuri : "+ baseuri )
@@ -122,6 +132,9 @@ def getdevices():
     debug("SID : "+sid)
     url=baseurl +"/webservices/homeautoswitch.lua?switchcmd=getdevicelistinfos&sid="+sid
     content=getUrl(url)
+    debug("+++getdevices CONTENT+++")
+    debug(content)
+    debug("---getdevices CONTENT---")
     xml = parseString(content)
     devices = xml.getElementsByTagName("device")
     return devices 
