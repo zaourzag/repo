@@ -83,6 +83,10 @@ def addLink(name, url, mode, iconimage, duration="", desc="",artist_id="",genre=
   liz.addStreamInfo('video', { 'duration' : duration })
   liz.setProperty("fanart_image", iconimage)
   xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
+  commands = []
+  listatrist = "plugin://plugin.video.ampya/?mode=songs_from_artist&url="+urllib.quote_plus(str(artist_id))  
+  commands.append(( "Mehr vom Künstler" , 'ActivateWindow(Videos,'+ listatrist +')'))
+  liz.addContextMenuItems( commands )  
   ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
   return ok
 
