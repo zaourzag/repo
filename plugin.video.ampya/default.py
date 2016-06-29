@@ -73,7 +73,7 @@ def addDir(name, url, mode, iconimage, desc=""):
   ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
   return ok
   
-def addLink(name, url, mode, iconimage, duration="", desc="",artist_id="",genre="",shortname="",production_year=0,zeit=0):
+def addLink(name, url, mode, iconimage, duration="", desc="",artist_id="",genre="",shortname="",production_year=0,zeit=0,liedid=0):  
   cd=addon.getSetting("password")  
   u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
   ok = True
@@ -85,7 +85,9 @@ def addLink(name, url, mode, iconimage, duration="", desc="",artist_id="",genre=
   xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
   commands = []
   listatrist = "plugin://plugin.video.ampya/?mode=songs_from_artist&url="+urllib.quote_plus(str(artist_id))  
+  listsimiliar = "plugin://plugin.video.ampya/?mode=list_similiar&url="+urllib.quote_plus(str(liedid))  
   commands.append(( "Mehr vom Künstler" , 'ActivateWindow(Videos,'+ listatrist +')'))
+  commands.append(( "Ähnliche Lieder" , 'ActivateWindow(Videos,'+ listsimiliar +')'))
   liz.addContextMenuItems( commands )  
   ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
   return ok
@@ -130,6 +132,7 @@ def ListeChannels(url):
     Token=element["asset"]["token"]
     duration=element["asset"]["duration"]
     iconimage=getbild(video_file_id)
+    id=element["asset"]["id"]
 
     
     
@@ -137,7 +140,7 @@ def ListeChannels(url):
     debug("iconimage :"+iconimage)
     
     
-    addLink(title +"("+kuenstler_name+")", Token, "playvideo", iconimage, duration=duration, desc="",artist_id=kuenstler_id)
+    addLink(title +"("+kuenstler_name+")", Token, "playvideo", iconimage, duration=duration, desc="",artist_id=kuenstler_id,liedid=id)
     debug("--------------")
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)   
 
@@ -158,13 +161,13 @@ def ListeVideos(url):
     Token=element["asset"]["token"]
     #duration=element["asset"]["duration"]
     iconimage=getbild(video_file_id)
-    
+    id=element["asset"]["id"]
     
     debug("VIDEOID: "+str(video_file_id))
     debug("iconimage :"+iconimage)
     
     
-    addLink(title +"("+kuenstler_name+")", Token, "playvideo", iconimage, desc="",artist_id=kuenstler_id)
+    addLink(title +"("+kuenstler_name+")", Token, "playvideo", iconimage, desc="",artist_id=kuenstler_id,liedid=id)
     debug("--------------")
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)   
 
@@ -275,7 +278,8 @@ def list_songs(url):
       kuenstler_id=video["artist_id"]
       video_file_id=video["video_file_id"]
       iconimage=getbild(video_file_id)
-      addLink(title +"("+kuenstler_name+")", Token, "playvideo", iconimage, desc="",artist_id=kuenstler_id)      
+      id=video["id"]
+      addLink(title +"("+kuenstler_name+")", Token, "playvideo", iconimage, desc="",artist_id=kuenstler_id,liedid=id)      
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)      
      
 def list_artists(url):     
@@ -290,7 +294,8 @@ def list_artists(url):
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)   
 def songs_from_artist(id):
     ListeVideos("https://www.putpat.tv/ws.json?method=Artist.assetsByArtistId&artistId="+id+"&client=android_phone&player_id=2")
-    
+def list_similiar(id):
+    ListeVideos("https://www.putpat.tv/ws.json?method=Asset.similarAssets&limit=50&assetId="+id+"&client=android_phone&player_id=2")    
 
 params = parameters_string_to_dict(sys.argv[2])
 mode = urllib.unquote_plus(params.get('mode', ''))
@@ -332,3 +337,5 @@ if mode == 'list_songs':
           list_songs(url) 
 if mode == 'songs_from_artist':     
      songs_from_artist(url)
+if mode == 'list_similiar':     
+     list_similiar(url)     
