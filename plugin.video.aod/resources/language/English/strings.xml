@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <strings>
-  <string id="30101">Quality</string>
+  <string id="30101">Quality Flash</string>
   <string id="30102">Username</string> 
   <string id="30103">Password</string> 
   <string id="30104">A-Z</string> 
@@ -10,5 +10,6 @@
   <string id="30108">Settings</string> 
   <string id="30109">Filme</string>
   <string id="30110">User or Password Incorrect</string>  
-  <string id="30111">Next time New Login</string> 
+  <string id="30111">Next time New Login</string>
+  <string id="30112">Quality Flash</string>  
 </strings>

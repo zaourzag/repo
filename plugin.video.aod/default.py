@@ -15,7 +15,9 @@ addon = xbmcaddon.Addon()
 translation = addon.getLocalizedString
 icon = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')+'/icon.png').decode('utf-8')
 global quality
+global qualityhtml
 quality=addon.getSetting("quality")
+qualityhtml=addon.getSetting("qualityhtml")
 username=addon.getSetting("user")
 password=addon.getSetting("pass")
 global movies
@@ -73,9 +75,9 @@ def addDir(name, url, mode, iconimage, desc=""):
 	return ok   
   
   
-def addLink(name, url, mode, iconimage, duration="", desc="", genre='',csrftoken=""):
+def addLink(name, url, mode, iconimage, duration="", desc="", genre='',csrftoken="",type=""):
   debug("addlink :" + url)  
-  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&csrftoken="+csrftoken
+  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&csrftoken="+csrftoken+"&type="+type
   ok = True
   liz = xbmcgui.ListItem(name, thumbnailImage=iconimage)
   liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Genre": genre})
@@ -168,7 +170,40 @@ def Serie(url):
       debug ("-------------------------------")     
       match=re.compile('src="([^"]+)"', re.DOTALL).findall(entry)
       img=baseurl+match[0]
-      debug("img :"+ img)
+      ret=flashvideo(entry,img,csrftoken)
+      if ret==1:
+        html5video(entry,img,csrftoken)
+    except :
+       error=1
+  debug ("#############################################################################")
+  
+  xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)  
+def html5video(entry,img,csrftoken):     
+    error=0
+    debug("Start Flashvideo")
+    try:
+      match=re.compile('title="([^"]+)"', re.DOTALL).findall(entry)
+      title=match[0]      
+      match=re.compile('data-playlist="([^"]+)"', re.DOTALL).findall(entry)
+      link=match[0]
+      debug("Link: "+ link)
+      if '<p class="episodebox-shorttext">' in entry:
+           match=re.compile('<p class="episodebox-shorttext">(.+)</p>', re.DOTALL).findall(entry)
+      else:
+           match=re.compile('<div itemprop="description">(.+)</p>', re.DOTALL).findall(entry)
+      desc=match[0]    
+      desc=desc.replace("<br />","") 
+      desc=desc.replace("<p>","") 
+      debug("csrftoken : "+csrftoken)
+      addLink(name=ersetze(title), url=baseurl+link, mode="Folge", iconimage=img, desc=desc,csrftoken=csrftoken,type="html5")      
+    except :
+       error=1
+    return error
+       
+def flashvideo(entry,img,csrftoken):    
+    error=0 
+    debug("Start Flashvideo")
+    try:
       match=re.compile('title="([^"]+)" data-stream="([^"]+)" data-dialog-header="([^"]+)"', re.DOTALL).findall(entry)
       title=match[0][2]        
       debug("Title :"+ title)       
@@ -195,13 +230,12 @@ def Serie(url):
          desc=desc.replace("<br />","") 
          desc=desc.replace("<p>","") 
          debug("csrftoken : "+csrftoken)
-         addLink(name=ersetze(title), url=link, mode="Folge", iconimage=img, desc=desc,csrftoken=csrftoken)      
+         addLink(name=ersetze(title), url=link, mode="Folge", iconimage=img, desc=desc,csrftoken=csrftoken,type="flash")      
     except :
        error=1
-  debug ("#############################################################################")
-  xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)  
+    return error
 
-def Folge(url,csrftoken):
+def Folge(url,csrftoken,type):
   global opener
   global cj
   global username
@@ -210,13 +244,80 @@ def Folge(url,csrftoken):
     opener.addheaders = [('X-CSRF-Token', csrftoken),
                      ('X-Requested-With', "XMLHttpRequest"),
                      ('Accept', "application/json, text/javascript, */*; q=0.01")]      
-    content=opener.open(url).read()
-    match = re.compile('"streamurl":"([^"]+)"', re.DOTALL).findall(content)
-    stream=match[0]  
-    match = re.compile('(.+)mp4:(.+)', re.DOTALL).findall(stream)  
-    path="mp4:"+match[0][1]
-    server=match[0][0] 
-    listitem = xbmcgui.ListItem (path=server +"swfUrl=https://ssl.p.jwpcdn.com/6/12/jwplayer.flash.swf playpath="+path+" token=83nqamH3#i3j app=aodrelaunch/ swfVfy=true")
+    content=opener.open(url).read()    
+    debug("Content:")
+    debug("--------------------:")
+    debug(content)
+    debug("----------------:")
+    if type=="html5":
+      match = re.compile('"file":"([^"]+)"', re.DOTALL).findall(content)
+      stream=match[1].replace("\\u0026","&")
+      debug("1")
+      debug("stream :" + stream)
+      content2=opener.open(stream).read()   
+      debug("----------------")      
+      debug(content2)      
+      debug("----------------")      
+      spl=content2.split('#EXT-X-STREAM-INF')
+      if qualityhtml=="MAX":
+        element=spl[1]
+        debug("Element: "+element)
+        match = re.compile('chunklist(.+)', re.DOTALL).findall(element)
+        qual="chunklist"+match[0]
+        debug("Qal : "+qual)
+        liste=stream.split('/')
+        laenge=len(liste)
+        pfadt=liste[0:-1]
+        s="/"
+        pfad=s.join(pfadt)
+        debug("Pfad : "+ pfad)
+        stream=pfad+"/"+qual[0:-1]    
+      if qualityhtml=="MIN":
+        element=spl[-1]
+        debug("Element: "+element)
+        match = re.compile('chunklist(.+)', re.DOTALL).findall(element)
+        qual="chunklist"+match[0]
+        debug("Qal : "+qual)
+        liste=stream.split('/')
+        laenge=len(liste)
+        pfadt=liste[0:-1]
+        s="/"
+        pfad=s.join(pfadt)
+        debug("Pfad : "+ pfad)
+        stream=pfad+"/"+qual[0:-1]      
+      if qualityhtml=="Select":
+        file=[]
+        namen=[]
+        liste=stream.split('/')
+        laenge=len(liste)
+        pfadt=liste[0:-1]
+        s="/"
+        pfad=s.join(pfadt)
+        for i in range(1,len(spl),1):
+          element=spl[i]
+          match = re.compile('BANDWIDTH=(.+?),RESOLUTION=(.+?)chunklist', re.DOTALL).findall(element)
+          band=match[0][0]
+          res=match[0][1]
+          match = re.compile('chunklist(.+)', re.DOTALL).findall(element)
+          qual="chunklist"+match[0]
+          file.append(qual)
+          namen.append(res + "( "+ str(int(band)/1024) +" kb/s )")
+        dialog = xbmcgui.Dialog()
+        nr=dialog.select("Qualität", namen) 
+        files=file[nr]
+        debug("Files :"+files)
+        stream=pfad+"/"+files[0:-1]
+        debug("##AV ##"+ stream)        
+      debug("----------------")
+      listitem = xbmcgui.ListItem (path=stream)
+    if type=="flash":
+      match = re.compile('"streamurl":"([^"]+)"', re.DOTALL).findall(content)
+      stream=match[0]  
+      match = re.compile('(.+)mp4:(.+)', re.DOTALL).findall(stream)  
+      path="mp4:"+match[0][1]
+      server=match[0][0] 
+      listitem = xbmcgui.ListItem (path=server +"swfUrl=https://ssl.p.jwpcdn.com/6/12/jwplayer.flash.swf playpath="+path+" token=83nqamH3#i3j app=aodrelaunch/ swfVfy=true")
+    
     xbmcplugin.setResolvedUrl(addon_handle,True, listitem)    
     debug(content)
   except IOError, e:          
@@ -289,6 +390,7 @@ def lanuage() :
 params = parameters_string_to_dict(sys.argv[2])  
 mode = urllib.unquote_plus(params.get('mode', ''))
 url = urllib.unquote_plus(params.get('url', ''))
+type = urllib.unquote_plus(params.get('type', ''))
 csrftoken = urllib.unquote_plus(params.get('csrftoken', ''))
 
 
@@ -328,7 +430,7 @@ else:
   if mode == 'Serie':
           Serie(url) 
   if mode == 'Folge':
-          Folge(url,csrftoken)            
+          Folge(url,csrftoken,type)            
   if mode == 'cat':
           category()  
   if mode == 'lang':
