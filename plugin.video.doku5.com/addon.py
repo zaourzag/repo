@@ -1,11 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import re, xbmcplugin, xbmcgui, requests
-import xbmc
-import xbmcaddon
-import os
-import urlparse
+import os, re, urlparse, requests
+import xbmc, xbmcgui, xbmcaddon, xbmcplugin
 from urllib import quote, unquote_plus, unquote, urlencode, quote_plus, urlretrieve
 
 
@@ -25,8 +22,15 @@ show_menu_abc = addon.getSetting('show_menu_abc')
 xbmcplugin.setContent(pluginhandle, 'Episodes')
 baseurl = 'http://doku5.com//api.php?'
 change_view = False
+sett_show_logo_fanart = False
+sett_show_doku_fanart = False
+sett_show_doku_fanart_fallback = False
 
-if addon.getSetting('show_doku_fanart') == 'false': fanart = 'fanart' + 'dis'
+if addon.getSetting('show_logo_fanart') == 'true': sett_show_logo_fanart = True
+if not sett_show_logo_fanart: fanart = 'fanart' + 'dis'
+if addon.getSetting('show_doku_fanart') == 'true': sett_show_doku_fanart = True
+if addon.getSetting('show_doku_fanart_fallback') == 'true': sett_show_doku_fanart_fallback = True
+
 if addon.getSetting('show_main_menu_folder') == 'true': show_mm = True
 if addon.getSetting('change_view') == 'true':
     change_view = True
@@ -38,6 +42,13 @@ if addon.getSetting('show_menu_reup') == 'false': dis_genre.append('Die neusten 
 if addon.getSetting('show_menu_week') == 'false': dis_genre.append('Aufsteiger der Woche')
 if addon.getSetting('show_menu_month') == 'false': dis_genre.append('Top Dokus des Monats')
 if addon.getSetting('show_menu_year') == 'false': dis_genre.append('Top Dokus des Jahres')
+
+sett_desc_show_date = False
+sett_desc_show_vote = False
+sett_desc_show_src = False
+if addon.getSetting('desc_show_date') == 'true': sett_desc_show_date = True
+if addon.getSetting('desc_show_vote') == 'true': sett_desc_show_vote = True
+if addon.getSetting('desc_show_src') == 'true': sett_desc_show_src = True
 
 
 def categories():
@@ -52,8 +63,7 @@ def categories():
     if show_menu_search == 'true': addDir('Suche', '', 'Search', imageDir + '6.png')
     if show_menu_cats == 'true': addDir('Kategorien', '', 'getcat', imageDir + '7.png')
     if show_menu_abc == 'true': addDir('A-Z', '', 'Alphabet', imageDir + '8.png')
-    if script_chk('plugin.video.bookmark') == 1:
-        addDir('Merkliste', '', 'merk', imageDir + '9.png')
+    if script_chk('plugin.video.bookmark') == 1: addDir('Merkliste', '', 'merk', imageDir + '9.png')
     xbmcplugin.endOfDirectory(pluginhandle)
     if change_view:
         xbmc.executebuiltin('Container.SetViewMode(%d)' % view_mode_id)
@@ -91,14 +101,15 @@ def index(url):
         desc = item['description']
         name = item['title']
         thumb = item['cover']
+        #thumb = 'http://img.youtube.com/vi/' + url + '/0.jpg'
+        fanart = get_fanart(url)
         duration = item['length']
         date = cleandate(item['date'])
         source = get_item_src(item['dokuSrc'])
         perc = get_item_perc(item['voting']['voteCountInPerc'])
         vote = get_item_vote(item['voting']['voteCountAll'])
-        desc = '%s      %s  bei  %s\n%s\n%s' % (
-        date, perc, vote, source, desc)
-        addLink(name, url, 'play', thumb, desc, duration)
+        desc = getdesc(date, perc, vote, source, desc)
+        addLink(name, url, 'play', thumb, desc, duration, date, fanart)
     try:
         url = (data['query']['nextpage'])
         addDir('Next', url, 'index', imageDir + '10.png')
@@ -116,13 +127,9 @@ def index(url):
 
 
 def play(url):
-    try:
-        video_url = "plugin://plugin.video.youtube/?path=/root/video&action=play_video&videoid="+url
-        listitem = xbmcgui.ListItem(path=video_url)
-        xbmcplugin.setResolvedUrl(pluginhandle, succeeded=True, listitem=listitem)
-    except ValueError:
-        pass
-        # xbmc.executebuiltin("XBMC.Notification(%s, Video not available!, 2000, %s)" % (title, icon))
+    video_url = "plugin://plugin.video.youtube/play/?video_id="+url
+    listitem = xbmcgui.ListItem(path=video_url)
+    xbmcplugin.setResolvedUrl(pluginhandle, succeeded=True, listitem=listitem)
 
 
 def Search():
@@ -159,7 +166,7 @@ def cleandate(date):
 
 
 def get_item_src(source):
-    if show_doku_src == 'true':
+    if sett_desc_show_src:
         if source.upper() != 'PROGRAMM' and len(source) > 2:
             if len(source) > 15:
                 source = source[0:14]
@@ -183,13 +190,11 @@ def get_item_perc(perc):
 
 def get_item_vote(vote):
     if vote == 1:
-        vote = str(vote) + '    Vote  '
+        vote = str(vote) + '   Vote  '
     elif vote < 10:
-        vote = str(vote) + '    Votes'
-    elif vote != 100:
-        vote = str(vote) + '  Votes'
+        vote = str(vote) + '   Votes'
     else:
-        vote = str(vote) + 'Votes'
+        vote = str(vote) + '  Votes'
     return vote
 
 
@@ -200,15 +205,45 @@ def getjson(url):
     return data
 
 
+def getdesc(date, perc, vote, source, description):
+    desc = ''
+    if sett_desc_show_date: desc = date + '   '
+    if sett_desc_show_vote: desc += vote + '  ' + perc + '   '
+    if sett_desc_show_src and source != '': desc += source
+
+    if sett_desc_show_date or sett_desc_show_vote or sett_desc_show_src and source != '':
+        desc += '\n'
+    desc += description
+    return desc
+
+
+def get_fanart(yt_id):
+    fanart = ''
+    if sett_show_logo_fanart:
+        fanart = xbmc.translatePath(os.path.join(home, 'fanart.jpg'))
+    if sett_show_doku_fanart:
+        fanart = 'http://img.youtube.com/vi/' + yt_id + '/maxresdefault.jpg'
+        if sett_show_doku_fanart_fallback:
+            if not exists(fanart):
+                fanart = 'http://img.youtube.com/vi/' + yt_id + '/hqdefault.jpg'
+
+    return fanart
+
+
+def exists(path):
+    r = requests.head(path)
+    return r.status_code == requests.codes.ok
+
+
 def script_chk(script_name):
     return xbmc.getCondVisibility('System.HasAddon(%s)' % script_name) == 1
 
 
-def addLink(name, url, mode, iconimage, desc, duration):
+def addLink(name, url, mode, iconimage, desc, duration, date, fanart):
     u = sys.argv[0] + "?url=" + quote_plus(url) + "&mode=" + str(mode)
     ok = True
     item = xbmcgui.ListItem(name, iconImage="DefaultVideo.png", thumbnailImage=iconimage)
-    item.setInfo(type="Video", infoLabels={'Genre': 'Doku', "Title": name, "Plot": desc, "Duration": duration})
+    item.setInfo(type="Video", infoLabels={'Genre': 'Doku', "Title": name, "Plot": desc, "Duration": duration, "aired": date})
     item.setProperty('IsPlayable', 'true')
     menu = []
     item.addContextMenuItems(items=menu, replaceItems=False)
