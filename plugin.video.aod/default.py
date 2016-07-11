@@ -184,9 +184,6 @@ def html5video(entry,img,csrftoken):
     try:
       match=re.compile('title="([^"]+)"', re.DOTALL).findall(entry)
       title=match[0]      
-      match=re.compile('data-playlist="([^"]+)"', re.DOTALL).findall(entry)
-      link=match[0]
-      debug("Link: "+ link)
       if '<p class="episodebox-shorttext">' in entry:
            match=re.compile('<p class="episodebox-shorttext">(.+)</p>', re.DOTALL).findall(entry)
       else:
@@ -195,7 +192,12 @@ def html5video(entry,img,csrftoken):
       desc=desc.replace("<br />","") 
       desc=desc.replace("<p>","") 
       debug("csrftoken : "+csrftoken)
-      addLink(name=ersetze(title), url=baseurl+link, mode="Folge", iconimage=img, desc=desc,csrftoken=csrftoken,type="html5")      
+      
+      match=re.compile('title="([^"]+)" data-playlist="([^"]+)"', re.DOTALL).findall(entry)
+      for type,link in match:
+        title2=title + "( "+ type.replace("starten","").replace("Japanischen Stream mit Untertiteln","OmU").replace("Deutschen Stream","Syncro") +" )"
+        debug("Link: "+ link)      
+        addLink(name=ersetze(title2), url=baseurl+link, mode="Folge", iconimage=img, desc=desc,csrftoken=csrftoken,type="html5")      
     except :
        error=1
     return error
