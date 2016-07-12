@@ -1,0 +1,11 @@
+<settings>
+   <category label="3009">       
+		<setting label="30012" type="slider" id="lesezeit" default="6" range="1,1,60" option="int" />
+		<setting label="30013" type="bool" id="greyout" default="true"  />
+        <setting label="30008" type="bool" id="bild" default="true"  />
+		<setting id="Feed" type="text" label="30014" default="" />
+    </category>
+   
+   
+</settings>
+ 
