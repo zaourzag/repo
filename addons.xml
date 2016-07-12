@@ -1178,7 +1178,7 @@ Orginal Code was from AddonScriptorDE</disclaimer>
   </extension>
 </addon>
 
-<addon id="service.rsspopup" name="Rss Popus" version="0.1" provider-name="L0RE">
+<addon id="service.rsspopup" name="Rss Popus" version="0.1.1" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.19.0"/>			       
 	    <import addon="script.module.feedparser" version="5.1.3"/>

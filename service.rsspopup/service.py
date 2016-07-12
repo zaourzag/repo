@@ -136,7 +136,8 @@ if __name__ == '__main__':
       greyout=__addon__.getSetting("greyout")
       Feed=__addon__.getSetting("Feed")
       if not oldfeeds==Feed:
-        schown=[]       
+        schown=[]
+        oldfeeds=Feed
       #channelr,channels,sendungr,sendungs,videor,videos=readersetzen()           
       feed = feedparser.parse(Feed)      
       debug("--Feed--")
