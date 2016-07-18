@@ -404,14 +404,40 @@ def abisz():
   xbmcplugin.endOfDirectory(addon_handle)
 
 def menu():
+    addDir(translation(30113), translation(30113), 'new_episodes', "")    
+    addDir(translation(30114), translation(30114), 'new_simulcast', "")    
+    addDir(translation(30115), translation(30115), 'new_animes', "")    
+    addDir(translation(30116), translation(30116), 'top10', "")    
     addDir(translation(30107), translation(30107), 'All', "") 
     addDir(translation(30104), translation(30104), 'AZ', "")
-    addDir(translation(30105), translation(30105), 'cat', "")
+    addDir(translation(30105), translation(30105), 'cat', "")    
     addDir(translation(30106), translation(30106), 'lang', "")     
     #addDir(translation(30111), translation(30111), 'cookies', "") 
     addDir(translation(30108), translation(30108), 'Settings', "") 
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
-
+def Start_listen(start_string):
+ content=geturl("http://www.anime-on-demand.de/")
+ kurz_inhalt = content[content.find(start_string)+1:]                                      
+ kurz_inhalt = kurz_inhalt[:kurz_inhalt.find('<hr />')]
+ spl=kurz_inhalt.split('<li>')
+ for i in range(1,len(spl),1):
+    entry=spl[i]
+    debug("-------")
+    debug(entry)
+    match=re.compile('src="(.+?)"', re.DOTALL).findall(entry)
+    img=baseurl+match[0]
+    match=re.compile('<a href="(.+?)">(.+?)</a>', re.DOTALL).findall(entry)
+    folge=match[0][0]
+    Serie=match[0][1]
+    try :
+       match=re.compile('<span class="neweps">(.+?)</span>', re.DOTALL).findall(entry)
+       folgen=match[0]
+       name=ersetze(Serie + " ( "+ folgen + " ) ")
+    except:
+       name=ersetze(Serie)
+    link=baseurl+folge
+    addDir(name=name, url=link, mode="Serie", iconimage=img, desc="")
+ xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 def cookies():
   if xbmcvfs.exists(temp):
     shutil.rmtree(temp)
@@ -445,3 +471,11 @@ else:
           cookies()
   if mode == 'getcontent_search':
           getcontent_search(url)             
+  if mode == 'new_episodes':
+          Start_listen("Neue Episoden")  
+  if mode == 'new_simulcast':
+          Start_listen("Neue Simulcasts")  
+  if mode == 'new_animes':
+          Start_listen("Neue Anime-Titel")  
+  if mode == 'top10':
+          Start_listen("Anime Top 10")            
