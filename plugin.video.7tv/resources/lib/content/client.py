@@ -1,8 +1,20 @@
 import hashlib
 import json
 import re
+import xbmc,xbmcaddon
+from hashlib import sha1
 from resources.lib import nightcrawler
 
+def debug(content):
+        log(content, xbmc.LOGDEBUG)
+    
+def notice(content):
+        log(content, xbmc.LOGNOTICE)
+
+def log(msg, level=xbmc.LOGNOTICE):
+        addon = xbmcaddon.Addon()
+        addonID = addon.getAddonInfo('id')
+        xbmc.log('%s: %s' % (addonID, msg), level) 
 
 class Client(nightcrawler.HttpClient):
     CHANNEL_ID_LIST = ['pro7', 'sat1', 'kabel1', 'sixx', 'sat1gold', 'prosiebenmaxx']
@@ -20,6 +32,7 @@ class Client(nightcrawler.HttpClient):
         r'/mega-app/v2/(?P<channel_id>(%s))/(tablet|phone)/format/show/(%s):(?P<format_id>\d+)' % (
             CHANNEL_IDS_STRING, CHANNEL_IDS_STRING))
 
+
     def __init__(self):
         nightcrawler.HttpClient.__init__(self, default_header={'User-Agent': '7TV-App-Android-v1.7.0.8-fb8e88f',
                                                                'Accept-Language': 'en_US',
@@ -28,7 +41,8 @@ class Client(nightcrawler.HttpClient):
         self._device = 'tablet'  # 'phone'
         pass
 
-    def _request(self, url, method='GET', headers=None, post_data=None, params=None, allow_redirects=True):
+    def _request(self, url, method='GET', headers=None, post_data=None, params=None, allow_redirects=True):    
+        debug("URL :" + url)
         if not params:
             params = {}
             pass
@@ -38,7 +52,7 @@ class Client(nightcrawler.HttpClient):
             pass
 
         response = super(Client, self)._request(url, method, self._default_header, post_data, params, allow_redirects)
-
+        debug("### "+ response.text + " #####")
         if method != 'HEAD':
             return json.loads(response.text)
 
@@ -222,70 +236,105 @@ class Client(nightcrawler.HttpClient):
 
     def get_video_url(self, video_id):
         # first request the web url of the video
-        url = 'http://contentapi.sim-technik.de/mega-app/v2/pro7/phone/video/%s' % str(video_id)
-        data = self._request(url)
+        urlb = 'http://contentapi.sim-technik.de/mega-app/v2/pro7/phone/video/%s' % str(video_id)
+        data = self._request(urlb)
+        debug("1------------")
+        debug(data)
+        debug("1++++++++++++")
         video_link = nightcrawler.utils.strings.to_utf8(
             data.get('screen', {}).get('screen_objects', [{'video_link': ''}])[0].get('video_link', ''))
 
         url = 'https://vas.sim-technik.de/vas/live/v2/videos'
-        params = {'access_token': 'seventv-app',
+        params = {'access_token': 'prosieben',
                   'client_location': video_link,
-                  'client_name': '7tv-app',
+                  'client_name': 'kolibri-2.0.19-splec4',
                   'ids': str(video_id)}
         data = self._request(url, params=params)
+        debug("2------------")
+        debug(data)
+        debug("2=============")
+        debug(params)
+        debug("2++++++++++++")        
+        sources=data[0]['sources']
+        source_ids=[]
+        for source in sources:
+            debug(source)
+            id=source['id']
+            debug("ID :" + str(id))
+            source_ids.append(source['id'] )
         is_protected = False
         if len(data) > 0:
             is_protected = data[0].get('is_protected', False)
             pass
 
-        url = 'http://vas.sim-technik.de/video/video.json'
-        params = {'clipid': video_id,
-                  'app': 'seventv-app',
-                  'method': '6'}
+            
+        access_token = 'prosieben'
+        client_name = 'kolibri-2.0.19-splec4'
+        client_location = video_link
+        clip_id=video_id
+        
+        
+        
+        g = '01!8d8F_)r9]4s[qeuXfP%'
+        client_id = g[:2] + sha1(''.join([clip_id, g, access_token, client_location, g, client_name]).encode('utf-8')).hexdigest()
+
+        url = 'http://vas.sim-technik.de/vas/live/v2/videos/%s/sources' % clip_id
+        params = {'access_token': access_token,
+                  'client_location': video_link,
+                  'client_name': client_name,
+                  'client_id': client_id,
+                  'ids': str(video_id)}        
+        
+                
         data = self._request(url, params=params)
-        video_url = data['VideoURL']
+        
+        debug("3------------")
+        debug(data)
+        debug("3=============")
+        debug(params)
+        debug("3++++++++++++")
+        server_id=data['server_id']
+        result=[]
+        for source_id in source_ids:
+            debug("3.1-----")
+            source_id=str(source_id)
+            debug(source_id)            
+            client_id = g[:2] + sha1(''.join([g, clip_id, access_token, server_id, client_location, source_id, g, client_name]).encode('utf-8')).hexdigest()
+            url = 'http://vas.sim-technik.de/vas/live/v2/videos/%s/sources/url' % clip_id
+            params = {'access_token': access_token,
+                  'client_id': client_id, 
+                  'client_location': video_link,
+                  'client_name': client_name,                    
+                  'server_id': server_id,                  
+                  'source_ids': source_id}
+            data = self._request(url, params=params)                  
+            debug("4------------")
+            debug(data)
+            debug("4=============")
+            debug(params)
+            debug("4++++++++++++")                  
+            if data['status_code']<=0 :
+               urls_sources = data['sources'][0]['url']
+               debug("5#")
+               debug(urls_sources)
+               debug("----->")
+               if data['sources'][0]['mimetype']=="application/x-mpegURL":  
+                  video_stream = {'title': "Stream",
+                                'sort': [640, 360],
+                                'video': {'height': 640},
+                                'uri': urls_sources}
 
-        video_format_list = [{'id': 12, 'title': '1280x720@2.7mbps', 'height': 720, 'bitrate': 2700},
-                             {'id': 11, 'title': '1280x720@2mbps', 'height': 720, 'bitrate': 2000},
-                             {'id': 10, 'title': '960x540@1.7mbps', 'height': 540, 'bitrate': 1700},
-                             {'id': 9, 'title': '960x540@1.4mbps', 'height': 540, 'bitrate': 1400},
-                             {'id': 8, 'title': '768x432@1.8mbps', 'height': 432, 'bitrate': 1800},
-                             {'id': 7, 'title': '768x432@1.5mbps', 'height': 432, 'bitrate': 1500},
-                             {'id': 6, 'title': '640x360@1.1mbps', 'height': 360, 'bitrate': 1100},
-                             {'id': 5, 'title': '640x360@0.6mbps', 'height': 360, 'bitrate': 600},
-                             {'id': 4, 'title': '480x270@0.4mbps', 'height': 270, 'bitrate': 400},
-                             {'id': 3, 'title': '416x258@0.2mbps', 'height': 258, 'bitrate': 200}]
-
-        result = []
-        last_video_format = {}
-        for video_format in video_format_list:
-            # optimization - skip the lower bit rates of the same resolution group
-            if last_video_format and last_video_format['height'] == video_format['height']:
-                continue
-                pass
-
-            url = re.sub(r'(.+?)(tp\d+.mp4)(.+)', r'\1tp%02d.mp4\3' % video_format['id'], video_url)
-            response = self._request(url, method='HEAD')
-            if response.status_code == 200:
-                video_stream = {'title': video_format['title'],
-                                'sort': [video_format['height'], video_format['bitrate']],
-                                'video': {'height': video_format['height']},
-                                'uri': url}
-
-                # mark the stream protected
-                if is_protected:
+                  # mark the stream protected
+                  if is_protected:
                     video_stream['is_protected'] = True
                     pass
 
-                result.append(video_stream)
+                  result.append(video_stream)
 
-                # skip all other streans if the video is protected
-                if is_protected:
+                  # skip all other streans if the video is protected
+                  if is_protected:
                     break
                     pass
 
-                last_video_format = video_format
-                pass
-            pass
-
+            
         return result
