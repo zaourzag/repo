@@ -5,7 +5,7 @@ import time, sys, os, urlparse,json
 import xbmc ,xbmcgui, xbmcaddon,xbmcvfs
 import urllib2,urllib,json
 import shutil
-import re
+import re,md5
 import socket, cookielib
 import feedparser
 import HTMLParser
@@ -20,8 +20,9 @@ profile    = xbmc.translatePath( __addon__.getAddonInfo('profile') ).decode("utf
 temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
 translation = __addon__.getLocalizedString
 
-
-  
+popupaddon=xbmcaddon.Addon("service.popwindow")
+popupprofile    = xbmc.translatePath( popupaddon.getAddonInfo('profile') ).decode("utf-8")
+popuptemp       = xbmc.translatePath( os.path.join( popupprofile, 'temp', '') ).decode("utf-8")
   
 wid = xbmcgui.getCurrentWindowId()
 window=xbmcgui.Window(wid)
@@ -39,69 +40,12 @@ def parameters_string_to_dict(parameters):
 	return paramDict
 
 # Soll Twitter Api Resetter Werden
-if len(sys.argv) > 1:
-    params = parameters_string_to_dict(sys.argv[2])
-    mode = urllib.unquote_plus(params.get('mode', ''))
-    if mode=="clear":      
-      xbmc.log("Twitter : CLEAR AUTH")
-      # ES wird mit dem Service ueber ein Verstecktes Feld Kommuiniziert
-      __addon__.setSetting(id='clear', value='CLEARIT')
-      # Meldung das der Settings gelöscht werden
-      dialog2 = xbmcgui.Dialog()
-      ok = xbmcgui.Dialog().ok( translation(30024), translation(30025) )
-      exit()
-  
+#if len(sys.argv) > 1:
+#    params = parameters_string_to_dict(sys.argv[2])
+#    mode = urllib.unquote_plus(params.get('mode', ''))
+    
 
-def showTweet(tweet,image=""):
-    global alles_anzeige
-    global urlfilter
-    global lesezeit
-    global background
-    global greyout
-    xbmc.log("Twitter : showTweet start")
-    global window
-    tw=unicode(tweet).encode('utf-8')
-    tw=tw.replace("&amp;","&")
-    xbmc.log("showTweet")
-    xbmc.log("Tweet:" +tw)        
-    wid = xbmcgui.getCurrentWindowId()
-    window=xbmcgui.Window(wid)
-    res=window.getResolution()
-    if len(tw) > 100 :
-       bis=100
-       for i in range(90,100):
-          if tw[i]==' ':
-           bis=i
-    else:
-        bis=len(tw)
-    if greyout=="true":
-       bg=xbmcgui.ControlImage(0,10,3000,100,"")
-       bg.setImage(background)
-       window.addControl(bg)
-    twitterlabel1=xbmcgui.ControlLabel (111, 31, 3000, 100, tw[:bis],textColor='0xFF000000')
-    twitterlabel2=xbmcgui.ControlLabel (110, 30, 3000, 100, tw[:bis],textColor='0xFFFFFFFF')        
-    window.addControl(twitterlabel1)
-    window.addControl(twitterlabel2)
-        
-    if len(tw) > 100:
-     twitterlabel3=xbmcgui.ControlLabel (111, 61, 3000, 100, tw[bis:],textColor='0xFF000000')
-     twitterlabel4=xbmcgui.ControlLabel (110, 60, 3000, 100, tw[bis:],textColor='0xFFFFFFFF')
-     window.addControl(twitterlabel3)
-     window.addControl(twitterlabel4)
-    avatar=xbmcgui.ControlImage(0,10,100,100,"")
-    avatar.setImage(image)
-    window.addControl(avatar)        
-    time.sleep(int(lesezeit))
-        
-    window.removeControl(twitterlabel1)
-    window.removeControl(twitterlabel2)
-    if len(tw) > 100:
-       window.removeControl(twitterlabel3)
-       window.removeControl(twitterlabel4)
-    window.removeControl(avatar)
-    if greyout=="true":
-       window.removeControl(bg)
-        
+
         
 def debug(content):
     log(content, xbmc.LOGDEBUG)
@@ -119,7 +63,21 @@ def geturl(url):
    inhalt = urllib2.urlopen(req).read()   
    return inhalt    
         
+def savemessage(message,image,grey,lesezeit)  :
+    message=unicode(message).encode('utf-8')
+    image=unicode(image).encode('utf-8')
+    debug("message :"+message)
+    debug("image :"+image)
+    debug("grey :"+grey)
+    debug("popuptemp :"+popuptemp)
+    debug("lesezeit :"+str(lesezeit))
+    filename=md5.new(message).hexdigest()  
+    f = open(popuptemp+"/"+filename, 'w')    
+    f.write(message+"###"+image+"###"+grey+"###"+str(lesezeit))
+    f.close()   
+    
 
+  
     
   
     
@@ -189,7 +147,8 @@ if __name__ == '__main__':
           if not bild=="true":
              cimg=""
           if title not in schown:
-            showTweet(title,cimg)
+            #savemessage(title,cimg,greyout,lesezeit) 
+            savemessage(title,cimg,greyout,lesezeit)             
             schown.append(title)
                    
       if monitor.waitForAbort(60):

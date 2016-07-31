@@ -6,7 +6,7 @@ import xbmc ,xbmcgui, xbmcaddon,xbmcvfs
 import urllib2,urllib,json
 import twitter,shutil
 import webbrowser
-import re
+import re,md5
 from requests_oauthlib import OAuth1Session
 from thread import start_new_thread
 from requests.packages import urllib3
@@ -33,7 +33,9 @@ profile    = xbmc.translatePath( __addon__.getAddonInfo('profile') ).decode("utf
 temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
 translation = __addon__.getLocalizedString
 
-
+popupaddon=xbmcaddon.Addon("service.popwindow")
+popupprofile    = xbmc.translatePath( popupaddon.getAddonInfo('profile') ).decode("utf-8")
+popuptemp       = xbmc.translatePath( os.path.join( popupprofile, 'temp', '') ).decode("utf-8")
   
   
 wid = xbmcgui.getCurrentWindowId()
@@ -65,66 +67,19 @@ if len(sys.argv) > 1:
       exit()
   
 
-def showTweet(tweet,image=""):
-    global alles_anzeige
-    global urlfilter
-    global lesezeit
-    global background
-    global greyout
-    xbmc.log("Twitter : showTweet start")
-    if xbmc.getCondVisibility('Pvr.IsPlayingTv') or alles_anzeige=="true" :   
-        global window
-        tw=unicode(tweet).encode('utf-8')
-        tw=tw.replace("&amp;","&")
-        xbmc.log("showTweet")
-        if urlfilter=="true":
-             xbmc.log("Filter URLS")
-             match=re.compile('(http[s]*://[^ ]+)', re.DOTALL).findall(tw)
-             if match:
-               for furl in match:
-                 tw=tw.replace(furl,"")
-                 xbmc.log("Filter Url : "+ furl)
-        xbmc.log("Tweet:" +tw)        
-        wid = xbmcgui.getCurrentWindowId()
-        window=xbmcgui.Window(wid)
-        res=window.getResolution()
-        if len(tw) > 100 :
-           bis=100
-           for i in range(90,100):
-             if tw[i]==' ':
-               bis=i
-        else:
-            bis=len(tw)
-        if greyout=="true":
-           bg=xbmcgui.ControlImage(0,10,3000,100,"")
-           bg.setImage(background)
-           window.addControl(bg)
-
-        twitterlabel1=xbmcgui.ControlLabel (111, 31, 3000, 100, tw[:bis],textColor='0xFF000000')
-        twitterlabel2=xbmcgui.ControlLabel (110, 30, 3000, 100, tw[:bis],textColor='0xFFFFFFFF')        
-        window.addControl(twitterlabel1)
-        window.addControl(twitterlabel2)
-        
-        if len(tw) > 100:
-         twitterlabel3=xbmcgui.ControlLabel (111, 61, 3000, 100, tw[bis:],textColor='0xFF000000')
-         twitterlabel4=xbmcgui.ControlLabel (110, 60, 3000, 100, tw[bis:],textColor='0xFFFFFFFF')
-         window.addControl(twitterlabel3)
-         window.addControl(twitterlabel4)
-        avatar=xbmcgui.ControlImage(0,10,100,100,"")
-        avatar.setImage(image)
-        window.addControl(avatar)        
-        time.sleep(int(lesezeit))
-        
-        window.removeControl(twitterlabel1)
-        window.removeControl(twitterlabel2)
-        if len(tw) > 100:
-           window.removeControl(twitterlabel3)
-           window.removeControl(twitterlabel4)
-        window.removeControl(avatar)
-        if greyout=="true":
-           window.removeControl(bg)
-        
-        
+def savemessage(message,image,grey,lesezeit)  :
+    message=unicode(message).encode('utf-8')
+    image=unicode(image).encode('utf-8')
+    debug("message :"+message)
+    debug("image :"+image)
+    debug("grey :"+grey)
+    debug("popuptemp :"+popuptemp)
+    debug("lesezeit :"+str(lesezeit))
+    filename=md5.new(message).hexdigest()  
+    f = open(popuptemp+"/"+filename, 'w')    
+    f.write(message+"###"+image+"###"+grey+"###"+str(lesezeit))
+    f.close()   
+    
 def debug(content):
     log(content, xbmc.LOGDEBUG)
     
@@ -431,8 +386,8 @@ if __name__ == '__main__':
                    userimage=tweet.user.profile_image_url    
                else :
                    userimage=""   
-               debug("Tweet ID " + str(tweet.id))                   
-               showTweet(text,userimage)                      
+               debug("Tweet ID " + str(tweet.id))                                  
+               savemessage(text,userimage,greyout,lesezeit)                  
          else:
              debug("Gebannt Thread")
            
