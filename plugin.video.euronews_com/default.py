@@ -9,7 +9,7 @@ import re
 import xbmcplugin
 import xbmcaddon,xbmc
 import xbmcgui,json
-import pyxbmct
+import pyxbmct,time
 from HTMLParser import HTMLParser
 
 
@@ -180,10 +180,10 @@ url = urllib.unquote_plus(params.get('url', ''))
 text = urllib.unquote_plus(params.get('text', ''))
 name = urllib.unquote_plus(params.get('name', ''))
 
-def ListRubriken(urls,text):
+def ListRubriken(urls,text,x=0):
  debug("ListRubriken url : "+urls)
- content = getUrl(urls)
- content = content[content.find('<section class="enw-block enw-block'):]
+ content2 = getUrl(urls)
+ content = content2[content2.find('<section class="enw-block enw-block'):]
  content = content[:content.find('<div class="base-leaderboard">')]
  urlliste = content.split('<h3 class="enw-blockTopbar__title">') 
  anz=0
@@ -211,6 +211,11 @@ def ListRubriken(urls,text):
         anz=anz+1
  if anz>0:
    addDir("Artikel", urls, 'startvideos', "")
+ if x>0:
+     content = content2[content2.find('<div class="small-6 columns text-right">'):]
+     content = content[:content.find('</div>')]
+     match = re.compile('<a href=([^ ]+?) class="enw-justin__header__timeline">(.+?)</a>', re.DOTALL).findall(content)
+     addDir(match[0][1], "", 'timeline', "")
  return anz    
 
  
@@ -283,8 +288,9 @@ def Rubriknews(urls,text="0"):
    addDir("Next", urls, 'Rubriknews', "", "",text=str(anz))     
    xbmcplugin.endOfDirectory(pluginhandle)
 def index():  
-  ListRubriken("http://"+language2+".euronews.com","")
+  ListRubriken("http://"+language2+".euronews.com","",x=1)
   addLink(translation(30001), "", 'playLive', "")
+  addDir("Search", "", 'search', "")
   xbmcplugin.endOfDirectory(pluginhandle)   
 
 def Rubrik(url,text):
@@ -346,7 +352,33 @@ def playVideo(url):
        window.doModal()
        del window
 
-
+def search():    
+     dialog = xbmcgui.Dialog()
+     d = dialog.input(translation(30010), type=xbmcgui.INPUT_ALPHANUM)
+     d=urllib.quote(d, safe='')
+     url="http://"+language2+".euronews.com/api/search?query="+ d 
+     Rubriknews(url,text="0")
+def timeline(stamp):
+     debug("TIMELINE URL: ")
+     urln="http://"+language2+".euronews.com/api/timeline.json?limit=20"
+     if stamp!="":
+        urln=urln+"&after="+stamp     
+     content = getUrl(urln)     
+     jsonurl=artikeltext(content)
+     struktur = json.loads(jsonurl)
+     for element in struktur:
+        datum=element['createdAt']
+        zeitstring=time.strftime("%H:%M", time.localtime(datum))
+        urltime=time.strftime("/%Y/%m/%d", time.localtime(datum))
+        title=element['title']
+        url="http://"+language2+".euronews.com"+urltime+element['url']
+        debug("URL" + url)
+        bild=element["images"][0]["url"]
+        bild=bild.replace("{{w}}x{{h}}","608x342")
+        addLink(zeitstring+ " "+title, url, 'PlayVideo', bild, "")
+     addDir("Next", str(datum), 'timeline', "", "")     
+     xbmcplugin.endOfDirectory(pluginhandle)
+     debug("timeline : "+jsonurl)
 if mode == 'listVideos':
    listVideos()
 elif mode == 'playLive':
@@ -358,7 +390,10 @@ elif mode == 'startvideos':
 elif mode == 'Rubriknews':
     Rubriknews(url,text)      
 elif mode == 'PlayVideo':
-     debug("PlayVideo")
      playVideo(url)       
+elif mode == 'search':
+     search()    
+elif mode == 'timeline':
+     timeline(url)            
 else:
     index()
