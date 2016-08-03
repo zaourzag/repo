@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 # coding: utf8
 
-import sys
 import os
+import math
 import requests
 import json
 import pickle
@@ -10,337 +10,381 @@ import re
 import HTMLParser
 from BeautifulSoup import BeautifulSoup
 import xbmcaddon
+import library as lib
 
 addon = xbmcaddon.Addon()
+mxdlib = lib.Library()
+
+def getAssetClass(asset_class):
+    if asset_class.lower() == 'multiassetbundletvseries':
+        return 'tvshow'
+    elif asset_class.lower() == 'multiassettvseriesseason':
+        return 'tvseason'
+    elif asset_class.lower() == 'assetvideofilm':
+        return 'movie'
+    elif asset_class.lower() == 'assetvideofilmtvseries':
+        return 'tvepisode'
+    elif asset_class.lower() == 'multiassetthemespecial':
+        return 'theme'
+
+    return None
 
 class MaxdomeSession:
-	def __init__(self, username, password, pathToCookies):
-		self.Assets = MaxdomeAssets(self)
-		self.session = requests.Session()
-		self.cookie_path = pathToCookies
-		self.username = username
-		self.password = password
-		self.customer_id = ''
-		self.session.headers.setdefault('User-Agent','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36')
-		
-		#Maxdome URLs
-		self.baseurl = 'https://www.maxdome.de'
-		self.api_url = 'https://heimdall.maxdome.de'
-		self.login_url = 'https://www.maxdome.de/_ajax/process/login/start/login0'
-		self.order_url = 'https://www.maxdome.de/_ajax/process/videoOrder/start/orderMovie0'
-		self.play_url = 'http://play.maxdome.de/webplayer'
-		self.license_url = ''
-		self.video_url = ''
-		
-		#Load cookies from last session if available
-		if os.path.isfile(self.cookie_path):
-			with open(self.cookie_path) as f:
-				cookies = requests.utils.cookiejar_from_dict(pickle.load(f))
-				self.session.cookies = cookies
-				
-		if not self.isLoggedIn():
-			self.session.cookies.clear_session_cookies()
-			if self.login():
-				self.session.cookies['quality'] = self.getPreferences()['orderQuality']
-				self.session.cookies['mxd-ua'] = '%7B%22os%22%3A%7B%22name%22%3A%22Linux%22%2C%22version%22%3A%22x86_64%22%7D%2C%22browser%22%3A%7B%22name%22%3A%22Chrome%22%2C%22version%22%3A%2248.0.2564.116%22%2C%22major%22%3A%2248%22%2C%22architecture%22%3A%2232%22%7D%7D'
-				with open(self.cookie_path, 'w') as f:
-					pickle.dump(requests.utils.dict_from_cookiejar(self.session.cookies), f)
+    def __init__(self, username, password, pathToCookies, region):
+        self.session = requests.Session()
+        self.cookie_path = pathToCookies
+        self.region = region
+        self.username = username
+        self.password = password
+        self.customer_id = ''
+        self.payment_type = addon.getSetting('payment').lower()
+        self.order_quality = '2'
+        self.session.headers.setdefault('User-Agent','Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/48.0.2564.116 Safari/537.36')
 
-	def isLoggedIn(self):
-		r = self.session.get(self.baseurl + '/mein-account')
-		strKey = 'isLoggedIn: '
-		startpos = r.text.find(strKey) + len(strKey)
-		endpos = r.text.find(',', startpos)
-		value = r.text[startpos:endpos]
-		if 'true' in value:
-			self.customer_id = self.getCustomerId(r.text)
-			return True
+        #Maxdome URLs
+        self.baseurl = 'https://www.maxdome.' + self.region
+        self.api_url = 'https://heimdall.maxdome.de'
+        self.login_url = 'https://www.maxdome.' + self.region + '/_ajax/process/login/start/login0'
+        self.license_url = ''
+        self.video_url = ''
+        
+        #Load cookies from last session if available
+        if os.path.isfile(self.cookie_path):
+            with open(self.cookie_path) as f:
+                cookies = requests.utils.cookiejar_from_dict(pickle.load(f))
+                self.session.cookies = cookies
+                
+        if not self.isLoggedIn():
+            self.session.cookies.clear_session_cookies()
+            if self.login():
+                self.session.cookies['mxd-ua'] = '%7B%22os%22%3A%7B%22name%22%3A%22Linux%22%2C%22version%22%3A%22x86_64%22%7D%2C%22browser%22%3A%7B%22name%22%3A%22Chrome%22%2C%22version%22%3A%2248.0.2564.116%22%2C%22major%22%3A%2248%22%2C%22architecture%22%3A%2232%22%7D%7D'
+                with open(self.cookie_path, 'w') as f:
+                    pickle.dump(requests.utils.dict_from_cookiejar(self.session.cookies), f)
 
-		return False
+        self.Assets = MaxdomeAssets(self)
+        self.getPreferences()
 
-	def getCustomerId(self, text):
-		strKey = 'Maxdome.customerId = \''
-		startpos = text.find(strKey) + len(strKey)
-		endpos = text.find('\';', startpos)
-		return text[startpos:endpos]
+    def isLoggedIn(self):
+        r = self.session.get(self.baseurl + '/mein-account')
+        strKey = 'isLoggedIn: '
+        startpos = r.text.find(strKey) + len(strKey)
+        endpos = r.text.find(',', startpos)
+        value = r.text[startpos:endpos]
+        if 'true' in value:
+            self.customer_id = self.getCustomerId(r.text)
+            return True
 
-	def getPreferences(self):
-		headers = {'accept':'application/vnd.maxdome.im.v8+json', 'Accept-Encoding':'gzip, deflate, sdch', 'Accept-Language':'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', 'client':'mxd_package', 'clienttype': 'webportal', 'Connection': 'keep-alive', 'content-type':'application/json', 'customerId':self.customer_id, 'language':'de_DE', 'Maxdome-Origin':'maxdome.de', 'mxd-session':self.session.cookies['mxd-bbe-session'], 'platform':'web'}
-		r = self.session.get(self.api_url + '/interfacemanager-2.1/mxd/customer/' + self.customer_id + '/preference', headers=headers)
-		
-		return r.json()
+        return False
 
-	def login(self):	
-		headers = {'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'Accept-Language':'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', 'connection': 'keep-alive', 'content-type': 'application/x-www-form-urlencoded; charset=UTF-8', 'X-Requested-With': 'XMLHttpRequest', 'Origin': 'https://www.maxdome.de', 'Referer': 'https://www.maxdome.de/'}
-		payload = {'userId': self.username, 'phrase': self.password, 'autoLogin': 'true'}
+    def getCustomerId(self, text):
+        strKey = 'Maxdome.customerId = \''
+        startpos = text.find(strKey) + len(strKey)
+        endpos = text.find('\';', startpos)
+        return text[startpos:endpos]
 
-		r = self.session.post(self.login_url, headers=headers, data=payload)
-		if 'Erfolgreich angemeldet' in r.text:
-			#Save cookies
-#			self.session.cookies['quality'] = self.getPreferences()['orderQuality']
-#			self.session.cookies['mxd-ua'] = '%7B%22os%22%3A%7B%22name%22%3A%22Linux%22%2C%22version%22%3A%22x86_64%22%7D%2C%22browser%22%3A%7B%22name%22%3A%22Chrome%22%2C%22version%22%3A%2248.0.2564.116%22%2C%22major%22%3A%2248%22%2C%22architecture%22%3A%2232%22%7D%7D'
-#			with open(self.cookie_path, 'w') as f:
-#				pickle.dump(requests.utils.dict_from_cookiejar(self.session.cookies), f)
+    def getPreferences(self):
+        headers = {'accept':'application/vnd.maxdome.im.v8+json', 'Accept-Encoding':'gzip, deflate, sdch', 'Accept-Language':'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', 'client':'mxd_package', 'clienttype': 'webportal', 'Connection': 'keep-alive', 'content-type':'application/json', 'customerId':self.customer_id, 'language':'de_' + self.region.upper(), 'Maxdome-Origin':'maxdome.' + self.region, 'mxd-session':self.session.cookies['mxd-bbe-session'], 'platform':'web'}
+        r = self.session.get(self.api_url + '/interfacemanager-2.1/mxd/customer/' + self.customer_id + '/preference', headers=headers)
+        data = r.json()
+        print 'MAXDOME PREFS'
+        print r.text
 
-			return self.isLoggedIn()
+    def login(self):
+        headers = {'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'Accept-Language':'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', 'connection': 'keep-alive', 'content-type': 'application/x-www-form-urlencoded; charset=UTF-8', 'X-Requested-With': 'XMLHttpRequest', 'Origin': 'https://www.maxdome.' + self.region, 'Referer': 'https://www.maxdome.' + self.region}
+        payload = {'userId': self.username, 'phrase': self.password, 'autoLogin': 'true'}
 
-		return False
+        r = self.session.post(self.login_url, headers=headers, data=payload)
+        if 'Erfolgreich angemeldet' in r.text:
+            return self.isLoggedIn()
 
-	def play(self, assetId):
-		headers = {'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'Accept-Language':'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', 'connection': 'keep-alive', 'content-type': 'application/x-www-form-urlencoded; charset=UTF-8', 'X-Requested-With': 'XMLHttpRequest', 'Origin': 'https://www.maxdome.de', 'Referer': 'https://www.maxdome.de/ab-durch-die-hecke-2152374.html', 'Host': 'www.maxdome.de'}
-		payload = {'assetId': assetId, 'licenseType': 'auto', 'isPreorder': 0, 'isHd': 1, 'orderableSeasonId': 0, 'portalHost': 'https://www.maxdome.de', 'ignoreResumeTime': 0}
-
-		r = self.session.post(self.order_url, headers=headers, data=payload, allow_redirects=True)
-		if r.status_code != 200:
-			return False
-
-		url = self.play_url + '/' + str(assetId)
-		r = self.session.get(url, headers=headers, allow_redirects=False)
-		startpos = r.text.find('dash:') + 6
-		endpos = r.text.find('},', startpos) + 1
-		data = json.loads(r.text[startpos:endpos])
-		self.license_url = data['licenseUrl'] + '|User-Agent=Mozilla%2F5.0%20(X11%3B%20Linux%20x86_64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20Chrome%2F49.0.2623.87%20Safari%2F537.36&Referer=http%3A%2F%2Fplay.maxdome.de%2Fwebplayer%2Fhttps%253A%252F%252Fwww.maxdome.de%252Fab-durch-die-hecke-2152374.html?portal_host=https%3A%2F%2Fwww.maxdome.de&Content-Type=|R{SSM}|'
-		self.video_url = data['videoUrl']
-
-		return True
-
+        return False
 
 class MaxdomeAssets:
-	def __init__(self, md_session):		
-		self.session = md_session
-		self.api_headers = {'accept': 'application/vnd.maxdome.im.v8+json', 'client': 'mxd_package', 'clienttype': 'webportal', 'language': 'de_DE', 'accept-language': 'de_DE', 'platform': 'web', 'Maxdome-Origin': 'maxdome.de'}
-		self.page_size = 1000
+    def __init__(self, md_session):
+        self.session = md_session
+        self.api_headers = {}
+        self.api_headers['accept'] = 'application/vnd.maxdome.im.v8+json'
+        self.api_headers['content-type'] = 'application/json'
+        self.api_headers['client'] = 'mxd_store'
+        self.api_headers['clienttype'] = 'webportal'
+        self.api_headers['language'] = 'de_' + self.session.region.upper()
+        self.api_headers['accept-language'] = 'de_DE'
+        self.api_headers['accept-encoding'] = 'gzip, detach'
+        self.api_headers['platform'] = 'web'
+        self.api_headers['Maxdome-Origin'] = 'maxdome.' + self.session.region
+        self.api_headers['customerId'] = self.session.customer_id
+        self.api_headers['mxd-session'] = self.session.session.cookies['mxd-bbe-session']
+        self.page_size = 1000
 
-	def orderAsset(self, assetId, fromStore=False):
-		headers = self.api_headers
-		headers['content-type'] = 'application/json'
-		headers['accept-language'] = 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4'
-		headers['Accept-Encoding'] = 'gzip, deflate'
-		headers['mxd-session'] = self.session.session.cookies['mxd-bbe-session']
-		payload = {'@class':'StartStep','baseData':{'deliveryType':'streaming','licenseType':'rent','quality':'2'}}
-		r = self.session.session.post(self.session.api_url + '/interfacemanager-2.1/mxd/mediaauth/' + self.session.customer_id + '/video/' + str(assetId) + '/' + 'sd' + '/start', headers=headers, data=json.dumps(payload))
-		if not 'orderId' in r.text:
-			return False
+    def isPackageContent(self, asset_info):
+        if 'packageList' in asset_info:
+            for item in asset_info['packageList']:
+                if 'premium_basic' in item:
+                    return True
 
-		orderId = r.json()['orderId']
-		url = self.session.api_url + '/api/mxd/playlist/asset/' + str(assetId) + '?transmissionType[]=mpegDashMultiLang&orderId=' + str(orderId)
-		r = self.session.session.get(url, headers=headers)
-		data = r.json()
-		strmFormat = getStrmFormat(data['playlistItemList'][0]['profileList'][0]['formatList'])
-		self.session.license_url = strmFormat['licenseUrl'] + '|User-Agent=Mozilla%2F5.0%20(X11%3B%20Linux%20x86_64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20Chrome%2F49.0.2623.87%20Safari%2F537.36&Content-Type=|R{SSM}|'
-		self.session.video_url = strmFormat['urlList'][0]['videoUrl']
+        return False
 
-	def getSeriesCategories(self):
-		r = self.session.session.get(self.session.api_url + '/api/navigations/MAIN?client=mxd_package', headers=self.api_headers)
-		data = r.json()
-		listitems = []		
-		for item in data['list'][0]['list'][0]['list'][0]['list']:
-			listitems.append({item['title']: item['link']['url']})
-		for item in data['list'][0]['list'][0]['list'][1]['list']:
-			listitems.append({item['title']: item['link']['url']})
-		
-		return listitems
+    def getSalesLabel(self, text):
+        if not '<strike>' in text or not '</strike>' in text:
+            return text
+        rm_start = text.index('<strike>')
+        rm_end = text.index('</strike>')+len('</strike>')
 
-	def getMoviesCategories(self):
-		r = self.session.session.get(self.session.api_url + '/api/navigations/MAIN?client=mxd_package', headers=self.api_headers)
-		data = r.json()
-		listitems = []		
-		for item in data['list'][0]['list'][1]['list'][0]['list']:
-			listitems.append({item['title']: item['link']['url']})
-		for item in data['list'][0]['list'][1]['list'][1]['list']:
-			listitems.append({item['title']: item['link']['url']})
-		
-		return listitems
+        return text.replace(text[rm_start:rm_end], '')
 
-	def getKidsCategories(self):
-		r = self.session.session.get(self.session.api_url + '/api/navigations/MAIN?client=mxd_package', headers=self.api_headers)
-		data = r.json()
-		listitems = []		
-		for item in data['list'][0]['list'][2]['list'][0]['list']:
-			if item['title'] == 'Kids-Stars':
-				continue
-			listitems.append({item['title']: item['link']['url']})
-		for item in data['list'][0]['list'][2]['list'][1]['list']:
-			listitems.append({item['title']: item['link']['url']})
-		
-		return listitems
+    def getSalesOptions(self, asset_info):
+        listitems = []
+        sale_props = asset_info['salesPropertiesContainer']['salesPropertiesRentSD']
+        sale_label = self.getSalesLabel(sale_props['buttonText'])
+        if sale_props['availableStatus'] == 'available':
+            listitems.append({'orderType':'rent', 'orderQuality': 'sd', 'label': 'SD Leihen fuer ' + sale_label})
+        sale_props = asset_info['salesPropertiesContainer']['salesPropertiesRentHD']
+        sale_label = self.getSalesLabel(sale_props['buttonText'])
+        if sale_props['availableStatus'] == 'available':
+            listitems.append({'orderType':'rent', 'orderQuality': 'hd', 'label': 'HD Leihen fuer ' + sale_label})
+        sale_props = asset_info['salesPropertiesContainer']['salesPropertiesBuySD']
+        sale_label = self.getSalesLabel(sale_props['buttonText'])
+        if sale_props['availableStatus'] == 'available':
+            listitems.append({'orderType':'buy', 'orderQuality': 'sd', 'label': 'SD Kaufen fuer ' + sale_label})
+        sale_props = asset_info['salesPropertiesContainer']['salesPropertiesBuyHD']
+        sale_label = self.getSalesLabel(sale_props['buttonText'])
+        if sale_props['availableStatus'] == 'available':
+            listitems.append({'orderType':'buy', 'orderQuality': 'hd', 'label': 'HD Kaufen fuer ' + sale_label})
 
-	def getKidsStarsCategories(self, path):
-		listitems = []
-		r = self.session.session.get(self.session.baseurl + path)
-		for match in re.findall(r'(?m)<a href="/kids-stars(.*?)"', r.text, re.S):
-			listitems.append({'path': match, 'title': ''})
-		matches = re.findall(r'(?m)class="trackable" data-tmlc="(.*?)"', r.text, re.S)
-		x = len(matches)
-		i = 0
-		while (i<x): 
-			listitems[i]['title'] = unescape(matches[i].replace('online schauen', ''))
-			i = i+1
+        return listitems
 
-		return listitems
+    def addToNotepad(self, assetid):
+        r = self.session.session.post(self.session.baseurl + '/_ajax/notepad/' + str(assetid))
 
-	def getBoughtAssets(self):
-		path = '/mein-account/historie?history=2'
-		return self.parseHtmlAssets(path=path, use_size=True, opt_pref='r_', select_set=1)
+    def deleteFromNotepad(self, assetid):
+        r = self.session.session.delete(self.session.baseurl + '/_ajax/notepad/' + str(assetid))
 
-	def getRentAssets(self):
-		path = '/mein-account/historie?history=1'
-		return self.parseHtmlAssets(path=path, use_size=True, opt_pref='r_', select_set=0)
+    def orderAsset(self, assetId, buyAsset=False, isHd=False, order_option='', orderType='rent', orderQuality='sd'):
+        headers = self.api_headers
+        headers['accept-language'] = 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4'
+        url = '%s/interfacemanager-2.1/mxd/mediaauth/%s/video/%s/%s/start' % (self.session.api_url, self.session.customer_id, str(assetId), orderQuality)
+        payload = {'@class':'StartStep','baseData':{'deliveryType':'streaming','licenseType':orderType,'quality':self.session.order_quality}}
+        r = self.session.session.post(url, headers=headers, data=json.dumps(payload))
+        data = r.json()
+        if '@class' in data:
+            if data['@class'] == 'SelectPaymentQuestionStep':
+                return data
+        elif 'errorCode' in data:
+            if 'MediaAuthNoLicenseAvailable' in data['message']:
+                pass
 
-	def getAssetInformation(self, assetId):
-		r = self.session.session.get(self.session.api_url + '/api/assets/' + str(assetId), headers=self.api_headers)
-		return r.json()
+        if not 'orderId' in r.text:
+            return False
 
-	def parseAsset(self, assetId):
-		data = self.getAssetInformation(assetId)
-		listitems = []
-		if data['@class'] == 'MultiAssetBundleTvSeries':			
-			for season in data['seasons']['assetList']:
-				item = {'id': season['id'], 'title': 'Staffel ' + season['number'], 'class': data['@class']} 
-				listitems.append(item)
-			return listitems
-		elif data['@class'] == 'MultiAssetTvSeriesSeason':
-			season = '%02d' % int(data['number'])
-			assets = self.getEpisodesFromHtml(assetId)
-			for episode in assets:
-				item = {'id': episode.keys()[0], 'title': episode.values()[0], 'class': data['@class']}
-				listitems.append(item)
-			return listitems
-		elif data['@class'] == 'AssetVideoFilm':
-			pass
-		elif data['@class'] == 'AssetVideoFilmTvSeries':
-			pass
+        orderId = r.json()['orderId']
+        url = self.session.api_url + '/api/mxd/playlist/asset/' + str(assetId) + '?transmissionType[]=mpegDashMultiLang&orderId=' + str(orderId)
+        r = self.session.session.get(url, headers=headers)
+        data = r.json()
+        strmFormat = getStrmFormat(data['playlistItemList'][0]['profileList'][0]['formatList'])
+        self.session.license_url = strmFormat['licenseUrl'] + '|User-Agent=Mozilla%2F5.0%20(X11%3B%20Linux%20x86_64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20Chrome%2F49.0.2623.87%20Safari%2F537.36&Content-Type=|R{SSM}|'
+        self.session.video_url = strmFormat['urlList'][0]['videoUrl']
 
-	def parseHtmlAssets(self, path, use_size=True, opt_pref='', select_set=0):
-		listitems = []
-		opt_char = '?'
-		url = self.session.baseurl + path
-		if '?' in url:
-			opt_char = '&'
-		if use_size:
-			url = url + opt_char + opt_pref + 'size=' + str(self.page_size)
-		print url
-		r = self.session.session.get(url)
-		page_count = self.getHtmlPageCount(r.text)
-		x = 1
-		while (x<=page_count):
-			data = self.getJsonDataProps(r.text, select_set)
-			if not 'assets' in data:
-				break
-			for item in data['assets']:			
-				asset = {'id': item['id'], 'title': unescape(item['title']), 'class': item['@class'], 'poster': item['coverList'][0]['url']}
-				listitems.append(asset)
-			x = x+1
-			if page_count>1:
-				url = self.session.baseurl + path + opt_char + opt_pref + 'start=' + str(x)
-				if use_size:
-					url = url + '&' + opt_pref + 'size=' + str(self.page_size)
-				r = self.session.session.get(url)
+        return True
 
-		return listitems
+    def processPayment(self, assetid, orderType, orderQuality):
+        headers = self.api_headers
+        headers['accept-language'] = 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4'
+        url = '%s/interfacemanager-2.1/mxd/mediaauth/%s/video/%s/%s/selectPayment' % (self.session.api_url, self.session.customer_id, str(assetid), orderQuality)
+        payload = {'@class':'SelectPaymentAnswerStep','baseData':{'deliveryType':'streaming','licenseType':orderType,'quality':self.session.order_quality},'selectedPaymentType':self.session.payment_type}
+        r = self.session.session.post(url, headers=headers, data=json.dumps(payload))
+        if r.status_code != 200:
+            return False
 
-	def getEpisodesFromHtml(self, assetId):
-		items = []
-		r = self.session.session.get(self.session.baseurl + '/' + str(assetId))
-		page_count = self.getHtmlPageCount(r.text)
-		x = 1
-		while (x<=page_count):
-			count = 0
-			soup = BeautifulSoup(r.text)
-			matches = soup.findAll('a', {'data-tmlc': 'Asset'})
-			while (count<len(matches)):
-				episode_title = matches[count].text.strip() + ' ' + matches[count+1].text.strip()
-				link = matches[count]['href']
-				endpos = link.find('.html')
-				startpos = link.rfind('-')+1
-				asset_id = link[startpos:endpos]
-				items.append({asset_id: episode_title})
-				count = count+3
-			x = x+1
-			if page_count>1:
-				r = self.session.session.get(self.session.baseurl + '/' + str(assetId))
+        return True
 
-		return items
+    def confirmPayment(self, assetid, orderType, orderQuality):
+        headers = self.api_headers
+        headers['accept-language'] = 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4'
+        url = '%s/interfacemanager-2.1/mxd/mediaauth/%s/video/%s/%s/confirm%s' % (self.session.api_url, self.session.customer_id, str(assetid), orderQuality, self.session.payment_type.title())
+        payload = {'@class':'Confirm' + self.session.payment_type.title() + 'AnswerStep','baseData':{'deliveryType':'streaming','licenseType':orderType,'quality':self.session.order_quality},'selectedPaymentType':self.session.payment_type}
+        r = self.session.session.post(url, headers=headers, data=json.dumps(payload))
+        if r.status_code != 200:
+            return False
 
-#	def getEpisodesFromHtml(self, assetId):
-#		items = []
-#		r = self.session.session.get(self.session.baseurl + '/' + str(assetId))
-#		page_count = len(re.findall(r'(?m)<a href=\"\?start=(.*?)</a>', r.text, re.S))-1
-#		if page_count < 1:
-#			page_count = 1
-#		x = 1
-#		while (x<=page_count):
-#			count = 0
-#			episodeNames = re.findall(r'(?m)data-tmlc="Asset">(.*?)</a>', r.text, re.S)
-#			for match in re.findall(r'(?m)<td class="episode-number">(.*?)</td>', r.text, re.S):
-#				name = episodeNames[3*count].strip() + ' ' + episodeNames[(3*count)+1].strip()
-#				endpos = match.find('.html')
-#				startpos = match.rfind('-', 0, endpos)
-#				items.append({match[startpos+1:endpos]: unescape(name)})
-#				count = count+1
-#			x = x+1
-#			if page_count>1:
-#				r = self.session.session.get(self.session.baseurl + '/' + str(assetId))
-#
-#		return items
+        return True
 
-	def searchAssets(self, term):
-		return self.parseHtmlAssets('/suche?search=' + term.replace(' ', '+'), False)
+    def getAssetInformation(self, assetId):
+        r = self.session.session.get(self.session.api_url + '/api/assets/' + str(assetId), headers=self.api_headers)
+        return r.json()
 
-	def getHtmlPageCount(self, html):
-		soup = BeautifulSoup(html)
-		matches = soup.findAll('a', href=re.compile('\?*start'))
-		if len(matches) > 0:
-			page_count = matches[len(matches)-2].text
-			return int(page_count)
+    def parseHtmlAssets(self, path, use_size=True, opt_pref='', select_set=0):
+        listitems = []
+        opt_char = '?'
+#        url = self.session.baseurl + path
+        url = path
+        if '?' in url:
+            opt_char = '&'
+        if use_size and ('size=' not in path):
+            url = url + opt_char + opt_pref + 'size=' + str(self.page_size)
+        r = self.session.session.get(url)
+        page_count = self.getHtmlPageCount(r.text)
+        data = self.getJsonDataProps(r.text, select_set)
+        if not data:
+            return listitems
+        for item in data['assets']:
+            asset = {'id': item['id'], 'title': unescape(item['title']), 'class': item['@class'], 'poster': item['coverList'][0]['url'], 'green': item['green']}
+            print asset
+            listitems.append(asset)
 
-		return 1
+        nextPagePath = self.getHtmlNextPage(r.text)
+        if nextPagePath:
+            url = url[0:url.rfind('?')] + nextPagePath
+            li = {'class': 'list', 'title': 'Mehr...', 'url': url}
+            listitems.append(li)
 
-	def getJsonDataProps(self, html, idx=0):
-		soup = BeautifulSoup(html)
-		matches = soup.findAll(attrs={'data-react-props': True})
-		if (idx < len(matches)):
-			return json.loads(matches[idx]['data-react-props'])
+        return listitems
 
-		return None
+
+    def parseHtmlAssetsBak(self, path, use_size=True, opt_pref='', select_set=0):
+        listitems = []
+        opt_char = '?'
+        url = self.session.baseurl + path
+        if '?' in url:
+            opt_char = '&'
+        if use_size:
+            url = url + opt_char + opt_pref + 'size=' + str(self.page_size)
+        print url
+        r = self.session.session.get(url)
+        page_count = self.getHtmlPageCount(r.text)
+        x = 1
+        while (x<=page_count):
+            data = self.getJsonDataProps(r.text, select_set)
+            if not 'assets' in data:
+                break
+            for item in data['assets']:
+                listitems.append(item['id'])
+            x = x+1
+            if page_count>1:
+                url = self.session.baseurl + path + opt_char + opt_pref + 'start=' + str(x)
+                if use_size:
+                    url = url + '&' + opt_pref + 'size=' + str(self.page_size)
+                r = self.session.session.get(url)
+
+        return listitems
+
+    def isPlayableAsset(self, assetId):
+        r = self.session.session.get(self.session.baseurl + '/' + str(assetId))
+        soup = BeautifulSoup(r.text)
+        data = self.getJsonDataProps(r.text, idx=0, field='green')
+        return data['asset']['green']
+
+    def getHtmlPageCount(self, html):
+        soup = BeautifulSoup(html)
+        matches = soup.findAll('a', href=re.compile('\?*start'))
+        if len(matches) > 0:
+            page_count = matches[len(matches)-2].text
+            return int(page_count)
+
+        return 1
+
+    def getHtmlNextPage(self, html):
+        soup = BeautifulSoup(html)
+        matches = soup.findAll('li', {'class': 'component--pagination-last-child '})
+        if len(matches) > 0:
+            return matches[0].find('a')['href']
+
+        return None
+
+    def getJsonDataProps(self, html, idx=0, field=''):
+        soup = BeautifulSoup(html)
+        matches = soup.findAll(attrs={'data-react-props': True})
+        while (idx < len(matches)):
+            if field == '':
+                return json.loads(matches[idx]['data-react-props'])
+            else:
+                data = json.loads(matches[idx]['data-react-props'])
+                if 'asset' in data:
+                    if field in data['asset']:
+                        return data
+                idx = idx+1
+
+        return None
+
+    def exportAsset(self, assetId):
+        asset_info = self.getAssetInformation(assetId)
+        asset_class = getAssetClass(asset_info['@class'])
+        if asset_class == 'tvshow':
+            #parse seasons
+            for season in asset_info['seasons']['assetList']:
+                self.exportAsset(season['id'])
+        elif asset_class == 'tvseason':
+            episodes = self.getEpisodesFromHtml(asset_info['id'])
+            for ep in episodes:
+                self.exportAsset(ep.keys()[0])
+        elif asset_class == 'tvepisode':
+            mxdlib.addEpisode(asset_info)
+        elif asset_class == 'movie':
+            mxdlib.addMovie(asset_info)
+
+    def getAssets2(self, query, start=0):
+        res_list = []
+        pageStart = 1
+        if start>0:
+            pageStart = start
+        url = self.session.api_url + '/api/mxd/assets?filter[]=' + query + '&pageSize=' + str(self.page_size) + '&pageStart=' + str(pageStart)
+        r = self.session.session.get(url, headers=self.api_headers)
+        data = r.json()
+        page_idx = data['pageInfo']['start']
+        page_size = data['pageInfo']['size']
+        if page_size < 1:
+            return res_list
+        page_count = math.ceil(float(data['pageInfo']['total'])/float(page_size))
+        
+        res_list = data['assetList']
+        while (start<1 and page_idx<page_count):
+            for item in self.getAssets(query, start=page_idx+1):
+                res_list.append(item)
+            page_idx = page_idx+1
+            
+        return res_list
+
+    def getAssets(self, query, page_start=1):
+        url = self.session.api_url + '/api/mxd/assets?filter[]=' + query + '&pageSize=' + str(self.page_size) + '&pageStart=' + str(page_start)
+        r = self.session.session.get(url, headers=self.api_headers)
+        data = r.json()
+        return data
 
 def unescape(text):
-	return HTMLParser.HTMLParser().unescape(text)
+    return HTMLParser.HTMLParser().unescape(text)
 
 def getStrmFormat(formatList):
-	useD51 = addon.getSetting('d51')
-	d51Available = False
-	multiLang = False
-	audioType = ''
-	resolution = '0'
-	resList = {}
-	for item in formatList:
-		print item['formatType']
-		#Audio - order ML|DE|XX
-		if item['formatType'].split('|')[1] == 'mu':
-			multiLang = True
-			audioType = 'mu'
-		elif item['formatType'].split('|')[1] == 'de' and not multiLang:
-			audioType = 'de'
-		elif not multiLang and audioType == '':
-			audioType = item['formatType'].split('|')[1]
+    useD51 = addon.getSetting('d51')
+    d51Available = False
+    multiLang = False
+    audioType = ''
+    resolution = '0'
+    resList = {}
+    for item in formatList:
+        #Audio - order ML|DE|XX
+        if item['formatType'].split('|')[1] == 'mu':
+            multiLang = True
+            audioType = 'mu'
+        elif item['formatType'].split('|')[1] == 'de' and not multiLang:
+            audioType = 'de'
+        elif not multiLang and audioType == '':
+            audioType = item['formatType'].split('|')[1]
 
-		#DD5.1 available
-		if item['formatType'].split('|')[2][1] == 'd':
-			d51Available = True
+        #DD5.1 available
+        if item['formatType'].split('|')[2][1] == 'd':
+            d51Available = True
 
-		#Video - highest resolution
-		if int(item['formatType'].split('|')[0]) > int(resolution):
-			resolution = item['formatType'].split('|')[0]
+        #Video - highest resolution
+        if int(item['formatType'].split('|')[0]) > int(resolution):
+            resolution = item['formatType'].split('|')[0]
 
-		resList[item['formatType']] = item
+        resList[item['formatType']] = item
 
-	audioChannels = '20'	
-	if multiLang:
-		audioChannels = audioChannels.replace('2', 'x')
-	if d51Available and useD51:
-		audioChannels = audioChannels.replace('0', 'd')
-		if not multiLang:
-			audioChannels = audioChannels.replace('2', '5')
+    audioChannels = '20'
+    if multiLang:
+        audioChannels = audioChannels.replace('2', 'x')
+    if d51Available and useD51:
+        audioChannels = audioChannels.replace('0', 'd')
+        if not multiLang:
+            audioChannels = audioChannels.replace('2', '5')
 
-	return resList[resolution + '|' + audioType + '|' + audioChannels]
+    return resList[resolution + '|' + audioType + '|' + audioChannels]
