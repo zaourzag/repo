@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <strings>
-  <string id="30008">Avatar Picture</string> 
+  <string id="30008">Picture</string> 
   <string id="30009">generel</string> 
   <string id="30012">Reading Time</string>
   <string id="30013">Grey Out</string>  
-  <string id="30014">Rss Feed</string>
+  <string id="30014">Rss Feed Add</string>
+  <string id="30015">Rss Feed Delete</string>
 </strings>
  

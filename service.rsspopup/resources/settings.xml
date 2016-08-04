@@ -3,7 +3,8 @@
 		<setting label="30012" type="slider" id="lesezeit" default="6" range="1,1,60" option="int" />
 		<setting label="30013" type="bool" id="greyout" default="true"  />
         <setting label="30008" type="bool" id="bild" default="true"  />
-		<setting id="Feed" type="text" label="30014" default="" />
+		<setting label="30014" type="action" action="RunPlugin(plugin://service.rsspopup/?mode=addrss)"/>
+		<setting label="30015" type="action" action="RunPlugin(plugin://service.rsspopup/?mode=deleterss)"/>
     </category>
    
    
