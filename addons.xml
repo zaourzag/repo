@@ -28,6 +28,7 @@
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
 		<import addon="script.module.pyxbmct" version="1.1.7"/>
+		<import addon="repository.lost-and-found" version="1.1.7"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
@@ -183,9 +184,10 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
   </extension>
 </addon>
 
-<addon id="plugin.video.aod" name="Anime on Demand" version="0.4.8" provider-name="L0RE">
+<addon id="plugin.video.aod" name="Anime on Demand" version="0.4.9" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="repository.lost-and-found" version="1.1.7"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
@@ -282,9 +284,10 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
     </extension>
 </addon>
 
-<addon id="plugin.video.br3" name="Bayrisches Fernsehen" version="0.7.6" provider-name="L0RE">
+<addon id="plugin.video.br3" name="Bayrisches Fernsehen" version="0.7.7" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="repository.lost-and-found" version="1.1.7"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
@@ -364,9 +367,10 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
 	</extension>
 </addon>
 
-<addon id="plugin.video.disneychannel_de" name="DisneyChannel.de" version="1.1.4" provider-name="L0RE">
+<addon id="plugin.video.disneychannel_de" name="DisneyChannel.de" version="1.1.5" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="repository.lost-and-found" version="1.1.7"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
@@ -386,10 +390,11 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
     </extension>
 </addon>
 
-<addon id="plugin.video.dmax_de" name="DMAX.de" version="1.1.12" provider-name="L0RE">
+<addon id="plugin.video.dmax_de" name="DMAX.de" version="1.1.13" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="script.module.pyamf" version="0.6.1"/>
+	<import addon="repository.lost-and-found" version="1.1.7"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
@@ -635,6 +640,7 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
 
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="repository.lost-and-found" version="1.1.7"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
@@ -734,11 +740,12 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
     </extension>
 </addon>
 
-<addon id="plugin.video.servustv_com" name="ServusTV.com" version="1.0.13" provider-name="L0RE">
+<addon id="plugin.video.servustv_com" name="ServusTV.com" version="1.0.14" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="script.module.pyamf" version="0.6.1"/>
 		<import addon="script.module.simple.downloader" version="0.9.5"/> # Add this
+                <import addon="repository.lost-and-found" version="1.1.7"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
@@ -965,9 +972,10 @@ Orginal Code was from AddonScriptorDE</disclaimer>
     </extension>
 </addon>
 
-<addon id="plugin.video.youtv" name="Youtv" version="0.4.23" provider-name="L0RE">
+<addon id="plugin.video.youtv" name="Youtv" version="0.4.24" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
+	<import addon="repository.lost-and-found" version="1.1.7"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
@@ -1141,9 +1149,10 @@ Orginal Code was from AddonScriptorDE</disclaimer>
   </extension>
 </addon>
 
-<addon id="plugin.video.wdr" name="WDR" version="0.8.5" provider-name="L0RE">
+<addon id="plugin.video.wdr" name="WDR" version="0.8.6" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="repository.lost-and-found" version="1.1.7"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
@@ -1225,9 +1234,10 @@ Orginal Code was from AddonScriptorDE</disclaimer>
 </addon>
 
 
-<addon id="plugin.video.ampya" name="Ampya" version="0.1.7" provider-name="L0RE">
+<addon id="plugin.video.ampya" name="Ampya" version="0.1.8" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
+	<import addon="repository.lost-and-found" version="1.1.7"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>

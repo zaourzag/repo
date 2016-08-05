@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<addon id="plugin.video.servustv_com" name="ServusTV.com" version="1.0.13" provider-name="L0RE">
+<addon id="plugin.video.servustv_com" name="ServusTV.com" version="1.0.14" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="script.module.pyamf" version="0.6.1"/>
 		<import addon="script.module.simple.downloader" version="0.9.5"/> # Add this
+                <import addon="repository.lost-and-found" version="1.1.7"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
