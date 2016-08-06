@@ -65,7 +65,7 @@ def showMessage(Message,image="",greyout="true",lesezeit=10):
     xbmc.log("showMessage")
     wid = xbmcgui.getCurrentWindowId()
     window=xbmcgui.Window(wid)
-    res=window.getResolution()
+    res=window.getResolution()    
     if len(tw) > 100 :
        bis=100
        for i in range(90,100):
@@ -73,21 +73,43 @@ def showMessage(Message,image="",greyout="true",lesezeit=10):
            bis=i
     else:
         bis=len(tw)
+    zeile1=tw[:bis]
+    rest=tw[bis:]
+    if len(rest) > 100 :
+       bis=100
+       for i in range(90,100):
+         if rest[i]==' ':
+           bis=i
+    else:
+        bis=len(rest)
+    zeile2=rest[:bis]   
+    zeile3=rest[bis:]  
+    if zeile1:
+        ll=70
+    if zeile2:
+        ll=100
+    if zeile3: 
+        ll=130
+        
     if greyout=="true":
-       bg=xbmcgui.ControlImage(0,10,3000,100,"")
+       bg=xbmcgui.ControlImage(0,10,3000,ll,"")
        bg.setImage(background)
        window.addControl(bg)
 
-    twitterlabel1=xbmcgui.ControlLabel (111, 31, 3000, 100, tw[:bis],textColor='0xFF000000')
-    twitterlabel2=xbmcgui.ControlLabel (110, 30, 3000, 100, tw[:bis],textColor='0xFFFFFFFF')        
+    twitterlabel1=xbmcgui.ControlLabel (111, 31, 3000, 100, zeile1,textColor='0xFF000000')
+    twitterlabel2=xbmcgui.ControlLabel (110, 30, 3000, 100, zeile1,textColor='0xFFFFFFFF')        
     window.addControl(twitterlabel1)
-    window.addControl(twitterlabel2)
-        
-    if len(tw) > 100:
-     twitterlabel3=xbmcgui.ControlLabel (111, 61, 3000, 100, tw[bis:],textColor='0xFF000000')
-     twitterlabel4=xbmcgui.ControlLabel (110, 60, 3000, 100, tw[bis:],textColor='0xFFFFFFFF')
+    window.addControl(twitterlabel2)        
+    if zeile2:
+     twitterlabel3=xbmcgui.ControlLabel (111, 61, 3000, 100, zeile2,textColor='0xFF000000')
+     twitterlabel4=xbmcgui.ControlLabel (110, 60, 3000, 100, zeile2,textColor='0xFFFFFFFF')
      window.addControl(twitterlabel3)
      window.addControl(twitterlabel4)
+    if zeile3:
+     twitterlabel5=xbmcgui.ControlLabel (111, 91, 3000, 100, zeile3,textColor='0xFF000000')
+     twitterlabel6=xbmcgui.ControlLabel (110, 90, 3000, 100, zeile3,textColor='0xFFFFFFFF')
+     window.addControl(twitterlabel5)
+     window.addControl(twitterlabel6) 
     avatar=xbmcgui.ControlImage(0,10,100,100,"")
     avatar.setImage(image)
     window.addControl(avatar)        
@@ -95,9 +117,12 @@ def showMessage(Message,image="",greyout="true",lesezeit=10):
         
     window.removeControl(twitterlabel1)
     window.removeControl(twitterlabel2)
-    if len(tw) > 100:
+    if zeile2:
        window.removeControl(twitterlabel3)
        window.removeControl(twitterlabel4)
+    if zeile3:
+       window.removeControl(twitterlabel5)
+       window.removeControl(twitterlabel6)       
     window.removeControl(avatar)
     if greyout=="true":
        window.removeControl(bg)
@@ -111,8 +136,17 @@ if __name__ == '__main__':
       text=[]
       image=[]
       greyout=[]
-      dirs, files = xbmcvfs.listdir(temp)
-      for name in files:
+      fileliste=[]
+      datumliste=[]
+      dirs, files = xbmcvfs.listdir(temp)      
+      for name in files:     
+          pf=os.path.join( temp, name)     
+          zeit=os.path.getctime(pf)
+          fileliste.append(name)
+          datumliste.append(zeit)          
+      if len(datumliste) > 0:
+        datumliste,fileliste = (list(x) for x in zip(*sorted(zip(datumliste,fileliste))))
+        for name in fileliste:
           debug("File :" + name)
           f = open(temp+"/"+name, 'r')    
           for line in f:      

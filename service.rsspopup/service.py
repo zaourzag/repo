@@ -210,9 +210,10 @@ if __name__ == '__main__':
                     day_string = dt.strftime('%Y-%m-%d %H:%M')                    
                     timelist.append(day_string)
                     timelist,titlelist,cimglist,lesezeitlist,greyoutlist = (list(x) for x in zip(*sorted(zip(timelist,titlelist,cimglist,lesezeitlist,greyoutlist))))
-        for i in range(len(titlelist)):                      
-                  savemessage(titlelist[i],cimglist[i],greyoutlist[i],lesezeitlist[i])             
-                  schown.append(title)                   
+        for i in range(len(titlelist)):  
+                   if not titlelist[i] in schown:
+                      savemessage(titlelist[i],cimglist[i],greyoutlist[i],lesezeitlist[i])             
+                      schown.append(title)                   
       if monitor.waitForAbort(60):
         break            
       

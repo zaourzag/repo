@@ -10,6 +10,7 @@ import socket, cookielib
 import feedparser
 import HTMLParser,xbmcplugin
 from dateutil import parser
+from django.utils.encoding import smart_str
 
 __addon__ = xbmcaddon.Addon()
 __addonname__ = __addon__.getAddonInfo('name')
@@ -147,20 +148,19 @@ def liega(lieganr):
       #debug("#############")
       #debug(spiel)
       # full oder data
-      live_status=unicode(spiel["live_status"])
-      aus=unicode(spiel["away"]["name"])
-      ins=unicode(spiel["home"]["name"])
+      live_status=smart_str(spiel["live_status"])
+      aus=smart_str(spiel["away"]["name"])
+      ins=smart_str(spiel["home"]["name"])
       ende=spiel["finished"]
-      match_date=spiel["match_date"]
-      match_time=spiel["match_time"]
+      match_date=smart_str(spiel["match_date"])
+      match_time=smart_str(spiel["match_time"])
       if match_time=="unknown":
           match_time=""     
-      id=spiel["id"]
-      name=unicode(match_date +" "+ match_time +" : "+ins +" - "+ aus )
+      id=spiel["id"]      
+      name=match_date +" "+ match_time +" : "+ins +" - "+ aus 
       url=str(id)
-      if not ende=="no" and not live_status=="none":
-       url=name+"##"+live_status +"##"+ str(lieganr) +"##"+ str(day) +"##"+str(id)
-       url=url.encode('ascii','ignore')
+      if ende=="no" and not live_status=="none":
+       url=name+"##"+live_status +"##"+ str(lieganr) +"##"+ str(day) +"##"+str(id)+"##"+aus+"##"+ins+"##"+match_date+"##"+match_time       
        debug("URL :::: ")
        debug(url)
        if url not in spielfile:
@@ -178,7 +178,8 @@ def savespiel(zeile)  :
        content=zeile   
     fp = open(filename, 'w')    
     fp.write(content)
-    fp.close()    
+    fp.close()   
+    xbmc.executebuiltin("Container.Refresh")    
  
 def add_game():
       debug("Start Add Game")
@@ -209,6 +210,10 @@ def delgame():
                     lieganr=arr[2]
                     dayid=arr[3]
                     spielnr=arr[4]
+                    aus=arr[5]
+                    ins=arr[6]
+                    match_date=arr[7]
+                    match_time=arr[8]
                     addDir(name, line, mode="delspiel", iconimage="" )  
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
 def delspiel(zeile)   :

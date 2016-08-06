@@ -47,15 +47,12 @@
     </extension>
 </addon>
 
-<addon id="service.popwindow" name="Pupup Windows" version="0.1" provider-name="L0RE">
+<addon id="service.popwindow" name="Pupup Windows" version="0.2" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.19.0"/>
 	<import addon="script.module.requests" version="2.9.1"/>	
     </requires>
     <extension point="xbmc.service" library="service.py" start="login" />
-	<extension point="xbmc.python.pluginsource" library="service.py" >
-	    <provides>executable</provides>
-    </extension>
     <extension point="xbmc.addon.metadata">
     <summary lang="en">Shows Popup  Windows</summary>
     <summary lang="de">Shows Popup  Windows</summary>
@@ -1105,11 +1102,12 @@ Orginal Code was from AddonScriptorDE</disclaimer>
   </extension>
 </addon>
 
-<addon id="service.twitterfeed" name="Twitter Feed" version="0.8.15" provider-name="L0RE">
+<addon id="service.twitterfeed" name="Twitter Feed" version="0.8.16" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.19.0"/>
 	<import addon="script.module.requests" version="2.9.1"/>	
-	<import addon="service.popwindow" version="0.1"/>	
+	<import addon="service.popwindow" version="0.2"/>	
+	<import addon="repository.lost-and-found" version="1.1.7"/>
     </requires>
     <extension point="xbmc.service" library="service.py" start="login" />
 	<extension point="xbmc.python.pluginsource" library="service.py" >
@@ -1195,12 +1193,13 @@ Orginal Code was from AddonScriptorDE</disclaimer>
   </extension>
 </addon>
 
-<addon id="service.fussballpopup" name="Fussball Popus (Work in Progress)" version="0.1.0" provider-name="L0RE">
+<addon id="service.fussballpopup" name="Fussball Popus (Work in Progress)" version="0.2.0" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.19.0"/>			       
 	    <import addon="script.module.feedparser" version="5.1.3"/>
         <import addon="script.module.requests" version="2.3.0"/>
-		<import addon="service.popwindow" version="0.1"/>	
+		<import addon="service.popwindow" version="0.2"/>	
+        <import addon="repository.lost-and-found" version="1.1.7"/>
     </requires>
     <extension point="xbmc.service" library="service.py" start="login" />
 	<extension point="xbmc.python.pluginsource" library="menu.py" >
@@ -1255,12 +1254,13 @@ Orginal Code was from AddonScriptorDE</disclaimer>
   </extension>
 </addon>
 
-<addon id="service.rsspopup" name="Rss Popus" version="0.3.0" provider-name="L0RE">
+<addon id="service.rsspopup" name="Rss Popus" version="0.3.2" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.19.0"/>			       
 	    <import addon="script.module.feedparser" version="5.1.3"/>
         <import addon="script.module.requests" version="2.3.0"/>
-		<import addon="service.popwindow" version="0.1"/>	
+		<import addon="service.popwindow" version="0.2"/>	
+        <import addon="repository.lost-and-found" version="1.1.7"/>
     </requires>
     <extension point="xbmc.service" library="service.py" start="login" />
 	
