@@ -10,6 +10,7 @@ import socket, cookielib
 import feedparser
 import HTMLParser,xbmcplugin
 from dateutil import parser
+from django.utils.encoding import smart_str
 
 __addon__ = xbmcaddon.Addon()
 __addonname__ = __addon__.getAddonInfo('name')
@@ -92,8 +93,7 @@ def addLink(name, url, mode, iconimage, duration="", desc="", genre=''):
     return ok
     
         
-def savemessage(message,image,grey,lesezeit)  :
-    from django.utils.encoding import smart_str
+def savemessage(message,image,grey,lesezeit)  :    
     message = smart_str(message)
     image=unicode(image).encode('utf-8')
     debug("message :"+message)
@@ -139,7 +139,16 @@ def ersetze(text):
     return text
   
     
-  
+def delspiel(id,liste):
+  fileinhalt=""
+  filename       = xbmc.translatePath( os.path.join( temp, 'spiel.txt') ).decode("utf-8")
+  for zeile in liste:
+    if not str(id) in zeile and "##" in zeile:
+         fileinhalt=fileinhalt+"\n"+zeile          
+  fp = open(filename, 'w')    
+  fp.write(fileinhalt)
+  fp.close()    
+
    
 if __name__ == '__main__':
     cimg=""
@@ -157,7 +166,7 @@ if __name__ == '__main__':
       ids=[]
       ins=[]
       auss=[]
-      anzal_meldungen=[]
+      anzal_meldungen=[]      
       xbmc.log("Hole Umgebung")
       bild=__addon__.getSetting("bild") 
       lesezeit=__addon__.getSetting("lesezeit")
@@ -166,9 +175,9 @@ if __name__ == '__main__':
       gesamtliste=[]
       if xbmcvfs.exists(filename) :
         fp=open(filename,"r") 
-        content=fp.read()
+        contentf=fp.read()
         fp.close()          
-        liste=content.split("\n")                
+        liste=contentf.split("\n")                
         for spiel in liste:  
           in_spieler=""
           out_spieler=""
@@ -186,7 +195,24 @@ if __name__ == '__main__':
             zeitpunkt=match_date+ " "+match_time
             dt = parser.parse(zeitpunkt)  
             lss=dt.timetuple()
-            lsv=time.mktime(lss)
+            lsv=time.mktime(lss)                       
+            
+            nurl="https://api.sport1.de/api/sports/matches-by-season/co"+lieganr+"/se/md"+dayid
+            content=geturl(nurl) 
+            struktur = json.loads(content)
+            tage=struktur["round"]
+            breakit=0
+            for tag in tage:
+              spiele=tag["match"]
+              for spiel in spiele:
+                id=spiel["id"] 
+                ende=spiel["finished"]             
+                if str(id)==spielnr: 
+                  if not ende=="no":
+                     delspiel(id,liste)
+                     breakit=1
+            if breakit==1:
+              continue
             #if live_status=="full":
             #   url="https://api.sport1.de/api/sports/liveticker/co"+lieganr+"/ma"+spielnr
             #   content=geturl(url)
@@ -221,7 +247,7 @@ if __name__ == '__main__':
                  action=element["action"]
                  kind=element["kind"]
                  if not element["content"]=="":
-                    ccontent=element["content"]
+                    ccontent=smart_str(element["content"])
                  #team=element["team"]["shortname"]
                  #person=element["person"]["name"]
                  #personid=element["person"]["id"]
