@@ -75,7 +75,7 @@ def savemessage(message,image,grey,lesezeit)  :
     debug("grey :"+grey)
     debug("popuptemp :"+popuptemp)
     debug("lesezeit :"+str(lesezeit))
-    filename=md5.new(message).hexdigest()  
+    filename=__addonname__ + "_"+md5.new(message).hexdigest()  
     f = open(popuptemp+"/"+filename, 'w')    
     f.write(message+"###"+image+"###"+grey+"###"+str(lesezeit))
     f.close()   
@@ -238,9 +238,10 @@ if __name__ == '__main__':
        f.close() 
     # Starte Service    
     monitor = xbmc.Monitor()
-    
+    search=""
     sinceid=None    
     # Solange der Service läuft
+    searchold=""
     while not monitor.abortRequested():
       xbmc.log("Hole Umgebung")
       country=__addon__.getSetting("country").lower()        
@@ -355,7 +356,12 @@ if __name__ == '__main__':
       
       if   country=="" :
            country=None    
-                 
+      if not searchold==search:
+          searchold=search                 
+          filename="DELETE_"+__addonname__ 
+          f = open(popuptemp+"/"+filename, 'w')              
+          f.write("DELETE")
+          f.close()   
       try:       
          debug ("-------")
          if inhalt=="Video" and tv=="true" and xbmc.getCondVisibility('Pvr.IsPlayingTv'):   

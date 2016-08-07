@@ -6,6 +6,7 @@ import xbmc ,xbmcgui, xbmcaddon,xbmcvfs
 import urllib2,urllib,json
 import re,md5,shutil
 import socket, cookielib
+from datetime import datetime
 
 
 
@@ -133,20 +134,46 @@ if __name__ == '__main__':
     temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
     monitor = xbmc.Monitor()       
     while not monitor.abortRequested():
+      start=datetime.now()
       text=[]
       image=[]
       greyout=[]
       fileliste=[]
       datumliste=[]
       dirs, files = xbmcvfs.listdir(temp)      
-      for name in files:     
+      delete=0
+      deletefile=""
+      module=""
+      for name in files:  
           pf=os.path.join( temp, name)     
           zeit=os.path.getctime(pf)
           fileliste.append(name)
-          datumliste.append(zeit)          
+          if "DELETE" in name:
+             delete=1
+             deletefile=name
+             teile=deletefile.split("_")          
+             module=teile[1]
+          datumliste.append(zeit)              
       if len(datumliste) > 0:
         datumliste,fileliste = (list(x) for x in zip(*sorted(zip(datumliste,fileliste))))
+        if delete==1:            
+          ende=0      
+          x=0          
+          for file in fileliste :              
+              if module in file  and ende==0:
+                  fileliste.pop(x)
+                  datumliste.pop(x)
+                  xbmcvfs.delete(temp+"/"+file)                  
+                  debug("Delete file :"+file)
+                  if "DELETE" in file:
+                     ende=1
+                     debug("Delete ende")
+                  x=x+1
+        count=0                
         for name in fileliste:
+          if count >4:
+             break
+          count=count+1                                  
           debug("File :" + name)
           f = open(temp+"/"+name, 'r')    
           for line in f:      
@@ -154,9 +181,14 @@ if __name__ == '__main__':
                 showMessage(message,image,grey,lesezeit)
           f.close()           
           xbmcvfs.delete(temp+"/"+name)                    
-      xbmc.log("Hole Umgebung")  
-      time.sleep(int(20))      
-      if monitor.waitForAbort(60):
+      xbmc.log("Hole Umgebung")        
+      end=datetime.now()
+      diff=int((end-start).seconds)
+      warten=20-diff
+      if warten < 1:
+        warten=1
+      debug("######  Warten : "+str(warten))
+      if monitor.waitForAbort(warten):
         break            
            
 
