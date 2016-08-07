@@ -216,12 +216,12 @@ class Client(nightcrawler.HttpClient):
         # first request the web url of the video
         url = 'http://contentapi.sim-technik.de/mega-app/v2/pro7/phone/video/%s' % video_id
         data = self._request(url)
-        video_link = nightcrawler.utils.strings.to_utf8(
+        client_location = nightcrawler.utils.strings.to_utf8(
             data.get('screen', {}).get('screen_objects', [{'video_link': ''}])[0].get('video_link', ''))
 
         url = 'https://vas.sim-technik.de/vas/live/v2/videos'
         params = {'access_token': 'seventv-app',
-                  'client_location': video_link,
+                  'client_location': client_location,
                   'client_name': '7tv-app',
                   'ids': video_id}
         data = self._request(url, params=params)
@@ -231,17 +231,15 @@ class Client(nightcrawler.HttpClient):
             pass
 
         access_token = 'h''b''b''t''v'
-        client_location = video_link
-        client_name = 'h''b''b''t''v'
         salt = '0''1''r''e''e''6''e''L''e''i''w''i''u''m''i''e''7''i''e''V''8''p''a''h''g''e''i''T''u''i''3''B'
         # http://hbbtv.prosieben.de/common/js/videocenter.js
         # __PATTERN = 'salt\s*:\s*"01(.+?)"'
         source_id = 4
 
-        videos = self._get_video_url(video_id, access_token, client_name, client_location, salt, source_id)
+        videos = self._get_video_url(video_id, access_token, access_token, client_location, salt, source_id)
 
-        video_format_dict = {12: {'title': '1280x720@3.0mbps', 'height': 720, 'bitrate': 3000},
-                             11: {'title': '1280x720@2.5mbps', 'height': 720, 'bitrate': 2500},
+        video_format_dict = {12: {'title': '1280x720@3.1mbps', 'height': 720, 'bitrate': 3100},
+                             11: {'title': '1280x720@2.3mbps', 'height': 720, 'bitrate': 2300},
                              10: {'title': '960x540@2.0mbps', 'height': 540, 'bitrate': 2000},
                              9: {'title': '960x540@1.5mbps', 'height': 540, 'bitrate': 1500},
                              8: {'title': '768x432@1.8mbps', 'height': 432, 'bitrate': 1800},
@@ -249,8 +247,8 @@ class Client(nightcrawler.HttpClient):
                              6: {'title': '640x360@1.1mbps', 'height': 360, 'bitrate': 1100},
                              5: {'title': '640x360@0.6mbps', 'height': 360, 'bitrate': 600},
                              4: {'title': '480x270@0.4mbps', 'height': 270, 'bitrate': 400},
-                             3: {'title': '416x258@0.2mbps', 'height': 258, 'bitrate': 200}}
-
+                             3: {'title': '416x234@0.2mbps', 'height': 234, 'bitrate': 200}}
+        
         result = []
         url = None
 
@@ -277,16 +275,15 @@ class Client(nightcrawler.HttpClient):
 
         # always available
         if not is_protected and url:
-            for _id in xrange(3, 4, 5):
+            for _id in (3, 4, 5):
                 _url = re.sub(r'(.+?)(tp\d+.mp4)(.+)', r'\1tp%02d.mp4\3' % _id, url)
                 video_stream = {'title': video_format_dict[_id]['title'],
                                 'sort': [video_format_dict[_id]['height'], video_format_dict[_id]['bitrate']],
                                 'video': {'height': video_format_dict[_id]['height']},
                                 'uri': _url}
                 result.append(video_stream)
-        else:
-            if not result:
-                result.append({'title': 'DRM', 'sort': [0, 0], 'video': {'height': 0}, 'uri': '', 'is_protected': True})
+        elif not result:
+            result.append({'is_protected': True})
 
         return result
 
