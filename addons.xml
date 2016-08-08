@@ -47,25 +47,6 @@
     </extension>
 </addon>
 
-<addon id="service.popwindow" name="Pupup Windows" version="0.2.1" provider-name="L0RE">
-    <requires>
-        <import addon="xbmc.python" version="2.19.0"/>
-	<import addon="script.module.requests" version="2.9.1"/>	
-    </requires>
-    <extension point="xbmc.service" library="service.py" start="login" />
-    <extension point="xbmc.addon.metadata">
-    <summary lang="en">Shows Popup  Windows</summary>
-    <summary lang="de">Shows Popup  Windows</summary>
-    <description lang="en">Shows Popup  Windows</description>
-    <description lang="de">Shows Popup  Windows</description>
-    <website></website>
-    <source>https://github.com/kodinerds/repo/tree/master/addons/service.popwindow</source>
-    <forum>http://www.kodinerds.net/index.php/Thread/46939-Repo-Lost-Found</forum>
-    <email>andreas at vogler dot name</email>
-    <platform>all</platform>
-  </extension>
-</addon>
-
 
 <addon id="plugin.program.newscenter" name="NewsCenter" version="0.0.6" provider-name="NewsCenter">
     <requires>
@@ -1193,7 +1174,7 @@ Orginal Code was from AddonScriptorDE</disclaimer>
   </extension>
 </addon>
 
-<addon id="service.fussballpopup" name="Fussball Popus (Work in Progress)" version="0.2.1" provider-name="L0RE">
+<addon id="service.fussballpopup" name="Fussball Popus (Work in Progress)" version="0.2.2" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.19.0"/>			       
 	    <import addon="script.module.feedparser" version="5.1.3"/>
@@ -1275,6 +1256,25 @@ Orginal Code was from AddonScriptorDE</disclaimer>
     <website></website>
     <source>https://github.com/kodinerds/repo/tree/master/service.rsspopup/</source>
     <forum>http://www.kodinerds.net/</forum>
+    <email>andreas at vogler dot name</email>
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="service.popwindow" name="Pupup Windows" version="0.2.2" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.19.0"/>
+	<import addon="script.module.requests" version="2.9.1"/>	
+    </requires>
+    <extension point="xbmc.service" library="service.py" start="login" />
+    <extension point="xbmc.addon.metadata">
+    <summary lang="en">Shows Popup  Windows</summary>
+    <summary lang="de">Shows Popup  Windows</summary>
+    <description lang="en">Shows Popup  Windows</description>
+    <description lang="de">Shows Popup  Windows</description>
+    <website></website>
+    <source>https://github.com/kodinerds/repo/tree/master/addons/service.popwindow</source>
+    <forum>http://www.kodinerds.net/index.php/Thread/46939-Repo-Lost-Found</forum>
     <email>andreas at vogler dot name</email>
     <platform>all</platform>
   </extension>
