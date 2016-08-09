@@ -25,5 +25,16 @@
   <string id="30023">Please enter this URL in a Browser</string>
   <string id="30024">Neu Configuration</string>
   <string id="30025">Nach verlassen des Einstellungen wird Twitter neu Configuriert</string>
+  <string id="30026">Design</string>
+  <string id="30027">Schrift</string>
+  <string id="30027">Font Size</string>
+  <string id="30028">Meldung Start X</string>
+  <string id="30029">Meldung Start Y</string>
+  <string id="30030">Meldung Höhe</string>
+  <string id="30031">Meldung Breite</string>
+  <string id="30032">Bild Höhe</string>
+  <string id="30033">Bild Breit</string>
+  <string id="30034">Advanced (Nur wenn du weißt was du tust)</string>
+  <string id="30035">Schriftfarbe</string> 
 </strings>
   

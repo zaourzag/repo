@@ -107,7 +107,7 @@ def geturl(url):
    inhalt = urllib2.urlopen(req).read()   
    return inhalt    
         
-def savemessage(message,image,grey,lesezeit)  :
+def savemessage(message,image,grey,lesezeit,xmessage,ymessage,breitemessage,hoehemessage,breitebild,hoehebild,font,fontcolor)  :
     message=unicode(message).encode('utf-8')
     image=unicode(image).encode('utf-8')
     debug("message :"+message)
@@ -115,10 +115,10 @@ def savemessage(message,image,grey,lesezeit)  :
     debug("grey :"+grey)
     debug("popuptemp :"+popuptemp)
     debug("lesezeit :"+str(lesezeit))
-    filename=md5.new(message).hexdigest()  
+    filename=__addonname__ + "_"+md5.new(message).hexdigest()  
     f = open(popuptemp+"/"+filename, 'w')    
-    f.write(message+"###"+image+"###"+grey+"###"+str(lesezeit))
-    f.close()   
+    f.write(message+"###"+image+"###"+grey+"###"+str(lesezeit)+"###"+str(xmessage)+"###"+str(ymessage)+"###"+ str(breitemessage)+"###"+str(hoehemessage)+ "###"+str(breitebild)+"###"+str(hoehebild)+"###"+ str(font)+"###"+fontcolor)
+    f.close()     
     
 
   
@@ -142,6 +142,14 @@ if __name__ == '__main__':
       bild=__addon__.getSetting("bild") 
       lesezeit=__addon__.getSetting("lesezeit")
       greyout=__addon__.getSetting("greyout")
+      xmessage=__addon__.getSetting("x-message")  
+      ymessage=__addon__.getSetting("y-message")  
+      hoehemessage=__addon__.getSetting("hoehe-message")  
+      breitemessage=__addon__.getSetting("breite-message")  
+      hoehebild=__addon__.getSetting("hoehe-bild")  
+      breitebild=__addon__.getSetting("breite-bild")  
+      font=__addon__.getSetting("font")  
+      fontcolor=__addon__.getSetting("fontcolor") 
       filename       = xbmc.translatePath( os.path.join( temp, 'urlliste.txt') ).decode("utf-8")
       gesamtliste=[]
       if xbmcvfs.exists(filename) :
@@ -212,7 +220,7 @@ if __name__ == '__main__':
                     timelist,titlelist,cimglist,lesezeitlist,greyoutlist = (list(x) for x in zip(*sorted(zip(timelist,titlelist,cimglist,lesezeitlist,greyoutlist))))
         for i in range(len(titlelist)):  
                    if not titlelist[i] in schown:
-                      savemessage(titlelist[i],cimglist[i],greyoutlist[i],lesezeitlist[i])             
+                      savemessage(titlelist[i],cimglist[i],greyoutlist[i],lesezeitlist[i],xmessage,ymessage,breitemessage,hoehemessage,breitebild,hoehebild,font,fontcolor)             
                       schown.append(title)                   
       if monitor.waitForAbort(60):
         break            

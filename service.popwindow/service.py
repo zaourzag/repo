@@ -55,75 +55,44 @@ def geturl(url):
    return inhalt   
    
 
-def showMessage(Message,image="",greyout="true",lesezeit=10):
+def showMessage(Message,image="",greyout="true",lesezeit=10,xmessage=110,ymessage=5,breitemessage=1170,hoehemessage=100,breitebild=100,hoehebild=100,fontname="font14",fontcolor="FFFFFFFF"):
     global alles_anzeige
     global urlfilter
     global background
     global window
-    #tw=unicode(Message).encode('utf-8')
-    tw=Message
-    tw=tw.replace("&amp;","&")
+    #tw=unicode(Message).encode('utf-8')   
+    tw=Message        
+    tw=tw.replace("&amp;","&")    
     xbmc.log("showMessage")
     wid = xbmcgui.getCurrentWindowId()
     window=xbmcgui.Window(wid)
-    res=window.getResolution()    
-    if len(tw) > 100 :
-       bis=100
-       for i in range(90,100):
-         if tw[i]==' ':
-           bis=i
-    else:
-        bis=len(tw)
-    zeile1=tw[:bis]
-    rest=tw[bis:]
-    if len(rest) > 100 :
-       bis=100
-       for i in range(90,100):
-         if rest[i]==' ':
-           bis=i
-    else:
-        bis=len(rest)
-    zeile2=rest[:bis]   
-    zeile3=rest[bis:]  
-    if zeile1:
-        ll=70
-    if zeile2:
-        ll=100
-    if zeile3: 
-        ll=130
-        
+    res=window.getResolution()        
     if greyout=="true":
-       bg=xbmcgui.ControlImage(0,10,3000,ll,"")
+       bg=xbmcgui.ControlImage(0,int(ymessage),1280,int(hoehemessage),"")
        bg.setImage(background)
        window.addControl(bg)
-
-    twitterlabel1=xbmcgui.ControlLabel (111, 31, 3000, 100, zeile1,textColor='0xFF000000')
-    twitterlabel2=xbmcgui.ControlLabel (110, 30, 3000, 100, zeile1,textColor='0xFFFFFFFF')        
-    window.addControl(twitterlabel1)
-    window.addControl(twitterlabel2)        
-    if zeile2:
-     twitterlabel3=xbmcgui.ControlLabel (111, 61, 3000, 100, zeile2,textColor='0xFF000000')
-     twitterlabel4=xbmcgui.ControlLabel (110, 60, 3000, 100, zeile2,textColor='0xFFFFFFFF')
-     window.addControl(twitterlabel3)
-     window.addControl(twitterlabel4)
-    if zeile3:
-     twitterlabel5=xbmcgui.ControlLabel (111, 91, 3000, 100, zeile3,textColor='0xFF000000')
-     twitterlabel6=xbmcgui.ControlLabel (110, 90, 3000, 100, zeile3,textColor='0xFFFFFFFF')
-     window.addControl(twitterlabel5)
-     window.addControl(twitterlabel6) 
-    avatar=xbmcgui.ControlImage(0,10,100,100,"")
+    x=int(xmessage)+int(breitebild )
+    debug("X : "+ str(xmessage))
+    debug("Y : "+ ymessage)
+    debug("Breite : "+breitemessage)
+    debug("hoehe : "+hoehemessage)
+    debug("BildBreite : "+breitebild)
+    debug("hoehebild : "+hoehebild)
+    debug("Text : "+tw)    
+    debug("Font : "+fontname) 
+    fontcolor='0x'+fontcolor
+    debug("FontColor : "+fontcolor)    
+    twitterlabel1=xbmcgui.ControlTextBox (x, int(ymessage), int(breitemessage)-x, int(hoehemessage),textColor=fontcolor,font=fontname)        
+    window.addControl(twitterlabel1)    
+    twitterlabel1.setText(tw)
+    debug("XYXYXY :"+ hoehebild)
+    avatar=xbmcgui.ControlImage(int(xmessage),int(ymessage),int(breitebild),int(hoehebild),"")
     avatar.setImage(image)
     window.addControl(avatar)        
     time.sleep(int(lesezeit))
         
     window.removeControl(twitterlabel1)
-    window.removeControl(twitterlabel2)
-    if zeile2:
-       window.removeControl(twitterlabel3)
-       window.removeControl(twitterlabel4)
-    if zeile3:
-       window.removeControl(twitterlabel5)
-       window.removeControl(twitterlabel6)       
+   
     window.removeControl(avatar)
     if greyout=="true":
        window.removeControl(bg)
@@ -177,8 +146,8 @@ if __name__ == '__main__':
           debug("File :" + name)
           f = open(temp+"/"+name, 'r')    
           for line in f:      
-                message,image,grey,lesezeit=line.split("###")         
-                showMessage(message,image,grey,lesezeit)
+                message,image,grey,lesezeit,xmessage,ymessage,breitemessage,hoehemessage,breitebild,hoehebild,fontname,fontcolor=line.split("###")         
+                showMessage(message,image,grey,lesezeit,xmessage,ymessage,breitemessage,hoehemessage,breitebild,hoehebild,fontname,fontcolor)
           f.close()           
           xbmcvfs.delete(temp+"/"+name)                    
       xbmc.log("Hole Umgebung")        

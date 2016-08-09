@@ -93,18 +93,18 @@ def addLink(name, url, mode, iconimage, duration="", desc="", genre=''):
     return ok
     
         
-def savemessage(message,image,grey,lesezeit)  :    
-    message = smart_str(message)
+def savemessage(message,image,grey,lesezeit,xmessage,ymessage,breitemessage,hoehemessage,breitebild,hoehebild,font,fontcolor)  :
+    message=unicode(message).encode('utf-8')
     image=unicode(image).encode('utf-8')
     debug("message :"+message)
     debug("image :"+image)
     debug("grey :"+grey)
     debug("popuptemp :"+popuptemp)
     debug("lesezeit :"+str(lesezeit))
-    filename=md5.new(message).hexdigest()  
+    filename=__addonname__ + "_"+md5.new(message).hexdigest()  
     f = open(popuptemp+"/"+filename, 'w')    
-    f.write(message+"###"+image+"###"+grey+"###"+str(lesezeit))
-    f.close()   
+    f.write(message+"###"+image+"###"+grey+"###"+str(lesezeit)+"###"+str(xmessage)+"###"+str(ymessage)+"###"+ str(breitemessage)+"###"+str(hoehemessage)+ "###"+str(breitebild)+"###"+str(hoehebild)+"###"+ str(font)+"###"+fontcolor)
+    f.close()     
     
 
 def ersetze(text):
@@ -168,9 +168,17 @@ if __name__ == '__main__':
       auss=[]
       anzal_meldungen=[]      
       xbmc.log("Hole Umgebung")
-      bild=__addon__.getSetting("bild") 
+      bild='false'
       lesezeit=__addon__.getSetting("lesezeit")
       greyout=__addon__.getSetting("greyout")
+      xmessage=__addon__.getSetting("x-message")  
+      ymessage=__addon__.getSetting("y-message")  
+      hoehemessage=__addon__.getSetting("hoehe-message")  
+      breitemessage=__addon__.getSetting("breite-message")  
+      hoehebild=__addon__.getSetting("hoehe-bild")  
+      breitebild=__addon__.getSetting("breite-bild")  
+      font=__addon__.getSetting("font")  
+      fontcolor=__addon__.getSetting("fontcolor") 
       filename       = xbmc.translatePath( os.path.join( temp, 'spiel.txt') ).decode("utf-8")
       gesamtliste=[]
       if xbmcvfs.exists(filename) :
@@ -334,7 +342,7 @@ if __name__ == '__main__':
           for i in range(len(titlelist)):     
             if not ids[i] in  schown:
                 debug("Zeit ist : "+str(timelist[i]))
-                savemessage(titlelist[i],cimglist[i],greyoutlist[i],lesezeitlist[i])             
+                savemessage(titlelist[i],cimglist[i],greyoutlist[i],lesezeitlist[i],xmessage,ymessage,breitemessage,hoehemessage,breitebild,hoehebild,font,fontcolor)             
                 schown.append(ids[i])                   
       if monitor.waitForAbort(60):
         break            

@@ -67,7 +67,7 @@ if len(sys.argv) > 1:
       exit()
   
 
-def savemessage(message,image,grey,lesezeit)  :
+def savemessage(message,image,grey,lesezeit,xmessage,ymessage,breitemessage,hoehemessage,breitebild,hoehebild,font,fontcolor)  :
     message=unicode(message).encode('utf-8')
     image=unicode(image).encode('utf-8')
     debug("message :"+message)
@@ -77,7 +77,7 @@ def savemessage(message,image,grey,lesezeit)  :
     debug("lesezeit :"+str(lesezeit))
     filename=__addonname__ + "_"+md5.new(message).hexdigest()  
     f = open(popuptemp+"/"+filename, 'w')    
-    f.write(message+"###"+image+"###"+grey+"###"+str(lesezeit))
+    f.write(message+"###"+image+"###"+grey+"###"+str(lesezeit)+"###"+str(xmessage)+"###"+str(ymessage)+"###"+ str(breitemessage)+"###"+str(hoehemessage)+ "###"+str(breitebild)+"###"+str(hoehebild)+"###"+ str(font)+"###"+fontcolor)
     f.close()   
     
 def debug(content):
@@ -259,6 +259,14 @@ if __name__ == '__main__':
       listtype=__addon__.getSetting("listtype")
       listurl=__addon__.getSetting("listurl")
       listfile=__addon__.getSetting("listfile")  
+      xmessage=__addon__.getSetting("x-message")  
+      ymessage=__addon__.getSetting("y-message")  
+      hoehemessage=__addon__.getSetting("hoehe-message")  
+      breitemessage=__addon__.getSetting("breite-message")  
+      hoehebild=__addon__.getSetting("hoehe-bild")  
+      breitebild=__addon__.getSetting("breite-bild")  
+      font=__addon__.getSetting("font")  
+      fontcolor=__addon__.getSetting("fontcolor")  
       if listfile=="":
          filename = os.path.join(__addondir__,"filter.txt")
          __addon__.setSetting(id="listfile", value=filename)
@@ -367,19 +375,21 @@ if __name__ == '__main__':
          if inhalt=="Video" and tv=="true" and xbmc.getCondVisibility('Pvr.IsPlayingTv'):   
                tweets=api.GetSearch(search,since_id=sinceid,lang=country,result_type="recent")
                debug("Search: "+ search)
-         if inhalt=="Hash":
+         elif inhalt=="Hash":
                tweets=api.GetSearch(search,since_id=sinceid,lang=country,result_type="recent")
                debug("Search: "+ search)
-         if inhalt=="Video" and video=="true":               
+         elif inhalt=="Video" and video=="true":               
                tweets=api.GetSearch(search,since_id=sinceid,lang=country,result_type="recent")
                debug("Search: "+ search)
-         if inhalt=="Timeline":
+         elif inhalt=="Timeline":
               tweets = api.GetHomeTimeline(since_id=sinceid)             
               search=""
+         else:
+              tweets=[]
          if search:
             debug ("Search: " +search)
       except:
-          debug("Tweets Holen Fehlerhaft")
+          debug("Tweets Holen Fehlerhaft")          
           continue     
       for tweet in tweets:                  
          text= tweet.user.name +" : "+ tweet.text.replace("\n"," ")
@@ -393,7 +403,7 @@ if __name__ == '__main__':
                else :
                    userimage=""   
                debug("Tweet ID " + str(tweet.id))                                  
-               savemessage(text,userimage,greyout,lesezeit)                  
+               savemessage(text,userimage,greyout,lesezeit,xmessage,ymessage,breitemessage,hoehemessage,breitebild,hoehebild,font,fontcolor)                  
          else:
              debug("Gebannt Thread")
            
