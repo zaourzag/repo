@@ -262,6 +262,33 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
     </extension>
 </addon>
 
+<addon id="plugin.video.bookmark" name="bookmark" version="0.0.3" provider-name="SLiX">
+    <requires>
+		<import addon="xbmc.python" version="2.23.0"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="addon.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<platform>all</platform>
+		<summary lang="en">Simple bookmark video addon</summary>
+		<description lang="en"> </description>
+		<summary lang="de">Einfaches Bookmark Video Addon</summary>
+		<description lang="de"> </description>
+		<license>GNU General Public License v3</license>
+		<language></language>
+		<forum></forum>
+		<source></source>
+		<email></email>
+	</extension>
+	<extension point="kodi.context.item" library="context_add.py">
+		<item>
+			<label>30021</label>
+			<visible>Window.IsActive(10025)+!Container.Content(Addons)</visible>
+		</item>
+	</extension>
+</addon>
+
 <addon id="plugin.video.br3" name="Bayrisches Fernsehen" version="0.7.7" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
