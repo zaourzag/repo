@@ -139,12 +139,20 @@ def ersetze(text):
     return text
   
     
-def delspiel(id,liste):
+def delspiel(ids,liste):  
   fileinhalt=""
-  filename       = xbmc.translatePath( os.path.join( temp, 'spiel.txt') ).decode("utf-8")
+  filename       = xbmc.translatePath( os.path.join( temp, 'spiel.txt') ).decode("utf-8")     
   for zeile in liste:
-    if not str(id) in zeile and "##" in zeile:
+    try:  
+      arr=zeile.split("##")    
+      spielnr=arr[4] 
+    except:
+      spielnr=""
+    if not spielnr in ids and "##" in zeile:
+         debug("Attache Line"+ zeile)
          fileinhalt=fileinhalt+"\n"+zeile          
+    else:
+         debug("Delete Line"+ zeile)
   fp = open(filename, 'w')    
   fp.write(fileinhalt)
   fp.close()    
@@ -194,173 +202,249 @@ if __name__ == '__main__':
         contentf=fp.read()
         fp.close()          
         liste=contentf.split("\n")                
+        
+        
+        spiellisteneu=[]        
+        delliste=[]
+        timelist=[]
+        
+        # Spiele Ermitteln
+        # File WIrd in Arraysgeladen
+        name=[]
+        live_status=[]
+        lieganr=[]
+        dayid=[]
+        spielnr=[]
+        aus=[]
+        inn=[]
+        match_date=[]
+        match_time=[]
+        lsv=[]
+        ganzeliega=[]
+        liste=contentf.split("\n")
         for spiel in liste:  
-          in_spieler=""
-          out_spieler=""
           if  "##" in spiel:          
             arr=spiel.split("##")
-            name=arr[0]
-            live_status=arr[1]
-            lieganr=arr[2]
-            dayid=arr[3]     
-            spielnr=arr[4]            
-            aus=arr[5]
-            inn=arr[6]
-            match_date=arr[7]
-            match_time=arr[8]  
-            zeitpunkt=match_date+ " "+match_time   
-            debug("   zeitpunkt "+zeitpunkt)         
-            dt = parser.parse(zeitpunkt, fuzzy=True,dayfirst=True)  
-            lss=dt.timetuple()
-            debug("---------->")
-            debug(lss)
-            lsv=time.mktime(lss)                                   
-            debug("LSV : "+str(lsv))
-            nurl="https://api.sport1.de/api/sports/matches-by-season/co"+lieganr+"/se/md"+dayid
-            content=geturl(nurl) 
+            debug("spielnr : "+arr[4])
+            if arr[4]=="-1":
+              ganzeliega.append(arr[2])
+              name.append(arr[0])
+              lieganr.append(arr[2])
+              dayid.append(arr[3])
+            else:                        
+              name.append(arr[0])
+              live_status.append(arr[1])
+              lieganr.append(arr[2])
+              dayid.append(arr[3])
+              spielnr.append(arr[4])
+              aus.append(arr[5])
+              inn.append(arr[6])
+              hdate=arr[7]
+              htime=arr[8]
+              match_date.append(hdate)
+              match_time.append(htime)
+              zeitpunkt=hdate+ " "+htime                             
+              debug("   zeitpunkt "+zeitpunkt)         
+              dt = parser.parse(zeitpunkt, fuzzy=True,dayfirst=True)  
+              lss=dt.timetuple()
+              lsv.append(time.mktime(lss))
+              debug("-------ADDE FILE-----------")       
+              debug(arr[0])
+        
+        liegadone=[]
+        
+        #SpielePrüfen  
+        delliste=[]
+        ## Jede Liega Wird einmalgeladen
+        for i in range(len(lieganr)):               
+          liga=lieganr[i]
+          debug("-------LIGA LOOP-----------")
+          debug("Liega :"+liga)
+          if not liga in liegadone:            
+            day=dayid[i]
+            liegadone.append(liga)
+            debug("Hole LiegA")            
+            nurl="https://api.sport1.de/api/sports/matches-by-season/co"+liga+"/se/md"+day
+            debug("NURL :"+nurl)
+            debug("_----------")
+            debug ("ganzeliega")
+            debug(ganzeliega)
+            debug ("spielnr")
+            debug(spielnr)               
+            content=geturl(nurl)           
             struktur = json.loads(content)
-            tage=struktur["round"]
-            breakit=0
-            if oldi==0:
-              for tag in tage:
-                spiele=tag["match"]
-                for spiel in spiele:
-                  id=spiel["id"] 
-                  ende=spiel["finished"]             
-                  if str(id)==spielnr: 
-                    if not ende=="no":
-                      delspiel(id,liste)
-                      breakit=1
-            if breakit==1:
-              continue
-            #if live_status=="full":
-            #   url="https://api.sport1.de/api/sports/liveticker/co"+lieganr+"/ma"+spielnr
-            #   content=geturl(url)
-            #   struktur = json.loads(content)
-            #   for element in struktur:
-            #       debug("######")
-            #       debug(element)
-            #       zeit=element["tickertime"]
-            #       minute=element["minute"]
-            #       dt = parser.parse(zeit)  
-            #       news=ersetze(element["content"])
-            #       id=element["id"]
-            #       text=str(minute) +" Minute "+inn +" & "+aus+" # "+ news
-            #       titlelist.append(text)
-            #       cimglist.append("")
-            #       greyoutlist.append(greyout)
-            #       lesezeitlist.append(lesezeit) 
-            #       ins.append(inn)
-            #       auss.append(aus)
-            #       timelist.append(time.mktime(dt.timetuple())) 
-            #       ids.append(id)
-            #   #Spieler MÜLLER von Maschaft BAYERN schiesst in der X Minute ein Tor [ + Spielstand 3:0 ] 
-            #else:
-            url="https://api.sport1.de/api/sports/match-event/ma"+spielnr
-            content=geturl(url)
-            struktur = json.loads(content)
-            ccontent="0:0"
-            anzal_meldung=0
-            for element in struktur: 
-                 foto=""            
-                 anzal_meldung=anzal_meldung+1
-                 minute=element["minute"]
-                 action=element["action"]
-                 kind=element["kind"]
-                 if not element["content"]=="":
-                    ccontent=smart_str(element["content"])
-                 #team=element["team"]["shortname"]
-                 #person=element["person"]["name"]
-                 #personid=element["person"]["id"]
-                 created=element["created"]
-                 id=element["id"]                 
-                 Meldung=""
-                 if action=="match":
-                    if spielzeit=="false":
-                        continue
-                    if kind=="game-end":
-                      Meldung=" Das Spiel "+ inn +" gegen "+aus +" Endete mit "+ccontent
-                    if kind=="game-start":
-                      Meldung=" Das Spiel "+ inn +" gegen "+aus +" hat Begonnen"
-                    if kind=="first-half-end":
-                      Meldung="Die Erste Halbzeit des Spiels "+ inn +" gegen "+aus +" ist zuende. Es steht "+ccontent                  
-                    if kind=="second-half-start":
-                      Meldung="Die Zweite Halbzeit des Spiels "+ inn +" gegen "+aus +" hat begonnen. Es steht "+ccontent            
-                    if kind=="second-half-end":
-                      Meldung="Die Zweite Halbzeit des Spiels "+ inn +" gegen "+aus +" ist zuende. Es steht "+ccontent                          
-                    if kind=="first-extra-start":
-                      Meldung="Die Erste Hälfte der Verlaengerung des Spiels "+ inn +" gegen "+aus +" hat Begonnen. Es steht "+ccontent          
-                    if kind=="first-extra-end":
-                      Meldung="Die Erste Hälfte der Verlaengerung des Spiels "+ inn +" gegen "+aus +" ist zuende. Es steht "+ccontent                           
-                    if kind=="second-extra-start":
-                      Meldung="Die Zweite Hälfte der Verlaengerung des Spiels "+ inn +" gegen "+aus +" hat begonnen. Es steht "+ccontent                                                 
-                    if kind=="second-extra-end":
-                      Meldung="Die Zweite Hälfte der Verlaengerung des Spiels "+ inn +" gegen "+aus +" ist zuende. Es steht "+ccontent                                                 
-                    if kind=="penalty-start":
-                      Meldung="Das Elfmeter Schiesse des Spiels "+ inn +" gegen "+aus +" hat begonnen. Es steht "+ccontent                                                 
-                 if action=="card":
-                    if karten=="false":
-                        continue
-                    team=element["team"]["name"]
-                    person=element["person"]["name"]
-                    personid=element["person"]["id"]
-                    if kind=="yellow":
-                        Meldung=minute +" Minute: Gelbe Karte fuer "+ person +" von "+ team 
-                    if kind=="red":
-                        Meldung=minute +" Minute: Rote Karte fuer "+ person +" von "+ team 
-                 if action=="goal": 
-                    if tor=="false":
-                      continue
-                    team=element["team"]["name"]
-                    person=element["person"]["name"]
-                    personid=element["person"]["id"]
-                    foto="http://images.sport1.de/imagix/filter2/jpeg/_set=profile_picture/http://sport1.weltsport.net/gfx/person/l/"+personid+".jpg"
-                    if kind=="penalty":    
-                       Meldung=minute +" Minute: Tor durch Strafstoss von "+ person +" von "+ team +". Es steht "+ccontent                    
-                    else:   
-                       Meldung=minute +" Minute: Spieler "+person +" schiesst ein Tor fuer "+team+". Es steht nun : "+ ccontent                          
-                 if action=="pso": 
-                    if elfmeter=="false":
-                       continue                    
-                    team=element["team"]["name"]
-                    person=element["person"]["name"]
-                    personid=element["person"]["id"]  
-                    foto="http://images.sport1.de/imagix/filter2/jpeg/_set=profile_picture/http://sport1.weltsport.net/gfx/person/l/"+personid+".jpg"
-                    if kind=="goal": 
-                       Meldung="Elf Meter Schiessen Tor von "+ person +" für "+ team
-                    if kind=="goal": 
-                       Meldung="Elf Meter Schiessen Verfehl von "+ person +" für "+ team
-                 if action=="playing":
-                    if spielerwechsel=="false":
-                       continue
-                    team=element["team"]["name"]
-                    person=element["person"]["name"]
-                    personid=element["person"]["id"] 
-                    if kind=="substitute-out":                        
-                        out_spieler=person
-                        Meldung=""
-                    if kind=="substitute-in":                                               
-                        in_spieler=person
-                        Meldung=""
-                    if not in_spieler=="" and not out_spieler=="":
-                        Meldung=minute +" Minute: "+team +" tauscht "+out_spieler +" durch "+in_spieler 
-                        in_spieler=""
-                        out_spieler=""
+            tage=struktur["round"] 
+            # Jeden Tagin derLiega            
+            for tag in tage:
+              debug("Neuer Tag")            
+              spiele=tag["match"]                     
+              #Jedes Spiel in dem Tag
+              for spiel in spiele:                               
+                 id=spiel["id"] 
+                 debug("Spiel :"+id)
+                 debug("liga :"+liga)
+                 ende=spiel["finished"] 
+                 #Wenn das Spiel Oder die Ganze Liega ausgewählt wurde
+                 if str(id) in spielnr or liga in ganzeliega: 
+                    #Spiel Zuende? und keine Liega
+                    if not ende=="no" and liga not in ganzeliega and oldi==0:
+                      #Spiel Zuende? und keine Liega
+                      delliste.append(id)
+                      debug("Delete :"+id)
+                    else:
+                       # Wenn Ganze Liega oder Spiel noch nicht zuende     
+                       debug("Neues Spiel")
+                       if ende=="no":
+                           debug("Spiel läuft ")
+                           # Nur Wenn das Spiel begonnen hat
+                           if str(id) in spielnr:
+                             spiellisteneu.append(spielnr.index(id))
+                             debug("Adde :"+str(spielnr.index(id)))
+                           else :
+                              a_live_status=smart_str(spiel["live_status"])
+                              a_aus=smart_str(spiel["away"]["name"])
+                              a_ins=smart_str(spiel["home"]["name"])
+                              a_ende=spiel["finished"]
+                              a_match_date=smart_str(spiel["match_date"])
+                              a_match_time=smart_str(spiel["match_time"])
+                              if a_match_time=="unknown":
+                                 a_match_time=""     
+                              a_id=spiel["id"]      
+                              a_name=a_match_date +" "+ a_match_time +" : "+a_ins +" - "+ a_aus 
+                              a_zeitpunkt=a_match_date+ " "+a_match_time                                       
+                              a_dt = parser.parse(a_zeitpunkt, fuzzy=True,dayfirst=True)  
+                              a_lss=a_dt.timetuple()
+                              lsv.append(time.mktime(a_lss))
+                              name.append(a_name)
+                              live_status.append(a_live_status)
+                              lieganr.append(liga)
+                              dayid.append(day)
+                              spielnr.append(a_id)                              
+                              aus.append(a_aus)
+                              inn.append(a_ins)
+                              match_date.append(a_match_date)
+                              match_time.append(a_match_time)                                
+                              spiellisteneu.append(spielnr.index(id))                              
+                              debug("Adde Neu:"+str(spielnr.index(id)))
+                           
+        # Loeschliste loeschen
+        if len(delliste) > 0:
+              delspiel(delliste,liste)                                          
+        #Spiele Abarbeiten
+        debug("spiellisteneu")
+        debug(spiellisteneu)
+        for nr in spiellisteneu: 
+          debug(" : SPIEL :")
+          debug(nr)         
+          debug ("Array")
+          debug(inn)
+          in_spieler=""
+          out_spieler=""
+          url="https://api.sport1.de/api/sports/match-event/ma"+spielnr[nr]
+          content=geturl(url)
+          struktur = json.loads(content)
+          ccontent="0:0"
+          anzal_meldung=0
+          for element in struktur: 
+            foto=""            
+            anzal_meldung=anzal_meldung+1
+            minute=element["minute"]
+            action=element["action"]
+            kind=element["kind"]
+            if not element["content"]=="":
+              ccontent=smart_str(element["content"])
+            created=element["created"]
+            id=element["id"]                 
+            Meldung=""
+            if action=="match":
+              if spielzeit=="false":
+                continue
+              if kind=="game-end":
+                Meldung=" Das Spiel "+ inn[nr] +" gegen "+aus[nr] +" Endete mit "+ccontent
+              if kind=="game-start":
+                Meldung=" Das Spiel "+ inn[nr] +" gegen "+aus[nr] +" hat Begonnen"
+              if kind=="first-half-end":
+                Meldung="Die Erste Halbzeit des Spiels "+ inn[nr] +" gegen "+aus[nr] +" ist zuende. Es steht "+ccontent                  
+              if kind=="second-half-start":
+                Meldung="Die Zweite Halbzeit des Spiels "+ inn[nr] +" gegen "+aus[nr] +" hat begonnen. Es steht "+ccontent            
+              if kind=="second-half-end":
+                Meldung="Die Zweite Halbzeit des Spiels "+ inn[nr] +" gegen "+aus[nr] +" ist zuende. Es steht "+ccontent                          
+              if kind=="first-extra-start":
+                Meldung="Die Erste Hälfte der Verlaengerung des Spiels "+ inn[nr] +" gegen "+aus[nr] +" hat Begonnen. Es steht "+ccontent          
+              if kind=="first-extra-end":
+                Meldung="Die Erste Hälfte der Verlaengerung des Spiels "+ inn[nr] +" gegen "+aus[nr] +" ist zuende. Es steht "+ccontent                           
+              if kind=="second-extra-start":
+                Meldung="Die Zweite Hälfte der Verlaengerung des Spiels "+ inn[nr] +" gegen "+aus[nr] +" hat begonnen. Es steht "+ccontent                                                 
+              if kind=="second-extra-end":
+                Meldung="Die Zweite Hälfte der Verlaengerung des Spiels "+ inn[nr] +" gegen "+aus[nr] +" ist zuende. Es steht "+ccontent                                                 
+              if kind=="penalty-start":
+                Meldung="Das Elfmeter Schiesse des Spiels "+ inn[nr] +" gegen "+aus[nr] +" hat begonnen. Es steht "+ccontent                                                 
+            if action=="card":
+              if karten=="false":
+                continue
+              team=element["team"]["name"]
+              person=element["person"]["name"]
+              personid=element["person"]["id"]
+              if kind=="yellow":
+                Meldung=minute +" Minute: Gelbe Karte fuer "+ person +" von "+ team 
+              if kind=="red":
+                Meldung=minute +" Minute: Rote Karte fuer "+ person +" von "+ team 
+            if action=="goal": 
+              if tor=="false":
+                continue
+              team=element["team"]["name"]
+              person=element["person"]["name"]
+              personid=element["person"]["id"]
+              foto="http://images.sport1.de/imagix/filter2/jpeg/_set=profile_picture/http://sport1.weltsport.net/gfx/person/l/"+personid+".jpg"
+              if kind=="penalty":    
+                Meldung=minute +" Minute: Tor durch Strafstoss von "+ person +" von "+ team +". Es steht "+ccontent                    
+              else:   
+                Meldung=minute +" Minute: Spieler "+person +" schiesst ein Tor fuer "+team+". Es steht nun : "+ ccontent                          
+            if action=="pso": 
+              if elfmeter=="false":
+                continue                    
+              team=element["team"]["name"]
+              person=element["person"]["name"]
+              personid=element["person"]["id"]  
+              foto="http://images.sport1.de/imagix/filter2/jpeg/_set=profile_picture/http://sport1.weltsport.net/gfx/person/l/"+personid+".jpg"
+              if kind=="goal": 
+                Meldung="Elf Meter Schiessen Tor von "+ person +" für "+ team
+              if kind=="goal": 
+                Meldung="Elf Meter Schiessen Verfehl von "+ person +" für "+ team
+            if action=="playing":
+              if spielerwechsel=="false":
+                continue
+              team=element["team"]["name"]
+              person=element["person"]["name"]
+              personid=element["person"]["id"] 
+              if kind=="substitute-out":                        
+                out_spieler=person
+                Meldung=""
+              if kind=="substitute-in":                                               
+                in_spieler=person
+                Meldung=""
+              if not in_spieler=="" and not out_spieler=="":
+                Meldung=minute +" Minute: "+team +" tauscht "+out_spieler +" durch "+in_spieler 
+                in_spieler=""
+                out_spieler=""
                     
-                 if not Meldung=="":
-                  titlelist.append(Meldung)
-                  cimglist.append(foto)
-                  greyoutlist.append(greyout)
-                  lesezeitlist.append(lesezeit) 
-                  ins.append(inn)
-                  auss.append(aus)    
-                  anzal_meldungen.append(anzal_meldung)
-                  debug("-------------> TIME NEU :"+str(lsv+int(minute)*60))
-                  timelist.append(lsv+int(minute)*60)                    
-                  ids.append(id)
+            if not Meldung=="":
+              titlelist.append(Meldung)
+              cimglist.append(foto)
+              greyoutlist.append(greyout)
+              lesezeitlist.append(lesezeit) 
+              ins.append(inn)
+              auss.append(aus)    
+              anzal_meldungen.append(anzal_meldung)             
+              debug("-------------> TIME NEU :"+str(lsv[nr]+int(minute)*60))
+              timelist.append(lsv[nr]+int(minute)*60)                    
+              ids.append(id)
+        #Sind Meldungen da
         if len(timelist)>0 :
-          timelist,anzal_meldungen,titlelist,cimglist,lesezeitlist,greyoutlist,ids,ins,auss = (list(x) for x in zip(*sorted(zip(timelist,anzal_meldungen,titlelist,cimglist,lesezeitlist,greyoutlist,ids,ins,auss))))            
-          for i in range(len(titlelist)):     
+          # Sortieren Meldungen
+          timelist,anzal_meldungen,titlelist,cimglist,lesezeitlist,greyoutlist,ids,ins,auss = (list(x) for x in zip(*sorted(zip(timelist,anzal_meldungen,titlelist,cimglist,lesezeitlist,greyoutlist,ids,ins,auss))))                      
+          for i in range(len(titlelist)):  
+            #Meldungen die schon Da waren nicht mehr zeigen          
             if not ids[i] in  schown:
                 debug("Zeit ist : "+str(timelist[i]))
                 savemessage(titlelist[i],cimglist[i],greyoutlist[i],lesezeitlist[i],xmessage,ymessage,breitemessage,hoehemessage,breitebild,hoehebild,font,fontcolor)             

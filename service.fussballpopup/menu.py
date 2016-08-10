@@ -92,7 +92,7 @@ def ersetze(text):
     return text
 
 def addDir(name, url, mode, iconimage, desc=""):
-    u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
+    u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)
     ok = True
     liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=iconimage)
     liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc})  
@@ -125,13 +125,14 @@ def geturl(url):
    inhalt = urllib2.urlopen(req).read()   
    return inhalt
   
-def liega(lieganr):
+def liega(lieganr,nname):
    oldi=0
    content=geturl("https://api.sport1.de/api/sports/competition/co"+lieganr)
    struktur = json.loads(content) 
    debug("Liega Matchday Content :"+ content)
    day=struktur["current_matchday"]   
    debug("Liega Day :"+ day)
+   debug("url day "+"https://api.sport1.de/api/sports/matches-by-season/co"+lieganr+"/se/md"+str(day))
    content=geturl("https://api.sport1.de/api/sports/matches-by-season/co"+lieganr+"/se/md"+str(day))
    struktur = json.loads(content)    
    tage=struktur["round"]
@@ -142,7 +143,11 @@ def liega(lieganr):
       spielfile=fp.read()
       fp.close()   
    else:
-      spielfile=""   
+      spielfile="" 
+   if not "Alle Spiele "+nname in spielfile:
+      url="Alle Spiele "+nname+"##-##"+ str(lieganr) +"##"+ str(day) +"##-1##-##-##-##-"
+      addDir("Alle Spiele "+nname, url, mode="savespiel", iconimage="" )            
+      url=""
    for tag in tage:
     spiele=tag["match"]
     for spiel in spiele:
@@ -159,7 +164,9 @@ def liega(lieganr):
           match_time=""     
       id=spiel["id"]      
       name=match_date +" "+ match_time +" : "+ins +" - "+ aus 
-      url=str(id)      
+      url=str(id) 
+      debug("   ende : "+ende)      
+      debug("   live_status : "+live_status)
       if ende=="no" and not live_status=="none" or oldi==1:
        url=name+"##"+live_status +"##"+ str(lieganr) +"##"+ str(day) +"##"+str(id)+"##"+aus+"##"+ins+"##"+match_date+"##"+match_time       
        debug("URL :::: ")
@@ -262,14 +269,14 @@ addon_handle = int(sys.argv[1])
 params = parameters_string_to_dict(sys.argv[2])
 mode = urllib.unquote_plus(params.get('mode', ''))
 url = urllib.unquote_plus(params.get('url', ''))
-
+name=urllib.unquote_plus(params.get('name', ''))
 debug("Mode Ist :"+mode)
 if mode=='':
     menu()  
 if mode=="add_game":
     add_game()
 if mode=="liega":
-    liega(url)
+    liega(url,name)
 if mode=="savespiel":
     savespiel(url)        
 if mode=="delgame":
