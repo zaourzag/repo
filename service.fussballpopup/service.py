@@ -188,7 +188,7 @@ if __name__ == '__main__':
       breitebild=__addon__.getSetting("breite-bild")  
       font=__addon__.getSetting("font")  
       fontcolor=__addon__.getSetting("fontcolor") 
-      
+      oldmessages=__addon__.getSetting("oldmessages") 
       spielzeit=__addon__.getSetting("spielzeit") 
       karten=__addon__.getSetting("karten") 
       tor=__addon__.getSetting("tor") 
@@ -220,7 +220,8 @@ if __name__ == '__main__':
         match_date=[]
         match_time=[]
         lsv=[]
-        ganzeliega=[]
+        ganzeliega=[]        
+        minute_now=[]
         liste=contentf.split("\n")
         for spiel in liste:  
           if  "##" in spiel:          
@@ -237,6 +238,7 @@ if __name__ == '__main__':
               lieganr.append(arr[2])
               dayid.append(arr[3])
               spielnr.append(arr[4])
+              minute_now.append("-")
               aus.append(arr[5])
               inn.append(arr[6])
               hdate=arr[7]
@@ -279,7 +281,8 @@ if __name__ == '__main__':
               debug("Neuer Tag")            
               spiele=tag["match"]                     
               #Jedes Spiel in dem Tag
-              for spiel in spiele:                               
+              for spiel in spiele:   
+                 aminute_now=spiel["current_minute"]              
                  id=spiel["id"] 
                  debug("Spiel :"+id)
                  debug("liga :"+liga)
@@ -294,13 +297,15 @@ if __name__ == '__main__':
                     else:
                        # Wenn Ganze Liega oder Spiel noch nicht zuende     
                        debug("Neues Spiel")
-                       if ende=="no":
+                       if ende=="no" or oldi==1:
                            debug("Spiel läuft ")
                            # Nur Wenn das Spiel begonnen hat
                            if str(id) in spielnr:
-                             spiellisteneu.append(spielnr.index(id))
-                             debug("Adde :"+str(spielnr.index(id)))
-                           else :
+                             if spielnr.index(id) not in spiellisteneu:                                
+                                spiellisteneu.append(spielnr.index(id))
+                                minute_now[spielnr.index(id)]=aminute_now
+                                debug("Adde :"+str(spielnr.index(id)))
+                           else :                              
                               a_live_status=smart_str(spiel["live_status"])
                               a_aus=smart_str(spiel["away"]["name"])
                               a_ins=smart_str(spiel["home"]["name"])
@@ -324,9 +329,12 @@ if __name__ == '__main__':
                               inn.append(a_ins)
                               match_date.append(a_match_date)
                               match_time.append(a_match_time)                                
-                              spiellisteneu.append(spielnr.index(id))                              
+                              spiellisteneu.append(spielnr.index(id))    
                               debug("Adde Neu:"+str(spielnr.index(id)))
-                           
+                              minute_now.append(aminute_now)
+        debug(" minute_now : ")
+        debug("---------------")
+        debug (minute_now)
         # Loeschliste loeschen
         if len(delliste) > 0:
               delspiel(delliste,liste)                                          
@@ -427,16 +435,16 @@ if __name__ == '__main__':
                 Meldung=minute +" Minute: "+team +" tauscht "+out_spieler +" durch "+in_spieler 
                 in_spieler=""
                 out_spieler=""
-                    
-            if not Meldung=="":
+                debug("Spiel Zeit"+ str(minute_now[nr]))
+                debug("Spiel minute"+ str(minute))
+            if not Meldung=="" and ( int(minute)>int(minute_now[nr]) or oldmessages=="true" ):              
               titlelist.append(Meldung)
               cimglist.append(foto)
               greyoutlist.append(greyout)
               lesezeitlist.append(lesezeit) 
               ins.append(inn)
               auss.append(aus)    
-              anzal_meldungen.append(anzal_meldung)             
-              debug("-------------> TIME NEU :"+str(lsv[nr]+int(minute)*60))
+              anzal_meldungen.append(anzal_meldung)                           
               timelist.append(lsv[nr]+int(minute)*60)                    
               ids.append(id)
         #Sind Meldungen da

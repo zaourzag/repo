@@ -126,14 +126,14 @@ def geturl(url):
    return inhalt
   
 def liega(lieganr,nname):
-   oldi=0
+   oldi=1
    content=geturl("https://api.sport1.de/api/sports/competition/co"+lieganr)
    struktur = json.loads(content) 
    debug("Liega Matchday Content :"+ content)
    day=struktur["current_matchday"]   
    debug("Liega Day :"+ day)
-   debug("url day "+"https://api.sport1.de/api/sports/matches-by-season/co"+lieganr+"/se/md"+str(day))
-   content=geturl("https://api.sport1.de/api/sports/matches-by-season/co"+lieganr+"/se/md"+str(day))
+   debug("url day "+"https://api.sport1.de/api/sports/matches-by-season/co"+lieganr+"/se/")
+   content=geturl("https://api.sport1.de/api/sports/matches-by-season/co"+lieganr+"/se/")
    struktur = json.loads(content)    
    tage=struktur["round"]
    

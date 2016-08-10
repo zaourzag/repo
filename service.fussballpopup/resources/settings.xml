@@ -10,6 +10,7 @@
 	<setting label="30019" type="bool" id="tor" default="true" />
 	<setting label="30020" type="bool" id="elfmeter" default="true" />
 	<setting label="30021" type="bool" id="spielerwechsel" default="true" />
+	<setting label="30111" type="bool" id="oldmessages" default="true" />
 	</category>
 	  <category label="30101">
 	  <setting label="30102" type="bool" id="custom" default="false" />
