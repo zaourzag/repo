@@ -6,6 +6,12 @@
   <string id="30013">Grey Out</string>  
   <string id="30014">Rss Feed Add</string>
   <string id="30015">Rss Feed Delete</string>
+  <string id="30016">Filter</string>
+  <string id="30017">Spielzeit Meldungen (z.b. Halbzeit)</string>
+  <string id="30018">Karten Meldungen (Rot/Gelb)</string>
+  <string id="30019">Tor Meldungen</string>
+  <string id="30020">11Meter Schiessen</string>
+  <string id="30021">Spieler Wechsel</string>
   <string id="30101">Erweiterte Einstellungen</string>
   <string id="30102">Erweiterte Einstellungen (Nur wenn du weißt was du tust</string>
   <string id="30103">Schrift</string>

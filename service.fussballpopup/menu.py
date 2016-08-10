@@ -126,6 +126,7 @@ def geturl(url):
    return inhalt
   
 def liega(lieganr):
+   oldi=0
    content=geturl("https://api.sport1.de/api/sports/competition/co"+lieganr)
    struktur = json.loads(content) 
    debug("Liega Matchday Content :"+ content)
@@ -158,8 +159,8 @@ def liega(lieganr):
           match_time=""     
       id=spiel["id"]      
       name=match_date +" "+ match_time +" : "+ins +" - "+ aus 
-      url=str(id)
-      if ende=="no" and not live_status=="none":
+      url=str(id)      
+      if ende=="no" and not live_status=="none" or oldi==1:
        url=name+"##"+live_status +"##"+ str(lieganr) +"##"+ str(day) +"##"+str(id)+"##"+aus+"##"+ins+"##"+match_date+"##"+match_time       
        debug("URL :::: ")
        debug(url)
@@ -233,7 +234,7 @@ def menu():
     debug("Start Menu")
     addDir(name="Spiel Eintragen", url="", mode="add_game", iconimage="" )
     addDir(name="Spiel Löschen", url="", mode="delgame", iconimage="" )       
-     
+    addDir("Settings", "Settings", 'Settings', "") 
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 
      
@@ -256,7 +257,7 @@ def savemessage(message,image,grey,lesezeit)  :
     
 
   
-
+addon = xbmcaddon.Addon()
 addon_handle = int(sys.argv[1])
 params = parameters_string_to_dict(sys.argv[2])
 mode = urllib.unquote_plus(params.get('mode', ''))
@@ -275,3 +276,5 @@ if mode=="delgame":
     delgame()   
 if mode=="delspiel":
     delspiel(url)       
+if mode == 'Settings':
+          addon.openSettings()
