@@ -1,0 +1,1332 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addons>
+<addon id="plugin.video.zdf_de_lite" name="ZDF Mediathek" version="2.2.7" provider-name="membrane">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="repository.membrane" version="1.9.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="de">ZDF, ZDFneo, ZDFkultur, ZDFinfo und 3sat Mediathek</summary>
+        <summary lang="en">ZDF, ZDFneo, ZDFkultur, ZDFinfo and 3sat Media Library</summary>
+        <language>de</language>
+        <description lang="de">ZDF, ZDFneo, ZDFkultur, ZDFinfo und 3sat Mediathek</description>
+        <description lang="en">ZDF, ZDFneo, ZDFkultur, ZDFinfo and 3sat Media Library</description>
+        <disclaimer lang="en">Some parts of this addon may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <source>https://github.com/AddonScriptorDE/plugin.video.zdf_de_lite</source>
+        <forum>http://forum.xbmc.org/showthread.php?tid=132563</forum>
+        <email>AddonScriptorDE at yahoo dot de</email>
+        <website>http://www.zdf.de/ZDFmediathek</website>
+    </extension>
+</addon>
+
+<addon id="plugin.video.euronews_com" name="euronews.com" version="2.0.15" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+		<import addon="script.module.pyxbmct" version="1.1.7"/>
+		<import addon="repository.lost-and-found" version="1.1.7"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="en">Livestream and latest news videos from euronews.com | Available languages: English, Greek, French, German, Italian, Spanish, Portuguese, Polish, Russian, Ukrainian, Turkish, Arabic and Persian</summary>
+        <language></language>
+        <description lang="en">Livestream and latest news videos from euronews.com | Available languages: English, Greek, French, German, Italian, Spanish, Portuguese, Polish, Russian, Ukrainian, Turkish, Arabic and Persian</description>
+        <disclaimer lang="en">Some parts of this addon may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <source>https://github.com/AddonScriptorDE/plugin.video.euronews_com</source>
+        <forum>http://forum.xbmc.org/showthread.php?tid=157182</forum>
+        <email>AddonScriptorDE at yahoo dot de</email>
+        <website>http://www.euronews.com</website>
+    </extension>
+</addon>
+
+
+<addon id="plugin.program.newscenter" name="NewsCenter" version="0.0.6" provider-name="NewsCenter">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="script.module.feedparser" version="5.1.3"/>
+	<import addon="script.module.requests" version="2.3.0" />
+    </requires>
+    <extension point="xbmc.python.script" library="default.py" />
+    <extension point="xbmc.service" library="starter.py" start="startup" />
+
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="en">NewsCenter Plugin for Germany</summary>
+        <language>de</language>
+        <description  lang="en">Plugin is for Skinners to integrate a newscenter. Which contains a widget with rss news and multiple direct URLs provided as Property to watch directly Tagesschau, Tagesschau in 100s, Wettervorhersagevideo, Wetter in 60s. Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
+</description>
+        <description  lang="de">Dieses Plugin benötigt eine Skin Integration! Mit diesem Plugin können Nachrichten RSS als Widget erstellt werden. Zusätzlich erstellt das Plugin direktlinks zu:
+Tagesschau
+Tagesschau in 100 Sekunden
+Kinder Nachrichten Logo
+Wetter in 60 Sekunden
+Wettervorhersage von Meteogroup.
+Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
+</description>
+	<website>-</website>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <source>https://github.com/tobias-d-oe/plugin.program.newscenter</source>
+        <forum>http://goo.gl/fdU042</forum>
+        <email>-</email>
+        <website>-</website>
+    </extension>
+</addon>
+
+<addon id="plugin.video.xbl" name="Xbox Live" version="0.0.2" provider-name="SLiX">
+	<requires>
+		<import addon="xbmc.python" version="2.14.0"/>
+		<import addon="script.module.requests" version="2.9.1"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="addon.py">
+		<provides>image video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<language/>
+		<summary lang="en">Xbox Live</summary>
+		<description lang="en">Xbox Live Addon BETA</description>
+		<summary lang="de">Xbox Live</summary>
+		<description lang="de">Xbox Live Addon BETA</description>
+		<platform>all</platform>
+		<license>GNU General Public License v3</license>
+		<forum></forum>
+		<source></source>
+		<email></email>
+	</extension>
+</addon>
+
+<addon id="plugin.audio.einslive_de" name="1LIVE.de" version="1.0.7" provider-name="AddonScriptorDE">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>audio</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="de">O-Ton-Charts, Comedy, Reportagen, Talks, Klubbing, letzte Sendungen und Livestream</summary>
+        <summary lang="en">O-Ton-Charts, Comedy, reports, talks, clubbing, last shows and livestream</summary>
+        <language>de</language>
+        <description lang="de">O-Ton-Charts, Comedy, Reportagen, Talks, Klubbing, letzte Sendungen und Livestream</description>
+        <description lang="en">O-Ton-Charts, Comedy, reports, talks, clubbing, last shows and livestream</description>
+        <disclaimer lang="en">Some parts of this addon may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.audio.einslive_de</source>
+        <forum>http://forum.xbmc.org/showthread.php?tid=132769</forum>
+        <email>AddonScriptorDE at yahoo dot de</email>
+        <website>http://www.einslive.de</website>
+    </extension>
+</addon>
+
+<addon id="plugin.audio.radioteddy_de" name="RadioTeddy.de" version="1.0.0" provider-name="Tombstone">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>audio</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="de">Radio Teddy, macht Spass! macht Schlau! - Das Radio für Eltern und Kids stream</summary>
+        <language>de</language>
+        <description lang="de">Made in Germany, Kinder Disco, Soft Mix, Gute Nacht Musik, Weihnachtslieder, Kinderlieder, TEDDY Cool und Livestream</description>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.audio.radioteddy_de</source>
+        <forum>http://forum.xbmc.org/showthread.php?</forum>
+        <website>http://www.radioteddy.de/</website>
+    </extension>
+</addon>
+
+<addon id="plugin.video.7tv" name="7TV" version="3.1.7" provider-name="L0RE">
+	<requires>
+		<import addon="xbmc.python" version="2.14.0"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="addon.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">ProSieben, Sat.1, Kabel 1 and Sixx media library</summary>
+		<summary lang="de">Mediathek für ProSieben, Sat.1, Kabel 1 and Sixx</summary>
+		<description lang="en">Experience with 7TV a majority of shipments of ProSieben, SAT.1, kabel eins and sixx directly after the TV broadcast for free and for at least 7 days in full length - and the round-the-clock!</description>
+		<description lang="de">Erleben Sie mit 7TV einen Großteil der Sendungen von ProSieben, SAT.1, kabel eins und sixx direkt nach der TV-Ausstrahlung kostenlos und für mindestens 7 Tage in voller Länge – und das rund um die Uhr!</description>
+		<disclaimer lang="en"></disclaimer>
+		<language>de</language>
+		<platform>all</platform>
+		<license>GNU General Public License v2.0</license>
+		<forum>http://forum.kodi.tv/showthread.php?tid=198550</forum>
+		<website>www.7tv.de</website>
+		<email>kodi at bromix dot org</email>
+		<source>https://github.com/bromix/plugin.video.7tv</source>
+	</extension>
+</addon>
+
+<addon id="plugin.video.animexx" name="Animexx Videos" version="0.8.3" provider-name="L0RE">
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Videos from Animexx</summary>
+    <summary lang="de">Videos von Animexx</summary>
+    <description lang="en">Animexx is one of the biggest german Anime Comunity. This Are Videos from this Comunity</description>
+    <description lang="de">Animexx ist einer der groessten deutschen Anime Comunitys. Dies sind die Videos der Seite</description>
+    <website></website>
+    <source>http://repo.l0re.com/data/plugin.video.animexx/</source>
+    <forum>http://www.animexx.de</forum>
+    <email>andreas at vogler dot name</email>
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="plugin.video.aod" name="Anime on Demand" version="0.4.9" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="repository.lost-and-found" version="1.1.7"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Videos von http://www.anime-on-demand.de/</summary>
+    <summary lang="de">Videos of http://www.anime-on-demand.de/</summary>
+    <description lang="en">Videos der Mediathek von http://www.anime-on-demand.de/ (Die erste Folge ist Kostenlos. Ein Account wird benoetigt)</description>
+    <description lang="de">Video From http://www.anime-on-demand.de/ (Die First Episode is Free. Accound is Required)</description>
+    <website></website>
+    <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.aod</source>
+    <forum>http://www.kodinerds.net/index.php/Thread/46939-Repo-Lost-Found/</forum>
+    <email>andreas at vogler dot name</email>
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="plugin.video.ardmediathek_de" name="ARD Mediathek" version="4.0.8" provider-name="AddonScriptorDE, membrane, L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+        <!--<import addon="script.module.ardlib" version="0.0.1"/>-->
+        <!--<import addon="script.module.f4mproxy" version="1.0.16"/>-->
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="de">Das Erste, Einsfestival, EinsPlus, Phoenix, WDR, SWR, HR, MDR, NDR, RBB, BR, ... Mediathek</summary>
+        <summary lang="en">Das Erste, Einsfestival, EinsPlus, Phoenix, WDR, SWR, HR, MDR, NDR, RBB, BR, ... Media Library</summary>
+        <language>de</language>
+        <description lang="de">Das Erste, Einsfestival, EinsPlus, Phoenix, WDR, SWR, HR, MDR, NDR, RBB, BR, ... Mediathek</description>
+        <description lang="en">Das Erste, Einsfestival, EinsPlus, Phoenix, WDR, SWR, HR, MDR, NDR, RBB, BR, ... Media Library</description>
+        <disclaimer lang="en">Some parts of this addon may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <source>https://github.com/AddonScriptorDE/plugin.video.ardmediathek_de</source>
+        <forum>http://forum.xbmc.org/showthread.php?tid=132563</forum>
+        <email>andreas at vogler dot name</email>
+        <website>http://www.ardmediathek.de</website>
+    </extension>
+</addon>
+
+<addon id="plugin.video.arte_tv" name="Arte.tv" version="2.9.6" provider-name="PUR3">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="de">ARTE Mediathek (DE/FR)</summary>
+        <summary lang="en">ARTE Media Library (DE/FR)</summary>
+        <summary lang="fr">ARTE médiathèque (DE/FR)</summary>
+        <language>de fr</language>
+        <description lang="de">Ermöglicht es Videos aus der ARTE+7 Mediathek oder Live-TV zu schauen. Außerdem ist eine Vorschau des TV-Programms einsehbar.</description>
+        <description lang="en">Watch Videos from the ARTE Media Library + Livestream (DE/FR)</description>
+        <description lang="fr">Regarder des vidéos de la ARTE médiathèque + Livestream (DE/FR)</description>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <source>http://repo.l0re.com/data/plugin.video.arte_tv/</source>
+        <website>http://www.arte.tv</website>
+    </extension>
+</addon>
+
+<addon id="plugin.video.atv_at" name="ATV.at" version="2.0.7" provider-name="AddonScriptorDE">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="de">ATV.at Mediathek</summary>
+        <summary lang="en">ATV.at media library</summary>
+        <language>de</language>
+        <description lang="de">ATV.at Mediathek</description>
+        <description lang="en">ATV.at media library</description>
+    <platform>all</platform>
+    </extension>
+</addon>
+
+<addon id="plugin.video.bild_bundesliga" name="Bundesliga bei Bild" version="1.9.5" provider-name="PUR3">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="de">Zusammenfassungen von Bundesligaspielen und Videos rund um die Bundesliga</summary>
+        <description lang="de">Zusammenfassungen von Bundesligaspielen und Videos rund um die Bundesliga</description>
+    </extension>
+</addon>
+
+<addon id="plugin.video.br3" name="Bayrisches Fernsehen" version="0.7.7" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="repository.lost-and-found" version="1.1.7"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Videos von Bayrischen Fernsehen</summary>
+    <summary lang="de">Videos of Bavarian Television</summary>
+    <description lang="en">Videos der Mediathek von Bayrischen Fernsehen</description>
+    <description lang="de">Video From Bavarian Television</description>
+    <website></website>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.br3</source>
+    <forum>http://www.kodinerds.net/index.php/Thread/46598-Bayrisches-Fernsehen/</forum>
+    <email>andreas at vogler dot name</email>
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="plugin.video.bundesliga3" name="3 Bundesliga" version="0.3.11" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="de">Livestreams der 3. Bundesliga</summary>
+        <summary lang="en">Livestreams of 3. Bundesliga</summary>
+        <language>de</language>
+        <description lang="de">Livestreams der 3. Bundesliga</description>
+        <description lang="en">Livestreams of 3. Bundesliga</description>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <source>://github.com/kodinerds/repo/tree/master/addons/plugin.video.bundesliga3</source>
+        <forum>http://www.kodinerds.net/index.php/Thread/47175-Suche-guten-Browser-f%C3%BCr-die-fire-Box/</forum>
+        <email>andreas at vogler dot name</email>
+        <website>http://www.liga3-online.de/live-spiele/</website>
+    </extension>
+
+</addon>
+
+<addon id="plugin.video.chefkoch_de" name="Chefkoch.de" version="2.0.7" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="en">Cooking videos</summary>
+        <summary lang="de">Video Kochrezepte</summary>
+        <language>de</language>
+        <description lang="en">Cooking videos</description>
+        <description lang="de">Video Kochrezepte</description>
+        <website>http://www.chefkoch.de</website>
+        <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.chefkoch_de</source>
+        <forum>http://forum.xbmc.org/showthread.php?tid=132563</forum>
+        <email>andreas at vogler dot name</email>
+    </extension>
+</addon>
+
+<addon id="plugin.video.dfb_tv" name="DFB TV" version="1.0.4" provider-name="PUR3">
+	<requires>
+		<import addon="xbmc.python" version="2.1.0"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de">DFB TV</summary>
+		<description lang="de">Zusammenfassungen von Spielen aus dem deutschen Männer- und Frauenfußball, Livestreams, sonstige Videos mit Bezug zum DFB.</description>
+		<language>de</language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<website>www.tv.dfb.de</website>
+	</extension>
+</addon>
+
+<addon id="plugin.video.disneychannel_de" name="DisneyChannel.de" version="1.1.5" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="repository.lost-and-found" version="1.1.7"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="de">DisneyChannel Mediathek</summary>
+        <summary lang="en">DisneyChannel media library</summary>
+        <language>de</language>
+        <description lang="de">DisneyChannel Mediathek</description>
+        <description lang="en">DisneyChannel media library</description>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <source>http://repo.l0re.com/data/plugin.video.disneychannel_de/</source>
+        <forum>http://www.kodinerds.net/index.php/Thread/11527-AddonScriptorDE-s-Addon-Sammlung/</forum>
+        <email>andreas at vogler dot name</email>
+        <website>http://www.disneychannel.de</website>
+    </extension>
+</addon>
+
+<addon id="plugin.video.dmax_de" name="DMAX.de" version="1.1.13" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="script.module.pyamf" version="0.6.1"/>
+	<import addon="repository.lost-and-found" version="1.1.7"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="en">DMAX-Videotheke</summary>
+        <language></language>
+        <description lang="en">DMAX-Videotheke</description>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.dmax_de</source>
+        <forum>http://forum.xbmc.org/showthread.php?tid=132563</forum>
+        <email>andreas at vogler dot name</email>
+        <website>http://www.dmax.de/videos</website>
+    </extension>
+</addon>
+
+<addon id="plugin.video.doku5.com" name="Doku5.com" version="0.1.5" provider-name="SLiX/skatulskijean">
+	<requires>
+		<import addon="xbmc.python" version="2.19.0"/>
+		<import addon="script.module.requests" version="2.7.0"/>
+		<import addon="plugin.video.youtube" version="5.1.20.6"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="addon.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary></summary>
+		<description></description>
+		<summary></summary>
+		<platform>all</platform>
+		<license></license>
+		<forum></forum>
+		<website></website>
+		<email></email>
+		<source></source>
+	</extension>
+</addon>
+
+<addon id="plugin.video.doku.cc" name="Doku.cc (veraltet neu: Doku5)" version="0.0.4" provider-name="skatulskijean">
+	<requires>
+		<import addon="xbmc.python" version="2.19.0"/>
+                <import addon="plugin.video.doku5.com" version="0.1.0"/>
+		<import addon="script.module.requests" version="2.7.0"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="addon.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary></summary>
+		<description></description>
+		<summary></summary>
+		<platform>all</platform>
+		<license></license>
+		<forum></forum>
+		<website></website>
+		<email></email>
+		<source></source>
+	</extension>
+</addon>
+
+<addon id="plugin.video.eurosport" name="Eurosport" version="1.0.1" provider-name="PUR3">
+	<requires>
+		<import addon="xbmc.python" version="2.1.0"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">Eurosport media library</summary>
+		<summary lang="de">Eurosport Mediathek</summary>
+		<description lang="en">Watch highlights, interviews, analysis and other videos from Eurosport</description>
+		<description lang="de">Schauen Sie Zusammenfassungen, Interviews, Analysen und sonstige Videos von Eurosport</description>
+		<disclaimer lang="en"></disclaimer>
+		<language>de</language>
+		<platform>all</platform>
+        <license>GNU General Public License v2.0</license>
+		<website>www.video.eurosport.com</website>
+	</extension>
+</addon>
+
+<addon id="plugin.video.fernsehkritik_tv" name="Fernsehkritik.tv" version="2.1.4" provider-name="AddonScriptorDE">
+    <requires>
+        <import addon="xbmc.python" version="2.19.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="en">The satirical-crucial TV magazin</summary>
+        <summary lang="de">Das satirisch-kritische TV Magazin</summary>
+        <language>de</language>
+        <description lang="en">The satirical-crucial TV magazin</description>
+        <description lang="de">Das satirisch-kritische TV Magazin</description>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <source>https://github.com/AddonScriptorDE/plugin.video.fernsehkritik_tv</source>
+        <forum>http://forum.xbmc.org/showthread.php?tid=</forum>
+        <email>AddonScriptorDE at yahoo dot de</email>
+        <website>http://www.fernsehkritik.tv</website>
+    </extension>
+</addon>
+
+<addon id="plugin.video.filmstarts_de" name="FilmStarts.de" version="2.1.7" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="de">Deutsche Trailer, Filmnews und Interviews</summary>
+        <summary lang="en">German trailers, movie-news and interviews</summary>
+        <language>de</language>
+        <description lang="de">Deutsche Trailer, Filmnews und Interviews</description>
+        <description lang="en">German trailers, movie-news and interviews</description>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <source>https://github.com/AddonScriptorDE/plugin.video.filmstarts_de</source>
+        <forum>http://forum.xbmc.org/showthread.php?tid=132563</forum>
+        <email>AddonScriptorDE at yahoo dot de</email>
+        <website>http://www.filmstarts.de</website>
+    </extension>
+</addon>
+
+<addon id="plugin.video.giga_de" name="GIGA.de" version="2.2.1" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="de">Technik, Games und Entertainment Videos</summary>
+        <summary lang="en">Technical, Games and Entertainment Videos</summary>
+        <language>de</language>
+        <description lang="de">Technik, Games und Entertainment Videos</description>
+        <description lang="en">Technical, Games and Entertainment Videos</description>
+        <website></website>
+        <source>http://repo.l0re.com/data/plugin.video.giga_de/</source>
+        <forum>http://www.kodinerds.net/index.php/Thread/11527-AddonScriptorDE-s-Addon-Sammlung/</forum>
+        <email>andreas at vogler dot name</email>
+    </extension>
+</addon>
+
+<addon id="plugin.video.helloworld" name="Helo World" version="0.0.1" provider-name="L0RE">
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Test Plugin von L0RE</summary>
+    <summary lang="de">Test Plugin von L0RE</summary>
+    <description lang="en">Test Plugin von L0RE</description>
+    <description lang="de">Test Plugin von L0RE</description>
+    <website></website>
+    <email>andreas at vogler dot name</email>
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="plugin.video.kicker_tv" name="Kicker.tv" version="1.0.1" provider-name="PUR3">
+	<requires>
+		<import addon="xbmc.python" version="2.1.0"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de">Kicker.tv</summary>
+		<description lang="de">Videos mit Bezug zum Fussball und anderen Sportarten</description>
+		<language>de</language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<website>www.kicker.tv</website>
+	</extension>
+</addon>
+
+<addon id="plugin.video.kika_de" name="KIKA+" version="1.0.9" provider-name="AddonScriptorDE">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="de">KIKA Mediathek</summary>
+        <summary lang="en">KIKA media library</summary>
+        <language>de</language>
+        <description lang="de">KiKA - der Kinderkanal von ARD und ZDF</description>
+        <description lang="en">KiKA - the kids channel from ARD and ZDF</description>
+        <disclaimer lang="en">Some parts of this addon may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.kika_de</source>
+        <forum>http://forum.xbmc.org/showthread.php?tid=132563</forum>
+        <email>AddonScriptorDE at yahoo dot de</email>
+        <website>http://kikaplus.net/clients/kika/kikaplus/</website>
+    </extension>
+</addon>
+
+<addon id="plugin.video.kikaninchen" name="KIKANINCHEN" version="1.0.6" provider-name="Tombstone">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.kikaninchen</source>
+        <forum>http://www.kodinerds.net/index.php/Thread/11527-AddonScriptorDE-s-Addon-Sammlung/</forum>
+        <summary lang="de">Kikaninchen Mediathek</summary>
+        <summary lang="en">Kikaninchen media library</summary>
+        <language>de</language>
+        <description lang="de">Kikaninchen - der U3 Kinderkanal von ARD und ZDF</description>
+        <description lang="en">Kikaninchen - the U3 kids channel from ARD and ZDF</description>
+    </extension>
+</addon>
+
+<addon id="plugin.video.mediatheken" name="Mediatheken" version="1.0.13" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="en">German media libraries</summary>
+        <summary lang="de">Deutsche Mediatheken</summary>
+        <language>de</language>
+        <description lang="en">German media libraries</description>
+        <description lang="de">Deutsche Mediatheken</description>
+        <source>https://github.com/AddonScriptorDE/plugin.video.mediatheken</source>
+        <forum>http://forum.xbmc.org/showthread.php?tid=</forum>
+        <email>AddonScriptorDE at yahoo dot de</email>
+        <website></website>
+    </extension>
+</addon>
+
+<addon id="plugin.video.mtv_de" name="MTV.de" version="3.3.9" provider-name="L0RE">
+
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="repository.lost-and-found" version="1.1.7"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="de">TV-Shows, Deutsche Charts, Videosuche, Playlisten, Favoriten</summary>
+        <summary lang="en">TV-Shows, german charts, clip search, playlists, favorites</summary>
+        <language>de</language>
+        <description lang="de">TV-Shows, Deutsche Charts, Videosuche, Playlisten, Favoriten</description>
+        <description lang="en">TV-Shows, German charts, clip search, playlists, favorites</description>
+        <disclaimer lang="en">Some parts of this addon may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
+    <platform>all</platform>
+    </extension>
+</addon>
+
+<addon id="plugin.video.n24_de" name="N24.de" version="2.0.12" provider-name="AddonScriptorDE">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="de">N24 Mediathek und Livestream</summary>
+        <summary lang="en">N24 Media Library and Livestream</summary>
+        <language>de</language>
+        <description lang="de">N24 Mediathek und Livestream</description>
+        <description lang="en">N24 Media Library and Livestream</description>
+        <disclaimer lang="en">Some parts of this addon may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
+    <platform>all</platform>
+    </extension>
+</addon>
+
+<addon id="plugin.video.nick_de" name="Nickelodeon.de" version="1.1.5" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="de">Nickelodeon und Nick Jr. Mediathek</summary>
+        <summary lang="en">Nickelodeon and Nick Jr. media library</summary>
+        <language>de</language>
+        <description lang="de">Nick.de ist die kostenlose Website von Nickelodeon.</description>
+        <description lang="en">Nick.de ist die kostenlose Website von Nickelodeon.</description>
+        <disclaimer lang="en">Some parts of this addon may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <source>http://repo.l0re.com/data/plugin.video.nick_de/</source>
+        <forum>http://forum.xbmc.org/showthread.php?tid=132563</forum>
+        <email>andreas at vogler dot name</email>
+        <website>http://www.nick.de</website>
+    </extension>
+</addon>
+
+<!--
+    Document   : addon.xml
+    Package    : OTR Integration to XBMC
+    Author     : Frank Epperlein
+    Copyright  : 2012, Frank Epperlein, DE
+    License    : Gnu General Public License 2
+    Description: XBMC Addon for OTR integration
+-->
+<addon id="plugin.video.onlinetvrecorder_com" version="0.7.4" name="onlinetvrecorder.com" provider-name="Frank Epperlein">
+  <extension point="xbmc.python.pluginsource" library="otr.py">
+    <provides>video</provides>
+  </extension> 
+  <extension point="xbmc.addon.metadata">
+    <summary>onlinetvrecorder.com integration</summary>
+    <summary lang="de">onlinetvrecorder.com integration</summary>
+    <description>Provides the ability to show onlinetvrecorder.com recordings within XBMC.</description>
+    <description lang="de">Ermoeglicht es Aufnahmen von onlinetvrecorder.com in XBMC anzuschauen.</description>
+    <platform>all</platform>
+  </extension> 
+  <requires>
+   <import addon="xbmc.python" version="2.1.0"/>
+   <import addon="script.module.parsedom" version="1.0.0"/> 
+  </requires>
+</addon>
+
+<addon id="plugin.video.ran_de" name="ran" version="2.2.2" provider-name="PUR3">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="de">Livestreams und Videos von ran.de</summary>
+        <summary lang="en">Livestreams and videos from ran.de</summary>
+        <description lang="de">Dieses Addon ermöglicht es euch, die neusten Videos und Livestreams von ran.de zu schauen.</description>
+        <description lang="en">Watch livestreams and the latest videos from ran.de.</description>
+    </extension>
+</addon>
+
+<addon id="plugin.video.servustv_com" name="ServusTV.com" version="1.0.14" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="script.module.pyamf" version="0.6.1"/>
+		<import addon="script.module.simple.downloader" version="0.9.5"/> # Add this
+                <import addon="repository.lost-and-found" version="1.1.7"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="en">Watch videos from the ServusTV media library</summary>
+        <language>de</language>
+        <description lang="en">Watch videos from the ServusTV media library</description>
+        <disclaimer lang="en">Some parts of this addon may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <source>https://github.com/AddonScriptorDE/plugin.video.servustv_com</source>
+        <forum>http://forum.xbmc.org/showthread.php?tid=</forum>
+        <email>AddonScriptorDE at yahoo dot de</email>
+        <website>http://www.servustv.com</website>
+    </extension>
+</addon>
+
+<addon id="plugin.video.sesamstrasse_de" name="Sesamstrasse.de" version="1.0.6" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="de">Sesamstrasse Mediathek</summary>
+        <summary lang="en">Sesamstrasse media library</summary>
+        <language>de</language>
+        <description lang="de">Ganze Folgen Sesamstrasse ansehen</description>
+        <description lang="en">Watch full episodes of Sesamstrasse</description>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.sesamstrasse_de</source>
+        <forum>http://forum.xbmc.org/showthread.php?tid=132563</forum>
+        <email>andreas at vogler dot name</email>
+        <website>http://www.sesamstrasse.de</website>
+    </extension>
+</addon>
+
+<addon id="plugin.video.sky_mediathek" name="Sky Mediathek" version="1.1.0" provider-name="PUR3">
+	<requires>
+		<import addon="xbmc.python" version="2.1.0"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de">Sky Mediathek</summary>
+		<description lang="de">Neueste Videos aus der Sky Mediathek anschauen.</description>
+		<language>de</language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<website>www.sky.de/mediathek</website>
+	</extension>
+</addon>
+
+<addon id="plugin.video.spiegel_tv" name="Spiegel.tv" version="1.1.4" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="de">Spiegel TV Mediathek (Reportagen/Dokumentationen)</summary>
+        <summary lang="en">Spiegel TV media library</summary>
+        <language>de</language>
+        <description lang="de">Spiegel TV Mediathek (Reportagen/Dokumentationen)</description>
+        <description lang="en">Spiegel TV media library</description>
+        <disclaimer lang="en">Some parts of this addon may not be legal in your country of residence - please check with your local laws before installing.
+Orginal Code was from AddonScriptorDE</disclaimer>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <source>http://repo.l0re.com/data/plugin.video.spiegel_tv/</source>
+        <forum>http://www.kodinerds.net/index.php/Thread/11527-AddonScriptorDE-s-Addon-Sammlung/</forum>
+        <email>lore at vogler dot name</email>
+        <website>http://www.spiegel.tv</website>
+    </extension>
+</addon>
+
+<addon id="plugin.video.sportdeutschland_tv" name="Sportdeutschland.TV" version="1.1.1" provider-name="PUR3">
+	<requires>
+    	<import addon="xbmc.python" version="2.1.0"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+	<extension point="xbmc.addon.metadata">
+	    <summary lang="de">Livestreams und Videos von sportdeutschland.tv</summary>
+	    <description lang="de">Sportdeutschland.tv zeigt exklusiv die Volleyball- und Tischtennis-Bundesliga, außerdem Basketball und noch viel mehr Sport!</description>
+	    <platform>all</platform>
+	    <language>de</language>
+  	</extension>
+</addon>
+
+<addon id="plugin.video.spotitube" name="Youtube Music" version="1.0.8" provider-name="AddonScriptorDE">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="plugin.video.youtube" version="3.0.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video audio</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="en">Play music videos via Youtube</summary>
+        <language></language>
+        <description lang="en">Play music videos via Youtube</description>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <source>https://github.com/AddonScriptorDE/plugin.video.spotitube</source>
+        <forum>http://forum.xbmc.org/showthread.php?tid=</forum>
+        <email>AddonScriptorDE at yahoo dot de</email>
+        <website></website>
+    </extension>
+</addon>
+
+<addon id="plugin.video.tele5_de" name="Tele5.de" version="1.0.6" provider-name="AddonScriptorDE">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="de">Tele5 Mediathek</summary>
+        <summary lang="en">Tele5 media library</summary>
+        <language>de</language>
+        <description lang="de">Tele5 Mediathek</description>
+        <description lang="en">Tele5 media library</description>
+        <disclaimer lang="en">Some parts of this addon may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <source>https://github.com/AddonScriptorDE/plugin.video.tele5_de</source>
+        <forum>http://forum.xbmc.org/showthread.php?tid=132563</forum>
+        <email>AddonScriptorDE at yahoo dot de</email>
+        <website>http://www.tele5.de</website>
+    </extension>
+</addon>
+
+<addon id="plugin.video.tivi_de" name="ZDF tivi" version="1.0.3" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="de">ZDF tivi Mediathek</summary>
+        <summary lang="en">ZDF tivi media library</summary>
+        <language>de</language>
+        <description lang="de">ZDF tivi Mediathek</description>
+        <description lang="en">ZDF tivi media library</description>
+        <disclaimer lang="en">Some parts of this addon may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <source>https://github.com/AddonScriptorDE/plugin.video.tivi_de</source>
+        <forum>http://forum.xbmc.org/showthread.php?tid=132563</forum>
+        <email>andreas at vogler dot name</email>
+        <website>http://www.tivi.de</website>
+    </extension>
+</addon>
+
+<addon id="plugin.video.tvtoday_de" name="TV Today - Best of Mediatheken" version="1.1.4" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="en">Best of german media libraries</summary>
+        <language>de</language>
+        <description lang="en">Best of german media libraries</description>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <source>https://github.com/AddonScriptorDE/plugin.video.tvtoday_de</source>
+        <forum>http://forum.xbmc.org/showthread.php?tid=132563</forum>
+        <email>andreas at vogler dot name</email>
+        <website>http://www.tvtoday.de/mediathek</website>
+    </extension>
+</addon>
+
+<addon id="plugin.video.vevo_tv" name="VEVO TV" version="1.1.5" provider-name="AddonScriptorDE">
+    <requires>
+        <import addon="xbmc.python" version="2.19.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video audio</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="en">Watch music videos 24/7 - Official mode is currently available in the US, Canada, and Germany. Custom mode is currently available in Australia, Brazil, Canada, France, Germany, Ireland, Italy, The Netherlands, New Zealand, Poland, Spain, UK and US.</summary>
+        <language></language>
+        <description lang="en">Watch music videos 24/7 - Official mode is currently available in the US, Canada, and Germany. Custom mode is currently available in Australia, Brazil, Canada, France, Germany, Ireland, Italy, The Netherlands, New Zealand, Poland, Spain, UK and US.</description>
+        <disclaimer lang="en">Some parts of this addon may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <source>https://github.com/AddonScriptorDE/plugin.video.vevo_tv</source>
+        <forum>http://forum.xbmc.org/showthread.php?tid=178369</forum>
+        <email>AddonScriptorDE at yahoo dot de</email>
+        <website>http://www.vevo.com</website>
+    </extension>
+</addon>
+
+<addon id="plugin.video.welt_der_wunder" name="Welt der Wunder" version="1.1.6" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="de">Welt der Wunder Livestream und Mediathek</summary>
+        <summary lang="en">Welt der Wunder livestream and media library</summary>
+        <language>de</language>
+        <description lang="de">Welt der Wunder Livestream und Mediathek</description>
+        <description lang="en">Welt der Wunder livestream and media library</description>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <source>http://repo.l0re.com/data/plugin.video.welt_der_wunder/</source>
+        <forum>http://forum.xbmc.org/showthread.php?tid=132563</forum>
+        <email>andreas at vogler dot name</email>
+        <website>http://www.weltderwunder.tv</website>
+    </extension>
+</addon>
+
+<addon id="plugin.video.youtv" name="Youtv" version="0.4.24" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+	<import addon="repository.lost-and-found" version="1.1.7"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Youtv</summary>
+    <summary lang="de">Youtv</summary>
+    <description lang="en">Youtv</description>
+    <description lang="de">Youtv</description>
+    <website></website>
+    <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.youtv</source>
+    <forum>http://www.kodinerds.net/</forum>
+    <email>andreas at vogler dot name</email>
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="plugin.video.zattoo_com" name="Zattoo Live TV" version="1.0.0" provider-name="PUR3">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="de">Über 75 TV-Sender als Livestreams auf dem Gerät deiner Wahl ansehen.</summary>
+        <description lang="de">Fußball, Serien, Filme, Dokus und Reportagen laufen mit Zattoo im Livestream. Alles was du brauchst, ist eine Internetverbindung und schon läuft das Fernsehprogramm mit mehr als 75-TV-Sendern kostenlos auf dem Gerät deiner Wahl.</description>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <website>http://www.zattoo.com</website>
+    </extension>
+</addon>
+
+<addon id="repository.lost-and-found" name="Repo Lost and Found" version="1.1.7" provider-name="L0RE">
+	<extension point="xbmc.addon.repository" name="L0RE">
+		<info compressed="true">https://raw.githubusercontent.com/kodinerds/repo/master/addons.xml</info>
+		<checksum>https://raw.githubusercontent.com/kodinerds/repo/master/addons.xml.md5</checksum>
+		<datadir zip="true">https://raw.githubusercontent.com/kodinerds/repo/master/</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary>Most of the addon have been abandoned, and Patched by someone new. Or have been Found without someone loosing them</summary>
+		<description>Most of the addon have been abandoned, and Patched by someone new. Or have been Found without someone loosing them</description>
+		<disclaimer></disclaimer>
+		<platform>all</platform>
+	</extension>
+</addon>
+
+<addon id="script.screensaver.animexx" name="Anime Fanartsaver" version="0.9.3" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+    </requires>
+    <extension point="xbmc.ui.screensaver" library="screensaver.py" >
+	<provides>executable</provides>
+    </extension>
+    <extension point="xbmc.python.script" library="screensaver.py" />
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <language/>
+        <website>http://repo.l0re.com/</website>
+        <source>http://repo.l0re.com/data/script.screensaver.animexx/</source>
+        <forum>http://www.kodinerds.net/index.php/Thread/45654-RELEASE-Animexx-Fanart-Screensave/</forum>
+        <email>andreas at vogler dot name</email>
+        <summary lang="en">Screensaver for Fanarts from Animexx</summary>
+        <description lang="en">Screensaver ,that shows all new fanarts from Animexx.de</description>
+		<summary lang="de">Screensaver für Animexx Fanarts</summary>
+        <description lang="de">Screensaver ,zum Anzeigen von Fanarts von Animexx.de</description>
+    </extension>
+</addon>
+
+<addon id="service.fritz.automation" name="Fritz Automation" version="0.2.1" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.20.0"/>
+    </requires>
+    <extension point="xbmc.service" library="service.py" start="login" />
+	<extension point="xbmc.python.pluginsource" library="service.py" >
+	    <provides>executable</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+    <summary lang="en">Stom von einer FritzSteckdose über die Fritzbox ab/an schalten unter bestimmten bedinungen</summary>
+    <summary lang="de">Stom von einer FritzSteckdose über die Fritzbox ab/an schalten unter bestimmten bedinungen</summary>
+    <description lang="en">Stom von einer FritzSteckdose über die Fritzbox ab/an schalten unter bestimmten bedinungen</description>
+    <description lang="de">Stom von einer FritzSteckdose über die Fritzbox ab/an schalten unter bestimmten bedinungen</description>
+    <website></website>
+    <source>https://github.com/kodinerds/repo/tree/master/addons/service.fritz.automation</source>
+    <forum>http://www.kodinerds.net/index.php/Thread/46939-Repo-Lost-Found/</forum>
+    <email>andreas at vogler dot name</email>
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="service.subtitles.subcentral" name="Subcentral.de" version="0.5.2" provider-name="L0RE">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+  </requires>
+  <extension point="xbmc.subtitle.module"
+             library="service.py" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Subcentral</summary>
+    <description lang="en">German Subtitles from subcentral Webpage for TV Series</description>
+    <description lang="de">Untertitel aus dem Forum Subcentral für TV Serien</description>
+    <disclaimer lang="en"></disclaimer>
+    <platform>all</platform>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    <forum>www.kodinerds.net/index.php/Thread/24416-RELEASE-SubCentral-de-Hochwertige-Untertitel-für-TV-Serien</forum>
+    <website>https://www.subcentral.de/</website>
+    <email>andreas at vogler dot name</email>
+    <source>https://github.com/kodinerds/repo/tree/master/service.subtitles.subcentral</source>    
+  </extension>
+</addon>
+
+<addon id="service.subtitles.tv4user" name="Tv4user.de" version="0.8.8" provider-name="L0RE">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+  </requires>
+  <extension point="xbmc.subtitle.module"
+             library="service.py" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Untertitel von board.tv4user.de fuer Serien in Deutsch und Englisch</summary>
+    <description lang="en">Subtitle in German/English for Serien from board.tv4user.de </description>
+    <disclaimer lang="en"></disclaimer>
+    <platform>all</platform>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    <forum>http://www.kodinerds.net/index.php/Thread/47097-RELEASE-Untertitel-Plugin-f%C3%BCr-http-board-tv4user-de</forum>
+    <website>http://www.br.de</website>
+    <email>andreas at vogler dot name</email>
+    <source>https://github.com/kodinerds/repo/tree/master/addons/service.subtitles.tv4user</source>    
+  </extension>
+</addon>
+
+<addon id="service.twitterfeed" name="Twitter Feed" version="0.8.18" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.19.0"/>
+	<import addon="script.module.requests" version="2.9.1"/>	
+	<import addon="service.popwindow" version="0.2"/>	
+	<import addon="repository.lost-and-found" version="1.1.7"/>
+    </requires>
+    <extension point="xbmc.service" library="service.py" start="login" />
+	<extension point="xbmc.python.pluginsource" library="service.py" >
+	    <provides>executable</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+    <summary lang="en">Shows Twitter Messages in Kodi</summary>
+    <summary lang="de">Zeigt Twitter Nachrichten in Kodi an</summary>
+    <description lang="en">Shows Hastags from "TV Shows and Sender" or "Timline" or a "defined search word"</description>
+    <description lang="de">Zeigt Hashtags aus dem Fernsehen an oder die Timeline oder ein Suchbegriff an</description>
+    <website></website>
+    <source>https://github.com/kodinerds/repo/tree/master/addons/service.livetv.twitter</source>
+    <forum>http://www.kodinerds.net/index.php/Thread/49221-Release-Twitterfeeds/</forum>
+    <email>andreas at vogler dot name</email>
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="service.youtv.downloader" name="Youtv Downloader" version="0.2.4" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.19.0"/>
+    </requires>
+    <extension point="xbmc.service" library="service.py" start="login" />
+	<extension point="xbmc.python.pluginsource" library="service.py" >
+	    <provides>executable</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+    <summary lang="en">Läd Das Archive Automatisiert 1 Mal am Tag Runter und löscht es</summary>
+    <summary lang="de">Downloads the Archive once a day and Deletes it</summary>
+    <description lang="en">Downloads the Archive once a day and Deletes it from Youtv</description>
+    <description lang="de">Läd Das Archive Automatisiert 1 Mal am Tag Runter und löscht es</description>
+    <website></website>
+    <source>https://github.com/kodinerds/repo/tree/master/addons/service.youtv.downloader</source>
+    <forum>http://www.kodinerds.net</forum>
+    <email>andreas at vogler dot name</email>
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="plugin.video.wdr" name="WDR" version="0.8.6" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="repository.lost-and-found" version="1.1.7"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Videos von WDR</summary>
+    <summary lang="de">Videos of WDR</summary>
+    <description lang="en">Videos der Mediathek von WDR</description>
+    <description lang="de">Video From WDR </description>
+    <website></website>
+    <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.wdr</source>
+    <forum>http://www.kodinerds.net/index.php/Thread/46939-Repo-Lost-Found/</forum>
+    <email>andreas at vogler dot name</email>
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="plugin.video.maxdome" name="maxdome" version="0.0.3" provider-name="frankr612">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+	<import addon="script.module.beautifulsoup" version="3.2.1"/>
+    <import addon="script.module.requests" version="2.9.1"/>
+    <import addon="script.module.routing" version="0.2.0"></import>
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="default.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_gb">Plugin for Maxdome</summary>
+    <description lang="en_gb">Allows you to stream all your content from Maxdome. 
+    ***Attention: Addon is unofficial and not related to or supported by Maxdome***</description>
+    <disclaimer lang="en_gb"></disclaimer>
+    <language></language>
+    <platform>all</platform>
+    <license></license>
+    <forum></forum>
+    <website></website>
+    <email></email>
+    <source></source>
+  </extension>
+</addon>
+
+<addon id="service.fussballpopup" name="Fussball Popus (Work in Progress)" version="0.2.5" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.19.0"/>			       
+	    <import addon="script.module.feedparser" version="5.1.3"/>
+        <import addon="script.module.requests" version="2.3.0"/>
+		<import addon="service.popwindow" version="0.2"/>	
+        <import addon="repository.lost-and-found" version="1.1.7"/>
+    </requires>
+    <extension point="xbmc.service" library="service.py" start="login" />
+	<extension point="xbmc.python.pluginsource" library="menu.py" >
+	    <provides>executable</provides>
+    </extension>
+
+    <extension point="xbmc.addon.metadata">
+    <summary lang="en">Shows Football Games Messages Feed in Overlay WIndows</summary>
+    <summary lang="de">Zeigt Fussball SPiele Nachrichten Updates in PupupFensterann</summary>
+    <description lang="en">Shows Fussball Feed in Overlay WIndows</description>
+    <description lang="de">Zeigt Fussball Updates in PupupFensterann</description>
+    <website></website>
+    <source>https://github.com/kodinerds/repo/tree/master/service.fussballpopup</source>
+    <forum>http://www.kodinerds.net/index.php/Thread/52014-Fussball-Meldungen-via-Popup-um-auf-dem-Laufenden-zu-bleiben/</forum>
+    <email>andreas at vogler dot name</email>
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="plugin.video.bookmark" name="bookmark" version="0.0.3" provider-name="SLiX">
+    <requires>
+		<import addon="xbmc.python" version="2.23.0"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="addon.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<platform>all</platform>
+		<summary lang="en">Simple bookmark video addon</summary>
+		<description lang="en"> </description>
+		<summary lang="de">Einfaches Bookmark Video Addon</summary>
+		<description lang="de"> </description>
+		<license>GNU General Public License v3</license>
+		<language></language>
+		<forum></forum>
+		<source></source>
+		<email></email>
+	</extension>
+	<extension point="kodi.context.item" library="context_add.py">
+		<item>
+			<label>30021</label>
+			<visible>Window.IsActive(10025)+!Container.Content(Addons)</visible>
+		</item>
+	</extension>
+</addon>
+
+<addon id="repository.membrane" name="membrane's KODI Add-ons" version="1.9.0" provider-name="membrane">
+	<extension point="xbmc.addon.repository" name="membrane's XBMC Add-on Repository">
+		<info compressed="false">http://github.com/prof-membrane/repository.membrane/raw/master/addons.xml</info>
+		<checksum>http://github.com/prof-membrane/repository.membrane/raw/master/addons.xml.md5</checksum>
+		<datadir zip="true">http://github.com/prof-membrane/repository.membrane/raw/master/</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary>Install membrane's Add-ons</summary>
+		<description>Download and install addons by membrane</description>
+		<platform>all</platform>
+	</extension>
+</addon>
+
+
+<addon id="plugin.video.ampya" name="Ampya" version="0.1.8" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+	<import addon="repository.lost-and-found" version="1.1.7"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Ampya</summary>
+    <summary lang="de">Ampya</summary>
+    <description lang="en">Ampya</description>
+    <description lang="de">Ampya</description>
+    <website></website>
+    <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.ampya</source>
+    <forum>http://www.kodinerds.net/</forum>
+    <email>andreas at vogler dot name</email>
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="service.rsspopup" name="Rss Popus" version="0.3.3" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.19.0"/>			       
+	    <import addon="script.module.feedparser" version="5.1.3"/>
+        <import addon="script.module.requests" version="2.3.0"/>
+		<import addon="service.popwindow" version="0.2"/>	
+        <import addon="repository.lost-and-found" version="1.1.7"/>
+    </requires>
+    <extension point="xbmc.service" library="service.py" start="login" />
+	
+	<extension point="xbmc.python.pluginsource" library="service.py" >
+	    <provides>executable</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+    <summary lang="en">Shows RSS Feed in Overlay WIndows</summary>
+    <summary lang="de">Zeigt Rss Updates in PupupFensterann</summary>
+    <description lang="en">Shows RSS Feed in Overlay WIndows</description>
+    <description lang="de">Zeigt Rss Updates in PupupFensterann</description>
+    <website></website>
+    <source>https://github.com/kodinerds/repo/tree/master/service.rsspopup/</source>
+    <forum>http://www.kodinerds.net/</forum>
+    <email>andreas at vogler dot name</email>
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="service.popwindow" name="Pupup Windows" version="0.2.3" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.19.0"/>
+	<import addon="script.module.requests" version="2.9.1"/>	
+    </requires>
+    <extension point="xbmc.service" library="service.py" start="login" />
+    <extension point="xbmc.addon.metadata">
+    <summary lang="en">Shows Popup  Windows</summary>
+    <summary lang="de">Shows Popup  Windows</summary>
+    <description lang="en">Shows Popup  Windows</description>
+    <description lang="de">Shows Popup  Windows</description>
+    <website></website>
+    <source>https://github.com/kodinerds/repo/tree/master/addons/service.popwindow</source>
+    <forum>http://www.kodinerds.net/index.php/Thread/46939-Repo-Lost-Found</forum>
+    <email>andreas at vogler dot name</email>
+    <platform>all</platform>
+  </extension>
+</addon>
+
+</addons>
