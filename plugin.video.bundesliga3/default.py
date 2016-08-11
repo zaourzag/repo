@@ -222,6 +222,7 @@ def jsonurl(url) :
     
 def watchlive(url,meldung="",spiel=""):
    urlnew=""
+   euro=0
    if not meldung == "" :
         dialog = xbmcgui.Dialog()
         nr=dialog.yesno("Läuft nicht", "Dieses Spielt läuft noch nicht trotzdem versuchen?")        
@@ -234,13 +235,13 @@ def watchlive(url,meldung="",spiel=""):
        match = re.compile('([^-]+) - ([^-]+)', re.DOTALL).findall(spiel)
        name1=match[0][0]
        name2=match[0][1]
-       urlstart="http://www.mdr.de/sport/livestreams/sport_livestreams100.html"
-       content=getUrl(urlstart)
-       match = re.compile('href="([^"]+?)" class="headline" title="">Livestream: ([^<]+?) - ([^<]+?)</a>', re.DOTALL).findall(content)
+       urlstart="http://www.mdr.de/mediathek/livestreams/mdr-plus/index.html"
+       content=getUrl(urlstart)                        
+       match = re.compile('href="([^"]+?)" class="moreBtn" title="([^-]+?) - ([^-]+?)"', re.DOTALL).findall(content)
        for urln,spieler1,spieler2 in match:
            if maschaftfinden(name1, name1) ==1 or maschaftfinden(name2, name1)==1  :   
                 url= urln
-       content=getUrl(urln)
+       content=getUrl("http://www.mdr.de/"+urln)
        match = re.compile("'playerXml':'(.+?)'", re.DOTALL).findall(content)       
        xmlurl= match[0].replace("\/","/")
        content=getUrl("http://www.mdr.de"+xmlurl)
@@ -293,6 +294,10 @@ def watchlive(url,meldung="",spiel=""):
       urlnew="http://rbb_event-lh.akamaihd.net/i/rbbevent_nongeo@107643/index_1728_av-p.m3u8?sd=10&rebase=on"
    if url=="br.de":
        urlnew=live()
+   if url=="Eurosport":
+      dialog = xbmcgui.Dialog()
+      nr=dialog.ok("Eurosport", "Eurosport hat kein Internet Stream")
+      euro=1
    if url=="hessenschau.de":
       urlN="http://hessenschau.de/sport/index.html"
       match = re.compile('([^-]+) - ([^-]+)', re.DOTALL).findall(spiel)
@@ -353,8 +358,9 @@ def watchlive(url,meldung="",spiel=""):
       listitem = xbmcgui.ListItem(path=urlnew) 
       xbmcplugin.setResolvedUrl(addon_handle,True, listitem)
    else :
-      dialog = xbmcgui.Dialog()
-      nr=dialog.ok("Sender nicht bekannt", "Zu Diesem sender fehlt der stream")
+      if euro==0:
+          dialog = xbmcgui.Dialog()
+          nr=dialog.ok("Sender nicht bekannt", "Zu Diesem sender fehlt der stream")          
       listitem = xbmcgui.ListItem(path=url) 
       xbmcplugin.setResolvedUrl(addon_handle,False, listitem) 
 
