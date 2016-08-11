@@ -193,12 +193,15 @@ def add_game():
       debug("Start Add Game")
       content=geturl("http://www.sport1.de/fussball/alle-ligen-und-wettbewerbe")
       match=re.compile('a href="/liga/(.+?)" title="Zur Seite von (.+?)"><span class="s1-logo-team"><img src="(.+?)"', re.DOTALL).findall(content)
+      doppelteweg=[]
       for url,name,image in match:
-        addDir(name, url, mode="liega", iconimage=image )         
-        debug ("Adde Name:" + name)
-        debug ("Adde url:" + url)
-        debug ("Adde mode:" + mode)
-        debug ("Adde iconimage:" + image)
+        if not url in doppelteweg :
+            doppelteweg.append(url)
+            addDir(name, url, mode="liega", iconimage=image )         
+            debug ("Adde Name:" + name)
+            debug ("Adde url:" + url)
+            debug ("Adde mode:" + mode)
+            debug ("Adde iconimage:" + image)
       xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
       
 def delgame():
