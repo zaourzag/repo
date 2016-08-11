@@ -23,8 +23,10 @@
   <string id="30106">Y Postition der Meldung</string>
   <string id="30107">Breite der Meldung</string>
   <string id="30108">Höhe der Meldung</string>
-  <string id="30109">Breite des Bildes</string>
-  <string id="30110">Höhe des Bildes</string>
+  <string id="30109">Breite des Bildes Links</string>
+  <string id="30110">Höhe des Bildes Links </string>
   <string id="30111">Alte Meldungen</string>
+  <string id="30112">Breite des Bildes Rechts</string>
+  <string id="30113">Höhe des Bildes Rechts</string>
 </strings>
   

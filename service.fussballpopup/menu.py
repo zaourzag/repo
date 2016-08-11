@@ -26,6 +26,7 @@ popupprofile    = xbmc.translatePath( popupaddon.getAddonInfo('profile') ).decod
 popuptemp       = xbmc.translatePath( os.path.join( popupprofile, 'temp', '') ).decode("utf-8")
   
 icon = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')+'/icon.png').decode('utf-8')
+
 defaultBackground = ""
 defaultThumb = ""
 

@@ -10,6 +10,7 @@ import socket, cookielib
 import feedparser
 import HTMLParser
 from dateutil import parser
+from django.utils.encoding import smart_str
 
 __addon__ = xbmcaddon.Addon()
 __addonname__ = __addon__.getAddonInfo('name')
@@ -107,22 +108,22 @@ def geturl(url):
    inhalt = urllib2.urlopen(req).read()   
    return inhalt    
         
-def savemessage(message,image,grey,lesezeit,xmessage,ymessage,breitemessage,hoehemessage,breitebild,hoehebild,font,fontcolor)  :
-    message=unicode(message).encode('utf-8')
-    image=unicode(image).encode('utf-8')
+def savemessage(message,image1,grey,lesezeit,xmessage,ymessage,breitemessage,hoehemessage,breitebild1,hoehebild1,fontname="font14",fontcolor="FFFFFFFF",startxbild1=-1,startybild1=-1,image2="",startxbild2=-1,startybild2=-1,breitebild2=0,hoehebild2=0):
+    message=smart_str(message)
+    image1=unicode(image1).encode('utf-8')
+    image2=unicode(image2).encode('utf-8')
     debug("message :"+message)
-    debug("image :"+image)
+    debug("image :"+image1)
+    debug("image :"+image2)
     debug("grey :"+grey)
     debug("popuptemp :"+popuptemp)
     debug("lesezeit :"+str(lesezeit))
     filename=__addonname__ + "_"+md5.new(message).hexdigest()  
     f = open(popuptemp+"/"+filename, 'w')    
-    f.write(message+"###"+image+"###"+grey+"###"+str(lesezeit)+"###"+str(xmessage)+"###"+str(ymessage)+"###"+ str(breitemessage)+"###"+str(hoehemessage)+ "###"+str(breitebild)+"###"+str(hoehebild)+"###"+ str(font)+"###"+fontcolor)
+    f.write(message+"###"+image1+"###"+image2+"###"+grey+"###"+str(lesezeit)+"###"+str(xmessage)+"###"+str(ymessage)+"###"+ str(breitemessage)+"###"+str(hoehemessage)+"###"+str(startxbild1)+"###"+str(startybild1)+ "###"+str(breitebild1)+"###"+str(hoehebild1)+"###"+str(startxbild2)+"###"+str(startybild2)+ "###"+str(breitebild2)+"###"+str(hoehebild2)+"###"+ str(fontname)+"###"+fontcolor)
     f.close()     
     
 
-  
-    
   
     
 if __name__ == '__main__':

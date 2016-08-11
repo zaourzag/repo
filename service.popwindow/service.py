@@ -54,13 +54,27 @@ def geturl(url):
    inhalt = urllib2.urlopen(req).read()   
    return inhalt   
    
-
-def showMessage(Message,image="",greyout="true",lesezeit=10,xmessage=110,ymessage=5,breitemessage=1170,hoehemessage=100,breitebild=100,hoehebild=100,fontname="font14",fontcolor="FFFFFFFF"):
+def showMessage(Message,image1="",image2="",greyout="true",lesezeit=10,xmessage=110,ymessage=5,breitemessage=1170,hoehemessage=100,startxbild1=-1,startybild1=-1,breitebild1=100,hoehebild1=100,startxbild2=-1,startybild2=-1,breitebild2=100,hoehebild2=100,fontname="font14",fontcolor="FFFFFFFF"):
     global alles_anzeige
     global urlfilter
     global background
     global window
-    #tw=unicode(Message).encode('utf-8')   
+    #tw=unicode(Message).encode('utf-8')  
+    debug("image1 "+ image1)
+    debug("image2 "+ image2)
+    debug("breitebild2 "+ breitebild2)
+    if int(startxbild1)==-1:
+        startxbild1=int(xmessage)
+    if int(startybild1)==-1:
+        startybild1=int(ymessage)
+    if int(startxbild2)==-1:
+        startxbild2=int(breitemessage)-int(breitebild2)
+    if int(startybild2)==-1:
+        startybild2=int(ymessage)
+#    if  image1=="":
+#        breitebild1=0
+#    if  image2=="":
+ #      breitebild2=0        
     tw=Message        
     tw=tw.replace("&amp;","&")    
     xbmc.log("showMessage")
@@ -71,29 +85,35 @@ def showMessage(Message,image="",greyout="true",lesezeit=10,xmessage=110,ymessag
        bg=xbmcgui.ControlImage(0,int(ymessage),1280,int(hoehemessage),"")
        bg.setImage(background)
        window.addControl(bg)
-    x=int(xmessage)+int(breitebild )
+    x=int(xmessage)+int(breitebild1 )
     debug("X : "+ str(xmessage))
     debug("Y : "+ ymessage)
     debug("Breite : "+breitemessage)
     debug("hoehe : "+hoehemessage)
-    debug("BildBreite : "+breitebild)
-    debug("hoehebild : "+hoehebild)
+    debug("BildBreite1 : "+str(breitebild1))
+    debug("hoehebild1 : "+str(hoehebild1))
+    debug("BildBreit2 : "+str(breitebild2))
+    debug("hoehebild2 : "+str(hoehebild2))
     debug("Text : "+tw)    
     debug("Font : "+fontname) 
     fontcolor='0x'+fontcolor
     debug("FontColor : "+fontcolor)    
-    twitterlabel1=xbmcgui.ControlTextBox (x, int(ymessage), int(breitemessage)-x, int(hoehemessage),textColor=fontcolor,font=fontname)        
+    twitterlabel1=xbmcgui.ControlTextBox (x, int(ymessage), int(breitemessage)- (x+int(breitebild2)), int(hoehemessage),textColor=fontcolor,font=fontname)        
     window.addControl(twitterlabel1)    
     twitterlabel1.setText(tw)
-    debug("XYXYXY :"+ hoehebild)
-    avatar=xbmcgui.ControlImage(int(xmessage),int(ymessage),int(breitebild),int(hoehebild),"")
-    avatar.setImage(image)
-    window.addControl(avatar)        
+    debug("XYXYXY :"+ str(hoehebild1))
+    avatar1=xbmcgui.ControlImage(int(startxbild1),int(startybild1),int(breitebild1),int(hoehebild1),"")
+    avatar1.setImage(image1)
+    avatar2=xbmcgui.ControlImage(int(startxbild2),int(startybild2),int(breitebild2),int(hoehebild2),"")
+    avatar2.setImage(image2)
+    window.addControl(avatar1)        
+    window.addControl(avatar2)        
     time.sleep(int(lesezeit))
         
     window.removeControl(twitterlabel1)
    
-    window.removeControl(avatar)
+    window.removeControl(avatar1)
+    window.removeControl(avatar2)
     if greyout=="true":
        window.removeControl(bg)
       
@@ -146,8 +166,9 @@ if __name__ == '__main__':
           debug("File :" + name)
           f = open(temp+"/"+name, 'r')    
           for line in f:      
-                message,image,grey,lesezeit,xmessage,ymessage,breitemessage,hoehemessage,breitebild,hoehebild,fontname,fontcolor=line.split("###")         
-                showMessage(message,image,grey,lesezeit,xmessage,ymessage,breitemessage,hoehemessage,breitebild,hoehebild,fontname,fontcolor)
+                message,image1,image2,grey,lesezeit,xmessage,ymessage,breitemessage,hoehemessage,startxbild1,startybild1,breitebild1,hoehebild1,startxbild2,startybild2,breitebild2,hoehebild2,fontname,fontcolor=line.split("###")    
+                message=message.replace("#n#","\n")                 
+                showMessage(message,image1,image2,grey,lesezeit,xmessage,ymessage,breitemessage,hoehemessage,startxbild1,startybild1,breitebild1,hoehebild1,startxbild2,startybild2,breitebild2,hoehebild2,fontname,fontcolor)
           f.close()           
           xbmcvfs.delete(temp+"/"+name)                    
       xbmc.log("Hole Umgebung")        

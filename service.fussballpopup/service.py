@@ -25,7 +25,9 @@ popupaddon=xbmcaddon.Addon("service.popwindow")
 popupprofile    = xbmc.translatePath( popupaddon.getAddonInfo('profile') ).decode("utf-8")
 popuptemp       = xbmc.translatePath( os.path.join( popupprofile, 'temp', '') ).decode("utf-8")
   
-icon = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')+'/icon.png').decode('utf-8')
+icon = xbmc.translatePath( os.path.join(xbmcaddon.Addon().getAddonInfo('path'),'icon.png')).decode('utf-8')
+yellow = xbmc.translatePath( os.path.join(xbmcaddon.Addon().getAddonInfo('path'),'grafix','yellow.png')).decode('utf-8')
+
 defaultBackground = ""
 defaultThumb = ""
 
@@ -49,7 +51,7 @@ def log(msg, level=xbmc.LOGNOTICE):
     addonID = addon.getAddonInfo('id')
     xbmc.log('%s: %s' % (addonID, msg), level) 
     
-    
+debug("YELLOW :" + yellow)    
 # Einlesen von Parametern, Notwendig für Reset der Twitter API
 def parameters_string_to_dict(parameters):
   paramDict = {}
@@ -93,17 +95,19 @@ def addLink(name, url, mode, iconimage, duration="", desc="", genre=''):
     return ok
     
         
-def savemessage(message,image,grey,lesezeit,xmessage,ymessage,breitemessage,hoehemessage,breitebild,hoehebild,font,fontcolor)  :
+def savemessage(message,image1,grey,lesezeit,xmessage,ymessage,breitemessage,hoehemessage,breitebild1,hoehebild1,fontname="font14",fontcolor="FFFFFFFF",startxbild1=-1,startybild1=-1,image2="",startxbild2=-1,startybild2=-1,breitebild2=0,hoehebild2=0):
     message=smart_str(message)
-    image=unicode(image).encode('utf-8')
+    image1=unicode(image1).encode('utf-8')
+    image2=unicode(image2).encode('utf-8')
     debug("message :"+message)
-    debug("image :"+image)
+    debug("image :"+image1)
+    debug("image :"+image2)
     debug("grey :"+grey)
     debug("popuptemp :"+popuptemp)
     debug("lesezeit :"+str(lesezeit))
     filename=__addonname__ + "_"+md5.new(message).hexdigest()  
     f = open(popuptemp+"/"+filename, 'w')    
-    f.write(message+"###"+image+"###"+grey+"###"+str(lesezeit)+"###"+str(xmessage)+"###"+str(ymessage)+"###"+ str(breitemessage)+"###"+str(hoehemessage)+ "###"+str(breitebild)+"###"+str(hoehebild)+"###"+ str(font)+"###"+fontcolor)
+    f.write(message+"###"+image1+"###"+image2+"###"+grey+"###"+str(lesezeit)+"###"+str(xmessage)+"###"+str(ymessage)+"###"+ str(breitemessage)+"###"+str(hoehemessage)+"###"+str(startxbild1)+"###"+str(startybild1)+ "###"+str(breitebild1)+"###"+str(hoehebild1)+"###"+str(startxbild2)+"###"+str(startybild2)+ "###"+str(breitebild2)+"###"+str(hoehebild2)+"###"+ str(fontname)+"###"+fontcolor)
     f.close()     
     
 
@@ -167,15 +171,17 @@ if __name__ == '__main__':
     oldi=0
     while not monitor.abortRequested():
       titlelist=[]
-      cimglist=[]
+      cimglist1=[]
+      cimglist2=[]
       greyoutlist=[]
       lesezeitlist=[]
       timelist=[] 
       ids=[]
       ins=[]
       auss=[]
-      anzal_meldungen=[]  
-      foto=""      
+      anzal_meldungen=[]        
+      foto1=""      
+      foto2=""      
       xbmc.log("Hole Umgebung")
       bild=__addon__.getSetting("bild") 
       lesezeit=__addon__.getSetting("lesezeit")
@@ -184,8 +190,10 @@ if __name__ == '__main__':
       ymessage=__addon__.getSetting("y-message")  
       hoehemessage=__addon__.getSetting("hoehe-message")  
       breitemessage=__addon__.getSetting("breite-message")  
-      hoehebild=__addon__.getSetting("hoehe-bild")  
-      breitebild=__addon__.getSetting("breite-bild")  
+      hoehebild1=__addon__.getSetting("hoehe-bild1")  
+      breitebild1=__addon__.getSetting("breite-bild1")  
+      hoehebild2=__addon__.getSetting("hoehe-bild2")  
+      breitebild2=__addon__.getSetting("breite-bild2")
       font=__addon__.getSetting("font")  
       fontcolor=__addon__.getSetting("fontcolor") 
       oldmessages=__addon__.getSetting("oldmessages") 
@@ -266,6 +274,8 @@ if __name__ == '__main__':
             day=dayid[i]
             liegadone.append(liga)
             debug("Hole LiegA")            
+            if oldi==1:
+              day="2"
             nurl="https://api.sport1.de/api/sports/matches-by-season/co"+liga+"/se/md"+day
             debug("NURL :"+nurl)
             debug("_----------")
@@ -347,14 +357,17 @@ if __name__ == '__main__':
           debug ("Array")
           debug(inn)
           in_spieler=""
+          in_id=""
           out_spieler=""
+          out_id=""
           url="https://api.sport1.de/api/sports/match-event/ma"+spielnr[nr]
           content=geturl(url)
           struktur = json.loads(content)
           ccontent="0:0"
           anzal_meldung=0
           for element in struktur: 
-            foto=""            
+            foto1=""
+            foto2=""
             anzal_meldung=anzal_meldung+1
             minute=element["minute"]
             action=element["action"]
@@ -395,6 +408,7 @@ if __name__ == '__main__':
               personid=element["person"]["id"]
               if kind=="yellow":
                 Meldung=minute +" Minute: Gelbe Karte fuer "+ person +" von "+ team 
+                foto1=yellow
               if kind=="red":
                 Meldung=minute +" Minute: Rote Karte fuer "+ person +" von "+ team 
             if action=="goal": 
@@ -403,18 +417,18 @@ if __name__ == '__main__':
               team=element["team"]["name"]
               person=element["person"]["name"]
               personid=element["person"]["id"]
-              foto="http://images.sport1.de/imagix/filter2/jpeg/_set=profile_picture/http://sport1.weltsport.net/gfx/person/l/"+personid+".jpg"
+              foto1="http://images.sport1.de/imagix/filter2/jpeg/_set=profile_picture/http://sport1.weltsport.net/gfx/person/l/"+personid+".jpg"
               if kind=="penalty":    
-                Meldung=minute +" Minute: Tor durch Strafstoss von "+ person +" von "+ team +". Es steht "+ccontent                    
+                Meldung="TOOR !#n#"+minute +" Minute: Tor durch Strafstoss von "+ person +" von "+ team +". Es steht "+ccontent                    
               else:   
-                Meldung=minute +" Minute: Spieler "+person +" schiesst ein Tor fuer "+team+". Es steht nun : "+ ccontent                          
+                Meldung="TOOR !#n#"+ minute +" Minute: Spieler "+person +" schiesst ein Tor fuer "+team+". Es steht nun : "+ ccontent                          
             if action=="pso": 
               if elfmeter=="false":
                 continue                    
               team=element["team"]["name"]
               person=element["person"]["name"]
               personid=element["person"]["id"]  
-              foto="http://images.sport1.de/imagix/filter2/jpeg/_set=profile_picture/http://sport1.weltsport.net/gfx/person/l/"+personid+".jpg"
+              foto1="http://images.sport1.de/imagix/filter2/jpeg/_set=profile_picture/http://sport1.weltsport.net/gfx/person/l/"+personid+".jpg"
               if kind=="goal": 
                 Meldung="Elf Meter Schiessen Tor von "+ person +" für "+ team
               if kind=="goal": 
@@ -427,19 +441,26 @@ if __name__ == '__main__':
               personid=element["person"]["id"] 
               if kind=="substitute-out":                        
                 out_spieler=person
+                out_id=personid
                 Meldung=""
               if kind=="substitute-in":                                               
                 in_spieler=person
+                in_id=personid
                 Meldung=""
               if not in_spieler=="" and not out_spieler=="":
                 Meldung=minute +" Minute: "+team +" tauscht "+out_spieler +" durch "+in_spieler 
+                foto1="http://images.sport1.de/imagix/filter2/jpeg/_set=profile_picture/http://sport1.weltsport.net/gfx/person/l/"+out_id+".jpg"
+                foto2="http://images.sport1.de/imagix/filter2/jpeg/_set=profile_picture/http://sport1.weltsport.net/gfx/person/l/"+in_id+".jpg"
                 in_spieler=""
                 out_spieler=""
+                out_id=""
+                in_id=""
                 debug("Spiel Zeit"+ str(minute_now[nr]))
                 debug("Spiel minute"+ str(minute))
             if not Meldung=="" and ( int(minute)>int(minute_now[nr]) or oldmessages=="true" ):              
               titlelist.append(Meldung)
-              cimglist.append(foto)
+              cimglist1.append(foto1)              
+              cimglist2.append(foto2)              
               greyoutlist.append(greyout)
               lesezeitlist.append(lesezeit) 
               ins.append(inn)
@@ -450,12 +471,12 @@ if __name__ == '__main__':
         #Sind Meldungen da
         if len(timelist)>0 :
           # Sortieren Meldungen
-          timelist,anzal_meldungen,titlelist,cimglist,lesezeitlist,greyoutlist,ids,ins,auss = (list(x) for x in zip(*sorted(zip(timelist,anzal_meldungen,titlelist,cimglist,lesezeitlist,greyoutlist,ids,ins,auss))))                      
+          timelist,anzal_meldungen,titlelist,cimglist1,cimglist2,lesezeitlist,greyoutlist,ids,ins,auss = (list(x) for x in zip(*sorted(zip(timelist,anzal_meldungen,titlelist,cimglist1,cimglist2,lesezeitlist,greyoutlist,ids,ins,auss))))                      
           for i in range(len(titlelist)):  
             #Meldungen die schon Da waren nicht mehr zeigen          
             if not ids[i] in  schown:
                 debug("Zeit ist : "+str(timelist[i]))
-                savemessage(titlelist[i],cimglist[i],greyoutlist[i],lesezeitlist[i],xmessage,ymessage,breitemessage,hoehemessage,breitebild,hoehebild,font,fontcolor)             
+                savemessage(titlelist[i],cimglist1[i],greyoutlist[i],lesezeitlist[i],xmessage,ymessage,breitemessage,hoehemessage,breitebild1,hoehebild1,font,fontcolor,-1,-1,cimglist2[i],-1,-1,breitebild2,hoehebild2)             
                 schown.append(ids[i])                   
       if monitor.waitForAbort(60):
         break            

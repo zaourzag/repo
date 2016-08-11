@@ -20,8 +20,10 @@
 	  <setting label="30106" type="number" id="y-message" default="5" enable='eq(-4,true)'/>        	  
 	  <setting label="30107" type="number" id="breite-message" default="1280" enable='eq(-5,true)'/>
       <setting label="30108" type="number" id="hoehe-message" default="100" enable='eq(-6,true)'/>        	  	  
-	  <setting label="30109" type="number" id="breite-bild" default="100" enable='eq(-7,true)' />        
-	  <setting label="30110" type="number" id="hoehe-bild" default="100" enable='eq(-8,true)'/>        
+	  <setting label="30109" type="number" id="breite-bild1" default="100" enable='eq(-7,true)' />        
+	  <setting label="30110" type="number" id="hoehe-bild1" default="100" enable='eq(-8,true)'/>        
+	  <setting label="30112" type="number" id="breite-bild2" default="100" enable='eq(-7,true)' />        
+	  <setting label="30113" type="number" id="hoehe-bild2" default="100" enable='eq(-8,true)'/> 
 	</category>
    
    
