@@ -15,7 +15,7 @@ from django.utils.encoding import smart_str
 __addon__ = xbmcaddon.Addon()
 __addonname__ = __addon__.getAddonInfo('name')
 __addondir__    = xbmc.translatePath( __addon__.getAddonInfo('path') )
-background = os.path.join(__addondir__,"bg.png")
+background = os.path.join(__addondir__,"fanart.jpg")
 
 profile    = xbmc.translatePath( __addon__.getAddonInfo('profile') ).decode("utf-8")
 temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
@@ -27,7 +27,7 @@ popuptemp       = xbmc.translatePath( os.path.join( popupprofile, 'temp', '') ).
   
 icon = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')+'/icon.png').decode('utf-8')
 
-defaultBackground = ""
+defaultBackground = background
 defaultThumb = ""
 
 
@@ -198,11 +198,15 @@ def add_game():
       for url,name,image in match:
         if not url in doppelteweg :
             doppelteweg.append(url)
+            newimg=os.path.join(xbmcaddon.Addon().getAddonInfo('path'),"grafix",name +".png")
+            debug("newimg : "+newimg)
+            if xbmcvfs.exists(newimg):
+               image=newimg
             addDir(name, url, mode="liega", iconimage=image )         
             debug ("Adde Name:" + name)
             debug ("Adde url:" + url)
             debug ("Adde mode:" + mode)
-            debug ("Adde iconimage:" + image)
+            debug ("Adde iconimage:" + image)            
       xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
       
 def delgame():
