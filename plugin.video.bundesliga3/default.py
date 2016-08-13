@@ -142,10 +142,14 @@ def getUrl(url):
 def maschaftfinden(manschaft,spiel):
         found=0
         sp1 = manschaft.split(' ') 
-        for i in range(1, len(sp1), 1): 
+        for i in range(1, len(sp1), 1):                  
           entry=sp1[i]
-          if entry in spiel:
-            found=1
+          if len(entry)>3:
+            if entry in spiel:
+              debug("maschaftfinden Entry :"+entry)
+              debug("spiel :")
+              debug (spiel)
+              found=1
         return found 
 
 def folge(url):
@@ -231,7 +235,7 @@ def watchlive(url,meldung="",spiel=""):
           xbmcplugin.setResolvedUrl(addon_handle,False, listitem) 
           get_spiele()
           return
-   if "mdr.de" in url:
+   if "mdr.de" in url:       
        match = re.compile('([^-]+) - ([^-]+)', re.DOTALL).findall(spiel)
        name1=match[0][0]
        name2=match[0][1]
@@ -239,8 +243,17 @@ def watchlive(url,meldung="",spiel=""):
        content=getUrl(urlstart)                        
        match = re.compile('href="([^"]+?)" class="moreBtn" title="([^-]+?) - ([^-]+?)"', re.DOTALL).findall(content)
        for urln,spieler1,spieler2 in match:
-           if maschaftfinden(name1, name1) ==1 or maschaftfinden(name2, name1)==1  :   
+           debug("- Spieler1 :"+spieler1)
+           debug("- Spieler2 :"+spieler2)
+           debug("- name1 :"+name1)
+           debug("- name1 :"+name2)
+           if maschaftfinden(spieler1, name1) ==1 or maschaftfinden(spieler2, name1)==1:   
+                debug("Gefunden")
                 url= urln
+                break
+           debug("--------------------------")
+       debug("urln :"+ urln)
+       debug("--------------------------")
        content=getUrl("http://www.mdr.de/"+urln)
        match = re.compile("'playerXml':'(.+?)'", re.DOTALL).findall(content)       
        xmlurl= match[0].replace("\/","/")
@@ -337,20 +350,25 @@ def watchlive(url,meldung="",spiel=""):
        name2=match[0][1]
        url="http://www.sportschau.de/fussball/bundesliga3/dritteligalivestreams100.html"
        content=getUrl(url)   
-       kurz_inhalt = content[content.find('<div class="media mediaA videoLink live">')+1:]
-       kurz_inhalt = kurz_inhalt[:kurz_inhalt.find('<!-- teaser -->')]
-       match = re.compile('mcUrl&#039;:&#039;([^&]+)&', re.DOTALL).findall(kurz_inhalt)
-       url=match[0]
-       match = re.compile('<h4 class="headline">(.+)</h4>', re.DOTALL).findall(kurz_inhalt)
-       match = re.compile('<a href="[^"]+"[^>]+>([^<]+)', re.DOTALL).findall(match[0])     
-       name=match[0].strip()
+       kurz_inhalt = content[content.find('<h1 class="siteHeadline hidden"')+1:]
+       kurz_inhalt = kurz_inhalt[kurz_inhalt.find('<div class="teaser">')+1:]             
+       kurz_inhalt = kurz_inhalt[kurz_inhalt.find('<div class="teaser">')+1:]
+       kurz_inhalt = kurz_inhalt[:kurz_inhalt.find('<div class="section sectionA" >')]
+       debug("------------+----")
+       debug (kurz_inhalt)
+       match = re.compile('href="(.+?)" title="3. Liga: (.+?)">', re.DOTALL).findall(kurz_inhalt)
+       url=match[0][0]
+       spiel=match[0][1]   
        debug("URL: "+ url)
        debug("totle: "+ name)
-       if maschaftfinden(name1, name) ==1 or maschaftfinden(name2, name)==1  : 
+       if maschaftfinden(name1, spiel) ==1 or maschaftfinden(name2, spiel)==1  : 
            debug("Gefunden")          
            urljson="http://www.sportschau.de/"+url                     
            content=getUrl(urljson)   
            #debug("content : " + content)
+           match = re.compile("'mediaObj': { 'url': '(.+?)'", re.DOTALL).findall(content)   
+           url3=match[0]
+           content=getUrl(url3) 
            match = re.compile('"([^"]+)\.m3u8', re.DOTALL).findall(content)   
            urlnew=match[0]+".m3u8"
            debug ("urlnew :"+ urlnew)

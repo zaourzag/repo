@@ -306,7 +306,7 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
   </extension>
 </addon>
 
-<addon id="plugin.video.bundesliga3" name="3. Liga" version="0.3.13" provider-name="L0RE">
+<addon id="plugin.video.bundesliga3" name="3. Liga" version="0.3.14" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
     </requires>
