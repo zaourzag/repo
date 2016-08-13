@@ -1,4 +1,5 @@
 #!/usr/bin/python
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
 import time, sys, os, urlparse,json
@@ -8,9 +9,9 @@ import shutil
 import re,md5
 import socket, cookielib
 import feedparser
+import popupwindow
 import HTMLParser
 from dateutil import parser
-from django.utils.encoding import smart_str
 
 __addon__ = xbmcaddon.Addon()
 __addonname__ = __addon__.getAddonInfo('name')
@@ -21,9 +22,7 @@ profile    = xbmc.translatePath( __addon__.getAddonInfo('profile') ).decode("utf
 temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
 translation = __addon__.getLocalizedString
 
-popupaddon=xbmcaddon.Addon("service.popwindow")
-popupprofile    = xbmc.translatePath( popupaddon.getAddonInfo('profile') ).decode("utf-8")
-popuptemp       = xbmc.translatePath( os.path.join( popupprofile, 'temp', '') ).decode("utf-8")
+
   
 wid = xbmcgui.getCurrentWindowId()
 window=xbmcgui.Window(wid)
@@ -41,7 +40,7 @@ def log(msg, level=xbmc.LOGNOTICE):
     xbmc.log('%s: %s' % (addonID, msg), level) 
     
     
-# Einlesen von Parametern, Notwendig für Reset der Twitter API
+# Einlesen von Parametern, Notwendig fuer Reset der Twitter API
 def parameters_string_to_dict(parameters):
 	paramDict = {}
 	if parameters:
@@ -107,24 +106,7 @@ def geturl(url):
    req = urllib2.Request(url)
    inhalt = urllib2.urlopen(req).read()   
    return inhalt    
-        
-def savemessage(message,image1,grey,lesezeit,xmessage,ymessage,breitemessage,hoehemessage,breitebild1,hoehebild1,fontname="font14",fontcolor="FFFFFFFF",startxbild1=-1,startybild1=-1,image2="",startxbild2=-1,startybild2=-1,breitebild2=0,hoehebild2=0):
-    message=smart_str(message)
-    image1=unicode(image1).encode('utf-8')
-    image2=unicode(image2).encode('utf-8')
-    debug("message :"+message)
-    debug("image :"+image1)
-    debug("image :"+image2)
-    debug("grey :"+grey)
-    debug("popuptemp :"+popuptemp)
-    debug("lesezeit :"+str(lesezeit))
-    filename=__addonname__ + "_"+md5.new(message).hexdigest()  
-    f = open(popuptemp+"/"+filename, 'w')    
-    f.write(message+"###"+image1+"###"+image2+"###"+grey+"###"+str(lesezeit)+"###"+str(xmessage)+"###"+str(ymessage)+"###"+ str(breitemessage)+"###"+str(hoehemessage)+"###"+str(startxbild1)+"###"+str(startybild1)+ "###"+str(breitebild1)+"###"+str(hoehebild1)+"###"+str(startxbild2)+"###"+str(startybild2)+ "###"+str(breitebild2)+"###"+str(hoehebild2)+"###"+ str(fontname)+"###"+fontcolor)
-    f.close()     
-    
-
-  
+          
     
 if __name__ == '__main__':
     cimg=""
@@ -221,7 +203,7 @@ if __name__ == '__main__':
                     timelist,titlelist,cimglist,lesezeitlist,greyoutlist = (list(x) for x in zip(*sorted(zip(timelist,titlelist,cimglist,lesezeitlist,greyoutlist))))
         for i in range(len(titlelist)):  
                    if not titlelist[i] in schown:
-                      savemessage(titlelist[i],cimglist[i],greyoutlist[i],lesezeitlist[i],xmessage,ymessage,breitemessage,hoehemessage,breitebild,hoehebild,font,fontcolor)             
+                      popupwindow.savemessage(__addon__,titlelist[i],cimglist[i],greyoutlist[i],lesezeitlist[i],xmessage,ymessage,breitemessage,hoehemessage,breitebild,hoehebild,font,fontcolor)             
                       schown.append(title)                   
       if monitor.waitForAbort(60):
         break            

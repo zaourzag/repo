@@ -11,6 +11,7 @@ import feedparser
 import HTMLParser,xbmcplugin
 from dateutil import parser
 from django.utils.encoding import smart_str
+import popupwindow
 
 __addon__ = xbmcaddon.Addon()
 __addonname__ = __addon__.getAddonInfo('name')
@@ -21,9 +22,7 @@ profile    = xbmc.translatePath( __addon__.getAddonInfo('profile') ).decode("utf
 temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
 translation = __addon__.getLocalizedString
 
-popupaddon=xbmcaddon.Addon("service.popwindow")
-popupprofile    = xbmc.translatePath( popupaddon.getAddonInfo('profile') ).decode("utf-8")
-popuptemp       = xbmc.translatePath( os.path.join( popupprofile, 'temp', '') ).decode("utf-8")
+
   
 icon = xbmc.translatePath( os.path.join(xbmcaddon.Addon().getAddonInfo('path'),'icon.png')).decode('utf-8')
 yellow = xbmc.translatePath( os.path.join(xbmcaddon.Addon().getAddonInfo('path'),'grafix','yellow.png')).decode('utf-8')
@@ -94,21 +93,7 @@ def addLink(name, url, mode, iconimage, duration="", desc="", genre=''):
     ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
     return ok
     
-        
-def savemessage(message,image1,grey,lesezeit,xmessage,ymessage,breitemessage,hoehemessage,breitebild1,hoehebild1,fontname="font14",fontcolor="FFFFFFFF",startxbild1=-1,startybild1=-1,image2="",startxbild2=-1,startybild2=-1,breitebild2=0,hoehebild2=0):
-    message=smart_str(message)
-    image1=unicode(image1).encode('utf-8')
-    image2=unicode(image2).encode('utf-8')
-    debug("message :"+message)
-    debug("image :"+image1)
-    debug("image :"+image2)
-    debug("grey :"+grey)
-    debug("popuptemp :"+popuptemp)
-    debug("lesezeit :"+str(lesezeit))
-    filename=__addonname__ + "_"+md5.new(message).hexdigest()  
-    f = open(popuptemp+"/"+filename, 'w')    
-    f.write(message+"###"+image1+"###"+image2+"###"+grey+"###"+str(lesezeit)+"###"+str(xmessage)+"###"+str(ymessage)+"###"+ str(breitemessage)+"###"+str(hoehemessage)+"###"+str(startxbild1)+"###"+str(startybild1)+ "###"+str(breitebild1)+"###"+str(hoehebild1)+"###"+str(startxbild2)+"###"+str(startybild2)+ "###"+str(breitebild2)+"###"+str(hoehebild2)+"###"+ str(fontname)+"###"+fontcolor)
-    f.close()     
+         
     
 
 def ersetze(text):
@@ -363,6 +348,8 @@ if __name__ == '__main__':
           url="https://api.sport1.de/api/sports/match-event/ma"+spielnr[nr]
           content=geturl(url)
           struktur = json.loads(content)
+          debug("struktur")
+          debug (struktur)
           ccontent="0:0"
           anzal_meldung=0
           for element in struktur: 
@@ -475,8 +462,8 @@ if __name__ == '__main__':
           for i in range(len(titlelist)):  
             #Meldungen die schon Da waren nicht mehr zeigen          
             if not ids[i] in  schown:
-                debug("Zeit ist : "+str(timelist[i]))
-                savemessage(titlelist[i],cimglist1[i],greyoutlist[i],lesezeitlist[i],xmessage,ymessage,breitemessage,hoehemessage,breitebild1,hoehebild1,font,fontcolor,-1,-1,cimglist2[i],-1,-1,breitebild2,hoehebild2)             
+                debug("Zeit ist : "+str(timelist[i]))                
+                popupwindow.savemessage(__addon__,titlelist[i],cimglist1[i],greyoutlist[i],lesezeitlist[i],xmessage,ymessage,breitemessage,hoehemessage,breitebild1,hoehebild1,font,fontcolor,-1,-1,cimglist2[i],-1,-1,breitebild2,hoehebild2)             
                 schown.append(ids[i])                   
       if monitor.waitForAbort(60):
         break            

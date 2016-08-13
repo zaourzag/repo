@@ -11,6 +11,7 @@ from requests_oauthlib import OAuth1Session
 from thread import start_new_thread
 from requests.packages import urllib3
 import socket, cookielib
+import popupwindow
 
 urllib3.disable_warnings()
 
@@ -33,10 +34,6 @@ profile    = xbmc.translatePath( __addon__.getAddonInfo('profile') ).decode("utf
 temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
 translation = __addon__.getLocalizedString
 
-popupaddon=xbmcaddon.Addon("service.popwindow")
-popupprofile    = xbmc.translatePath( popupaddon.getAddonInfo('profile') ).decode("utf-8")
-popuptemp       = xbmc.translatePath( os.path.join( popupprofile, 'temp', '') ).decode("utf-8")
-  
   
 wid = xbmcgui.getCurrentWindowId()
 window=xbmcgui.Window(wid)
@@ -67,19 +64,7 @@ if len(sys.argv) > 1:
       exit()
   
 
-def savemessage(message,image,grey,lesezeit,xmessage,ymessage,breitemessage,hoehemessage,breitebild,hoehebild,font,fontcolor)  :
-    message=unicode(message).encode('utf-8')
-    image=unicode(image).encode('utf-8')
-    debug("message :"+message)
-    debug("image :"+image)
-    debug("grey :"+grey)
-    debug("popuptemp :"+popuptemp)
-    debug("lesezeit :"+str(lesezeit))
-    filename=__addonname__ + "_"+md5.new(message).hexdigest()  
-    f = open(popuptemp+"/"+filename, 'w')    
-    f.write(message+"###"+image+"###"+grey+"###"+str(lesezeit)+"###"+str(xmessage)+"###"+str(ymessage)+"###"+ str(breitemessage)+"###"+str(hoehemessage)+ "###"+str(breitebild)+"###"+str(hoehebild)+"###"+ str(font)+"###"+fontcolor)
-    f.close()   
-    
+
 def debug(content):
     log(content, xbmc.LOGDEBUG)
     
@@ -402,8 +387,8 @@ if __name__ == '__main__':
                    userimage=tweet.user.profile_image_url    
                else :
                    userimage=""   
-               debug("Tweet ID " + str(tweet.id))                                  
-               savemessage(text,userimage,greyout,lesezeit,xmessage,ymessage,breitemessage,hoehemessage,breitebild,hoehebild,font,fontcolor)                  
+               debug("Tweet ID " + str(tweet.id))                 
+               popupwindow.savemessage(__addon__,text,userimage,greyout,lesezeit,xmessage,ymessage,breitemessage,hoehemessage,breitebild,hoehebild,font,fontcolor)                  
          else:
              debug("Gebannt Thread")
            
