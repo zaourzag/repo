@@ -12,6 +12,10 @@ import HTMLParser,xbmcplugin
 from dateutil import parser
 from django.utils.encoding import smart_str
 
+xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
+xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_TRACKNUM)
+
+
 __addon__ = xbmcaddon.Addon()
 __addonname__ = __addon__.getAddonInfo('name')
 __addondir__    = xbmc.translatePath( __addon__.getAddonInfo('path') )
@@ -92,11 +96,11 @@ def ersetze(text):
     text = text.strip()
     return text
 
-def addDir(name, url, mode, iconimage, desc=""):
+def addDir(name, url, mode, iconimage, desc="",sortname=""):
     u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)
     ok = True
     liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=iconimage)
-    liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc})  
+    liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc,"TrackNumber":sortname})  
     if not iconimage or iconimage==icon or iconimage==defaultThumb:
         iconimage = defaultBackground
         liz.setProperty("fanart_image", iconimage)
@@ -190,19 +194,21 @@ def savespiel(zeile)  :
     fp.close()   
     xbmc.executebuiltin("Container.Refresh")    
  
-def add_game():
-      debug("Start Add Game")
-      content=geturl("http://www.sport1.de/fussball/alle-ligen-und-wettbewerbe")
+def add_game(url):
+      debug("Start Add Game")      
+      content=geturl(url)
       match=re.compile('a href="/liga/(.+?)" title="Zur Seite von (.+?)"><span class="s1-logo-team"><img src="(.+?)"', re.DOTALL).findall(content)
       doppelteweg=[]
-      for url,name,image in match:
+      count=0
+      for url,name,image in match:        
         if not url in doppelteweg :
+            count=count+1            
             doppelteweg.append(url)
             newimg=os.path.join(xbmcaddon.Addon().getAddonInfo('path'),"grafix",name +".png")
             debug("newimg : "+newimg)
             if xbmcvfs.exists(newimg):
                image=newimg
-            addDir(name, url, mode="liega", iconimage=image )         
+            addDir(name, url, mode="liega", iconimage=image ,sortname=str(count))         
             debug ("Adde Name:" + name)
             debug ("Adde url:" + url)
             debug ("Adde mode:" + mode)
@@ -245,13 +251,20 @@ def delspiel(zeile)   :
     fp = open(filename, 'w')    
     fp.write(fileinhalt)
     fp.close()    
-def menu():    
+def menu1():    
     debug("Start Menu")
-    addDir(name="Spiel Eintragen", url="", mode="add_game", iconimage="" )
+    addDir(name="Spiel Eintragen", url="", mode="menu2", iconimage="" )
     addDir(name="Spiel Löschen", url="", mode="delgame", iconimage="" )       
     addDir("Settings", "Settings", 'Settings', "") 
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 
+def menu2():
+     addDir(name="Top Spiele",url="http://www.sport1.de/fussball/alle-ligen-und-wettbewerbe", mode="add_game", iconimage="" )
+     addDir(name="Nationale Liegen",url="http://www.sport1.de/fussball/alle-ligen-und-wettbewerbe/nationale-ligen", mode="add_game", iconimage="" )
+     addDir(name="Internationale Ligen und Pokalwettbewerbe",url="http://www.sport1.de/fussball/alle-ligen-und-wettbewerbe/internationale-ligen-und-pokalwettbewerbe", mode="add_game", iconimage="" )
+     addDir(name="Internationale Turniere",url="http://www.sport1.de/fussball/alle-ligen-und-wettbewerbe/internationale-turniere", mode="add_game", iconimage="" )
+     addDir(name="Internationale Klub-Wettbewerbe",url="http://www.sport1.de/fussball/alle-ligen-und-wettbewerbe/internationale-klubwettbewerbe", mode="add_game", iconimage="" )
+     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
      
 
 # Soll Twitter Api Resetter Werden
@@ -280,9 +293,11 @@ url = urllib.unquote_plus(params.get('url', ''))
 name=urllib.unquote_plus(params.get('name', ''))
 debug("Mode Ist :"+mode)
 if mode=='':
-    menu()  
+    menu1()  
+if mode=="menu2":
+    menu2()
 if mode=="add_game":
-    add_game()
+    add_game(url)
 if mode=="liega":
     liega(url,name)
 if mode=="savespiel":
