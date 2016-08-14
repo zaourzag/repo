@@ -82,7 +82,7 @@ def showMessage(Message,image1="",image2="",greyout="true",lesezeit=10,xmessage=
     window=xbmcgui.Window(wid)
     res=window.getResolution()        
     if greyout=="true":
-       bg=xbmcgui.ControlImage(0,int(ymessage),1280,int(hoehemessage),"")
+       bg=xbmcgui.ControlImage(0,int(ymessage),10000,int(hoehemessage),"")
        bg.setImage(background)
        window.addControl(bg)
     x=int(xmessage)+int(breitebild1 )
