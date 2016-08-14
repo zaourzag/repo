@@ -106,7 +106,7 @@ def all(url=""):
         link=baseurl+match[0]
         match=re.compile('<p class="animebox-shorttext">.+</p>', re.DOTALL).findall(entry)
         desc=match[0]
-        desc=desc.replace('<p class="episodebox-shorttext">','')  
+        desc=desc.replace('<p class="episodebox-shorttext">','').replace('<p class="animebox-shorttext">",'')
         desc=desc.replace("</p>",'')   
         addDir(name=ersetze(title), url=link, mode="Serie", iconimage=img, desc=desc)
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
@@ -362,7 +362,7 @@ def category() :
   cj.save(cookie,ignore_discard=True, ignore_expires=True)
 
   kurz_inhalt = content[content.find('<ul class="inline-block-list" style="display: block; text-align: center;">')+1:]                                      
-  kurz_inhalt = kurz_inhalt[:kurz_inhalt.find('</ul>')]
+  kurz_inhalt = kurz_inhalt[:kurz_inhalt.find('</ul>')]  
   match=re.compile('<a href="([^"]+)">([^<]+)</a>', re.DOTALL).findall(kurz_inhalt)
   for link,name in match:
       addDir(name=ersetze(name), url=baseurl+link, mode="catall",iconimage="", desc="")
