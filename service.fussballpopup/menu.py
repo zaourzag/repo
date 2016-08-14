@@ -172,7 +172,7 @@ def liega(lieganr,nname):
       url=str(id) 
       debug("   ende : "+ende)      
       debug("   live_status : "+live_status)
-      if ende=="no" and not live_status=="none" or oldi==1:
+      if ende=="no" and not live_status=="none" and not live_status=="result" or oldi==1:
        url=name+"##"+live_status +"##"+ str(lieganr) +"##"+ str(day) +"##"+str(id)+"##"+aus+"##"+ins+"##"+match_date+"##"+match_time       
        debug("URL :::: ")
        debug(url)
