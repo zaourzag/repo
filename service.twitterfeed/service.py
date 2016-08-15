@@ -227,7 +227,9 @@ if __name__ == '__main__':
     sinceid=None    
     # Solange der Service läuft
     searchold=""
+    ratetag=0
     while not monitor.abortRequested():
+      ratetag=ratetag+1
       xbmc.log("Hole Umgebung")
       country=__addon__.getSetting("country").lower()        
       limit=__addon__.getSetting("limit")         
@@ -264,10 +266,13 @@ if __name__ == '__main__':
       if Video_s=='true' or Hash_s=='true':
           if Video_s=='true' and Hash_s=='true':
             ratlimit=20
+            ratetag=ratetag+20
           else:
             ratlimit=8
+            ratetag=ratetag+8
       else :
-            ratlimit=70      
+            ratlimit=70
+            ratetag=ratetag+70
 
       debug("Ratelimit "+ str(ratlimit))
       if start==0:
@@ -383,7 +388,9 @@ if __name__ == '__main__':
                x=1
                tweets2=api.GetSearch(searchh,since_id=sinceid,lang=country,result_type="recent")
                debug("Search: "+ searchh)
-         if Timeline_s=="true":
+         if ratetag>=70:
+          ratetag=0
+          if Timeline_s=="true":
               debug("Hole Timeline")
               x=1
               tweets4 = api.GetHomeTimeline(since_id=sinceid)             
