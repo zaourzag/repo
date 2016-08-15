@@ -23,9 +23,12 @@ wid = xbmcgui.getCurrentWindowId()
 window=xbmcgui.Window(wid)
 window.show()
 
-if xbmcvfs.exists(temp):
-  shutil.rmtree(temp)
-xbmcvfs.mkdirs(temp)
+try:
+  if xbmcvfs.exists(temp):
+    shutil.rmtree(temp)
+  xbmcvfs.mkdirs(temp)
+except:
+  pass
        
 # Einlesen von Parametern, Notwendig für Reset der Twitter API
 def parameters_string_to_dict(parameters):

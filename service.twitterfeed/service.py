@@ -14,7 +14,7 @@ import socket, cookielib
 import popupwindow
 
 urllib3.disable_warnings()
-
+ 
 REQUEST_TOKEN_URL = 'https://api.twitter.com/oauth/request_token'
 ACCESS_TOKEN_URL = 'https://api.twitter.com/oauth/access_token'
 AUTHORIZATION_URL = 'https://api.twitter.com/oauth/authorize'
@@ -234,7 +234,9 @@ if __name__ == '__main__':
       alles_anzeige=__addon__.getSetting("alles_anzeige")   
       hashtag=__addon__.getSetting("hashtag") 
       bild=__addon__.getSetting("bild") 
-      inhalt=__addon__.getSetting("inhalt")
+      Timeline_s=__addon__.getSetting("Timeline_s")
+      Hash_s=__addon__.getSetting("Hash_s")
+      Video_s=__addon__.getSetting("Video_s")
       tv=__addon__.getSetting("tv")
       video=__addon__.getSetting("video")
       urlfilter=__addon__.getSetting("urls")
@@ -259,12 +261,15 @@ if __name__ == '__main__':
       heute=time.localtime(time.time())[2]      
       if heute!= old_heute:
          channelr,channels,sendungr,sendungs,videor,videos=readersetzen()         
-      if inhalt=="Video" or inhalt=="Hash":
+      if Video_s=='true' or Hash_s=='true':
+          if Video_s=='true' and Hash_s=='true':
+            ratlimit=20
+          else:
             ratlimit=8
       else :
-            ratlimit=60      
+            ratlimit=70      
 
-
+      debug("Ratelimit "+ str(ratlimit))
       if start==0:
         debug("Pause wegen Rate Limit")
         if monitor.waitForAbort(ratlimit):
@@ -301,7 +306,7 @@ if __name__ == '__main__':
       
 
 
-      if inhalt=="Video" and  video=="true" and xbmc.getCondVisibility('Player.HasMedia') and not xbmc.getCondVisibility('Pvr.IsPlayingTv'):
+      if Video_s=='true' and  video=="true" and xbmc.getCondVisibility('Player.HasMedia') and not xbmc.getCondVisibility('Pvr.IsPlayingTv'):
          title=""
          title=xbmc.getInfoLabel('VideoPlayer.TVShowTitle') 
          debug("Title :" + title)
@@ -320,7 +325,7 @@ if __name__ == '__main__':
          search="#" + title
          debug("Video:")
          debug ("Search : "+ search)
-      if inhalt=="Video" and  tv=="true" and xbmc.getCondVisibility('Pvr.IsPlayingTv'):
+      if Video_s=='true' and  tv=="true" and xbmc.getCondVisibility('Pvr.IsPlayingTv'):
         # Nur wenn ein Fernsehnder an ist          
         xbmc.log("Hole Ferseh tweets")
         
@@ -338,45 +343,65 @@ if __name__ == '__main__':
         else:
            search="#"+ channel                     
       
-      if inhalt=="Hash":
+      if Hash_s=='true':
           if hashtag :
-             if inhalt=="Hash":
-                 xbmc.log("#Hastag :" + hashtag)
-                 search=hashtag
+              xbmc.log("#Hastag :" + hashtag)
+              searchh=hashtag
           else:
              xbmc.log("Setze Kodi")
-             search="kodi"
+             searchh="kodi"
       
       if   country=="" :
            country=None    
       if not searchold==search:
-          searchold=search                 
-          filename="DELETE_"+__addonname__ 
-          f = open(popuptemp+"/"+filename, 'w')              
-          f.write("DELETE")
-          f.close()   
+          searchold=search  
+          try:          
+            popupwindow.deletemessage(__addon__)
+          except:
+             pass
+      x=0
+      tweets1=[]
+      tweets2=[]
+      tweets3=[]
+      tweets4=[]
       try:       
          debug ("-------")
-         if inhalt=="Video" and tv=="true" and xbmc.getCondVisibility('Pvr.IsPlayingTv'):   
-               tweets=api.GetSearch(search,since_id=sinceid,lang=country,result_type="recent")
+         if Video_s=="true" and tv=="true" and xbmc.getCondVisibility('Pvr.IsPlayingTv'):   
+               debug("Search TV: "+ search)
+               debug("Hole TV")
+               x=1
+               tweets1=api.GetSearch(search,since_id=sinceid,lang=country,result_type="recent")
                debug("Search: "+ search)
-         elif inhalt=="Hash":
-               tweets=api.GetSearch(search,since_id=sinceid,lang=country,result_type="recent")
-               debug("Search: "+ search)
-         elif inhalt=="Video" and video=="true":               
-               tweets=api.GetSearch(search,since_id=sinceid,lang=country,result_type="recent")
-               debug("Search: "+ search)
-         elif inhalt=="Timeline":
-              tweets = api.GetHomeTimeline(since_id=sinceid)             
+         elif Video_s=="true" and video=="true":    
+               debug("Search Video: "+ search)         
+               debug("Hole Video")
+               x=1
+               tweets3=api.GetSearch(search,since_id=sinceid,lang=country,result_type="recent")               
+               debug("Search: "+ search)               
+         if Hash_s=='true':
+               debug("Hole Hashtag")
+               x=1
+               tweets2=api.GetSearch(searchh,since_id=sinceid,lang=country,result_type="recent")
+               debug("Search: "+ searchh)
+         if Timeline_s=="true":
+              debug("Hole Timeline")
+              x=1
+              tweets4 = api.GetHomeTimeline(since_id=sinceid)             
+              debug("TWEE :")
               search=""
-         else:
+         if x==0:
               tweets=[]
          if search:
             debug ("Search: " +search)
-      except:
-          debug("Tweets Holen Fehlerhaft")          
-          continue     
-      for tweet in tweets:                  
+      except Exception as e:
+          debug("Tweets Holen Fehlerhaft")    
+          debug(e)          
+          continue
+      textarray=[]
+      idarray=[]
+      imagearray=[]
+      tweets=tweets1+tweets2+tweets3+tweets4
+      for tweet in tweets:  
          text= tweet.user.name +" : "+ tweet.text.replace("\n"," ")
          if  tweet.id > sinceid :
              sinceid=tweet.id              
@@ -387,9 +412,15 @@ if __name__ == '__main__':
                    userimage=tweet.user.profile_image_url    
                else :
                    userimage=""   
-               debug("Tweet ID " + str(tweet.id))                 
-               popupwindow.savemessage(__addon__,text,userimage,greyout,lesezeit,xmessage,ymessage,breitemessage,hoehemessage,breitebild,hoehebild,font,fontcolor)                  
+               debug("Tweet ID " + str(tweet.id))
+               if not text in textarray:             
+                  textarray.append(text)
+                  idarray.append(tweet.id)   
+                  imagearray.append(userimage)             
          else:
              debug("Gebannt Thread")
-           
+      if len(textarray) >0:
+          idarray,textarray,imagearray = (list(x) for x in zip(*sorted(zip(idarray,textarray,imagearray))))                                          
+          for i in range(len(textarray)):              
+              popupwindow.savemessage(__addon__,textarray[i],imagearray[i],greyout,lesezeit,xmessage,ymessage,breitemessage,hoehemessage,breitebild,hoehebild,font,fontcolor)                  
       

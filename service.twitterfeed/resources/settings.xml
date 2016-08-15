@@ -1,11 +1,13 @@
 <settings>
    <category label="3009">
-        <setting label="30005" type="action" action="RunPlugin(plugin://service.twitterfeed/?mode=clear)"/>
-		<setting id="inhalt" type="select" label="30002" default="Video" values="Timeline|Hash|Video" />   
-		<setting label="30014" type="bool" id="tv" default="true" enable='eq(-1,Video)' />
-		<setting label="30015" type="bool" id="video" default="false" enable='eq(-2,Video)' />
-		<setting label="30006" type="bool" id="alles_anzeige" default="false" enable='!eq(-1,TV)' />
-		<setting label="30007" type="text" id="hashtag" default="" visible='eq(-4,Hash)' />
+        <setting label="30005" type="action" action="RunPlugin(plugin://service.twitterfeed/?mode=clear)"/>				
+		<setting label="30036" type="bool" id="Timeline_s" default="false"  />
+		<setting label="30037" type="bool" id="Hash_s" default="false" />
+		<setting label="30038" type="bool" id="Video_s" default="true"  />
+		<setting label="30014" type="bool" id="tv" default="true" visible='eq(-1,true)' />
+		<setting label="30015" type="bool" id="video" default="false" visible='eq(-2,true)' />
+		<setting label="30006" type="bool" id="alles_anzeige" default="false"  />
+		<setting label="30007" type="text" id="hashtag" default="" visible='eq(-5,true)' />
 		<setting label="30004" type="slider" id="limit" default="2" range="1,1,20" option="int" />
 		<setting label="30012" type="slider" id="lesezeit" default="6" range="1,1,60" option="int" />
 		<setting id="listtype" type="select" label="30016" default="File" values="Url|File" />
