@@ -208,7 +208,28 @@ def readersetzen():
          videor.append([suche,ersetze])
   return channelr,channels,sendungr,sendungs,videor,videos
     
-  
+def lesetext(blacklist,tweets,textarray,idarray,imagearray,sinceid)  :
+    for tweet in tweets:  
+         text= tweet.user.name +" : "+ tweet.text.replace("\n"," ")
+         if  tweet.id > sinceid :
+             sinceid=tweet.id              
+             debug("Neue Tweet ID " + str(tweet.id))         
+         if not block(text,blacklist) : 
+               debug("Tweet ok")         
+               if bild=="true":
+                   userimage=tweet.user.profile_image_url    
+               else :
+                   userimage=""   
+               debug("Tweet ID " + str(tweet.id))
+               if not text in textarray:             
+                  textarray.append(text)
+                  idarray.append(tweet.id)   
+                  imagearray.append(userimage)             
+         else:
+             debug("Gebannt Thread")
+    if len(textarray) >0:
+       idarray,textarray,imagearray = (list(x) for x in zip(*sorted(zip(idarray,textarray,imagearray))))                                              
+    return textarray,idarray,imagearray,sinceid
     
 if __name__ == '__main__':
     xbmc.log("Twitter:  Starte Plugin")
@@ -224,7 +245,11 @@ if __name__ == '__main__':
     # Starte Service    
     monitor = xbmc.Monitor()
     search=""
-    sinceid=None    
+    sinceid1=None    
+    sinceid2=None    
+    sinceid3=None    
+    sinceid4=None    
+    
     # Solange der Service läuft
     searchold=""
     ratetag=0
@@ -375,25 +400,25 @@ if __name__ == '__main__':
                debug("Search TV: "+ search)
                debug("Hole TV")
                x=1
-               tweets1=api.GetSearch(search,since_id=sinceid,lang=country,result_type="recent")
+               tweets1=api.GetSearch(search,since_id=sinceid1,lang=country,result_type="recent")
                debug("Search: "+ search)
          elif Video_s=="true" and video=="true":    
                debug("Search Video: "+ search)         
                debug("Hole Video")
                x=1
-               tweets3=api.GetSearch(search,since_id=sinceid,lang=country,result_type="recent")               
+               tweets3=api.GetSearch(search,since_id=sinceid3,lang=country,result_type="recent")               
                debug("Search: "+ search)               
          if Hash_s=='true':
                debug("Hole Hashtag")
                x=1
-               tweets2=api.GetSearch(searchh,since_id=sinceid,lang=country,result_type="recent")
+               tweets2=api.GetSearch(searchh,since_id=sinceid2,lang=country,result_type="recent")
                debug("Search: "+ searchh)
          if ratetag>=70:
           ratetag=0
           if Timeline_s=="true":
               debug("Hole Timeline")
               x=1
-              tweets4 = api.GetHomeTimeline(since_id=sinceid)             
+              tweets4 = api.GetHomeTimeline(since_id=sinceid4)             
               debug("TWEE :")
               search=""
          if x==0:
@@ -407,27 +432,12 @@ if __name__ == '__main__':
       textarray=[]
       idarray=[]
       imagearray=[]
-      tweets=tweets1+tweets2+tweets3+tweets4
-      for tweet in tweets:  
-         text= tweet.user.name +" : "+ tweet.text.replace("\n"," ")
-         if  tweet.id > sinceid :
-             sinceid=tweet.id              
-             debug("Neue Tweet ID " + str(tweet.id))         
-         if not block(text,blacklist) : 
-               debug("Tweet ok")         
-               if bild=="true":
-                   userimage=tweet.user.profile_image_url    
-               else :
-                   userimage=""   
-               debug("Tweet ID " + str(tweet.id))
-               if not text in textarray:             
-                  textarray.append(text)
-                  idarray.append(tweet.id)   
-                  imagearray.append(userimage)             
-         else:
-             debug("Gebannt Thread")
-      if len(textarray) >0:
-          idarray,textarray,imagearray = (list(x) for x in zip(*sorted(zip(idarray,textarray,imagearray))))                                          
+      tweets=tweets1+tweets2+tweets3+tweets4       
+      textarray,idarray,imagearray,sinceid1=lesetext(blacklist,tweets1,textarray,idarray,imagearray,sinceid1)      
+      textarray,idarray,imagearray,sinceid2=lesetext(blacklist,tweets2,textarray,idarray,imagearray,sinceid2)      
+      textarray,idarray,imagearray,sinceid3=lesetext(blacklist,tweets3,textarray,idarray,imagearray,sinceid3)      
+      textarray,idarray,imagearray,sinceid4=lesetext(blacklist,tweets4,textarray,idarray,imagearray,sinceid4)                                                            
+      if len(textarray) >0:          
           for i in range(len(textarray)):              
               popupwindow.savemessage(__addon__,textarray[i],imagearray[i],greyout,lesezeit,xmessage,ymessage,breitemessage,hoehemessage,breitebild,hoehebild,font,fontcolor)                  
       
