@@ -15,6 +15,7 @@
 :channel:isin:"kabeleins"="kabel1"
 :channel:isin:"rtli"="rtl2"
 :channel:isin:"skybundesliga"="bundesliga"
+:channel:isin:"rtl"="rtl OR @RTL.de"
 :show:replace:" "=""
 :show:replace:"ä"="ae"
 :show:replace:"ö"="oe"

@@ -187,6 +187,7 @@ if __name__ == '__main__':
       tor=__addon__.getSetting("tor") 
       elfmeter=__addon__.getSetting("elfmeter") 
       spielerwechsel=__addon__.getSetting("spielerwechsel") 
+      anzahlmeldungen=__addon__.getSetting("anzahlmeldungen")
       
       filename       = xbmc.translatePath( os.path.join( temp, 'spiel.txt') ).decode("utf-8")
       gesamtliste=[]
@@ -464,7 +465,9 @@ if __name__ == '__main__':
             if not ids[i] in  schown:
                 debug("Zeit ist : "+str(timelist[i]))                
                 popupwindow.savemessage(__addon__,titlelist[i],cimglist1[i],greyoutlist[i],lesezeitlist[i],xmessage,ymessage,breitemessage,hoehemessage,breitebild1,hoehebild1,font,fontcolor,-1,-1,cimglist2[i],-1,-1,breitebild2,hoehebild2)             
-                schown.append(ids[i])                   
+                schown.append(ids[i])    
+                if len(schown)>anzahlmeldungen:
+                    schown.pop(0)                
       if monitor.waitForAbort(60):
         break            
       
