@@ -92,8 +92,8 @@ class Infowindow(pyxbmct.AddonDialogWindow):
         self.placeControl(self.image, 0, 0,columnspan=2,rowspan=2)
         self.placeControl(self.textbox, 2, 0, columnspan=8,rowspan=6)                  
       else:
-        self.placeControl(self.image, 0, 0,columnspan=6,rowspan=6)
-        self.placeControl(self.textbox, 6, 0,columnspan=8,rowspan=2)     
+        self.placeControl(self.image, 0, 0,columnspan=8,rowspan=6)
+        #self.placeControl(self.textbox, 6, 0,columnspan=8,rowspan=2)     
       self.textbox.setText(self.text)
       self.connectEventList(
              [pyxbmct.ACTION_MOVE_UP,
@@ -225,30 +225,43 @@ def startvideos(url):
   debug("startvideos URL : "+url)
   content = getUrl(url)
   titlearray=[]
+  urln=""
   #debug("Content :" + content)
   #content = content[content.find('<main id="enw-main-content" >'):]  
   #content = content[:content.find('div class="xlarge-3 enw-mpu1 show-for-xlarge">')]
   #debug("Content 2:" + content)
   Artikelliste = content.split('<article data-nid="') 
   anz=0
-  for i in range(1, len(Artikelliste), 1):
+  for i in range(1, len(Artikelliste), 1):        
    try:
-    element=Artikelliste[i]             
+    element=Artikelliste[i]         
+    debug("--------------------")
+    debug(element)
     match = re.compile('<h[0-9] class="media__body__title">(.+?)</h[0-9]>', re.DOTALL).findall(element)
-    title=artikeltext(match[0])
-    if "<a rel" in title:
-      match = re.compile('<span class="media__body__description">(.+?)<', re.DOTALL).findall(element)
+    title1=artikeltext(match[0])
+    debug("Title1 :"+title1)
+    if "<a rel" in title1:
+      match = re.compile('>([^<]+?)<', re.DOTALL).findall(title1)
+      debug("Title2 :"+match[0])
       title=artikeltext(match[0])
+      match = re.compile('href="(.+?)"', re.DOTALL).findall(title1)
+      urln="http://"+language2+".euronews.com"+match[0]
     match = re.compile('src="(.+?)"', re.DOTALL).findall(element)
     bild=match[0]
-    match = re.compile('href="(.+?)"', re.DOTALL).findall(element)
-    url="http://"+language2+".euronews.com"+match[0]    
+    if not "http" in bild:
+       continue
+    debug("bild :"+bild)
+    if urln=="":
+      match = re.compile('href="(.+?)"', re.DOTALL).findall(element)
+      urln="http://"+language2+".euronews.com"+match[0]    
+    debug("url :"+urln)
     if not title in titlearray:    
       titlearray.append(title)
-      addLink(title, url, 'PlayVideo', bild, "")     
+      debug("Addlink "+urln)
+      addLink(title,urln, 'PlayVideo', bild, "")     
     anz=anz+1
    except:
-     pass
+     pass  
   xbmcplugin.endOfDirectory(pluginhandle)
  
 def playLive():    
@@ -266,9 +279,13 @@ def Aktuelle_meldungen(url,text):
        match = re.compile('href="(.+?)">(.+?)</a>', re.DOTALL).findall(element)       
        for urlstring, text in match:
           url="http://"+language2+".euronews.com"+urlstring
-          addDir(text, url, 'Rubriknews', "", "",text="0") 
+          debug("Aktuelle_meldungen text:"+text)
+          debug("Aktuelle_meldungen url:"+url)      
+          addDir(text, url, 'Rubrik', "", "",text="0") 
+
 def Rubriknews(urls,text="0"):
-   content = getUrl(urls+"?offset="+text)
+   debug("Rubriknews urls :"+urls)
+   content = getUrl(urls+"?offset="+text)   
    if "data-api-url" in content:
       match = re.compile('data-api-url="(.+?)"', re.DOTALL).findall(content)
       urls="http://"+language2+".euronews.com"+match[0]
@@ -285,7 +302,7 @@ def Rubriknews(urls,text="0"):
       debug ("---###---")
       addLink(title, url, 'PlayVideo', bild, "")  
       anz=anz+1
-   addDir("Next", urls, 'Rubriknews', "", "",text=str(anz))     
+   addDir("Next", urls, 'Rubriknews', "", "",text=str(anz))        
    xbmcplugin.endOfDirectory(pluginhandle)
 def index():  
   ListRubriken("http://"+language2+".euronews.com","",x=1)
@@ -296,8 +313,11 @@ def index():
 def Rubrik(url,text):
   if "http" in url  :
      anz=ListRubriken(url,text)
-     if anz==0:
-       startvideos(url) 
+     if anz==0:      
+      try:
+        Rubriknews(url) 
+      except:        
+        startvideos(url)      
   else:
       Aktuelle_meldungen(url,0)      
   xbmcplugin.endOfDirectory(pluginhandle)
@@ -337,7 +357,10 @@ def playVideo(url):
          text = text[:text.find('</div>')]
          text=artikeltext(text)
          bild=match[0]
-         nurbild=0
+         if text=="":
+           nurbild=1
+         else:
+           nurbild=0         
        else:
             fototext = content[content.find('<div id="potd-wrap" class="col-m-b clear">'):]
             fototext = fototext[:fototext.find('</div>')]
@@ -345,6 +368,7 @@ def playVideo(url):
             text=artikeltext(text)
             match = re.compile('<img src="(.+?)"', re.DOTALL).findall(fototext)
             bild=match[0]
+            debug("playVideo : 1")
             nurbild=1
        debug("BILD :"+bild)
        debug("nurbild :"+str(nurbild))
@@ -379,6 +403,7 @@ def timeline(stamp):
      addDir("Next", str(datum), 'timeline', "", "")     
      xbmcplugin.endOfDirectory(pluginhandle)
      debug("timeline : "+jsonurl)
+     
 if mode == 'listVideos':
    listVideos()
 elif mode == 'playLive':
@@ -386,7 +411,7 @@ elif mode == 'playLive':
 elif mode == 'Rubrik':
     Rubrik(url,text)    
 elif mode == 'startvideos':
-    startvideos(url)       
+    startvideos(url)          
 elif mode == 'Rubriknews':
     Rubriknews(url,text)      
 elif mode == 'PlayVideo':
