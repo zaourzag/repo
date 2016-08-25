@@ -187,6 +187,7 @@ def ListRubriken(urls,text,x=0):
  content = content[:content.find('<div class="base-leaderboard">')]
  urlliste = content.split('<h3 class="enw-blockTopbar__title">') 
  anz=0
+ urlold=[]
  for i in range(1, len(urlliste), 1):
    element=urlliste[i]   
    if "enw-btn__carouselNext" not in element:
@@ -207,7 +208,11 @@ def ListRubriken(urls,text,x=0):
       debug("------------" + str(anz))
       debug("------------" + url)
       if not "http://"+language2+".euronews.com/prog" in url and not url=="http://"+language2+".euronews.com/video" or anz>3 :
-        addDir(name, url, 'Rubrik', "", "",text=text) 
+        if not url in urlold:
+          urlold.append(url)
+          debug(" ListRubrioken url: "+url)         
+          debug(" ListRubrioken name: "+name)
+          addDir(name, url, 'Rubrik', "", "",text=text) 
         anz=anz+1
  if anz>0:
    addDir("Artikel", urls, 'startvideos', "")
@@ -261,8 +266,7 @@ def startvideos(url):
       addLink(title,urln, 'PlayVideo', bild, "")     
     anz=anz+1
    except:
-     pass  
-  xbmcplugin.endOfDirectory(pluginhandle)
+     pass    
  
 def playLive():    
     url="http://fr-par-iphone-1.cdn.hexaglobe.net/streaming/euronews_ewns/iphone_"+language+".m3u8"
@@ -270,8 +274,10 @@ def playLive():
     xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
      
 def Aktuelle_meldungen(url,text):
+  debug("Aktuelle_meldungen;" +url)
   content = getUrl("http://"+language2+".euronews.com")
   Artikelliste = content.split('<div class="scroll-horizontal ">') 
+  count=0
   for i in range(1, len(Artikelliste), 1):
     element=Artikelliste[i]
     if url in element:
@@ -282,7 +288,9 @@ def Aktuelle_meldungen(url,text):
           debug("Aktuelle_meldungen text:"+text)
           debug("Aktuelle_meldungen url:"+url)      
           addDir(text, url, 'Rubrik', "", "",text="0") 
-
+          count=count+1
+  
+  
 def Rubriknews(urls,text="0"):
    debug("Rubriknews urls :"+urls)
    content = getUrl(urls+"?offset="+text)   
@@ -302,14 +310,38 @@ def Rubriknews(urls,text="0"):
       debug ("---###---")
       addLink(title, url, 'PlayVideo', bild, "")  
       anz=anz+1
-   addDir("Next", urls, 'Rubriknews', "", "",text=str(anz))        
-   xbmcplugin.endOfDirectory(pluginhandle)
+   addDir("Next", urls, 'Rubriknews', "", "",text=str(anz))           
 def index():  
   ListRubriken("http://"+language2+".euronews.com","",x=1)
   addLink(translation(30001), "", 'playLive', "")
+  addDir("Shows", "http://de.euronews.com/programme", 'Sendungen', "")
   addDir("Search", "", 'search', "")
   xbmcplugin.endOfDirectory(pluginhandle)   
-
+  
+def Sendungen():
+  url="http://"+language2+".euronews.com"
+  content = getUrl(url) 
+  content = content[content.find('<li id="programs_link" data-accordion-item>'):]
+  match = re.compile('<a href="(.+?)"', re.DOTALL).findall(content)
+  newurl=url+match[0]
+  content = getUrl(newurl)   
+  buchstaben = content.split('<div class="letter-programs">')
+  for i in range(1, len(buchstaben), 1):
+         element=buchstaben[i]
+         debug("Element :"+element)
+         match = re.compile('href="(.+?)">', re.DOTALL).findall(element)  
+         url="http://"+language2+".euronews.com"+match[0]
+         match = re.compile('src="(.+?)"', re.DOTALL).findall(element)
+         bild=match[0]
+         match = re.compile('<h3>(.+?)</h3>', re.DOTALL).findall(element)
+         text=match[0]         
+         if not "{{" in text:
+           addDir(text, url, 'Rubrik', bild, "",text="0")   
+  xbmcplugin.endOfDirectory(pluginhandle) 
+  
+  
+  
+  
 def Rubrik(url,text):
   if "http" in url  :
      anz=ListRubriken(url,text)
@@ -319,8 +351,8 @@ def Rubrik(url,text):
       except:        
         startvideos(url)      
   else:
-      Aktuelle_meldungen(url,0)      
-  xbmcplugin.endOfDirectory(pluginhandle)
+      Aktuelle_meldungen(url,0)               
+  xbmcplugin.endOfDirectory(pluginhandle)      
   
 def playVideo(url):
     debug("Playvideo URL : " + url)
@@ -382,6 +414,7 @@ def search():
      d=urllib.quote(d, safe='')
      url="http://"+language2+".euronews.com/api/search?query="+ d 
      Rubriknews(url,text="0")
+     xbmcplugin.endOfDirectory(pluginhandle)
 def timeline(stamp):
      debug("TIMELINE URL: ")
      urln="http://"+language2+".euronews.com/api/timeline.json?limit=20"
@@ -412,6 +445,7 @@ elif mode == 'Rubrik':
     Rubrik(url,text)    
 elif mode == 'startvideos':
     startvideos(url)          
+    xbmcplugin.endOfDirectory(pluginhandle)      
 elif mode == 'Rubriknews':
     Rubriknews(url,text)      
 elif mode == 'PlayVideo':
@@ -419,6 +453,8 @@ elif mode == 'PlayVideo':
 elif mode == 'search':
      search()    
 elif mode == 'timeline':
-     timeline(url)            
+     timeline(url)  
+elif mode == 'Sendungen':
+     Sendungen()           
 else:
     index()
