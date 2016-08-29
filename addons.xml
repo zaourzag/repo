@@ -101,6 +101,27 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
 	</extension>
 </addon>
 
+<addon id="plugin.video.youtv" name="Youtv" version="0.4.25" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+	<import addon="repository.lost-and-found" version="1.1.7"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Youtv</summary>
+    <summary lang="de">Youtv</summary>
+    <description lang="en">Youtv</description>
+    <description lang="de">Youtv</description>
+    <website></website>
+    <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.youtv</source>
+    <forum>http://www.kodinerds.net/</forum>
+    <email>andreas at vogler dot name</email>
+    <platform>all</platform>
+  </extension>
+</addon>
+
 <addon id="plugin.audio.einslive_de" name="1LIVE.de" version="1.0.7" provider-name="AddonScriptorDE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
@@ -248,24 +269,6 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
         <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
         <source>http://repo.l0re.com/data/plugin.video.arte_tv/</source>
         <website>http://www.arte.tv</website>
-    </extension>
-</addon>
-
-<addon id="plugin.video.atv_at" name="ATV.at" version="2.0.7" provider-name="AddonScriptorDE">
-    <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <summary lang="de">ATV.at Mediathek</summary>
-        <summary lang="en">ATV.at media library</summary>
-        <language>de</language>
-        <description lang="de">ATV.at Mediathek</description>
-        <description lang="en">ATV.at media library</description>
-    <platform>all</platform>
     </extension>
 </addon>
 
@@ -969,27 +972,6 @@ Orginal Code was from AddonScriptorDE</disclaimer>
         <email>andreas at vogler dot name</email>
         <website>http://www.weltderwunder.tv</website>
     </extension>
-</addon>
-
-<addon id="plugin.video.youtv" name="Youtv" version="0.4.24" provider-name="L0RE">
-    <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
-	<import addon="repository.lost-and-found" version="1.1.7"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en">Youtv</summary>
-    <summary lang="de">Youtv</summary>
-    <description lang="en">Youtv</description>
-    <description lang="de">Youtv</description>
-    <website></website>
-    <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.youtv</source>
-    <forum>http://www.kodinerds.net/</forum>
-    <email>andreas at vogler dot name</email>
-    <platform>all</platform>
-  </extension>
 </addon>
 
 <addon id="plugin.video.zattoo_com" name="Zattoo Live TV" version="1.0.0" provider-name="PUR3">
