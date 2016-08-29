@@ -59,10 +59,15 @@ def holejson(url,token=""):
     return struktur
 
 def addDir(name, url, mode, iconimage, desc="",ids=""):
+  debug ("Adddir ids:" +ids)
   u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&ids="+str(ids)
   ok = True
   liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=iconimage)
   liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc})
+  deleteit = "plugin://plugin.video.youtv/?mode=deleteassistent&url="+urllib.quote_plus(ids)
+  commands = []
+  commands.append(( translation(30112), 'XBMC.RunPlugin('+ deleteit +')'))    
+  liz.addContextMenuItems( commands )
   if useThumbAsFanart:
     if not iconimage or iconimage==icon or iconimage==defaultThumb:
       iconimage = defaultBackground
@@ -76,12 +81,13 @@ def addLink(name, url, mode, iconimage, duration="", desc="", genre='',shortname
   debug ("addLink abo " + str(abo))
   debug ("addLink abo " + str(shortname))
   cd=addon.getSetting("password")  
-  cd="4921"
   u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
   ok = True
   liz = xbmcgui.ListItem(name, iconImage=defaultThumb, thumbnailImage=iconimage)
   download = "plugin://plugin.video.youtv/?mode=download&url="+urllib.quote_plus(url)
+  deleteit = "plugin://plugin.video.youtv/?mode=deleteit&url="+urllib.quote_plus(url)
   commands = []
+  commands.append(( translation(30112), 'XBMC.RunPlugin('+ deleteit +')'))    
   if cd=="4921" or abo>1:
     debug("APEND")
     commands.append(( translation(30111), 'XBMC.RunPlugin('+ download +')'))    
@@ -184,8 +190,10 @@ def listListen(url,filter):
      if subtitle!= "Null":
        title=title+" ( "+subtitle +" )"
      id=str(name["id"])
+     type_id=str(name["type_id"])     
+     debug("TYPE ID :"+ type_id)
      bild=unicode(name["image"][0]["url"]).encode("utf-8")         
-     addDir(title, id, "listrec", bild, desc="")     
+     addDir(title, id, "listrec", bild, desc="",ids=type_id)     
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 
 def liste(url,filter,page=1):
@@ -386,7 +394,26 @@ ids = urllib.unquote_plus(params.get('ids', ''))
 genid = urllib.unquote_plus(params.get('genid', ''))
 wort=""
 wort = urllib.unquote_plus(params.get('wort', ''))
-   
+debug("XX IDS :"+ids)
+
+def deleteit(query_url):
+  debug("----- url :" +query_url)
+  token=login() 
+  mytoken="Token token="+ token
+  userAgent = "YOUTV/1.2.7 CFNetwork/758.2.8 Darwin/15.0.0"        
+  debug("---- query_url :"+query_url)
+  headers = {
+      'User-Agent': userAgent,
+      'Authorization': mytoken
+  }        
+  debug(headers)  
+  opener = urllib2.build_opener(urllib2.HTTPHandler)
+  req = urllib2.Request(query_url, None, headers)
+  req.get_method = lambda: 'DELETE'     
+  url = urllib2.urlopen(req) 
+  xbmc.executebuiltin("Container.Refresh")
+
+
 if mode is '':
     addDir(translation(30107), translation(30107), 'listListen', "")    
     addDir(translation(30108), translation(30108), 'Settings', "")        
@@ -408,4 +435,8 @@ else:
           download(url)
   if mode == 'cachelear':              
           cachelear()
-          
+  if mode == 'deleteit':              
+          deleteit("https://www.youtv.de/api/v2/recordings/"+ url+".json?platform=ios"  )          
+  if mode == 'deleteassistent':                        
+          deleteit("https://www.youtv.de/api/v2/recording_assistants/"+ url+".json"  )                    
+
