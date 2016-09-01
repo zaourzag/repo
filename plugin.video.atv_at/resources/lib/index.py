@@ -6,8 +6,14 @@ import urllib
 
 def play(**kwargs):
     import gui
-    playlist = api.get_playlist(urllib.unquote(kwargs['url']))
-    gui.play_playlist(playlist)
+    import xbmcaddon
+    addon = xbmcaddon.Addon(id='plugin.video.atv_at')
+    protocol = ('http', 'rtsp')[int(addon.getSetting('protocol'))]
+    if addon.getSetting('video.as_playlist') == 'true':
+        playlist = api.get_playlist(urllib.unquote(kwargs['url']), protocol)
+        gui.play_playlist(playlist)
+    else:
+        gui.play(api.get_video_url(urllib.unquote(kwargs['url']), protocol))
 
 
 def cluster(**kwargs):
@@ -16,6 +22,10 @@ def cluster(**kwargs):
 
 def index():
     api.list_clusters()
+
+
+def more(**kwargs):
+    api.list_cluster(urllib.unquote(urllib.unquote(kwargs['url'])))
 
 
 d = dict(p.split('=') for p in sys.argv[2][1:].split('&') if len(p.split('=')) == 2)

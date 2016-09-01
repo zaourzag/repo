@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+   <setting id="protocol" type="enum" label="30100" values="M3U8|RTSP" default="0"/>
+   <setting id="video.as_playlist" type="bool" label="30101" default="true"/>
+</settings>

@@ -1311,7 +1311,7 @@ Orginal Code was from AddonScriptorDE</disclaimer>
   </extension>
 </addon>
 
-<addon id="plugin.video.atv_at" name="ATV.at Mediathek" version="2.5.2" provider-name="PUR3">
+<addon id="plugin.video.atv_at" name="ATV.at Mediathek" version="2.6.1" provider-name="PUR3">
 	<requires>
     	<import addon="xbmc.python" version="2.1.0"/>
 	</requires>

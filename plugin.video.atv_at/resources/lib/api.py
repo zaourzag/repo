@@ -49,10 +49,53 @@ def list_cluster(url):
             title = parser.unescape(title.decode('utf-8'))
             thumb = parser.unescape(thumb.decode('utf-8'))
             gui.add_video(title, thumb, {'f': 'play', 'url': url})
+    # now look for more videos
+    index_more_videos = html.find('<div class="more jsb_ jsb_MoreTeasersButton" data-jsb="')
+    if index_more_videos != -1:
+        url_more_videos = html[index_more_videos + 55:html.find('"', index_more_videos + 55)]
+        if url_more_videos.startswith('url='):
+            url_more_videos = url_more_videos[4:]
+        gui.add_folder('[B]Mehr Videos[/B]', None, {'f': 'more', 'url': url_more_videos})
+    # now look for other cluster numbers of same cluster
+    index_other_clusters = html.find('<select class="select jsb_ jsb_Select"')
+    if index_other_clusters != -1:
+        other_clusters_part = html[index_other_clusters:html.find('</select>', index_other_clusters)]
+        other_clusters = re.findall('<option value="(.*?)">(.*?)</option>', other_clusters_part, re.DOTALL)
+        for url, title in other_clusters:
+            title = parser.unescape(title.decode('utf-8'))
+            gui.add_folder('[B]%s[/B]' % parser.unescape(title.decode('utf-8')), None, {'f': 'cluster', 'url': url})
     gui.end_listing()
 
 
-def get_playlist(url):
+def get_video_url(url, protocol='http'):
+    response = requests.get(url, headers=__HEADERS)
+    html = response.read()
+    match = re.search('FlashPlayer" data-jsb="(.*?)"', html)
+    if match:
+        parser = HTMLParser()
+        response.text = parser.unescape(match.group(1))
+        json_data = response.json()
+        parts = json_data['config']['initial_video']['parts']
+        geoblocked_parts = 0
+        stacked_url = ''
+        for part in parts:
+            if part['is_geo_ip_blocked']:
+                geoblocked_parts += 1
+            streams = part['sources']
+            if not streams:
+                continue
+            for stream in streams:
+                if stream['protocol'] == protocol:
+                    stacked_url += stream['src'] + ' , '
+                    break
+        if geoblocked_parts == len(parts) and not is_user_from_austria():
+            return gui.warning('Video nicht abspielbar', 'Dieses Video ist nur in Österreich verfügbar!')
+        if stacked_url:
+            return 'stack://' + stacked_url[:-3]
+    return gui.warning('Video nicht gefunden', 'Es konnte kein Videolink ermittelt werden!')
+
+
+def get_playlist(url, protocol='http'):
     response = requests.get(url, headers=__HEADERS)
     html = response.read()
     match = re.search('FlashPlayer" data-jsb="(.*?)"', html)
@@ -71,7 +114,7 @@ def get_playlist(url):
                 continue
             stream_part = part['title'], part['preview_image_url'], streams[0]['src']
             for stream in streams:
-                if stream['protocol'] == 'http':
+                if stream['protocol'] == protocol:
                     stream_part = part['title'], part['preview_image_url'], stream['src']
                     break
             playlist.append(stream_part)
