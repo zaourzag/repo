@@ -27,7 +27,7 @@ def list_clusters():
     clusters = re.findall(pattern, html, re.DOTALL)
     parser = HTMLParser()
     for url, thumb, title in clusters:
-        title = parser.unescape(title.decode('utf-8'))
+        title = parser.unescape(title.decode('utf-8', 'ignore'))
         gui.add_folder(title, thumb, {'f': 'cluster', 'url': url})
     gui.end_listing()
 
@@ -46,8 +46,8 @@ def list_cluster(url):
             except:
                 continue
             url, thumb, title = video_data
-            title = parser.unescape(title.decode('utf-8'))
-            thumb = parser.unescape(thumb.decode('utf-8'))
+            title = parser.unescape(title.decode('utf-8', 'ignore'))
+            thumb = parser.unescape(thumb.decode('utf-8', 'ignore'))
             gui.add_video(title, thumb, {'f': 'play', 'url': url})
     # now look for more videos
     index_more_videos = html.find('<div class="more jsb_ jsb_MoreTeasersButton" data-jsb="')
@@ -56,14 +56,13 @@ def list_cluster(url):
         if url_more_videos.startswith('url='):
             url_more_videos = url_more_videos[4:]
         gui.add_folder('[B]Mehr Videos[/B]', None, {'f': 'more', 'url': url_more_videos})
-    # now look for other cluster numbers of same cluster
-    index_other_clusters = html.find('<select class="select jsb_ jsb_Select"')
-    if index_other_clusters != -1:
-        other_clusters_part = html[index_other_clusters:html.find('</select>', index_other_clusters)]
-        other_clusters = re.findall('<option value="(.*?)">(.*?)</option>', other_clusters_part, re.DOTALL)
-        for url, title in other_clusters:
-            title = parser.unescape(title.decode('utf-8'))
-            gui.add_folder('[B]%s[/B]' % parser.unescape(title.decode('utf-8')), None, {'f': 'cluster', 'url': url})
+    # now look for other seasons of same cluster
+    index_other_seasons = html.find('<select class="select jsb_ jsb_Select"')
+    if index_other_seasons != -1:
+        other_seasons_block = html[index_other_seasons:html.find('</select>', index_other_seasons)]
+        other_seasons = re.findall('<option value="(.*?)">(.*?)</option>', other_seasons_block, re.DOTALL)
+        for url, title in other_seasons:
+            gui.add_folder('[B]%s[/B]' % title, None, {'f': 'cluster', 'url': url})
     gui.end_listing()
 
 
