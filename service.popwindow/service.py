@@ -168,13 +168,16 @@ if __name__ == '__main__':
              break
           count=count+1                                  
           debug("File :" + name)
-          f = open(temp+"/"+name, 'r')    
-          for line in f:                       
+          try:
+            f = open(temp+"/"+name, 'r')    
+            for line in f:                       
                 message,image1,grey,lesezeit,xmessage,ymessage,breitemessage,hoehemessage,startxbild1,startybild1,breitebild1,hoehebild1,image2,startxbild2,startybild2,breitebild2,hoehebild2,fontname,fontcolor=line.split("###")    
                 message=message.replace("#n#","\n")                                 
                 showMessage(message,image1=image1,image2=image2,greyout=grey,lesezeit=lesezeit,xmessage=xmessage,ymessage=ymessage,breitemessage=breitemessage,hoehemessage=hoehemessage,startxbild1=startxbild1,startybild1=startybild1,breitebild1=breitebild1,hoehebild1=hoehebild1,startxbild2=startxbild2,startybild2=startybild2,breitebild2=breitebild2,hoehebild2=hoehebild2,fontname=fontname,fontcolor=fontcolor)
-          f.close()           
-          xbmcvfs.delete(temp+"/"+name)                    
+            f.close()           
+            xbmcvfs.delete(temp+"/"+name)                    
+          except:
+             pass
       xbmc.log("Hole Umgebung")        
       end=datetime.now()
       diff=int((end-start).seconds)
