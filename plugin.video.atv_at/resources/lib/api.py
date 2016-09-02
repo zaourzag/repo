@@ -32,9 +32,25 @@ def list_clusters():
     gui.end_listing()
 
 
-def list_cluster(url):
+def list_seasons(html):
+    index_seasons = html.find('<select class="select jsb_ jsb_Select"')
+    if index_seasons != -1:
+        seasons_block = html[index_seasons:html.find('</select>', index_seasons)]
+        seasons = re.findall('<option .*?value="(.*?)">(.*?)</option>', seasons_block, re.DOTALL)
+        for url, title in seasons:
+            gui.add_folder(title, None, {'f': 'videos', 'url': url})
+        return True
+    return False
+
+
+def list_videos(url):
     response = requests.get(url, headers=__HEADERS)
     html = response.read()
+    _list_videos(html)
+    gui.end_listing()
+
+
+def _list_videos(html):
     pattern_video = '<li class="teaser">(.*?)</li>'
     pattern_video_data = 'href="(.*?)".*?<img src="(.*?)".*?"title">(.*?)<'
     videos = re.findall(pattern_video, html, re.DOTALL)
@@ -49,20 +65,20 @@ def list_cluster(url):
             title = parser.unescape(title.decode('utf-8', 'ignore'))
             thumb = parser.unescape(thumb.decode('utf-8', 'ignore'))
             gui.add_video(title, thumb, {'f': 'play', 'url': url})
-    # now look for more videos
+    # now look for more videos button
     index_more_videos = html.find('<div class="more jsb_ jsb_MoreTeasersButton" data-jsb="')
     if index_more_videos != -1:
         url_more_videos = html[index_more_videos + 55:html.find('"', index_more_videos + 55)]
         if url_more_videos.startswith('url='):
             url_more_videos = url_more_videos[4:]
-        gui.add_folder('[B]Mehr Videos[/B]', None, {'f': 'more', 'url': url_more_videos})
-    # now look for other seasons of same cluster
-    index_other_seasons = html.find('<select class="select jsb_ jsb_Select"')
-    if index_other_seasons != -1:
-        other_seasons_block = html[index_other_seasons:html.find('</select>', index_other_seasons)]
-        other_seasons = re.findall('<option value="(.*?)">(.*?)</option>', other_seasons_block, re.DOTALL)
-        for url, title in other_seasons:
-            gui.add_folder('[B]%s[/B]' % title, None, {'f': 'cluster', 'url': url})
+        gui.add_folder('[B]Nächste Seite[/B]', None, {'f': 'more', 'url': url_more_videos})
+
+
+def list_cluster(url):
+    response = requests.get(url, headers=__HEADERS)
+    html = response.read()
+    if not list_seasons(html):
+        _list_videos(html)
     gui.end_listing()
 
 

@@ -24,8 +24,13 @@ def index():
     api.list_clusters()
 
 
+def videos(**kwargs):
+    api.list_videos(urllib.unquote(kwargs['url']))
+
+
 def more(**kwargs):
-    api.list_cluster(urllib.unquote(urllib.unquote(kwargs['url'])))
+    kwargs['url'] = urllib.unquote(kwargs['url'])
+    cluster(**kwargs)
 
 
 d = dict(p.split('=') for p in sys.argv[2][1:].split('&') if len(p.split('=')) == 2)
