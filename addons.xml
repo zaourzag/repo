@@ -1230,6 +1230,30 @@ Orginal Code was from AddonScriptorDE</disclaimer>
 	</extension>
 </addon>
 
+<addon id="service.iptv.ewe" name="EWE IPTV" version="0.0.1" provider-name="frankr612">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="pvr.iptvsimple" version="1.12.12"/>
+    <import addon="script.module.requests" version="2.9.1"/>
+    <import addon="script.module.routing" version="0.2.0"></import>
+  </requires>
+  <extension point="xbmc.service" library="service.py">
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_gb">Plugin for EWE IPTV</summary>
+    <description lang="en_gb">Wrapper Service for EWE IPTV Channels 
+    ***Attention: Addon is unofficial and not related to or supported by EWE AG***</description>
+    <disclaimer lang="en_gb"></disclaimer>
+    <language></language>
+    <platform>all</platform>
+    <license></license>
+    <forum></forum>
+    <website></website>
+    <email></email>
+    <source></source>
+  </extension>
+</addon>
+
 <addon id="repository.membrane" name="membrane's KODI Add-ons" version="1.9.0" provider-name="membrane">
 	<extension point="xbmc.addon.repository" name="membrane's XBMC Add-on Repository">
 		<info compressed="false">http://github.com/prof-membrane/repository.membrane/raw/master/addons.xml</info>
