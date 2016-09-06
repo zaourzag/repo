@@ -47,14 +47,35 @@ def log(msg, level=xbmc.LOGNOTICE):
     xbmc.log('%s: %s' % (addonID, msg), level) 
 
 def index():
-    addDir(translation(30001), urlMain+"/"+siteVersion, 'listGenres', defaultFanart)
+    addDir(translation(30001), urlMain+"/"+siteVersion, 'liste', defaultFanart)
     addDir(translation(30002), urlMain+"/"+siteVersion+"/Videos", 'listGenres', defaultFanart)
-    addDir(translation(30008), urlMain+"/"+siteVersion+"/Themen", 'listGenres', defaultFanart)
+    addDir(translation(30008), urlMain+"/"+siteVersion+"/Themen", 'liste', defaultFanart)
     addDir(translation(30010), "", 'search', defaultFanart)
     addLink(translation(30011), "", 'playLiveStream', defaultFanart)
     addDir(translation(30107), translation(30107), 'Settings', "")     
     xbmcplugin.endOfDirectory(pluginhandle)
-
+def liste(url):
+    debug("listGenres url "+url)
+    xbmcplugin.addSortMethod(pluginhandle, xbmcplugin.SORT_METHOD_LABEL)
+    content = opener.open(url).read()
+    spl = content.split('<div class="mol teaser columns large-3 ">')
+    for i in range(1, len(spl), 1):
+      entry = spl[i]              
+      #debug("---------")
+      #debug(entry)
+      #debug("---------")
+      match = re.compile('<a href="(.+?)" >', re.DOTALL).findall(entry)
+      url=match[0]
+      match = re.compile('src="(.+?)"', re.DOTALL).findall(entry)
+      img=match[0]
+      match = re.compile('teaser-s">([^<]+)<', re.DOTALL).findall(entry)      
+      title=match[0]
+      debug("title : "+title)
+      debug("url : "+url)
+      debug("img : "+urlMain+img)
+      addDir(cleanTitle(title), urlMain+url, 'listGenres', urlMain+img)
+    
+    xbmcplugin.endOfDirectory(pluginhandle)
 
 def listGenres(url):
     debug("listGenres url "+url)
@@ -62,22 +83,39 @@ def listGenres(url):
     content = opener.open(url).read()
     debug("------------------")
     debug(content)
+    titleall=[]
     match = re.compile('h1 class="ato headline[^<]+<a href="(.+?)" >([^<]+?)<', re.DOTALL).findall(content)
-    found=0
+    found=0    
     for url2, title in match:        
         debug("URL : "+url)
         title = cleanTitle(title)
-        if title:
+        if not title in titleall:
+          titleall.append(title)
+          if title:
             found=1
-            addDir(cleanTitle(title), urlMain+url2, 'listGenres', defaultFanart)
-    if found==0:
-     match = re.compile('h2 class="ato headline[^<]+<a href="(.+?)" >([^<]+?)<', re.DOTALL).findall(content)    
-     for url2, title in match:        
+            addDir(cleanTitle(title), urlMain+url2, 'listGenres', defaultFanart)    
+         
+    match = re.compile('<div class="teaser-thema short">[^<]+<a href="(.+?)" >([^<]+?)<', re.DOTALL).findall(content)    
+    for url3, title in match:        
+        debug("THEMEN URL : "+url3)
+        debug("THEMEN Thema : "+title)
+        title = cleanTitle(title)
+        if not title in titleall:
+          titleall.append(title)
+          if title:
+            found=1
+            addDir(cleanTitle(title), urlMain+url3, 'listGenres', defaultFanart)    
+            
+    match = re.compile('h2 class="ato headline[^<]+<a href="(.+?)" >([^<]+?)<', re.DOTALL).findall(content)         
+    for url4, title in match:        
         debug("URL : "+url)
         title = cleanTitle(title)
-        if title:
+        if not title in titleall:
+          titleall.append(title)
+          if title:
             found=1
-            addDir(cleanTitle(title), urlMain+url2, 'listGenres', defaultFanart)
+            addDir(cleanTitle(title), urlMain+url4, 'listGenres', defaultFanart)            
+
     if found==0:
       listVideos(url)
     else:
@@ -239,6 +277,8 @@ elif mode == 'queueVideo':
     queueVideo(url, name, thumb)
 elif mode == 'search':
     search()
+elif mode == 'liste':
+    liste(url)       
 elif mode == 'Settings':
           addon.openSettings()
 else:
