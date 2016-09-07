@@ -1,0 +1,3 @@
+<settings>
+   <setting id="text" type="select" label="30004" default="EN" values="EN|RU" />   
+</settings>
