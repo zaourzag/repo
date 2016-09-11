@@ -197,7 +197,10 @@ def ListRubriken(urls,text,x=0):
       url=""
       if "<" in name:
           match = re.compile('<a href="(.+?)">(.+?)</a>', re.DOTALL).findall(name)
-          url="http://"+language2+".euronews.com"+match[0][0]
+          if not "http:" in match[0][0]:
+             url="http://"+language2+".euronews.com"+match[0][0]
+          else:
+             url=match[0][0]
           name=match[0][1]
       if "no_comment" in name:
           name="No Comment"
@@ -250,7 +253,10 @@ def startvideos(url):
       debug("Title2 :"+match[0])
       title=artikeltext(match[0])
       match = re.compile('href="(.+?)"', re.DOTALL).findall(title1)
-      urln="http://"+language2+".euronews.com"+match[0]
+      if not "http" in match[0]:
+        urln="http://"+language2+".euronews.com"+match[0]
+      else:
+        urln=match[0]
     match = re.compile('src="(.+?)"', re.DOTALL).findall(element)
     bild=match[0]
     if not "http" in bild:
@@ -262,7 +268,7 @@ def startvideos(url):
     debug("url :"+urln)
     if not title in titlearray:    
       titlearray.append(title)
-      debug("Addlink "+urln)
+      debug("Add link "+urln)
       addLink(title,urln, 'PlayVideo', bild, "")     
     anz=anz+1
    except:
@@ -284,7 +290,10 @@ def Aktuelle_meldungen(url,text):
        element = element[:element.find('</div>')]
        match = re.compile('href="(.+?)">(.+?)</a>', re.DOTALL).findall(element)       
        for urlstring, text in match:
-          url="http://"+language2+".euronews.com"+urlstring
+          if not "http:" in urlstring:
+            url="http://"+language2+".euronews.com"+urlstring
+          else:
+            url =urlstring
           debug("Aktuelle_meldungen text:"+text)
           debug("Aktuelle_meldungen url:"+url)      
           addDir(text, url, 'Rubrik', "", "",text="0") 
@@ -293,14 +302,24 @@ def Aktuelle_meldungen(url,text):
   
 def Rubriknews(urls,text="0"):
    debug("Rubriknews urls :"+urls)
-   content = getUrl(urls+"?offset="+text)   
+   if text=="-1":
+      content = getUrl(urls)   
+   else:
+      content = getUrl(urls+"?offset="+text)   
    if "data-api-url" in content:
       match = re.compile('data-api-url="(.+?)"', re.DOTALL).findall(content)
-      urls="http://"+language2+".euronews.com"+match[0]
+      if not "http:" in match[0]:
+        urls="http://"+language2+".euronews.com"+match[0]
+      else:
+        urls=match[0]
       content = getUrl(urls)
    struktur = json.loads(content)    
    anz=int(text)
+   debug("starte ergebnis")
+   debug("--------------------")
+   debug(struktur)
    for element in struktur:
+      debug("Nees Element")
       url=element["canonical"]
       title=element["title"]
       bild=element["images"][0]["url"]
@@ -310,7 +329,8 @@ def Rubriknews(urls,text="0"):
       debug ("---###---")
       addLink(title, url, 'PlayVideo', bild, "")  
       anz=anz+1
-   addDir("Next", urls, 'Rubriknews', "", "",text=str(anz))           
+   if not text=="-1":
+      addDir("Next", urls, 'Rubriknews', "", "",text=str(anz))           
 def index():  
   ListRubriken("http://"+language2+".euronews.com","",x=1)
   addLink(translation(30001), "", 'playLive', "")
@@ -330,7 +350,10 @@ def Sendungen():
          element=buchstaben[i]
          debug("Element :"+element)
          match = re.compile('href="(.+?)">', re.DOTALL).findall(element)  
-         url="http://"+language2+".euronews.com"+match[0]
+         if not "http:" in match[0]:
+            url="http://"+language2+".euronews.com"+match[0]
+         else:
+            url=match[0]
          match = re.compile('src="(.+?)"', re.DOTALL).findall(element)
          bild=match[0]
          match = re.compile('<h3>(.+?)</h3>', re.DOTALL).findall(element)
@@ -413,7 +436,7 @@ def search():
      d = dialog.input(translation(30010), type=xbmcgui.INPUT_ALPHANUM)
      d=urllib.quote(d, safe='')
      url="http://"+language2+".euronews.com/api/search?query="+ d 
-     Rubriknews(url,text="0")
+     Rubriknews(url,text="-1")
      xbmcplugin.endOfDirectory(pluginhandle)
 def timeline(stamp):
      debug("TIMELINE URL: ")
@@ -445,7 +468,7 @@ elif mode == 'Rubrik':
     Rubrik(url,text)    
 elif mode == 'startvideos':
     startvideos(url)          
-    xbmcplugin.endOfDirectory(pluginhandle)      
+    xbmcplugin.endOfDirectory(pluginhandle) 
 elif mode == 'Rubriknews':
     Rubriknews(url,text)      
 elif mode == 'PlayVideo':
