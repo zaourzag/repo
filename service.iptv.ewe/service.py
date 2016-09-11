@@ -8,8 +8,10 @@ import ewetv
 addon = xbmcaddon.Addon()
 username = addon.getSetting('username')
 password = addon.getSetting('password')
+host = addon.getSetting('host')
 port = int(addon.getSetting('port'))
-channels_file = xbmc.translatePath(addon.getAddonInfo('profile')) + 'channels.m3u'
+
+channels_file = addon.getSetting('playlist_path') + 'iptv_channels.m3u'
 
 class myHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
     def do_GET(self):
@@ -24,12 +26,13 @@ class myHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
 
 tv = ewetv.EweTv(username, password)
 if tv.login():
-    tv.generateM3U(channels_file, port)
-
+    hasChanges = tv.generateM3U(channels_file, host, port)
+    if hasChanges:
+        xbmcgui.Dialog().notification('EWE IPTV', 'Es wurden neue Sender gefunden. Neustart erforderlich!', xbmcgui.NOTIFICATION_INFO, 5000, True)
     monitor = xbmc.Monitor()
     xbmc.log("Starting EWE-IPTV wrapper on port " + str(port))
     SocketServer.TCPServer.allow_reuse_address = True
-    handler = SocketServer.TCPServer(("127.0.0.1", port), myHandler)
+    handler = SocketServer.TCPServer((host, port), myHandler)
     handler.serve_forever()
      
     while not monitor.abortRequested():
