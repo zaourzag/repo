@@ -1344,6 +1344,21 @@ Orginal Code was from AddonScriptorDE</disclaimer>
   </extension>
 </addon>
 
+<addon id="plugin.video.wiesn" name="Oktoberfest" version="0.2.0" provider-name="L0RE">
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Livestreams from the Oktoberfest</summary>
+    <summary lang="de">Livestreams vom Oktoberfest</summary>
+    <description lang="en">Livestreams from the Oktoberfest</description>
+    <description lang="de">Livestreams from the Oktoberfest</description>
+    <website></website>
+    <email>andreas at vogler dot name</email>
+    <platform>all</platform>
+  </extension>
+</addon>
+
 <addon id="repository.membrane" name="membrane's KODI Add-ons" version="1.9.0" provider-name="membrane">
 	<extension point="xbmc.addon.repository" name="membrane's XBMC Add-on Repository">
 		<info compressed="false">http://github.com/prof-membrane/repository.membrane/raw/master/addons.xml</info>
