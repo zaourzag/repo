@@ -146,15 +146,15 @@ einsLike = urllib.unquote_plus(params.get('einslike', '')) == 'True'
 
 # Haupt Menu Anzeigen      
 if mode is '':    
-    addLink("Wirtsbudenstrasse(Muenchen.tv)" , url="https://streams.muenchen.tv/wiesncam/wiesencam1.stream_1/jwplayer.m3u8", mode="playlive", iconimage="https://www.muenchen.tv/storage/thumbs/366x/r:1442558753/125465.jpg",duration="",desc="")    
+    addLink("Wirtsbudenstraße (Muenchen.tv)" , url="https://streams.muenchen.tv/wiesncam/wiesencam1.stream_1/jwplayer.m3u8", mode="playlive", iconimage="https://www.muenchen.tv/storage/thumbs/366x/r:1442558753/125465.jpg",duration="",desc="")    
     addLink("Hofbräu Festzelt (Muenchen.tv)" , url="https://streams.muenchen.tv/wiesncam/wiesencam2.stream_1/jwplayer.m3u8", mode="playlive", iconimage="https://www.muenchen.tv/storage/thumbs/366x/r:1442558715/125467.jpg",duration="",desc="")    
     addLink("Bavaria (www.wiesn.tv)", url="0", mode="getstream", iconimage="http://www.wiesn.tv/images/photos/Cams/LiveCam_Baravia.jpg",duration="",desc="")        
     addLink("Armbrust (www.wiesn.tv)", url="1", mode="getstream", iconimage="http://www.wiesn.tv/images/photos/Cams/Armrustschuetzenfestzelt.jpg",duration="",desc="")        
-    addLink("Loewenbräu (www.wiesn.tv)", url="2", mode="getstream", iconimage="http://www.wiesn.tv/images/photos/Cams/Loewenbraeuturm.jpg",duration="",desc="")        
-    addLink("Teufelsrad(Oktoberfest.de)", url="3", mode="getstream", iconimage="http://www.wiesn.tv/images/photos/Cams/Teufelsrad.jpg",duration="",desc="")       
-    addLink("Reisenrad (Oktoberfest.de)", url="rtmp://62.113.210.240/netco-rtplive/oktoberfest1.stream", mode="playlive", iconimage="",duration="",desc="")           
+    addLink("Löwenbräu (www.wiesn.tv)", url="2", mode="getstream", iconimage="http://www.wiesn.tv/images/photos/Cams/Loewenbraeuturm.jpg",duration="",desc="")        
+    addLink("Teufelsrad (Oktoberfest.de)", url="3", mode="getstream", iconimage="http://www.wiesn.tv/images/photos/Cams/Teufelsrad.jpg",duration="",desc="")       
+    addLink("Riesenrad (Oktoberfest.de)", url="rtmp://62.113.210.240/netco-rtplive/oktoberfest1.stream", mode="playlive", iconimage="",duration="",desc="")           
     addLink("Bavaria (Oktoberfest.de)", url="rtmp://62.113.210.240/netco-rtplive/oktoberfest2.stream", mode="playlive", iconimage="",duration="",desc="")           
-    addLink("Wirtsbudenstrasse (Oktoberfest.de)", url="rtmp://62.113.210.240/netco-rtplive/oktoberfest3.stream", mode="playlive", iconimage="",duration="",desc="")               
+    addLink("Wirtsbudenstraße (Oktoberfest.de)", url="rtmp://62.113.210.240/netco-rtplive/oktoberfest3.stream", mode="playlive", iconimage="",duration="",desc="")               
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 else:  
   if mode == 'playlive':
