@@ -150,13 +150,19 @@ def Playvideo(url):
   file=match[0]  
   if not "http" in file:
     file=mainurl+file
-  match=re.compile('track src="(.+?)"', re.DOTALL).findall(content)
-  sub=match[0]
-  subfilecontent = geturl(mainurl+sub)
-  subFile=temp+"/sub.srt"
-  fh = open(subFile, 'wb')
-  fh.write(subfilecontent)
-  fh.close()
+  try:
+      match=re.compile('track src="(.+?)"', re.DOTALL).findall(content)
+      sub=match[0]
+      subfilecontent = geturl(mainurl+sub)
+      subFile=temp+"/sub.srt"
+      fh = open(subFile, 'wb')
+      fh.write(subfilecontent)
+      fh.close()
+  except:
+     sub=""
+     subFile=""
+  debug("File: "+file)
+  debug("sub: "+sub)  
   listitem = xbmcgui.ListItem(path=file)  
   listitem.setSubtitles([subFile])
   xbmcplugin.setResolvedUrl(addon_handle,True, listitem)  
