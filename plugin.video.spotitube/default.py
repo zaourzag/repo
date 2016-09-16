@@ -143,7 +143,7 @@ def itunesMain():
 
 def billboardMain():
     addAutoPlayDir(translation(30005), urlMainBB+"/rss/charts/hot-100", "listBillboardCharts", "", "", "browse")
-    addAutoPlayDir("Trending 140", "Top 140 in Trending", "listBillboardChartsNew", "", "", "browse")
+    addAutoPlayDir("Trending 140","Top 140 in Emerging", "listBillboardChartsNew", "", "", "browse")
     addAutoPlayDir("Last 24 Hours", "Top 140 in Overall", "listBillboardChartsNew", "", "", "browse")
     #addDir("Archive", "", "listBillboardArchiveMain", "", "", "browse")
     addDir(translation(30006), "genre", "listBillboardChartsTypes", "", "", "browse")
@@ -481,10 +481,11 @@ def listBP(type, url, limit):
         playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
         playlist.clear()
     content = cache(url, 1)
-    spl=content.split('"bucket-item track"')
+    spl=content.split('bucket-item ec-item track')
     pos = 1
     for i in range(1,len(spl),1):
         entry=spl[i]
+        print "entry :"+ entry
         artist=re.findall('data-artist=".*?">(.*?)</a>',entry,re.S)[0]
         videoTitle=re.findall('title="(.*?)"',entry,re.S)[0]
         if "(Original Mix)" in videoTitle:
