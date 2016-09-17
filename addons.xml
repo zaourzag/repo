@@ -276,7 +276,7 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
   </extension>
 </addon>
 
-<addon id="plugin.video.ardmediathek_de" name="ARD Mediathek" version="4.0.8" provider-name="AddonScriptorDE, membrane, L0RE">
+<addon id="plugin.video.ardmediathek_de" name="ARD Mediathek" version="4.9.1" provider-name="AddonScriptorDE, membrane, L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <!--<import addon="script.module.ardlib" version="0.0.1"/>-->

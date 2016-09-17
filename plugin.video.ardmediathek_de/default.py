@@ -91,6 +91,7 @@ def index():
 
 def listVideos(url,page=1):
   content = getUrl(url)
+  debug("-----+++++------")
   spl = content.split('<div class="teaser" data-ctrl')
   for i in range(1, len(spl), 1):
     entry = spl[i]
@@ -130,18 +131,20 @@ def listVideos(url,page=1):
     match = re.compile('/image/(.+?)/16x9/', re.DOTALL).findall(entry)
     thumb = ""
     if match:
-      thumb = baseUrl+"/image/"+match[0]+"/16x9/448"
+      thumb = baseUrl+"/image/"+match[0]+"/16x9/896"
     addLink(title, videoID, 'playVideo', thumb, duration, desc)
   xbmcplugin.endOfDirectory(pluginhandle)
   if forceViewMode:
     xbmc.executebuiltin('Container.SetViewMode('+viewMode+')')
     
 def listVideosXml(videoId):
+  debug("-----+++++------")
   for name,id,thumb,length in getVideosXml(videoId):
     addLink(name, id, 'playVideo', thumb, runtimeToInt(length), '')
   xbmcplugin.endOfDirectory(pluginhandle)
   
 def listDirRss(url):
+  debug("-----+++++------")
   content = getUrl(url)
   for title,pubDate,thumb,plot,link,documentId,category,runtime in rssParser(content):
     if not checkLive(pubDate):
@@ -156,7 +159,7 @@ def listVideosRss(url,showName,hideShowName,nextPage,einsLike):
     if hideShowName:
       title = title.replace(showName+' - ','')
     if not checkLive(pubDate) and not '/Audio-Podcast?' in link and not '/Video-Podcast?' in link:
-      thumb = thumb.replace('/384','/448')
+      thumb = thumb.replace('/384','/896')
       addLink(cleanTitle(title[0].upper()+title[1:]),link,'playVideoUrl',thumb,runtime,desc=plot,genre=category)
       
   if len(c) > 45 and nextPage:#ARD Webseite ist buggy, darum nicht 50 oder 54
@@ -294,7 +297,7 @@ def listLiveChannels():
     match = re.compile('class="headline">(.+?)<', re.DOTALL).findall(entry)
     title = match[0]
     match = re.compile('/image/(.+?)/16x9/', re.DOTALL).findall(entry)
-    thumb = baseUrl+"/image/"+match[0]+"/16x9/448"
+    thumb = baseUrl+"/image/"+match[0]+"/16x9/896"
     if title!="Das Erste":
       addLink(cleanTitle(title), channelID, 'playLive', thumb)
   xbmcplugin.endOfDirectory(pluginhandle)
