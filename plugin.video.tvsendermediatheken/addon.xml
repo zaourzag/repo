@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<addon id="plugin.video.tvsendermediatheken" name="TV-Sender Mediatheken" version="1.3.5" provider-name="Steffen95">
+<addon id="plugin.video.tvsendermediatheken" name="TV-Sender Mediatheken" version="1.3.6" provider-name="Steffen95">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
     </requires>

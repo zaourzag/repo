@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.laola1tv" version="1.5.2" name="Laola1 TV" provider-name="Jin">
+<addon id="plugin.video.laola1tv" version="1.5.3" name="Laola1 TV" provider-name="Jin">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
     </requires>

@@ -74,7 +74,7 @@
 </addon>
 
 
-<addon id="plugin.program.newscenter" name="NewsCenter" version="0.0.8" provider-name="NewsCenter">
+<addon id="plugin.program.newscenter" name="NewsCenter" version="0.0.9" provider-name="NewsCenter">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="script.module.feedparser" version="5.1.3"/>
@@ -1493,7 +1493,7 @@ Orginal Code was from AddonScriptorDE</disclaimer>
   </extension>
 </addon>
 
-<addon id="plugin.audio.prime_music" name="Amazon Prime Music" version="0.4.2" provider-name="piet">
+<addon id="plugin.audio.prime_music" name="Amazon Prime Music" version="0.4.3" provider-name="piet">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="script.module.mechanize" version="0.2.6"/>
@@ -1514,7 +1514,7 @@ Orginal Code was from AddonScriptorDE</disclaimer>
     </extension>
 </addon>
 
-<addon id="plugin.program.tvhighlights" name="TV Highlights Grabber - TV Digital" version="0.1.12" provider-name="TDOe">
+<addon id="plugin.program.tvhighlights" name="TV Highlights Grabber - TV Digital" version="0.1.13" provider-name="TDOe">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
     </requires>
@@ -1542,7 +1542,7 @@ oder online unter https://goo.gl/GtK41L nachlesen.
     </extension>
 </addon>
 
-<addon id="plugin.service.gto" name="German Telecast Offers" version="2.0.4" provider-name="Birger Jesch">
+<addon id="plugin.service.gto" name="German Telecast Offers" version="2.0.5" provider-name="Birger Jesch">
     <requires>
         <import addon="xbmc.python" version="2.20.0"/>
     </requires>
@@ -1573,7 +1573,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
     </extension>
 </addon>
 
-<addon id="plugin.video.amvnews" version="1.3.3" name="AMV News" provider-name="Jin">
+<addon id="plugin.video.amvnews" version="1.3.4" name="AMV News" provider-name="Jin">
   <requires>
    <import addon="xbmc.python" version="2.1.0"/>
    <import addon="script.module.requests" version="2.3.0"/>
@@ -1590,7 +1590,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
   </extension>
 </addon>
 
-<addon id="plugin.video.eurosportplayer" version="1.3.2" name="Eurosport Player" provider-name="Jin">
+<addon id="plugin.video.eurosportplayer" version="1.3.3" name="Eurosport Player" provider-name="Jin">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
     </requires>
@@ -1611,7 +1611,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
     </extension>
 </addon>
 
-<addon id="plugin.video.jim_panse_gamer" name="JimPanseGamer" version="2.0.2" provider-name="">
+<addon id="plugin.video.jim_panse_gamer" name="JimPanseGamer" version="2.0.3" provider-name="">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="plugin.video.youtube" version="1.0.0"/>
@@ -1628,7 +1628,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
     </extension>
 </addon>
 
-<addon id="plugin.video.laola1tv" version="1.5.2" name="Laola1 TV" provider-name="Jin">
+<addon id="plugin.video.laola1tv" version="1.5.3" name="Laola1 TV" provider-name="Jin">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
     </requires>
@@ -1649,7 +1649,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
   </extension>
 </addon>
 
-<addon id="plugin.video.mvmix" version="1.6.2" name="Music Video Mix" provider-name="Jin">
+<addon id="plugin.video.mvmix" version="1.6.3" name="Music Video Mix" provider-name="Jin">
     <requires>
         <import addon="xbmc.python" version="2.14.0"/> 
     </requires>
@@ -1664,7 +1664,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
     </extension>
 </addon>
 
-<addon id="plugin.video.sport1de" version="1.0.3" name="Sport1" provider-name="Jin">
+<addon id="plugin.video.sport1de" version="1.0.4" name="Sport1" provider-name="Jin">
   <requires>
    <import addon="xbmc.python" version="2.14.0"/>
    <import addon="script.module.requests"/>
@@ -1685,7 +1685,7 @@ Achtung: Diese Sender wurden nicht auf Funktionalität geprüft!
   </extension>
 </addon>
 
-<addon id="plugin.video.stoersendertv" name="stoersendertv" version="2.0.3" provider-name="don">
+<addon id="plugin.video.stoersendertv" name="stoersendertv" version="2.0.4" provider-name="don">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="plugin.video.youtube" version="3.0.0"/>
@@ -1703,7 +1703,7 @@ Achtung: Diese Sender wurden nicht auf Funktionalität geprüft!
     </extension>
 </addon>
 
-<addon id="plugin.video.tvsendermediatheken" name="TV-Sender Mediatheken" version="1.3.5" provider-name="Steffen95">
+<addon id="plugin.video.tvsendermediatheken" name="TV-Sender Mediatheken" version="1.3.6" provider-name="Steffen95">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
     </requires>
@@ -1722,7 +1722,7 @@ Achtung: Diese Sender wurden nicht auf Funktionalität geprüft!
     </extension>
 </addon>
 
-<addon id="resource.images.addonicons.color" name="Alternative Addon Icons" version="1.2" provider-name="Barney Stinsen">
+<addon id="resource.images.addonicons.color" name="Alternative Addon Icons" version="1.2.1" provider-name="Barney Stinsen">
 	<extension point="kodi.resource.images" compile="false" type="addonicons" />
 	<requires>
 		<import addon="kodi.resource" version="1.0.0"/>
@@ -1735,7 +1735,7 @@ Achtung: Diese Sender wurden nicht auf Funktionalität geprüft!
 	</extension>
 </addon>
 
-<addon id="resource.uisounds.destiny" version="1.0.2" name="Destiny UI Sounds (Normal)" provider-name="Jugger">
+<addon id="resource.uisounds.destiny" version="1.0.3" name="Destiny UI Sounds (Normal)" provider-name="Jugger">
   <requires>
     <import addon="kodi.resource" version="1.0.0"/>
   </requires>
@@ -1747,7 +1747,7 @@ Achtung: Diese Sender wurden nicht auf Funktionalität geprüft!
   </extension>
 </addon>
 
-<addon id="script.delete.files" name="Delete Files" version="0.1.2" provider-name="mad-max">
+<addon id="script.delete.files" name="Delete Files" version="0.1.3" provider-name="mad-max">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
   </requires>
@@ -1763,7 +1763,7 @@ Achtung: Diese Sender wurden nicht auf Funktionalität geprüft!
   </extension>
 </addon>
 
-<addon id="script.loungeripper" name="Lounge Ripper" version="0.1.24" provider-name="Birger Jesch">
+<addon id="script.loungeripper" name="Lounge Ripper" version="0.1.25" provider-name="Birger Jesch">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
 	</requires>
@@ -1786,7 +1786,7 @@ Achtung: Diese Sender wurden nicht auf Funktionalität geprüft!
 	</extension>
 </addon>
 
-<addon id="service.fritzbox.callmonitor" name="Fritzbox Callmonitor" version="2.0.3" provider-name="Birger Jesch, Lutz Leonhardt">
+<addon id="service.fritzbox.callmonitor" name="Fritzbox Callmonitor" version="2.0.4" provider-name="Birger Jesch, Lutz Leonhardt">
   <requires>
     <import addon="script.module.requests" version="2.3.0" />
     <import addon="script.module.pil" version="1.1.7" />
@@ -1822,7 +1822,7 @@ Achtung: Diese Sender wurden nicht auf Funktionalität geprüft!
   </extension>
 </addon>
 
-<addon id="service.idle.actions" name="IDLE actions" version="1.0.3" provider-name="4lb3rtO">
+<addon id="service.idle.actions" name="IDLE actions" version="1.0.4" provider-name="4lb3rtO">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
 	<import addon="xbmc.addon" version="12.0.0"/>
@@ -1841,7 +1841,7 @@ Achtung: Diese Sender wurden nicht auf Funktionalität geprüft!
   </extension>
 </addon>
 
-<addon id="service.kn.switchtimer" name="KN Switchtimer Service" provider-name="Birger Jesch" version="1.2.5">
+<addon id="service.kn.switchtimer" name="KN Switchtimer Service" provider-name="Birger Jesch" version="1.2.6">
     <requires>
         <import addon="xbmc.addon" version="14.0.0"/>
         <import addon="xbmc.python" version="2.20.0"/>
@@ -1877,7 +1877,7 @@ Achtung: Diese Sender wurden nicht auf Funktionalität geprüft!
     </extension>
 </addon>
 
-<addon id="service.lgtv.remote" name="LG Smart TV 3D Switch" version="0.1.18" provider-name="Birger Jesch">
+<addon id="service.lgtv.remote" name="LG Smart TV 3D Switch" version="0.1.19" provider-name="Birger Jesch">
   <extension point="xbmc.service" library="default.py" start="login" />
   <extension point="xbmc.python.script" library="scan.py" />
   <extension point="xbmc.addon.metadata">
@@ -1896,7 +1896,7 @@ Achtung: Diese Sender wurden nicht auf Funktionalität geprüft!
   </extension>
 </addon>
 
-<addon id="service.rytecepgdownloader" name="Rytec EPG Downloader" version="16.5.11" provider-name="Jin">
+<addon id="service.rytecepgdownloader" name="Rytec EPG Downloader" version="16.5.12" provider-name="Jin">
     <requires>
         <import addon="xbmc.python" version="2.14.0"/>
         <import addon="script.module.requests"/>
@@ -1910,7 +1910,7 @@ Achtung: Diese Sender wurden nicht auf Funktionalität geprüft!
     </extension>
 </addon>
 
-<addon id="service.sleepy.watchdog" name="Sleepy Watchdog" version="0.1.16" provider-name="Birger Jesch, thanks to Martin Schlosser">
+<addon id="service.sleepy.watchdog" name="Sleepy Watchdog" version="0.1.17" provider-name="Birger Jesch, thanks to Martin Schlosser">
   <extension point="xbmc.service"
              library="default.py" start="[login|startup]" />
   <extension point="xbmc.addon.metadata">
@@ -1929,7 +1929,7 @@ Achtung: Diese Sender wurden nicht auf Funktionalität geprüft!
   </extension>
 </addon>
 
-<addon id="service.tvh.manager" name="TVHeadend Power and Recording Management" version="0.3.18" provider-name="Birger Jesch">
+<addon id="service.tvh.manager" name="TVHeadend Power and Recording Management" version="0.3.19" provider-name="Birger Jesch">
   <extension point="xbmc.service" library="default.py" start="[login|startup]" />
   <extension point="xbmc.python.script" library="default.py" />
   <extension point="xbmc.addon.metadata">
@@ -1951,7 +1951,7 @@ Achtung: Diese Sender wurden nicht auf Funktionalität geprüft!
   </extension>
 </addon>
 
-<addon id="skin.destiny" name="Destiny" version="1.5.5" provider-name="Jugger">
+<addon id="skin.destiny" name="Destiny" version="1.5.6" provider-name="Jugger">
   <requires>
     <import addon="xbmc.gui" version="5.10.0"/> 
   </requires>
@@ -1971,7 +1971,7 @@ Achtung: Diese Sender wurden nicht auf Funktionalität geprüft!
   </extension>
 </addon>
 
-<addon id="skin.horizonzv" name="[RC] Horizonz V (Kodi 17)" version="0.9.0.3" provider-name="blauesgruen">
+<addon id="skin.horizonzv" name="[RC] Horizonz V (Kodi 17)" version="0.9.0.4" provider-name="blauesgruen">
 	<requires>
 		<import addon="xbmc.gui" version="5.12.0"/>
 	</requires>
@@ -1987,7 +1987,7 @@ Achtung: Diese Sender wurden nicht auf Funktionalität geprüft!
 	</extension>
 </addon>
 
-<addon id="skin.horizonzv.isengard" name="Horizonz V" version="1.9.0.5" provider-name="blauesgruen">
+<addon id="skin.horizonzv.isengard" name="Horizonz V" version="1.9.0.6" provider-name="blauesgruen">
 	<requires>
 		<import addon="xbmc.gui" version="5.10.0"/>
 		<!-- <import addon="script.image.resource.select" version="0.0.5"/>
@@ -2012,7 +2012,7 @@ Achtung: Diese Sender wurden nicht auf Funktionalität geprüft!
 	</extension>
 </addon>
 
-<addon id="skin.moddedconfluence.4" name="Confluence-MOD Vol. 4.2 (Beta)" provider-name="mad-max / blauesgruen (credits Team-XBMC)" version="1.3.4">
+<addon id="skin.moddedconfluence.4" name="Confluence-MOD Vol. 4.2 (Beta)" provider-name="mad-max / blauesgruen (credits Team-XBMC)" version="1.3.5">
 	<requires>
 		<import addon="xbmc.gui" version="5.10.0" />
 		<import addon="script.image.resource.select" version="0.0.5"/>
@@ -2057,7 +2057,7 @@ Achtung: Diese Sender wurden nicht auf Funktionalität geprüft!
 	</extension>
 </addon>
 
-<addon id="service.nfo.watchedstate.updater" name="NFO Watchedstate Updater" version="1.1.3" provider-name="4lb3rtO">
+<addon id="service.nfo.watchedstate.updater" name="NFO Watchedstate Updater" version="1.1.4" provider-name="4lb3rtO">
   <requires>
     <!-- Those are the version on final release. Just depend on the python version for Betas/RCs -->
     <import addon="xbmc.python" version="2.19.0"/>	  
