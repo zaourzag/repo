@@ -5,7 +5,7 @@ import xbmcplugin
 import xbmcgui
 from resources.lib.api import get_json_data
 import json
-import random
+import time
 
 URI = sys.argv[0]
 ADDON_HANDLE = int(sys.argv[1])
@@ -24,7 +24,6 @@ def round_seconds(seconds_to_round, round_to_nearest_seconds = 300):
     return seconds_to_round
 
 def list_channels(session, pg_hash, USE_FANARTS = False):
-
     if not pg_hash or not session:
         from resources.lib.api import login
         login()
@@ -32,7 +31,6 @@ def list_channels(session, pg_hash, USE_FANARTS = False):
         addon = xbmcaddon.Addon(id = 'plugin.video.zattoo_com')
         pg_hash = addon.getSetting('pg_hash')
         session = addon.getSetting('session')
-
     try:
         json_data = json.loads(get_json_data('http://zattoo.com/zapi/v2/cached/channels/%s?details=True' % pg_hash, session))
     except urllib2.HTTPError:
@@ -45,13 +43,15 @@ def list_channels(session, pg_hash, USE_FANARTS = False):
         json_data = json.loads(get_json_data('http://zattoo.com/zapi/v2/cached/channels/%s?details=True' % pg_hash, session))
     except urllib2.URLError:
         from resources.lib.functions import warning
-        warning('Keine Netzwerkverbindung!', exit = True)        
+        warning('Keine Netzwerkverbindung!')
+        return
     except:
         from resources.lib.functions import warning
-        warning('TV Daten konnten nicht geladen werden!', exit = True)
+        warning('TV Daten konnten nicht geladen werden!')
+        return
     
     channel_groups = json_data['channel_groups']#[:3]
-    random_number = random.getrandbits(64) # to force new thumbs
+    current_timestamp = int(time.time())
     
     for group in channel_groups:
         for channel in group['channels']:
@@ -59,21 +59,27 @@ def list_channels(session, pg_hash, USE_FANARTS = False):
                 if quality['availability'] == 'available':
                     channel_name = quality['title']
                     id = channel['cid']
-                    thumb = 'http://thumb.zattic.com/%s/500x288.jpg?%i' % (id, random_number)
+                    thumb = 'http://thumb.zattic.com/%s/500x288.jpg?r=%i' % (id, current_timestamp)
                     try:
                         title = channel['now']['t']
+                        subtitle = channel['now']['et']
+                        if subtitle:
+                            title = '%s: %s' % (title, subtitle)
                     except:
                         title = ''
+                    item = xbmcgui.ListItem('[B][COLOR blue]%s[/COLOR][/B] %s' % (channel_name, title), thumbnailImage=thumb)
                     try:
-                        duration_in_seconds = round_seconds(channel['now']['e'] - channel['now']['s'])
+                        duration_in_seconds = round_seconds(channel['now']['e'] - current_timestamp)
                     except:
                         duration_in_seconds = 0
                     try:
                         next = '[B][COLOR blue]Danach:[/COLOR][/B] %s (%i Min.)' % (
                                 channel['next']['t'], (channel['next']['e'] - channel['next']['s']) / 60)
+                        item.addContextMenuItems(
+                            [('EPG Daten laden', 'xbmc.RunPlugin(plugin://plugin.video.zattoo_com/?mode=epg&id=%s)' % channel['now']['id'])]
+                        )
                     except:
                         next = ''
-                    item = xbmcgui.ListItem('[B][COLOR blue]%s[/COLOR][/B] %s' % (channel_name, title), thumbnailImage=thumb)
                     if USE_FANARTS:
                         try:
                             fanart = channel['now']['i'].replace('format_480x360.jpg', 'format_1280x720.jpg')

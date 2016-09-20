@@ -1,14 +1,4 @@
 # -*- coding: utf-8 -*-
-
-def get_parameter_dict(parameters):
-    param_dict = {}
-    if parameters:
-        param_pairs = parameters[1:].split('&')
-        for pair in param_pairs:
-            splitted = pair.split('=')
-            if (len(splitted)) == 2:
-                param_dict[splitted[0]] = splitted[1]
-    return param_dict
     
 def warning(text, title = 'Zattoo Live TV', time = 4500, exit = False):
     import xbmc
