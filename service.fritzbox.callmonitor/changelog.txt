@@ -2,7 +2,7 @@ CHANGELOG
 
 2.0.5
 - Bugfix for Android based systems (NullHandler)
-- bump version due repo change
+- bump version due repo change to kodinerds
 
 2.0.2
 - Option for pausing audio/video on incoming signaling added. Default is set to false.
