@@ -80,12 +80,14 @@ def entity2unicode(text):
 
 def getUnicodePage(url, container=None):
     try:
-        req = urllib2.urlopen(url.encode('utf-8'))
+        req = urllib2.urlopen(url.encode('utf-8'), timeout=30)
     except UnicodeDecodeError:
         req = urllib2.urlopen(url)
     except ValueError:
         return False
     except urllib2.HTTPError:
+        return False
+    except socket.timeout:
         return False
 
     encoding = 'utf-8'
@@ -170,20 +172,22 @@ def channelName2channelId(channelname):
     # translate via json if necessary
     trans = json.loads(str(ChannelTranslate))
     for tr in trans:
-        if channelname.upper() == tr['name'].upper():
-            writeLog("Translating %s to %s" % (channelname,tr['pvrname']), level=xbmc.LOGDEBUG)
-            channelname = tr['pvrname']
+        for names in tr['name']:
+            if channelname.lower() == names.lower():
+                writeLog("Translating %s to %s" % (channelname, tr['pvrname']), level=xbmc.LOGDEBUG)
+                channelname = tr['pvrname']
+                break
     
     if 'result' in res and 'channels' in res['result']:
         res = res['result'].get('channels')
         for channels in res:
 
             # prefer HD Channel if available
-            if __prefer_hd__ and  (channelname + " HD").lower() in channels['label'].lower():
+            if __prefer_hd__ and  (channelname + " HD").lower() == channels['label'].lower():
                 writeLog("GTO found HD priorized channel %s" % (channels['label']), level=xbmc.LOGDEBUG)
                 return channels['channelid']
 
-            if channelname.lower() in channels['label'].lower():
+            if channelname.lower() == channels['label'].lower():
                 writeLog("GTO found channel %s" % (channels['label']), level=xbmc.LOGDEBUG)
                 return channels['channelid']
     return False
@@ -245,7 +249,7 @@ def clearInfoProperties():
 
 def refreshWidget(handle=None, enabled=__enableinfo__):
 
-    blobs = WINDOW.getProperty('GTO.blobs')
+    blobs = WINDOW.getProperty('GTO.blobs') or '0'
     if blobs == '0': return 0
 
     notifyOSD(__LS__(30010), __LS__(30109) % (__shortname__), icon=__icon__, enabled=enabled)
@@ -291,12 +295,13 @@ def scrapeGTOPage(enabled=__enableinfo__):
 
     notifyOSD(__LS__(30010), __LS__(30018) % (__shortname__), icon=__icon__, enabled=enabled)
     writeLog('Start scraping from %s' % (data.rssurl), level=xbmc.LOGDEBUG)
+    blobs = WINDOW.getProperty('GTO.blobs') or '0'
 
     content = getUnicodePage(data.rssurl, container=data.selector)
+    if not content: return
+
     i = 1
     content.pop(0)
-
-    blobs = WINDOW.getProperty('GTO.blobs') or '0'
 
     for idx in range(1, int(blobs) + 1, 1):
         WINDOW.clearProperty('GTO.%s' % (idx))
