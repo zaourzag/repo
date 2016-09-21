@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 
-import socket
+import socket, select
 import os
 import re
-import traceback
-import sys
 
 import xbmc
 import xbmcaddon
 import xbmcgui
+# import json
 from resources.lib.PhoneBooks.PhoneBookFacade import PhoneBookFacade
 from resources.lib.KlickTel import KlickTel
 import hashlib
@@ -37,7 +36,6 @@ LISTENPORT = 1012
 PLAYER = xbmc.Player()
 OSD = xbmcgui.Dialog()
 
-
 # CLASSES
 
 class PlayerProperties:
@@ -63,19 +61,12 @@ class PlayerProperties:
 class XBMCMonitor(xbmc.Monitor):
     def __init__(self, *args, **kwargs):
         xbmc.Monitor.__init__(self)
-        self.SettingsChanged = False
+        self.settingsChanged = False
 
     def onSettingsChanged(self):
-        self.SettingsChanged = True
+        self.settingsChanged = True
 
-    def onScreensaverActivated(self):
-        self.ScreensaverActive = True
-
-    def onScreensaverDeactivated(self):
-        self.ScreensaverActive = False
-
-
-class FritzCallmonitor(PlayerProperties, XBMCMonitor):
+class FritzCallmonitor(PlayerProperties):
     __phoneBookFacade = None
     __phonebook = None
     __klicktel = None
@@ -85,11 +76,11 @@ class FritzCallmonitor(PlayerProperties, XBMCMonitor):
     def __init__(self):
 
         self.PlayerProperties = PlayerProperties()
-        XBMCMonitor.__init__(self)
         self.getSettings()
         self.getPhonebook()
 
         self.ScreensaverActive = xbmc.getCondVisibility('System.ScreenSaverActive')
+        self.screensaver = None
 
         self.connectionEstablished = None
         self.userActionPlay = None
@@ -157,7 +148,10 @@ class FritzCallmonitor(PlayerProperties, XBMCMonitor):
         self.__optPauseAudio = True if __addon__.getSetting('optPauseAudio').upper() == 'TRUE' else False
         self.__optPauseVideo = True if __addon__.getSetting('optPauseVideo').upper() == 'TRUE' else False
         self.__optPauseTV = True if __addon__.getSetting('optPauseTV').upper() == 'TRUE' else False
+        self.__optEarlyPause = True if __addon__.getSetting('optEarlyPause').upper() == 'TRUE' else False
         self.__useKlickTelReverse = True if __addon__.getSetting('useKlickTelReverse').upper() == 'TRUE' else False
+
+        self.notifyLog('Settings (re)loaded', level=xbmc.LOGDEBUG)
 
     # Get the Phonebook
 
@@ -206,6 +200,7 @@ class FritzCallmonitor(PlayerProperties, XBMCMonitor):
                         if os.path.isfile(fname):
                             self.notifyLog('Load image from cache: %s' % (os.path.basename(fname)))
                             imageBMP = fname
+                            break
 
         return {'name': name, 'imageBMP': imageBMP}
 
@@ -215,6 +210,46 @@ class FritzCallmonitor(PlayerProperties, XBMCMonitor):
             self.notifyLog('%s is excluded from monitoring, do not notify...' % (exnum))
             self.__hide = True
         return self.__hide
+
+    def handlePlayerProperties(self):
+        self.PlayerProperties.getConnectConditions()
+        if self.PlayerProperties.isPause != self.PlayerProperties.isConnectPause:
+            self.userActionPlay = True
+        if self.PlayerProperties.isMute != self.PlayerProperties.isConnectMute:
+            self.userActionMute = True
+        #
+        # Save connection for handleDisconnected:
+        # this condition determines whether the play and mute commands has to be executed again
+        #
+        self.connectionEstablished = True
+
+        # Extra condition: only do this if the user hasn't changed the status of the player
+
+        if (
+            self.__optPauseAudio or self.__optPauseVideo) and not self.PlayerProperties.isPause and not self.userActionPlay:
+            if self.__optPauseTV and self.PlayerProperties.isPlayTV:
+                self.notifyLog('Player is playing TV, pausing...')
+                xbmc.executebuiltin('PlayerControl(Play)')
+                # Save the status of the player for later comparison
+                self.PlayerProperties.isConnectPause = True
+            elif self.__optPauseVideo and self.PlayerProperties.isPlayVideo and not self.PlayerProperties.isPlayTV:
+                self.notifyLog('Player is playing Video, pausing...')
+                xbmc.executebuiltin('PlayerControl(Play)')
+                # Save the status of the player for later comparison
+                self.PlayerProperties.isConnectPause = True
+            elif self.__optPauseAudio and self.PlayerProperties.isPlayAudio and not self.PlayerProperties.isPlayTV:
+                self.notifyLog('Player is playing Audio, pausing...')
+                xbmc.executebuiltin('PlayerControl(Play)')
+                # Save the status of the player for later comparison
+                self.PlayerProperties.isConnectPause = True
+
+        if self.__optMute and not self.PlayerProperties.isMute and not self.userActionMute:
+            if not (self.__optPauseAudio or self.__optPauseVideo) or (
+                        not self.__optPauseTV and self.PlayerProperties.isPlayTV):
+                self.notifyLog('Muting Volume...')
+                xbmc.executebuiltin('Mute')
+                # Save the status of the player for later comparison
+                self.PlayerProperties.isConnectMute = True
 
     def handleOutgoingCall(self, line):
         self.PlayerProperties.getConditions()
@@ -253,48 +288,36 @@ class FritzCallmonitor(PlayerProperties, XBMCMonitor):
                 caller_num = __LS__(30016)
                 icon = __IconUnknown__
 
+            if self.__optEarlyPause: self.handlePlayerProperties()
+
+            # TODO: read actual screensaver via JSON, set screensaver to None
+            '''
+            query = {
+                "jsonrpc": "2.0",
+                "method": "Settings.getSettingValue",
+                "params": {"setting": "screensaver.mode"},
+                "id": 0
+            }
+            res = json.loads(xbmc.executeJSONRPC(json.dumps(query, encoding='utf-8')))
+            self.screensaver = res['result']['value']
+            query = {
+                "jsonrpc": "2.0",
+                "method": "Settings.setSettingValue",
+                "params": {"setting": "screensaver.mode", "value": ""},
+                "id": 0
+            }
+            res = json.loads(xbmc.executeJSONRPC(json.dumps(query, encoding='utf-8')))
+            self.notifyLog('Setting Screensaver %s to None' % (self.screensaver))
+            '''
+
             self.notifyOSD(__LS__(30010), __LS__(30011) % (name, caller_num), icon, self.__dispMsgTime)
             self.notifyLog('Incoming call from %s (%s)' % (name, caller_num))
+
 
     def handleConnected(self, line):
         self.notifyLog('Line connected')
         if not self.__hide:
-            self.PlayerProperties.getConnectConditions()
-            if self.PlayerProperties.isPause != self.PlayerProperties.isConnectPause:
-                self.userActionPlay = True
-            if self.PlayerProperties.isMute != self.PlayerProperties.isConnectMute:
-                self.userActionMute = True
-            #
-            # Save connection for handleDisconnected:
-            # this condition determines whether the play and mute commands has to be executed again
-            #
-            self.connectionEstablished = True
-            # Extra condition: only do this if the user hasn't changed the status of the player
-            if (
-                        self.__optPauseAudio or self.__optPauseVideo) and not self.PlayerProperties.isPause and not self.userActionPlay:
-                if self.__optPauseTV and self.PlayerProperties.isPlayTV:
-                    self.notifyLog('Player is playing TV, pausing...')
-                    xbmc.executebuiltin('PlayerControl(Play)')
-                    # Save the status of the player for later comparison
-                    self.PlayerProperties.isConnectPause = True
-                elif self.__optPauseVideo and self.PlayerProperties.isPlayVideo and not self.PlayerProperties.isPlayTV:
-                    self.notifyLog('Player is playing Video, pausing...')
-                    xbmc.executebuiltin('PlayerControl(Play)')
-                    # Save the status of the player for later comparison
-                    self.PlayerProperties.isConnectPause = True
-                elif self.__optPauseAudio and self.PlayerProperties.isPlayAudio and not self.PlayerProperties.isPlayTV:
-                    self.notifyLog('Player is playing Audio, pausing...')
-                    xbmc.executebuiltin('PlayerControl(Play)')
-                    # Save the status of the player for later comparison
-                    self.PlayerProperties.isConnectPause = True
-
-            if self.__optMute and not self.PlayerProperties.isMute and not self.userActionMute:
-                if not (self.__optPauseAudio or self.__optPauseVideo) or (
-                            not self.__optPauseTV and self.PlayerProperties.isPlayTV):
-                    self.notifyLog('Muting Volume...')
-                    xbmc.executebuiltin('Mute')
-                    # Save the status of the player for later comparison
-                    self.PlayerProperties.isConnectMute = True
+            if not self.__optEarlyPause: self.handlePlayerProperties()
 
     def handleDisconnected(self, line):
         if not self.__hide:
@@ -328,6 +351,19 @@ class FritzCallmonitor(PlayerProperties, XBMCMonitor):
                             not self.__optPauseTV and self.PlayerProperties.isPlayTV):
                     self.notifyLog('Volume was not muted, unmute...')
                     xbmc.executebuiltin('Mute')
+
+            # TODO: set screensaver to default module
+            '''
+            query = {
+                "jsonrpc": "2.0",
+                "method": "Settings.setSettingValue",
+                "params": {"setting": "screensaver.mode", "value": self.screensaver},
+                "id": 0
+            }
+            res = json.loads(xbmc.executeJSONRPC(json.dumps(query, encoding='utf-8')))
+            self.notifyLog('Setting Screensaver back to %s' % (self.screensaver))
+            '''
+
         else:
             self.notifyLog('excluded number seems disconnected, reset status of callmonitor')
             self.__hide = False
@@ -338,22 +374,13 @@ class FritzCallmonitor(PlayerProperties, XBMCMonitor):
     def notifyLog(self, message, level=xbmc.LOGNOTICE):
         xbmc.log('[%s] %s' % (__addonname__, message.encode('utf-8')), level)
 
-    def traceError(self, e, exc_tb):
-        while exc_tb:
-            tb = traceback.format_tb(exc_tb)
-            self.notifyLog('%s' % e, level=xbmc.LOGERROR)
-            self.notifyLog('In module: %s' % sys.argv[0].strip() or '<not defined>', level=xbmc.LOGERROR)
-            self.notifyLog('At line:   %s' % traceback.tb_lineno(exc_tb), level=xbmc.LOGERROR)
-            self.notifyLog('In file:   %s' % tb[0].split(",")[0].strip()[6:-1], level=xbmc.LOGERROR)
-            exc_tb = exc_tb.tb_next
-
     def connect(self, notify=False):
         if self.__s is not None:
             self.__s.close()
             self.__s = None
         try:
             self.__s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            self.__s.settimeout(60)
+            self.__s.settimeout(30)
             self.__s.connect((self.__server, LISTENPORT))
         except socket.error as e:
             if notify: self.notifyOSD(__LS__(30030), __LS__(30031) % (self.__server, LISTENPORT), __IconError__)
@@ -361,7 +388,7 @@ class FritzCallmonitor(PlayerProperties, XBMCMonitor):
             self.notifyLog('%s' % (e), level=xbmc.LOGERROR)
             return False
         except Exception as e:
-            self.traceError(e, sys.exc_traceback)
+            self.notifyLog('%s' % (e), level=xbmc.LOGERROR)
             return False
         else:
             self.notifyLog('Connected, listen to %s on port %s' % (self.__server, LISTENPORT))
@@ -374,7 +401,15 @@ class FritzCallmonitor(PlayerProperties, XBMCMonitor):
 
             # MAIN SERVICE
 
-            while not xbmc.abortRequested:
+            Mon = XBMCMonitor()
+            while not Mon.abortRequested():
+
+                if Mon.settingsChanged:
+                    self.getSettings()
+                    Mon.settingsChanged = False
+
+                # ToDo: investigate more from https://pymotw.com/2/select/index.html#module-select
+                # i.e check exception handling
 
                 try:
                     fbdata = self.__s.recv(512)
@@ -389,24 +424,18 @@ class FritzCallmonitor(PlayerProperties, XBMCMonitor):
 
                 except socket.timeout:
                     pass
+                except socket.error as e:
+                    self.notifyLog('No connection to %s, try to respawn' % (self.__server), level=xbmc.LOGERROR)
+                    self.notifyLog('%s' % (e), level=xbmc.LOGERROR)
+                    self.connect()
                 except IndexError:
                     self.notifyLog('Communication failure', level=xbmc.LOGERROR)
                     self.connect()
-                except socket.error as e:
-                    self.notifyLog('No connection to %s, try to respawn' % (self.__server), level=xbmc.LOGERROR)
-                    self.connect()
                 except Exception as e:
-                    self.traceError(e, sys.exc_traceback)
+                    self.notifyLog('%s' % (e), level=xbmc.LOGERROR)
                     break
 
-                if self.SettingsChanged:
-                    self.notifyLog('Settings changed, perform update')
-                    self.getSettings()
-                    self.SettingsChanged = False
-                    self.getPhonebook()
-
             self.__s.close()
-
 
 # START
 
