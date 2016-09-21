@@ -1621,8 +1621,7 @@ Achtung: Diese Sender wurden nicht auf Funktionalität geprüft!
   </extension>
 </addon>
 
-<addon id="service.fritzbox.callmonitor" name="Fritzbox Callmonitor" version="2.0.5"
-       provider-name="Birger Jesch, Lutz Leonhardt">
+<addon id="service.fritzbox.callmonitor" name="Fritzbox Callmonitor" version="2.0.5" provider-name="Birger Jesch, Lutz Leonhardt">
   <requires>
     <import addon="xbmc.python" version="2.24.0" />
     <import addon="xbmc.json" version="6.32.4" />
