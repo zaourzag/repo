@@ -1867,7 +1867,7 @@ Achtung: Diese Sender wurden nicht auf Funktionalität geprüft!
     </extension>
 </addon>
 
-<addon id="service.sleepy.watchdog" name="Sleepy Watchdog" version="0.1.17" provider-name="Birger Jesch, thanks to Martin Schlosser">
+<addon id="service.sleepy.watchdog" name="Sleepy Watchdog" version="0.1.18" provider-name="Birger Jesch, thanks to Martin Schlosser">
   <extension point="xbmc.service"
              library="default.py" start="[login|startup]" />
   <extension point="xbmc.addon.metadata">
