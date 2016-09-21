@@ -23,27 +23,6 @@
     </extension>
 </addon>
 
-<addon id="plugin.audio.prime_music" name="Amazon Prime Music" version="0.4.3" provider-name="piet">
-    <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
-        <import addon="script.module.mechanize" version="0.2.6"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>audio</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <summary lang="en">Amazon Prime Music Add-on (DE)</summary>
-        <language></language>
-        <description lang="en">Amazon Prime Music Add-on (DE)</description>
-        <disclaimer lang="en">Some parts of this addon may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
-        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-        <source>https://github.com/</source>
-        <forum>http://www.kodinerds.net</forum>
-        <website>http://www.amazon.de</website>
-    </extension>
-</addon>
-
 <addon id="plugin.audio.radioteddy_de" name="RadioTeddy.de" version="1.0.0" provider-name="Tombstone">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
@@ -127,65 +106,6 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
     </extension>
 </addon>
 
-<addon id="plugin.program.tvhighlights" name="TV Highlights Grabber - TV Digital" version="0.1.13" provider-name="TDOe">
-    <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
-    </requires>
-    <extension point="xbmc.python.script" library="default.py" />
-    <extension point="xbmc.service" library="starter.py" start="startup">
-    </extension>
-
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <summary lang="en">Fetch todays TV Highlights from www.tvdigital.de</summary>
-        <summary lang="de">Holt die TV Highlights des Tages von www.tvdigital.de</summary>
-        <language>de</language>
-        <description lang="en">Fetch todays TV Highlights from www.tvdigital.de</description>
-        <description lang="de">Holt die TV Highlights des Tages von www.tvdigital.de
-
-Dieses Plugin benoetigt eine Skin-Integration!
-Hierfür bitte README.txt im Ordner integration beachten
-oder online unter https://goo.gl/GtK41L nachlesen.
-        </description>
-        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-        <source>https://github.com/tobias-d-oe/plugin.program.tvhighlights</source>
-        <forum>http://goo.gl/TdGZsF</forum>
-        <email>-</email>
-        <website>-</website>
-    </extension>
-</addon>
-
-<addon id="plugin.service.gto" name="German Telecast Offers" version="2.0.5" provider-name="Birger Jesch">
-    <requires>
-        <import addon="xbmc.python" version="2.20.0"/>
-    </requires>
-    <extension point="xbmc.python.script" library="default.py" />
-    <extension point="xbmc.service" library="starter.py" start="startup">
-    </extension>
-
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <summary lang="en">Fetch todays TV Offers from different scrapers</summary>
-        <summary lang="de">Holt die TV Tipps des Tages aus den RSS-Feeds diverser Webseiten</summary>
-        <language>de</language>
-        <description lang="en">Fetch todays TV Offers from different scrapers
-
-This plugin needs a integration into the skin!
-Please refer to the README.txt into the folder named 'integration'.
-        </description>
-        <description lang="de">Holt die TV Tipps des Tages aus den RSS-Feeds diverser Webseiten.
-
-Dieses Plugin benoetigt eine Skin-Integration!
-Hierfür bitte README.txt im Ordner 'integration' beachten.
-        </description>
-        <license>GNU GENERAL PUBLIC LICENSE. Version 3, June 2007</license>
-        <source>https://github.com/b-jesch/plugin.service.gto</source>
-        <forum>http://www.kodinerds.net/index.php/Thread/50943-Release-TV-Widget-German-Telecast-Offers/</forum>
-        <email>birger.jesch@gmail.com</email>
-        <website>http://vdr4bj1.no-ip.org/index.php?action=list&amp;item=addon</website>
-    </extension>
-</addon>
-
 <addon id="plugin.video.7tv" name="7TV" version="3.1.7" provider-name="L0RE">
 	<requires>
 		<import addon="xbmc.python" version="2.14.0"/>
@@ -226,23 +146,6 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
     <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.ampya</source>
     <forum>http://www.kodinerds.net/</forum>
     <email>andreas at vogler dot name</email>
-    <platform>all</platform>
-  </extension>
-</addon>
-
-<addon id="plugin.video.amvnews" version="1.3.4" name="AMV News" provider-name="Jin">
-  <requires>
-   <import addon="xbmc.python" version="2.1.0"/>
-   <import addon="script.module.requests" version="2.3.0"/>
-  </requires>
-  <extension 
-    point="xbmc.python.pluginsource"
-    library="default.py">
-   <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary>AMVNews.ru</summary>
-    <description>Anime Music Videos</description>
     <platform>all</platform>
   </extension>
 </addon>
@@ -602,27 +505,6 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
 	</extension>
 </addon>
 
-<addon id="plugin.video.eurosportplayer" version="1.3.3" name="Eurosport Player" provider-name="Jin">
-    <requires>
-        <import addon="xbmc.python" version="2.24.0"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="addon.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <summary lang="de_DE">Eurosport live, jederzeit und überall</summary>
-        <summary lang="en_GB">Watch Eurosport Live Anytime, Anywhere</summary>
-        <description lang="de_DE">Eurosport Player ist der Eurosport-Abonnementservice, mit dem Sie vollständigen und unbegrenzten LIVE- und On-Demand-Zugriff auf die Eurosport-Kanäle und exklusive Inhalte erhalten.</description>
-        <description lang="en_GB">Eurosport Player is the Eurosport subscription service to enjoy full and unlimited access to the Eurosport channels and exclusive content LIVE and on demand.</description>
-        <platform>all</platform>
-        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-        <disclaimer lang="de_DE">Inoffizielles Addon - Benutzung auf eigene Gefahr</disclaimer>
-        <disclaimer lang="en_GB">Unofficial Addon - Use at your own risk</disclaimer>
-        <forum>http://www.kodinerds.net</forum>
-        <email>[jin] at [xyz] dot [de]</email>
-    </extension>
-</addon>
-
 <addon id="plugin.video.fernsehkritik_tv" name="Fernsehkritik.tv" version="2.1.4" provider-name="AddonScriptorDE">
     <requires>
         <import addon="xbmc.python" version="2.19.0"/>
@@ -688,7 +570,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
     </extension>
 </addon>
 
-<addon id="plugin.video.helloworld" name="Helo World" version="0.0.3" provider-name="L0RE">
+<addon id="plugin.video.helloworld" name="Helo World" version="0.0.5" provider-name="L0RE">
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
     </extension>
@@ -701,23 +583,6 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
     <email>andreas at vogler dot name</email>
     <platform>all</platform>
   </extension>
-</addon>
-
-<addon id="plugin.video.jim_panse_gamer" name="JimPanseGamer" version="2.0.3" provider-name="">
-    <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
-        <import addon="plugin.video.youtube" version="1.0.0"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <summary lang="en">JimPanseGamer</summary>
-        <language></language>
-        <description lang="en">JimPanseGamer</description>
-    <platform>all</platform>
-    </extension>
 </addon>
 
 <addon id="plugin.video.kicker_tv" name="Kicker.tv" version="1.0.1" provider-name="PUR3">
@@ -777,27 +642,6 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
         <description lang="de">Kikaninchen - der U3 Kinderkanal von ARD und ZDF</description>
         <description lang="en">Kikaninchen - the U3 kids channel from ARD and ZDF</description>
     </extension>
-</addon>
-
-<addon id="plugin.video.laola1tv" version="1.5.3" name="Laola1 TV" provider-name="Jin">
-    <requires>
-        <import addon="xbmc.python" version="2.24.0"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="addon.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <summary lang="de_DE">LAOLA1.tv - Das Sport-TV im Netz</summary>
-        <summary lang="en_GB">LAOLA1.tv - the online sports TV</summary>
-        <description lang="de_DE">Online-Videos und Video-LIVE-Streams aus der Welt des Sports.</description>
-        <description lang="en_GB">Highlight-clips and video-LIVE-streams from the world of sports.</description>
-        <platform>all</platform>
-        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-        <disclaimer lang="de_DE">Inoffizielles Addon - Benutzung auf eigene Gefahr</disclaimer>
-        <disclaimer lang="en_GB">Unofficial Addon - Use at your own risk</disclaimer>
-        <forum>http://www.kodinerds.net</forum>
-        <email>[jin] at [xyz] dot [de]</email>
-  </extension>
 </addon>
 
 <addon id="plugin.video.magine" name="Magine (Entwicklung)" version="0.0.1" provider-name="L0RE">
@@ -882,21 +726,6 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
         <description lang="en">TV-Shows, German charts, clip search, playlists, favorites</description>
         <disclaimer lang="en">Some parts of this addon may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
     <platform>all</platform>
-    </extension>
-</addon>
-
-<addon id="plugin.video.mvmix" version="1.6.3" name="Music Video Mix" provider-name="Jin">
-    <requires>
-        <import addon="xbmc.python" version="2.14.0"/> 
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="mvmix.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <summary>Music Video Mix Player</summary>
-        <description>Randomly Play Local And Online Music Videos Based On The Last FM Similar Artists API</description>
-        <platform>all</platform>
-        <forum>http://www.kodinerds.net/index.php/Thread/46548-Release-Music-Video-Mix-Player/</forum>
     </extension>
 </addon>
 
@@ -1120,27 +949,6 @@ Orginal Code was from AddonScriptorDE</disclaimer>
     </extension>
 </addon>
 
-<addon id="plugin.video.sport1de" version="1.0.4" name="Sport1" provider-name="Jin">
-  <requires>
-   <import addon="xbmc.python" version="2.14.0"/>
-   <import addon="script.module.requests"/>
-  </requires>
-  <extension 
-    point="xbmc.python.pluginsource"
-    library="default.py">
-   <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary>Sportnachrichten - aktuelle News und Livestreams</summary>
-    <description>
-Für Sport1US und Sport1+ wird ein ABO auf sport1.de benötigt.
-Achtung: Diese Sender wurden nicht auf Funktionalität geprüft!
-    </description>
-    <platform>all</platform>
-    <forum>http://www.kodinerds.net/index.php/Thread/47296</forum>
-  </extension>
-</addon>
-
 <addon id="plugin.video.sportdeutschland_tv" name="Sportdeutschland.TV" version="1.1.1" provider-name="PUR3">
 	<requires>
     	<import addon="xbmc.python" version="2.1.0"/>
@@ -1174,24 +982,6 @@ Achtung: Diese Sender wurden nicht auf Funktionalität geprüft!
         <forum>http://forum.xbmc.org/showthread.php?tid=</forum>
         <email>AddonScriptorDE at yahoo dot de</email>
         <website></website>
-    </extension>
-</addon>
-
-<addon id="plugin.video.stoersendertv" name="stoersendertv" version="2.0.4" provider-name="don">
-    <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
-        <import addon="plugin.video.youtube" version="3.0.0"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-    	<website>http://www.stoersender.tv</website>
-        <platform>all</platform>
-        <summary lang="en">Dieter Hildebrandt Stoersender.TV</summary>
-        <language>de</language>
-        <description lang="en">stoersender.tv ist freies Internet-Stör-Sehen, finanziert von der Crowd auf Startnext.de der weltweit ersten gemeinnützigen Crowdfunding-Plattform für unabhängige Projekte - z.B. für freien Journalismus.</description>
-    <platform>all</platform>
     </extension>
 </addon>
 
@@ -1238,25 +1028,6 @@ Achtung: Diese Sender wurden nicht auf Funktionalität geprüft!
         <forum>http://forum.xbmc.org/showthread.php?tid=132563</forum>
         <email>andreas at vogler dot name</email>
         <website>http://www.tivi.de</website>
-    </extension>
-</addon>
-
-<addon id="plugin.video.tvsendermediatheken" name="TV-Sender Mediatheken" version="1.3.6" provider-name="Steffen95">
-    <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <summary lang="de">Alle Sendungen aus vielen deutsche TV-Sender Mediatheken</summary>
-        <language>de</language>
-        <description lang="de">Dieses Addon greift direkt auf die Sendungen von den deutschen TV-Sernder Mediatheken zu und erspart somit einiges an Navigation durch Unterpunkte. Das Addon greift hierbei nur auf die entsprechenden Pfade von anderen Addons zu, sodass diese zum verwenden des Addons zwingend notwendig sind.</description>
-        <source></source>
-        <forum>http://www.kodinerds.net/index.php/Thread/49530-Release-Mediatheken-Sendungen/</forum>
-        <email></email>
-        <website></website>
     </extension>
 </addon>
 
@@ -1442,20 +1213,6 @@ Achtung: Diese Sender wurden nicht auf Funktionalität geprüft!
     </extension>
 </addon>
 
-<addon id="repository.kodinerds" name="kodinerds.net Add-ons" version="1.1.9" provider-name="L0RE">
-	<extension point="xbmc.addon.repository" name="L0RE">
-		<info compressed="true">https://raw.githubusercontent.com/kodinerds/repo/master/addons.xml</info>
-		<checksum>https://raw.githubusercontent.com/kodinerds/repo/master/addons.xml.md5</checksum>
-		<datadir zip="true">https://raw.githubusercontent.com/kodinerds/repo/master/</datadir>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary>Most of the addon have been abandoned, and Patched by someone new. Or have been Found without someone loosing them</summary>
-		<description>Most of the addon have been abandoned, and Patched by someone new. Or have been Found without someone loosing them</description>
-		<disclaimer></disclaimer>
-		<platform>all</platform>
-	</extension>
-</addon>
-
 <addon id="repository.lost-and-found" name="kodinerds.net Add-ons" version="1.1.9" provider-name="L0RE">
 	<extension point="xbmc.addon.repository" name="L0RE">
 		<info compressed="true">https://raw.githubusercontent.com/kodinerds/repo/master/addons.xml</info>
@@ -1484,47 +1241,6 @@ Achtung: Diese Sender wurden nicht auf Funktionalität geprüft!
 </addon>
 
 
-<addon id="resource.images.addonicons.color" name="Alternative Addon Icons" version="1.2.1" provider-name="Barney Stinsen">
-	<extension point="kodi.resource.images" compile="false" type="addonicons" />
-	<requires>
-		<import addon="kodi.resource" version="1.0.0"/>
-	</requires>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="en">Alternative Addon Icons</summary>
-		<description lang="en">Alternative Addon Icons</description>
-		<platform>all</platform>
-		<license>Creative Commons Attribution-Share Alike 3.0 United States</license>
-	</extension>
-</addon>
-
-<addon id="resource.uisounds.destiny" version="1.0.3" name="Destiny UI Sounds (Normal)" provider-name="Jugger">
-  <requires>
-    <import addon="kodi.resource" version="1.0.0"/>
-  </requires>
-  <extension point="kodi.resource.uisounds"/>
-  <extension point="kodi.addon.metadata">
-    <summary lang="en">Destiny UI Sounds (Normal)</summary>
-    <description lang="en">Destiny UI Sounds (Normal)</description>
-    <platform>all</platform>
-  </extension>
-</addon>
-
-<addon id="script.delete.files" name="Delete Files" version="0.1.3" provider-name="mad-max">
-  <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
-  </requires>
-  <extension point="xbmc.python.script" library="default.py" />
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en">Delete old files from a Directory</summary>
-	<summary lang="de">Löschen von alten Dateien aus einem Verzeichnis</summary>
-    <description lang="en">Delete old files from a Directory for maintenance purposes</description>
-	<description lang="de">Löschen von alten Dateien aus einem Verzeichnis zur Dateipflege</description>
-    <license>The MIT License</license>
-    <platform>all</platform>
-    <language></language>
-  </extension>
-</addon>
-
 <addon id="script.fritz.anaus" name="FritzPower Adapter An/Aus" version="0.2.1" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.20.0"/>
@@ -1543,29 +1259,6 @@ Achtung: Diese Sender wurden nicht auf Funktionalität geprüft!
     <email>andreas at vogler dot name</email>
     <platform>all</platform>
   </extension>
-</addon>
-
-<addon id="script.loungeripper" name="Lounge Ripper" version="0.1.25" provider-name="Birger Jesch">
-	<requires>
-		<import addon="xbmc.python" version="2.1.0"/>
-	</requires>
-	<extension point="xbmc.python.script" library="default.py">
-		<provides>executable</provides>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="en">Rip DVDs and BluRays within Kodi</summary>
-        <summary lang="de">Rippt DVDs und BluRays in Kodi</summary>
-		<description lang="en">Lounge Ripper uses MakeMKV and Handbrake to rip and encode movies directly into Kodi with a simple press of a button.</description>
-        <description lang="de">Mit Lounge Ripper einfach per Knopfdruck Filme direkt in Kodi mit Hilfe von MakeMKV und Handbrake rippen und umkodieren.</description>
-		<disclaimer lang="en">Since Lounge Ripper makes use of MakeMKV and Handbrake, those must be installed properly for it to work.</disclaimer>
-		<disclaimer lang="de">Lounge Ripper verwendet MakeMKV und Handbrake, diese müssen korrekt installiert sein.</disclaimer>
-		<platform>all</platform>
-		<license></license>
-		<forum></forum>
-		<website></website>
-		<email>birger.jesch@gmail.com</email>
-		<source>https://github.com/b-jesch/script.loungeripper.git</source>
-	</extension>
 </addon>
 
 <addon id="script.module.cryptopy" name="CryptoPy" version="1.2.6" provider-name="cryptopy.sourceforge.net">
@@ -1621,6 +1314,478 @@ Achtung: Diese Sender wurden nicht auf Funktionalität geprüft!
   </extension>
 </addon>
 
+<addon id="service.fussballpopup" name="Fussball Ticker" version="0.3.8" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.19.0"/>			       
+	    <import addon="script.module.feedparser" version="5.1.3"/>
+        <import addon="script.module.requests" version="2.3.0"/>
+		<import addon="service.popwindow" version="0.2.6"/>	
+        <import addon="repository.lost-and-found" version="1.1.7"/>
+    </requires>
+    <extension point="xbmc.service" library="service.py" start="login" />
+	<extension point="xbmc.python.pluginsource" library="menu.py" >
+	    <provides>executable</provides>
+    </extension>
+
+    <extension point="xbmc.addon.metadata">
+    <summary lang="en">Shows Football Games Messages Feed in Overlay WIndows</summary>
+    <summary lang="de">Zeigt Fussball SPiele Nachrichten Updates in PupupFensterann</summary>
+    <description lang="en">Shows Fussball Feed in Overlay WIndows</description>
+    <description lang="de">Zeigt Fussball Updates in PupupFensterann</description>
+    <website></website>
+    <source>https://github.com/kodinerds/repo/tree/master/service.fussballpopup</source>
+    <forum>http://www.kodinerds.net/index.php/Thread/52014-Fussball-Meldungen-via-Popup-um-auf-dem-Laufenden-zu-bleiben/</forum>
+    <email>andreas at vogler dot name</email>
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="service.iptv.ewe" name="EWE IPTV" version="0.0.3" provider-name="frankr612">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.requests" version="2.9.1"/>
+    <import addon="script.module.routing" version="0.2.0"></import>
+  </requires>
+  <extension point="xbmc.service" library="service.py">
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en_gb">Plugin for EWE IPTV</summary>
+    <description lang="en_gb">Wrapper Service for EWE IPTV Channels 
+    ***Attention: Addon is unofficial and not related to or supported by EWE AG***</description>
+    <disclaimer lang="en_gb"></disclaimer>
+    <language></language>
+    <platform>all</platform>
+    <license></license>
+    <forum></forum>
+    <website></website>
+    <email></email>
+    <source></source>
+  </extension>
+</addon>
+
+<addon id="service.popwindow" name="Pupup Windows" version="0.2.8" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.19.0"/>
+	<import addon="script.module.requests" version="2.9.1"/>	
+    </requires>
+    <extension point="xbmc.service" library="service.py" start="login" />
+	<extension point="xbmc.python.module" library="lib" />
+    <extension point="xbmc.addon.metadata">
+    <summary lang="en">Shows Popup  Windows</summary>
+    <summary lang="de">Shows Popup  Windows</summary>
+    <description lang="en">Shows Popup  Windows</description>
+    <description lang="de">Shows Popup  Windows</description>
+    <website></website>
+    <source>https://github.com/kodinerds/repo/tree/master/addons/service.popwindow</source>
+    <forum>http://www.kodinerds.net/index.php/Thread/46939-Repo-Lost-Found</forum>
+    <email>andreas at vogler dot name</email>
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="service.rsspopup" name="Rss Popus" version="0.3.7" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.19.0"/>			       
+	    <import addon="script.module.feedparser" version="5.1.3"/>
+        <import addon="script.module.requests" version="2.3.0"/>
+		<import addon="service.popwindow" version="0.2.6"/>	
+        <import addon="repository.lost-and-found" version="1.1.7"/>
+    </requires>
+    <extension point="xbmc.service" library="service.py" start="login" />
+	
+	<extension point="xbmc.python.pluginsource" library="service.py" >
+	    <provides>executable</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+    <summary lang="en">Shows RSS Feed in Overlay WIndows</summary>
+    <summary lang="de">Zeigt Rss Updates in PupupFensterann</summary>
+    <description lang="en">Shows RSS Feed in Overlay WIndows</description>
+    <description lang="de">Zeigt Rss Updates in PupupFensterann</description>
+    <website></website>
+    <source>https://github.com/kodinerds/repo/tree/master/service.rsspopup/</source>
+    <forum>http://www.kodinerds.net/</forum>
+    <email>andreas at vogler dot name</email>
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="service.subtitles.subcentral" name="Subcentral.de" version="0.5.2" provider-name="L0RE">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+  </requires>
+  <extension point="xbmc.subtitle.module"
+             library="service.py" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Subcentral</summary>
+    <description lang="en">German Subtitles from subcentral Webpage for TV Series</description>
+    <description lang="de">Untertitel aus dem Forum Subcentral für TV Serien</description>
+    <disclaimer lang="en"></disclaimer>
+    <platform>all</platform>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    <forum>www.kodinerds.net/index.php/Thread/24416-RELEASE-SubCentral-de-Hochwertige-Untertitel-für-TV-Serien</forum>
+    <website>https://www.subcentral.de/</website>
+    <email>andreas at vogler dot name</email>
+    <source>https://github.com/kodinerds/repo/tree/master/service.subtitles.subcentral</source>    
+  </extension>
+</addon>
+
+<addon id="service.subtitles.tv4user" name="Tv4user.de" version="0.8.8" provider-name="L0RE">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+  </requires>
+  <extension point="xbmc.subtitle.module"
+             library="service.py" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Untertitel von board.tv4user.de fuer Serien in Deutsch und Englisch</summary>
+    <description lang="en">Subtitle in German/English for Serien from board.tv4user.de </description>
+    <disclaimer lang="en"></disclaimer>
+    <platform>all</platform>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    <forum>http://www.kodinerds.net/index.php/Thread/47097-RELEASE-Untertitel-Plugin-f%C3%BCr-http-board-tv4user-de</forum>
+    <website>http://www.br.de</website>
+    <email>andreas at vogler dot name</email>
+    <source>https://github.com/kodinerds/repo/tree/master/addons/service.subtitles.tv4user</source>    
+  </extension>
+</addon>
+
+<addon id="service.twitterfeed" name="Twitter Feed" version="0.8.25" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.19.0"/>
+	<import addon="script.module.requests" version="2.9.1"/>	
+	<import addon="service.popwindow" version="0.2.7"/>	
+	<import addon="repository.lost-and-found" version="1.1.7"/>
+    </requires>
+    <extension point="xbmc.service" library="service.py" start="login" />
+	<extension point="xbmc.python.pluginsource" library="service.py" >
+	    <provides>executable</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+    <summary lang="en">Shows Twitter Messages in Kodi</summary>
+    <summary lang="de">Zeigt Twitter Nachrichten in Kodi an</summary>
+    <description lang="en">Shows Hastags from "TV Shows and Sender" or "Timline" or a "defined search word"</description>
+    <description lang="de">Zeigt Hashtags aus dem Fernsehen an oder die Timeline oder ein Suchbegriff an</description>
+    <website></website>
+    <source>https://github.com/kodinerds/repo/tree/master/addons/service.livetv.twitter</source>
+    <forum>http://www.kodinerds.net/index.php/Thread/49221-Release-Twitterfeeds/</forum>
+    <email>andreas at vogler dot name</email>
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="service.youtv.downloader" name="Youtv Downloader" version="0.2.4" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.19.0"/>
+    </requires>
+    <extension point="xbmc.service" library="service.py" start="login" />
+	<extension point="xbmc.python.pluginsource" library="service.py" >
+	    <provides>executable</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+    <summary lang="en">Läd Das Archive Automatisiert 1 Mal am Tag Runter und löscht es</summary>
+    <summary lang="de">Downloads the Archive once a day and Deletes it</summary>
+    <description lang="en">Downloads the Archive once a day and Deletes it from Youtv</description>
+    <description lang="de">Läd Das Archive Automatisiert 1 Mal am Tag Runter und löscht es</description>
+    <website></website>
+    <source>https://github.com/kodinerds/repo/tree/master/addons/service.youtv.downloader</source>
+    <forum>http://www.kodinerds.net</forum>
+    <email>andreas at vogler dot name</email>
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="plugin.audio.prime_music" name="Amazon Prime Music" version="0.4.3" provider-name="piet">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="script.module.mechanize" version="0.2.6"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>audio</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="en">Amazon Prime Music Add-on (DE)</summary>
+        <language></language>
+        <description lang="en">Amazon Prime Music Add-on (DE)</description>
+        <disclaimer lang="en">Some parts of this addon may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <source>https://github.com/</source>
+        <forum>http://www.kodinerds.net</forum>
+        <website>http://www.amazon.de</website>
+    </extension>
+</addon>
+
+<addon id="plugin.program.tvhighlights" name="TV Highlights Grabber - TV Digital" version="0.1.13" provider-name="TDOe">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+    </requires>
+    <extension point="xbmc.python.script" library="default.py" />
+    <extension point="xbmc.service" library="starter.py" start="startup">
+    </extension>
+
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="en">Fetch todays TV Highlights from www.tvdigital.de</summary>
+        <summary lang="de">Holt die TV Highlights des Tages von www.tvdigital.de</summary>
+        <language>de</language>
+        <description lang="en">Fetch todays TV Highlights from www.tvdigital.de</description>
+        <description lang="de">Holt die TV Highlights des Tages von www.tvdigital.de
+
+Dieses Plugin benoetigt eine Skin-Integration!
+Hierfür bitte README.txt im Ordner integration beachten
+oder online unter https://goo.gl/GtK41L nachlesen.
+        </description>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <source>https://github.com/tobias-d-oe/plugin.program.tvhighlights</source>
+        <forum>http://goo.gl/TdGZsF</forum>
+        <email>-</email>
+        <website>-</website>
+    </extension>
+</addon>
+
+<addon id="plugin.service.gto" name="German Telecast Offers" version="2.0.5" provider-name="Birger Jesch">
+    <requires>
+        <import addon="xbmc.python" version="2.20.0"/>
+    </requires>
+    <extension point="xbmc.python.script" library="default.py" />
+    <extension point="xbmc.service" library="starter.py" start="startup">
+    </extension>
+
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="en">Fetch todays TV Offers from different scrapers</summary>
+        <summary lang="de">Holt die TV Tipps des Tages aus den RSS-Feeds diverser Webseiten</summary>
+        <language>de</language>
+        <description lang="en">Fetch todays TV Offers from different scrapers
+
+This plugin needs a integration into the skin!
+Please refer to the README.txt into the folder named 'integration'.
+        </description>
+        <description lang="de">Holt die TV Tipps des Tages aus den RSS-Feeds diverser Webseiten.
+
+Dieses Plugin benoetigt eine Skin-Integration!
+Hierfür bitte README.txt im Ordner 'integration' beachten.
+        </description>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 3, June 2007</license>
+        <source>https://github.com/b-jesch/plugin.service.gto</source>
+        <forum>http://www.kodinerds.net/index.php/Thread/50943-Release-TV-Widget-German-Telecast-Offers/</forum>
+        <email>birger.jesch@gmail.com</email>
+        <website>http://vdr4bj1.no-ip.org/index.php?action=list&amp;item=addon</website>
+    </extension>
+</addon>
+
+<addon id="plugin.video.amvnews" version="1.3.4" name="AMV News" provider-name="Jin">
+  <requires>
+   <import addon="xbmc.python" version="2.1.0"/>
+   <import addon="script.module.requests" version="2.3.0"/>
+  </requires>
+  <extension 
+    point="xbmc.python.pluginsource"
+    library="default.py">
+   <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary>AMVNews.ru</summary>
+    <description>Anime Music Videos</description>
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="plugin.video.eurosportplayer" version="1.3.3" name="Eurosport Player" provider-name="Jin">
+    <requires>
+        <import addon="xbmc.python" version="2.24.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="addon.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="de_DE">Eurosport live, jederzeit und überall</summary>
+        <summary lang="en_GB">Watch Eurosport Live Anytime, Anywhere</summary>
+        <description lang="de_DE">Eurosport Player ist der Eurosport-Abonnementservice, mit dem Sie vollständigen und unbegrenzten LIVE- und On-Demand-Zugriff auf die Eurosport-Kanäle und exklusive Inhalte erhalten.</description>
+        <description lang="en_GB">Eurosport Player is the Eurosport subscription service to enjoy full and unlimited access to the Eurosport channels and exclusive content LIVE and on demand.</description>
+        <platform>all</platform>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <disclaimer lang="de_DE">Inoffizielles Addon - Benutzung auf eigene Gefahr</disclaimer>
+        <disclaimer lang="en_GB">Unofficial Addon - Use at your own risk</disclaimer>
+        <forum>http://www.kodinerds.net</forum>
+        <email>[jin] at [xyz] dot [de]</email>
+    </extension>
+</addon>
+
+<addon id="plugin.video.jim_panse_gamer" name="JimPanseGamer" version="2.0.3" provider-name="">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="plugin.video.youtube" version="1.0.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="en">JimPanseGamer</summary>
+        <language></language>
+        <description lang="en">JimPanseGamer</description>
+    <platform>all</platform>
+    </extension>
+</addon>
+
+<addon id="plugin.video.laola1tv" version="1.5.3" name="Laola1 TV" provider-name="Jin">
+    <requires>
+        <import addon="xbmc.python" version="2.24.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="addon.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="de_DE">LAOLA1.tv - Das Sport-TV im Netz</summary>
+        <summary lang="en_GB">LAOLA1.tv - the online sports TV</summary>
+        <description lang="de_DE">Online-Videos und Video-LIVE-Streams aus der Welt des Sports.</description>
+        <description lang="en_GB">Highlight-clips and video-LIVE-streams from the world of sports.</description>
+        <platform>all</platform>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <disclaimer lang="de_DE">Inoffizielles Addon - Benutzung auf eigene Gefahr</disclaimer>
+        <disclaimer lang="en_GB">Unofficial Addon - Use at your own risk</disclaimer>
+        <forum>http://www.kodinerds.net</forum>
+        <email>[jin] at [xyz] dot [de]</email>
+  </extension>
+</addon>
+
+<addon id="plugin.video.mvmix" version="1.6.3" name="Music Video Mix" provider-name="Jin">
+    <requires>
+        <import addon="xbmc.python" version="2.14.0"/> 
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="mvmix.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary>Music Video Mix Player</summary>
+        <description>Randomly Play Local And Online Music Videos Based On The Last FM Similar Artists API</description>
+        <platform>all</platform>
+        <forum>http://www.kodinerds.net/index.php/Thread/46548-Release-Music-Video-Mix-Player/</forum>
+    </extension>
+</addon>
+
+<addon id="plugin.video.sport1de" version="1.0.4" name="Sport1" provider-name="Jin">
+  <requires>
+   <import addon="xbmc.python" version="2.14.0"/>
+   <import addon="script.module.requests"/>
+  </requires>
+  <extension 
+    point="xbmc.python.pluginsource"
+    library="default.py">
+   <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary>Sportnachrichten - aktuelle News und Livestreams</summary>
+    <description>
+Für Sport1US und Sport1+ wird ein ABO auf sport1.de benötigt.
+Achtung: Diese Sender wurden nicht auf Funktionalität geprüft!
+    </description>
+    <platform>all</platform>
+    <forum>http://www.kodinerds.net/index.php/Thread/47296</forum>
+  </extension>
+</addon>
+
+<addon id="plugin.video.stoersendertv" name="stoersendertv" version="2.0.4" provider-name="don">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="plugin.video.youtube" version="3.0.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+    	<website>http://www.stoersender.tv</website>
+        <platform>all</platform>
+        <summary lang="en">Dieter Hildebrandt Stoersender.TV</summary>
+        <language>de</language>
+        <description lang="en">stoersender.tv ist freies Internet-Stör-Sehen, finanziert von der Crowd auf Startnext.de der weltweit ersten gemeinnützigen Crowdfunding-Plattform für unabhängige Projekte - z.B. für freien Journalismus.</description>
+    <platform>all</platform>
+    </extension>
+</addon>
+
+<addon id="plugin.video.tvsendermediatheken" name="TV-Sender Mediatheken" version="1.3.6" provider-name="Steffen95">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="de">Alle Sendungen aus vielen deutsche TV-Sender Mediatheken</summary>
+        <language>de</language>
+        <description lang="de">Dieses Addon greift direkt auf die Sendungen von den deutschen TV-Sernder Mediatheken zu und erspart somit einiges an Navigation durch Unterpunkte. Das Addon greift hierbei nur auf die entsprechenden Pfade von anderen Addons zu, sodass diese zum verwenden des Addons zwingend notwendig sind.</description>
+        <source></source>
+        <forum>http://www.kodinerds.net/index.php/Thread/49530-Release-Mediatheken-Sendungen/</forum>
+        <email></email>
+        <website></website>
+    </extension>
+</addon>
+
+<addon id="resource.images.addonicons.color" name="Alternative Addon Icons" version="1.2.1" provider-name="Barney Stinsen">
+	<extension point="kodi.resource.images" compile="false" type="addonicons" />
+	<requires>
+		<import addon="kodi.resource" version="1.0.0"/>
+	</requires>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">Alternative Addon Icons</summary>
+		<description lang="en">Alternative Addon Icons</description>
+		<platform>all</platform>
+		<license>Creative Commons Attribution-Share Alike 3.0 United States</license>
+	</extension>
+</addon>
+
+<addon id="resource.uisounds.destiny" version="1.0.3" name="Destiny UI Sounds (Normal)" provider-name="Jugger">
+  <requires>
+    <import addon="kodi.resource" version="1.0.0"/>
+  </requires>
+  <extension point="kodi.resource.uisounds"/>
+  <extension point="kodi.addon.metadata">
+    <summary lang="en">Destiny UI Sounds (Normal)</summary>
+    <description lang="en">Destiny UI Sounds (Normal)</description>
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="script.delete.files" name="Delete Files" version="0.1.3" provider-name="mad-max">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+  </requires>
+  <extension point="xbmc.python.script" library="default.py" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Delete old files from a Directory</summary>
+	<summary lang="de">Löschen von alten Dateien aus einem Verzeichnis</summary>
+    <description lang="en">Delete old files from a Directory for maintenance purposes</description>
+	<description lang="de">Löschen von alten Dateien aus einem Verzeichnis zur Dateipflege</description>
+    <license>The MIT License</license>
+    <platform>all</platform>
+    <language></language>
+  </extension>
+</addon>
+
+<addon id="script.loungeripper" name="Lounge Ripper" version="0.1.25" provider-name="Birger Jesch">
+	<requires>
+		<import addon="xbmc.python" version="2.1.0"/>
+	</requires>
+	<extension point="xbmc.python.script" library="default.py">
+		<provides>executable</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">Rip DVDs and BluRays within Kodi</summary>
+        <summary lang="de">Rippt DVDs und BluRays in Kodi</summary>
+		<description lang="en">Lounge Ripper uses MakeMKV and Handbrake to rip and encode movies directly into Kodi with a simple press of a button.</description>
+        <description lang="de">Mit Lounge Ripper einfach per Knopfdruck Filme direkt in Kodi mit Hilfe von MakeMKV und Handbrake rippen und umkodieren.</description>
+		<disclaimer lang="en">Since Lounge Ripper makes use of MakeMKV and Handbrake, those must be installed properly for it to work.</disclaimer>
+		<disclaimer lang="de">Lounge Ripper verwendet MakeMKV und Handbrake, diese müssen korrekt installiert sein.</disclaimer>
+		<platform>all</platform>
+		<license></license>
+		<forum></forum>
+		<website></website>
+		<email>birger.jesch@gmail.com</email>
+		<source>https://github.com/b-jesch/script.loungeripper.git</source>
+	</extension>
+</addon>
+
 <addon id="service.fritzbox.callmonitor" name="Fritzbox Callmonitor" version="2.0.4" provider-name="Birger Jesch, Lutz Leonhardt">
   <requires>
     <import addon="script.module.requests" version="2.3.0" />
@@ -1657,32 +1822,6 @@ Achtung: Diese Sender wurden nicht auf Funktionalität geprüft!
   </extension>
 </addon>
 
-<addon id="service.fussballpopup" name="Fussball Ticker" version="0.3.8" provider-name="L0RE">
-    <requires>
-        <import addon="xbmc.python" version="2.19.0"/>			       
-	    <import addon="script.module.feedparser" version="5.1.3"/>
-        <import addon="script.module.requests" version="2.3.0"/>
-		<import addon="service.popwindow" version="0.2.6"/>	
-        <import addon="repository.lost-and-found" version="1.1.7"/>
-    </requires>
-    <extension point="xbmc.service" library="service.py" start="login" />
-	<extension point="xbmc.python.pluginsource" library="menu.py" >
-	    <provides>executable</provides>
-    </extension>
-
-    <extension point="xbmc.addon.metadata">
-    <summary lang="en">Shows Football Games Messages Feed in Overlay WIndows</summary>
-    <summary lang="de">Zeigt Fussball SPiele Nachrichten Updates in PupupFensterann</summary>
-    <description lang="en">Shows Fussball Feed in Overlay WIndows</description>
-    <description lang="de">Zeigt Fussball Updates in PupupFensterann</description>
-    <website></website>
-    <source>https://github.com/kodinerds/repo/tree/master/service.fussballpopup</source>
-    <forum>http://www.kodinerds.net/index.php/Thread/52014-Fussball-Meldungen-via-Popup-um-auf-dem-Laufenden-zu-bleiben/</forum>
-    <email>andreas at vogler dot name</email>
-    <platform>all</platform>
-  </extension>
-</addon>
-
 <addon id="service.idle.actions" name="IDLE actions" version="1.0.4" provider-name="4lb3rtO">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
@@ -1698,29 +1837,6 @@ Achtung: Diese Sender wurden nicht auf Funktionalität geprüft!
 	<forum><!--  http://www.xbmcnerds.com/index.php?page=Thread&threadID=31418  --></forum>
     <website></website>
     <email>4lb3rtO@gmx.de</email>
-    <source></source>
-  </extension>
-</addon>
-
-<addon id="service.iptv.ewe" name="EWE IPTV" version="0.0.3" provider-name="frankr612">
-  <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
-    <import addon="script.module.requests" version="2.9.1"/>
-    <import addon="script.module.routing" version="0.2.0"></import>
-  </requires>
-  <extension point="xbmc.service" library="service.py">
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en_gb">Plugin for EWE IPTV</summary>
-    <description lang="en_gb">Wrapper Service for EWE IPTV Channels 
-    ***Attention: Addon is unofficial and not related to or supported by EWE AG***</description>
-    <disclaimer lang="en_gb"></disclaimer>
-    <language></language>
-    <platform>all</platform>
-    <license></license>
-    <forum></forum>
-    <website></website>
-    <email></email>
     <source></source>
   </extension>
 </addon>
@@ -1780,79 +1896,6 @@ Achtung: Diese Sender wurden nicht auf Funktionalität geprüft!
   </extension>
 </addon>
 
-<addon id="service.nfo.watchedstate.updater" name="NFO Watchedstate Updater" version="1.1.4" provider-name="4lb3rtO">
-  <requires>
-    <!-- Those are the version on final release. Just depend on the python version for Betas/RCs -->
-    <import addon="xbmc.python" version="2.19.0"/>	  
-    <import addon="xbmc.json"   version="6.20.0"/>
-    <import addon="xbmc.addon"  version="14.0.0"/>
-  </requires>
-  <extension 
-    point="xbmc.service" 
-    library="default.py" 
-    start="login"/>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en">Renewed your watchedstate in nfo files</summary>
-    <summary lang="de">Erneuert deinen watchedstate in den nfo Dateien</summary>
-    <description lang="en">Update your watchedstate in the nfo files as soon as this happens in the XBMC library.</description>
-    <description lang="de">Aktualisiert deinen watchedstate in den nfo Dateien, sobald dies in der XBMC Bibliothek geschieht.</description>
-    <platform>all</platform>
-    <language>en</language>
-    <language>de</language>
-    <license>Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)</license>
-    <forum><!-- http://www.kodinerds.net/index.php/Thread/36207 --></forum>
-    <website></website>
-    <email>4lb3rtO@gmx.de</email>
-    <source><!-- https://github.com/4lb3rtO/service.nfo.watchedstate.updater.git --></source>
-  </extension>
-</addon>
-
-<addon id="service.popwindow" name="Pupup Windows" version="0.2.8" provider-name="L0RE">
-    <requires>
-        <import addon="xbmc.python" version="2.19.0"/>
-	<import addon="script.module.requests" version="2.9.1"/>	
-    </requires>
-    <extension point="xbmc.service" library="service.py" start="login" />
-	<extension point="xbmc.python.module" library="lib" />
-    <extension point="xbmc.addon.metadata">
-    <summary lang="en">Shows Popup  Windows</summary>
-    <summary lang="de">Shows Popup  Windows</summary>
-    <description lang="en">Shows Popup  Windows</description>
-    <description lang="de">Shows Popup  Windows</description>
-    <website></website>
-    <source>https://github.com/kodinerds/repo/tree/master/addons/service.popwindow</source>
-    <forum>http://www.kodinerds.net/index.php/Thread/46939-Repo-Lost-Found</forum>
-    <email>andreas at vogler dot name</email>
-    <platform>all</platform>
-  </extension>
-</addon>
-
-<addon id="service.rsspopup" name="Rss Popus" version="0.3.7" provider-name="L0RE">
-    <requires>
-        <import addon="xbmc.python" version="2.19.0"/>			       
-	    <import addon="script.module.feedparser" version="5.1.3"/>
-        <import addon="script.module.requests" version="2.3.0"/>
-		<import addon="service.popwindow" version="0.2.6"/>	
-        <import addon="repository.lost-and-found" version="1.1.7"/>
-    </requires>
-    <extension point="xbmc.service" library="service.py" start="login" />
-	
-	<extension point="xbmc.python.pluginsource" library="service.py" >
-	    <provides>executable</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-    <summary lang="en">Shows RSS Feed in Overlay WIndows</summary>
-    <summary lang="de">Zeigt Rss Updates in PupupFensterann</summary>
-    <description lang="en">Shows RSS Feed in Overlay WIndows</description>
-    <description lang="de">Zeigt Rss Updates in PupupFensterann</description>
-    <website></website>
-    <source>https://github.com/kodinerds/repo/tree/master/service.rsspopup/</source>
-    <forum>http://www.kodinerds.net/</forum>
-    <email>andreas at vogler dot name</email>
-    <platform>all</platform>
-  </extension>
-</addon>
-
 <addon id="service.rytecepgdownloader" name="Rytec EPG Downloader" version="16.5.12" provider-name="Jin">
     <requires>
         <import addon="xbmc.python" version="2.14.0"/>
@@ -1867,7 +1910,7 @@ Achtung: Diese Sender wurden nicht auf Funktionalität geprüft!
     </extension>
 </addon>
 
-<addon id="service.sleepy.watchdog" name="Sleepy Watchdog" version="0.1.17" provider-name="Birger Jesch, thanks to Martin Schlosser">
+<addon id="service.sleepy.watchdog" name="Sleepy Watchdog" version="0.1.18" provider-name="Birger Jesch, thanks to Martin Schlosser">
   <extension point="xbmc.service"
              library="default.py" start="[login|startup]" />
   <extension point="xbmc.addon.metadata">
@@ -1883,45 +1926,6 @@ Achtung: Diese Sender wurden nicht auf Funktionalität geprüft!
     <website>http://vdr4bj1.no-ip.org</website>
     <email></email>
     <source>https://github.com/b-jesch/service.sleepy.watchdog</source>
-  </extension>
-</addon>
-
-<addon id="service.subtitles.subcentral" name="Subcentral.de" version="0.5.2" provider-name="L0RE">
-  <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
-  </requires>
-  <extension point="xbmc.subtitle.module"
-             library="service.py" />
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en">Subcentral</summary>
-    <description lang="en">German Subtitles from subcentral Webpage for TV Series</description>
-    <description lang="de">Untertitel aus dem Forum Subcentral für TV Serien</description>
-    <disclaimer lang="en"></disclaimer>
-    <platform>all</platform>
-    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-    <forum>www.kodinerds.net/index.php/Thread/24416-RELEASE-SubCentral-de-Hochwertige-Untertitel-für-TV-Serien</forum>
-    <website>https://www.subcentral.de/</website>
-    <email>andreas at vogler dot name</email>
-    <source>https://github.com/kodinerds/repo/tree/master/service.subtitles.subcentral</source>    
-  </extension>
-</addon>
-
-<addon id="service.subtitles.tv4user" name="Tv4user.de" version="0.8.8" provider-name="L0RE">
-  <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
-  </requires>
-  <extension point="xbmc.subtitle.module"
-             library="service.py" />
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en">Untertitel von board.tv4user.de fuer Serien in Deutsch und Englisch</summary>
-    <description lang="en">Subtitle in German/English for Serien from board.tv4user.de </description>
-    <disclaimer lang="en"></disclaimer>
-    <platform>all</platform>
-    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-    <forum>http://www.kodinerds.net/index.php/Thread/47097-RELEASE-Untertitel-Plugin-f%C3%BCr-http-board-tv4user-de</forum>
-    <website>http://www.br.de</website>
-    <email>andreas at vogler dot name</email>
-    <source>https://github.com/kodinerds/repo/tree/master/addons/service.subtitles.tv4user</source>    
   </extension>
 </addon>
 
@@ -1947,51 +1951,6 @@ Achtung: Diese Sender wurden nicht auf Funktionalität geprüft!
   </extension>
 </addon>
 
-<addon id="service.twitterfeed" name="Twitter Feed" version="0.8.25" provider-name="L0RE">
-    <requires>
-        <import addon="xbmc.python" version="2.19.0"/>
-	<import addon="script.module.requests" version="2.9.1"/>	
-	<import addon="service.popwindow" version="0.2.7"/>	
-	<import addon="repository.lost-and-found" version="1.1.7"/>
-    </requires>
-    <extension point="xbmc.service" library="service.py" start="login" />
-	<extension point="xbmc.python.pluginsource" library="service.py" >
-	    <provides>executable</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-    <summary lang="en">Shows Twitter Messages in Kodi</summary>
-    <summary lang="de">Zeigt Twitter Nachrichten in Kodi an</summary>
-    <description lang="en">Shows Hastags from "TV Shows and Sender" or "Timline" or a "defined search word"</description>
-    <description lang="de">Zeigt Hashtags aus dem Fernsehen an oder die Timeline oder ein Suchbegriff an</description>
-    <website></website>
-    <source>https://github.com/kodinerds/repo/tree/master/addons/service.livetv.twitter</source>
-    <forum>http://www.kodinerds.net/index.php/Thread/49221-Release-Twitterfeeds/</forum>
-    <email>andreas at vogler dot name</email>
-    <platform>all</platform>
-  </extension>
-</addon>
-
-<addon id="service.youtv.downloader" name="Youtv Downloader" version="0.2.4" provider-name="L0RE">
-    <requires>
-        <import addon="xbmc.python" version="2.19.0"/>
-    </requires>
-    <extension point="xbmc.service" library="service.py" start="login" />
-	<extension point="xbmc.python.pluginsource" library="service.py" >
-	    <provides>executable</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-    <summary lang="en">Läd Das Archive Automatisiert 1 Mal am Tag Runter und löscht es</summary>
-    <summary lang="de">Downloads the Archive once a day and Deletes it</summary>
-    <description lang="en">Downloads the Archive once a day and Deletes it from Youtv</description>
-    <description lang="de">Läd Das Archive Automatisiert 1 Mal am Tag Runter und löscht es</description>
-    <website></website>
-    <source>https://github.com/kodinerds/repo/tree/master/addons/service.youtv.downloader</source>
-    <forum>http://www.kodinerds.net</forum>
-    <email>andreas at vogler dot name</email>
-    <platform>all</platform>
-  </extension>
-</addon>
-
 <addon id="skin.destiny" name="Destiny" version="1.5.6" provider-name="Jugger">
   <requires>
     <import addon="xbmc.gui" version="5.10.0"/> 
@@ -2010,6 +1969,22 @@ Achtung: Diese Sender wurden nicht auf Funktionalität geprüft!
   <disclaimer lang="en">no official skin use at your own risk.</disclaimer>
   <platform>all</platform> 
   </extension>
+</addon>
+
+<addon id="skin.horizonzv" name="[RC] Horizonz V (Kodi 17)" version="0.9.0.4" provider-name="blauesgruen">
+	<requires>
+		<import addon="xbmc.gui" version="5.12.0"/>
+	</requires>
+	<extension point="xbmc.gui.skin" debugging="false" effectslowdown="0.65">
+		<res width="1920" height="1080" aspect="16:9" default="true" folder="1080p" />
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<platform>all</platform>
+		<summary>Skin von blauesgruen / Initiator mad-max</summary>
+		<description></description>
+		<!-- <description>Konzept:[CR]- einen AEON Skin schaffen der auch auf schwächeren Systemen läuft[CR]- logische und intuitive Bedienung[CR]- ein ansprechendes Aussehen im Alu-/Glasdesign, gut lesbar[CR]- alles ganz anders zu machen ;)[CR]bisher unterstützte Addons:[CR]- Artwork Downloader (Artworks für Filme)[CR]- CDArt Manager (Artworks für Music)[CR]- Script Extended Infos[CR]- GlobalSearch[CR]- SkinWidgets (ermöglicht die Darstellung von "zuletzt hinzugefügten", "zufällig gewählten" und "empfohlenen" Elementen)[CR]Kontakt und Fehlermeldungen:[CR]- www.kodinerds.net "Horizonz V"[CR]DANKE AN DIE COMMUNITY BEI XBMCNERDS/KODINERDS FUER DIE UNTERSTÜTZUNG !!!</description> -->
+		<disclaimer>Ursprünglich basierte der Skin auf den Mockups von xb2iris Skin "Horizonz".</disclaimer>
+	</extension>
 </addon>
 
 <addon id="skin.horizonzv.isengard" name="Horizonz V" version="1.9.0.6" provider-name="blauesgruen">
@@ -2033,22 +2008,6 @@ Achtung: Diese Sender wurden nicht auf Funktionalität geprüft!
 		<platform>all</platform>
 		<summary>Skin von blauesgruen / Initiator mad-max</summary>
 		<description>Konzept:[CR]- einen AEON Skin schaffen der auch auf schwächeren Systemen läuft[CR]- logische und intuitive Bedienung[CR]- ein ansprechendes Aussehen im Alu-/Glasdesign, gut lesbar[CR]- alles ganz anders zu machen ;)[CR]bisher unterstützte Addons:[CR]- Artwork Downloader (Artworks für Filme)[CR]- CDArt Manager (Artworks für Music)[CR]- Script Extended Infos[CR]- GlobalSearch[CR]- SkinWidgets (ermöglicht die Darstellung von "zuletzt hinzugefügten", "zufällig gewählten" und "empfohlenen" Elementen)[CR]Kontakt und Fehlermeldungen:[CR]- www.kodinerds.net "Horizonz V"[CR]DANKE AN DIE COMMUNITY BEI XBMCNERDS/KODINERDS FUER DIE UNTERSTÜTZUNG !!!</description>
-		<disclaimer>Ursprünglich basierte der Skin auf den Mockups von xb2iris Skin "Horizonz".</disclaimer>
-	</extension>
-</addon>
-
-<addon id="skin.horizonzv" name="[RC] Horizonz V (Kodi 17)" version="0.9.0.4" provider-name="blauesgruen">
-	<requires>
-		<import addon="xbmc.gui" version="5.12.0"/>
-	</requires>
-	<extension point="xbmc.gui.skin" debugging="false" effectslowdown="0.65">
-		<res width="1920" height="1080" aspect="16:9" default="true" folder="1080p" />
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<platform>all</platform>
-		<summary>Skin von blauesgruen / Initiator mad-max</summary>
-		<description></description>
-		<!-- <description>Konzept:[CR]- einen AEON Skin schaffen der auch auf schwächeren Systemen läuft[CR]- logische und intuitive Bedienung[CR]- ein ansprechendes Aussehen im Alu-/Glasdesign, gut lesbar[CR]- alles ganz anders zu machen ;)[CR]bisher unterstützte Addons:[CR]- Artwork Downloader (Artworks für Filme)[CR]- CDArt Manager (Artworks für Music)[CR]- Script Extended Infos[CR]- GlobalSearch[CR]- SkinWidgets (ermöglicht die Darstellung von "zuletzt hinzugefügten", "zufällig gewählten" und "empfohlenen" Elementen)[CR]Kontakt und Fehlermeldungen:[CR]- www.kodinerds.net "Horizonz V"[CR]DANKE AN DIE COMMUNITY BEI XBMCNERDS/KODINERDS FUER DIE UNTERSTÜTZUNG !!!</description> -->
 		<disclaimer>Ursprünglich basierte der Skin auf den Mockups von xb2iris Skin "Horizonz".</disclaimer>
 	</extension>
 </addon>
@@ -2082,6 +2041,47 @@ Achtung: Diese Sender wurden nicht auf Funktionalität geprüft!
 		<disclaimer lang="en_US">Confluence is based on the work of Jezz_X and Team XBMC</disclaimer>
 		<platform>all</platform>
 	</extension>
+</addon>
+
+<addon id="repository.kodinerds" name="kodinerds.net Add-ons" version="1.1.9" provider-name="L0RE">
+	<extension point="xbmc.addon.repository" name="L0RE">
+		<info compressed="true">https://raw.githubusercontent.com/kodinerds/repo/master/addons.xml</info>
+		<checksum>https://raw.githubusercontent.com/kodinerds/repo/master/addons.xml.md5</checksum>
+		<datadir zip="true">https://raw.githubusercontent.com/kodinerds/repo/master/</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary>Most of the addon have been abandoned, and Patched by someone new. Or have been Found without someone loosing them</summary>
+		<description>Most of the addon have been abandoned, and Patched by someone new. Or have been Found without someone loosing them</description>
+		<disclaimer></disclaimer>
+		<platform>all</platform>
+	</extension>
+</addon>
+
+<addon id="service.nfo.watchedstate.updater" name="NFO Watchedstate Updater" version="1.1.4" provider-name="4lb3rtO">
+  <requires>
+    <!-- Those are the version on final release. Just depend on the python version for Betas/RCs -->
+    <import addon="xbmc.python" version="2.19.0"/>	  
+    <import addon="xbmc.json"   version="6.20.0"/>
+    <import addon="xbmc.addon"  version="14.0.0"/>
+  </requires>
+  <extension 
+    point="xbmc.service" 
+    library="default.py" 
+    start="login"/>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Renewed your watchedstate in nfo files</summary>
+    <summary lang="de">Erneuert deinen watchedstate in den nfo Dateien</summary>
+    <description lang="en">Update your watchedstate in the nfo files as soon as this happens in the XBMC library.</description>
+    <description lang="de">Aktualisiert deinen watchedstate in den nfo Dateien, sobald dies in der XBMC Bibliothek geschieht.</description>
+    <platform>all</platform>
+    <language>en</language>
+    <language>de</language>
+    <license>Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International (CC BY-NC-SA 4.0)</license>
+    <forum><!-- http://www.kodinerds.net/index.php/Thread/36207 --></forum>
+    <website></website>
+    <email>4lb3rtO@gmx.de</email>
+    <source><!-- https://github.com/4lb3rtO/service.nfo.watchedstate.updater.git --></source>
+  </extension>
 </addon>
 
 </addons>
