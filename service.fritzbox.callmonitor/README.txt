@@ -17,5 +17,5 @@ Some notes
 
    Example: 08154711, 08154712
    
-2. Some Boxes need a user and a password for login, others need only password. Leave username blank if you
-   don't need this.
+2. With OS greater then 6.5 the Boxes needs a full qualified login (username/password). I strongly recommended
+   that even for older OSs
