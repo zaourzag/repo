@@ -13,3 +13,6 @@ Authentication (Nutzer, Passwort). Es empfiehlt sich, für Smart Home einen eige
 
 Zum Einbinden in den Confluence sind einige Änderungen am Skin erforderlich. Diese sind in 
 der [Readme.md](resources/Confluence/Readme.md) im Ordner resources/Confluence nochmal genau beschrieben.
+
+Ansonsten lässt sich in den Settings des Addons ein bevorzugtes Gerät angeben, welches beim Aufruf des Addons den Status
+wechselt (toggelt).

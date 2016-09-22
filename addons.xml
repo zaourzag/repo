@@ -1322,6 +1322,29 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
   	</extension>
 </addon>
 
+<addon id="plugin.program.fritzact" name="Fritz Smart Home" version="0.0.3" provider-name="Birger Jesch">
+    <requires>
+        <import addon="xbmc.python" version="2.20.0" />
+        <import addon="script.module.requests" version="2.9.1" />
+    </requires>
+	<extension point="xbmc.python.script" library="default.py">
+		<provides>executable</provides>
+    </extension>
+
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="en">Switching your home with Kodi</summary>
+        <summary lang="de">Schalte Dein Zuhause mit Kodi</summary>
+        <description lang="en">Use your Fritz!DECT switches within Kodi. Control light and devices with FritzDECT actors. Find out about powered-on devices and their power consumption.</description>
+        <description lang="de">Schalte Deine Fritz!DECT Steckdosen mit Kodi. Steuere Licht und Geräte über FritzDECT Schalter. Informiere Dich über eingeschaltete Geräte und deren Stromverbrauch.</description>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 3, June 2007</license>
+        <source></source>
+        <forum></forum>
+        <email>birger.jesch@gmail.com</email>
+        <website></website>
+    </extension>
+</addon>
+
 <addon id="plugin.video.arte_tv" name="Arte.tv" version="2.9.6" provider-name="PUR3">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>

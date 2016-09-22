@@ -4,6 +4,7 @@
     <string id="30001">Fritzbox Nutzername</string>
     <string id="30002">Fritzbox Passwort</string>
     <string id="30003">Benutze TLS/HTTPS zur Kommunikation</string>
+    <string id="30004">Bevorzugter Schalter (AIN)</string>
     <!-- Error Messages -->
     <string id="30010">Fritz!Box nicht erreichbar</string>
     <string id="30011">Login fehlgeschlagen</string>
@@ -16,7 +17,7 @@
     <string id="30024">Temperatur:</string>
     <string id="30025">Leistung:</string>
     <string id="30026">Modus:</string>
-    <string id="30027">Gesamtverbrauch:</string>
+    <string id="30027">Verbrauch:</string>
     <!-- States -->
     <string id="30030">aus</string>
     <string id="30031">an</string>
