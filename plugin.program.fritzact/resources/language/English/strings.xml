@@ -4,6 +4,7 @@
     <string id="30001">Fritzbox Userrname</string>
     <string id="30002">Fritzbox Password</string>
     <string id="30003">Use TLS/HTTPS for Communication</string>
+    <string id="30004">Preferred Switch (AIN)</string>
     <!-- Error Messages -->
     <string id="30010">Fritz!Box unreachable</string>
     <string id="30011">Could not log in</string>

@@ -89,6 +89,8 @@ weitere Informationen (AVM): https://avm.de/fileadmin/user_upload/Global/Service
     ListItem.Icon                   Zustandsbild des Aktors (offline/an/aus)
     ListItem.Property(present)      Gerät offline/online internationalisiert (siehe strings.po)
     ListItem.Property(state)        Schalter an/aus internationalisiert
+    ListItem.Property(b_present)    offline/online als boolscher Wert (true/false)
+    ListItem.Property(b_state)      an/aus als boolscher Wert (true/false)
     ListItem.Property(mode)         Betriebsmodus auto/manuell deutsch
     ListItem.Property(temperature)  Temperatur des Sensors in Celsius
     ListItem.Property(power)        entnommene Leistung in 0.01 W

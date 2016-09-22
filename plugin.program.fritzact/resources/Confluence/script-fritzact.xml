@@ -43,15 +43,21 @@
                                                         <texture border="15">RecentAddedBack.png</texture>
                                                 </control>
                                                 <control type="image">
+                                                        <description>Dialog Header Image</description>
+                                                        <left>10</left>
+                                                        <top>17</top>
+                                                        <width>270</width>
+                                                        <height>25</height>
+                                                        <texture>dialogheader.png</texture>
+                                                </control>
+                                                <control type="image">
                                                         <description>Actor Status Image</description>
-                                                        <left>20</left>
-                                                        <top>50</top>
-                                                        <width>92</width>
-                                                        <height>140</height>
+                                                        <left>15</left>
+                                                        <top>45</top>
+                                                        <width>97</width>
+                                                        <height>150</height>
                                                         <aspectratio>scale</aspectratio>
                                                         <texture background="true">$INFO[ListItem.Icon]</texture>
-                                                        <bordertexture border="5">button-nofocus.png</bordertexture>
-                                                        <bordersize>5</bordersize>
                                                 </control>
                                                 <control type="label">
                                                         <description>Actor Name</description>
@@ -59,7 +65,7 @@
                                                         <top>20</top>
                                                         <width>270</width>
                                                         <height>20</height>
-                                                        <font>font12_title</font>
+                                                        <font>font10_title</font>
                                                         <textcolor>white</textcolor>
                                                         <shadowcolor>black</shadowcolor>
                                                         <selectedcolor>selected</selectedcolor>
@@ -69,9 +75,9 @@
                                                 </control>
                                                 <control type="label">
                                                         <description>Actor Presence</description>
-                                                        <left>135</left>
+                                                        <left>118</left>
                                                         <top>45</top>
-                                                        <width>130</width>
+                                                        <width>155</width>
                                                         <height>20</height>
                                                         <font>font10</font>
                                                         <textcolor>grey2</textcolor>
@@ -83,9 +89,9 @@
                                                 </control>
                                                 <control type="label">
                                                         <description>Actor Mode</description>
-                                                        <left>135</left>
+                                                        <left>118</left>
                                                         <top>65</top>
-                                                        <width>130</width>
+                                                        <width>155</width>
                                                         <height>20</height>
                                                         <font>font10</font>
                                                         <textcolor>grey2</textcolor>
@@ -97,9 +103,9 @@
                                                 </control>
                                                 <control type="label">
                                                         <description>Actor Toggle State</description>
-                                                        <left>135</left>
+                                                        <left>118</left>
                                                         <top>85</top>
-                                                        <width>130</width>
+                                                        <width>155</width>
                                                         <height>20</height>
                                                         <font>font10</font>
                                                         <textcolor>grey2</textcolor>
@@ -111,9 +117,9 @@
                                                 </control>
                                                 <control type="label">
                                                         <description>Actor Temperature</description>
-                                                        <left>135</left>
+                                                        <left>118</left>
                                                         <top>125</top>
-                                                        <width>130</width>
+                                                        <width>155</width>
                                                         <height>20</height>
                                                         <font>font10</font>
                                                         <textcolor>grey2</textcolor>
@@ -125,9 +131,9 @@
                                                 </control>
                                                 <control type="label">
                                                         <description>Actor Power Consumption</description>
-                                                        <left>135</left>
+                                                        <left>118</left>
                                                         <top>145</top>
-                                                        <width>130</width>
+                                                        <width>155</width>
                                                         <height>20</height>
                                                         <font>font10</font>
                                                         <textcolor>grey2</textcolor>
@@ -135,13 +141,13 @@
                                                         <selectedcolor>selected</selectedcolor>
                                                         <align>right</align>
                                                         <aligny>top</aligny>
-                                                        <label>$ADDON[plugin.program.fritzact 30025] $INFO[ListItem.Property(power)] W</label>
+                                                        <label>$ADDON[plugin.program.fritzact 30027] $INFO[ListItem.Property(energy)] kWh</label>
                                                 </control>
                                                 <control type="label">
                                                         <description>AIN</description>
-                                                        <left>135</left>
+                                                        <left>118</left>
                                                         <top>175</top>
-                                                        <width>130</width>
+                                                        <width>155</width>
                                                         <height>20</height>
                                                         <font>font10_title</font>
                                                         <textcolor>grey2</textcolor>
@@ -162,27 +168,35 @@
                                                         <texture border="15">RecentAddedBack.png</texture>
                                                 </control>
                                                 <control type="image">
-                                                        <description>Actor Status Image</description>
-                                                        <left>20</left>
-                                                        <top>50</top>
-                                                        <width>92</width>
-                                                        <height>140</height>
-                                                        <aspectratio>scale</aspectratio>
-                                                        <texture background="true">$INFO[ListItem.Icon]</texture>
-                                                        <bordertexture border="5">folder-focus.png</bordertexture>
-                                                        <bordersize>5</bordersize>
-                                                        <visible>Control.HasFocus(58501)</visible>
+                                                        <description>Dialog Header Image</description>
+                                                        <left>10</left>
+                                                        <top>17</top>
+                                                        <width>270</width>
+                                                        <height>25</height>
+                                                        <texture>dialogheader.png</texture>
                                                 </control>
                                                 <control type="image">
                                                         <description>Actor Status Image</description>
-                                                        <left>20</left>
-                                                        <top>50</top>
-                                                        <width>105</width>
-                                                        <height>140</height>
+                                                        <left>15</left>
+                                                        <top>45</top>
+                                                        <width>97</width>
+                                                        <height>150</height>
                                                         <aspectratio>scale</aspectratio>
                                                         <texture background="true">$INFO[ListItem.Icon]</texture>
-                                                        <bordertexture border="5">button-nofocus.png</bordertexture>
-                                                        <bordersize>5</bordersize>
+                                                </control>
+                                                <control type="label">
+                                                        <description>Actor Name</description>
+                                                        <left>10</left>
+                                                        <top>20</top>
+                                                        <width>270</width>
+                                                        <height>20</height>
+                                                        <font>font10_title</font>
+                                                        <textcolor>white</textcolor>
+                                                        <shadowcolor>black</shadowcolor>
+                                                        <selectedcolor>selected</selectedcolor>
+                                                        <align>center</align>
+                                                        <aligny>center</aligny>
+                                                        <label>$INFO[ListItem.Label]</label>
                                                         <visible>!Control.HasFocus(58501)</visible>
                                                 </control>
                                                 <control type="label">
@@ -191,19 +205,20 @@
                                                         <top>20</top>
                                                         <width>270</width>
                                                         <height>20</height>
-                                                        <font>font12_title</font>
-                                                        <textcolor>white</textcolor>
+                                                        <font>font10_title</font>
+                                                        <textcolor>blue</textcolor>
                                                         <shadowcolor>black</shadowcolor>
                                                         <selectedcolor>selected</selectedcolor>
                                                         <align>center</align>
                                                         <aligny>center</aligny>
                                                         <label>$INFO[ListItem.Label]</label>
+                                                        <visible>Control.HasFocus(58501)</visible>
                                                 </control>
                                                  <control type="label">
                                                         <description>Actor Presence</description>
-                                                        <left>135</left>
+                                                        <left>118</left>
                                                         <top>45</top>
-                                                        <width>130</width>
+                                                        <width>155</width>
                                                         <height>20</height>
                                                         <font>font10</font>
                                                         <textcolor>grey2</textcolor>
@@ -215,9 +230,9 @@
                                                 </control>
                                                 <control type="label">
                                                         <description>Actor Mode</description>
-                                                        <left>135</left>
+                                                        <left>118</left>
                                                         <top>65</top>
-                                                        <width>130</width>
+                                                        <width>155</width>
                                                         <height>20</height>
                                                         <font>font10</font>
                                                         <textcolor>grey2</textcolor>
@@ -229,9 +244,9 @@
                                                 </control>
                                                 <control type="label">
                                                         <description>Actor Toggle State</description>
-                                                        <left>135</left>
+                                                        <left>118</left>
                                                         <top>85</top>
-                                                        <width>130</width>
+                                                        <width>155</width>
                                                         <height>20</height>
                                                         <font>font10</font>
                                                         <textcolor>grey2</textcolor>
@@ -243,9 +258,9 @@
                                                 </control>
                                                 <control type="label">
                                                         <description>Actor Temperature</description>
-                                                        <left>135</left>
+                                                        <left>118</left>
                                                         <top>125</top>
-                                                        <width>130</width>
+                                                        <width>155</width>
                                                         <height>20</height>
                                                         <font>font10</font>
                                                         <textcolor>grey2</textcolor>
@@ -257,9 +272,9 @@
                                                 </control>
                                                 <control type="label">
                                                         <description>Actor Power Consumption</description>
-                                                        <left>135</left>
+                                                        <left>118</left>
                                                         <top>145</top>
-                                                        <width>130</width>
+                                                        <width>155</width>
                                                         <height>20</height>
                                                         <font>font10</font>
                                                         <textcolor>grey2</textcolor>
@@ -267,13 +282,13 @@
                                                         <selectedcolor>selected</selectedcolor>
                                                         <align>right</align>
                                                         <aligny>top</aligny>
-                                                        <label>$ADDON[plugin.program.fritzact 30025] $INFO[ListItem.Property(power)] W</label>
+                                                        <label>$ADDON[plugin.program.fritzact 30027] $INFO[ListItem.Property(energy)] kWh</label>
                                                 </control>
                                                 <control type="label">
                                                         <description>AIN</description>
-                                                        <left>135</left>
+                                                        <left>118</left>
                                                         <top>175</top>
-                                                        <width>130</width>
+                                                        <width>155</width>
                                                         <height>20</height>
                                                         <font>font10_title</font>
                                                         <textcolor>grey2</textcolor>
