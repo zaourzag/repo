@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<strings>
+    <string id="30000">Fritzbox Name oder IP</string>
+    <string id="30001">Fritzbox Nutzername</string>
+    <string id="30002">Fritzbox Passwort</string>
+    <string id="30003">Benutze TLS/HTTPS zur Kommunikation</string>
+    <!-- Error Messages -->
+    <string id="30010">Fritz!Box nicht erreichbar</string>
+    <string id="30011">Login fehlgeschlagen</string>
+    <string id="30012">Login gesperrt, bitte %s sec warten</string>
+    <!-- Window Labels -->
+    <string id="30020">Fritz!DECT Aktoren</string>
+    <string id="30021">Name: </string>
+    <string id="30022">Status:</string>
+    <string id="30023">Schaltzustand:</string>
+    <string id="30024">Temperatur:</string>
+    <string id="30025">Leistung:</string>
+    <string id="30026">Modus:</string>
+    <string id="30027">Gesamtverbrauch:</string>
+    <!-- States -->
+    <string id="30030">aus</string>
+    <string id="30031">an</string>
+    <string id="30032">offline</string>
+    <string id="30033">verfügbar</string>
+</strings>
