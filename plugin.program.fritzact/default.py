@@ -48,25 +48,28 @@ class Device():
 
         self.name = device.find('name').text
         self.present = int(device.find('present').text or '0')
+        self.b_present = 'true' if self.present == 1 else 'false'
 
         self.is_thermostat = self.functionbitmask & (1 << 6) > 0        # Comet DECT (Radiator Thermostat)
         self.has_powermeter = self.functionbitmask & (1 << 7) > 0       # Energy Sensor
         self.has_temperature = self.functionbitmask & (1 << 8) > 0      # Temperature Sensor
-        self.is_switch = self.functionbitmask & (1 << 9) > 0           # Power Switch
+        self.is_switch = self.functionbitmask & (1 << 9) > 0            # Power Switch
         self.is_repeater = self.functionbitmask & (1 << 10) > 0         # DECT Repeater
 
         # Switch attributes
 
         if self.is_switch:
             self.state = int(device.find('switch').find('state').text or '0')
+            self.b_state = 'true' if self.state == 1 else 'false'
             self.mode = device.find('switch').find('mode').text
             self.lock = int(device.find('switch').find('lock').text or '0')
 
         # Power attributes
+
         if self.has_powermeter:
             self.power = 0.0
             self.energy = 0.0
-            self.power = '{:0.2f}'.format(float(device.find('powermeter').find('power').text)/100)
+            self.power = '{:0.2f}'.format(float(device.find('powermeter').find('power').text)/1000)
             self.energy = '{:0.2f}'.format(float(device.find('powermeter').find('energy').text)/1000)
 
         # Temperature attributes
@@ -89,7 +92,7 @@ class FritzBox():
             sid = None
 
             try:
-                response = self.session.get(self.base_url + '/login_sid.lua')
+                response = self.session.get(self.base_url + '/login_sid.lua', verify=False)
                 xml = ET.fromstring(response.text)
                 if xml.find('SID').text == "0000000000000000":
                     challenge = xml.find('Challenge').text
@@ -97,7 +100,7 @@ class FritzBox():
                     response = self.session.get(url, params={
                         "username": self.__fbuser,
                         "response": self.calculate_response(challenge, self.__fbpasswd),
-                    })
+                    }, verify=False)
                     xml = ET.fromstring(response.text)
                     if xml.find('SID').text == "0000000000000000":
                         blocktime = int(xml.find('BlockTime').text)
@@ -128,6 +131,7 @@ class FritzBox():
         self.__fbuser = __addon__.getSetting('fbUser')
         self.__fbpasswd = t.crypt('fbPasswd', 'fb_key', 'fb_token')
         self.__fbtls = 'https://' if __addon__.getSetting('fbTLS').upper() == 'TRUE' else 'http://'
+        self.__prefAIN = __addon__.getSetting('preferredAIN')
         #
         self.__lastLogin = int(__addon__.getSetting('lastLogin') or 0)
         self.__fbSID = __addon__.getSetting('SID') or None
@@ -148,7 +152,7 @@ class FritzBox():
 
                     actor.icon = __absent__
                     if actor.present == 1:
-                        actor.icon == __on__
+                        actor.icon = __on__
                         if actor.state == 0: actor.icon = __off__
 
                     actors.append(actor)
@@ -156,7 +160,9 @@ class FritzBox():
                     if handle is not None:
                         wid = xbmcgui.ListItem(label=actor.name, label2=actor.actor_id, iconImage=actor.icon)
                         wid.setProperty('present', __LS__(30032 + actor.present))
+                        wid.setProperty('b_present', actor.b_present)
                         wid.setProperty('state', __LS__(30030 + actor.state))
+                        wid.setProperty('b_state', actor.b_state)
                         wid.setProperty('mode', actor.mode)
                         wid.setProperty('temperature', str(actor.temperature))
                         wid.setProperty('power', actor.power)
@@ -181,7 +187,7 @@ class FritzBox():
             'sid': self.__fbSID,
         }
         if ain: params['ain'] = ain
-        response = self.session.get(self.base_url + '/webservices/homeautoswitch.lua', params=params)
+        response = self.session.get(self.base_url + '/webservices/homeautoswitch.lua', params=params, verify=False)
         response.raise_for_status()
         return response.text.strip()
 
@@ -224,6 +230,11 @@ if len(arguments) > 1:
             fritz.switch('setswitchoff', ain)
             xbmcgui.Window(10000).setProperty('fritzact.timestamp', str(int(time())))
 
+else:
+    if __addon__.getSetting('preferredAIN') is not None:
+        fritz.switch('setswitchtoggle', __addon__.getSetting('preferredAIN'))
+        xbmcgui.Window(10000).setProperty('fritzact.timestamp', str(int(time())))
+
 actors = fritz.get_actors(handle=_addonHandle)
 if actors is not None:
     for device in actors:
@@ -234,4 +245,5 @@ if actors is not None:
         t.writeLog('Device ID:   %s' % (device.device_id), level=xbmc.LOGDEBUG)
         t.writeLog('Temperature: %s °C'.decode('utf-8') % (device.temperature), level=xbmc.LOGDEBUG)
         t.writeLog('State:       %s' % (device.state), level=xbmc.LOGDEBUG)
-        t.writeLog('Power:       %s kWh' % (device.power), level=xbmc.LOGDEBUG)
+        t.writeLog('Power:       %s W' % (device.power), level=xbmc.LOGDEBUG)
+        t.writeLog('Consumption: %s kWh' % (device.energy), level=xbmc.LOGDEBUG)
