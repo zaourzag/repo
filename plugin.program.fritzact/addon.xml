@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<addon id="plugin.program.fritzact" name="Fritz Smart Home" version="0.0.1" provider-name="Birger Jesch">
+    <requires>
+        <import addon="xbmc.python" version="2.20.0" />
+        <import addon="script.module.requests" version="2.9.1" />
+    </requires>
+	<extension point="xbmc.python.script" library="default.py">
+		<provides>executable</provides>
+    </extension>
+
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="en">Use your Fritz!DECT switches within Kodi</summary>
+        <summary lang="de">Schalte Deine Fritz!DECT Steckdosen mit Kodi</summary>
+        <description lang="en">Use your Fritz!DECT switches within Kodi</description>
+        <description lang="de">Schalte Deine Fritz!DECT Steckdosen mit Kodi</description>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 3, June 2007</license>
+        <source></source>
+        <forum></forum>
+        <email>birger.jesch@gmail.com</email>
+        <website></website>
+    </extension>
+</addon>
