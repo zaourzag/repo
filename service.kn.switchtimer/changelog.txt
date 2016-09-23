@@ -1,5 +1,8 @@
 CHANGELOG
 
+1.2.6
+- Version bump due repo change
+
 1.2.3
 - Dutch translation
 
