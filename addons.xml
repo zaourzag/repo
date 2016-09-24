@@ -23,7 +23,7 @@
     </extension>
 </addon>
 
-<addon id="plugin.audio.prime_music" name="Amazon Prime Music" version="0.4.3" provider-name="piet">
+<addon id="plugin.audio.prime_music" name="Amazon Prime Music" version="0.4.4" provider-name="piet">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="script.module.mechanize" version="0.2.6"/>
@@ -2086,6 +2086,20 @@ Achtung: Diese Sender wurden nicht auf Funktionalität geprüft!
 		<disclaimer lang="en_GB">Confluence is based on the work of Jezz_X and Team XBMC</disclaimer>
 		<disclaimer lang="en_NZ">Confluence is based on the work of Jezz_X and Team XBMC</disclaimer>
 		<disclaimer lang="en_US">Confluence is based on the work of Jezz_X and Team XBMC</disclaimer>
+		<platform>all</platform>
+	</extension>
+</addon>
+
+<addon id="repository.sandmann79.plugins" name="Sandmann79s Repository" version="1.0.2" provider-name="Sandmann79">
+	<extension point="xbmc.addon.repository" name="Sandmann79s Repository">
+		<info compressed="false">https://raw.githubusercontent.com/Sandmann79/xbmc/master/packages/addons.xml</info>
+		<checksum>https://raw.githubusercontent.com/Sandmann79/xbmc/master/packages/addons.xml.md5</checksum>
+		<datadir zip="true">https://raw.githubusercontent.com/Sandmann79/xbmc/master/packages/</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary>Test Repo</summary>
+		<description></description>
+		<disclaimer></disclaimer>
 		<platform>all</platform>
 	</extension>
 </addon>
