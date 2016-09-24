@@ -23,7 +23,7 @@
     </extension>
 </addon>
 
-<addon id="plugin.audio.prime_music" name="Amazon Prime Music" version="0.4.3" provider-name="piet">
+<addon id="plugin.audio.prime_music" name="Amazon Prime Music" version="0.4.4" provider-name="piet">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="script.module.mechanize" version="0.2.6"/>
@@ -2090,6 +2090,20 @@ Achtung: Diese Sender wurden nicht auf Funktionalität geprüft!
 	</extension>
 </addon>
 
+<addon id="repository.sandmann79.plugins" name="Sandmann79s Repository" version="1.0.2" provider-name="Sandmann79">
+	<extension point="xbmc.addon.repository" name="Sandmann79s Repository">
+		<info compressed="false">https://raw.githubusercontent.com/Sandmann79/xbmc/master/packages/addons.xml</info>
+		<checksum>https://raw.githubusercontent.com/Sandmann79/xbmc/master/packages/addons.xml.md5</checksum>
+		<datadir zip="true">https://raw.githubusercontent.com/Sandmann79/xbmc/master/packages/</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary>Test Repo</summary>
+		<description></description>
+		<disclaimer></disclaimer>
+		<platform>all</platform>
+	</extension>
+</addon>
+
 <addon id="plugin.program.fritzact" name="Fritz Smart Home" version="0.0.3" provider-name="Birger Jesch">
     <requires>
         <import addon="xbmc.python" version="2.20.0" />
@@ -2113,7 +2127,7 @@ Achtung: Diese Sender wurden nicht auf Funktionalität geprüft!
     </extension>
 </addon>
 
-<addon id="plugin.video.nick_de" name="Nickelodeon.de" version="0.1.0" provider-name="L0RE">
+<addon id="plugin.video.nick_at" name="Nickelodeon.at" version="0.1.0" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
     </requires>
@@ -2125,11 +2139,11 @@ Achtung: Diese Sender wurden nicht auf Funktionalität geprüft!
         <summary lang="de">Nickelodeon und Nick Jr. Mediathek</summary>
         <summary lang="en">Nickelodeon and Nick Jr. media library</summary>
         <language>de</language>
-        <description lang="de">Nick.de ist die kostenlose Website von Nickelodeon.</description>
-        <description lang="en">Nick.de ist die kostenlose Website von Nickelodeon.</description>
+        <description lang="de">Nick.at ist die kostenlose Website von Nickelodeon.</description>
+        <description lang="en">Nick.at ist die kostenlose Website von Nickelodeon.</description>
         <disclaimer lang="en">Some parts of this addon may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
         <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-        <source>http://repo.l0re.com/data/plugin.video.nick_de/</source>
+        <source>https://github.com/kodinerds/repo/tree/master/plugin.video.nick_at</source>
         <forum>http://forum.xbmc.org/showthread.php?tid=132563</forum>
         <email>andreas at vogler dot name</email>
         <website>http://www.nick.de</website>
