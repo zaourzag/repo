@@ -80,55 +80,62 @@ def geturl(url):
 def get_spiele():
   URL="http://www.liga3-online.de/live-spiele/"
   content=geturl(URL)
-  kurz_inhalt = content[content.find('wp-table-reloaded wp-table-reloaded-id-8')+1:]
+  kurz_inhalt = content[content.find('wp-table-reloaded wp-table-reloaded-id-8')+1:]  
   kurz_inhalt = kurz_inhalt[:kurz_inhalt.find('</tbody>')]
   spl=kurz_inhalt.split('<tr class="row')
   for i in range(2,len(spl)-1,1):
     element=spl[i]
-    debug ("Element :" + element)
-    ar_datum=re.compile('<td class="column-2[^>]*>([^<]+)</td>', re.DOTALL).findall(element)    
-    ar_zeit=re.compile('<td class="column-3[^>]*>([^<]+)</td>', re.DOTALL).findall(element)    
-    ar_spiel=re.compile('<td class="column-4[^>]*>([^<]+)</td>', re.DOTALL).findall(element)
-    ar_sender=re.compile('<td class="column-5[^>]*>([^<]+)</td>', re.DOTALL).findall(element)
-    if ar_datum:
-     datum=ar_datum[0]
-     datum_old=datum
-    else:
-     datum=datum_old
-    if ar_zeit :
-      zeit=ar_zeit[0]
-      zeit_old=zeit
-    else:
-      zeit=zeit_old
-    spiel=ar_spiel[0]
-    sender=ar_sender[0]
-    lt = time.localtime()
-    jahr=time.strftime("%Y", lt)
-    debug("datum"+datum)
-    datum_reg=re.compile('.+, ([0-9]+)\. (.+)', re.DOTALL).findall(datum)
-    month=datum_reg[0][1]
-    day=datum_reg[0][0]
-    monat=Monate[month]
-    jahr_now= time.strftime("%Y", lt)
-    tag_now= time.strftime("%d", lt)
-    monat_now= time.strftime("%m", lt)
-    debug("------"+ str(jahr_now) +"=="+ str(jahr) +": "+ str(day) +"=="+ str(tag_now) +":"+ str(monat_now) +"=="+ str(monat))
-    if int(monat_now) > int(monat):
-       jahr=str(int(jahr)+1)
-    zeitstring=day+"."+str(monat) +"."+jahr + " " + zeit
-    zeitobjekt=time.strptime(zeitstring , "%d.%m.%Y %H:%M Uhr")   
-    if time.mktime(zeitobjekt) <= time.mktime(lt):
-      neuzeit=time.strftime("[COLOR red]Läuft seit "+ zeit +"[/COLOR]",zeitobjekt)         
-    elif str(jahr_now)==str(jahr) and str(day)==str(tag_now) and str(monat_now)==str(monat):
-     neuzeit="[COLOR yellow]Heute [/COLOR]"+ zeit
-    else:
-      neuzeit=time.strftime("%d. %B %H:%M",zeitobjekt)   
+    try:
+      debug ("Element :" + element)
+      ar_datum=re.compile('<td class="column-2[^>]*>([^<]+)</td>', re.DOTALL).findall(element)    
+      ar_zeit=re.compile('<td class="column-3[^>]*>([^<]+)</td>', re.DOTALL).findall(element)    
+      ar_spiel=re.compile('<td class="column-4[^>]*>([^<]+)</td>', re.DOTALL).findall(element)
+      ar_sender=re.compile('<td class="column-5[^>]*>([^<]+)</td>', re.DOTALL).findall(element)
+      if ar_datum:
+        datum=ar_datum[0]
+        datum_old=datum
+      else:
+        datum=datum_old
+      if ar_zeit :
+        zeit=ar_zeit[0]
+        zeit_old=zeit
+      else:
+        zeit=zeit_old
+      spiel=ar_spiel[0]
+      sender=ar_sender[0]
+      lt = time.localtime()
+      jahr=time.strftime("%Y", lt)
+      debug("datum"+datum)
+      datum_reg=re.compile('.+, ([0-9]+)\. (.+)', re.DOTALL).findall(datum)
+      month=datum_reg[0][1]
+      day=datum_reg[0][0]
+      monat=Monate[month]
+      jahr_now= time.strftime("%Y", lt)
+      tag_now= time.strftime("%d", lt)
+      monat_now= time.strftime("%m", lt)
+      debug("------"+ str(jahr_now) +"=="+ str(jahr) +": "+ str(day) +"=="+ str(tag_now) +":"+ str(monat_now) +"=="+ str(monat))
+      if int(monat_now) > int(monat):
+        jahr=str(int(jahr)+1)
+      zeitstring=day+"."+str(monat) +"."+jahr + " " + zeit.strip()
+      debug("zeitstring :"+zeitstring +"XXX")
+      zeitobjekt=time.strptime(zeitstring , "%d.%m.%Y %H:%M Uhr")   
+      if time.mktime(zeitobjekt) <= time.mktime(lt):
+        neuzeit=time.strftime("[COLOR red]Läuft seit "+ zeit +"[/COLOR]",zeitobjekt)         
+      elif str(jahr_now)==str(jahr) and str(day)==str(tag_now) and str(monat_now)==str(monat):
+        neuzeit="[COLOR yellow]Heute [/COLOR]"+ zeit
+      else:
+        neuzeit=time.strftime("%d. %B %H:%M",zeitobjekt)   
 
-    if time.mktime(zeitobjekt) > time.mktime(lt) :
-       meldung="Läuft noch nicht"       
-    else:
-       meldung=""      
-    addLink(name=neuzeit +" : "+ spiel, url=sender , mode="Watch",meldung=meldung,spiel=spiel)
+      if time.mktime(zeitobjekt) > time.mktime(lt) :
+        meldung="Läuft noch nicht"       
+      else:
+        meldung=""     
+      txtneu=neuzeit +" : "+ spiel
+      if "*" in sender: 
+         txtneu= txtneu + " (Konferenz)"
+      addLink(name=txtneu, url=sender , mode="Watch",meldung=meldung,spiel=spiel)
+    except:
+       pass    
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 def getUrl(url):
         
@@ -225,6 +232,11 @@ def jsonurl(url) :
 
     
 def watchlive(url,meldung="",spiel=""):
+   debug("watchlive")
+   debug(url)
+   debug(meldung)
+   debug(spiel)
+   debug("----------")
    urlnew=""
    euro=0
    if not meldung == "" :
