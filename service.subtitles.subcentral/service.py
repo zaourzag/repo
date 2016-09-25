@@ -161,23 +161,25 @@ def oldthread(url,staffel,old=1):
     if len(contentx)>10:
       content=contentx
     else:
-       contentx = content[content.find('<!-- Hier Bilderserie (Bilder-Modul) einfügen. [Optinal] -->'):]   
+       contentx = content[content.find('<!-- Hier Bilderserie'):]   
        if len(contentx)>10:
            content=contentx
        else:
          contentx = content[content.find('<div class="messageFooterRight">'):]         
-    debug("________"+ content)
+    #debug("________"+ content)
+    #debug("-------------------------")
     content = content[content.find('<div class="baseSC">'):]
     content = content[:content.find('<div class="bhinweis">')]
     content = content[:content.find('<div class="txtb afgtxtb">')]
-    if old==1:
-      spl = content.split('<!-- Spaltenbreite (und -gruppierung) - Nur einmal pro Tabellen-Modul -->')
+    if old==1:      
+        spl = content.split('<!-- Spaltenbreite (und -gruppierung)')
     else:
        spl = content.split('<div class="baseSC">')
     gefunden=0
     for i in range(1, len(spl), 1):       
        element=spl[i]         
-       debug("Zeile A:"+element)
+       debug("Element:")
+       debug(element)
        #HEADER
        header=element[element.find('<thead>')+1:]
        header = header[:header.find('</thead>')]
