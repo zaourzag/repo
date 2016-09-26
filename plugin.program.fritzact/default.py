@@ -105,7 +105,7 @@ class FritzBox():
                     if xml.find('SID').text == "0000000000000000":
                         blocktime = int(xml.find('BlockTime').text)
                         t.writeLog("Login failed, please wait %s seconds" % (blocktime), xbmc.LOGERROR)
-                        t.notifyOSD(__addonname__, __LS__(30012))
+                        t.notifyOSD(__addonname__, __LS__(30012) % (blocktime))
                     else:
                         sid = xml.find('SID').text
 
@@ -128,7 +128,7 @@ class FritzBox():
 
     def getSettings(self):
         self.__fbserver = __addon__.getSetting('fbServer')
-        self.__fbuser = __addon__.getSetting('fbUser')
+        self.__fbuser = __addon__.getSetting('fbUsername')
         self.__fbpasswd = t.crypt('fbPasswd', 'fb_key', 'fb_token')
         self.__fbtls = 'https://' if __addon__.getSetting('fbTLS').upper() == 'TRUE' else 'http://'
         self.__prefAIN = __addon__.getSetting('preferredAIN')
