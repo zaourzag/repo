@@ -699,7 +699,7 @@
 							<focusedcolor>black</focusedcolor>
 							<onclick>Skin.ToggleSetting(HomeMenuNoNewsButton)</onclick>
 							<selected>!Skin.HasSetting(HomeMenuNoNewsButton)</selected>
-							<visible>System.HasAddon(plugin.program.newscenter)</visible>
+							<!-- <visible>System.HasAddon(plugin.program.newscenter)</visible> -->
 						</control>
 						<control type="button" id="335">
 							<description>NEWS Speed</description>
