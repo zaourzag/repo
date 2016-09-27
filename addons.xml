@@ -1066,7 +1066,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
 	</extension>
 </addon>
 
-<addon id="plugin.video.skygo.de" name="SkyGo" version="1.0.0" provider-name="jojo, frankr612">
+<addon id="plugin.video.skygo.de" name="SkyGo" version="1.0.1" provider-name="jojo, frankr612">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
     <import addon="script.module.requests" version="2.9.1"/>
