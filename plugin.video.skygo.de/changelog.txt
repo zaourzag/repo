@@ -1,3 +1,5 @@
+1.0.1
+- Zeitangabe bei LivePlaner Events hinzugefügt (thx @ eric1905)
 1.0.0
 - Unterstützung für Sport Wiederholungen und Mediatheken
 - Livesender auch bei nicht Live-Events (derzeit werden von Sky nur Sportsender angeboten)

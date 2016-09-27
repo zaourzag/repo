@@ -3,6 +3,7 @@ import requests
 import xbmcaddon
 import xbmcgui
 import xbmcplugin
+import navigation as nav
 from skygo import SkyGo
 
 addon_handle = int(sys.argv[1])
@@ -19,7 +20,8 @@ def playLiveTv(channel_id):
         for channel in tab['eventList']:
             if channel['channel']['id'] == channel_id:
                 if 'msMediaUrl' in channel['channel']:
-                    skygo.play(channel['channel']['msMediaUrl'], channel['channel']['mobilepc'], apix_id=apix_id)
+                    info_tag = nav.getInfoLabel('live', channel)
+                    skygo.play(channel['channel']['msMediaUrl'], package_code=channel['channel']['mobilepc'], info_tag=info_tag, apix_id=apix_id)
                 elif 'assetid' in channel['channel']['event']:
                     pass
                     #todo play asset from archive - actually not needed
