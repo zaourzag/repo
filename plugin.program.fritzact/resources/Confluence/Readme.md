@@ -87,10 +87,11 @@ weitere Informationen (AVM): https://avm.de/fileadmin/user_upload/Global/Service
     ListItem.Label                  Name des Aktors
     ListItem.Label2                 AIN
     ListItem.Icon                   Zustandsbild des Aktors (offline/an/aus)
+    ListItem.Property(type)         Aktor-Typ (switch/thermostat)
     ListItem.Property(present)      Gerät offline/online internationalisiert (siehe strings.po)
     ListItem.Property(state)        Schalter an/aus internationalisiert
-    ListItem.Property(b_present)    offline/online als boolscher Wert (true/false)
-    ListItem.Property(b_state)      an/aus als boolscher Wert (true/false)
+    ListItem.Property(b_present)    offline/online als 'boolscher' String (true/false)
+    ListItem.Property(b_state)      an/aus als 'boolscher' String (true/false)
     ListItem.Property(mode)         Betriebsmodus auto/manuell deutsch
     ListItem.Property(temperature)  Temperatur des Sensors in Celsius
     ListItem.Property(power)        entnommene Leistung in 0.01 W
@@ -122,3 +123,6 @@ Aufruf z.B. für den dynamischen List Content:
 <content>plugin://plugin.program.fritzact?ts=$INFO[Window(Home).Property(fritzact.timestamp)]</content>
 ```
 
+Ein Einbinden des Addons in den Skin als Programm-Addon toggelt den bevorzugten Aktor (siehe Settings), d.h. es können bei
+mehreren Kodi-Instanzen bzw. -installationen auch die zur Installation sinnvollen Aktoren geschaltet werden (z.B Kodi im
+Wohnzimmer: bevorzugter Aktor ist Aktor im Wohnzimmer, Kodi Kinderzimmer: bevorzugter Aktor ist Aktor im Kinderzimmer usw.)

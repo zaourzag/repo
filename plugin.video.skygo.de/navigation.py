@@ -5,6 +5,8 @@ import xbmc, xbmcgui, xbmcplugin, xbmcaddon, xbmcvfs
 import requests
 import urllib2
 import json
+import datetime
+import time
 import xml.etree.ElementTree as ET
 import resources.lib.common as common
 from skygo import SkyGo
@@ -245,6 +247,31 @@ def parseListing(page, path):
 
     return listitems
 
+def buildLiveEventTag(event_info):
+    tag = ''
+    dayDict = {'Monday': 'Montag', 'Tuesday': 'Dienstag', 'Wednesday': 'Mittwoch', 'Thursday': 'Donnerstag', 'Friday': 'Freitag', 'Saturday': 'Samstag', 'Sunday': 'Sonntag'}
+    if event_info != '':  
+        now = datetime.datetime.now()
+
+        strStartTime = '%s %s' % (event_info['start_date'], event_info['start_time'])
+        strEndTime = '%s %s' % (event_info['end_date'], event_info['end_time'])
+        start_time = datetime.datetime.fromtimestamp(time.mktime(time.strptime(strStartTime, "%Y/%m/%d %H:%M")))
+        end_time = datetime.datetime.fromtimestamp(time.mktime(time.strptime(strEndTime, "%Y/%m/%d %H:%M")))
+
+        if (now >= start_time) and (now <= end_time):
+            tag = '[COLOR red][Live][/COLOR]'
+        elif start_time.date() == datetime.datetime.today().date():
+            tag = '[COLOR blue][Heute ' + event_info['start_time'] + '][/COLOR]'
+        elif start_time.date() == (datetime.datetime.today() + datetime.timedelta(days=1)).date():
+            tag = '[COLOR blue][Morgen ' + event_info['start_time'] + '][/COLOR]'
+        else:
+            day = start_time.strftime('%A')
+            if not day in dayDict.values():
+                day = day.replace(day, dayDict[day])[0:2]
+            tag = '[COLOR blue][' + day + ', ' + start_time.strftime("%d.%m %H:%M]") + '[/COLOR]'
+    
+    return tag
+
 def getInfoLabel(asset_type, data):    
     info = {}
     info['title'] = data.get('title', '')
@@ -252,7 +279,6 @@ def getInfoLabel(asset_type, data):
     if not data.get('year_of_production', '') == '':
         info['year'] = data.get('year_of_production', '')
     info['plot'] = data.get('synopsis', '').replace('\n', '').strip()
-    print data
     if info['plot'] == '':
         info['plot'] = data.get('description', '').replace('\n', '').strip()
     info['duration'] = data.get('length', 0)*60
@@ -271,7 +297,9 @@ def getInfoLabel(asset_type, data):
 #        else:
 #            info['title'] = '%02d - %s' % (info['episode'], info['title'])
     if asset_type == 'Sport':
-        pass
+        if data.get('current_type', '') == 'Live':
+            #LivePlanner listing
+            info['title'] = buildLiveEventTag(data['technical_event']['on_air']) + ' ' + info['title']
     if asset_type == 'Clip':
         info['title'] = data['item_title']
         info['plot'] = data.get('teaser_long', '')
@@ -302,7 +330,6 @@ def listAssets(asset_list, isWatchlist=False):
     for item in asset_list:
         isPlayable = False
         li = xbmcgui.ListItem(label=item['label'], iconImage=icon_file)
-        print item
         if item['type'] in ['Film', 'Episode', 'Sport', 'Clip', 'Series', 'live', 'searchresult']:
             isPlayable = True
             info = getInfoLabel(item['type'], item['data'])
