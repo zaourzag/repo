@@ -1,0 +1,10 @@
+Changelog:
+
+- 0.0.4
+  Preparations for implementation of 'Comet DECT' radiator thermostat
+
+- 0.0.3
+  Bugfixes
+
+- 0.0.1
+  initial commit

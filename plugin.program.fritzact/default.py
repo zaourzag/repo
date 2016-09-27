@@ -29,9 +29,11 @@ __version__ = __addon__.getAddonInfo('version')
 __path__ = __addon__.getAddonInfo('path')
 __LS__ = __addon__.getLocalizedString
 
-__on__ = xbmc.translatePath(os.path.join(__path__, 'resources', 'lib', 'media', 'dect_on.png'))
-__off__ = xbmc.translatePath(os.path.join(__path__, 'resources', 'lib', 'media', 'dect_off.png'))
-__absent__ = xbmc.translatePath(os.path.join(__path__, 'resources', 'lib', 'media', 'dect_absent.png'))
+__s_on__ = xbmc.translatePath(os.path.join(__path__, 'resources', 'lib', 'media', 'dect_on.png'))
+__s_off__ = xbmc.translatePath(os.path.join(__path__, 'resources', 'lib', 'media', 'dect_off.png'))
+__s_absent__ = xbmc.translatePath(os.path.join(__path__, 'resources', 'lib', 'media', 'dect_absent.png'))
+__t_on__ = xbmc.translatePath(os.path.join(__path__, 'resources', 'lib', 'media', 'comet_on.png'))
+__t_absent__ = xbmc.translatePath(os.path.join(__path__, 'resources', 'lib', 'media', 'comet_absent.png'))
 
 class Device():
 
@@ -59,10 +61,18 @@ class Device():
         # Switch attributes
 
         if self.is_switch:
+            self.type = 'switch'
             self.state = int(device.find('switch').find('state').text or '0')
             self.b_state = 'true' if self.state == 1 else 'false'
             self.mode = device.find('switch').find('mode').text
             self.lock = int(device.find('switch').find('lock').text or '0')
+
+        if self.is_thermostat:
+            self.type = 'thermostat'
+            self.actual_temp = self.bin2degree(int(device.find('hkr').find('tist').text or '0'))
+            self.set_temp = self.bin2degree(int(device.find('hkr').find('tsoll').text or '0'))
+            self.comf_temp = self.bin2degree(int(device.find('hkr').find('komfort').text or '0'))
+            self.lowering_temp = self.bin2degree(int(device.find('hkr').find('absenk').text or '0'))
 
         # Power attributes
 
@@ -76,7 +86,14 @@ class Device():
 
         if self.has_temperature:
             self.temperature = 0.0
-            self.temperature = '{:0.1f}'.format(float(device.find("temperature").find("celsius").text)/10)
+            self.temperature = '{:0.1f}'.format(float(device.find("temperature").find("celsius").text)/10) + ' °C'.decode('utf-8')
+
+
+    def bin2degree(self, binary_value = 0):
+        if 16 <= binary_value <= 56: return str((binary_value - 16)/2.0 + 8) + ' °C'.decode('utf-8')
+        elif binary_value == 253: return 'off'
+        elif binary_value == 254: return 'on'
+        return 'invalid'
 
 class FritzBox():
 
@@ -150,21 +167,28 @@ class FritzBox():
                 for d in range(1):
                     actor = Device(device)
 
-                    actor.icon = __absent__
-                    if actor.present == 1:
-                        actor.icon = __on__
-                        if actor.state == 0: actor.icon = __off__
+                    if actor.is_switch:
+                        actor.icon = __s_absent__
+                        if actor.present == 1:
+                            actor.icon = __s_on__
+                            if actor.state == 0: actor.icon = __s_off__
+                    elif actor.is_thermostat:
+                        actor.icon = __t_absent__
+                        if actor.present == 1:
+                            actor.icon = __t_on__
+                            if actor.state == 0: actor.icon = __t_absent__
 
                     actors.append(actor)
 
                     if handle is not None:
                         wid = xbmcgui.ListItem(label=actor.name, label2=actor.actor_id, iconImage=actor.icon)
+                        wid.setProperty('type', actor.type)
                         wid.setProperty('present', __LS__(30032 + actor.present))
                         wid.setProperty('b_present', actor.b_present)
                         wid.setProperty('state', __LS__(30030 + actor.state))
                         wid.setProperty('b_state', actor.b_state)
                         wid.setProperty('mode', actor.mode)
-                        wid.setProperty('temperature', str(actor.temperature))
+                        wid.setProperty('temperature', unicode(actor.temperature))
                         wid.setProperty('power', actor.power)
                         wid.setProperty('energy', actor.energy)
                         xbmcplugin.addDirectoryItem(handle=handle, url='', listitem=wid)
@@ -240,10 +264,11 @@ if actors is not None:
     for device in actors:
         t.writeLog('-------------------------------------', level=xbmc.LOGDEBUG)
         t.writeLog('Name:        %s' % (device.name), level=xbmc.LOGDEBUG)
+        t.writeLog('Type:        %s' % (device.type), level=xbmc.LOGDEBUG)
         t.writeLog('ID (AIN):    %s' % (device.actor_id), level=xbmc.LOGDEBUG)
         t.writeLog('Presence:    %s' % (device.present), level=xbmc.LOGDEBUG)
         t.writeLog('Device ID:   %s' % (device.device_id), level=xbmc.LOGDEBUG)
-        t.writeLog('Temperature: %s °C'.decode('utf-8') % (device.temperature), level=xbmc.LOGDEBUG)
+        t.writeLog('Temperature: %s' % (device.temperature), level=xbmc.LOGDEBUG)
         t.writeLog('State:       %s' % (device.state), level=xbmc.LOGDEBUG)
         t.writeLog('Power:       %s W' % (device.power), level=xbmc.LOGDEBUG)
         t.writeLog('Consumption: %s kWh' % (device.energy), level=xbmc.LOGDEBUG)

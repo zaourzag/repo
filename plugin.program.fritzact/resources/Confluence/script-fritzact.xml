@@ -127,7 +127,7 @@
                                                         <selectedcolor>selected</selectedcolor>
                                                         <align>right</align>
                                                         <aligny>top</aligny>
-                                                        <label>$ADDON[plugin.program.fritzact 30024] $INFO[ListItem.Property(temperature)] °C</label>
+                                                        <label>$ADDON[plugin.program.fritzact 30024] $INFO[ListItem.Property(temperature)]</label>
                                                 </control>
                                                 <control type="label">
                                                         <description>Actor Power Consumption</description>
@@ -268,7 +268,7 @@
                                                         <selectedcolor>selected</selectedcolor>
                                                         <align>right</align>
                                                         <aligny>top</aligny>
-                                                        <label>$ADDON[plugin.program.fritzact 30024] $INFO[ListItem.Property(temperature)] °C</label>
+                                                        <label>$ADDON[plugin.program.fritzact 30024] $INFO[ListItem.Property(temperature)]</label>
                                                 </control>
                                                 <control type="label">
                                                         <description>Actor Power Consumption</description>
