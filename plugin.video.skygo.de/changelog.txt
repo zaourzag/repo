@@ -1,3 +1,5 @@
+1.0.2
+- Ausblenden von doppelten Einträgen mit gleichen Streams bei den Livesendern
 1.0.1
 - Zeitangabe bei LivePlaner Events hinzugefügt (thx @ eric1905)
 1.0.0
