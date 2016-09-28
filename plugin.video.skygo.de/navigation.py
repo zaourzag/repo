@@ -125,7 +125,6 @@ def search():
     listAssets(listitems)
 
 def listLiveChannels():
-    listitems = []
     mediaurls = {}
     url = 'http://www.skygo.sky.de/epgd/sg/ipad/excerpt/'
     r = requests.get(url)
@@ -136,15 +135,14 @@ def listLiveChannels():
             if media_url.startswith('http://'):
                 url = common.build_url({'action': 'playLive', 'channel_id': event['channel']['id']})                
                 #zeige keine doppelten sender mit gleichem stream - nutze hd falls verfügbar
-                if not media_url in mediaurls.keys():                    
-                    listitems.append({'type': 'live', 'label': event['channel']['name'], 'url': url, 'data': event})
-                    mediaurls[media_url] = event['channel']['hd']
-                elif mediaurls[media_url] != event['channel']['hd'] and event['channel']['hd'] == 1:
-                    listitems.append({'type': 'live', 'label': event['channel']['name'], 'url': url, 'data': event})
-                    mediaurls[media_url] = event['channel']['hd']
+                if not media_url in mediaurls.keys():                 
+                    mediaurls[media_url] = {'type': 'live', 'label': event['channel']['name'], 'url': url, 'data': event}
+                else:
+                    if mediaurls[media_url]['data']['channel']['hd'] == 0 and event['channel']['hd'] == 1:
+                        mediaurls[media_url] = {'type': 'live', 'label': event['channel']['name'], 'url': url, 'data': event}
                     
 
-    listAssets(listitems)
+    listAssets(sorted(mediaurls.values(), key=lambda k:k['data']['channel']['id']))
     
 
 def listEpisodesFromSeason(series_id, season_id):
