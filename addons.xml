@@ -2137,8 +2137,12 @@ Achtung: Diese Sender wurden nicht auf Funktionalität geprüft!
         <platform>all</platform>
         <summary lang="en">Switching your home with Kodi</summary>
         <summary lang="de">Schalte Dein Zuhause mit Kodi</summary>
-        <description lang="en">Use your Fritz!DECT switches within Kodi. Control light and devices with FritzDECT actors. Find out about powered-on devices and their power consumption.</description>
-        <description lang="de">Schalte Deine Fritz!DECT Steckdosen mit Kodi. Steuere Licht und Geräte über FritzDECT Schalter. Informiere Dich über eingeschaltete Geräte und deren Stromverbrauch.</description>
+        <description lang="en">Use your Fritz!DECT switches within Kodi. Control light and switch your devices with
+            FritzDECT actors. Find out about powered-on devices and their power consumption. Make yourself
+        comfortable with a touch of your remote.</description>
+        <description lang="de">Schalte Deine Fritz!DECT Steckdosen mit Kodi. Steuere Licht und Deine Geräte über
+            FritzDECT Schalter. Informiere Dich über eingeschaltete Geräte und deren Stromverbrauch. Mach'
+        es Dir behaglich - nur mit einem Klick auf der Fernbedienung.</description>
         <license>GNU GENERAL PUBLIC LICENSE. Version 3, June 2007</license>
         <source></source>
         <forum></forum>
