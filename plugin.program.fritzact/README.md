@@ -1,8 +1,8 @@
 <h1>Fritz!Box SmartHome - Switching Your FritzDECT</h1>
 <h2>Anmerkungen zur Verwendung und Integration in den Confluence Skin</h2>
 
-Die FritzBox bietet über die sogenannte AHA-HTTP-API, die Möglichkeit, DECT Steckdosen fernzuschalten. Dieses Addon nutzt 
-diese Möglichkeit und stellt u.a. den Schaltzustand der Steckdosen in Kodi dar.
+Die FritzBox bietet über die sogenannte AHA-HTTP-API, die Möglichkeit, DECT Steckdosen und Heizungsthermostaten (Comet) fernzuschalten. 
+Dieses Addon nutzt diese Möglichkeit und stellt u.a. den Schaltzustand der Steckdosen und Thermostate in Kodi dar.
 
 Das Addon ist als Widget konzipiert, welches im Home unter dem Punkt Programme abgelegt wird. Damit steht es unmittelbar nach 
 dem Start von Kodi zur Verfügung und die Steckdosen sind mit wenigen Aktionen der Fernbedienung erreichbar.
