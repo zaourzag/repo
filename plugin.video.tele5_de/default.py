@@ -50,34 +50,58 @@ def listVideos(urlMain):
     h = HTMLParser.HTMLParser()
     debug("listVideos urlMain :"+ urlMain)    
     content = opener.open(urlMain).read()
-    content = content[content.find('<div class="videosGesamt">'):]
-    content = content[:content.find('<!-- FOOTER -->')]  
-    content = content[:content.find('<!--TYPO3SEARCH_end-->')]  
-    debug("content :"+content)
-    spl = content.split('<a ')
+    #struktur1 content:
     VIDEOSFOUND=0
-    for i in range(1, len(spl), 1):
-        debug("SP :"+spl[i])
-        VIDEOSFOUND=1
-        entry = spl[i]
-        
-        entry1 = entry.replace("<br>",": ")
-        match = re.compile('<h3>(.+?)<', re.DOTALL).findall(entry1)
-        title = match[0].replace("<br>",": ")
-        
-        match = re.compile('<p>(.+?)</p>', re.DOTALL).findall(entry)
-        desc = match[0]
-        desc = desc[:desc.find('<')]
-        debug("DESC :"+ desc)
-        title = cleanTitle(title)
-        match = re.compile('href="(.+?)"', re.DOTALL).findall(entry)
-        url = match[0]
-        match = re.compile('src="(.+?)"', re.DOTALL).findall(entry)
-        thumb = match[0]
-        if "http://www.tele5.de/re-play/sendungen.html" in urlMain:
-          addDir(title, url, 'listVideos', thumb, desc=desc)        
-        else:
-          addLink(title, url, 'playVideo', thumb, desc=desc)
+    if '<div class="videosGesamt">' in content:
+        content = content[content.find('<div class="videosGesamt">'):]
+        content = content[:content.find('<!-- FOOTER -->')]  
+        content = content[:content.find('<!--TYPO3SEARCH_end-->')]  
+        debug("content :"+content)
+        spl = content.split('<a ')        
+        for i in range(1, len(spl), 1):
+            debug("SP :"+spl[i])
+            VIDEOSFOUND=1
+            entry = spl[i]
+          
+            entry1 = entry.replace("<br>",": ")
+            match = re.compile('<h3>(.+?)<', re.DOTALL).findall(entry1)
+            title = match[0].replace("<br>",": ")
+            
+            match = re.compile('<p>(.+?)</p>', re.DOTALL).findall(entry)
+            desc = match[0]
+            desc = desc[:desc.find('<')]
+            debug("DESC :"+ desc)
+            title = cleanTitle(title)
+            match = re.compile('href="(.+?)"', re.DOTALL).findall(entry)
+            url = match[0]
+            match = re.compile('src="(.+?)"', re.DOTALL).findall(entry)
+            thumb = match[0]
+            if "http://www.tele5.de/re-play/sendungen.html" in urlMain:
+              addDir(title, url, 'listVideos', thumb, desc=desc)        
+            else:
+              addLink(title, url, 'playVideo', thumb, desc=desc)   
+    if "kWidget.thumbEmbed" in  content:         
+        contentneu = content[content.find('<!-- MAINCONTENT -->'):]
+        contentneu = contentneu[:contentneu.find('<!--TYPO3SEARCH_end-->')]
+        debug("contentneu :")
+        debug(contentneu)
+        spl = contentneu.split('class="csc-default"')
+        for i in range(1, len(spl), 1):
+          entry = spl[i]
+          debug("------------------")
+          debug(entry)
+          debug("------------------")
+          try:
+              match = re.compile('thumbnail" content="(.+?)"', re.DOTALL).findall(entry)
+              image=match[0]
+          except:
+           match = re.compile('"entry_id": "(.+?)"', re.DOTALL).findall(entry)
+           id=match[0]
+           image="http://api.medianac.com/p/102/sp/10200/thumbnail/entry_id/"+id+"/version/100002/acv/152/height/480"
+          match = re.compile('<h3 class="bg-headline">(.+?)<h3>', re.DOTALL).findall(entry)
+          title=match[0]
+          VIDEOSFOUND=1
+          addLink(title, urlMain, 'playVideo', image, count=i)
     if VIDEOSFOUND == 0:
         content = opener.open(urlMain).read()
         content = content[content.find('<!--TYPO3SEARCH_begin-->'):]
@@ -99,9 +123,22 @@ def listVideos(urlMain):
     xbmcplugin.endOfDirectory(pluginhandle)
 
 
-def playVideo(url):
+def playVideo(url,count):
+    count=int(count)  
     content = opener.open(url).read()
-    matchID = re.compile('/entry_id/(.+?)"', re.DOTALL).findall(content)
+    debug("XCount :"+ str(count))
+    if count>0:
+        contentneu = content[content.find('<!-- MAINCONTENT -->'):]
+        contentneu = contentneu[:contentneu.find('<!--TYPO3SEARCH_end-->')]        
+        spl = contentneu.split('class="csc-default"')
+        content=spl[count]
+        debug("Content playvideo short:")        
+        debug(content)
+    try:
+      matchID = re.compile('/entry_id/(.+?)"', re.DOTALL).findall(content)
+      XID=matchID[0]
+    except:
+      matchID = re.compile('"entry_id": "(.+?)"', re.DOTALL).findall(content)
     match2 = re.compile('resource="http://(.+?)/.+?/wid/_(.+?)/', re.DOTALL).findall(content)
     match3 = re.compile('src="http://api.medianac.com/p/(.+?)/sp/.+?/embedIframeJs/uiconf_id/(.+?)/', re.DOTALL).findall(content)
     matchYT = re.compile('youtube.com/embed/(.+?)"', re.DOTALL).findall(content)
@@ -155,8 +192,8 @@ def parameters_string_to_dict(parameters):
     return paramDict
 
 
-def addLink(name, url, mode, iconimage, desc="", duration=""):
-    u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
+def addLink(name, url, mode, iconimage, desc="", duration="",count=0):
+    u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&count="+str(count)
     ok = True
     liz = xbmcgui.ListItem(name, iconImage="DefaultVideo.png", thumbnailImage=iconimage)
     liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Duration": duration})
@@ -179,11 +216,12 @@ mode = urllib.unquote_plus(params.get('mode', ''))
 url = urllib.unquote_plus(params.get('url', ''))
 name = urllib.unquote_plus(params.get('name', ''))
 thumb = urllib.unquote_plus(params.get('thumb', ''))
+count  = urllib.unquote_plus(params.get('count', ''))
 
 if mode == 'listVideos':
     listVideos(url)
 elif mode == 'playVideo':
-    playVideo(url)
+    playVideo(url,count)
 elif mode == 'queueVideo':
     queueVideo(url, name, thumb)
 else:
