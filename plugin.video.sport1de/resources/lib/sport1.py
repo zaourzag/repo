@@ -79,8 +79,8 @@ class Sport1(object):
         result = None
         try:
             url = self.get_date()
-            self.headers.update({   'Referer'   :  'http://sportsapi.sport1.de',
-                                    'Host'      :  'sportsapi.sport1.de'})
+            self.headers.update({   'Referer'   :  'http://api.sport1.de',
+                                    'Host'      :  'api.sport1.de'})
             data = requests.get(url, headers=self.headers).json()
             return data
         except:
