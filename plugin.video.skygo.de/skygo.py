@@ -202,7 +202,34 @@ class SkyGo:
         init_data = base64.urlsafe_b64encode(init_data)
         return init_data
 
-    def play(self, manifest_url, package_code, info_tag=None, apix_id=None):
+    def parentalCheck(self, parental_rating, play=False):
+        if parental_rating == 0:
+            return True
+
+        ask_pin = addon.getSetting('js_askforpin')
+        max_rating = addon.getSetting('js_maxrating')
+        if max_rating.isdigit():
+            if int(max_rating) < 0:
+                return True
+            if int(max_rating) < parental_rating:
+                if ask_pin == 'false' or not play:
+                    return False
+                else:
+                    dlg = xbmcgui.Dialog()
+                    code = dlg.input('PIN Code', type=xbmcgui.INPUT_NUMERIC)
+                    if code == password:
+                        return True
+                    else:
+                        return False
+
+        return True
+
+    def play(self, manifest_url, package_code, parental_rating=0, info_tag=None, apix_id=None):
+        #Jugendschutz
+        if not self.parentalCheck(parental_rating, play=True):
+            xbmcgui.Dialog().notification('SkyGo - FSK ' + str(parental_rating), 'Keine Berechtigung zum Abspielen dieses Eintrages', xbmcgui.NOTIFICATION_ERROR, 2000, True)
+            return False
+
         if self.login():
             if self.may_play(package_code):
                 init_data = None

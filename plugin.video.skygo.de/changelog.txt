@@ -1,3 +1,5 @@
+1.0.7
+- Jungendschutz Einstellungen hinzugefügt
 1.0.3
 1.0.2
 - Ausblenden von doppelten Einträgen mit gleichen Streams bei den Livesendern
