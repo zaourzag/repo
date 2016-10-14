@@ -17,37 +17,18 @@ class Client(object):
                             
         self.v2           = 'https://club.laola1.tv/sp/laola1tv/api/v2/'
         self.v3           = 'https://club.laola1.tv/sp/laola1tv/api/v3/'
-        self.feed         = 'http://www.laola1.tv/feed/'
+        self.feed         = 'http://www.laola1.tv'
         
         self.partner      = '22'
         self.target       = '8'
         self.target_vod   = '2'
         self.target_live  = '17'
 
-    def content(self, type):
-        self.params = {
-                        'type':type,
-                        'target':self.target,
-                        'customer':'1001',
-                        'lang':lang,
-                        'portal':portal
-                        }
-        return self.json_request(self.feed + 'appfeed.php')
+    def menu(self):
+        return self.json_request('%s/%s-%s/apps/menu' % (self.feed, lang, portal))
         
-    def videos(self, id):
-        self.params = {
-                        'targetID':self.target,
-                        'template':'3',
-                        'v':'2',
-                        'partner':self.partner,
-                        'stageID':id,
-                        'page':'0',
-                        'rows':'50',
-                        'lang':lang,
-                        'portal':portal,
-                        'format':'json'
-                        }
-        return self.json_request(self.feed + 'app_video.feed.php')
+    def feeds(self, pagetype, id, page=''):
+        return self.json_request('%s/%s-%s/apps/%s/%s/%s' % (self.feed, lang, portal, pagetype, id, page))
         
     def live_feed(self):
         self.params = {
@@ -59,7 +40,7 @@ class Client(object):
                         'records':'50',
                         'format':'json'
                         }
-        return self.json_request(self.feed + 'app_video.feed.php')
+        return self.json_request('%s/feed/app_video.feed.php' % (self.feed))
             
     def player(self, id, params):
         if params == 'true':
@@ -71,14 +52,14 @@ class Client(object):
         
         self.post_data = {
                             '0' : 'tv.laola1.laolatv.premiumclub',
-                            '1': 'tv.laola1.laolatv.premiumclub_all_access'
+                            '1' : 'tv.laola1.laolatv.premiumclub_all_access'
                             }
                             
         self.params    = {
-                            'videoId': id,
-                            'label' : 'laola1tv',
-                            'area'  : 'laola1tv',
-                            'target': target
+                            'videoId' : id,
+                            'label'   : 'laola1tv',
+                            'area'    : 'laola1tv',
+                            'target'  : target
                             }
         return self.json_request(self.v3 + 'user/session/premium/player/stream-access')
             
@@ -119,5 +100,5 @@ class Client(object):
         if r.headers.get('content-type', '').startswith('application/json'):
             return r.json()
         else:
-            log('[laola1tv] error: json request failed with %s response' % (str(r.status_code)))
+            log('[%s] error: json request failed with %s response' % (addon_id, str(r.status_code)))
             return {}

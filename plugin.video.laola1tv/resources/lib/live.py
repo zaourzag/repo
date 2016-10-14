@@ -17,7 +17,7 @@ class Live:
     def title(self, i):
         title = i['titleEN']
         if self.live == 'true':
-            return utfenc(unicode('[COLOR red]LIVE[/COLOR] - %s' % (title)))
+            return utfenc(unicode('[COLOR red]LIVE[/COLOR]  %s' % (title)))
         else:
             return utfenc(unicode('%s %s' % (self.start,title)))
         

@@ -4,10 +4,11 @@ import json,os,re,sys,urllib,urlparse
 import time,datetime
 import xbmc,xbmcaddon,xbmcgui,xbmcplugin,xbmcvfs
 
-addon_id     = 'plugin.video.laola1tv'
 addon_handle = int(sys.argv[1])
 addon        = xbmcaddon.Addon()
 dialog       = xbmcgui.Dialog()
+addon_id     = addon.getAddonInfo('id')
+version      = addon.getAddonInfo('version')
 icon         = addon.getAddonInfo('icon')
 fanart       = addon.getAddonInfo('fanart')
 force_view   = addon.getSetting('force_view') == 'true'
