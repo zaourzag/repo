@@ -610,8 +610,8 @@
         <value condition="Container(8006).HasFocus(30)">addon_fav30</value>
     </variable>
     <variable name="DashboardAddonLabel">
-        <value condition="!String.IsEmpty(Container(8005).ListItem.Label2)">$INFO[Container(8005).ListItem.Label2]</value>
-        <value>$INFO[Container(8005).ListItem.Label]</value>
+        <value condition="!String.IsEmpty(Container(8005).ListItem.Label2)+Control.HasFocus(8005)">$INFO[Container(8005).ListItem.Label2]</value>
+        <value condition="String.IsEmpty(Container(8005).ListItem.Label2)+Control.HasFocus(8005)">$INFO[Container(8005).ListItem.Label]</value>
     </variable>
     <variable name="DashboardAddonLabel3">
         <value condition="String.IsEmpty(Container(8006).ListItem.Label)+![String.IsEmpty(Container(8006).ListItem.Label2)|String.IsEmpty(Container(8006).ListItem.Icon)]">! kein Addon gewählt !</value>
@@ -624,13 +624,15 @@
     <variable name="DashboardExtendedInfoLabel">
         <value condition="Skin.HasSetting(dashboard_youtubeuser)">youtube $INFO[Skin.String(YoutubeSearchUser),(,)]</value>
         <value condition="Skin.HasSetting(dashboard_youtube)">youtube (HD DE Trailer)</value>
+        <value condition="Skin.HasSetting(dashboard_youtubeplaylists)">youtube playlists $INFO[Skin.String(YoutubeSearchPlaylists),(,)]</value>
         <value condition="Skin.HasSetting(dashboard_appletrailer)">apple itunes trailers</value>
-        <value condition="Skin.HasSetting(dashboard_newdvdreleases)">new dvd releases (Rotten Tomatoes)</value>
+        <!-- <value condition="Skin.HasSetting(dashboard_newdvdreleases)">new dvd releases (Rotten Tomatoes)</value>
+        <value condition="Skin.HasSetting(dashboard_currentdvdmovies)">current dvd movies (Rotten Tomatoes)</value>
         <value condition="Skin.HasSetting(dashboard_toprentals)">toprentals (Rotten Tomatoes)</value>
         <value condition="Skin.HasSetting(dashboard_intheaters)">intheaters (Rotten Tomatoes)</value>
         <value condition="Skin.HasSetting(dashboard_comingsoon)">comingsoon (Rotten Tomatoes)</value>
         <value condition="Skin.HasSetting(dashboard_opening)">opening (Rotten Tomatoes)</value>
-        <value condition="Skin.HasSetting(dashboard_boxoffice)">boxoffice (Rotten Tomatoes)</value>
+        <value condition="Skin.HasSetting(dashboard_boxoffice)">boxoffice (Rotten Tomatoes)</value> -->
         <value condition="Skin.HasSetting(dashboard_incinemas)">incinemas (The MovieDB)</value>
         <value condition="Skin.HasSetting(dashboard_upcoming)">upcoming (The MovieDB)</value>
         <value condition="Skin.HasSetting(dashboard_popularmovies)">popular movies (The MovieDB)</value>
@@ -641,19 +643,22 @@
         <value condition="Skin.HasSetting(dashboard_airingtodaytvshows)">airingtoday tvshows (The MovieDB)</value>
         <value condition="Skin.HasSetting(dashboard_trendingmovies)">trending movies (Trakt.tv)</value>
         <value condition="Skin.HasSetting(dashboard_trendingshows)">trending shows (Trakt.tv)</value>
-        <value condition="Skin.HasSetting(dashboard_airingshows)">airing episodes (Trakt.tv)</value>
+        <value condition="Skin.HasSetting(dashboard_airingshows)">airing tv shows (Trakt.tv)</value>
+        <value condition="Skin.HasSetting(dashboard_premiereshows)">premiereshows tv shows (Trakt.tv)</value>
     </variable>
     <variable name="DashboardExtendedInfoContent">
-        <value condition="Skin.HasSetting(dashboard_youtubeuser)">plugin://script.extendedinfo?info=youtubesearch&amp;&amp;id=$INFO[Skin.String(YoutubeSearchUser)]</value>
-        <value condition="Skin.HasSetting(dashboard_youtube)">plugin://script.extendedinfo?info=youtubesearch&amp;&amp;id=HD German Trailer 2016</value>
+        <value condition="Skin.HasSetting(dashboard_youtubeuser)">plugin://script.extendedinfo?info=youtubesearchvideos&amp;&amp;id=$INFO[Skin.String(YoutubeSearchUser)]</value>
+        <value condition="Skin.HasSetting(dashboard_youtube)">plugin://script.extendedinfo?info=youtubesearchvideos&amp;&amp;id=HD German Trailer 2016</value>
+        <value condition="Skin.HasSetting(dashboard_youtubeplaylists)">plugin://script.extendedinfo?info=youtubeplaylistvideos&amp;&amp;id=$INFO[Skin.String(YoutubeSearchPlaylists)]</value>
         <value condition="Skin.HasSetting(dashboard_appletrailer)">plugin://plugin.video.itunes_trailers/</value>
-        <value condition="Skin.HasSetting(dashboard_newdvdreleases)">plugin://script.extendedinfo?info=newdvdmovies</value>
+        <!-- <value condition="Skin.HasSetting(dashboard_newdvdreleases)">plugin://script.extendedinfo?info=newdvdmovies</value>
+        <value condition="Skin.HasSetting(dashboard_currentdvdmovies)">plugin://script.extendedinfo?info=currentdvdmovies</value>
         <value condition="Skin.HasSetting(dashboard_toprentals)">plugin://script.extendedinfo?info=toprentalmovies</value>
         <value condition="Skin.HasSetting(dashboard_intheaters)">plugin://script.extendedinfo?info=intheatermovies</value>
         <value condition="Skin.HasSetting(dashboard_comingsoon)">plugin://script.extendedinfo?info=comingsoonmovies</value>
         <value condition="Skin.HasSetting(dashboard_opening)">plugin://script.extendedinfo?info=openingmovies</value>
-        <value condition="Skin.HasSetting(dashboard_boxoffice)">plugin://script.extendedinfo?info=boxofficemovies</value>
-        <value condition="Skin.HasSetting(dashboard_incinemas)">plugin://script.extendedinfo?info=incinemas</value>
+        <value condition="Skin.HasSetting(dashboard_boxoffice)">plugin://script.extendedinfo?info=boxofficemovies</value> -->
+        <value condition="Skin.HasSetting(dashboard_incinemas)">plugin://script.extendedinfo?info=incinemamovies</value>
         <value condition="Skin.HasSetting(dashboard_upcoming)">plugin://script.extendedinfo?info=upcomingmovies</value>
         <value condition="Skin.HasSetting(dashboard_popularmovies)">plugin://script.extendedinfo?info=popularmovies</value>
         <value condition="Skin.HasSetting(dashboard_topratedmovies)">plugin://script.extendedinfo?info=topratedmovies</value>
@@ -661,20 +666,23 @@
         <value condition="Skin.HasSetting(dashboard_topratedtvshows)">plugin://script.extendedinfo?info=topratedtvshows</value>
         <value condition="Skin.HasSetting(dashboard_onairtvshows)">plugin://script.extendedinfo?info=onairtvshows</value>
         <value condition="Skin.HasSetting(dashboard_airingtodaytvshows)">plugin://script.extendedinfo?info=airingtodaytvshows</value>
-        <value condition="Skin.HasSetting(dashboard_trendingmovies)">plugin://script.extendedinfo?info=traktsimilarmovies</value>
-        <value condition="Skin.HasSetting(dashboard_trendingshows)">plugin://script.extendedinfo?info=traktsimilartvshows</value>
-        <value condition="Skin.HasSetting(dashboard_airingshows)">plugin://script.extendedinfo?info=airingepisodes</value>
+        <value condition="Skin.HasSetting(dashboard_trendingmovies)">plugin://script.extendedinfo?info=trendingmovies</value>
+        <value condition="Skin.HasSetting(dashboard_trendingshows)">plugin://script.extendedinfo?info=trendingshows</value>
+        <value condition="Skin.HasSetting(dashboard_airingshows)">plugin://script.extendedinfo?info=airingshows</value>
+        <value condition="Skin.HasSetting(dashboard_premiereshows)">plugin://script.extendedinfo?info=premiereshows</value>
     </variable>
     <variable name="DashboardExtendedInfoLabel2">
         <value condition="Skin.HasSetting(dashboard_youtubeuser2)">youtube $INFO[Skin.String(YoutubeSearchUser2),(,)]</value>
         <value condition="Skin.HasSetting(dashboard_youtube2)">youtube (HD DE Trailer)</value>
+        <value condition="Skin.HasSetting(dashboard_youtubeplaylists2)">youtube playlists $INFO[Skin.String(YoutubeSearchPlaylists2),(,)]</value>
         <value condition="Skin.HasSetting(dashboard_appletrailer2)">apple itunes trailers</value>
-        <value condition="Skin.HasSetting(dashboard_newdvdreleases2)">new dvd releases (Rotten Tomatoes)</value>
+        <!-- <value condition="Skin.HasSetting(dashboard_newdvdreleases2)">new dvd releases (Rotten Tomatoes)</value>
+        <value condition="Skin.HasSetting(dashboard_currentdvdmovies2)">current dvd movies (Rotten Tomatoes)</value>
         <value condition="Skin.HasSetting(dashboard_toprentals2)">toprentals (Rotten Tomatoes)</value>
         <value condition="Skin.HasSetting(dashboard_intheaters2)">intheaters (Rotten Tomatoes)</value>
         <value condition="Skin.HasSetting(dashboard_comingsoon2)">comingsoon (Rotten Tomatoes)</value>
         <value condition="Skin.HasSetting(dashboard_opening2)">opening (Rotten Tomatoes)</value>
-        <value condition="Skin.HasSetting(dashboard_boxoffice2)">boxoffice (Rotten Tomatoes)</value>
+        <value condition="Skin.HasSetting(dashboard_boxoffice2)">boxoffice (Rotten Tomatoes)</value> -->
         <value condition="Skin.HasSetting(dashboard_incinemas2)">incinemas (The MovieDB)</value>
         <value condition="Skin.HasSetting(dashboard_upcoming2)">upcoming (The MovieDB)</value>
         <value condition="Skin.HasSetting(dashboard_popularmovies2)">popular movies (The MovieDB)</value>
@@ -685,19 +693,22 @@
         <value condition="Skin.HasSetting(dashboard_airingtodaytvshows2)">airingtoday tvshows (The MovieDB)</value>
         <value condition="Skin.HasSetting(dashboard_trendingmovies2)">trending movies (Trakt.tv)</value>
         <value condition="Skin.HasSetting(dashboard_trendingshows2)">trending shows (Trakt.tv)</value>
-        <value condition="Skin.HasSetting(dashboard_airingshows2)">airing episodes (Trakt.tv)</value>
+        <value condition="Skin.HasSetting(dashboard_airingshows2)">airing tv shows (Trakt.tv)</value>
+        <value condition="Skin.HasSetting(dashboard_premiereshows2)">premiereshows tv shows (Trakt.tv)</value>
     </variable>
     <variable name="DashboardExtendedInfoContent2">
-        <value condition="Skin.HasSetting(dashboard_youtubeuser2)">plugin://script.extendedinfo?info=youtubesearch&amp;&amp;id=$INFO[Skin.String(YoutubeSearchUser2)]</value>
-        <value condition="Skin.HasSetting(dashboard_youtube2)">plugin://script.extendedinfo?info=youtubesearch&amp;&amp;id=HD German Trailer 2016</value>
+        <value condition="Skin.HasSetting(dashboard_youtubeuser2)">plugin://script.extendedinfo?info=youtubesearchvideos&amp;&amp;id=$INFO[Skin.String(YoutubeSearchUser2)]</value>
+        <value condition="Skin.HasSetting(dashboard_youtube2)">plugin://script.extendedinfo?info=youtubesearchvideos&amp;&amp;id=HD German Trailer 2016</value>
+        <value condition="Skin.HasSetting(dashboard_youtubeplaylists2)">plugin://script.extendedinfo?info=youtubeplaylistvideos&amp;&amp;id=$INFO[Skin.String(YoutubeSearchPlaylists2)]</value>
         <value condition="Skin.HasSetting(dashboard_appletrailer2)">plugin://plugin.video.itunes_trailers/</value>
-        <value condition="Skin.HasSetting(dashboard_newdvdreleases2)">plugin://script.extendedinfo?info=newdvdmovies</value>
+        <!-- <value condition="Skin.HasSetting(dashboard_newdvdreleases2)">plugin://script.extendedinfo?info=newdvdmovies</value>
+        <value condition="Skin.HasSetting(dashboard_currentdvdmovies2)">plugin://script.extendedinfo?info=currentdvdmovies</value>
         <value condition="Skin.HasSetting(dashboard_toprentals2)">plugin://script.extendedinfo?info=toprentalmovies</value>
         <value condition="Skin.HasSetting(dashboard_intheaters2)">plugin://script.extendedinfo?info=intheatermovies</value>
         <value condition="Skin.HasSetting(dashboard_comingsoon2)">plugin://script.extendedinfo?info=comingsoonmovies</value>
         <value condition="Skin.HasSetting(dashboard_opening2)">plugin://script.extendedinfo?info=openingmovies</value>
-        <value condition="Skin.HasSetting(dashboard_boxoffice2)">plugin://script.extendedinfo?info=boxofficemovies</value>
-        <value condition="Skin.HasSetting(dashboard_incinemas2)">plugin://script.extendedinfo?info=incinemas</value>
+        <value condition="Skin.HasSetting(dashboard_boxoffice2)">plugin://script.extendedinfo?info=boxofficemovies</value> -->
+        <value condition="Skin.HasSetting(dashboard_incinemas2)">plugin://script.extendedinfo?info=incinemamovies</value>
         <value condition="Skin.HasSetting(dashboard_upcoming2)">plugin://script.extendedinfo?info=upcomingmovies</value>
         <value condition="Skin.HasSetting(dashboard_popularmovies2)">plugin://script.extendedinfo?info=popularmovies</value>
         <value condition="Skin.HasSetting(dashboard_topratedmovies2)">plugin://script.extendedinfo?info=topratedmovies</value>
@@ -705,9 +716,10 @@
         <value condition="Skin.HasSetting(dashboard_topratedtvshows2)">plugin://script.extendedinfo?info=topratedtvshows</value>
         <value condition="Skin.HasSetting(dashboard_onairtvshows2)">plugin://script.extendedinfo?info=onairtvshows</value>
         <value condition="Skin.HasSetting(dashboard_airingtodaytvshows2)">plugin://script.extendedinfo?info=airingtodaytvshows</value>
-        <value condition="Skin.HasSetting(dashboard_trendingmovies2)">plugin://script.extendedinfo?info=traktsimilarmovies</value>
-        <value condition="Skin.HasSetting(dashboard_trendingshows2)">plugin://script.extendedinfo?info=traktsimilartvshows</value>
-        <value condition="Skin.HasSetting(dashboard_airingshows2)">plugin://script.extendedinfo?info=airingepisodes</value>
+        <value condition="Skin.HasSetting(dashboard_trendingmovies2)">plugin://script.extendedinfo?info=trendingmovies</value>
+        <value condition="Skin.HasSetting(dashboard_trendingshows2)">plugin://script.extendedinfo?info=trendingshows</value>
+        <value condition="Skin.HasSetting(dashboard_airingshows2)">plugin://script.extendedinfo?info=airingshows</value>
+        <value condition="Skin.HasSetting(dashboard_premiereshows2)">plugin://script.extendedinfo?info=premiereshows</value>
     </variable>
     <variable name="ViewIDLabel_List">
         <value condition="String.StartsWith(Container.FolderPath,plugin://)+!Container.Content(files)">ID 50</value>
@@ -894,5 +906,9 @@
 		<value condition="Container.Content(songs)">$INFO[ListItem.ContributorAndRole,[B]$LOCALIZE[31128][/B][CR],]</value>
 		<value condition="Container.Content(albums)">$INFO[ListItem.Property(Album_Description),[B]$LOCALIZE[21821][/B][CR],]</value>
 		<value>$INFO[ListItem.Property(Artist_Description),[B]$LOCALIZE[21887][/B][CR],]</value>
+	</variable>
+	<variable name="VideoHWDecoder">
+		<value condition="Player.Process(videohwdecoder)">HW</value>
+		<value>SW</value>
 	</variable>
 </includes>

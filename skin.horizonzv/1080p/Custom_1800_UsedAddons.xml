@@ -231,74 +231,61 @@
                         <onclick>Addon.OpenSettings(script.tvtunes)</onclick>
                         <visible>System.HasAddon(script.tvtunes)</visible>
                     </item>
-                    <!-- <item>
-						<label>TV Highlights Grabber</label>
-						<label2>$LOCALIZE[24038]</label2>
-						<onclick>SetProperty(UsedAddons,tvhighlights)</onclick>
-						<onclick>ActivateWindow(1801)</onclick>
-						<visible>!System.HasAddon(plugin.program.tvhighlights)</visible>
-					</item>
-					<item>
-						<label>TV Highlights Grabber $INFO[System.AddonVersion(plugin.program.tvhighlights),(,)]</label>
-						<label2>$LOCALIZE[5]</label2>
-						<onclick>Addon.OpenSettings(plugin.program.tvhighlights)</onclick>
-						<visible>System.HasAddon(plugin.program.tvhighlights)</visible>
-					</item> -->
                     <item>
-                        <label>German Telecast Offers (TV Highlights)</label>
+                        <label>German Telecast Offers</label>
                         <label2>$LOCALIZE[24038]</label2>
                         <onclick>InstallAddon(script.service.gto)</onclick>
                         <visible>!System.HasAddon(plugin.service.gto)</visible>
-                        <visible>System.HasAddon(repository.kodinerds)</visible>
+                        <!-- <visible>System.HasAddon(repository.kodinerds)</visible> -->
                     </item>
                     <item>
-                        <label>German Telecast Offers (TV Highlights) $INFO[System.AddonVersion(plugin.service.gto),(,)]</label>
+                        <label>German Telecast Offers $INFO[System.AddonVersion(plugin.service.gto),(,)]</label>
                         <label2>$LOCALIZE[5]</label2>
                         <onclick>Addon.OpenSettings(plugin.service.gto)</onclick>
                         <visible>System.HasAddon(plugin.service.gto)</visible>
-                        <visible>System.HasAddon(repository.kodinerds)</visible>
+                        <!-- <visible>System.HasAddon(repository.kodinerds)</visible> -->
                     </item>
                     <item>
                         <label>KN Switchtimer Service</label>
                         <label2>$LOCALIZE[24038]</label2>
                         <onclick>InstallAddon(service.kn.switchtimer)</onclick>
                         <visible>!System.HasAddon(service.kn.switchtimer)</visible>
-                        <visible>System.HasAddon(repository.kodinerds)</visible>
+                        <!-- <visible>System.HasAddon(repository.kodinerds)</visible> -->
                     </item>
                     <item>
                         <label>KN Switchtimer Service $INFO[System.AddonVersion(service.kn.switchtimer),(,)]</label>
                         <label2>$LOCALIZE[5]</label2>
                         <onclick>Addon.OpenSettings(service.kn.switchtimer)</onclick>
                         <visible>System.HasAddon(service.kn.switchtimer)</visible>
-                        <visible>System.HasAddon(repository.kodinerds)</visible>
+                        <!-- <visible>System.HasAddon(repository.kodinerds)</visible> -->
                     </item>
                     <item>
                         <label>News Center</label>
                         <label2>$LOCALIZE[24038]</label2>
                         <onclick>InstallAddon(plugin.program.newscenter)</onclick>
                         <visible>!System.HasAddon(plugin.program.newscenter)</visible>
-                        <visible>System.HasAddon(repository.kodinerds)</visible>
+                        <!-- <visible>System.HasAddon(repository.kodinerds)</visible> -->
                     </item>
                     <item>
                         <label>News Center $INFO[System.AddonVersion(plugin.program.newscenter),(,)]</label>
                         <label2>$LOCALIZE[5]</label2>
                         <onclick>Addon.OpenSettings(plugin.program.newscenter)</onclick>
                         <visible>System.HasAddon(plugin.program.newscenter)</visible>
-                        <visible>System.HasAddon(repository.kodinerds)</visible>
+                        <!-- <visible>System.HasAddon(repository.kodinerds)</visible> -->
                     </item>
                     <item>
                         <label>Serien Planer</label>
                         <label2>$LOCALIZE[24038]</label2>
                         <onclick>InstallAddon(plugin.program.serienplaner)</onclick>
                         <visible>!System.HasAddon(plugin.program.serienplaner)</visible>
-                        <visible>System.HasAddon(repository.kodinerds)</visible>
+                        <!-- <visible>System.HasAddon(repository.kodinerds)</visible> -->
                     </item>
                     <item>
                         <label>Serien Planer $INFO[System.AddonVersion(plugin.program.serienplaner),(,)]</label>
                         <label2>$LOCALIZE[5]</label2>
                         <onclick>Addon.OpenSettings(plugin.program.serienplaner)</onclick>
                         <visible>System.HasAddon(plugin.program.serienplaner)</visible>
-                        <visible>System.HasAddon(repository.kodinerds)</visible>
+                        <!-- <visible>System.HasAddon(repository.kodinerds)</visible> -->
                     </item>
                     <item>
                         <label>Resource Images Weatherfanart Multi</label>

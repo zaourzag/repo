@@ -320,7 +320,6 @@
                     <width>1110</width>
                     <height>52</height>
                     <align>left</align>
-                    <onup>25</onup>
                     <label>$LOCALIZE[20007]</label>
                     <textcolor>grey3</textcolor>
                     <texturenofocus>-</texturenofocus>
@@ -384,7 +383,6 @@
                     <width>1110</width>
                     <height>52</height>
                     <align>left</align>
-                    <onup>25</onup>
                     <label>51493</label>
                     <textcolor>grey3</textcolor>
                     <texturenofocus>-</texturenofocus>
@@ -418,7 +416,6 @@
                     <width>1110</width>
                     <height>52</height>
                     <align>left</align>
-                    <onup>25</onup>
                     <label>108</label>
                     <textcolor>grey3</textcolor>
                     <texturenofocus>-</texturenofocus>
@@ -933,6 +930,27 @@
                 </control>
                 <include>WidgetGeneralSettings</include>
             </control>
+            <control type="grouplist" id="36100"> <!-- fav4 -->
+                <!-- Fav4 -->
+                <left>45</left>
+                <top>188</top>
+                <width>1110</width>
+                <height>870</height>
+                <height>675</height>
+                <itemgap>3</itemgap>
+                <visible>String.IsEqual(Window(Home).Property(HomeButton),fav4)</visible>
+                <control type="radiobutton" id="140">
+                    <width>1110</width>
+                    <height>52</height>
+                    <align>left</align>
+                    <textcolor>grey3</textcolor>
+                    <texturenofocus>-</texturenofocus>
+                    <label>51569</label>
+                    <onclick>Skin.ToggleSetting(Widget_Fav4)</onclick>
+                    <selected>Skin.HasSetting(Widget_Fav4)</selected>
+                </control>
+                <include>WidgetGeneralSettings</include>
+            </control>
             <control type="grouplist" id="36100"> <!-- news -->
                 <!-- NEWS -->
                 <left>45</left>
@@ -945,7 +963,6 @@
                     <width>1110</width>
                     <height>52</height>
                     <align>left</align>
-                    <onup>25</onup>
                     <label>News</label>
                     <textcolor>grey3</textcolor>
                     <texturenofocus>-</texturenofocus>
@@ -980,7 +997,6 @@
                     <width>1110</width>
                     <height>52</height>
                     <align>left</align>
-                    <onup>25</onup>
                     <label>TV Highlights (GTO)</label>
                     <textcolor>grey3</textcolor>
                     <texturenofocus>-</texturenofocus>
@@ -1025,7 +1041,6 @@
                     <width>1110</width>
                     <height>52</height>
                     <align>left</align>
-                    <onup>25</onup>
                     <label>Serien Planer</label>
                     <textcolor>grey3</textcolor>
                     <texturenofocus>-</texturenofocus>
@@ -1110,6 +1125,145 @@
                     <selected>Skin.HasSetting(Widget_Videoplaylists)</selected>
                 </control>
                 <include>WidgetGeneralSettings</include>
+            </control>
+            <control type="grouplist" id="36100"> <!-- dashboard -->
+                <!-- dashboard -->
+                <left>45</left>
+                <top>188</top>
+                <width>1110</width>
+                <height>870</height>
+                <height>675</height>
+                <itemgap>3</itemgap>
+                <visible>String.IsEqual(Window(Home).Property(HomeButton),dashboard)</visible>
+					<!-- 51549|dashboard_newdvdreleases,
+					515490|dashboard_currentdvdmovies,
+					51550|dashboard_toprentals,
+					51551|dashboard_intheaters,
+					51552|dashboard_comingsoon,
+					51553|dashboard_opening,		
+					51554|dashboard_boxoffice, -->
+				<control type="button" id="50">
+					<description>Blog Settings</description>
+					<width>1110</width>
+					<height>52</height>
+					<align>left</align>
+					<textcolor>grey3</textcolor>
+					<texturenofocus>-</texturenofocus>
+					<label>51541</label>
+					<label2>$VAR[DashboardExtendedInfoLabel]</label2>
+					<onclick>Skin.SelectBool(51541,
+					594|dashboard_eventblog1_off,
+					51546|dashboard_youtubeuser,
+					51547|dashboard_youtube,
+					515470|dashboard_youtubeplaylists,
+					51548|dashboard_appletrailer,
+					51555|dashboard_incinemas,
+					51556|dashboard_upcoming,
+					51557|dashboard_popularmovies,
+					51558|dashboard_topratedmovies,
+					51559|dashboard_populartvshows,
+					51560|dashboard_topratedtvshows,
+					51561|dashboard_onairtvshows,
+					51562|dashboard_airingtodaytvshows,
+					51563|dashboard_trendingmovies,
+					51564|dashboard_trendingshows,
+					51565|dashboard_airingshows,
+					51566|dashboard_premiereshows,
+					)</onclick>
+					<enable>System.HasAddon(script.extendedinfo)</enable>
+				</control>
+				<control type="button" id="49">
+					<description>Blog Settings</description>
+					<width>1110</width>
+					<height>52</height>
+					<align>left</align>
+					<textcolor>grey3</textcolor>
+					<texturenofocus>-</texturenofocus>
+					<label>- YouTube $INFO[Skin.String(YoutubeSearchUser),(,)]</label>
+					<onclick>Skin.SetString(YoutubeSearchUser)</onclick>
+					<visible>Skin.HasSetting(dashboard_youtubeuser)+System.HasAddon(script.extendedinfo)</visible>
+				</control>
+				<control type="button" id="48">
+					<description>Blog Settings</description>
+					<width>1110</width>
+					<height>52</height>
+					<align>left</align>
+					<textcolor>grey3</textcolor>
+					<texturenofocus>-</texturenofocus>
+					<label>- YouTube $INFO[Skin.String(YoutubeSearchPlaylists),(,)]</label>
+					<onclick>Skin.SetString(YoutubeSearchPlaylists)</onclick>
+					<visible>Skin.HasSetting(dashboard_youtubeplaylists)+System.HasAddon(script.extendedinfo)</visible>
+				</control>
+					<!-- 51549|dashboard_newdvdreleases2,
+					515490|dashboard_currentdvdmovies2,
+					51550|dashboard_toprentals2,
+					51551|dashboard_intheaters2,
+					51552|dashboard_comingsoon2,
+					51553|dashboard_opening2,		
+					51554|dashboard_boxoffice2, -->
+				<control type="button" id="47">
+					<description>Blog Settings</description>
+					<width>1110</width>
+					<height>52</height>
+					<align>left</align>
+					<textcolor>grey3</textcolor>
+					<texturenofocus>-</texturenofocus>
+					<label>51542</label>
+					<label2>$VAR[DashboardExtendedInfoLabel2]</label2>
+					<onclick>Skin.SelectBool(51542,
+					594|dashboard_eventblog1_off2,
+					51546|dashboard_youtubeuser2,
+					51547|dashboard_youtube2,
+					515470|dashboard_youtubeplaylists2,
+					51548|dashboard_appletrailer2,
+					51555|dashboard_incinemas2,
+					51556|dashboard_upcoming2,
+					51557|dashboard_popularmovies2,
+					51558|dashboard_topratedmovies2,
+					51559|dashboard_populartvshows2,
+					51560|dashboard_topratedtvshows2,
+					51561|dashboard_onairtvshows2,
+					51562|dashboard_airingtodaytvshows2,
+					51563|dashboard_trendingmovies2,
+					51564|dashboard_trendingshows2,
+					51565|dashboard_airingshows2,
+					51566|dashboard_premiereshows2,
+					)</onclick>
+					<enable>System.HasAddon(script.extendedinfo)</enable>
+				</control>
+				<control type="button" id="46">
+					<description>Blog Settings</description>
+					<width>1110</width>
+					<height>52</height>
+					<align>left</align>
+					<textcolor>grey3</textcolor>
+					<texturenofocus>-</texturenofocus>
+					<label>- YouTube $INFO[Skin.String(YoutubeSearchUser2),(,)]</label>
+					<onclick>Skin.SetString(YoutubeSearchUser2)</onclick>
+					<visible>Skin.HasSetting(dashboard_youtubeuser2)+System.HasAddon(script.extendedinfo)</visible>
+				</control>
+				<control type="button" id="45">
+					<description>Blog Settings</description>
+					<width>1110</width>
+					<height>52</height>
+					<align>left</align>
+					<textcolor>grey3</textcolor>
+					<texturenofocus>-</texturenofocus>
+					<label>- YouTube $INFO[Skin.String(YoutubeSearchPlaylists2),(,)]</label>
+					<onclick>Skin.SetString(YoutubeSearchPlaylists2)</onclick>
+					<visible>Skin.HasSetting(dashboard_youtubeplaylists2)+System.HasAddon(script.extendedinfo)</visible>
+				</control>
+				<control type="radiobutton" id="44">
+					<width>1110</width>
+					<height>52</height>
+					<align>left</align>
+					<textcolor>grey3</textcolor>
+					<texturenofocus>-</texturenofocus>
+					<label>Fritz Dect</label>
+					<onclick>Skin.ToggleSetting(Widget_NEWS_FritzDect)</onclick>
+					<selected>Skin.HasSetting(Widget_NEWS_FritzDect)</selected>
+					<visible>System.HasAddon(plugin.program.fritzact)</visible>
+				</control>
             </control>
         </control>
     </controls>

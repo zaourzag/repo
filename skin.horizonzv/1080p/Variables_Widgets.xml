@@ -19,6 +19,7 @@
         <value condition="String.IsEqual(Window(Home).Property(HomeButton),fav2)+String.IsEmpty(Skin.String(Favourite2_Playlist_Label))">FAV2</value>
         <value condition="String.IsEqual(Window(Home).Property(HomeButton),fav3)+!String.IsEmpty(Skin.String(Favourite3_Playlist_Label))">$INFO[Skin.String(Favourite3_Playlist_Label)]</value>
         <value condition="String.IsEqual(Window(Home).Property(HomeButton),fav3)+String.IsEmpty(Skin.String(Favourite3_Playlist_Label))">FAV3</value>
+        <value condition="String.IsEqual(Window(Home).Property(HomeButton),fav4)">FAV4</value>
     </variable>
     <variable name="Widget_Label">
         <!-- recommend -->

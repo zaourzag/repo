@@ -33,7 +33,6 @@
                 <include>HomepageWidget</include>
                 <include>Dashboard</include>
                 <include condition="System.HasAddon(plugin.service.gto)|System.HasAddon(plugin.program.newscenter)|System.HasAddon(plugin.program.serienplaner)">HomeNewsCenter</include>
-                <include condition="System.HasAddon(script.extendedinfo)">Dashboard_Extended</include>
             </control>
             <control type="group"> <!-- RSS / NavInfo / OSD -->
                 <control type="group">
@@ -57,12 +56,11 @@
                 <aspectratio>keep</aspectratio>
                 <texture>Horizonzv.png</texture>
                 <animation effect="fade" start="100" end="0" time="2000" delay="8000" condition="true">Conditional</animation>
-                <visible>Window.Previous(startup)+!Skin.HasSetting(HomeMenuVertical)</visible>
+                <visible>Window.Previous(startup)</visible>
             </control>
             <control type="group"> <!-- Statistic -->
                 <left>810</left>
                 <top>964</top>
-                <visible>!Skin.HasSetting(HomeMenuVertical)|[Skin.HasSetting(HomeMenuVertical)+Container(9000).HasFocus()]</visible>
                 <visible>Skin.HasSetting(statistic)+!Window.IsVisible(favourites)</visible>
                 <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),music)|String.IsEqual(Container(9000).ListItem.Property(homemenu_id),movies)|String.IsEqual(Container(9000).ListItem.Property(homemenu_id),tvshow)</visible>
                 <animation type="WindowOpen" condition="Skin.HasSetting(animation)">
@@ -163,15 +161,6 @@
                     <visible>!Skin.HasSetting(hide_central)</visible>
                     <control type="group">
                         <control type="image">
-                            <visible>Skin.HasSetting(HomeMenuVertical)</visible>
-                            <left>-15</left>
-                            <top>0</top>
-                            <width>1950</width>
-                            <height>330</height>
-                            <texture background="true">Black.png</texture>
-                        </control>
-                        <control type="image">
-                            <visible>!Skin.HasSetting(HomeMenuVertical)</visible>
                             <left>-15</left>
                             <top>0</top>
                             <width>1950</width>
@@ -589,7 +578,7 @@
         <control type="grouplist"> <!-- Debuginfos -->
             <visible>Skin.HasSetting(DebugInfo)</visible>
             <left>30</left>
-            <top>60r</top>
+            <top>90r</top>
             <width>1800</width>
             <orientation>horizontal</orientation>
             <itemgap>0</itemgap>
@@ -602,8 +591,8 @@
                 <align>left</align>
                 <textcolor>orange</textcolor>
                 <shadowcolor>black</shadowcolor>
-                <label>295 sichtbar | </label>
-				<visible>Control.IsVisible(295)</visible>
+                <label>8004 sichtbar | </label>
+				<visible>Control.IsVisible(8004)</visible>
             </control>
             <control type="label">
                 <left>30</left>
@@ -614,8 +603,47 @@
                 <align>left</align>
                 <textcolor>orange</textcolor>
                 <shadowcolor>black</shadowcolor>
-                <label>$INFO[Container(295).ListItem(1).Label] | </label>
+                <label>8006 sichtbar | </label>
+				<visible>Control.IsVisible(8006)</visible>
             </control>
         </control>
+		<control type="list" id="784512">
+            <left>30</left>
+            <top>60r</top>
+            <width>1800</width>
+			<height>30</height>
+			<viewtype label="222">list</viewtype>
+			<pagecontrol>-</pagecontrol>
+			<scrolltime>200</scrolltime>
+			<orientation>Horizontal</orientation>
+            <visible>Skin.HasSetting(DebugInfo)</visible>
+			<itemlayout height="30" width="105">
+				<control type="label">
+					<left>0</left>
+					<top>0</top>
+					<width>105</width>
+					<height>18</height>
+					<font>font12</font>
+					<align>left</align>
+					<textcolor>orange</textcolor>
+					<shadowcolor>black</shadowcolor>
+					<label>$INFO[ListItem.Label] | </label>
+				</control>
+			</itemlayout>
+			<focusedlayout height="30" width="105">
+				<control type="label">
+					<left>0</left>
+					<top>0</top>
+					<width>105</width>
+					<height>18</height>
+					<font>font12</font>
+					<align>left</align>
+					<textcolor>orange</textcolor>
+					<shadowcolor>black</shadowcolor>
+					<label>$INFO[ListItem.Label] | </label>
+				</control>
+			</focusedlayout>
+				<content>plugin://script.extendedinfo?info=onairtvshows</content>
+		</control>
     </controls>
 </window>

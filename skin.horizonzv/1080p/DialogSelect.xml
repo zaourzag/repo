@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window type="dialog">
     <defaultcontrol always="true">3</defaultcontrol>
-    <zorder>4</zorder>
+    <zorder>5</zorder>
     <include>openclose</include>
     <include>openclosebox</include>
     <controls>

@@ -19,6 +19,7 @@
         <include>HomepageWidget_FAV1</include>
         <include>HomepageWidget_FAV2</include>
         <include>HomepageWidget_FAV3</include>
+        <include>HomepageWidget_FAV4</include>
         <include>HomepageWidget_Videos</include>
     </include>
     <include name="HomepageWidget_Movies">
@@ -1916,6 +1917,39 @@
 			</include>
         </control>
     </include>
+    <include name="HomepageWidget_FAV4">
+        <control type="group">
+            <left>8</left>
+            <top>472</top>
+            <include>opencloseslideleft</include>
+            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),fav4)</visible>
+            <visible>!Window.IsVisible(favourites)</visible>
+            <visible>Skin.HasSetting(favourite4)</visible>
+			<include content="HomePageWidget_list">
+				<!-- user playlist -->
+				<param name="HomePageWidget_Slide1" value="540" />
+				<param name="HomePageWidget_Slide2" value="360" />
+				<param name="HomePageWidget_Slide3" value="180" />
+				<param name="HomePageWidget_Left" value="189" />
+			
+				<param name="HomePageWidget_content" value="$INFO[Skin.String(Favourite4_Playlist_Path)]" />
+				<param name="HomePageWidget_target" value="music" />
+				<param name="HomePageWidget_limit" value="20" />
+				<param name="HomePageWidget_sortby" value="" />
+				<param name="HomePageWidget_list_id" value="281" />
+				<param name="HomePageWidget_list_width" value="729" />
+				<param name="HomePageWidget_list_onleft" value="281" />
+				<param name="HomePageWidget_list_onright" value="281" />
+				<param name="HomePageWidget_list_ondown" value="9000" />
+				<param name="HomePageWidget_list_onup" value="-" />
+				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$INFO[Skin.String(Favourite4_Playlist_Path)],home)" />
+				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)" />
+				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Widget_Fav4)" />
+				<param name="HomePageWidget_list_visible2" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),fav4)" />
+				<param name="HomePageWidget_list_visible3" value="!String.IsEmpty(Skin.String(Favourite4_Playlist_Path))" />
+			</include>
+        </control>
+    </include>
     <include name="HomepageWidget_Videos">
         <control type="group">
             <left>8</left>
@@ -3275,7 +3309,7 @@
                         <width>172</width>
                         <height>240</height>
                         <aspectratio>stretch</aspectratio>
-						<colordiffuse>$VAR[BackgroundOverlayColorWidget]</colordiffuse>
+						<colordiffuse>$VAR[BackgroundOverlayColorDialog]</colordiffuse>
 						<texture>WhiteBack.png</texture>
 						<visible>Control.HasFocus($PARAM[Widget_Listlayout_id])</visible>
                     </control>
@@ -3410,7 +3444,7 @@
 						<width>153</width>
 						<height>236</height>
 						<aspectratio>stretch</aspectratio>
-						<colordiffuse>$VAR[BackgroundOverlayColorWidget]</colordiffuse>
+						<colordiffuse>$VAR[BackgroundOverlayColorDialog]</colordiffuse>
 						<texture>WhiteBack.png</texture>
 						<visible>Control.HasFocus($PARAM[Widget_Listlayout_id])</visible>
 					</control>
@@ -3704,7 +3738,7 @@
 						<width>212</width>
 						<height>236</height>
 						<aspectratio>stretch</aspectratio>
-						<colordiffuse>$VAR[BackgroundOverlayColorWidget]</colordiffuse>
+						<colordiffuse>$VAR[BackgroundOverlayColorDialog]</colordiffuse>
 						<texture>WhiteBack.png</texture>
 						<visible>Control.HasFocus($PARAM[Widget_Listlayout_id])</visible>
 					</control>

@@ -854,7 +854,6 @@
         <control type="group">
             <!-- menulayout inkl. neonslide -->
 			<height>86</height>
-            <visible>!Skin.HasSetting(HomeMenuVertical)</visible>
             <animation effect="slide" start="0,0" end="0,-112" time="400" delay="250" condition="Window.IsVisible(favourites)">Conditional</animation>
             <control type="image">
                 <left>-8</left>

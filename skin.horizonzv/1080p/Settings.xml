@@ -113,19 +113,14 @@
 			</focusedlayout>
 			<content>
 				<item>
-					<label>$LOCALIZE[20094]</label>
-					<onclick>ActivateWindow(1103)</onclick>
-					<icon>icons/settings/filemanager.png</icon>
-				</item>
-				<item>
 					<label>$LOCALIZE[14201]</label>
 					<onclick>ActivateWindow(PlayerSettings)</onclick>
 					<icon>icons/settings/video.png</icon>
 				</item>
 				<item>
-					<label>$LOCALIZE[14203]</label>
-					<onclick>ActivateWindow(LibrarySettings)</onclick>
-					<icon>icons/settings/video.png</icon>
+					<label>$LOCALIZE[14212]</label>
+					<onclick>ActivateWindow(MediaSettings)</onclick>
+					<icon>icons/settings/library.png</icon>
 				</item>
 				<item>
 					<label>$LOCALIZE[14205]</label>
@@ -161,6 +156,21 @@
 					<label>$LOCALIZE[138]</label>
 					<onclick>ActivateWindow(systeminfo)</onclick>
 					<icon>icons/settings/sysinfo.png</icon>
+				</item>
+				<item>
+					<label>$LOCALIZE[31067]</label>
+					<onclick>ActivateWindow(eventlog)</onclick>
+					<icon>icons/settings/eventlog.png</icon>
+				</item>
+				<item>
+					<label>$LOCALIZE[10003]</label>
+					<onclick>ActivateWindow(filemanager)</onclick>
+					<icon>icons/settings/filemanager.png</icon>
+				</item>
+				<item>
+					<label>$LOCALIZE[24001]</label>
+					<onclick>ActivateWindow(addonbrowser)</onclick>
+					<icon>icons/settings/addons.png</icon>
 				</item>
 			</content>
 		</control>

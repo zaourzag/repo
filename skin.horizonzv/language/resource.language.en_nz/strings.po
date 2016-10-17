@@ -128,9 +128,10 @@ msgctxt "#31029"
 msgid "Fanart"
 msgstr "Fanart"
 
+#: /1080i/SettingsSystemInfo.xml:172
 msgctxt "#31030"
-msgid "Your rating"
-msgstr "Deine Wertung"
+msgid "Memory used"
+msgstr ""
 
 msgctxt "#31031"
 msgid "Pic thumbs"
@@ -219,6 +220,10 @@ msgstr "Diese Datei besteht aus mehreren Teilen. Bitte den abzuspielenden Teil a
 msgctxt "#31061"
 msgid "Current selected"
 msgstr "Aktuell ausgewählt"
+
+msgctxt "#31067"
+msgid "Event log"
+msgstr "Ereignisse"
 
 msgctxt "#31090"
 msgid "Search trailer"
@@ -332,17 +337,25 @@ msgctxt "#31136"
 msgid "Home page \"Pictures\" submenu"
 msgstr "Hauptmenü Bilder-Untermenü"
 
+#: /1080i/DialogPlayerProcessInfo.xml
+msgctxt "#31137"
+msgid "PVR info"
+msgstr ""
+
+#: /1080i/DialogPlayerProcessInfo.xml
+msgctxt "#31138"
+msgid "Player process info"
+msgstr ""
+
+#: /1080i/DialogPlayerProcessInfo.xml
+msgctxt "#31139"
+msgid "Video decoder"
+msgstr ""
+
+#: /1080i/DialogPlayerProcessInfo.xml
 msgctxt "#31140"
-msgid "Music OSD"
-msgstr "Musik-OSD"
-
-msgctxt "#31141"
-msgid "Video OSD"
-msgstr "Video-OSD"
-
-msgctxt "#31142"
-msgid "Settings level"
-msgstr "Einstellungsebene"
+msgid "Pixel format"
+msgstr ""
 
 msgctxt "#31200"
 msgid "Shortcuts"
@@ -1538,7 +1551,7 @@ msgstr "höre deine"
 
 msgctxt "#51382"
 msgid "manage your"
-msgstr "verwalte dein"
+msgstr "verwalte dein(e)"
 
 msgctxt "#51384"
 msgid "experience your"
@@ -1952,6 +1965,10 @@ msgctxt "#51547"
 msgid "YouTube (HD DE Trailer)"
 msgstr "YouTube (HD DE Trailer)"
 
+msgctxt "#515470"
+msgid "YouTube playlists"
+msgstr "YouTube Playlists"
+
 msgctxt "#51548"
 msgid "Trailer (Apple)"
 msgstr "Trailer (Apple)"
@@ -1959,6 +1976,10 @@ msgstr "Trailer (Apple)"
 msgctxt "#51549"
 msgid "new dvd releases (Rotten Tomatoes)"
 msgstr "new dvd releases (Rotten Tomatoes)"
+
+msgctxt "#515490"
+msgid "current dvd movies (Rotten Tomatoes)"
+msgstr "current dvd movies (Rotten Tomatoes)"
 
 msgctxt "#51550"
 msgid "top rentals (Rotten Tomatoes)"
@@ -2021,9 +2042,17 @@ msgid "trending tvshows (Trakt.tv)"
 msgstr "Trending TVShows (Trakt.tv)"
 
 msgctxt "#51565"
-msgid "airing episodes (Trakt.tv)"
-msgstr "Airing Episodes (Trakt.tv)"
+msgid "airing tvshows (Trakt.tv)"
+msgstr "Airing TVShows (Trakt.tv)"
+
+msgctxt "#51566"
+msgid "premiere tvshows (Trakt.tv)"
+msgstr "Premiere TVShows (Trakt.tv)"
 
 msgctxt "#51567"
 msgid "click for more infos"
 msgstr "klicke für mehr Informationen"
+
+msgctxt "#51569"
+msgid "show subdirectories"
+msgstr "zeige Unterverzeichnisse"
