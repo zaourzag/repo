@@ -303,7 +303,8 @@ def scrapeGTOPage(enabled=__enableinfo__):
     i = 1
     content.pop(0)
 
-    for idx in range(1, int(blobs) + 1, 1):
+    # for idx in range(1, int(blobs) + 1, 1):
+    for idx in range(1, 17, 1):
         WINDOW.clearProperty('GTO.%s' % (idx))
 
     WINDOW.setProperty('GTO.blobs', '0')
