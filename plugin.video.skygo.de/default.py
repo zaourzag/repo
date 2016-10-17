@@ -54,5 +54,8 @@ if params:
     elif params['action'] == 'listSeason':
         nav.listEpisodesFromSeason(params['series_id'], params['id'])
 
+    elif params['action'] == 'parentalSettings':
+        nav.showParentalSettings()
+
 else:
     nav.rootDir()

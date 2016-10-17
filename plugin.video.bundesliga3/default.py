@@ -131,7 +131,7 @@ def get_spiele():
       else:
         meldung=""     
       txtneu=neuzeit +" : "+ spiel
-      if "*" in sender: 
+      if "*" in sender and not "/" in sender : 
          txtneu= txtneu + " (Konferenz)"
       addLink(name=txtneu, url=sender , mode="Watch",meldung=meldung,spiel=spiel)
     except:
@@ -239,6 +239,13 @@ def watchlive(url,meldung="",spiel=""):
    debug("----------")
    urlnew=""
    euro=0
+   if "/" in url:
+      sender=url.replace("*"," (Konferenz)")
+      spl = sender.split('/')
+      dialog = xbmcgui.Dialog()
+      nr=dialog.select("Stream:", spl)     
+      url=spl[nr].replace(" (Konferenz)","").strip()
+      debug("URL IST: #"+ url +"###")
    if not meldung == "" :
         dialog = xbmcgui.Dialog()
         nr=dialog.yesno("Läuft nicht", "Dieses Spielt läuft noch nicht trotzdem versuchen?")        
@@ -317,8 +324,6 @@ def watchlive(url,meldung="",spiel=""):
       urlnew="http://wdr_fs_geo-lh.akamaihd.net/i/wdrfs_geogeblockt@112044/master.m3u8"             
    if url=="rbb-online.de":
       urlnew="http://rbb_event-lh.akamaihd.net/i/rbbevent_nongeo@107643/index_1728_av-p.m3u8?sd=10&rebase=on"
-   if url=="br.de":
-       urlnew=live()
    if url=="Eurosport":
       dialog = xbmcgui.Dialog()
       nr=dialog.ok("Eurosport", "Eurosport hat kein Internet Stream")
@@ -384,6 +389,8 @@ def watchlive(url,meldung="",spiel=""):
            match = re.compile('"([^"]+)\.m3u8', re.DOTALL).findall(content)   
            urlnew=match[0]+".m3u8"
            debug ("urlnew :"+ urlnew)
+   if "br.de" in url :
+       urlnew=live()           
    if urlnew :         
       listitem = xbmcgui.ListItem(path=urlnew) 
       xbmcplugin.setResolvedUrl(addon_handle,True, listitem)

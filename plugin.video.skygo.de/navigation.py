@@ -23,6 +23,9 @@ nav_blacklist = [34, 32, 27, 15]
 #Sport: Wiederholungen
 nav_force = [35, 36, 37, 161]
 
+#Jugendschutz
+js_showall = xbmcaddon.Addon().getSetting('js_showall')
+
 xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_NONE)
 xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_LABEL)
  
@@ -64,6 +67,26 @@ def addDir(label, url, icon=icon_file):
     li = xbmcgui.ListItem(label, iconImage=icon)
     xbmcplugin.addDirectoryItem(handle=addon_handle, url=url,
                                 listitem=li, isFolder=True)
+
+def showParentalSettings():
+    fsk_list = ['Deaktiviert', '0', '6', '12', '16', '18']
+    dlg = xbmcgui.Dialog()
+    code = dlg.input('PIN Code', type=xbmcgui.INPUT_NUMERIC)
+    if code == xbmcaddon.Addon().getSetting('password'):
+        idx = dlg.select('Wähle maximale FSK Alterstufe', fsk_list)
+        if idx >= 0:
+            fsk_code = fsk_list[idx]
+            if fsk_code == 'Deaktiviert':
+                xbmcaddon.Addon().setSetting('js_maxrating', '-1')
+            else:
+                xbmcaddon.Addon().setSetting('js_maxrating', fsk_list[idx])
+        if idx > 0:
+            if dlg.yesno('Jugendschutz', 'Sollen Inhalte mit einer Alterseinstufung über ', 'FSK ' + fsk_list[idx] + ' angezeigt werden?'):
+                xbmcaddon.Addon().setSetting('js_showall', 'true')
+            else:
+                xbmcaddon.Addon().setSetting('js_showall', 'false')
+    else:
+        xbmcgui.Dialog().notification('SkyGo - Jugendschutz', 'Fehlerhafte PIN', xbmcgui.NOTIFICATION_ERROR, 2000, True)
     
 def getHeroImage(data):
     if 'main_picture' in data:
@@ -153,6 +176,11 @@ def listEpisodesFromSeason(series_id, season_id):
     for season in data['seasons']['season']:
         if str(season['id']) == str(season_id):
             for episode in season['episodes']['episode']:
+                #Check Altersfreigabe / Jugendschutzeinstellungen
+                if 'parental_rating' in episode:
+                    if js_showall == 'false':
+                        if not skygo.parentalCheck(episode['parental_rating']['value'], play=False):   
+                            continue
                 url = common.build_url({'action': 'playVod', 'vod_id': episode['id']})
                 li = xbmcgui.ListItem()
                 li.setProperty('IsPlayable', 'true')
@@ -336,6 +364,11 @@ def listAssets(asset_list, isWatchlist=False):
         li = xbmcgui.ListItem(label=item['label'], iconImage=icon_file)
         if item['type'] in ['Film', 'Episode', 'Sport', 'Clip', 'Series', 'live', 'searchresult']:
             isPlayable = True
+            #Check Altersfreigabe / Jugendschutzeinstellungen
+            if 'parental_rating' in item['data']:
+                if js_showall == 'false':
+                    if not skygo.parentalCheck(item['data']['parental_rating']['value'], play=False):   
+                        continue
             info = getInfoLabel(item['type'], item['data'])
             li.setInfo('video', info)
             li.setLabel(info['title'])

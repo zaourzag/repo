@@ -1,13 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from common import *
-    
-def stageid(data,ck):
-    content = data['content']
-    contentPage = str(content[ck]['contentPage'])
-    r = re.search("u'stageid': u'(\d+)'", contentPage)
-    if r:
-        return r.group(1)
 
 def unas_url(data):
     if data.get('status', 'error') == 'success':

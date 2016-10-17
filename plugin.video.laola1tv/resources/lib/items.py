@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from common import *
+from menu import Menu
+from videos import Videos
+from live_videos import Live_Videos
+from live import Live
 
 class Items:
 
@@ -29,7 +33,7 @@ class Items:
                 'poster' : item.get('thumb', icon),
                 'fanart' : fanart
                 }
-                
+
         labels = {
                     'title'     : item['title'],
                     'plot'      : item.get('plot', ''),
@@ -59,35 +63,44 @@ class Items:
 items = Items()
 
 def menu(data):
-    from menu import Menu
     items.add({'mode':'live', 'title':getString(30101)})
-    if data.get('menu_items', None):
-        channels = data['menu_items'][5]['Sport Channel']
-        for i in channels:
-            items.add(Menu(i, 'sub_menu').item)
+    sports = data[0]['children']
+    for i in sports:
+        items.add(Menu(i, 'sports').item)
     items.list()
     
-def sub_menu(data,channel):
-    from menu import Menu
-    channels = data['menu_items'][5]['Sport Channel']
+def sports(data, channel):
+    channels = data[0]['children']
     for c in channels:
         if channel == utfenc(c['title']):
-            for i in c['submenu']:
-                items.add(Menu(i, 'videos').item)
+            for i in c['children']:
+                items.add(Menu(i, 'sub_menu').item)
             break
     items.list()
-
+    
+def sub_menu(data):
+    container = data['container']
+    for c in container:
+        if c['content']:
+            if c.get('page', None):
+                items.add(Menu(c, 'videos').item)
+            else:
+                for i in c['content']:
+                    items.add(Videos(i).item)
+        elif c['schedule']:
+            for s in c['schedule']:
+                items.add(Live_Videos(s).item)
+    items.list()
+    
 def live(data):
-    from live import Live
     videos = data.get('video', [])
     for i in videos:
         items.add(Live(i).item)
     items.list()
 
 def video(data):
-    from videos import Videos
-    videos = data.get('VIDEO', [])
-    for i in videos:
+    content = data['container'][0]['content']
+    for i in content:
         items.add(Videos(i).item)
     items.list()
     

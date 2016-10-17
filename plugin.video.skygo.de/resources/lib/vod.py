@@ -12,4 +12,5 @@ def playAsset(asset_id):
     if 'ms_media_url' in asset_info:
         manifest_url = asset_info['ms_media_url']
 
-    skygo.play(manifest_url, package_code=asset_info['package_code'], info_tag=info_tag, apix_id=str(asset_info['event_id']))
+    parental_rating = asset_info.get('parental_rating', {}).get('value', 0)
+    skygo.play(manifest_url, package_code=asset_info['package_code'], parental_rating=parental_rating, info_tag=info_tag, apix_id=str(asset_info['event_id']))

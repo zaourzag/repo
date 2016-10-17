@@ -10,17 +10,18 @@ client = Client()
 
 def run():
     if mode == 'root':
-        data = client.content('menu')
+        data = client.menu()
         cache.cache_data(data)
         items.menu(data)
         login()
+    elif mode == 'sports':
+        items.sports(cache.get_cache_data(), title)
     elif mode == 'sub_menu':
-        items.sub_menu(cache.get_cache_data(), args['title'][0])
+        items.sub_menu(client.feeds(params, id))
     elif mode == 'live':
         items.live(client.live_feed())
     elif mode == 'videos':
-        _id_ = helper.stageid(client.content('content'), id)
-        items.video(client.videos(_id_))
+        items.video(client.feeds(params, id))
     elif mode == 'play':
         items.play(path())
         client.deletesession()
@@ -35,16 +36,19 @@ def login():
     login_data = client.login()
     _cookie_   = helper.create_cookie(login_data)
     addon.setSetting('cookie', _cookie_)
-    log('[laola1tv] login: %s' % (user(_cookie_)))
+    log('[%s] login: %s' % (addon_id, user(_cookie_)))
     
 def user(_cookie_):
     return helper.user(client.user(_cookie_))
 
 args   = urlparse.parse_qs(sys.argv[2][1:])
 mode   = args.get('mode', ['root'])[0]
+title  = args.get('title', [''])[0]
 id     = args.get('id', [''])[0]
 params = args.get('params', [''])[0]
-log('[laola1tv] arguments: %s' % (str(args)))
+if not args:
+    args = version
+log('[%s] arguments: %s' % (addon_id, str(args)))
 
 if mode == 'root':
     if email and password:
