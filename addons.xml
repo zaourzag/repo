@@ -2051,7 +2051,7 @@ Für Sport1US und Sport1+ wird ein ABO auf sport1.de benötigt.
 	</extension>
 </addon>
 
-<addon id="skin.horizonzv" name="[RC] Horizonz V (Kodi 17)" version="0.9.0.4" provider-name="blauesgruen">
+<addon id="skin.horizonzv" name="[RC] Horizonz V (Kodi 17)" version="0.9.0.6" provider-name="blauesgruen">
 	<requires>
 		<import addon="xbmc.gui" version="5.12.0"/>
 	</requires>
