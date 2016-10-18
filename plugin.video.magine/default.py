@@ -185,7 +185,10 @@ def playlive(url,session,userid,channelid):
            counter2=0 
            if playlist.size()<3 :              
               playlist=leseclips(session,userid,channelid,playlist,timelist)  
-        time.sleep(60)
+        counter=0
+        while counter < 60 and xbmc.Player().isPlaying():
+            time.sleep(1)
+            counter=counter+1
         counter2=counter2+1
         counter1=0                
     time.sleep(1)
