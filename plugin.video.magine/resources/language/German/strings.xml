@@ -2,5 +2,7 @@
 <strings>
   <string id="30101">User</string>
   <string id="30102">Password</string>
-  <string id="30102">Einstellungen</string>
+  <string id="30103">Einstellungen</string>
+  <string id="30104">Fersehsender</string>
+  <string id="30105">PIN</string>
 </strings>

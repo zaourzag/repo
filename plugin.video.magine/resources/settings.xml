@@ -1,4 +1,5 @@
 <settings>
    <setting id="user" type="text" label="30101" default=""/>   
    <setting id="password" type="text" option="hidden" label="30102" default=""/>
+   <setting id="pin" type="number" option="hidden" label="30103" default=""/>
 </settings>
