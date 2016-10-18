@@ -2286,10 +2286,10 @@ Für Sport1US und Sport1+ wird ein ABO auf sport1.de benötigt.
 	</extension>
 </addon>
 
-<addon id="plugin.video.7tvinput" name="7TV(InputStream)" version="3.1.8" provider-name="L0RE">
+<addon id="plugin.video.7tvinput" name="7TV(InputStream)" version="3.1.9" provider-name="L0RE">
 	<requires>
 		<import addon="xbmc.python" version="2.14.0"/>
-		<import addon="inputstream.mpd" version="1.2.16"/>
+		<import addon="inputstream.mpd" version="1.2.17"/>
 	</requires>
 	<extension point="xbmc.python.pluginsource" library="addon.py">
 		<provides>video</provides>
