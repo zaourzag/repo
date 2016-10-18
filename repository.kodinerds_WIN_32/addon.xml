@@ -6,8 +6,10 @@
 		<datadir zip="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/WIN_32/</datadir>
 	</extension>
 	<extension point="xbmc.addon.metadata">
-		<summary>Most of the addon have been abandoned, and Patched by someone new. Or have been Found without someone loosing them</summary>
-		<description>Most of the addon have been abandoned, and Patched by someone new. Or have been Found without someone loosing them</description>
+		<summary lang="en">Official Repository of Kodinerds</summary>
+		<summary lang="de">Offizielles Repository der Kodinerds</summary>
+		<description lang="en">This is the official Repository of the german Community 'Kodinerds' which you'll find at www.kodinerds.net. Most of the hosted Addons are supported by the members of the Community. Enjoy!</description>
+		<description lang="de">Das ist das offizielle Repository der deutschen Community 'Kodinerds', welche Du unter www.kodinerds.net findest. Die meisten der hier gehosteten Addons werden von den Mitgliedern der Community aktiv supported. Viel Spaß!</description>
 		<disclaimer></disclaimer>
 		<platform>windx</platform>
 	</extension>

@@ -608,8 +608,10 @@ Orginal Code was from AddonScriptorDE</disclaimer>
 		<datadir zip="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/RPi/</datadir>
 	</extension>
 	<extension point="xbmc.addon.metadata">
-		<summary>Most of the addon have been abandoned, and Patched by someone new. Or have been Found without someone loosing them</summary>
-		<description>Most of the addon have been abandoned, and Patched by someone new. Or have been Found without someone loosing them</description>
+		<summary lang="en">Official Repository of Kodinerds</summary>
+		<summary lang="de">Offizielles Repository der Kodinerds</summary>
+		<description lang="en">This is the official Repository of the german Community 'Kodinerds' which you'll find at www.kodinerds.net. Most of the hosted Addons are supported by the members of the Community. Enjoy!</description>
+		<description lang="de">Das ist das offizielle Repository der deutschen Community 'Kodinerds', welche Du unter www.kodinerds.net findest. Die meisten der hier gehosteten Addons werden von den Mitgliedern der Community aktiv supported. Viel Spaß!</description>
 		<disclaimer></disclaimer>
 		<platform>linux</platform>
 	</extension>
@@ -622,8 +624,10 @@ Orginal Code was from AddonScriptorDE</disclaimer>
 		<datadir zip="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/Generic_x68_64/</datadir>
 	</extension>
 	<extension point="xbmc.addon.metadata">
-		<summary>Most of the addon have been abandoned, and Patched by someone new. Or have been Found without someone loosing them</summary>
-		<description>Most of the addon have been abandoned, and Patched by someone new. Or have been Found without someone loosing them</description>
+		<summary lang="en">Official Repository of Kodinerds</summary>
+		<summary lang="de">Offizielles Repository der Kodinerds</summary>
+		<description lang="en">This is the official Repository of the german Community 'Kodinerds' which you'll find at www.kodinerds.net. Most of the hosted Addons are supported by the members of the Community. Enjoy!</description>
+		<description lang="de">Das ist das offizielle Repository der deutschen Community 'Kodinerds', welche Du unter www.kodinerds.net findest. Die meisten der hier gehosteten Addons werden von den Mitgliedern der Community aktiv supported. Viel Spaß!</description>
 		<disclaimer></disclaimer>
 		<platform>linux</platform>
 	</extension>
@@ -1227,8 +1231,10 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
 		<datadir zip="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/WIN_32/</datadir>
 	</extension>
 	<extension point="xbmc.addon.metadata">
-		<summary>Most of the addon have been abandoned, and Patched by someone new. Or have been Found without someone loosing them</summary>
-		<description>Most of the addon have been abandoned, and Patched by someone new. Or have been Found without someone loosing them</description>
+		<summary lang="en">Official Repository of Kodinerds</summary>
+		<summary lang="de">Offizielles Repository der Kodinerds</summary>
+		<description lang="en">This is the official Repository of the german Community 'Kodinerds' which you'll find at www.kodinerds.net. Most of the hosted Addons are supported by the members of the Community. Enjoy!</description>
+		<description lang="de">Das ist das offizielle Repository der deutschen Community 'Kodinerds', welche Du unter www.kodinerds.net findest. Die meisten der hier gehosteten Addons werden von den Mitgliedern der Community aktiv supported. Viel Spaß!</description>
 		<disclaimer></disclaimer>
 		<platform>windx</platform>
 	</extension>
@@ -1316,8 +1322,10 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
 		<datadir zip="true">https://raw.githubusercontent.com/kodinerds/repo/master/</datadir>
 	</extension>
 	<extension point="xbmc.addon.metadata">
-		<summary>Most of the addon have been abandoned, and Patched by someone new. Or have been Found without someone loosing them</summary>
-		<description>Most of the addon have been abandoned, and Patched by someone new. Or have been Found without someone loosing them</description>
+		<summary lang="en">Official Repository of Kodinerds</summary>
+		<summary lang="de">Offizielles Repository der Kodinerds</summary>
+		<description lang="en">This is the official Repository of the german Community 'Kodinerds' which you'll find at www.kodinerds.net. Most of the hosted Addons are supported by the members of the Community. Enjoy!</description>
+		<description lang="de">Das ist das offizielle Repository der deutschen Community 'Kodinerds', welche Du unter www.kodinerds.net findest. Die meisten der hier gehosteten Addons werden von den Mitgliedern der Community aktiv supported. Viel Spaß!</description>
 		<disclaimer></disclaimer>
 		<platform>all</platform>
 	</extension>
@@ -1624,8 +1632,10 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
 		<datadir zip="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/Odroid_C2/</datadir>
 	</extension>
 	<extension point="xbmc.addon.metadata">
-		<summary>Most of the addon have been abandoned, and Patched by someone new. Or have been Found without someone loosing them</summary>
-		<description>Most of the addon have been abandoned, and Patched by someone new. Or have been Found without someone loosing them</description>
+		<summary lang="en">Official Repository of Kodinerds</summary>
+		<summary lang="de">Offizielles Repository der Kodinerds</summary>
+		<description lang="en">This is the official Repository of the german Community 'Kodinerds' which you'll find at www.kodinerds.net. Most of the hosted Addons are supported by the members of the Community. Enjoy!</description>
+		<description lang="de">Das ist das offizielle Repository der deutschen Community 'Kodinerds', welche Du unter www.kodinerds.net findest. Die meisten der hier gehosteten Addons werden von den Mitgliedern der Community aktiv supported. Viel Spaß!</description>
 		<disclaimer></disclaimer>
 		<platform>linux</platform>
 	</extension>
@@ -2006,7 +2016,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
     </extension>
 </addon>
 
-<addon id="service.tvh.manager" name="TVHeadend Power and Recording Management" version="0.3.19" provider-name="Birger Jesch">
+<addon id="service.tvh.manager" name="TVHeadend Power and Recording Management" version="0.3.17" provider-name="Birger Jesch">
   <extension point="xbmc.service" library="default.py" start="[login|startup]" />
   <extension point="xbmc.python.script" library="default.py" />
   <extension point="xbmc.addon.metadata">
@@ -2216,8 +2226,10 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
 		<datadir zip="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/RPi2/</datadir>
 	</extension>
 	<extension point="xbmc.addon.metadata">
-		<summary>Most of the addon have been abandoned, and Patched by someone new. Or have been Found without someone loosing them</summary>
-		<description>Most of the addon have been abandoned, and Patched by someone new. Or have been Found without someone loosing them</description>
+		<summary lang="en">Official Repository of Kodinerds</summary>
+		<summary lang="de">Offizielles Repository der Kodinerds</summary>
+		<description lang="en">This is the official Repository of the german Community 'Kodinerds' which you'll find at www.kodinerds.net. Most of the hosted Addons are supported by the members of the Community. Enjoy!</description>
+		<description lang="de">Das ist das offizielle Repository der deutschen Community 'Kodinerds', welche Du unter www.kodinerds.net findest. Die meisten der hier gehosteten Addons werden von den Mitgliedern der Community aktiv supported. Viel Spaß!</description>
 		<disclaimer></disclaimer>
 		<platform>linux</platform>
 	</extension>
@@ -2280,8 +2292,10 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
 		<datadir zip="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/OSX_64/</datadir>
 	</extension>
 	<extension point="xbmc.addon.metadata">
-		<summary>Most of the addon have been abandoned, and Patched by someone new. Or have been Found without someone loosing them</summary>
-		<description>Most of the addon have been abandoned, and Patched by someone new. Or have been Found without someone loosing them</description>
+		<summary lang="en">Official Repository of Kodinerds</summary>
+		<summary lang="de">Offizielles Repository der Kodinerds</summary>
+		<description lang="en">This is the official Repository of the german Community 'Kodinerds' which you'll find at www.kodinerds.net. Most of the hosted Addons are supported by the members of the Community. Enjoy!</description>
+		<description lang="de">Das ist das offizielle Repository der deutschen Community 'Kodinerds', welche Du unter www.kodinerds.net findest. Die meisten der hier gehosteten Addons werden von den Mitgliedern der Community aktiv supported. Viel Spaß!</description>
 		<disclaimer></disclaimer>
 		<platform>osx</platform>
 	</extension>
