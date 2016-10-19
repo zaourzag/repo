@@ -1,4 +1,5 @@
-﻿v 0.9.0.6
+﻿v 0.9.0.9
+- texture.xbt neu gepackt
 - Bugfix: Videoinfo ("o")
 - Neu: FritzDect Addon ins Dashboard intergriert
 - Dashboard überarbeitet, Extendinfos überarbeitet (infos von rotten tomatoes deaktiviert)
