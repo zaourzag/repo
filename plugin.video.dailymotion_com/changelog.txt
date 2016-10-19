@@ -1,3 +1,6 @@
+2.2.2
+- Fix
+- Up to Know Mainainer was until 2.2 AddonscriptorDE,new Maintainer L0RE
 2.2
  - Fixe video quality and max video quality
 2.1.6
