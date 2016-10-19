@@ -181,15 +181,6 @@
                             <onclick>Skin.ToggleSetting(DebugInfo)</onclick>
                             <selected>Skin.HasSetting(DebugInfo)</selected>
                         </control>
-                        <control type="radiobutton" id="207">
-                            <description>Home Menu Orientaion</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <label>vertikales Hauptmenü</label>
-                            <onclick>Skin.ToggleSetting(HomeMenuVertical)</onclick>
-                            <selected>Skin.HasSetting(HomeMenuVertical)</selected>
-                            <visible>false</visible>
-                        </control>
                         <control type="radiobutton" id="208">
                             <description>Firstrun</description>
                             <width>1260</width>
@@ -2213,12 +2204,6 @@
                         <pagecontrol>70</pagecontrol>
                         <visible>Container(8000).Hasfocus(8)</visible>
                         <include>openclosevisible</include>
-                        <control type="button" id="1009">
-                            <width>1260</width>
-                            <align>left</align>
-							<label>Dashboard - $LOCALIZE[24000] $LOCALIZE[455]</label>
-							<onclick>Skin.SelectBool(51226, 12311|dashboard_small, 12312|dashboard_medium, 12313|dashboard_big)</onclick>
-                        </control>
                         <control type="button" id="1010">
                             <width>1260</width>
                             <align>left</align>

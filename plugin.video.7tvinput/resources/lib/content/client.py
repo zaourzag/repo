@@ -240,7 +240,8 @@ class Client(nightcrawler.HttpClient):
             pass
 
         #access_token = 's''e''v''e''n''t''v''-''w''e''b'
-        access_token = 'prosieben'
+        #access_token = 'prosieben'
+        access_token = 'seventv-web'
         salt = '01!8d8F_)r9]4s[qeuXfP%'
         #salt = '0''1''r''e''e''6''e''L''e''i''w''i''u''m''i''e''7''i''e''V''8''p''a''h''g''e''i''T''u''i''3''B'
         # http://hbbtv.prosieben.de/common/js/videocenter.js

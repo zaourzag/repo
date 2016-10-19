@@ -768,7 +768,7 @@
                     <control type="button" id="7">
                         <description>UserRating</description>
                         <include>dialogbutton</include>
-                        <label>31030</label>
+                        <label>38018</label>
 						<enable>IsEmpty(Container.PluginName)</enable>
                     </control>
                     <control type="togglebutton" id="8">

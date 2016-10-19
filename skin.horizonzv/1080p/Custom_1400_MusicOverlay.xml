@@ -57,7 +57,6 @@
                         <font>impacted24</font>
                         <textcolor>white</textcolor>
                         <visible>![Window.IsVisible(MyPVRChannels.xml)|Window.IsVisible(MyPVRGuide.xml)|Window.IsVisible(MyPVRRecordings.xml)|Window.IsVisible(MyPVRTimers.xml)|Window.IsVisible(MyPVRSearch.xml)]</visible>
-                        <visible>[Window.IsVisible(Home)+!Skin.HasSetting(HomeMenuVertical)]|!Window.IsVisible(Home)</visible>
                         <visible>!Window.IsVisible(eventlog)</visible>
                         <visible>Skin.HasSetting(NavInfo)+!Control.HasFocus(666)</visible>
                     </control>

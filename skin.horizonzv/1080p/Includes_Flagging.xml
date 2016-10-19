@@ -159,19 +159,19 @@
         <control type="button">
             <description>Video AudioLanguage 1</description>
 			<include>FlagDimensionButton</include>
-            <label>$INFO[ListItem.Property(AudioLanguage.1]</label>
+            <label>$INFO[ListItem.Property(AudioLanguage.1)]</label>
             <visible>!String.IsEmpty(ListItem.Property(AudioLanguage.1))</visible>
         </control>
         <control type="button">
             <description>Video AudioChannels 1</description>
 			<include>FlagDimensionButton</include>
-            <label>$INFO[ListItem.Property(AudioChannels.1,, $LOCALIZE[19078]]</label>
+            <label>$INFO[ListItem.Property(AudioChannels.1),, $LOCALIZE[19078]]</label>
             <visible>!String.IsEmpty(ListItem.Property(AudioChannels.1))</visible>
         </control>
         <control type="button">
             <description>Video AudioCodec 1</description>
 			<include>FlagDimensionButton</include>
-            <label>$INFO[ListItem.Property(AudioCodec.1]</label>
+            <label>$INFO[ListItem.Property(AudioCodec.1)]</label>
             <visible>!String.IsEmpty(ListItem.Property(AudioCodec.1))</visible>
         </control>
     </include>
@@ -187,19 +187,19 @@
         <control type="button">
             <description>Video AudioLanguage 2</description>
 			<include>FlagDimensionButton</include>
-            <label>$INFO[ListItem.Property(AudioLanguage.2]</label>
+            <label>$INFO[ListItem.Property(AudioLanguage.2)]</label>
             <visible>!String.IsEmpty(ListItem.Property(AudioLanguage.2))</visible>
         </control>
         <control type="button">
             <description>Video AudioChannels 2</description>
 			<include>FlagDimensionButton</include>
-            <label>$INFO[ListItem.Property(AudioChannels.2,, $LOCALIZE[19078]]</label>
+            <label>$INFO[ListItem.Property(AudioChannels.2),, $LOCALIZE[19078]]</label>
             <visible>!String.IsEmpty(ListItem.Property(AudioChannels.2))</visible>
         </control>
         <control type="button">
             <description>Video AudioCodec 2</description>
 			<include>FlagDimensionButton</include>
-            <label>$INFO[ListItem.Property(AudioCodec.2]</label>
+            <label>$INFO[ListItem.Property(AudioCodec.2)]</label>
             <visible>!String.IsEmpty(ListItem.Property(AudioCodec.2))</visible>
         </control>
     </include>

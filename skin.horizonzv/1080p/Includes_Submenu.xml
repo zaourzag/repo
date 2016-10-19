@@ -342,55 +342,63 @@
         </control>
     </include>
     <include name="HomeSubMenuSystem">
-        <control type="grouplist" id="9010">
-            <include>HomeSubMenuCommonValues</include>
-            <onleft>9010</onleft>
-            <onright>9010</onright>
-            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),setting)</visible>
-            <control type="button" id="90121">
-                <include>ButtonHomeSubCommonValues</include>
-                <label>20077</label>
-                <onclick>ActivateWindow(skinsettings)</onclick>
-                <visible>!Skin.HasSetting(SubMenu_Music_NoSkinSettingButton)</visible>
-            </control>
-            <control type="button" id="90128">
-                <include>ButtonHomeSubCommonValues</include>
-                <label>LibreELEC</label>
-                <onclick>RunAddon(service.libreelec.settings)</onclick>
-                <visible>System.HasAddon(service.libreelec.settings)</visible>
-                <visible>!Skin.HasSetting(SubMenu_Music_NoLibreelecButton)</visible>
-            </control>
-            <control type="button" id="90123">
-                <include>ButtonHomeSubCommonValues</include>
-                <label>7</label>
-                <onclick>ActivateWindow(FileManager)</onclick>
-                <visible>!Skin.HasSetting(SubMenu_Music_NoFilemanagerButton)</visible>
-            </control>
-            <control type="button" id="90124">
-                <include>ButtonHomeSubCommonValues</include>
-                <label>13200</label>
-                <onclick>ActivateWindow(Profiles)</onclick>
-                <visible>!Skin.HasSetting(SubMenu_Music_NoProfileButton)</visible>
-            </control>
-            <control type="button" id="90125">
-                <include>ButtonHomeSubCommonValues</include>
-                <label>130</label>
-                <onclick>ActivateWindow(SystemInfo)</onclick>
-                <visible>!Skin.HasSetting(SubMenu_Music_NoSystemInfoButton)</visible>
-            </control>
-            <control type="button" id="90126">
-                <include>ButtonHomeSubCommonValues</include>
-                <label>14114</label>
-                <onclick>ActivateWindow(eventlog)</onclick>
-            </control>
-            <control type="button" id="90127">
-                <description>Toggle Systeminfo Widget</description>
-                <include>ButtonHomeSubCommonValues</include>
-                <label>$LOCALIZE[13000] Widget</label>
-                <onclick condition="!Skin.HasSetting(Widget_Systeminfo)">Skin.SetBool(Widget_Systeminfo)</onclick>
-                <onclick condition="Skin.HasSetting(Widget_Systeminfo)">Skin.Reset(Widget_Systeminfo)</onclick>
-            </control>
-        </control>
+		<control type="grouplist" id="9010">
+			<include>HomeSubMenuCommonValues</include>
+			<onleft>9010</onleft>
+			<onright>9010</onright>
+			<visible>StringCompare(Container(9000).ListItem.Property(homemenu_id),setting)</visible>
+			<control type="button" id="90131">
+				<include>ButtonHomeSubCommonValues</include>
+				<label>20077</label>
+				<onclick>ActivateWindow(skinsettings)</onclick>
+				<visible>!Skin.HasSetting(SubMenu_Music_NoSkinSettingButton)</visible>
+			</control>
+			<control type="button" id="90130">
+				<include>ButtonHomeSubCommonValues</include>
+				<label>LibreELEC</label>
+				<onclick>RunAddon(service.libreelec.settings)</onclick>
+				<visible>System.HasAddon(service.libreelec.settings)</visible>
+				<visible>!Skin.HasSetting(SubMenu_Music_NoLibreelecButton)</visible>
+			</control>
+			<control type="button" id="90129">
+			<include>ButtonHomeSubCommonValues</include>
+				<label>OpenELEC</label>
+				<onclick>RunAddon(service.openelec.settings)</onclick>
+				<visible>System.HasAddon(service.openelec.settings)</visible>
+				<visible>!Skin.HasSetting(SubMenu_Music_NoLibreelecButton)</visible>
+			</control>
+			<control type="button" id="90124">
+				<include>ButtonHomeSubCommonValues</include>
+				<label>7</label>
+				<onclick>ActivateWindow(FileManager)</onclick>
+				<visible>!Skin.HasSetting(SubMenu_Music_NoFilemanagerButton)</visible>
+			</control>
+			<control type="button" id="90125">
+				<include>ButtonHomeSubCommonValues</include>
+				<label>13200</label>
+				<onclick>ActivateWindow(Profiles)</onclick>
+				<visible>!Skin.HasSetting(SubMenu_Music_NoProfileButton)</visible>
+			</control>
+			<control type="button" id="90126">
+				<include>ButtonHomeSubCommonValues</include>
+				<label>130</label>
+				<onclick>ActivateWindow(SystemInfo)</onclick>
+				<visible>!Skin.HasSetting(SubMenu_Music_NoSystemInfoButton)</visible>
+			</control>
+			<control type="button" id="90127">
+				<include>ButtonHomeSubCommonValues</include>
+				<label>14114</label>
+				<onclick>ActivateWindow(EventLog,events://,return)</onclick>
+				<visible>system.getbool(eventlog.enabled)</visible>
+			</control>
+			<control type="button" id="90128">
+				<description>Toggle Systeminfo Widget</description>
+				<include>ButtonHomeSubCommonValues</include>
+				<label>$LOCALIZE[13000] Widget</label>
+				<onclick condition="!Skin.HasSetting(Widget_Systeminfo)">Skin.SetBool(Widget_Systeminfo)</onclick>
+				<onclick condition="Skin.HasSetting(Widget_Systeminfo)">Skin.Reset(Widget_Systeminfo)</onclick>
+			</control>
+		</control>
     </include>
     <include name="HomeSubMenuPlayDisc">
         <control type="grouplist" id="9010">
@@ -553,87 +561,16 @@
     <include name="HomeSubMenuPrograms">
         <!-- Dashboard -->
         <control type="grouplist" id="9010">
+			<onup>8009</onup>
             <include>HomeSubMenuCommonValues</include>
             <onleft>9010</onleft>
             <onright>9010</onright>
-            <onup>8005</onup>
             <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),dashboard)</visible>
-            <control type="button" id="90161">
-                <description>Blog Settings</description>
+            <control type="button" id="90123">
                 <include>ButtonHomeSubCommonValues</include>
-                <label>51541</label>
-				<onclick>Skin.SelectBool(51541,
-				594|dashboard_eventblog1_off,
-				51546|dashboard_youtubeuser,
-				51547|dashboard_youtube,
-				51548|dashboard_appletrailer,
-				51549|dashboard_newdvdreleases,
-				51550|dashboard_toprentals,
-				51551|dashboard_intheaters,
-				51552|dashboard_comingsoon,
-				51553|dashboard_opening,		
-				51554|dashboard_boxoffice,
-				51555|dashboard_incinemas,
-				51556|dashboard_upcoming,
-				51557|dashboard_popularmovies,
-				51558|dashboard_topratedmovies,
-				51559|dashboard_populartvshows,
-				51560|dashboard_topratedtvshows,
-				51561|dashboard_onairtvshows,
-				51562|dashboard_airingtodaytvshows,
-				51563|dashboard_trendingmovies,
-				51564|dashboard_trendingshows,
-				51565|dashboard_airingshows,
-				)</onclick>
-                <enable>[Skin.HasSetting(dashboard_medium)|Skin.HasSetting(dashboard_small)]+System.HasAddon(script.extendedinfo)</enable>
-            </control>
-            <control type="button" id="90165">
-                <description>Blog Settings</description>
-                <include>ButtonHomeSubCommonValues</include>
-                <label>YouTube $INFO[Skin.String(YoutubeSearchUser),(,)]</label>
-				<onclick>Skin.SetString(YoutubeSearchUser)</onclick>
-                <visible>[Skin.HasSetting(dashboard_medium)|Skin.HasSetting(dashboard_small)]+Skin.HasSetting(dashboard_youtubeuser)+System.HasAddon(script.extendedinfo)</visible>
-            </control>
-            <control type="button" id="90166">
-                <description>Blog Settings</description>
-                <include>ButtonHomeSubCommonValues</include>
-                <label>51542</label>
-				<onclick>Skin.SelectBool(51542,
-				594|dashboard_eventblog1_off2,
-				51546|dashboard_youtubeuser2,
-				51547|dashboard_youtube2,
-				51548|dashboard_appletrailer2,
-				51549|dashboard_newdvdreleases2,
-				51550|dashboard_toprentals2,
-				51551|dashboard_intheaters2,
-				51552|dashboard_comingsoon2,
-				51553|dashboard_opening2,		
-				51554|dashboard_boxoffice2,
-				51555|dashboard_incinemas2,
-				51556|dashboard_upcoming2,
-				51557|dashboard_popularmovies2,
-				51558|dashboard_topratedmovies2,
-				51559|dashboard_populartvshows2,
-				51560|dashboard_topratedtvshows2,
-				51561|dashboard_onairtvshows2,
-				51562|dashboard_airingtodaytvshows2,
-				51563|dashboard_trendingmovies2,
-				51564|dashboard_trendingshows2,
-				51565|dashboard_airingshows2,
-				)</onclick>
-                <enable>[Skin.HasSetting(dashboard_medium)|Skin.HasSetting(dashboard_small)]+System.HasAddon(script.extendedinfo)</enable>
-            </control>
-            <control type="button" id="90167">
-                <description>Blog Settings</description>
-                <include>ButtonHomeSubCommonValues</include>
-                <label>YouTube $INFO[Skin.String(YoutubeSearchUser2),(,)]</label>
-				<onclick>Skin.SetString(YoutubeSearchUser2)</onclick>
-                <visible>[Skin.HasSetting(dashboard_medium)|Skin.HasSetting(dashboard_small)]+Skin.HasSetting(dashboard_youtubeuser2)+System.HasAddon(script.extendedinfo)</visible>
-            </control>
-            <control type="button" id="90164">
-                <include>ButtonHomeSubCommonValues</include>
-                <label>$LOCALIZE[24000] $LOCALIZE[455]</label>
-				<onclick>Skin.SelectBool(51226, 12311|dashboard_small, 12312|dashboard_medium, 12313|dashboard_big)</onclick>
+                <label>Widget</label>
+                <onclick>SetProperty(HomeButton,dashboard)</onclick>
+                <onclick>ActivateWindow(1500)</onclick>
             </control>
         </control>
     </include>
@@ -803,6 +740,18 @@
                 <include>ButtonHomeSubCommonValues</include>
                 <label>Widget</label>
                 <onclick>SetProperty(HomeButton,fav3)</onclick>
+                <onclick>ActivateWindow(1500)</onclick>
+            </control>
+        </control>
+    </include>
+    <include name="HomeSubMenuFav4">
+        <control type="grouplist" id="9010">
+            <include>HomeSubMenuCommonValues</include>
+            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),fav4)</visible>
+            <control type="button" id="90148">
+                <include>ButtonHomeSubCommonValues</include>
+                <label>Widget</label>
+                <onclick>SetProperty(HomeButton,fav4)</onclick>
                 <onclick>ActivateWindow(1500)</onclick>
             </control>
         </control>
@@ -1020,6 +969,7 @@
                 <include>HomeSubMenuFav1</include>
                 <include>HomeSubMenuFav2</include>
                 <include>HomeSubMenuFav3</include>
+                <include>HomeSubMenuFav4</include>
                 <include>HomeSubMenuKids</include>
                 <include>HomeSubMenuNews</include>
             </control>

@@ -78,6 +78,12 @@
     </variable>
     <include name="View_302_3Panel">
         <include>openclose</include>
+        <control type="image">
+            <include>Dimensions_Fullscreen</include>
+            <colordiffuse>fanartdiffuse</colordiffuse>
+            <texture>WhiteBack.png</texture>
+			<visible>Control.IsVisible(302)+!Control.HasFocus(666)</visible>
+        </control>
         <control type="group">
             <control type="button" id="444">
                 <enable>false</enable>
@@ -121,7 +127,7 @@
                     <top>20</top>
                     <width>650</width>
                     <height>878</height>
-                    <!-- <colordiffuse>$VAR[Panel3Color]</colordiffuse> -->
+                    <colordiffuse>grey1</colordiffuse>
                     <texture background="true">InlayDark.png</texture>
                 </control>
                 <control type="image">
@@ -252,107 +258,6 @@
                     <label>$INFO[ListItem.AddonDescription]</label>
                     <visible>Container.Content(addons)</visible>
                 </control>
-                <control type="group">
-                    <left>0</left>
-                    <top>0</top>
-                    <visible>!String.IsEmpty(Container(303).ListItem().Label)+Control.IsVisible(600)</visible>
-                    <visible>!Container.Content(seasons)+!Container.Content(sets)+!String.StartsWith(Container.FolderPath,videodb://movies/titles/)</visible>
-                    <!-- <control type="list" id="600">
-						<left>105</left>
-						<top>60</top>
-						<width>360</width>
-						<height>500</height>
-						<onleft>303</onleft>
-						<onright condition="Container(600).HasNext|Container(600).HasPrevious">80</onright>
-						<onright condition="![Container(600).HasNext|Container(600).HasPrevious]">600</onright>
-						<onup>600</onup>
-						<ondown>600</ondown>
-						<viewtype label="3 Panel">panel</viewtype>
-						<pagecontrol>80</pagecontrol>
-						<scrolltime>200</scrolltime>
-						<animation effect="slide" start="0" end="-7" condition="Control.IsVisible(80)">Conditional</animation>
-						<itemlayout width="360" height="35">
-							<control type="label">
-								<left>10</left>
-								<width>320</width>
-								<height>44</height>
-								<align>left</align>
-								<textcolor>grey</textcolor>
-								<label>$VAR[OriginalTitle]</label>
-							</control>
-							<control type="image">
-								<left>335</left>
-								<top>12</top>
-								<width>25</width>
-								<height>20</height>
-								<texture background="true">$INFO[ListItem.Overlay]</texture>
-								<visible>!Container(302).ListItem().IsResumable</visible>
-							</control>
-							<control type="image">
-								<left>335</left>
-								<top>12</top>
-								<width>20</width>
-								<height>20</height>
-								<texture background="true">OverlayWatching.png</texture>
-								<visible>Container(302).ListItem().IsResumable</visible>
-							</control>
-						</itemlayout>
-						<focusedlayout width="360" height="35">
-							<control type="image">
-								<left>0</left>
-								<top>4</top>
-								<width>360</width>
-								<height>35</height>
-								<colordiffuse>grey1</colordiffuse>
-								<texture border="5">buttons/ButtonFOlightGlow.png</texture>
-								<visible>Control.HasFocus(600)</visible>
-							</control>
-							<control type="image">
-								<left>0</left>
-								<top>4</top>
-								<width>360</width>
-								<height>35</height>
-								<colordiffuse>grey2</colordiffuse>
-								<texture border="5">buttons/ButtonFOlightGlow.png</texture>
-								<visible>!Control.HasFocus(600)</visible>
-							</control>
-							<control type="label">
-								<left>10</left>
-								<width>320</width>
-								<height>44</height>
-								<align>left</align>
-								<label>$VAR[OriginalTitle]</label>
-							</control>
-							<control type="image">
-								<left>335</left>
-								<top>12</top>
-								<width>25</width>
-								<height>20</height>
-								<texture background="true">$INFO[ListItem.Overlay]</texture>
-								<visible>!Container(302).ListItem().IsResumable</visible>
-							</control>
-							<control type="image">
-								<left>335</left>
-								<top>12</top>
-								<width>20</width>
-								<height>20</height>
-								<texture background="true">OverlayWatching.png</texture>
-								<visible>Container(302).ListItem().IsResumable</visible>
-							</control>
-						</focusedlayout>
-						<content target="video">$VAR[Panel3Content]</content>
-					</control> -->
-                    <control type="scrollbar" id="80">
-                        <left>686</left>
-                        <top>105</top>
-                        <height>720</height>
-                        <onleft>600</onleft>
-                        <onright>732</onright>
-                        <showonepage>false</showonepage>
-                        <orientation>vertical</orientation>
-                        <visible>!Container.Content(movies)</visible>
-                    </control>
-                </control>
             </control>
             <control type="group">
                 <!-- Panel 2 -->
@@ -414,6 +319,7 @@
                     <height>300</height>
                     <align>left</align>
                     <include>openclosevisible</include>
+                    <visible>!Control.IsVisible(303)</visible>
                     <visible>Container.Content(Movies)</visible>
                     <visible>!System.HasAddon(script.skin.info.service)+![ListItem.IsCollection|Container.Content(Sets)]|!String.IsEmpty(ListItem.Plot)</visible>
                     <include>MovieDataList_Content</include>
@@ -424,6 +330,7 @@
                     <width>555</width>
                     <height>3</height>
                     <colordiffuse>fanartdiffuse</colordiffuse>
+                    <visible>!Control.IsVisible(303)</visible>
                     <texture background="true" border="1">Separator1.png</texture>
                     <include>openclosevisible</include>
                     <visible>!String.IsEmpty(Control.GetLabel(90))</visible>
@@ -537,6 +444,7 @@
                     <shadowcolor>black</shadowcolor>
                     <label>$VAR[InfoWallTextboxVar]</label>
                     <include>openclosevisible</include>
+                    <visible>!Control.IsVisible(303)</visible>
                     <visible>![Container.Content(TVShows)|Container.Content(seasons)|Container.Content(episodes)|Container.Content(addons)]</visible>
                     <visible>!ListItem.IsCollection|!String.IsEmpty(ListItem.Plot)</visible>
                 </control>

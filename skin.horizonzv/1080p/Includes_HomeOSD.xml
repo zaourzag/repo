@@ -5,9 +5,9 @@
             <visible>Window.IsVisible(home)</visible>
             <control type="group">
                 <include>opencloseslideup</include>
-                <visible>[[String.IsEqual(Container(9000).ListItem.Property(homemenu_id),dashboard)|String.IsEqual(Container(9000).ListItem.Property(homemenu_id),news)]+Player.HasMedia]</visible>
+                <visible>[[String.IsEqual(Container(9000).ListItem.Property(homemenu_id),news)]+Player.HasMedia]</visible>
+                <!-- <visible>[[String.IsEqual(Container(9000).ListItem.Property(homemenu_id),dashboard)|String.IsEqual(Container(9000).ListItem.Property(homemenu_id),news)]+Player.HasMedia]</visible> -->
                 <visible>!Control.HasFocus(200)+!Window.IsVisible(favourites)</visible>
-                <visible>!Skin.HasSetting(HomeMenuVertical)</visible>
                 <control type="image">
                     <left>-8</left>
                     <top>150r</top>
@@ -35,38 +35,6 @@
                 </control>
             </control>
             <control type="group">
-                <visible>Skin.HasSetting(HomeMenuVertical)</visible>
-                <visible>!Control.HasFocus(200)+!Window.IsVisible(favourites)</visible>
-                <include>opencloseslow</include>
-                <control type="image">
-                    <left>330r</left>
-                    <top>135</top>
-                    <width>300</width>
-                    <height>150</height>
-                    <aspectratio align="right" aligny="top">keep</aspectratio>
-                    <texture diffuse="masks/Mask.png">$INFO[MusicPlayer.Cover]$INFO[VideoPlayer.Cover]</texture>
-                </control>
-                <control type="image">
-                    <left>1485r</left>
-                    <top>300</top>
-                    <width>1455</width>
-                    <height>3</height>
-                    <colordiffuse>fanartdiffuse</colordiffuse>
-                    <texture border="1">Separator1.png</texture>
-                </control>
-                <control type="label">
-                    <left>1230r</left>
-                    <top>82</top>
-                    <width>1200</width>
-                    <height>45</height>
-                    <align>right</align>
-                    <font>impacted26</font>
-                    <textcolor>white</textcolor>
-                    <label>$VAR[SeekLabel,[COLOR=grey],: [/COLOR]]$INFO[MusicPlayer.Artist,, - ]$INFO[Player.Title]</label>
-                </control>
-            </control>
-            <control type="group">
-                <visible>!Skin.HasSetting(HomeMenuVertical)</visible>
                 <include>opencloseslideright</include>
                 <visible>!Control.HasFocus(20)+!Window.IsVisible(favourites)+!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),dashboard)+!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),news)</visible>
                 <control type="group">

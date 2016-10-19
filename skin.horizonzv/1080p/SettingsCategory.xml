@@ -53,8 +53,8 @@
 							<height>45</height>
 							<width>525</width>
 							<align>left</align>
-							<textcolor>black</textcolor>
-							<shadowcolor>white</shadowcolor>
+							<textcolor>description</textcolor>
+							<shadowcolor>grey3</shadowcolor>
 							<font>impacted21</font>
 							<label>SP</label>
 						</control>
@@ -64,8 +64,8 @@
 							<height>45</height>
 							<width>675</width>
 							<align>right</align>
-							<textcolor>black</textcolor>
-							<shadowcolor>grey</shadowcolor>
+							<textcolor>description</textcolor>
+							<shadowcolor>grey3</shadowcolor>
 							<font>impacted21</font>
 							<label>Level: $INFO[Control.GetLabel(20)]</label>
 						</control>
@@ -122,14 +122,15 @@
 						<label>$LOCALIZE[31112]</label>
 					</control>
 					<control type="label">
-						<left>0</left>
+						<left>30</left>
 						<top>87</top>
 						<height>102</height>
-						<width>525</width>
+						<width>480</width>
 						<align>center</align>
 						<aligny>center</aligny>
-						<textcolor>selectedhome</textcolor>
-						<font>impacted44</font>
+						<textcolor>white</textcolor>
+						<shadowcolor>grey3</shadowcolor>
+						<font>impacted36</font>
 						<label>$INFO[Control.GetLabel(2)]</label>
 					</control>
 				</control>
