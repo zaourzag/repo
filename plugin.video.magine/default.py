@@ -100,8 +100,8 @@ def addLink(name, url, mode, iconimage, duration="", desc="", genre='',channelid
 	xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
 	ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
 	return ok
-def addDir(name, url, mode, iconimage, desc="",year="",channelid="",times=""):
-  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&channelid="+str(channelid)+"&times="+str(times)
+def addDir(name, url, mode, iconimage, desc="",year="",channelid="",times="",start="",ende="",id_such=""):
+  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&channelid="+str(channelid)+"&times="+str(times)+"&start="+str(start)+"&ende="+str(ende)+"&id_such="+str(id_such)
   ok = True
   liz = xbmcgui.ListItem(name, iconImage=iconimage, thumbnailImage=iconimage)  
   liz.setProperty("fanart_image", iconimage)
@@ -125,7 +125,19 @@ def login():
     userid=-1
   return session,userid
 
-def mediatek(session,userid,id_such):
+def selectdate(session,userid,id_such):
+   for i in xrange(0, 7):
+        Tag=datetime.datetime.strftime(datetime.datetime.now()-datetime.timedelta(i),'%w')         
+        datuma=translation(30130 + int(Tag))
+        start=datetime.datetime.strftime(datetime.datetime.now()-datetime.timedelta(int(i)),'%Y%m%dT000000Z')
+        ende=datetime.datetime.strftime(datetime.datetime.now()-datetime.timedelta(int(i))+datetime.timedelta(hours=24),'%Y%m%dT000000Z')
+        addDir(datuma, "", "mediatek", "", start=start,ende=ende,id_such=id_such)                           
+   xbmcplugin.endOfDirectory(addon_handle)
+   
+def mediatek(session,userid,id_such,start,ende):
+  debug(".START. "+start)
+  debug(".ENDE. "+ende)
+  debug(".id_such. "+id_such)
   header=[]
   header.append (("Authorization","Bearer "+session))
   header.append (("UserId",userid))
@@ -141,8 +153,8 @@ def mediatek(session,userid,id_such):
   now = datetime.datetime.now()
   vontime = now - datetime.timedelta(hours=24)
   bistime = now 
-  von=vontime.strftime("%Y%m%dT%H%M00Z")
-  bis=bistime.strftime("%Y%m%dT%H%M00Z")
+  von=start
+  bis=ende
   debug("VON: "+von)
   debug("BIS: "+bis) 
   url="https://magine.com/api/content/v2/timeline/airings?channels="+senderliste+"&from="+von+"&to="+bis
@@ -272,7 +284,7 @@ def listchannels(session,userid):
             break
     if channela==1:            
       debug("BILD :"+"http://images.tvoli.com/channel-logos/"+str(channel) +".png?width=128&height=128")
-      addDir(name_arr[id], "", "mediatek", "http://images.tvoli.com/channel-logos/"+str(channel) +".png?width=128&height=128", channelid=str(channel))                   
+      addDir(name_arr[id], "", "selectdate", "http://images.tvoli.com/channel-logos/"+str(channel) +".png?width=128&height=128", channelid=str(channel))                   
   xbmcplugin.endOfDirectory(addon_handle)     
                 
 def playlive(url,session,userid,channelid):    
@@ -357,6 +369,9 @@ channelid = urllib.unquote_plus(params.get('channelid', ''))
 ids = urllib.unquote_plus(params.get('ids', ''))
 times = urllib.unquote_plus(params.get('times', ''))
 showName = urllib.unquote_plus(params.get('showName', ''))
+start = urllib.unquote_plus(params.get('start', ''))
+ende = urllib.unquote_plus(params.get('ende', ''))
+id_such= urllib.unquote_plus(params.get('id_such', ''))
 hideShowName = urllib.unquote_plus(params.get('hideshowname', '')) == 'True'
 nextPage = urllib.unquote_plus(params.get('nextpage', '')) == 'True'
 einsLike = urllib.unquote_plus(params.get('einslike', '')) == 'True'    
@@ -380,9 +395,11 @@ if mode == 'listchannels':
           listchannels(session,userid)   
 if mode == 'listchannel':
           listchannel(session,userid,channelid)    
-if mode == 'mediatek':
-           mediatek(session,userid,channelid)
+if mode == 'selectdate':
+           selectdate(session,userid,channelid)
 if mode == 'playvideo':
-          playvideo(session,userid,channelid,ids)              
+          playvideo(session,userid,channelid,ids)    
+if mode == 'mediatek':
+          mediatek(session,userid,id_such,start,ende)         
 if mode == 'Settings':
           addon.openSettings()          
