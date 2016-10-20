@@ -13,6 +13,7 @@ import md5
 import hashlib
 import time,cookielib
 import base64
+import datetime
 cj = cookielib.CookieJar()
 
 def getUrl(url,data="x",header=[]):
@@ -87,8 +88,8 @@ def log(msg, level=xbmc.LOGNOTICE):
     xbmc.log('%s: %s' % (addonID, msg), level) 
     
   
-def addLink(name, url, mode, iconimage, duration="", desc="", genre='',channelid="",times=""):
-	u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&channelid="+str(channelid)+"&times="+str(times)
+def addLink(name, url, mode, iconimage, duration="", desc="", genre='',channelid="",times="",ids=0):
+	u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&channelid="+str(channelid)+"&times="+str(times)+"&ids="+str(ids)
 	ok = True
 	liz = xbmcgui.ListItem(name, iconImage=defaultThumb, thumbnailImage=iconimage)
 	liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Genre": genre})
@@ -102,13 +103,8 @@ def addLink(name, url, mode, iconimage, duration="", desc="", genre='',channelid
 def addDir(name, url, mode, iconimage, desc="",year="",channelid="",times=""):
   u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&channelid="+str(channelid)+"&times="+str(times)
   ok = True
-  liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=iconimage)
-  if useThumbAsFanart:
-    if not iconimage or iconimage==icon or iconimage==defaultThumb:
-      iconimage = defaultBackground
-    liz.setProperty("fanart_image", iconimage)
-  else:
-    liz.setProperty("fanart_image", defaultBackground)
+  liz = xbmcgui.ListItem(name, iconImage=iconimage, thumbnailImage=iconimage)  
+  liz.setProperty("fanart_image", iconimage)
   ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
   return ok
 def login():
@@ -129,47 +125,156 @@ def login():
     userid=-1
   return session,userid
 
-def mediatek(session,userid):
+def mediatek(session,userid,id_such):
   header=[]
   header.append (("Authorization","Bearer "+session))
   header.append (("UserId",userid))
-  content=getUrl("https://magine.com/api/content/v2/timeline/channels",header=header)
-  struktur = json.loads(content)
-  for channel in struktur:
-     debug("_-----")
-     debug(channel)
-     name = channel["name"]     
-     id = channel["id"]
-     logoDark = channel["logoDark"]
-     viewRecorded=channel["rights"]["viewRecorded"]
-     subscribed=channel["subscribed"]
-     if viewRecorded==True  and subscribed==True :
-       addLink(name, "", "listchannel", logoDark, channelid=id)
+  content=getUrl("https://magine.com/api/channel/v1/users/"+userid,header=header)  
+  struktur = json.loads(content)  
+  channelid_arr=[]  
+  name_arr=[]
+  for element in struktur: 
+   channelid_arr.append(element["id"])
+   name_arr.append(element["name"])
+  senderliste=",".join(channelid_arr)
+  
+  now = datetime.datetime.now()
+  vontime = now - datetime.timedelta(hours=24)
+  bistime = now 
+  von=vontime.strftime("%Y%m%dT%H%M00Z")
+  bis=bistime.strftime("%Y%m%dT%H%M00Z")
+  debug("VON: "+von)
+  debug("BIS: "+bis) 
+  url="https://magine.com/api/content/v2/timeline/airings?channels="+senderliste+"&from="+von+"&to="+bis
+  content=getUrl(url,header=header)  
+  struktur_inhalt = json.loads(content)   
+  for element in struktur_inhalt:        
+    channel=element
+    for element in struktur_inhalt[element]:       
+        #debug("----"+element["rights"]["recorded"]["available"])    
+        if element["rights"]["recorded"]["available"]==True:
+           debug("++++-")
+           debug(element)
+           title=element["title"]
+           channel=element["channelId"]
+           ids=element["id"]
+           bild=element["image"]
+           zeitstring=element["start"].split("T")
+           start=zeitstring[0]
+           zeit=zeitstring[1].split(":")           
+           starzeit=zeit[0]+":"+zeit[1]
+           id=channelid_arr.index(channel) 
+           title=start+" "+starzeit+" "+title+" ( "+name_arr[id]+" )"
+           if id_such==channel:
+             addLink(title, "", "playvideo", bild, channelid=channel,ids=ids)     
   xbmcplugin.endOfDirectory(addon_handle)
 
-def listchannel(session,userid,channelid):
+def playvideo(session,userid,channelid,id):
   header=[]
   header.append (("Authorization","Bearer "+session))
-  content=getUrl("https://magine.com/api/content/v2/timeline/airings?channels="+channelid+"&from=20160908T010000Z&to=20160908T050000Z",header=header)
   header.append (("UserId",userid))
-  debug("-----------------------")
-  debug(content)
+  newurl="https://magine.com/api/contenturl/v1/channel/"+str(channelid)+"/airing/"+str(id)  
+  content=getUrl(newurl,header=header)  
   struktur = json.loads(content)
-  
+  newurl="https://magine.com/api/airing/v2/"+str(id)  
+  content=getUrl(newurl,header=header)  
+  struktur2 = json.loads(content)
+  title=struktur2["title"]
+  desc=struktur2["description"]
+  debug("......")  
+  debug(struktur)
+  userAgent = "Coralie/1.7.2-2016081207(SM-G900F; Android; 6.0.1; DeviceId c248c629af1fe0a8c46b95668064c1d2952a9e91d27bccc3c5d584c2f7553a; Token Tvoli/ec9ab8acf27f14cacfefbf1087463fd3aeacdca4; VersionCheck)"
+  listitem = xbmcgui.ListItem(path=struktur["dash"])        
+  debug("List Item gesetzt")      
+  pin=addon.getSetting("pin") 
+  lic_header="|Authorization=Bearer%20"+session+"&UserId=" +userid+"&Magine-ChannelId=" +channelid+"&Magine-Md=PC-Awesomesauce"+"&Magine-ParentalControlPinCode="+pin+"&Magine-Mk=HTML5"+"&Magine-ClientId=c060c1bf-d805-4feb-74d4-d8241e27d836"+"&Magine-ProgramId="+id+"|R{SSM}|"
+  listitem.setProperty('inputstream.mpd.license_type', 'com.widevine.alpha')  
+  listitem.setProperty('inputstream.mpd.license_key', "https://magine.com/api/drm/v4/license/widevine"+lic_header)
+  listitem.setProperty('inputstream.mpd.license_data', base64.b64encode(b'\x08\x01\x12\x10'+'{KID}'+b'\x1A\x05'+'tvoli"'+chr(len('channel.'+channelid+'.'+id))+'channel.'+channelid+'.'+id+'*'+b'\x02'+'SD2'+b'\x00'))
+  listitem.setProperty('inputstreamaddon', 'inputstream.mpd')   
+  listitem.setInfo( "video", { "Title" : title, "Plot" : desc} )    
+  xbmcplugin.setResolvedUrl(addon_handle, True, listitem)
   
 def mainmenu(session,userid):
   header=[]
   header.append (("Authorization","Bearer "+session))
   header.append (("UserId",userid))
-  content=getUrl("https://magine.com/api/channel/v1/users/"+userid,header=header)
+  content=getUrl("https://magine.com/api/time/v1",header=header)
+  struktur = json.loads(content)  
+  timestamp=int(struktur["nowUnixtime"])
+  content=getUrl("https://magine.com/api/channel/v1/users/"+userid,header=header)  
   struktur = json.loads(content) 
+  debug("Mainmenu")
+  debug(content)
+  channelid_arr=[]
+  logo_arr=[]
+  name_arr=[]
+  for element in struktur: 
+   channelid_arr.append(element["id"])
+  senderliste=",".join(channelid_arr)
+  debug("Senderlist="+senderliste)
+  now = datetime.datetime.now()
+  vontime = now - datetime.timedelta(hours=5)
+  bistime = now + datetime.timedelta(hours=5)
+  von=vontime.strftime("%Y%m%dT%H%M00Z")
+  bis=bistime.strftime("%Y%m%dT%H%M00Z")
+  debug("VON: "+von)
+  debug("BIS: "+bis)
+  url="https://magine.com/api/content/v2/timeline/airings?channels="+senderliste+"&from="+von+"&to="+bis
+  content=getUrl(url,header=header)  
+  struktur_inhalt = json.loads(content)   
   for element in struktur: 
     channelid=element["id"]
-    logoDark=element["logoDark"]
-    name=element["name"]    
-    addLink(name, "", "playlive", "http://images.tvoli.com/channel-logos/"+str(channelid) +".png?width=128&height=128", channelid=channelid)
+    #logoDark=element["logoDark"]
+    sender_strukt=struktur_inhalt[channelid]
+    debug("----")    
+    for sendung in sender_strukt:            
+        start=int(sendung["startUnixtime"])
+        stop=int(sendung["stopUnixtime"])
+        if timestamp>start and timestamp<stop:
+          debug("Gefunden")
+          logoDark = sendung["image"]            
+          name=sendung["title"]   +" ( "+ element["name"] +" )"
+          addLink(name, "", "playlive", logoDark, channelid=channelid)     
   xbmcplugin.endOfDirectory(addon_handle)
+
+def listchannels(session,userid):
+  header=[]
+  header.append (("Authorization","Bearer "+session))
+  header.append (("UserId",userid))
+  content=getUrl("https://magine.com/api/channel/v1/users/"+userid,header=header)  
+  struktur = json.loads(content)  
+  channelid_arr=[]  
+  name_arr=[]
+  for element in struktur: 
+   channelid_arr.append(element["id"])
+   name_arr.append(element["name"])
+  senderliste=",".join(channelid_arr)
   
+  now = datetime.datetime.now()
+  vontime = now - datetime.timedelta(hours=24)
+  bistime = now 
+  von=vontime.strftime("%Y%m%dT%H%M00Z")
+  bis=bistime.strftime("%Y%m%dT%H%M00Z")
+  debug("VON: "+von)
+  debug("BIS: "+bis) 
+  url="https://magine.com/api/content/v2/timeline/airings?channels="+senderliste+"&from="+von+"&to="+bis
+  content=getUrl(url,header=header)  
+  struktur_inhalt = json.loads(content)   
+  for element1 in struktur_inhalt:        
+    channel=element1
+    channela=0
+    for element in struktur_inhalt[element1]:      
+      if element["rights"]["recorded"]["available"]==True:
+            channel=element["channelId"]
+            id=channelid_arr.index(channel)    
+            channela=1 
+            break
+    if channela==1:            
+      debug("BILD :"+"http://images.tvoli.com/channel-logos/"+str(channel) +".png?width=128&height=128")
+      addDir(name_arr[id], "", "mediatek", "http://images.tvoli.com/channel-logos/"+str(channel) +".png?width=128&height=128", channelid=str(channel))                   
+  xbmcplugin.endOfDirectory(addon_handle)     
+                
 def playlive(url,session,userid,channelid):    
   debug("Playlive")
   playlist = xbmc.PlayList(1)
@@ -185,7 +290,10 @@ def playlive(url,session,userid,channelid):
            counter2=0 
            if playlist.size()<3 :              
               playlist=leseclips(session,userid,channelid,playlist,timelist)  
-        time.sleep(60)
+        counter=0
+        while counter < 60 and xbmc.Player().isPlaying():
+            time.sleep(1)
+            counter=counter+1
         counter2=counter2+1
         counter1=0                
     time.sleep(1)
@@ -216,12 +324,12 @@ def leseclips(session,userid,channelid,playlist,timelist):
       struktur = json.loads(content)        
       userAgent = "Coralie/1.7.2-2016081207(SM-G900F; Android; 6.0.1; DeviceId c248c629af1fe0a8c46b95668064c1d2952a9e91d27bccc3c5d584c2f7553a; Token Tvoli/ec9ab8acf27f14cacfefbf1087463fd3aeacdca4; VersionCheck)"
       listitem = xbmcgui.ListItem(path=struktur["dash"])        
-      debug("List Item gesetzt")
-      #lic_header="|Authorization=Bearer "+session+"&UserId=" +userid+"&Magine-ChannelId=" +channelid+"&Magine-Md=SM-G900F"+"&Magine-Mk=FAndroid_samsung"+"&Magine-ClientId=611ad642ccd1d792d907c238adf533bb030f8c09a59f94e8d6647f795baf5b28"+"&Magine-ProgramId="+times+"&User-Agent="+userAgent+"||"
-      lic_header="|Authorization=Bearer%20"+session+"&UserId=" +userid+"&Magine-ChannelId=" +channelid+"&Magine-Md=PC-Awesomesauce"+"&Magine-Mk=HTML5"+"&Magine-ClientId=c060c1bf-d805-4feb-74d4-d8241e27d836"+"&Magine-ProgramId="+times+"|R{SSM}|"
+      debug("List Item gesetzt")      
+      pin=addon.getSetting("pin") 
+      lic_header="|Authorization=Bearer%20"+session+"&UserId=" +userid+"&Magine-ChannelId=" +channelid+"&Magine-Md=PC-Awesomesauce"+"&Magine-ParentalControlPinCode="+pin+"&Magine-Mk=HTML5"+"&Magine-ClientId=c060c1bf-d805-4feb-74d4-d8241e27d836"+"&Magine-ProgramId="+times+"|R{SSM}|"
       listitem.setProperty('inputstream.mpd.license_type', 'com.widevine.alpha')
       listitem.setProperty('inputstream.mpd.license_key', "https://magine.com/api/drm/v4/license/widevine"+lic_header)
-      listitem.setProperty('inputstream.mpd.license_data', base64.b64encode(b'\x08\x01\x12\x10'+'{KID}'+b'\x1A\x05'+'tvoli"'+b'\x1B'+'channel.'+channelid+'.'+times+'*'+b'\x02'+'SD2'+b'\x00'))
+      listitem.setProperty('inputstream.mpd.license_data', base64.b64encode(b'\x08\x01\x12\x10'+'{KID}'+b'\x1A\x05'+'tvoli"'+chr(len('channel.'+channelid+'.'+times))+'channel.'+channelid+'.'+times+'*'+b'\x02'+'SD2'+b'\x00'))
       listitem.setProperty('inputstreamaddon', 'inputstream.mpd')   
       listitem.setInfo( "video", { "Title" : title, "Plot" : desc} )    
       playlist.add(struktur["dash"], listitem)   
@@ -246,6 +354,7 @@ mode = urllib.unquote_plus(params.get('mode', ''))
 url = urllib.unquote_plus(params.get('url', ''))
 name = urllib.unquote_plus(params.get('name', ''))
 channelid = urllib.unquote_plus(params.get('channelid', ''))
+ids = urllib.unquote_plus(params.get('ids', ''))
 times = urllib.unquote_plus(params.get('times', ''))
 showName = urllib.unquote_plus(params.get('showName', ''))
 hideShowName = urllib.unquote_plus(params.get('hideshowname', '')) == 'True'
@@ -260,16 +369,20 @@ if mode is '':
           nr=dialog.ok("User/Password", "Bitte Korrekten User und Password in Einstellungen hinterlegen") 
     else:          
         addDir(translation(30104) , url="-", mode="mainmenu", iconimage="")    
-        #addDir("Mediatek" , url="-", mode="mediatek", iconimage="") 
+        addDir("Mediatek" , url="-", mode="listchannels", iconimage="") 
     addDir(translation(30103), translation(30102), 'Settings', "")         
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)  
 if mode == 'playlive':
           playlive(url,session,userid,channelid)     
 if mode == 'mainmenu':
           mainmenu(session,userid)      
-if mode == 'mediatek':
-          mediatek(session,userid)   
+if mode == 'listchannels':
+          listchannels(session,userid)   
 if mode == 'listchannel':
           listchannel(session,userid,channelid)    
+if mode == 'mediatek':
+           mediatek(session,userid,channelid)
+if mode == 'playvideo':
+          playvideo(session,userid,channelid,ids)              
 if mode == 'Settings':
           addon.openSettings()          
