@@ -185,10 +185,7 @@ def playlive(url,session,userid,channelid):
            counter2=0 
            if playlist.size()<3 :              
               playlist=leseclips(session,userid,channelid,playlist,timelist)  
-        counter=0
-        while counter < 60 and xbmc.Player().isPlaying():
-            time.sleep(1)
-            counter=counter+1
+        time.sleep(60)
         counter2=counter2+1
         counter1=0                
     time.sleep(1)
@@ -219,12 +216,12 @@ def leseclips(session,userid,channelid,playlist,timelist):
       struktur = json.loads(content)        
       userAgent = "Coralie/1.7.2-2016081207(SM-G900F; Android; 6.0.1; DeviceId c248c629af1fe0a8c46b95668064c1d2952a9e91d27bccc3c5d584c2f7553a; Token Tvoli/ec9ab8acf27f14cacfefbf1087463fd3aeacdca4; VersionCheck)"
       listitem = xbmcgui.ListItem(path=struktur["dash"])        
-      debug("List Item gesetzt")      
-      pin=addon.getSetting("pin") 
-      lic_header="|Authorization=Bearer%20"+session+"&UserId=" +userid+"&Magine-ChannelId=" +channelid+"&Magine-Md=PC-Awesomesauce"+"&Magine-ParentalControlPinCode="+pin+"&Magine-Mk=HTML5"+"&Magine-ClientId=c060c1bf-d805-4feb-74d4-d8241e27d836"+"&Magine-ProgramId="+times+"|R{SSM}|"
+      debug("List Item gesetzt")
+      #lic_header="|Authorization=Bearer "+session+"&UserId=" +userid+"&Magine-ChannelId=" +channelid+"&Magine-Md=SM-G900F"+"&Magine-Mk=FAndroid_samsung"+"&Magine-ClientId=611ad642ccd1d792d907c238adf533bb030f8c09a59f94e8d6647f795baf5b28"+"&Magine-ProgramId="+times+"&User-Agent="+userAgent+"||"
+      lic_header="|Authorization=Bearer%20"+session+"&UserId=" +userid+"&Magine-ChannelId=" +channelid+"&Magine-Md=PC-Awesomesauce"+"&Magine-Mk=HTML5"+"&Magine-ClientId=c060c1bf-d805-4feb-74d4-d8241e27d836"+"&Magine-ProgramId="+times+"|R{SSM}|"
       listitem.setProperty('inputstream.mpd.license_type', 'com.widevine.alpha')
       listitem.setProperty('inputstream.mpd.license_key', "https://magine.com/api/drm/v4/license/widevine"+lic_header)
-      listitem.setProperty('inputstream.mpd.license_data', base64.b64encode(b'\x08\x01\x12\x10'+'{KID}'+b'\x1A\x05'+'tvoli"'+chr(len('channel.'+channelid+'.'+times))+'channel.'+channelid+'.'+times+'*'+b'\x02'+'SD2'+b'\x00'))
+      listitem.setProperty('inputstream.mpd.license_data', base64.b64encode(b'\x08\x01\x12\x10'+'{KID}'+b'\x1A\x05'+'tvoli"'+b'\x1B'+'channel.'+channelid+'.'+times+'*'+b'\x02'+'SD2'+b'\x00'))
       listitem.setProperty('inputstreamaddon', 'inputstream.mpd')   
       listitem.setInfo( "video", { "Title" : title, "Plot" : desc} )    
       playlist.add(struktur["dash"], listitem)   
