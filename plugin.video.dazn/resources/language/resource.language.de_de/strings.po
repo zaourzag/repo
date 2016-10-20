@@ -1,0 +1,169 @@
+# Kodi Media Center language file
+# Addon Name: DAZN
+# Addon id: plugin.video.dazn
+# Addon Provider: Jin
+
+msgid ""
+msgstr ""
+
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de_DE\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "#30000"
+msgid "General"
+msgstr "Allgemein"
+
+msgctxt "#30001"
+msgid "Email"
+msgstr "E-Mail"
+
+msgctxt "#30002"
+msgid "Password"
+msgstr "Passwort"
+
+msgctxt "#30010"
+msgid "View"
+msgstr "Ansicht"
+
+msgctxt "#30011"
+msgid "Override View"
+msgstr "Ansicht überschreiben"
+
+msgctxt "#30012"
+msgid "View: Content"
+msgstr "Ansicht: Inhalt"
+
+msgctxt "#30013"
+msgid "View: ID"
+msgstr "Ansicht: ID"
+
+msgctxt "#30020"
+msgid "Advanced"
+msgstr "Fortgeschritten"
+
+msgctxt "#30021"
+msgid "Server Selection"
+msgstr "Server Auswahl"
+
+msgctxt "#30025"
+msgid "Automatic"
+msgstr "Automatisch"
+
+msgctxt "#30026"
+msgid "Akamai (1)"
+msgstr "Akamai (1)"
+
+msgctxt "#30027"
+msgid "Akamai (2)"
+msgstr "Akamai (2)"
+
+msgctxt "#30028"
+msgid "Level3 (1)"
+msgstr "Level3 (1)"
+
+msgctxt "#30029"
+msgid "Level3 (2)"
+msgstr "Level3 (2)"
+
+msgctxt "#30101"
+msgid "DAZN is not available in your country"
+msgstr "DAZN ist in deinem Land nicht verfügbar"
+
+msgctxt "#30108"
+msgid "You can only play two videos on your connected devices at the same time. To continue watching, then close DAZN on one of your other devices."
+msgstr "Du kannst nur zwei Videos gleichzeitig auf deinen Geräten angucken. Schließe DAZN auf einem deiner Geräte, um weiterzuschauen."
+
+msgctxt "#30151"
+msgid "Incorrect email address or password"
+msgstr "Falsche E-Mail-Adresse oder falsches Passwort"
+
+msgctxt "#30152"
+msgid "Unable to find email address"
+msgstr "Email Adresse kann nicht gefunden werden"
+
+msgctxt "#30153"
+msgid "Password does not match"
+msgstr "Passwort stimmt nicht überein"
+
+msgctxt "#30201"
+msgid "Catch Up"
+msgstr "Re-Live"
+
+msgctxt "#30202"
+msgid "Coming Up"
+msgstr "Demnächst"
+
+msgctxt "#30203"
+msgid "DAZN Picks"
+msgstr "DAZN Picks"
+
+msgctxt "#30204"
+msgid "Features"
+msgstr "Features"
+
+msgctxt "#30205"
+msgid "Live Now"
+msgstr "Jetzt Live"
+
+msgctxt "#30206"
+msgid "Everyone's Watching"
+msgstr "Jetzt angesagt"
+
+msgctxt "#30207"
+msgid "Your Sports"
+msgstr "Deine Sportarten"
+
+msgctxt "#30208"
+msgid "What's On"
+msgstr "Was läuft"
+
+msgctxt "#30209"
+msgid "All Sports"
+msgstr "Alle Sportarten"
+
+msgctxt "#30210"
+msgid "Tournaments"
+msgstr "Turniere & Ligen"
+
+msgctxt "#30211"
+msgid "Competitors"
+msgstr "Konkurrenten"
+
+msgctxt "#30221"
+msgid "Today"
+msgstr "Heute"
+
+msgctxt "#30222"
+msgid "Tomorrow"
+msgstr "Morgen"
+
+msgctxt "#30223"
+msgid "Monday"
+msgstr "Montag"
+
+msgctxt "#30224"
+msgid "Tuesday"
+msgstr "Dienstag"
+
+msgctxt "#30225"
+msgid "Wednesday"
+msgstr "Mittwoch"
+
+msgctxt "#30226"
+msgid "Thursday"
+msgstr "Donnerstag"
+
+msgctxt "#30227"
+msgid "Friday"
+msgstr "Freitag"
+
+msgctxt "#30228"
+msgid "Saturday"
+msgstr "Samstag"
+
+msgctxt "#30229"
+msgid "Sunday"
+msgstr "Sonntag"

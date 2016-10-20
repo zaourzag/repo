@@ -1,0 +1,14 @@
+<settings>
+    <category label="30000">
+        <setting label="30001" type="text" id="email" default=""/>
+        <setting label="30002" type="text" id="password" option="hidden"  enable="!eq(-1,)" default=""/>
+    </category>
+    <category label="30010">
+        <setting label="30011" type="bool" id="force_view" default="false"/>
+        <setting label="30012" type="select" id="content" enable="eq(-1,true)" values="videos|movies|tvshows|episodes|musicvideos" default="videos"/>
+        <setting label="30013" type="number" id="view_id" enable="eq(-2,true)" default="55"/>
+    </category>
+    <category label="30020">
+        <setting label="30021" type="enum" id="server" lvalues="30025|30026|30027|30028|30029" default="0"/>
+    </category>
+</settings>
