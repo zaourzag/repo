@@ -283,10 +283,9 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
   </extension>
 </addon>
 
-<addon id="plugin.video.aod" name="Anime on Demand" version="0.4.11" provider-name="L0RE">
+<addon id="plugin.video.aod" name="Anime on Demand" version="0.4.13" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
-        <import addon="repository.lost-and-found" version="1.1.7"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
@@ -2169,7 +2168,7 @@ v0.5.2 (2016-09-28)
     </extension>
 </addon>
 
-<addon id="plugin.video.nick_at" name="Nickelodeon.at" version="0.1.0" provider-name="L0RE">
+<addon id="plugin.video.nick_at" name="Nickelodeon.at" version="0.1.1" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
     </requires>
@@ -2188,7 +2187,7 @@ v0.5.2 (2016-09-28)
         <source>https://github.com/kodinerds/repo/tree/master/plugin.video.nick_at</source>
         <forum>http://forum.xbmc.org/showthread.php?tid=132563</forum>
         <email>andreas at vogler dot name</email>
-        <website>http://www.nick.de</website>
+        <website>http://www.nick.at</website>
     </extension>
 </addon>
 
