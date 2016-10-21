@@ -16,3 +16,6 @@
 - Debugging eingebaut wegen Filmen
 0.4.5
 - Fix fuer Filme
+0.4.13
+- Many Fixes
+- HTML5 Videos
