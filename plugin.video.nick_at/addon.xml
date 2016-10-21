@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<addon id="plugin.video.nick_at" name="Nickelodeon.at" version="0.1.0" provider-name="L0RE">
+<addon id="plugin.video.nick_at" name="Nickelodeon.at" version="0.1.1" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
     </requires>
@@ -18,6 +18,6 @@
         <source>https://github.com/kodinerds/repo/tree/master/plugin.video.nick_at</source>
         <forum>http://forum.xbmc.org/showthread.php?tid=132563</forum>
         <email>andreas at vogler dot name</email>
-        <website>http://www.nick.de</website>
+        <website>http://www.nick.at</website>
     </extension>
 </addon>
