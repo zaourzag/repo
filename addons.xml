@@ -300,6 +300,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
     <forum>http://www.kodinerds.net/index.php/Thread/46939-Repo-Lost-Found/</forum>
     <email>andreas at vogler dot name</email>
     <platform>all</platform>
+    <language>de</language>
   </extension>
 </addon>
 
