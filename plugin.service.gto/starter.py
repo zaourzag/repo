@@ -10,7 +10,7 @@ __path__ = __addon__.getAddonInfo('path')
 __LS__ = __addon__.getLocalizedString
 __icon__ = xbmc.translatePath(os.path.join(__path__, 'icon.png'))
 
-HOME = HOME
+HOME = xbmcgui.Window(10000)
 DELAY = 15
 OSD = xbmcgui.Dialog()
 
