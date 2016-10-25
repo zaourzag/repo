@@ -14,7 +14,8 @@ def buildUrl(query):
 def buildExtInfo(data, service_name=''):
     line = '#EXTINF:-1'
     line += ' tvg-id=%s.de' % (data['title'].replace(' ', ''))
-    line += ' tvg-logo=%s.de' % (data['title'].replace(' ', ''))
+#    line += ' tvg-logo=%s.de' % (data['title'].replace(' ', ''))
+    line += ' tvg-logo=%s' % ('http://logos.zattic.com' + data['logo_black_84'])
     line += ' group-title="%s"' % (service_name)
     line += ' tvg-name=%s, %s' % (data['title'].replace(' ', ''), data['title'])
     return line
