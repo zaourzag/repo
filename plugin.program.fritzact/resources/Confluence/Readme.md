@@ -22,7 +22,7 @@ sudo cp $HOME/.kodi/addons/plugin.program.fritzact/resources/Confluence/script-f
 sudo nano includes.xml
 ```
   
-  und unterhalb der Zeile <include file="IncludesHomeRecentlyAdded.xml" /> folgendes einfügen:
+  und unterhalb der Zeile `<include file="IncludesHomeRecentlyAdded.xml" />` folgendes einfügen:
 
     <include file="script-fritzact-xml" />
     

@@ -24,7 +24,7 @@ def crypt( pw, key, token):
         return ''
     else:
         _key = ''
-        for i in range((len(pw) / 16) + 1):
+        for d in range((len(pw) / 16) + 1):
             _key += ('%016d' % int(random.random() * 10 ** 16))
         _key = _key[:-2] + ('%02d' % len(_pw))
         _tpw = _pw.ljust(len(_key), 'a')

@@ -1,3 +1,6 @@
+0.3.18
+- added option to store EPG data grabbed from xmltv on local file system
+
 0.3.17
 - Message handling improved
 

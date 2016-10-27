@@ -201,12 +201,20 @@ msgctxt "#30054"
 msgid "Check Settings (deliver Email)"
 msgstr "Einstellungen testen (E-Mail versenden)"
 
+msgctxt "#30058"
+msgid "PyEPG/XMLTV socket path"
+msgstr "PyEPG/XMLTV Socket Pfad"
+
+msgctxt "#30059"
+msgid "Store epg.xml in folder"
+msgstr "Datei 'epg.xml' speichern in"
+
 msgctxt "#30060"
-msgid "Grab EPG-Data from external Provider (XMLTV)"
+msgid "Grab EPG Data from external Provider (XMLTV)"
 msgstr "Erfasse EPG-Daten externer Anbieter (XMLTV)"
 
 msgctxt "#30061"
-msgid "Wakeup for EPG-updates"
+msgid "Wakeup for EPG Updates"
 msgstr "Zyklus für EPG-Aktualisierung"
 
 msgctxt "#30062"
@@ -214,8 +222,12 @@ msgid "Wakeup at"
 msgstr "Einschalten um"
 
 msgctxt "#30063"
-msgid "Duration of EPG-update until shutdown"
+msgid "Duration of EPG Update until shutdown"
 msgstr "System ausschalten nach"
+
+msgctxt "#30064"
+msgid "Store EPG Data additionally in file epg.xml"
+msgstr "EPG-Daten zusätzlich in Datei speichern (epg.xml)"
 
 msgctxt "#30065"
 msgid "%s: This mail indicates that you have created your setup for delivering mails successfully. PVR-manager will use these settings for future notifications."

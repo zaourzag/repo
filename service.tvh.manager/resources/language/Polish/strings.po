@@ -201,12 +201,20 @@ msgctxt "#30057"
 msgid "%s: This mail indicates that you have created your setup for delivering mails successfully. PVR-manager will use these settings for future notifications."
 msgstr "%s: Ten e-mail oznacza, że utworzono konfigurację do dostarczania wiadomości z powodzeniem. PVR-menedżer wykorzysta te ustawienia dla przyszłych powiadomień."
 
+msgctxt "#30058"
+msgid "PyEPG/XMLTV socket path"
+msgstr "PyEPG/XMLTV ścieżka gniazdo"
+
+msgctxt "#30059"
+msgid "Store epg.xml in folder"
+msgstr "Sklep 'epg.xml' w folderze"
+
 msgctxt "#30060"
-msgid "Grab EPG-Data from external Provider (XMLTV)"
+msgid "Grab EPG Data from external Provider (XMLTV)"
 msgstr "Wykryte dane EPG od zewnętrznych dostawców (XMLTV)"
 
 msgctxt "#30061"
-msgid "Wakeup for EPG-updates"
+msgid "Wakeup for EPG Updates"
 msgstr "Cykl aktualizacji EPG"
 
 msgctxt "#30062"
@@ -214,8 +222,12 @@ msgid "Wakeup at"
 msgstr "Włączyć o:"
 
 msgctxt "#30063"
-msgid "Duration of EPG-update until shutdown"
+msgid "Duration of EPG Update until shutdown"
 msgstr "System wyłączy się po:"
+
+msgctxt "#30064"
+msgid "Store EPG Data additionally in file epg.xml"
+msgstr "Przechowywać EPG danych dodatkowo w pliku 'epg.xml'"
 
 msgctxt "#30065"
 msgid "%s: This mail indicates that your setup is ok and works for future notifications."

@@ -10,7 +10,7 @@
     <string id="30011">Login fehlgeschlagen</string>
     <string id="30012">Login gesperrt, bitte %s sec warten</string>
     <!-- Window Labels -->
-    <string id="30020">Fritz!DECT Aktoren</string>
+    <string id="30020">FritzDECT Schalter</string>
     <string id="30021">Name: </string>
     <string id="30022">Status:</string>
     <string id="30023">Schaltzustand:</string>

@@ -143,6 +143,9 @@ class Manager():
         self.__epg_time = int(__addon__.getSetting('epgtimer_time'))
         self.__epg_duration = int(re.match('\d+', __addon__.getSetting('epgtimer_duration')).group())
         self.__epg_grab_ext = True if __addon__.getSetting('epg_grab_ext').upper() == 'TRUE' else False
+        self.__epg_socket = xbmc.translatePath(__addon__.getSetting('epg_socket_path'))
+        self.__epg_store = True if __addon__.getSetting('store_epg').upper() == 'TRUE' else False
+        self.__epg_path = xbmc.translatePath(os.path.join(__addon__.getSetting('epg_path'), 'epg.xml'))
 
     # Connect to TVHeadend and establish connection (log in))
 
@@ -431,8 +434,10 @@ class Manager():
             #
             # ToDo: implement startup of external script (epg grabbing)
             #
+            _epgpath = self.__epg_path
+            if self.__epg_store and _epgpath == '': _epgpath = '/dev/null'
             try:
-                os.system(EXTGRABBER)
+                os.system('%s %s %s' % (EXTGRABBER, _epgpath, self.__epg_socket))
             except Exception, e:
                 writeLog('Could not start external EPG-Grabber', xbmc.LOGERROR)
 

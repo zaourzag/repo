@@ -1,5 +1,8 @@
 Changelog:
 
+- 0.0.5
+  Actors list added, will be shown if a preferred AIN isn't set and more than one actor is present
+
 - 0.0.4
   Preparations for implementation of 'Comet DECT' radiator thermostat
 

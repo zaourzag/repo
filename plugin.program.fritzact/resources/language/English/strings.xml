@@ -10,7 +10,7 @@
     <string id="30011">Could not log in</string>
     <string id="30012">Login blocked, wait %s seconds</string>
     <!-- Window Labels -->
-    <string id="30020">Fritz!DECT Actors</string>
+    <string id="30020">FritzDECT Switches</string>
     <string id="30021">Name: </string>
     <string id="30022">State:</string>
     <string id="30023">Switch:</string>

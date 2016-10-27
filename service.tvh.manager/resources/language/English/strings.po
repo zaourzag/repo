@@ -208,14 +208,22 @@ msgctxt "#30054"
 msgid "Check Settings (deliver Email)"
 msgstr ""
 
-#empty strings from id 30055 to 30059
+#empty strings from id 30055 to 30057
+
+msgctxt "#30058"
+msgid "PyEPG/XMLTV socket path"
+msgstr ""
+
+msgctxt "#30059"
+msgid "Store epg.xml in folder"
+msgstr ""
 
 msgctxt "#30060"
-msgid "Grab EPG-Data from external Provider (XMLTV)"
+msgid "Grab EPG Data from external Provider (XMLTV)"
 msgstr ""
 
 msgctxt "#30061"
-msgid "Wakeup for EPG-updates"
+msgid "Wakeup for EPG Updates"
 msgstr ""
 
 msgctxt "#30062"
@@ -223,7 +231,11 @@ msgid "Wakeup at"
 msgstr ""
 
 msgctxt "#30063"
-msgid "Duration of EPG-update until shutdown"
+msgid "Duration of EPG Update until shutdown"
+msgstr ""
+
+msgctxt "#30064"
+msgid "Store EPG Data additionally in file epg.xml"
 msgstr ""
 
 msgctxt "#30065"

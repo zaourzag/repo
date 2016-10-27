@@ -88,8 +88,9 @@ class Device():
             self.temperature = 0.0
             self.temperature = '{:0.1f}'.format(float(device.find("temperature").find("celsius").text)/10) + ' °C'.decode('utf-8')
 
+    @classmethod
 
-    def bin2degree(self, binary_value = 0):
+    def bin2degree(cls, binary_value = 0):
         if 16 <= binary_value <= 56: return str((binary_value - 16)/2.0 + 8) + ' °C'.decode('utf-8')
         elif binary_value == 253: return 'off'
         elif binary_value == 254: return 'on'
@@ -126,7 +127,7 @@ class FritzBox():
                     else:
                         sid = xml.find('SID').text
 
-            except (requests.exceptions.ConnectionError, TypeError) as e:
+            except (requests.exceptions.ConnectionError, TypeError):
                 t.writeLog('FritzBox unreachable', level=xbmc.LOGERROR)
                 t.notifyOSD(__addonname__, __LS__(30010))
 
@@ -135,7 +136,9 @@ class FritzBox():
             __addon__.setSetting('SID', self.__fbSID)
             __addon__.setSetting('lastLogin', str(self.__lastLogin))
 
-    def calculate_response(self, challenge, password):
+    @classmethod
+
+    def calculate_response(cls, challenge, password):
 
         # Calculate response for the challenge-response authentication
 
@@ -157,14 +160,16 @@ class FritzBox():
 
         # Returns a list of Actor objects for querying SmartHome devices.
 
+        actors = []
+
         devices = self.switch("getdevicelistinfos")
+
         if devices is not None:
-            actors = []
             for device in ET.fromstring(devices):
                 #
                 # TEST WITH MORE THEN ONE DEVICE CHANGE RANGE
                 #
-                for d in range(1):
+                for i in range(1):
                     actor = Device(device)
 
                     if actor.is_switch:
@@ -196,7 +201,8 @@ class FritzBox():
             if handle is not None:
                 xbmcplugin.endOfDirectory(handle=handle, updateListing=True)
             xbmc.executebuiltin('Container.Refresh')
-            return actors
+
+        return actors
 
     def switch(self, cmd, ain=None):
 
@@ -213,6 +219,7 @@ class FritzBox():
         if ain: params['ain'] = ain
         response = self.session.get(self.base_url + '/webservices/homeautoswitch.lua', params=params, verify=False)
         response.raise_for_status()
+        xbmcgui.Window(10000).setProperty('fritzact.timestamp', str(int(time())))
         return response.text.strip()
 
 # _______________________________
@@ -241,25 +248,36 @@ if len(arguments) > 1:
 
     t.writeLog('provided parameter hash: %s' % (arguments[1]), level=xbmc.LOGDEBUG)
 
-    if action is not None:
-        if action == 'toggle':
-            fritz.switch('setswitchtoggle', ain)
-            xbmcgui.Window(10000).setProperty('fritzact.timestamp', str(int(time())))
+actors = fritz.get_actors(handle=_addonHandle)
 
-        elif action == 'on':
-            fritz.switch('setswitchon', ain)
-            xbmcgui.Window(10000).setProperty('fritzact.timestamp', str(int(time())))
+if action is not None:
+    if action == 'toggle':
+        fritz.switch('setswitchtoggle', ain)
 
-        elif action == 'off':
-            fritz.switch('setswitchoff', ain)
-            xbmcgui.Window(10000).setProperty('fritzact.timestamp', str(int(time())))
+    elif action == 'on':
+        fritz.switch('setswitchon', ain)
+
+    elif action == 'off':
+        fritz.switch('setswitchoff', ain)
 
 else:
-    if __addon__.getSetting('preferredAIN') is not None:
+    if __addon__.getSetting('preferredAIN') != '':
         fritz.switch('setswitchtoggle', __addon__.getSetting('preferredAIN'))
-        xbmcgui.Window(10000).setProperty('fritzact.timestamp', str(int(time())))
+    else:
+        if len(actors) == 1:
+            fritz.switch('setswitchtoggle', actors[0].actor_id)
+        else:
+            _devlist = []
+            _ainlist = []
+            for device in actors:
+                if device.type == 'switch':
+                    _devlist.append(device.name)
+                    _ainlist.append(device.actor_id)
+            if len(_devlist) > 0:
+                dialog = xbmcgui.Dialog()
+                _idx = dialog.select(__LS__(30020), _devlist)
+                if _idx > -1: fritz.switch('setswitchtoggle', _ainlist[_idx])
 
-actors = fritz.get_actors(handle=_addonHandle)
 if actors is not None:
     for device in actors:
         t.writeLog('-------------------------------------', level=xbmc.LOGDEBUG)
