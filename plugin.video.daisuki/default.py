@@ -145,16 +145,18 @@ def listserien():
 def serie(url):
     debug("Url Serie :"+url)
     content=getUrl(url)
-    kurz_inhalt = content[content.find('contentList0')+1:]
+    kurz_inhalt = content[content.find('<!-- moviesBlock start -->')+1:]
     kurz_inhalt = kurz_inhalt[:kurz_inhalt.find('<!-- moviesBlock end  -->')]
     print kurz_inhalt
     spl=kurz_inhalt.split('<div id')
     for element in spl:
       try:
-        nr=re.compile('movieitem([0-9]+)', re.DOTALL).findall(element)[0]
+        nr=re.compile('/([0-9]+)/movie.jpg', re.DOTALL).findall(element)[0]
         image=re.compile('delay="(.+?)"', re.DOTALL).findall(element)[0]
-        folge=re.compile('false;">([^<]+)</a></p>', re.DOTALL).findall(element)[0]
-        delay="/content/dam/pim/daisuki/en/GODEATER/12487/movie.jpg"
+        try:        
+          folge=re.compile('false;">([^<]+)</a></p>', re.DOTALL).findall(element)[0]
+        except:
+          folge=re.compile('<p class="episodeNumber">([0-9]+?)</p>', re.DOTALL).findall(element)[0]        
         urln=url.replace(".html","."+str(nr)+".html").replace("detail.","watch.")
         addLink("Episode "+folge,urln, 'stream', "http://www.daisuki.net"+image) 
         debug("image :"+ image)
