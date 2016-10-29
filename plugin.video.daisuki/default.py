@@ -25,6 +25,8 @@ addon_handle = int(sys.argv[1])
 
 args = urlparse.parse_qs(sys.argv[2][1:])
 addon = xbmcaddon.Addon()
+
+mainurl="http://www.daisuki.net/"
 # Lade Sprach Variablen
 translation = addon.getLocalizedString
 defaultBackground = ""
@@ -133,7 +135,10 @@ url = urllib.unquote_plus(params.get('url', ''))
 
 
 def listserien():
-    url="http://www.daisuki.net/bin/wcm/searchAnimeAPI?api=anime_list&searchOptions=&currentPath=/content/daisuki/de/en"
+    main=getUrl(mainurl)
+    country=re.compile('<meta property="og:url" content="http://www.daisuki.net/(.+?)/top.html"', re.DOTALL).findall(main)[0]
+    print "Country : "+ country
+    url="http://www.daisuki.net/bin/wcm/searchAnimeAPI?api=anime_list&searchOptions=&currentPath=/content/daisuki/"+country
     struktur=holejson(url)
     for name in struktur["response"]:
      title=name["title"]
