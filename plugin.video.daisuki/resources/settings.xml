@@ -1,9 +1,2 @@
 <settings>
-   <setting id="user" type="text" label="30101" default=""/>   
-   <setting id="pw" type="text" option="hidden" label="30102" default=""/>
-   <setting id="bitrate" type="select" label="30103" default="Select" values="Min|Max|Select" />
-   <setting label="30104" type="folder" id="download_dir" value="" /> 
-   <setting label="30105" type="bool" id="https" default="true" /> 
-   <setting id="password" type="text" label="Password" visible="false" />
-   <setting label="30106" type="action" action="RunPlugin(plugin://plugin.video.youtv/?mode=cachelear)"/>
 </settings>

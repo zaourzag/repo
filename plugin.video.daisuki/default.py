@@ -100,9 +100,6 @@ def parameters_string_to_dict(parameters):
   
   
 def getUrl(url,data="x"):
-        https=addon.getSetting("https")
-        if https=="true":
-           url=url.replace("https","http")
         print("Get Url: " +url)
         opener = urllib2.build_opener(urllib2.HTTPCookieProcessor())
         userAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:49.0) Gecko/20100101 Firefox/49.0"
@@ -134,11 +131,11 @@ mode = urllib.unquote_plus(params.get('mode', ''))
 url = urllib.unquote_plus(params.get('url', ''))
 
 
-def listserien():
+def listserien(url):
     main=getUrl(mainurl)
     country=re.compile('<meta property="og:url" content="http://www.daisuki.net/(.+?)/top.html"', re.DOTALL).findall(main)[0]
     print "Country : "+ country
-    url="http://www.daisuki.net/bin/wcm/searchAnimeAPI?api=anime_list&searchOptions=&currentPath=/content/daisuki/"+country
+    url=url+country
     struktur=holejson(url)
     for name in struktur["response"]:
      title=name["title"]
@@ -232,6 +229,7 @@ def stream(url):
    urls,sub,title=getstream(url)
    debug ("Streamurl :"+url)
    debug ("Streamurlsub :"+sub)
+ 
    listitem = xbmcgui.ListItem(path=urls)
    listitem.setInfo('video', { 'title': title })
    subcontent=getUrl(sub)
@@ -246,10 +244,7 @@ def stream(url):
      text_file.write(element)
      text_file.close()      
      ttml2srt.ttml2srt(temp+lang+".xml", True,temp+lang+".srt")
-     listsubs.append(temp+lang+".srt")
-     print "-----------"
-     print element   
-     print "-----------"
+     listsubs.append(temp+lang+".srt")     
    listitem.setSubtitles(listsubs)
    #text_file = open(temp+"daisuki.xml", "w")
    #text_file.write(subcontent)
@@ -257,10 +252,22 @@ def stream(url):
    #ttml2srt.ttml2srt(temp+"daisuki.xml", True,temp+"daisuki.srt")
    #listitem.setSubtitles([temp+"daisuki.srt"])
    xbmcplugin.setResolvedUrl(addon_handle,True, listitem) 
-   
+def generes(url):
+   urlkat="http://www.daisuki.net/bin/wcm/searchAnimeAPI?api=anime_categories&currentPath=%2Fcontent%2Fdaisuki%2Fde%2Fen"
+   content=getUrl(urlkat)
+   struktur = json.loads(content) 
+   response=struktur["response"][url]
+   for element in response:
+     if int(element["SeriesCount"])>0:
+       name=element["name"]
+       id=element["id"]
+       addDir(name,"http://www.daisuki.net/bin/wcm/searchAnimeAPI?api=anime_list&searchOptions=genre="+str(id)+"&currentPath=/content/daisuki/", 'listserien', "")  
+   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
 if mode is '':
-    addDir("Liste Serien","Liste Serien", 'listserien', "")    
-    addDir(translation(30108), translation(30108), 'Settings', "")        
+    addDir("All Series","http://www.daisuki.net/bin/wcm/searchAnimeAPI?api=anime_list&searchOptions=&currentPath=/content/daisuki/", 'listserien', "")  
+    addDir("Generes", 'categories', "generes","")  
+    addDir("Studios", 'studios', "generes","")  
+    #addDir(translation(30108), translation(30108), 'Settings', "")        
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
 else:
   # Wenn Settings ausgewählt wurde
@@ -268,8 +275,10 @@ else:
           addon.openSettings()
   # Wenn Kategory ausgewählt wurde
   if mode == 'listserien':
-          listserien()                      
+          listserien(url)                      
   if mode == 'serie':
           serie(url)      
   if mode == 'stream':
           stream(url)                
+  if mode == 'generes':
+          generes(url)               

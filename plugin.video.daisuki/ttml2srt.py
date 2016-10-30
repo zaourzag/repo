@@ -111,16 +111,9 @@ class TTML2SRTParser(HTMLParser):
             if self.use_frame_rate:
                 begin = re.sub(r'\.\d+$', '', begin)
                 end = re.sub(r'\.\d+$', '', end)
-            print "Begin :"+begin
-            print "end :"+end
-            print "ttml_time_format :"+self.ttml_time_format
             #00:00:25.484
             begin=datetime(2000,1,1,int(begin[0:2]),int(begin[3:5]),int(begin[6:8]),int(begin[9:12]))
             end=datetime(2000,1,1,int(end[0:2]),int(end[3:5]),int(end[6:8]),int(end[9:12]))
-            print "Begin :"
-            print begin
-            print "end :"
-            print end
             if self.use_frame_rate:
                 begin = begin.replace(microsecond=int(begin.microsecond / 10000.0 / self.frame_rate * 1000000))
                 end = end.replace(microsecond=int(end.microsecond / 10000.0 / self.frame_rate * 1000000))
