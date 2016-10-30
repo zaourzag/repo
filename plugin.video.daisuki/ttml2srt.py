@@ -20,6 +20,7 @@ from HTMLParser import HTMLParser
 from htmlentitydefs import name2codepoint
 from datetime import datetime
 import argparse, codecs, os, re, sys
+import time
 
 class TTML2SRTParser(HTMLParser):
     """
@@ -110,16 +111,26 @@ class TTML2SRTParser(HTMLParser):
             if self.use_frame_rate:
                 begin = re.sub(r'\.\d+$', '', begin)
                 end = re.sub(r'\.\d+$', '', end)
-            begin = datetime.strptime(begin, self.ttml_time_format)
-            end = datetime.strptime(end, self.ttml_time_format)
+            print "Begin :"+begin
+            print "end :"+end
+            print "ttml_time_format :"+self.ttml_time_format
+            #00:00:25.484
+            begin=datetime(2000,1,1,int(begin[0:2]),int(begin[3:5]),int(begin[6:8]),int(begin[9:12]))
+            end=datetime(2000,1,1,int(end[0:2]),int(end[3:5]),int(end[6:8]),int(end[9:12]))
+            print "Begin :"
+            print begin
+            print "end :"
+            print end
             if self.use_frame_rate:
                 begin = begin.replace(microsecond=int(begin.microsecond / 10000.0 / self.frame_rate * 1000000))
                 end = end.replace(microsecond=int(end.microsecond / 10000.0 / self.frame_rate * 1000000))
             self.caption = {}
             self.index += 1
             self.caption['index'] = self.index
-            self.caption['begin'] = begin.strftime(self.SRT_TIME_FORMAT)[:-3]
-            self.caption['end'] = end.strftime(self.SRT_TIME_FORMAT)[:-3]
+            self.caption['begin'] = begin.strftime(self.SRT_TIME_FORMAT)            
+            self.caption['begin'] = self.caption['begin'][0:9]+self.caption['begin'][-3:]            
+            self.caption['end'] = end.strftime(self.SRT_TIME_FORMAT)
+            self.caption['end'] = self.caption['end'][0:9]+self.caption['end'][-3:]
             self.caption['text'] = u''
         if not self.caption:
             return
