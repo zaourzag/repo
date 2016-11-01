@@ -107,6 +107,9 @@ def login():
   else:
       password=""
   if not username=="" and  not password=="":
+      main=getUrl(mainurl)
+      country=re.compile('<meta property="og:url" content="http://www.daisuki.net/(.+?)/top.html"', re.DOTALL).findall(main)[0]
+      print "Country : "+ country
       values = {'password' : password,
       'emailAddress' : username,        
       }      
@@ -114,7 +117,7 @@ def login():
       print "_------"+data
       try:
           header = [('User-Agent', 'userAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:49.0) Gecko/20100101 Firefox/49.0'),
-                    ("Referer", "http://www.daisuki.net/de/en/top.html")]      
+                    ("Referer", "http://www.daisuki.net/"+country+"/top.html")]      
           content=getUrl("https://www.daisuki.net/bin/SignInServlet.html/input",data,header)                                  
           for cookief in cj:
             print cookief
@@ -148,7 +151,7 @@ addon_handle = int(sys.argv[1])
 args = urlparse.parse_qs(sys.argv[2][1:])
 addon = xbmcaddon.Addon()
 
-mainurl="http://www.daisuki.net/"
+mainurl="http://www.daisuki.net"
 # Lade Sprach Variablen
 translation = addon.getLocalizedString
 defaultBackground = ""
@@ -199,9 +202,9 @@ def listserien(url):
     struktur=holejson(url)
     for name in struktur["response"]:
      title=name["title"]
-     image="http://www.daisuki.net"+name["imageURL_s"]
+     image=mainurl+name["imageURL_s"]
      beschreibung=name["synopsis"]
-     url="http://www.daisuki.net"+name["animeURL"]
+     url=mainurl+name["animeURL"]
      addDir(title,url, 'serie', image,desc=beschreibung) 
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)      
 def serie(url):
@@ -350,13 +353,39 @@ def generes(url):
        id=element["id"]
        addDir(name,"http://www.daisuki.net/bin/wcm/searchAnimeAPI?api=anime_list&searchOptions=genre="+str(id)+"&currentPath=/content/daisuki/", 'listserien', "")  
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
-   
-      
+
+def myanimelist():
+    main=getUrl(mainurl)
+    country=re.compile('<meta property="og:url" content="http://www.daisuki.net/(.+?)/top.html"', re.DOTALL).findall(main)[0]
+    sprache=re.compile('[^/]+/(.+)', re.DOTALL).findall(country)[0]
+    url="https://www.daisuki.net/bin/MyAnimeListServlet"
+    params = {
+            "pagePath": "/content/daisuki/"+country+"/mypage/myanimelist",
+            "language": sprache            
+    }
+    header = [('User-Agent', 'userAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:49.0) Gecko/20100101 Firefox/49.0'),              
+              ("Referer", "https://www.daisuki.net/"+country+"/mypage/myanimelist.html")]      
+    data = urllib.urlencode(params)  
+    debug ("Data :"+data)
+    try:
+      content=getUrl(url,data,header)         
+      struktur = json.loads(content)   
+      for serie in struktur["items"]  :
+        url=mainurl+serie["url"]
+        image=mainurl+serie["imagePath"]
+        title=serie["title"]
+        addDir(title,url, 'serie', image)  
+    except:
+       dialog = xbmcgui.Dialog()
+       dialog.ok("Login",translation(30112))
+    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
+    
 if mode is '':
     addDir("All Series","http://www.daisuki.net/bin/wcm/searchAnimeAPI?api=anime_list&searchOptions=&currentPath=/content/daisuki/", 'listserien', "")  
     addDir("Generes", 'categories', "generes","")  
     addDir("Studios", 'studios', "generes","")  
-    addDir("Login", "login", 'login', "")        
+    addDir("Login", "login", 'login', "")
+    addDir("My Anime List", "myanimelist", 'myanimelist', "")            
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
 else:
   # Wenn Settings ausgewählt wurde
@@ -373,3 +402,5 @@ else:
           generes(url)               
   if mode == 'login':
           login()
+  if mode == 'myanimelist':
+          myanimelist()          
