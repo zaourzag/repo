@@ -18,32 +18,6 @@ import ttml2srt
 
 
 
-# Setting Variablen Des Plugins
-global debuging
-base_url = sys.argv[0]
-addon_handle = int(sys.argv[1])
-
-args = urlparse.parse_qs(sys.argv[2][1:])
-addon = xbmcaddon.Addon()
-
-mainurl="http://www.daisuki.net/"
-# Lade Sprach Variablen
-translation = addon.getLocalizedString
-defaultBackground = ""
-defaultThumb = ""
-profile    = xbmc.translatePath( addon.getAddonInfo('profile') ).decode("utf-8")
-temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
-#Directory für Token Anlegen
-if not xbmcvfs.exists(temp):       
-       xbmcvfs.mkdirs(temp)
-       
-
-icon = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')+'/icon.png').decode('utf-8')
-useThumbAsFanart=addon.getSetting("useThumbAsFanart") == "true"
-#xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
-#xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_LABEL)
-
-
 def debug(content):
     log(content, xbmc.LOGDEBUG)
     
@@ -99,11 +73,17 @@ def parameters_string_to_dict(parameters):
   return paramDict
   
   
-def getUrl(url,data="x"):
+def getUrl(url,data="x",header=""):
+        global cj
         print("Get Url: " +url)
-        opener = urllib2.build_opener(urllib2.HTTPCookieProcessor())
+        for cook in cj:
+          debug(" Cookie :"+ str(cook))
+        opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))        
         userAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:49.0) Gecko/20100101 Firefox/49.0"
-        opener.addheaders = [('User-Agent', userAgent)]
+        if header=="":
+          opener.addheaders = [('User-Agent', userAgent)]        
+        else:
+          opener.addheaders = header        
         try:
           if data!="x" :
              content=opener.open(url,data=data).read()
@@ -112,16 +92,96 @@ def getUrl(url,data="x"):
         except urllib2.HTTPError as e:
              #print e.code   
              cc=e.read()  
-             struktur = json.loads(cc)  
-             error=struktur["errors"][0] 
-             error=unicode(error).encode("utf-8")
-             debug("ERROR : " + error)
-             dialog = xbmcgui.Dialog()
-             nr=dialog.ok("Error", error)
-             return ""
-             
+             debug("Error : " +cc)
+       
         opener.close()
         return content
+  
+def login():
+  global cj
+  dialog = xbmcgui.Dialog()
+  username = dialog.input(translation(30101), type=xbmcgui.INPUT_ALPHANUM)
+  if not username=="":
+      dialog = xbmcgui.Dialog()
+      password = dialog.input(translation(30101), type=xbmcgui.INPUT_ALPHANUM)
+  else:
+      password=""
+  if not username=="" and  not password=="":
+      values = {'password' : password,
+      'emailAddress' : username,        
+      }      
+      data = urllib.urlencode(values)
+      print "_------"+data
+      try:
+          header = [('User-Agent', 'userAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:49.0) Gecko/20100101 Firefox/49.0'),
+                    ("Referer", "http://www.daisuki.net/de/en/top.html")]      
+          content=getUrl("https://www.daisuki.net/bin/SignInServlet.html/input",data,header)                                  
+          for cookief in cj:
+            print cookief
+            if "key" in str(cookief):
+               key=re.compile('key=(.+?) ', re.DOTALL).findall(str(cookief))[0]
+            if "userID" in str(cookief):
+               userid=re.compile('userID=(.+?) ', re.DOTALL).findall(str(cookief))[0]
+          #   print "CX  :"+cx    
+          #cj.save(cookie,ignore_discard=True, ignore_expires=True)
+          cxc=getUrl("http://www.daisuki.net/bin/SignInCheckServlet?userID="+userid+"&key="+key)    
+          #{"userID":null,"status":"9901","msg":"Invalid user ID"}
+          #{"key":"0fbaea1392d81cb5cd13476629d31cb47ab66f5d","nickname":"L0RE","userID":373884,"status":"0000","msg":"success"}#          
+          struktur = json.loads(cxc) 
+          if not struktur["status"]=="0000":
+             dialog = xbmcgui.Dialog()
+             dialog.ok("Login",struktur["msg"])
+          else:
+              cj.save(cookie,ignore_discard=True, ignore_expires=True)                
+      except:
+          e = sys.exc_info()[0]
+          debug("Error : ")
+          debug(e)  
+          dialog = xbmcgui.Dialog()
+          dialog.ok("Login",translation(30110))
+        
+# Setting Variablen Des Plugins
+global debuging
+base_url = sys.argv[0]
+addon_handle = int(sys.argv[1])
+
+args = urlparse.parse_qs(sys.argv[2][1:])
+addon = xbmcaddon.Addon()
+
+mainurl="http://www.daisuki.net/"
+# Lade Sprach Variablen
+translation = addon.getLocalizedString
+defaultBackground = ""
+defaultThumb = ""
+profile    = xbmc.translatePath( addon.getAddonInfo('profile') ).decode("utf-8")
+temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
+
+cookie=temp+"/cookie.jar"
+cj = cookielib.LWPCookieJar();
+
+if xbmcvfs.exists(cookie):
+    cj.load(cookie,ignore_discard=True, ignore_expires=True)
+
+
+username=addon.getSetting("user")
+password=addon.getSetting("pass")
+
+#Directory für Token Anlegen
+if not xbmcvfs.exists(temp):       
+       xbmcvfs.mkdirs(temp)
+       
+
+
+
+
+
+       
+
+icon = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')+'/icon.png').decode('utf-8')
+useThumbAsFanart=addon.getSetting("useThumbAsFanart") == "true"
+#xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
+#xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_LABEL)
+
 
 
  
@@ -131,7 +191,7 @@ mode = urllib.unquote_plus(params.get('mode', ''))
 url = urllib.unquote_plus(params.get('url', ''))
 
 
-def listserien(url):
+def listserien(url):    
     main=getUrl(mainurl)
     country=re.compile('<meta property="og:url" content="http://www.daisuki.net/(.+?)/top.html"', re.DOTALL).findall(main)[0]
     print "Country : "+ country
@@ -147,23 +207,41 @@ def listserien(url):
 def serie(url):
     debug("Url Serie :"+url)
     content=getUrl(url)
+    debug("Content Serie")
+    debug(content)
+    debug("--------------")
     kurz_inhalt = content[content.find('<!-- moviesBlock start -->')+1:]
     kurz_inhalt = kurz_inhalt[:kurz_inhalt.find('<!-- moviesBlock end  -->')]
     print kurz_inhalt
-    spl=kurz_inhalt.split('<div id')
+    spl=kurz_inhalt.split('<p class="episodeNumber">')
+    folge_arr=[]
+    url_arr=[]
+    image_arr=[]
     for element in spl:
       try:
         nr=re.compile('/([0-9]+)/movie.jpg', re.DOTALL).findall(element)[0]
+        
         image=re.compile('delay="(.+?)"', re.DOTALL).findall(element)[0]
         try:        
-          folge=re.compile('false;">([^<]+)</a></p>', re.DOTALL).findall(element)[0]
+          folge=re.compile('false;">([^<]+)</a>', re.DOTALL).findall(element)[0]
+          if "#" in folge:
+            folge=re.compile('#([0-9]+)', re.DOTALL).findall(folge)[0]
         except:
-          folge=re.compile('<p class="episodeNumber">([0-9]+?)</p>', re.DOTALL).findall(element)[0]        
+          folge=re.compile('<p class="episodeNumber">([0-9]+?)</p>', re.DOTALL).findall(element)[0]    
         urln=url.replace(".html","."+str(nr)+".html").replace("detail.","watch.")
-        addLink("Episode "+folge,urln, 'stream', "http://www.daisuki.net"+image) 
-        debug("image :"+ image)
+        folge=int(folge)
+        if folge not in folge_arr:          
+          folge_arr.append(int(folge))     
+          url_arr.append(urln)
+          image_arr.append(image)
       except:
         pass
+    folge_arr, url_arr,image_arr = (list(x) for x in zip(*sorted(zip(folge_arr, url_arr,image_arr))))
+    for i in range(0,len(url_arr),1): 
+     print url_arr[i]     
+     print folge_arr[i]
+     addLink("Episode "+str(folge_arr[i]),url_arr[i], 'stream', "http://www.daisuki.net"+image_arr[i]) 
+    debug("image :"+ image)     
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)      
       
 def getstream(url):
@@ -177,8 +255,14 @@ def getstream(url):
             "cashPath":int(time.time()*1000)
   }
   content=getUrl(url)
-  match=re.compile('var flashvars = {(.+?)}', re.DOTALL).findall(content)
-  flash=match[0]
+  debug(content)
+  try:
+    match=re.compile('var flashvars = {(.+?)}', re.DOTALL).findall(content)
+    flash=match[0]
+  except:
+     dialog = xbmcgui.Dialog()
+     dialog.ok("Premium",translation(30111))
+     return
   api_params = {}
   s=re.compile('\'s\':"(.+?)"', re.DOTALL).findall(content)[0]
   initi=re.compile('\'init\':\'(.+?)\'', re.DOTALL).findall(content)[0]
@@ -225,8 +309,11 @@ def getstream(url):
   title=re.compile('"title_str":"(.+?)"', re.DOTALL).findall(decrypted)[0]    
   return playurl,sub,title
 
-def stream(url):     
-   urls,sub,title=getstream(url)
+def stream(url):  
+   try:   
+      urls,sub,title=getstream(url)
+   except:
+       return
    debug ("Streamurl :"+url)
    debug ("Streamurlsub :"+sub)
  
@@ -263,11 +350,13 @@ def generes(url):
        id=element["id"]
        addDir(name,"http://www.daisuki.net/bin/wcm/searchAnimeAPI?api=anime_list&searchOptions=genre="+str(id)+"&currentPath=/content/daisuki/", 'listserien', "")  
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
+   
+      
 if mode is '':
     addDir("All Series","http://www.daisuki.net/bin/wcm/searchAnimeAPI?api=anime_list&searchOptions=&currentPath=/content/daisuki/", 'listserien', "")  
     addDir("Generes", 'categories', "generes","")  
     addDir("Studios", 'studios', "generes","")  
-    #addDir(translation(30108), translation(30108), 'Settings', "")        
+    addDir("Login", "login", 'login', "")        
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
 else:
   # Wenn Settings ausgewählt wurde
@@ -282,3 +371,5 @@ else:
           stream(url)                
   if mode == 'generes':
           generes(url)               
+  if mode == 'login':
+          login()
