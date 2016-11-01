@@ -1,3 +1,7 @@
+0.3.19
+
+- EPG handling and download of external EPG providers improved
+
 0.3.18
 - added option to store EPG data grabbed from xmltv on local file system
 

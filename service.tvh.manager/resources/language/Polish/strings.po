@@ -203,7 +203,7 @@ msgstr "%s: Ten e-mail oznacza, że utworzono konfigurację do dostarczania wiad
 
 msgctxt "#30058"
 msgid "PyEPG/XMLTV socket path"
-msgstr "PyEPG/XMLTV ścieżka gniazdo"
+msgstr "PyEPG/XMLTV gniazdo"
 
 msgctxt "#30059"
 msgid "Store epg.xml in folder"

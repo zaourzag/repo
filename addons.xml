@@ -2108,7 +2108,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
     </extension>
 </addon>
 
-<addon id="service.tvh.manager" name="TVHeadend Power and Recording Management" version="0.3.18" provider-name="Birger Jesch">
+<addon id="service.tvh.manager" name="TVHeadend Power and Recording Management" version="0.3.19" provider-name="Birger Jesch">
   <extension point="xbmc.service" library="default.py" start="[login|startup]" />
   <extension point="xbmc.python.script" library="default.py" />
   <extension point="xbmc.addon.metadata">

@@ -436,10 +436,16 @@ class Manager():
             #
             _epgpath = self.__epg_path
             if self.__epg_store and _epgpath == '': _epgpath = '/dev/null'
+            _start = datetime.datetime.now()
             try:
-                os.system('%s %s %s' % (EXTGRABBER, _epgpath, self.__epg_socket))
+                _comm = subprocess.Popen('%s %s %s' % (EXTGRABBER, _epgpath, self.__epg_socket),
+                                         stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True, universal_newlines=True)
+                while _comm.poll() is None:
+                    writeLog(_comm.stdout.readline().decode('utf-8', 'ignore').strip(), xbmc.LOGDEBUG)
+
+                writeLog('external EPG grabber script tooks %s seconds' % ((datetime.datetime.now() - _start).seconds), xbmc.LOGDEBUG)
             except Exception, e:
-                writeLog('Could not start external EPG-Grabber', xbmc.LOGERROR)
+                writeLog('Could not start external EPG grabber script', xbmc.LOGERROR)
 
         idle = xbmc.getGlobalIdleTime()
 

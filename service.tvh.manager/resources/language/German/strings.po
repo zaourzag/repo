@@ -202,8 +202,8 @@ msgid "Check Settings (deliver Email)"
 msgstr "Einstellungen testen (E-Mail versenden)"
 
 msgctxt "#30058"
-msgid "PyEPG/XMLTV socket path"
-msgstr "PyEPG/XMLTV Socket Pfad"
+msgid "PyEPG/XMLTV socket"
+msgstr "PyEPG/XMLTV Socket"
 
 msgctxt "#30059"
 msgid "Store epg.xml in folder"
