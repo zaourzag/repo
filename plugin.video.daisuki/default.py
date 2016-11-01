@@ -16,7 +16,18 @@ import pyaes
 import base64
 import ttml2srt
 
+global debuging
+base_url = sys.argv[0]
+addon_handle = int(sys.argv[1])
 
+args = urlparse.parse_qs(sys.argv[2][1:])
+addon = xbmcaddon.Addon()
+
+mainurl="http://www.daisuki.net"
+# Lade Sprach Variablen
+translation = addon.getLocalizedString
+defaultBackground = ""
+defaultThumb = ""
 
 def debug(content):
     log(content, xbmc.LOGDEBUG)
@@ -37,10 +48,20 @@ def holejson(url):
     struktur = json.loads(content) 
     return struktur
 
-def addDir(name, url, mode, iconimage, desc=""): 
+def addDir(name, url, mode, iconimage, desc="", id="0", add=0, dele=0): 
   u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
   ok = True
   liz = xbmcgui.ListItem(name, iconImage=iconimage, thumbnailImage=iconimage)
+  if add==1:      
+      addit = "plugin://plugin.video.daisuki/?mode=addserie&url="+urllib.quote_plus(url)+"&id="+urllib.quote_plus(id)
+      commands = []
+      commands.append(( translation(30113), 'XBMC.RunPlugin('+ addit +')'))    
+      liz.addContextMenuItems( commands )
+  if dele==1:
+      delit = "plugin://plugin.video.daisuki/?mode=delserie&url="+urllib.quote_plus(url)
+      commands = []
+      commands.append(( translation(30114), 'XBMC.RunPlugin('+ delit +')'))          
+      liz.addContextMenuItems( commands )
   liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc})
   liz.setProperty("fanart_image", iconimage)
   ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
@@ -99,13 +120,8 @@ def getUrl(url,data="x",header=""):
   
 def login():
   global cj
-  dialog = xbmcgui.Dialog()
-  username = dialog.input(translation(30101), type=xbmcgui.INPUT_ALPHANUM)
-  if not username=="":
-      dialog = xbmcgui.Dialog()
-      password = dialog.input(translation(30101), type=xbmcgui.INPUT_ALPHANUM)
-  else:
-      password=""
+  username=addon.getSetting("user")  
+  password=addon.getSetting("pass")  
   if not username=="" and  not password=="":
       main=getUrl(mainurl)
       country=re.compile('<meta property="og:url" content="http://www.daisuki.net/(.+?)/top.html"', re.DOTALL).findall(main)[0]
@@ -142,20 +158,11 @@ def login():
           debug(e)  
           dialog = xbmcgui.Dialog()
           dialog.ok("Login",translation(30110))
-        
+      dialog = xbmcgui.Dialog()
+      dialog.ok("Login",translation(30115))        
 # Setting Variablen Des Plugins
-global debuging
-base_url = sys.argv[0]
-addon_handle = int(sys.argv[1])
 
-args = urlparse.parse_qs(sys.argv[2][1:])
-addon = xbmcaddon.Addon()
 
-mainurl="http://www.daisuki.net"
-# Lade Sprach Variablen
-translation = addon.getLocalizedString
-defaultBackground = ""
-defaultThumb = ""
 profile    = xbmc.translatePath( addon.getAddonInfo('profile') ).decode("utf-8")
 temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
 
@@ -189,9 +196,6 @@ useThumbAsFanart=addon.getSetting("useThumbAsFanart") == "true"
 
  
   
-params = parameters_string_to_dict(sys.argv[2])
-mode = urllib.unquote_plus(params.get('mode', ''))
-url = urllib.unquote_plus(params.get('url', ''))
 
 
 def listserien(url):    
@@ -202,10 +206,11 @@ def listserien(url):
     struktur=holejson(url)
     for name in struktur["response"]:
      title=name["title"]
+     id=name["id"]
      image=mainurl+name["imageURL_s"]
      beschreibung=name["synopsis"]
      url=mainurl+name["animeURL"]
-     addDir(title,url, 'serie', image,desc=beschreibung) 
+     addDir(title,url, 'serie', image,desc=beschreibung,id=id,add=1) 
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)      
 def serie(url):
     debug("Url Serie :"+url)
@@ -216,11 +221,12 @@ def serie(url):
     kurz_inhalt = content[content.find('<!-- moviesBlock start -->')+1:]
     kurz_inhalt = kurz_inhalt[:kurz_inhalt.find('<!-- moviesBlock end  -->')]
     print kurz_inhalt
-    spl=kurz_inhalt.split('<p class="episodeNumber">')
+    spl=kurz_inhalt.split('img delay')
     folge_arr=[]
     url_arr=[]
     image_arr=[]
     for element in spl:
+      element="delay"+element
       try:
         nr=re.compile('/([0-9]+)/movie.jpg', re.DOTALL).findall(element)[0]
         
@@ -342,7 +348,7 @@ def stream(url):
    #ttml2srt.ttml2srt(temp+"daisuki.xml", True,temp+"daisuki.srt")
    #listitem.setSubtitles([temp+"daisuki.srt"])
    xbmcplugin.setResolvedUrl(addon_handle,True, listitem) 
-def generes(url):
+def generes(url):   
    urlkat="http://www.daisuki.net/bin/wcm/searchAnimeAPI?api=anime_categories&currentPath=%2Fcontent%2Fdaisuki%2Fde%2Fen"
    content=getUrl(urlkat)
    struktur = json.loads(content) 
@@ -354,7 +360,7 @@ def generes(url):
        addDir(name,"http://www.daisuki.net/bin/wcm/searchAnimeAPI?api=anime_list&searchOptions=genre="+str(id)+"&currentPath=/content/daisuki/", 'listserien', "")  
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
 
-def myanimelist():
+def myanimelist():    
     main=getUrl(mainurl)
     country=re.compile('<meta property="og:url" content="http://www.daisuki.net/(.+?)/top.html"', re.DOTALL).findall(main)[0]
     sprache=re.compile('[^/]+/(.+)', re.DOTALL).findall(country)[0]
@@ -371,21 +377,63 @@ def myanimelist():
       content=getUrl(url,data,header)         
       struktur = json.loads(content)   
       for serie in struktur["items"]  :
+        print serie
         url=mainurl+serie["url"]
         image=mainurl+serie["imagePath"]
         title=serie["title"]
-        addDir(title,url, 'serie', image)  
+        addDir(title,url, 'serie', image,dele=1,id=1)  
     except:
        dialog = xbmcgui.Dialog()
        dialog.ok("Login",translation(30112))
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
-    
+
+def addserie(url,id):      
+  urls="http://www.daisuki.net/bin/MyAnimeListServlet/add"
+  params = {
+            "series_id": id            
+    }
+  data = urllib.urlencode(params)   
+  header = [('User-Agent', 'userAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:49.0) Gecko/20100101 Firefox/49.0'),
+            ("Referer", url),
+            ("X-Requested-With", "XMLHttpRequest"),
+            ("CSRF-Token","undefined")
+            ]        
+  content=getUrl(urls,data,header)         
+
+def delserie(url):
+  content=getUrl(url) 
+  id=re.compile('g_id = ([0-9]+)</script>', re.DOTALL).findall(content)[0]
+  print "IDID :"+id
+  urls="http://www.daisuki.net/bin/MyAnimeListServlet/remove"
+  params = {
+            "series_id": id            
+    }
+  data = urllib.urlencode(params)   
+  header = [('User-Agent', 'userAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:49.0) Gecko/20100101 Firefox/49.0'),
+            ("Referer", url),
+            ("X-Requested-With", "XMLHttpRequest"),
+            ("CSRF-Token","undefined")
+            ]        
+  content=getUrl(urls,data,header)         
+  debug("content")
+  xbmc.executebuiltin("Container.Refresh")
+
+params = parameters_string_to_dict(sys.argv[2])
+mode = urllib.unquote_plus(params.get('mode', ''))
+url = urllib.unquote_plus(params.get('url', ''))
+id = urllib.unquote_plus(params.get('id', ''))
+
+user=addon.getSetting("user")  
+passw=addon.getSetting("pass")  
+  
 if mode is '':
     addDir("All Series","http://www.daisuki.net/bin/wcm/searchAnimeAPI?api=anime_list&searchOptions=&currentPath=/content/daisuki/", 'listserien', "")  
     addDir("Generes", 'categories', "generes","")  
     addDir("Studios", 'studios', "generes","")  
-    addDir("Login", "login", 'login', "")
-    addDir("My Anime List", "myanimelist", 'myanimelist', "")            
+    if not user=="" and not password=="":
+      addDir("Login", "login", 'login', "")
+      addDir("My Anime List", "myanimelist", 'myanimelist', "")            
+    addDir(translation(30108), translation(30108), 'Settings', "") 
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
 else:
   # Wenn Settings ausgewählt wurde
@@ -404,3 +452,7 @@ else:
           login()
   if mode == 'myanimelist':
           myanimelist()          
+  if mode == 'addserie':
+          addserie(url,id)                    
+  if mode == 'delserie':
+          delserie(url)                              
