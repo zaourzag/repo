@@ -14,3 +14,5 @@
 - Patch Video Url
 1.1.1
 - Changed for Official Release
+1.1.4
+-fixes
