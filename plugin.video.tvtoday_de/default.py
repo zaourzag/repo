@@ -1,231 +1,207 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-import socket
-import urllib
-import urllib2
+
+import sys
+import urlparse
+import xbmcgui
 import xbmcplugin
 import xbmcaddon
-import xbmcgui
+import xbmc
+import xbmcvfs
+import urllib, urllib2, socket, cookielib, re, os, shutil,json
 import time
-import sys
-import os
-import re
-
-#addon = xbmcaddon.Addon()
-#addonID = addon.getAddonInfo('id')
-addonID = 'plugin.video.tvtoday_de'
-addon = xbmcaddon.Addon(id=addonID)
-socket.setdefaulttimeout(30)
-pluginhandle = int(sys.argv[1])
-opener = urllib2.build_opener()
-baseUrl = "http://www.tvtoday.de"
-userAgent = "Mozilla/5.0 (Windows NT 5.1; rv:24.0) Gecko/20100101 Firefox/24.0"
-opener.addheaders = [('User-Agent', userAgent)]
-useThumbAsFanart = addon.getSetting("useThumbAsFanart") == "true"
-forceViewMode = addon.getSetting("forceView") == "true"
-viewMode = str(addon.getSetting("viewID"))
-addonDir = xbmc.translatePath(addon.getAddonInfo('path'))
-addonUserDataFolder = xbmc.translatePath(addon.getAddonInfo('profile'))
-cacheFile = os.path.join(addonUserDataFolder, 'cache')
-icon = os.path.join(addonDir, 'icon.png')
-
-if not os.path.isdir(addonUserDataFolder):
-    os.mkdir(addonUserDataFolder)
+import datetime
 
 
-def index():
-    addDir("Gesamt", "", 'listVideosAll', icon)
-    addDir("Serien", "carousel_SE", 'listVideos', icon)
-    addDir("Reportagen", "carousel_RE", 'listVideos', icon)
-    addDir("Spielfilme", "carousel_SP", 'listVideos', icon)
-    addDir("Unterhaltung", "carousel_U", 'listVideos', icon)
-    addDir("Kinder", "carousel_KIN", 'listVideos', icon)
-    addDir("Sport", "carousel_SPO", 'listVideos', icon)
-    xbmcplugin.endOfDirectory(pluginhandle)
+
+global debuging
+base_url = sys.argv[0]
+addon_handle = int(sys.argv[1])
+
+args = urlparse.parse_qs(sys.argv[2][1:])
+addon = xbmcaddon.Addon()
+
+mainurl="http://www.tvtoday.de"
+# Lade Sprach Variablen
+translation = addon.getLocalizedString
+defaultBackground = ""
 
 
-def listVideosAll():
-    content = getUrl(baseUrl+"/mediathek")
-    content = content[content.find('<div id="topTeaser"')+1:]
-    spl = content.split('<div class="carousel-feature">')
-    entries = []
-    for i in range(1, len(spl), 1):
-        entry = spl[i]
-        if "rtl2-programm" not in entry and "rtl-programm" not in entry and "vox-programm" not in entry and "super-programm" not in entry:
-            match1 = re.compile('class="heading">(.+?)<', re.DOTALL).findall(entry)
-            match2 = re.compile('title="(.+?)"', re.DOTALL).findall(entry)
-            if match1:
-                title = cleanTitle(match1[0])
-            elif match2:
-                title = cleanTitle(match2[0])
-            title = title.replace("<wbr/>","").replace("<br />"," -")
-            match = re.compile('href="(.+?)"', re.DOTALL).findall(entry)
-            url = match[0]
-            match = re.compile('src="(.+?)"', re.DOTALL).findall(entry)
-            thumb = match[0]
-            thumb = thumb[:thumb.find(',')]+".jpg"
-            addLink(title, url, 'playVideo', thumb)
-    xbmcplugin.endOfDirectory(pluginhandle)
-    if forceViewMode:
-        xbmc.executebuiltin('Container.SetViewMode('+viewMode+')')
 
+def debug(content):
+    log(content, xbmc.LOGDEBUG)
+    
+def notice(content):
+    log(content, xbmc.LOGNOTICE)
 
-def listVideos(type):
-    content = getUrl(baseUrl+"/mediathek")
-    content = content[content.find('id="'+type+'"'):]
-    content = content[:content.find('</ul>')]
-    spl = content.split('<div class="el">')
-    entries = []
-    for i in range(1, len(spl), 1):
-        entry = spl[i]
-        if "sat1-programm" not in entry:
-            match = re.compile('<strong>([^<]*)</strong>.+?<span>(.+?)</span>', re.DOTALL).findall(entry)
-            title = cleanTitle(match[0][0].strip())+" - "+cleanTitle(match[0][1].strip())
-            title = title.replace("<wbr/>","").replace("<br />"," -")
-            match = re.compile('href="(.+?)"', re.DOTALL).findall(entry)
-            url = match[0]
-            match = re.compile('src="(.+?)"', re.DOTALL).findall(entry)
-            thumb = match[0]
-            thumb = thumb[:thumb.find(',')]+".jpg"
-            addLink(title, url, 'playVideo', thumb)
-    xbmcplugin.endOfDirectory(pluginhandle)
-    if forceViewMode:
-        xbmc.executebuiltin('Container.SetViewMode('+viewMode+')')
+def log(msg, level=xbmc.LOGNOTICE):
+    addon = xbmcaddon.Addon()
+    addonID = addon.getAddonInfo('id')
+    xbmc.log('%s: %s' % (addonID, msg), level) 
 
-
-def playVideo(urlMain):
-    content = opener.open(urlMain).read()
-    match1 = re.compile("openwin\\('(.+?)'", re.DOTALL).findall(content)
-#                      <a href="http://mediathek.daserste.de/Die-Kanzlei/Folge-13-%C3%9Cble-Tricks/Das-Erste/Video?documentId=32425652&bcastId=30292384" class="mediathek-open col-hover-thek" id="mediathek-8160108" data-info="Die Kanzlei-ARD-8160108">
-    match2 = re.compile('a href=\"([^"]+)" class="mediathek-open col-hover-thek"', re.DOTALL).findall(content)
-    if match1:
-        url = match1[0]
-    elif match2:
-        url = match2[0]
-    finalUrl = ""
-    if url.startswith("http://www.zdf.de/ZDFmediathek/"):
-        match = re.compile("/beitrag/video/(.+?)/", re.DOTALL).findall(url)
-        if match:
-            finalUrl = getPluginUrl("plugin.video.zdf_de_lite")+"/?mode=playVideo&url="+urllib.quote_plus(match[0])
-    elif url.startswith("http://www.arte.tv"):
-        match = re.compile("http://www.arte.tv/guide/de/([^/]+?)/", re.DOTALL).findall(url)
-        id=match[0]
-        try:            
-            xbmcaddon.Addon('plugin.video.arte_tv')
-            finalUrl = getPluginUrl("plugin.video.arte_tv")+"/?mode=play-video&id="+id
-        except:
-          try:
-               xbmcaddon.Addon('plugin.video.arteplussept')
-               finalUrl = getPluginUrl("plugin.video.arteplussept")+"/play/"+urllib.quote_plus(id)               
-          except:
-                xbmc.log("Kein Arte Plugin vorhanden")
-        #http://www.arte.tv/guide/de/064098-001/arte-junior-das-magazin
-
-        print "##X## "+ id                
-    elif url.startswith("http://mediathek.daserste.de/"):
-        m = re.compile('documentId=([0-9]+)', re.DOTALL).findall(content)        
-        url = m[0]        
-        finalUrl = getPluginUrl("plugin.video.ardmediathek_de")+"/?mode=playVideo&url="+urllib.quote_plus(url)
-    elif url.startswith("http://www.ardmediathek.de/"):
-        url = url[url.find("documentId=")+11:]
-        if "&" in url:
-            url = url[:url.find("&")]
-        finalUrl = getPluginUrl("plugin.video.ardmediathek_de")+"/?mode=playVideo&url="+urllib.quote_plus(url)
-    elif url.startswith("http://rtl-now.rtl.de/") or url.startswith("http://rtl2now.rtl2.de/") or url.startswith("http://www.voxnow.de/") or url.startswith("http://www.rtlnitronow.de/") or url.startswith("http://www.superrtlnow.de/"):
-        finalUrl = getPluginUrl("plugin.video.rtl_now")+"/?mode=playVideo&url="+urllib.quote_plus(url)
-    if finalUrl:
-        listitem = xbmcgui.ListItem(path=finalUrl)
-        xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
-
-
-def queueVideo(url, name):
-    playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
-    listitem = xbmcgui.ListItem(name)
-    playlist.add(url, listitem)
-
-
-def getUrl(url):
-    if os.path.exists(cacheFile) and (time.time()-os.path.getmtime(cacheFile) < 60*10):
-        fh = open(cacheFile, 'r')
-        content = fh.read()
-        fh.close()
-    else:
-        content = opener.open(url).read()
-        fh = open(cacheFile, 'w')
-        fh.write(content)
-        fh.close()
-    return content
-
-
-def translation(id):
-    return addon.getLocalizedString(id).encode('utf-8')
-
-
-def cleanTitle(title):
-    title = title.replace("u0026", "&").replace("&lt;", "<").replace("&gt;", ">").replace("&amp;", "&").replace("&#039;", "'").replace("&quot;", "\"").replace("&szlig;", "ß").replace("&ndash;", "-")
-    title = title.replace("&Auml;", "Ä").replace("&Uuml;", "Ü").replace("&Ouml;", "Ö").replace("&auml;", "ä").replace("&uuml;", "ü").replace("&ouml;", "ö")
-    title = title.replace("\\'", "'").strip()
-    return title
-
-
-def getPluginUrl(pluginID):
-    plugin = xbmcaddon.Addon(id=pluginID)
-    if xbmc.getCondVisibility("System.Platform.xbox"):
-        return "plugin://video/"+plugin.getAddonInfo('name')
-    else:
-        return "plugin://"+plugin.getAddonInfo('id')
-
-
+def addDir(name, url, mode, iconimage, desc="", id="0", add=0, dele=0): 
+  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
+  ok = True
+  liz = xbmcgui.ListItem(name, iconImage=iconimage, thumbnailImage=iconimage)  
+  liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc})
+  liz.setProperty("fanart_image", iconimage)
+  ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
+  return ok
+  
+def addLink(name, url, mode, iconimage, duration="", desc="", genre='',shortname="",zeit="",production_year="",abo=1,search=""):
+  debug ("addLink abo " + str(abo))
+  debug ("addLink abo " + str(shortname))
+  cd=addon.getSetting("password")  
+  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
+  ok = True
+  liz = xbmcgui.ListItem(name, iconImage="", thumbnailImage=iconimage)
+  liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Genre": genre,"Sorttitle":shortname,"Dateadded":zeit,"year":production_year })
+  liz.setProperty('IsPlayable', 'true')
+  liz.addStreamInfo('video', { 'duration' : duration })
+  liz.setProperty("fanart_image", iconimage)
+  #liz.setProperty("fanart_image", defaultBackground)
+  xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
+  ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)  
+  return ok
+  
 def parameters_string_to_dict(parameters):
-    paramDict = {}
-    if parameters:
-        paramPairs = parameters[1:].split("&")
-        for paramsPair in paramPairs:
-            paramSplits = paramsPair.split('=')
-            if (len(paramSplits)) == 2:
-                paramDict[paramSplits[0]] = paramSplits[1]
-    return paramDict
+  paramDict = {}
+  if parameters:
+    paramPairs = parameters[1:].split("&")
+    for paramsPair in paramPairs:
+      paramSplits = paramsPair.split('=')
+      if (len(paramSplits)) == 2:
+        paramDict[paramSplits[0]] = paramSplits[1]
+  return paramDict
+  
+  
+def getUrl(url,data="x",header=""):        
+        opener = urllib2.build_opener(urllib2.HTTPCookieProcessor())        
+        userAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:49.0) Gecko/20100101 Firefox/49.0"
+        if header=="":
+          opener.addheaders = [('User-Agent', userAgent)]        
+        else:
+          opener.addheaders = header        
+        try:
+          if data!="x" :
+             content=opener.open(url,data=data).read()
+          else:
+             content=opener.open(url).read()
+        except urllib2.HTTPError as e:
+             #print e.code   
+             cc=e.read()  
+             debug("Error : " +cc)
+       
+        opener.close()
+        return content
+
+def thema(thema):
+   main=getUrl(mainurl+"/mediathek/")
+   kurz_inhalt = main[main.find('<h3 class="h3 uppercase category-headline">'+thema+'</h3>')+1:]
+   kurz_inhalt = kurz_inhalt[:kurz_inhalt.find('<h3 class="h3 uppercase category-headline">')]
+   spl = kurz_inhalt.split('<div class="slide js-')     
+   for i in range(0, len(spl), 1):
+      element=spl[i]
+      try:
+        debug("Image")
+        image=re.compile('data-lazy-load-src="(.+?)"', re.DOTALL).findall(element)[0]
+        debug(image)
+        debug("Thema")
+        thema=re.compile('<p class="h7 name">(.+?)</p>', re.DOTALL).findall(element)[0]
+        debug(thema)
+        debug("Sender")
+        sender=re.compile('<span class="h6 text">(.+?)</span>', re.DOTALL).findall(element)[0]                                                 
+        debug(sender)
+        debug("URL")  
+        url=re.compile('<a href="([^\"]+?)" class="element js-hover', re.DOTALL).findall(element)[0]
+        debug(url)
+        debug("-------------")
+        if not sender=="RTL" and  not sender=="VOX" and not sender=="ZDF" :
+          addLink(thema, url, 'folge', image)                
+      except:
+        pass
+   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)        
+
+def folge(url):
+  main=getUrl(mainurl+url) 
+  kurz_inhalt = main[main.find('<div class="img-wrapper stage">')+1:]
+  url=re.compile('<a href="([^\"]+?)"', re.DOTALL).findall(kurz_inhalt)[0]
+  debug ("Folge URL :"+url)
+  if "ardmediathek" in url:      
+      debug("URL ARD:"+ url)
+      id=re.compile('documentId=([0-9]+)', re.DOTALL).findall(url)[0]
+      debug("ID :"+id)
+      import libArd
+      videoUrl,subUrl = libArd.getVideoUrl(id)
+      listitem = xbmcgui.ListItem(path=videoUrl)
+      xbmcplugin.setResolvedUrl(addon_handle, True, listitem)
+  if "zdf.de" in url:
+      #dialog = xbmcgui.Dialog()
+      #dialog.ok("ZDF","Zdf fehlt die schnitstelle,bin bin Membrane dran")
+      #import libZdf
+      #xy=libZdf.libZdfGetVideoHtml('https://www.zdf.de/comedy/neo-magazin-mit-jan-boehmermann/neo-magazin-royale-vom-27-10-2016-102.html')
+      #xy=libZdf.libZdfGetVideoHtml(url)      
+      debug("Url: ")
+      debug (xy)
+      
+  if "arte.tv" in url:   
+   VID = re.compile("http://www.arte.tv/guide/de/([^/]+?)/", re.DOTALL).findall(url)[0]
+   pluginID="plugin.video.arte_tv"
+   plugin = xbmcaddon.Addon(id=pluginID)
+   finalUrl = "plugin://"+plugin.getAddonInfo('id') +"/?mode=play-video&id="+VID
+   listitem = xbmcgui.ListItem(path=finalUrl)
+   xbmcplugin.setResolvedUrl(addon_handle, True, listitem)   
+
+#  username=addon.getSetting("user")  
+
+#country=re.compile('<meta property="og:url" content="http://www.daisuki.net/(.+?)/top.html"', re.DOTALL).findall(main)[0]
+#          header = [('User-Agent', 'userAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:49.0) Gecko/20100101 Firefox/49.0'),
+#                    ("Referer", "http://www.daisuki.net/"+country+"/top.html")]      
+#          content=getUrl("https://www.daisuki.net/bin/SignInServlet.html/input",data,header)                                  
+#          for cookief in cj:
+#            print cookief
+#            if "key" in str(cookief):
+#          struktur = json.loads(cxc) 
+#                        cj.save(cookie,ignore_discard=True, ignore_expires=True)                
+#cookie=temp+"/cookie.jar"
+#cj = cookielib.LWPCookieJar();
+
+#if xbmcvfs.exists(cookie):
+#    cj.load(cookie,ignore_discard=True, ignore_expires=True)
+
+profile    = xbmc.translatePath( addon.getAddonInfo('profile') ).decode("utf-8")
+temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
 
 
-def addLink(name, url, mode, iconimage, desc="", duration="", date=""):
-    u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
-    ok = True
-    liz = xbmcgui.ListItem(name, iconImage="DefaultVideo.png", thumbnailImage=iconimage)
-    liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Aired": date, "Duration": duration, "Episode": 1})
-    liz.setProperty('IsPlayable', 'true')
-    if useThumbAsFanart and iconimage!=icon:
-        liz.setProperty("fanart_image", iconimage)
-    entries = []
-    entries.append((translation(30001), 'RunPlugin('+getPluginUrl(addonID)+'/?mode=queueVideo&url='+urllib.quote_plus(u)+'&name='+urllib.quote_plus(name)+')',))
-    liz.addContextMenuItems(entries)
-    ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
-    return ok
+#Directory für Token Anlegen
+if not xbmcvfs.exists(temp):       
+       xbmcvfs.mkdirs(temp)
+      
 
-
-def addDir(name, url, mode, iconimage, args="", type=""):
-    u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&thumb="+urllib.quote_plus(iconimage)+"&args="+urllib.quote_plus(args)+"&type="+urllib.quote_plus(type)
-    ok = True
-    liz = xbmcgui.ListItem(name, iconImage="DefaultTVShows.png", thumbnailImage=iconimage)
-    liz.setInfo(type="Video", infoLabels={"Title": name})
-    if useThumbAsFanart and not iconimage.split(os.sep)[-1].startswith("icon"):
-        liz.setProperty("fanart_image", iconimage)
-    ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
-    return ok
-
+       
+icon = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')+'/icon.png').decode('utf-8')
+useThumbAsFanart=addon.getSetting("useThumbAsFanart") == "true"
+#xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
+#xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_LABEL)
+    #kurz_inhalt = content[content.find('<!-- moviesBlock start -->')+1:]
+    #kurz_inhalt = kurz_inhalt[:kurz_inhalt.find('<!-- moviesBlock end  -->')]
 
 params = parameters_string_to_dict(sys.argv[2])
 mode = urllib.unquote_plus(params.get('mode', ''))
 url = urllib.unquote_plus(params.get('url', ''))
-name = urllib.unquote_plus(params.get('name', ''))
-thumb = urllib.unquote_plus(params.get('thumb', ''))
-
-if mode == 'listVideos':
-    listVideos(url)
-elif mode == 'listVideosAll':
-    listVideosAll()
-elif mode == 'playVideo':
-    playVideo(url)
-elif mode == "queueVideo":
-    queueVideo(url, name)
-else:
-    index()
+    
+if mode is '':
+    main=getUrl(mainurl+"/mediathek/")
+    Themen=re.compile('<h3 class="h3 uppercase category-headline">(.+?)</h3>', re.DOTALL).findall(main)
+    debug("Themen :")
+    debug(Themen)
+    for thema in Themen:
+      addDir(thema, thema, 'thema', "")                
+    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
+else:         
+  if mode == 'delserie':
+          delserie(url)
+  if mode == 'thema':
+          thema(url)                 
+  if mode == 'folge':
+          folge(url)              

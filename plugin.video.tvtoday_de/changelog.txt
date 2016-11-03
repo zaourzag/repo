@@ -17,3 +17,5 @@
 1.1.4
 - Fix fuer Arte
 - RTL ausgebaut
+1.2.0
+Komplett rework
