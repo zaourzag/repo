@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 
-<addon id="plugin.video.pseudo.library" name="PseudoLibrary" version="0.1.2b" provider-name="Sytone, Lunatixz, Stereodruid">
+<addon id="plugin.video.pseudo.library" name="PseudoLibrary" version="0.1.3" provider-name="Sytone, Lunatixz, Stereodruid">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="script.module.t0mm0.common" version="2.0.0"/>
