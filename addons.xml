@@ -824,9 +824,6 @@ v1.9.0 (2016-10-14) moving to the new api - please report bugs
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
     </extension>
-  <requires>
-    <import addon="inputstream.mpd" version="1.2.10"/>
-  </requires>
   <extension point="xbmc.addon.metadata">
     <summary lang="en">Magine TV</summary>
     <summary lang="de">Magine TV</summary>
