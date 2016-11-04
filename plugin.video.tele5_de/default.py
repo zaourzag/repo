@@ -89,7 +89,6 @@ def listcat(url,type="listVideos"):
         except:
            pass
     xbmcplugin.endOfDirectory(pluginhandle)
-    xbmc.executebuiltin('Container.SetViewMode(500)')
 
 
 def listVideos(url):
