@@ -2329,7 +2329,7 @@ v0.5.2 (2016-09-28)
 
 <addon id="plugin.video.7tvinput" name="7TV(InputStream)" version="3.1.9" provider-name="L0RE">
 	<requires>
-		<import addon="xbmc.python" version="2.14.0"/>
+                <import addon="xbmc.python" version="2.24.0"/>
 	</requires>
 	<extension point="xbmc.python.pluginsource" library="addon.py">
 		<provides>video</provides>
