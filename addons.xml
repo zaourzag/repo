@@ -1279,7 +1279,7 @@ Für Sport1US und Sport1+ wird ein ABO auf sport1.de benötigt.
 <addon id="plugin.video.tvtoday_de" name="TV Today - Best of Mediatheken" version="1.2.0" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>        
-        <import addon="script.module.libArd" version="1.9.4"/>
+	<import addon="script.module.libArd" version="0.3.4"/>
         <import addon="plugin.video.arte_tv" version="2.9.6"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="default.py">
