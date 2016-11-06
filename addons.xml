@@ -304,31 +304,6 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
   </extension>
 </addon>
 
-<addon id="plugin.video.ardmediathek_de" name="ARD Mediathek" version="4.9.1" provider-name="AddonScriptorDE, membrane, L0RE">
-    <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
-        <!--<import addon="script.module.ardlib" version="0.0.1"/>-->
-        <!--<import addon="script.module.f4mproxy" version="1.0.16"/>-->
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <summary lang="de">Das Erste, Einsfestival, EinsPlus, Phoenix, WDR, SWR, HR, MDR, NDR, RBB, BR, ... Mediathek</summary>
-        <summary lang="en">Das Erste, Einsfestival, EinsPlus, Phoenix, WDR, SWR, HR, MDR, NDR, RBB, BR, ... Media Library</summary>
-        <language>de</language>
-        <description lang="de">Das Erste, Einsfestival, EinsPlus, Phoenix, WDR, SWR, HR, MDR, NDR, RBB, BR, ... Mediathek</description>
-        <description lang="en">Das Erste, Einsfestival, EinsPlus, Phoenix, WDR, SWR, HR, MDR, NDR, RBB, BR, ... Media Library</description>
-        <disclaimer lang="en">Some parts of this addon may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
-        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-        <source>https://github.com/AddonScriptorDE/plugin.video.ardmediathek_de</source>
-        <forum>http://forum.xbmc.org/showthread.php?tid=132563</forum>
-        <email>andreas at vogler dot name</email>
-        <website>http://www.ardmediathek.de</website>
-    </extension>
-</addon>
-
 <addon id="plugin.video.arte_tv" name="Arte.tv" version="2.9.6" provider-name="PUR3">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
@@ -1463,30 +1438,6 @@ v0.5.2 (2016-09-28)
         <description lang="de">Fußball, Serien, Filme, Dokus und Reportagen laufen mit Zattoo im Livestream. Alles was du brauchst, ist eine Internetverbindung und schon läuft das Fernsehprogramm mit mehr als 75-TV-Sendern kostenlos auf dem Gerät deiner Wahl.</description>
         <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
         <website>http://www.zattoo.com</website>
-    </extension>
-</addon>
-
-<addon id="plugin.video.zdf_de_lite" name="ZDF Mediathek" version="2.2.7" provider-name="membrane">
-    <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
-        <import addon="repository.membrane" version="1.9.0"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <summary lang="de">ZDF, ZDFneo, ZDFkultur, ZDFinfo und 3sat Mediathek</summary>
-        <summary lang="en">ZDF, ZDFneo, ZDFkultur, ZDFinfo and 3sat Media Library</summary>
-        <language>de</language>
-        <description lang="de">ZDF, ZDFneo, ZDFkultur, ZDFinfo und 3sat Mediathek</description>
-        <description lang="en">ZDF, ZDFneo, ZDFkultur, ZDFinfo and 3sat Media Library</description>
-        <disclaimer lang="en">Some parts of this addon may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
-        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-        <source>https://github.com/AddonScriptorDE/plugin.video.zdf_de_lite</source>
-        <forum>http://forum.xbmc.org/showthread.php?tid=132563</forum>
-        <email>AddonScriptorDE at yahoo dot de</email>
-        <website>http://www.zdf.de/ZDFmediathek</website>
     </extension>
 </addon>
 
