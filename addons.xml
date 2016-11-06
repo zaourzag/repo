@@ -1276,7 +1276,7 @@ Für Sport1US und Sport1+ wird ein ABO auf sport1.de benötigt.
     </extension>
 </addon>
 
-<addon id="plugin.video.tvtoday_de" name="TV Today - Best of Mediatheken" version="1.2.1" provider-name="LORE/realvito">
+<addon id="plugin.video.tvtoday_de" name="TV Today - Best of Mediatheken" version="1.2.2" provider-name="LORE/realvito">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
 		<import addon="script.module.libArd" version="0.3.4"/>
