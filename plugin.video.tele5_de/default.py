@@ -125,8 +125,8 @@ def listVideos(url):
             for element in Entries:
               staffel=element["staffel"]
               folge=element["folge"]
-              utitle= element["utitel"]
-              title= element["title"]
+              utitle= element["utitel"].strip()
+              title= element["title"].strip()
               id=element["id"]
               data=element["vodate"]
               genre=element["welt"]
@@ -136,7 +136,7 @@ def listVideos(url):
               else:
                  name="Folge "+ folge 
               if not utitle=="" :
-                 name=name+" ( "+utitle +" )"
+                 name=name+" - "+utitle
               addLink(name, str(id), 'playVideo', image,dadd=data,genre=genre,episode=folge,season=staffel)          
               #addLink("Folge :"+ folge , str(id), 'playVideo', image)          
           
