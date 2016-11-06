@@ -1276,26 +1276,43 @@ Für Sport1US und Sport1+ wird ein ABO auf sport1.de benötigt.
     </extension>
 </addon>
 
-<addon id="plugin.video.tvtoday_de" name="TV Today - Best of Mediatheken" version="1.2.0" provider-name="L0RE">
-    <requires>
-        <import addon="xbmc.python" version="2.1.0"/>        
-	<import addon="script.module.libArd" version="0.3.4"/>
-        <import addon="plugin.video.arte_tv" version="2.9.6"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <summary lang="en">Best of german media libraries</summary>
-        <language>de</language>
-        <description lang="en">Best of german media libraries</description>
-        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-        <source>https://github.com/AddonScriptorDE/plugin.video.tvtoday_de</source>
-        <forum>http://forum.xbmc.org/showthread.php?tid=132563</forum>
-        <email>andreas at vogler dot name</email>
-        <website>http://www.tvtoday.de/mediathek</website>
-    </extension>
+<addon id="plugin.video.tvtoday_de"
+		name="TV Today - Best of Mediatheken"
+		version="1.2.1"
+		provider-name="LORE/realvito">
+	<requires>
+		<import addon="xbmc.python" version="2.1.0"/>
+		<import addon="script.module.libArd" version="0.3.4"/>
+		<import addon="script.module.libZdf" version="1.9.5"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<platform>all</platform>
+		<summary>Das Beste aus TV-Today</summary>
+		<description>Webseite, Anzeige u.a. angepasst ab 4.11.2016 @realvito[CR][CR]Das Beste aus deutschen Mediatheken, ausgewählt und zusammengestellt von der Zeitschrift TV-Today (www.tvtoday.de).[CR][CR]Für mehr Informationen zu allen Neuerungen siehe - CHANGELOG.</description>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.tvtoday_de</source>
+		<forum>http://www.kodinerds.net/index.php/Thread/53329-RERELEASE-TVTODAY/</forum>
+		<email>-</email>
+		<website>http://www.tvtoday.de/mediathek/</website>
+		<news> [B]Version 1.2.1  (06.11.2016) :[/B]
+					- Autor bisher @LORE
+					- Ab jetzt überarbeitet und übernommen durch @realvito
+					- Testlauf auf Win 8.1/64 bit unter Jarvis 16.1 und Krypton 17 beta4 und läuft
+					- Sortierung für die vergangenen fünf Tage nach Datum hinzugefügt
+					- abschaltbare Sender-Kennung
+					- extra Debugfunktion zur Fehlererkennung (aber Achtung -kodi.log- füllt sich schnell)
+					- Plots werden im entsprechenden ViewModus angezeigt (Skin abhängig)
+					- Es besteht die Möglichkeit -per Rechtsklick- Videos automatisch nacheinander abzuspielen
+					- Fanart für Addon erstellt
+					- "libZdf" wieder freigeschaltet - leider erst nach der Reparatur von "libZdf" funktionsfähig
+					  * (! Fehlerbehebung durch anderen Autor in Arbeit !) *
+					- Resolver für "DasErste" reaktiviert
+					- P.S. wenn unter vereinzelten Filmangeboten keine Sender-Kennung angezeigt wird,
+					   so liegt das an der Webseite von "TvToday" und nicht am ADDON !</news>
+	</extension>
 </addon>
 
 <addon id="plugin.video.vevo_tv" name="VEVO TV" version="1.1.5" provider-name="AddonScriptorDE">
