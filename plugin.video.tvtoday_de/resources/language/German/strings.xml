@@ -1,5 +1,9 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <strings>
-  <string id="30101">Thumb als Fanart nutzen</string>
-  <string id="30102">View erzwingen</string>
+	<string id="32001">Allgemein</string>
+	<string id="30101">Ansicht-ViewID erzwingen</string>
+	<string id="30102">ViewID</string>
+	<string id="30103">Sender-Kennungen anzeigen</string>
+	<string id="30104">Thumb als Hintergrund-Fanart nutzen</string>
+	<string id="30105">Programm-Debug mit Details (sonst nur Minimal-Log)</string>
 </strings>

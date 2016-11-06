@@ -1,21 +1,50 @@
-1.0.0
+﻿1.0.0
 - Initial release
+
 1.0.1
 - Added caching
+
 1.0.2
 - Small bugfix
+
 1.0.3
 - Fixed site changes
+
 1.0.4
 - Fixed ARD playback
-1.1.0
-- Author bisher Addonscriptor.de
-- Ab jetzt Übernommen durch L0RE
+
+[B]Version 1.0.5  (05.10.2015)[/B]
+- Fixed Webadressen der Mediatheken @realvito
+- addon.xml geändert
+
+[B]Version 1.1.0  (28.12.2015)[/B]
+- Autor bisher Addonscriptor.de
+- Ab jetzt übernommen durch @L0RE
+- Fixed Webadressen der Mediatheken @realvito
 - Patch für ARD
-1.1.1
-- Fix für dokus
-1.1.4
-- Fix fuer Arte
-- RTL ausgebaut
-1.2.0
-Komplett rework
+
+[B]Version 1.1.1  (30.12.2015)[/B]
+- Fix für Dokus
+
+[B]Version 1.1.2  (09.01.2016)[/B]
+- Fix Wiedergabe ARTE-TV
+
+[B]Version 1.1.4  (10.01.2016)[/B]
+- RTL-Sender rausgenommen (da NOWTV-Addon nicht mehr funktioniert)
+
+[B]Version 1.2.0  (03.11.2016)[/B]
+ - Komplett rework, da Webseitenänderung
+ 
+ [B]Version 1.2.1  (06.11.2016)[/B]
+ - Autor bisher @LORE
+ - Ab jetzt überarbeitet und übernommen durch @realvito
+ - Testlauf auf Win 8.1/64 bit unter Jarvis 16.1 und Krypton 17 beta4 und läuft
+ - Sortierung für die vergangenen fünf Tage nach Datum hinzugefügt
+ - abschaltbare Sender-Kennung
+ - extra Debugfunktion zur Fehlererkennung (aber Achtung -kodi.log- füllt sich schnell)
+ - Plots werden im entsprechenden ViewModus angezeigt (Skin abhängig)
+ - Es besteht die Möglichkeit -per Rechtsklick- Videos automatisch nacheinander abzuspielen
+ - Fanart für Addon erstellt
+ - "libZdf" wieder freigeschaltet - leider erst nach der Reparatur von "libZdf" funktionsfähig (! Fehlerbehebung durch anderen Autor in Arbeit !)
+ - Resolver für "DasErste" reaktiviert
+ - P.S. wenn unter vereinzelten Filmangeboten keine Sender-Kennung angezeigt wird, so liegt das an der Webseite von "TvToday" und nicht am ADDON !
