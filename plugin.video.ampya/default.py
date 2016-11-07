@@ -94,7 +94,7 @@ def addLink(name, url, mode, iconimage, duration="", desc="",artist_id="",genre=
 
 
 def getUrl(url,data="x"):        
-        print("Get Url: " +url)
+        debug("Get Url: " +url)
         opener = urllib2.build_opener(urllib2.HTTPCookieProcessor())
         userAgent = "Dalvik/2.1.0 (Linux; U; Android 5.0;)"
         opener.addheaders = [('User-Agent', userAgent)]

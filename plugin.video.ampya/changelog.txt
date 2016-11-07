@@ -1,4 +1,2 @@
 ﻿0.1.8
-- Updates
-0.1.4
 - Release

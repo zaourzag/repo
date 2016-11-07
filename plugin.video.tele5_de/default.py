@@ -12,17 +12,23 @@ import xbmcaddon
 import HTMLParser
 import json
 
+reload(sys)
+sys.setdefaultencoding('utf-8')
+
 #addon = xbmcaddon.Addon()
 #addonID = addon.getAddonInfo('id')
 addonID = 'plugin.video.tele5_de'
 addon = xbmcaddon.Addon(id=addonID)
 socket.setdefaulttimeout(30)
 pluginhandle = int(sys.argv[1])
+xbmcplugin.setContent(pluginhandle, 'movies')
 translation = addon.getLocalizedString
 xbox = xbmc.getCondVisibility("System.Platform.xbox")
 icon = xbmc.translatePath('special://home/addons/'+addonID+'/icon.png')
 baseUrl = "http://www.tele5.de"
 opener = urllib2.build_opener()
+xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
+xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_LABEL)
 opener.addheaders = [('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; rv:25.0) Gecko/20100101 Firefox/25.0')]
 
 def debug(content):
@@ -89,7 +95,6 @@ def listcat(url,type="listVideos"):
         except:
            pass
     xbmcplugin.endOfDirectory(pluginhandle)
-    xbmc.executebuiltin('Container.SetViewMode(500)')
 
 
 def listVideos(url):
@@ -120,11 +125,20 @@ def listVideos(url):
             for element in Entries:
               staffel=element["staffel"]
               folge=element["folge"]
-              title=element["title"]
+              utitle= element["utitel"].strip()
+              title= element["title"].strip()
               id=element["id"]
+              data=element["vodate"]
+              genre=element["welt"]
               image=element["image"].replace("\/","/")
-              #addLink("Folge :"+ folge +"( "+title +" )", str(id), 'playVideo', image)          
-              addLink("Folge :"+ folge , str(id), 'playVideo', image)          
+              if folge=="0":
+                name=title
+              else:
+                 name="Folge "+ folge 
+              if not utitle=="" :
+                 name=name+" - "+utitle
+              addLink(name, str(id), 'playVideo', image,dadd=data,genre=genre,episode=folge,season=staffel)          
+              #addLink("Folge :"+ folge , str(id), 'playVideo', image)          
           
               #   addLink(h.unescape(title[i]), url, 'playVideo', thumb[i])
             xbmcplugin.endOfDirectory(pluginhandle)
@@ -140,7 +154,6 @@ def playVideo(url):
     mpg=re.compile(' <BaseURL>(.+?)</BaseURL>', re.DOTALL).findall(content)[-1]    
     videofile=file.replace("manifest.mpd",mpg)
     debug("MPG: "+videofile)
-    print content
     listitem = xbmcgui.ListItem(path=videofile)
     xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
 
@@ -169,11 +182,11 @@ def parameters_string_to_dict(parameters):
     return paramDict
 
 
-def addLink(name, url, mode, iconimage, desc="", duration="",count=0):
+def addLink(name, url, mode, iconimage, desc="", duration="",count=0,dadd=0,genre="",episode=0,season=0):
     u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&count="+str(count)
     ok = True
     liz = xbmcgui.ListItem(name, iconImage="DefaultVideo.png", thumbnailImage=iconimage)
-    liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Duration": duration})
+    liz.setInfo(type="Video", infoLabels={"title": name, "plot": desc, "duration": duration ,"lastplayed": dadd,"genre":genre,"episode":episode,"season":season })
     liz.setProperty('IsPlayable', 'true')
     liz.addContextMenuItems([(translation(30004), 'RunPlugin(plugin://'+addonID+'/?mode=queueVideo&url='+urllib.quote_plus(u)+'&name='+str(name)+'&thumb='+urllib.quote_plus(iconimage)+')',)])
     ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)

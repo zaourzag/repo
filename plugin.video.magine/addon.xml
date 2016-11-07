@@ -3,9 +3,6 @@
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
     </extension>
-  <requires>
-    <import addon="inputstream.mpd" version="1.2.10"/>
-  </requires>
   <extension point="xbmc.addon.metadata">
     <summary lang="en">Magine TV</summary>
     <summary lang="de">Magine TV</summary>

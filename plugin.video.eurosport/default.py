@@ -23,7 +23,7 @@ base_url = [
         'http://video.eurosport.ru'
     ][language]
 
-body = '/_ajax_/video_section_v8/video_section_videos_list_v8.zone?O2=1&mime=text%%2fxml&site=%s&langueid=%i&domainid=%i'
+body = '/_ajax_/video_section_v8_5/video_section_videos_list_v8_5.zone?O2=1&mime=text/xml&site=%s&langueid=%s&domainid=%s'
     
 body_params_tuple = [
         ('vib', 0, 127),
@@ -55,6 +55,7 @@ categories = {
     'handball'          : '&Order=6&sportid=30',
     'volleyball'        : '&Order=6&sportid=62',
     'horse'             : '&Order=6&sportid=70',
+    'olympics'          : '&Order=6&sportid=82',
     'others'            : '&Order=6&sportid=95',
     } 
     
@@ -67,8 +68,7 @@ def get_stream_url(page_url):
     headers = {
         'Accept' : 'application/json;pk=BCpkADawqM3MZvB5-O3gVHFfCea9YnT314U4Vjbwcf9hFiUk2DFZJ8JjDOL45ZKNEzOg8LmAlSfReKWd2ifTkAkceEvw2E-Urd3iVVfEsM_2_mZS5alk6FDmv53Azghb59_jb-ORRHXHfJwi',
         'User-Agent' : 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:38.0) Gecko/20100101 Firefox/38.0',
-        'Referer' : page_url,
-        'Connection' : 'keep-alive'
+        'Referer' : page_url
     }
     try:
         req = urllib2.Request(api_url, None, headers)
@@ -80,22 +80,22 @@ def get_stream_url(page_url):
             if hd: return stream['src']
             return stream['src'].replace('-2300-1024-576', '-700-512-288')
 
-def list_videos(url_body, date = '', current_page = 1):
+def list_videos(url_body, date = None, current_page = 1):
     if date:
-        url = ajax_url + url_body + '&date=' + date
+        url = ajax_url + url_body + '&datemax=' + date
     else:
         url = ajax_url + url_body
     try:
         xml = urllib2.urlopen(url).read()
     except: return False
-    regex_video_info = '<div id=.*?class="video">.*?<a href="(.+?)".*?title="(.+?)">.*?<img src="(.+?)".*?<div class="duration">(.+?)<.*?class="since">(.+?)<'
+    regex_video_info = '<div id=.*?class="video-list-container">.*?<a href="(.+?)".*?title="(.+?)">.*?<div class="video-list-container__thumbnail">.*?(?:"|&quot;)http(.+?)(?:"|&quot;).*?<div class="video-list-container__thumbnail-duration">(.+?)<.*?class="since">(.+?)<'
     videos = re.findall(regex_video_info, xml)
     item_added = False
     for video in videos:
         try:
             title = video[1].replace('&quot;', '"').replace('&amp;', '&')
             url = base_url + video[0]
-            thumb = video[2]
+            thumb = 'http%s?w=400' % video[2]
             duration = video[3]
             try:
                 splitted_duration = duration.split(':')
@@ -108,9 +108,9 @@ def list_videos(url_body, date = '', current_page = 1):
                     break
             if add_video(title, date, thumb, url, duration_in_seconds): item_added = True
         except: continue
-    last_date = re.findall('data-last-date="(.+?)"', xml)[0].replace(' ', '%20')
-    if last_date and not categories['popular'] in url_body and len(videos)>1:
-        add_category('%s (%i)' % (translation(30103), current_page+1), 'list-videos', url_body, last_date, current_page+1)
+    last_date = re.findall('data-last-date="(.+?)"', xml)[0]
+    if len(videos) == 20 and categories['popular'] not in url_body:
+        add_category('[B]%s (%s)[/B]' % (xbmc.getLocalizedString(33078), current_page+1), 'list-videos', url_body, last_date, current_page+1)
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
     return item_added
 
@@ -159,7 +159,10 @@ date = urllib.unquote_plus(params.get('date', ''))
 if mode == 'play-video':
     if not play_video(url): warning(translation(30104))
 elif mode == 'list-videos':
-    if not list_videos(url, date, int(next_page)): warning(translation(30105))
+    try:
+        if not list_videos(url, date, int(next_page)): warning(translation(30105))
+    except:
+        xbmcplugin.endOfDirectory(int(sys.argv[1]))
 else:
     add_category(translation(30106), 'list-videos', categories['latest'])
     add_category(translation(30107), 'list-videos', categories['popular'])
@@ -178,5 +181,6 @@ else:
     #add_category(translation(30115), 'list-videos', categories['handball'])
     #add_category(translation(30122), 'list-videos', categories['volleyball'])
     #add_category(translation(30123), 'list-videos', categories['horse'])
+    add_category(translation(30124), 'list-videos', categories['olympics'])
     add_category(translation(30119), 'list-videos', categories['others'])
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
