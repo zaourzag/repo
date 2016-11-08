@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="31000">
+        <setting label="31001" id="username" type="text" default=""/>
+        <setting label="31002" id="password" type="text" option="hidden" enable="!eq(-1,)" default=""/>
+        <setting type="sep"/>
+        <setting label="31003" id="max_bandwidth" type="labelenum" values="600|900|1500|3000|5000" default="5000"/>
+        <setting label="31004" id="audio_stream" type="labelenum" values="A|B" default="A"/>
+        <setting type="sep"/>
+		<setting label="31005" type="bool" id="start_liveTV" default="false"/>
+        <setting type="sep"/>
+        <setting label="31006" type="action" action="RunPlugin(plugin://plugin.video.zattooboxExt.beta/?mode=reloadDB)"/>
+    </category>
+   <category label="31010">
+        <setting label="31011"  id="time_offset" type="labelenum" values="-2|-1|0|1|2" default="-2"/>
+		<setting label="31013" type="bool" id="epgPlay" default="false"/>
+        <setting type="sep"/>
+		<setting label="31014" type="folder" id="library_dir" source="video" option="writeable"/>
+        <setting label="31015" type="action" option="hidden" enable="!eq(-1,)" action="RunPlugin(plugin://plugin.video.zattooboxExt.beta/?mode=makelibrary)"/>
+    </category>
+</settings>
