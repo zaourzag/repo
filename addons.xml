@@ -2471,7 +2471,7 @@ v0.5.2 (2016-09-28)
     </extension>
 </addon>
 
-<addon id="plugin.video.zattooboxExt.beta" version="1.5.4" name="Zattoo Box Extended Beta" provider-name="Daniel Griner, Pascal Nançoz">
+<addon id="plugin.video.zattooboxExt.beta" version="1.5.5" name="Zattoo Box Extended Beta" provider-name="Daniel Griner, Pascal Nançoz">
   <requires>
     <import addon="xbmc.python" version="2.14.0"/>
     <import addon="xbmc.addon" version="13.0.0" />
