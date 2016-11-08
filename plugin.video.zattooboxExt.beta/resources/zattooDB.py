@@ -189,32 +189,31 @@ class ZattooDB(object):
 
     count=0
     for channel in programData['channels']:
-      cid = channel['cid']
-      for program in channel['programs']:
+       cid = channel['cid']
+       if cid =="chtv":
+          continue
+       #c.execute('SELECT * FROM channels WHERE id==?', [cid])
+       #countt=c.fetchall()
+       #if len(countt)==0: 
+       #   print "Sender NICHT : "+cid
+       for program in channel['programs']:
         count+=1
         if program['i'] != None:
           image = "http://images.zattic.com/" + program['i']
           #http://images.zattic.com/system/images/6dcc/8817/50d1/dfab/f21c/format_480x360.jpg
-
-        else: image = ""
-        print 'INSERT OR IGNORE INTO programs(channel, title, start_date, end_date, description, image_small, showID) VALUES(?, ?, ?, ?, ?, ?, ?)',[cid, program['t'], program['s'], program['e'], program['et'], image, program['id'] ]
+        else: image = ""          
         try:
-          c.execute('INSERT OR IGNORE INTO programs(channel, title, start_date, end_date, description, image_small, showID) VALUES(?, ?, ?, ?, ?, ?, ?)',
-            [cid, program['t'], program['s'], program['e'], program['et'], image, program['id'] ])
-          self.conn.commit()                    
-          if not c.rowcount:
-            c.execute('UPDATE programs SET channel=?, title=?, start_date=?, end_date=?, description=?, image_small=? WHERE showID=?',
-              [cid, program['t'], program['s'], program['e'], program['et'], image, program['id'] ])
-            self.conn.commit()
+            print 'INSERT OR IGNORE INTO programs(channel, title, start_date, end_date, description, image_small, showID) VALUES(%, %, %, %, %, %)',cid, program['t'], program['e'], program['et'], image, program['id'] 
         except:
             pass
-
+        c.execute('INSERT OR IGNORE INTO programs(channel, title, start_date, end_date, description, image_small, showID) VALUES(?, ?, ?, ?, ?, ?, ?)',
+            [cid, program['t'], program['s'], program['e'], program['et'], image, program['id'] ])          
+        if not c.rowcount:
+            c.execute('UPDATE programs SET channel=?, title=?, start_date=?, end_date=?, description=?, image_small=? WHERE showID=?',
+              [cid, program['t'], program['s'], program['e'], program['et'], image, program['id'] ])            
     if count>0: 
-      c.execute('INSERT into updates(date, type) VALUES(?, ?)', [date, 'program'])    
-    try:
-        self.conn.commit()
-    except:
-        pass
+      c.execute('INSERT into updates(date, type) VALUES(?, ?)', [date, 'program'])        
+      self.conn.commit()    
     c.close()
 
   def getChannelList(self, favourites=True):
@@ -318,7 +317,7 @@ class ZattooDB(object):
     if row is not None:
       playing = {'channel':row['channel'], 'start':row['start_date'], 'action_time':row['action_time'], 'current_stream':row['current_stream'], 'streams':row['streams']}
     else:
-      playing = {'channel':'1', 'start':datetime.datetime.now(), 'action_time':datetime.datetime.now()}
+      playing = {'channel':'ard', 'start':datetime.datetime.now(), 'action_time':datetime.datetime.now()}
     c.close()
     return playing
 
