@@ -180,7 +180,11 @@ def search():
         title=title.replace("."," ")
         if "(" in title:
           title=title[:title.find("(")].strip()
-        
+        xbmc.log("+++++++++++++++++++++++")
+        xbmc.log(title)
+        xbmc.log(season)
+        xbmc.log(episode)
+        xbmc.log("+++++++++++++++++++++++")
         if title=="" or season=="" or episode=="":
           xbmc.executebuiltin('XBMC.Notification(SubCentral.de:,'+translation(30014)+'!,3000,'+icon+')')
           main()

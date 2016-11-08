@@ -66,6 +66,7 @@ def ersetze(inhalt):
    inhalt=inhalt.replace('&quot;','"')    
    inhalt=inhalt.replace('&gt;','>')      
    inhalt=inhalt.replace('&amp;','&') 
+   inhalt=inhalt.strip()
    return inhalt
     
 # Einstellungen Lesen    
@@ -124,6 +125,7 @@ def clean_serie(title):
         title=title.replace('.','')
         title=title.replace("'","")
         title=title.replace("&amp;","")
+        title=title.strip()
         return title
 
 # Liste Aller Serien Holen        
@@ -363,6 +365,9 @@ def search():
   error=0
   # Suche Serie
   serien_complete,ids,serien=lies_serien()
+  debug("######")
+  debug(serien)
+  debug("######")
   show=clean_serie(video['tvshow'])
   # Wenn keine Serien Gibt es error=1 anosnten wird die ID rausgesucht
   if not show == '':
