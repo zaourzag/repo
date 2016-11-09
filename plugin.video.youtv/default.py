@@ -19,6 +19,9 @@ addon_handle = int(sys.argv[1])
 
 args = urlparse.parse_qs(sys.argv[2][1:])
 addon = xbmcaddon.Addon()
+
+
+
 # Lade Sprach Variablen
 translation = addon.getLocalizedString
 defaultBackground = ""
@@ -29,7 +32,11 @@ temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("ut
 if not xbmcvfs.exists(temp):       
        xbmcvfs.mkdirs(temp)
        
-
+pupup=addon.getSetting("pupup")
+if pupup=="false":
+   dialog = xbmcgui.Dialog()
+   nr=dialog.ok("ACHTUNG", translation(30114))
+   addon.setSetting("pupup","true")
 icon = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')+'/icon.png').decode('utf-8')
 useThumbAsFanart=addon.getSetting("useThumbAsFanart") == "true"
 #xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
@@ -114,7 +121,7 @@ def parameters_string_to_dict(parameters):
   
   
 def getUrl(url,data="x",token=""):
-        https=addon.getSetting("https")
+        https=addon.getSetting("https")               
         if https=="true":
            url=url.replace("https","http")
         print("Get Url: " +url)

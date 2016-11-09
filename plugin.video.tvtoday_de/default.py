@@ -1,10 +1,17 @@
 ﻿# -*- coding: utf-8 -*-
 import xbmc, xbmcgui, xbmcplugin, xbmcaddon
 import sys, os, json
+reload(sys)
+sys.setdefaultencoding('utf-8')
 import urllib, urllib2
 import re, string
 from datetime import date,datetime,timedelta
 import time, socket
+from StringIO import StringIO
+import gzip
+
+token = '23a1db22b51b13162bd0b86b24e556c8c6b6272d reraeB'
+getheader = {'Api-Auth': token[::-1]}
 
 
 pluginhandle = int(sys.argv[1])
@@ -187,33 +194,108 @@ def playVideo(urlMain):
 		else:
 			xbmc.log("[TvToday](playVideo) AbspielLink-00 (ARD+3) : *ARD+3-Plugin* VIDEO konnte NICHT abgespielt werden !!!", xbmc.LOGFATAL)
 	elif url.startswith("https://www.zdf.de"):
-		import libZdf
-		# libZdf.libZdfGetVideoHtml('https://www.zdf.de/uri/vcms_beitrag_'+result)
 		url = url[:url.find(".html")]
 		videoID = urllib.unquote_plus(url)+".html"
-		xbmc.log("[TvToday](playVideo) AbspielLink-1 (ZDF+3) : %s" %(videoID), xbmc.LOGNOTICE)
-		finalUrl = libZdf.libZdfGetVideoHtml(videoID)
+		return ZdfGetVideo(videoID)
+	elif url.startswith("http://www.nowtv.de"):
+		try:
+			match3 = re.compile("/(.+?)/(.+?)/(.+?)/", re.DOTALL).findall(url)
+			id = match3[2]
+			xbmc.sleep(1000)
+			finalUrl ='plugin://plugin.video.nowtv.de.p/?mode=play-video&id='+id
+		except:
+			pass
 		if finalUrl:
-			xbmc.log("[TvToday](playVideo) AbspielLink-2 (ZDF+3) : %s" %(finalUrl), xbmc.LOGNOTICE)
+			xbmc.log("[TvToday](playVideo) AbspielLink (NOWTV) : %s" %(finalUrl), xbmc.LOGNOTICE)
 		else:
-			xbmc.log("[TvToday](playVideo) AbspielLink-00 (ZDF+3) : *ZDF-Plugin* VIDEO konnte NICHT abgespielt werden !!!", xbmc.LOGFATAL)
-	xbmc.log("[TvToday](playVideo) frei", xbmc.LOGNOTICE)
-	xbmc.log("[TvToday](playVideo) --- ENDE WIEDERGABE ANFORDERUNG ---", xbmc.LOGNOTICE)
+			xbmc.log("[TvToday](playVideo) AbspielLink-00 (NOWTV) : *NOWTV-Plugin* VIDEO konnte NICHT abgespielt werden !!!", xbmc.LOGFATAL)
+			xbmc.executebuiltin('Notification(TvToday : [COLOR red]!!! URL - ERROR !!![/COLOR], ERROR = [COLOR red]NowTV - wird derzeit noch NICHT unterstützt ![/COLOR],10000,'+icon+')')
+	if not url.startswith("https://www.zdf.de"):
+		xbmc.log("[TvToday](playVideo) --- ENDE WIEDERGABE ANFORDERUNG ---", xbmc.LOGNOTICE)
 	if finalUrl:
 		listitem = xbmcgui.ListItem(path=finalUrl)
 		xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
+
+def ZdfGetVideo(url):
+	content = getUrl(url)
+	link = re.compile('"content": "(.*?)",', re.DOTALL).findall(content)[0]
+	response = getUrl(link,getheader)
+	ID = re.compile('"uurl":"(.*?)",', re.DOTALL).findall(response)[0]
+	LinkDirekt = getUrl("https://api.zdf.de//tmd/2/portal/vod/ptmd/mediathek/"+ID)
+	#LinkDownload = getUrl("https://api.zdf.de/tmd/2/ngplayer_2_3/vod/ptmd/mediathek/"+ID)
+	jsonObject = json.loads(LinkDirekt)
+	return extractLinks(jsonObject)
+
+def extractLinks(jsonObject):
+	DATA = {}
+	DATA['media'] = []
+	try:
+		for each in jsonObject['priorityList']:
+			if each['formitaeten'][0]['type'] == 'h264_aac_ts_http_m3u8_http':
+				for quality in each['formitaeten'][0]['qualities']:
+					if quality['quality'] == 'auto':
+						DATA['media'].append({'url':quality['audio']['tracks'][0]['uri'], 'type': 'video', 'stream':'HLS'})
+					else:
+						if quality['quality'] == 'hd':
+							DATA['media'].append({'url':quality['audio']['tracks'][0]['uri'], 'type': 'video', 'stream':'HLS'})
+						elif quality['quality'] == 'veryhigh':
+							DATA['media'].append({'url':quality['audio']['tracks'][0]['uri'], 'type': 'video', 'stream':'HLS'})
+						elif quality['quality'] == 'high':
+							DATA['media'].append({'url':quality['audio']['tracks'][0]['uri'], 'type': 'video', 'stream':'HLS'})
+						elif quality['quality'] == 'med':
+							DATA['media'].append({'url':quality['audio']['tracks'][0]['uri'], 'type': 'video', 'stream':'HLS'})
+						elif quality['quality'] == 'low':
+							DATA['media'].append({'url':quality['audio']['tracks'][0]['uri'], 'type': 'video', 'stream':'HLS'})
+					finalUrl = DATA['media'][0]['url']
+					xbmc.log("[TvToday](extractLinks) m3u8-Quality (ZDF+3) : %s" %(finalUrl), xbmc.LOGNOTICE)
+	except:
+		try:
+			for each in jsonObject['priorityList']:
+				if each['formitaeten'][0]['type'] == 'h264_aac_mp4_http_na_na':
+					for quality in each['formitaeten'][0]['qualities']:
+						if quality['quality'] == 'auto':
+							DATA['media'].append({'url':quality['audio']['tracks'][0]['uri'], 'type': 'video', 'stream':'HLS'})
+						else:
+							if quality['quality'] == 'hd':
+								DATA['media'].append({'url':quality['audio']['tracks'][0]['uri'], 'type': 'video', 'stream':'HLS'})
+							elif quality['quality'] == 'veryhigh':
+								DATA['media'].append({'url':quality['audio']['tracks'][0]['uri'], 'type': 'video', 'stream':'HLS'})
+							elif quality['quality'] == 'high':
+								DATA['media'].append({'url':quality['audio']['tracks'][0]['uri'], 'type': 'video', 'stream':'HLS'})
+							elif quality['quality'] == 'med':
+								DATA['media'].append({'url':quality['audio']['tracks'][0]['uri'], 'type': 'video', 'stream':'HLS'})
+							elif quality['quality'] == 'low':
+								DATA['media'].append({'url':quality['audio']['tracks'][0]['uri'], 'type': 'video', 'stream':'HLS'})
+						finalUrl = DATA['media'][0]['url']
+						xbmc.log("[TvToday](extractLinks) mp4-Quality (ZDF+3) : %s" %(finalUrl), xbmc.LOGNOTICE)
+		except:
+			pass
+	if finalUrl:
+		listitem = xbmcgui.ListItem(path=str(finalUrl))
+		xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
+	else:
+		xbmc.log("[TvToday](extractLinks) AbspielLink-00 (ZDF+3) : *ZDF-Plugin* VIDEO konnte NICHT abgespielt werden !!!", xbmc.LOGFATAL)
+	xbmc.log("[TvToday](playVideo) --- ENDE WIEDERGABE ANFORDERUNG ---", xbmc.LOGNOTICE)
 
 def queueVideo(url, name):
 	playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
 	listitem = xbmcgui.ListItem(name)
 	playlist.add(url, listitem)
 
-def getUrl(url):
+def getUrl(url,headers={}):
 	req = urllib2.Request(url)
-	req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:49.0) Gecko/20100101 Firefox/22.0')
+	req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:49.0) Gecko/20100101 Firefox/25.0')
+	req.add_header('Accept-Encoding','gzip, deflate')
+	for key in headers:
+		req.add_header(key, headers[key])
 	response = urllib2.urlopen(req)
+	compressed = response.info().get('Content-Encoding') == 'gzip'
 	link = response.read()
 	response.close()
+	if compressed:
+		buf = StringIO(link)
+		f = gzip.GzipFile(fileobj=buf)
+		link = f.read()
 	return link
 
 def cleanTitle(title):

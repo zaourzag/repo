@@ -35,7 +35,7 @@
 [B]Version 1.2.0  (03.11.2016)[/B]
  - Komplett rework, da Webseitenänderung
  
- [B]Version 1.2.1  (06.11.2016)[/B]
+[B]Version 1.2.1/1.2.2  (06.11.2016)[/B]
  - Autor bisher @LORE
  - Ab jetzt überarbeitet und übernommen durch @realvito
  - Testlauf auf Win 8.1/64 bit unter Jarvis 16.1 und Krypton 17 beta4 und läuft
@@ -48,3 +48,8 @@
  - "libZdf" wieder freigeschaltet - leider erst nach der Reparatur von "libZdf" funktionsfähig (! Fehlerbehebung durch anderen Autor in Arbeit !)
  - Resolver für "DasErste" reaktiviert
  - P.S. wenn unter vereinzelten Filmangeboten keine Sender-Kennung angezeigt wird, so liegt das an der Webseite von "TvToday" und nicht am ADDON !
+ 
+[B]Version 1.2.3  (09.11.2016)[/B]
+ - Eigenen Resolver für das "ZDF" eingebaut (thx @membrane für die Vorlage)
+ - *(script.module.libZdf vorerst enfernt)
+ - Meldung für NowTV erstellt (da derzeit KEIN funktionierendes Plugin existiert)

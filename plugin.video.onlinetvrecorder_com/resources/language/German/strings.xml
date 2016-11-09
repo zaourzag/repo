@@ -91,4 +91,6 @@
     <string id="30367">Datei übersprungen (Datei/Ordner exisitiert nicht)</string>
     <string id="30368">Stream:</string>
     <string id="30369">Lokale Kopie:</string>
+    <string id="30113">Popup Warning</string>
+    <string id="30114">Es gibt ein Urteil das YOUTV Illegal ist, deshalb wird YOUTV aus dem Kodnerds Repo entfernt und nicht mehr Supported</string>
 </strings>

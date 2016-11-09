@@ -7,13 +7,21 @@
     Description: Main program script for package
 """
 
-import xbmcplugin
+import xbmcplugin,xbmcgui
 import xbmcaddon
 import xbmc
 import sys
 import inspect
 from resources.lib import XbmcOtr as worker
 
+aadd = xbmcaddon.Addon()
+translation = aadd.getLocalizedString
+pupup=aadd.getSetting("pupup")
+if pupup=="false":
+   dialog = xbmcgui.Dialog()
+   nr=dialog.ok("ACHTUNG", translation(30114))
+   aadd.setSetting("pupup","true")
+   
 #import os
 #sys.path.append(
 #    os.path.join(
