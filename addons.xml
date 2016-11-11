@@ -932,30 +932,6 @@ v1.9.0 (2016-10-14) moving to the new api - please report bugs
     </extension>
 </addon>
 
-<!--
-    Document   : addon.xml
-    Package    : OTR Integration to XBMC
-    Author     : Frank Epperlein
-    Copyright  : 2012, Frank Epperlein, DE
-    License    : Gnu General Public License 2
-    Description: XBMC Addon for OTR integration
--->
-<addon id="plugin.video.onlinetvrecorder_com" version="0.7.5" name="onlinetvrecorder.com" provider-name="Frank Epperlein">
-  <extension point="xbmc.python.pluginsource" library="otr.py">
-    <provides>video</provides>
-  </extension> 
-  <extension point="xbmc.addon.metadata">
-    <summary>onlinetvrecorder.com integration</summary>
-    <summary lang="de">onlinetvrecorder.com integration</summary>
-    <description>Provides the ability to show onlinetvrecorder.com recordings within XBMC.</description>
-    <description lang="de">Ermoeglicht es Aufnahmen von onlinetvrecorder.com in XBMC anzuschauen.</description>
-    <platform>all</platform>
-  </extension> 
-  <requires>
-   <import addon="xbmc.python" version="2.1.0"/>
-   <import addon="script.module.parsedom" version="1.0.0"/> 
-  </requires>
-</addon>
 
 <addon id="plugin.video.ran_de" name="ran" version="2.2.2" provider-name="PUR3">
     <requires>
@@ -1388,27 +1364,6 @@ v0.5.2 (2016-09-28)
 	</extension>
 </addon>
 
-<addon id="plugin.video.youtv" name="Youtv" version="0.4.27" provider-name="L0RE">
-    <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
-	<import addon="repository.lost-and-found" version="1.1.7"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en">Youtv</summary>
-    <summary lang="de">Youtv</summary>
-    <description lang="en">Youtv</description>
-    <description lang="de">Youtv</description>
-    <website></website>
-    <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.youtv</source>
-    <forum>http://www.kodinerds.net/</forum>
-    <email>andreas at vogler dot name</email>
-    <platform>all</platform>
-  </extension>
-</addon>
-
 <addon id="plugin.video.zattoo_com" name="Zattoo Live TV" version="1.1.0" provider-name="PUR3">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
@@ -1441,7 +1396,8 @@ v0.5.2 (2016-09-28)
 	</extension>
 </addon>
 
-<addon id="repository.lost-and-found" name="kodinerds.net Add-ons" version="1.1.10" provider-name="L0RE">
+<addon id="repository.lost-and-found" name="kodinerds.net Add-ons" version="1.1.11" provider-name="L0RE">
+
    <requires>
         <import addon="repository.kodinerds" version="1.1.9"/>
    </requires>
@@ -1456,6 +1412,7 @@ v0.5.2 (2016-09-28)
 		<disclaimer></disclaimer>
 		<platform>all</platform>
 	</extension>
+        <broken>Kodinerds Repo ersetzt Lost und Found</broken>
 </addon>
 
 <addon id="repository.membrane" name="membrane's KODI Add-ons" version="1.9.0" provider-name="membrane">
