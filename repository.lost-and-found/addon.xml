@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="repository.lost-and-found" name="kodinerds.net Add-ons" version="1.1.10" provider-name="L0RE">
+<addon id="repository.lost-and-found" name="kodinerds.net Add-ons" version="1.1.11" provider-name="L0RE">
+
    <requires>
         <import addon="repository.kodinerds" version="1.1.9"/>
    </requires>
@@ -14,4 +15,5 @@
 		<disclaimer></disclaimer>
 		<platform>all</platform>
 	</extension>
+        <broken>Kodinerds Repo ersetzt Lost und Found</broken>
 </addon>
