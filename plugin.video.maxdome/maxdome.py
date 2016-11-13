@@ -9,7 +9,7 @@ import pickle
 import re
 import HTMLParser
 from BeautifulSoup import BeautifulSoup
-import xbmcaddon
+import xbmcaddon, xbmcgui
 import library as lib
 
 addon = xbmcaddon.Addon()
@@ -62,7 +62,7 @@ class MaxdomeSession:
                     pickle.dump(requests.utils.dict_from_cookiejar(self.session.cookies), f)
 
         self.Assets = MaxdomeAssets(self)
-        self.getPreferences()
+        #self.getPreferences()
 
     def isLoggedIn(self):
         r = self.session.get(self.baseurl + '/mein-account')
@@ -86,8 +86,7 @@ class MaxdomeSession:
         headers = {'accept':'application/vnd.maxdome.im.v8+json', 'Accept-Encoding':'gzip, deflate, sdch', 'Accept-Language':'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', 'client':'mxd_package', 'clienttype': 'webportal', 'Connection': 'keep-alive', 'content-type':'application/json', 'customerId':self.customer_id, 'language':'de_' + self.region.upper(), 'Maxdome-Origin':'maxdome.' + self.region, 'mxd-session':self.session.cookies['mxd-bbe-session'], 'platform':'web'}
         r = self.session.get(self.api_url + '/interfacemanager-2.1/mxd/customer/' + self.customer_id + '/preference', headers=headers)
         data = r.json()
-        print 'MAXDOME PREFS'
-        print r.text
+        print data
 
     def login(self):
         headers = {'accept': '*/*', 'accept-encoding': 'gzip, deflate', 'Accept-Language':'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4', 'connection': 'keep-alive', 'content-type': 'application/x-www-form-urlencoded; charset=UTF-8', 'X-Requested-With': 'XMLHttpRequest', 'Origin': 'https://www.maxdome.' + self.region, 'Referer': 'https://www.maxdome.' + self.region}
@@ -159,6 +158,22 @@ class MaxdomeAssets:
     def deleteFromNotepad(self, assetid):
         r = self.session.session.delete(self.session.baseurl + '/_ajax/notepad/' + str(assetid))
 
+    def checkAvsPin(self, base_data):
+        dlg = xbmcgui.Dialog()
+        pin = dlg.input('Altersfreigabe PIN', type=xbmcgui.INPUT_NUMERIC)        
+        headers = self.api_headers
+        headers['accept-language'] = 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4'
+        url = '%s/interfacemanager-2.1/mxd/mediaauth/%s/video/%s/%s/checkAvsPin' % (self.session.api_url, self.session.customer_id, str(base_data['assetId']), base_data['orderedQuality'])
+        payload = {'@class':'CheckAvsPinAnswerStep','baseData': base_data, 'pin': pin}
+        r = self.session.session.post(url, headers=headers, data=json.dumps(payload))
+        data = r.json()
+        if '@class' in data:
+            if data['@class'] == 'AvsInvalidPinStep':
+                xbmcgui.Dialog().notification('Maxdome', 'Eingegebene PIN ist ungültig', xbmcgui.NOTIFICATION_ERROR, 2000, True)
+                return False
+
+        return data
+
     def orderAsset(self, assetId, buyAsset=False, isHd=False, order_option='', orderType='rent', orderQuality='sd'):
         headers = self.api_headers
         headers['accept-language'] = 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4'
@@ -166,22 +181,28 @@ class MaxdomeAssets:
         payload = {'@class':'StartStep','baseData':{'deliveryType':'streaming','licenseType':orderType,'quality':self.session.order_quality}}
         r = self.session.session.post(url, headers=headers, data=json.dumps(payload))
         data = r.json()
+        print data
         if '@class' in data:
             if data['@class'] == 'SelectPaymentQuestionStep':
                 return data
+            elif data['@class'] == 'CheckAvsPinQuestionStep':
+                data = self.checkAvsPin(data['baseData'])
+                if not data:
+                    return False
+
         elif 'errorCode' in data:
             if 'MediaAuthNoLicenseAvailable' in data['message']:
                 pass
 
-        if not 'orderId' in r.text:
+        if not 'orderId' in data:
             return False
 
-        orderId = r.json()['orderId']
+        orderId = data['orderId']
         url = self.session.api_url + '/api/mxd/playlist/asset/' + str(assetId) + '?transmissionType[]=mpegDashMultiLang&orderId=' + str(orderId)
         r = self.session.session.get(url, headers=headers)
         data = r.json()
         strmFormat = getStrmFormat(data['playlistItemList'][0]['profileList'][0]['formatList'])
-        self.session.license_url = strmFormat['licenseUrl'] + '|User-Agent=Mozilla%2F5.0%20(X11%3B%20Linux%20x86_64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20Chrome%2F49.0.2623.87%20Safari%2F537.36&Content-Type=|R{SSM}|'
+        self.session.license_url = strmFormat['licenseUrl'] + '|User-Agent=Mozilla%2F5.0%20(X11%3B%20Linux%20x86_64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20Chrome%2F49.0.2623.87%20Safari%2F537.36|R{SSM}|'
         self.session.video_url = strmFormat['urlList'][0]['videoUrl']
 
         return True
@@ -254,8 +275,6 @@ class MaxdomeAssets:
         x = 1
         while (x<=page_count):
             data = self.getJsonDataProps(r.text, select_set)
-            if not 'assets' in data:
-                break
             for item in data['assets']:
                 listitems.append(item['id'])
             x = x+1
