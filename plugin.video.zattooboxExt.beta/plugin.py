@@ -49,7 +49,7 @@ __addon__ = xbmcaddon.Addon()
 __addonId__=__addon__.getAddonInfo('id')
 __addonname__ = __addon__.getAddonInfo('name')
 
-_timezone_ = int(__addon__.getSetting('time_offset'))*60*-60 #-time.altzone
+#_timezone_ = int(__addon__.getSetting('time_offset'))*60*-60 #-time.altzone
 _listMode_ = __addon__.getSetting('channellist')
 _channelList_=[]
 _zattooDB_=ZattooDB()
@@ -83,7 +83,15 @@ ACTION_MOUSE_WHEEL_DOWN = 105
 ACTION_MOUSE_WHEEL_UP = 104
 ACTION_BUILT_IN_FUNCTION = 122
 
+from tzlocal import get_localzone
+import pytz
+tz = get_localzone()
+offset=tz.utcoffset(datetime.datetime.now()).total_seconds()
+_timezone_=int(offset)
 
+
+print "+++++++++++++++++++++"
+print str(offset)
 
 def build_directoryContent(content, addon_handle, cache=True, root=False):
 	xbmcplugin.setContent(addon_handle, 'movies')
@@ -191,7 +199,7 @@ def build_recordingsList(addon_uri, addon_handle):
 		#mark if show is future, running or finished
 		start = int(time.mktime(time.strptime(record['start'], "%Y-%m-%dT%H:%M:%SZ"))) + _timezone_  # local timestamp
 		end = int(time.mktime(time.strptime(record['end'], "%Y-%m-%dT%H:%M:%SZ"))) + _timezone_  # local timestamp
-		now = time.time()
+		now = time.time()    
 		color='red'
 		if (now>start): color='orange'
 		if (now>end): color='green'

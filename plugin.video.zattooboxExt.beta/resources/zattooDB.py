@@ -192,10 +192,10 @@ class ZattooDB(object):
        cid = channel['cid']
        if cid =="chtv":
           continue
-       #c.execute('SELECT * FROM channels WHERE id==?', [cid])
-       #countt=c.fetchall()
-       #if len(countt)==0: 
-       #   print "Sender NICHT : "+cid
+       c.execute('SELECT * FROM channels WHERE id==?', [cid])
+       countt=c.fetchall()
+       if len(countt)==0: 
+         print "Sender NICHT : "+cid
        for program in channel['programs']:
         count+=1
         if program['i'] != None:
