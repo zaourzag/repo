@@ -2294,7 +2294,7 @@ v0.5.2 (2016-09-28)
 	</extension>
 </addon>
 
-<addon id="plugin.video.daisuki" name="Daisuki" version="0.3.2" provider-name="L0RE">
+<addon id="plugin.video.daisuki" name="Daisuki" version="0.3.3" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
     </requires>
