@@ -15,6 +15,9 @@ import rsa
 import pyaes
 import base64
 import ttml2srt
+import ssl
+
+ssl._create_default_https_context = ssl._create_unverified_context
 
 global debuging
 base_url = sys.argv[0]
@@ -189,8 +192,8 @@ if not xbmcvfs.exists(temp):
 
 icon = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')+'/icon.png').decode('utf-8')
 useThumbAsFanart=addon.getSetting("useThumbAsFanart") == "true"
-#xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
-#xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_LABEL)
+xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
+xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_LABEL)
 
 
 
@@ -226,21 +229,29 @@ def serie(url):
     url_arr=[]
     image_arr=[]
     for element in spl:
+      debug(".....")
       element="delay"+element
       try:
         nr=re.compile('/([0-9]+)/movie.jpg', re.DOTALL).findall(element)[0]
+        debug("NR :"+nr)
         
         image=re.compile('delay="(.+?)"', re.DOTALL).findall(element)[0]
+        debug("image :"+image)
         try:        
           folge=re.compile('false;">([^<]+)</a>', re.DOTALL).findall(element)[0]
+          debug("folge1 :"+folge)
           if "#" in folge:
             folge=re.compile('#([0-9]+)', re.DOTALL).findall(folge)[0]
+          debug("folge2 :"+folge)
         except:
           folge=re.compile('<p class="episodeNumber">([0-9]+?)</p>', re.DOTALL).findall(element)[0]    
+        debug("folge3 :"+folge)
         urln=url.replace(".html","."+str(nr)+".html").replace("detail.","watch.")
-        folge=int(folge)
+        debug("urln :"+urln)
+        if folge.isdigit()==True:
+            folge=int(folge)
         if folge not in folge_arr:          
-          folge_arr.append(int(folge))     
+          folge_arr.append(folge)     
           url_arr.append(urln)
           image_arr.append(image)
       except:
@@ -325,7 +336,7 @@ def stream(url):
        return
    debug ("Streamurl :"+url)
    debug ("Streamurlsub :"+sub)
- 
+
    listitem = xbmcgui.ListItem(path=urls)
    listitem.setInfo('video', { 'title': title })
    subcontent=getUrl(sub)
