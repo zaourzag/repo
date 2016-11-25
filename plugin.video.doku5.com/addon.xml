@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.doku5.com" name="Doku5.com" version="0.1.5" provider-name="SLiX/skatulskijean">
+<addon id="plugin.video.doku5.com" name="Doku5.com" version="0.1.9" provider-name="SLiX, skatulskijean">
 	<requires>
 		<import addon="xbmc.python" version="2.19.0"/>
 		<import addon="script.module.requests" version="2.7.0"/>
@@ -9,11 +9,11 @@
 		<provides>video</provides>
 	</extension>
 	<extension point="xbmc.addon.metadata">
-		<summary></summary>
-		<description></description>
+		<summary>Die größte Doku-Mediathek im Netz</summary>
+		<description>Über 15.000 Dokumentationen, Dokumentafilme, Reportagen und Voträge in voller Länge.</description>
 		<summary></summary>
 		<platform>all</platform>
-		<license></license>
+		<license>GNU General Public License v3</license>
 		<forum></forum>
 		<website></website>
 		<email></email>
