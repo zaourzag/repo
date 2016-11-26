@@ -260,7 +260,7 @@ def watchlive(url,meldung="",spiel=""):
        name2=match[0][1]
        urlstart="http://www.mdr.de/mediathek/livestreams/mdr-plus/index.html"
        content=getUrl(urlstart)                        
-       match = re.compile('href="([^"]+?)" class="moreBtn" title="([^-]+?) - ([^-]+?)"', re.DOTALL).findall(content)
+       match = re.compile('href="([^"]+?)" class="moreBtn" title=(.+?) - (.+?)\"', re.DOTALL).findall(content)
        for urln,spieler1,spieler2 in match:
            debug("- Spieler1 :"+spieler1)
            debug("- Spieler2 :"+spieler2)
@@ -318,9 +318,9 @@ def watchlive(url,meldung="",spiel=""):
       urlnew="http://mdr_sa_hls-lh.akamaihd.net/i/livetvmdrsachsenanhalt_de@106901/master.m3u8"    
    elif "RBB" in url:
       urlnew="http://rbb_live-lh.akamaihd.net/i/rbb_berlin@108248/master.m3u8?bkup=off"      
-   if url=="SWR":
+   elif "SWR" in url:
       urlnew="http://swrbw-lh.akamaihd.net/i/swrbw_live@196738/master.m3u8"
-   if url=="WDR":
+   elif "WDR" in url:
       urlnew="http://wdr_fs_geo-lh.akamaihd.net/i/wdrfs_geogeblockt@112044/master.m3u8"             
    if url=="rbb-online.de":
       urlnew="http://rbb_event-lh.akamaihd.net/i/rbbevent_nongeo@107643/index_1728_av-p.m3u8?sd=10&rebase=on"
