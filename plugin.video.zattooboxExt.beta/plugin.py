@@ -85,9 +85,12 @@ ACTION_BUILT_IN_FUNCTION = 122
 
 from tzlocal import get_localzone
 import pytz
-tz = get_localzone()
-offset=tz.utcoffset(datetime.datetime.now()).total_seconds()
-_timezone_=int(offset)
+try:
+  tz = get_localzone()
+  offset=tz.utcoffset(datetime.datetime.now()).total_seconds()
+  _timezone_=int(offset)
+except:
+  _timezone_ = int(__addon__.getSetting('time_offset'))*60*-60 #-time.altzone
 
 
 print "+++++++++++++++++++++"
