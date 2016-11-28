@@ -93,8 +93,6 @@ except:
   _timezone_ = int(__addon__.getSetting('time_offset'))*60*-60 #-time.altzone
 
 
-print "+++++++++++++++++++++"
-print str(offset)
 
 def build_directoryContent(content, addon_handle, cache=True, root=False):
 	xbmcplugin.setContent(addon_handle, 'movies')
