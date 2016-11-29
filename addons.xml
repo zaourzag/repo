@@ -1358,7 +1358,7 @@ v0.5.2 (2016-09-28)
     </extension>
 </addon>
 
-<addon id="plugin.video.cinetrailer.tv" name="CineTrailer.tv" version="0.0.8" provider-name="L0RE">
+<addon id="plugin.video.cinetrailer.tv" name="CineTrailer.tv" version="0.0.9" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.19.0"/>
     </requires>
