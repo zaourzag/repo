@@ -84,11 +84,9 @@ def Videolink(url):
        if "youtube" in video_url:
           id=video_url.replace("https://www.youtube.com/watch?v=","")
           debug(" ID ::::::"+id)
-          plugin='plugin://plugin.video.youtube/?action=play_video&videoid='+ id           
-          xbmc.executebuiltin("xbmc.PlayMedia("+plugin+")")
-       else:
-          listitem = xbmcgui.ListItem(path=video_url)
-          return xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
+          video_url='plugin://plugin.video.youtube/?action=play_video&videoid='+ id           
+       listitem = xbmcgui.ListItem(path=video_url)
+       return xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
 
 def addDir(name,url,mode,iconimage):
         u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
