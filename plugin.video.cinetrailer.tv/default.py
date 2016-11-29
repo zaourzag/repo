@@ -15,7 +15,17 @@ translation = addon.getLocalizedString
 language=xbmc.getInfoLabel('System.Language')
 xbox=xbmc.getCondVisibility("System.Platform.xbox")
 
+def debug(content):
+    log(content, xbmc.LOGDEBUG)
+    
+def notice(content):
+    log(content, xbmc.LOGNOTICE)
 
+def log(msg, level=xbmc.LOGNOTICE):
+    addon = xbmcaddon.Addon()
+    addonID = addon.getAddonInfo('id')
+    xbmc.log('%s: %s' % (addonID, msg), level) 
+    
 def CATEGORIES():
         if language=='Italian':
           addDir(translation(30005),'0',"Parse",'')
@@ -63,13 +73,22 @@ def Parse(url):
 			addLink(title,fanart,url,"Videolink",thumb, '')
 
 def Videolink(url):
+       debug("Videolink URL"+ url)
        data=urllib2.urlopen(url).read()
+       debug("DATA :")
+       debug (data)
        if xbox:
 		   video_url=re.findall("var clipUrlLQ = '(.*?)'",data,re.S)[0]
        else:
 		   video_url=re.findall("var clipUrlHQ = '(.*?)'",data,re.S)[0]
-       listitem = xbmcgui.ListItem(path=video_url)
-       return xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
+       if "youtube" in video_url:
+          id=video_url.replace("https://www.youtube.com/watch?v=","")
+          debug(" ID ::::::"+id)
+          plugin='plugin://plugin.video.youtube/?action=play_video&videoid='+ id           
+          xbmc.executebuiltin("xbmc.PlayMedia("+plugin+")")
+       else:
+          listitem = xbmcgui.ListItem(path=video_url)
+          return xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
 
 def addDir(name,url,mode,iconimage):
         u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
