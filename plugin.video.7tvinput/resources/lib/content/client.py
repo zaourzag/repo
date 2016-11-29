@@ -323,7 +323,7 @@ class Client(nightcrawler.HttpClient):
           struktur = json.loads(adaptivaddon)           
           if not "error" in struktur.keys() :            
             if struktur["result"]["addon"]["enabled"]==True:
-                is_type="inputstream.adaptive"                
+                is_type="inputstream.mpd"                
         if is_type=="":
           dialog = xbmcgui.Dialog()
           nr=dialog.ok("Inputstream", "Inputstream fehlt")
