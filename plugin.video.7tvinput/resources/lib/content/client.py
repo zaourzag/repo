@@ -1,6 +1,8 @@
 import re
 import xbmcgui,xbmcplugin
 import sys
+import xbmc
+import json
 from resources.lib import nightcrawler
 try:
     import urllib.parse as compat_urllib_parse
@@ -309,6 +311,29 @@ class Client(nightcrawler.HttpClient):
         #print "client_name :"+client_name
         #print "client_location :"+client_location
         #print "salt :"+salt
+        
+        adaptivaddon=xbmc.executeJSONRPC('{"jsonrpc": "2.0", "id": 1, "method": "Addons.GetAddonDetails", "params": {"addonid": "inputstream.adaptive", "properties": ["enabled"]}}')        
+        struktur = json.loads(adaptivaddon) 
+        is_type=""
+        if not "error" in struktur.keys() :            
+            if struktur["result"]["addon"]["enabled"]==True:
+                is_type="inputstream.adaptive"
+        if is_type=="":
+          adaptivaddon=xbmc.executeJSONRPC('{"jsonrpc": "2.0", "id": 1, "method": "Addons.GetAddonDetails", "params": {"addonid": "inputstream.mpd", "properties": ["enabled"]}}')        
+          struktur = json.loads(adaptivaddon)           
+          if not "error" in struktur.keys() :            
+            if struktur["result"]["addon"]["enabled"]==True:
+                is_type="inputstream.adaptive"                
+        if is_type=="":
+          dialog = xbmcgui.Dialog()
+          nr=dialog.ok("Inputstream", "Inputstream fehlt")
+          return ""
+        #is_type="inputstream.adaptive"
+        #      xy=xbmc.executeJSONRPC('{"jsonrpc": "2.0", "id": 1, "method": "Addons.GetAddonDetails", "params": {"addonid": "inputstream.mpd", "properties": ["enabled"]}}')
+        #      is_type="inputstream.mpd"
+           #dialog = xbmcgui.Dialog()
+           #nr=dialog.ok("Inputstream", "Inputstream fehlt")
+#           return
         print "source_id : "+str(source_id)        
         if source_id is None:
             json_url = 'http://vas.sim-technik.de/vas/live/v2/videos/%s?' \
@@ -356,15 +381,18 @@ class Client(nightcrawler.HttpClient):
         userAgent = 'user-agent=Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36&Origin=http://www.7tv.de&Referer=http://www.7tv.de/fresh-off-the-boat/25-staffel-2-episode-5-tote-hose-an-halloween-ganze-folge&content-type='
         addon_handle = int(sys.argv[1])
         listitem = xbmcgui.ListItem(path=data)         
-        listitem.setProperty('inputstream.mpd.license_type', 'com.widevine.alpha')
+        #listitem.setProperty('inputstream.mpd.license_type', 'com.widevine.alpha')
+        #listitem.setProperty('inputstream.mpd.license_type', 'com.widevine.alpha')
+        listitem.setProperty(is_type+".license_type", "com.widevine.alpha")
+        listitem.setProperty(is_type+".manifest_type", "mpd")
+        listitem.setProperty('inputstreamaddon', is_type)
         try:
           lic=json_data["drm"]["licenseAcquisitionUrl"]        
           token=json_data["drm"]["token"]                
-          listitem.setProperty('inputstream.mpd.license_key', lic +"?token="+token+"|"+userAgent+"|R{SSM}|")            
+          listitem.setProperty(is_type+'.license_key', lic +"?token="+token+"|"+userAgent+"|R{SSM}|")            
         except:
            pass
-        listitem.setProperty('inputstreamaddon', 'inputstream.mpd')
-        #listitem.setProperty('inputstream.mpd.license_data', 'prosiebensatglomex".psd:4560428*.HD')
+        #listitem.setProperty('inputstreamaddon', 'inputstream.mpd')        
         xbmcplugin.setResolvedUrl(addon_handle, True, listitem)
   
         #print "Daten lic :"+lic
