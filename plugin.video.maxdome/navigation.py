@@ -6,6 +6,7 @@ import xbmcplugin
 import xbmcaddon
 import urlparse
 import urllib
+import json
 
 import maxdome as maxdome
 
@@ -20,6 +21,18 @@ if addon.getSetting('packageonly').lower() == 'true':
 
 poster_width = '214'
 poster_height = '306'
+
+# Get installed inputstream addon
+def getInputstreamAddon():
+    is_types = ['inputstream.adaptive', 'inputstream.mpd']
+    for i in is_types:
+        r = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "id": 1, "method": "Addons.GetAddonDetails", "params": {"addonid":"' + i + '", "properties": ["enabled"]}}')
+        data = json.loads(r)
+        if not "error" in data.keys():
+            if data["result"]["addon"]["enabled"] == True:
+                return i
+        
+    return None
 
 root_dir = [
             {'label': 'Filme', 'page': 'movies'},
@@ -443,9 +456,16 @@ class Navigation:
             li = xbmcgui.ListItem(path=self.mxd.video_url)
             info = self.getInfoItem(asset_info)
             li.setInfo('video', info)
-            li.setProperty('inputstream.mpd.license_type', 'com.widevine.alpha')
-            li.setProperty('inputstream.mpd.license_key', self.mxd.license_url)
-            li.setProperty('inputstreamaddon', 'inputstream.mpd')
+            # Inputstream settings
+            is_addon = getInputstreamAddon()
+            if not is_addon:
+               xbmcgui.Dialog().notification('Maxdome Fehler', 'Inputstream Addon fehlt!', xbmcgui.NOTIFICATION_ERROR, 2000, True)
+               return False
+ 
+            li.setProperty(is_addon + '.license_type', 'com.widevine.alpha')
+            li.setProperty(is_addon + '.manifest_type', 'mpd')
+            li.setProperty(is_addon + '.license_key', self.mxd.license_url)
+            li.setProperty('inputstreamaddon', is_addon)
 
             xbmcplugin.setResolvedUrl(addon_handle, True, listitem=li)
             return True
