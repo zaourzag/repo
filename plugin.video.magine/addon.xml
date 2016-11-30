@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.magine" name="Magine" version="0.2.1" provider-name="L0RE">
+<addon id="plugin.video.magine" name="Magine" version="0.2.2" provider-name="L0RE">
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
     </extension>
+  <requires>
+  </requires>
   <extension point="xbmc.addon.metadata">
     <summary lang="en">Magine TV</summary>
     <summary lang="de">Magine TV</summary>
