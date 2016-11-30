@@ -787,10 +787,9 @@ v1.9.0 (2016-10-14) moving to the new api - please report bugs
   </extension>
 </addon>
 
-<addon id="plugin.video.maxdome" name="maxdome" version="1.0.1" provider-name="frankr612">
+<addon id="plugin.video.maxdome" name="maxdome" version="1.0.2" provider-name="frankr612">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
-    <import addon="inputstream.mpd" version="1.2.4"/>
 	<import addon="script.module.beautifulsoup" version="3.2.1"/>
     <import addon="script.module.requests" version="2.9.1"/>
     <import addon="script.module.routing" version="0.2.0"></import>
