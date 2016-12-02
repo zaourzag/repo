@@ -1396,6 +1396,27 @@ v0.5.2 (2016-09-28)
 	</extension>
 </addon>
 
+<addon id="plugin.video.filmstarts" name="Filmstarts (WORK IN PROGRESS)" version="0.1" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="de">Film und Serien Informationen von http://www.filmstarts.de/</summary>
+    <summary lang="en">Film an Series Information from http://www.filmstarts.de/</summary>
+    <description lang="en">Film an Series Information from http://www.filmstarts.de/</description>
+    <description lang="de">Film und Serien Informationen von http://www.filmstarts.de/</description>
+    <website></website>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.br3</source>
+    <forum>http://www.kodinerds.net/index.php/Thread/46598-Bayrisches-Fernsehen/</forum>
+    <email>andreas at vogler dot name</email>
+    <platform>all</platform>
+  </extension>
+</addon>
+
 <addon id="repository.lost-and-found" name="kodinerds.net Add-ons" version="1.1.11" provider-name="L0RE">
 
    <requires>
