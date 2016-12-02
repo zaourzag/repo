@@ -195,17 +195,23 @@ def jahre(url,type="filterserien"):
    debug("Genre URL :"+url)    
    kurz_inhalt = content[content.find('Alle Jahre</span>')+1:]
    kurz_inhalt = kurz_inhalt[:kurz_inhalt.find('</li></ul>')]
-   elemente=kurz_inhalt.split('<li class="visible">')
+   elemente=kurz_inhalt.split('</li><li')
    for i in range(1,len(elemente),1):   
         element=elemente[i]    
         debug("-------")
         debug(element)
-        match = re.compile('<span class="acLnk ([^"]+)">([^<]+?)</span> <span class="lighten">\(([^<]+?)\)</span>', re.DOTALL).findall(element)  
-        url=decode(match[0][0])
-        name=match[0][1]
-        anzahl=match[0][2]
-        debug("Decoed :"+url)
-        addDir(name +" ( "+anzahl +" )", baseurl+url, type, "")
+        try:
+          match = re.compile('<span class="acLnk ([^"]+)">([^<]+?)</span> <span class="lighten">\(([^<]+?)\)</span>', re.DOTALL).findall(element)  
+          url=decode(match[0][0])
+          name=match[0][1]
+          anzahl=match[0][2]
+          debug("Decoed :"+url)
+          addDir(name +" ( "+anzahl +" )", baseurl+url, type, "")
+        except:
+          match = re.compile('<a href="(.+?)">(.+?)</a>', re.DOTALL).findall(element)   
+          url=match[0][0]
+          name=match[0][1]
+          addDir(name , baseurl+url, type, "")
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)   
 
 def neuetrailer(url,page=1):
@@ -245,19 +251,25 @@ def laender(url,type="filterserien"):
    debug("Genre URL :"+url)    
    kurz_inhalt = content[content.find('Alle Länder</span>')+1:]
    kurz_inhalt = kurz_inhalt[:kurz_inhalt.find('</li></ul>')]
-   elemente=kurz_inhalt.split('<li class="visible">')
+   elemente=kurz_inhalt.split('</li><li')
    for i in range(1,len(elemente),1):   
         element=elemente[i]  
         element=element.replace('<strong>',"")
         element=element.replace('</strong>',"")        
         debug("-------")
         debug(element)
-        match = re.compile('<span class="acLnk ([^"]+)">([^<]+?)</span> <span class="lighten">\(([^<]+?)\)</span>', re.DOTALL).findall(element)  
-        url=decode(match[0][0])
-        name=match[0][1]
-        anzahl=match[0][2]
-        debug("Decoed :"+url)
-        addDir(name +" ( "+anzahl +" )", baseurl+url, type, "")
+        try:
+          match = re.compile('<span class="acLnk ([^"]+)">([^<]+?)</span> <span class="lighten">\(([^<]+?)\)</span>', re.DOTALL).findall(element)  
+          url=decode(match[0][0])
+          name=match[0][1]
+          anzahl=match[0][2]
+          debug("Decoed :"+url)
+          addDir(name +" ( "+anzahl +" )", baseurl+url, type, "")
+        except:
+          match = re.compile('<a href="(.+?)">(.+?)</a>', re.DOTALL).findall(element)   
+          url=match[0][0]
+          name=match[0][1]
+          addDir(name , baseurl+url, type, "")
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)      
    
 def types(url):
@@ -282,12 +294,26 @@ def genre(url,type="filterart"):
    debug("Genre URL :"+url)    
    kurz_inhalt = content[content.find('Alle Genres</span>')+1:]
    kurz_inhalt = kurz_inhalt[:kurz_inhalt.find('</li></ul>')]
-   match = re.compile('<span class="acLnk ([^"]+)">(.+?)</span> <span class="lighten">\((.+?)\)</span>', re.DOTALL).findall(kurz_inhalt)
-   for url,name,anzahl in match:      
-      url=decode(url)
-      debug("Decoed :"+url)
-      addDir(name +" ( "+anzahl +" )", baseurl+url, type, "")
-   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)   
+   elemente=kurz_inhalt.split('</li><li')
+   for i in range(1,len(elemente),1):   
+        element=elemente[i]  
+        element=element.replace('<strong>',"")
+        element=element.replace('</strong>',"")        
+        debug("-------")
+        debug(element)
+        try:
+          match = re.compile('<span class="acLnk ([^"]+)">([^<]+?)</span> <span class="lighten">\(([^<]+?)\)</span>', re.DOTALL).findall(element)  
+          url=decode(match[0][0])
+          name=match[0][1]
+          anzahl=match[0][2]
+          debug("Decoed :"+url)
+          addDir(name +" ( "+anzahl +" )", baseurl+url, type, "")
+        except:
+          match = re.compile('<a href="(.+?)">(.+?)</a>', re.DOTALL).findall(element)   
+          url=match[0][0]
+          name=match[0][1]
+          addDir(name , baseurl+url, type, "")
+   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)     
    
 def archivevideos(url,page=1):   
    page=int(page)
