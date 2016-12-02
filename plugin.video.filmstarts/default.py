@@ -141,7 +141,7 @@ def series():
     addDir("Best Bewertete", "http://www.filmstarts.de/serien/beste/", 'filterserien', "")
     addDir("Populaerste Serien", "http://www.filmstarts.de/serien/top/populaerste/", 'serienvideos', "")  
     addDir("Meisterwartete Staffeln", "http://www.filmstarts.de/serien/kommende-staffeln/meisterwartete/", 'serienvideos', "")
-    addDir("Neueste Gestartete Serien", "http://www.filmstarts.de/serien/neue/", 'archivevideos', "")         
+    addDir("Neueste Gestartete Serien", "http://www.filmstarts.de/serien/neue/", 'serienvideos', "")         
     addDir("Neue Serien Trailer", "http://www.filmstarts.de/serien/videos/neueste/", 'neuetrailer', "",xtype="")      
     addDir("Video-Archiv", "http://www.filmstarts.de/serien-archiv/", 'filterserien', "")
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
