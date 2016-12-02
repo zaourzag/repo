@@ -138,13 +138,12 @@ def trailer():
 
 def series():
     addDir("Beliebteste Serien", "http://www.filmstarts.de/serien/top/", 'filterserien', "")
-    #addDir("Best Bewertete", "http://www.filmstarts.de/serien/beste/", 'archivevideos', "")
-    #addDir("Populaerste Serien", "http://www.filmstarts.de/serien/top/populaerste/", 'trailerpage', "")
-    #addDir("Meißt Erwartete Serien", "http://www.filmstarts.de/serien/top/", 'trailerpage', "")
-    #addDir("Kommende Staffeln", "http://www.filmstarts.de/serien/kommende-staffeln/meisterwartete/", 'trailerpage', "")
-    #addDir("Neueste Gestartete Serien", "http://www.filmstarts.de/serien/neue/", 'archivevideos', "")      
-    #addDir("Serien Trailer", "http://www.filmstarts.de/serien/videos/neueste/", 'trailerpage', "")      
-    #addDir("Video-Archiv", "http://www.filmstarts.de/serien-archiv/", 'filterart', "")
+    addDir("Best Bewertete", "http://www.filmstarts.de/serien/beste/", 'filterserien', "")
+    addDir("Populaerste Serien", "http://www.filmstarts.de/serien/top/populaerste/", 'serienvideos', "")  
+    addDir("Meisterwartete Staffeln", "http://www.filmstarts.de/serien/kommende-staffeln/meisterwartete/", 'serienvideos', "")
+    addDir("Neueste Gestartete Serien", "http://www.filmstarts.de/serien/neue/", 'archivevideos', "")         
+    addDir("Neue Serien Trailer", "http://www.filmstarts.de/serien/videos/neueste/", 'neuetrailer', "",xtype="")      
+    addDir("Video-Archiv", "http://www.filmstarts.de/serien-archiv/", 'filterserien', "")
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 
 def filterserien():
@@ -198,7 +197,37 @@ def jahre(url,type="filterserien"):
         addDir(name +" ( "+anzahl +" )", baseurl+url, type, "")
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)   
 
-
+def neuetrailer(url,page=1):
+    page=int(page)
+    debug("archivevideos URL :"+url)
+    if page >1:
+      getu=url+"?page="+str(page)
+    else:
+      getu=url     
+    content=geturl(getu)
+    kurz_inhalt = content[content.find('<div class="tabs_main">')+1:]
+    kurz_inhalt = kurz_inhalt[:kurz_inhalt.find('<div class="pager pager margin_40t">')]
+    elemente=kurz_inhalt.split('<article data-block')
+    for i in range(1,len(elemente),1):  
+        try:    
+          element=elemente[i]    
+          element=element.replace('<strong>',"")
+          element=element.replace('</strong>',"")
+          try:
+              image = re.compile("src='([^']+)'", re.DOTALL).findall(element)[0]
+          except:           
+              image = re.compile('"src":"([^"]+)"', re.DOTALL).findall(element)[0]        
+          match = re.compile('<a href="([^"]+?)">([^<]+)</a>', re.DOTALL).findall(element)    
+          urlx=match[0][0]
+          text=match[0][1]
+          debug("IMG :"+ image)
+          addLink(text, baseurl+urlx, 'playVideo', image)
+        except:
+          pass
+    if 'fr">Nächste<i class="icon-arrow-right">' in content:  
+      addDir("Next", url, 'neuetrailer', "",page=page+1)
+    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)  
+    
 def laender(url,type="filterserien"):
    content=geturl(url)
    debug("Genre URL :"+url)    
@@ -290,15 +319,16 @@ def serienvideos(url,page=1):
      try:
         element=elemente[i]                 
         image = re.compile("src='(.+?)'", re.DOTALL).findall(element)[0]
-        url = re.compile('href="(.+?)"', re.DOTALL).findall(element)[0]
-        url=url.replace(".html","/videos/")
+        urlg = re.compile('href="(.+?)"', re.DOTALL).findall(element)[0]
+        urlg=url.replace(".html","/videos/")
         name= re.compile("title='(.+?)'", re.DOTALL).findall(element)[0] 
-        addDir(name, baseurl+url, 'tvstaffeln', image)        
+        name=ersetze(name)
+        addDir(name, baseurl+urlg, 'tvstaffeln', image)        
      except:
         debug("....")
         debug(element)
-   if 'fr">Nächste<i class="icon-arrow-right">' in content:
-     addDir("Next", url, 'archivevideos', "",page=page+1)
+   if 'fr">Nächste<i class="icon-arrow-right">' in content:  
+     addDir("Next", url, 'serienvideos', "",page=page+1)
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)   
 
 def tvstaffeln(url):
@@ -471,3 +501,5 @@ else:
           jahre(url,type="filterserien")
   if mode == 'laender':                          
           laender(url,type="filterserien")          
+  if mode == 'neuetrailer':                          
+          neuetrailer(url,page)          
