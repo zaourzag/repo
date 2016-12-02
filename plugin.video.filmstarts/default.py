@@ -58,6 +58,12 @@ def ersetze(inhalt):
    inhalt=inhalt.replace('&quot;','"')    
    inhalt=inhalt.replace('&gt;','>')      
    inhalt=inhalt.replace('&amp;','&') 
+   inhalt=inhalt.replace('&#287;','G') 
+   inhalt=inhalt.replace('&#252;','ü') 
+   inhalt=inhalt.replace('&#228;','ä')    
+   inhalt=inhalt.replace('&#246;','ö') 
+   inhalt=inhalt.replace('&#304;','i') 
+   inhalt=inhalt.replace('&#350;','Ş') 
    return inhalt
    
 def addDir(name, url, mode, iconimage, desc="",page=1,xtype=""):
@@ -135,6 +141,11 @@ def trailer():
     addDir("Neueste Trailer", "http://www.filmstarts.de/trailer/neu/", 'trailerpage', "")
     addDir("Video-Archiv", baseurl+"/trailer/archiv/", 'filterart', "")
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
+def kino():
+    addDir("Aktuelle Kino Filme", "http://www.filmstarts.de/filme-imkino/kinostart/", 'serienvideos', "")
+    addDir("Neustart der Woche", "http://www.filmstarts.de/filme-imkino/neu/", 'serienvideos', "")
+    addDir("Die Besten Filme im Kino", "http://www.filmstarts.de/filme-imkino/besten-filme/user-wertung/", 'serienvideos', "")     
+    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)    
 
 def series():
     addDir("Beliebteste Serien", "http://www.filmstarts.de/serien/top/", 'filterserien', "")
@@ -221,7 +232,8 @@ def neuetrailer(url,page=1):
           urlx=match[0][0]
           text=match[0][1]
           debug("IMG :"+ image)
-          addLink(text, baseurl+urlx, 'playVideo', image)
+          if not urlx=="":
+            addLink(text, baseurl+urlx, 'playVideo', image)
         except:
           pass
     if 'fr">Nächste<i class="icon-arrow-right">' in content:  
@@ -317,18 +329,19 @@ def serienvideos(url,page=1):
    elemente=content.split('<div class="data_box">')
    for i in range(1,len(elemente),1):
      try:
-        element=elemente[i]
-        debug("Element :")        
-        debug (element)
-        image = re.compile("src='(.+?)'", re.DOTALL).findall(element)[0]
-        urlg = re.compile('href="(.+?)"', re.DOTALL).findall(element)[0]
-        urlg=urlg.replace(".html","/videos/")
-        name= re.compile("title='(.+?)'", re.DOTALL).findall(element)[0] 
-        name=ersetze(name)
-        if not "http://" in urlg:
-           urlg=baseurl+urlg
-        debug("URLG : "+urlg)
-        addDir(name, urlg, 'tvstaffeln', image)        
+        element=elemente[i]       
+        if not "button btn-disabled" in element:          
+          debug("Element :")        
+          debug (element)
+          image = re.compile("src='(.+?)'", re.DOTALL).findall(element)[0]
+          urlg = re.compile('href="(.+?)"', re.DOTALL).findall(element)[0]
+          urlg=urlg.replace(".html","/videos/")
+          name= re.compile("title='(.+?)'", re.DOTALL).findall(element)[0] 
+          name=ersetze(name)
+          if not "http://" in urlg:
+            urlg=baseurl+urlg
+          debug("URLG : "+urlg)
+          addDir(name, urlg, 'tvstaffeln', image)                  
      except:
         debug("....")
         debug(element)
@@ -471,6 +484,7 @@ def trailerpage(url,page=1) :
 if mode is '':
     addDir(translation(30002), "", 'trailer', "")
     addDir("Serien", "", 'series', "")
+    addDir("Kino", "", 'kino', "")
     #addDir(translation(30001), translation(30001), 'Settings', "")   
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 else:
@@ -510,3 +524,5 @@ else:
           laender(url,type="filterserien")          
   if mode == 'neuetrailer':                          
           neuetrailer(url,page)          
+  if mode == 'kino':                          
+          kino()
