@@ -317,13 +317,18 @@ def serienvideos(url,page=1):
    elemente=content.split('<div class="data_box">')
    for i in range(1,len(elemente),1):
      try:
-        element=elemente[i]                 
+        element=elemente[i]
+        debug("Element :")        
+        debug (element)
         image = re.compile("src='(.+?)'", re.DOTALL).findall(element)[0]
         urlg = re.compile('href="(.+?)"', re.DOTALL).findall(element)[0]
-        urlg=url.replace(".html","/videos/")
+        urlg=urlg.replace(".html","/videos/")
         name= re.compile("title='(.+?)'", re.DOTALL).findall(element)[0] 
         name=ersetze(name)
-        addDir(name, baseurl+urlg, 'tvstaffeln', image)        
+        if not "http://" in urlg:
+           urlg=baseurl+urlg
+        debug("URLG : "+urlg)
+        addDir(name, urlg, 'tvstaffeln', image)        
      except:
         debug("....")
         debug(element)
@@ -333,6 +338,7 @@ def serienvideos(url,page=1):
 
 def tvstaffeln(url):
     content=geturl(url)
+    debug ("tvstaffeln url :"+url)
     kurz_inhalt = content[content.find('<ul class="column-1">')+1:]
     kurz_inhalt = kurz_inhalt[:kurz_inhalt.find("id='seriesseasonnumb")]    
     elemente=kurz_inhalt.split('span class="acLnk')    
@@ -340,8 +346,9 @@ def tvstaffeln(url):
     for i in range(1,len(elemente),1):
             try:
                 element=elemente[i]
-                debug(" .... TVSTAFFELN .....")
-                debug(element)     
+                element=element.replace('<strong>',"")
+                element=element.replace('</strong>',"")  
+                debug(" .... TVSTAFFELN .....")                 
                 name= re.compile('w-scrollto">([^<]+)', re.DOTALL).findall(element)[0]  
                 name=name.replace("\n","")
                 anzahl= re.compile('<span class="lighten fs11">\((.+?)\)</span>', re.DOTALL).findall(element)[0]  
