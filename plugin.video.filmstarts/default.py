@@ -142,7 +142,7 @@ def trailer():
     addDir("Video-Archiv", baseurl+"/trailer/archiv/", 'filterart', "")
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 def kino():
-    addDir("Aktuelle Kino Filme", "http://www.filmstarts.de/filme-imkino/kinostart/", 'serienvideos', "")
+    addDir("Aktuelle Kino Filme", "http://www.filmstarts.de/filme-imkino/kinostart/", 'kinovideos', "")
     addDir("Neustart der Woche", "http://www.filmstarts.de/filme-imkino/neu/", 'serienvideos', "")
     addDir("Die Besten Filme im Kino", "http://www.filmstarts.de/filme-imkino/besten-filme/user-wertung/", 'serienvideos', "")     
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)    
@@ -375,6 +375,40 @@ def serienvideos(url,page=1):
      addDir("Next", url, 'serienvideos', "",page=page+1)
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)   
 
+   
+   
+def kinovideos(url,page=1):   
+   debug("Start serienvideos")   
+   page=int(page)
+   debug("serienvideos URL :"+url)
+   if page >1:
+    getu=url+"?page="+str(page)
+   else:
+    getu=url     
+   content=geturl(getu)   
+   elemente=content.split('<div class="data_box">')
+   for i in range(1,len(elemente),1):
+     try:
+        element=elemente[i]       
+        if not "button btn-disabled" in element:          
+          debug("Element :")        
+          debug (element)
+          image = re.compile("src='(.+?)'", re.DOTALL).findall(element)[0]
+          urlg = re.compile('button btn-primary " href="(.+?)"', re.DOTALL).findall(element)[0]          
+          name= re.compile("title='(.+?)'", re.DOTALL).findall(element)[0] 
+          name=ersetze(name)
+          if not "http://" in urlg:
+            urlg=baseurl+urlg
+          debug("URLG : "+urlg)
+          addLink(name, urlg, 'playVideo', image)                  
+     except:
+        debug("....")
+        debug(element)
+   if 'fr">Nächste<i class="icon-arrow-right">' in content:  
+     addDir("Next", url, 'serienvideos', "",page=page+1)
+   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)      
+   
+   
 def tvstaffeln(url):
     content=geturl(url)
     debug ("tvstaffeln url :"+url)
@@ -552,3 +586,5 @@ else:
           neuetrailer(url,page)          
   if mode == 'kino':                          
           kino()
+  if mode == 'kinovideos':                          
+          kinovideos(url)          
