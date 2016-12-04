@@ -98,6 +98,7 @@ def listcat(url,type="listVideos"):
 
 
 def listVideos(url):
+          debug("URL :"+ url)
           content=getUrl(url)
           #http://tele5.flowcenter.de/gg/play/l/17:pid=vplayer_1560&tt=1&se=1&rpl=1&ssd=1&ssp=1&sst=1&lbt=1&
           y=0
@@ -110,12 +111,13 @@ def listVideos(url):
                   url="http://tele5.flowcenter.de/gg/play/l/"+lid+":pid="+ pid +"&oh="+ oh +"&se="+ se +"&rpl="+ rpl +"&ssd="+ ssd +"&ssp="+ ssp +"&sst="+ sst +"&lbt="+lbt +"&"
               except:
                   cid=re.compile('<div class="fwplayer" cid="(.+?)" >', re.DOTALL).findall(content)[0]
-                  playVideo(cid)
+                  img=re.compile('<img style="width:100%;" src="(.+?)"', re.DOTALL).findall(content)[0]                                    
+                  addLink("Aktuelle Folge", str(cid), 'playVideo', img)    
+                  #playVideo(cid)
                   y=1
           if y==0:                                                                                    
             debug("NEWURL: "+url)
             content=getUrl(url)
-            content=re.compile('{(.+)}', re.DOTALL).findall(content)[0]
             content=re.compile('{(.+)}', re.DOTALL).findall(content)[0]
             content="{"+content+"}"
             debug("CONTENT:")
@@ -145,6 +147,7 @@ def listVideos(url):
 
 
 def playVideo(url):
+    debug("PlayVideo Url :"+url)
     addon_handle = int(sys.argv[1])
     urlneu="http://tele5.flowcenter.de/gg/play/p/"+url+":mobile=0&nsrc="+url+"&" 
     content = getUrl(urlneu)
