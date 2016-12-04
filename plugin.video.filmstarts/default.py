@@ -395,10 +395,14 @@ def serienvideos(url,page=1):
           urlg=urlg.replace(".html","/videos/")
           name= re.compile("title='(.+?)'", re.DOTALL).findall(element)[0] 
           name=ersetze(name)
+          try:
+            desc= re.compile('<p class="margin_5t">([^<]+)', re.DOTALL).findall(element)[0]           
+          except:
+            desc=""                              
           if not "http://" in urlg:
             urlg=baseurl+urlg
           debug("URLG : "+urlg)
-          addDir(name, urlg, 'tvstaffeln', image)                  
+          addDir(name, urlg, 'tvstaffeln', image,desc=desc)                  
      except:
         debug("....")
         debug(element)
