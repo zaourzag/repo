@@ -1,10 +1,10 @@
-#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
 import xbmc, xbmcgui, xbmcplugin, xbmcaddon, xbmcvfs
 import sys
 import json
-from resources.lib._json import read_json, write_json
+import os
+from lib._json import read_json, write_json
 
 loglevel = 1
 xbmc.log('plugin.video.bookmark - init context rem', loglevel)
@@ -12,6 +12,8 @@ xbmc.log('plugin.video.bookmark - init context rem', loglevel)
 addonID = "plugin.video.bookmark"
 addon = xbmcaddon.Addon(id=addonID)
 userdataDir = xbmc.translatePath(addon.getAddonInfo('profile'))
+dbDir = os.path.join(userdataDir, 'db') + '/'
+
 fanart = ''
 log_msg = 'plugin.video.bookmark - '
 
@@ -22,7 +24,7 @@ name = xbmc.getInfoLabel("ListItem.Title")
 
 
 def main():
-    db_file = userdataDir + addon_id + '.json'
+    db_file = dbDir + addon_id + '.json'
     delete_from_db(name, db_file)
 
 
@@ -31,8 +33,8 @@ def delete_from_db(name, db_file):
     xbmc.log(log_msg + 'File: '+db_file, loglevel)
     db_data = read_json(db_file)
     for i in db_data:
-        if name == db_data[i]['name'].encode("utf-8"):
-            del db_data[i]
+        if name == i['name'].encode("utf-8"):
+            db_data.remove(i)
             write_json(db_file, db_data)
             break       #no need to keep searching
     else:

@@ -63,7 +63,7 @@ msgstr "Context"
 
 msgctxt "#30081"
 msgid "Springe direkt zu 'Addons'"
-msgstr "Skip inital menu (jump directly to addon)"
+msgstr "Skip inital menu (jump directly to addons)"
 
 msgctxt "#30082"
 msgid "Aktiviere Fanart"
@@ -78,3 +78,11 @@ msgstr "Delete db when last entry is removed"
 msgctxt "#30110"
 msgid "Willst du wirklich das gesamte Addon löschen?"
 msgstr "Do you really want to delete the addon?"
+
+msgctxt "#30210"
+msgid "bookmark video addon"
+msgstr ""
+
+msgctxt "#30211"
+msgid "Bereits bookmarked!"
+msgstr ""
