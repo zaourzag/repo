@@ -356,9 +356,11 @@ class Navigation:
         return False
 
     def listAssets(self, query, use_filter=False, force=False, start=1):
+        #API changed! each filter needs a field/value format now
+        query = query.replace(',', '&filter[]=')
         if package_only and not force:
 #            query += ',package~premium_basic'
-            query += ',hasPackageContent'
+            query += '&filter[]=hasPackageContent'
         data = self.mxd.Assets.getAssets(query, page_start=start)
         if use_filter:
             data['assetList'] = self.filterTvShows(data, True, True)
