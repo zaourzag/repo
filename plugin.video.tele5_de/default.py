@@ -118,7 +118,7 @@ def listVideos(url):
           if y==0:                                                                                    
             debug("NEWURL: "+url)
             content=getUrl(url)
-            content=re.compile('{(.+)}', re.DOTALL).findall(content)[0]
+            content=re.compile('\{(.+)\}', re.DOTALL).findall(content)[0]
             content="{"+content+"}"
             debug("CONTENT:")
             debug(content)
