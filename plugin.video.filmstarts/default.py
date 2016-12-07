@@ -102,8 +102,8 @@ def parameters_string_to_dict(parameters):
 
 def decodeurl(url):
     debug("URL :"+ url)   
-    codestring=['13', '1E', '19', '1F', '20', '2A', '21', '22', '2B', '23', '24', '2C', '25', '26', 'BA', 'B1', 'B2', 'BB', 'B3', 'B4', 'BC', 'B5', 'B6', 'BD', 'B7', 'B8', 'BE', 'B9', 'BF', '30', '31', '32', '3B', '33', '34', '3C', '35', '3D', '4A', '41', '42', '4B', '43', '44', '4C', '45', '46', '4D', '47', '48', '4E', '49', '4F', 'C0', 'C1', 'C2', 'CB', 'C3', 'C4', 'CC', 'C5', 'C6', 'CD']
-    decodesring=['%', '-', '.', '/', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+    codestring=['3F','2D','13', '1E', '19', '1F', '20', '2A', '21', '22', '2B', '23', '24', '2C', '25', '26', 'BA', 'B1', 'B2', 'BB', 'B3', 'B4', 'BC', 'B5', 'B6', 'BD', 'B7', 'B8', 'BE', 'B9', 'BF', '30', '31', '32', '3B', '33', '34', '3C', '35', '3D', '4A', '41', '42', '4B', '43', '44', '4C', '45', '46', '4D', '47', '48', '4E', '49', '4F', 'C0', 'C1', 'C2', 'CB', 'C3', 'C4', 'CC', 'C5', 'C6', 'CD']
+    decodesring=['_',':','%', '-', '.', '/', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
     ziel=""    
     for i in range(0,len(url),2):   
       debug("##")
@@ -154,7 +154,7 @@ def kino():
     addDir("Neustart der Woche", "http://www.filmstarts.de/filme-imkino/neu/", 'kinovideos', "")
     addDir("Die Besten Filme im Kino", "http://www.filmstarts.de/filme-imkino/besten-filme/user-wertung/", 'kinovideos', "")     
     addDir("Kinderfilme im Kino", "http://www.filmstarts.de/filme-imkino/kinderfilme/", 'kinovideos', "")             
-    addDir("Starttermin nach wochen", "http://www.filmstarts.de/filme-vorschau/de/?week=", 'selectwoche', "")         
+    addDir("Starttermin nach Wochen", "", 'selectwoche', "")             
     addDir("Besten Filme", "http://www.filmstarts.de/filme/besten/user-wertung/", 'filterkino', "")         
     addDir("Schlechtesten Filme", "http://www.filmstarts.de/filme/schlechtesten/user-wertung/", 'filterkino', "")         
     addDir("Kinder Filme", "http://www.filmstarts.de/filme/kinderfilme/", 'filterkino', "")    
@@ -219,8 +219,9 @@ def selectwoche(url):
    d = dialog.input("Wähle die Woche des KinoProgramms", type=xbmcgui.INPUT_DATE)
    d=d.replace(' ','0')  
    d= d[6:] + "-" + d[3:5] + "-" + d[:2]
-   ulr=url
-   kinovideos(ulr,datum=d)    
+   addDir("Deutschland", "http://www.filmstarts.de/filme-vorschau/de/?week=", 'kinovideos', "",datum=d)         
+   addDir("USA", "http://www.filmstarts.de/filme-vorschau/usa/?week=", 'kinovideos', "",datum=d)    
+   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)        
    
 def filterserien():
     debug("filterart url :"+ url)
@@ -535,10 +536,10 @@ def kinovideos(url,page=1,datum=""):
       Beforweek = Start - timedelta(days=7)
       nx=Nextweek.strftime("%Y-%m-%d")
       bx=Beforweek.strftime("%Y-%m-%d")
-      addDir("Nächste woche", url, 'serienvideos', "",datum=nx)      
-      addDir("Vorhärige WOche", url, 'serienvideos', "",datum=bx)              
+      addDir("Nächste woche", url, 'kinovideos', "",datum=nx)      
+      addDir("Vorhärige WOche", url, 'kinovideos', "",datum=bx)              
    if 'fr">Nächste<i class="icon-arrow-right">' in content:  
-     addDir("Next", url, 'serienvideos', "",page=page+1)
+     addDir("Next", url, 'kinovideos', "",page=page+1)
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)      
    
    
@@ -608,11 +609,16 @@ def tvfolgen(url,xtype):
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)      
     
 def playVideo(url):
+    debug("Playvideo URL:"+url)
     content = geturl(url)
-    match = re.compile('"html5PathHD":"(.*?)"', re.DOTALL).findall(content)
+    try:
+      match = re.compile('"html5PathHD":"(.*?)"', re.DOTALL).findall(content)
+      ul=decodeurl(match[0])    
+    except:
+       ul=""
     finalUrl=""
-    if match[0] and match[0].startswith("http://"):
-        finalUrl=match[0]
+    if ul and ul.startswith("http://"):
+        finalUrl=ul
     else:
         match = re.compile('"refmedia":(.+?),', re.DOTALL).findall(content)
         media = match[0]
@@ -722,7 +728,7 @@ else:
   if mode == 'kino':                          
           kino()
   if mode == 'kinovideos':                          
-          kinovideos(url,datum="")          
+          kinovideos(url,datum=datum)          
   if mode == 'selectwoche':                            
           selectwoche(url)
   if mode == 'filterkino':                            
