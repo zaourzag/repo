@@ -1,5 +1,8 @@
 Changelog:
 
+- 0.0.9
+  Prevent exception if FritzBox is not available or a connection is not established
+
 - 0.0.8
   Code structure redesign instead of temporary store of device list. Revert 0.0.7.
   Interactive selection of preferred AIN over device name in settings.

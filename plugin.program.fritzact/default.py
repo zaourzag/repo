@@ -161,9 +161,13 @@ class FritzBox():
         # Returns a list of Actor objects for querying SmartHome devices.
 
         actors = []
-        devices = ET.fromstring(self.switch('getdevicelistinfos'))
+        devices = None
 
-        if devices is not None:
+        _devicelist = self.switch('getdevicelistinfos')
+        if _devicelist is not None:
+
+            devices = ET.fromstring(_devicelist)
+
             for device in devices:
 
                 actor = Device(device)
@@ -207,6 +211,7 @@ class FritzBox():
             if handle is not None:
                 xbmcplugin.endOfDirectory(handle=handle, updateListing=True)
             xbmc.executebuiltin('Container.Refresh')
+
         else:
             t.writeLog('no device list available', xbmc.LOGDEBUG)
         return actors
@@ -216,7 +221,7 @@ class FritzBox():
         # Call an actor method
 
         if self.__fbSID is None:
-            t.writeLog('Not logged in', level=xbmc.LOGERROR)
+            t.writeLog('Not logged in or no connection to FritzBox', level=xbmc.LOGERROR)
             return
 
         params = {
