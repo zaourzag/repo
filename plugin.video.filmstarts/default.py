@@ -68,27 +68,55 @@ def ersetze(inhalt):
    inhalt=inhalt.replace('&#350;','Ş') 
    inhalt=inhalt.replace('&#223;','ß') 
    return inhalt
-   
-def addDir(name, url, mode, iconimage, desc="",page=1,xtype="",datum=""):
-	u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&page="+str(page)+"&xtype="+xtype+"&datum="+datum
-	ok = True
-	liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=iconimage)
-	liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc})
-	
-	ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
-	return ok
+
+def imagereplace(icon):   
+  print "ICON :"+icon
+  try:
+    quelle  = re.compile('(_[0-9]+_[0-9]+)/', re.DOTALL).findall(icon) [0]
+  except:
+        quelle="XXXXXXXXXXXXXXX"
+  icon=icon.replace(quelle,"_1200_1600")
+  print "ICON :"+icon
+  return icon
   
-def addLink(name, url, mode, iconimage, duration="", desc="", genre='',director="",bewertung=""):
-	u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
-	ok = True
-	liz = xbmcgui.ListItem(name, iconImage=iconimage, thumbnailImage=iconimage)
-	liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Genre": genre, "Director":director,"Rating":bewertung})
-	liz.setProperty('IsPlayable', 'true')
-	liz.addStreamInfo('video', { 'duration' : duration })
-	liz.setProperty("fanart_image", iconimage)
+def addDir(name, url, mode, thump, desc="",page=1,xtype="",datum=""):
+  thump=imagereplace(thump)  
+  try:
+     id  = re.compile('serien/(.+?)/videos/', re.DOTALL).findall(url) [0]
+     icon="http://de.web.img1.acsta.net/r_1200_1600/seriesposter/"+id+"/poster_large.jpg"
+  except:
+     icon=thump    
+  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&page="+str(page)+"&xtype="+xtype+"&datum="+datum
+  ok = True
+  liz = xbmcgui.ListItem(name)  
+  liz.setArt({ 'fanart' : thump })
+  liz.setArt({ 'thumb' : thump })
+  liz.setArt({ 'banner' : icon })
+  liz.setArt({ 'fanart' : icon })
+  liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc})
+	
+  ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
+  return ok
+  
+def addLink(name, url, mode, thump, duration="", desc="", genre='',director="",bewertung=""):
+  debug("URL ADDLINK :"+url)
+  thump=imagereplace(thump) 
+  try:
+     id  = re.compile('serien/(.+?)/videos/', re.DOTALL).findall(url) [0]
+     icon="http://de.web.img1.acsta.net/r_1200_1600/seriesposter/"+id+"/poster_large.jpg"
+  except:
+     icon=thump  
+  print icon  
+  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
+  ok = True
+  liz = xbmcgui.ListItem(name,thumbnailImage=thump)
+  liz.setArt({ 'fanart' : icon })
+  liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Genre": genre, "Director":director,"Rating":bewertung})
+  liz.setProperty('IsPlayable', 'true')
+  liz.addStreamInfo('video', { 'duration' : duration })
 	#xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
-	ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
-	return ok
+  ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
+  return ok
   
 def parameters_string_to_dict(parameters):
 	paramDict = {}
