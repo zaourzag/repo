@@ -112,7 +112,10 @@ class Provider(nightcrawler.Provider):
         for item in items:
             # prepend the title
             if prepend_format:
-                item['title'] = '%s - %s' % (item['format'], item['title'])
+                try:
+                  item['title'] = '%s - %s' % (item['format'], item['title']
+                except:
+                  pass
                 pass
             if context.get_settings().show_tumbfanart():
               item['images']['fanart'] =  item['images']['thumbnail']
