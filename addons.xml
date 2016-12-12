@@ -229,7 +229,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
 	</extension>
 </addon>
 
-<addon id="plugin.video.ampya" name="Ampya" version="0.1.8" provider-name="L0RE">
+<addon id="plugin.video.ampya" name="Ampya" version="0.1.9" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
     </requires>
@@ -382,7 +382,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
 	</extension>
 </addon>
 
-<addon id="plugin.video.br3" name="Bayerisches Fernsehen" version="0.7.8" provider-name="L0RE">
+<addon id="plugin.video.br3" name="Bayerisches Fernsehen" version="0.7.9" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
     </requires>
