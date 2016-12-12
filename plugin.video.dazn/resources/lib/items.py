@@ -81,9 +81,10 @@ class Items:
     def play_item(self, item, name=False, context=False):
         path = item.ManifestUrl
         listitem = xbmcgui.ListItem()
-        listitem.setProperty('inputstreamaddon', 'inputstream.mpd')
-        listitem.setProperty('inputstream.mpd.license_type', 'com.widevine.alpha')
-        listitem.setProperty('inputstream.mpd.license_key', item.LaUrl+'&_widevineChallenge=B{SSM}|||JBlicense')
+        listitem.setProperty('inputstreamaddon', 'inputstream.adaptive')
+        listitem.setProperty('inputstream.adaptive.manifest_type', 'mpd')
+        listitem.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')
+        listitem.setProperty('inputstream.adaptive.license_key', item.LaUrl+'&_widevineChallenge=B{SSM}|||JBlicense')
         if context:
             listitem.setInfo('video', {'Title': name})
             xbmc.Player().play(path, listitem)

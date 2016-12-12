@@ -61,12 +61,14 @@ class Client:
         
     def setToken(self, auth, result):
         log("[%s] signin: %s" % (addon_id, result))
-        if auth and result.lower() == "signedin":
+        if auth:
             self.TOKEN = auth["Token"]
             self.HEADERS["Authorization"] = "Bearer " + self.TOKEN
         else:
             self.TOKEN = ""
             dialog.ok("DAZN", result)
+        if result == "HardOffer":
+            dialog.ok("DAZN", getString(30161))
         addon.setSetting("token", self.TOKEN)
         
     def signIn(self):
@@ -148,6 +150,8 @@ class Client:
             self.refreshToken()
         elif code == "2" or code.lower() == "signin":
             self.signIn()
+        elif code == "7":
+            dialog.ok("DAZN", getString(30107))
         elif code == "10008":
             dialog.ok("DAZN", getString(30108))
         elif code == "InvalidAccount" or code == "invalidPassword":
