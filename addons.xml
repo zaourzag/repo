@@ -2547,7 +2547,7 @@ v0.5.2 (2016-09-28)
 	</extension>
 </addon>
 
-<addon id="plugin.video.mediathekdirekt" name="Mediathek Direkt" version="0.0.3" provider-name="P_Aeh">
+<addon id="plugin.video.mediathekdirekt" name="Mediathek Direkt" version="0.0.4" provider-name="P_Aeh">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
   </requires>
