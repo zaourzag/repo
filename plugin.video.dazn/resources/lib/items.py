@@ -79,12 +79,28 @@ class Items:
         xbmcplugin.addDirectoryItem(addon_handle, build_url(data), listitem, folder)
         
     def play_item(self, item, name=False, context=False):
+        adaptivaddon=xbmc.executeJSONRPC('{"jsonrpc": "2.0", "id": 1, "method": "Addons.GetAddonDetails", "params": {"addonid": "inputstream.adaptive", "properties": ["enabled"]}}')        
+        sstruktur = json.loads(adaptivaddon) 
+        is_type=""
+        if not "error" in sstruktur.keys() :            
+          if sstruktur["result"]["addon"]["enabled"]==True:
+            is_type="inputstream.adaptive"
+          if is_type=="":
+            adaptivaddon=xbmc.executeJSONRPC('{"jsonrpc": "2.0", "id": 1, "method": "Addons.GetAddonDetails", "params": {"addonid": "inputstream.mpd", "properties": ["enabled"]}}')        
+            sstruktur = json.loads(adaptivaddon)           
+            if not "error" in sstruktur.keys() :            
+              if sstruktur["result"]["addon"]["enabled"]==True:
+                is_type="inputstream.mpd"                
+        if is_type=="":
+          dialog = xbmcgui.Dialog()
+          nr=dialog.ok("Inputstream", "Inputstream fehlt")
+          return "" 
         path = item.ManifestUrl
         listitem = xbmcgui.ListItem()
-        listitem.setProperty('inputstreamaddon', 'inputstream.adaptive')
-        listitem.setProperty('inputstream.adaptive.manifest_type', 'mpd')
-        listitem.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')
-        listitem.setProperty('inputstream.adaptive.license_key', item.LaUrl+'&_widevineChallenge=B{SSM}|||JBlicense')
+        listitem.setProperty('inputstreamaddon', is_type)
+        listitem.setProperty(is_type +'.manifest_type', 'mpd')
+        listitem.setProperty(is_type+'.license_type', 'com.widevine.alpha')
+        listitem.setProperty(is_type+'.license_key', item.LaUrl+'&_widevineChallenge=B{SSM}|||JBlicense')
         if context:
             listitem.setInfo('video', {'Title': name})
             xbmc.Player().play(path, listitem)
