@@ -26,4 +26,3 @@
 -Fix Hype Maschine
 1.0.8 by L0RE
 - Fix for Empty Playlists
-

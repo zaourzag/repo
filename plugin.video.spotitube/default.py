@@ -17,6 +17,12 @@ import xbmcvfs
 import time
 from operator import itemgetter
 from datetime import date
+import urllib2
+import ssl
+try:
+  ssl._create_default_https_context = ssl._create_unverified_context
+except:
+  pass
 
 #addon = xbmcaddon.Addon()
 #addonID = addon.getAddonInfo('id')
