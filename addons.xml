@@ -1426,7 +1426,7 @@ v0.6.0 (2016-12-02)
   </extension>
 </addon>
 
-<addon id="repository.lost-and-found" name="kodinerds.net Add-ons" version="1.1.11" provider-name="L0RE">
+<addon id="repository.lost-and-found" name="kodinerds.net Add-ons (old)" version="1.1.12" provider-name="L0RE">
 
    <requires>
         <import addon="repository.kodinerds" version="1.1.9"/>
@@ -1435,12 +1435,14 @@ v0.6.0 (2016-12-02)
 		<info compressed="true">https://raw.githubusercontent.com/kodinerds/repo/master/addons.xml</info>
 		<checksum>https://raw.githubusercontent.com/kodinerds/repo/master/addons.xml.md5</checksum>
 		<datadir zip="true">https://raw.githubusercontent.com/kodinerds/repo/master/</datadir>
+                <broken>deprecated</broken>
 	</extension>
 	<extension point="xbmc.addon.metadata">
 		<summary>Most of the addon have been abandoned, and Patched by someone new. Or have been Found without someone loosing them</summary>
 		<description>Most of the addon have been abandoned, and Patched by someone new. Or have been Found without someone loosing them</description>
 		<disclaimer></disclaimer>
 		<platform>all</platform>
+                <broken>deprecated</broken>
 	</extension>
         <broken>Kodinerds Repo ersetzt Lost und Found</broken>
 </addon>
