@@ -113,7 +113,7 @@ class Provider(nightcrawler.Provider):
             # prepend the title
             if prepend_format:
                 try:
-                  item['title'] = '%s - %s' % (item['format'], item['title']
+                  item['title'] = '%s - %s' % (item['format'], item['title'])
                 except:
                   pass
                 pass
