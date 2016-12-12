@@ -1298,10 +1298,10 @@ Für Sport1US und Sport1+ wird ein ABO auf sport1.de benötigt.
     </extension>
 </addon>
 
-<addon id="plugin.video.dazn" version="0.5.2" name="DAZN" provider-name="Jin">
+<addon id="plugin.video.dazn" version="0.6.0" name="DAZN" provider-name="Jin">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
-        <import addon="inputstream.mpd"/>
+        <import addon="inputstream.adaptive"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="addon.py">
         <provides>video</provides>
@@ -1322,7 +1322,8 @@ Including football from the top European leagues, the best US sport, tennis and 
         <disclaimer lang="de_DE">Inoffizielles Addon - Benutzung auf eigene Gefahr</disclaimer>
         <disclaimer lang="en_GB">Unofficial Addon - Use at your own risk</disclaimer>
         <news>
-v0.5.2 (2016-09-28)
+v0.6.0 (2016-12-02)
+- inputstream adaptive
         </news>
         <forum>http://www.kodinerds.net</forum>
         <email>[jin] at [xyz] dot [de]</email>
