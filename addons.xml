@@ -1298,9 +1298,10 @@ Für Sport1US und Sport1+ wird ein ABO auf sport1.de benötigt.
     </extension>
 </addon>
 
-<addon id="plugin.video.dazn" version="0.6.0" name="DAZN" provider-name="Jin">
+<addon id="plugin.video.dazn" version="0.6.1" name="DAZN" provider-name="Jin">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
+        <import addon="inputstream.adaptive"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="addon.py">
         <provides>video</provides>
