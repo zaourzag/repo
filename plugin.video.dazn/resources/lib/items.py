@@ -85,7 +85,7 @@ class Items:
         if not "error" in sstruktur.keys() :            
           if sstruktur["result"]["addon"]["enabled"]==True:
             is_type="inputstream.adaptive"
-          if is_type=="":
+        if is_type=="":
             adaptivaddon=xbmc.executeJSONRPC('{"jsonrpc": "2.0", "id": 1, "method": "Addons.GetAddonDetails", "params": {"addonid": "inputstream.mpd", "properties": ["enabled"]}}')        
             sstruktur = json.loads(adaptivaddon)           
             if not "error" in sstruktur.keys() :            
