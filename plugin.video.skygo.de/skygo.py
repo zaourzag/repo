@@ -30,6 +30,18 @@ print autoKillSession
 datapath = xbmc.translatePath(addon.getAddonInfo('profile'))
 cookiePath = datapath + 'COOKIES'
 
+# Get installed inputstream addon
+def getInputstreamAddon():
+    is_types = ['inputstream.adaptive', 'inputstream.smoothstream']
+    for i in is_types:
+        r = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "id": 1, "method": "Addons.GetAddonDetails", "params": {"addonid":"' + i + '", "properties": ["enabled"]}}')
+        data = json.loads(r)
+        if not "error" in data.keys():
+            if data["result"]["addon"]["enabled"] == True:
+                return i
+        
+    return None
+
 class SkyGo:
     """Sky Go Class"""
 
@@ -240,12 +252,17 @@ class SkyGo:
                 li = xbmcgui.ListItem(path=manifest_url)
                 if info_tag:
                     li.setInfo('video', info_tag)
-                # Force smoothsteam addon
-                li.setProperty('inputstream.smoothstream.license_type', 'com.widevine.alpha')
+                # Inputstream settings
+                is_addon = getInputstreamAddon()
+                if not is_addon:
+                    xbmcgui.Dialog().notification('SkyGo Fehler', 'Inputstream Addon fehlt!', xbmcgui.NOTIFICATION_ERROR, 2000, True)
+                    return False
+                li.setProperty(is_addon + '.license_type', 'com.widevine.alpha')
+                li.setProperty(is_addon + '.manifest_type', 'ism')
                 if init_data:
-                    li.setProperty('inputstream.smoothstream.license_key', self.licence_url)
-                    li.setProperty('inputstream.smoothstream.license_data', init_data)
-                li.setProperty('inputstreamaddon', 'inputstream.smoothstream')
+                    li.setProperty(is_addon + '.license_key', self.licence_url)
+                    li.setProperty(is_addon + '.license_data', init_data)
+                li.setProperty('inputstreamaddon', is_addon)
                 # Start Playing
                 xbmcplugin.setResolvedUrl(addon_handle, True, listitem=li)
             else:

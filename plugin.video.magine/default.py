@@ -198,12 +198,31 @@ def playvideo(session,userid,channelid,id):
   userAgent = "Coralie/1.7.2-2016081207(SM-G900F; Android; 6.0.1; DeviceId c248c629af1fe0a8c46b95668064c1d2952a9e91d27bccc3c5d584c2f7553a; Token Tvoli/ec9ab8acf27f14cacfefbf1087463fd3aeacdca4; VersionCheck)"
   listitem = xbmcgui.ListItem(path=struktur["dash"])        
   debug("List Item gesetzt")      
-  pin=addon.getSetting("pin") 
+  pin=addon.getSetting("pin")
+  adaptivaddon=xbmc.executeJSONRPC('{"jsonrpc": "2.0", "id": 1, "method": "Addons.GetAddonDetails", "params": {"addonid": "inputstream.adaptive", "properties": ["enabled"]}}')        
+  sstruktur = json.loads(adaptivaddon) 
+  is_type=""
+  if not "error" in sstruktur.keys() :            
+     if sstruktur["result"]["addon"]["enabled"]==True:
+        is_type="inputstream.adaptive"
+     if is_type=="":
+        adaptivaddon=xbmc.executeJSONRPC('{"jsonrpc": "2.0", "id": 1, "method": "Addons.GetAddonDetails", "params": {"addonid": "inputstream.mpd", "properties": ["enabled"]}}')        
+        sstruktur = json.loads(adaptivaddon)           
+        if not "error" in sstruktur.keys() :            
+           if sstruktur["result"]["addon"]["enabled"]==True:
+                is_type="inputstream.mpd"                
+  if is_type=="":
+     dialog = xbmcgui.Dialog()
+     nr=dialog.ok("Inputstream", "Inputstream fehlt")
+     return "" 
+  debug("XXX YYYY")     
+  debug(is_type)
   lic_header="|Authorization=Bearer%20"+session+"&UserId=" +userid+"&Magine-ChannelId=" +channelid+"&Magine-Md=PC-Awesomesauce"+"&Magine-ParentalControlPinCode="+pin+"&Magine-Mk=HTML5"+"&Magine-ClientId=c060c1bf-d805-4feb-74d4-d8241e27d836"+"&Magine-ProgramId="+id+"|R{SSM}|"
-  listitem.setProperty('inputstream.mpd.license_type', 'com.widevine.alpha')  
-  listitem.setProperty('inputstream.mpd.license_key', "https://magine.com/api/drm/v4/license/widevine"+lic_header)
-  listitem.setProperty('inputstream.mpd.license_data', base64.b64encode(b'\x08\x01\x12\x10'+'{KID}'+b'\x1A\x05'+'tvoli"'+chr(len('channel.'+channelid+'.'+id))+'channel.'+channelid+'.'+id+'*'+b'\x02'+'SD2'+b'\x00'))
-  listitem.setProperty('inputstreamaddon', 'inputstream.mpd')   
+  listitem.setProperty(is_type+'.license_type', 'com.widevine.alpha')  
+  listitem.setProperty(is_type+'.license_key', "https://magine.com/api/drm/v4/license/widevine"+lic_header)
+  listitem.setProperty(is_type+'.license_data', base64.b64encode(b'\x08\x01\x12\x10'+'{KID}'+b'\x1A\x05'+'tvoli"'+chr(len('channel.'+channelid+'.'+id))+'channel.'+channelid+'.'+id+'*'+b'\x02'+'SD2'+b'\x00'))
+  listitem.setProperty('inputstreamaddon', is_type)  
+  listitem.setProperty(is_type+".manifest_type", "mpd")  
   listitem.setInfo( "video", { "Title" : title, "Plot" : desc} )    
   xbmcplugin.setResolvedUrl(addon_handle, True, listitem)
   
@@ -338,11 +357,28 @@ def leseclips(session,userid,channelid,playlist,timelist):
       listitem = xbmcgui.ListItem(path=struktur["dash"])        
       debug("List Item gesetzt")      
       pin=addon.getSetting("pin") 
+      adaptivaddon=xbmc.executeJSONRPC('{"jsonrpc": "2.0", "id": 1, "method": "Addons.GetAddonDetails", "params": {"addonid": "inputstream.adaptive", "properties": ["enabled"]}}')        
+      sstruktur = json.loads(adaptivaddon) 
+      is_type=""
+      if not "error" in sstruktur.keys() :            
+          if sstruktur["result"]["addon"]["enabled"]==True:
+              is_type="inputstream.adaptive"
+      if is_type=="":
+        adaptivaddon=xbmc.executeJSONRPC('{"jsonrpc": "2.0", "id": 1, "method": "Addons.GetAddonDetails", "params": {"addonid": "inputstream.mpd", "properties": ["enabled"]}}')        
+        sstruktur = json.loads(adaptivaddon)           
+        if not "error" in sstruktur.keys() :            
+           if sstruktur["result"]["addon"]["enabled"]==True:
+                is_type="inputstream.mpd"                
+      if is_type=="":
+          dialog = xbmcgui.Dialog()
+          nr=dialog.ok("Inputstream", "Inputstream fehlt")
+          return "" 
       lic_header="|Authorization=Bearer%20"+session+"&UserId=" +userid+"&Magine-ChannelId=" +channelid+"&Magine-Md=PC-Awesomesauce"+"&Magine-ParentalControlPinCode="+pin+"&Magine-Mk=HTML5"+"&Magine-ClientId=c060c1bf-d805-4feb-74d4-d8241e27d836"+"&Magine-ProgramId="+times+"|R{SSM}|"
-      listitem.setProperty('inputstream.mpd.license_type', 'com.widevine.alpha')
-      listitem.setProperty('inputstream.mpd.license_key', "https://magine.com/api/drm/v4/license/widevine"+lic_header)
-      listitem.setProperty('inputstream.mpd.license_data', base64.b64encode(b'\x08\x01\x12\x10'+'{KID}'+b'\x1A\x05'+'tvoli"'+chr(len('channel.'+channelid+'.'+times))+'channel.'+channelid+'.'+times+'*'+b'\x02'+'SD2'+b'\x00'))
-      listitem.setProperty('inputstreamaddon', 'inputstream.mpd')   
+      listitem.setProperty(is_type+'.license_type', 'com.widevine.alpha')
+      listitem.setProperty(is_type+'.license_key', "https://magine.com/api/drm/v4/license/widevine"+lic_header)
+      listitem.setProperty(is_type+'.license_data', base64.b64encode(b'\x08\x01\x12\x10'+'{KID}'+b'\x1A\x05'+'tvoli"'+chr(len('channel.'+channelid+'.'+times))+'channel.'+channelid+'.'+times+'*'+b'\x02'+'SD2'+b'\x00'))
+      listitem.setProperty('inputstreamaddon', is_type)   
+      listitem.setProperty(is_type+".manifest_type", "mpd")  
       listitem.setInfo( "video", { "Title" : title, "Plot" : desc} )    
       playlist.add(struktur["dash"], listitem)   
   return playlist

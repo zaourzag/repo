@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+﻿﻿<?xml version="1.0" encoding="UTF-8"?>
 <addon id="plugin.program.fritzact" name="Fritz Smart Home" version="0.0.10" provider-name="Birger Jesch">
     <requires>
         <import addon="xbmc.python" version="2.20.0" />

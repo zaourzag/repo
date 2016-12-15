@@ -5,6 +5,7 @@ import SocketServer
 import urlparse
 import resources.lib.ewetv as ewetv
 import resources.lib.zattoo as zattoo
+import resources.lib.netcologne as netcologne
 import channellist
 
 addon = xbmcaddon.Addon()
@@ -39,12 +40,17 @@ if addon.getSetting('ewetv') == 'true':
     ewetv = ewetv.EWETV(addon.getSetting('user_ewe'), addon.getSetting('pass_ewe'))
     if ewetv.login():
         tv_services.append(ewetv)
+if addon.getSetting('netcologne') == 'true':
+    nc = netcologne.NetCologne(addon.getSetting('user_nc'), addon.getSetting('pass_nc'))
+    if nc.login():
+        tv_services.append(nc)
 if addon.getSetting('zattoo') == 'true':
     zattoo = zattoo.Zattoo(addon.getSetting('user_zattoo'), addon.getSetting('pass_zattoo'))
     if zattoo.login():
         tv_services.append(zattoo)
 
 if len(tv_services)>0:
+    print tv_services    
     if channellist.generateM3U(tv_services):
         xbmcgui.Dialog().notification('IPTV Proxy', 'Senderliste aktualisiert. Neustart erforderlich!', xbmcgui.NOTIFICATION_INFO, 5000, True)
     xbmc.log('Starting IPTV Proxy on port ' + str(port))

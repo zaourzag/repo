@@ -37,7 +37,7 @@ def generateM3U(tvservices):
         for group in channel_data['channel_groups']:
             for c in group['channels']:
                 for quality in c['qualities']:
-                    if not quality['availability'] == 'available':
+                    if not quality['availability'] in ['available', 'needs_internal_network']:
                         continue
 
                     line1 = buildExtInfo(quality, tvs.serviceName).encode('utf8')

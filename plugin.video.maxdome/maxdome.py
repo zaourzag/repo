@@ -112,7 +112,7 @@ class MaxdomeAssets:
         self.api_headers['platform'] = 'web'
         self.api_headers['Maxdome-Origin'] = 'maxdome.' + self.session.region
         self.api_headers['customerId'] = self.session.customer_id
-        self.api_headers['mxd-session'] = self.session.session.cookies['mxd-bbe-session']
+        self.api_headers['mxd-session'] = self.session.session.cookies.get('mxd-bbe-session', domain='.maxdome.' + self.session.region)
         self.page_size = 1000
 
     def isPackageContent(self, asset_info):
@@ -174,6 +174,14 @@ class MaxdomeAssets:
 
         return data
 
+    def showPaymentOptions(self, data):
+        items = []
+        for opt in data['paymentMethodList']:
+            items.append(opt['title'])
+        dlg = xbmcgui.Dialog()
+        dlg.select('Zahlungsart', items)
+        
+
     def orderAsset(self, assetId, buyAsset=False, isHd=False, order_option='', orderType='rent', orderQuality='sd'):
         headers = self.api_headers
         headers['accept-language'] = 'de-DE,de;q=0.8,en-US;q=0.6,en;q=0.4'
@@ -181,9 +189,9 @@ class MaxdomeAssets:
         payload = {'@class':'StartStep','baseData':{'deliveryType':'streaming','licenseType':orderType,'quality':self.session.order_quality}}
         r = self.session.session.post(url, headers=headers, data=json.dumps(payload))
         data = r.json()
-        print data
         if '@class' in data:
             if data['@class'] == 'SelectPaymentQuestionStep':
+                #TODO Verschiedene Zahlungsmethoden anbieten
                 return data
             elif data['@class'] == 'CheckAvsPinQuestionStep':
                 data = self.checkAvsPin(data['baseData'])

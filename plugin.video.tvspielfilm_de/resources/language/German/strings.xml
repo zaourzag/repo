@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<strings>
+	<string id="32001">Allgemein</string>
+	<string id="30101">     Ansicht-ViewID erzwingen</string>
+	<string id="30102">     ViewID</string>
+	<string id="30103">     Sender-Kennungen anzeigen</string>
+	<string id="30104">     [COLOR orangered]NowTV-Sendungen anzeigen[/COLOR] (funktioniert in allen Bereichen)</string>
+	<string id="30105">     Thumb als Hintergrund-Fanart nutzen</string>
+	<string id="30106">     Programm-Debug mit Details (sonst nur Minimal-Log)</string>
+	
+	<string id="30111">[B][COLOR ff0099ff]ANSICHT[/COLOR][/B]</string>
+	<string id="30112">[B][COLOR ff0099ff]SENDER[/COLOR][/B]</string>
+	<string id="30113">[B][COLOR ff0099ff]FANART[/COLOR][/B]</string>
+	<string id="30114">[B][COLOR ff0099ff]LOG[/COLOR][/B]</string>
+	
+	<string id="30201">[B][COLOR chartreuse]In Abspielliste einreihen[/COLOR][/B]</string>
+</strings>

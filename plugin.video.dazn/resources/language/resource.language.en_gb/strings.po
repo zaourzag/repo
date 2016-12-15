@@ -72,6 +72,10 @@ msgctxt "#30101"
 msgid "DAZN is not available in your country"
 msgstr ""
 
+msgctxt "#30107"
+msgid "Access to the requested content has been denied."
+msgstr ""
+
 msgctxt "#30108"
 msgid "You can only play two videos on your connected devices at the same time. To continue watching, then close DAZN on one of your other devices."
 msgstr ""
@@ -86,6 +90,10 @@ msgstr ""
 
 msgctxt "#30153"
 msgid "Password does not match"
+msgstr ""
+
+msgctxt "#30161"
+msgid "Subscribe & Pay Now"
 msgstr ""
 
 msgctxt "#30201"

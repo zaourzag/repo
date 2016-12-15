@@ -85,11 +85,14 @@ def getUnicodePage(url, container=None):
         req = urllib2.urlopen(url.encode('utf-8'), timeout=30)
     except UnicodeDecodeError:
         req = urllib2.urlopen(url)
+
     except ValueError:
         return False
-    except urllib2.HTTPError:
+    except urllib2.URLError, e:
+        writeLog(str(e.reason), xbmc.LOGERROR)
         return False
     except socket.timeout:
+        writeLog('Socket timeout', xbmc.LOGERROR)
         return False
 
     encoding = 'utf-8'
