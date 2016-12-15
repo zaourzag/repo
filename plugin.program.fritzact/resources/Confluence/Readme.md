@@ -99,10 +99,21 @@ weitere Informationen (AVM): https://avm.de/fileadmin/user_upload/Global/Service
 
 <h2>Methoden/Aufruf</h2>
 
-Toggelt den Schalter:
+Toggelt den Aktor:
 
 ```
 <onclick>RunScript(plugin.program.fritzact,action=toggle&amp;ain=$INFO[ListItem.Label2])</onclick>
+```
+
+Möchte man einen beliebigen Button innerhalb eines Skins zum Umschalten eines Aktors einbinden, kann man das auch
+direkt unter der Angabe der AIN (hier z.B. 08150 1234567) des betreffenden Aktors realisieren. Die AIN des Aktors findet
+man im Webinterface der Fritzbox im Bereich Smarthome:
+
+```
+<control type='button'>
+<label>Garage</label>
+<onclick>RunScript(plugin.program.fritzact,action=toggle&ain='08150 1234567')</onclick>
+</control>
 ```
 
 Schaltet Aktor ein:
@@ -126,3 +137,6 @@ Aufruf z.B. für den dynamischen List Content:
 Ein Einbinden des Addons in den Skin als Programm-Addon toggelt den bevorzugten Aktor (siehe Settings), d.h. es können bei
 mehreren Kodi-Instanzen bzw. -installationen auch die zur Installation sinnvollen Aktoren geschaltet werden (z.B Kodi im
 Wohnzimmer: bevorzugter Aktor ist Aktor im Wohnzimmer, Kodi Kinderzimmer: bevorzugter Aktor ist Aktor im Kinderzimmer usw.)
+
+Wird keine bevorzugte AIN im Setup des Addons festgelegt und gibt es mehr als einen Aktor im Smarthome, erscheint eine
+Liste aller verfügbarer Aktoren, aus denen einer zum Umschalten ausgewählt werden kann.

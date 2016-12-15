@@ -152,6 +152,7 @@ class FritzBox():
         self.__fbpasswd = t.crypt('fbPasswd', 'fb_key', 'fb_token')
         self.__fbtls = 'https://' if __addon__.getSetting('fbTLS').upper() == 'TRUE' else 'http://'
         self.__prefAIN = __addon__.getSetting('preferredAIN')
+        self.__readonlyAIN = __addon__.getSetting('readonlyAIN').split(',')
         #
         self.__lastLogin = int(__addon__.getSetting('lastLogin') or 0)
         self.__fbSID = __addon__.getSetting('SID') or None
@@ -161,47 +162,59 @@ class FritzBox():
         # Returns a list of Actor objects for querying SmartHome devices.
 
         actors = []
+        devices = None
 
-        devices = self.switch("getdevicelistinfos")
+        _devicelist = self.switch('getdevicelistinfos')
+        if _devicelist is not None:
 
-        if devices is not None:
-            for device in ET.fromstring(devices):
-                #
-                # TEST WITH MORE THEN ONE DEVICE CHANGE RANGE
-                #
-                for i in range(1):
-                    actor = Device(device)
+            devices = ET.fromstring(_devicelist)
 
-                    if actor.is_switch:
-                        actor.icon = __s_absent__
-                        if actor.present == 1:
-                            actor.icon = __s_on__
-                            if actor.state == 0: actor.icon = __s_off__
-                    elif actor.is_thermostat:
-                        actor.icon = __t_absent__
-                        if actor.present == 1:
-                            actor.icon = __t_on__
-                            if actor.state == 0: actor.icon = __t_absent__
+            for device in devices:
 
-                    actors.append(actor)
+                actor = Device(device)
 
-                    if handle is not None:
-                        wid = xbmcgui.ListItem(label=actor.name, label2=actor.actor_id, iconImage=actor.icon)
-                        wid.setProperty('type', actor.type)
-                        wid.setProperty('present', __LS__(30032 + actor.present))
-                        wid.setProperty('b_present', actor.b_present)
-                        wid.setProperty('state', __LS__(30030 + actor.state))
-                        wid.setProperty('b_state', actor.b_state)
-                        wid.setProperty('mode', actor.mode)
-                        wid.setProperty('temperature', unicode(actor.temperature))
-                        wid.setProperty('power', actor.power)
-                        wid.setProperty('energy', actor.energy)
-                        xbmcplugin.addDirectoryItem(handle=handle, url='', listitem=wid)
+                if actor.is_switch:
+                    actor.icon = __s_absent__
+                    if actor.present == 1:
+                        actor.icon = __s_on__
+                        if actor.state == 0: actor.icon = __s_off__
+                elif actor.is_thermostat:
+                    actor.icon = __t_absent__
+                    if actor.present == 1:
+                        actor.icon = __t_on__
+                        if actor.state == 0: actor.icon = __t_absent__
+
+                actors.append(actor)
+
+                if handle is not None:
+                    wid = xbmcgui.ListItem(label=actor.name, label2=actor.actor_id, iconImage=actor.icon)
+                    wid.setProperty('type', actor.type)
+                    wid.setProperty('present', __LS__(30032 + actor.present))
+                    wid.setProperty('b_present', actor.b_present)
+                    wid.setProperty('state', __LS__(30030 + actor.state))
+                    wid.setProperty('b_state', actor.b_state)
+                    wid.setProperty('mode', actor.mode)
+                    wid.setProperty('temperature', unicode(actor.temperature))
+                    wid.setProperty('power', actor.power)
+                    wid.setProperty('energy', actor.energy)
+                    xbmcplugin.addDirectoryItem(handle=handle, url='', listitem=wid)
+
+                t.writeLog('----- current state of AIN %s -----' % (actor.actor_id), level=xbmc.LOGDEBUG)
+                t.writeLog('Name:        %s' % (actor.name), level=xbmc.LOGDEBUG)
+                t.writeLog('Type:        %s' % (actor.type), level=xbmc.LOGDEBUG)
+                t.writeLog('Presence:    %s' % (actor.present), level=xbmc.LOGDEBUG)
+                t.writeLog('Device ID:   %s' % (actor.device_id), level=xbmc.LOGDEBUG)
+                t.writeLog('Temperature: %s' % (actor.temperature), level=xbmc.LOGDEBUG)
+                t.writeLog('State:       %s' % (actor.state), level=xbmc.LOGDEBUG)
+                t.writeLog('Power:       %s W' % (actor.power), level=xbmc.LOGDEBUG)
+                t.writeLog('Consumption: %s kWh' % (actor.energy), level=xbmc.LOGDEBUG)
 
             if handle is not None:
                 xbmcplugin.endOfDirectory(handle=handle, updateListing=True)
             xbmc.executebuiltin('Container.Refresh')
 
+        else:
+            t.writeLog('no device list available', xbmc.LOGDEBUG)
         return actors
 
     def switch(self, cmd, ain=None):
@@ -209,17 +222,26 @@ class FritzBox():
         # Call an actor method
 
         if self.__fbSID is None:
-            t.writeLog('Not logged in', level=xbmc.LOGERROR)
+            t.writeLog('Not logged in or no connection to FritzBox', level=xbmc.LOGERROR)
             return
 
         params = {
             'switchcmd': cmd,
             'sid': self.__fbSID,
         }
-        if ain: params['ain'] = ain
+        if ain:
+
+            # check if readonly AIN
+
+            for li in self.__readonlyAIN:
+                if ain == li.strip():
+                    xbmcgui.Dialog().notification(__addonname__, __LS__(30013), xbmcgui.NOTIFICATION_WARNING, 3000)
+                    return
+
+            params['ain'] = ain
+
         response = self.session.get(self.base_url + '/webservices/homeautoswitch.lua', params=params, verify=False)
         response.raise_for_status()
-        xbmcgui.Window(10000).setProperty('fritzact.timestamp', str(int(time())))
         return response.text.strip()
 
 # _______________________________
@@ -235,22 +257,25 @@ fritz = FritzBox()
 
 arguments = sys.argv
 
+t.writeLog('<<<<', xbmc.LOGDEBUG)
+
 if len(arguments) > 1:
     if arguments[0][0:6] == 'plugin':
         _addonHandle = int(arguments[1])
         arguments.pop(0)
         arguments[1] = arguments[1][1:]
-        t.writeLog('calling script as plugin source (handle #%s)' % (_addonHandle), level=xbmc.LOGDEBUG)
+        t.writeLog('Refreshing dynamic list content with plugin handle #%s' % (_addonHandle), level=xbmc.LOGDEBUG)
 
     params = t.paramsToDict(arguments[1])
     action = urllib.unquote_plus(params.get('action', ''))
     ain = urllib.unquote_plus(params.get('ain', ''))
 
-    t.writeLog('provided parameter hash: %s' % (arguments[1]), level=xbmc.LOGDEBUG)
+    t.writeLog('Parameter hash: %s' % (arguments[1]), level=xbmc.LOGDEBUG)
 
 actors = fritz.get_actors(handle=_addonHandle)
 
-if action is not None:
+if _addonHandle is None:
+
     if action == 'toggle':
         fritz.switch('setswitchtoggle', ain)
 
@@ -260,33 +285,58 @@ if action is not None:
     elif action == 'off':
         fritz.switch('setswitchoff', ain)
 
-else:
-    if __addon__.getSetting('preferredAIN') != '':
-        fritz.switch('setswitchtoggle', __addon__.getSetting('preferredAIN'))
+    elif action == 'setpreferredain':
+        _devlist = [__LS__(30006)]
+        _ainlist = ['']
+        for device in actors:
+            if device.type == 'switch':
+                _devlist.append(device.name)
+                _ainlist.append(device.actor_id)
+        if len(_devlist) > 0:
+            dialog = xbmcgui.Dialog()
+            _idx = dialog.select(__LS__(30020), _devlist)
+            if _idx > -1:
+                __addon__.setSetting('preferredAIN', _ainlist[_idx])
+    elif action == 'setreadonlyain':
+        _devlist = [__LS__(30006)]
+        _ainlist = ['']
+        for device in actors:
+            if device.type == 'switch':
+                _devlist.append(device.name)
+                _ainlist.append(device.actor_id)
+        if len(_devlist) > 0:
+            dialog = xbmcgui.Dialog()
+            _idx = dialog.multiselect(__LS__(30020), _devlist)
+            if _idx is not None:
+                __addon__.setSetting('readonlyAIN', ', '.join([_ainlist[i] for i in _idx]))
     else:
-        if len(actors) == 1:
-            fritz.switch('setswitchtoggle', actors[0].actor_id)
+        if __addon__.getSetting('preferredAIN') != '':
+            action = 'toogle'
+            ain =  __addon__.getSetting('preferredAIN')
+            fritz.switch('setswitchtoggle', ain)
         else:
-            _devlist = []
-            _ainlist = []
-            for device in actors:
-                if device.type == 'switch':
-                    _devlist.append(device.name)
-                    _ainlist.append(device.actor_id)
-            if len(_devlist) > 0:
-                dialog = xbmcgui.Dialog()
-                _idx = dialog.select(__LS__(30020), _devlist)
-                if _idx > -1: fritz.switch('setswitchtoggle', _ainlist[_idx])
+            if len(actors) == 1:
+                action = 'toogle'
+                ain = actors[0].actor_id
+                fritz.switch('setswitchtoggle', ain)
+            else:
+                _devlist = []
+                _ainlist = []
+                for device in actors:
+                    if device.type == 'switch':
+                        _alternate_state = __LS__(30031) if device.b_state == 'false' else __LS__(30030)
+                        _devlist.append('%s: %s' % (device.name, _alternate_state))
+                        _ainlist.append(device.actor_id)
+                if len(_devlist) > 0:
+                    dialog = xbmcgui.Dialog()
+                    _idx = dialog.select(__LS__(30020), _devlist)
+                    if _idx > -1:
+                        ain = _ainlist[_idx]
+                        fritz.switch('setswitchtoggle', ain)
+                        action = 'toogle'
+    if action != '':
+        ts = str(int(time()))
+        t.writeLog('Set timestamp: %s, device: %s, action: %s' % (ts, ain, action), xbmc.LOGDEBUG)
+        xbmcgui.Window(10000).setProperty('fritzact.timestamp', ts)
 
-if actors is not None:
-    for device in actors:
-        t.writeLog('-------------------------------------', level=xbmc.LOGDEBUG)
-        t.writeLog('Name:        %s' % (device.name), level=xbmc.LOGDEBUG)
-        t.writeLog('Type:        %s' % (device.type), level=xbmc.LOGDEBUG)
-        t.writeLog('ID (AIN):    %s' % (device.actor_id), level=xbmc.LOGDEBUG)
-        t.writeLog('Presence:    %s' % (device.present), level=xbmc.LOGDEBUG)
-        t.writeLog('Device ID:   %s' % (device.device_id), level=xbmc.LOGDEBUG)
-        t.writeLog('Temperature: %s' % (device.temperature), level=xbmc.LOGDEBUG)
-        t.writeLog('State:       %s' % (device.state), level=xbmc.LOGDEBUG)
-        t.writeLog('Power:       %s W' % (device.power), level=xbmc.LOGDEBUG)
-        t.writeLog('Consumption: %s kWh' % (device.energy), level=xbmc.LOGDEBUG)
+t.writeLog('>>>>', xbmc.LOGDEBUG)
