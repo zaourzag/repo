@@ -2461,7 +2461,7 @@ v0.6.0 (2016-12-02)
   </extension>
 </addon>
 
-<addon id="plugin.video.osmosis" name="OSMOSIS" version="0.4.1" provider-name="Stereodruid">
+<addon id="plugin.video.osmosis" name="OSMOSIS" version="0.4.2" provider-name="Stereodruid">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="script.module.t0mm0.common" version="2.0.0"/>
