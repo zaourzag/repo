@@ -76,9 +76,10 @@ def similar(a, b):
 class Infowindow(pyxbmct.AddonDialogWindow):
     text=""
     pos=0
-    def __init__(self, title='',text=''):
+    def __init__(self, title='',text='',image=""):
         super(Infowindow, self).__init__(title)
         self.setGeometry(600,600,8,8)        
+        self.bild=image
         self.text=text        
         self.set_info_controls()
         # Connect a key action (Backspace) to close the window.
@@ -88,6 +89,8 @@ class Infowindow(pyxbmct.AddonDialogWindow):
       self.textbox=pyxbmct.TextBox()            
       self.placeControl(self.textbox, 2, 0, columnspan=8,rowspan=6)                       
       self.textbox.setText(self.text)
+      self.image = pyxbmct.Image(self.bild)
+      self.placeControl(self.image, 0, 0,columnspan=8,rowspan=2)
       self.connectEventList(
              [pyxbmct.ACTION_MOVE_UP,
              pyxbmct.ACTION_MOUSE_WHEEL_UP],
@@ -160,7 +163,8 @@ if __name__ == '__main__':
         xbmc.executebuiltin('Notification('+title+',"Serie nicht gefunden")')
     else:
         newlink="http://www.serienjunkies.de"+maxlink+"alle-serien-staffeln.html"
-        content=geturl(newlink)    
+        content=geturl(newlink)            
+        Bild = re.compile('property="og:image" content="(.+?)"', re.DOTALL).findall(content)[0]   
         Zusammenfassung = re.compile('<p class="box clear pad5">(.+?)</p>', re.DOTALL).findall(content)[0]   
         Zusammenfassung=Zusammenfassung.replace("</a>","")   
         wegs = re.compile('(<.+?>)', re.DOTALL).findall(Zusammenfassung)
@@ -172,7 +176,7 @@ if __name__ == '__main__':
         Zusammenfassung=Zusammenfassung.replace("&auml;","ä")
         Zusammenfassung=Zusammenfassung.replace("&ouml;","ö")
         Zusammenfassung=Zusammenfassung.replace("&szlig;","ß")    
-        window = Infowindow(title="SerienFino",text=Zusammenfassung)
+        window = Infowindow(title="SerienFino",text=Zusammenfassung,image=Bild)
         window.doModal()
         del window
     cj.save(cookie,ignore_discard=True, ignore_expires=True)
