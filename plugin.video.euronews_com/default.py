@@ -220,9 +220,7 @@ def ListRubriken(urls,text,x=0):
  if anz>0:
    addDir("Artikel", urls, 'startvideos', "")
  if x>0:
-     content = content2[content2.find('<div class="small-6 columns text-right">'):]
-     content = content[:content.find('</div>')]
-     match = re.compile('<a href=([^ ]+?) class="enw-justin__header__timeline">(.+?)</a>', re.DOTALL).findall(content)
+     match = re.compile('<a href=([^ ]+?) class="enw-justin__header__timeline">(.+?)</a>', re.DOTALL).findall(content2)
      addDir(match[0][1], "", 'timeline', "")
  return anz    
 
