@@ -128,7 +128,6 @@ if __name__ == '__main__':
     url="http://www.serienjunkies.de/suchen.php?s="+suchtitle+"+XXXX&a=s&t=0"
     debug("URL :"+url)
     content=geturl(url)
-    print content
     match = re.compile('<div class="sminibox"><a href="(.+?)"><img src="(.+?)"[^"]+?alt="(.+?)"/>', re.DOTALL).findall(content)
     maxlink=""
     maxnr=0
@@ -146,7 +145,7 @@ if __name__ == '__main__':
       except:
          pass
       xy=similar(title_comp,name_comp)
-      if xy>0.8:
+      if xy>0.8:    
           if xy>maxnr:
             maxnr=xy 
             maxlink=link
@@ -157,22 +156,23 @@ if __name__ == '__main__':
       debug("title_comp : "+title_comp)      
       debug("#############" + str(xy))
     debug("maxlink : "+maxlink)
-    newlink="http://www.serienjunkies.de"+maxlink+"alle-serien-staffeln.html"
-    content=geturl(newlink)
-    debug("++++ CONENT **+++")
-    debug(content)    
-    Zusammenfassung = re.compile('<p class="box clear pad5">(.+?)</p>', re.DOTALL).findall(content)[0]   
-    Zusammenfassung=Zusammenfassung.replace("</a>","")   
-    wegs = re.compile('(<.+?>)', re.DOTALL).findall(Zusammenfassung)
-    for weg in wegs:
-       Zusammenfassung=Zusammenfassung.replace(weg,"")     
-    debug("Zusammenfassung : "+Zusammenfassung)
-    debug("---")
-    Zusammenfassung=Zusammenfassung.replace("&uuml;","ü")
-    Zusammenfassung=Zusammenfassung.replace("&auml;","ä")
-    Zusammenfassung=Zusammenfassung.replace("&ouml;","ö")
-    Zusammenfassung=Zusammenfassung.replace("&szlig;","ß")    
-    window = Infowindow(title="SerienFino",text=Zusammenfassung)
-    window.doModal()
-    del window
+    if maxlink=="":
+        xbmc.executebuiltin('Notification('+title+',"Serie nicht gefunden")')
+    else:
+        newlink="http://www.serienjunkies.de"+maxlink+"alle-serien-staffeln.html"
+        content=geturl(newlink)    
+        Zusammenfassung = re.compile('<p class="box clear pad5">(.+?)</p>', re.DOTALL).findall(content)[0]   
+        Zusammenfassung=Zusammenfassung.replace("</a>","")   
+        wegs = re.compile('(<.+?>)', re.DOTALL).findall(Zusammenfassung)
+        for weg in wegs:
+            Zusammenfassung=Zusammenfassung.replace(weg,"")     
+        debug("Zusammenfassung : "+Zusammenfassung)
+        debug("---")
+        Zusammenfassung=Zusammenfassung.replace("&uuml;","ü")
+        Zusammenfassung=Zusammenfassung.replace("&auml;","ä")
+        Zusammenfassung=Zusammenfassung.replace("&ouml;","ö")
+        Zusammenfassung=Zusammenfassung.replace("&szlig;","ß")    
+        window = Infowindow(title="SerienFino",text=Zusammenfassung)
+        window.doModal()
+        del window
     cj.save(cookie,ignore_discard=True, ignore_expires=True)
