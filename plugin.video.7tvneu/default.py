@@ -196,9 +196,55 @@ def ganzefolgensender(url):
 def serie(url):
     debug("serie :"+url)
     addDir("Alle Clips", url+"/alle-clips", "listvideos", "")      
-    addDir("Ganze Folgen", url+"/ganze-folgen", "listvideos", "")           
+    addDir("Ganze Folgen", url+"/ganze-folgen", "listvideos", "")    
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 
+def sendungsmenu():
+    addDir("Sender", "sixx", "allsender", "")      
+    addDir("Generes", "Anime", "allsender", "")   
+    addDir("Alle Sendungen", baseurl+"/queue/format", "abisz", "")   
+    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
+    
+def abisz(url):
+  debug("abisz URL :"+url)
+  inhalt = geturl(url) 
+  struktur = json.loads(inhalt) 
+  debug("struktur --------")
+  #debug(struktur)
+  for buchstabe in struktur["facet"]:
+     addDir(buchstabe, url+"/(letter)/"+buchstabe, "jsonfile", "")      
+  xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
+
+def jsonfile(url):
+   debug("jsonfile url :"+url)
+   inhalt = geturl(url) 
+   struktur = json.loads(inhalt) 
+   for element in struktur["entries"]:
+     urlv=element["url"]
+     image=element["images"][0]["url"]
+     title=element["title"]
+     addDir(title, baseurl+"/"+urlv, "serie", image)       
+   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
+   
+def allsender(begriff):
+  debug("allsender url :"+begriff)
+  url="http://www.7tv.de/sendungen-a-z"    
+  inhalt = geturl(url) 
+  inhalt = inhalt[:inhalt.find('<div class="tvshow-list" data-type="bentobox">')] 
+  debug("####### "+inhalt)
+  spl=inhalt.split('<ul class="tvshow-filter">')
+  for i in range(1,len(spl),1):   
+      entry=spl[i]
+      debug("Entry :"+ entry)
+      if not begriff in entry:
+         debug("Nicht gefunden")
+         continue
+      filter=re.compile('<a href="#tvshow-all" data-href="(.+?)">(.+?)</a>', re.DOTALL).findall(entry)
+      for url,name in filter:
+         url=baseurl+url
+         addDir(name, url, "abisz", "")      
+  xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
+  
 def listvideos(url):
   inhalt = geturl(url) 
   kurz_inhalt = inhalt[inhalt.find('<div class="main-zone">')+1:]
@@ -325,6 +371,7 @@ def playvideo(video_id, access_token, client_name, client_location, salt, source
 # Haupt Menu Anzeigen      
 if mode is '':
     addDir("Sender", "Sender", 'senderlist', "") 
+    addDir("Sendungen A-Z", url+"/ganze-folgen", "sendungsmenu", "")  
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 else:
   # Wenn Settings ausgewählt wurde
@@ -345,3 +392,11 @@ else:
           getvideoid(url)     
   if mode == 'ganzefolgensender':
           ganzefolgensender(url)                      
+  if mode == 'sendungsmenu':
+          sendungsmenu()                  
+  if mode == 'allsender':
+          allsender(url)                          
+  if mode == 'abisz':
+          abisz(url)                                             
+  if mode == 'jsonfile':
+          jsonfile(url)                                                               
