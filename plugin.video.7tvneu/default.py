@@ -64,8 +64,8 @@ def log(msg, level=xbmc.LOGNOTICE):
     addonID = addon.getAddonInfo('id')
     xbmc.log('%s: %s' % (addonID, msg), level) 
     
-def addDir(name, url, mode, iconimage, desc=""):
-  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
+def addDir(name, url, mode, iconimage, desc="",sendername=""):
+  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&sendername="+str(sendername)
   ok = True
   liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=iconimage)
   liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc})
@@ -129,6 +129,7 @@ def parameters_string_to_dict(parameters):
 params = parameters_string_to_dict(sys.argv[2])
 mode = urllib.unquote_plus(params.get('mode', ''))
 url = urllib.unquote_plus(params.get('url', ''))
+sendername = urllib.unquote_plus(params.get('sendername', ''))
 
 def senderlist():
     inhalt = geturl(baseurl) 
@@ -206,11 +207,12 @@ def sendungsmenu():
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
     
 def abisz(url):
+  url=url.replace(" ","%20")
   debug("abisz URL :"+url)
   inhalt = geturl(url) 
   struktur = json.loads(inhalt) 
   debug("struktur --------")
-  #debug(struktur)
+  debug(struktur)
   for buchstabe in struktur["facet"]:
      addDir(buchstabe, url+"/(letter)/"+buchstabe, "jsonfile", "")      
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
@@ -376,12 +378,47 @@ def playvideo(video_id, access_token, client_name, client_location, salt, source
         #print "Daten data :"+data        
         return ""
 
-        
-  
+def verpasstdatum():
+  #http://www.7tv.de/missedshows/data/20161215
+   dialog = xbmcgui.Dialog()
+   d = dialog.input(translation(30009), type=xbmcgui.INPUT_DATE)
+   d=d.replace(' ','0')  
+   d= d[6:] +  d[3:5] + d[:2]
+   url=baseurl+"/missedshows/data/"+d
+   json_data = geturl(url)
+   json_data = json.loads(json_data) 
+   for sendername in json_data["entries"].keys():
+     debug("sender "+sendername)
+     addDir(sendername, url, "listdatum", "",sendername=sendername)  
+   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
+     
+def  listdatum(url,sendername):
+   debug("listdatum ulr :"+url)
+   debug("listdatum sender :"+ sendername)
+   json_data = geturl(url)
+   json_data = json.loads(json_data) 
+   senderliste=json_data["entries"][sendername]
+   for element in senderliste:
+     title=element["title"]
+     urlv=element["url"]
+     desc=element["description"]
+     dur=int(element["duration"]) /1000     
+     img=element["images"][0]["url"]
+     serie=element["metadata"]["tvShowTitle"]
+     time=element["airtime"]
+     name=time + " " + serie + " - " + title
+     
+     addLink(name, urlv, "getvideoid", "",desc=desc,duration=dur) 
+   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
+   debug("senderliste")
+   debug(senderliste)
+
+
 # Haupt Menu Anzeigen      
 if mode is '':
     addDir("Sender", "Sender", 'senderlist', "") 
     addDir("Sendungen A-Z", url+"/ganze-folgen", "sendungsmenu", "")  
+    addDir("Verpasste Sendungen", "", "verpasstdatum", "")  
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 else:
   # Wenn Settings ausgewählt wurde
@@ -410,3 +447,7 @@ else:
           abisz(url)                                             
   if mode == 'jsonfile':
           jsonfile(url)                                                               
+  if mode == 'verpasstdatum':
+          verpasstdatum()   
+  if mode == 'listdatum':
+          listdatum(url,sendername)          
