@@ -318,8 +318,7 @@ def playvideo(video_id, access_token, client_name, client_location, salt, source
             else:
               #debug("Protected : "+json_data["is_protected"])
               if json_data["is_protected"]==True:
-                dialog = xbmcgui.Dialog()  
-                nr=dialog.ok("Inputstream", "DRM geschützte Folgen gehen nur mit Inputstream")
+                xbmc.executebuiltin('Notification("Inputstream", "DRM geschützte Folgen gehen nur mit Inputstream")')
                 return
               else:
                 for stream in json_data['sources']:
