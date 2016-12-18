@@ -145,7 +145,7 @@ def senderlist():
 
 def sender(url):
     addDir("Beliebteste Sendungen", url, "belibtesendungen", "")      
-    addDir("Ganze Folgen", url, "ganzefolgensender", "")           
+    addDir("Neue Ganze Folgen", url, "ganzefolgensender", "")           
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
     
 def belibtesendungen(url):
@@ -297,11 +297,11 @@ def playvideo(video_id, access_token, client_name, client_location, salt, source
           if not "error" in struktur.keys() :            
             if struktur["result"]["addon"]["enabled"]==True:
                 is_type="inputstream.mpd"                
-        if is_type=="":
-          dialog = xbmcgui.Dialog()
-          nr=dialog.ok("Inputstream", "Inputstream fehlt")
-          return ""
-
+#        if is_type=="":
+#          dialog = xbmcgui.Dialog()
+          #nr=dialog.ok("Inputstream", "Inputstream fehlt")
+          #return ""
+        print "is_type :"+is_type
         if source_id is None:
             json_url = 'http://vas.sim-technik.de/vas/live/v2/videos/%s?' \
                        'access_token=%s&client_location=%s&client_name=%s' \
@@ -310,11 +310,22 @@ def playvideo(video_id, access_token, client_name, client_location, salt, source
             json_data = json.loads(json_data) 
             print json_data
             print "........................"
-            for stream in json_data['sources']:
-              if  stream['mimetype']=='application/dash+xml':           
-                source_id = stream['id']
-            print source_id
-
+            if not is_type=="":
+              for stream in json_data['sources']:
+                if  stream['mimetype']=='application/dash+xml':           
+                  source_id = stream['id']
+              print source_id
+            else:
+              #debug("Protected : "+json_data["is_protected"])
+              if json_data["is_protected"]==True:
+                dialog = xbmcgui.Dialog()  
+                nr=dialog.ok("Inputstream", "DRM geschützte Folgen gehen nur mit Inputstream")
+                return
+              else:
+                for stream in json_data['sources']:
+                  if  stream['mimetype']=='video/mp4':           
+                    source_id = stream['id']
+                print source_id
         client_id_1 = salt[:2] + sha1(
             ''.join([str(video_id), salt, access_token, client_location, salt, client_name]).encode(
                 'utf-8')).hexdigest()
