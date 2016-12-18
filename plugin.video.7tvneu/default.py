@@ -389,6 +389,9 @@ def verpasstdatum():
    d = dialog.input(translation(30009), type=xbmcgui.INPUT_DATE)
    d=d.replace(' ','0')  
    d= d[6:] +  d[3:5] + d[:2]
+   xbmc.executebuiltin('ActivateWindow("Videos","plugin://plugin.video.7tvneu?url='+d+'&mode=verpasstdatummenu")') 
+
+def verpasstdatummenu(d):
    url=baseurl+"/missedshows/data/"+d
    json_data = geturl(url)
    json_data = json.loads(json_data) 
@@ -422,6 +425,12 @@ def search():
    dialog = xbmcgui.Dialog()
    d = dialog.input(translation(30010), type=xbmcgui.INPUT_ALPHANUM)
    d=d.replace(" ","%20")
+   debug("XYXXX :::")   
+   #xbmc.executebuiltin('Notification("Inputstream", "DRM geschützte Folgen gehen nur mit Inputstream")')
+   xbmc.executebuiltin('ActivateWindow("Videos","plugin://plugin.video.7tvneu?url='+d+'&mode=searchmenu")') 
+   debug("WWWW :::")
+   
+def searchmenu(d):
    #/type/episode/offset/1/limit/5
    addDir("Serien", url=baseurl +"/7tvsearch/search/query/"+ d , mode="searchtext", iconimage="" ,offset=1,limit=5,type="format")      
    addDir("Ganze Folgen", url=baseurl +"/7tvsearch/search/type/"+ d , mode="searchtext", iconimage="" ,offset=1,limit=5,type="episode")   
@@ -454,7 +463,7 @@ def searchtext(url,offset,limit,type):
 if mode is '':
     addDir("Sender", "Sender", 'senderlist', "") 
     addDir("Sendungen A-Z", url+"/ganze-folgen", "sendungsmenu", "")  
-    addDir("Verpasste Sendungen", "", "verpasstdatum", "")  
+    addDir("Sendungen nach Datum", "", "verpasstdatum", "")  
     addDir("Suche","","search","")
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 else:
@@ -492,3 +501,7 @@ else:
           search()
   if mode ==  'searchtext':
           searchtext(url,offset,limit,type)
+  if mode ==  'searchmenu':
+          searchmenu(url)
+  if mode ==  'verpasstdatummenu':
+          verpasstdatummenu(url)          
