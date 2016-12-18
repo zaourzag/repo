@@ -64,8 +64,8 @@ def log(msg, level=xbmc.LOGNOTICE):
     addonID = addon.getAddonInfo('id')
     xbmc.log('%s: %s' % (addonID, msg), level) 
     
-def addDir(name, url, mode, iconimage, desc="",sendername=""):
-  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&sendername="+str(sendername)
+def addDir(name, url, mode, iconimage, desc="",sendername="",offset="",limit="",type=""):
+  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&sendername="+str(sendername)+"&offset="+str(offset)+"&limit="+str(limit)+"&type="+str(type)
   ok = True
   liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=iconimage)
   liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc})
@@ -130,6 +130,11 @@ params = parameters_string_to_dict(sys.argv[2])
 mode = urllib.unquote_plus(params.get('mode', ''))
 url = urllib.unquote_plus(params.get('url', ''))
 sendername = urllib.unquote_plus(params.get('sendername', ''))
+offset = urllib.unquote_plus(params.get('offset', ''))
+limit = urllib.unquote_plus(params.get('limit', ''))
+type = urllib.unquote_plus(params.get('type', ''))
+
+
 
 def senderlist():
     inhalt = geturl(baseurl) 
@@ -413,12 +418,44 @@ def  listdatum(url,sendername):
    debug("senderliste")
    debug(senderliste)
 
+def search():
+   dialog = xbmcgui.Dialog()
+   d = dialog.input(translation(30010), type=xbmcgui.INPUT_ALPHANUM)
+   d=d.replace(" ","%20")
+   #/type/episode/offset/1/limit/5
+   addDir("Serien", url=baseurl +"/7tvsearch/search/query/"+ d , mode="searchtext", iconimage="" ,offset=1,limit=5,type="format")      
+   addDir("Ganze Folgen", url=baseurl +"/7tvsearch/search/type/"+ d , mode="searchtext", iconimage="" ,offset=1,limit=5,type="episode")   
+   addDir("Clips", url=baseurl +"/7tvsearch/search/format/"+ d , mode="searchtext", iconimage="" ,offset=1,limit=5,type="clip")   
+   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)         
+  
 
+def searchtext(url,offset,limit,type): 
+   debug("Type :"+type) 
+   urlx=url+"/type/"+ type + "/offset/"+offset +"/limit/"+limit
+   debug("Searchtext ---------")
+   debug(urlx)
+   content = geturl(urlx)
+   spl=content.split('<article class')
+   for i in range(1,len(spl),1):
+      entry=spl[i]  
+      urlt=re.compile('href="(.+?)"', re.DOTALL).findall(entry)[0]
+      urlt=baseurl+urlt
+      img=re.compile('data-src="(.+?)"', re.DOTALL).findall(entry)[0]
+      title=re.compile('title="(.+?)"', re.DOTALL).findall(entry)[0]      
+      if  type=="format":
+        addDir(title, urlt, "serie", img) 
+      else:
+        addLink(title, urlt, "getvideoid", img) 
+   if i>5:
+      addDir("Next", url, mode="searchtext", iconimage="" ,offset=str(int(offset)+7),limit=limit,type=type)   
+   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
+   
 # Haupt Menu Anzeigen      
 if mode is '':
     addDir("Sender", "Sender", 'senderlist', "") 
     addDir("Sendungen A-Z", url+"/ganze-folgen", "sendungsmenu", "")  
     addDir("Verpasste Sendungen", "", "verpasstdatum", "")  
+    addDir("Suche","","search","")
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 else:
   # Wenn Settings ausgewählt wurde
@@ -450,4 +487,8 @@ else:
   if mode == 'verpasstdatum':
           verpasstdatum()   
   if mode == 'listdatum':
-          listdatum(url,sendername)          
+          listdatum(url,sendername) 
+  if mode == 'search':
+          search()
+  if mode ==  'searchtext':
+          searchtext(url,offset,limit,type)
