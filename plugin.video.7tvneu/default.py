@@ -281,19 +281,20 @@ def getvideoid(client_location):
   debug("getvideoid client_location :"+client_location)
   inhalt = geturl(client_location)
   video_id=re.compile('"clip_id": "(.+?)"', re.DOTALL).findall(inhalt)[0]  
-  access_token = 'seventv-web'
-  salt = '01!8d8F_)r9]4s[qeuXfP%'
+
   source_id = None
-  videos = playvideo(video_id, access_token, "", client_location, salt, source_id)
+  videos = playvideo(video_id, client_location,  source_id)
 
   
   
 
-def playvideo(video_id, access_token, client_name, client_location, salt, source_id=None):
+def playvideo(video_id,  client_location, source_id=None):
         from hashlib import sha1
 
         adaptivaddon=xbmc.executeJSONRPC('{"jsonrpc": "2.0", "id": 1, "method": "Addons.GetAddonDetails", "params": {"addonid": "inputstream.adaptive", "properties": ["enabled"]}}')        
         struktur = json.loads(adaptivaddon) 
+        debug("adaptivaddon struktur :")
+        debug(struktur)
         is_type=""
         if not "error" in struktur.keys() :            
             if struktur["result"]["addon"]["enabled"]==True:
@@ -304,12 +305,20 @@ def playvideo(video_id, access_token, client_name, client_location, salt, source
           if not "error" in struktur.keys() :            
             if struktur["result"]["addon"]["enabled"]==True:
                 is_type="inputstream.mpd"                
-#        if is_type=="":
+        if is_type=="":
+            access_token = 'h''b''b''t''v'  
+            salt = '0''1''r''e''e''6''e''L''e''i''w''i''u''m''i''e''7''i''e''V''8''p''a''h''g''e''i''T''u''i''3''B'
+            client_name='h''b''b''t''v'
+        else:
+          access_token = 'seventv-web'  
+          salt = '01!8d8F_)r9]4s[qeuXfP%'
+          client_name=''
 #          dialog = xbmcgui.Dialog()
           #nr=dialog.ok("Inputstream", "Inputstream fehlt")
           #return ""
         print "is_type :"+is_type
         if source_id is None:
+            source_id=0 
             json_url = 'http://vas.sim-technik.de/vas/live/v2/videos/%s?' \
                        'access_token=%s&client_location=%s&client_name=%s' \
                        % (video_id, access_token, client_location, client_name)
@@ -319,8 +328,9 @@ def playvideo(video_id, access_token, client_name, client_location, salt, source
             print "........................"
             if not is_type=="":
               for stream in json_data['sources']:
-                if  stream['mimetype']=='application/dash+xml':           
-                  source_id = stream['id']
+                if  stream['mimetype']=='application/dash+xml': 
+                  if int(source_id) <  int(stream['id']):               
+                    source_id = stream['id']
               print source_id
             else:
               #debug("Protected : "+json_data["is_protected"])
@@ -330,7 +340,8 @@ def playvideo(video_id, access_token, client_name, client_location, salt, source
               else:
                 for stream in json_data['sources']:
                   if  stream['mimetype']=='video/mp4':           
-                    source_id = stream['id']
+                    if int(source_id) <  int(stream['id']):                                   
+                        source_id = stream['id']
                 print source_id
         client_id_1 = salt[:2] + sha1(
             ''.join([str(video_id), salt, access_token, client_location, salt, client_name]).encode(
@@ -345,7 +356,7 @@ def playvideo(video_id, access_token, client_name, client_location, salt, source
         print "........................"
         server_id = json_data['server_id']
         
-        client_name = 'kolibri-1.2.5'    
+        #client_name = 'kolibri-1.2.5'    
         client_id = salt[:2] + sha1(''.join([salt, video_id, access_token, server_id,client_location, str(source_id), salt, client_name]).encode('utf-8')).hexdigest()
         url_api_url = 'http://vas.sim-technik.de/vas/live/v2/videos/%s/sources/url?%s' % (video_id, compat_urllib_parse.urlencode({
             'access_token': access_token,
@@ -358,9 +369,21 @@ def playvideo(video_id, access_token, client_name, client_location, salt, source
         print "url_api_url :"+url_api_url
         json_data = geturl(url_api_url)
         json_data = json.loads(json_data) 
-        print json_data
-        print "........................"        
-        data=json_data["sources"][0]["url"]               
+        debug ("---------------------------")
+        debug( json_data)
+        debug( "........................")
+        max_id=0
+        for stream in json_data["sources"]:
+            ul=stream["url"]
+            try:
+                sid=re.compile('-tp([0-9]+).mp4', re.DOTALL).findall(ul)[0]
+                id=int(sid)
+                if max_id<id:
+                    max_id=id
+                    data=ul
+            except:
+              data=ul                                 
+        #data=json_data["sources"][-1]["url"]               
         userAgent = 'user-agent=Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36&Origin=http://www.7tv.de&Referer=http://www.7tv.de/fresh-off-the-boat/25-staffel-2-episode-5-tote-hose-an-halloween-ganze-folge&content-type='
         addon_handle = int(sys.argv[1])
         listitem = xbmcgui.ListItem(path=data)         
