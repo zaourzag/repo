@@ -141,6 +141,9 @@ def mediatek(session,userid,id_such,start,ende):
   header=[]
   header.append (("Authorization","Bearer "+session))
   header.append (("UserId",userid))
+  content=getUrl("https://magine.com/api/time/v1",header=header)
+  struktur = json.loads(content)  
+  timestamp=int(struktur["nowUnixtime"])
   content=getUrl("https://magine.com/api/channel/v1/users/"+userid,header=header)  
   struktur = json.loads(content)  
   channelid_arr=[]  
@@ -150,7 +153,7 @@ def mediatek(session,userid,id_such,start,ende):
    name_arr.append(element["name"])
   senderliste=",".join(channelid_arr)
   
-  now = datetime.datetime.now()
+  now = datetime.datetime.utcfromtimestamp(timestamp)
   vontime = now - datetime.timedelta(hours=24)
   bistime = now 
   von=start
@@ -229,50 +232,30 @@ def playvideo(session,userid,channelid,id):
 def mainmenu(session,userid):
   header=[]
   header.append (("Authorization","Bearer "+session))
-  header.append (("UserId",userid))
-  content=getUrl("https://magine.com/api/time/v1",header=header)
-  struktur = json.loads(content)  
-  timestamp=int(struktur["nowUnixtime"])
-  content=getUrl("https://magine.com/api/channel/v1/users/"+userid,header=header)  
+  header.append (("UserId",userid))  
+  content=getUrl("https://magine.com/api/your-tv/v1/sections",header=header)  
   struktur = json.loads(content) 
-  debug("Mainmenu")
-  debug(content)
-  channelid_arr=[]
-  logo_arr=[]
-  name_arr=[]
-  for element in struktur: 
-   channelid_arr.append(element["id"])
-  senderliste=",".join(channelid_arr)
-  debug("Senderlist="+senderliste)
-  now = datetime.datetime.now()
-  vontime = now - datetime.timedelta(hours=5)
-  bistime = now + datetime.timedelta(hours=5)
-  von=vontime.strftime("%Y%m%dT%H%M00Z")
-  bis=bistime.strftime("%Y%m%dT%H%M00Z")
-  debug("VON: "+von)
-  debug("BIS: "+bis)
-  url="https://magine.com/api/content/v2/timeline/airings?channels="+senderliste+"&from="+von+"&to="+bis
-  content=getUrl(url,header=header)  
-  struktur_inhalt = json.loads(content)   
-  for element in struktur: 
-    channelid=element["id"]
-    #logoDark=element["logoDark"]
-    sender_strukt=struktur_inhalt[channelid]
-    debug("----")    
-    for sendung in sender_strukt:            
-        start=int(sendung["startUnixtime"])
-        stop=int(sendung["stopUnixtime"])
-        if timestamp>start and timestamp<stop:
-          debug("Gefunden")
-          logoDark = sendung["image"]            
-          name=sendung["title"]   +" ( "+ element["name"] +" )"
-          addLink(name, "", "playlive", logoDark, channelid=channelid)     
+
+  
+  
+  for element in struktur["sections"][0]["sectionItems"][0]["subsection"]["items"]: 
+        element=element["airing"]
+        debug (element)
+        bild=element["image"] 
+        kanal_name=element["channel"]["name"]
+        kanal_id=element["channel"]["id"]
+        zeit=element["id"]        
+        senung_name=element["title"]
+        addLink(kanal_name +" - "+senung_name , str(zeit), "playlive", bild, channelid=str(kanal_id))
   xbmcplugin.endOfDirectory(addon_handle)
 
 def listchannels(session,userid):
   header=[]
   header.append (("Authorization","Bearer "+session))
   header.append (("UserId",userid))
+  content=getUrl("https://magine.com/api/time/v1",header=header)
+  struktur = json.loads(content)  
+  timestamp=int(struktur["nowUnixtime"])
   content=getUrl("https://magine.com/api/channel/v1/users/"+userid,header=header)  
   struktur = json.loads(content)  
   channelid_arr=[]  
@@ -282,7 +265,7 @@ def listchannels(session,userid):
    name_arr.append(element["name"])
   senderliste=",".join(channelid_arr)
   
-  now = datetime.datetime.now()
+  now = datetime.datetime.utcfromtimestamp(timestamp)
   vontime = now - datetime.timedelta(hours=24)
   bistime = now 
   von=vontime.strftime("%Y%m%dT%H%M00Z")
@@ -306,82 +289,87 @@ def listchannels(session,userid):
       addDir(name_arr[id], "", "selectdate", "http://images.tvoli.com/channel-logos/"+str(channel) +".png?width=128&height=128", channelid=str(channel))                   
   xbmcplugin.endOfDirectory(addon_handle)     
                 
-def playlive(url,session,userid,channelid):    
+def playlive(url,session,userid,channelid):      
+  header=[]
+  header.append (("Authorization","Bearer "+session))
+  header.append (("UserId",userid))
+  times=url
   debug("Playlive")
   playlist = xbmc.PlayList(1)
   playlist.clear() 
-  timelist=[]  
-  playlist=leseclips(session,userid,channelid,playlist,timelist)  
+  item,title,next,dauer=leseclips(times,session,userid,channelid)
+  playlist.add(title, item)  
+  debug("NEXT :"+ str(next))  
   xbmc.Player().play(playlist)
-  counter1=0
-  counter2=0
-  while counter1<4:
-    while xbmc.Player().isPlaying():  
-        if counter2==10:
-           counter2=0 
-           if playlist.size()<3 :              
-              playlist=leseclips(session,userid,channelid,playlist,timelist)  
-        counter=0
-        while counter < 60 and xbmc.Player().isPlaying():
-            time.sleep(1)
-            counter=counter+1
-        counter2=counter2+1
-        counter1=0                
-    time.sleep(1)
-    counter1=counter1+1  
+  time.sleep(3)
+  while xbmc.Player().isPlaying():  
+    dauer=dauer-300
+    if dauer<0:
+      dauer=1
+    time.sleep(dauer)
+    dauer=0
+    try:
+        item,title,next,dauer=leseclips(next,session,userid,channelid)  
+    except:
+         pass
+    playlist.add(title, item) 
   
   
-def leseclips(session,userid,channelid,playlist,timelist):  
+def leseclips(url,session,userid,channelid):  
+
   debug("leseclips")
+  times=url
+  path=str(times)[0:5]
   header=[]    
   header.append (("Authorization","Bearer "+session))
   header.append (("UserId",userid))  
-  urx="https://magine.com/api/content/v2/feeds/channel-"+channelid
-  content=getUrl(urx,header=header)
-  struktur = json.loads(content)
-  laenge=0
-  for element in struktur["items"]:
-    if laenge > 2:
-      break
-    laenge=laenge+1    
-    times=str(element["id"])
-    if not times in timelist:
-      timelist.append(times)
-      desc=element["description"]
-      title=element["title"]
-      debug("-------------- :"+str(times))  
-      newurl="https://magine.com/api/contenturl/v1/channel/"+str(channelid)+"/airing/"+str(times)
-      content=getUrl(newurl,header=header)
-      struktur = json.loads(content)        
-      userAgent = "Coralie/1.7.2-2016081207(SM-G900F; Android; 6.0.1; DeviceId c248c629af1fe0a8c46b95668064c1d2952a9e91d27bccc3c5d584c2f7553a; Token Tvoli/ec9ab8acf27f14cacfefbf1087463fd3aeacdca4; VersionCheck)"
-      listitem = xbmcgui.ListItem(path=struktur["dash"])        
-      debug("List Item gesetzt")      
-      pin=addon.getSetting("pin") 
-      adaptivaddon=xbmc.executeJSONRPC('{"jsonrpc": "2.0", "id": 1, "method": "Addons.GetAddonDetails", "params": {"addonid": "inputstream.adaptive", "properties": ["enabled"]}}')        
-      sstruktur = json.loads(adaptivaddon) 
-      is_type=""
-      if not "error" in sstruktur.keys() :            
-          if sstruktur["result"]["addon"]["enabled"]==True:
-              is_type="inputstream.adaptive"
-      if is_type=="":
-        adaptivaddon=xbmc.executeJSONRPC('{"jsonrpc": "2.0", "id": 1, "method": "Addons.GetAddonDetails", "params": {"addonid": "inputstream.mpd", "properties": ["enabled"]}}')        
-        sstruktur = json.loads(adaptivaddon)           
-        if not "error" in sstruktur.keys() :            
-           if sstruktur["result"]["addon"]["enabled"]==True:
-                is_type="inputstream.mpd"                
-      if is_type=="":
-          dialog = xbmcgui.Dialog()
-          nr=dialog.ok("Inputstream", "Inputstream fehlt")
-          return "" 
-      lic_header="|Authorization=Bearer%20"+session+"&UserId=" +userid+"&Magine-ChannelId=" +channelid+"&Magine-Md=PC-Awesomesauce"+"&Magine-ParentalControlPinCode="+pin+"&Magine-Mk=HTML5"+"&Magine-ClientId=c060c1bf-d805-4feb-74d4-d8241e27d836"+"&Magine-ProgramId="+times+"|R{SSM}|"
-      listitem.setProperty(is_type+'.license_type', 'com.widevine.alpha')
-      listitem.setProperty(is_type+'.license_key', "https://magine.com/api/drm/v4/license/widevine"+lic_header)
-      listitem.setProperty(is_type+'.license_data', base64.b64encode(b'\x08\x01\x12\x10'+'{KID}'+b'\x1A\x05'+'tvoli"'+chr(len('channel.'+channelid+'.'+times))+'channel.'+channelid+'.'+times+'*'+b'\x02'+'SD2'+b'\x00'))
-      listitem.setProperty('inputstreamaddon', is_type)   
-      listitem.setProperty(is_type+".manifest_type", "mpd")  
-      listitem.setInfo( "video", { "Title" : title, "Plot" : desc} )    
-      playlist.add(struktur["dash"], listitem)   
-  return playlist
+  
+  content=getUrl("https://magine.com/api/time/v1",header=header)
+  struktur = json.loads(content)  
+  timestamp=int(struktur["nowUnixtime"])
+  
+  content=getUrl("https://magine.com/api/airing/v2/"+times,header=header)
+  struktur= json.loads(content) 
+  debug(struktur)
+  title=struktur["title"]
+  stop=struktur["stopUnixtime"]
+  desc=struktur["description"]
+  dauer=stop-timestamp
+  
+  debug("dauer :"+str(dauer))
+  debug("Git file")
+  content=getUrl("https://magine.com/api/contenturl/v1/channel/"+ channelid +"/airing/"+times,header=header)
+  struktur= json.loads(content) 
+  dash_file=struktur["dash"]
+  debug(struktur)
+  listitem = xbmcgui.ListItem(path=dash_file)        
+  debug("List Item gesetzt")      
+  pin=addon.getSetting("pin") 
+  adaptivaddon=xbmc.executeJSONRPC('{"jsonrpc": "2.0", "id": 1, "method": "Addons.GetAddonDetails", "params": {"addonid": "inputstream.adaptive", "properties": ["enabled"]}}')        
+  sstruktur = json.loads(adaptivaddon) 
+  is_type=""
+  if not "error" in sstruktur.keys() :            
+     if sstruktur["result"]["addon"]["enabled"]==True:
+        is_type="inputstream.adaptive"
+  if is_type=="":
+     adaptivaddon=xbmc.executeJSONRPC('{"jsonrpc": "2.0", "id": 1, "method": "Addons.GetAddonDetails", "params": {"addonid": "inputstream.mpd", "properties": ["enabled"]}}')        
+     sstruktur = json.loads(adaptivaddon)           
+     if not "error" in sstruktur.keys() :            
+        if sstruktur["result"]["addon"]["enabled"]==True:
+          is_type="inputstream.mpd"                
+  if is_type=="":
+      dialog = xbmcgui.Dialog()
+      nr=dialog.ok("Inputstream", "Inputstream fehlt")
+      return "" 
+  lic_header="|Authorization=Bearer%20"+session+"&UserId=" +userid+"&Magine-ChannelId=" +channelid+"&Magine-Md=PC-Awesomesauce"+"&Magine-ParentalControlPinCode="+pin+"&Magine-Mk=HTML5"+"&Magine-ClientId=c060c1bf-d805-4feb-74d4-d8241e27d836"+"&Magine-ProgramId="+times+"|R{SSM}|"
+  listitem.setProperty(is_type+'.license_type', 'com.widevine.alpha')
+  listitem.setProperty(is_type+'.license_key', "https://magine.com/api/drm/v4/license/widevine"+lic_header)
+  listitem.setProperty(is_type+'.license_data', base64.b64encode(b'\x08\x01\x12\x10'+'{KID}'+b'\x1A\x05'+'tvoli"'+chr(len('channel.'+channelid+'.'+times))+'channel.'+channelid+'.'+times+'*'+b'\x02'+'SD2'+b'\x00'))
+  listitem.setProperty('inputstreamaddon', is_type)   
+  listitem.setProperty(is_type+".manifest_type", "mpd")  
+  listitem.setInfo( "video", { "Title" : title, "Plot" : desc} )   
+  debug("ADDDD")      
+  return listitem,dash_file,str(path)+str(stop),dauer
 
   
 def parameters_string_to_dict(parameters):
