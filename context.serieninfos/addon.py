@@ -140,27 +140,35 @@ if __name__ == '__main__':
     response = json.loads(xbmc.executeJSONRPC(json.dumps(query)))
     lastplayd_nr=0
     lastplayd_title=""
+    lastplayd_staffel=1
     lastepisode_nr=0
-    lastepisode_name=""   
+    lastepisode_name="" 
+    lastepisode_staffel=1
     fehlen=""
     for episode in response["result"]["episodes"]:
        debug("------")
        debug (episode)
        if episode["playcount"] > 0:
-         if lastplayd_nr<episode["episode"]:
+         if lastplayd_nr<episode["episode"] or lastplayd_staffel<episode["season"]:
             lastplayd_nr=episode["episode"]
+            lastplayd_staffel=episode["season"]
             lastplayd_title="S"+str(episode["season"])+"E"+str(episode["episode"])
-       if lastepisode_nr<episode["episode"]:
+            
+       if lastepisode_nr<episode["episode"] or lastepisode_staffel<episode["season"] :
+          if lastepisode_staffel<episode["season"]:
+            lastepisode_nr=0            
           count=episode["episode"]-lastepisode_nr
           if count>1:
               debug("lastepisode_nr :"+str(lastepisode_nr))
               debug("episode :"+str(episode["episode"]))
               if count==2:
-                fehlen=fehlen+","+str(lastepisode_nr+1)              
+                fehlen=fehlen+","+"S"+str(episode["season"])+"E"+str(lastepisode_nr+1)              
               if count >2:
-                fehlen=fehlen+","+str(lastepisode_nr+1) +" - "+ str(episode["episode"]-1)
+                fehlen=fehlen+","+"S"+str(lastepisode_staffel)+"E"+ str(lastepisode_nr+1) +" - "+ "S"+str(episode["season"])+"E"+str(episode["episode"]-1)
+                
           lastepisode_nr=episode["episode"]
           lastepisode_name="S"+str(episode["season"])+"E"+str(episode["episode"])
+          lastepisode_staffel=episode["season"] 
     if len(fehlen) >0:
      fehlen=fehlen[1:]
     debug("lastplayd_title : "+lastplayd_title) 
