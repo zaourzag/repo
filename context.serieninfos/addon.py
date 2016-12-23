@@ -133,8 +133,13 @@ if __name__ == '__main__':
     
     info = sys.listitem.getVideoInfoTag()   
     title=""
+    title=xbmc.getInfoLabel('ListItem.TVShowTitle')
     try:    
       title=info.getTVShowTitle()
+    except:
+       pass
+    try:
+      title=xbmc.getInfoLabel('ListItem.TVShowTitle')
     except:
        pass
     if title=="":
