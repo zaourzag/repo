@@ -694,6 +694,11 @@ class zattooOSD(xbmcgui.WindowXMLDialog):
 		if action in [ACTION_STOP, ACTION_BUILT_IN_FUNCTION]:
 			self.close()
 			xbmc.executebuiltin("Action(OSD)") #close hidden gui
+    if action in [ACTION_PARENT_DIR, KEY_NAV_BACK, ACTION_PREVIOUS_MENU]:
+			self.close()
+		if action in [ACTION_STOP, ACTION_BUILT_IN_FUNCTION]:
+			self.close()
+      xbmc.executebuiltin("Action(OSD)") #close hidden gui      
 				
 	def onClick(self, controlID):
 		channel=_zattooDB_.get_playing()['channel']
