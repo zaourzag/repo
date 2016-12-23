@@ -76,21 +76,37 @@ def similar(a, b):
 class Infowindow(pyxbmct.AddonDialogWindow):
     text=""
     pos=0
-    def __init__(self, title='',text='',image=""):
+    def __init__(self, title='',text='',image="",lastplayd_title="",lastepisode_name="",fehlen=""):
         super(Infowindow, self).__init__(title)
         self.setGeometry(600,600,8,8)        
         self.bild=image
-        self.text=text        
+        self.text=text    
+        self.lastplayd_title=lastplayd_title
+        self.lastepisode_name=lastepisode_name
+        self.fehlen=fehlen
         self.set_info_controls()
         # Connect a key action (Backspace) to close the window.
         self.connect(pyxbmct.ACTION_NAV_BACK, self.close)
 
     def set_info_controls(self):
-      self.textbox=pyxbmct.TextBox()            
-      self.placeControl(self.textbox, 2, 0, columnspan=8,rowspan=6)                       
-      self.textbox.setText(self.text)
       self.image = pyxbmct.Image(self.bild)
       self.placeControl(self.image, 0, 0,columnspan=8,rowspan=2)
+      self.textbox=pyxbmct.TextBox()            
+      self.placeControl(self.textbox, 2, 0, columnspan=8,rowspan=3)                       
+      self.textbox.setText(self.text)
+      if not fehlen=="":
+        self.textboxf=pyxbmct.TextBox()                  
+        self.placeControl(self.textboxf, 5, 0, columnspan=8,rowspan=1)                       
+        self.textboxf.setText("Fehlende Folgen : "+ fehlen)
+      
+      self.textbox2=pyxbmct.TextBox()                  
+      self.placeControl(self.textbox2, 7, 0, columnspan=3,rowspan=1)                       
+      self.textbox2.setText("Letze Gesehene : "+ lastplayd_title)
+      
+      self.textbox3=pyxbmct.TextBox()            
+      self.placeControl(self.textbox3, 7, 5, columnspan=3,rowspan=1)                       
+      self.textbox3.setText("Vorhanden Bis : "+ lastepisode_name)      
+
       self.connectEventList(
              [pyxbmct.ACTION_MOVE_UP,
              pyxbmct.ACTION_MOUSE_WHEEL_UP],
@@ -115,8 +131,42 @@ class Infowindow(pyxbmct.AddonDialogWindow):
 if __name__ == '__main__':
     addon = xbmcaddon.Addon()
     
-    info = sys.listitem.getVideoInfoTag()
+    info = sys.listitem.getVideoInfoTag()       
     title=info.getTVShowTitle()
+        
+    query = {"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": { "filter": { "field": "tvshow", "operator": "is", "value": "" }, "limits": { "start" : 0 }, "properties": ["playcount", "runtime", "tvshowid","episode","season"], "sort": { "order": "ascending", "method": "label" } }, "id": "libTvShows"}
+    query = json.loads(json.dumps(query))
+    query['params']['filter']['value'] = title
+    response = json.loads(xbmc.executeJSONRPC(json.dumps(query)))
+    lastplayd_nr=0
+    lastplayd_title=""
+    lastepisode_nr=0
+    lastepisode_name=""   
+    fehlen=""
+    for episode in response["result"]["episodes"]:
+       debug("------")
+       debug (episode)
+       if episode["playcount"] > 0:
+         if lastplayd_nr<episode["episode"]:
+            lastplayd_nr=episode["episode"]
+            lastplayd_title="S"+str(episode["season"])+"E"+str(episode["episode"])
+       if lastepisode_nr<episode["episode"]:
+          count=episode["episode"]-lastepisode_nr
+          if count>1:
+              debug("lastepisode_nr :"+str(lastepisode_nr))
+              debug("episode :"+str(episode["episode"]))
+              if count==2:
+                fehlen=fehlen+","+str(lastepisode_nr+1)              
+              if count >2:
+                fehlen=fehlen+","+str(lastepisode_nr+1) +" - "+ str(episode["episode"]-1)
+          lastepisode_nr=episode["episode"]
+          lastepisode_name="S"+str(episode["season"])+"E"+str(episode["episode"])
+    if len(fehlen) >0:
+     fehlen=fehlen[1:]
+    debug("lastplayd_title : "+lastplayd_title) 
+    debug("lastepisode_name : "+lastepisode_name) 
+    debug("fehlen : "+fehlen) 
+    
     if title=="":
      title=sys.listitem.getLabel()
     debug("TITLE :::: "+title)
@@ -176,7 +226,7 @@ if __name__ == '__main__':
         Zusammenfassung=Zusammenfassung.replace("&auml;","ä")
         Zusammenfassung=Zusammenfassung.replace("&ouml;","ö")
         Zusammenfassung=Zusammenfassung.replace("&szlig;","ß")    
-        window = Infowindow(title="SerienFino",text=Zusammenfassung,image=Bild)
+        window = Infowindow(title="SerienFino",text=Zusammenfassung,image=Bild,lastplayd_title=lastplayd_title,lastepisode_name=lastepisode_name,fehlen=fehlen)
         window.doModal()
         del window
     cj.save(cookie,ignore_discard=True, ignore_expires=True)
