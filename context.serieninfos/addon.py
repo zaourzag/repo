@@ -132,10 +132,13 @@ if __name__ == '__main__':
     addon = xbmcaddon.Addon()
     
     info = sys.listitem.getVideoInfoTag()   
+    title=""
     try:    
       title=info.getTVShowTitle()
     except:
-      title = xbmc.getInfoLabel("ListItem.Title").decode('UTF-8')        
+       pass
+    if title=="":
+      title = xbmc.getInfoLabel("ListItem.Title").decode('UTF-8')      
     query = {"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": { "filter": { "field": "tvshow", "operator": "is", "value": "" }, "limits": { "start" : 0 }, "properties": ["playcount", "runtime", "tvshowid","episode","season"], "sort": { "order": "ascending", "method": "label" } }, "id": "libTvShows"}
     query = json.loads(json.dumps(query))
     query['params']['filter']['value'] = title
@@ -147,7 +150,8 @@ if __name__ == '__main__':
     lastepisode_name="" 
     lastepisode_staffel=1
     fehlen=""
-    for episode in response["result"]["episodes"]:
+    try:
+     for episode in response["result"]["episodes"]:
        debug("------")
        debug (episode)
        if episode["playcount"] > 0:
@@ -171,12 +175,13 @@ if __name__ == '__main__':
           lastepisode_nr=episode["episode"]
           lastepisode_name="S"+str(episode["season"])+"E"+str(episode["episode"])
           lastepisode_staffel=episode["season"] 
-    if len(fehlen) >0:
-     fehlen=fehlen[1:]
-    debug("lastplayd_title : "+lastplayd_title) 
-    debug("lastepisode_name : "+lastepisode_name) 
-    debug("fehlen : "+fehlen) 
-    
+     if len(fehlen) >0:
+      fehlen=fehlen[1:]
+     debug("lastplayd_title : "+lastplayd_title) 
+     debug("lastepisode_name : "+lastepisode_name) 
+     debug("fehlen : "+fehlen) 
+    except:
+       pass
     if title=="":
      title=sys.listitem.getLabel()
     debug("TITLE :::: "+title)
