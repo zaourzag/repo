@@ -131,9 +131,11 @@ class Infowindow(pyxbmct.AddonDialogWindow):
 if __name__ == '__main__':
     addon = xbmcaddon.Addon()
     
-    info = sys.listitem.getVideoInfoTag()       
-    title=info.getTVShowTitle()
-        
+    info = sys.listitem.getVideoInfoTag()   
+    try:    
+      title=info.getTVShowTitle()
+    except:
+      title = xbmc.getInfoLabel("ListItem.Title").decode('UTF-8')        
     query = {"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": { "filter": { "field": "tvshow", "operator": "is", "value": "" }, "limits": { "start" : 0 }, "properties": ["playcount", "runtime", "tvshowid","episode","season"], "sort": { "order": "ascending", "method": "label" } }, "id": "libTvShows"}
     query = json.loads(json.dumps(query))
     query['params']['filter']['value'] = title
