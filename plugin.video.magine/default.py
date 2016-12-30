@@ -147,12 +147,15 @@ def getstreamtype():
      return ""
   return is_type
 
-def playdash(file,session,userid,channelid,id,desc="",title=""): 
+def playdash(file,session,userid,channelid,ids,desc="",title="",is_type=""): 
+  header=[]
+  header.append (("Authorization","Bearer "+session))
+  header.append (("UserId",userid))
   content=getUrl(baseurl+"/api/time/v1",header=header)
   struktur = json.loads(content)  
   timestamp=int(struktur["nowUnixtime"])
   
-  newurl=baseurl+"/api/airing/v2/"+str(id)  
+  newurl=baseurl+"/api/airing/v2/"+str(ids)  
   content=getUrl(newurl,header=header)  
   struktur2 = json.loads(content)
   title=struktur2["title"]
@@ -162,13 +165,14 @@ def playdash(file,session,userid,channelid,id,desc="",title=""):
     dauer=stop-timestamp
   except:
     dauer=0
+    stop=0
     
   listitem = xbmcgui.ListItem(path=file)        
   pin=addon.getSetting("pin")
-  lic_header="|Authorization=Bearer%20"+session+"&UserId=" +userid+"&Magine-ChannelId=" +channelid+"&Magine-Md=PC-Awesomesauce"+"&Magine-ParentalControlPinCode="+pin+"&Magine-Mk=HTML5"+"&Magine-ClientId=c060c1bf-d805-4feb-74d4-d8241e27d836"+"&Magine-ProgramId="+id+"|R{SSM}|"
+  lic_header="|Authorization=Bearer%20"+session+"&UserId=" +userid+"&Magine-ChannelId=" +channelid+"&Magine-Md=PC-Awesomesauce"+"&Magine-ParentalControlPinCode="+pin+"&Magine-Mk=HTML5"+"&Magine-ClientId=c060c1bf-d805-4feb-74d4-d8241e27d836"+"&Magine-ProgramId="+ids+"|R{SSM}|"
   listitem.setProperty(is_type+'.license_type', 'com.widevine.alpha')  
   listitem.setProperty(is_type+'.license_key', "https://magine.com/api/drm/v4/license/widevine"+lic_header)
-  listitem.setProperty(is_type+'.license_data', base64.b64encode(b'\x08\x01\x12\x10'+'{KID}'+b'\x1A\x05'+'tvoli"'+chr(len('channel.'+channelid+'.'+id))+'channel.'+channelid+'.'+id+'*'+b'\x02'+'SD2'+b'\x00'))
+  listitem.setProperty(is_type+'.license_data', base64.b64encode(b'\x08\x01\x12\x10'+'{KID}'+b'\x1A\x05'+'tvoli"'+chr(len('channel.'+channelid+'.'+ids))+'channel.'+channelid+'.'+ids+'*'+b'\x02'+'SD2'+b'\x00'))
   listitem.setProperty('inputstreamaddon', is_type)  
   listitem.setProperty(is_type+".manifest_type", "mpd")  
   listitem.setInfo( "video", { "Title" : title, "Plot" : desc} )    
@@ -249,7 +253,7 @@ def mediathek_filelist(session,userid,id_such,start,ende):
   bis=ende
   debug("VON: "+von)
   debug("BIS: "+bis) 
-  url=baseurl+"api/content/v2/timeline/airings?channels="+senderliste+"&from="+von+"&to="+bis
+  url=baseurl+"/api/content/v2/timeline/airings?channels="+senderliste+"&from="+von+"&to="+bis
   content=getUrl(url,header=header)  
   struktur_inhalt = json.loads(content)   
   for element in struktur_inhalt:        
@@ -270,14 +274,14 @@ def mediathek_filelist(session,userid,id_such,start,ende):
            id=channelid_arr.index(channel) 
            title=start+" "+starzeit+" "+title+" ( "+name_arr[id]+" )"
            if id_such==channel:
-             addLink(title, "", "mediathek_playvideo<", bild, channelid=channel,ids=ids)     
+             addLink(title, "", "mediathek_playvideo", bild, channelid=channel,ids=ids)     
   xbmcplugin.endOfDirectory(addon_handle)
     
-def mediathek_playvideo(session,userid,channelid,id):
+def mediathek_playvideo(session,userid,channelid,ids):
   header=[]
   header.append (("Authorization","Bearer "+session))
   header.append (("UserId",userid))
-  newurl=baseurl+"/api/contenturl/v1/channel/"+str(channelid)+"/airing/"+str(id)  
+  newurl=baseurl+"/api/contenturl/v1/channel/"+str(channelid)+"/airing/"+str(ids)  
   content=getUrl(newurl,header=header)  
   struktur = json.loads(content)
   userAgent = "Coralie/1.7.2-2016081207(SM-G900F; Android; 6.0.1" 
@@ -287,7 +291,7 @@ def mediathek_playvideo(session,userid,channelid,id):
      return "" 
   debug("XXX YYYY")     
   debug(is_type)  
-  listitem,dauer,stop=playdash(struktur["dash"],session,userid,channelid,id)
+  listitem,dauer,stop=playdash(struktur["dash"],session,userid,channelid,ids,is_type=is_type)
   xbmcplugin.setResolvedUrl(addon_handle, True, listitem)
 
 
@@ -347,9 +351,12 @@ def live_play(url,session,userid,channelid):
     except:
          pass
     playlist.add(title, item) 
+  time.sleep(10000)
     
-def leseclips(url,session,userid,channelid):  
-
+def live_leseclips(url,session,userid,channelid):  
+  header=[]
+  header.append (("Authorization","Bearer "+session))
+  header.append (("UserId",userid))
   debug("leseclips")
   times=url
   path=str(times)[0:5]
@@ -365,7 +372,7 @@ def leseclips(url,session,userid,channelid):
   is_type=getstreamtype()  
   if is_type=="":     
      return ""  
-  listitem,dauer,stop=playdash(dash_file,session,userid,channelid,id) 
+  listitem,dauer,stop=playdash(dash_file,session,userid,channelid,times,is_type=is_type) 
   return listitem,dash_file,str(path)+str(stop),dauer
 
   
