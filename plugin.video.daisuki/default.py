@@ -256,13 +256,16 @@ def serie(url):
           image_arr.append(image)
       except:
         pass
-    folge_arr, url_arr,image_arr = (list(x) for x in zip(*sorted(zip(folge_arr, url_arr,image_arr))))
-    for i in range(0,len(url_arr),1): 
-     print url_arr[i]     
-     print folge_arr[i]
-     addLink("Episode "+str(folge_arr[i]),url_arr[i], 'stream', "http://www.daisuki.net"+image_arr[i]) 
-    debug("image :"+ image)     
-    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)      
+    try:
+      folge_arr, url_arr,image_arr = (list(x) for x in zip(*sorted(zip(folge_arr, url_arr,image_arr))))
+      for i in range(0,len(url_arr),1): 
+          print url_arr[i]     
+          print folge_arr[i]
+          addLink("Episode "+str(folge_arr[i]),url_arr[i], 'stream', "http://www.daisuki.net"+image_arr[i]) 
+       
+      xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)      
+    except:
+       xbmc.executebuiltin('Notification("No Episodes", "No Episodes ,maybe pay content")')
       
 def getstream(url):
  
