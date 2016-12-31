@@ -2000,7 +2000,7 @@ v0.6.0 (2016-12-02)
   </extension>
 </addon>
 
-<addon id="service.twitterfeed" name="Twitter Feed" version="0.8.26" provider-name="L0RE">
+<addon id="service.twitterfeed" name="Twitter Feed" version="0.8.27" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.19.0"/>
 	<import addon="script.module.requests" version="2.9.1"/>	
