@@ -239,7 +239,7 @@ if __name__ == '__main__':
     #Directory für Token Anlegen
     if not xbmcvfs.exists(temp):       
        xbmcvfs.mkdirs(temp)
-    if not xbmcvfs.exists( os.path.join(temp,"/init.ok")) and  __addon__.getSetting("clear")!="CLEARIT": 
+    if not xbmcvfs.exists( os.path.join(temp,"init.ok")) and  __addon__.getSetting("clear")!="CLEARIT": 
        f = open( os.path.join(temp,"init.ok"), 'w')    
        f.close() 
     # Starte Service    
@@ -307,7 +307,7 @@ if __name__ == '__main__':
       start=0
       
       # Wenn kein Token oder Authentifizerung löschen wurde Neu Authentifizieren
-      if not xbmcvfs.exists( os.path.join(temp,"/init.ok")) or __addon__.getSetting("clear")=="CLEARIT": 
+      if not xbmcvfs.exists( os.path.join(temp,"init.ok")) or __addon__.getSetting("clear")=="CLEARIT": 
         debug("Starte neue Authentifizierung")
         try:      
           get_access_token(consumer_key, consumer_secret)       
@@ -318,7 +318,7 @@ if __name__ == '__main__':
       else:         
           # Alten Token Laden
           debug("Lese Token aus File")
-          f=xbmcvfs.File( os.path.join(temp,"/init.ok"),"r")   
+          f=xbmcvfs.File( os.path.join(temp,"init.ok"),"r")   
           daten=f.read()
           if daten=="":
             continue
