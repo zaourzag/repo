@@ -225,17 +225,24 @@ def listShowsFavs():
 
 
 def listSeasons(urlMain):
+    debug("urlMain :"+urlMain)
     content = opener.open(urlMain).read()
     videos = content.split('\"cfct-module dni-listing\"')
     for i in range(1,len(videos),1):  
-      name_reg = re.compile('<div class="tab-module-header">(.+?)</div>', re.DOTALL).findall(videos[i])
-      name=name_reg[0]
-      addDir(name, urlMain, 'listEpisodes',"","",text=name)
+      try:
+        name_reg = re.compile('<div class="tab-module-header">(.+?)</div>', re.DOTALL).findall(videos[i])
+        name=name_reg[0]
+        addDir(name, urlMain, 'listEpisodes',"","",text=name)
+      except:
+        pass
     videos = content.split('\"cfct-module dni-content-grid\"')
-    for i in range(1,len(videos),1):  
-      name_reg = re.compile('<div class="tab-module-header">(.+?)</div>', re.DOTALL).findall(videos[i])
-      name=name_reg[0]
-      addDir(name, urlMain, 'listEpisodes',"","",text=name)            
+    for i in range(1,len(videos),1):   
+      try:    
+          name_reg = re.compile('<div class="tab-module-header">(.+?)</div>', re.DOTALL).findall(videos[i])
+          name=name_reg[0]
+          addDir(name, urlMain, 'listEpisodes',"","",text=name)            
+      except:
+          pass
     xbmcplugin.endOfDirectory(pluginhandle)
     if forceViewMode:
             xbmc.executebuiltin('Container.SetViewMode('+viewMode+')')
@@ -261,8 +268,11 @@ def listEpisodes(url, text):
         videos = content.split('\"cfct-module dni-content-grid\"')                      
         for i in range(1,len(videos),1):
            debug("####### "+ videos[i])
-           name_reg = re.compile('<div class="tab-module-header">(.+?)</div>', re.DOTALL).findall(videos[i])
-           namel=name_reg[0]
+           try:
+            name_reg = re.compile('<div class="tab-module-header">(.+?)</div>', re.DOTALL).findall(videos[i])
+            namel=name_reg[0]
+           except: 
+             pass
            if namel==text:
             names_reg = re.compile('<a href="(.+?)" target="" onClick=".+?">.+?<img class="" src="(.+?)" alt=".+?" ><h3>(.+?)</h3></div></a>', re.DOTALL).findall(videos[i])                                    
             for url,img,name in names_reg:            
