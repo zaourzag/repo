@@ -29,8 +29,7 @@ translation = addon.getLocalizedString
 # Es geht um Videos
 xbmcplugin.setContent(addon_handle, 'movies')
 
-country=addon.getSetting("country")
-baseurl="http://www.7tv."+country
+baseurl="http://www.7tv.de"
 icon = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')+'/icon.png').decode('utf-8')
 
 
