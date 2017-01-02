@@ -83,6 +83,9 @@ ACTION_MOUSE_WHEEL_DOWN = 105
 ACTION_MOUSE_WHEEL_UP = 104
 ACTION_BUILT_IN_FUNCTION = 122
 
+ACTION_CHANNEL_UP = 184
+ACTION_CHANNEL_DOWN = 185
+
 from tzlocal import get_localzone
 import pytz
 try:
@@ -626,7 +629,7 @@ class zattooGUI(xbmcgui.WindowXMLDialog):
     elif action==ACTION_OSD:
       if hasattr(self, 'hideNrTimer'): self.hideNrTimer.cancel()
       self.close()
-    elif action == ACTION_SELECT_ITEM:
+    if action in [ACTION_SELECT_ITEM, ACTION_MOUSE_LEFT_CLICK]:
       self.hidePrevImg()
       if(self.channelInput):
         self.channelInputTimer.cancel()
@@ -635,20 +638,22 @@ class zattooGUI(xbmcgui.WindowXMLDialog):
         makeOsdInfo()
         gui = zattooOSD("zattooOSD.xml",__addon__.getAddonInfo('path'))
         gui.doModal()
-        
+
     elif action == ACTION_MOVE_LEFT:
       self.setPrevImg()
       self.showChannelNr(toggle_channel()+1)
     elif action == ACTION_MOVE_RIGHT:
       change_stream(1)
-    elif action == ACTION_MOVE_UP:
+    if action in [ACTION_MOVE_UP, ACTION_CHANNEL_UP]:
       if self.hidePrevImg():return
       nr=skip_channel(-1)
       self.showChannelNr(nr+1)
-    elif action == ACTION_MOVE_DOWN:
+    if action in [ACTION_MOVE_DOWN, ACTION_CHANNEL_DOWN]:
       if self.hidePrevImg():return
       nr=skip_channel(+1)
       self.showChannelNr(nr+1)
+    
+
     elif (action>57 and action<68): #numbers 0-9
       self.hidePrevImg()
       #print('channel ipnut'+str(action))
@@ -706,18 +711,32 @@ class zattooOSD(xbmcgui.WindowXMLDialog):
     program=program[0]
     self.close() #close OSD
 
-    if controlID==201: #recall
+    if controlID==209: #recall
       xbmc.executebuiltin("Action(OSD)") #close hidden gui
       start = int(time.mktime(program['start_date'].timetuple()))
       end = int(time.mktime(program['end_date'].timetuple()))
       watch_channel(channel,start,end)
-    elif controlID==202: #record program
+    elif controlID==210: #record program
       setup_recording(program['showID'])
-    elif controlID==203: #teletext
+    elif controlID==211: #teletext
       from resources.teletext import Teletext
       tele = Teletext()
       tele.doModal()
       del tele
+    elif controlID==201: #Back
+      self.close()
+    elif controlID==202: #Channel Up
+      nr=skip_channel(-1)
+      self.showChannelNr(nr+1)
+    elif controlID==203: #Channel Down
+      nr=skip_channel(+1)
+      self.showChannelNr(nr+1)
+    elif controlID==205:
+      xbmc.executebuiltin("Action(Stop)")
+      xbmc.executebuiltin("Action(OSD)")
+      if hasattr(self, 'hideNrTimer'): self.hideNrTimer.cancel()
+      self.close()
+      
     elif controlID>300:
       xbmc.executebuiltin("Action(OSD)") #close hidden gui
       if controlID==303: xbmc.executebuiltin('ActivateWindow(10025,"plugin://'+__addonId__+'/?mode=channellist")')
@@ -725,6 +744,9 @@ class zattooOSD(xbmcgui.WindowXMLDialog):
       elif controlID==302: xbmc.executebuiltin('RunPlugin("plugin://'+__addonId__+'/?mode=previewOSD")')
       elif controlID==301: xbmc.executebuiltin('RunPlugin("plugin://'+__addonId__+'/?mode=epgOSD")')
 
+
+   
+        
   def onFocus(self, controlID):
     i=10
 

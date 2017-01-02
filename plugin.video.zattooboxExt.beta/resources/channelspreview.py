@@ -126,14 +126,14 @@ class ChannelsPreview(xbmcgui.Window):
 			xbmc.executebuiltin('XBMC.RunPlugin(%s)' % url)
 			#xbmc.executebuiltin("Action(FullScreen)")
 
-		'''
+        '''
 		elif action == ACTION_MOUSE_MOVE:
 			xbmcgui.Dialog().notification('mouse', 'move', '', 000, False)
 		elif action == ACTION_MOUSE_LEFT_CLICK:
 			xbmcgui.Dialog().notification('mouse', 'click', '', 000, False)
 		elif action == ACTION_MOUSE_DRAG:
 			xbmcgui.Dialog().notification('mouse', 'drag', '', 000, False)
-		'''
+        '''
 
 	def createPreview(self, fav):
 		imgW = 256

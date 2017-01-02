@@ -467,3 +467,10 @@ msgctxt "#31903"
 msgid "recording request transmitted to Zattoo.\nThe show now should be visible in Recordings!"
 msgstr "Aufnahme-Anfrage wurde an Zattoo übermittelt.\nDie Sendung sollte nun in den Aufnahmen sein!"
 
+msgctxt "#31904"
+msgid "ZATTOO HIQ"
+msgstr "ZATTOO HIQ"
+
+msgctxt "#31905"
+msgid "Swiss IP address"
+msgstr "Schweizer IP Adresse"

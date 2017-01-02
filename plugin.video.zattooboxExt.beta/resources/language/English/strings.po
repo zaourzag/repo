@@ -1,4 +1,7 @@
-# XBMC Media Center language file
+
+msgctxt "#31903"
+msgid "ZATTOO HIQ"
+msgstr "ZATTOO HIQ"# XBMC Media Center language file
 # Addon Name: TV Guide
 # Addon id: script.tvguide
 # Addon Provider: twinther
@@ -506,3 +509,11 @@ msgctxt "#31903"
 msgid "recording request transmitted to Zattoo.\nThe show now should be visible in Recordings!"
 msgstr ""
 
+
+msgctxt "#31904"
+msgid "ZATTOO HIQ"
+msgstr ""
+
+msgctxt "#31905"
+msgid "Swiss IP address"
+msgstr ""
