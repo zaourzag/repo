@@ -640,9 +640,6 @@ class zattooGUI(xbmcgui.WindowXMLDialog):
     elif action==ACTION_STOP:
       if hasattr(self, 'hideNrTimer'): self.hideNrTimer.cancel()
       self.close()
-      open=xbmcgui.Window(10000).getProperty('zattooGUI')
-      if (open=='True'):
-        self.close()
     elif action==ACTION_OSD:
       if hasattr(self, 'hideNrTimer'): self.hideNrTimer.cancel()
       self.close()

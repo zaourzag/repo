@@ -373,6 +373,7 @@
                 <wrapmultiline>true</wrapmultiline>
                 <autoscroll time="3600" delay="6000" repeat="6000">true</autoscroll>
             </control>
+<!---
             <control type="textbox" id="4024">
 				<description>Description</description>
 				<left>30</left>
@@ -383,9 +384,10 @@
 				<textcolor>white</textcolor>
 				<font>font14</font>
 				<!--<label>$INFO[VideoPlayer.Plot]</label>-->
-				<label>$INFO[Window(Home).Property(plot)]</label>
+<!--				<label>$INFO[Window(Home).Property(plot)]</label>
 				<autoscroll delay="5000" time="2200" repeat="10000">!Skin.HasSetting(StopAutoScroll)</autoscroll>
-			</control>
+			</control>  -->
+
             <control type="image" id="4023">
                 <description>Program logo / Source logo</description>
                 <posx>930</posx>
