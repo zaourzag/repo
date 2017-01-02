@@ -85,7 +85,21 @@ ACTION_BUILT_IN_FUNCTION = 122
 
 ACTION_CHANNEL_UP = 184
 ACTION_CHANNEL_DOWN = 185
+ACTION_PAGE_UP = 5
+ACTION_PAGE_DOWN = 6
 
+SWISS = xbmcaddon.Addon('plugin.video.zattooboxExt.beta').getSetting('swiss')
+HIQ = xbmcaddon.Addon('plugin.video.zattooboxExt.beta').getSetting('hiq')
+
+if SWISS=="true":
+    xbmc.executebuiltin( "Skin.SetBool(%s)" %'swiss')
+else:
+    xbmc.executebuiltin( "Skin.Reset(%s)" %'swiss')
+if HIQ=='true':
+    xbmc.executebuiltin( "Skin.SetBool(%s)" %'hiq')
+else:
+    xbmc.executebuiltin( "Skin.Reset(%s)" %'hiq')
+    
 from tzlocal import get_localzone
 import pytz
 try:
@@ -626,6 +640,9 @@ class zattooGUI(xbmcgui.WindowXMLDialog):
     elif action==ACTION_STOP:
       if hasattr(self, 'hideNrTimer'): self.hideNrTimer.cancel()
       self.close()
+      open=xbmcgui.Window(10000).getProperty('zattooGUI')
+      if (open=='True'):
+        self.close()
     elif action==ACTION_OSD:
       if hasattr(self, 'hideNrTimer'): self.hideNrTimer.cancel()
       self.close()
@@ -644,11 +661,11 @@ class zattooGUI(xbmcgui.WindowXMLDialog):
       self.showChannelNr(toggle_channel()+1)
     elif action == ACTION_MOVE_RIGHT:
       change_stream(1)
-    if action in [ACTION_MOVE_UP, ACTION_CHANNEL_UP]:
+    if action in [ACTION_MOVE_UP, ACTION_CHANNEL_UP, ACTION_PAGE_UP]:
       if self.hidePrevImg():return
       nr=skip_channel(-1)
       self.showChannelNr(nr+1)
-    if action in [ACTION_MOVE_DOWN, ACTION_CHANNEL_DOWN]:
+    if action in [ACTION_MOVE_DOWN, ACTION_CHANNEL_DOWN, ACTION_PAGE_DOWN]:
       if self.hidePrevImg():return
       nr=skip_channel(+1)
       self.showChannelNr(nr+1)
@@ -699,11 +716,7 @@ class zattooOSD(xbmcgui.WindowXMLDialog):
     if action in [ACTION_STOP, ACTION_BUILT_IN_FUNCTION]:
       self.close()
       xbmc.executebuiltin("Action(OSD)") #close hidden gui
-    if action in [ACTION_PARENT_DIR, KEY_NAV_BACK, ACTION_PREVIOUS_MENU]:
-      self.close()
-    if action in [ACTION_STOP, ACTION_BUILT_IN_FUNCTION]:
-      self.close()
-      xbmc.executebuiltin("Action(OSD)") #close hidden gui      
+   
       
   def onClick(self, controlID):
     channel=_zattooDB_.get_playing()['channel']

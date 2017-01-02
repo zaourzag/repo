@@ -130,7 +130,7 @@ class ChannelsPreview(xbmcgui.Window):
 		elif action == ACTION_MOUSE_MOVE:
 			xbmcgui.Dialog().notification('mouse', 'move', '', 000, False)
 		elif action == ACTION_MOUSE_LEFT_CLICK:
-			xbmcgui.Dialog().notification('mouse', 'click', '', 000, False)
+			xbmc.executebuiltin('Notification(%s, %s, %d, %s)'%(Klick,line1, time,))
 		elif action == ACTION_MOUSE_DRAG:
 			xbmcgui.Dialog().notification('mouse', 'drag', '', 000, False)
         '''
