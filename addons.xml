@@ -206,29 +206,6 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
     </extension>
 </addon>
 
-<addon id="plugin.video.7tv" name="7TV (old)" version="3.1.10" provider-name="L0RE">
-	<requires>
-		<import addon="xbmc.python" version="2.14.0"/>
-	</requires>
-	<extension point="xbmc.python.pluginsource" library="addon.py">
-		<provides>video</provides>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="en">ProSieben, Sat.1, Kabel 1 and Sixx media library</summary>
-		<summary lang="de">Mediathek für ProSieben, Sat.1, Kabel 1 and Sixx</summary>
-		<description lang="en">Experience with 7TV a majority of shipments of ProSieben, SAT.1, kabel eins and sixx directly after the TV broadcast for free and for at least 7 days in full length - and the round-the-clock!</description>
-		<description lang="de">Erleben Sie mit 7TV einen Großteil der Sendungen von ProSieben, SAT.1, kabel eins und sixx direkt nach der TV-Ausstrahlung kostenlos und für mindestens 7 Tage in voller Länge – und das rund um die Uhr!</description>
-		<disclaimer lang="en"></disclaimer>
-		<language>de</language>
-		<platform>all</platform>
-		<license>GNU General Public License v2.0</license>
-		<forum>http://forum.kodi.tv/showthread.php?tid=198550</forum>
-		<website>www.7tv.de</website>
-		<email>kodi at bromix dot org</email>
-		<source>https://github.com/bromix/plugin.video.7tv</source>
-	</extension>
-</addon>
-
 <addon id="plugin.video.ampya" name="Ampya" version="0.1.9" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
@@ -528,7 +505,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
     </extension>
 </addon>
 
-<addon id="plugin.video.7tvneu" name="7TV" version="0.5.5" provider-name="L0RE">
+<addon id="plugin.video.7tvneu" name="7TV" version="0.5.6" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
     </requires>
@@ -2399,29 +2376,6 @@ v0.6.0 (2016-12-02)
 		<description lang="de">Das ist das offizielle Repository der deutschen Community 'Kodinerds', welche Du unter www.kodinerds.net findest. Die meisten der hier gehosteten Addons werden von den Mitgliedern der Community aktiv supported. Viel Spaß!</description>
 		<disclaimer></disclaimer>
 		<platform>linux</platform>
-	</extension>
-</addon>
-
-<addon id="plugin.video.7tvinput" name="7TV Old" version="3.1.13" provider-name="L0RE">
-	<requires>
-		<import addon="xbmc.python" version="2.14.0"/>
-	</requires>
-	<extension point="xbmc.python.pluginsource" library="addon.py">
-		<provides>video</provides>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="en">ProSieben, Sat.1, Kabel 1 and Sixx media library</summary>
-		<summary lang="de">Mediathek für ProSieben, Sat.1, Kabel 1 and Sixx</summary>
-		<description lang="en">Experience with 7TV a majority of shipments of ProSieben, SAT.1, kabel eins and sixx directly after the TV broadcast for free and for at least 7 days in full length - and the round-the-clock!</description>
-		<description lang="de">Erleben Sie mit 7TV einen Großteil der Sendungen von ProSieben, SAT.1, kabel eins und sixx direkt nach der TV-Ausstrahlung kostenlos und für mindestens 7 Tage in voller Länge – und das rund um die Uhr!</description>
-		<disclaimer lang="en"></disclaimer>
-		<language>de</language>
-		<platform>all</platform>
-		<license>GNU General Public License v2.0</license>
-		<forum>http://forum.kodi.tv/showthread.php?tid=198550</forum>
-		<website>www.7tv.de</website>
-		<email>kodi at bromix dot org</email>
-		<source>https://github.com/bromix/plugin.video.7tv</source>
 	</extension>
 </addon>
 
