@@ -247,8 +247,8 @@ class EPG(xbmcgui.WindowXML):
 
 		# if startime is in the future -> setup recording
 		if start > now :
-			if not self.premiumUser: xbmcgui.Dialog().ok('Error',' ',strings(ERROR_NO_PREMIUM))
-			elif xbmcgui.Dialog().yesno(program['title'], strings(RECORD_SHOW)):
+#			if not self.premiumUser: xbmcgui.Dialog().ok('Error',' ',strings(ERROR_NO_PREMIUM))
+			if xbmcgui.Dialog().yesno(program['title'], strings(RECORD_SHOW)):
 				url = "plugin://"+__addonId__+"/?mode=record_p&program_id=" + program['showID']
 			else: return
 		# else if endtime is in the past -> recall
