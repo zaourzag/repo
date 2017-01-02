@@ -177,7 +177,7 @@ def belibtesendungen(url):
 
 def ganzefolgensender(url):
   inhalt = geturl(url) 
-  kurz_inhalt = inhalt[inhalt.find('<h3 class="row-headline">Aktuelle Ganze Folgen</h3>')+1:]
+  kurz_inhalt = inhalt[inhalt.find('</h3>')+1:]
   kurz_inhalt = kurz_inhalt[:kurz_inhalt.find('<h3 class="row-headline">Ihre Favoriten</h3>')]  
   spl=kurz_inhalt.split('<article class')
   for i in range(1,len(spl),1):
