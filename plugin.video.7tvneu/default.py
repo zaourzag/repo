@@ -28,7 +28,9 @@ translation = addon.getLocalizedString
 
 # Es geht um Videos
 xbmcplugin.setContent(addon_handle, 'movies')
-baseurl="http://www.7tv.de"
+
+country=addon.getSetting("country")
+baseurl="http://www.7tv."+country
 icon = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')+'/icon.png').decode('utf-8')
 
 
@@ -384,9 +386,9 @@ def playvideo(video_id,  client_location, source_id=None):
             except:
               data=ul                                 
         #data=json_data["sources"][-1]["url"]               
-        userAgent = 'user-agent=Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36&Origin=http://www.7tv.de&Referer=http://www.7tv.de/fresh-off-the-boat/25-staffel-2-episode-5-tote-hose-an-halloween-ganze-folge&content-type='
+        userAgent = 'user-agent=Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36'
         addon_handle = int(sys.argv[1])
-        listitem = xbmcgui.ListItem(path=data)         
+        listitem = xbmcgui.ListItem(path=data+"|"+userAgent)         
         #listitem.setProperty('inputstream.mpd.license_type', 'com.widevine.alpha')
         #listitem.setProperty('inputstream.mpd.license_type', 'com.widevine.alpha')
         listitem.setProperty(is_type+".license_type", "com.widevine.alpha")
@@ -488,6 +490,7 @@ if mode is '':
     addDir("Sendungen A-Z", url+"/ganze-folgen", "sendungsmenu", "")  
     addDir("Sendungen nach Datum", "", "verpasstdatum", "")  
     addDir("Suche","","search","")
+    addDir("Einstellungen", "", 'Settings', "")   
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 else:
   # Wenn Settings ausgewählt wurde
