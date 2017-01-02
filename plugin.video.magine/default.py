@@ -14,6 +14,15 @@ import hashlib
 import time,cookielib
 import base64
 import datetime
+from tzlocal import get_localzone
+#import pytz
+
+try:
+  tz = get_localzone()
+  offset=tz.utcoffset(datetime.datetime.now()).total_seconds()
+  _timezone_=int(offset)-3600
+except:  
+  _timezone_ = int(__addon__.getSetting('time_offset'))*60*-60 #-time.altzone
 
 # Setting Variablen Des Plugins
 baseurl="https://magine.com"
@@ -87,7 +96,7 @@ def log(msg, level=xbmc.LOGNOTICE):
     xbmc.log('%s: %s' % (addonID, msg), level) 
     
   
-def addLink(name, url, mode, iconimage, duration="", desc="", genre='',channelid="",times="",ids=0):
+def addLink(name, url, mode, iconimage, duration="", desc="", genre='',channelid="",times="",ids=0,start=0):
   u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&channelid="+str(channelid)+"&times="+str(times)+"&ids="+str(ids)
   ok = True
   liz = xbmcgui.ListItem(name, iconImage=defaultThumb, thumbnailImage=iconimage)  
@@ -97,6 +106,11 @@ def addLink(name, url, mode, iconimage, duration="", desc="", genre='',channelid
   liz.setProperty("fanart_image", iconimage)
   #liz.setProperty("fanart_image", defaultBackground)
   xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
+  commands = []  
+  link = "plugin://plugin.video.magine/?mode=mediathek_playvideo&channelid="+str(channelid)+"&ids="+str(start)
+  commands.append(( "Start from Beginning", 'XBMC.RunPlugin('+ link +')'))
+  liz.addContextMenuItems( commands )
+
   ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
   return ok
   
@@ -267,12 +281,11 @@ def mediathek_filelist(session,userid,id_such,start,ende):
            channel=element["channelId"]
            ids=element["id"]
            bild=element["image"]
-           zeitstring=element["start"].split("T")
-           start=zeitstring[0]
-           zeit=zeitstring[1].split(":")           
-           starzeit=zeit[0]+":"+zeit[1]
+           startzeit=element["startUnixtime"]+ _timezone_*60*60
+           #start = int(time.mktime(startzeit)) + _timezone_  # local timestamp
+           start=datetime.datetime.fromtimestamp(startzeit).strftime('%d.%m. %H:%M')
            id=channelid_arr.index(channel) 
-           title=start+" "+starzeit+" "+title+" ( "+name_arr[id]+" )"
+           title=start+" "+title+" ( "+name_arr[id]+" )"           
            if id_such==channel:
              addLink(title, "", "mediathek_playvideo", bild, channelid=channel,ids=ids)     
   xbmcplugin.endOfDirectory(addon_handle)
@@ -307,6 +320,8 @@ def live_channels(session,userid):
   content=getUrl(baseurl+"/api/your-tv/v1/sections",header=header)  
   struktur = json.loads(content)     
   for element in struktur["sections"][0]["sectionItems"][0]["subsection"]["items"]: 
+        debug("element :")
+        debug(element)
         element=element["airing"]
         debug (element)
         bild=element["image"] 
@@ -323,7 +338,7 @@ def live_channels(session,userid):
           titel=kanal_name
         if anzeige=="3":
           titel=senung_name          
-        addLink(titel, str(zeit), "live_play", bild, channelid=str(kanal_id))
+        addLink(titel, str(zeit), "live_play", bild, channelid=str(kanal_id),start=element["showId"])
   xbmcplugin.endOfDirectory(addon_handle)
 
                 
@@ -344,14 +359,17 @@ def live_play(url,session,userid,channelid):
     dauer=dauer-300
     if dauer<0:
       dauer=1
-    time.sleep(dauer)
+    time.sleep(dauer)    
     dauer=0
     try:
         item,title,next,dauer=leseclips(next,session,userid,channelid)  
     except:
          pass
     playlist.add(title, item) 
+    #xbmc.executebuiltin('Container.Refresh')
   time.sleep(10000)
+  #xbmc.executebuiltin('Container.Refresh')
+  
     
 def live_leseclips(url,session,userid,channelid):  
   header=[]
