@@ -204,7 +204,7 @@ def html5video(entry,img,csrftoken,menulist):
         debug("Link: "+ link)                   
         debug("title :"+title2) 
         idd=hashlib.md5(title2).hexdigest()        
-        menulist=menulist+idd+"###"+baseurl+link+"###"+csrftoken+"###html5\n"
+        menulist=menulist+idd+"###"+baseurl+link+"###"+csrftoken+"###html5###\n"
         addLink(name=ersetze(title2), url="plugin://plugin.video.aod/", mode="hashplay", iconimage=img, desc=desc,csrftoken=idd,type="html5")      
     except :
        error=1
@@ -213,7 +213,7 @@ def hashplay(idd):
   debug("hashplay url :"+idd)
   f=xbmcvfs.File( os.path.join(temp,"menu.txt"),"r")   
   daten=f.read()
-  zeilen=daten.split('\n')
+  zeilen=daten.split('\n')  
   for zeile in zeilen:    
     debug ("Read Zeile :"+zeile)
     felder=zeile.split("###")
@@ -223,8 +223,7 @@ def hashplay(idd):
           debug("Gefunden")
           uurl=felder[1]
           csrftoken=felder[2]          
-          type=felder[3]
-          type=type.replace("\n","")
+          type=felder[3]                      
           debug("Type :"+type)
           Folge(uurl,csrftoken,type)
     
@@ -262,7 +261,8 @@ def flashvideo(entry,img,csrftoken,menulist):
          debug("csrftoken : "+csrftoken)
          debug("URL :" + link)
          debug("title :"+title)
-         menulist=menulist+md5sum(title)+"###"+link+"###"+csrftoken+"###flash\n"     
+         idd=hashlib.md5(title).hexdigest()        
+         menulist=menulist+idd+"###"+link+"###"+csrftoken+"###flash###\n"     
          addLink(name=ersetze(title), url="plugin://plugin.video.aod/", mode="hashplay", iconimage=img, desc=desc,csrftoken=idd,type="flash")      
     except :
        error=1
