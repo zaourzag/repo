@@ -8,6 +8,7 @@ import xbmcplugin
 import xbmcaddon
 import xbmc
 import xbmcvfs
+import hashlib
 import urllib, urllib2, socket, cookielib, re, os, shutil,json
 
 addon_handle = int(sys.argv[1])
@@ -147,6 +148,7 @@ def Serie(url):
   debug("COntent :")
   debug("-------------------------------")
   debug(content)
+  menulist=""
   if not '<a href="/users/edit">Benutzerkonto</a>' in content :    
     content=login(url)
   cj.save(cookie,ignore_discard=True, ignore_expires=True)
@@ -169,16 +171,19 @@ def Serie(url):
       debug(entry)          
       debug ("-------------------------------")     
       match=re.compile('src="([^"]+)"', re.DOTALL).findall(entry)
-      img=baseurl+match[0]
-      ret=flashvideo(entry,img,csrftoken)
+      img=baseurl+match[0]      
+      ret,menulist=flashvideo(entry,img,csrftoken,menulist)
       if ret==1:
-        html5video(entry,img,csrftoken)
+        ret,menulist=html5video(entry,img,csrftoken,menulist)
     except :
-       error=1
+       error=1  
   debug ("#############################################################################")
+  f = open( os.path.join(temp,"menu.txt"), 'w')  
+  f.write(menulist)
+  f.close()
   
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)  
-def html5video(entry,img,csrftoken):     
+def html5video(entry,img,csrftoken,menulist):     
     error=0
     debug("Start Flashvideo")
     try:
@@ -196,13 +201,36 @@ def html5video(entry,img,csrftoken):
       match=re.compile('title="([^"]+)" data-playlist="([^"]+)"', re.DOTALL).findall(entry)
       for type,link in match:
         title2=title + "( "+ type.replace("starten","").replace("Japanischen Stream mit Untertiteln","OmU").replace("Deutschen Stream","Syncro") +" )"
-        debug("Link: "+ link)      
-        addLink(name=ersetze(title2), url=baseurl+link, mode="Folge", iconimage=img, desc=desc,csrftoken=csrftoken,type="html5")      
+        debug("Link: "+ link)                   
+        debug("title :"+title2) 
+        idd=hashlib.md5(title2).hexdigest()        
+        menulist=menulist+idd+"###"+baseurl+link+"###"+csrftoken+"###html5\n"
+        finalUrl = 'plugin://plugin.video.aod/'
+        addLink(name=ersetze(title2), url=finalUrl, mode="hashplay", iconimage=img, desc=desc,csrftoken=idd,type="html5")      
     except :
        error=1
-    return error
-       
-def flashvideo(entry,img,csrftoken):    
+    return error,menulist
+def hashplay(idd):
+  debug("hashplay url :"+idd)
+  f=xbmcvfs.File( os.path.join(temp,"menu.txt"),"r")   
+  daten=f.read()
+  zeilen=daten.split('\n')
+  for zeile in zeilen:    
+    debug ("Read Zeile :"+zeile)
+    felder=zeile.split("###")
+    debug("Felder ")
+    debug(felder)
+    if felder[0]==idd:    
+          debug("Gefunden")
+          uurl=felder[1]
+          csrftoken=felder[2]
+          type=felder[3][:-1]
+          debug("Type :"+type)
+          Folge(uurl,csrftoken,type)
+    
+           
+  
+def flashvideo(entry,img,csrftoken,menulist):    
     error=0 
     debug("Start Flashvideo")
     try:
@@ -232,16 +260,22 @@ def flashvideo(entry,img,csrftoken):
          desc=desc.replace("<br />","") 
          desc=desc.replace("<p>","") 
          debug("csrftoken : "+csrftoken)
+         debug("URL :" + link)
+         debug("title :"+title)
+         menulist=menulist+md5sum(title)+"###"+link+"###"+csrftoken+"###flash\n"
          addLink(name=ersetze(title), url=link, mode="Folge", iconimage=img, desc=desc,csrftoken=csrftoken,type="flash")      
     except :
        error=1
-    return error
+    return error,menulist
 
 def Folge(url,csrftoken,type):
   global opener
   global cj
   global username
   global password
+  debug("Folge URL :"+url+"#")
+  debug("Folge csrftoken :"+csrftoken+"#")
+  debug("Folge type :"+type+"#")
   try :        
     opener.addheaders = [('X-CSRF-Token', csrftoken),
                      ('X-Requested-With', "XMLHttpRequest"),
@@ -252,12 +286,13 @@ def Folge(url,csrftoken,type):
     debug(content)
     debug("----------------:")
     if type=="html5":
+      debug("Folge  html5")
       match = re.compile('"file":"([^"]+)"', re.DOTALL).findall(content)
       stream=match[1].replace("\\u0026","&")
       debug("1")
       debug("stream :" + stream)
       content2=opener.open(stream).read()   
-      debug("----------------")      
+      debug("-------Content2---------")      
       debug(content2)      
       debug("----------------")      
       spl=content2.split('#EXT-X-STREAM-INF')
@@ -480,3 +515,5 @@ else:
           Start_listen("Neue Anime-Titel")  
   if mode == 'top10':
           Start_listen("Anime Top 10")            
+  if mode == 'hashplay':          
+          hashplay(csrftoken)
