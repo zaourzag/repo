@@ -713,9 +713,8 @@ class zattooOSD(xbmcgui.WindowXMLDialog):
     if action in [ACTION_STOP, ACTION_BUILT_IN_FUNCTION]:
       self.close()
       xbmc.executebuiltin("Action(OSD)") #close hidden gui
-      open=xbmcgui.Window(10000).getProperty('zattooGUI')
-      if (open=='True'):
-        xbmc.executebuiltin("Notification(ZattooGUI,GUI ist open)")
+   
+      
   def onClick(self, controlID):
     channel=_zattooDB_.get_playing()['channel']
     program = _zattooDB_.getPrograms({channel:''}, True, datetime.datetime.now(), datetime.datetime.now())
@@ -744,7 +743,7 @@ class zattooOSD(xbmcgui.WindowXMLDialog):
       self.showChannelNr(nr+1)
     elif controlID==205:
       xbmc.executebuiltin("Action(Stop)")
-      xbmc.executebuiltin("Action(OSD)") #close hidden gui     
+      xbmc.executebuiltin("Action(OSD)")
       if hasattr(self, 'hideNrTimer'): self.hideNrTimer.cancel()
       self.close()
       

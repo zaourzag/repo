@@ -251,7 +251,7 @@ class ZattooDB(object):
     return channel
 
 
-  def getPrograms(self, channels, get_long_description=True, startTime=datetime.datetime.now(), endTime=datetime.datetime.now()):
+  def getPrograms(self, channels, get_long_description=False, startTime=datetime.datetime.now(), endTime=datetime.datetime.now()):
     #self.updateProgram(startTime)
     channelKeys=('\',\''.join(channels.keys()))
     channelKeys="'"+channelKeys.replace(",'index',", "")+"'"
@@ -259,15 +259,15 @@ class ZattooDB(object):
     c.execute('SELECT * FROM programs WHERE channel in (' + channelKeys + ')  AND start_date < ? AND end_date > ?', [endTime, startTime])
     programList = []
     for row in c:
-#      description_long = row['description_long']
-#      if get_long_description and description_long == None: 
-#        description_long = self.getShowInfo(row['showID'],'description')
+      description_long = row["description_long"]
+      if get_long_description and description_long == None: 
+        description_long = self.getShowInfo(row["showID"],'description')
       programList.append({
         'channel': row['channel'],
         'showID' : row['showID'],
         'title' : row['title'],
         'description' : row['description'],
-        'description_long' : row['description_long'],
+        'description_long' : description_long,
         'start_date' : row['start_date'],
         'end_date' : row['end_date'],
         'image_small' : row['image_small'],
