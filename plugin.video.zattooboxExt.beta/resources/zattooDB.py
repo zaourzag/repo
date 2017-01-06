@@ -279,26 +279,30 @@ class ZattooDB(object):
 
 
   def getShowInfo(self, showID, field='all'):
-    import json
-    c = self.conn.cursor()
-    c.execute('SELECT * FROM showinfos WHERE showID= ? ', [int(showID)])
-    row = c.fetchone()
-    if row is not None:
-      showInfoJson=row['info']#[1:-1]
-      showInfo=json.loads(showInfoJson)
-    else:
-      api = '/zapi/program/details?program_id=' + str(showID) + '&complete=True'
-      showInfo = self.zapi.exec_zapiCall(api, None)
-      if showInfo is None: return []
-      showInfo = showInfo['program']
-      #showInfoJson="'"+json.dumps(showInfo)+"'"
-      try: c.execute('INSERT INTO showinfos(showID, info) VALUES(?, ?)',(int(showID), json.dumps(showInfo)))
-      except: pass
-      
-    self.conn.commit()
-    c.close()
-    if field!='all': return showInfo[field]
-    else: return showInfo
+		if field!='all':
+			api = '/zapi/program/details?program_id=' + str(showID) + '&complete=True'
+			showInfo = self.zapi.exec_zapiCall(api, None)
+			return showInfo['program'].get(field, " ")
+		
+		#save information for recordings
+		import json
+		c = self.conn.cursor()
+		c.execute('SELECT * FROM showinfos WHERE showID= ? ', [int(showID)])
+		row = c.fetchone()
+		if row is not None:
+			showInfoJson=row['info']
+			showInfo=json.loads(showInfoJson)
+		else:
+			api = '/zapi/program/details?program_id=' + str(showID) + '&complete=True'
+			showInfo = self.zapi.exec_zapiCall(api, None)
+			if showInfo is None: return []
+			showInfo = showInfo['program']
+			try: c.execute('INSERT INTO showinfos(showID, info) VALUES(?, ?)',(int(showID), json.dumps(showInfo)))
+			except: pass
+		self.conn.commit()
+		c.close()
+		return showInfo
+
 
 
   def set_playing(self, channel=None, start=None, streams=None, streamNr=0):

@@ -112,7 +112,23 @@
 				<bordersize>15</bordersize>-->
 				<texture>$INFO[Window(Home).Property(channelLogo)]</texture>
 			</control>
-			
+<!--
+			<control type="grouplist">
+				<description>Media Codec Flagging Images</description>
+				<left>0</left>
+				<top>610</top>
+				<width>1280</width>
+				<align>center</align>
+				<itemgap>2</itemgap>
+				<orientation>horizontal</orientation>
+				<include>VideoCodecFlaggingConditions</include>
+				<include>AudioCodecFlaggingConditions</include>
+				<include>AudioChannelsFlaggingConditions</include>
+				<include>AspectCodecFlaggingConditions</include>
+				<include>VideoStereoscopicsFlaggingConditions</include>
+				<include>VideoTypeHackFlaggingConditions</include>
+			</control>
+-->
 		</control>
 			<control type="group" id="2">
 			<defaultcontrol always="true">201</defaultcontrol>
