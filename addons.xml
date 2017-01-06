@@ -2438,11 +2438,7 @@ v0.6.0 (2016-12-02)
   </extension>
 </addon>
 
-<<<<<<< HEAD
-<addon id="plugin.video.zattooboxExt.beta" version="1.5.15" name="Zattoo Box Extended Beta" provider-name="L0RE (Modify by Steffen Rolapp)">
-=======
 <addon id="plugin.video.zattooboxExt.beta" version="1.5.16" name="Zattoo Box Extended Beta" provider-name="L0RE (Modify by Steffen Rolapp)">
->>>>>>> fbdf6d5f66dddc4192b3c5d8e7c6278d5981dde5
   <requires>
     <import addon="xbmc.python" version="2.14.0"/>
     <import addon="xbmc.addon" version="13.0.0" />

@@ -1,11 +1,4 @@
-<<<<<<< HEAD
-
-msgctxt "#31903"
-msgid "ZATTOO HIQ"
-msgstr "ZATTOO HIQ"# XBMC Media Center language file
-=======
 # XBMC Media Center language file
->>>>>>> fbdf6d5f66dddc4192b3c5d8e7c6278d5981dde5
 # Addon Name: TV Guide
 # Addon id: script.tvguide
 # Addon Provider: twinther

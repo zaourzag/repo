@@ -316,14 +316,6 @@ class EPG(xbmcgui.WindowXML):
 		description = self.db.getShowLongDescription(program['showID'])
 		if description == '': description = strings(NO_DESCRIPTION)
 		self.setControlText(self.C_MAIN_DESCRIPTION, description)
-<<<<<<< HEAD
-
-		self.setControlImage(self.C_MAIN_LOGO, program['channel_logo'])
-
-		if program['image_small'] is not None:
-			self.setControlImage(self.C_MAIN_IMAGE, program['image_small'])
-			self.setControlImage(self.C_MAIN_BACKGROUND, program['image_small'])
-=======
 		self.descriptionTimer.start()
 				
 		#self.setControlImage(self.C_MAIN_LOGO, program['channel_logo'])
@@ -331,7 +323,6 @@ class EPG(xbmcgui.WindowXML):
 		if program['image_small'] is not None:
 			self.setControlImage(self.C_MAIN_IMAGE, program['image_small'])
 			#self.setControlImage(self.C_MAIN_BACKGROUND, program['image_small'])
->>>>>>> fbdf6d5f66dddc4192b3c5d8e7c6278d5981dde5
 
 # 		if ADDON.getSetting('program.background.enabled') == 'true' and program['image_large'] is not None:
 # 			self.setControlImage(self.C_MAIN_BACKGROUND, program['image_large'])
