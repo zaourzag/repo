@@ -97,7 +97,7 @@ def log(msg, level=xbmc.LOGNOTICE):
     
   
 def addLink(name, url, mode, iconimage, duration="", desc="", genre='',channelid="",times="",ids=0):
-  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&channelid="+str(channelid)+"&times="+str(times)+"&ids="+str(ids)
+  u = base_url+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&channelid="+str(channelid)+"&times="+str(times)+"&ids="+str(ids)
   ok = True
   liz = xbmcgui.ListItem(name, iconImage=defaultThumb, thumbnailImage=iconimage)  
   liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Genre": genre})
@@ -115,7 +115,7 @@ def addLink(name, url, mode, iconimage, duration="", desc="", genre='',channelid
   return ok
   
 def addDir(name, url, mode, iconimage, desc="",year="",channelid="",times="",start="",ende="",id_such=""):
-  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&channelid="+str(channelid)+"&times="+str(times)+"&start="+str(start)+"&ende="+str(ende)+"&id_such="+str(id_such)
+  u = base_url+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&channelid="+str(channelid)+"&times="+str(times)+"&start="+str(start)+"&ende="+str(ende)+"&id_such="+str(id_such)  
   ok = True
   liz = xbmcgui.ListItem(name, iconImage=iconimage, thumbnailImage=iconimage)  
   liz.setProperty("fanart_image", iconimage)
@@ -372,7 +372,7 @@ def live_channels(session,userid):
   urlb=baseurl+"/api/content/v2/timeline/airings?channels="+kanalliste+"&from="+von+"&to="+bis
   content=getUrl(urlb,header=header)  
   struktur = json.loads(content)   
-  for i in range(1,len(kanal_id_arr),1):
+  for i in range(0,len(kanal_id_arr),1):
      kanal_name=kanal_name_arr[i]
      bild=bild_arr[i]
      kanal_id=kanal_id_arr[i]
@@ -493,7 +493,7 @@ if mode is '':
         addDir(translation(30104) , url="-", mode="live_channels", iconimage="")    
         addDir(translation(30137) , url="-", mode="mediathek_channels", iconimage="") 
         addDir(translation(30146) , url="-", mode="live_mytv", iconimage="") 
-    addDir(translation(30103), translation(30102), 'Settings', "")         
+    addDir(translation(30103), "", 'Settings', "")         
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)  
 if mode == 'live_play':
           live_play(url,session,userid,channelid,ids)     
