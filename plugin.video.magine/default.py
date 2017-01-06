@@ -20,10 +20,10 @@ from tzlocal import get_localzone
 try:
   tz = get_localzone()
   offset=tz.utcoffset(datetime.datetime.now()).total_seconds()
-  _timezone_=int(offset)-3600
+  _timezone_=int(offset)
 except:  
-  _timezone_ = int(__addon__.getSetting('time_offset'))*60*-60 #-time.altzone
-
+  _timezone_ = int(__addon__.getSetting('time_offset'))*60*60 
+print "_timezone_ :"+str(_timezone_)
 # Setting Variablen Des Plugins
 baseurl="https://magine.com"
 
@@ -96,7 +96,7 @@ def log(msg, level=xbmc.LOGNOTICE):
     xbmc.log('%s: %s' % (addonID, msg), level) 
     
   
-def addLink(name, url, mode, iconimage, duration="", desc="", genre='',channelid="",times="",ids=0,start=0):
+def addLink(name, url, mode, iconimage, duration="", desc="", genre='',channelid="",times="",ids=0):
   u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&channelid="+str(channelid)+"&times="+str(times)+"&ids="+str(ids)
   ok = True
   liz = xbmcgui.ListItem(name, iconImage=defaultThumb, thumbnailImage=iconimage)  
@@ -107,7 +107,7 @@ def addLink(name, url, mode, iconimage, duration="", desc="", genre='',channelid
   #liz.setProperty("fanart_image", defaultBackground)
   xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
   commands = []  
-  link = "plugin://plugin.video.magine/?mode=mediathek_playvideo&channelid="+str(channelid)+"&ids="+str(start)
+  link = "plugin://plugin.video.magine/?mode=mediathek_playvideo&channelid="+str(channelid)
   commands.append(( "Start from Beginning", 'XBMC.RunPlugin('+ link +')'))
   liz.addContextMenuItems( commands )
 
@@ -161,7 +161,7 @@ def getstreamtype():
      return ""
   return is_type
 
-def playdash(file,session,userid,channelid,ids,desc="",title="",is_type=""): 
+def playdash(file,session,userid,channelid,ids,desc="",title="",is_type="",mediathek=0): 
   header=[]
   header.append (("Authorization","Bearer "+session))
   header.append (("UserId",userid))
@@ -183,10 +183,11 @@ def playdash(file,session,userid,channelid,ids,desc="",title="",is_type=""):
     
   listitem = xbmcgui.ListItem(path=file)        
   pin=addon.getSetting("pin")
-  lic_header="|Authorization=Bearer%20"+session+"&UserId=" +userid+"&Magine-ChannelId=" +channelid+"&Magine-Md=PC-Awesomesauce"+"&Magine-ParentalControlPinCode="+pin+"&Magine-Mk=HTML5"+"&Magine-ClientId=c060c1bf-d805-4feb-74d4-d8241e27d836"+"&Magine-ProgramId="+ids+"|R{SSM}|"
+  lic_header="|Authorization=Bearer%20"+session+"&UserId=" +userid+"&Magine-ChannelId=" +channelid+"&Magine-Md=PC-Awesomesauce"+"&Magine-ParentalControlPinCode="+pin+"&Magine-Mk=HTML5"+"&Magine-ClientId=c060c1bf-d805-4feb-74d4-d8241e27d836"+"&Magine-ProgramId="+ids+"|R{SSM}|" 
   listitem.setProperty(is_type+'.license_type', 'com.widevine.alpha')  
   listitem.setProperty(is_type+'.license_key', "https://magine.com/api/drm/v4/license/widevine"+lic_header)
-  listitem.setProperty(is_type+'.license_data', base64.b64encode(b'\x08\x01\x12\x10'+'{KID}'+b'\x1A\x05'+'tvoli"'+chr(len('channel.'+channelid+'.'+ids))+'channel.'+channelid+'.'+ids+'*'+b'\x02'+'SD2'+b'\x00'))
+  if mediathek==0:
+    listitem.setProperty(is_type+'.license_data', base64.b64encode(b'\x08\x01\x12\x10'+'{KID}'+b'\x1A\x05'+'tvoli"'+chr(len('channel.'+channelid+'.'+ids))+'channel.'+channelid+'.'+ids+'*'+b'\x02'+'SD2'+b'\x00'))
   listitem.setProperty('inputstreamaddon', is_type)  
   listitem.setProperty(is_type+".manifest_type", "mpd")  
   listitem.setInfo( "video", { "Title" : title, "Plot" : desc} )    
@@ -281,7 +282,7 @@ def mediathek_filelist(session,userid,id_such,start,ende):
            channel=element["channelId"]
            ids=element["id"]
            bild=element["image"]
-           startzeit=element["startUnixtime"]+ _timezone_*60*60
+           startzeit=element["startUnixtime"]- _timezone_  +3600
            #start = int(time.mktime(startzeit)) + _timezone_  # local timestamp
            start=datetime.datetime.fromtimestamp(startzeit).strftime('%d.%m. %H:%M')
            id=channelid_arr.index(channel) 
@@ -297,6 +298,8 @@ def mediathek_playvideo(session,userid,channelid,ids):
   newurl=baseurl+"/api/contenturl/v1/channel/"+str(channelid)+"/airing/"+str(ids)  
   content=getUrl(newurl,header=header)  
   struktur = json.loads(content)
+  debug("mediathek_playvideo struktur : ")
+  debug(struktur)
   userAgent = "Coralie/1.7.2-2016081207(SM-G900F; Android; 6.0.1" 
   debug("List Item gesetzt")      
   is_type=getstreamtype()  
@@ -304,13 +307,11 @@ def mediathek_playvideo(session,userid,channelid,ids):
      return "" 
   debug("XXX YYYY")     
   debug(is_type)  
-  listitem,dauer,stop=playdash(struktur["dash"],session,userid,channelid,ids,is_type=is_type)
+  listitem,dauer,stop=playdash(struktur["dash"],session,userid,channelid,ids,is_type=is_type,mediathek=1)
   xbmcplugin.setResolvedUrl(addon_handle, True, listitem)
 
 
-  
-  
-def live_channels(session,userid):
+def live_mytv(session,userid):
   anzeige=addon.getSetting("anzeige")   
   debug("anzeige")
   debug(anzeige)
@@ -323,6 +324,7 @@ def live_channels(session,userid):
         debug("element :")
         debug(element)
         element=element["airing"]
+        ids=element["id"]
         debug (element)
         bild=element["image"] 
         kanal_name=element["channel"]["name"]
@@ -338,15 +340,78 @@ def live_channels(session,userid):
           titel=kanal_name
         if anzeige=="3":
           titel=senung_name          
-        addLink(titel, str(zeit), "live_play", bild, channelid=str(kanal_id),start=element["showId"])
+        addLink(titel, "", "mediathek_playvideo", bild, channelid=str(kanal_id),ids=ids)
+  xbmcplugin.endOfDirectory(addon_handle)  
+  
+def live_channels(session,userid):
+  anzeige=addon.getSetting("anzeige")   
+  debug("anzeige")
+  debug(anzeige)
+  header=[]
+  header.append (("Authorization","Bearer "+session))
+  header.append (("UserId",userid))  
+  content=getUrl(baseurl+"/api/channel/v1/users/"+userid,header=header)  
+  struktur = json.loads(content)   
+  bild_arr=[]
+  kanal_name_arr=[]
+  kanal_id_arr=[]
+  kanalliste=""  
+  for element in struktur: 
+        debug("element :")       
+        debug (element)
+        bild_arr.append(element["logoDark"])
+        kanal_name_arr.append(element["name"])
+        kanal_id_arr.append(element["id"])  
+        kanalliste=kanalliste+str(element["id"])+","
+  kanalliste=kanalliste[:-1] 
+  now = datetime.datetime.now()- datetime.timedelta(seconds=_timezone_)
+  vontime = now - datetime.timedelta(hours=3)
+  bistime = now + datetime.timedelta(hours=3)
+  von=vontime.strftime("%Y%m%dT%H%M00Z")
+  bis=bistime.strftime("%Y%m%dT%H%M00Z")
+  urlb=baseurl+"/api/content/v2/timeline/airings?channels="+kanalliste+"&from="+von+"&to="+bis
+  content=getUrl(urlb,header=header)  
+  struktur = json.loads(content)   
+  for i in range(1,len(kanal_id_arr),1):
+     kanal_name=kanal_name_arr[i]
+     bild=bild_arr[i]
+     kanal_id=kanal_id_arr[i]
+     senung_name=kanal_name_arr[i]
+     for sendung in struktur[kanal_id]:
+        bild=sendung["image"]
+        start=datetime.datetime.utcfromtimestamp(int(sendung["startUnixtime"]))  
+        stop=datetime.datetime.utcfromtimestamp(int(sendung["stopUnixtime"]))  
+        senung_name=sendung["title"]
+        if now> start and now < stop:
+                      
+            debug ("Gefunden :")
+            debug(sendung)
+            titel=sendung["title"]
+            titel=kanal_name +" - "+senung_name
+            if anzeige=="0":
+              titel=kanal_name +" - "+senung_name
+            if anzeige=="1":
+              titel=senung_name +" - "+kanal_name
+            if anzeige=="2":
+              titel=kanal_name
+            if anzeige=="3":
+              titel=senung_name
+            addLink(titel, "", "live_play", bild, channelid=str(kanal_id),ids="")
   xbmcplugin.endOfDirectory(addon_handle)
 
                 
-def live_play(url,session,userid,channelid):      
+def live_play(url,session,userid,channelid,ids):      
   header=[]
   header.append (("Authorization","Bearer "+session))
   header.append (("UserId",userid))
-  times=url
+  debug("Start :"+ids)
+  #https://magine.com/api/content/v2/feeds/channel-11245
+  if ids=="":
+    content=getUrl(baseurl+"/api/content/v2/feeds/channel-"+str(channelid),header=header)  
+    struktur = json.loads(content)    
+    times=struktur["items"][0]["id"]
+  else:
+    times=ids
   debug("live_play")
   playlist = xbmc.PlayList(1)
   playlist.clear() 
@@ -427,14 +492,17 @@ if mode is '':
     else:          
         addDir(translation(30104) , url="-", mode="live_channels", iconimage="")    
         addDir(translation(30137) , url="-", mode="mediathek_channels", iconimage="") 
+        addDir(translation(30146) , url="-", mode="live_mytv", iconimage="") 
     addDir(translation(30103), translation(30102), 'Settings', "")         
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)  
 if mode == 'live_play':
-          live_play(url,session,userid,channelid)     
+          live_play(url,session,userid,channelid,ids)     
 if mode == 'live_channels':
           live_channels(session,userid)      
 if mode == 'mediathek_channels':
           mediathek_channels(session,userid)   
+if mode == 'live_mytv':
+          live_mytv(session,userid)             
 if mode == 'listchannel':
           listchannel(session,userid,channelid)    
 if mode == 'mediathek_selectdate':
