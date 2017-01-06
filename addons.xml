@@ -792,7 +792,7 @@ v1.9.0 (2016-10-14) moving to the new api - please report bugs
   </extension>
 </addon>
 
-<addon id="plugin.video.magine" name="Magine" version="0.3.4" provider-name="L0RE">
+<addon id="plugin.video.magine" name="Magine" version="0.3.5" provider-name="L0RE">
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
     </extension>
