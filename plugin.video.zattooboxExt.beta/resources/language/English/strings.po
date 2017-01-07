@@ -514,3 +514,7 @@ msgstr ""
 msgctxt "#31905"
 msgid "Swiss IP address"
 msgstr ""
+
+msgctxt "#31906"
+msgid "Channel"
+msgstr ""

@@ -295,7 +295,7 @@ class ZattooDB(object):
 		else:
 			api = '/zapi/program/details?program_id=' + str(showID) + '&complete=True'
 			showInfo = self.zapi.exec_zapiCall(api, None)
-			if showInfo is None: return []
+			if showInfo is None: return "NONE"
 			showInfo = showInfo['program']
 			try: c.execute('INSERT INTO showinfos(showID, info) VALUES(?, ?)',(int(showID), json.dumps(showInfo)))
 			except: pass

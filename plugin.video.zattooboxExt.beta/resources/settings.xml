@@ -11,6 +11,7 @@
         <setting label="31004" id="audio_stream" type="labelenum" values="A|B" default="A"/>
         <setting type="sep"/>
 		<setting label="31005" type="bool" id="start_liveTV" default="false"/>
+ <!--       <setting label="31906" type="text" id="start_channel" default="SRF1" enable="false"/> -->
         <setting type="sep"/>
         <setting label="31006" type="action" action="RunPlugin(plugin://plugin.video.zattooboxExt.beta/?mode=reloadDB)"/>
     </category>

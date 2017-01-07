@@ -474,3 +474,7 @@ msgstr "ZATTOO HIQ"
 msgctxt "#31905"
 msgid "Swiss IP address"
 msgstr "Schweizer IP Adresse"
+
+msgctxt "#31906"
+msgid "Channel"
+msgstr "Kanal"
