@@ -58,6 +58,11 @@ ACTION_MOUSE_WHEEL_UP = 104
 ACTION_MOUSE_WHEEL_DOWN = 105
 ACTION_MOUSE_MOVE = 107
 
+ACTION_GESTURE_SWIPE_LEFT = 511
+ACTION_GESTURE_SWIPE_RIGHT = 521
+ACTION_GESTURE_SWIPE_UP = 531
+ACTION_GESTURE_SWIPE_DOWN = 541
+
 KEY_NAV_BACK = 92
 KEY_CONTEXT_MENU = 117
 KEY_HOME = 159
@@ -205,13 +210,13 @@ class EPG(xbmcgui.WindowXML):
 				self.setFocus(control)
 				return
 
-		if actionId == ACTION_LEFT:
+		if actionId in [ACTION_LEFT, ACTION_GESTURE_SWIPE_LEFT]:
 			self._left(currentFocus)
-		elif actionId == ACTION_RIGHT:
+		elif actionId in [ACTION_RIGHT, ACTION_GESTURE_SWIPE_RIGHT]:
 			self._right(currentFocus)
-		elif actionId == ACTION_UP:
+		elif actionId in [ACTION_UP, ACTION_GESTURE_SWIPE_UP]:
 			self._up(currentFocus)
-		elif actionId == ACTION_DOWN:
+		elif actionId in [ACTION_DOWN, ACTION_GESTURE_SWIPE_DOWN]:
 			self._down(currentFocus)
 		elif actionId  in [ACTION_NEXT_ITEM, ACTION_6]:
 			self._nextDay()

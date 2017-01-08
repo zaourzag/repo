@@ -248,7 +248,7 @@
 				<font>-</font>
 				<texturefocus>OSDBookmarksFO.png</texturefocus>
 				<texturenofocus>OSDBookmarksNF.png</texturenofocus>
-				<onclick>ActivateWindow(VideoBookmarks)</onclick>
+<!--				<onclick>ActivateWindow(VideoBookmarks)</onclick> -->
 				<visible>!VideoPlayer.Content(LiveTV)</visible>
 				<onleft>207</onleft>
 				<onright>209</onright>

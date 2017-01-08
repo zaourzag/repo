@@ -342,3 +342,15 @@ class ZattooDB(object):
 
     self.updateChannels(True)
     self.updateProgram(datetime.datetime.now(), True)
+  
+  def update_library(self):
+    c = self.conn.cursor()
+    
+    date = datetime.date.today().strftime('%Y-%m-%d')
+    c.execute('SELECT * FROM updates WHERE date=? AND type=? ', [date, 'records'])
+    if len(c.fetchall())>0: return "False"
+    c.execute('DELETE FROM updates WHERE type=? ', ['records'])
+    c.execute('INSERT into updates(date, type) VALUES(?, ?)', [date, 'records'])        
+    self.conn.commit()    
+    c.close()
+    return "True"
