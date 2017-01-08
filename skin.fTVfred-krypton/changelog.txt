@@ -1,0 +1,266 @@
+Changelog:
+
+3.4.4
+- Added NextUP PostPlay dialog
+- Fixed some MusicOSD issues
+
+3.4.3
+- Relayouted MyPVRChannels.xml
+- Relayouted MyPVRGuide.xml
+
+3.4.2
+- More script.skin.helper.service fixes
+- Added label for discontinued shows in video info dialog
+
+3.4.1
+- Replaced ExtendendInfo with a local custom info dialog for the pseudo xray feature. This also enables the info dialog for episodes.
+- Fixed broken metacritic and rottentomatoes ratings
+- Other minor changes
+
+3.4.0
+- Reworked PVR info dialogs
+- Workaround for "Browse TV Show" button in DialogVideoInfo for Emby users
+- Other minor changes
+
+3.3.9
+- Just minor things and code cleanup. Happy new year, folks!
+
+3.3.8
+- Let it snow, let it snow, let it snooooow
+
+3.3.7
+- Fixed broken SkinHelper music artworks
+
+3.3.6
+- Added custom PVR info OSD
+- Minor adjustments
+
+3.3.5
+- Minor fixes such as the hidden subtitle settings button
+
+3.3.4
+- Added option to show the video in the background
+- Small changes and code adjustments
+
+3.3.3
+- Fixed Wide viewtype
+- Changed player title label layout
+
+3.3.2
+- Readded PVR artwork support for recordings
+- Fixed and moved PVR artwork setting to a own settings entry
+- Fixed small bugs
+
+3.3.1
+- Merged GitHub version to repo with a lot of small minor adjustments
+
+3.3.0a
+- Fixed startup loop for fresh installations and a rare scenario
+- Adjusted forgotten NextAired animations
+
+3.3.0
+- Fixed animation of focused items in the viewtypes
+- GlobalSeach cleanup
+- Improved PVR windows
+
+3.2.9a
+- Fixed custom startup bug
+
+3.2.9
+ - Fixed TV recordings widget
+ - Cleaned up and improved widget code
+ 
+3.2.8
+ - Fixed TV widget for the latest Krypton nightlies
+ - Tweaked startup window
+ - Fixed TV guide button in recording window
+ - Fixed notification icon background
+ - Removed main menu capitalization
+
+3.2.7
+ - Removed thumbnail option for the shutdownmenu
+ - Fixed icon issue with custom shutdownmenu items
+ - Fixed visible DefaultControl option in shutdownmenu edit dialog
+ - Added NumItems to skinshortcuts edit dialog
+ - Tweaked height difference and improved skinshortcuts edit dialog
+
+3.2.6
+ - Reworked skinshortcuts dialog
+ - Added option to select preferred active menu item after Kodi startup
+ - Improved preload and animations
+ - Added fallback for pseudo xray episode cast
+ - Removed plugin based genre support
+ - Merged language strings and cleanup
+ 
+3.2.5
+!Important! All widget and banner layout settings must be set again
+
+ - Reworked preloading mechanism
+ - Rework of banner and widget layout settings to use static values instead of language strings
+ - Added recently added episodes and in progress TV shows as banner option
+ - Moved skin backup option from Skin Settings to More
+ - Merged language strings and cleanup
+
+3.2.4
+- Improved code and look of banner feature
+- Added latest CZ and FR translations
+- Other minor fixes and changes
+
+3.2.3b
+- Fixed rating on season level #2
+- Fixed info labels in music info dialog
+
+3.2.3
+- Changed play icon to episode and TV channels layout to be only visible for the focused item
+- Fixed invisible partymode button
+- Readded partymode button to song viewtype
+- Added playercontrol to shutdownmenu
+- Added unwatched episode label on tvshow level
+- Fixed rating on season level
+- Other minor fixes and changes
+
+3.2.2
+- Enabled song viewtype for Amazon Prime music addon
+- Added equalizer icon for current playing item in song list
+- Replaced FSK rating flags
+- Fixed audio flags dimensions
+- Removed 'not rated' flag
+- Added play icon to episode and TV channels layout
+- Replaced PVR genre with next title
+- Cleanup and minor changes
+
+3.2.1
+- DialogMusicInfo Krypton work
+- Replaced track and album lists with Skin Helper Service in music info dialog
+- Added album mood and style in album info dialog
+- Added cast loading indicator to pseudo x-ray feature
+- Other minor fixes and changes
+
+3.2.0
+- Added Rotten Tomatoes and Metacritics to DialogVideoInfo
+- Added hint box to DialogVideoInfo
+- Fixed list animations in video and extended info dialogs
+- Fixed GlobalSearch fanarts
+- Added button to 'no search results' message of GlobalSearch
+- Fixed playlist position glitch in music visualisation
+
+3.1.10b
+- Fixed music playlist window issues
+- Fixed broken addon screenshots
+
+3.1.10
+- Added user rating to visualisation
+- Reworked music OSD menus
+- Fixed equaliser.gif for albums
+- Replaced artist slideshow script with skin helper service
+
+3.1.9
+- Improved Now Playing overlay layout
+- Improved legibility in visualisation window
+- Added disc art support for music in visualisation window
+- Fixed missing forward and rewinding indicators in visualisation window
+- Fixed broken rewinding indicator
+
+3.1.8
+- Added tempo indicator
+- Added list view for addon screenshots in addon info dialog
+- New notification dialog layout
+- New volumebar dialog layout
+- New extendedprogress dialog layout
+- Fixed ExtendendInfo actor dialog labels
+- Fixed ExtendendInfo video dialog sidemenu
+
+3.1.7
+- Added resolution info flags for videos
+- Added process info dialog
+- Some other minor fixes
+
+3.1.6
+- Added support for TV show FSK rating
+- Fixed missing episode rating icon in video info dialog
+- Fixed rare Live TV pseudo NextUp issue
+- Code improvements
+
+3.1.5
+- Krypton work
+- Added screenshot support to addon info dialog
+- Added 4k corner badge for widgets and views
+- Added delay to pseudo NextUp for TV playback
+- Added and forced poster view for actors videonode
+- Replaced icon and fanart
+
+3.1.4
+- Added pseudo NextUp for Live TV
+- Fixed focus issue in widget group editing dialog
+- Added scrolling to media processing CPU load line for multicore values
+- Cleanup skinshortcuts overrides
+
+3.1.3
+- VideoOSD rework/cleanup
+- Added apply button to subtitle OSD
+- Changed method of Offset and Shift buttons in the subtitle OSD
+- Added CPU load info to media processing OSD
+
+3.1.2
+- Redesigned "3D Options" and "Subtitle Options" OSD
+- Added subtitle styling options to VideoOSD
+- Added "no subtitle service" check to the subtitle download dialog
+- Added 720p label to VideoPlayer
+- Other minor adjustmens
+
+3.1.1
+- Improved boomarks dialog
+- Increased font size of video player titles
+- Fixed skin provided widget path for movie genres
+- Fixed minor "no content configured" widget message animation glitch
+- Fixed some overlay animation glitches for addon based contents
+- Added media processing infos
+
+3.1.0
+- Fixed widget config dialog
+- Replaced some textures with scaleable ones
+- Cleanup
+
+3.0.10
+- New PVR channels OSD
+- Fixed other minor issues
+
+3.0.9
+- Reworked IMDb/TMDb/TVDb icons
+- Added option to choose, which rating provider is used for movies/tv shows
+- Added minimalistic audio channel / codec flags for movies and episodes
+- Fixed "no information found" plot issue
+- Removed "My account" of ExtendedInfo YouTube Browser
+- Fixed Select Dialog glitch for rare scenarios
+- Hide "muted" information after a few seconds
+- Removed fadeout of paused icon
+
+3.0.8
+- Krypton work
+
+3.0.7
+- Added ExtendedInfo YouTube Browser
+- Dialog tweaks
+- Cleanup
+
+3.0.6
+- Fixed ExtendedInfo layouts and conditions (newest version required)
+- Minor fixes
+
+3.0.5
+- Reverted previous busy dialog fix because it's not needed anymore
+- Added a more secure check that widget animations are going to be triggered, even if there is an delay of other conditions
+
+3.0.4
+- fixed addon info labels
+
+3.0.3
+- repo push
+
+3.0.2
+- preload timeout fixes
+
+3.0.1
+Krypton repo release
+- Renamed skin ID. Please create and import an backup of the Jarvis Krypton version.
+		
