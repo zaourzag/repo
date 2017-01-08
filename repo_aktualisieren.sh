@@ -29,7 +29,7 @@ echo '<addons>' >> $REPO/addons.xml
 for name in `find . -maxdepth 1 -type d |grep -v \.git|grep -v addons|egrep -v "^\.$"|cut -d \/ -f 2 `; do 
    VERSION=`cat $name/addon.xml|grep \<addon|grep $name |tr 'A-Z' 'a-z'|sed 's/.*version="\([^"]*\)"*.*/\1/g'`
      if [ ! -f "$name/$name-$VERSION.zip" ]; then
-       zip -r $name/$name-$VERSION.zip $name -x \*.zip
+       zip -r $name/$name-$VERSION.zip $name -x \*.zip -x \*.git
      fi
    cat $name/addon.xml|grep -v "<?xml " >> $REPO/addons.xml
    echo "" >> $REPO/addons.xml
