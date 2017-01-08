@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addons>
-<addon id="plugin.video.ipcams" name="Surveillance Cameras" version="0.0.2" provider-name="brat, BJ1">
-  <extension point="xbmc.python.pluginsource" library="default.py">
-    <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <platform>all</platform>
-    <summary lang="en">Surveillance Cameras</summary>
-    <summary lang="de">Überwachungskameras</summary>
-    <description lang="en">Take a look to the pictures of your installed surveillance cameras. You are able to select one of a maximum number of three cameras.</description>
-    <description lang="de">Schau' Dir die Bilder Deiner installierten Überwachungskameras an. Du kannst eine von maximal drei Kameras auswählen.</description>
-    <disclaimer lang="en">Use at your own risk. This is not a replacment for professional equipment.</disclaimer>
-    <disclaimer lang="de">Benutzung auf eigene Gefahr. ersetzt keine professionelle Ausrüstung.</disclaimer>
-    <license>GNU GENERAL PUBLIC LICENSE. Version 3, June 2007</license>
-    <forum></forum>
-    <website></website>
-    <email>birger.jesch@gmail.com</email>
-    <source>https://github.com/b-jesch/plugin.video.ipcams</source>
-  </extension>
+<addon id="plugin.program.fast_com" version="1.0.0" name="FAST.com" provider-name="Jin">
+    <requires>
+        <import addon="xbmc.python" version="2.24.0"/>
+    </requires>
+    <extension point="xbmc.python.script" library="addon.py">
+        <provides>executable</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en_GB">Fast.com: Internet Speed Test</summary>
+        <description lang="en_GB">How fast is your download speed? In seconds, Fast.com's simple Internet speed test will estimate your ISP speed.</description>
+        <platform>all</platform>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <news>v1.0.0 (2016-09-26)
+- initial release
+        </news>
+        <forum>http://www.kodinerds.net</forum>
+        <email>[jin] at [xyz] dot [de]</email>
+    </extension>
 </addon>
 
 <addon id="plugin.audio.einslive_de" name="1LIVE.de" version="1.0.7" provider-name="AddonScriptorDE">
@@ -112,54 +112,6 @@
 		<email>kodi at bromix dot org</email>
 		<source>https://github.com/bromix/plugin.audio.soundcloud</source>
 	</extension>
-</addon>
-
-<addon id="plugin.program.fast_com" version="1.0.0" name="FAST.com" provider-name="Jin">
-    <requires>
-        <import addon="xbmc.python" version="2.24.0"/>
-    </requires>
-    <extension point="xbmc.python.script" library="addon.py">
-        <provides>executable</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <summary lang="en_GB">Fast.com: Internet Speed Test</summary>
-        <description lang="en_GB">How fast is your download speed? In seconds, Fast.com's simple Internet speed test will estimate your ISP speed.</description>
-        <platform>all</platform>
-        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-        <news>v1.0.0 (2016-09-26)
-- initial release
-        </news>
-        <forum>http://www.kodinerds.net</forum>
-        <email>[jin] at [xyz] dot [de]</email>
-    </extension>
-</addon>
-
-<addon id="plugin.program.fritzact" name="Fritz Smart Home" version="0.0.10" provider-name="Birger Jesch">
-    <requires>
-        <import addon="xbmc.python" version="2.20.0" />
-        <import addon="script.module.requests" version="2.9.1" />
-    </requires>
-	<extension point="xbmc.python.script" library="default.py">
-		<provides>executable</provides>
-    </extension>
-
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <summary lang="en">Switching your home with Kodi</summary>
-        <summary lang="de">Schalte Dein Zuhause mit Kodi</summary>
-        <description lang="en">Use your Fritz!DECT switches within Kodi. Control light and switch your devices with FritzDECT actors. Find out about powered-on devices and their power consumption. Make yourself comfortable with a touch of your remote.</description>
-        <description lang="de">Schalte Deine Fritz!DECT Steckdosen mit Kodi. Steuere Licht und Deine Geräte über FritzDECT Schalter. Informiere Dich über eingeschaltete Geräte und deren Stromverbrauch. Mach' es Dir bequem - mit nur einem Klick auf der Fernbedienung.</description>
-        <license>GNU GENERAL PUBLIC LICENSE. Version 3, June 2007</license>
-        <source>https://github.com/b-jesch/plugin.program.fritzact</source>
-        <forum>http://www.kodinerds.net/index.php/Thread/52691-RELEASE-Fritz-Smart-Home/</forum>
-        <email>birger.jesch@gmail.com</email>
-        <website></website>
-        <assets>
-            <screenshot>resources/screenshots/screenshot-01.jpg</screenshot>
-            <screenshot>resources/screenshots/screenshot-02.jpg</screenshot>
-            <screenshot>resources/screenshots/screenshot-03.jpg</screenshot>
-        </assets>
-    </extension>
 </addon>
 
 
@@ -329,6 +281,27 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
   </extension>
 </addon>
 
+<addon id="context.serieninfos" name="Serien Infos" version="0.2.4" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.20.0" />
+        <import addon="script.module.pyxbmct" version="1.1.7"/>
+    </requires>
+    <extension point="kodi.context.item" library="addon.py">
+        <item>
+            <label>Serien Infos</label>
+            <visible>Window.IsActive(10025)+!Container.Content(Addons)+!Container.Content(images)+!Container.Content(movies)+!Container.Content(songs)</visible>            
+        </item>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en">Display Series Info Last Episod and Season</summary>
+        <description lang="en">Display Series Info Last Episod and Season</description>
+        <platform>all</platform>
+        <language>en</language>
+        <license>GNU General Public License, v2</license>
+        <email></email>
+    </extension>
+</addon>
+
 <addon id="plugin.video.arte_tv" name="Arte.tv" version="2.9.6" provider-name="PUR3">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
@@ -472,82 +445,6 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
     </extension>
 </addon>
 
-<addon id="plugin.video.dailymotion_com" name="DailyMotion.com" version="2.2.3" provider-name="L0RE">
-    <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
-        <import addon="script.module.simple.downloader" version="1.0.0"/>
-        <import addon="script.module.requests" version="2.4.3"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <summary lang="en">Movies, TV, Music, User-Clips, 3D and Livestreams</summary>
-        <language></language>
-        <description lang="en">Movies, TV, Music, User-Clips, 3D and Livestreams</description>
-        <disclaimer lang="en">Some parts of this addon may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
-        <website>http://www.dailymotion.com</website>
-        <source>https://github.com/AddonScriptorDE/plugin.video.dailymotion_com</source>
-        <forum>http://forum.xbmc.org/showthread.php?tid=142626</forum>
-        <email>AddonScriptorDE at yahoo dot de</email>
-    </extension>
-</addon>
-
-<addon id="plugin.video.daisuki" name="Daisuki" version="0.3.4" provider-name="L0RE">
-    <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en">Videos from Daisuki</summary>
-    <summary lang="de">Videos von Daisuki</summary>
-    <description lang="en">Videos from Daisuki</description>
-    <description lang="de">Videos von Daisuki</description>
-    <website></website>
-    <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.daisuki</source>
-    <forum>http://www.kodinerds.net/</forum>
-    <email>andreas at vogler dot name</email>
-    <platform>all</platform>
-  </extension>
-</addon>
-
-<addon id="plugin.video.dazn" version="0.6.3" name="DAZN" provider-name="L0RE">
-    <requires>
-        <import addon="xbmc.python" version="2.25.0"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="addon.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <summary lang="de_DE">ERLEBE DEINEN SPORT. LIVE UND ON-DEMAND.</summary>
-        <summary lang="en_GB">WATCH YOUR SPORT,YOUR WAY. LIVE AND ON-DEMAND.</summary>
-        <description lang="de_DE">
-Egal ob live zu Hause, unterwegs, zeitversetzt oder im Rückblick – mit DAZN kannst du deinen Lieblingssport endlich so erleben, wie du es möchtest. 
-Das Angebot erstreckt sich dabei von europäischem Spitzen-Fußball über die besten US-Sportligen bis hin zu Tennis und vielem mehr.
-        </description>
-        <description lang="en_GB">
-Whether you watch live at home, on the go or on demand, DAZN lets you experience sport the way you always wanted.
-Including football from the top European leagues, the best US sport, tennis and much more.
-        </description>
-        <platform>all</platform>
-        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-        <disclaimer lang="de_DE">Inoffizielles Addon - Benutzung auf eigene Gefahr</disclaimer>
-        <disclaimer lang="en_GB">Unofficial Addon - Use at your own risk</disclaimer>
-        <news>
-V0.6.3
-- Erarlier Version Maintained by Jin
-- Version Greater 0.6.0 Maintained by L0RE
-v0.6.0 (2016-12-02)
-- inputstream adaptive
-        </news>
-        <forum>http://www.kodinerds.net</forum>
-        <email>[jin] at [xyz] dot [de]</email>
-    </extension>
-</addon>
-
 <addon id="plugin.video.dfb_tv" name="DFB TV" version="1.0.4" provider-name="PUR3">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
@@ -606,6 +503,28 @@ v0.6.0 (2016-12-02)
         <email>andreas at vogler dot name</email>
         <website>http://www.dmax.de/videos</website>
     </extension>
+</addon>
+
+<addon id="plugin.video.7tvneu" name="7TV" version="0.5.7" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+  <extension point="xbmc.addon.metadata">
+		<summary lang="en">ProSieben, Sat.1, Kabel 1 and Sixx media library</summary>
+		<summary lang="de">Mediathek für ProSieben, Sat.1, Kabel 1 and Sixx</summary>
+		<description lang="en">Experience with 7TV a majority of shipments of ProSieben, SAT.1, kabel eins and sixx directly after the TV broadcast for free and for at least 7 days in full length - and the round-the-clock!</description>
+		<description lang="de">Erleben Sie mit 7TV einen Großteil der Sendungen von ProSieben, SAT.1, kabel eins und sixx direkt nach der TV-Ausstrahlung kostenlos und für mindestens 7 Tage in voller Länge – und das rund um die Uhr!</description>
+		<disclaimer lang="en"></disclaimer>
+    <website></website>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.br3</source>
+    <forum>http://www.kodinerds.net/index.php/Thread/46598-Bayrisches-Fernsehen/</forum>
+    <email>andreas at vogler dot name</email>
+    <platform>all</platform>
+  </extension>
 </addon>
 
 <addon id="plugin.video.doku5.com" name="Doku5.com" version="0.1.9" provider-name="SLiX, skatulskijean">
@@ -990,29 +909,6 @@ v1.9.0 (2016-10-14) moving to the new api - please report bugs
     </extension>
 </addon>
 
-<addon id="plugin.video.nick_at" name="Nickelodeon.at" version="0.1.1" provider-name="L0RE">
-    <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <summary lang="de">Nickelodeon und Nick Jr. Mediathek</summary>
-        <summary lang="en">Nickelodeon and Nick Jr. media library</summary>
-        <language>de</language>
-        <description lang="de">Nick.at ist die kostenlose Website von Nickelodeon.</description>
-        <description lang="en">Nick.at ist die kostenlose Website von Nickelodeon.</description>
-        <disclaimer lang="en">Some parts of this addon may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
-        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-        <source>https://github.com/kodinerds/repo/tree/master/plugin.video.nick_at</source>
-        <forum>http://forum.xbmc.org/showthread.php?tid=132563</forum>
-        <email>andreas at vogler dot name</email>
-        <website>http://www.nick.at</website>
-    </extension>
-</addon>
-
 <addon id="plugin.video.nick_de" name="Nickelodeon.de" version="1.1.5" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
@@ -1036,27 +932,6 @@ v1.9.0 (2016-10-14) moving to the new api - please report bugs
     </extension>
 </addon>
 
-<addon id="context.serieninfos" name="Serien Infos" version="0.2.4" provider-name="L0RE">
-    <requires>
-        <import addon="xbmc.python" version="2.20.0" />
-        <import addon="script.module.pyxbmct" version="1.1.7"/>
-    </requires>
-    <extension point="kodi.context.item" library="addon.py">
-        <item>
-            <label>Serien Infos</label>
-            <visible>Window.IsActive(10025)+!Container.Content(Addons)+!Container.Content(images)+!Container.Content(movies)+!Container.Content(songs)</visible>            
-        </item>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <summary lang="en">Display Series Info Last Episod and Season</summary>
-        <description lang="en">Display Series Info Last Episod and Season</description>
-        <platform>all</platform>
-        <language>en</language>
-        <license>GNU General Public License, v2</license>
-        <email></email>
-    </extension>
-</addon>
-
 <addon id="plugin.video.ran_de" name="ran" version="2.2.2" provider-name="PUR3">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
@@ -1071,25 +946,6 @@ v1.9.0 (2016-10-14) moving to the new api - please report bugs
         <description lang="de">Dieses Addon ermöglicht es euch, die neusten Videos und Livestreams von ran.de zu schauen.</description>
         <description lang="en">Watch livestreams and the latest videos from ran.de.</description>
     </extension>
-</addon>
-
-<addon id="plugin.video.rocketbeanstvlive" version="2.1.3" name="Rocket Beans TV" provider-name="Jin, Ulukai">
-  <requires>
-    <import addon="xbmc.python" version="2.14.0"/>
-    <import addon="plugin.video.youtube" version="5.2.1"/>
-  </requires>
-  <extension
-    point="xbmc.python.pluginsource"
-    library="addon.py">
-    <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="de_de">Rocket Beans TV | 24/7 Entertainment</summary>
-    <description lang="de_de">Rocket Beans TV ist Entertainment 24/7 zu digitalen Themen wie Filme, Games und Comedy.</description>
-    <language>de</language>
-    <platform>all</platform>
-    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-  </extension>
 </addon>
 
 <addon id="plugin.video.servustv_com" name="ServusTV.com" version="1.0.16" provider-name="L0RE">
@@ -1463,6 +1319,40 @@ Für Sport1US und Sport1+ wird ein ABO auf sport1.de benötigt.
     </extension>
 </addon>
 
+<addon id="plugin.video.dazn" version="0.6.3" name="DAZN" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.25.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="addon.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="de_DE">ERLEBE DEINEN SPORT. LIVE UND ON-DEMAND.</summary>
+        <summary lang="en_GB">WATCH YOUR SPORT,YOUR WAY. LIVE AND ON-DEMAND.</summary>
+        <description lang="de_DE">
+Egal ob live zu Hause, unterwegs, zeitversetzt oder im Rückblick – mit DAZN kannst du deinen Lieblingssport endlich so erleben, wie du es möchtest. 
+Das Angebot erstreckt sich dabei von europäischem Spitzen-Fußball über die besten US-Sportligen bis hin zu Tennis und vielem mehr.
+        </description>
+        <description lang="en_GB">
+Whether you watch live at home, on the go or on demand, DAZN lets you experience sport the way you always wanted.
+Including football from the top European leagues, the best US sport, tennis and much more.
+        </description>
+        <platform>all</platform>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <disclaimer lang="de_DE">Inoffizielles Addon - Benutzung auf eigene Gefahr</disclaimer>
+        <disclaimer lang="en_GB">Unofficial Addon - Use at your own risk</disclaimer>
+        <news>
+V0.6.3
+- Erarlier Version Maintained by Jin
+- Version Greater 0.6.0 Maintained by L0RE
+v0.6.0 (2016-12-02)
+- inputstream adaptive
+        </news>
+        <forum>http://www.kodinerds.net</forum>
+        <email>[jin] at [xyz] dot [de]</email>
+    </extension>
+</addon>
+
 <addon id="plugin.video.xbl" name="Xbox Live" version="0.0.2" provider-name="SLiX">
 	<requires>
 		<import addon="xbmc.python" version="2.14.0"/>
@@ -1485,25 +1375,23 @@ Für Sport1US und Sport1+ wird ein ABO auf sport1.de benötigt.
 	</extension>
 </addon>
 
-<addon id="plugin.video.7tvneu" name="7TV" version="0.5.7" provider-name="L0RE">
-    <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
+<addon id="plugin.video.ipcams" name="Surveillance Cameras" version="0.0.2" provider-name="brat, BJ1">
+  <extension point="xbmc.python.pluginsource" library="default.py">
+    <provides>video</provides>
+  </extension>
   <extension point="xbmc.addon.metadata">
-		<summary lang="en">ProSieben, Sat.1, Kabel 1 and Sixx media library</summary>
-		<summary lang="de">Mediathek für ProSieben, Sat.1, Kabel 1 and Sixx</summary>
-		<description lang="en">Experience with 7TV a majority of shipments of ProSieben, SAT.1, kabel eins and sixx directly after the TV broadcast for free and for at least 7 days in full length - and the round-the-clock!</description>
-		<description lang="de">Erleben Sie mit 7TV einen Großteil der Sendungen von ProSieben, SAT.1, kabel eins und sixx direkt nach der TV-Ausstrahlung kostenlos und für mindestens 7 Tage in voller Länge – und das rund um die Uhr!</description>
-		<disclaimer lang="en"></disclaimer>
-    <website></website>
-    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-    <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.br3</source>
-    <forum>http://www.kodinerds.net/index.php/Thread/46598-Bayrisches-Fernsehen/</forum>
-    <email>andreas at vogler dot name</email>
     <platform>all</platform>
+    <summary lang="en">Surveillance Cameras</summary>
+    <summary lang="de">Überwachungskameras</summary>
+    <description lang="en">Take a look to the pictures of your installed surveillance cameras. You are able to select one of a maximum number of three cameras.</description>
+    <description lang="de">Schau' Dir die Bilder Deiner installierten Überwachungskameras an. Du kannst eine von maximal drei Kameras auswählen.</description>
+    <disclaimer lang="en">Use at your own risk. This is not a replacment for professional equipment.</disclaimer>
+    <disclaimer lang="de">Benutzung auf eigene Gefahr. ersetzt keine professionelle Ausrüstung.</disclaimer>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 3, June 2007</license>
+    <forum></forum>
+    <website></website>
+    <email>birger.jesch@gmail.com</email>
+    <source>https://github.com/b-jesch/plugin.video.ipcams</source>
   </extension>
 </addon>
 
@@ -1544,6 +1432,22 @@ Für Sport1US und Sport1+ wird ein ABO auf sport1.de benötigt.
     </extension>
 </addon>
 
+<addon id="repository.kodinerds" name="kodinerds.net Add-ons" version="6.0.0" provider-name="L0RE">
+	<extension point="xbmc.addon.repository" name="L0RE">
+		<info compressed="true">https://raw.githubusercontent.com/kodinerds/repo/master/addons.xml</info>
+		<checksum>https://raw.githubusercontent.com/kodinerds/repo/master/addons.xml.md5</checksum>
+		<datadir zip="true">https://raw.githubusercontent.com/kodinerds/repo/master/</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">Official Repository of Kodinerds</summary>
+		<summary lang="de">Offizielles Repository der Kodinerds</summary>
+		<description lang="en">This is the official Repository of the german Community 'Kodinerds' which you'll find at www.kodinerds.net. Most of the hosted Addons are supported by the members of the Community. Enjoy!</description>
+		<description lang="de">Das ist das offizielle Repository der deutschen Community 'Kodinerds', welche Du unter www.kodinerds.net findest. Die meisten der hier gehosteten Addons werden von den Mitgliedern der Community aktiv supported. Viel Spaß!</description>
+		<disclaimer></disclaimer>
+		<platform>all</platform>
+	</extension>
+</addon>
+
 <addon id="plugin.video.filmstarts" name="Filmstarts" version="0.6.4" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
@@ -1563,199 +1467,6 @@ Für Sport1US und Sport1+ wird ein ABO auf sport1.de benötigt.
     <email>andreas at vogler dot name</email>
     <platform>all</platform>
   </extension>
-</addon>
-
-<addon id="repository.kodinerds" name="kodinerds.net Add-ons" version="6.0.0" provider-name="L0RE">
-	<extension point="xbmc.addon.repository" name="L0RE">
-		<info compressed="true">https://raw.githubusercontent.com/kodinerds/repo/master/addons.xml</info>
-		<checksum>https://raw.githubusercontent.com/kodinerds/repo/master/addons.xml.md5</checksum>
-		<datadir zip="true">https://raw.githubusercontent.com/kodinerds/repo/master/</datadir>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="en">Official Repository of Kodinerds</summary>
-		<summary lang="de">Offizielles Repository der Kodinerds</summary>
-		<description lang="en">This is the official Repository of the german Community 'Kodinerds' which you'll find at www.kodinerds.net. Most of the hosted Addons are supported by the members of the Community. Enjoy!</description>
-		<description lang="de">Das ist das offizielle Repository der deutschen Community 'Kodinerds', welche Du unter www.kodinerds.net findest. Die meisten der hier gehosteten Addons werden von den Mitgliedern der Community aktiv supported. Viel Spaß!</description>
-		<disclaimer></disclaimer>
-		<platform>all</platform>
-	</extension>
-</addon>
-
-<addon id="repository.kodinerds_Generic_x68_64" name="kodinerds.net Binary Addons for Generic Linux" version="1.0.3" provider-name="L0RE">
-	<extension point="xbmc.addon.repository" name="L0RE">
-		<info compressed="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/Generic_x68_64/addons.xml</info>
-		<checksum>https://raw.githubusercontent.com/kodinerds/binary-repo/master/Generic_x68_64/addons.xml.md5</checksum>
-		<datadir zip="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/Generic_x68_64/</datadir>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="en">Official Repository of Kodinerds</summary>
-		<summary lang="de">Offizielles Repository der Kodinerds</summary>
-		<description lang="en">This is the official Repository of the german Community 'Kodinerds' which you'll find at www.kodinerds.net. Most of the hosted Addons are supported by the members of the Community. Enjoy!</description>
-		<description lang="de">Das ist das offizielle Repository der deutschen Community 'Kodinerds', welche Du unter www.kodinerds.net findest. Die meisten der hier gehosteten Addons werden von den Mitgliedern der Community aktiv supported. Viel Spaß!</description>
-		<disclaimer></disclaimer>
-		<platform>linux</platform>
-	</extension>
-</addon>
-
-<addon id="repository.kodinerds_OSX_64" name="kodinerds.net Binary Addons for OSX 64" version="1.0.3" provider-name="L0RE">
-	<extension point="xbmc.addon.repository" name="L0RE">
-		<info compressed="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/OSX_64/addons.xml</info>
-		<checksum>https://raw.githubusercontent.com/kodinerds/binary-repo/master/OSX_64/addons.xml.md5</checksum>
-		<datadir zip="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/OSX_64/</datadir>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="en">Official Repository of Kodinerds</summary>
-		<summary lang="de">Offizielles Repository der Kodinerds</summary>
-		<description lang="en">This is the official Repository of the german Community 'Kodinerds' which you'll find at www.kodinerds.net. Most of the hosted Addons are supported by the members of the Community. Enjoy!</description>
-		<description lang="de">Das ist das offizielle Repository der deutschen Community 'Kodinerds', welche Du unter www.kodinerds.net findest. Die meisten der hier gehosteten Addons werden von den Mitgliedern der Community aktiv supported. Viel Spaß!</description>
-		<disclaimer></disclaimer>
-		<platform>osx</platform>
-	</extension>
-</addon>
-
-<addon id="repository.kodinerds_Odroid_C2" name="kodinerds.net Binary Addons for Odroid_C2" version="1.0.3" provider-name="L0RE">
-	<extension point="xbmc.addon.repository" name="L0RE">
-		<info compressed="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/Odroid_C2/addons.xml</info>
-		<checksum>https://raw.githubusercontent.com/kodinerds/binary-repo/master/Odroid_C2/addons.xml.md5</checksum>
-		<datadir zip="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/Odroid_C2/</datadir>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="en">Official Repository of Kodinerds</summary>
-		<summary lang="de">Offizielles Repository der Kodinerds</summary>
-		<description lang="en">This is the official Repository of the german Community 'Kodinerds' which you'll find at www.kodinerds.net. Most of the hosted Addons are supported by the members of the Community. Enjoy!</description>
-		<description lang="de">Das ist das offizielle Repository der deutschen Community 'Kodinerds', welche Du unter www.kodinerds.net findest. Die meisten der hier gehosteten Addons werden von den Mitgliedern der Community aktiv supported. Viel Spaß!</description>
-		<disclaimer></disclaimer>
-		<platform>linux</platform>
-	</extension>
-</addon>
-
-<addon id="repository.kodinerds_RPi" name="kodinerds.net Binary Addons for Rasperry 1" version="1.0.3" provider-name="L0RE">
-	<extension point="xbmc.addon.repository" name="L0RE">
-		<info compressed="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/RPi/addons.xml</info>
-		<checksum>https://raw.githubusercontent.com/kodinerds/binary-repo/master/RPi/addons.xml.md5</checksum>
-		<datadir zip="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/RPi/</datadir>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="en">Official Repository of Kodinerds</summary>
-		<summary lang="de">Offizielles Repository der Kodinerds</summary>
-		<description lang="en">This is the official Repository of the german Community 'Kodinerds' which you'll find at www.kodinerds.net. Most of the hosted Addons are supported by the members of the Community. Enjoy!</description>
-		<description lang="de">Das ist das offizielle Repository der deutschen Community 'Kodinerds', welche Du unter www.kodinerds.net findest. Die meisten der hier gehosteten Addons werden von den Mitgliedern der Community aktiv supported. Viel Spaß!</description>
-		<disclaimer></disclaimer>
-		<platform>linux</platform>
-	</extension>
-</addon>
-
-<addon id="repository.kodinerds_RPi2" name="kodinerds.net Binary Addons for Rasperry 2+3" version="1.0.3" provider-name="L0RE">
-	<extension point="xbmc.addon.repository" name="L0RE">
-		<info compressed="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/RPi2/addons.xml</info>
-		<checksum>https://raw.githubusercontent.com/kodinerds/binary-repo/master/RPi2/addons.xml.md5</checksum>
-		<datadir zip="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/RPi2/</datadir>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="en">Official Repository of Kodinerds</summary>
-		<summary lang="de">Offizielles Repository der Kodinerds</summary>
-		<description lang="en">This is the official Repository of the german Community 'Kodinerds' which you'll find at www.kodinerds.net. Most of the hosted Addons are supported by the members of the Community. Enjoy!</description>
-		<description lang="de">Das ist das offizielle Repository der deutschen Community 'Kodinerds', welche Du unter www.kodinerds.net findest. Die meisten der hier gehosteten Addons werden von den Mitgliedern der Community aktiv supported. Viel Spaß!</description>
-		<disclaimer></disclaimer>
-		<platform>linux</platform>
-	</extension>
-</addon>
-
-<addon id="repository.kodinerds_S905" name="kodinerds.net Binary Addons for AML S905 based devices" version="1.0.3" provider-name="L0RE">
-	<extension point="xbmc.addon.repository" name="L0RE">
-		<info compressed="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/S905/addons.xml</info>
-		<checksum>https://raw.githubusercontent.com/kodinerds/binary-repo/master/S905/addons.xml.md5</checksum>
-		<datadir zip="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/S905/</datadir>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary>A Kodi 17 binary addon repository for AML S905 based devices</summary>
-		<description>None of the addons are checkted against other projects then Odroid_C2.
-			Use them, on other AML S905 based devices, at your own risk! 
-			We are not responsible for any damage or data loss!</description>
-		<disclaimer>Some parts of this addons may not be legal in your country of residence - please check with
-			your local laws before installing.</disclaimer>
-		<platform>linux</platform>
-	</extension>
-</addon>
-
-<addon id="repository.kodinerds_WIN_32" name="kodinerds.net Binary Addons for Windows" version="1.0.3" provider-name="L0RE">
-	<extension point="xbmc.addon.repository" name="L0RE">
-		<info compressed="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/WIN_32/addons.xml</info>
-		<checksum>https://raw.githubusercontent.com/kodinerds/binary-repo/master/WIN_32/addons.xml.md5</checksum>
-		<datadir zip="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/WIN_32/</datadir>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="en">Official Repository of Kodinerds</summary>
-		<summary lang="de">Offizielles Repository der Kodinerds</summary>
-		<description lang="en">This is the official Repository of the german Community 'Kodinerds' which you'll find at www.kodinerds.net. Most of the hosted Addons are supported by the members of the Community. Enjoy!</description>
-		<description lang="de">Das ist das offizielle Repository der deutschen Community 'Kodinerds', welche Du unter www.kodinerds.net findest. Die meisten der hier gehosteten Addons werden von den Mitgliedern der Community aktiv supported. Viel Spaß!</description>
-		<disclaimer></disclaimer>
-		<platform>windx</platform>
-	</extension>
-</addon>
-
-<addon id="plugin.video.4players" name="4Players Videos" version="2.0.4" provider-name="L0RE">
-    <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
-        <import addon="script.module.xbmcswift2" version="2.4.0"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="addon.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <language>de</language>
-        <website>http://www.4players.de/</website>
-        <source>https://github.com/dersphere/plugin.video.4players</source>
-        <forum>http://forum.xbmc.org/showthread.php?tid=110689</forum>
-        <email>sphere@dersphere.de</email>
-        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-        <summary lang="be">Game related videos from www.4players.de</summary>
-        <summary lang="bg">Game related videos from www.4players.de</summary>
-        <summary lang="ca">Vídeos relacionats amb jocs de www.4players.de</summary>
-        <summary lang="de">Videos über Computer-Spiele von www.4players.de</summary>
-        <summary lang="el">Βίντεο παιχνιδιών από το www.4players.de</summary>
-        <summary lang="en">Game related videos from www.4players.de</summary>
-        <summary lang="es">Videos de juegos de www.4players.de</summary>
-        <summary lang="fr">Vidéos de jeu de www.4players.de</summary>
-        <summary lang="fr_CA">Vidéos relatifs à des jeux provenant de www.4players.de</summary>
-        <summary lang="gl">Vídeos de www.4players.de sobre Xogos</summary>
-        <summary lang="he">סרטונים בנושא משחקי וידאו מ-www.4players.de</summary>
-        <summary lang="hr">Igre povezane s video snimkama sa www.4players.de</summary>
-        <summary lang="hu">Játékkal kapcsolatos videók a www.4players.de weboldalról</summary>
-        <summary lang="it">Filmati relativi al Gioco da www.4players.de</summary>
-        <summary lang="nl">Spel gerelateerde video's van www.4players.de</summary>
-        <summary lang="pl">Wideo o grach z www.4players.de</summary>
-        <summary lang="pt">Vídeos de jogos a partir de www.4players.de</summary>
-        <summary lang="pt_BR">Vídeos relacionados a Jogos de www.4players.de</summary>
-        <summary lang="sv">Spelrelaterade videor från www.4players.de</summary>
-        <summary lang="zh">www.4players.de上的游戏相关视频</summary>
-        <description lang="be">4Players is a german video-game magazine.[CR]With this add-on you can browse latest- or popular-videos, game reviews or browse videos by games you are interested in.[CR]You can also filter the videos by platforms in the add-on settings.</description>
-        <description lang="bg">4Players е германско списание видео игри.[CR]С тази добавка можете да търсите най-новите или най-популярните видео клипове, ревюта или да търсите видео клипове за игри, от които се интересувате.[CR]Можете също да филтрирате видео клипове от платформи от настройките на добавката.</description>
-        <description lang="ca">4Players es una revista de videojocs alemanya.[CR]Amb aquest complement pots explorar els últims- o els més populars-vídeos, ressenyes de videojocs o buscar vídeos dels videojocs que t'interessin.[CR]També pots filtrar els vídeos per plataforma en la configuració del complement.</description>
-        <description lang="de">4Players ist ein deutesches Videospielmagazin.[CR]Mit diesem Addon können die neuesten oder populärsten Videos, Spiel-Reviews oder Videos von Spielen, an denen Du interessiert bist, durchsucht werden.[CR]Die Videos können auch nach Plattform gefiltert werden, siehe Addon-Einstellungen.</description>
-        <description lang="el">Το 4Players είναι ένα γερμανικό περιοδικό βιντεοπαιχνιδιών.[CR]Με αυτό το πρόσθετο να δείτε τα πιο πρόσφατα ή δημοφιλή βίντεο, κριτικές παιχνιδιών ή να βρείτε παιχνίδια τα οποία σας ενδιαφέρουν.[CR]Μπορείτε, επίσης, να φιλτράρετε τα βίντεο ανά παιχνιδομηχανή στις ρυθμίσεις του πρόσθετου.</description>
-        <description lang="en">4Players is a german video-game magazine.[CR]With this add-on you can browse latest- or popular-videos, game reviews or browse videos by games you are interested in.[CR]You can also filter the videos by platforms in the add-on settings.</description>
-        <description lang="es">4Players es una revista alemana de videojuegos.[CR]Con este complemento puede explorar los últimos o los más populares vídeos y críticas de juegos, o buscar los vídeos de los juegos en los que esté interesado.[CR]También puede filtrar los vídeos según la plataforma, en los ajustes del complemento.</description>
-        <description lang="fr">4Players et un magazine allemand de jeux vidéos.[CR]Avec cette extension vous pouvez naviguer entre les dernières  vidéos - ou populaires -, revues des jeux ou naviguer parmi les vidéos des jeux qui vous intéressent.[CR]Vous pouvez aussi filtrer les vidéos par plateformes dans les paramètres de l'extension.</description>
-        <description lang="fr_CA">4Players est un magazine de jeux vidéo allemand.[CR]Avec cette extension vous pouver naviguer les dernières vidéos ou les vidéos les plus populaire, les critiques de jeu, ou naviguer les vidéos pour les jeux qui vous intéressent.[CR]Vous pouvez aussi filtrer les vidéos par plate-formes dans les configurations de l'extension.</description>
-        <description lang="gl">4Players é unha revista de videoxogos alemán.[CR]Grazas a este complemento, pode navegar polos vídeos máis recentes ou populares, análises de xogos ou buscar vídeos entre os xogos que lle interesan.[CR]Tamén pode filtrar os vídeos por plataforma na configuración do complemento.</description>
-        <description lang="he">4Players הוא מגזין משחקי וידאו גרמני.[CR]בעזרת הרחבה זו אפשר לצפות בסרטונים וביקורות עדכניים ופופולריים ולחפש סרטונים העוסקים משחקים שמעניינים אותך.[CR]בהגדרות ההרחבה ניתן לסנן את הסרטונים לפי פלטפורמות.</description>
-        <description lang="hr">4Players je njemački magazin za video igre.[CR]Sa ovim dodatkom možete pregledavati najnovije- ili najpopularnije-video snimke, recenzije igara ili pregledavati video snimke koje vas zanimaju.[CR]Isto tako možete filtrirati video snimke prema platformi u postavkama dodatka.</description>
-        <description lang="hu">4Players egy német videójáték újság.[CR]Ezzel a kiegészítővel böngészheti a legújabb vagy legnépszerűbb videókat, játékteszteket vagy érdeklődésére számot tartó játékvideókat.[CR]Szűrhetőek a videók platformokra a kiegészítő beállításaiban.</description>
-        <description lang="it">4Player è un magazine tedesco sui video giochi.[CG]Con questo add-on puoi sfogliare gli ultimi o più popolari video, recensioni o sfogliare i video per giochi che ti interessano.[CR]Puoi anche filtrare i video per piattaforma nelle impostazioni dell'add-on.</description>
-        <description lang="nl">4Players is een duits video-game tijdschrift.[CR]Met deze add-on kunt u de laatste- of populairste video's en game reviews bekijken. Ook kunt u video's bekijken voor games waarin u bent geïnteresseerd.[CR]U kunt de video's ook filteren op platform in de add-on instellingen.</description>
-        <description lang="pl">4Players jest niemieckim magazynem o grach.[CR]Ta wtyczka umożliwia przeglądanie najnowszych lub popularnych wideo, recenzji gier, lub przeglądanie wideo dotyczących gier, którymi się interesujesz.[CR]Można również użyć filtru.</description>
-        <description lang="pt">4Players é uma revista de vídeojogos alemã.[CR]Com este add-on, pode navegar por vídeos recentes ou populares, análises de jogos ou procurar vídeos dos jogos que quiser.[CR]Pode também filtrar os vídeos por plataforma, nas definições do add-on.</description>
-        <description lang="pt_BR">4Players é uma revista de jogos alemã.[CR]Com este addon você pode navegar nos vídeos mais populares, reviews de jogos ou procurar pelos vídeos de games que mais te interessam.[CR]Você também pode filtrar os vídeos por plataformas nos ajustes do addon.</description>
-        <description lang="sv">4Players är ett tyskt videospelsmagasin.[CR]Med detta tillägg kan du bläddra bland dom senaste eller populäraste videorna, spelrecensioner eller bläddra bland videor för spelen du är intresserad av.[CR]Du kan också filtrera videorna efter plattformar i tilläggsinställningarna.</description>
-        <description lang="zh">4Players是一个德国视频游戏杂志。[CR]通过此插件，你可以浏览最近或最热门视频、游戏评论，或按你感兴趣的游戏浏览视频。[CR]你还可以在插件设置中按平台筛选视频。</description>
-        <news>v2.0.4  (2016-12-07)
-- Plugin Made by Tristan Fischer (sphere@dersphere.de) and Maintained until 2.0.4
-- New Version Up 2.0.4 Maintained by L0RE
-        </news>
-
-    </extension>
 </addon>
 
 <addon id="repository.lost-and-found" name="kodinerds.net Add-ons (old)" version="1.1.12" provider-name="L0RE">
@@ -1792,20 +1503,6 @@ Für Sport1US und Sport1+ wird ein ABO auf sport1.de benötigt.
 	</extension>
 </addon>
 
-
-<addon id="repository.sandmann79.plugins" name="Sandmann79s Repository" version="1.0.2" provider-name="Sandmann79">
-	<extension point="xbmc.addon.repository" name="Sandmann79s Repository">
-		<info compressed="false">https://raw.githubusercontent.com/Sandmann79/xbmc/master/packages/addons.xml</info>
-		<checksum>https://raw.githubusercontent.com/Sandmann79/xbmc/master/packages/addons.xml.md5</checksum>
-		<datadir zip="true">https://raw.githubusercontent.com/Sandmann79/xbmc/master/packages/</datadir>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary>Test Repo</summary>
-		<description></description>
-		<disclaimer></disclaimer>
-		<platform>all</platform>
-	</extension>
-</addon>
 
 <addon id="resource.images.addonicons.color" name="Alternative Addon Icons" version="1.2.1" provider-name="Barney Stinsen">
 	<extension point="kodi.resource.images" compile="false" type="addonicons" />
@@ -2049,27 +1746,6 @@ Für Sport1US und Sport1+ wird ein ABO auf sport1.de benötigt.
   </extension>
 </addon>
 
-<addon id="service.iptv.proxy" name="IPTV Proxy" version="1.0.2" provider-name="frankr612">
-  <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
-    <import addon="script.module.requests" version="2.9.1"/>
-    <import addon="script.module.routing" version="0.2.0"></import>
-  </requires>
-  <extension point="xbmc.service" library="service.py" />
-  <extension point="xbmc.python.script" library="pluginplayer.py" />
-  <extension point="xbmc.addon.metadata">
-    <summary lang="de">IPTV Service Proxy</summary>
-    <description lang="de">Service Addon zur Einbindung von Zattoo/EWETV IPTV Sendern in Kodi via Simple IPTV Client</description>
-    <language></language>
-    <platform>all</platform>
-    <license></license>
-    <forum></forum>
-    <website></website>
-    <email></email>
-    <source></source>
-  </extension>
-</addon>
-
 <addon id="service.kn.switchtimer" name="KN Switchtimer Service" provider-name="Birger Jesch" version="1.2.6">
     <requires>
         <import addon="xbmc.addon" version="14.0.0"/>
@@ -2133,26 +1809,6 @@ Für Sport1US und Sport1+ wird ein ABO auf sport1.de benötigt.
       <screenshot>resources/screenshots/screenshot-01.jpg</screenshot>
       <screenshot>resources/screenshots/screenshot-02.jpg</screenshot>
     </assets>
-  </extension>
-</addon>
-
-<addon id="skin.destiny" name="Destiny" version="1.5.6" provider-name="Jugger">
-  <requires>
-    <import addon="xbmc.gui" version="5.10.0"/> 
-  </requires>
-  <extension
-    point="xbmc.gui.skin"
-    debugging="false"
-    effectslowdown="0.75">
-    <res width="1920" height="1080" aspect="16:9" default="true" folder="1080i" />
-  </extension>
-  <extension point="xbmc.addon.metadata">
-  <summary lang="en">skin created and design by Jugger</summary> 
-  <summary lang="de">Skin Destiny von Jugger</summary>
-  <description lang="en">The skin is kept simple but Destiny Modern skin but has a lot to offer.</description>
-  <description lang="de">Der Skin Destiny ist ein schlicht gehaltener aber Moderner Skin der aber auch einiges zu bieten hat.[CR]Support gibt es unter http://www.kodinerds.net</description>
-  <disclaimer lang="en">no official skin use at your own risk.</disclaimer>
-  <platform>all</platform> 
   </extension>
 </addon>
 
@@ -2366,6 +2022,26 @@ Für Sport1US und Sport1+ wird ein ABO auf sport1.de benötigt.
   </extension>
 </addon>
 
+<addon id="skin.destiny" name="Destiny" version="1.5.6" provider-name="Jugger">
+  <requires>
+    <import addon="xbmc.gui" version="5.10.0"/> 
+  </requires>
+  <extension
+    point="xbmc.gui.skin"
+    debugging="false"
+    effectslowdown="0.75">
+    <res width="1920" height="1080" aspect="16:9" default="true" folder="1080i" />
+  </extension>
+  <extension point="xbmc.addon.metadata">
+  <summary lang="en">skin created and design by Jugger</summary> 
+  <summary lang="de">Skin Destiny von Jugger</summary>
+  <description lang="en">The skin is kept simple but Destiny Modern skin but has a lot to offer.</description>
+  <description lang="de">Der Skin Destiny ist ein schlicht gehaltener aber Moderner Skin der aber auch einiges zu bieten hat.[CR]Support gibt es unter http://www.kodinerds.net</description>
+  <disclaimer lang="en">no official skin use at your own risk.</disclaimer>
+  <platform>all</platform> 
+  </extension>
+</addon>
+
 <addon id="skin.horizonzv.isengard" name="Horizonz V" version="1.9.0.7" provider-name="blauesgruen">
 	<requires>
 		<import addon="xbmc.gui" version="5.10.0"/>
@@ -2436,6 +2112,330 @@ Für Sport1US und Sport1+ wird ein ABO auf sport1.de benötigt.
 		<disclaimer lang="en_US">Confluence is based on the work of Jezz_X and Team XBMC</disclaimer>
 		<platform>all</platform>
 	</extension>
+</addon>
+
+<addon id="plugin.video.4players" name="4Players Videos" version="2.0.4" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="script.module.xbmcswift2" version="2.4.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="addon.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <language>de</language>
+        <website>http://www.4players.de/</website>
+        <source>https://github.com/dersphere/plugin.video.4players</source>
+        <forum>http://forum.xbmc.org/showthread.php?tid=110689</forum>
+        <email>sphere@dersphere.de</email>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <summary lang="be">Game related videos from www.4players.de</summary>
+        <summary lang="bg">Game related videos from www.4players.de</summary>
+        <summary lang="ca">Vídeos relacionats amb jocs de www.4players.de</summary>
+        <summary lang="de">Videos über Computer-Spiele von www.4players.de</summary>
+        <summary lang="el">Βίντεο παιχνιδιών από το www.4players.de</summary>
+        <summary lang="en">Game related videos from www.4players.de</summary>
+        <summary lang="es">Videos de juegos de www.4players.de</summary>
+        <summary lang="fr">Vidéos de jeu de www.4players.de</summary>
+        <summary lang="fr_CA">Vidéos relatifs à des jeux provenant de www.4players.de</summary>
+        <summary lang="gl">Vídeos de www.4players.de sobre Xogos</summary>
+        <summary lang="he">סרטונים בנושא משחקי וידאו מ-www.4players.de</summary>
+        <summary lang="hr">Igre povezane s video snimkama sa www.4players.de</summary>
+        <summary lang="hu">Játékkal kapcsolatos videók a www.4players.de weboldalról</summary>
+        <summary lang="it">Filmati relativi al Gioco da www.4players.de</summary>
+        <summary lang="nl">Spel gerelateerde video's van www.4players.de</summary>
+        <summary lang="pl">Wideo o grach z www.4players.de</summary>
+        <summary lang="pt">Vídeos de jogos a partir de www.4players.de</summary>
+        <summary lang="pt_BR">Vídeos relacionados a Jogos de www.4players.de</summary>
+        <summary lang="sv">Spelrelaterade videor från www.4players.de</summary>
+        <summary lang="zh">www.4players.de上的游戏相关视频</summary>
+        <description lang="be">4Players is a german video-game magazine.[CR]With this add-on you can browse latest- or popular-videos, game reviews or browse videos by games you are interested in.[CR]You can also filter the videos by platforms in the add-on settings.</description>
+        <description lang="bg">4Players е германско списание видео игри.[CR]С тази добавка можете да търсите най-новите или най-популярните видео клипове, ревюта или да търсите видео клипове за игри, от които се интересувате.[CR]Можете също да филтрирате видео клипове от платформи от настройките на добавката.</description>
+        <description lang="ca">4Players es una revista de videojocs alemanya.[CR]Amb aquest complement pots explorar els últims- o els més populars-vídeos, ressenyes de videojocs o buscar vídeos dels videojocs que t'interessin.[CR]També pots filtrar els vídeos per plataforma en la configuració del complement.</description>
+        <description lang="de">4Players ist ein deutesches Videospielmagazin.[CR]Mit diesem Addon können die neuesten oder populärsten Videos, Spiel-Reviews oder Videos von Spielen, an denen Du interessiert bist, durchsucht werden.[CR]Die Videos können auch nach Plattform gefiltert werden, siehe Addon-Einstellungen.</description>
+        <description lang="el">Το 4Players είναι ένα γερμανικό περιοδικό βιντεοπαιχνιδιών.[CR]Με αυτό το πρόσθετο να δείτε τα πιο πρόσφατα ή δημοφιλή βίντεο, κριτικές παιχνιδιών ή να βρείτε παιχνίδια τα οποία σας ενδιαφέρουν.[CR]Μπορείτε, επίσης, να φιλτράρετε τα βίντεο ανά παιχνιδομηχανή στις ρυθμίσεις του πρόσθετου.</description>
+        <description lang="en">4Players is a german video-game magazine.[CR]With this add-on you can browse latest- or popular-videos, game reviews or browse videos by games you are interested in.[CR]You can also filter the videos by platforms in the add-on settings.</description>
+        <description lang="es">4Players es una revista alemana de videojuegos.[CR]Con este complemento puede explorar los últimos o los más populares vídeos y críticas de juegos, o buscar los vídeos de los juegos en los que esté interesado.[CR]También puede filtrar los vídeos según la plataforma, en los ajustes del complemento.</description>
+        <description lang="fr">4Players et un magazine allemand de jeux vidéos.[CR]Avec cette extension vous pouvez naviguer entre les dernières  vidéos - ou populaires -, revues des jeux ou naviguer parmi les vidéos des jeux qui vous intéressent.[CR]Vous pouvez aussi filtrer les vidéos par plateformes dans les paramètres de l'extension.</description>
+        <description lang="fr_CA">4Players est un magazine de jeux vidéo allemand.[CR]Avec cette extension vous pouver naviguer les dernières vidéos ou les vidéos les plus populaire, les critiques de jeu, ou naviguer les vidéos pour les jeux qui vous intéressent.[CR]Vous pouvez aussi filtrer les vidéos par plate-formes dans les configurations de l'extension.</description>
+        <description lang="gl">4Players é unha revista de videoxogos alemán.[CR]Grazas a este complemento, pode navegar polos vídeos máis recentes ou populares, análises de xogos ou buscar vídeos entre os xogos que lle interesan.[CR]Tamén pode filtrar os vídeos por plataforma na configuración do complemento.</description>
+        <description lang="he">4Players הוא מגזין משחקי וידאו גרמני.[CR]בעזרת הרחבה זו אפשר לצפות בסרטונים וביקורות עדכניים ופופולריים ולחפש סרטונים העוסקים משחקים שמעניינים אותך.[CR]בהגדרות ההרחבה ניתן לסנן את הסרטונים לפי פלטפורמות.</description>
+        <description lang="hr">4Players je njemački magazin za video igre.[CR]Sa ovim dodatkom možete pregledavati najnovije- ili najpopularnije-video snimke, recenzije igara ili pregledavati video snimke koje vas zanimaju.[CR]Isto tako možete filtrirati video snimke prema platformi u postavkama dodatka.</description>
+        <description lang="hu">4Players egy német videójáték újság.[CR]Ezzel a kiegészítővel böngészheti a legújabb vagy legnépszerűbb videókat, játékteszteket vagy érdeklődésére számot tartó játékvideókat.[CR]Szűrhetőek a videók platformokra a kiegészítő beállításaiban.</description>
+        <description lang="it">4Player è un magazine tedesco sui video giochi.[CG]Con questo add-on puoi sfogliare gli ultimi o più popolari video, recensioni o sfogliare i video per giochi che ti interessano.[CR]Puoi anche filtrare i video per piattaforma nelle impostazioni dell'add-on.</description>
+        <description lang="nl">4Players is een duits video-game tijdschrift.[CR]Met deze add-on kunt u de laatste- of populairste video's en game reviews bekijken. Ook kunt u video's bekijken voor games waarin u bent geïnteresseerd.[CR]U kunt de video's ook filteren op platform in de add-on instellingen.</description>
+        <description lang="pl">4Players jest niemieckim magazynem o grach.[CR]Ta wtyczka umożliwia przeglądanie najnowszych lub popularnych wideo, recenzji gier, lub przeglądanie wideo dotyczących gier, którymi się interesujesz.[CR]Można również użyć filtru.</description>
+        <description lang="pt">4Players é uma revista de vídeojogos alemã.[CR]Com este add-on, pode navegar por vídeos recentes ou populares, análises de jogos ou procurar vídeos dos jogos que quiser.[CR]Pode também filtrar os vídeos por plataforma, nas definições do add-on.</description>
+        <description lang="pt_BR">4Players é uma revista de jogos alemã.[CR]Com este addon você pode navegar nos vídeos mais populares, reviews de jogos ou procurar pelos vídeos de games que mais te interessam.[CR]Você também pode filtrar os vídeos por plataformas nos ajustes do addon.</description>
+        <description lang="sv">4Players är ett tyskt videospelsmagasin.[CR]Med detta tillägg kan du bläddra bland dom senaste eller populäraste videorna, spelrecensioner eller bläddra bland videor för spelen du är intresserad av.[CR]Du kan också filtrera videorna efter plattformar i tilläggsinställningarna.</description>
+        <description lang="zh">4Players是一个德国视频游戏杂志。[CR]通过此插件，你可以浏览最近或最热门视频、游戏评论，或按你感兴趣的游戏浏览视频。[CR]你还可以在插件设置中按平台筛选视频。</description>
+        <news>v2.0.4  (2016-12-07)
+- Plugin Made by Tristan Fischer (sphere@dersphere.de) and Maintained until 2.0.4
+- New Version Up 2.0.4 Maintained by L0RE
+        </news>
+
+    </extension>
+</addon>
+
+<addon id="repository.sandmann79.plugins" name="Sandmann79s Repository" version="1.0.2" provider-name="Sandmann79">
+	<extension point="xbmc.addon.repository" name="Sandmann79s Repository">
+		<info compressed="false">https://raw.githubusercontent.com/Sandmann79/xbmc/master/packages/addons.xml</info>
+		<checksum>https://raw.githubusercontent.com/Sandmann79/xbmc/master/packages/addons.xml.md5</checksum>
+		<datadir zip="true">https://raw.githubusercontent.com/Sandmann79/xbmc/master/packages/</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary>Test Repo</summary>
+		<description></description>
+		<disclaimer></disclaimer>
+		<platform>all</platform>
+	</extension>
+</addon>
+
+<addon id="plugin.program.fritzact" name="Fritz Smart Home" version="0.0.10" provider-name="Birger Jesch">
+    <requires>
+        <import addon="xbmc.python" version="2.20.0" />
+        <import addon="script.module.requests" version="2.9.1" />
+    </requires>
+	<extension point="xbmc.python.script" library="default.py">
+		<provides>executable</provides>
+    </extension>
+
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="en">Switching your home with Kodi</summary>
+        <summary lang="de">Schalte Dein Zuhause mit Kodi</summary>
+        <description lang="en">Use your Fritz!DECT switches within Kodi. Control light and switch your devices with FritzDECT actors. Find out about powered-on devices and their power consumption. Make yourself comfortable with a touch of your remote.</description>
+        <description lang="de">Schalte Deine Fritz!DECT Steckdosen mit Kodi. Steuere Licht und Deine Geräte über FritzDECT Schalter. Informiere Dich über eingeschaltete Geräte und deren Stromverbrauch. Mach' es Dir bequem - mit nur einem Klick auf der Fernbedienung.</description>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 3, June 2007</license>
+        <source>https://github.com/b-jesch/plugin.program.fritzact</source>
+        <forum>http://www.kodinerds.net/index.php/Thread/52691-RELEASE-Fritz-Smart-Home/</forum>
+        <email>birger.jesch@gmail.com</email>
+        <website></website>
+        <assets>
+            <screenshot>resources/screenshots/screenshot-01.jpg</screenshot>
+            <screenshot>resources/screenshots/screenshot-02.jpg</screenshot>
+            <screenshot>resources/screenshots/screenshot-03.jpg</screenshot>
+        </assets>
+    </extension>
+</addon>
+
+<addon id="plugin.video.nick_at" name="Nickelodeon.at" version="0.1.1" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="de">Nickelodeon und Nick Jr. Mediathek</summary>
+        <summary lang="en">Nickelodeon and Nick Jr. media library</summary>
+        <language>de</language>
+        <description lang="de">Nick.at ist die kostenlose Website von Nickelodeon.</description>
+        <description lang="en">Nick.at ist die kostenlose Website von Nickelodeon.</description>
+        <disclaimer lang="en">Some parts of this addon may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <source>https://github.com/kodinerds/repo/tree/master/plugin.video.nick_at</source>
+        <forum>http://forum.xbmc.org/showthread.php?tid=132563</forum>
+        <email>andreas at vogler dot name</email>
+        <website>http://www.nick.at</website>
+    </extension>
+</addon>
+
+<addon id="service.iptv.proxy" name="IPTV Proxy" version="1.0.2" provider-name="frankr612">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.requests" version="2.9.1"/>
+    <import addon="script.module.routing" version="0.2.0"></import>
+  </requires>
+  <extension point="xbmc.service" library="service.py" />
+  <extension point="xbmc.python.script" library="pluginplayer.py" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="de">IPTV Service Proxy</summary>
+    <description lang="de">Service Addon zur Einbindung von Zattoo/EWETV IPTV Sendern in Kodi via Simple IPTV Client</description>
+    <language></language>
+    <platform>all</platform>
+    <license></license>
+    <forum></forum>
+    <website></website>
+    <email></email>
+    <source></source>
+  </extension>
+</addon>
+
+<addon id="plugin.video.rocketbeanstvlive" version="2.1.3" name="Rocket Beans TV" provider-name="Jin, Ulukai">
+  <requires>
+    <import addon="xbmc.python" version="2.14.0"/>
+    <import addon="plugin.video.youtube" version="5.2.1"/>
+  </requires>
+  <extension
+    point="xbmc.python.pluginsource"
+    library="addon.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="de_de">Rocket Beans TV | 24/7 Entertainment</summary>
+    <description lang="de_de">Rocket Beans TV ist Entertainment 24/7 zu digitalen Themen wie Filme, Games und Comedy.</description>
+    <language>de</language>
+    <platform>all</platform>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+  </extension>
+</addon>
+
+<addon id="repository.kodinerds_Generic_x68_64" name="kodinerds.net Binary Addons for Generic Linux" version="1.0.3" provider-name="L0RE">
+	<extension point="xbmc.addon.repository" name="L0RE">
+		<info compressed="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/Generic_x68_64/addons.xml</info>
+		<checksum>https://raw.githubusercontent.com/kodinerds/binary-repo/master/Generic_x68_64/addons.xml.md5</checksum>
+		<datadir zip="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/Generic_x68_64/</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">Official Repository of Kodinerds</summary>
+		<summary lang="de">Offizielles Repository der Kodinerds</summary>
+		<description lang="en">This is the official Repository of the german Community 'Kodinerds' which you'll find at www.kodinerds.net. Most of the hosted Addons are supported by the members of the Community. Enjoy!</description>
+		<description lang="de">Das ist das offizielle Repository der deutschen Community 'Kodinerds', welche Du unter www.kodinerds.net findest. Die meisten der hier gehosteten Addons werden von den Mitgliedern der Community aktiv supported. Viel Spaß!</description>
+		<disclaimer></disclaimer>
+		<platform>linux</platform>
+	</extension>
+</addon>
+
+<addon id="repository.kodinerds_OSX_64" name="kodinerds.net Binary Addons for OSX 64" version="1.0.3" provider-name="L0RE">
+	<extension point="xbmc.addon.repository" name="L0RE">
+		<info compressed="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/OSX_64/addons.xml</info>
+		<checksum>https://raw.githubusercontent.com/kodinerds/binary-repo/master/OSX_64/addons.xml.md5</checksum>
+		<datadir zip="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/OSX_64/</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">Official Repository of Kodinerds</summary>
+		<summary lang="de">Offizielles Repository der Kodinerds</summary>
+		<description lang="en">This is the official Repository of the german Community 'Kodinerds' which you'll find at www.kodinerds.net. Most of the hosted Addons are supported by the members of the Community. Enjoy!</description>
+		<description lang="de">Das ist das offizielle Repository der deutschen Community 'Kodinerds', welche Du unter www.kodinerds.net findest. Die meisten der hier gehosteten Addons werden von den Mitgliedern der Community aktiv supported. Viel Spaß!</description>
+		<disclaimer></disclaimer>
+		<platform>osx</platform>
+	</extension>
+</addon>
+
+<addon id="repository.kodinerds_RPi" name="kodinerds.net Binary Addons for Rasperry 1" version="1.0.3" provider-name="L0RE">
+	<extension point="xbmc.addon.repository" name="L0RE">
+		<info compressed="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/RPi/addons.xml</info>
+		<checksum>https://raw.githubusercontent.com/kodinerds/binary-repo/master/RPi/addons.xml.md5</checksum>
+		<datadir zip="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/RPi/</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">Official Repository of Kodinerds</summary>
+		<summary lang="de">Offizielles Repository der Kodinerds</summary>
+		<description lang="en">This is the official Repository of the german Community 'Kodinerds' which you'll find at www.kodinerds.net. Most of the hosted Addons are supported by the members of the Community. Enjoy!</description>
+		<description lang="de">Das ist das offizielle Repository der deutschen Community 'Kodinerds', welche Du unter www.kodinerds.net findest. Die meisten der hier gehosteten Addons werden von den Mitgliedern der Community aktiv supported. Viel Spaß!</description>
+		<disclaimer></disclaimer>
+		<platform>linux</platform>
+	</extension>
+</addon>
+
+<addon id="repository.kodinerds_RPi2" name="kodinerds.net Binary Addons for Rasperry 2+3" version="1.0.3" provider-name="L0RE">
+	<extension point="xbmc.addon.repository" name="L0RE">
+		<info compressed="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/RPi2/addons.xml</info>
+		<checksum>https://raw.githubusercontent.com/kodinerds/binary-repo/master/RPi2/addons.xml.md5</checksum>
+		<datadir zip="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/RPi2/</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">Official Repository of Kodinerds</summary>
+		<summary lang="de">Offizielles Repository der Kodinerds</summary>
+		<description lang="en">This is the official Repository of the german Community 'Kodinerds' which you'll find at www.kodinerds.net. Most of the hosted Addons are supported by the members of the Community. Enjoy!</description>
+		<description lang="de">Das ist das offizielle Repository der deutschen Community 'Kodinerds', welche Du unter www.kodinerds.net findest. Die meisten der hier gehosteten Addons werden von den Mitgliedern der Community aktiv supported. Viel Spaß!</description>
+		<disclaimer></disclaimer>
+		<platform>linux</platform>
+	</extension>
+</addon>
+
+<addon id="repository.kodinerds_WIN_32" name="kodinerds.net Binary Addons for Windows" version="1.0.3" provider-name="L0RE">
+	<extension point="xbmc.addon.repository" name="L0RE">
+		<info compressed="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/WIN_32/addons.xml</info>
+		<checksum>https://raw.githubusercontent.com/kodinerds/binary-repo/master/WIN_32/addons.xml.md5</checksum>
+		<datadir zip="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/WIN_32/</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">Official Repository of Kodinerds</summary>
+		<summary lang="de">Offizielles Repository der Kodinerds</summary>
+		<description lang="en">This is the official Repository of the german Community 'Kodinerds' which you'll find at www.kodinerds.net. Most of the hosted Addons are supported by the members of the Community. Enjoy!</description>
+		<description lang="de">Das ist das offizielle Repository der deutschen Community 'Kodinerds', welche Du unter www.kodinerds.net findest. Die meisten der hier gehosteten Addons werden von den Mitgliedern der Community aktiv supported. Viel Spaß!</description>
+		<disclaimer></disclaimer>
+		<platform>windx</platform>
+	</extension>
+</addon>
+
+<addon id="repository.kodinerds_Odroid_C2" name="kodinerds.net Binary Addons for Odroid_C2" version="1.0.3" provider-name="L0RE">
+	<extension point="xbmc.addon.repository" name="L0RE">
+		<info compressed="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/Odroid_C2/addons.xml</info>
+		<checksum>https://raw.githubusercontent.com/kodinerds/binary-repo/master/Odroid_C2/addons.xml.md5</checksum>
+		<datadir zip="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/Odroid_C2/</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">Official Repository of Kodinerds</summary>
+		<summary lang="de">Offizielles Repository der Kodinerds</summary>
+		<description lang="en">This is the official Repository of the german Community 'Kodinerds' which you'll find at www.kodinerds.net. Most of the hosted Addons are supported by the members of the Community. Enjoy!</description>
+		<description lang="de">Das ist das offizielle Repository der deutschen Community 'Kodinerds', welche Du unter www.kodinerds.net findest. Die meisten der hier gehosteten Addons werden von den Mitgliedern der Community aktiv supported. Viel Spaß!</description>
+		<disclaimer></disclaimer>
+		<platform>linux</platform>
+	</extension>
+</addon>
+
+<addon id="plugin.video.dailymotion_com" name="DailyMotion.com" version="2.2.3" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="script.module.simple.downloader" version="1.0.0"/>
+        <import addon="script.module.requests" version="2.4.3"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="en">Movies, TV, Music, User-Clips, 3D and Livestreams</summary>
+        <language></language>
+        <description lang="en">Movies, TV, Music, User-Clips, 3D and Livestreams</description>
+        <disclaimer lang="en">Some parts of this addon may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
+        <website>http://www.dailymotion.com</website>
+        <source>https://github.com/AddonScriptorDE/plugin.video.dailymotion_com</source>
+        <forum>http://forum.xbmc.org/showthread.php?tid=142626</forum>
+        <email>AddonScriptorDE at yahoo dot de</email>
+    </extension>
+</addon>
+
+<addon id="repository.kodinerds_S905" name="kodinerds.net Binary Addons for AML S905 based devices" version="1.0.3" provider-name="L0RE">
+	<extension point="xbmc.addon.repository" name="L0RE">
+		<info compressed="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/S905/addons.xml</info>
+		<checksum>https://raw.githubusercontent.com/kodinerds/binary-repo/master/S905/addons.xml.md5</checksum>
+		<datadir zip="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/S905/</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary>A Kodi 17 binary addon repository for AML S905 based devices</summary>
+		<description>None of the addons are checkted against other projects then Odroid_C2.
+			Use them, on other AML S905 based devices, at your own risk! 
+			We are not responsible for any damage or data loss!</description>
+		<disclaimer>Some parts of this addons may not be legal in your country of residence - please check with
+			your local laws before installing.</disclaimer>
+		<platform>linux</platform>
+	</extension>
+</addon>
+
+<addon id="plugin.video.daisuki" name="Daisuki" version="0.3.4" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Videos from Daisuki</summary>
+    <summary lang="de">Videos von Daisuki</summary>
+    <description lang="en">Videos from Daisuki</description>
+    <description lang="de">Videos von Daisuki</description>
+    <website></website>
+    <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.daisuki</source>
+    <forum>http://www.kodinerds.net/</forum>
+    <email>andreas at vogler dot name</email>
+    <platform>all</platform>
+  </extension>
 </addon>
 
 <addon id="plugin.video.zattooboxExt.beta" version="1.5.18" name="Zattoo Box Extended Beta" provider-name="L0RE (Modify by Steffen Rolapp)">
