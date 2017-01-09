@@ -478,3 +478,11 @@ msgstr "Schweizer IP Adresse"
 msgctxt "#31906"
 msgid "Channel"
 msgstr "Kanal"
+
+msgctxt "#31907"
+msgid "Set the channel as the start channel"
+msgstr "Den Kanal als Startkanal festlegen"
+
+msgctxt "#31910"
+msgid "Reset Folder"
+msgstr "Verzeichnis zurücksetzen"

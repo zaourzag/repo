@@ -11,7 +11,7 @@
         <setting label="31004" id="audio_stream" type="labelenum" values="A|B" default="A"/>
         <setting type="sep"/>
 		<setting label="31005" type="bool" id="start_liveTV" default="false"/>
- <!--       <setting label="31906" type="text" id="start_channel" default="SRF1" enable="false"/> -->
+        <setting label="31906" type="text" id="start_channel" default="ARD" enable="false"/>
         <setting type="sep"/>
         <setting label="31006" type="action" action="RunPlugin(plugin://plugin.video.zattooboxExt.beta/?mode=reloadDB)"/>
     </category>
@@ -20,6 +20,7 @@
 		<setting label="31013" type="bool" id="epgPlay" default="false"/>
         <setting type="sep"/>
 		<setting label="31014" type="folder" id="library_dir" source="video" option="writeable"/>
-        <setting label="31015" type="action" option="hidden" enable="!eq(-1,)" action="RunPlugin(plugin://plugin.video.zattooboxExt.beta/?mode=makelibrary)"/>
+        <setting label="31910" type="action" id="reset_dir" enable="!eq(-1,)" action="RunPlugin(plugin://plugin.video.zattooboxExt.beta/?mode=resetdir)"/>
+        <setting label="31015" type="action" option="hidden" enable="!eq(-2,)" action="RunPlugin(plugin://plugin.video.zattooboxExt.beta/?mode=makelibrary)"/>
     </category>
 </settings>

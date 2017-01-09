@@ -259,6 +259,8 @@ class ZattooDB(object):
     c.execute('SELECT * FROM programs WHERE channel in (' + channelKeys + ')  AND start_date < ? AND end_date > ?', [endTime, startTime])
     programList = []
     for row in c:
+
+        
       description_long = row["description_long"]
       if get_long_description and description_long == None: 
         description_long = self.getShowInfo(row["showID"],'description')
@@ -279,30 +281,30 @@ class ZattooDB(object):
 
 
   def getShowInfo(self, showID, field='all'):
-		if field!='all':
-			api = '/zapi/program/details?program_id=' + str(showID) + '&complete=True'
-			showInfo = self.zapi.exec_zapiCall(api, None)
-			return showInfo['program'].get(field, " ")
-		
-		#save information for recordings
-		import json
-		c = self.conn.cursor()
-		c.execute('SELECT * FROM showinfos WHERE showID= ? ', [int(showID)])
-		row = c.fetchone()
-		if row is not None:
-			showInfoJson=row['info']
-			showInfo=json.loads(showInfoJson)
-		else:
-			api = '/zapi/program/details?program_id=' + str(showID) + '&complete=True'
-			showInfo = self.zapi.exec_zapiCall(api, None)
-			if showInfo is None: return "NONE"
-			showInfo = showInfo['program']
-			try: c.execute('INSERT INTO showinfos(showID, info) VALUES(?, ?)',(int(showID), json.dumps(showInfo)))
-			except: pass
-		self.conn.commit()
-		c.close()
-		return showInfo
-
+        if field!='all':
+            api = '/zapi/program/details?program_id=' + str(showID) + '&complete=True'
+            showInfo = self.zapi.exec_zapiCall(api, None)
+            return showInfo['program'].get(field, " ")
+        
+        #save information for recordings
+        import json
+        c = self.conn.cursor()
+        c.execute('SELECT * FROM showinfos WHERE showID= ? ', [int(showID)])
+        row = c.fetchone()
+        if row is not None:
+            showInfoJson=row['info']
+            showInfo=json.loads(showInfoJson)
+        else:
+            api = '/zapi/program/details?program_id=' + str(showID) + '&complete=True'
+            showInfo = self.zapi.exec_zapiCall(api, None)
+            if showInfo is None: return "NONE"
+            showInfo = showInfo['program']
+            try: c.execute('INSERT INTO showinfos(showID, info) VALUES(?, ?)',(int(showID), json.dumps(showInfo)))
+            except: pass
+        self.conn.commit()
+        c.close()
+        return showInfo
+    
 
 
   def set_playing(self, channel=None, start=None, streams=None, streamNr=0):
@@ -344,13 +346,45 @@ class ZattooDB(object):
     self.updateProgram(datetime.datetime.now(), True)
   
   def update_library(self):
-    c = self.conn.cursor()
-    
-    date = datetime.date.today().strftime('%Y-%m-%d')
-    c.execute('SELECT * FROM updates WHERE date=? AND type=? ', [date, 'records'])
-    if len(c.fetchall())>0: return "False"
+    c = self.conn.cursor() 
+    date = datetime.date.today().strftime('%Y-%m-%d')   
     c.execute('DELETE FROM updates WHERE type=? ', ['records'])
     c.execute('INSERT into updates(date, type) VALUES(?, ?)', [date, 'records'])        
     self.conn.commit()    
     c.close()
+    return 
+
+  def test_library(self):
+    folder=__addon__.getSetting('library_dir')
+    if not folder: return "False"
+    c = self.conn.cursor()    
+    date = datetime.date.today().strftime('%Y-%m-%d')
+    c.execute('SELECT * FROM updates WHERE date=? AND type=? ', [date, 'records'])
+    if len(c.fetchall())>0:
+        self.conn.commit()    
+        c.close()
+        return "False"
+    self.conn.commit()    
+    c.close()
     return "True"
+  
+  def get_channeltitle(self, channelid):
+    c = self.conn.cursor()
+    c.execute('SELECT * FROM channels WHERE id= ? ', [channelid])
+    row = c.fetchone()
+    if row:
+      channeltitle=row['title']
+    self.conn.commit()
+    c.close()
+    return channeltitle 
+
+  def get_channelid(self, channeltitle):
+    c = self.conn.cursor()
+    c.execute('SELECT * FROM channels WHERE title= ? ', [channeltitle])
+    row = c.fetchone()
+    if row:
+      channelid=row['id']
+    self.conn.commit()
+    c.close()
+    return channelid
+  

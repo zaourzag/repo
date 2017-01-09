@@ -518,3 +518,11 @@ msgstr ""
 msgctxt "#31906"
 msgid "Channel"
 msgstr ""
+
+msgctxt "#31907"
+msgid "Set the channel as the start channel"
+msgstr ""
+
+msgctxt "#31910"
+msgid "Reset Folder"
+msgstr ""

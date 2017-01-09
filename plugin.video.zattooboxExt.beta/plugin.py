@@ -141,14 +141,16 @@ def build_root(addon_uri, addon_handle):
     __addon__.openSettings()
     sys.exit()
   
-  #play sf-1 on open addon
+  #play channel on open addon
   if ((not xbmc.Player().isPlaying()) and (__addon__.getSetting('start_liveTV')=='true')):
-    resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/watch', {'cid': 'sf-1', 'stream_type': 'hls', 'maxrate':__addon__.getSetting('max_bandwidth')})
+    channeltitle = __addon__.getSetting('start_channel')
+    channelid = _zattooDB_.get_channelid(channeltitle)
+    resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/watch', {'cid': channelid, 'stream_type': 'hls', 'maxrate':__addon__.getSetting('max_bandwidth')})
     xbmc.Player().play(resultData['stream']['watch_urls'][0]['url'])
     streamsList = []
     for stream in resultData['stream']['watch_urls']: streamsList.append(stream['url'])
     streamsList = '|'.join(streamsList)
-    _zattooDB_.set_playing('sf-1', '0', streamsList, 0)
+    _zattooDB_.set_playing(channelid, '0', streamsList, 0)
     makeZattooGUI()
 
   localString = __addon__.getLocalizedString
@@ -195,11 +197,12 @@ def build_channelsList(addon_uri, addon_handle):
           prog = search
           break
       content.append({
-#         'title': chan['title'] + '   -   ' + prog.get('title', '')+ '   '+prog['start_date'].strftime('%H:%M')+'-'+prog['end_date'].strftime('%H:%M'),
+#        'title': channels[chan]['title'] + '   -   ' + prog.get('title', '')+ '   '+start.strftime('%H:%M')+'-'+end.strftime('%H:%M'),
         'title': str(nr)+' '+channels[chan]['title'] + '   -   ' + prog.get('title', ''),
         'image': channels[chan]['logo'],
         'thumbnail': prog.get('image_small', ''),
         'plot':  prog.get('description_long', ''),
+#        'plot': prog.get('start_date').strftime('%H:%M')+'-'+prog.get('end_date').strftime('%H:%M'),
         'isFolder': False,
         'url': addon_uri + '?' + urllib.urlencode({'mode': 'watch_c', 'id': channels[chan]['id']}),
         'selected' : channels[chan]['id'] == playing['channel']
@@ -301,7 +304,8 @@ def delete_recording(recording_id):
 
 def make_library():
   folder=__addon__.getSetting('library_dir')
-  
+  print folder
+  if not folder: return
   import os
   libraryPath = xbmc.translatePath(folder)
   if not os.path.exists(libraryPath): os.makedirs(libraryPath)
@@ -343,7 +347,7 @@ def make_library():
     f = open(nfoFile,"w")
     f.write(out.encode("UTF-8"))
     f.close()
-  
+  _zattooDB_.update_library()
   xbmcgui.Dialog().notification('Ordner für Filme aktualisiert', __addon__.getLocalizedString(31020), time=10000)    
   
 def slugify(value):
@@ -720,6 +724,7 @@ class zattooOSD(xbmcgui.WindowXMLDialog):
       
   def onClick(self, controlID):
     channel=_zattooDB_.get_playing()['channel']
+    channeltitle=_zattooDB_.get_channeltitle(channel)
     program = _zattooDB_.getPrograms({channel:''}, True, datetime.datetime.now(), datetime.datetime.now())
     program=program[0]
     self.close() #close OSD
@@ -749,7 +754,9 @@ class zattooOSD(xbmcgui.WindowXMLDialog):
       xbmc.executebuiltin("Action(OSD)")
       if hasattr(self, 'hideNrTimer'): self.hideNrTimer.cancel()
       self.close()
-      
+    elif controlID==208:
+      if xbmcgui.Dialog().yesno(channeltitle, __addon__.getLocalizedString(31907)):
+         __addon__.setSetting(id="start_channel", value=channeltitle)
     elif controlID>300:
       xbmc.executebuiltin("Action(OSD)") #close hidden gui
       if controlID==303: xbmc.executebuiltin('ActivateWindow(10025,"plugin://'+__addonId__+'/?mode=channellist")')
@@ -830,6 +837,9 @@ def main():
     del tele
   elif action == 'makelibrary':
     make_library()
+  elif action == 'resetdir':
+    __addon__.setSetting(id="library_dir", value="")
+    xbmc.executebuiltin('Container.Refresh')
   '''
   elif action == 'showInfo':
     #xbmc.executebuiltin('ActivateWindow(12003)')
@@ -838,9 +848,10 @@ def main():
     del info
   '''
     
-#test = _zattooDB_.update_library()
-#if test == "True":
-    #make_library()
+test = _zattooDB_.test_library()
+if test == "True":
+    print "ERGEBNIS  " + test
+    make_library()
     
 main()
 
