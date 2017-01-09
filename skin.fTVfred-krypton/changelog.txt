@@ -1,5 +1,16 @@
 Changelog:
 
+3.4.7
+- Fixed skin helper widgets and backup feature
+
+3.4.6
+- Reworked some dialogs
+- Code and file cleanup
+
+3.4.5
+- Replaced some fonts and color values in the PVR screens
+- Code cleanup
+
 3.4.4
 - Added NextUP PostPlay dialog
 - Fixed some MusicOSD issues
