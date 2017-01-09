@@ -339,7 +339,10 @@ def listSpotifyPlaylists(url):
     for item in content['items']:
         uri = item['playlist']['uri'].encode('utf-8')
         try:
-            thumb = "http://d3rt1990lpmkn.cloudfront.net/300/"+item['playlist']['image']
+            if not "http" in item['playlist']['image']:
+              thumb = "http://d3rt1990lpmkn.cloudfront.net/300/"+item['playlist']['image']
+            else:
+              thumb = item['playlist']['image']
         except:
             thumb = ""
         title = item['playlist']['title'].encode('utf-8')
