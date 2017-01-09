@@ -110,7 +110,6 @@ except:
   _timezone_ = int(__addon__.getSetting('time_offset'))*60*-60 #-time.altzone
 
 
-
 def build_directoryContent(content, addon_handle, cache=True, root=False):
   xbmcplugin.setContent(addon_handle, 'movies')
   xbmcplugin.setPluginFanart(addon_handle, __addon__.getAddonInfo('path') + '/fanart.jpg')
@@ -172,6 +171,7 @@ def build_root(addon_uri, addon_handle):
   #update db
   _zattooDB_.updateChannels()
   _zattooDB_.updateProgram()
+
   
 def build_channelsList(addon_uri, addon_handle):
   import urllib
@@ -311,6 +311,8 @@ def make_library():
   for record in resultData['recordings']:
     showInfo=_zattooDB_.getShowInfo(record['program_id'])
     
+    if showInfo == "NONE": continue
+    
     if showInfo['episode_title']: name=showInfo['title']+'-'+showInfo['episode_title']
     else: name=showInfo['title']
 
@@ -342,7 +344,7 @@ def make_library():
     f.write(out.encode("UTF-8"))
     f.close()
   
-  xbmcgui.Dialog().notification('all done!', __addon__.getLocalizedString(31020), time=10000)    
+  xbmcgui.Dialog().notification('Ordner für Filme aktualisiert', __addon__.getLocalizedString(31020), time=10000)    
   
 def slugify(value):
     """
@@ -817,7 +819,7 @@ def main():
   elif action == 'reloadDB':
     _zattooDB_.reloadDB()
     xbmcgui.Dialog().notification(__addonname__, __addon__.getLocalizedString(31250), time=10000)    
-
+    make_library
   elif action == 'changeStream':
     dir = int(args.get('dir')[0])
     change_stream(dir)
@@ -835,7 +837,11 @@ def main():
     info.doModal()
     del info
   '''
-
+    
+#test = _zattooDB_.update_library()
+#if test == "True":
+    #make_library()
+    
 main()
 
 
