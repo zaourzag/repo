@@ -2379,7 +2379,7 @@ v0.6.0 (2016-12-02)
 	</extension>
 </addon>
 
-<addon id="plugin.video.dailymotion_com" name="DailyMotion.com" version="2.2.3" provider-name="L0RE">
+<addon id="plugin.video.dailymotion_com" name="DailyMotion.com" version="2.2.4" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="script.module.simple.downloader" version="1.0.0"/>
