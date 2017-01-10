@@ -1244,36 +1244,27 @@ Für Sport1US und Sport1+ wird ein ABO auf sport1.de benötigt.
     </extension>
 </addon>
 
-<addon id="plugin.video.tvtoday_de" name="TV Today - Best of Mediatheken" version="1.3.0" provider-name="realvito">
+<addon id="plugin.video.tvspielfilm_de" name="TV Spielfilm - Das Beste aus den Mediatheken" version="1.0.1" provider-name="realvito">
 	<requires>
 		<import addon="xbmc.python" version="2.14.0"/>
-		<import addon="script.module.libArd" version="0.3.4"/>
 	</requires>
 	<extension point="xbmc.python.pluginsource" library="default.py">
 		<provides>video</provides>
 	</extension>
 	<extension point="xbmc.addon.metadata">
-		<summary>Das Beste aus TV-Today</summary>
-		<description>@realvito[CR]Das Beste aus deutschen Mediatheken, ausgewählt und zusammengestellt von der Zeitschrift TV-Today (www.tvtoday.de).[CR][CR]Für mehr Informationen zu allen Neuerungen siehe - CHANGELOG.[CR]     HAVE FUN</description>
+		<summary>Das Beste aus TV-Spielfilm</summary>
+		<description>@realvito[CR]Das Beste aus deutschen Mediatheken, ausgewählt und zusammengestellt von der Zeitschrift TV-Spielfilm (www.tvspielfilm.de).[CR][CR]Für mehr Informationen zu allen Neuerungen siehe - CHANGELOG.[CR]     HAVE FUN</description>
 		<disclaimer></disclaimer>
 		<language></language>
 		<platform>all</platform>
 		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-		<forum>http://www.kodinerds.net/index.php/Thread/53329-RERELEASE-TVTODAY/</forum>
-		<website>http://www.tvtoday.de/mediathek/</website>
+		<forum>http://www.kodinerds.net/index.php/Thread/?</forum>
+		<website>http://www.tvspielfilm.de/mediathek/</website>
 		<email></email>
-		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.tvtoday_de</source>
-		<news> [B]Version 1.3.0  (10.12.2016)[/B]
-					- Sender-Kennung im Genrebereich (z.B. Spielfilme...) überarbeitet und verkürzt
-					- fixed: Umlaute und Sonderzeichen in der Sender-Kennung
-					- NowTV Sender können jetzt zu 100% im Genrebereich per "settings" ausgeblendet werden (im Datumbereich nicht zu 100% möglich, da die Webseite von "TvToday" nicht mehr hergibt !)
-					- (NowTV Senderabschaltung jetzt in die "settings" integriert, da der eine oder andere, die gelaufene Sendung vielleicht später im Browser ansehen möchte !)
-					- fixed: Wenn der Titel oder ein Teil des Titels einer Sendung nicht vorhanden ist, wird der Ordner nicht gelistet (IndexError)
-					- fixed: VideoLink von "TvToday" existiert nicht mehr bei den "Öffentlich-Rechtlichen"
-					- fixed: Video- und Audiocodecanzeigen verschwinden in der Ordneransicht (Kodi-KRYPTON 17.0-beta6)
-					- fixed: Abspiellisten-Eintrag wird nicht im -Rechtsklickmenü- angezeigt und Thumb von Sendung wird nicht übertragen
-					- kleinere Fehler: Titel der Sendung endet mit einem Komma (Vorher: Vebrauchermagazin, -  Jetzt: Verbrauchermagazin)
-					- gesamten Code überarbeitet</news>
+		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.tvspielfilm_de</source>
+		<news> [B]Version 1.0.1  (04.01.2017)[/B]
+					- Eigenen Resolver für die "ARD" eingebaut
+					- *(script.module.libArd vorerst enfernt)</news>
 	</extension>
 </addon>
 
@@ -2487,31 +2478,6 @@ v0.6.0 (2016-12-02)
   </extension>
 </addon>
 
-<addon id="plugin.video.tvspielfilm_de" name="TV Spielfilm - Das Beste aus den Mediatheken" version="1.0.0" provider-name="realvito">
-	<requires>
-		<import addon="xbmc.python" version="2.14.0"/>
-		<import addon="script.module.libArd" version="0.3.4"/>
-	</requires>
-	<extension point="xbmc.python.pluginsource" library="default.py">
-		<provides>video</provides>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary>Das Beste aus TV-Spielfilm</summary>
-		<description>@realvito[CR]Das Beste aus deutschen Mediatheken, ausgewählt und zusammengestellt von der Zeitschrift TV-Spielfilm (www.tvspielfilm.de).[CR][CR]Für mehr Informationen zu allen Neuerungen siehe - CHANGELOG.[CR]     HAVE FUN</description>
-		<disclaimer></disclaimer>
-		<language></language>
-		<platform>all</platform>
-		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-		<forum>http://www.kodinerds.net/index.php/Thread/?</forum>
-		<website>http://www.tvspielfilm.de/mediathek/</website>
-		<email></email>
-		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.tvspielfilm_de</source>
-		<news> [B]Version 1.0.0  (10.12.2016)[/B]
-					- Initial release @realvito
-					- Das meiste übernommen vom "plugin.video.tvtoday_de" (gleiche Quelle)</news>
-	</extension>
-</addon>
-
 <addon id="plugin.video.netzkino_de" name="Netzkino" version="2.2.3" provider-name="L0RE">
 	<requires>
 		<import addon="xbmc.python" version="2.14.0"/>
@@ -2668,6 +2634,30 @@ See changelog.txt for more details.</news>
         <description lang="de">Slideshow von Fanarts/Postern im fTV Style</description>
         <description lang="en">Poster and fanart slideshow based on the fTV style</description>
     </extension>
+</addon>
+
+<addon id="plugin.video.tvtoday_de" name="TV Today - Best of Mediatheken" version="1.3.1" provider-name="realvito">
+	<requires>
+		<import addon="xbmc.python" version="2.14.0"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary>Das Beste aus TV-Today</summary>
+		<description>@realvito[CR]Das Beste aus deutschen Mediatheken, ausgewählt und zusammengestellt von der Zeitschrift TV-Today (www.tvtoday.de).[CR][CR]Für mehr Informationen zu allen Neuerungen siehe - CHANGELOG.[CR]     HAVE FUN</description>
+		<disclaimer></disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum>http://www.kodinerds.net/index.php/Thread/53329-RERELEASE-TVTODAY/</forum>
+		<website>http://www.tvtoday.de/mediathek/</website>
+		<email></email>
+		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.tvtoday_de</source>
+		<news> [B]Version 1.3.1  (04.01.2017)[/B]
+					- Eigenen Resolver für die "ARD" eingebaut
+					- *(script.module.libArd vorerst enfernt)</news>
+	</extension>
 </addon>
 
 </addons>

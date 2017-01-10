@@ -1,15 +1,23 @@
 ﻿#!/usr/bin/python
 # -*- coding: utf-8 -*-
-import xbmc, xbmcgui, xbmcplugin, xbmcaddon
-import sys, os, json
+import xbmc
+import xbmcplugin
+import xbmcgui
+import xbmcaddon
+import os
+import re
+import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
-import urllib, urllib2
+try: import simplejson as json
+except ImportError: import json
+import urllib
+import urllib2
 import urlparse
-import re, string
-from datetime import date,datetime,timedelta
 import time
 import socket
+from datetime import date,datetime,timedelta
+from operator import itemgetter
 from StringIO import StringIO
 import gzip
 
@@ -114,7 +122,7 @@ def listVideosNachTag(url=""):
 			if showNOW == 'true':
 				pass
 			else:
-				if ("RTL" in senderID or "VOX" in senderID):
+				if ("RTL" in senderID or "VOX" in senderID or "SUPER" in senderID):
 					continue
 			debug("(listVideosNachTag) Name - %s" %name)
 			debug("(listVideosNachTag) Link : %s" %fullUrl)
@@ -166,7 +174,7 @@ def listVideosGenre(type):
 			if showNOW == 'true':
 				pass
 			else:
-				if ("RTL" in senderID or "VOX" in senderID):
+				if ("RTL" in senderID or "VOX" in senderID or "SUPER" in senderID):
 					continue
 			debug("(listVideosGenre) Name - %s" %name)
 			debug("(listVideosGenre) Link : %s" %fullUrl)
@@ -183,7 +191,7 @@ def playVideo(url):
 	xbmc.log("[TvToday](playVideo) frei", xbmc.LOGNOTICE)
 	content = getUrl(url)
 	url = re.compile('<div class="img-wrapper stage">\s*<a href=\"([^"]+)" \s*target=', re.DOTALL).findall(content)[0]
-	finalUrl = ""
+	finalURL = ""
 	xbmc.log("[TvToday](playVideo) AbspielLink (Original) : %s" %(url), xbmc.LOGNOTICE)
 	xbmc.log("[TvToday](playVideo) frei", xbmc.LOGNOTICE)
 	if url.startswith("http://www.arte.tv"):
@@ -192,35 +200,26 @@ def playVideo(url):
 		try:
 			pluginID_1 = 'plugin.video.arte_tv'
 			plugin1 = xbmcaddon.Addon(id=pluginID_1)
-			finalUrl = 'plugin://'+plugin1.getAddonInfo('id')+'/?mode=play-video&id='+videoID
-			xbmc.log("[TvToday](playVideo) AbspielLink-1 (ARTE-TV) : %s" %(finalUrl), xbmc.LOGNOTICE)
+			finalURL = 'plugin://'+plugin1.getAddonInfo('id')+'/?mode=play-video&id='+videoID
+			xbmc.log("[TvToday](playVideo) AbspielLink-1 (ARTE-TV) : %s" %(finalURL), xbmc.LOGNOTICE)
 		except:
 			try:
 				pluginID_2 = 'plugin.video.arteplussept'
 				plugin2 = xbmcaddon.Addon(id=pluginID_2)
-				finalUrl = 'plugin://'+plugin2.getAddonInfo('id')+'/play/'+urllib.quote_plus(videoID)
-				xbmc.log("[TvToday](playVideo) AbspielLink-2 (ARTE-plussept) : %s" %(finalUrl), xbmc.LOGNOTICE)
+				finalURL = 'plugin://'+plugin2.getAddonInfo('id')+'/play/'+urllib.quote_plus(videoID)
+				xbmc.log("[TvToday](playVideo) AbspielLink-2 (ARTE-plussept) : %s" %(finalURL), xbmc.LOGNOTICE)
 			except:
-				if finalUrl:
+				if finalURL:
 					xbmc.log("[TvToday](playVideo) AbspielLink-00 (ARTE) : *ARTE-Plugin* VIDEO konnte NICHT abgespielt werden !!!", xbmc.LOGERROR)
 				else:
 					xbmc.log("[TvToday](playVideo) AbspielLink-00 (ARTE) : KEIN *ARTE-Plugin* zur Wiedergabe vorhanden !!!", xbmc.LOGFATAL)
 					xbmc.executebuiltin('Notification(TvToday : [COLOR red]!!! ADDON - ERROR !!![/COLOR], ERROR = [COLOR red]KEIN *ARTE-Plugin* installiert[/COLOR] - bitte überprüfen ...,6000,'+icon+')')
 				pass
 	elif (url.startswith("http://www.ardmediathek.de") or url.startswith("http://mediathek.daserste.de")):
-		import libArd
-		try:
-			videoID = url.split('documentId=')[1]
-			if '&' in videoID:
-				videoID = videoID.split('&')[0]
-			videoUrl,subUrl = libArd.getVideoUrl(videoID)
-			xbmc.sleep(1000)
-			finalUrl = str(videoUrl)
-			xbmc.log("[TvToday](playVideo) AbspielLink (ARD+3) : %s" %(finalUrl), xbmc.LOGNOTICE)
-		except:
-			xbmc.log("[TvToday](playVideo) AbspielLink-00 (ARD+3) : *ARD-Plugin* Der angeforderte -VideoLink- existiert NICHT !!!", xbmc.LOGERROR)
-			xbmc.executebuiltin('Notification(TvToday : [COLOR red]!!! VideoURL - ERROR !!![/COLOR], ERROR = [COLOR red]Der angeforderte *VideoLink* existiert NICHT ![/COLOR],6000,'+icon+')')
-			pass
+		videoID = url.split('documentId=')[1]
+		if '&' in videoID:
+			videoID = videoID.split('&')[0]
+		return ArdGetVideo(videoID)
 	elif url.startswith("https://www.zdf.de"):
 		url = url[:url.find(".html")]
 		videoID = urllib.unquote_plus(url)+".html"
@@ -232,16 +231,91 @@ def playVideo(url):
 			xbmc.sleep(1000)
 			pluginID_3 = 'plugin.video.nowtv.de.p'
 			plugin3 = xbmcaddon.Addon(id=pluginID_3)
-			finalUrl = 'plugin://'+plugin3.getAddonInfo('id')+'/?mode=play-video&id='+videoID
+			finalURL = 'plugin://'+plugin3.getAddonInfo('id')+'/?mode=play-video&id='+videoID
 		except:
 			xbmc.log("[TvToday](playVideo) AbspielLink-00 (NOWTV) : *NOWTV-Plugin* VIDEO konnte NICHT abgespielt werden !!!", xbmc.LOGERROR)
 			xbmc.executebuiltin('Notification(TvToday : [COLOR red]!!! URL - ERROR !!![/COLOR], ERROR = [COLOR red]NowTV - wird derzeit noch NICHT unterstützt ![/COLOR],6000,'+icon+')')
 			pass
-	if not url.startswith("https://www.zdf.de"):
-		xbmc.log("[TvToday](playVideo) --- ENDE WIEDERGABE ANFORDERUNG ---", xbmc.LOGNOTICE)
-	if finalUrl:
-		listitem = xbmcgui.ListItem(name, path=finalUrl)
+	if finalURL:
+		listitem = xbmcgui.ListItem(name, path=finalURL)
 		xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
+		xbmc.log("[TvToday](playVideo) --- ENDE WIEDERGABE ANFORDERUNG ---", xbmc.LOGNOTICE)
+	else:
+		xbmc.log("[TvToday](playVideo) --- ENDE WIEDERGABE ANFORDERUNG ---", xbmc.LOGNOTICE)
+
+def ArdGetVideo(id):
+	try:
+		finalURL = False
+		mp4URL = ""
+		content = getUrl('http://www.ardmediathek.de/play/media/'+id+'?devicetype=pc&features=flash')
+		result = json.loads(content)
+		muvidLinks = result["_mediaArray"][0]["_mediaStreamArray"]
+		normalLinks = result["_mediaArray"][1]["_mediaStreamArray"]
+		linkQuality = 3 # Beste verfügbare mp4-Qualität in der ARD-Mediathek = 3 (alle anderen sind schlechter)
+		# Beste Qualität ?
+		if muvidLinks:
+			for muvidLink in muvidLinks:
+				stream = muvidLink["_stream"]
+				if muvidLink["_quality"] == 'auto' and 'mil/master.m3u8' in stream:
+					mp4URL = stream
+					xbmc.log("[TvToday](ArdGetVideo) m3u8-Stream (ARD+3) : %s" %(str(mp4URL)), xbmc.LOGNOTICE)
+		if normalLinks and mp4URL == "":
+			if linkQuality == -1:
+				linkQuality = 0
+				for normalLink in normalLinks:
+					if normalLink["_quality"] > linkQuality and '_stream' in normalLink:
+						linkQuality = normalLink["_quality"]
+			xbmc.log("[TvToday](ArdGetVideo) LINK-Qualität (ARD+3) : %s" %(str(linkQuality)), xbmc.LOGNOTICE)
+			for normalLink in normalLinks:
+				if linkQuality != normalLink["_quality"]:
+					continue
+				stream = normalLink["_stream"]
+				# Überprüfen, ob die ausgewählte Qualität zwei Streams enthält
+				if type(stream) is list or type(stream) is tuple:
+					if len(stream) > 1:
+						mp4URL = stream[0]
+						xbmc.log("[TvToday](ArdGetVideo) Wir haben 2 Streams (ARD+3) - wähle den 1 : %s" %(str(mp4URL)), xbmc.LOGNOTICE)
+					else:
+						mp4URL = stream[0]
+						xbmc.log("[TvToday](ArdGetVideo) Wir haben 1 Stream (ARD+3) in der Liste : %s" %(str(mp4URL)), xbmc.LOGNOTICE)
+				else:
+					mp4URL = stream
+					xbmc.log("[TvToday](ArdGetVideo) Wir haben 1 Stream (ARD+3) - wähle Diesen : %s" %(str(mp4URL)), xbmc.LOGNOTICE)
+		# *mp4URL* überprüfen, Qualität nachbessern, danach abspielen
+		finalURL = mp4URL.replace('.hq.mp4', '.hd.mp4').replace('.ln.mp4', '.hq.mp4').replace('.l.mp4', '.xl.mp4').replace('_C.mp4', '_X.mp4')
+		if not finalURL:
+			finalURL = ndrPodcastHack(finalURL)
+			finalURL = dwHack(finalURL)
+			xbmc.log("[TvToday](ArdGetVideo) finalURL (ARD+3) NICHT gefunden - nutze Hack !", xbmc.LOGNOTICE)
+		else:
+			listitem = xbmcgui.ListItem(name, path=finalURL)
+			xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
+			xbmc.log("[TvToday](ArdGetVideo) END-Qualität (ARD+3) : %s" %(finalURL), xbmc.LOGNOTICE)
+	except:
+		xbmc.log("[TvToday](ArdGetVideo) AbspielLink-00 (ARD+3) : *ARD-Plugin* Der angeforderte -VideoLink- existiert NICHT !!!", xbmc.LOGERROR)
+		xbmc.executebuiltin('Notification(TvToday : [COLOR red]!!! VideoURL - ERROR !!![/COLOR], ERROR = [COLOR red]Der angeforderte *VideoLink* existiert NICHT ![/COLOR],6000,'+icon+')')
+		pass
+	xbmc.log("[TvToday](playVideo) --- ENDE WIEDERGABE ANFORDERUNG ---", xbmc.LOGNOTICE)
+
+def ndrPodcastHack(url):
+	try:
+		if url.startswith('http://media.ndr.de/download/podcasts/'):
+			uri = url.split('/')[-1]
+			YYYYMMDD = uri.split('-')[1]
+			YYYY = YYYYMMDD[:4]
+			MMDD = YYYYMMDD[4:]
+			return 'http://hls.ndr.de/i/ndr/'+ YYYY +'/'+ MMDD +'/'+ uri
+	except:
+		pass
+	return url
+
+def dwHack(url):
+	try:
+		if url.startswith('http://tv-download.dw.de'):
+			return url.replace('_sd.mp4','_hd_dwdownload.mp4')
+	except:
+		pass
+	return url
 
 def ZdfGetVideo(url):
 	try:
@@ -249,19 +323,22 @@ def ZdfGetVideo(url):
 		link = re.compile('"content": "(.*?)",', re.DOTALL).findall(content)[0]
 		response = getUrl(link,getheader)
 		ID = re.compile('"uurl":"(.*?)",', re.DOTALL).findall(response)[0]
-		LinkDirekt = getUrl("https://api.zdf.de//tmd/2/portal/vod/ptmd/mediathek/"+ID)
-		#LinkDownload = getUrl("https://api.zdf.de/tmd/2/ngplayer_2_3/vod/ptmd/mediathek/"+ID)
+		#LinkDirekt2 = getUrl("https://api.zdf.de/tmd/2/portal/vod/ptmd/mediathek/"+ID)
+		LinkDirekt = getUrl("https://api.zdf.de/tmd/2/ngplayer_2_3/vod/ptmd/mediathek/"+ID)
 		jsonObject = json.loads(LinkDirekt)
-		return extractLinks(jsonObject)
+		return ZdfExtractQuality(jsonObject)
 	except:
-		xbmc.log("[TvToday](playVideo) AbspielLink-00 (ZDF+3) : *ZDF-Plugin* Der angeforderte -VideoLink- existiert NICHT !!!", xbmc.LOGERROR)
+		xbmc.log("[TvToday](ZdfGetVideo) AbspielLink-00 (ZDF+3) : *ZDF-Plugin* Der angeforderte -VideoLink- existiert NICHT !!!", xbmc.LOGERROR)
+		xbmc.log("[TvToday](playVideo) --- ENDE WIEDERGABE ANFORDERUNG ---", xbmc.LOGNOTICE)
 		xbmc.executebuiltin('Notification(TvToday : [COLOR red]!!! VideoURL - ERROR !!![/COLOR], ERROR = [COLOR red]Der angeforderte *VideoLink* existiert NICHT ![/COLOR],6000,'+icon+')')
 		pass
 
-def extractLinks(jsonObject):
-	DATA = {}
-	DATA['media'] = []
+def ZdfExtractQuality(jsonObject):
 	try:
+		DATA = {}
+		DATA['media'] = []
+		finalURL = False
+		mp4URL = ""
 		for each in jsonObject['priorityList']:
 			if each['formitaeten'][0]['type'] == 'h264_aac_ts_http_m3u8_http':
 				for quality in each['formitaeten'][0]['qualities']:
@@ -274,39 +351,45 @@ def extractLinks(jsonObject):
 							DATA['media'].append({'url':quality['audio']['tracks'][0]['uri'], 'type': 'video', 'stream':'HLS'})
 						elif quality['quality'] == 'high':
 							DATA['media'].append({'url':quality['audio']['tracks'][0]['uri'], 'type': 'video', 'stream':'HLS'})
-						elif quality['quality'] == 'med':
+				zdfURL = DATA['media'][0]['url']
+				mp4URL = zdfURL
+				xbmc.log("[TvToday](ZdfExtractQuality) m3u8-Stream (ZDF+3) : %s" %(mp4URL), xbmc.LOGNOTICE)
+			if each['formitaeten'][0]['type'] == 'h264_aac_mp4_http_na_na' and mp4URL == "":
+				for quality in each['formitaeten'][0]['qualities']:
+					if quality['quality'] == 'auto':
+						DATA['media'].append({'url':quality['audio']['tracks'][0]['uri'], 'type': 'video', 'stream':'HLS'})
+					else:
+						if quality['quality'] == 'hd':
 							DATA['media'].append({'url':quality['audio']['tracks'][0]['uri'], 'type': 'video', 'stream':'HLS'})
-						elif quality['quality'] == 'low':
+						elif quality['quality'] == 'veryhigh':
 							DATA['media'].append({'url':quality['audio']['tracks'][0]['uri'], 'type': 'video', 'stream':'HLS'})
-					finalUrl = DATA['media'][0]['url']
-					xbmc.log("[TvToday](extractLinks) m3u8-Quality (ZDF+3) : %s" %(finalUrl), xbmc.LOGNOTICE)
+						elif quality['quality'] == 'high':
+							DATA['media'].append({'url':quality['audio']['tracks'][0]['uri'], 'type': 'video', 'stream':'HLS'})
+				# *zdfURL* überprüfen, Qualität nachbessern, danach abspielen
+				zdfURL = DATA['media'][0]['url']
+				xbmc.log("[TvToday](ZdfExtractQuality) ZDF-STANDARDurl : %s" %(zdfURL), xbmc.LOGNOTICE)
+				higherURL =  zdfURL.replace('1456k_p13v11', '2328k_p35v11').replace('1456k_p13v12', '2328k_p35v12').replace('1496k_p13v13', '2328k_p35v13').replace('2256k_p14v11', '2328k_p35v11').replace('2256k_p14v12', '2328k_p35v12').replace('2296k_p14v13', '2328k_p35v13')
+				if ('2328k_p35v11' in higherURL or '2328k_p35v12' in higherURL or '2328k_p35v13' in higherURL):
+					hdURL = higherURL.replace('1456k_p13v12', '3328k_p36v12').replace('2256k_p14v12', '3328k_p36v12').replace('2328k_p35v12', '3328k_p36v12').replace('1496k_p13v13', '3328k_p36v13').replace('2296k_p14v13', '3328k_p36v13').replace('2328k_p35v13', '3328k_p36v13')
+					if ('3328k_p36v12' in hdURL or '3328k_p36v13' in hdURL):
+						mp4URL = hdURL
+						xbmc.log("[TvToday](ZdfExtractQuality) ZDF-HDurl : %s" %(mp4URL), xbmc.LOGNOTICE)
+					else:
+						mp4URL = higherURL
+						xbmc.log("[TvToday](ZdfExtractQuality) ZDF-HIGHERurl : %s" %(mp4URL), xbmc.LOGNOTICE)
+				else:
+					mp4URL = zdfURL
+					xbmc.log("[TvToday](ZdfExtractQuality) ZDF-ZDFurl : %s" %(mp4URL), xbmc.LOGNOTICE)
+		finalURL = mp4URL
+		if not finalURL:
+			xbmc.log("[TvToday](ZdfExtractQuality) AbspielLink-00 (ZDF+3) : *ZDF-Plugin* VIDEO konnte NICHT abgespielt werden !!!", xbmc.LOGERROR)
+		else:
+			listitem = xbmcgui.ListItem(name, path=finalURL)
+			xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
+			xbmc.log("[TvToday](ZdfExtractQuality) END-Qualität (ZDF+3) : %s" %(finalURL), xbmc.LOGNOTICE)
 	except:
-		try:
-			for each in jsonObject['priorityList']:
-				if each['formitaeten'][0]['type'] == 'h264_aac_mp4_http_na_na':
-					for quality in each['formitaeten'][0]['qualities']:
-						if quality['quality'] == 'auto':
-							DATA['media'].append({'url':quality['audio']['tracks'][0]['uri'], 'type': 'video', 'stream':'HLS'})
-						else:
-							if quality['quality'] == 'hd':
-								DATA['media'].append({'url':quality['audio']['tracks'][0]['uri'], 'type': 'video', 'stream':'HLS'})
-							elif quality['quality'] == 'veryhigh':
-								DATA['media'].append({'url':quality['audio']['tracks'][0]['uri'], 'type': 'video', 'stream':'HLS'})
-							elif quality['quality'] == 'high':
-								DATA['media'].append({'url':quality['audio']['tracks'][0]['uri'], 'type': 'video', 'stream':'HLS'})
-							elif quality['quality'] == 'med':
-								DATA['media'].append({'url':quality['audio']['tracks'][0]['uri'], 'type': 'video', 'stream':'HLS'})
-							elif quality['quality'] == 'low':
-								DATA['media'].append({'url':quality['audio']['tracks'][0]['uri'], 'type': 'video', 'stream':'HLS'})
-						finalUrl = DATA['media'][0]['url']
-						xbmc.log("[TvToday](extractLinks) mp4-Quality (ZDF+3) : %s" %(finalUrl), xbmc.LOGNOTICE)
-		except:
-			pass
-	if finalUrl:
-		listitem = xbmcgui.ListItem(name, path=str(finalUrl))
-		xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
-	else:
-		xbmc.log("[TvToday](extractLinks) AbspielLink-00 (ZDF+3) : *ZDF-Plugin* VIDEO konnte NICHT abgespielt werden !!!", xbmc.LOGERROR)
+		xbmc.log("[TvToday](ZdfExtractQuality) AbspielLink-00 (ZDF+3) : *ZDF-Plugin* Fehler bei Anforderung des AbspielLinks !!!", xbmc.LOGERROR)
+		pass
 	xbmc.log("[TvToday](playVideo) --- ENDE WIEDERGABE ANFORDERUNG ---", xbmc.LOGNOTICE)
 
 def queueVideo(url,name,thumb):
@@ -314,12 +397,14 @@ def queueVideo(url,name,thumb):
 	listitem = xbmcgui.ListItem(name,iconImage=thumb,thumbnailImage=thumb)
 	playlist.add(url,listitem)
 
-def getUrl(url,headers={}):
+def getUrl(url,headers=False):
 	req = urllib2.Request(url)
-	req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:49.0) Gecko/20100101 Firefox/25.0')
-	req.add_header('Accept-Encoding','gzip,deflate')
-	for key in headers:
-		req.add_header(key, headers[key])
+	if headers:
+		for key in headers:
+			req.add_header(key, headers[key])
+	else:
+		req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:49.0) Gecko/20100101 Firefox/32.0')
+		req.add_header('Accept-Encoding','gzip,deflate')
 	response = urllib2.urlopen(req)
 	if response.info().get('Content-Encoding') == 'gzip':
 		buf = StringIO(response.read())
@@ -327,8 +412,8 @@ def getUrl(url,headers={}):
 		link = f.read()
 		f.close()
 	else:
-		link = response.read().decode('utf-8', 'ignore').encode('utf-8', 'ignore')
-	response.close()
+		link = response.read()
+		response.close()
 	return link
 
 def cleanTitle(title):
@@ -342,7 +427,7 @@ def cleanTitle(title):
 	return title
 
 def cleanSender(senderID):
-	ChannelCode = ('ARD','Das Erste','ONE','ZDF','2NEO','ZNEO','ZINFO','3SAT','Arte','ARTE','BR','HR','MDR','NDR','N3','ORF','PHOEN','RBB','SR','SWR','SWR/SR','WDR','RTL','RTL2','VOX','SRTL')
+	ChannelCode = ('ARD','Das Erste','ONE','ZDF','2NEO','ZNEO','ZINFO','3SAT','Arte','ARTE','BR','HR','MDR','NDR','N3','ORF','PHOEN','RBB','SR','SWR','SWR/SR','WDR','RTL','RTL2','VOX','SRTL','SUPER')
 	if senderID in ChannelCode and senderID != "":
 		try:
 			senderID = senderID.replace(' ', '')

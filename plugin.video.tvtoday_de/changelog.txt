@@ -65,3 +65,7 @@
  - fixed: Abspiellisten-Eintrag wird nicht im -Rechtsklickmenü- angezeigt und Thumb von Sendung wird nicht übertragen
  - kleinere Fehler: Titel der Sendung endet mit einem Komma (Vorher: Vebrauchermagazin, -  Jetzt: Verbrauchermagazin)
  - gesamten Code überarbeitet
+
+[B]Version 1.3.1  (04.01.2017)[/B]
+ - Eigenen Resolver für die "ARD" eingebaut
+ - *(script.module.libArd vorerst enfernt)

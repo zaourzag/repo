@@ -1,8 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<addon id="plugin.video.tvtoday_de" name="TV Today - Best of Mediatheken" version="1.3.0" provider-name="realvito">
+<addon id="plugin.video.tvtoday_de" name="TV Today - Best of Mediatheken" version="1.3.1" provider-name="realvito">
 	<requires>
 		<import addon="xbmc.python" version="2.14.0"/>
-		<import addon="script.module.libArd" version="0.3.4"/>
 	</requires>
 	<extension point="xbmc.python.pluginsource" library="default.py">
 		<provides>video</provides>
@@ -18,16 +17,8 @@
 		<website>http://www.tvtoday.de/mediathek/</website>
 		<email></email>
 		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.tvtoday_de</source>
-		<news> [B]Version 1.3.0  (10.12.2016)[/B]
-					- Sender-Kennung im Genrebereich (z.B. Spielfilme...) überarbeitet und verkürzt
-					- fixed: Umlaute und Sonderzeichen in der Sender-Kennung
-					- NowTV Sender können jetzt zu 100% im Genrebereich per "settings" ausgeblendet werden (im Datumbereich nicht zu 100% möglich, da die Webseite von "TvToday" nicht mehr hergibt !)
-					- (NowTV Senderabschaltung jetzt in die "settings" integriert, da der eine oder andere, die gelaufene Sendung vielleicht später im Browser ansehen möchte !)
-					- fixed: Wenn der Titel oder ein Teil des Titels einer Sendung nicht vorhanden ist, wird der Ordner nicht gelistet (IndexError)
-					- fixed: VideoLink von "TvToday" existiert nicht mehr bei den "Öffentlich-Rechtlichen"
-					- fixed: Video- und Audiocodecanzeigen verschwinden in der Ordneransicht (Kodi-KRYPTON 17.0-beta6)
-					- fixed: Abspiellisten-Eintrag wird nicht im -Rechtsklickmenü- angezeigt und Thumb von Sendung wird nicht übertragen
-					- kleinere Fehler: Titel der Sendung endet mit einem Komma (Vorher: Vebrauchermagazin, -  Jetzt: Verbrauchermagazin)
-					- gesamten Code überarbeitet</news>
+		<news> [B]Version 1.3.1  (04.01.2017)[/B]
+					- Eigenen Resolver für die "ARD" eingebaut
+					- *(script.module.libArd vorerst enfernt)</news>
 	</extension>
 </addon>
