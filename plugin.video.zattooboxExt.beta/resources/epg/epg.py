@@ -18,19 +18,21 @@
 #  http://www.gnu.org/copyleft/gpl.html
 #
 
-import datetime, time
+import datetime, time, locale
 import threading
 
-import xbmc, xbmcgui, xbmcaddon
+import xbmc, xbmcgui, xbmcaddon, xbmcplugin
 
 from resources.zattooDB import ZattooDB
 
 # from notification import Notification
 from strings import *
 
-
 __addon__ = xbmcaddon.Addon()
 __addonId__=__addon__.getAddonInfo('id')
+__settings__ = xbmcaddon.Addon(__addonId__)
+__language__ = __settings__.getLocalizedString
+
 
 DEBUG=False
 
@@ -44,6 +46,7 @@ ACTION_HOME = 159
 ACTION_END = 160
 ACTION_2 = 60
 ACTION_4 = 62
+ACTION_5 = 63
 ACTION_6 = 64
 ACTION_8 = 66
 
@@ -67,7 +70,7 @@ KEY_NAV_BACK = 92
 KEY_CONTEXT_MENU = 117
 KEY_HOME = 159
 
-CHANNELS_PER_PAGE = 9
+CHANNELS_PER_PAGE = 8
 
 HALF_HOUR = datetime.timedelta(minutes=30)
 
@@ -94,7 +97,7 @@ class ControlAndProgram(object):
 
 
 class EPG(xbmcgui.WindowXML):
-	CHANNELS_PER_PAGE = 9
+	CHANNELS_PER_PAGE = 8
 
 	C_MAIN_DATE = 4000
 	C_MAIN_TITLE = 4020
@@ -180,6 +183,10 @@ class EPG(xbmcgui.WindowXML):
 
 # 		 self.notification = Notification(self.database, ADDON.getAddonInfo('path')+'/resources/epg')
 		self.updateTimebar()
+		
+		self.getControl(4400).setVisible(False)
+		self.getControl(4401).setVisible(True)
+
 
 	def onAction(self, action):
 		actionId=action.getId()
@@ -210,13 +217,13 @@ class EPG(xbmcgui.WindowXML):
 				self.setFocus(control)
 				return
 
-		if actionId in [ACTION_LEFT, ACTION_GESTURE_SWIPE_LEFT]:
+		if actionId == ACTION_LEFT:
 			self._left(currentFocus)
-		elif actionId in [ACTION_RIGHT, ACTION_GESTURE_SWIPE_RIGHT]:
+		elif actionId == ACTION_RIGHT:
 			self._right(currentFocus)
-		elif actionId in [ACTION_UP, ACTION_GESTURE_SWIPE_UP]:
+		elif actionId == ACTION_UP:
 			self._up(currentFocus)
-		elif actionId in [ACTION_DOWN, ACTION_GESTURE_SWIPE_DOWN]:
+		elif actionId == ACTION_DOWN:
 			self._down(currentFocus)
 		elif actionId  in [ACTION_NEXT_ITEM, ACTION_6]:
 			self._nextDay()
@@ -235,12 +242,46 @@ class EPG(xbmcgui.WindowXML):
 			self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30,
 													 seconds=self.viewStartDate.second)
 			self.onRedrawEPG(self.channelIdx, self.viewStartDate)
-
+		elif actionId == ACTION_5:
+			self.getDate()
+		
+			
 	def onClick(self, controlId):
 		if controlId in [self.C_MAIN_LOADING_CANCEL, self.C_MAIN_MOUSE_EXIT]:
 			self.close()
 			return
-
+			
+		elif controlId == 4350:
+			self.getControl(4401).setVisible(False)
+			self.getControl(4400).setVisible(True)
+			return
+			
+		
+		
+		if controlId == 4303:
+			self._moveUp(CHANNELS_PER_PAGE)
+		elif controlId == 4304:
+			self._moveDown(CHANNELS_PER_PAGE)
+		elif controlId == 4302:
+			self.viewStartDate -= datetime.timedelta(hours=2)
+			self.onRedrawEPG(self.channelIdx, self.viewStartDate)
+			return
+		elif controlId == 4305:
+			self.viewStartDate += datetime.timedelta(hours=2)
+			self.onRedrawEPG(self.channelIdx, self.viewStartDate)
+			return
+		elif controlId == 4307:
+			self._previousDay()
+		elif controlId == 4308:
+			self._nextDay()
+		elif controlId == 4309:
+			self.getDate()
+		elif controlId == 4001:
+			self.viewStartDate = datetime.datetime.today()
+			self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30,
+													 seconds=self.viewStartDate.second)
+			self.onRedrawEPG(self.channelIdx, self.viewStartDate)
+		
 		if self.isClosing: return
 
 		program = self._getProgramFromControl(self.getControl(controlId))
@@ -491,7 +532,8 @@ class EPG(xbmcgui.WindowXML):
 		self.db.updateProgram(startTime)
 
 		# date and time row
-		self.setControlLabel(self.C_MAIN_DATE, self.formatDate(self.viewStartDate))
+		#Date = str(self.viewStartDate.strftime ('%A %d. %B %Y'))
+		self.setControlLabel(self.C_MAIN_DATE, self.formatDate(self.viewStartDate))		
 		time=startTime
 		for col in range(1, 5):
 			self.setControlLabel(4000 + col, self.formatTime(time))
@@ -705,8 +747,7 @@ class EPG(xbmcgui.WindowXML):
 
 	def formatDate(self, timestamp):
 		if timestamp:
-# 			format = xbmc.getRegion('dateshort')
-			format = "%a %d.%m."
+ 			format = xbmc.getRegion('datelong')
 			return timestamp.strftime(format)
 		else:
 			return ''
@@ -746,5 +787,36 @@ class EPG(xbmcgui.WindowXML):
 		except Exception:
 			pass
 
-
+	def getDate(self):
+		
+		format = xbmc.getRegion('dateshort')
+		dialog = xbmcgui.Dialog()
+		today = datetime.date.today()
+		date = dialog.numeric(1, 'Enter date').replace(' ','0').replace('/','.')
+		datelow = datetime.date.today() - datetime.timedelta(days=8)
+		datelow = datelow.strftime(format)
+		datehigh = datetime.date.today() + datetime.timedelta(days=14)
+		datehigh = datehigh.strftime(format)
+		if date < datelow:
+			xbmcgui.Dialog().notification(str(date),' Datum ist zu klein', time=3000) 
+			return
+		if date > datehigh:
+			xbmcgui.Dialog().notification(str(date),' Datum ist zu gross', time=3000) 
+			return
+		date = time.strptime(date, '%d.%m.%Y')
+		today = time.strptime(str(today), '%Y-%m-%d')
+		timedelta = datetime.timedelta(seconds=time.mktime(date) - time.mktime(today))
+		if date > today:
+			self.viewStartDate = datetime.datetime.today()
+			self.viewStartDate += datetime.timedelta(days=int(str(timedelta)[:2]))
+			self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30,
+													 seconds=self.viewStartDate.second)
+			self.onRedrawEPG(self.channelIdx, self.viewStartDate)
+		if date < today:
+			self.viewStartDate = datetime.datetime.today()
+			delta = str(timedelta).replace('-','')[:2]
+			self.viewStartDate -= datetime.timedelta(days=int(delta))
+			self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30,
+													 seconds=self.viewStartDate.second)
+			self.onRedrawEPG(self.channelIdx, self.viewStartDate)
 

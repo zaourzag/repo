@@ -1,4 +1,16 @@
+------------------------------------------------
+[B]ZattooBox Extended v1.6.0beta[/B] 11.01.2017
+------------------------------------------------
+-Neuer Maintainer Steffen Rolapp
+-Bisherige Maintainer: Daniel Griner, Pascal Nançoz, LORE
+-div Bugfix
+-überarbeitets und erweitertes OSD
+-überarbeiteter EPG
+-Touch unterstützung
+
+------------------------------------------------
 Zatoo 1.5.6
+------------------------------------------------
 -Neue Maintainer: L0RE
 -Bisherige Maintainer: Daniel Griner, Pascal Nançoz
 - Fix Wegen Fewhlerhaften Kanal
