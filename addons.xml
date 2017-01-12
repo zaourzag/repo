@@ -2079,7 +2079,7 @@ v0.6.0 (2016-12-02)
 	</extension>
 </addon>
 
-<addon id="skin.horizonzv" name="[RC] Horizonz V (Kodi 17)" version="0.9.0.10" provider-name="blauesgruen">
+<addon id="skin.horizonzv" name="[RC] Horizonz V (Kodi 17)" version="0.9.0.11" provider-name="blauesgruen">
 	<requires>
 		<import addon="xbmc.gui" version="5.12.0"/>
 	</requires>
