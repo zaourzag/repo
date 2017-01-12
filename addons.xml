@@ -2564,7 +2564,7 @@ See changelog.txt for more details.</news>
   </extension>
 </addon>
 
-<addon id="plugin.video.osmosis" name="OSMOSIS" version="0.4.7" provider-name="Stereodruid">
+<addon id="plugin.video.osmosis" name="OSMOSIS" version="1.0.3" provider-name="Stereodruid">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="script.module.t0mm0.common" version="2.0.0"/>
@@ -2590,7 +2590,7 @@ See changelog.txt for more details.</news>
     <extension point="xbmc.service" library="service.py" start="startup"/>
     <extension point="xbmc.addon.metadata">
     <summary lang="en">Generates Strm files form streams that can be scraped to the library</summary>
-    <description lang="en">Generate Strm files from Kodi Plugins, Youtube, that can be scraped to the library. Special thanks goes to Kodinerds.net users: breaksrmine, XsupergurkeX, Sagorian, EpicFail80, hansjuergense, MicTie, krani83 , Casablanca89
+    <description lang="en">Generate Strm files from Kodi Plugins, Youtube, that can be scraped to the library. Special thanks goes to Kodinerds.net users: breaksrmine, XsupergurkeX, Sagorian, EpicFail80, hansjuergense, MicTie, krani83 , Casablanca89, Elux, willriker88
 	</description>
     <disclaimer lang="en"></disclaimer>
 	<summary lang="de">
@@ -2598,7 +2598,7 @@ See changelog.txt for more details.</news>
 	</summary>
     <description lang="de">
     	Erstellt Strm-Dateien Kodi-Plugins,Youtube, die mit einem Scraper zur Datenbank hinzugefügt werden können. 
-    	Unterstützte Formate: Serien, Filme. Vielen Dank an Kodinerds.net und speziell an die Mitglieder​: breaksrmine, XsupergurkeX, Sagorian, EpicFail80, hansjuergense, MicTie, krani83 , Casablanca89
+    	Unterstützte Formate: Serien, Filme. Vielen Dank an Kodinerds.net und speziell an die Mitglieder​: breaksrmine, XsupergurkeX, Sagorian, EpicFail80, hansjuergense, MicTie, krani83 , Casablanca89, Elux, willriker88
     </description>
     <disclaimer lang="de"></disclaimer>
     <language></language>
