@@ -12,6 +12,18 @@ import urllib, urllib2, socket, cookielib, re, os, shutil,json
 import time
 import datetime
 
+
+import ssl
+
+try:
+    _create_unverified_https_context = ssl._create_unverified_context
+except AttributeError:
+    # Legacy Python that doesn't verify HTTPS certificates by default
+    pass
+else:
+    # Handle target environment that doesn't support HTTPS verification
+    ssl._create_default_https_context = _create_unverified_https_context
+
 # Setting Variablen Des Plugins
 global debuging
 base_url = sys.argv[0]
@@ -31,7 +43,7 @@ temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("ut
 if not xbmcvfs.exists(temp):       
        xbmcvfs.mkdirs(temp)
        
-
+xbmcplugin.setContent(int(sys.argv[1]), 'musicvideos')
 icon = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')+'/icon.png').decode('utf-8')
 useThumbAsFanart=addon.getSetting("useThumbAsFanart") == "true"
 
@@ -66,10 +78,11 @@ def addDir(name, url, mode, iconimage, desc=""):
   liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc})
   if useThumbAsFanart:
     if not iconimage or iconimage==icon or iconimage==defaultThumb:
-      iconimage = defaultBackground
-    liz.setProperty("fanart_image", iconimage)
+      iconimage = defaultBackground    
+    liz.setArt({ 'fanart': iconimage })
   else:
-    liz.setProperty("fanart_image", defaultBackground)
+    liz.setArt({ 'fanart': defaultBackground })  
+  xbmcplugin.setContent(int(sys.argv[1]), 'musicvideos')
   ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
   return ok
   
@@ -81,8 +94,8 @@ def addLink(name, url, mode, iconimage, duration="", desc="",artist_id="",genre=
   liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Genre": genre,"Sorttitle":shortname,"Dateadded":zeit,"year":production_year })
   liz.setProperty('IsPlayable', 'true')
   liz.addStreamInfo('video', { 'duration' : duration })
-  liz.setProperty("fanart_image", iconimage)
-  xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
+  liz.setArt({ 'fanart': iconimage }) 
+  xbmcplugin.setContent(int(sys.argv[1]), 'musicvideos')
   commands = []
   listatrist = "plugin://plugin.video.ampya/?mode=songs_from_artist&url="+urllib.quote_plus(str(artist_id))  
   listsimiliar = "plugin://plugin.video.ampya/?mode=list_similiar&url="+urllib.quote_plus(str(liedid))  
@@ -192,7 +205,9 @@ def Listekanaele(url):
    addLink(title , str(id), "playKanal", "http://files.putpat.tv/artwork/channelgraphics/"+str(id)+"/channellogo_150.png")
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
   
-def monitor_playlist(cliplist,playlist,url,id)   :
+def monitor_playlist(url,id)   :
+    global playlist
+    global cliplist
     counter=0
     counter2=0
     while counter2<5:
@@ -200,7 +215,7 @@ def monitor_playlist(cliplist,playlist,url,id)   :
             counter2=0
             if counter > 120:
                 debug("Suche neue Clips")
-                clipseinlesen(playlist,url,id)        
+                clipseinlesen(url,id)        
                 counter=0
             time.sleep(1)
             counter=counter+1    
@@ -210,11 +225,12 @@ def monitor_playlist(cliplist,playlist,url,id)   :
 
       
         
-def clipseinlesen(playlist,url,id):
+def clipseinlesen(url,id):
     content=getUrl(url)
     struktur = json.loads(content)
     global cliplist
     global filelist
+    global playlist  
     for name in struktur:
       debug("-------")
       #debug(name["channel"])
@@ -223,11 +239,14 @@ def clipseinlesen(playlist,url,id):
       debug("iD : "+ str(ids))
       if int(id)==int(ids):
         for clip in name["channel"]["clips"]:
-           debug("------------")    
+           debug("-----XX-------")    
            debug(clip)           
            urln=clip["clip"]["tokens"]["medium"]
            debug(urln)
-           artist=clip["clip"]["asset"]["artist"]["title"].encode("utf-8")
+           try:
+              artist=clip["clip"]["asset"]["artist"]["title"].encode("utf-8")
+           except:
+              artist=""
            title=clip["clip"]["asset"]["title"] .encode("utf-8")
            clipid=clip["clip"]["video_file_id"]           
            bild=getbild(clipid)
@@ -239,16 +258,15 @@ def clipseinlesen(playlist,url,id):
              filelist.append(url)
            
 def playKanal(url,id):
-    global cliplist        
+    global cliplist       
+    global playlist    
     playlist = xbmc.PlayList(1)
     playlist.clear() 
     cliplist=[]
     debug("Playliste gelöscht")
-    clipseinlesen(playlist,url,id)    
-    listItem = xbmcgui.ListItem('', thumbnailImage = '')
-    xbmcplugin.setResolvedUrl(handle=int(sys.argv[1]), succeeded=False, listitem=listItem)
-    xbmc.Player().play(playlist) 
-    monitor_playlist(cliplist,playlist,url,id)    
+    clipseinlesen(url,id)    
+    xbmc.Player().play(playlist)     
+    #monitor_playlist(url,id)    
 
 def Search():
      dialog = xbmcgui.Dialog()
@@ -302,7 +320,6 @@ mode = urllib.unquote_plus(params.get('mode', ''))
 url = urllib.unquote_plus(params.get('url', ''))
 
 if mode is '':
-    addDir(translation(30102), translation(30002), 'Home', "")
     addDir(translation(30103), translation(30003), 'Top',"")
     addDir(translation(30104), translation(30004), 'New', "")   
     addDir(translation(30105), translation(30105), 'Empfehlungen', "")  

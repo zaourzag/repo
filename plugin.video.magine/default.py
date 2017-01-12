@@ -427,7 +427,7 @@ def live_play(url,session,userid,channelid,ids):
     time.sleep(dauer)    
     dauer=0
     try:
-        item,title,next,dauer=leseclips(next,session,userid,channelid)  
+        item,title,next,dauer=live_leseclips(next,session,userid,channelid)  
     except:
          pass
     playlist.add(title, item) 
