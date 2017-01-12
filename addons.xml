@@ -206,7 +206,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
     </extension>
 </addon>
 
-<addon id="plugin.video.ampya" name="Ampya" version="0.1.9" provider-name="L0RE">
+<addon id="plugin.video.ampya" name="Ampya" version="0.1.10" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
     </requires>
@@ -792,7 +792,7 @@ v1.9.0 (2016-10-14) moving to the new api - please report bugs
   </extension>
 </addon>
 
-<addon id="plugin.video.magine" name="Magine" version="0.3.5" provider-name="L0RE">
+<addon id="plugin.video.magine" name="Magine" version="0.3.6" provider-name="L0RE">
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
     </extension>
