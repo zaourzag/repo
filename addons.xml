@@ -2190,7 +2190,7 @@ v0.6.0 (2016-12-02)
     </extension>
 </addon>
 
-<addon id="skin.fTVfred-krypton" version="3.4.8a" name="fTV Fred Edition (Krypton)" provider-name="Sualfred">
+<addon id="skin.fTVfred-krypton" version="3.4.9" name="fTV Fred Edition (Krypton)" provider-name="Sualfred">
 	<requires>
 		<import addon="xbmc.gui" version="5.12.0"/>
 		<import addon="script.toolbox" version="1.1.1"/>
@@ -2220,8 +2220,8 @@ v0.6.0 (2016-12-02)
         </assets>
 		<news>Changelog:
 
-[B]3.4.8[/B]
-- Label fixes
+[B]3.4.9[/B]
+- Improved PVR window performance
 
 See changelog.txt for more details.</news>
 	</extension>
