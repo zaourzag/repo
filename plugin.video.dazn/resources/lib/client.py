@@ -3,6 +3,20 @@
 import simple_requests as requests
 from .common import *
 
+import xbmc
+   
+def debug(content):
+    log(content, xbmc.LOGDEBUG)
+    
+def notice(content):
+    log(content, xbmc.LOGNOTICE)
+
+def log(msg, level=xbmc.LOGNOTICE):
+    addon = xbmcaddon.Addon()
+    addonID = addon.getAddonInfo('id')
+    xbmc.log('%s: %s' % (addonID, msg), level) 
+    
+    
 class Client:
 
     def __init__(self):
@@ -131,10 +145,22 @@ class Client:
             self.TOKEN = ""
         
     def request(self, url):
+        debug("Start request")
+        debug("URL :"+url)
+        debug("Data :")
+        debug(self.POST_DATA)
+        debug("HEADER :")
+        debug(self.HEADERS)
+        debug("Params :")
+        debug (self.PARAMS)        
         if self.POST_DATA:
             r = requests.post(url, headers=self.HEADERS, data=self.POST_DATA, params=self.PARAMS)
         else:
             r = requests.get(url, headers=self.HEADERS, params=self.PARAMS)
+        debug("Return")
+        debug("Code :"+str(r.status_code))
+        debug("JSON :")
+        debug(r.json())
         if r.headers.get("content-type", "").startswith("application/json"):
             return r.json()
         else:
