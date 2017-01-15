@@ -252,6 +252,7 @@ class EPG(xbmcgui.WindowXML):
 			return
 			
 		elif controlId == 4350:
+			
 			self.getControl(4401).setVisible(False)
 			self.getControl(4400).setVisible(True)
 			return
@@ -508,9 +509,12 @@ class EPG(xbmcgui.WindowXML):
 		self._clearEpg()
 
 		channels = self.db.getChannelList(self.favourites)
-		if channelStart < 0: channelStart = len(channels) - 1
-		elif channelStart > len(channels) - 1: channelStart = 0
+		
+		if channelStart < 0:
+			channelStart = len(channels) - (int((float(len(channels))/8 - len(channels)/8)*8))
+		elif channelStart > len(channels) -1: channelStart = 0
 		self.channelIdx = channelStart
+
 		
 		'''
 		#channels that are visible 
@@ -819,4 +823,9 @@ class EPG(xbmcgui.WindowXML):
 			self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30,
 													 seconds=self.viewStartDate.second)
 			self.onRedrawEPG(self.channelIdx, self.viewStartDate)
-
+		if date == today:
+			self.viewStartDate = datetime.datetime.today()
+			self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30,
+													 seconds=self.viewStartDate.second)
+			self.onRedrawEPG(self.channelIdx, self.viewStartDate)
+		

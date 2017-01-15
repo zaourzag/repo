@@ -526,3 +526,7 @@ msgstr ""
 msgctxt "#31910"
 msgid "Reset Folder"
 msgstr ""
+
+msgctxt "#31911"
+msgid "Delete the recording directory and the recorded movies?\nThe recordings are not deleted at Zattoo."
+msgstr ""

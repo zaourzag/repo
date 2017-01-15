@@ -323,7 +323,9 @@ class ZattooDB(object):
     if row is not None:
       playing = {'channel':row['channel'], 'start':row['start_date'], 'action_time':row['action_time'], 'current_stream':row['current_stream'], 'streams':row['streams']}
     else:
-      playing = {'channel':'ard', 'start':datetime.datetime.now(), 'action_time':datetime.datetime.now()}
+      c.execute('SELECT * FROM channels WHERE favourite=? AND weight=?', ['1', '0'] )
+      row = c.fetchone() 
+      playing = {'channel':row['id'], 'start':datetime.datetime.now(), 'action_time':datetime.datetime.now()}
     c.close()
     return playing
 
@@ -388,3 +390,12 @@ class ZattooDB(object):
     c.close()
     return channelid
   
+  def get_channelweight(self, weight):
+    c = self.conn.cursor()
+    c.execute('SELECT * FROM channels WHERE weight= ? ', [weight])
+    row = c.fetchone()
+    if row:
+      channelid=row['id']
+    self.conn.commit()
+    c.close()
+    return channelid

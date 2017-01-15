@@ -486,3 +486,7 @@ msgstr "Den Kanal als Startkanal festlegen"
 msgctxt "#31910"
 msgid "Reset Folder"
 msgstr "Verzeichnis zurücksetzen"
+
+msgctxt "#31911"
+msgid "Delete the recording directory and the recorded movies?\nThe recordings are not deleted at Zattoo."
+msgstr "Das Aufnahme-Verzeichnis und die enthaltenen Filme löschen?\nDie Aufnahmen werden bei Zattoo nicht gelöscht."

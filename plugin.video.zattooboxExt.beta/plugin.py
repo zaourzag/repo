@@ -226,7 +226,7 @@ def build_recordingsList(addon_uri, addon_handle):
     if (now>start): color='orange'
     if (now>end): color='green'
     
-    start=datetime.datetime.fromtimestamp(start).strftime('%d.%m. %H:%M')
+    start=datetime.datetime.fromtimestamp(start).strftime('%d.%m.%Y. %H:%M') # NEW changed - by Samoth
     label=start+' '
     if record['episode_title']:
       label+='[COLOR '+color+']'+record['title']+'[/COLOR]: '+record['episode_title']
@@ -253,7 +253,7 @@ def build_recordingsList(addon_uri, addon_handle):
     contextMenuItems = []
     contextMenuItems.append(('delete recording', 'RunPlugin("plugin://'+__addonId__+'/?mode=remove_recording&recording_id='+str(record['id'])+'")'))
     li.addContextMenuItems(contextMenuItems, replaceItems=True)
-
+    
     xbmcplugin.addDirectoryItem(
       handle=addon_handle,
       url=addon_uri + '?' + urllib.urlencode({'mode': 'watch_r', 'id': record['id']}),
@@ -264,7 +264,6 @@ def build_recordingsList(addon_uri, addon_handle):
   xbmcplugin.setContent(addon_handle, 'movies')
   xbmcplugin.addSortMethod(addon_handle, 2)
   xbmcplugin.addSortMethod(addon_handle, 9)
-  
   
 def watch_recording(addon_uri, addon_handle, recording_id):
   #if xbmc.Player().isPlaying(): return
@@ -295,16 +294,19 @@ def setup_recording(program_id):
   params = {'program_id': program_id}
   resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/playlist/program', params)
   xbmcgui.Dialog().ok(__addonname__, __addon__.getLocalizedString(31903))
+  make_library()  # NEW added - by Samoth
 
 def delete_recording(recording_id):
   params = {'recording_id': recording_id}
+  folder=__addon__.getSetting('library_dir') # NEW added - by Samoth
+  if folder: # NEW added - by Samoth
+    delete_entry_from_library(str(recording_id)) # NEW added - by Samoth	
   resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/playlist/remove', params)
   xbmc.executebuiltin('Container.Refresh')
 # times in local timestamps
 
 def make_library():
   folder=__addon__.getSetting('library_dir')
-  print folder
   if not folder: return
   import os
   libraryPath = xbmc.translatePath(folder)
@@ -330,7 +332,7 @@ def make_library():
     f.close()
     
     out='<?xml version="1.0" encoding="UTF-8" standalone="yes" ?><movie>'
-    out+='<title>[COLOR red]ZBE[/COLOR] '+name+'</title>'
+    out+='<title>'+name+' [COLOR red]ZBE[/COLOR]</title>'
     out+='<year>'+str(showInfo['year'])+'</year>'
     out+='<plot>'+showInfo['description']+'</plot>'
     out+='<thumb>'+showInfo['image_url']+'</thumb>'
@@ -349,6 +351,34 @@ def make_library():
     f.close()
   _zattooDB_.update_library()
   xbmcgui.Dialog().notification('Ordner für Filme aktualisiert', __addon__.getLocalizedString(31020), time=10000)    
+
+def delete_library(): # New added - by Samoth
+  folder=__addon__.getSetting('library_dir') # New added - by Samoth
+  if not folder: return # New added - by Samoth
+  import os, shutil # New added - by Samoth
+  libraryPath = xbmc.translatePath(folder) # New added - by Samoth
+  if os.path.exists(libraryPath) and libraryPath != "": # New added - by Samoth
+  	shutil.rmtree(libraryPath)  # New added - by Samoth
+
+def delete_entry_from_library(recording_id): # New added - by Samoth
+  import os, shutil # New added - by Samoth
+  folder=__addon__.getSetting('library_dir') # New added - by Samoth
+  if not folder: return # New added - by Samoth
+  libraryPath = xbmc.translatePath(folder)
+  resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/playlist', None) # New added - by Samoth	
+  for record in resultData['recordings']: # New added - by Samoth
+    if recording_id == str(record['id']): # New added - by Samoth
+	    showInfo=_zattooDB_.getShowInfo(record['program_id']) # New added - by Samoth
+	    if showInfo == "NONE": continue # New added - by Samoth
+	    
+	    if showInfo['episode_title']: name=showInfo['title']+'-'+showInfo['episode_title'] # New added - by Samoth
+	    else: name=showInfo['title'] # New added - by Samoth
+
+	    fileName=slugify(name) # New added - by Samoth
+	    strmDir=os.path.join(libraryPath, fileName) # New added - by Samoth
+	    if os.path.exists(os.path.dirname(strmDir)): # New added - by Samoth
+	     shutil.rmtree(strmDir) # New added - by Samoth
+	    continue # New added - by Samoth
   
 def slugify(value):
     """
@@ -667,11 +697,11 @@ class zattooGUI(xbmcgui.WindowXMLDialog):
       change_stream(1)
     if action in [ACTION_MOVE_UP, ACTION_CHANNEL_UP, ACTION_PAGE_UP]:
       if self.hidePrevImg():return
-      nr=skip_channel(-1)
+      nr=skip_channel(+1)
       self.showChannelNr(nr+1)
     if action in [ACTION_MOVE_DOWN, ACTION_CHANNEL_DOWN, ACTION_PAGE_DOWN]:
       if self.hidePrevImg():return
-      nr=skip_channel(+1)
+      nr=skip_channel(-1)
       self.showChannelNr(nr+1)
     
 
@@ -826,6 +856,7 @@ def main():
   elif action == 'reloadDB':
     _zattooDB_.reloadDB()
     xbmcgui.Dialog().notification(__addonname__, __addon__.getLocalizedString(31250), time=10000)    
+    delete_library() # New added - by Samoth    
     make_library
   elif action == 'changeStream':
     dir = int(args.get('dir')[0])
@@ -836,10 +867,14 @@ def main():
     tele.doModal()
     del tele
   elif action == 'makelibrary':
+    delete_library()
     make_library()
   elif action == 'resetdir':
-    __addon__.setSetting(id="library_dir", value="")
-    xbmc.executebuiltin('Container.Refresh')
+    delete = xbmcgui.Dialog().yesno(__addonname__, __addon__.getLocalizedString(31911))
+    if delete:
+      delete_library()
+      __addon__.setSetting(id="library_dir", value="")
+      xbmc.executebuiltin('Container.Refresh')
   '''
   elif action == 'showInfo':
     #xbmc.executebuiltin('ActivateWindow(12003)')
@@ -850,7 +885,6 @@ def main():
     
 test = _zattooDB_.test_library()
 if test == "True":
-    print "ERGEBNIS  " + test
     make_library()
     
 main()

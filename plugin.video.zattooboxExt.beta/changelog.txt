@@ -1,3 +1,11 @@
+-------------------------------------------------
+[B] ZattooBox Extendet v1.6.1beta[/B] 15.01.2017
+-------------------------------------------------
+-Bugfix beim Start EPG 
+-Bugfix gehe zu Heute im EPG
+-Bugfix beim scroolen im EPG
+-neue Funktionen beim löschen der Library (by Samoth)
+
 ------------------------------------------------
 [B]ZattooBox Extended v1.6.0beta[/B] 11.01.2017
 ------------------------------------------------
