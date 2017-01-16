@@ -261,9 +261,10 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
   </extension>
 </addon>
 
-<addon id="plugin.video.aod" name="Anime on Demand" version="0.4.19" provider-name="L0RE">
+<addon id="plugin.video.aod" name="Anime on Demand" version="0.4.20" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="script.module.pyxbmct" version="1.1.7"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
