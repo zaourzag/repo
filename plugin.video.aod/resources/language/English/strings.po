@@ -89,3 +89,7 @@ msgstr ""
 msgctxt "#30116"
 msgid "Anime Top 10"
 msgstr ""
+
+msgctxt "#30117"
+msgid "New Stuff"
+msgstr "New Stuff"

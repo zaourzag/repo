@@ -82,9 +82,13 @@ msgid "New Simulcasts"
 msgstr "Neue Simulcasts"
 
 msgctxt "#30115"
-msgid "New Anime"
+msgid "New Animes"
 msgstr "Neue Anime-Titel"
 
 msgctxt "#30116"
 msgid "Anime Top 10"
 msgstr "Anime Top 10"
+
+msgctxt "#30117"
+msgid "New Stuff"
+msgstr "Neues Matrial"

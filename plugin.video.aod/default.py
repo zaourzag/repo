@@ -10,6 +10,7 @@ import xbmc
 import xbmcvfs
 import hashlib
 import urllib, urllib2, socket, cookielib, re, os, shutil,json
+import pyxbmct
 
 addon_handle = int(sys.argv[1])
 addon = xbmcaddon.Addon()
@@ -58,6 +59,52 @@ opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
 baseurl="https://www.anime-on-demand.de"
     
     
+class Infowindow(pyxbmct.AddonDialogWindow):
+    bild=""
+    nur_bild=""
+    text=""
+    pos=0
+    def __init__(self, title='',text='',image='',nurbild=0):
+        super(Infowindow, self).__init__(title)
+        self.setGeometry(600,600,8,8)
+        self.bild=image
+        self.nur_bild=nurbild
+        self.text=text        
+        self.set_info_controls()
+        # Connect a key action (Backspace) to close the window.
+        self.connect(pyxbmct.ACTION_NAV_BACK, self.close)
+
+    def set_info_controls(self):
+      self.textbox=pyxbmct.TextBox()  
+      self.image = pyxbmct.Image(self.bild)           
+      if self.nur_bild==0:
+        self.placeControl(self.image, 0, 0,columnspan=2,rowspan=2)
+        self.placeControl(self.textbox, 2, 0, columnspan=8,rowspan=6)                  
+      else:
+        self.placeControl(self.image, 0, 0,columnspan=8,rowspan=6)
+        #self.placeControl(self.textbox, 6, 0,columnspan=8,rowspan=2)     
+      self.textbox.setText(self.text)
+      self.connectEventList(
+             [pyxbmct.ACTION_MOVE_UP,
+             pyxbmct.ACTION_MOUSE_WHEEL_UP],
+            self.hoch)         
+      self.connectEventList(
+            [pyxbmct.ACTION_MOVE_DOWN,
+             pyxbmct.ACTION_MOUSE_WHEEL_DOWN],
+            self.runter)                  
+      self.setFocus(self.textbox)            
+    def hoch(self):
+        self.pos=self.pos-1
+        if self.pos < 0:
+          self.pos=0
+        self.textbox.scroll(self.pos)
+    def runter(self):
+        self.pos=self.pos+1        
+        self.textbox.scroll(self.pos)
+        posnew=self.textbox.getPosition()
+        debug("POSITION : "+ str(posnew))
+
+        
     
     
 def ersetze(inhalt):
@@ -185,22 +232,26 @@ def Serie(url):
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)  
 def html5video(entry,img,csrftoken,menulist):     
     error=0
-    debug("Start Flashvideo")
+    debug("Start HTMLvideo")
     try:
-      match=re.compile('title="([^"]+)"', re.DOTALL).findall(entry)
-      title=match[0]      
-      if '<p class="episodebox-shorttext">' in entry:
+      match=re.compile(' title="([^"]+)"', re.DOTALL).findall(entry)
+      title=match[0] 
+      debug ("Title :"+title)  
+      try:      
+        if '<p class="episodebox-shorttext">' in entry:
            match=re.compile('<p class="episodebox-shorttext">(.+)</p>', re.DOTALL).findall(entry)
-      else:
+        else:
            match=re.compile('<div itemprop="description">(.+)</p>', re.DOTALL).findall(entry)
-      desc=match[0]    
-      desc=desc.replace("<br />","") 
-      desc=desc.replace("<p>","") 
-      debug("csrftoken : "+csrftoken)
-      
+        desc=match[0]    
+        desc=desc.replace("<br />","") 
+        desc=desc.replace("<p>","") 
+        desc=desc.replace("&quot;","\"") 
+      except:
+        desc=""
+      debug("csrftoken : "+csrftoken)      
       match=re.compile('title="([^"]+)" data-playlist="([^"]+)"', re.DOTALL).findall(entry)
-      for type,link in match:
-        title2=title + "( "+ type.replace("starten","").replace("Japanischen Stream mit Untertiteln","OmU").replace("Deutschen Stream","Syncro") +" )"
+      for type,link in match:        
+        title2=title + " ( "+ type.replace("starten","").replace("Japanischen Stream mit Untertiteln","OmU").replace("Deutschen Stream","Syncro") +" )"
         debug("Link: "+ link)                   
         debug("title :"+title2) 
         idd=hashlib.md5(title2).hexdigest()        
@@ -439,15 +490,43 @@ def abisz():
 		addDir(letter.upper(), baseurl+"/animes/begins_with/"+letter.upper(), 'catall', "")
   xbmcplugin.endOfDirectory(addon_handle)
 
-def menu():
+def newmenu():
     addDir(translation(30113), translation(30113), 'new_episodes', "")    
     addDir(translation(30114), translation(30114), 'new_simulcast', "")    
     addDir(translation(30115), translation(30115), 'new_animes', "")    
+    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)   
+
+def newsmenu():
+  addDir("AoD aktuell", "/articles/category/3/1", 'readnews', "") 
+  addDir("Anime Deutschland", "", 'readnews', "") 
+  addDir("Anime Japan", "", 'readnews', "") 
+  addDir("Games", "", 'readnews', "") 
+  xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)         
+  
+def readnews(kat):
+    url=baseurl+"/articles"
+    content = geturl(url)    
+    elemente = content.split('<div class="category-item">') 
+    for i in range(1, len(elemente), 1):
+      element=elemente[i]   
+      match = re.compile('<a href="(.+?)">(.+?)</a>', re.DOTALL).findall(element)
+      url=match[0][0]
+      name=match[0][1]
+      image = re.compile('src="(.+?)"', re.DOTALL).findall(element)[0]
+      addLink(name=ersetze(name), url=baseurl+url, mode="artikel", iconimage=baseurl+image) 
+    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)         
+    
+def artikel(url):
+    content = geturl(url) 
+   
+def menu():
+    addDir(translation(30117), translation(30117), 'newmenu', "") 
     addDir(translation(30116), translation(30116), 'top10', "")    
     addDir(translation(30107), translation(30107), 'All', "") 
     addDir(translation(30104), translation(30104), 'AZ', "")
     addDir(translation(30105), translation(30105), 'cat', "")    
     addDir(translation(30106), translation(30106), 'lang', "")     
+    addDir("News", "", 'newsmenu', "")  
     #addDir(translation(30111), translation(30111), 'cookies', "") 
     addDir(translation(30108), translation(30108), 'Settings', "") 
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
@@ -517,3 +596,7 @@ else:
           Start_listen("Anime Top 10")            
   if mode == 'hashplay':          
           hashplay(csrftoken)
+  if mode == 'newsmenu':          
+          newsmenu()
+  if mode == 'readnews':          
+          readnews(url)                  
