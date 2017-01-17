@@ -2,4 +2,4 @@
 
 [logo]: repository.kodinerds/icon.png
 
-Official Repository of [Kodinerds.net](http://kodinerds.net)
+Official Repository of the german Community [Kodinerds.net](http://kodinerds.net)
