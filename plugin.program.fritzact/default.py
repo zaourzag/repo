@@ -21,6 +21,7 @@ import xbmcgui
 import xbmcaddon
 import xbmcplugin
 from xml.etree import ElementTree as ET
+import re
 
 __addon__ = xbmcaddon.Addon()
 __addonID__ = __addon__.getAddonInfo('id')
@@ -58,6 +59,18 @@ class Device():
         self.is_switch = self.functionbitmask & (1 << 9) > 0            # Power Switch
         self.is_repeater = self.functionbitmask & (1 << 10) > 0         # DECT Repeater
 
+        self.state = 'n/a'
+        self.b_state = 'n/a'
+        self.power = 'n/a'
+        self.energy = 'n/a'
+        self.temperature = 'n/a'
+        self.mode = 'n/a'
+        self.lock = 'n/a'
+
+        self.set_temp = 'n/a'
+        self.comf_temp = 'n/a'
+        self.lowering_temp = 'n/a'
+
         # Switch attributes
 
         if self.is_switch:
@@ -69,7 +82,7 @@ class Device():
 
         if self.is_thermostat:
             self.type = 'thermostat'
-            self.actual_temp = self.bin2degree(int(device.find('hkr').find('tist').text or '0'))
+            self.temperature = self.bin2degree(int(device.find('hkr').find('tist').text or '0'))
             self.set_temp = self.bin2degree(int(device.find('hkr').find('tsoll').text or '0'))
             self.comf_temp = self.bin2degree(int(device.find('hkr').find('komfort').text or '0'))
             self.lowering_temp = self.bin2degree(int(device.find('hkr').find('absenk').text or '0'))
@@ -77,16 +90,19 @@ class Device():
         # Power attributes
 
         if self.has_powermeter:
-            self.power = 0.0
-            self.energy = 0.0
-            self.power = '{:0.2f}'.format(float(device.find('powermeter').find('power').text)/1000)
-            self.energy = '{:0.2f}'.format(float(device.find('powermeter').find('energy').text)/1000)
+            self.power = '{:0.2f}'.format(float(device.find('powermeter').find('power').text)/1000) + ' W'
+            self.energy = '{:0.2f}'.format(float(device.find('powermeter').find('energy').text)/1000) + ' kWh'
 
         # Temperature attributes
 
         if self.has_temperature:
-            self.temperature = 0.0
             self.temperature = '{:0.1f}'.format(float(device.find("temperature").find("celsius").text)/10) + ' °C'.decode('utf-8')
+
+        if self.is_repeater:
+            self.type = 'switch'
+
+        _group = re.match('([A-F]|\d){2}:([A-F]|\d){2}:([A-F]|\d){2}-([A-F]|\d){3}', self.actor_id)
+        if _group is not None: self.type = 'group'
 
     @classmethod
 
@@ -157,7 +173,7 @@ class FritzBox():
         self.__lastLogin = int(__addon__.getSetting('lastLogin') or 0)
         self.__fbSID = __addon__.getSetting('SID') or None
 
-    def get_actors(self, handle=None):
+    def get_actors(self, handle=None, type=None):
 
         # Returns a list of Actor objects for querying SmartHome devices.
 
@@ -173,6 +189,8 @@ class FritzBox():
 
                 actor = Device(device)
 
+                if type is not None and type != actor.type: continue
+
                 if actor.is_switch:
                     actor.icon = __s_absent__
                     if actor.present == 1:
@@ -182,7 +200,6 @@ class FritzBox():
                     actor.icon = __t_absent__
                     if actor.present == 1:
                         actor.icon = __t_on__
-                        if actor.state == 0: actor.icon = __t_absent__
 
                 actors.append(actor)
 
@@ -191,23 +208,34 @@ class FritzBox():
                     wid.setProperty('type', actor.type)
                     wid.setProperty('present', __LS__(30032 + actor.present))
                     wid.setProperty('b_present', actor.b_present)
-                    wid.setProperty('state', __LS__(30030 + actor.state))
+                    if isinstance(actor.state, int):
+                        wid.setProperty('state', __LS__(30030 + actor.state))
+                    else:
+                        wid.setProperty('state', actor.state)
                     wid.setProperty('b_state', actor.b_state)
                     wid.setProperty('mode', actor.mode)
                     wid.setProperty('temperature', unicode(actor.temperature))
                     wid.setProperty('power', actor.power)
                     wid.setProperty('energy', actor.energy)
+
+                    wid.setProperty('set_temp', actor.set_temp)
+                    wid.setProperty('comf_temp', actor.comf_temp)
+                    wid.setProperty('lowering_temp', actor.lowering_temp)
+
                     xbmcplugin.addDirectoryItem(handle=handle, url='', listitem=wid)
 
                 t.writeLog('----- current state of AIN %s -----' % (actor.actor_id), level=xbmc.LOGDEBUG)
-                t.writeLog('Name:        %s' % (actor.name), level=xbmc.LOGDEBUG)
-                t.writeLog('Type:        %s' % (actor.type), level=xbmc.LOGDEBUG)
-                t.writeLog('Presence:    %s' % (actor.present), level=xbmc.LOGDEBUG)
-                t.writeLog('Device ID:   %s' % (actor.device_id), level=xbmc.LOGDEBUG)
-                t.writeLog('Temperature: %s' % (actor.temperature), level=xbmc.LOGDEBUG)
-                t.writeLog('State:       %s' % (actor.state), level=xbmc.LOGDEBUG)
-                t.writeLog('Power:       %s W' % (actor.power), level=xbmc.LOGDEBUG)
-                t.writeLog('Consumption: %s kWh' % (actor.energy), level=xbmc.LOGDEBUG)
+                t.writeLog('Name:          %s' % (actor.name), level=xbmc.LOGDEBUG)
+                t.writeLog('Type:          %s' % (actor.type), level=xbmc.LOGDEBUG)
+                t.writeLog('Presence:      %s' % (actor.present), level=xbmc.LOGDEBUG)
+                t.writeLog('Device ID:     %s' % (actor.device_id), level=xbmc.LOGDEBUG)
+                t.writeLog('Temperature:   %s' % (actor.temperature), level=xbmc.LOGDEBUG)
+                t.writeLog('State:         %s' % (actor.state), level=xbmc.LOGDEBUG)
+                t.writeLog('Power:         %s' % (actor.power), level=xbmc.LOGDEBUG)
+                t.writeLog('Consumption:   %s' % (actor.energy), level=xbmc.LOGDEBUG)
+                t.writeLog('soll Temp.:    %s' % (actor.set_temp), level=xbmc.LOGDEBUG)
+                t.writeLog('comfort Temp.: %s' % (actor.comf_temp), level=xbmc.LOGDEBUG)
+                t.writeLog('lower Temp.:   %s' % (actor.lowering_temp), level=xbmc.LOGDEBUG)
 
             if handle is not None:
                 xbmcplugin.endOfDirectory(handle=handle, updateListing=True)
@@ -251,6 +279,7 @@ class FritzBox():
 
 action = None
 ain = None
+type = None
 _addonHandle = None
 
 fritz = FritzBox()
@@ -269,10 +298,13 @@ if len(arguments) > 1:
     params = t.paramsToDict(arguments[1])
     action = urllib.unquote_plus(params.get('action', ''))
     ain = urllib.unquote_plus(params.get('ain', ''))
+    type = urllib.unquote_plus(params.get('type', ''))
+
+    if type not in ['switch', 'thermostat', 'repeater', 'group']: type = None
 
     t.writeLog('Parameter hash: %s' % (arguments[1]), level=xbmc.LOGDEBUG)
 
-actors = fritz.get_actors(handle=_addonHandle)
+actors = fritz.get_actors(handle=_addonHandle, type=type)
 
 if _addonHandle is None:
 

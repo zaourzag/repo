@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import sys, os, stat, platform, subprocess, traceback
+import sys, os, stat, platform, subprocess
 import socket
 import re
 import xbmc, xbmcaddon, xbmcgui
@@ -38,11 +38,14 @@ if not (_sts.st_mode & stat.S_IEXEC): os.chmod(SHUTDOWN_CMD, _sts.st_mode | stat
 if not (_stg.st_mode & stat.S_IEXEC): os.chmod(EXTGRABBER, _stg.st_mode | stat.S_IEXEC)
 
 CYCLE = 15  # polling cycle
-WAITPERIOD = 5 # Timebuffer for aborting shutdown process by user
 
 HOST = socket.gethostname()
-
 OSD = xbmcgui.Dialog()
+
+PLATFORM_OE = any(dist for dist in ('LIBREELEC', 'OPENELEC') if dist in ', '.join(platform.uname()).upper())
+if PLATFORM_OE:
+    writeLog('OS seems to be LibreELEC or OpenELEC, reset sudo in settings')
+    if __addon__.getSetting('sudo').upper() == 'TRUE': __addon__.setSetting('sudo', 'false')
 
 # binary Flags
 
@@ -160,7 +163,7 @@ class Manager():
                 opener.open(self.__server + ':' + self.__port + '/status.xml')
                 urllib2.install_opener(opener)
                 self.__conn_established = True
-                writeLog('Connection to %s established (Basic Authentication)' % (self.__server), level=xbmc.LOGDEBUG)
+                writeLog('Connection to %s established (Basic Authentication)' % (self.__server))
                 break
 
             except urllib2.HTTPError, e:
@@ -172,10 +175,10 @@ class Manager():
                         urllib2.install_opener(opener)
                         opener.open(self.__server + ':' + self.__port + '/status.xml')
                         self.__conn_established = True
-                        writeLog('Connection to %s established (Digest Authentication)' % (self.__server), level=xbmc.LOGDEBUG)
+                        writeLog('Connection to %s established (Digest Authentication)' % (self.__server))
                         break
                     except Exception, e:
-                        writeLog('%s Remaining connection attempt(s) to %s' % (self.__maxattempts, self.__server), level=xbmc.LOGDEBUG)
+                        writeLog('%s Remaining connection attempt(s) to %s' % (self.__maxattempts, self.__server))
                         xbmc.sleep(5000)
                         self.__maxattempts -= 1
                         continue
@@ -183,7 +186,7 @@ class Manager():
                     raise
 
             except Exception, e:
-                writeLog('%s Remaining connection attempt(s) to %s' % (self.__maxattempts, self.__server), level=xbmc.LOGDEBUG)
+                writeLog('%s Remaining connection attempt(s) to %s' % (self.__maxattempts, self.__server))
                 xbmc.sleep(5000)
                 self.__maxattempts -= 1
                 continue
@@ -228,7 +231,7 @@ class Manager():
                 writeLog('Mail could not be delivered. Check your settings.', xbmc.LOGERROR)
                 return False
         else:
-            writeLog('"%s" completed, no Mail delivered.' % (message), level=xbmc.LOGDEBUG)
+            writeLog('"%s" completed, no Mail delivered.' % (message))
             return True
 
     def notifyOSD(self, header, message, icon=xbmcgui.NOTIFICATION_INFO):
@@ -291,7 +294,7 @@ class Manager():
             if nwc and len(nwc.split('\n')) > 0:
                 bState |= isNET
                 _nc = nwc.split('\n')
-                for _conn in _nc: writeLog('Establ. nc: %s <-> %s' % (_conn.split()[3], _conn.split()[4]), level=xbmc.LOGDEBUG)
+                for _conn in _nc: writeLog('Establ. nc: %s <-> %s' % (_conn.split()[3], _conn.split()[4]))
 
         # Check if screensaver is running
         self.__ScScreensaverActive = xbmc.getCondVisibility('System.ScreenSaverActive')
@@ -309,7 +312,7 @@ class Manager():
             self.__wakeUp = (__curTime + datetime.timedelta(minutes=int(nodedata[0]) - self.__prerun)).replace(second=0)
             __WakeUpUTRec = int(time.mktime(self.__wakeUp.timetuple()))
         else:
-            writeLog('No recordings to schedule', level=xbmc.LOGDEBUG)
+            writeLog('No recordings to schedule')
 
         if self.__epg_interval > 0:
             __dayDelta = self.__epg_interval
@@ -358,8 +361,8 @@ class Manager():
 
         if self.__ScreensaverActive and self.__windowID: xbmc.executebuiltin('ActivateWindow(%s)') % self.__windowID
         if xbmc.getCondVisibility('VideoPlayer.isFullscreen'):
-            writeLog('Countdown possibly invisible (fullscreen mode)', level=xbmc.LOGDEBUG)
-            writeLog('Showing additional notification', level=xbmc.LOGDEBUG)
+            writeLog('Countdown possibly invisible (fullscreen mode)')
+            writeLog('Showing additional notification')
             self.notifyOSD(__LS__(30010), __LS__(30011) % __counter)
             xbmc.sleep(5000)
 
@@ -387,14 +390,23 @@ class Manager():
 
         if self.calcNextSched():
             __task = ['Recording', 'EPG-Update']
-            writeLog('Wakeup for %s by %s at %s' % (__task[self.__wakeUpStrOffset], self.__wakeup,  self.__wakeUp.strftime('%d.%m.%y %H:%M')), level=xbmc.LOGDEBUG)
+            writeLog('Wakeup for %s by %s at %s' % (__task[self.__wakeUpStrOffset], self.__wakeup,  self.__wakeUp.strftime('%d.%m.%y %H:%M')))
             if self.__nextsched: self.notifyOSD(__LS__(30017), __LS__(30018 + self.__wakeUpStrOffset) % (self.__wakeUp.strftime('%d.%m.%Y %H:%M')))
         elif self.__nextsched:
             self.notifyOSD(__LS__(30010), __LS__(30014))
-        if self.__nextsched: xbmc.sleep(5000)
+
+        if xbmc.getCondVisibility('Player.Playing'):
+            writeLog('Stopping Player')
+            xbmc.Player().stop()
+
+        _t = xbmc.getGlobalIdleTime()
+        xbmc.sleep(5000)
+        if xbmc.getGlobalIdleTime() - _t < 5:
+            writeLog('Shutdown aborted by user')
+            return False
 
         _sm = ['Kodi/XBMC', 'OS']
-        writeLog('Instruct the system to shut down using %s method' % (_sm[self.__shutdown]), level=xbmc.LOGDEBUG)
+        writeLog('Instruct the system to shut down using %s method' % (_sm[self.__shutdown]))
 
         if self.__sudo:
             os.system('sudo %s %s %s %s' % (SHUTDOWN_CMD, self.__wakeup, self.__wakeUpUT, self.__shutdown))
@@ -425,12 +437,11 @@ class Manager():
             elif (_bState & isNET):
                 self.notifyOSD(__LS__(30015), __LS__(30023), icon=xbmcgui.NOTIFICATION_WARNING)  # Notify 'Network active'
             else:
-                if not self.countDown(WAITPERIOD): self.setWakeup()
-                return True
+                return self.setWakeup()
         else: return False
 
         if (_bState & isEPG) and self.__epg_grab_ext and os.path.isfile(EXTGRABBER):
-            writeLog('Starting script for grabbing external EPG', level=xbmc.LOGDEBUG)
+            writeLog('Starting script for grabbing external EPG')
             #
             # ToDo: implement startup of external script (epg grabbing)
             #
@@ -441,9 +452,9 @@ class Manager():
                 _comm = subprocess.Popen('%s %s %s' % (EXTGRABBER, _epgpath, self.__epg_socket),
                                          stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True, universal_newlines=True)
                 while _comm.poll() is None:
-                    writeLog(_comm.stdout.readline().decode('utf-8', 'ignore').strip(), xbmc.LOGDEBUG)
+                    writeLog(_comm.stdout.readline().decode('utf-8', 'ignore').strip())
 
-                writeLog('external EPG grabber script tooks %s seconds' % ((datetime.datetime.now() - _start).seconds), xbmc.LOGDEBUG)
+                writeLog('external EPG grabber script tooks %s seconds' % ((datetime.datetime.now() - _start).seconds))
             except Exception, e:
                 writeLog('Could not start external EPG grabber script', xbmc.LOGERROR)
 
@@ -457,8 +468,8 @@ class Manager():
 
             if mon.waitForAbort(CYCLE): return True
             if idle > xbmc.getGlobalIdleTime():
-                writeLog('User activty detected', level=xbmc.LOGDEBUG)
-                writeLog('System was %s idle' % (time.strftime('%H:%M:%S', time.gmtime(idle))), level=xbmc.LOGDEBUG)
+                writeLog('User activty detected')
+                writeLog('System was %s idle' % (time.strftime('%H:%M:%S', time.gmtime(idle))))
                 return True
             idle = xbmc.getGlobalIdleTime()
 
@@ -469,11 +480,11 @@ class Manager():
             for item in nodedata:
                 if not item in self.__recTitles:
                     self.__recTitles.append(item)
-                    writeLog('Recording of "%s" is/becomes active' % (item), level=xbmc.LOGDEBUG)
+                    writeLog('Recording of "%s" is/becomes active' % (item))
             for item in self.__recTitles:
                 if not item in nodedata:
                     self.__recTitles.remove(item)
-                    writeLog('Recording of "%s" has finished' % (item), level=xbmc.LOGDEBUG)
+                    writeLog('Recording of "%s" has finished' % (item))
                     if not self.__recTitles: self.calcNextSched()
                     if mode is None:
                         self.deliverMail(__LS__(30047) % (HOST, item) + self.__wakeUpMessage)
@@ -486,7 +497,7 @@ class Manager():
             if not self.countDown(counter=self.__counter): self.setWakeup()
         elif not _bState and mode is None:
             writeLog('Service was running without any user activity', level=xbmc.LOGNOTICE)
-            self.setWakeup()
+            return self.setWakeup()
 
         ##################################### END OF MAIN SERVICE #####################################
 

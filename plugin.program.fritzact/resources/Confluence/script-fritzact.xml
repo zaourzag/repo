@@ -141,7 +141,7 @@
                                                         <selectedcolor>selected</selectedcolor>
                                                         <align>right</align>
                                                         <aligny>top</aligny>
-                                                        <label>$ADDON[plugin.program.fritzact 30027] $INFO[ListItem.Property(energy)] kWh</label>
+                                                        <label>$ADDON[plugin.program.fritzact 30027] $INFO[ListItem.Property(energy)]</label>
                                                 </control>
                                                 <control type="label">
                                                         <description>AIN</description>
@@ -282,7 +282,7 @@
                                                         <selectedcolor>selected</selectedcolor>
                                                         <align>right</align>
                                                         <aligny>top</aligny>
-                                                        <label>$ADDON[plugin.program.fritzact 30027] $INFO[ListItem.Property(energy)] kWh</label>
+                                                        <label>$ADDON[plugin.program.fritzact 30027] $INFO[ListItem.Property(energy)]</label>
                                                 </control>
                                                 <control type="label">
                                                         <description>AIN</description>

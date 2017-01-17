@@ -1,5 +1,7 @@
-0.3.19
+0.3.20
+- Improved shutdown handling
 
+0.3.19
 - EPG handling and download of external EPG providers improved
 
 0.3.18
