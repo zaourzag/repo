@@ -1,8 +1,5 @@
 Changelog:
 
-3.5.1
-- Fixed LiveTV widget
-
 3.5.0
 - Added new optional "recently watched" widget for TV channels
 
