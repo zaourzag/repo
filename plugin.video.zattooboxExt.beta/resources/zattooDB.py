@@ -107,7 +107,7 @@ class ZattooDB(object):
 
     try:
       c.execute('CREATE TABLE channels(id TEXT, title TEXT, logo TEXT, weight INTEGER, favourite BOOLEAN, PRIMARY KEY (id) )')
-      c.execute('CREATE TABLE programs(showID TEXT, title TEXT, channel TEXT, start_date TIMESTAMP, end_date TIMESTAMP, description TEXT, description_long TEXT, image_small TEXT, image_large TEXT, updates_id INTEGER, FOREIGN KEY(channel) REFERENCES channels(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED, FOREIGN KEY(updates_id) REFERENCES updates(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED)')
+      c.execute('CREATE TABLE programs(showID TEXT, title TEXT, channel TEXT, start_date TIMESTAMP, end_date TIMESTAMP, description TEXT, description_long TEXT, year TEXT, country TEXT, genre TEXT, category TEXT, image_small TEXT, image_large TEXT, updates_id INTEGER, FOREIGN KEY(channel) REFERENCES channels(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED, FOREIGN KEY(updates_id) REFERENCES updates(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED)')
       c.execute('CREATE TABLE updates(id INTEGER, date TIMESTAMP, type TEXT, PRIMARY KEY (id) )')
       c.execute('CREATE TABLE playing(channel TEXT, start_date TIMESTAMP, action_time TIMESTAMP, current_stream INTEGER, streams TEXT, PRIMARY KEY (channel))')
       c.execute('CREATE TABLE showinfos(showID INTEGER, info TEXT, PRIMARY KEY (showID))')
@@ -132,7 +132,7 @@ class ZattooDB(object):
 
     # always clear db on update
     c.execute('DELETE FROM channels')
-
+    print "account  "+ self.zapi.AccountData['account']['power_guide_hash']
     api = '/zapi/v2/cached/channels/' + self.zapi.AccountData['account']['power_guide_hash'] + '?details=False'
     channelsData = self.zapi.exec_zapiCall(api, None)
 
@@ -185,6 +185,8 @@ class ZattooDB(object):
     xbmcgui.Dialog().notification(__addon__.getLocalizedString(31006), date.strftime('%A %d.%m.%Y'), __addon__.getAddonInfo('path') + '/icon.png', 000, False)
 
     api = '/zapi/v2/cached/program/power_guide/' + self.zapi.AccountData['account']['power_guide_hash'] + '?end=' + str(toTime) + '&start=' + str(fromTime)
+
+    print "api   "+api
     programData = self.zapi.exec_zapiCall(api, None)
 
     count=0
@@ -203,19 +205,23 @@ class ZattooDB(object):
           #http://images.zattic.com/system/images/6dcc/8817/50d1/dfab/f21c/format_480x360.jpg
         else: image = ""          
         try:
-            print 'INSERT OR IGNORE INTO programs(channel, title, start_date, end_date, description, image_small, showID) VALUES(%, %, %, %, %, %)',cid, program['t'], program['e'], program['et'], image, program['id'] 
+            print 'INSERT OR IGNORE INTO programs(channel, title, start_date, end_date, description, genre, image_small, showID) VALUES(%, %, %, %, %, %, %)',cid, program['t'], program['s'], program['e'], program['et'], ', '.join(program['g']), image, program['id'] 
         except:
             pass
-        c.execute('INSERT OR IGNORE INTO programs(channel, title, start_date, end_date, description, image_small, showID) VALUES(?, ?, ?, ?, ?, ?, ?)',
-            [cid, program['t'], program['s'], program['e'], program['et'], image, program['id'] ])          
+        c.execute('INSERT OR IGNORE INTO programs(channel, title, start_date, end_date, description, genre, image_small, showID) VALUES(?, ?, ?, ?, ?, ?, ?, ?)',
+            [cid, program['t'], program['s'], program['e'], program['et'], ', '.join(program['g']), image, program['id'] ])          
         if not c.rowcount:
-            c.execute('UPDATE programs SET channel=?, title=?, start_date=?, end_date=?, description=?, image_small=? WHERE showID=?',
-              [cid, program['t'], program['s'], program['e'], program['et'], image, program['id'] ])            
+            c.execute('UPDATE programs SET channel=?, title=?, start_date=?, end_date=?, description=?, genre=?, image_small=? WHERE showID=?',
+              [cid, program['t'], program['s'], program['e'], program['et'], ', '.join(program['g']), image, program['id'] ])            
     if count>0: 
       c.execute('INSERT into updates(date, type) VALUES(?, ?)', [date, 'program'])        
       self.conn.commit()    
     c.close()
-
+    
+    # update programInfo
+    channels = self.getChannelList()
+    self.getPrograms(channels, True)
+    
   def getChannelList(self, favourites=True):
     #self.updateChannels()
     c = self.conn.cursor()
@@ -254,32 +260,60 @@ class ZattooDB(object):
   def getPrograms(self, channels, get_long_description=False, startTime=datetime.datetime.now(), endTime=datetime.datetime.now()):
     #self.updateProgram(startTime)
     channelKeys=('\',\''.join(channels.keys()))
-    channelKeys="'"+channelKeys.replace(",'index',", "")+"'"
+    channelKeys="'"+channelKeys.replace(",'index',", ",")+"'"
     c = self.conn.cursor()
     c.execute('SELECT * FROM programs WHERE channel in (' + channelKeys + ')  AND start_date < ? AND end_date > ?', [endTime, startTime])
+
     programList = []
     for row in c:
-
-        
       description_long = row["description_long"]
       if get_long_description and description_long == None: 
-        description_long = self.getShowInfo(row["showID"],'description')
+        #description_long = self.getShowInfo(row["showID"],'description')
+        description_long = self.getShowLongDescription(row["showID"])
       programList.append({
         'channel': row['channel'],
         'showID' : row['showID'],
         'title' : row['title'],
         'description' : row['description'],
         'description_long' : description_long,
+        'year': row['year'],
+        'genre': row['genre'],
+        'country': row['country'],
+        'category': row['category'],
         'start_date' : row['start_date'],
         'end_date' : row['end_date'],
         'image_small' : row['image_small'],
         'image_large': row['image_large']
       })
-
     c.close()
     return programList
 
-
+  def getShowLongDescription(self, showID):
+        c = self.conn.cursor()
+        try:
+            c.execute('SELECT * FROM programs WHERE showID= ? ', [showID])
+        except:
+            return None
+        
+        show = c.fetchone()
+        longDesc = show['description_long']
+        if longDesc == None:
+            api = '/zapi/program/details?program_id=' + showID + '&complete=True'
+            showInfo = self.zapiSession().exec_zapiCall(api, None)
+            longDesc = showInfo['program']['description']
+            c.execute('UPDATE programs SET description_long=? WHERE showID=?', [longDesc, showID ])
+            year = showInfo['program']['year']
+            c.execute('UPDATE programs SET year=? WHERE showID=?', [year, showID ])
+            category = ', '.join(showInfo['program']['categories'])
+            c.execute('UPDATE programs SET category=? WHERE showID=?', [category, showID ])
+            country = showInfo['program']['country']
+            country = country.replace('|',', ')
+            c.execute('UPDATE programs SET country=? WHERE showID=?', [country, showID ])
+            self.conn.commit()
+            
+        c.close()
+        return longDesc
+        
   def getShowInfo(self, showID, field='all'):
         if field!='all':
             api = '/zapi/program/details?program_id=' + str(showID) + '&complete=True'

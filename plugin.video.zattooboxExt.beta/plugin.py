@@ -56,6 +56,9 @@ _zattooDB_=ZattooDB()
 
 _umlaut_ = {ord(u'ä'): u'ae', ord(u'ö'): u'oe', ord(u'ü'): u'ue', ord(u'ß'): u'ss'}
 
+localString = __addon__.getLocalizedString
+local = xbmc.getLocalizedString
+
 ACTION_MOVE_LEFT = 1
 ACTION_MOVE_RIGHT = 2
 ACTION_MOVE_UP = 3
@@ -91,6 +94,8 @@ ACTION_PAGE_DOWN = 6
 SWISS = xbmcaddon.Addon('plugin.video.zattooboxExt.beta').getSetting('swiss')
 HIQ = xbmcaddon.Addon('plugin.video.zattooboxExt.beta').getSetting('hiq')
 
+
+
 if SWISS=="true":
     xbmc.executebuiltin( "Skin.SetBool(%s)" %'swiss')
 else:
@@ -119,16 +124,24 @@ def build_directoryContent(content, addon_handle, cache=True, root=False):
     record['plot'] = record.get('plot', "")
     record['thumbnail'] = record.get('thumbnail', "")
     record['selected'] = record.get('selected', False)
-
+    record['genre'] = record.get('genre', "")
+    record['year'] = record.get('year', "")
+    record['country'] = record.get('country', "")
+    record['category'] = record.get('category', "")
+    
     li = xbmcgui.ListItem(record['title'], iconImage=record['image'])
     li.setInfo('video', {'plot':record['plot'] })
+    li.setInfo('video', {'genre':record['genre'] })
+    li.setInfo('video', {'year':record['year'] })
+    li.setInfo('video', {'country':record['country']})
+    li.setInfo('video', {'category':record['category']})
     li.setProperty('fanart_image', record['thumbnail'])
     li.select(record['selected'])
   
     xbmcplugin.addDirectoryItem(handle=addon_handle, url=record['url'], listitem=li, isFolder=record['isFolder'])
 
   xbmcplugin.endOfDirectory(addon_handle, True, root, cache)
-
+ 
 def build_root(addon_uri, addon_handle):
   import urllib
 
@@ -153,7 +166,7 @@ def build_root(addon_uri, addon_handle):
     _zattooDB_.set_playing(channelid, '0', streamsList, 0)
     makeZattooGUI()
 
-  localString = __addon__.getLocalizedString
+  
   iconPath = __addon__.getAddonInfo('path') + '/icon.png'
   if _listMode_ == 'all': listTitle = localString(31100)
   else: listTitle = localString(31101)
@@ -180,10 +193,10 @@ def build_channelsList(addon_uri, addon_handle):
   channels = _zattooDB_.getChannelList(_listMode_ == 'favourites')
   if channels is not None:
     # get currently playing shows
-    program = _zattooDB_.getPrograms(channels)
+    program = _zattooDB_.getPrograms(channels, True)
     content = []
     # time of chanellist creation
-#     content.append({'title': '[B][COLOR blue]' + time.strftime("%H:%M:%S") +'[/B][/COLOR]', 'isFolder': False, 'url':''})
+    #content.append({'title': '[B][COLOR blue]' + time.strftime("%H:%M:%S") +'[/B][/COLOR]', 'isFolder': False, 'url':''})
 
     # get last watched channel
     playing = _zattooDB_.get_playing()
@@ -196,22 +209,36 @@ def build_channelsList(addon_uri, addon_handle):
         if search['channel'] == chan:
           prog = search
           break
+      try:
+        start = prog.get('start_date','').strftime('%H:%M')
+        end = prog.get('end_date','').strftime('%H:%M')
+        startend = '[COLOR yellow]'+start+"-"+end+'[/COLOR]'
+      except AttributeError:
+        startend = ''
+      if len(str(nr)) == 1: 
+        chnr = '  '+str(nr)
+      else: chnr = str(nr)
+      
       content.append({
-#        'title': channels[chan]['title'] + '   -   ' + prog.get('title', '')+ '   '+start.strftime('%H:%M')+'-'+end.strftime('%H:%M'),
-        'title': str(nr)+' '+channels[chan]['title'] + '   -   ' + prog.get('title', ''),
+        'title': '[COLOR green]'+chnr+'[/COLOR]'+'  '+channels[chan]['title'] + ' - ' + prog.get('title', '')+ '  '+startend,
         'image': channels[chan]['logo'],
         'thumbnail': prog.get('image_small', ''),
+        'genre': prog.get('genre',''),
         'plot':  prog.get('description_long', ''),
-#        'plot': prog.get('start_date').strftime('%H:%M')+'-'+prog.get('end_date').strftime('%H:%M'),
+        #'plot': prog.get('genre','')+"  "+str(prog.get('year','')),
+        'year': prog.get('year',''),
+        'category': prog.get('category',''),
+        'country': prog.get('country',''),
         'isFolder': False,
         'url': addon_uri + '?' + urllib.urlencode({'mode': 'watch_c', 'id': channels[chan]['id']}),
         'selected' : channels[chan]['id'] == playing['channel']
       })
       nr+=1
-
+       
   build_directoryContent(content, addon_handle, False)
 
-
+  
+  
 def build_recordingsList(addon_uri, addon_handle):
   import urllib
   resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/playlist', None)
@@ -242,7 +269,7 @@ def build_recordingsList(addon_uri, addon_handle):
       if person['role']=='director': director=person['person']
       else: cast.append(person['person'])
     
-    meta.update({'title':label,'year':showInfo['year'], 'plot':showInfo['description'], 'country':showInfo['description'],'director':director, 'cast':cast, 'genre':'|'.join(showInfo['genres'])  })
+    meta.update({'title':label,'year':showInfo['year'], 'plot':showInfo['description'], 'country':showInfo['description'],'director':director, 'cast':cast, 'genre':', '.join(showInfo['genres'])  })
 
     li = xbmcgui.ListItem(label)
     li.setInfo('video',meta)
@@ -608,15 +635,20 @@ def makeOsdInfo():
   channelInfo = _zattooDB_.get_channelInfo(channel_id)
   program = _zattooDB_.getPrograms({channel_id:''}, True, datetime.datetime.now(), datetime.datetime.now())
   program=program[0]
-
+  
+  description = program['description']
+  if description == None: description = ''
+  else: description = '  -  ' + description
   win=xbmcgui.Window(10000)
-  win.setProperty('title', program['title'])
-  win.setProperty('channelInfo', channelInfo['title']+ ', ' + program['start_date'].strftime('%A %H:%M') + '-' + program['end_date'].strftime('%H:%M'))
+  win.setProperty('title', program['title'] + description)
+  win.setProperty('channelInfo', channelInfo['title'] + ', ' + program['start_date'].strftime('%A %H:%M') + '-' + program['end_date'].strftime('%H:%M'))
   win.setProperty('showThumb', program['image_small'])
   win.setProperty('channelLogo', channelInfo['logo'])
   win.setProperty('plot', program['description_long'])
-
-
+  win.setProperty('genre', '[COLOR blue]'+ local(135) + ':  ' + '[/COLOR]'+ program['genre'])
+  win.setProperty('year', '[COLOR blue]' + local(345) + ':  ' + '[/COLOR]' + program['year'] + '   ' + '[COLOR blue]' + local(21866) + ':  ' + '[/COLOR]' + program['category'])
+  win.setProperty('country', '[COLOR blue]' + local(574) + ':  ' + '[/COLOR]' + program['country'])
+#  win.setProberty('category', '[COLOR blue]' + local(21866) + ':  ' + '[/COLOR]' + program['category'])
 
 class myPlayer( xbmc.Player ):
   def __init__(self, skip=False):
@@ -882,7 +914,8 @@ def main():
     info.doModal()
     del info
   '''
-    
+
+      
 test = _zattooDB_.test_library()
 if test == "True":
     make_library()
