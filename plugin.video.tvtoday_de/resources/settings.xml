@@ -15,4 +15,12 @@
 		<setting label="30114" type="lsep"/>
 		<setting label="30106" type="bool" id="enableDebug" default="false"/>
 	</category>
+	<category label="32002">
+		<setting label="30115" type="lsep"/>
+		<setting label="30107" type="enum" id="streamSelection" values="auto|mp4" default="0"/>
+		<setting label="30116" type="lsep"/>
+		<setting label="30150" type="text" option="readable"/>
+		<setting label="30151" type="text" option="readable"/>
+		<setting label="30152" type="text" option="readable"/>
+	</category>
 </settings>

@@ -5,3 +5,8 @@
 [B]Version 1.0.1  (04.01.2017)[/B]
  - Eigenen Resolver für die "ARD" eingebaut
  - *(script.module.libArd vorerst enfernt)
+
+[B]Version 1.0.2  (16.01.2017)[/B]
+ - Auswahlschalter "m3u8/mp4" für Wiedergabe von ARD- und ZDF-Links in "settings" integriert
+ - *m3u8=Bessere Qualität / mp4=Bei Wiedegabeproblemen oder gewünschtem Download (ARTE-Links sind immer "mp4")
+ - SprachFiles überarbeitet/ergänzt

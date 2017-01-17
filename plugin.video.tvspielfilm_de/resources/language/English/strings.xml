@@ -1,17 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <strings>
 	<string id="32001">General</string>
+	<string id="32002">Playback</string>
+	
 	<string id="30101">     Force View-Mode</string>
 	<string id="30102">     ViewID</string>
 	<string id="30103">     Show Channel-Identification</string>
 	<string id="30104">     [COLOR orangered]Show NowTV-Shows[/COLOR] (works in all areas)</string>
 	<string id="30105">     Use Thumb as Fanart</string>
 	<string id="30106">     Detailed Program-Debug (otherwise only Minimal-Log)</string>
+	<string id="30107">     Preferred Links at ARD+ZDF[CR]          [COLOR yellow][auto=m3u8 (best Quality) • mp4=mp4][/COLOR]</string>
 	
 	<string id="30111">[B][COLOR ff0099ff]VIEW[/COLOR][/B]</string>
 	<string id="30112">[B][COLOR ff0099ff]CHANNEL[/COLOR][/B]</string>
 	<string id="30113">[B][COLOR ff0099ff]FANART[/COLOR][/B]</string>
 	<string id="30114">[B][COLOR ff0099ff]LOG[/COLOR][/B]</string>
+	<string id="30115">[B][COLOR ff0099ff]PLAY[/COLOR][/B]</string>
+	<string id="30116">[B][COLOR ff0099ff]INFO[/COLOR][/B]</string>
+	
+	<string id="30150">[COLOR orangered]During playback problems with ARD- or ZDF-Links...[/COLOR]</string>
+	<string id="30151">[COLOR chartreuse]Or if you want to save ARD, ARTE or ZDF-Links with a Download-ADDON...[/COLOR]</string>
+	<string id="30152">• [COLOR chartreuse]Setting choose »[/COLOR]mp4[COLOR chartreuse]« [/COLOR]•</string>
 	
 	<string id="30201">[B][COLOR chartreuse]Add to Playlist[/COLOR][/B]</string>
 </strings>

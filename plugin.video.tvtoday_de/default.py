@@ -36,6 +36,7 @@ addonPath = xbmc.translatePath(addon.getAddonInfo('path')).decode('utf-8')
 dataPath = xbmc.translatePath(addon.getAddonInfo('profile')).decode('utf-8')
 fanart = os.path.join(addonPath, 'fanart.jpg').decode('utf-8')
 icon = os.path.join(addonPath, 'icon.png').decode('utf-8')
+preferredStreamType = addon.getSetting("streamSelection")
 showSender = addon.getSetting("enableSender")
 showNOW = addon.getSetting("enableTVnow")
 enableDebug = addon.getSetting("enableDebug")
@@ -253,7 +254,7 @@ def ArdGetVideo(id):
 		normalLinks = result["_mediaArray"][1]["_mediaStreamArray"]
 		linkQuality = 3 # Beste verfügbare mp4-Qualität in der ARD-Mediathek = 3 (alle anderen sind schlechter)
 		# Beste Qualität ?
-		if muvidLinks:
+		if preferredStreamType == "0" and muvidLinks:
 			for muvidLink in muvidLinks:
 				stream = muvidLink["_stream"]
 				if muvidLink["_quality"] == 'auto' and 'mil/master.m3u8' in stream:
@@ -323,8 +324,8 @@ def ZdfGetVideo(url):
 		link = re.compile('"content": "(.*?)",', re.DOTALL).findall(content)[0]
 		response = getUrl(link,getheader)
 		ID = re.compile('"uurl":"(.*?)",', re.DOTALL).findall(response)[0]
-		#LinkDirekt2 = getUrl("https://api.zdf.de/tmd/2/portal/vod/ptmd/mediathek/"+ID)
-		LinkDirekt = getUrl("https://api.zdf.de/tmd/2/ngplayer_2_3/vod/ptmd/mediathek/"+ID)
+		LinkDirekt = getUrl("https://api.zdf.de/tmd/2/portal/vod/ptmd/mediathek/"+ID)
+		#LinkDirekt2 = getUrl("https://api.zdf.de/tmd/2/ngplayer_2_3/vod/ptmd/mediathek/"+ID)
 		jsonObject = json.loads(LinkDirekt)
 		return ZdfExtractQuality(jsonObject)
 	except:
@@ -340,7 +341,7 @@ def ZdfExtractQuality(jsonObject):
 		finalURL = False
 		mp4URL = ""
 		for each in jsonObject['priorityList']:
-			if each['formitaeten'][0]['type'] == 'h264_aac_ts_http_m3u8_http':
+			if preferredStreamType == "0" and each['formitaeten'][0]['type'] == 'h264_aac_ts_http_m3u8_http':
 				for quality in each['formitaeten'][0]['qualities']:
 					if quality['quality'] == 'auto':
 						DATA['media'].append({'url':quality['audio']['tracks'][0]['uri'], 'type': 'video', 'stream':'HLS'})
@@ -370,7 +371,7 @@ def ZdfExtractQuality(jsonObject):
 				xbmc.log("[TvToday](ZdfExtractQuality) ZDF-STANDARDurl : %s" %(zdfURL), xbmc.LOGNOTICE)
 				higherURL =  zdfURL.replace('1456k_p13v11', '2328k_p35v11').replace('1456k_p13v12', '2328k_p35v12').replace('1496k_p13v13', '2328k_p35v13').replace('2256k_p14v11', '2328k_p35v11').replace('2256k_p14v12', '2328k_p35v12').replace('2296k_p14v13', '2328k_p35v13')
 				if ('2328k_p35v11' in higherURL or '2328k_p35v12' in higherURL or '2328k_p35v13' in higherURL):
-					hdURL = higherURL.replace('1456k_p13v12', '3328k_p36v12').replace('2256k_p14v12', '3328k_p36v12').replace('2328k_p35v12', '3328k_p36v12').replace('1496k_p13v13', '3328k_p36v13').replace('2296k_p14v13', '3328k_p36v13').replace('2328k_p35v13', '3328k_p36v13')
+					hdURL = higherURL.replace('2328k_p35v12', '3328k_p36v12').replace('2328k_p35v13', '3328k_p36v13')
 					if ('3328k_p36v12' in hdURL or '3328k_p36v13' in hdURL):
 						mp4URL = hdURL
 						xbmc.log("[TvToday](ZdfExtractQuality) ZDF-HDurl : %s" %(mp4URL), xbmc.LOGNOTICE)
