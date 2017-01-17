@@ -7,7 +7,6 @@ import os
 import sys
 import socket
 import xbmc
-import xbmc
 import xbmcgui
 import xbmcaddon
 import xbmcplugin
@@ -313,6 +312,7 @@ def scrapeGTOPage(enabled=__enableinfo__):
         HOME.clearProperty('GTO.%s' % (idx))
 
     HOME.setProperty('GTO.blobs', '0')
+    HOME.setProperty('GTO.provider', data.shortname)
 
     for container in content:
 
@@ -485,6 +485,8 @@ if len(arguments) > 1:
 
     elif action == 'change_scraper':
         changeScraper()
+        scrapeGTOPage()
+        refreshWidget(enabled=False)
 else:
     writeLog('No arguments passed, scrape page and refresh widget')
     if not __enableinfo__: notifyOSD(__LS__(30010), __LS__(30018) % (__scraper__.shortname), icon=__icon__, enabled=True)
