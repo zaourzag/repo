@@ -106,6 +106,16 @@ class Teletext(xbmcgui.WindowDialog):
 		elif action == ACTION_MOVE_DOWN:
 			self.currentPage -=1
 			self.showPage(str(self.currentPage))
+		#elif action == ACTION_SELECT_ITEM:
+			#dialog = xbmcgui.Dialog()
+			#pageInput = dialog.numeric(0, 'Enter Site')
+			#print 'SEITE   ' + pageInput
+			#if len(self.pageInput)>2:
+				#self.currentPage = int(self.pageInput)
+				
+				#self.showPage(str(self.currentPage))
+				#self.pageInput=''
+				
 
 	def showPage(self, page, subpage=1):
 		if (subpage==1):

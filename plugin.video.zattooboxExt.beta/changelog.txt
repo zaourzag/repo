@@ -1,10 +1,4 @@
 -------------------------------------------------
-[B] ZattooBox Extendet v1.6.2beta[/B] 17.01.2017
--------------------------------------------------
--OSD überarbeitet (Anzeige: Genre,Kategorie,Jahr,Land)
--Medienansicht in der Kanalliste mit langer Beschreibung
-
--------------------------------------------------
 [B] ZattooBox Extendet v1.6.1beta[/B] 15.01.2017
 -------------------------------------------------
 -Bugfix beim Start EPG 
