@@ -117,6 +117,8 @@ class Client:
                             "OriginalToken" : self.TOKEN
                             }
         data = self.request(self.REFRESH)
+        debug("refreshToken DATA :" )
+        debug(data)
         if data.get("odata.error", None):
             self.errorHandler(data)
         else:
