@@ -17,13 +17,14 @@ addon = xbmcaddon.Addon()
 translation = addon.getLocalizedString
 icon = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')+'/icon.png').decode('utf-8')
 global quality
-global qualityhtml
+global qualityhtml1
 quality=addon.getSetting("quality")
-qualityhtml=addon.getSetting("qualityhtml")
+qualityhtml1=addon.getSetting("qualityhtml1")
 username=addon.getSetting("user")
 password=addon.getSetting("pass")
 global movies
 movies=addon.getSetting("movies")
+
 
 
 
@@ -57,33 +58,139 @@ if xbmcvfs.exists(cookie):
 
 opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
 baseurl="https://www.anime-on-demand.de"
-    
-    
-class Infowindow(pyxbmct.AddonDialogWindow):
-    bild=""
-    nur_bild=""
+
+
+class Infowindow(pyxbmct.AddonDialogWindow):    
     text=""
     pos=0
-    def __init__(self, title='',text='',image='',nurbild=0):
-        super(Infowindow, self).__init__(title)
-        self.setGeometry(600,600,8,8)
-        self.bild=image
-        self.nur_bild=nurbild
-        self.text=text        
+    image=""
+    trailer=""
+    starttext=""
+    def __init__(self, text=''):
+        self.title=re.compile('<h1 style="margin: 0;">(.+?)</h1>', re.DOTALL).findall(text)[0]
+        try:
+              self.image=baseurl+ re.compile('class="newspic" src="(.+?)"', re.DOTALL).findall(text)[0]
+        except:
+               pass
+        kurz_inhalt = text[text.find('<div class="article-text">')+1:]
+        kurz_inhalt = kurz_inhalt[:kurz_inhalt.find('</div>')]  
+        if "<table " in kurz_inhalt: 
+          self.starttext=text        
+          kurz_inhalt = kurz_inhalt[:kurz_inhalt.find('<table ')]  
+        kurz_inhalt=ersetze(kurz_inhalt)       
+        kurz_inhalt= kurz_inhalt.replace("</p>","\n")
+        spl=kurz_inhalt.split('\n')
+        self.text=""
+        self.textlen=0
+        for i in range(1,len(spl),1):
+          entry=spl[i]
+          debug("Entry :"+entry)
+          if not "img alt=" in entry and not "iframe " in entry :
+             entry=entry.replace("<br />","\n")
+             entry=entry.replace("</li>","\n")
+             kuerzen=re.compile('<(.+?)>', re.DOTALL).findall(entry)
+             for kurz in kuerzen:
+                debug("Kurz :"+kurz)
+                entry=entry.replace("<"+kurz+">","")    
+             self.text=self.text+entry+"\n"
+             self.textlen=self.textlen+1
+        self.title=ersetze(self.title)
+        try:
+          self.trailer=re.compile('src="https://www.youtube.com/embed/(.+?)"', re.DOTALL).findall(text)[0]        
+          debug("TRailer: "+self.trailer)
+        except:
+           pass
+        super(Infowindow, self).__init__(self.title)
+        self.setGeometry(600,600,23,10)
         self.set_info_controls()
         # Connect a key action (Backspace) to close the window.
         self.connect(pyxbmct.ACTION_NAV_BACK, self.close)
-
-    def set_info_controls(self):
-      self.textbox=pyxbmct.TextBox()  
-      self.image = pyxbmct.Image(self.bild)           
-      if self.nur_bild==0:
-        self.placeControl(self.image, 0, 0,columnspan=2,rowspan=2)
-        self.placeControl(self.textbox, 2, 0, columnspan=8,rowspan=6)                  
+    def set_info_controls(self):   
+      debug("set_info_controls start")    
+      self.ueberschrift=pyxbmct.Label(self.title,alignment=pyxbmct.ALIGN_CENTER) 
+      self.placeControl(self.ueberschrift, 0, 0,columnspan=10,rowspan=1) 
+      
+      if not "<tbody>" in self.starttext:      
+        self.image = pyxbmct.Image( self.image,aspectRatio=2)
+        self.placeControl(self.image, 1, 1,columnspan=6,rowspan=6)
+        self.beschreibung=pyxbmct.TextBox( font='font10')
+        self.placeControl(self.beschreibung, 7, 0,columnspan=10,rowspan=14) 
+        self.beschreibung.setText(self.text)      
+        self.button = pyxbmct.Button('Trailer', font='font14')
+        if not self.trailer=="":            
+            self.placeControl(self.button, 20, 0,columnspan=4,rowspan=2) 
+            self.connect(self.button, self.startv)
+        self.raus = pyxbmct.Button('Exit', font='font14')
+        self.placeControl(self.raus, 20, 6,columnspan=4,rowspan=2) 
+        self.connect(self.raus, self.close)
+        self.setFocus(self.raus)  
       else:
-        self.placeControl(self.image, 0, 0,columnspan=8,rowspan=6)
-        #self.placeControl(self.textbox, 6, 0,columnspan=8,rowspan=2)     
-      self.textbox.setText(self.text)
+        self.image = pyxbmct.Image( self.image,aspectRatio=2)
+        self.placeControl(self.image, 1, 4,columnspan=2,rowspan=2)
+        
+        self.beschreibung=pyxbmct.TextBox(font='font10')
+        self.placeControl(self.beschreibung, 3, 0,columnspan=10,rowspan=7) 
+        self.beschreibung.setText(self.text)      
+        
+        #self.sp1=pyxbmct.Label("16.-22.01.2017",font='font11')
+        #self.placeControl(self.sp1, 9, 0,columnspan=3,rowspan=2)     
+        #self.sp2=pyxbmct.Label("Titel",font='font11')
+        #self.placeControl(self.sp2, 9, 3,columnspan=3,rowspan=2)       
+        #self.sp3=pyxbmct.Label("Episode",font='font11')
+        #self.placeControl(self.sp3, 9, 6,columnspan=3,rowspan=2) 
+        kurz_inhalt = self.starttext[self.starttext.find('<tbody>')+1:]
+        kurz_inhalt = kurz_inhalt[:kurz_inhalt.find('</tbody>')]    
+        kurz_inhalt=kurz_inhalt.replace("\n","")
+        starty=9
+        startx=0
+        counter=0
+        counter2=0
+        spl=kurz_inhalt.split('</tr>')               
+        for i in range(0,len(spl),1):
+          entry=spl[i]
+          entry=entry.replace("<br />","###")
+          match=re.compile('>(.+?)</td>', re.DOTALL).findall(entry)
+          for feld in match:              
+              feld=ersetze(feld)
+              kuerzen=re.compile('<(.+?)>', re.DOTALL).findall(feld)
+              for kurz in kuerzen:
+                feld=feld.replace("<"+kurz+">","") 
+              if len(feld)>20:
+                 gr=5
+              else:
+                 gr=0
+              if "###" in feld:
+                  sp2=feld.split('###')              
+                  for i2 in range(0,len(sp2),1):
+                    entry2=sp2[i2]
+                    self.sp1=pyxbmct.Label(entry2,font='font10')                    
+                    self.placeControl(self.sp1, starty, startx,columnspan=2+gr,rowspan=2)                
+                    starty=starty+1
+                    counter=counter+1
+                  starty=starty-counter
+                  if counter2<counter:
+                    counter2=counter-1
+                  counter=0
+                  startx=startx+2+gr
+              else:
+                 self.sp1=pyxbmct.Label(feld,font='font10')
+                 self.placeControl(self.sp1, starty, startx,columnspan=2+gr,rowspan=2)                
+                 startx=startx+2+gr 
+          starty=starty+1+counter2      
+          counter2=0          
+          startx=0 
+          
+      #self.z1=pyxbmct.Label("AAAA")
+      #self.placeControl(self.z1, 10, 0,columnspan=3,rowspan=2) 
+      #self.z1=pyxbmct.Label("BBBB")
+      #self.placeControl(self.z1, 10, 3,columnspan=3,rowspan=2) 
+      #self.z1=pyxbmct.Label("CCCC")
+      #self.placeControl(self.z1, 10, 6,columnspan=3,rowspan=2)       
+      self.connectEventList([pyxbmct.ACTION_MOVE_LEFT,
+                             pyxbmct.ACTION_MOVE_RIGHT,
+                             pyxbmct.ACTION_MOUSE_DRAG,
+                             pyxbmct.ACTION_MOUSE_LEFT_CLICK],
+                             self.leftright)
       self.connectEventList(
              [pyxbmct.ACTION_MOVE_UP,
              pyxbmct.ACTION_MOUSE_WHEEL_UP],
@@ -91,27 +198,56 @@ class Infowindow(pyxbmct.AddonDialogWindow):
       self.connectEventList(
             [pyxbmct.ACTION_MOVE_DOWN,
              pyxbmct.ACTION_MOUSE_WHEEL_DOWN],
-            self.runter)                  
-      self.setFocus(self.textbox)            
+            self.runter)         
+
+            
+    def  startv(self):
+      self.close()
+      plugin='plugin://plugin.video.youtube/?action=play_video&videoid='+ self.trailer  
+      xbmc.executebuiltin("xbmc.PlayMedia("+plugin+")")
+      
+    
+      debug("Pressed Button")
+    def  leftright(self):
+        if self.getFocus() == self.raus:
+             self.setFocus(self.button)     
+        elif self.getFocus() == self.beschreibung:
+             self.setFocus(self.button) 
+        elif self.getFocus() == self.button:
+             self.setFocus(self.raus)               
+        else:
+             self.setFocus(self.raus)    
     def hoch(self):
         self.pos=self.pos-1
         if self.pos < 0:
           self.pos=0
-        self.textbox.scroll(self.pos)
+        self.beschreibung.scroll(self.pos)
     def runter(self):
         self.pos=self.pos+1        
-        self.textbox.scroll(self.pos)
-        posnew=self.textbox.getPosition()
-        debug("POSITION : "+ str(posnew))
-
-        
-    
+        self.beschreibung.scroll(self.pos)
+        posnew=self.beschreibung.getPosition()
+        debug("POSITION : "+ str(posnew))             
     
 def ersetze(inhalt):
    inhalt=inhalt.replace('&#39;','\'')  
    inhalt=inhalt.replace('&quot;','"')    
    inhalt=inhalt.replace('&gt;','>')      
    inhalt=inhalt.replace('&amp;','&') 
+   inhalt=inhalt.replace('&uuml;','ü') 
+   inhalt=inhalt.replace('&ouml;','ö')  
+   inhalt=inhalt.replace('&auml;','ä') 
+   inhalt=inhalt.replace('&Uuml;','Ü') 
+   inhalt=inhalt.replace('&Ouml;','Ö')  
+   inhalt=inhalt.replace('&Auml;','Ä')    
+   inhalt=inhalt.replace('&szlig;','ß') 
+   inhalt=inhalt.replace('&nbsp;',' ') 
+   inhalt=inhalt.replace('&rsquo;','\'') 
+   inhalt=inhalt.replace('&ndash;','-')
+   inhalt=inhalt.replace('&hellip;','...')
+   inhalt=inhalt.replace('&Eacute','E')
+   inhalt=inhalt.replace('\n','') 
+   inhalt=inhalt.replace('\t','') 
+   inhalt=inhalt.replace('&copy;','(c)') 
    return inhalt
 
 def addDir(name, url, mode, iconimage, desc=""):
@@ -123,13 +259,13 @@ def addDir(name, url, mode, iconimage, desc=""):
 	return ok   
   
   
-def addLink(name, url, mode, iconimage, duration="", desc="", genre='',csrftoken="",type=""):
+def addLink(name, url, mode, iconimage, duration="", desc="", genre='',csrftoken="",type="",play='true'):
   debug("addlink :" + url)  
   u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&csrftoken="+csrftoken+"&type="+type
   ok = True
   liz = xbmcgui.ListItem(name, thumbnailImage=iconimage)
   liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Genre": genre})
-  liz.setProperty('IsPlayable', 'true')
+  liz.setProperty('IsPlayable', play)
   liz.addStreamInfo('video', { 'duration' : duration })
   liz.setProperty("fanart_image", iconimage)
   #liz.setProperty("fanart_image", defaultBackground)
@@ -347,8 +483,9 @@ def Folge(url,csrftoken,type):
       debug(content2)      
       debug("----------------")      
       spl=content2.split('#EXT-X-STREAM-INF')
-      if qualityhtml=="MAX":
-        element=spl[1]
+      debug("qualityhtml1 :"+qualityhtml1)
+      if not qualityhtml1=="6":
+        element=spl[int(qualityhtml1)+1]
         debug("Element: "+element)
         match = re.compile('chunklist(.+)', re.DOTALL).findall(element)
         qual="chunklist"+match[0]
@@ -360,20 +497,7 @@ def Folge(url,csrftoken,type):
         pfad=s.join(pfadt)
         debug("Pfad : "+ pfad)
         stream=pfad+"/"+qual[0:-1]    
-      if qualityhtml=="MIN":
-        element=spl[-1]
-        debug("Element: "+element)
-        match = re.compile('chunklist(.+)', re.DOTALL).findall(element)
-        qual="chunklist"+match[0]
-        debug("Qal : "+qual)
-        liste=stream.split('/')
-        laenge=len(liste)
-        pfadt=liste[0:-1]
-        s="/"
-        pfad=s.join(pfadt)
-        debug("Pfad : "+ pfad)
-        stream=pfad+"/"+qual[0:-1]      
-      if qualityhtml=="Select":
+      if qualityhtml1=="6":
         file=[]
         namen=[]
         liste=stream.split('/')
@@ -498,13 +622,13 @@ def newmenu():
 
 def newsmenu():
   addDir("AoD aktuell", "/articles/category/3/1", 'readnews', "") 
-  addDir("Anime Deutschland", "", 'readnews', "") 
-  addDir("Anime Japan", "", 'readnews', "") 
-  addDir("Games", "", 'readnews', "") 
+  addDir("Anime Deutschland", "/articles/category/2/1", 'readnews', "") 
+  addDir("Anime Japan", "/articles/category/1/1", 'readnews', "") 
+  addDir("Games", "/articles/category/4/1", 'readnews', "") 
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)         
   
 def readnews(kat):
-    url=baseurl+"/articles"
+    url=baseurl+kat
     content = geturl(url)    
     elemente = content.split('<div class="category-item">') 
     for i in range(1, len(elemente), 1):
@@ -513,12 +637,24 @@ def readnews(kat):
       url=match[0][0]
       name=match[0][1]
       image = re.compile('src="(.+?)"', re.DOTALL).findall(element)[0]
-      addLink(name=ersetze(name), url=baseurl+url, mode="artikel", iconimage=baseurl+image) 
+      addLink(name=ersetze(name), url=baseurl+url, mode="artikel", iconimage=baseurl+image,play="false") 
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)         
     
 def artikel(url):
+    debug("Start Artikel")
+    debug("Artikel  ULR:"+ url)
     content = geturl(url) 
-   
+    listitem = xbmcgui.ListItem(path="")
+    xbmcplugin.setResolvedUrl(addon_handle, False, listitem)
+    debug(" ARtikeL ##")
+    #try:
+    window=Infowindow (text=content)     
+    window.doModal()
+    del window
+    #except:
+   #     debug("ERROR ARTIKEL")
+    #xbmc.executebuiltin('Notification("Fehler","News nicht darstellbar")')
+
 def menu():
     addDir(translation(30117), translation(30117), 'newmenu', "") 
     addDir(translation(30116), translation(30116), 'top10', "")    
@@ -527,7 +663,7 @@ def menu():
     addDir(translation(30105), translation(30105), 'cat', "")    
     addDir(translation(30106), translation(30106), 'lang', "")     
     addDir("News", "", 'newsmenu', "")  
-    #addDir(translation(30111), translation(30111), 'cookies', "") 
+    addDir(translation(30111), translation(30111), 'cookies', "") 
     addDir(translation(30108), translation(30108), 'Settings', "") 
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 def Start_listen(start_string):
@@ -598,5 +734,9 @@ else:
           hashplay(csrftoken)
   if mode == 'newsmenu':          
           newsmenu()
+  if mode == 'newmenu':          
+          newmenu()          
   if mode == 'readnews':          
-          readnews(url)                  
+          readnews(url)            
+  if mode == 'artikel':          
+          artikel(url)                      
