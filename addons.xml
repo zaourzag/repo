@@ -1952,7 +1952,7 @@ v0.6.0 (2016-12-02)
   </extension>
 </addon>
 
-<addon id="service.subtitles.tv4user" name="Tv4user.de" version="0.8.8" provider-name="L0RE">
+<addon id="service.subtitles.tv4user" name="Tv4user.de" version="0.8.9" provider-name="L0RE">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
   </requires>
