@@ -93,3 +93,23 @@ msgstr ""
 msgctxt "#30117"
 msgid "New Stuff"
 msgstr "New Stuff"
+
+msgctxt "#30118"
+msgid "News"
+msgstr "News"
+
+msgctxt "#30119"
+msgid "AoD News"
+msgstr "AoD aktuell"
+
+msgctxt "#30120"
+msgid "Anime Germany"
+msgstr "Anime Deutschland"
+
+msgctxt "#30121"
+msgid "Anime Japan"
+msgstr "Anime Japan"
+
+msgctxt "#30122"
+msgid "Games"
+msgstr "Games"

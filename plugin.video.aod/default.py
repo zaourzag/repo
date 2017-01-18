@@ -110,7 +110,9 @@ class Infowindow(pyxbmct.AddonDialogWindow):
       self.ueberschrift=pyxbmct.Label(self.title,alignment=pyxbmct.ALIGN_CENTER) 
       self.placeControl(self.ueberschrift, 0, 0,columnspan=10,rowspan=1) 
       
-      if not "<tbody>" in self.starttext:      
+      if not "<tbody>" in self.starttext:  
+        if self.image=="" and not self.trailer=="" :
+             self.image="https://img.youtube.com/vi/"+self.trailer+"/hqdefault.jpg"        
         self.image = pyxbmct.Image( self.image,aspectRatio=2)
         self.placeControl(self.image, 1, 1,columnspan=6,rowspan=6)
         self.beschreibung=pyxbmct.TextBox( font='font10')
@@ -621,10 +623,10 @@ def newmenu():
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)   
 
 def newsmenu():
-  addDir("AoD aktuell", "/articles/category/3/1", 'readnews', "") 
-  addDir("Anime Deutschland", "/articles/category/2/1", 'readnews', "") 
-  addDir("Anime Japan", "/articles/category/1/1", 'readnews', "") 
-  addDir("Games", "/articles/category/4/1", 'readnews', "") 
+  addDir(translation(30119), "/articles/category/3/1", 'readnews', "") 
+  addDir(translation(30120), "/articles/category/2/1", 'readnews', "") 
+  addDir(translation(30121), "/articles/category/1/1", 'readnews', "") 
+  addDir(translation(30122), "/articles/category/4/1", 'readnews', "") 
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)         
   
 def readnews(kat):
@@ -656,13 +658,13 @@ def artikel(url):
     #xbmc.executebuiltin('Notification("Fehler","News nicht darstellbar")')
 
 def menu():
+    addDir(translation(30118), "", 'newsmenu', "")  
     addDir(translation(30117), translation(30117), 'newmenu', "") 
     addDir(translation(30116), translation(30116), 'top10', "")    
     addDir(translation(30107), translation(30107), 'All', "") 
     addDir(translation(30104), translation(30104), 'AZ', "")
     addDir(translation(30105), translation(30105), 'cat', "")    
-    addDir(translation(30106), translation(30106), 'lang', "")     
-    addDir("News", "", 'newsmenu', "")  
+    addDir(translation(30106), translation(30106), 'lang', "")         
     addDir(translation(30111), translation(30111), 'cookies', "") 
     addDir(translation(30108), translation(30108), 'Settings', "") 
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)

@@ -92,3 +92,23 @@ msgstr "Anime Top 10"
 msgctxt "#30117"
 msgid "New Stuff"
 msgstr "Neues Matrial"
+
+msgctxt "#30118"
+msgid "News"
+msgstr "News"
+
+msgctxt "#30119"
+msgid "AoD aktuell"
+msgstr "AoD aktuell"
+
+msgctxt "#30120"
+msgid "Anime Deutschland"
+msgstr "Anime Deutschland"
+
+msgctxt "#30121"
+msgid "Anime Japan"
+msgstr "Anime Japan"
+
+msgctxt "#30122"
+msgid "Games"
+msgstr "Games"
