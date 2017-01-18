@@ -24,6 +24,8 @@ username=addon.getSetting("user")
 password=addon.getSetting("pass")
 global movies
 movies=addon.getSetting("movies")
+filtertype=addon.getSetting("filtertype")
+
 
 
 
@@ -33,6 +35,7 @@ temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("ut
 if not xbmcvfs.exists(temp):  
   xbmcvfs.mkdirs(temp)
 
+favdatei   = xbmc.translatePath( os.path.join(temp,"favorit.txt") ).decode("utf-8")
 
 
 
@@ -47,8 +50,8 @@ def log(msg, level=xbmc.LOGNOTICE):
     addonID = addon.getAddonInfo('id')
     xbmc.log('%s: %s' % (addonID, msg), level) 
 
-    
-cookie=temp+"/cookie.jar"
+
+cookie   = xbmc.translatePath( os.path.join(temp,"cookie.jar") ).decode("utf-8")    
 cj = cookielib.LWPCookieJar();
 
 
@@ -229,7 +232,7 @@ class Infowindow(pyxbmct.AddonDialogWindow):
         self.beschreibung.scroll(self.pos)
         posnew=self.beschreibung.getPosition()
         debug("POSITION : "+ str(posnew))             
-    
+     
 def ersetze(inhalt):
    inhalt=inhalt.replace('&#39;','\'')  
    inhalt=inhalt.replace('&quot;','"')    
@@ -250,13 +253,17 @@ def ersetze(inhalt):
    inhalt=inhalt.replace('\n','') 
    inhalt=inhalt.replace('\t','') 
    inhalt=inhalt.replace('&copy;','(c)') 
+   inhalt=inhalt.replace('&ldquo;','"') 
+   inhalt=inhalt.replace('&rdquo;','"') 
+   inhalt=inhalt.replace('&bdquo;','"') 
    return inhalt
 
-def addDir(name, url, mode, iconimage, desc=""):
-	u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
+def addDir(name, url, mode, iconimage, desc="",title="",bild=""):
+	u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&title="+str(title)+"&bild="+str(bild)
 	ok = True
 	liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=iconimage)
 	liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc})			
+
 	ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
 	return ok   
   
@@ -293,8 +300,10 @@ def alles(url=""):
         match=re.compile('<p class="animebox-shorttext">.+</p>', re.DOTALL).findall(entry)
         desc=match[0]
         desc=desc.replace('<p class="episodebox-shorttext">','').replace('<p class="animebox-shorttext">','')
-        desc=desc.replace("</p>",'')   
-        addDir(name=ersetze(title), url=link, mode="Serie", iconimage=img, desc=desc)
+        desc=desc.replace("</p>",'')  
+        debug("::::: filtertype "+str(filtertype))        
+        if ( "(OmU)" in  title and filtertype=="0" ) or ( not "(OmU)" in  title and filtertype=="1" ) or filtertype=="2":     
+            addDir(name=ersetze(title), url=link, mode="Serie", iconimage=img, desc=desc,title=title,bild=img)
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
    
 def login(url):
@@ -320,7 +329,7 @@ def login(url):
     return content
    
     
-def Serie(url):
+def Serie(url,title="",bild=""):
   global opener
   global cj
   global username
@@ -366,8 +375,75 @@ def Serie(url):
   f = open( os.path.join(temp,"menu.txt"), 'w')  
   f.write(menulist)
   f.close()
-  
+  addDir(translation(30127), url, mode="simil", iconimage="", desc="")      
+  found=0
+  if xbmcvfs.exists(favdatei):
+     f=open(favdatei,'r')     
+     for line in f:
+           if url in line:
+              found=1
+  if found==0:           
+             addDir(translation(30128), url, mode="favadd", iconimage="", desc="",title=title,bild=bild)      
+  else :
+             addDir(translation(30129), url, mode="favdel", iconimage="", desc="")     
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)  
+  
+def favadd(url,titel,bild):
+  debug(" favadd url :"+url)
+  textfile=url+"###"+titel+"###"+bild+"\n"
+  try:
+    f=open(favdatei,'r')
+    for line in f:
+      textfile=textfile+line
+    f.close()
+  except:
+    pass
+  f=open(favdatei,'w')
+  f.write(textfile)
+  f.close()
+  xbmc.executebuiltin('Notification('+ translation(30131)+',"'+translation(30132)+'")')
+  xbmc.executebuiltin("Container.Refresh")
+    
+
+def favdel(url):
+  debug(" FAVDEL url :"+url)
+  textfile=""
+  f=open(favdatei,'r')
+  for line in f:
+     if not url in line and not line=="\n":
+      textfile=textfile+line
+  f.close()
+  f=open(favdatei,'w')
+  f.write(textfile)
+  f.close()
+  xbmc.executebuiltin('Notification('+ translation(30133)+',"'+translation(30134)+'")')
+  xbmc.executebuiltin("Container.Refresh")  
+
+def listfav()  :
+    if xbmcvfs.exists(favdatei):
+        f=open(favdatei,'r')
+        for line in f:
+          spl=line.split('###')       
+          addDir(name=spl[1], url=spl[0], mode="Serie", iconimage=spl[2].strip(), desc="",title=spl[1],bild=spl[2].strip())
+        f.close()
+    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
+    
+def  simil(url):
+  userAgent = "Mozilla/5.0 (Windows NT 6.2; WOW64; rv:23.0) Gecko/20100101 Firefox/23.0"
+  opener.addheaders = [('User-Agent', userAgent)]
+  content=opener.open(url).read()  
+  kurz_inhalt = content[content.find('<div class="jcarousel">')+1:]                                      
+  kurz_inhalt = kurz_inhalt[:kurz_inhalt.find('</div>')]
+  spl=kurz_inhalt.split('<li>')
+  for i in range(1,len(spl),1):
+      entry=spl[i]                        
+      match=re.compile('<a href="(.+?)">(.+?)</a>', re.DOTALL).findall(entry)
+      urlx=baseurl+match[0][0]
+      title=match[0][1]
+      img=baseurl+re.compile('src="(.+?)"', re.DOTALL).findall(entry)[0]
+      addDir(name=title, url=urlx, mode="Serie", iconimage=img, desc="",title=title,bild=img)
+  xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
+  
 def html5video(entry,img,csrftoken,menulist):     
     error=0
     debug("Start HTMLvideo")
@@ -394,7 +470,8 @@ def html5video(entry,img,csrftoken,menulist):
         debug("title :"+title2) 
         idd=hashlib.md5(title2).hexdigest()        
         menulist=menulist+idd+"###"+baseurl+link+"###"+csrftoken+"###html5###\n"
-        addLink(name=ersetze(title2), url="plugin://plugin.video.aod/", mode="hashplay", iconimage=img, desc=desc,csrftoken=idd,type="html5")      
+        if ( not "Syncro" in  title2 and filtertype=="0" ) or ( "Syncro" in  title2 and filtertype=="1" ) or filtertype=="2": 
+          addLink(name=ersetze(title2), url="plugin://plugin.video.aod/", mode="hashplay", iconimage=img, desc=desc,csrftoken=idd,type="html5")      
     except :
        error=1
     return error,menulist
@@ -607,6 +684,8 @@ mode = urllib.unquote_plus(params.get('mode', ''))
 url = urllib.unquote_plus(params.get('url', ''))
 type = urllib.unquote_plus(params.get('type', ''))
 csrftoken = urllib.unquote_plus(params.get('csrftoken', ''))
+title = urllib.unquote_plus(params.get('title', ''))
+bild = urllib.unquote_plus(params.get('bild', ''))
 
 
 def abisz():
@@ -660,6 +739,7 @@ def artikel(url):
 def menu():
     addDir(translation(30118), "", 'newsmenu', "")  
     addDir(translation(30117), translation(30117), 'newmenu', "") 
+    addDir(translation(30130), translation(30130), 'listfav', "") 
     addDir(translation(30116), translation(30116), 'top10', "")    
     addDir(translation(30107), translation(30107), 'All', "") 
     addDir(translation(30104), translation(30104), 'AZ', "")
@@ -689,7 +769,11 @@ def Start_listen(start_string):
     except:
        name=ersetze(Serie)
     link=baseurl+folge
-    addDir(name=name, url=link, mode="Serie", iconimage=img, desc="")
+    kuerzen=re.compile('<(.+?)>', re.DOTALL).findall(name)
+    for kurz in kuerzen:
+        name=name.replace("<"+kurz+">","") 
+    if ( "(OmU)" in  name and filtertype=="0" ) or ( not "(OmU)" in  name and filtertype=="1" ) or filtertype=="2": 
+        addDir(name=name, url=link, mode="Serie", iconimage=img, desc="",title=name,bild=img)
  xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 def cookies():
   if xbmcvfs.exists(temp):
@@ -709,7 +793,7 @@ else:
   if mode == 'All':
           alles(baseurl+"/animes")
   if mode == 'Serie':
-          Serie(url) 
+          Serie(url,title,bild) 
   if mode == 'Folge':
           Folge(url,csrftoken,type)            
   if mode == 'cat':
@@ -742,3 +826,11 @@ else:
           readnews(url)            
   if mode == 'artikel':          
           artikel(url)                      
+  if mode == 'simil':          
+          simil(url)          
+  if mode == 'favadd':          
+          favadd(url,title,bild)          
+  if mode == 'favdel':          
+          favdel(url)                             
+  if mode == 'listfav':          
+          listfav()     
