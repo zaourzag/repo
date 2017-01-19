@@ -1465,7 +1465,7 @@ v0.6.0 (2016-12-02)
 
 <addon id="plugin.video.filmstarts" name="Filmstarts" version="0.6.5" provider-name="L0RE">
     <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="xbmc.python" version="2.24.0"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
