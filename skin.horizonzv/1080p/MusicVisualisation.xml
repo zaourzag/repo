@@ -2,7 +2,7 @@
 <window>
     <defaultcontrol>-</defaultcontrol>
 	<backgroundcolor>$VAR[BackgroundOverlayColor]</backgroundcolor>
-    <onload condition="Skin.HasSetting(fanart)+System.HasAddon(script.artistslideshow)+!Visualisation.Enabled">RunScript(script.artistslideshow, daemon=true)</onload>
+    <onload condition="Skin.HasSetting(fanart)+System.HasAddon(script.artistslideshow)+!Visualisation.Enabled">RunScript(script.artistslideshow)</onload>
     <include>openclose</include>
     <controls>
         <control type="group">
@@ -1452,11 +1452,21 @@
                     <left>30</left>
                     <top>225</top>
                     <width>1800</width>
-                    <height>33</height>
+                    <height>66</height>
                     <textcolor>orange</textcolor>
                     <shadowcolor>black</shadowcolor>
-                    <label>2012 sichtbar (Musik Extrafanart lokal) [COLOR=red]$INFO[Control.GetLabel(2012)][/COLOR]</label>
-                    <visible>Control.IsVisible(2012)</visible>
+                    <label>[COLOR=red]Musik Pfad muss für lokale EXTRAFANARTs angegeben werden ![/COLOR][CR]</label>
+                    <visible>String.IsEmpty(Skin.String(Music_Folder_Path))</visible>
+                </control>
+                <control type="label">
+                    <left>30</left>
+                    <top>225</top>
+                    <width>1800</width>
+                    <height>66</height>
+                    <textcolor>orange</textcolor>
+                    <shadowcolor>black</shadowcolor>
+                    <label>Musikpfad: [COLOR=red]$INFO[Skin.String(Music_Folder_Path)][/COLOR][CR]</label>
+                    <visible>!String.IsEmpty(Skin.String(Music_Folder_Path))</visible>
                 </control>
                 <control type="label">
                     <left>30</left>
@@ -1465,8 +1475,9 @@
                     <height>33</height>
                     <textcolor>orange</textcolor>
                     <shadowcolor>black</shadowcolor>
-                    <label>2013 sichtbar (Musik Extrafanart global) [COLOR=red]$INFO[Control.GetLabel(2013)][/COLOR]</label>
-                    <visible>Control.IsVisible(2013)</visible>
+                    <label>2012 Musik Extrafanart lokal (ControlLabel): [COLOR=red]$INFO[Control.GetLabel(2012)][/COLOR]</label>
+                    <!-- <visible>Control.IsVisible(2012)</visible> -->
+                    <visible>!String.IsEmpty(Skin.String(Music_Folder_Path))</visible>
                 </control>
                 <control type="label">
                     <left>30</left>
@@ -1475,8 +1486,9 @@
                     <height>33</height>
                     <textcolor>orange</textcolor>
                     <shadowcolor>black</shadowcolor>
-                    <label>2014 sichtbar (Musik Player.Fanart) [COLOR=red]$INFO[Control.GetLabel(2014)][/COLOR]</label>
-                    <visible>Control.IsVisible(2014)</visible>
+                    <label>2012 Musik Extrafanart lokal (direkter Code): [COLOR=red]$INFO[Skin.String(Music_Folder_Path)]$INFO[MusicPlayer.Artist,,/extrafanart][/COLOR]</label>
+                    <!-- <visible>Control.IsVisible(2012)</visible> -->
+                    <visible>!String.IsEmpty(Skin.String(Music_Folder_Path))</visible>
                 </control>
                 <control type="label">
                     <left>30</left>
@@ -1485,8 +1497,8 @@
                     <height>33</height>
                     <textcolor>orange</textcolor>
                     <shadowcolor>black</shadowcolor>
-                    <label>2020 sichtbar (Musik Extrafanart global) [COLOR=red]$INFO[Control.GetLabel(2020)][/COLOR]</label>
-                    <visible>Control.IsVisible(2020)</visible>
+                    <label>2013 ArtistSlideshow (ControlLabel): [COLOR=red]$INFO[Control.GetLabel(2013)][/COLOR]</label>
+                    <!-- <visible>Control.IsVisible(2013)</visible> -->
                 </control>
                 <control type="label">
                     <left>30</left>
@@ -1495,7 +1507,27 @@
                     <height>33</height>
                     <textcolor>orange</textcolor>
                     <shadowcolor>black</shadowcolor>
-                    <label>ArtworkReady [COLOR=red]$INFO[Window(Visualisation).Property(ArtistSlideshow.ArtworkReady)][/COLOR]</label>
+                    <label>2013 ArtistSlideshow (direkter Code): [COLOR=red]$INFO[Window(Visualisation).Property(ArtistSlideshow)][/COLOR]</label>
+                    <!-- <visible>Control.IsVisible(2013)</visible> -->
+                </control>
+                <control type="label">
+                    <left>30</left>
+                    <top>225</top>
+                    <width>1800</width>
+                    <height>33</height>
+                    <textcolor>orange</textcolor>
+                    <shadowcolor>black</shadowcolor>
+                    <label>2014 Player.Fanart: [COLOR=red]$INFO[Control.GetLabel(2014)][/COLOR]</label>
+                    <!-- <visible>Control.IsVisible(2014)</visible> -->
+                </control>
+                <control type="label">
+                    <left>30</left>
+                    <top>225</top>
+                    <width>1800</width>
+                    <height>33</height>
+                    <textcolor>orange</textcolor>
+                    <shadowcolor>black</shadowcolor>
+                    <label>ArtworkReady: [COLOR=red]$INFO[Window(Visualisation).Property(ArtistSlideshow.ArtworkReady)][/COLOR]</label>
                 </control>
             </control>
         </control>

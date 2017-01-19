@@ -174,7 +174,29 @@
 				</item>
 			</content>
 		</control>
-        <include>Clock</include>
+        <control type="image">
+			<left>0</left>
+			<top>100</top>
+			<height>40</height>
+			<width>1920</width>
+			<aspectratio>keep</aspectratio>
+			<texture>ArrowBig.png</texture>
+			<animation effect="rotate" end="-90" center="auto" time="0" condition="true">Conditional</animation>
+			<visible>Container(9000).HasPrevious</visible>
+			<include>openclosevisible</include>
+		</control>
+        <control type="image">
+			<left>0</left>
+			<top>740</top>
+			<height>40</height>
+			<width>1920</width>
+			<aspectratio>keep</aspectratio>
+			<texture>ArrowBig.png</texture>
+			<animation effect="rotate" end="90" center="auto" time="0" condition="true">Conditional</animation>
+			<visible>Container(9000).HasNext</visible>
+			<include>openclosevisible</include>
+		</control>
+		<include>Clock</include>
         <include>NavInfo</include>
         <!-- <include>Arrows</include> -->
         <include>BehindDialogFadeOut</include>

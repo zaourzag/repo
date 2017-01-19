@@ -5,8 +5,7 @@
             <visible>Window.IsVisible(home)</visible>
             <control type="group">
                 <include>opencloseslideup</include>
-                <visible>[[String.IsEqual(Container(9000).ListItem.Property(homemenu_id),news)]+Player.HasMedia]</visible>
-                <!-- <visible>[[String.IsEqual(Container(9000).ListItem.Property(homemenu_id),dashboard)|String.IsEqual(Container(9000).ListItem.Property(homemenu_id),news)]+Player.HasMedia]</visible> -->
+                <visible>[[String.IsEqual(Container(9000).ListItem.Property(homemenu_id),dashboard)|String.IsEqual(Container(9000).ListItem.Property(homemenu_id),news)]+Player.HasMedia]</visible>
                 <visible>!Control.HasFocus(200)+!Window.IsVisible(favourites)</visible>
                 <control type="image">
                     <left>-8</left>
@@ -36,9 +35,10 @@
             </control>
             <control type="group">
                 <include>opencloseslideright</include>
-                <visible>!Control.HasFocus(20)+!Window.IsVisible(favourites)+!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),dashboard)+!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),news)</visible>
+                <visible>!Control.HasFocus(20)+!Window.IsVisible(favourites)</visible>
+				<visible>!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),dashboard)+!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),news)</visible>
                 <control type="group">
-                    <visible>Skin.HasSetting(music_art)+Player.HasAudio</visible>
+                    <visible>Skin.HasSetting(music_art)+Player.HasAudio+!Control.HasFocus(200)</visible>
                     <control type="image">
                         <left>30</left>
                         <top>900</top>

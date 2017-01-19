@@ -10,6 +10,7 @@
     <include>openclosefanart</include>
     <controls>
         <control type="group">
+            <include>DialogBackgroundSimple</include>
             <include>openclosevisible</include>
             <control type="image">
                 <left>360</left>
@@ -69,7 +70,7 @@
                 <label>21422</label>
             </control>
             <control type="group" id="9001">
-                <control type="spincontrolex" id="15">
+                <control type="button" id="15">
                     <description>Rule Field</description>
                     <left>45</left>
                     <top>150</top>
@@ -103,7 +104,7 @@
                     <textcolor>white</textcolor>
                     <visible>!Control.HasFocus(15)</visible>
                 </control>
-                <control type="spincontrolex" id="16">
+                <control type="button" id="16">
                     <description>Rule operator</description>
                     <left>608</left>
                     <top>150</top>

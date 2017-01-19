@@ -105,7 +105,7 @@
                     <include>SidePanelButton</include>
                     <label>51463</label>
                     <onclick>RunScript(script.image.resource.select,property=studiologos&amp;type=resource.images.studios)</onclick>
-                    <visible>System.HasAddon(script.image.resource.select)+Control.IsVisible(9898)+!Container.Content(genres)</visible>
+                    <visible>System.HasAddon(script.image.resource.select)+[Control.IsVisible(9898)|Container.Content(studios)]</visible>
                 </control>
             </control>
             <include>SidePanelNavigation</include>

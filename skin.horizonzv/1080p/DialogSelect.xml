@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window type="dialog">
     <defaultcontrol always="true">3</defaultcontrol>
-    <zorder>5</zorder>
+    <zorder>6</zorder>
     <include>openclose</include>
     <include>openclosebox</include>
     <controls>
@@ -52,7 +52,7 @@
                 <width>1275</width>
                 <height>411</height>
                 <texture border="8" colordiffuse="grey2">$VAR[SelectBack]</texture>
-                <bordertexture border="2" colordiffuse="red">WhiteBack.png</bordertexture>
+                <bordertexture border="2" colordiffuse="$VAR[BackgroundOverlayColor]">WhiteBack.png</bordertexture>
                 <bordersize>10</bordersize>
                 <visible>[Control.IsVisible(3) + !Integer.IsGreater(Container(3).NumItems,4)] | [Control.IsVisible(6) + !Integer.IsGreater(Container(6).NumItems,2)]</visible>
             </control>
@@ -176,7 +176,7 @@
                             <top>0</top>
                             <width>825</width>
                             <height>60</height>
-                            <colordiffuse>orange</colordiffuse>
+                            <colordiffuse>$VAR[BackgroundOverlayColor]</colordiffuse>
                             <texture border="5">buttons/ButtonNF.png</texture>
                             <visible>Control.HasFocus(3)</visible>
                         </control>

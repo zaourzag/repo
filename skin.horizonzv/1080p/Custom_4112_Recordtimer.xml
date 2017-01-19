@@ -151,7 +151,7 @@
                         <visible>!String.Contains(ListItem.Label,...)</visible>
                     </control>
                 </focusedlayout>
-                <content target="pvr" limit="10">pvr://timers/tv/grouped</content>
+                <content target="pvr" limit="10">pvr://timers/tv/timers</content>
             </control>
         </control>
     </controls>

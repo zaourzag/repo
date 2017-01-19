@@ -121,14 +121,14 @@
                         </item>
                         <item id="5">
                             <description>Widget Settings</description>
-                            <label>51273</label>
+                            <label>Widgets</label>
                             <onclick>noop</onclick>
                         </item>
-                        <item id="8">
+                        <!-- <item id="8">
                             <description>Dashboard</description>
                             <label>Dashboard</label>
                             <onclick>noop</onclick>
-                        </item>
+                        </item> -->
                         <item id="6">
                             <description>Design / Performance</description>
                             <label>51274</label>
@@ -246,7 +246,7 @@
                         <onup>300</onup>
                         <ondown>300</ondown>
                         <onleft>8000</onleft>
-                        <!-- <onright>71</onright> -->
+                        <onright>71</onright>
                         <onright>400</onright>
                         <orientation>vertical</orientation>
                         <pagecontrol>71</pagecontrol>
@@ -270,7 +270,142 @@
                             <focusedcolor>black</focusedcolor>
                             <onclick>Skin.SetString(homemenufocus)</onclick>
                         </control>
-                        <control type="radiobutton" id="302">
+                        <control type="button" id="302">
+                            <description>Music Button</description>
+                            <width>1260</width>
+                            <align>left</align>
+							<label>$VAR[Home_Music_Label]</label>
+                            <onclick>SetProperty(HomeButton,music,home)</onclick>
+                            <onclick>ActivateWindow(1501)</onclick>
+                            <!-- <enable>Library.HasContent(Music)</enable> -->
+                        </control>
+                        <control type="button" id="303">
+                            <description>Video Button</description>
+                            <width>1260</width>
+                            <align>left</align>
+							<label>$VAR[Home_Video_Label]</label>
+                            <onclick>SetProperty(HomeButton,videos,home)</onclick>
+                            <onclick>ActivateWindow(1501)</onclick>
+                        </control>
+                        <control type="button" id="304">
+                            <description>Movie Button</description>
+                            <width>1260</width>
+                            <align>left</align>
+							<label>$VAR[Home_Movie_Label]</label>
+                            <onclick>SetProperty(HomeButton,movies,home)</onclick>
+                            <onclick>ActivateWindow(1501)</onclick>
+                            <!-- <enable>Library.HasContent(Movies)</enable> -->
+                        </control>
+                        <control type="radiobutton" id="305">
+                            <description>Dashboard Button</description>
+                            <width>1260</width>
+                            <align>left</align>
+                            <label>Dashboard</label>
+                            <focusedcolor>black</focusedcolor>
+                            <onclick>Skin.ToggleSetting(HomeMenuNoProgramsButton)</onclick>
+                            <selected>!Skin.HasSetting(HomeMenuNoProgramsButton)</selected>
+                        </control>
+                        <control type="button" id="306">
+                            <description>TVShow Button</description>
+                            <width>1260</width>
+                            <align>left</align>
+							<label>$VAR[Home_TVShow_Label]</label>
+                            <onclick>SetProperty(HomeButton,series,home)</onclick>
+                            <onclick>ActivateWindow(1501)</onclick>
+                            <!-- <enable>Library.HasContent(TVShows)</enable> -->
+                        </control>
+                        <control type="button" id="307">
+                            <description>MusicVideo Button</description>
+                            <width>1260</width>
+                            <align>left</align>
+							<label>$VAR[Home_MusicVideo_Label]</label>
+                            <onclick>SetProperty(HomeButton,musicvideos,home)</onclick>
+                            <onclick>ActivateWindow(1501)</onclick>
+                            <!-- <enable>Library.HasContent(musicvideos)</enable> -->
+                        </control>
+                        <control type="button" id="308">
+                            <description>Picture Button</description>
+                            <width>1260</width>
+                            <align>left</align>
+							<label>$VAR[Home_Picture_Label]</label>
+                            <onclick>SetProperty(HomeButton,picture,home)</onclick>
+                            <onclick>ActivateWindow(1501)</onclick>
+                            <!-- <enable>Library.HasContent(Pictures)</enable> -->
+                        </control>
+                        <control type="radiobutton" id="309">
+                            <description>Weather Button</description>
+                            <width>1260</width>
+                            <align>left</align>
+                            <label>$LOCALIZE[8]</label>
+                            <focusedcolor>black</focusedcolor>
+                            <onclick>Skin.ToggleSetting(HomeMenuNoWeatherButton)</onclick>
+                            <selected>!Skin.HasSetting(HomeMenuNoWeatherButton)</selected>
+                        </control>
+                        <control type="radiobutton" id="432">
+                            <description>Weather Fadeout</description>
+                            <width>1260</width>
+                            <align>left</align>
+                            <label> - $LOCALIZE[51294]</label>
+                            <focusedcolor>black</focusedcolor>
+                            <onclick>Skin.ToggleSetting(HomeMenuWeatherFadeout)</onclick>
+                            <selected>Skin.HasSetting(HomeMenuWeatherFadeout)</selected>
+                            <visible>!Skin.HasSetting(HomeMenuNoWeatherButton)</visible>
+                        </control>
+                        <control type="button" id="434">
+                            <description>Weather Timer</description>
+                            <width>1260</width>
+                            <align>left</align>
+                            <label> - $LOCALIZE[51296]</label>
+                            <label2>$INFO[Skin.String(hidehomemenu_timer),, sec]</label2>
+                            <focusedcolor>black</focusedcolor>
+                            <onclick>Skin.SetNumeric(hidehomemenu_timer)</onclick>
+                            <visible>Skin.HasSetting(HomeMenuWeatherFadeout)</visible>
+                            <visible>!Skin.HasSetting(HomeMenuNoWeatherButton)</visible>
+                        </control>
+                        <control type="radiobutton" id="436">
+                            <description>Weather Toggle Fanart Home</description>
+                            <width>1260</width>
+                            <align>left</align>
+                            <label> - $LOCALIZE[51366]</label>
+                            <focusedcolor>black</focusedcolor>
+                            <onclick>Skin.ToggleSetting(WeatherFanartHome)</onclick>
+                            <onclick condition="String.IsEmpty(Skin.String(weatherfanart.path))+!Skin.HasSetting(WeatherFanartHome)">Skin.SetPath(WeatherFanartDir)</onclick>
+                            <selected>Skin.HasSetting(WeatherFanartHome)</selected>
+                            <visible>!Skin.HasSetting(HomeMenuNoWeatherButton)</visible>
+                            <visible>System.HasAddon(script.image.resource.select)</visible>
+                        </control>
+                        <control type="button" id="438">
+                            <description>Weather Fanart Path</description>
+                            <include>openclosevisible</include>
+                            <width>1260</width>
+                            <align>left</align>
+                            <label>    $LOCALIZE[51332]</label>
+                            <label2>$INFO[Skin.String(weatherfanart.path)]</label2>
+                            <focusedcolor>black</focusedcolor>
+                            <onclick>RunScript(script.image.resource.select,property=weatherfanart&amp;type=resource.images.weatherfanart)</onclick>
+                            <visible>Skin.HasSetting(WeatherFanartHome)</visible>
+                            <visible>!Skin.HasSetting(HomeMenuNoWeatherButton)</visible>
+                            <visible>System.HasAddon(script.image.resource.select)</visible>
+                        </control>
+                        <control type="button" id="310">
+                            <description>PlayDisc Button</description>
+                            <width>1260</width>
+                            <align>left</align>
+							<label>$VAR[Home_PlayDisc_Label]</label>
+                            <onclick>SetProperty(HomeButton,playdisc,home)</onclick>
+                            <onclick>ActivateWindow(1501)</onclick>
+                        </control>
+                        <!-- 
+                        <control type="radiobutton" id="311">
+                            <description>PlayDVD Button</description>
+                            <width>1260</width>
+                            <align>left</align>
+                            <label>$LOCALIZE[341]</label>
+                            <focusedcolor>black</focusedcolor>
+                            <onclick>Skin.ToggleSetting(HomeMenuNoDVDButton)</onclick>
+                            <selected>!Skin.HasSetting(HomeMenuNoDVDButton)</selected>
+                        </control>
+						<control type="radiobutton" id="303">
                             <description>Video Button</description>
                             <width>1260</width>
                             <align>left</align>
@@ -279,17 +414,7 @@
                             <onclick>Skin.ToggleSetting(HomeMenuNoVideosButton)</onclick>
                             <selected>!Skin.HasSetting(HomeMenuNoVideosButton)</selected>
                         </control>
-                        <control type="radiobutton" id="298">
-                            <description>Video Button</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <label>- $LOCALIZE[51443]</label>
-                            <focusedcolor>black</focusedcolor>
-                            <onclick>Skin.ToggleSetting(HomeMenuVideosToFiles)</onclick>
-                            <selected>Skin.HasSetting(HomeMenuVideosToFiles)</selected>
-                            <visible>!Skin.HasSetting(HomeMenuNoVideosButton)</visible>
-                        </control>
-                        <control type="radiobutton" id="303">
+						<control type="radiobutton" id="303">
                             <description>Movie Button</description>
                             <width>1260</width>
                             <align>left</align>
@@ -298,8 +423,8 @@
                             <onclick>Skin.ToggleSetting(HomeMenuNoMovieButton)</onclick>
                             <selected>!Skin.HasSetting(HomeMenuNoMovieButton)</selected>
                             <visible>Library.HasContent(Movies)</visible>
-                        </control>
-                        <control type="radiobutton" id="304">
+                        </control> -->
+                        <!-- <control type="radiobutton" id="304">
                             <description>TVShow Button</description>
                             <width>1260</width>
                             <align>left</align>
@@ -328,77 +453,22 @@
                             <selected>!Skin.HasSetting(HomeMenuNoPictureButton)</selected>
                         </control>
                         <control type="radiobutton" id="307">
-                            <description>Weather Button</description>
+                            <description>Music Button</description>
                             <width>1260</width>
                             <align>left</align>
-                            <label>$LOCALIZE[8]</label>
+                            <label>$LOCALIZE[2]</label>
                             <focusedcolor>black</focusedcolor>
-                            <onclick>Skin.ToggleSetting(HomeMenuNoWeatherButton)</onclick>
-                            <selected>!Skin.HasSetting(HomeMenuNoWeatherButton)</selected>
-                        </control>
-                        <control type="radiobutton" id="432">
-                            <description>Weather Timer</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <label> - $LOCALIZE[51294]</label>
-                            <focusedcolor>black</focusedcolor>
-                            <onclick>Skin.ToggleSetting(HomeMenuWeatherFadeout)</onclick>
-                            <selected>Skin.HasSetting(HomeMenuWeatherFadeout)</selected>
-                            <visible>!Skin.HasSetting(HomeMenuNoWeatherButton)</visible>
-                        </control>
-                        <control type="button" id="434">
-                            <description>Weather Timer</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <label> - $LOCALIZE[51296]</label>
-                            <label2>$INFO[Skin.String(hidehomemenu_timer),, sec]</label2>
-                            <focusedcolor>black</focusedcolor>
-                            <onclick>Skin.SetNumeric(hidehomemenu_timer)</onclick>
-                            <visible>Skin.HasSetting(HomeMenuWeatherFadeout)</visible>
-                            <visible>!Skin.HasSetting(HomeMenuNoWeatherButton)</visible>
-                        </control>
-                        <control type="radiobutton" id="436">
-                            <description>Toggle Weather Fanart Hauptmenü</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <label> - $LOCALIZE[51366]</label>
-                            <focusedcolor>black</focusedcolor>
-                            <onclick>Skin.ToggleSetting(WeatherFanartHome)</onclick>
-                            <onclick condition="String.IsEmpty(Skin.String(weatherfanart.path))+!Skin.HasSetting(WeatherFanartHome)">Skin.SetPath(WeatherFanartDir)</onclick>
-                            <selected>Skin.HasSetting(WeatherFanartHome)</selected>
-                            <visible>!Skin.HasSetting(HomeMenuNoWeatherButton)</visible>
-                            <visible>System.HasAddon(script.image.resource.select)</visible>
-                        </control>
-                        <control type="button" id="438">
-                            <include>openclosevisible</include>
-                            <description>Weather Fanart Path</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <label>    $LOCALIZE[51332]</label>
-                            <label2>$INFO[Skin.String(weatherfanart.path)]</label2>
-                            <focusedcolor>black</focusedcolor>
-                            <onclick>RunScript(script.image.resource.select,property=weatherfanart&amp;type=resource.images.weatherfanart)</onclick>
-                            <visible>Skin.HasSetting(WeatherFanartHome)</visible>
-                            <visible>!Skin.HasSetting(HomeMenuNoWeatherButton)</visible>
-                            <visible>System.HasAddon(script.image.resource.select)</visible>
-                        </control>
-                        <control type="radiobutton" id="308">
-                            <description>Programs Button</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <label>Dashboard</label>
-                            <focusedcolor>black</focusedcolor>
-                            <onclick>Skin.ToggleSetting(HomeMenuNoProgramsButton)</onclick>
-                            <selected>!Skin.HasSetting(HomeMenuNoProgramsButton)</selected>
-                        </control>
-                        <control type="label" id="309">
+                            <onclick>Skin.ToggleSetting(HomeMenuNoMusicButton)</onclick>
+                            <selected>!Skin.HasSetting(HomeMenuNoMusicButton)</selected>
+                        </control> -->
+                        <control type="label" id="3012">
                             <!-- Extra Buttons -->
                             <width>1260</width>
                             <height>18</height>
                             <align>center</align>
                             <label>-</label>
                         </control>
-                        <control type="image" id="311">
+                        <control type="image" id="3013">
                             <width>1260</width>
                             <height>1</height>
                             <align>center</align>
@@ -604,7 +674,7 @@
                             <onclick>Skin.SetPath(Favourite4_Playlist_Path,,)</onclick>
                             <visible>Skin.HasSetting(favourite4)</visible>
                         </control>
-                        <control type="label" id="3242">
+                        <control type="label" id="3014">
                             <!-- Extra Buttons -->
                             <width>1260</width>
                             <height>8</height>
@@ -612,21 +682,21 @@
                             <label>-</label>
                             <textcolor>description</textcolor>
                         </control>
-                        <control type="image" id="3250">
+                        <control type="image" id="3015">
                             <width>1260</width>
                             <height>1</height>
                             <align>center</align>
                             <texture>Separator2.png</texture>
                             <colordiffuse>description</colordiffuse>
                         </control>
-                        <control type="label" id="326">
+                        <control type="label" id="330">
                             <width>1260</width>
                             <height>8</height>
                             <align>center</align>
                             <label>-</label>
                             <textcolor>description</textcolor>
                         </control>
-                        <control type="radiobutton" id="327">
+                        <control type="radiobutton" id="331">
                             <description>Settings Button</description>
                             <width>1260</width>
                             <align>left</align>
@@ -635,16 +705,7 @@
                             <onclick>Skin.ToggleSetting(HomeMenuNoSettingsButton)</onclick>
                             <selected>!Skin.HasSetting(HomeMenuNoSettingsButton)</selected>
                         </control>
-                        <control type="radiobutton" id="328">
-                            <description>Music Button</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <label>$LOCALIZE[2]</label>
-                            <focusedcolor>black</focusedcolor>
-                            <onclick>Skin.ToggleSetting(HomeMenuNoMusicButton)</onclick>
-                            <selected>!Skin.HasSetting(HomeMenuNoMusicButton)</selected>
-                        </control>
-                        <control type="radiobutton" id="329">
+                        <control type="radiobutton" id="332">
                             <description>PVR Button</description>
                             <width>1260</width>
                             <align>left</align>
@@ -653,7 +714,7 @@
                             <onclick>Skin.ToggleSetting(HomeMenuNoPvrButton)</onclick>
                             <selected>!Skin.HasSetting(HomeMenuNoPvrButton)</selected>
                         </control>
-                        <control type="radiobutton" id="330">
+                        <control type="radiobutton" id="333">
                             <description>Radio Button</description>
                             <width>1260</width>
                             <align>left</align>
@@ -661,15 +722,6 @@
                             <focusedcolor>black</focusedcolor>
                             <onclick>Skin.ToggleSetting(HomeMenuNoRadioButton)</onclick>
                             <selected>!Skin.HasSetting(HomeMenuNoRadioButton)</selected>
-                        </control>
-                        <control type="radiobutton" id="332">
-                            <description>PlayDVD Button</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <label>$LOCALIZE[341]</label>
-                            <focusedcolor>black</focusedcolor>
-                            <onclick>Skin.ToggleSetting(HomeMenuNoDVDButton)</onclick>
-                            <selected>!Skin.HasSetting(HomeMenuNoDVDButton)</selected>
                         </control>
                         <control type="radiobutton" id="334">
                             <description>NEWS Button</description>
@@ -1364,7 +1416,7 @@
                             <onclick>Skin.ToggleSetting(WidgetDim)</onclick>
                             <selected>Skin.HasSetting(WidgetDim)</selected>
                         </control>
-                        <control type="radiobutton" id="603">
+                        <!-- <control type="radiobutton" id="603">
                             <description>Settings Button</description>
                             <width>1260</width>
                             <align>left</align>
@@ -1372,6 +1424,15 @@
                             <focusedcolor>black</focusedcolor>
                             <onclick>Skin.ToggleSetting(Widget_Cases)</onclick>
                             <selected>Skin.HasSetting(Widget_Cases)</selected>
+                        </control> -->
+                        <control type="radiobutton" id="604">
+                            <description>Settings Button</description>
+                            <width>1260</width>
+                            <align>left</align>
+                            <label>keine Progressbar im Widget (grüne Balken auf dem Cover)</label>
+                            <focusedcolor>black</focusedcolor>
+                            <onclick>Skin.ToggleSetting(WidgetNoPercentPlayedBar)</onclick>
+                            <selected>Skin.HasSetting(WidgetNoPercentPlayedBar)</selected>
                         </control>
                         <control type="label" id="6004">
                             <!-- Recently/Random Settings -->
@@ -2189,8 +2250,7 @@
                             <colordiffuse>description</colordiffuse>
                         </control>
                     </control>
-                    <control type="grouplist" id="1000">
-                        <!-- Dashboard -->
+                    <!-- <control type="grouplist" id="1000">
                         <description>Control Area</description>
                         <left>8</left>
                         <width>1260</width>
@@ -2238,7 +2298,7 @@
                             <label2>$INFO[Skin.String(YoutubeSearchUser2)]</label2>
                             <onclick>Skin.SetString(YoutubeSearchUser2)</onclick>
                         </control>
-                    </control>
+                    </control> -->
                 </control>
                 <control type="group">
                     <!-- Infobox -->

@@ -1,18 +1,18 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<window id="136">
-    <!-- <zorder>2</zorder> -->
-    <coordinates>
-        <system>1</system>
-        <left>0</left>
-        <top>0</top>
-    </coordinates>
+<?xml version="1.0" encoding="utf-8"?>
+<window>
+	<animation effect="fade" end="100" time="560">WindowOpen</animation>
+	<animation effect="fade" start="100" end="0" time="240">WindowClose</animation>
     <controls>
-        <control type="group" id="901">
-            <animation effect="fade" time="300">WindowOpen</animation>
-            <animation effect="fade" time="300">WindowClose</animation>
-            <control type="group">
-                <left>0</left>
-                <top>225</top>
+        <control type="group">
+			<visible>String.IsEmpty(Window(Home).Property(script.cinemavision.running))</visible>
+			<animation effect="fade" time="400">VisibleChange</animation>
+			<centerleft>50%</centerleft>
+			<centertop>50%</centertop>
+			<width>1920</width>
+			<height>540</height>
+			<visible>!Window.IsActive(startup)</visible>
+			<control type="group">
+				<depth>DepthMax</depth>
                 <control type="image">
                     <description>Busy animation</description>
                     <left>0</left>
@@ -63,7 +63,7 @@
                     <height>150</height>
                     <texture>Busy.png</texture>
                     <aspectratio>keep</aspectratio>
-                    <animation effect="rotate" start="0" end="360" center="auto" time="2500" loop="true" condition="true">conditional</animation>
+                    <animation effect="rotate" start="0" end="360" center="auto" time="3500" loop="true" condition="true">conditional</animation>
                 </control>
                 <control type="image">
                     <description>Busy animation</description>
@@ -74,7 +74,7 @@
                     <texture>Busy.png</texture>
                     <aspectratio>keep</aspectratio>
                     <colordiffuse>grey</colordiffuse>
-                    <animation effect="rotate" start="0" end="-360" center="auto" time="2000" loop="true" condition="true">conditional</animation>
+                    <animation effect="rotate" start="0" end="-360" center="auto" time="3000" loop="true" condition="true">conditional</animation>
                 </control>
             </control>
         </control>

@@ -2,7 +2,7 @@
 <includes>
     <variable name="WidgetPropertyLabel">
         <value condition="String.IsEqual(Window(Home).Property(HomeButton),movies)">$LOCALIZE[20342]</value>
-        <value condition="String.IsEqual(Window(Home).Property(HomeButton),series)">$LOCALIZE[20343]</value>
+        <value condition="String.IsEqual(Window(Home).Property(HomeButton),tvshow)">$LOCALIZE[20343]</value>
         <value condition="String.IsEqual(Window(Home).Property(HomeButton),musicvideos)">$LOCALIZE[20389]</value>
         <value condition="String.IsEqual(Window(Home).Property(HomeButton),music)">$LOCALIZE[2]</value>
         <value condition="String.IsEqual(Window(Home).Property(HomeButton),livetv)">$LOCALIZE[31502]</value>

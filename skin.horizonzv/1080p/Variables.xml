@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <includes>
     <variable name="widgetdim">
-        <value condition="Skin.HasSetting(WidgetDim)|Control.HasFocus(299)|Control.HasFocus(300)|Control.HasFocus(303)&#xD;&#xA;&#x9;&#x9;|Control.HasFocus(8005)|Control.HasFocus(8006)|Control.HasFocus(8007)|Control.HasFocus(8008)">grey1</value>
+        <value condition="Skin.HasSetting(WidgetDim)|Control.HasFocus(299)|Control.HasFocus(300)|Control.HasFocus(303)|Control.HasFocus(8005)|Control.HasFocus(8006)|Control.HasFocus(8007)|Control.HasFocus(8008)">grey1</value>
         <value condition="!Skin.HasSetting(WidgetDim)">white</value>
     </variable>
     <variable name="HomeScrollerDescription">
@@ -35,6 +35,18 @@
     </variable>
     <variable name="MovieStudioLogoVar">
         <value condition="!String.IsEmpty(Skin.String(studiologos.path))">$INFO[Skin.String(studiologos.path)]</value>
+    </variable>
+    <variable name="MovieMoviegenreiconsExtVar">
+        <value condition="String.Contains(Skin.String(moviegenreicons.ext),.png)">.png</value>
+        <value condition="String.Contains(Skin.String(moviegenreicons.ext),.jpg)">.jpg</value>
+    </variable>
+    <variable name="MovieMovieStudiosVar">
+        <value condition="String.Contains(Skin.String(studiologos.ext),.png)">.png</value>
+        <value condition="String.Contains(Skin.String(studiologos.ext),.jpg)">.jpg</value>
+    </variable>
+    <variable name="MovieMusicgenreiconsExtVar">
+        <value condition="String.Contains(Skin.String(musicgenreicons.ext),.png)">.png</value>
+        <value condition="String.Contains(Skin.String(musicgenreicons.ext),.jpg)">.jpg</value>
     </variable>
     <variable name="OSDTexture">
         <value condition="Player.Playing">osd/bigosd/BigPlay.png</value>
@@ -268,17 +280,19 @@
         <value condition="String.IsEmpty(ListItem.Art(banner))">SetBanner.png</value>
     </variable>
     <variable name="PosterThumb">
-        <value condition="String.Contains(Skin.String(moviegenreicons.name),coloured)+Container.Content(genres)+!ListItem.IsParentFolder+!Window.IsVisible(music)">resource://resource.images.moviegenreicons.coloured/$INFO[ListItem.Label,,.jpg]</value>
-        <value condition="String.Contains(Skin.String(moviegenreicons.name),filmstrip)+Container.Content(genres)+!ListItem.IsParentFolder+!Window.IsVisible(music)">resource://resource.images.moviegenreicons.filmstrip/$INFO[ListItem.Label,,.jpg]</value>
-        <value condition="String.Contains(Skin.String(moviegenreicons.name),grey)+Container.Content(genres)+!ListItem.IsParentFolder+!Window.IsVisible(music)">resource://resource.images.moviegenreicons.grey/$INFO[ListItem.Label,,.jpg]</value>
-        <value condition="String.Contains(Skin.String(moviegenreicons.name),poster)+Container.Content(genres)+!ListItem.IsParentFolder+!Window.IsVisible(music)">resource://resource.images.moviegenreicons.poster/$INFO[ListItem.Label,,.jpg]</value>
-        <value condition="String.Contains(Skin.String(moviegenreicons.name),transparent)+Container.Content(genres)+!ListItem.IsParentFolder+!Window.IsVisible(music)">resource://resource.images.moviegenreicons.transparent/$INFO[ListItem.Label,,.png]</value>
-        <value condition="String.Contains(Skin.String(moviegenreicons.name),white)+Container.Content(genres)+!ListItem.IsParentFolder+!Window.IsVisible(music)">resource://resource.images.moviegenreicons.white/$INFO[ListItem.Label,,.jpg]</value>
-        <value condition="String.Contains(Skin.String(moviegenreicons.name),flat)+Container.Content(genres)+!ListItem.IsParentFolder+!Window.IsVisible(music)">resource://resource.images.moviegenreicons.xzener-flat/$INFO[ListItem.Label,,.png]</value>
-        <value condition="String.Contains(Skin.String(moviegenreicons.name),reflected)+Container.Content(genres)+!ListItem.IsParentFolder+!Window.IsVisible(music)">resource://resource.images.moviegenreicons.xzener-reflection/$INFO[ListItem.Label,,.png]</value>
-        <value condition="String.Contains(Skin.String(musicgenreicons.name),grey)+Container.Content(genres)+!ListItem.IsParentFolder+Window.IsVisible(music)">resource://resource.images.musicgenreicons.grey/$INFO[ListItem.Label,,.jpg]</value>
-        <value condition="String.Contains(Skin.String(musicgenreicons.name),poster)+Container.Content(genres)+!ListItem.IsParentFolder+Window.IsVisible(music)">resource://resource.images.musicgenreicons.poster/$INFO[ListItem.Label,,.jpg]</value>
-        <value condition="String.Contains(Skin.String(musicgenreicons.name),text)+Container.Content(genres)+!ListItem.IsParentFolder+Window.IsVisible(music)">resource://resource.images.musicgenreicons.text/$INFO[ListItem.Label,,.jpg]</value>
+        <value condition="String.Contains(Skin.String(studiologos.name),coloured)+Container.Content(studios)+!ListItem.IsParentFolder+!Window.IsVisible(music)">$INFO[ListItem.Label,resource://resource.images.studios.coloured/,]$VAR[MovieMovieStudiosVar]</value>
+        <value condition="String.Contains(Skin.String(studiologos.name),white)+Container.Content(studios)+!ListItem.IsParentFolder+!Window.IsVisible(music)">$INFO[ListItem.Label,resource://resource.images.studios.white/,]$VAR[MovieMovieStudiosVar]</value>
+        <value condition="String.Contains(Skin.String(moviegenreicons.name),coloured)+Container.Content(genres)+!ListItem.IsParentFolder+!Window.IsVisible(music)">$INFO[ListItem.Label,resource://resource.images.moviegenreicons.coloured/,]$VAR[MovieMoviegenreiconsExtVar]</value>
+        <value condition="String.Contains(Skin.String(moviegenreicons.name),filmstrip)+Container.Content(genres)+!ListItem.IsParentFolder+!Window.IsVisible(music)">$INFO[ListItem.Label,resource://resource.images.moviegenreicons.filmstrip/,]$VAR[MovieMoviegenreiconsExtVar]</value>
+        <value condition="String.Contains(Skin.String(moviegenreicons.name),grey)+Container.Content(genres)+!ListItem.IsParentFolder+!Window.IsVisible(music)">$INFO[ListItem.Label,resource://resource.images.moviegenreicons.grey/,]$VAR[MovieMoviegenreiconsExtVar]</value>
+        <value condition="String.Contains(Skin.String(moviegenreicons.name),poster)+Container.Content(genres)+!ListItem.IsParentFolder+!Window.IsVisible(music)">$INFO[ListItem.Label,resource://resource.images.moviegenreicons.poster/,]$VAR[MovieMoviegenreiconsExtVar]</value>
+        <value condition="String.Contains(Skin.String(moviegenreicons.name),transparent)+Container.Content(genres)+!ListItem.IsParentFolder+!Window.IsVisible(music)">$INFO[ListItem.Label,resource://resource.images.moviegenreicons.transparent/,]$VAR[MovieMoviegenreiconsExtVar]</value>
+        <value condition="String.Contains(Skin.String(moviegenreicons.name),white)+Container.Content(genres)+!ListItem.IsParentFolder+!Window.IsVisible(music)">$INFO[ListItem.Label,resource://resource.images.moviegenreicons.white/,]$VAR[MovieMoviegenreiconsExtVar]</value>
+        <value condition="String.Contains(Skin.String(moviegenreicons.name),flat)+Container.Content(genres)+!ListItem.IsParentFolder+!Window.IsVisible(music)">$INFO[ListItem.Label,resource://resource.images.moviegenreicons.xzener-flat/,]$VAR[MovieMoviegenreiconsExtVar]</value>
+        <value condition="String.Contains(Skin.String(moviegenreicons.name),reflected)+Container.Content(genres)+!ListItem.IsParentFolder+!Window.IsVisible(music)">$INFO[ListItem.Label,resource://resource.images.moviegenreicons.xzener-reflection/,.png]$VAR[MovieMusicgenreiconsExtVar]</value>
+        <value condition="String.Contains(Skin.String(musicgenreicons.name),grey)+Container.Content(genres)+!ListItem.IsParentFolder+Window.IsVisible(music)">$INFO[ListItem.Label,resource://resource.images.musicgenreicons.grey/,.jpg]$VAR[MovieMusicgenreiconsExtVar]</value>
+        <value condition="String.Contains(Skin.String(musicgenreicons.name),poster)+Container.Content(genres)+!ListItem.IsParentFolder+Window.IsVisible(music)">$INFO[ListItem.Label,resource://resource.images.musicgenreicons.poster/,.jpg]$VAR[MovieMusicgenreiconsExtVar]</value>
+        <value condition="String.Contains(Skin.String(musicgenreicons.name),text)+Container.Content(genres)+!ListItem.IsParentFolder+Window.IsVisible(music)">$INFO[ListItem.Label,resource://resource.images.musicgenreicons.text/,.jpg]$VAR[MovieMusicgenreiconsExtVar]</value>
         <value condition="!String.IsEmpty(ListItem.Art(poster))">$INFO[ListItem.Art(poster)]</value>
         <value condition="String.IsEmpty(ListItem.Art(poster))+!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),tvshow)">$INFO[ListItem.Icon]</value>
         <value condition="Container.Content(episodes)|String.IsEqual(Container(9000).ListItem.Property(homemenu_id),tvshow)">$INFO[ListItem.Art(tvshow.poster)]</value>
@@ -352,6 +366,7 @@
         <value condition="ListItem.HasTimer + !ListItem.TimerIsActive">PVR-HasTimerDisabled.png</value>
         <value condition="ListItem.HasTimerSchedule">PVR-HasTimerSchedule.png</value>
         <value condition="ListItem.HasTimer">PVR-HasTimer.png</value>
+        <value>$VAR[VARSwitchtimer]</value>
     </variable>
     <variable name="PVRTimerLabel">
         <value condition="ListItem.IsRecording">$LOCALIZE[19043]</value>
@@ -490,6 +505,11 @@
         <value>$INFO[ListItem.Plot]</value>
     </variable>
     <!-- End NOX -->
+    <variable name="PVRRecordLabel">
+        <value condition="!String.IsEmpty(ListItem.EpisodeName)">$INFO[ListItem.EpisodeName]</value>
+        <value condition="String.IsEmpty(ListItem.EpisodeName)+!String.IsEmpty(ListItem.PlotOutline)">$INFO[ListItem.PlotOutline, - ,]</value>
+        <value condition="String.IsEmpty(ListItem.EpisodeName)+String.IsEmpty(ListItem.PlotOutline)">$INFO[ListItem.Label]</value>
+    </variable>
     <variable name="WidgetsWeatherFanart">
         <value condition="!Skin.HasSetting(WeatherFanartHome)">$LOCALIZE[20439]</value>
         <value condition="Skin.HasSetting(WeatherFanartHome)">$LOCALIZE[20445]</value>
@@ -910,5 +930,13 @@
 	<variable name="VideoHWDecoder">
 		<value condition="Player.Process(videohwdecoder)">HW</value>
 		<value>SW</value>
+	</variable>
+	<variable name="VolumeIconVar">
+		<!-- <value condition="Player.Muted">dialogs/volume/mute.png</value> -->
+		<value condition="Integer.IsGreater(Player.Volume,66)">osd/AudioFO.png</value>
+		<value condition="Integer.IsGreater(Player.Volume,33)">osd/AudioFO1.png</value>
+		<value condition="player.passthrough">osd/AudioFO.png</value>
+		<value condition="player.Muted">osd/AudioMute.png</value>
+		<value>osd/AudioFO2.png</value>
 	</variable>
 </includes>

@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<includes>
+	<!-- Music -->
+    <variable name="Home_Music_Category">
+        <value condition="Skin.HasSetting(Home_Music_Custom_Category_Music)">$LOCALIZE[2]</value>
+        <value condition="Skin.HasSetting(Home_Music_Custom_Category_Video)">$LOCALIZE[36912]</value>
+        <value condition="Skin.HasSetting(Home_Music_Custom_Category_Pictures)">$LOCALIZE[1]</value>
+        <value condition="Skin.HasSetting(Home_Music_Custom_Category_File)">$LOCALIZE[559]</value>
+    </variable>
+    <variable name="Home_Music_SubCategory">
+        <value condition="[Skin.HasSetting(Home_Music_Custom_Category_File)+Skin.HasSetting(Home_Music_Custom_SubCategory_Video)]|Skin.HasSetting(Home_Music_Custom_Category_Video)">videos</value>
+        <value condition="[Skin.HasSetting(Home_Music_Custom_Category_File)+Skin.HasSetting(Home_Music_Custom_SubCategory_Music)]|Skin.HasSetting(Home_Music_Custom_Category_Music)">music</value>
+        <value condition="Skin.HasSetting(Home_Music_Custom_Category_Pictures)">pictures</value>
+    </variable>
+    <variable name="Home_Music_SubCategory_Label">
+        <value condition="Skin.HasSetting(Home_Music_Custom_SubCategory_Video)">$LOCALIZE[36912]</value>
+        <value condition="Skin.HasSetting(Home_Music_Custom_SubCategory_Music)">$LOCALIZE[2]</value>
+        <value condition="Skin.HasSetting(Home_Music_Custom_SubCategory_Pictures)">$LOCALIZE[24001]</value>
+    </variable>
+    <variable name="Home_Music_Currentpath">
+        <value condition="Skin.HasSetting(Home_Music_Custom_Category_Video)">Skin.SetPath(Home_Music_Custom_Path,library://video/)</value>
+        <value condition="Skin.HasSetting(Home_Music_Custom_Category_Music)">Skin.SetPath(Home_Music_Custom_Path,library://music/)</value>
+        <value condition="Skin.HasSetting(Home_Music_Custom_Category_Pictures)">Skin.SetPath(Home_Music_Custom_Path,)</value>
+        <value condition="Skin.HasSetting(Home_Music_Custom_Category_File)">Skin.SetFile(Home_Music_Custom_Path,,special://profile/playlists/)</value>
+    </variable>
+    <variable name="Home_Music_Label">
+        <value condition="Skin.HasSetting(HomeMenu_Custom_Music_Button)">$INFO[Skin.String(Home_Music_Custom_Label)]</value>
+		<value>$LOCALIZE[2]</value>
+    </variable>
+	<!-- Video -->
+    <variable name="Home_Video_Category">
+        <value condition="Skin.HasSetting(Home_Video_Custom_Category_Video)">$LOCALIZE[36912]</value>
+        <value condition="Skin.HasSetting(Home_Video_Custom_Category_Music)">$LOCALIZE[2]</value>
+        <value condition="Skin.HasSetting(Home_Video_Custom_Category_Pictures)">$LOCALIZE[1]</value>
+        <value condition="Skin.HasSetting(Home_Video_Custom_Category_File)">$LOCALIZE[559]</value>
+    </variable>
+    <variable name="Home_Video_SubCategory">
+        <value condition="[Skin.HasSetting(Home_Video_Custom_Category_File)+Skin.HasSetting(Home_Video_Custom_SubCategory_Video)]|Skin.HasSetting(Home_Video_Custom_Category_Video)">videos</value>
+        <value condition="[Skin.HasSetting(Home_Video_Custom_Category_File)+Skin.HasSetting(Home_Video_Custom_SubCategory_Music)]|Skin.HasSetting(Home_Video_Custom_Category_Music)">music</value>
+        <value condition="Skin.HasSetting(Home_Video_Custom_Category_Pictures)">pictures</value>
+    </variable>
+    <variable name="Home_Video_SubCategory_Label">
+        <value condition="Skin.HasSetting(Home_Video_Custom_SubCategory_Video)">$LOCALIZE[36912]</value>
+        <value condition="Skin.HasSetting(Home_Video_Custom_SubCategory_Music)">$LOCALIZE[2]</value>
+        <value condition="Skin.HasSetting(Home_Video_Custom_SubCategory_Pictures)">$LOCALIZE[24001]</value>
+    </variable>
+    <variable name="Home_Video_Currentpath">
+        <value condition="Skin.HasSetting(Home_Video_Custom_Category_Video)">Skin.SetPath(Home_Video_Custom_Path,library://video/)</value>
+        <value condition="Skin.HasSetting(Home_Video_Custom_Category_Music)">Skin.SetPath(Home_Video_Custom_Path,library://music/)</value>
+        <value condition="Skin.HasSetting(Home_Video_Custom_Category_Pictures)">Skin.SetPath(Home_Video_Custom_Path,)</value>
+        <value condition="Skin.HasSetting(Home_Video_Custom_Category_File)">Skin.SetFile(Home_Video_Custom_Path,,special://profile/playlists/)</value>
+    </variable>
+    <variable name="Home_Video_Label">
+        <value condition="Skin.HasSetting(HomeMenu_Custom_Video_Button)">$INFO[Skin.String(Home_Video_Custom_Label)]</value>
+		<value>$LOCALIZE[3]</value>
+    </variable>
+	<!-- Movies -->
+    <variable name="Home_Movie_Category">
+        <value condition="Skin.HasSetting(Home_Movie_Custom_Category_Video)">$LOCALIZE[36912]</value>
+        <value condition="Skin.HasSetting(Home_Movie_Custom_Category_Music)">$LOCALIZE[2]</value>
+        <value condition="Skin.HasSetting(Home_Movie_Custom_Category_Pictures)">$LOCALIZE[1]</value>
+        <value condition="Skin.HasSetting(Home_Movie_Custom_Category_File)">$LOCALIZE[559]</value>
+    </variable>
+    <variable name="Home_Movie_SubCategory">
+        <value condition="[Skin.HasSetting(Home_Movie_Custom_Category_File)+Skin.HasSetting(Home_Movie_Custom_SubCategory_Video)]|Skin.HasSetting(Home_Movie_Custom_Category_Video)">videos</value>
+        <value condition="[Skin.HasSetting(Home_Movie_Custom_Category_File)+Skin.HasSetting(Home_Movie_Custom_SubCategory_Music)]|Skin.HasSetting(Home_Movie_Custom_Category_Music)">music</value>
+        <value condition="Skin.HasSetting(Home_Movie_Custom_Category_Pictures)">pictures</value>
+    </variable>
+    <variable name="Home_Movie_SubCategory_Label">
+        <value condition="Skin.HasSetting(Home_Movie_Custom_SubCategory_Video)">$LOCALIZE[36912]</value>
+        <value condition="Skin.HasSetting(Home_Movie_Custom_SubCategory_Music)">$LOCALIZE[2]</value>
+        <value condition="Skin.HasSetting(Home_Movie_Custom_SubCategory_Pictures)">$LOCALIZE[24001]</value>
+    </variable>
+    <variable name="Home_Movie_Currentpath">
+        <value condition="Skin.HasSetting(Home_Movie_Custom_Category_Video)">Skin.SetPath(Home_Movie_Custom_Path,library://video/)</value>
+        <value condition="Skin.HasSetting(Home_Movie_Custom_Category_Music)">Skin.SetPath(Home_Movie_Custom_Path,library://music/)</value>
+        <value condition="Skin.HasSetting(Home_Movie_Custom_Category_Pictures)">Skin.SetPath(Home_Movie_Custom_Path,)</value>
+        <value condition="Skin.HasSetting(Home_Movie_Custom_Category_File)">Skin.SetFile(Home_Movie_Custom_Path,,special://profile/playlists/)</value>
+    </variable>
+    <variable name="Home_Movie_Label">
+        <value condition="Skin.HasSetting(HomeMenu_Custom_Movie_Button)">$INFO[Skin.String(Home_Movie_Custom_Label)]</value>
+		<value>$LOCALIZE[20342]</value>
+    </variable>
+	<!-- Series -->
+    <variable name="Home_TVShow_Category">
+        <value condition="Skin.HasSetting(Home_TVShow_Custom_Category_Video)">$LOCALIZE[36912]</value>
+        <value condition="Skin.HasSetting(Home_TVShow_Custom_Category_Music)">$LOCALIZE[2]</value>
+        <value condition="Skin.HasSetting(Home_TVShow_Custom_Category_Pictures)">$LOCALIZE[1]</value>
+        <value condition="Skin.HasSetting(Home_TVShow_Custom_Category_File)">$LOCALIZE[559]</value>
+    </variable>
+    <variable name="Home_TVShow_SubCategory">
+        <value condition="[Skin.HasSetting(Home_TVShow_Custom_Category_File)+Skin.HasSetting(Home_TVShow_Custom_SubCategory_Video)]|Skin.HasSetting(Home_TVShow_Custom_Category_Video)">videos</value>
+        <value condition="[Skin.HasSetting(Home_TVShow_Custom_Category_File)+Skin.HasSetting(Home_TVShow_Custom_SubCategory_Music)]|Skin.HasSetting(Home_TVShow_Custom_Category_Music)">music</value>
+        <value condition="Skin.HasSetting(Home_TVShow_Custom_Category_Pictures)">pictures</value>
+    </variable>
+    <variable name="Home_TVShow_SubCategory_Label">
+        <value condition="Skin.HasSetting(Home_TVShow_Custom_SubCategory_Video)">$LOCALIZE[36912]</value>
+        <value condition="Skin.HasSetting(Home_TVShow_Custom_SubCategory_Music)">$LOCALIZE[2]</value>
+        <value condition="Skin.HasSetting(Home_TVShow_Custom_SubCategory_Pictures)">$LOCALIZE[24001]</value>
+    </variable>
+    <variable name="Home_TVShow_Currentpath">
+        <value condition="Skin.HasSetting(Home_TVShow_Custom_Category_Video)">Skin.SetPath(Home_TVShow_Custom_Path,library://video/)</value>
+        <value condition="Skin.HasSetting(Home_TVShow_Custom_Category_Music)">Skin.SetPath(Home_TVShow_Custom_Path,library://music/)</value>
+        <value condition="Skin.HasSetting(Home_TVShow_Custom_Category_Pictures)">Skin.SetPath(Home_TVShow_Custom_Path,)</value>
+        <value condition="Skin.HasSetting(Home_TVShow_Custom_Category_File)">Skin.SetFile(Home_TVShow_Custom_Path,,special://profile/playlists/)</value>
+    </variable>
+    <variable name="Home_TVShow_Label">
+        <value condition="Skin.HasSetting(HomeMenu_Custom_TVShow_Button)">$INFO[Skin.String(Home_TVShow_Custom_Label)]</value>
+		<value>$LOCALIZE[20343]</value>
+    </variable>
+	<!-- MusicVideo -->
+    <variable name="Home_MusicVideo_Category">
+        <value condition="Skin.HasSetting(Home_MusicVideo_Custom_Category_Video)">$LOCALIZE[36912]</value>
+        <value condition="Skin.HasSetting(Home_MusicVideo_Custom_Category_Music)">$LOCALIZE[2]</value>
+        <value condition="Skin.HasSetting(Home_MusicVideo_Custom_Category_Pictures)">$LOCALIZE[1]</value>
+        <value condition="Skin.HasSetting(Home_MusicVideo_Custom_Category_File)">$LOCALIZE[559]</value>
+    </variable>
+    <variable name="Home_MusicVideo_SubCategory">
+        <value condition="[Skin.HasSetting(Home_MusicVideo_Custom_Category_File)+Skin.HasSetting(Home_MusicVideo_Custom_SubCategory_Video)]|Skin.HasSetting(Home_MusicVideo_Custom_Category_Video)">videos</value>
+        <value condition="[Skin.HasSetting(Home_MusicVideo_Custom_Category_File)+Skin.HasSetting(Home_MusicVideo_Custom_SubCategory_Music)]|Skin.HasSetting(Home_MusicVideo_Custom_Category_Music)">music</value>
+        <value condition="Skin.HasSetting(Home_MusicVideo_Custom_Category_Pictures)">pictures</value>
+    </variable>
+    <variable name="Home_MusicVideo_SubCategory_Label">
+        <value condition="Skin.HasSetting(Home_MusicVideo_Custom_SubCategory_Video)">$LOCALIZE[36912]</value>
+        <value condition="Skin.HasSetting(Home_MusicVideo_Custom_SubCategory_Music)">$LOCALIZE[2]</value>
+        <value condition="Skin.HasSetting(Home_MusicVideo_Custom_SubCategory_Pictures)">$LOCALIZE[24001]</value>
+    </variable>
+    <variable name="Home_MusicVideo_Currentpath">
+        <value condition="Skin.HasSetting(Home_MusicVideo_Custom_Category_Video)">Skin.SetPath(Home_MusicVideo_Custom_Path,library://video/)</value>
+        <value condition="Skin.HasSetting(Home_MusicVideo_Custom_Category_Music)">Skin.SetPath(Home_MusicVideo_Custom_Path,library://music/)</value>
+        <value condition="Skin.HasSetting(Home_MusicVideo_Custom_Category_Pictures)">Skin.SetPath(Home_MusicVideo_Custom_Path,)</value>
+        <value condition="Skin.HasSetting(Home_MusicVideo_Custom_Category_File)">Skin.SetFile(Home_MusicVideo_Custom_Path,,special://profile/playlists/)</value>
+    </variable>
+    <variable name="Home_MusicVideo_Label">
+        <value condition="Skin.HasSetting(HomeMenu_Custom_MusicVideo_Button)">$INFO[Skin.String(Home_MusicVideo_Custom_Label)]</value>
+		<value>$LOCALIZE[20389]</value>
+    </variable>
+	<!-- Picture -->
+    <variable name="Home_Picture_Category">
+        <value condition="Skin.HasSetting(Home_Picture_Custom_Category_Video)">$LOCALIZE[36912]</value>
+        <value condition="Skin.HasSetting(Home_Picture_Custom_Category_Music)">$LOCALIZE[2]</value>
+        <value condition="Skin.HasSetting(Home_Picture_Custom_Category_Pictures)">$LOCALIZE[1]</value>
+        <value condition="Skin.HasSetting(Home_Picture_Custom_Category_File)">$LOCALIZE[559]</value>
+    </variable>
+    <variable name="Home_Picture_SubCategory">
+        <value condition="[Skin.HasSetting(Home_Picture_Custom_Category_File)+Skin.HasSetting(Home_Picture_Custom_SubCategory_Video)]|Skin.HasSetting(Home_Picture_Custom_Category_Video)">videos</value>
+        <value condition="[Skin.HasSetting(Home_Picture_Custom_Category_File)+Skin.HasSetting(Home_Picture_Custom_SubCategory_Music)]|Skin.HasSetting(Home_Picture_Custom_Category_Music)">music</value>
+        <value condition="Skin.HasSetting(Home_Picture_Custom_Category_Pictures)">pictures</value>
+    </variable>
+    <variable name="Home_Picture_SubCategory_Label">
+        <value condition="Skin.HasSetting(Home_Picture_Custom_SubCategory_Video)">$LOCALIZE[36912]</value>
+        <value condition="Skin.HasSetting(Home_Picture_Custom_SubCategory_Music)">$LOCALIZE[2]</value>
+        <value condition="Skin.HasSetting(Home_Picture_Custom_SubCategory_Pictures)">$LOCALIZE[24001]</value>
+    </variable>
+    <variable name="Home_Picture_Currentpath">
+        <value condition="Skin.HasSetting(Home_Picture_Custom_Category_Video)">Skin.SetPath(Home_Picture_Custom_Path,library://video/)</value>
+        <value condition="Skin.HasSetting(Home_Picture_Custom_Category_Music)">Skin.SetPath(Home_Picture_Custom_Path,library://music/)</value>
+        <value condition="Skin.HasSetting(Home_Picture_Custom_Category_Pictures)">Skin.SetPath(Home_Picture_Custom_Path,)</value>
+        <value condition="Skin.HasSetting(Home_Picture_Custom_Category_File)">Skin.SetFile(Home_Picture_Custom_Path,,special://profile/playlists/)</value>
+    </variable>
+    <variable name="Home_Picture_Label">
+        <value condition="Skin.HasSetting(HomeMenu_Custom_Picture_Button)">$INFO[Skin.String(Home_Picture_Custom_Label)]</value>
+		<value>$LOCALIZE[1]</value>
+    </variable>
+	<!-- PlayDisc -->
+    <variable name="Home_PlayDisc_Category">
+        <value condition="Skin.HasSetting(Home_PlayDisc_Custom_Category_Video)">$LOCALIZE[36912]</value>
+        <value condition="Skin.HasSetting(Home_PlayDisc_Custom_Category_Music)">$LOCALIZE[2]</value>
+        <value condition="Skin.HasSetting(Home_PlayDisc_Custom_Category_Pictures)">$LOCALIZE[1]</value>
+        <value condition="Skin.HasSetting(Home_PlayDisc_Custom_Category_File)">$LOCALIZE[559]</value>
+    </variable>
+    <variable name="Home_PlayDisc_SubCategory">
+        <value condition="[Skin.HasSetting(Home_PlayDisc_Custom_Category_File)+Skin.HasSetting(Home_PlayDisc_Custom_SubCategory_Video)]|Skin.HasSetting(Home_PlayDisc_Custom_Category_Video)">videos</value>
+        <value condition="[Skin.HasSetting(Home_PlayDisc_Custom_Category_File)+Skin.HasSetting(Home_PlayDisc_Custom_SubCategory_Music)]|Skin.HasSetting(Home_PlayDisc_Custom_Category_Music)">music</value>
+        <value condition="Skin.HasSetting(Home_PlayDisc_Custom_Category_Pictures)">pictures</value>
+    </variable>
+    <variable name="Home_PlayDisc_SubCategory_Label">
+        <value condition="Skin.HasSetting(Home_PlayDisc_Custom_SubCategory_Video)">$LOCALIZE[36912]</value>
+        <value condition="Skin.HasSetting(Home_PlayDisc_Custom_SubCategory_Music)">$LOCALIZE[2]</value>
+        <value condition="Skin.HasSetting(Home_PlayDisc_Custom_SubCategory_Pictures)">$LOCALIZE[24001]</value>
+    </variable>
+    <variable name="Home_PlayDisc_Currentpath">
+        <value condition="Skin.HasSetting(Home_PlayDisc_Custom_Category_Video)">Skin.SetPath(Home_PlayDisc_Custom_Path,library://video/)</value>
+        <value condition="Skin.HasSetting(Home_PlayDisc_Custom_Category_Music)">Skin.SetPath(Home_PlayDisc_Custom_Path,library://music/)</value>
+        <value condition="Skin.HasSetting(Home_PlayDisc_Custom_Category_Pictures)">Skin.SetPath(Home_PlayDisc_Custom_Path,)</value>
+        <value condition="Skin.HasSetting(Home_PlayDisc_Custom_Category_File)">Skin.SetFile(Home_PlayDisc_Custom_Path,,special://profile/playlists/)</value>
+    </variable>
+    <variable name="Home_PlayDisc_Label">
+        <value condition="Skin.HasSetting(HomeMenu_Custom_PlayDisc_Button)">$INFO[Skin.String(Home_PlayDisc_Custom_Label)]</value>
+		<value>$LOCALIZE[341]</value>
+    </variable>
+</includes>

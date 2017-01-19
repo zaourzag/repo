@@ -576,14 +576,18 @@
     <include name="HomeMenuMusic">
         <item id="2">
             <description>Music Library</description>
-            <label>2</label>
+            <label>$VAR[Home_Music_Label]</label>
             <label2>$VAR[backgroundfolder]home_music$VAR[bkg_fileext]</label2>
             <icon>$INFO[Skin.String(user_bkg_music)]</icon>
             <property name="homemenu_id">music</property>
-            <onclick condition="Window.IsVisible(Home)">ActivateWindow(Music,root,return)</onclick>
+            <property name="homemenu_category">$VAR[Home_Music_Category]</property>
+            <property name="homemenu_subcategory">$VAR[Home_Music_SubCategory]</property>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Music_Button)">ActivateWindow(Music,root,return)</onclick>
+            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(HomeMenu_Custom_Music_Button)">ActivateWindow($VAR[Home_Music_SubCategory],$INFO[Skin.String(Home_Music_Custom_Path)],return)</onclick>
             <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_music)</onclick>
             <onclick condition="!Window.IsVisible(Home)">Container.Refresh</onclick>
-            <visible>!Skin.HasSetting(HomeMenuNoMusicButton)+Library.HasContent(Music)</visible>
+            <visible>!Skin.HasSetting(HomeMenuNoMusicButton)</visible>
+            <!-- <visible>!Skin.HasSetting(HomeMenuNoMusicButton)+Library.HasContent(Music)</visible> -->
         </item>
         <item id="2">
             <description>Music Files</description>
@@ -599,12 +603,16 @@
     <include name="HomeMenuVideo">
         <item id="19">
             <description>Video Files</description>
-            <label>3</label>
+            <label>$VAR[Home_Video_Label]</label>
             <label2>$VAR[backgroundfolder]home_video$VAR[bkg_fileext]</label2>
             <icon>$INFO[Skin.String(user_bkg_movie)]</icon>
-            <property name="homemenu_id">video</property>
-            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenuVideosToFiles)">ActivateWindow(videos,root,return)</onclick>
-            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(HomeMenuVideosToFiles)">ActivateWindow(videos,files,return)</onclick>
+            <property name="homemenu_id">videos</property>
+            <property name="homemenu_label">$VAR[Home_Video_Label]</property>
+            <property name="homemenu_category">$VAR[Home_Video_Category]</property>
+            <property name="homemenu_subcategory">$VAR[Home_Video_Custom_SubCategory_Video]</property>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Video_Button)+!Skin.HasSetting(HomeMenuVideosToFiles)">ActivateWindow(videos,root,return)</onclick>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Video_Button)+Skin.HasSetting(HomeMenuVideosToFiles)">ActivateWindow(videos,files,return)</onclick>
+            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(HomeMenu_Custom_Video_Button)">ActivateWindow($VAR[Home_Video_SubCategory],$INFO[Skin.String(Home_Video_Custom_Path)],return)</onclick>
             <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_movie)</onclick>
             <visible>!Skin.HasSetting(HomeMenuNoVideosButton)</visible>
         </item>
@@ -612,13 +620,17 @@
     <include name="HomeMenuMovie">
         <item id="4">
             <description>Movie Library</description>
-            <label>20342</label>
+            <label>$VAR[Home_Movie_Label]</label>
             <label2>$VAR[backgroundfolder]home_video$VAR[bkg_fileext]</label2>
             <icon>$INFO[Skin.String(user_bkg_movie)]</icon>
             <property name="homemenu_id">movies</property>
-            <onclick condition="Window.IsVisible(Home)">ActivateWindow(Videos,MovieTitles,return)</onclick>
+            <property name="homemenu_category">$VAR[Home_Movie_Category]</property>
+            <property name="homemenu_subcategory">$VAR[Home_Movie_Custom_SubCategory_Video]</property>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Movie_Button)">ActivateWindow(Videos,MovieTitles,return)</onclick>
+            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(HomeMenu_Custom_Movie_Button)">ActivateWindow($VAR[Home_Movie_SubCategory],$INFO[Skin.String(Home_Movie_Custom_Path)],return)</onclick>
             <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_movie)</onclick>
-            <visible>!Skin.HasSetting(HomeMenuNoMovieButton)+Library.HasContent(Movies)</visible>
+            <visible>!Skin.HasSetting(HomeMenuNoMovieButton)</visible>
+            <!-- <visible>!Skin.HasSetting(HomeMenuNoMovieButton)+Library.HasContent(Movies)</visible> -->
         </item>
     </include>
     <include name="HomeMenuDashboard">
@@ -636,35 +648,46 @@
     <include name="HomeMenuTVShows">
         <item id="5">
             <description>TV Show Library</description>
-            <label>20343</label>
+            <label>$VAR[Home_TVShow_Label]</label>
             <label2>$VAR[backgroundfolder]home_tvshows$VAR[bkg_fileext]</label2>
             <icon>$INFO[Skin.String(user_bkg_tvshow)]</icon>
             <property name="homemenu_id">tvshow</property>
-            <onclick condition="Window.IsVisible(Home)">ActivateWindow(Videos,TVShowTitles,return)</onclick>
+            <property name="homemenu_category">$VAR[Home_TVShow_Category]</property>
+            <property name="homemenu_subcategory">$VAR[Home_TVShow_Custom_SubCategory_Video]</property>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_TVShow_Button)">ActivateWindow(Videos,TVShowTitles,return)</onclick>
+            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(HomeMenu_Custom_TVShow_Button)">ActivateWindow($VAR[Home_TVShow_SubCategory],$INFO[Skin.String(Home_TVShow_Custom_Path)],return)</onclick>
             <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_tvshow)</onclick>
-            <visible>!Skin.HasSetting(HomeMenuNoTVShowButton)+Library.HasContent(TVShows)</visible>
+            <visible>!Skin.HasSetting(HomeMenuNoTVShowButton)</visible>
+            <!-- <visible>!Skin.HasSetting(HomeMenuNoTVShowButton)+Library.HasContent(TVShows)</visible> -->
         </item>
     </include>
     <include name="HomeMenuMusicvideos">
         <item id="9">
             <description>Musicvideo Library</description>
-            <label>20389</label>
+            <label>$VAR[Home_MusicVideo_Label]</label>
             <label2>$VAR[backgroundfolder]home_musicvideos$VAR[bkg_fileext]</label2>
             <icon>$INFO[Skin.String(user_bkg_musicvideo)]</icon>
             <property name="homemenu_id">musicvideo</property>
-            <onclick condition="Window.IsVisible(Home)">ActivateWindow(Videos,MusicVideos,return)</onclick>
+            <property name="homemenu_category">$VAR[Home_MusicVideo_Category]</property>
+            <property name="homemenu_subcategory">$VAR[Home_MusicVideo_Custom_SubCategory_Video]</property>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_MusicVideo_Button)">ActivateWindow(Videos,TVShowTitles,return)</onclick>
+            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(HomeMenu_Custom_MusicVideo_Button)">ActivateWindow($VAR[Home_MusicVideo_SubCategory],$INFO[Skin.String(Home_MusicVideo_Custom_Path)],return)</onclick>
             <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_musicvideo)</onclick>
-            <visible>!Skin.HasSetting(HomeMenuNoMusicVideos)+Library.HasContent(MusicVideos)</visible>
+            <visible>!Skin.HasSetting(HomeMenuNoMusicVideos)</visible>
+            <!-- <visible>!Skin.HasSetting(HomeMenuNoMusicVideos)+Library.HasContent(MusicVideos)</visible> -->
         </item>
     </include>
     <include name="HomeMenuPictures">
         <item id="3">
             <description>Pictures</description>
-            <label>1</label>
+            <label>$VAR[Home_Picture_Label]</label>
             <label2>$VAR[backgroundfolder]home_pictures$VAR[bkg_fileext]</label2>
             <icon>$INFO[Skin.String(user_bkg_pictures)]</icon>
             <property name="homemenu_id">picture</property>
-            <onclick condition="Window.IsVisible(Home)">ActivateWindow(Pictures)</onclick>
+            <property name="homemenu_category">$VAR[Home_Picture_Category]</property>
+            <property name="homemenu_subcategory">$VAR[Home_Picture_Custom_SubCategory_Video]</property>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Picture_Button)">ActivateWindow(Pictures)</onclick>
+            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(HomeMenu_Custom_Picture_Button)">ActivateWindow($VAR[Home_Picture_SubCategory],$INFO[Skin.String(Home_Picture_Custom_Path)],return)</onclick>
             <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_pictures)</onclick>
             <visible>!Skin.HasSetting(HomeMenuNoPictureButton)</visible>
         </item>
@@ -684,13 +707,16 @@
     <include name="HomeMenuPlayDisc">
         <item id="7">
             <description>PlayDVD</description>
-            <label>341</label>
+            <label>$VAR[Home_PlayDisc_Label]</label>
             <label2>$VAR[backgroundfolder]home_disc$VAR[bkg_fileext]</label2>
             <icon>$INFO[Skin.String(user_bkg_dvd)]</icon>
             <property name="homemenu_id">playdisc</property>
-            <onclick condition="Window.IsVisible(Home)">PlayDVD()</onclick>
+            <property name="homemenu_category">$VAR[Home_PlayDisc_Category]</property>
+            <property name="homemenu_subcategory">$VAR[Home_PlayDisc_Custom_SubCategory_Video]</property>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_PlayDisc_Button)">PlayDVD()</onclick>
+            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(HomeMenu_Custom_PlayDisc_Button)">ActivateWindow($VAR[Home_PlayDisc_SubCategory],$INFO[Skin.String(Home_PlayDisc_Custom_Path)],return)</onclick>
             <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_dvd)</onclick>
-            <visible>!Skin.HasSetting(HomeMenuNoDVDButton)+System.HasMediaDVD</visible>
+            <!-- <visible>!Skin.HasSetting(HomeMenuNoDVDButton)+System.HasMediaDVD</visible> -->
         </item>
     </include>
     <include name="HomeMenu3D">
@@ -866,7 +892,7 @@
                 <left>-8</left>
                 <top>795</top>
                 <width>1935</width>
-                <height>96</height>
+                <height>93</height>
                 <colordiffuse>$VAR[BackgroundOverlayColor]</colordiffuse>
                 <texture background="true">MenuStripe.png</texture>
             </control>
@@ -883,7 +909,7 @@
                 </control>
                 <control type="image">
                     <left>2010</left>
-                    <top>879</top>
+                    <top>880</top>
                     <width>150</width>
                     <height>8</height>
                     <include>neonslide</include>
@@ -935,7 +961,7 @@
 			</control>
             <control type="wraplist" id="9000">
                 <description>Home Wraplist</description>
-                <left>-182</left>
+                <left>-200</left>
                 <top>750</top>
                 <width>2400</width>
                 <height>160</height>
@@ -957,19 +983,6 @@
                         <height>75</height>
                         <width>350</width>
                         <font>impacted36</font>
-                        <label>|</label>
-                        <align>left</align>
-						<animation effect="fade" end="25" condition="true">Conditional</animation>
-                        <textcolor>$VAR[BackgroundOverlayColor]</textcolor>
-                        <visible>Control.HasFocus(9000)</visible>
-                        <include>openclosevisible</include>
-                    </control>
-                    <control type="label">
-                        <left>0</left>
-                        <top>52</top>
-                        <height>75</height>
-                        <width>350</width>
-                        <font>impacted36</font>
                         <label>[UPPERCASE]$INFO[ListItem.Label][/UPPERCASE]</label>
                         <align>center</align>
                         <textcolor>white</textcolor>
@@ -977,7 +990,7 @@
                         <include>openclosevisible</include>
                     </control>
                 </itemlayout>
-                <focusedlayout width="500" height="90">
+                <focusedlayout width="550" height="90">
                     <control type="button">
                         <include>HiddenButton</include>
                         <onfocus>$VAR[WeatherFadeout]</onfocus>

@@ -288,6 +288,21 @@
                         <!-- <visible>System.HasAddon(repository.kodinerds)</visible> -->
                     </item>
                     <item>
+                        <label>Library Node Editor</label>
+                        <label2>$LOCALIZE[24038]</label2>
+                        <onclick>InstallAddon(plugin.library.node.editor)</onclick>
+                        <visible>!System.HasAddon(plugin.library.node.editor)</visible>
+                        <!-- <visible>System.HasAddon(repository.kodinerds)</visible> -->
+                    </item>
+                    <item>
+                        <label>Library Node Editor $INFO[System.AddonVersion(plugin.library.node.editor),(,)]</label>
+                        <label2>$LOCALIZE[5]</label2>
+						<onclick>Action(back)</onclick>
+                        <onclick>RunAddon(plugin.library.node.editor)</onclick>
+                        <visible>System.HasAddon(plugin.library.node.editor)</visible>
+                        <!-- <visible>System.HasAddon(repository.kodinerds)</visible> -->
+                    </item>
+                    <item>
                         <label>Resource Images Weatherfanart Multi</label>
                         <label2>$LOCALIZE[24038]</label2>
                         <onclick>InstallAddon(resource.images.weatherfanart.multi)</onclick>

@@ -345,15 +345,21 @@
             <include>opencloseslidedown</include>
             <control type="label">
                 <width>1800</width>
-                <height>45</height>
+                <height>30</height>
                 <label>$INFO[Pvr.NowRecordingTitle,[COLOR=red]$LOCALIZE[19158]: [/COLOR],]$INFO[Pvr.NowRecordingChannel, / ,]</label>
                 <visible>Pvr.IsRecording</visible>
             </control>
             <control type="label">
                 <width>1800</width>
-                <height>45</height>
+                <height>30</height>
                 <label>$INFO[Pvr.NextRecordingTitle,[COLOR=red]$LOCALIZE[19157]: [/COLOR],]$INFO[Pvr.NextRecordingChannel, / ,]</label>
-                <visible>Pvr.HasTimer</visible>
+                <visible>Pvr.HasNonRecordingTVTimer|Pvr.HasNonRecordingRadioTimer</visible>
+            </control>
+            <control type="label">
+                <width>1800</width>
+                <height>30</height>
+                <label>[COLOR=red]nächster Umschalttimer: [/COLOR]$INFO[Skin.String(t0:date)]$INFO[Skin.String(t0:channel), / ,]</label>
+                <visible>!String.IsEmpty(Skin.String(t0:date))</visible>
             </control>
         </control>
         <control type="label">

@@ -2,12 +2,11 @@
 <includes>
     <include name="FlagDimensionButton">
 		<width>auto</width>
-		<height>36</height>
+		<height>26</height>
 		<textcolor>white</textcolor>
 		<shadowcolor>black</shadowcolor>
-        <textcolor>white</textcolor>
         <focusedcolor>white</focusedcolor>
-		<font>ubuntu-r13b</font>
+		<font>ubuntu-r12</font>
 		<onclick>noop</onclick>
 		<texturefocus border="4">buttons/ButtonNF.png</texturefocus>
 		<texturenofocus border="4">buttons/ButtonNF.png</texturenofocus>
@@ -95,8 +94,8 @@
     <include name="FlagVideo">
         <control type="image">
             <description>AudioLanguage Icon</description>
-            <width>55</width>
-            <height>36</height>
+            <width>42</width>
+            <height>26</height>
             <colordiffuse>description</colordiffuse>
             <texture>flagging/videostream1.png</texture>
 			<visible>!String.IsEmpty(ListItem.VideoResolution)</visible>
@@ -149,8 +148,8 @@
     <include name="FlagVideoAudioStream1">
         <control type="image">
             <description>AudioLanguage Icon</description>
-            <width>55</width>
-            <height>36</height>
+            <width>42</width>
+            <height>26</height>
             <colordiffuse>description</colordiffuse>
             <texture>flagging/audiostream1.png</texture>
             <visible>!String.IsEmpty(ListItem.Property(AudioLanguage.1))</visible>
@@ -178,8 +177,8 @@
     <include name="FlagVideoAudioStream2">
         <control type="image">
             <description>Seperator Icon</description>
-            <width>55</width>
-            <height>36</height>
+            <width>42</width>
+            <height>26</height>
             <colordiffuse>description</colordiffuse>
             <texture>flagging/audiostream2.png</texture>
             <visible>!String.IsEmpty(ListItem.Property(AudioLanguage.2))</visible>
@@ -206,8 +205,8 @@
     <include name="FlagVideoSubtitles">
         <control type="image">
             <description>Seperator Icon</description>
-            <width>55</width>
-            <height>36</height>
+            <width>42</width>
+            <height>26</height>
             <colordiffuse>description</colordiffuse>
             <texture>flagging/subtitles.png</texture>
             <visible>!String.IsEmpty(ListItem.Property(SubtitleLanguage.1))</visible>

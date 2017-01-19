@@ -471,6 +471,42 @@
             <align>right</align>
             <label>Artist Slide Show ON</label>
             <visible>Window(Visualisation).Property(ArtistSlideshowRunning)</visible>
+            <visible>Skin.HasSetting(DebugInfo)</visible>
+        </control>
+        <control type="label">
+            <left>0</left>
+            <top>138</top>
+            <width>1890</width>
+            <height>21</height>
+            <textcolor>red</textcolor>
+            <shadowcolor>-</shadowcolor>
+            <align>right</align>
+            <label>$INFO[Skin.String(moviegenreicons.path)]$INFO[ListItem.Label]$INFO[Skin.String(moviegenreicons.ext)]</label>
+            <visible>!String.IsEmpty(Skin.String(moviegenreicons.name)+Container.Content(genres)</visible>
+            <visible>Skin.HasSetting(DebugInfo)</visible>
+        </control>
+        <control type="label">
+            <left>0</left>
+            <top>168</top>
+            <width>1890</width>
+            <height>21</height>
+            <textcolor>red</textcolor>
+            <shadowcolor>-</shadowcolor>
+            <align>right</align>
+            <label>$INFO[Skin.String(studiologos.path)]$INFO[ListItem.Label]$INFO[Skin.String(studiologos.ext)]</label>
+            <visible>!String.IsEmpty(Skin.String(studiologos.name)+Container.Content(studios)</visible>
+            <visible>Skin.HasSetting(DebugInfo)</visible>
+        </control>
+        <control type="label">
+            <left>0</left>
+            <top>198</top>
+            <width>1890</width>
+            <height>21</height>
+            <textcolor>red</textcolor>
+            <shadowcolor>-</shadowcolor>
+            <align>right</align>
+            <label>$VAR[PosterThumb]</label>
+            <visible>Skin.HasSetting(DebugInfo)</visible>
         </control>
     </controls>
 </window>

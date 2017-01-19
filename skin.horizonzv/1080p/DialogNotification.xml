@@ -14,6 +14,7 @@
                 <width>1800</width>
                 <height>120</height>
                 <texture>KaiToastBack.png</texture>
+				<include>openclosevisible</include>
                 <visible>!Window.IsVisible(151)</visible>
             </control>
             <control type="image">

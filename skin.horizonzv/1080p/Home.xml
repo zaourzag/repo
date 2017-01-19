@@ -606,8 +606,30 @@
                 <label>8006 sichtbar | </label>
 				<visible>Control.IsVisible(8006)</visible>
             </control>
+            <control type="label">
+                <left>30</left>
+                <top>225</top>
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>orange</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>homemenu_id: $INFO[Container(9000).ListItem.Property(homemenu_id)] | </label>
+            </control>
+            <control type="label">
+                <left>30</left>
+                <top>225</top>
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>orange</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>SubCategory: $INFO[Container(9000).ListItem.Property(homemenu_subcategory)] | </label>
+            </control>
         </control>
-		<control type="list" id="784512">
+		<!-- <control type="list" id="784512">
             <left>30</left>
             <top>60r</top>
             <width>1800</width>
@@ -644,6 +666,6 @@
 				</control>
 			</focusedlayout>
 				<content>plugin://script.extendedinfo?info=onairtvshows</content>
-		</control>
+		</control> -->
     </controls>
 </window>

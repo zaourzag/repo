@@ -1,130 +1,75 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<window id="104">
-    <defaultcontrol always="true">-</defaultcontrol>
-    <controls>
-        <control type="group">
-            <left>1833</left>
-            <top>48</top>
-			<visible>Player.Muted</visible>
-            <animation effect="slide" end="150,0" time="400" tween="quadratic" delay="100">WindowClose</animation>
-            <animation effect="slide" start="150,0" time="400" tween="quadratic">WindowOpen</animation>
-            <control type="image" id="901">
-                <description>Mute Image</description>
-                <left>15</left>
-                <top>56</top>
-                <width>555</width>
-                <height>60</height>
-                <texture background="true" border="10">OverlayDialogBackground.png</texture>
-                <visible>!Window.IsVisible(visualisation)+!Window.IsVisible(fullscreenvideo)</visible>
-            </control>
-            <control type="image" id="901">
-                <description>Mute Image</description>
-                <left>9</left>
-                <top>56</top>
-                <width>90</width>
-                <height>64</height>
-                <texture background="true" border="8">Underlay2.png</texture>
-                <visible>Window.IsVisible(visualisation)|Window.IsVisible(fullscreenvideo)</visible>
-            </control>
-            <control type="image" id="902">
-                <description>Mute Icon</description>
-                <left>15</left>
-                <top>48</top>
-                <width>75</width>
-                <height>75</height>
-                <!-- <colordiffuse>red</colordiffuse> -->
-                <texture background="true">osd/AudioMute.png</texture>
-            </control>
-        </control>
-        <control type="group">
-            <left>1312</left>
-            <top>96</top>
-            <include>openclose</include>
-			<!-- <visible>!Player.Muted</visible> -->
+<?xml version="1.0" encoding="utf-8"?>
+<window>
+	<zorder>4</zorder>
+	<controls>
+		<control type="group">
+			<visible>!Window.IsActive(startup)</visible>
+			<left>1810</left>
+			<top>60</top>
             <animation type="WindowOpen" condition="Skin.HasSetting(animation)">
                 <effect type="fade" start="0" end="100" time="300"/>
-                <effect type="slide" start="0,-300" end="0,0" time="500"/>
+                <effect type="slide" start="300,0" end="0,0" time="500"/>
             </animation>
             <animation type="WindowClose" condition="Skin.HasSetting(animation)">
                 <effect type="fade" start="100" end="0" time="500" delay="200" />
-                <effect type="slide" start="0,0" end="0,-300" time="1000" delay="200" />
+                <effect type="slide" start="0,0" end="300,0" time="1000" delay="200" />
             </animation>
-            <animation effect="slide" start="0" end="-60" time="200" condition="Player.Muted">Conditional</animation>
-			<animation type="Conditional" condition="Player.Muted">
-                <effect type="fade" start="100" end="0" time="500" delay="500" />
-                <effect type="slide" start="0,0" end="0,-300" time="1000" delay="500" />
-            </animation>
-            <control type="image">
-                <description>background image</description>
-                <left>15</left>
-                <top>8</top>
-                <width>576</width>
-                <height>60</height>
-                <texture background="true" border="10">OverlayDialogBackground.png</texture>
-                <visible>!Window.IsVisible(visualisation)+!Window.IsVisible(fullscreenvideo)</visible>
-            </control>
-            <control type="image">
-                <description>background image</description>
-                <left>9</left>
-                <top>8</top>
-                <width>578</width>
-                <height>64</height>
-                <texture border="2">Underlay2.png</texture>
-                <visible>Window.IsVisible(visualisation)|Window.IsVisible(fullscreenvideo)</visible>
-            </control>
-            <control type="group">
-                <visible>!player.passthrough</visible>
-                <control type="image">
-                    <description>Lite Volume Logo</description>
-                    <left>15</left>
-                    <top>9</top>
-                    <width>63</width>
-                    <height>57</height>
-                    <aspectratio>keep</aspectratio>
-                    <texture background="true">osd/AudioFO.png</texture>
-                </control>
-                <control type="progress" id="1">
-                    <description>progress control</description>
-                    <left>75</left>
-                    <top>18</top>
-                    <width>495</width>
-                    <height>40</height>
-                    <info>Player.Volume</info>
-                </control>
-                <control type="label">
-                    <description>progress control</description>
-                    <left>450</left>
-                    <top>26</top>
-                    <width>112</width>
-                    <height>27</height>
-                    <font>ubuntu-r13b</font>
-                    <shadowcolor>black</shadowcolor>
-                    <align>right</align>
-                    <info>Player.Volume</info>
-                </control>
-            </control>
-            <control type="group">
-                <visible>player.passthrough</visible>
-                <control type="image">
-                    <description>Lite Volume Logo</description>
-                    <left>15</left>
-                    <top>9</top>
-                    <width>63</width>
-                    <height>57</height>
-                    <aspectratio>keep</aspectratio>
-                    <colordiffuse>selected</colordiffuse>
-                    <texture background="true">osd/AudioFO.png</texture>
-                </control>
-                <control type="label">
-                    <description>Passthrough Label</description>
-                    <left>105</left>
-                    <top>27</top>
-                    <width>495</width>
-                    <height>27</height>
-                    <font>ubuntu-r13b</font>
-                    <label>29802</label>
-                </control>
-            </control>
-        </control>
-    </controls>
+			<control type="group">
+				<control type="progress" id="29999">
+					<include>HiddenButton</include>
+					<info>Player.Volume</info>
+				</control>
+				<control type="group">
+					<control type="image" id="901">
+						<description>Mute Image</description>
+						<left>54</left>
+						<top>10</top>
+						<width>300</width>
+						<height>82</height>
+						<colordiffuse>grey1</colordiffuse>
+						<texture border="10">OverlayDialogBackground.png</texture>
+					</control>
+					<control type="image" id="901">
+						<description>Mute Image</description>
+						<left>3</left>
+						<top>0</top>
+						<width>104</width>
+						<height>102</height>
+						<colordiffuse>grey1</colordiffuse>
+						<texture>Pin.png</texture>
+					</control>
+				</control>
+				<control type="group">
+					<left>13</left>
+					<top>9</top>
+					<control type="image">
+						<left>0</left>
+						<top>0</top>
+						<width>84</width>
+						<height>84</height>
+						<colordiffuse>grey3</colordiffuse>
+						<texture>dialogs/volume/progress/p100.png</texture>
+					</control>
+					<control type="image">
+						<left>0</left>
+						<top>0</top>
+						<width>84</width>
+						<height>84</height>
+						<fadetime>0</fadetime>
+						<colordiffuse>description</colordiffuse>
+						<texture>$INFO[Control.GetLabel(29999),dialogs/volume/progress/p,.png]</texture>
+						<animation effect="fade" start="100" end="0" delay="300" time="500" tween="sine" condition="Player.Muted">Conditional</animation>
+					</control>
+					<control type="image">
+						<left>8</left>
+						<top>7</top>
+						<width>68</width>
+						<height>68</height>
+						<fadetime>300</fadetime>
+						<texture colordiffuse="white">$VAR[VolumeIconVar]</texture>
+					</control>
+				</control>
+			</control>
+		</control>
+	</controls>
 </window>

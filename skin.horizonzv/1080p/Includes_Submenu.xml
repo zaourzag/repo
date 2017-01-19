@@ -33,12 +33,113 @@
         <texturenofocus>-</texturenofocus>
         <pulseonselect>false</pulseonselect>
     </include>
+    <include name="HomeSubSettingsButton">
+		<control type="button" id="90250">
+			<include>ButtonHomeSubCommonValues</include>
+			<label>21417</label>
+			<onclick>SetProperty(HomeButton,$INFO[Container(9000).ListItem.Property(homemenu_id)])</onclick>
+			<onclick>ActivateWindow(1501)</onclick>
+		</control>
+	</include>
+    <include name="HomeSubMenuMusic">
+        <control type="grouplist" id="9010">
+            <include>HomeSubMenuCommonValues</include>
+            <onleft>9010</onleft>
+            <onright>9010</onright>
+            <onup>8002</onup>
+            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),music)</visible>
+            <control type="button" id="90190">
+                <description>Refresh Button</description>
+                <height>39</height>
+                <width>39</width>
+                <align>center</align>
+                <aligny>center</aligny>
+                <texturefocus>buttons/RefreshFO.png</texturefocus>
+                <texturenofocus>buttons/RefreshNF.png</texturenofocus>
+                <pulseonselect>false</pulseonselect>
+                <label>-</label>
+                <onclick>Control.SetFocus(9000)</onclick>
+                <onclick>ActivateWindow(1142)</onclick>
+				<visible>!Skin.HasSetting(HomeMenu_Custom_Music_Button)</visible>
+            </control>
+            <control type="button" id="90192">
+                <include>ButtonHomeSubCommonValues</include>
+                <label>589</label>
+                <onclick>PlayerControl(partymode(music))</onclick>
+                <onclick>fullscreen</onclick>
+                <visible>Library.HasContent(Music)</visible>
+                <visible>!Skin.HasSetting(SubMenu_Music_NoPartymodeButton)</visible>
+				<visible>!Skin.HasSetting(HomeMenu_Custom_Music_Button)</visible>
+            </control>
+            <control type="button" id="90194">
+                <include>ButtonHomeSubCommonValues</include>
+                <label>133</label>
+                <onclick>ActivateWindow(Music,Artists,return)</onclick>
+                <visible>Library.HasContent(Music)</visible>
+                <visible>!Skin.HasSetting(SubMenu_Music_NoArtistButton)</visible>
+				<visible>!Skin.HasSetting(HomeMenu_Custom_Music_Button)</visible>
+            </control>
+            <control type="button" id="90196">
+                <include>ButtonHomeSubCommonValues</include>
+                <label>132</label>
+                <onclick>ActivateWindow(music,Albums,return)</onclick>
+                <visible>Library.HasContent(Music)</visible>
+                <visible>!Skin.HasSetting(SubMenu_Music_NoAlbumButton)</visible>
+				<visible>!Skin.HasSetting(HomeMenu_Custom_Music_Button)</visible>
+            </control>
+            <control type="button" id="90198">
+                <include>ButtonHomeSubCommonValues</include>
+                <label>134</label>
+                <onclick>ActivateWindow(music,Songs,return)</onclick>
+                <visible>Library.HasContent(Music)</visible>
+                <visible>!Skin.HasSetting(SubMenu_Music_NoSongsButton)</visible>
+				<visible>!Skin.HasSetting(HomeMenu_Custom_Music_Button)</visible>
+            </control>
+            <control type="button" id="90200">
+                <include>ButtonHomeSubCommonValues</include>
+                <label>744</label>
+                <onclick>ActivateWindow(Music,Files,return)</onclick>
+				<visible>!Skin.HasSetting(HomeMenu_Custom_Music_Button)</visible>
+            </control>
+            <control type="button" id="90202">
+                <include>ButtonHomeSubCommonValues</include>
+                <label>14022</label>
+                <onclick>ActivateWindow(music,root)</onclick>
+                <visible>Library.HasContent(Music)</visible>
+                <visible>!Skin.HasSetting(SubMenu_Music_NoLibraryButton)</visible>
+				<visible>!Skin.HasSetting(HomeMenu_Custom_Music_Button)</visible>
+            </control>
+            <control type="button" id="90204">
+                <include>ButtonHomeSubCommonValues</include>
+                <label>24001</label>
+                <onclick>ActivateWindow(music,Addons,return)</onclick>
+                <visible>Library.HasContent(Music)</visible>
+                <visible>!Skin.HasSetting(SubMenu_Music_NoAddonButton)</visible>
+				<visible>!Skin.HasSetting(HomeMenu_Custom_Music_Button)</visible>
+            </control>
+            <control type="button" id="90206">
+                <include>ButtonHomeSubCommonValues</include>
+                <label>24001</label>
+                <onclick>ActivateWindow(Music,Addons,return)</onclick>
+                <visible>!Library.HasContent(Music)</visible>
+                <visible>!Skin.HasSetting(SubMenu_Music_NoAddonButton)</visible>
+				<visible>!Skin.HasSetting(HomeMenu_Custom_Music_Button)</visible>
+            </control>
+            <!-- <control type="button" id="90207">
+                <include>ButtonHomeSubCommonValues</include>
+                <label>Widget</label>
+                <onclick>SetProperty(HomeButton,music)</onclick>
+                <onclick>ActivateWindow(1500)</onclick>
+            </control> -->
+			<include>HomeSubSettingsButton</include>
+        </control>
+    </include>
     <include name="HomeSubMenuVideos">
         <control type="grouplist" id="9010">
             <include>HomeSubMenuCommonValues</include>
             <onleft>9010</onleft>
             <onright>9010</onright>
-            <visible>Container(9000).HasFocus(19)</visible>
+            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),videos)</visible>
             <control type="button" id="90110">
                 <description>Refresh Button</description>
                 <height>39</height>
@@ -51,6 +152,7 @@
                 <label>-</label>
                 <onclick>Control.SetFocus(9000)</onclick>
                 <onclick>ActivateWindow(1141)</onclick>
+				<visible>!Skin.HasSetting(HomeMenu_Custom_Video_Button)</visible>
             </control>
             <control type="button" id="90112">
                 <include>ButtonHomeSubCommonValues</include>
@@ -58,6 +160,7 @@
                 <onclick>ActivateWindow(Videos,MovieTitles,return)</onclick>
                 <visible>Library.HasContent(Movies)</visible>
                 <visible>!Skin.HasSetting(SubMenu_Video_NoMovieButton)</visible>
+				<visible>!Skin.HasSetting(HomeMenu_Custom_Video_Button)</visible>
             </control>
             <control type="button" id="90114">
                 <include>ButtonHomeSubCommonValues</include>
@@ -65,6 +168,7 @@
                 <onclick>ActivateWindow(Videos,TvShowTitles,return)</onclick>
                 <visible>Library.HasContent(TVShows)</visible>
                 <visible>!Skin.HasSetting(SubMenu_Video_NoTVShowButton)</visible>
+				<visible>!Skin.HasSetting(HomeMenu_Custom_Video_Button)</visible>
             </control>
             <control type="button" id="90116">
                 <include>ButtonHomeSubCommonValues</include>
@@ -72,11 +176,13 @@
                 <onclick>ActivateWindow(Videos,MusicVideoTitles,return)</onclick>
                 <visible>Library.HasContent(MusicVideos)</visible>
                 <visible>!Skin.HasSetting(SubMenu_Video_NoMusicvideoButton)</visible>
+				<visible>!Skin.HasSetting(HomeMenu_Custom_Video_Button)</visible>
             </control>
             <control type="button" id="90118">
                 <include>ButtonHomeSubCommonValues</include>
                 <label>744</label>
                 <onclick>ActivateWindow(Videos,Files,return)</onclick>
+				<visible>!Skin.HasSetting(HomeMenu_Custom_Video_Button)</visible>
             </control>
             <control type="button" id="90120">
                 <include>ButtonHomeSubCommonValues</include>
@@ -84,19 +190,16 @@
                 <onclick>ActivateWindow(Videos,Root)</onclick>
                 <visible>Library.HasContent(Video)</visible>
                 <visible>!Skin.HasSetting(SubMenu_Video_NoLibraryButton)</visible>
+				<visible>!Skin.HasSetting(HomeMenu_Custom_Video_Button)</visible>
             </control>
             <control type="button" id="90122">
                 <include>ButtonHomeSubCommonValues</include>
                 <label>24001</label>
                 <onclick>ActivateWindow(Videos,Addons,return)</onclick>
                 <visible>!Skin.HasSetting(SubMenu_Video_NoVideoAddonButton)</visible>
+				<visible>!Skin.HasSetting(HomeMenu_Custom_Video_Button)</visible>
             </control>
-            <control type="button" id="90123">
-                <include>ButtonHomeSubCommonValues</include>
-                <label>Widget</label>
-                <onclick>SetProperty(HomeButton,videos)</onclick>
-                <onclick>ActivateWindow(1500)</onclick>
-            </control>
+			<include>HomeSubSettingsButton</include>
         </control>
     </include>
     <include name="HomeSubMenuMovies">
@@ -104,7 +207,7 @@
             <include>HomeSubMenuCommonValues</include>
             <onleft>9010</onleft>
             <onright>9010</onright>
-            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),movies)+Library.HasContent(Movies)</visible>
+            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),movies)</visible>
             <control type="button" id="90132">
                 <description>Refresh Button</description>
                 <height>39</height>
@@ -117,6 +220,7 @@
                 <label>-</label>
                 <onclick>Control.SetFocus(9000)</onclick>
                 <onclick>ActivateWindow(1141)</onclick>
+				<visible>!Skin.HasSetting(HomeMenu_Custom_Movie_Button)</visible>
             </control>
             <control type="button" id="90134">
                 <include>ButtonHomeSubCommonValues</include>
@@ -124,48 +228,101 @@
                 <onclick>ActivateWindow(Videos,MovieSets,return)</onclick>
                 <visible>Library.HasContent(MovieSets)</visible>
                 <visible>!Skin.HasSetting(SubMenu_Movie_NoSetButton)</visible>
+				<visible>!Skin.HasSetting(HomeMenu_Custom_Movie_Button)</visible>
             </control>
             <control type="button" id="90136">
                 <include>ButtonHomeSubCommonValues</include>
                 <label>369</label>
                 <onclick>ActivateWindow(Videos,MovieTitles,return)</onclick>
                 <visible>!Skin.HasSetting(SubMenu_Movie_NoTitleButton)</visible>
+				<visible>!Skin.HasSetting(HomeMenu_Custom_Movie_Button)</visible>
             </control>
             <control type="button" id="90138">
                 <include>ButtonHomeSubCommonValues</include>
                 <label>135</label>
                 <onclick>ActivateWindow(Videos,MovieGenres,return)</onclick>
                 <visible>!Skin.HasSetting(SubMenu_Movie_NoGenreButton)</visible>
+				<visible>!Skin.HasSetting(HomeMenu_Custom_Movie_Button)</visible>
             </control>
             <control type="button" id="90140">
                 <include>ButtonHomeSubCommonValues</include>
                 <label>652</label>
                 <onclick>ActivateWindow(Videos,MovieYears,return)</onclick>
                 <visible>!Skin.HasSetting(SubMenu_Movie_NoGenreButton)</visible>
+				<visible>!Skin.HasSetting(HomeMenu_Custom_Movie_Button)</visible>
             </control>
             <control type="button" id="90142">
                 <include>ButtonHomeSubCommonValues</include>
                 <label>344</label>
                 <onclick>ActivateWindow(Videos,MovieActors,return)</onclick>
                 <visible>!Skin.HasSetting(SubMenu_Movie_NoActorButton)</visible>
+				<visible>!Skin.HasSetting(HomeMenu_Custom_Movie_Button)</visible>
             </control>
             <control type="button" id="90144">
                 <include>ButtonHomeSubCommonValues</include>
                 <label>24001</label>
                 <onclick>ActivateWindow(Videos,Addons,return)</onclick>
                 <visible>!Skin.HasSetting(SubMenu_Movie_NoAddonButton)</visible>
+				<visible>!Skin.HasSetting(HomeMenu_Custom_Movie_Button)</visible>
             </control>
             <control type="button" id="90146">
                 <include>ButtonHomeSubCommonValues</include>
                 <label>744</label>
                 <onclick>ActivateWindow(Videos,Files,return)</onclick>
+				<visible>!Skin.HasSetting(HomeMenu_Custom_Movie_Button)</visible>
             </control>
-            <control type="button" id="90150">
+			<include>HomeSubSettingsButton</include>
+        </control>
+    </include>
+    <include name="HomeSubMenuTVShows">
+        <control type="grouplist" id="9010">
+            <include>HomeSubMenuCommonValues</include>
+            <onleft>9010</onleft>
+            <onright>9010</onright>
+            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),tvshow)</visible>
+            <control type="button" id="90170">
+                <description>Refresh Button</description>
+                <height>39</height>
+                <width>39</width>
+                <align>center</align>
+                <aligny>center</aligny>
+                <texturefocus>buttons/RefreshFO.png</texturefocus>
+                <texturenofocus>buttons/RefreshNF.png</texturenofocus>
+                <pulseonselect>false</pulseonselect>
+                <label>-</label>
+                <onclick>Control.SetFocus(9000)</onclick>
+                <onclick>ActivateWindow(1141)</onclick>
+				<visible>!Skin.HasSetting(HomeMenu_Custom_TVShow_Button)</visible>
+            </control>
+            <control type="button" id="90172">
                 <include>ButtonHomeSubCommonValues</include>
-                <label>Widget</label>
-                <onclick>SetProperty(HomeButton,movies)</onclick>
-                <onclick>ActivateWindow(1500)</onclick>
+                <label>369</label>
+                <onclick>ActivateWindow(Videos,TVShowTitles,return)</onclick>
+                <visible>!Skin.HasSetting(SubMenu_TVShow_NoTitleButton)</visible>
+				<visible>!Skin.HasSetting(HomeMenu_Custom_TVShow_Button)</visible>
             </control>
+            <control type="button" id="90174">
+                <include>ButtonHomeSubCommonValues</include>
+                <label>135</label>
+                <onclick>ActivateWindow(Videos,TVShowGenres,return)</onclick>
+                <visible>!Skin.HasSetting(SubMenu_TVShow_NoGenreButton)</visible>
+				<visible>!Skin.HasSetting(HomeMenu_Custom_TVShow_Button)</visible>
+            </control>
+            <control type="button" id="90176">
+                <include>ButtonHomeSubCommonValues</include>
+                <label>652</label>
+                <onclick>ActivateWindow(Videos,TVShowYears,return)</onclick>
+                <visible>!Skin.HasSetting(SubMenu_TVShow_NoYearButton)</visible>
+				<visible>!Skin.HasSetting(HomeMenu_Custom_TVShow_Button)</visible>
+            </control>
+            <control type="button" id="90178">
+                <include>ButtonHomeSubCommonValues</include>
+                <label>344</label>
+                <onclick>ActivateWindow(Videos,TVShowActors,return)</onclick>
+                <visible>!Skin.HasSetting(SubMenu_TVShow_NoActorButton)</visible>
+				<visible>!Skin.HasSetting(HomeMenu_Custom_TVShow_Button)</visible>
+            </control>
+			<include>HomeSubSettingsButton</include>
         </control>
     </include>
     <include name="HomeSubMenuMusicVideos">
@@ -199,146 +356,13 @@
                 <onclick>ActivateWindow(Videos,MusicVideosGenres,return)</onclick>
                 <visible>!Skin.HasSetting(SubMenu_MusicVideo_NoGenreButton)</visible>
             </control>
-            <control type="button" id="90179">
+            <!-- <control type="button" id="90179">
                 <include>ButtonHomeSubCommonValues</include>
                 <label>Widget</label>
                 <onclick>SetProperty(HomeButton,musicvideos)</onclick>
                 <onclick>ActivateWindow(1500)</onclick>
-            </control>
-        </control>
-    </include>
-    <include name="HomeSubMenuTVShows">
-        <control type="grouplist" id="9010">
-            <include>HomeSubMenuCommonValues</include>
-            <onleft>9010</onleft>
-            <onright>9010</onright>
-            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),tvshow)</visible>
-            <control type="button" id="90170">
-                <description>Refresh Button</description>
-                <height>39</height>
-                <width>39</width>
-                <align>center</align>
-                <aligny>center</aligny>
-                <texturefocus>buttons/RefreshFO.png</texturefocus>
-                <texturenofocus>buttons/RefreshNF.png</texturenofocus>
-                <pulseonselect>false</pulseonselect>
-                <label>-</label>
-                <onclick>Control.SetFocus(9000)</onclick>
-                <onclick>ActivateWindow(1141)</onclick>
-            </control>
-            <control type="button" id="90172">
-                <include>ButtonHomeSubCommonValues</include>
-                <label>369</label>
-                <onclick>ActivateWindow(Videos,TVShowTitles,return)</onclick>
-                <visible>!Skin.HasSetting(SubMenu_TVShow_NoTitleButton)</visible>
-            </control>
-            <control type="button" id="90174">
-                <include>ButtonHomeSubCommonValues</include>
-                <label>135</label>
-                <onclick>ActivateWindow(Videos,TVShowGenres,return)</onclick>
-                <visible>!Skin.HasSetting(SubMenu_TVShow_NoGenreButton)</visible>
-            </control>
-            <control type="button" id="90176">
-                <include>ButtonHomeSubCommonValues</include>
-                <label>652</label>
-                <onclick>ActivateWindow(Videos,TVShowYears,return)</onclick>
-                <visible>!Skin.HasSetting(SubMenu_TVShow_NoYearButton)</visible>
-            </control>
-            <control type="button" id="90178">
-                <include>ButtonHomeSubCommonValues</include>
-                <label>344</label>
-                <onclick>ActivateWindow(Videos,TVShowActors,return)</onclick>
-                <visible>!Skin.HasSetting(SubMenu_TVShow_NoActorButton)</visible>
-            </control>
-            <control type="button" id="90179">
-                <include>ButtonHomeSubCommonValues</include>
-                <label>Widget</label>
-                <onclick>SetProperty(HomeButton,series)</onclick>
-                <onclick>ActivateWindow(1500)</onclick>
-            </control>
-        </control>
-    </include>
-    <include name="HomeSubMenuMusic">
-        <control type="grouplist" id="9010">
-            <include>HomeSubMenuCommonValues</include>
-            <onleft>9010</onleft>
-            <onright>9010</onright>
-            <onup>8002</onup>
-            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),music)</visible>
-            <control type="button" id="90190">
-                <description>Refresh Button</description>
-                <height>39</height>
-                <width>39</width>
-                <align>center</align>
-                <aligny>center</aligny>
-                <texturefocus>buttons/RefreshFO.png</texturefocus>
-                <texturenofocus>buttons/RefreshNF.png</texturenofocus>
-                <pulseonselect>false</pulseonselect>
-                <label>-</label>
-                <onclick>Control.SetFocus(9000)</onclick>
-                <onclick>ActivateWindow(1142)</onclick>
-            </control>
-            <control type="button" id="90192">
-                <include>ButtonHomeSubCommonValues</include>
-                <label>589</label>
-                <onclick>PlayerControl(partymode(music))</onclick>
-                <onclick>fullscreen</onclick>
-                <visible>Library.HasContent(Music)</visible>
-                <visible>!Skin.HasSetting(SubMenu_Music_NoPartymodeButton)</visible>
-            </control>
-            <control type="button" id="90194">
-                <include>ButtonHomeSubCommonValues</include>
-                <label>133</label>
-                <onclick>ActivateWindow(Music,Artists,return)</onclick>
-                <visible>Library.HasContent(Music)</visible>
-                <visible>!Skin.HasSetting(SubMenu_Music_NoArtistButton)</visible>
-            </control>
-            <control type="button" id="90196">
-                <include>ButtonHomeSubCommonValues</include>
-                <label>132</label>
-                <onclick>ActivateWindow(music,Albums,return)</onclick>
-                <visible>Library.HasContent(Music)</visible>
-                <visible>!Skin.HasSetting(SubMenu_Music_NoAlbumButton)</visible>
-            </control>
-            <control type="button" id="90198">
-                <include>ButtonHomeSubCommonValues</include>
-                <label>134</label>
-                <onclick>ActivateWindow(music,Songs,return)</onclick>
-                <visible>Library.HasContent(Music)</visible>
-                <visible>!Skin.HasSetting(SubMenu_Music_NoSongsButton)</visible>
-            </control>
-            <control type="button" id="90200">
-                <include>ButtonHomeSubCommonValues</include>
-                <label>744</label>
-                <onclick>ActivateWindow(Music,Files,return)</onclick>
-            </control>
-            <control type="button" id="90202">
-                <include>ButtonHomeSubCommonValues</include>
-                <label>14022</label>
-                <onclick>ActivateWindow(music,root)</onclick>
-                <visible>Library.HasContent(Music)</visible>
-                <visible>!Skin.HasSetting(SubMenu_Music_NoLibraryButton)</visible>
-            </control>
-            <control type="button" id="90204">
-                <include>ButtonHomeSubCommonValues</include>
-                <label>24001</label>
-                <onclick>ActivateWindow(music,Addons,return)</onclick>
-                <visible>Library.HasContent(Music)</visible>
-                <visible>!Skin.HasSetting(SubMenu_Music_NoAddonButton)</visible>
-            </control>
-            <control type="button" id="90206">
-                <include>ButtonHomeSubCommonValues</include>
-                <label>24001</label>
-                <onclick>ActivateWindow(Music,Addons,return)</onclick>
-                <visible>!Library.HasContent(Music)</visible>
-                <visible>!Skin.HasSetting(SubMenu_Music_NoAddonButton)</visible>
-            </control>
-            <control type="button" id="90207">
-                <include>ButtonHomeSubCommonValues</include>
-                <label>Widget</label>
-                <onclick>SetProperty(HomeButton,music)</onclick>
-                <onclick>ActivateWindow(1500)</onclick>
-            </control>
+            </control> -->
+			<include>HomeSubSettingsButton</include>
         </control>
     </include>
     <include name="HomeSubMenuSystem">
@@ -424,6 +448,7 @@
                 <onclick>EjectTray()</onclick>
                 <onclick>SetFocus(9000)</onclick>
             </control>
+			<include>HomeSubSettingsButton</include>
         </control>
     </include>
     <include name="HomeSubMenuPictures">
@@ -437,12 +462,7 @@
                 <label>24001</label>
                 <onclick>ActivateWindow(Pictures,Addons,return)</onclick>
             </control>
-            <control type="button" id="90148">
-                <include>ButtonHomeSubCommonValues</include>
-                <label>Widget</label>
-                <onclick>SetProperty(HomeButton,picture)</onclick>
-                <onclick>ActivateWindow(1500)</onclick>
-            </control>
+			<include>HomeSubSettingsButton</include>
         </control>
     </include>
     <include name="HomeSubMenuLiveTV">
@@ -482,6 +502,7 @@
                 <onclick>SetProperty(HomeButton,livetv)</onclick>
                 <onclick>ActivateWindow(1500)</onclick>
             </control>
+			<include>HomeSubSettingsButton</include>
         </control>
     </include>
     <include name="HomeSubMenuRadio">
@@ -521,6 +542,7 @@
                 <onclick>SetProperty(HomeButton,radio)</onclick>
                 <onclick>ActivateWindow(1500)</onclick>
             </control>
+			<include>HomeSubSettingsButton</include>
         </control>
     </include>
     <include name="HomeSubMenuWeather">
@@ -830,7 +852,7 @@
             <include>opencloseslideup</include>
             <left>0</left>
             <top>897</top>
-			<height>200</height>
+			<height>40</height>
             <ondown>9000</ondown>
             <control type="group">
                 <left>-15</left>
@@ -871,32 +893,6 @@
                     <texture flipx="true">SideFade.png</texture>
                 </control>
             </control>
-            <!-- <control type="group">
-                <left>0</left>
-                <top>3</top>
-				<height>200</height>
-                <include>HomeSubMenuVideos</include>
-                <include>HomeSubMenuMovies</include>
-                <include>HomeSubMenuTVShows</include>
-                <include>HomeSubMenuMusicVideos</include>
-                <include>HomeSubMenuMusic</include>
-                <include>HomeSubMenuSystem</include>
-                <include>HomeSubMenuPlayDisc</include>
-                <include>HomeSubMenuPictures</include>
-                <include>HomeSubMenuLiveTV</include>
-                <include>HomeSubMenuRadio</include>
-                <include>HomeSubMenuWeather</include>
-                <include>HomeSubMenuPrograms</include>
-                <include>HomeSubMenu3D</include>
-                <include>HomeSubMenuHD</include>
-                <include>HomeSubMenuFullHD</include>
-                <include>HomeSubMenuDoku</include>
-                <include>HomeSubMenuFav1</include>
-                <include>HomeSubMenuFav2</include>
-                <include>HomeSubMenuFav3</include>
-                <include>HomeSubMenuKids</include>
-                <include>HomeSubMenuNews</include>
-            </control> -->
         </control>
     </include>
     <include name="submenucontent">
@@ -905,47 +901,8 @@
             <include>opencloseslideup</include>
             <left>0</left>
             <top>897</top>
-			<height>200</height>
+			<height>80</height>
             <ondown>9000</ondown>
-            <!-- <control type="group">
-                <left>-15</left>
-                <top>-129</top>
-                <animation type="Conditional" condition="ControlGroup(9001).HasFocus()">
-                    <effect type="fade" start="0" end="100" time="200" />
-                </animation>
-                <animation type="Conditional" condition="!ControlGroup(9001).HasFocus()">
-                    <effect type="slide" start="0,-30" end="0,0" time="200" tween="quadratic" easing="out" />
-                    <effect type="fade" start="100" end="0" time="200" />
-                </animation>
-                <control type="image">
-                    <left>-15</left>
-                    <top>16</top>
-                    <width>1950</width>
-                    <height>52</height>
-                    <texture background="true">BackSilver.png</texture>
-                </control>
-                <control type="image">
-                    <left>-15</left>
-                    <top>16</top>
-                    <width>1950</width>
-                    <height>1</height>
-                    <texture background="true">Separator2.png</texture>
-                </control>
-                <control type="image">
-                    <left>0</left>
-                    <top>16</top>
-                    <width>300</width>
-                    <height>63</height>
-                    <texture background="true">SideFade.png</texture>
-                </control>
-                <control type="image">
-                    <left>1642</left>
-                    <top>16</top>
-                    <width>300</width>
-                    <height>63</height>
-                    <texture flipx="true">SideFade.png</texture>
-                </control>
-            </control> -->
             <control type="group">
                 <left>0</left>
                 <top>3</top>

@@ -24,9 +24,9 @@
                 </control>
             </control>
             <control type="list" id="50">
-                <left>105</left>
+                <left>80</left>
                 <top>322</top>
-                <width>870</width>
+                <width>970</width>
                 <height>675</height>
                 <onleft>9000</onleft>
                 <onright>70</onright>
@@ -55,31 +55,44 @@
                             <texture fallback="DefaultVideo.png">$INFO[ListItem.Icon]</texture>
                             <aspectratio>keep</aspectratio>
                         </control>
-                        <control type="label">
-                            <left>105</left>
-                            <top>0</top>
-                            <width>645</width>
-                            <height>38</height>
-                            <align>left</align>
-                            <aligny>center</aligny>
-                            <textcolor>grey1</textcolor>
-                            <label>$INFO[ListItem.ChannelName]</label>
-                            <font>ubuntu-r16b</font>
-                        </control>
-                        <control type="label">
-                            <left>105</left>
-                            <top>48</top>
-                            <width>675</width>
-                            <height>30</height>
-                            <align>left</align>
-                            <aligny>center</aligny>
-                            <label>$INFO[ListItem.Label]$INFO[ListItem.PlotOutline, - ,]</label>
-                            <font>ubuntu-r19b</font>
-                        </control>
+						<control type="label">
+							<left>105</left>
+							<top>0</top>
+							<width>745</width>
+							<height>38</height>
+							<align>left</align>
+							<aligny>center</aligny>
+							<textcolor>grey</textcolor>
+							<label>$INFO[ListItem.Label]</label>
+							<font>ubuntu-r16b</font>
+							<visible>![String.IsEmpty(ListItem.EpisodeName)+String.IsEmpty(ListItem.PlotOutline)]</visible>
+						</control>
+						<control type="label">
+							<left>105</left>
+							<top>0</top>
+							<width>745</width>
+							<height>38</height>
+							<align>left</align>
+							<aligny>center</aligny>
+							<textcolor>grey</textcolor>
+							<label>$INFO[ListItem.ChannelName]</label>
+							<font>ubuntu-r16b</font>
+							<visible>String.IsEmpty(ListItem.EpisodeName)+String.IsEmpty(ListItem.PlotOutline)</visible>
+						</control>
+						<control type="label">
+							<left>105</left>
+							<top>48</top>
+							<width>768</width>
+							<height>30</height>
+							<align>left</align>
+							<aligny>center</aligny>
+							<label>$VAR[PVRRecordLabel]</label>
+							<font>ubuntu-r19b</font>
+						</control>
                         <control type="label">
                             <left>0</left>
                             <top>0</top>
-                            <width>810</width>
+                            <width>910</width>
                             <height>38</height>
                             <textcolor>grey1</textcolor>
                             <align>right</align>
@@ -88,7 +101,7 @@
                             <font>ubuntu-r16b</font>
                         </control>
                         <control type="image">
-                            <left>780</left>
+                            <left>880</left>
                             <top>42</top>
                             <width>36</width>
                             <height>38</height>
@@ -96,7 +109,7 @@
                             <visible>!ListItem.IsResumable+!String.Contains(ListItem.Overlay,OverlayHD.png)</visible>
                         </control>
                         <control type="image">
-                            <left>780</left>
+                            <left>880</left>
                             <top>42</top>
                             <width>36</width>
                             <height>38</height>
@@ -111,7 +124,7 @@
                         <control type="image">
                             <left>0</left>
                             <top>0</top>
-                            <width>825</width>
+                            <width>925</width>
                             <height>105</height>
                             <colordiffuse>reddiffuse</colordiffuse>
                             <texture diffuse="masks/banner_mask.png">WhiteBack.png</texture>
@@ -120,7 +133,7 @@
                         <control type="image">
                             <left>0</left>
                             <top>0</top>
-                            <width>825</width>
+                            <width>925</width>
                             <height>105</height>
                             <colordiffuse>grey</colordiffuse>
                             <texture border="4">masks/Default.png</texture>
@@ -146,28 +159,39 @@
                             <control type="label">
                                 <left>105</left>
                                 <top>0</top>
-                                <width>645</width>
+                                <width>745</width>
                                 <height>38</height>
                                 <align>left</align>
                                 <aligny>center</aligny>
-                                <textcolor>grey1</textcolor>
+                                <label>$INFO[ListItem.Label]</label>
+                                <font>ubuntu-r16b</font>
+								<visible>![String.IsEmpty(ListItem.EpisodeName)+String.IsEmpty(ListItem.PlotOutline)]</visible>
+                            </control>
+                            <control type="label">
+                                <left>105</left>
+                                <top>0</top>
+                                <width>745</width>
+                                <height>38</height>
+                                <align>left</align>
+                                <aligny>center</aligny>
                                 <label>$INFO[ListItem.ChannelName]</label>
                                 <font>ubuntu-r16b</font>
+								<visible>String.IsEmpty(ListItem.EpisodeName)+String.IsEmpty(ListItem.PlotOutline)</visible>
                             </control>
                             <control type="label">
                                 <left>105</left>
                                 <top>48</top>
-                                <width>668</width>
+                                <width>768</width>
                                 <height>30</height>
                                 <align>left</align>
                                 <aligny>center</aligny>
-                                <label>$INFO[ListItem.Label]$INFO[ListItem.PlotOutline, - ,]</label>
+                                <label>$VAR[PVRRecordLabel]</label>
                                 <font>ubuntu-r19b</font>
                             </control>
                             <control type="label">
                                 <left>0</left>
                                 <top>0</top>
-                                <width>810</width>
+                                <width>910</width>
                                 <height>38</height>
                                 <textcolor>grey1</textcolor>
                                 <align>right</align>
@@ -176,7 +200,7 @@
                                 <font>ubuntu-r16b</font>
                             </control>
                             <control type="image">
-                                <left>780</left>
+                                <left>880</left>
                                 <top>42</top>
                                 <width>36</width>
                                 <height>38</height>
@@ -184,7 +208,7 @@
                                 <visible>!ListItem.IsResumable+!String.Contains(ListItem.Overlay,OverlayHD.png)</visible>
                             </control>
                             <control type="image">
-                                <left>780</left>
+                                <left>880</left>
                                 <top>42</top>
                                 <width>36</width>
                                 <height>38</height>
@@ -196,7 +220,7 @@
                 </focusedlayout>
             </control>
             <control type="scrollbar" id="70">
-                <left>945</left>
+                <left>1045</left>
                 <top>326</top>
                 <height>660</height>
                 <onleft>50</onleft>
@@ -205,9 +229,9 @@
                 <orientation>vertical</orientation>
             </control>
             <control type="label">
-                <left>982</left>
+                <left>1082</left>
                 <top>375</top>
-                <width>810</width>
+                <width>710</width>
                 <height>38</height>
                 <label>$INFO[ListItem.PlotOutline]</label>
                 <align>center</align>
@@ -217,11 +241,10 @@
                 <shadowcolor>black</shadowcolor>
             </control>
             <control type="group">
-                <left>30</left>
+                <left>130</left>
                 <top>30</top>
                 <visible>!String.IsEmpty(Container(50).ListItem.Plot)</visible>
-                <control type="image">
-                    <description>Description Value for TV Show</description>
+                <!-- <control type="image">
                     <left>952</left>
                     <top>398</top>
                     <width>15</width>
@@ -230,19 +253,18 @@
                     <texture background="true" flipx="true" border="1">SideFade.png</texture>
                 </control>
                 <control type="image">
-                    <description>Description Value for TV Show</description>
-                    <left>1808</left>
+                    <left>1708</left>
                     <top>398</top>
                     <width>15</width>
                     <height>510</height>
                     <colordiffuse>fanartdiffuse</colordiffuse>
                     <texture background="true" border="1">SideFade.png</texture>
-                </control>
+                </control> -->
                 <control type="textbox">
                     <description>Description Value for TV Show</description>
                     <left>982</left>
                     <top>405</top>
-                    <width>810</width>
+                    <width>710</width>
                     <height>510</height>
                     <include condition="!Skin.HasSetting(BigPlotText)">PlotText16Var</include>
                     <include condition="Skin.HasSetting(BigPlotText)">PlotTextBigVar</include>
@@ -251,7 +273,7 @@
                 </control>
             </control>
             <control type="group">
-                <left>1185</left>
+                <left>1250</left>
                 <top>165</top>
                 <control type="label">
                     <description>Disk usage text</description>
@@ -272,7 +294,7 @@
                     <left>15</left>
                     <top>822</top>
                     <width>435</width>
-                    <height>18</height>
+                    <height>12</height>
                     <info>PVR.backenddiskspaceprogr</info>
                     <visible>!Integer.IsGreater(PVR.backenddiskspaceprogr,100)</visible>
                 </control>

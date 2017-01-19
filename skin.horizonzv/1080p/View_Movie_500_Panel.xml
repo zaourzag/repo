@@ -123,7 +123,7 @@
                             <top>20</top>
                             <width>164</width>
                             <height>224</height>
-                            <aspectratio>stretch</aspectratio>
+                            <aspectratio>scale</aspectratio>
                             <fadetime>FadeTime</fadetime>
                             <colordiffuse>$VAR[CoverDim]</colordiffuse>
                             <texture diffuse="masks/mask.png" fallback="FallbackCover.png">$VAR[PosterThumb]</texture>
@@ -219,7 +219,7 @@
                             <top>20</top>
                             <width>164</width>
                             <height>224</height>
-                            <aspectratio>stretch</aspectratio>
+                            <aspectratio>scale</aspectratio>
                             <fadetime>FadeTime</fadetime>
                             <texture diffuse="masks/mask.png" fallback="FallbackCover.png">$VAR[PosterThumb]</texture>
                         </control>

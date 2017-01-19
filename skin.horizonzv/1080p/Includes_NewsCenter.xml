@@ -332,6 +332,7 @@
                     <textcolor>grey</textcolor>
                     <shadowcolor>black</shadowcolor>
                     <label>TV Highlights</label>
+					<visible>Control.IsVisible(402)</visible>
                 </control>
                 <control type="list" id="402">
                     <left>0</left>
@@ -366,7 +367,7 @@
                     <focusedlayout height="180" width="360" condition="!Control.HasFocus(402)">
                         <include>HomeNewsCenterItemLayout</include>
                     </focusedlayout>
-					<content sortby="time" sortorder="ascending">plugin://plugin.service.gto?action=getcontent&amp;ts=$INFO[Window(Home).Property(GTO.timestamp)]</content>
+					<content>plugin://plugin.service.gto?action=getcontent&amp;ts=$INFO[Window(Home).Property(GTO.timestamp)]</content>
                 </control>
             </control>
             <control type="group"> <!-- Serien Planer -->
@@ -389,6 +390,7 @@
                     <textcolor>grey</textcolor>
                     <shadowcolor>black</shadowcolor>
                     <label>Serien Planer</label>
+					<visible>Control.IsVisible(403)</visible>
                 </control>
                 <control type="list" id="403">
                     <left>0</left>
