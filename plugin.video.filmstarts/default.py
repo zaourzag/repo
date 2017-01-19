@@ -38,7 +38,6 @@ if xbmcvfs.exists(temp):
   shutil.rmtree(temp)
 xbmcvfs.mkdirs(temp)
 cookie=os.path.join( temp, 'cookie.jar')
-print "Cookie= "+cookie
 cj = cookielib.LWPCookieJar();
 
 if xbmcvfs.exists(cookie):
@@ -70,13 +69,13 @@ def ersetze(inhalt):
    return inhalt
 
 def imagereplace(icon):   
-  print "ICON :"+icon
+  debug ("ICON :"+icon)
   try:
     quelle  = re.compile('(_[0-9]+_[0-9]+)/', re.DOTALL).findall(icon) [0]
   except:
         quelle="XXXXXXXXXXXXXXX"
   icon=icon.replace(quelle,"_1200_1600")
-  print "ICON :"+icon
+  debug( "ICON :"+icon)
   return icon
   
 def addDir(name, url, mode, thump, desc="",page=1,xtype="",datum=""):
@@ -106,7 +105,7 @@ def addLink(name, url, mode, thump, duration="", desc="", genre='',director="",b
      icon="http://de.web.img1.acsta.net/r_1200_1600/seriesposter/"+id+"/poster_large.jpg"
   except:
      icon=thump  
-  print icon  
+  debug( icon  )
   u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
   ok = True
   liz = xbmcgui.ListItem(name,thumbnailImage=thump)
@@ -147,7 +146,7 @@ def decodeurl(url):
     
 def geturl(url,data="x",header=""):
         global cj
-        print("Get Url: " +url)
+        debug("Get Url: " +url)
         for cook in cj:
           debug(" Cookie :"+ str(cook))
         opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))        
@@ -162,7 +161,7 @@ def geturl(url,data="x",header=""):
           else:
              content=opener.open(url).read()
         except urllib2.HTTPError as e:
-             #print e.code   
+             #debug( e.code )  
              cc=e.read()  
              debug("Error : " +cc)
        
@@ -171,38 +170,38 @@ def geturl(url,data="x",header=""):
         return content
 
 def trailer():
-    addDir("Beliebteste Trailer", "http://www.filmstarts.de/trailer/beliebteste.html", 'trailerpage', "")
-    addDir("Aktuell im Kino", "http://www.filmstarts.de/trailer/imkino/", 'trailerpage', "")
-    addDir("Demnächst im Kino", "http://www.filmstarts.de/trailer/bald/", 'trailerpage', "")
-    addDir("Neueste Trailer", "http://www.filmstarts.de/trailer/neu/", 'trailerpage', "")
-    addDir("Video-Archiv", baseurl+"/trailer/archiv/", 'filterart', "")
+    addDir(translation(30008), "http://www.filmstarts.de/trailer/beliebteste.html", 'trailerpage', "")
+    addDir(translation(30009), "http://www.filmstarts.de/trailer/imkino/", 'trailerpage', "")
+    addDir(translation(30010), "http://www.filmstarts.de/trailer/bald/", 'trailerpage', "")
+    addDir(translation(30011), "http://www.filmstarts.de/trailer/neu/", 'trailerpage', "")
+    addDir(translation(30012), baseurl+"/trailer/archiv/", 'filterart', "")
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 def kino():
-    addDir("Aktuelle Kino Filme", "http://www.filmstarts.de/filme-imkino/kinostart/", 'kinovideos', "")
-    addDir("Neustart der Woche", "http://www.filmstarts.de/filme-imkino/neu/", 'kinovideos', "")
-    addDir("Die Besten Filme im Kino", "http://www.filmstarts.de/filme-imkino/besten-filme/user-wertung/", 'kinovideos', "")     
-    addDir("Kinderfilme im Kino", "http://www.filmstarts.de/filme-imkino/kinderfilme/", 'kinovideos', "")             
-    addDir("Starttermin nach Wochen", "", 'selectwoche', "")             
-    addDir("Besten Filme", "http://www.filmstarts.de/filme/besten/user-wertung/", 'filterkino', "")         
-    addDir("Schlechtesten Filme", "http://www.filmstarts.de/filme/schlechtesten/user-wertung/", 'filterkino', "")         
-    addDir("Kinder Filme", "http://www.filmstarts.de/filme/kinderfilme/", 'filterkino', "")    
+    addDir(translation(30013), "http://www.filmstarts.de/filme-imkino/kinostart/", 'kinovideos', "")
+    addDir(translation(30014), "http://www.filmstarts.de/filme-imkino/neu/", 'kinovideos', "")
+    addDir(translation(30015), "http://www.filmstarts.de/filme-imkino/besten-filme/user-wertung/", 'kinovideos', "")     
+    addDir(translation(30016), "http://www.filmstarts.de/filme-imkino/kinderfilme/", 'kinovideos', "")             
+    addDir(translation(30017), "", 'selectwoche', "")             
+    addDir(translation(30018), "http://www.filmstarts.de/filme/besten/user-wertung/", 'filterkino', "")         
+    addDir(translation(30019), "http://www.filmstarts.de/filme/schlechtesten/user-wertung/", 'filterkino', "")         
+    addDir(translation(30020), "http://www.filmstarts.de/filme/kinderfilme/", 'filterkino', "")    
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)    
 
 def series():
-    addDir("Beliebteste Serien", "http://www.filmstarts.de/serien/top/", 'filterserien', "")
-    addDir("Best Bewertete", "http://www.filmstarts.de/serien/beste/", 'filterserien', "")
-    addDir("Populaerste Serien", "http://www.filmstarts.de/serien/top/populaerste/", 'serienvideos', "")  
-    addDir("Meisterwartete Staffeln", "http://www.filmstarts.de/serien/kommende-staffeln/meisterwartete/", 'serienvideos', "")
-    addDir("Neueste Gestartete Serien", "http://www.filmstarts.de/serien/neue/", 'serienvideos', "")         
-    addDir("Neue Serien Trailer", "http://www.filmstarts.de/serien/videos/neueste/", 'neuetrailer', "",xtype="")      
-    addDir("Video-Archiv", "http://www.filmstarts.de/serien-archiv/", 'filterserien', "")
+    addDir(translation(30021), "http://www.filmstarts.de/serien/top/", 'filterserien', "")
+    addDir(translation(30022), "http://www.filmstarts.de/serien/beste/", 'filterserien', "")
+    addDir(translation(30023), "http://www.filmstarts.de/serien/top/populaerste/", 'serienvideos', "")  
+    addDir(translation(30024), "http://www.filmstarts.de/serien/kommende-staffeln/meisterwartete/", 'serienvideos', "")
+    addDir(translation(30025), "http://www.filmstarts.de/serien/neue/", 'serienvideos', "")         
+    addDir(translation(30026), "http://www.filmstarts.de/serien/videos/neueste/", 'neuetrailer', "",xtype="")      
+    addDir(translation(30027), "http://www.filmstarts.de/serien-archiv/", 'filterserien', "")
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 
 def news():
-    addDir("5 Sterne", "http://www.filmstarts.de/videos/shows/funf-sterne/", 'newsvideos', "")
-    addDir("Fehlerteufel", "http://www.filmstarts.de/videos/shows/filmstarts-fehlerteufel/", 'newsvideos', "")
-    addDir("Interviews", "http://www.filmstarts.de/trailer/interviews/", 'newsvideos', "")
-    addDir("Meine Lieblings Filmscene", "http://www.filmstarts.de/videos/shows/meine-lieblings-filmszene/", 'newsvideos', "")
+    addDir(translation(30028), "http://www.filmstarts.de/videos/shows/funf-sterne/", 'newsvideos', "")
+    addDir(translation(30029), "http://www.filmstarts.de/videos/shows/filmstarts-fehlerteufel/", 'newsvideos', "")
+    addDir(translation(30030), "http://www.filmstarts.de/trailer/interviews/", 'newsvideos', "")
+    addDir(translation(30031), "http://www.filmstarts.de/videos/shows/meine-lieblings-filmszene/", 'newsvideos', "")
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 
 def newsvideos(url,page=1):
@@ -236,7 +235,7 @@ def newsvideos(url,page=1):
       addLink(title, baseurl+link, 'playVideo', img)
    try:
       xyx = re.compile('(<li class="navnextbtn">[^<]+<span class="acLnk)', re.DOTALL).findall(content)[0]        
-      addDir("Next", url, 'newsvideos', "",page=page+1)
+      addDir(translation(30046), url, 'newsvideos', "",page=page+1)
    except:
       pass
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)      
@@ -247,41 +246,41 @@ def selectwoche(url):
    d = dialog.input("Wähle die Woche des KinoProgramms", type=xbmcgui.INPUT_DATE)
    d=d.replace(' ','0')  
    d= d[6:] + "-" + d[3:5] + "-" + d[:2]
-   addDir("Deutschland", "http://www.filmstarts.de/filme-vorschau/de/?week=", 'kinovideos', "",datum=d)         
-   addDir("USA", "http://www.filmstarts.de/filme-vorschau/usa/?week=", 'kinovideos', "",datum=d)    
+   addDir(translation(30032), "http://www.filmstarts.de/filme-vorschau/de/?week=", 'kinovideos', "",datum=d)         
+   addDir(translation(30033), "http://www.filmstarts.de/filme-vorschau/usa/?week=", 'kinovideos', "",datum=d)    
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)        
    
 def filterserien():
     debug("filterart url :"+ url)
     if not "genre-" in url:
-        addDir("Filter nach Genre", url, 'genre', "",xtype="filterserien")
+        addDir(translation(30034), url, 'genre', "",xtype="filterserien")
     if not "jahrzehnt" in url:        
-      addDir("Filter nach Jahre", url, 'jahre',"")
+      addDir(translation(30035), url, 'jahre',"")
     if not "produktionsland-" in url:
-      addDir("Filter nach Laender", url, 'laender', "")
-    addDir("Zeige Videos", url, 'serienvideos', "")     
+      addDir(translation(30036), url, 'laender', "")
+    addDir(translation(30037), url, 'serienvideos', "")     
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
     
 def filterkino(url):
     debug("filterart url :"+ url)
     if not "genre-" in url:
-        addDir("Filter nach Genre", url, 'genre', "",xtype="filterkino")
+        addDir(translation(30034), url, 'genre', "",xtype="filterkino")
     if not "jahrzehnt" in url:        
-      addDir("Filter nach Jahre", url, 'jahre',"")
+      addDir(translation(30035), url, 'jahre',"")
     if not "produktionsland-" in url:
-      addDir("Filter nach Laender", url, 'laender', "")
-    addDir("Zeige Videos", url, 'kinovideos', "")     
+      addDir(translation(30036), url, 'laender', "")
+    addDir(translation(30037), url, 'kinovideos', "")     
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
     
 def filterart(url):
     debug("filterart url :"+ url)
     if not "genre-" in url:
-        addDir("Filter nach Genre", url, 'genre', "",xtype="filterart")
+        addDir(translation(30034), url, 'genre', "",xtype="filterart")
     if not "sprache-" in url:        
-      addDir("Filter nach Sprache", url, 'sprache',"")
+      addDir(translation(30038), url, 'sprache',"")
     if not "format-" in url:
-      addDir("Filter nach Format", url, 'types', "")
-    addDir("Zeige Videos", url, 'archivevideos', "")     
+      addDir(translation(30039), url, 'types', "")
+    addDir(translation(30037), url, 'archivevideos', "")     
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
     
 def sprache(url):  
@@ -348,7 +347,7 @@ def neuetrailer(url,page=1):
         except:
           pass
     if 'fr">Nächste<i class="icon-arrow-right">' in content:  
-      addDir("Next", url, 'neuetrailer', "",page=page+1)
+      addDir(translation(30006), url, 'neuetrailer', "",page=page+1)
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)  
     
 def laender(url,type="filterserien"):
@@ -445,7 +444,7 @@ def archivevideos(url,page=1):
         debug("....")
         debug(element)
    if 'fr">Nächste<i class="icon-arrow-right">' in content:
-     addDir("Next", url, 'archivevideos', "",page=page+1)
+     addDir(translation(30006), url, 'archivevideos', "",page=page+1)
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)     
    
 def serienvideos(url,page=1):   
@@ -481,7 +480,7 @@ def serienvideos(url,page=1):
         debug("....")
         debug(element)
    if 'fr">Nächste<i class="icon-arrow-right">' in content:  
-     addDir("Next", url, 'serienvideos', "",page=page+1)
+     addDir(translation(30006), url, 'serienvideos', "",page=page+1)
   
 
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)   
@@ -564,10 +563,10 @@ def kinovideos(url,page=1,datum=""):
       Beforweek = Start - timedelta(days=7)
       nx=Nextweek.strftime("%Y-%m-%d")
       bx=Beforweek.strftime("%Y-%m-%d")
-      addDir("Nächste woche", url, 'kinovideos', "",datum=nx)      
-      addDir("Vorhärige WOche", url, 'kinovideos', "",datum=bx)              
+      addDir(translation(30040), url, 'kinovideos', "",datum=nx)      
+      addDir(translation(30041), url, 'kinovideos', "",datum=bx)              
    if 'fr">Nächste<i class="icon-arrow-right">' in content:  
-     addDir("Next", url, 'kinovideos', "",page=page+1)
+     addDir(translation(30006), url, 'kinovideos', "",page=page+1)
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)      
    
    
@@ -594,7 +593,7 @@ def tvstaffeln(url):
             except:
                 pass
     if x>0:
-            addDir("Alle Videos", url, 'tvfolgen', "",xtype="")
+            addDir(translation(30007), url, 'tvfolgen', "",xtype="")
             xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)         
     else:     
             tvfolgen(url,"") 
@@ -705,15 +704,15 @@ def trailerpage(url,page=1) :
         debug("....NOK")
         debug(element)
    if 'fr">Nächste<i class="icon-arrow-right">' in content:
-     addDir("Next", url, 'trailerpage', "",page=page+1)
+     addDir(translation(30006), url, 'trailerpage', "",page=page+1)
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)     
         
 # Haupt Menu Anzeigen      
 if mode is '':
     addDir(translation(30002), "", 'trailer', "")
-    addDir("Serien", "", 'series', "")
-    addDir("Kino", "", 'kino', "")
-    addDir("News", "", 'news', "")
+    addDir(translation(30003), "", 'series', "")
+    addDir(translation(30004), "", 'kino', "")
+    addDir(translation(30005), "", 'news', "")
     #addDir(translation(30001), translation(30001), 'Settings', "")   
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 else:

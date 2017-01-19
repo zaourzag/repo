@@ -27,6 +27,7 @@ subdir=xbmc.translatePath( os.path.join( temp, 'subs', '') ).decode("utf-8")
 subdownload=xbmc.translatePath( os.path.join( temp, 'download', '') ).decode("utf-8")
 subtitlefile="tv4user"
 
+mainUrl = "http://board.TV4User.de"
 
 
 # Anlegen von Directorys
@@ -45,7 +46,12 @@ if xbmcvfs.exists(temp):
 xbmcvfs.mkdirs(temp)
 xbmcvfs.mkdirs(subdir)
 xbmcvfs.mkdirs(subdownload)
+cookie   = xbmc.translatePath( os.path.join(temp,"cookie.jar") ).decode("utf-8")    
+cj = cookielib.LWPCookieJar();
 
+if xbmcvfs.exists(cookie):
+   cj.load(cookie,ignore_discard=True, ignore_expires=True)
+   
 # Logging
 def debug(content):
     log(content, xbmc.LOGDEBUG)
@@ -73,6 +79,7 @@ def getSettings():
   pw=addon.getSetting("pw")
   global backNav
 
+   
 # Url Parameter Einlesen  
 def get_params(string=""):
   param=[]
@@ -97,26 +104,27 @@ def get_params(string=""):
 
 # Einloggen  
 def login():
-  cj = cookielib.CookieJar()
-  global mainUrl
-  mainUrl = "http://board.TV4User.de"
-  global opener
-  opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
-  userAgent = "Mozilla/5.0 (Windows NT 6.2; WOW64; rv:23.0) Gecko/20100101 Firefox/23.0"
-  opener.addheaders = [('User-Agent', userAgent)]
-  xy=opener.open(mainUrl+"/index.php?form=UserLogin", data="loginUsername="+urllib.quote_plus(user)+"&loginPassword="+urllib.quote_plus(pw)).read()
+  xy=getUrl(mainUrl+"/index.php?form=UserLogin", data="loginUsername="+urllib.quote_plus(user)+"&loginPassword="+urllib.quote_plus(pw))
   
 # Url einlesen  
-def getUrl(url):
-        
-        debug("TV4User: Get Url")
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; rv:23.0) Gecko/20100101 Firefox/23.0')
-        response = urllib2.urlopen(req)
-        content=response.read()
-        response.close()
+def getUrl(url,data="x"):
+               
+        debug("Get Url: " +url)
+        opener = urllib2.build_opener(urllib2.HTTPCookieProcessor())
+        userAgent = "Dalvik/2.1.0 (Linux; U; Android 5.0;)"
+        opener.addheaders = [('User-Agent', userAgent)]
+        try:
+          if data!="x" :
+             content=opener.open(url,data=data).read()
+          else:
+             content=opener.open(url).read()
+        except urllib2.HTTPError as e:
+             return ""
+             
+        opener.close()
+        cj.save(cookie,ignore_discard=True, ignore_expires=True)
         return content
-
+                               
         # Titel Beeinigen
 def clean_serie(title):
         title=title.lower().replace('the ','') 
@@ -128,7 +136,7 @@ def clean_serie(title):
 # Liste Aller Serien Holen        
 def lies_serien():
         debug("TV4User: Starte ShowAllSeries")
-        content = opener.open(mainUrl+"/index.php").read()
+        content = getUrl(mainUrl+"/index.php")
         content = content[content.find('Alphabetische Serien-&Uuml;bersicht')+1:]
         content = content[:content.find('</form>')]
         # Serie Suchen
@@ -503,7 +511,7 @@ def setSubtitle(subUrl):
         downloadfile=xbmc.translatePath(subdownload+subtitlefile)
         clearSubTempDir(subdownload)
         clearSubTempDir(subdir)
-        rarContent = opener.open(subUrl).read()
+        rarContent = getUrl(subUrl)
         if rarContent.startswith("Rar"):
           ext="rar"
         else:

@@ -797,14 +797,14 @@ class EPG(xbmcgui.WindowXML):
 		dialog = xbmcgui.Dialog()
 		today = datetime.date.today()
 		date = dialog.numeric(1, 'Enter date').replace(' ','0').replace('/','.')
-		datelow = datetime.date.today() - datetime.timedelta(days=8)
-		datelow = datelow.strftime(format)
-		datehigh = datetime.date.today() + datetime.timedelta(days=14)
-		datehigh = datehigh.strftime(format)
-		if date < datelow:
+		datelow = (datetime.date.today() - datetime.timedelta(days=7))
+		datehigh = (datetime.date.today() + datetime.timedelta(days=14))
+
+		print str(datelow)
+		if time.strptime(date, '%d.%m.%Y') < time.strptime(str(datelow), '%Y-%m-%d'):
 			xbmcgui.Dialog().notification(str(date),' Datum ist zu klein', time=3000) 
 			return
-		if date > datehigh:
+		if time.strptime(date, '%d.%m.%Y') > time.strptime(str(datehigh), '%Y-%m-%d'):
 			xbmcgui.Dialog().notification(str(date),' Datum ist zu gross', time=3000) 
 			return
 		date = time.strptime(date, '%d.%m.%Y')

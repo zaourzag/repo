@@ -408,10 +408,18 @@ def live_play(url,session,userid,channelid,ids):
   #https://magine.com/api/content/v2/feeds/channel-11245
   if ids=="":
     content=getUrl(baseurl+"/api/content/v2/feeds/channel-"+str(channelid),header=header)  
-    struktur = json.loads(content)    
-    times=struktur["items"][0]["id"]
+    struktur = json.loads(content)   
+    debug("live_play Struktur Channel :")    
+    debug(struktur)
+    now = datetime.datetime.now()- datetime.timedelta(seconds=_timezone_)
+    for element in struktur["items"]:
+        start=datetime.datetime.utcfromtimestamp(int(element["startUnixtime"]))  
+        stop=datetime.datetime.utcfromtimestamp(int(element["stopUnixtime"])) 
+        if now> start and now < stop:               
+           times=element["id"]           
   else:
     times=ids
+  debug("TIMES :"+str(times))
   debug("live_play")
   playlist = xbmc.PlayList(1)
   playlist.clear() 

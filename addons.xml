@@ -261,7 +261,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
   </extension>
 </addon>
 
-<addon id="plugin.video.aod" name="Anime on Demand" version="0.5.1" provider-name="L0RE">
+<addon id="plugin.video.aod" name="Anime on Demand" version="0.6.0" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="script.module.pyxbmct" version="1.1.7"/>
@@ -794,7 +794,7 @@ v1.9.0 (2016-10-14) moving to the new api - please report bugs
   </extension>
 </addon>
 
-<addon id="plugin.video.magine" name="Magine" version="0.3.6" provider-name="L0RE">
+<addon id="plugin.video.magine" name="Magine" version="0.3.7" provider-name="L0RE">
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
     </extension>
@@ -1334,7 +1334,7 @@ Für Sport1US und Sport1+ wird ein ABO auf sport1.de benötigt.
     </extension>
 </addon>
 
-<addon id="plugin.video.dazn" version="0.7.1" name="DAZN" provider-name="L0RE">
+<addon id="plugin.video.dazn" version="0.7.2" name="DAZN" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
     </requires>
@@ -1463,22 +1463,22 @@ v0.6.0 (2016-12-02)
 	</extension>
 </addon>
 
-<addon id="plugin.video.filmstarts" name="Filmstarts" version="0.6.4" provider-name="L0RE">
+<addon id="plugin.video.filmstarts" name="Filmstarts" version="0.6.5" provider-name="L0RE">
     <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="xbmc.python" version="2.24.0"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
     </extension>
   <extension point="xbmc.addon.metadata">
-    <summary lang="de">Film und Serien Informationen von http://www.filmstarts.de/</summary>
-    <summary lang="en">Film an Series Information from http://www.filmstarts.de/</summary>
-    <description lang="en">Film an Series Information from http://www.filmstarts.de/</description>
-    <description lang="de">Film und Serien Informationen von http://www.filmstarts.de/</description>
+    <summary lang="de">Film und Serien (Trailer, Making of,Teaser,...)  von http://www.filmstarts.de/</summary>
+    <summary lang="en">Film an Series (Trailer, Making of,Teaser,...) from http://www.filmstarts.de/</summary>
+    <description lang="en">Film an Series (Trailer, Making of,Teaser,...) from http://www.filmstarts.de/</description>
+    <description lang="de">Film und Serien (Trailer, Making of,Teaser,...) von http://www.filmstarts.de/</description>
     <website></website>
     <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-    <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.br3</source>
-    <forum>http://www.kodinerds.net/index.php/Thread/46598-Bayrisches-Fernsehen/</forum>
+    <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.filmstarts</source>
+    <forum>https://www.kodinerds.net/index.php/Thread/53743-RERelease-filmstarts/</forum>
     <email>andreas at vogler dot name</email>
     <platform>all</platform>
   </extension>
@@ -1952,7 +1952,7 @@ v0.6.0 (2016-12-02)
   </extension>
 </addon>
 
-<addon id="service.subtitles.tv4user" name="Tv4user.de" version="0.8.8" provider-name="L0RE">
+<addon id="service.subtitles.tv4user" name="Tv4user.de" version="0.8.9" provider-name="L0RE">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
   </requires>
@@ -2196,7 +2196,7 @@ v0.6.0 (2016-12-02)
     </extension>
 </addon>
 
-<addon id="skin.fTVfred-krypton" version="3.5.1a" name="fTV Fred Edition (Krypton)" provider-name="Sualfred">
+<addon id="skin.fTVfred-krypton" version="3.5.2" name="fTV Fred Edition (Krypton)" provider-name="Sualfred">
 	<requires>
 		<import addon="xbmc.gui" version="5.12.0"/>
 		<import addon="script.toolbox" version="1.1.1"/>
@@ -2226,8 +2226,8 @@ v0.6.0 (2016-12-02)
         </assets>
 		<news>Changelog:
 
-[B]3.5.1[/B]
-- Fixed LiveTV widget
+[B]3.5.2[/B]
+- Reworked banner implementation (eg auto refresh each 10 minutes)
 
 See changelog.txt for more details.</news>
 	</extension>
@@ -2493,7 +2493,7 @@ See changelog.txt for more details.</news>
   </extension>
 </addon>
 
-<addon id="plugin.video.zattooboxExt.beta" version="1.6.2" name="Zattoo Box Extended Beta" provider-name="Steffen Rolapp">
+<addon id="plugin.video.zattooboxExt.beta" version="1.6.3" name="Zattoo Box Extended Beta" provider-name="Steffen Rolapp">
   <requires>
     <import addon="xbmc.python" version="2.14.0"/>
     <import addon="xbmc.addon" version="13.0.0" />
