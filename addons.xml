@@ -2085,7 +2085,7 @@ v0.6.0 (2016-12-02)
 	</extension>
 </addon>
 
-<addon id="skin.horizonzv" name="[RC] Horizonz V (Kodi 17)" version="0.9.0.11" provider-name="blauesgruen">
+<addon id="skin.horizonzv" name="[RC] Horizonz V (Kodi 17)" version="0.9.0.12" provider-name="blauesgruen">
 	<requires>
 		<import addon="xbmc.gui" version="5.12.0"/>
 	</requires>
@@ -2096,8 +2096,22 @@ v0.6.0 (2016-12-02)
 		<platform>all</platform>
 		<summary>Skin von blauesgruen / Initiator mad-max</summary>
 		<description></description>
-		<!-- <description>Konzept:[CR]- einen AEON Skin schaffen der auch auf schwächeren Systemen läuft[CR]- logische und intuitive Bedienung[CR]- ein ansprechendes Aussehen im Alu-/Glasdesign, gut lesbar[CR]- alles ganz anders zu machen ;)[CR]bisher unterstützte Addons:[CR]- Artwork Downloader (Artworks für Filme)[CR]- CDArt Manager (Artworks für Music)[CR]- Script Extended Infos[CR]- GlobalSearch[CR]- SkinWidgets (ermöglicht die Darstellung von "zuletzt hinzugefügten", "zufällig gewählten" und "empfohlenen" Elementen)[CR]Kontakt und Fehlermeldungen:[CR]- www.kodinerds.net "Horizonz V"[CR]DANKE AN DIE COMMUNITY BEI XBMCNERDS/KODINERDS FUER DIE UNTERSTÜTZUNG !!!</description> -->
 		<disclaimer>Ursprünglich basierte der Skin auf den Mockups von xb2iris Skin "Horizonz".</disclaimer>
+		<license>CC BY-SA 4.0, GNU GENERAL PUBLIC LICENSE Version 2.0</license>
+		<forum>http://kodinerds.net/</forum>
+		<source>https://github.com/kodinerds/repo/tree/master/skin.horizonzv</source>
+			<assets>
+			   <icon>resources/icon.png</icon>
+			   <fanart>resources/fanart.jpg</fanart>
+			   <screenshot>resources/screenshot-01.jpg</screenshot>
+			   <screenshot>resources/screenshot-02.jpg</screenshot>
+			   <screenshot>resources/screenshot-03.jpg</screenshot>
+			   <screenshot>resources/screenshot-04.jpg</screenshot>
+			   <screenshot>resources/screenshot-05.jpg</screenshot>
+			   <screenshot>resources/screenshot-06.jpg</screenshot>
+			   <screenshot>resources/screenshot-07.jpg</screenshot>
+			   <screenshot>resources/screenshot-08.jpg</screenshot>
+		   </assets>
 	</extension>
 </addon>
 
