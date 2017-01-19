@@ -12,7 +12,7 @@ class Playback:
         self.LaUrl       = self.parse_data(n, details, 'LaUrl')
         
     def parse_data(self, n, data, id):
-        return data[n][id]
+        return data[n][id].replace('https','http')
         
     def location(self, data):
         l = ['auto-auto', 'akamai-dc1', 'akamai-dc2', 'footprint-dc1', 'footprint-dc2']

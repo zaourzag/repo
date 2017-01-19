@@ -40,7 +40,7 @@ class Tiles:
             self.item['duration'] = timedelta_total_seconds(end-start)
         
     def add_thumb(self, i):
-        url = api_base+"/img('%s')/$value?Quality=95&Width=256&Height=256&Format='%s'"
+        url = api_base+"/img('%s')/$value?Quality=95&Width=720&Height=540&ResizeAction='fill'&VerticalAlignment='top'&Format='%s'"
         image = i.get('Image', '')
         if image:
             self.item['thumb'] = url % (image['Id'], image['ImageMimeType'])
