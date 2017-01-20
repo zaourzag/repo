@@ -3,20 +3,6 @@
 import simple_requests as requests
 from .common import *
 
-import xbmc
-   
-def debug(content):
-    log(content, xbmc.LOGDEBUG)
-    
-def notice(content):
-    log(content, xbmc.LOGNOTICE)
-
-def log(msg, level=xbmc.LOGNOTICE):
-    addon = xbmcaddon.Addon()
-    addonID = addon.getAddonInfo('id')
-    xbmc.log('%s: %s' % (addonID, msg), level) 
-    
-    
 class Client:
 
     def __init__(self):
@@ -56,7 +42,7 @@ class Client:
         self.POST_DATA = {
                             "AssetId"            : id,
                             "Format"             : "MPEG-DASH",
-                            "PlayerId"           : uniq_id(device_id),
+                            "PlayerId"           : addon.getSetting('device_id'),
                             "Secure"             : "true",
                             "PlayReadyInitiator" : "false",
                             "BadManifests"       : [],
@@ -80,9 +66,9 @@ class Client:
             self.HEADERS["Authorization"] = "Bearer " + self.TOKEN
         else:
             self.TOKEN = ""
-            dialog.ok("DAZN", result)
+            dialog.ok(addon_name, result)
         if result == "HardOffer":
-            dialog.ok("DAZN", getString(30161))
+            dialog.ok(addon_name, getString(30161))
         addon.setSetting("token", self.TOKEN)
         
     def signIn(self):
@@ -90,7 +76,7 @@ class Client:
             self.POST_DATA = {
                                 "Email"    : utfenc(email),
                                 "Password" : utfenc(password),
-                                "DeviceId" : uniq_id(device_id),
+                                "DeviceId" : addon.getSetting('device_id'),
                                 "Platform" : "web",
                                 }
             data = self.request(self.SIGNIN)
@@ -108,7 +94,7 @@ class Client:
     def signOut(self):
         self.HEADERS["Authorization"] = "Bearer " + self.TOKEN
         self.POST_DATA = {
-                            "DeviceId" : uniq_id(device_id)
+                            "DeviceId" : addon.getSetting('device_id')
                             }
         r = self.request(self.SIGNOUT)
         
@@ -117,8 +103,6 @@ class Client:
                             "OriginalToken" : self.TOKEN
                             }
         data = self.request(self.REFRESH)
-        debug("refreshToken DATA :" )
-        debug(data)
         if data.get("odata.error", None):
             self.errorHandler(data)
         else:
@@ -141,28 +125,16 @@ class Client:
                 if not self.TOKEN:
                     self.signIn()
             else:
-                dialog.ok("DAZN", getString(30101))
+                dialog.ok(addon_name, getString(30101))
             self.POST_DATA  = {}
         else:
             self.TOKEN = ""
         
     def request(self, url):
-        debug("Start request")
-        debug("URL :"+url)
-        debug("Data :")
-        debug(self.POST_DATA)
-        debug("HEADER :")
-        debug(self.HEADERS)
-        debug("Params :")
-        debug (self.PARAMS)        
         if self.POST_DATA:
             r = requests.post(url, headers=self.HEADERS, data=self.POST_DATA, params=self.PARAMS)
         else:
             r = requests.get(url, headers=self.HEADERS, params=self.PARAMS)
-        debug("Return")
-        debug("Code :"+str(r.status_code))
-        debug("JSON :")
-        debug(r.json())
         if r.headers.get("content-type", "").startswith("application/json"):
             return r.json()
         else:
@@ -179,14 +151,14 @@ class Client:
         elif code == "2" or code.lower() == "signin":
             self.signIn()
         elif code == "7":
-            dialog.ok("DAZN", getString(30107))
+            dialog.ok(addon_name, getString(30107))
         elif code == "10008":
-            dialog.ok("DAZN", getString(30108))
+            dialog.ok(addon_name, getString(30108))
         elif code == "InvalidAccount" or code == "invalidPassword":
-            dialog.ok("DAZN", getString(30151))
+            dialog.ok(addon_name, getString(30151))
         elif code == "unableFindEmail":
-            dialog.ok("DAZN", getString(30152))
+            dialog.ok(addon_name, getString(30152))
         elif code == "passwords_doesnt_match":
-            dialog.ok("DAZN", getString(30153))
+            dialog.ok(addon_name, getString(30153))
         else:
-            dialog.ok("DAZN", msg)
+            dialog.ok(addon_name, msg)

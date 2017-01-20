@@ -3,14 +3,14 @@
 import json,os,sys,urllib,urlparse
 import time,datetime,random,re
 import xbmc,xbmcaddon,xbmcgui,xbmcplugin
-
-from uuid import getnode as uuid_node
+from uuid import UUID
 from hashlib import md5
 
 addon_handle = int(sys.argv[1])
 addon        = xbmcaddon.Addon()
 dialog       = xbmcgui.Dialog()
 addon_id     = addon.getAddonInfo('id')
+addon_name  = addon.getAddonInfo('name')
 version      = addon.getAddonInfo('version')
 icon         = addon.getAddonInfo('icon')
 fanart       = addon.getAddonInfo('fanart')
@@ -22,7 +22,6 @@ password     = addon.getSetting('password')
 token        = addon.getSetting('token')
 language     = addon.getSetting('language')
 country      = addon.getSetting('country')
-device_id    = addon.getSetting('device_id')
 cdn          = int(addon.getSetting('server'))
 
 base_url     = 'https://isl.dazn.com'
@@ -57,23 +56,22 @@ def utc2local(date_string):
         epoch = time.mktime(utc.timetuple())
         offset = datetime.datetime.fromtimestamp(epoch) - datetime.datetime.utcfromtimestamp(epoch)
         return (utc + offset).strftime(time_format)
-        
-def uniq_id(mac_addr):
-    if mac_addr:
-        return mac_addr
-    else:
-        mac_addr = xbmc.getInfoLabel('Network.MacAddress')
+
+def uniq_id():
+    mac_addr = xbmc.getInfoLabel('Network.MacAddress')
     if not ":" in mac_addr: mac_addr = xbmc.getInfoLabel('Network.MacAddress')
     # hack response busy
     if not ":" in mac_addr:
-        time.sleep(2)
+        time.sleep(1)
         mac_addr = xbmc.getInfoLabel('Network.MacAddress')
     if ":" in mac_addr:
-        mac_addr = md5(str(mac_addr.decode("utf-8"))).hexdigest()
+        mac_addr = str(UUID(md5(str(mac_addr.decode("utf-8"))).hexdigest()))
+        addon.setSetting('device_id', mac_addr)
+        return True
     else:
-        mac_addr = md5(str(uuid_node())).hexdigest()
-    addon.setSetting('device_id', mac_addr)
-    return mac_addr
+        log("[%s] error: failed to get device id (%s)" % (addon_id, str(mac_addr)))
+        dialog.ok(addon_name, getString(30051))
+        return False
     
 def days(title, now, start):
     today = datetime.date.today()

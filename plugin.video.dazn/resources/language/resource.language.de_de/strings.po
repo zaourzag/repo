@@ -68,6 +68,10 @@ msgctxt "#30029"
 msgid "Level3 (2)"
 msgstr "Level3 (2)"
 
+msgctxt "#30051"
+msgid "Failed to get Device ID. Please Retry."
+msgstr "Fehler beim Abrufen der Geräte-ID Bitte erneut versuchen."
+
 msgctxt "#30101"
 msgid "DAZN is not available in your country"
 msgstr "DAZN ist in deinem Land nicht verfügbar"
