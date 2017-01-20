@@ -191,7 +191,7 @@ def playdash(file,session,userid,channelid,ids,desc="",title="",is_type="",media
   listitem.setProperty('inputstreamaddon', is_type)  
   listitem.setProperty(is_type+".manifest_type", "mpd")  
   listitem.setInfo( "video", { "Title" : title, "Plot" : desc} )    
-  return listitem,dauer,stop  
+  return listitem,dauer,title  
    
 
 def mediathek_channels(session,userid):
@@ -307,7 +307,7 @@ def mediathek_playvideo(session,userid,channelid,ids):
      return "" 
   debug("XXX YYYY")     
   debug(is_type)  
-  listitem,dauer,stop=playdash(struktur["dash"],session,userid,channelid,ids,is_type=is_type,mediathek=1)
+  listitem,dauer,title=playdash(struktur["dash"],session,userid,channelid,ids,is_type=is_type,mediathek=1)
   xbmcplugin.setResolvedUrl(addon_handle, True, listitem)
 
 
@@ -399,32 +399,39 @@ def live_channels(session,userid):
             addLink(titel, "", "live_play", bild, channelid=str(kanal_id),ids="")
   xbmcplugin.endOfDirectory(addon_handle)
 
-                
-def live_play(url,session,userid,channelid,ids):      
+def get_ids(session,userid,channelid):                
   header=[]
   header.append (("Authorization","Bearer "+session))
   header.append (("UserId",userid))
   debug("Start :"+ids)
   #https://magine.com/api/content/v2/feeds/channel-11245
-  if ids=="":
-    content=getUrl(baseurl+"/api/content/v2/feeds/channel-"+str(channelid),header=header)  
-    struktur = json.loads(content)   
-    debug("live_play Struktur Channel :")    
-    debug(struktur)
-    now = datetime.datetime.now()- datetime.timedelta(seconds=_timezone_)
-    for element in struktur["items"]:
-        start=datetime.datetime.utcfromtimestamp(int(element["startUnixtime"]))  
-        stop=datetime.datetime.utcfromtimestamp(int(element["stopUnixtime"])) 
-        if now> start and now < stop:               
-           times=element["id"]           
-  else:
-    times=ids
+  content=getUrl(baseurl+"/api/content/v2/feeds/channel-"+str(channelid),header=header)  
+  struktur = json.loads(content)   
+  debug("live_play Struktur Channel :")    
+  debug(struktur)
+  now = datetime.datetime.now()- datetime.timedelta(seconds=_timezone_)
+  id_arr=[]
+  for element in struktur["items"]:
+     start=datetime.datetime.utcfromtimestamp(int(element["startUnixtime"]))  
+     stop=datetime.datetime.utcfromtimestamp(int(element["stopUnixtime"]))     
+     if now < stop:               
+          id_arr.append(element["id"])    
+  return id_arr
+  
+def live_play(session,userid,channelid):      
+  header=[]
+  header.append (("Authorization","Bearer "+session))
+  header.append (("UserId",userid))
+  debug("Start :"+ids)
+  #https://magine.com/api/content/v2/feeds/channel-11245
+  
+  id_arr=get_ids(session,userid,channelid)
   debug("TIMES :"+str(times))
   debug("live_play")
   playlist = xbmc.PlayList(1)
   playlist.clear() 
-  item,title,next,dauer=live_leseclips(times,session,userid,channelid)
-  playlist.add(title, item)  
+  item,dashfile,dauer,id_arr=live_leseclips(session,userid,channelid,id_arr)
+  playlist.add(dashfile, item)  
   debug("NEXT :"+ str(next))  
   xbmc.Player().play(playlist)
   time.sleep(3)
@@ -435,25 +442,27 @@ def live_play(url,session,userid,channelid,ids):
     time.sleep(dauer)    
     dauer=0
     try:
-        item,title,next,dauer=live_leseclips(next,session,userid,channelid)  
+        item,dashfile,dauer,id_arr=live_leseclips(session,userid,channelid,id_arr)  
     except:
          pass
-    playlist.add(title, item) 
+    playlist.add(dashfile, item) 
     #xbmc.executebuiltin('Container.Refresh')
   time.sleep(10000)
   #xbmc.executebuiltin('Container.Refresh')
   
     
-def live_leseclips(url,session,userid,channelid):  
+def live_leseclips(session,userid,channelid,id_arr):  
   header=[]
   header.append (("Authorization","Bearer "+session))
   header.append (("UserId",userid))
   debug("leseclips")
-  times=url
-  path=str(times)[0:5]
   header=[]    
   header.append (("Authorization","Bearer "+session))
   header.append (("UserId",userid))  
+  if len(id_arr)==0:
+      id_arr=get_ids(session,userid,channelid)
+  times=id_arr[0]
+  id_arr.pop(0)
   
   content=getUrl(baseurl+"/api/contenturl/v1/channel/"+ channelid +"/airing/"+times,header=header)
   struktur= json.loads(content) 
@@ -463,8 +472,8 @@ def live_leseclips(url,session,userid,channelid):
   is_type=getstreamtype()  
   if is_type=="":     
      return ""  
-  listitem,dauer,stop=playdash(dash_file,session,userid,channelid,times,is_type=is_type) 
-  return listitem,dash_file,str(path)+str(stop),dauer
+  listitem,dauer,title=playdash(dash_file,session,userid,channelid,times,is_type=is_type) 
+  return listitem,dash_file,dauer,id_arr
 
   
 def parameters_string_to_dict(parameters):
@@ -496,7 +505,7 @@ session,userid=login()
 if mode is '':
     if session==-1:
           dialog = xbmcgui.Dialog()
-          nr=dialog.ok(translation(30138), translation(30137)) 
+          nr=dialog.ok(translation(30138), translation(30139)) 
     else:          
         addDir(translation(30104) , url="-", mode="live_channels", iconimage="")    
         addDir(translation(30137) , url="-", mode="mediathek_channels", iconimage="") 
@@ -504,7 +513,7 @@ if mode is '':
     addDir(translation(30103), "", 'Settings', "")         
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)  
 if mode == 'live_play':
-          live_play(url,session,userid,channelid,ids)     
+          live_play(session,userid,channelid)     
 if mode == 'live_channels':
           live_channels(session,userid)      
 if mode == 'mediathek_channels':
