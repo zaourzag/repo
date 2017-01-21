@@ -110,7 +110,7 @@ def login():
 def getUrl(url,data="x"):
                
         debug("Get Url: " +url)
-        opener = urllib2.build_opener(urllib2.HTTPCookieProcessor())
+        opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))  
         userAgent = "Dalvik/2.1.0 (Linux; U; Android 5.0;)"
         opener.addheaders = [('User-Agent', userAgent)]
         try:
