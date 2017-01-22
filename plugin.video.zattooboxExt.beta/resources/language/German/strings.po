@@ -490,3 +490,7 @@ msgstr "Verzeichnis zurücksetzen"
 msgctxt "#31911"
 msgid "Delete the recording directory and the recorded movies?\nThe recordings are not deleted at Zattoo."
 msgstr "Das Aufnahme-Verzeichnis und die enthaltenen Filme löschen?\nDie Aufnahmen werden bei Zattoo nicht gelöscht."
+
+msgctxt "#31912"
+msgid "Keypad"
+msgstr "Tastenfeld"

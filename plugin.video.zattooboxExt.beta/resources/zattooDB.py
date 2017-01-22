@@ -219,8 +219,8 @@ class ZattooDB(object):
     c.close()
     
     # update programInfo
-    channels = self.getChannelList()
-    self.getPrograms(channels, True)
+    #channels = self.getChannelList()
+    #self.getPrograms(channels, True)
     
   def getChannelList(self, favourites=True):
     #self.updateChannels()
@@ -267,7 +267,7 @@ class ZattooDB(object):
     programList = []
     for row in c:
       description_long = row["description_long"]
-      if get_long_description and description_long == None: 
+      if get_long_description and description_long is None: 
         #description_long = self.getShowInfo(row["showID"],'description')
         description_long = self.getShowLongDescription(row["showID"])
       programList.append({
@@ -297,7 +297,7 @@ class ZattooDB(object):
         
         show = c.fetchone()
         longDesc = show['description_long']
-        if longDesc == None:
+        if longDesc is None:
             api = '/zapi/program/details?program_id=' + showID + '&complete=True'
             showInfo = self.zapiSession().exec_zapiCall(api, None)
             longDesc = showInfo['program']['description']
@@ -381,28 +381,6 @@ class ZattooDB(object):
     self.updateChannels(True)
     self.updateProgram(datetime.datetime.now(), True)
   
-  def update_library(self):
-    c = self.conn.cursor() 
-    date = datetime.date.today().strftime('%Y-%m-%d')   
-    c.execute('DELETE FROM updates WHERE type=? ', ['records'])
-    c.execute('INSERT into updates(date, type) VALUES(?, ?)', [date, 'records'])        
-    self.conn.commit()    
-    c.close()
-    return 
-
-  def test_library(self):
-    folder=__addon__.getSetting('library_dir')
-    if not folder: return "False"
-    c = self.conn.cursor()    
-    date = datetime.date.today().strftime('%Y-%m-%d')
-    c.execute('SELECT * FROM updates WHERE date=? AND type=? ', [date, 'records'])
-    if len(c.fetchall())>0:
-        self.conn.commit()    
-        c.close()
-        return "False"
-    self.conn.commit()    
-    c.close()
-    return "True"
   
   def get_channeltitle(self, channelid):
     c = self.conn.cursor()
@@ -433,3 +411,23 @@ class ZattooDB(object):
     self.conn.commit()
     c.close()
     return channelid
+
+  def getProgInfo(self, startTime=datetime.datetime.now(), endTime=datetime.datetime.now()):
+        channels = self.getChannelList(False)
+        #self.updateProgram(startTime)
+        channelKeys=('\',\''.join(channels.keys()))
+        channelKeys="'"+channelKeys.replace(",'index',", ",")+"'"
+        c = self.conn.cursor()
+        try:
+            c.execute('SELECT * FROM programs WHERE channel in (' + channelKeys + ')  AND start_date < ? AND end_date > ?', [endTime, startTime])
+        except: 
+            print type(channelKeys)
+            
+        print "StartTime   " + str(startTime)
+        for row in c:
+          description_long = row["description_long"]
+          if description_long is None: 
+            print str(row['channel']) + '  -  ' + str(startTime)
+            description_long = self.getShowLongDescription(row["showID"])
+        c.close()
+        return 
