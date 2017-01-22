@@ -45,7 +45,7 @@ def getUrl(url,data="x"):
         https=addon.getSetting("https")
         if https=="true":
            url=url.replace("https","http")
-        print("Get Url: " +url)
+        debug("Get Url: " +url)
         opener = urllib2.build_opener(urllib2.HTTPCookieProcessor())
         userAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:49.0) Gecko/20100101 Firefox/49.0"
         opener.addheaders = [('User-Agent', userAgent)]
@@ -55,7 +55,7 @@ def getUrl(url,data="x"):
           else:
              content=opener.open(url).read()
         except urllib2.HTTPError as e:
-             #print e.code   
+             #debug( e.code)
              cc=e.read()  
              struktur = json.loads(cc)  
              error=struktur["errors"][0] 
@@ -77,7 +77,7 @@ def listcat(url,type="listVideos"):
     content = content[content.find('<a id="skipNavigation22" class="invisible">&nbsp;</a>'):]
     content = content[:content.find('<div class="ce_tvprogramme first last block">')]
     spl = content.split('ce_teaserelemen')     
-    print("Length :"+str(len(spl)))
+    debug("Length :"+str(len(spl)))
     if len(spl)==2:
        listVideos(url)
     else:
@@ -112,7 +112,7 @@ def listVideos(url):
               except:
                   cid=re.compile('<div class="fwplayer" cid="(.+?)" >', re.DOTALL).findall(content)[0]
                   img=re.compile('<img style="width:100%;" src="(.+?)"', re.DOTALL).findall(content)[0]                                    
-                  addLink("Aktuelle Folge", str(cid), 'playVideo', img)    
+                  addLink(translation(30002), str(cid), 'playVideo', img)    
                   #playVideo(cid)
                   y=1
           if y==0:                                                                                    

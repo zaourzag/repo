@@ -99,7 +99,7 @@ def parameters_string_to_dict(parameters):
   
 def getUrl(url,data="x",header=""):
         global cj
-        print("Get Url: " +url)
+        debug("Get Url: " +url)
         for cook in cj:
           debug(" Cookie :"+ str(cook))
         opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))        
@@ -114,7 +114,7 @@ def getUrl(url,data="x",header=""):
           else:
              content=opener.open(url).read()
         except urllib2.HTTPError as e:
-             #print e.code   
+             #debug( e.code   )
              cc=e.read()  
              debug("Error : " +cc)
        
@@ -128,27 +128,23 @@ def login():
   if not username=="" and  not password=="":
       main=getUrl(mainurl)
       country=re.compile('<meta property="og:url" content="http://www.daisuki.net/(.+?)/top.html"', re.DOTALL).findall(main)[0]
-      print "Country : "+ country
+      debug("Country : "+ country)
       values = {'password' : password,
       'emailAddress' : username,        
       }      
       data = urllib.urlencode(values)
-      print "_------"+data
+      debug("_------"+data)
       try:
           header = [('User-Agent', 'userAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:49.0) Gecko/20100101 Firefox/49.0'),
                     ("Referer", "http://www.daisuki.net/"+country+"/top.html")]      
           content=getUrl("https://www.daisuki.net/bin/SignInServlet.html/input",data,header)                                  
           for cookief in cj:
-            print cookief
+            debug( cookief)
             if "key" in str(cookief):
                key=re.compile('key=(.+?) ', re.DOTALL).findall(str(cookief))[0]
             if "userID" in str(cookief):
                userid=re.compile('userID=(.+?) ', re.DOTALL).findall(str(cookief))[0]
-          #   print "CX  :"+cx    
-          #cj.save(cookie,ignore_discard=True, ignore_expires=True)
-          cxc=getUrl("http://www.daisuki.net/bin/SignInCheckServlet?userID="+userid+"&key="+key)    
-          #{"userID":null,"status":"9901","msg":"Invalid user ID"}
-          #{"key":"0fbaea1392d81cb5cd13476629d31cb47ab66f5d","nickname":"L0RE","userID":373884,"status":"0000","msg":"success"}#          
+          cxc=getUrl("http://www.daisuki.net/bin/SignInCheckServlet?userID="+userid+"&key="+key)             
           struktur = json.loads(cxc) 
           if not struktur["status"]=="0000":
              dialog = xbmcgui.Dialog()
@@ -160,9 +156,9 @@ def login():
           debug("Error : ")
           debug(e)  
           dialog = xbmcgui.Dialog()
-          dialog.ok("Login",translation(30110))
+          dialog.ok(translation(30121),translation(30110))
       dialog = xbmcgui.Dialog()
-      dialog.ok("Login",translation(30115))        
+      dialog.ok(translation(30121),translation(30115))        
 # Setting Variablen Des Plugins
 
 
@@ -182,14 +178,7 @@ password=addon.getSetting("pass")
 #Directory für Token Anlegen
 if not xbmcvfs.exists(temp):       
        xbmcvfs.mkdirs(temp)
-       
-
-
-
-
-
-       
-
+      
 icon = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')+'/icon.png').decode('utf-8')
 useThumbAsFanart=addon.getSetting("useThumbAsFanart") == "true"
 xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
@@ -197,14 +186,10 @@ xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_LABEL)
 
 
 
- 
-  
-
-
 def listserien(url):    
     main=getUrl(mainurl)
     country=re.compile('<meta property="og:url" content="http://www.daisuki.net/(.+?)/top.html"', re.DOTALL).findall(main)[0]
-    print "Country : "+ country
+    debug( "Country : "+ country)
     url=url+country
     struktur=holejson(url)
     for name in struktur["response"]:
@@ -214,7 +199,8 @@ def listserien(url):
      beschreibung=name["synopsis"]
      url=mainurl+name["animeURL"]
      addDir(title,url, 'serie', image,desc=beschreibung,id=id,add=1) 
-    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)      
+    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)  
+    
 def serie(url):
     debug("Url Serie :"+url)
     content=getUrl(url)
@@ -223,7 +209,7 @@ def serie(url):
     debug("--------------")
     kurz_inhalt = content[content.find('<!-- moviesBlock start -->')+1:]
     kurz_inhalt = kurz_inhalt[:kurz_inhalt.find('<!-- moviesBlock end  -->')]
-    print kurz_inhalt
+    debug( kurz_inhalt)
     spl=kurz_inhalt.split('img delay')
     folge_arr=[]
     url_arr=[]
@@ -259,8 +245,8 @@ def serie(url):
     try:
       folge_arr, url_arr,image_arr = (list(x) for x in zip(*sorted(zip(folge_arr, url_arr,image_arr))))
       for i in range(0,len(url_arr),1): 
-          print url_arr[i]     
-          print folge_arr[i]
+          debug( url_arr[i])
+          debug(folge_arr[i])
           addLink("Episode "+str(folge_arr[i]),url_arr[i], 'stream', "http://www.daisuki.net"+image_arr[i]) 
        
       xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)      
@@ -356,12 +342,8 @@ def stream(url):
      ttml2srt.ttml2srt(temp+lang+".xml", True,temp+lang+".srt")
      listsubs.append(temp+lang+".srt")     
    listitem.setSubtitles(listsubs)
-   #text_file = open(temp+"daisuki.xml", "w")
-   #text_file.write(subcontent)
-   #text_file.close()
-   #ttml2srt.ttml2srt(temp+"daisuki.xml", True,temp+"daisuki.srt")
-   #listitem.setSubtitles([temp+"daisuki.srt"])
    xbmcplugin.setResolvedUrl(addon_handle,True, listitem) 
+   
 def generes(url):   
    urlkat="http://www.daisuki.net/bin/wcm/searchAnimeAPI?api=anime_categories&currentPath=%2Fcontent%2Fdaisuki%2Fde%2Fen"
    content=getUrl(urlkat)
@@ -391,14 +373,14 @@ def myanimelist():
       content=getUrl(url,data,header)         
       struktur = json.loads(content)   
       for serie in struktur["items"]  :
-        print serie
+        debug( serie)
         url=mainurl+serie["url"]
         image=mainurl+serie["imagePath"]
         title=serie["title"]
         addDir(title,url, 'serie', image,dele=1,id=1)  
     except:
        dialog = xbmcgui.Dialog()
-       dialog.ok("Login",translation(30112))
+       dialog.ok(translation(30121),translation(30112))
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
 
 def addserie(url,id):      
@@ -417,7 +399,7 @@ def addserie(url,id):
 def delserie(url):
   content=getUrl(url) 
   id=re.compile('g_id = ([0-9]+)</script>', re.DOTALL).findall(content)[0]
-  print "IDID :"+id
+  debug( "IDID :"+id)
   urls="http://www.daisuki.net/bin/MyAnimeListServlet/remove"
   params = {
             "series_id": id            
@@ -441,12 +423,12 @@ user=addon.getSetting("user")
 passw=addon.getSetting("pass")  
   
 if mode is '':
-    addDir("All Series","http://www.daisuki.net/bin/wcm/searchAnimeAPI?api=anime_list&searchOptions=&currentPath=/content/daisuki/", 'listserien', "")  
-    addDir("Generes", 'categories', "generes","")  
-    addDir("Studios", 'studios', "generes","")  
+    addDir(translation(30116),"http://www.daisuki.net/bin/wcm/searchAnimeAPI?api=anime_list&searchOptions=&currentPath=/content/daisuki/", 'listserien', "")  
+    addDir(translation(30117), 'categories', "generes","")  
+    addDir(translation(30118), 'studios', "generes","")  
     if not user=="" and not password=="":
-      addDir("Login", "login", 'login', "")
-      addDir("My Anime List", "myanimelist", 'myanimelist', "")            
+      addDir(translation(30119), "login", 'login', "")
+      addDir(translation(30120), "myanimelist", 'myanimelist', "")            
     addDir(translation(30108), translation(30108), 'Settings', "") 
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
 else:
