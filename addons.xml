@@ -2443,7 +2443,7 @@ See changelog.txt for more details.</news>
   </extension>
 </addon>
 
-<addon id="plugin.video.zattooboxExt.beta" version="1.6.4" name="Zattoo Box Extended Beta" provider-name="Steffen Rolapp">
+<addon id="plugin.video.zattooboxExt.beta" version="1.6.4.1" name="Zattoo Box Extended Beta" provider-name="Steffen Rolapp">
   <requires>
     <import addon="xbmc.python" version="2.14.0"/>
     <import addon="xbmc.addon" version="13.0.0" />
@@ -2451,7 +2451,7 @@ See changelog.txt for more details.</news>
   <extension point="xbmc.python.pluginsource" library="plugin.py">
     <provides>video</provides>
   </extension>
-
+  <extension point="xbmc.service" library="service.py" start="login" />
 
   <extension point="xbmc.addon.metadata">
     <summary lang="en">Play Live TV and recorded shows from Zattoo.</summary>
