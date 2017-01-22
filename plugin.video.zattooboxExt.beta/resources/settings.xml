@@ -4,23 +4,29 @@
         <setting label="31001" id="username" type="text" default=""/>
         <setting label="31002" id="password" type="text" option="hidden" enable="!eq(-1,)" default=""/>
         <setting type="sep"/>
-        <setting label="31905" id="swiss" type="bool" default="false" />
-        <setting label="31904" id="hiq" type="bool" default="false" enable="eq(-1,true)"/>       
+        <setting label="31003" id="swiss" type="bool" default="false" />
+        <setting label="31004" id="hiq" type="bool" default="false" enable="eq(-1,true)"/>       
         <setting type="sep"/>
-        <setting label="31003" id="max_bandwidth" type="labelenum" values="600|900|1500|3000|5000" default="5000"/>
-        <setting label="31004" id="audio_stream" type="labelenum" values="A|B" default="A"/>
+        <setting label="31005" id="max_bandwidth" type="labelenum" values="600|900|1500|3000|5000" default="5000"/>
+        <setting label="31006" id="audio_stream" type="labelenum" values="A|B" default="A"/>
         <setting type="sep"/>
-		<setting label="31005" type="bool" id="start_liveTV" default="false"/>
-        <setting label="31906" type="text" id="start_channel" default="ARD" enable="false"/>
-        <setting type="sep"/>
-        <setting label="31006" type="action" action="RunPlugin(plugin://plugin.video.zattooboxExt.beta/?mode=reloadDB)"/>
+        <setting label="31007" type="bool" id="start_liveTV" default="false"/>
+        <setting label="31008" type="text" id="start_channel" default="ARD" enable="false"/>
     </category>
-   <category label="31010">
+    <category label="31010">
         <setting label="31011"  id="time_offset" type="labelenum" values="-2|-1|0|1|2" default="-2"/>
-		<setting label="31013" type="bool" id="epgPlay" default="false"/>
+        <setting label="31012" type="bool" id="epgPlay" default="false"/>
         <setting type="sep"/>
-		<setting label="31014" type="folder" id="library_dir" source="video" option="writeable"/>
-        <setting label="31910" type="action" id="reset_dir" enable="!eq(-1,)" action="RunPlugin(plugin://plugin.video.zattooboxExt.beta/?mode=resetdir)"/>
+        <setting label="31013" type="folder" id="library_dir" source="video" option="writeable"/>
+        <setting label="31014" type="action" id="reset_dir" enable="!eq(-1,)" action="RunPlugin(plugin://plugin.video.zattooboxExt.beta/?mode=resetdir)"/>
         <setting label="31015" type="action" option="hidden" enable="!eq(-2,)" action="RunPlugin(plugin://plugin.video.zattooboxExt.beta/?mode=makelibrary)"/>
     </category>
+    <category label="31020">
+        <setting label="31021" id="dbonstart" type="bool" default="true" />
+        <setting label="31022" id="onlyfav" type="bool" enable="eq(-1,true)" default="false" />
+        <setting type="sep"/>
+        <setting label="31023" type="action" action="RunPlugin(plugin://plugin.video.zattooboxExt.beta/?mode=reloadDB)"/>
+        
+    </category>
+    
 </settings>

@@ -127,6 +127,8 @@
 				<textcolor>white</textcolor>
 				<font>font12</font>
 				<label>$INFO[Window(Home).Property(year)]</label>
+				<scroll>true</scroll>
+				<scrollspeed>50</scrollspeed>
 			</control>
 			
 			<control type="label" id="1">

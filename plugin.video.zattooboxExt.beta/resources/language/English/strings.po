@@ -348,16 +348,9 @@ msgid "Streaming using that addon is now disabled."
 msgstr ""
 
 
+####  Settings   ####
 
-
-
-
-
-
-
-
-
-
+### Zattoo Einstellungen ###
 msgctxt "#31000"
 msgid "Zattoo settings"
 msgstr ""
@@ -371,55 +364,78 @@ msgid "Password"
 msgstr ""
 
 msgctxt "#31003"
-msgid "Maximum Bandwidth (kbps)"
+msgid "Swiss IP address"
 msgstr ""
 
 msgctxt "#31004"
-msgid "Default Audio"
+msgid "ZATTOO HIQ"
 msgstr ""
 
 msgctxt "#31005"
-msgid "liveTV on start"
-msgstr
-
+msgid "Maximum Bandwidth (kbps)"
+msgstr ""
 
 msgctxt "#31006"
-msgid "Renew Database"
-msgstr
+msgid "Default Audio"
+msgstr ""
+
+msgctxt "#31007"
+msgid "liveTV on start"
+msgstr ""
+
+msgctxt "#31008"
+msgid "Channel"
+msgstr ""
 
 
 
+### EPG/Aufnahmen ###
 msgctxt "#31010"
 msgid "EPG/Recordings"
-msgstr
+msgstr ""
 
 msgctxt "#31011"
 msgid "EPG time offset"
-msgstr
+msgstr ""
 
-
+msgctxt "#31012"
+msgid "always play show in EPG"
+msgstr ""
 
 msgctxt "#31013"
-msgid "always play show in EPG"
-msgstr
+msgid "select folder for library"
+msgstr ""
 
 msgctxt "#31014"
-msgid "select folder for library"
-msgstr
+msgid "Reset Folder"
+msgstr ""
 
 msgctxt "#31015"
 msgid "make library files"
-msgstr
+msgstr ""
 
+
+
+### Datenbank ###
 msgctxt "#31020"
-msgid "Now set your folder-content to movies,only use local information and update the library...."
-msgstr
+msgid "Database"
+msgstr ""
+
+msgctxt "#31021"
+msgid "Load program information at Kodi start"
+msgstr ""
+
+msgctxt "#31023"
+msgid "Renew Database"
+msgstr ""
+
+msgctxt "#31022"
+msgid "Load only favortites"
+msgstr ""
 
 
 
-
-
-
+### Haupmenu ###
 
 msgctxt "#31100"
 msgid "All Channels"
@@ -477,7 +493,9 @@ msgctxt "#31250"
 msgid "Database was cleared and current data was loaded."
 msgstr
 
-
+msgctxt "#31251"
+msgid  "Now set your folder-content to movies,only use local information and update the library...."
+msgstr ""
 
 
 msgctxt "#31300"
@@ -504,28 +522,11 @@ msgstr ""
 
 msgctxt "#31903"
 msgid "recording request transmitted to Zattoo.\nThe show now should be visible in Recordings!"
-msgstr ""
-
-
-msgctxt "#31904"
-msgid "ZATTOO HIQ"
-msgstr ""
-
-msgctxt "#31905"
-msgid "Swiss IP address"
-msgstr ""
-
-msgctxt "#31906"
-msgid "Channel"
-msgstr ""
+msgstr "Aufnahme-Anfrage wurde an Zattoo übermittelt.\nDie Sendung sollte nun in den Aufnahmen sein!"
 
 msgctxt "#31907"
 msgid "Set the channel as the start channel"
-msgstr ""
-
-msgctxt "#31910"
-msgid "Reset Folder"
-msgstr ""
+msgstr "Den Kanal als Startkanal festlegen"
 
 msgctxt "#31911"
 msgid "Delete the recording directory and the recorded movies?\nThe recordings are not deleted at Zattoo."
@@ -534,3 +535,12 @@ msgstr ""
 msgctxt "#31912"
 msgid "Keypad"
 msgstr ""
+
+
+
+
+
+
+
+
+

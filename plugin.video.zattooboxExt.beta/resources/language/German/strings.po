@@ -325,8 +325,9 @@ msgid "Streaming using that addon is now disabled."
 msgstr "Streaming mit diesem Addon ist jetzt deaktiviert."
 
 
+####  Settings   ####
 
-
+### Zattoo Einstellungen ###
 msgctxt "#31000"
 msgid "Zattoo settings"
 msgstr "Zattoo Einstellungen"
@@ -340,24 +341,32 @@ msgid "Password"
 msgstr "Passwort"
 
 msgctxt "#31003"
+msgid "Swiss IP address"
+msgstr "Schweizer IP Adresse"
+
+msgctxt "#31004"
+msgid "ZATTOO HIQ"
+msgstr "ZATTOO HIQ"
+
+msgctxt "#31005"
 msgid "Maximum Bandwidth (kbps)"
 msgstr "Maximale Bandbreite (kbps)"
 
-msgctxt "#31004"
+msgctxt "#31006"
 msgid "Default Audio"
 msgstr "Standard Ton"
 
-msgctxt "#31005"
+msgctxt "#31007"
 msgid "liveTV on start"
 msgstr "liveTV beim Start"
 
-
-msgctxt "#31006"
-msgid "Renew Database"
-msgstr "Datenbank neu erstellen"
-
+msgctxt "#31008"
+msgid "Channel"
+msgstr "Kanal"
 
 
+
+### EPG/Aufnahmen ###
 msgctxt "#31010"
 msgid "EPG/Recordings"
 msgstr "EPG/Aufnahmen"
@@ -366,27 +375,43 @@ msgctxt "#31011"
 msgid "EPG time offset"
 msgstr "EPG Zeitverschiebung"
 
-
-
-msgctxt "#31013"
+msgctxt "#31012"
 msgid "always play show in EPG"
 msgstr "im EPG immer abspielen"
 
-msgctxt "#31014"
+msgctxt "#31013"
 msgid "select folder for library"
 msgstr "Verzeichnis for Bibliothek auswählen"
+
+msgctxt "#31014"
+msgid "Reset Folder"
+msgstr "Verzeichnis zurücksetzen"
 
 msgctxt "#31015"
 msgid "make library files"
 msgstr "Bibliothek Dateien erstellen"
 
 
+
+### Datenbank ###
 msgctxt "#31020"
-msgid  "Now set your folder-content to movies,only use local information and update the library...."
-msgstr "Ordner als Filme definieren, nur lokale Informationen verwenden und Bibliothek aktualisieren..."
+msgid "Database"
+msgstr "Datenbank"
+
+msgctxt "#31021"
+msgid "Load program information at Kodi start"
+msgstr "Programm Information bei Kodi Start laden"
+
+msgctxt "#31023"
+msgid "Renew Database"
+msgstr "Datenbank neu erstellen"
+
+msgctxt "#31022"
+msgid "Load only favortites"
+msgstr "Nur Favortiten laden"
 
 
-
+### Haupmenu ###
 
 msgctxt "#31100"
 msgid "All Channels"
@@ -421,6 +446,8 @@ msgid "Settings"
 msgstr "Einstellungen"
 
 
+### Benachrichtigungen ##
+
 msgctxt "#31200"
 msgid "Search show:"
 msgstr "Suche Sendung:"
@@ -442,6 +469,11 @@ msgctxt "#31250"
 msgid "Database was cleared and current data was loaded."
 msgstr "Die Datenbank wurde gelöscht und neue Daten wurden geladen."
 
+msgctxt "#31251"
+msgid  "Now set your folder-content to movies,only use local information and update the library...."
+msgstr "Ordner als Filme definieren, nur lokale Informationen verwenden und Bibliothek aktualisieren..."
+
+
 msgctxt "#31300"
 msgid "Record this show"
 msgstr "Diese Sendung aufnehmen"
@@ -453,6 +485,7 @@ msgstr "Von Anfang abspielen"
 msgctxt "#31302"
 msgid "Only available for Premium users"
 msgstr "Nur für Premium Kunden verfügbar"
+
 
 
 msgctxt "#31901"
@@ -467,25 +500,9 @@ msgctxt "#31903"
 msgid "recording request transmitted to Zattoo.\nThe show now should be visible in Recordings!"
 msgstr "Aufnahme-Anfrage wurde an Zattoo übermittelt.\nDie Sendung sollte nun in den Aufnahmen sein!"
 
-msgctxt "#31904"
-msgid "ZATTOO HIQ"
-msgstr "ZATTOO HIQ"
-
-msgctxt "#31905"
-msgid "Swiss IP address"
-msgstr "Schweizer IP Adresse"
-
-msgctxt "#31906"
-msgid "Channel"
-msgstr "Kanal"
-
 msgctxt "#31907"
 msgid "Set the channel as the start channel"
 msgstr "Den Kanal als Startkanal festlegen"
-
-msgctxt "#31910"
-msgid "Reset Folder"
-msgstr "Verzeichnis zurücksetzen"
 
 msgctxt "#31911"
 msgid "Delete the recording directory and the recorded movies?\nThe recordings are not deleted at Zattoo."
@@ -494,3 +511,12 @@ msgstr "Das Aufnahme-Verzeichnis und die enthaltenen Filme löschen?\nDie Aufnah
 msgctxt "#31912"
 msgid "Keypad"
 msgstr "Tastenfeld"
+
+
+
+
+
+
+
+
+

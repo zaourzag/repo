@@ -179,7 +179,7 @@ def build_root(addon_uri, addon_handle):
     {'title': localString(31104), 'image': iconPath, 'isFolder': False, 'url': addon_uri + '?' + urllib.urlencode({'mode': 'epg'})},
     {'title': localString(31105), 'image': iconPath, 'isFolder': True, 'url': addon_uri + '?' + urllib.urlencode({'mode': 'search'})},
     {'title': localString(31106), 'image': iconPath, 'isFolder': True, 'url': addon_uri + '?' + urllib.urlencode({'mode': 'recordings'})},
-    {'title': localString(31006), 'image': iconPath, 'isFolder': True, 'url': addon_uri + '?' + urllib.urlencode({'mode': 'reloadDB'})},
+#    {'title': localString(31023), 'image': iconPath, 'isFolder': True, 'url': addon_uri + '?' + urllib.urlencode({'mode': 'reloadDB'})},
     {'title': '[COLOR ff333333]' + localString(31107) + '[/COLOR]', 'image': iconPath, 'isFolder': False, 'url': addon_uri + '?' + urllib.urlencode({'mode': 'show_settings'})},
     ]
   build_directoryContent(content, addon_handle, True, False)
@@ -825,7 +825,7 @@ def main():
     tele.doModal()
     del tele
   elif action == 'makelibrary':
-    delete_library()
+    _library_.delete_library()
     _library_.make_library()
   elif action == 'resetdir':
     delete = xbmcgui.Dialog().yesno(__addonname__, __addon__.getLocalizedString(31911))

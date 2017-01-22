@@ -182,7 +182,7 @@ class ZattooDB(object):
     count=c.fetchall()
     if len(count)>0: return
 
-    xbmcgui.Dialog().notification(__addon__.getLocalizedString(31006), date.strftime('%A %d.%m.%Y'), __addon__.getAddonInfo('path') + '/icon.png', 000, False)
+    xbmcgui.Dialog().notification(__addon__.getLocalizedString(31022), date.strftime('%A %d.%m.%Y'), __addon__.getAddonInfo('path') + '/icon.png', 5000, False)
 
     api = '/zapi/v2/cached/program/power_guide/' + self.zapi.AccountData['account']['power_guide_hash'] + '?end=' + str(toTime) + '&start=' + str(fromTime)
 
@@ -298,11 +298,13 @@ class ZattooDB(object):
         show = c.fetchone()
         longDesc = show['description_long']
         if longDesc is None:
+        
             api = '/zapi/program/details?program_id=' + showID + '&complete=True'
             showInfo = self.zapiSession().exec_zapiCall(api, None)
             longDesc = showInfo['program']['description']
             c.execute('UPDATE programs SET description_long=? WHERE showID=?', [longDesc, showID ])
             year = showInfo['program']['year']
+            if year is None: year=''
             c.execute('UPDATE programs SET year=? WHERE showID=?', [year, showID ])
             category = ', '.join(showInfo['program']['categories'])
             c.execute('UPDATE programs SET category=? WHERE showID=?', [category, showID ])
@@ -310,7 +312,7 @@ class ZattooDB(object):
             country = country.replace('|',', ')
             c.execute('UPDATE programs SET country=? WHERE showID=?', [country, showID ])
             self.conn.commit()
-            
+           
         c.close()
         return longDesc
         
@@ -412,8 +414,11 @@ class ZattooDB(object):
     c.close()
     return channelid
 
-  def getProgInfo(self, startTime=datetime.datetime.now(), endTime=datetime.datetime.now()):
-        channels = self.getChannelList(False)
+  def getProgInfo(self, notify=False, startTime=datetime.datetime.now(), endTime=datetime.datetime.now()):
+        fav = False
+        if __addon__.getSetting('onlyfav') == 'true': fav = True
+        channels = self.getChannelList(fav)
+        
         #self.updateProgram(startTime)
         channelKeys=('\',\''.join(channels.keys()))
         channelKeys="'"+channelKeys.replace(",'index',", ",")+"'"
@@ -422,12 +427,25 @@ class ZattooDB(object):
             c.execute('SELECT * FROM programs WHERE channel in (' + channelKeys + ')  AND start_date < ? AND end_date > ?', [endTime, startTime])
         except: 
             print type(channelKeys)
-            
+        # if Notification
+        if notify:
+            PopUp = xbmcgui.DialogProgressBG()
+            counter=len(channels)
+            bar = 0         # Progressbar (Null Prozent)
+            PopUp.create('ZattooBoxExt lade Programm Informationen ...', '')
+            PopUp.update(bar)
         print "StartTime   " + str(startTime)
         for row in c:
+          if notify:
+            bar += 1
+            percent = int(bar * 100 / counter) 
           description_long = row["description_long"]
-          if description_long is None: 
+          if description_long is None or description_long == '': 
             print str(row['channel']) + '  -  ' + str(startTime)
+            if notify:
+                PopUp.update(percent,'ZattooBoxExt lade Programm Informationen ...', 'Programm Information für ' + str(row['channel']))
             description_long = self.getShowLongDescription(row["showID"])
         c.close()
+        if notify:
+            PopUp.close()
         return 
