@@ -141,13 +141,13 @@
 				
                 <control type="label" id="4000">
                     <description>Displays todays date</description>
-                    <posx>420</posx>
+                    <posx>185</posx>
                     <posy>-30</posy>
                     <width>300</width>
                     <height>100</height>
                     <textcolor>ffffffff</textcolor>
                     <font>font13</font>
-					<align>right</align>
+					<align>left</align>
                     <aligny>center</aligny>
 					<visible>true</visible>
                 </control>

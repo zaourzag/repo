@@ -1,4 +1,11 @@
 -------------------------------------------------
+[B] ZattooBox Extendet v1.6.4beta[/B] 15.01.2017
+-------------------------------------------------
+- Touch Unterstützung für Teletext
+- Service-script zun Laden der Filmbeschreibung
+- div Bugfix
+
+-------------------------------------------------
 [B] ZattooBox Extendet v1.6.1beta[/B] 15.01.2017
 -------------------------------------------------
 -Bugfix beim Start EPG 

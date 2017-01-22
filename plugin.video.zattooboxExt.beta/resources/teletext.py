@@ -27,7 +27,7 @@ import urllib2
 
 __addon__ = xbmcaddon.Addon()
 _dataFolder_ = xbmc.translatePath(__addon__.getAddonInfo('profile')).decode('utf-8')
-
+localString = __addon__.getLocalizedString
 
 
 ACTION_MOVE_LEFT = 1
@@ -53,6 +53,11 @@ ACTION_MOUSE_START = 100
 ACTION_MOUSE_WHEEL_DOWN = 105
 ACTION_MOUSE_WHEEL_UP = 104
 
+ACTION_GESTURE_SWIPE_LEFT = 511
+ACTION_GESTURE_SWIPE_RIGHT = 521
+ACTION_GESTURE_SWIPE_UP = 531
+ACTION_GESTURE_SWIPE_DOWN = 541
+
 
 class Teletext(xbmcgui.WindowDialog):
 	def __init__(self):
@@ -73,6 +78,9 @@ class Teletext(xbmcgui.WindowDialog):
 
 		self.pageImage = xbmcgui.ControlImage(260, 0, 800, 720, "")
 		self.addControl(self.pageImage)
+		
+		self.button0 = xbmcgui.ControlButton(50, 640, 170, 40, localString(31912), font='font20', alignment=2)
+		self.addControl(self.button0)
 
 		self.currentPage=100
 		self.showPage(str(self.currentPage))
@@ -84,6 +92,7 @@ class Teletext(xbmcgui.WindowDialog):
 		if action in [ACTION_PARENT_DIR, KEY_NAV_BACK, ACTION_PREVIOUS_MENU]:
 			if self.imagePath: os.remove(self.imagePath)
 			self.close()
+			
 		elif (action>57 and action<68): #numbers 0-9
 			self.pageInput+=str(action-58)
 			self.pageInputCtrl.setLabel(self.pageInput+('*'*(3-len(self.pageInput))))
@@ -93,28 +102,30 @@ class Teletext(xbmcgui.WindowDialog):
 				self.showPage(str(self.currentPage))
 				self.pageInput=''
 
-		elif action == ACTION_MOVE_LEFT:
+		elif action in [ACTION_MOVE_DOWN, ACTION_GESTURE_SWIPE_DOWN]:
 			self.currentPage=(int((self.currentPage-1)/100))*100
 			if self.currentPage<100: self.currentPage=100
 			self.showPage(str(self.currentPage))
-		elif action == ACTION_MOVE_RIGHT:
+		elif action in [ACTION_MOVE_UP, ACTION_GESTURE_SWIPE_UP]:
 			self.currentPage=(int(self.currentPage/100)+1)*100
 			self.showPage(str(self.currentPage))
-		elif action == ACTION_MOVE_UP:
+		elif action in [ACTION_MOVE_RIGHT, ACTION_GESTURE_SWIPE_RIGHT]:
 			self.currentPage +=1
 			self.showPage(str(self.currentPage))
-		elif action == ACTION_MOVE_DOWN:
+		elif action in [ACTION_MOVE_LEFT, ACTION_GESTURE_SWIPE_LEFT]:
 			self.currentPage -=1
 			self.showPage(str(self.currentPage))
-		#elif action == ACTION_SELECT_ITEM:
-			#dialog = xbmcgui.Dialog()
-			#pageInput = dialog.numeric(0, 'Enter Site')
-			#print 'SEITE   ' + pageInput
-			#if len(self.pageInput)>2:
-				#self.currentPage = int(self.pageInput)
-				
-				#self.showPage(str(self.currentPage))
-				#self.pageInput=''
+		
+			
+	def onControl(self, control):
+		if control == self.button0:
+			print "Open Keypad"
+			dialog = xbmcgui.Dialog()
+			self.pageInput = dialog.numeric(0, 'Enter Site')
+			if len(self.pageInput)>2:
+				self.currentPage = int(self.pageInput)
+				self.showPage(str(self.currentPage))
+				self.pageInput=''
 				
 
 	def showPage(self, page, subpage=1):
