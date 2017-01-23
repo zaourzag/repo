@@ -27,7 +27,7 @@ subdir=xbmc.translatePath( os.path.join( temp, 'subs', '') ).decode("utf-8")
 subdownload=xbmc.translatePath( os.path.join( temp, 'download', '') ).decode("utf-8")
 subtitlefile="tv4user"
 
-mainUrl = "http://board.TV4User.de"
+mainUrl = "https://www.TV4User.de"
 
 
 # Anlegen von Directorys
@@ -112,7 +112,7 @@ def getUrl(url,data="x"):
         debug("Get Url: " +url)
         opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))  
         userAgent = "Dalvik/2.1.0 (Linux; U; Android 5.0;)"
-        opener.addheaders = [('User-Agent', userAgent)]
+        opener.addheaders = [('User-Agent', userAgent),('Content-Type','application/x-www-form-urlencoded')]        
         try:
           if data!="x" :
              content=opener.open(url,data=data).read()
