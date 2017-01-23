@@ -1952,7 +1952,8 @@ v0.7.0 (2016-12-26)
 
 <addon id="service.subtitles.tv4user" name="Tv4user.de" version="0.8.11" provider-name="L0RE">
   <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="xbmc.python" version="2.19.0"/>
+    <import addon="script.module.requests" version="2.12.4"/>
   </requires>
   <extension point="xbmc.subtitle.module"
              library="service.py" />
@@ -1965,7 +1966,7 @@ v0.7.0 (2016-12-26)
     <forum>http://www.kodinerds.net/index.php/Thread/47097-RELEASE-Untertitel-Plugin-f%C3%BCr-http-board-tv4user-de</forum>
     <website>http://www.br.de</website>
     <email>andreas at vogler dot name</email>
-    <source>https://github.com/kodinerds/repo/tree/master/addons/service.subtitles.tv4user</source>    
+    <source>https://github.com/kodinerds/repo/tree/master/addons/service.subtitles.tv4user</source>
   </extension>
 </addon>
 
