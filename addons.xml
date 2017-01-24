@@ -1852,26 +1852,6 @@ v0.7.0 (2016-12-26)
   </extension>
 </addon>
 
-<addon id="service.popwindow" name="Pupup Windows" version="0.2.8" provider-name="L0RE">
-    <requires>
-        <import addon="xbmc.python" version="2.19.0"/>
-	<import addon="script.module.requests" version="2.9.1"/>	
-    </requires>
-    <extension point="xbmc.service" library="service.py" start="login" />
-	<extension point="xbmc.python.module" library="lib" />
-    <extension point="xbmc.addon.metadata">
-    <summary lang="en">Shows Popup  Windows</summary>
-    <summary lang="de">Shows Popup  Windows</summary>
-    <description lang="en">Shows Popup  Windows</description>
-    <description lang="de">Shows Popup  Windows</description>
-    <website></website>
-    <source>https://github.com/kodinerds/repo/tree/master/addons/service.popwindow</source>
-    <forum>http://www.kodinerds.net/index.php/Thread/46939-Repo-Lost-Found</forum>
-    <email>andreas at vogler dot name</email>
-    <platform>all</platform>
-  </extension>
-</addon>
-
 <addon id="service.rsspopup" name="Rss Popus" version="0.3.8" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.19.0"/>			       
@@ -1992,29 +1972,6 @@ v0.7.0 (2016-12-26)
     <website>http://vdr4bj1.no-ip.org</website>
     <email>birger.jesch@gmail.com</email>
     <source>https://github.com/b-jesch/service.tvh.manager</source>
-  </extension>
-</addon>
-
-<addon id="service.twitterfeed" name="Twitter Feed" version="0.8.28" provider-name="L0RE">
-    <requires>
-        <import addon="xbmc.python" version="2.19.0"/>
-	<import addon="script.module.requests" version="2.9.1"/>	
-	<import addon="service.popwindow" version="0.2.7"/>	
-    </requires>
-    <extension point="xbmc.service" library="service.py" start="login" />
-	<extension point="xbmc.python.pluginsource" library="service.py" >
-	    <provides>executable</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-    <summary lang="en">Shows Twitter Messages in Kodi</summary>
-    <summary lang="de">Zeigt Twitter Nachrichten in Kodi an</summary>
-    <description lang="en">Shows Hastags from "TV Shows and Sender" or "Timline" or a "defined search word"</description>
-    <description lang="de">Zeigt Hashtags aus dem Fernsehen an oder die Timeline oder ein Suchbegriff an</description>
-    <website></website>
-    <source>https://github.com/kodinerds/repo/tree/master/addons/service.livetv.twitter</source>
-    <forum>http://www.kodinerds.net/index.php/Thread/49221-Release-Twitterfeeds/</forum>
-    <email>andreas at vogler dot name</email>
-    <platform>all</platform>
   </extension>
 </addon>
 
