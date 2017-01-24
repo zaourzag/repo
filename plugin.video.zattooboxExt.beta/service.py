@@ -9,39 +9,36 @@
 
 import xbmc, xbmcgui, xbmcaddon, datetime, time
 import sys, urlparse
-from resources.zattooDB import ZattooDB
-from resources.library import library
 
-_library_=library()
+from resources.library import library
+from resources.zattooDB import ZattooDB
+
 _zattooDB_ = ZattooDB()
+_library_=library()
 __addon__ = xbmcaddon.Addon()
 __addonId__=__addon__.getAddonInfo('id')
 __addonname__ = __addon__.getAddonInfo('name')
-       
-def refreshProg():
+
+              
+def refreshProg(self):
+    import urllib
     monitor = xbmc.Monitor()
     while not monitor.abortRequested():
-        if monitor.waitForAbort(300): break
-        # update programInfo    
+        if monitor.waitForAbort(60): break
+        #update programInfo    
         startTime=datetime.datetime.now()+datetime.timedelta(minutes = 5)
         endTime=datetime.datetime.now()+datetime.timedelta(minutes = 5)
+
         _zattooDB_.getProgInfo(False, startTime, endTime)
         print "REFRESH Prog  " + str(datetime.datetime.now())
-
-
-def recInfo():
-    import urllib
-    resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/playlist', None)
-    if resultData is None: return
-    for record in resultData['recordings']:
-        showInfo=_zattooDB_.getShowInfo(record['program_id']) 
+        
            
 def start():
+    import urllib
     _zattooDB_.updateChannels()
     _zattooDB_.updateProgram()
     
     xbmc.executebuiltin("ActivateWindow(busydialog)")
-    recInfo()
     _library_.make_library()   
     xbmc.executebuiltin("Dialog.Close(busydialog)")
     
@@ -50,7 +47,7 @@ def start():
 
     xbmcgui.Dialog().notification('Programm Informationen', __addon__.getLocalizedString(30110),  __addon__.getAddonInfo('path') + '/icon.png', 5000, False) 
 
-    refreshProg()  
+    #refreshProg()  
 
 
 

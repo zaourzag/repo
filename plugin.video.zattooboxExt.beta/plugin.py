@@ -577,6 +577,8 @@ def makeOsdInfo():
   win.setProperty('country', '[COLOR blue]' + local(574) + ':  ' + '[/COLOR]' + str(program['country']))
 #  win.setProberty('category', '[COLOR blue]' + local(21866) + ':  ' + '[/COLOR]' + program['category'])
 
+# Refresh Long_Description
+
 class myPlayer( xbmc.Player ):
   def __init__(self, skip=False):
     self.skip=skip

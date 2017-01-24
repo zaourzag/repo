@@ -24,6 +24,9 @@ from zapisession import ZapiSession
 
 
 __addon__ = xbmcaddon.Addon()
+_listMode_ = __addon__.getSetting('channellist')
+_channelList_=[]
+
 
 REMOTE_DBG = False
 
@@ -218,9 +221,6 @@ class ZattooDB(object):
       self.conn.commit()    
     c.close()
     
-    # update programInfo
-    #channels = self.getChannelList()
-    #self.getPrograms(channels, True)
     
   def getChannelList(self, favourites=True):
     #self.updateChannels()
@@ -262,6 +262,7 @@ class ZattooDB(object):
     channelKeys=('\',\''.join(channels.keys()))
     channelKeys="'"+channelKeys.replace(",'index',", ",")+"'"
     c = self.conn.cursor()
+    print 'Aufruf Menu  ' + str(startTime) + ' - '+ str(endTime)
     c.execute('SELECT * FROM programs WHERE channel in (' + channelKeys + ')  AND start_date < ? AND end_date > ?', [endTime, startTime])
 
     programList = []
@@ -285,35 +286,38 @@ class ZattooDB(object):
         'image_small' : row['image_small'],
         'image_large': row['image_large']
       })
+
     c.close()
     return programList
 
   def getShowLongDescription(self, showID):
-        c = self.conn.cursor()
+        info = self.conn.cursor()
         try:
-            c.execute('SELECT * FROM programs WHERE showID= ? ', [showID])
+            info.execute('SELECT * FROM programs WHERE showID= ? ', [showID])
         except:
             return None
         
-        show = c.fetchone()
+        show = info.fetchone()
         longDesc = show['description_long']
         if longDesc is None:
-        
             api = '/zapi/program/details?program_id=' + showID + '&complete=True'
             showInfo = self.zapiSession().exec_zapiCall(api, None)
+            if showInfo is None:
+                longDesc=''
+                return longDesc            
             longDesc = showInfo['program']['description']
-            c.execute('UPDATE programs SET description_long=? WHERE showID=?', [longDesc, showID ])
+            info.execute('UPDATE programs SET description_long=? WHERE showID=?', [longDesc, showID ])
             year = showInfo['program']['year']
             if year is None: year=''
-            c.execute('UPDATE programs SET year=? WHERE showID=?', [year, showID ])
+            info.execute('UPDATE programs SET year=? WHERE showID=?', [year, showID ])
             category = ', '.join(showInfo['program']['categories'])
-            c.execute('UPDATE programs SET category=? WHERE showID=?', [category, showID ])
+            info.execute('UPDATE programs SET category=? WHERE showID=?', [category, showID ])
             country = showInfo['program']['country']
             country = country.replace('|',', ')
-            c.execute('UPDATE programs SET country=? WHERE showID=?', [country, showID ])
-            self.conn.commit()
-           
-        c.close()
+            info.execute('UPDATE programs SET country=? WHERE showID=?', [country, showID ])
+            
+        self.conn.commit()
+        info.close()
         return longDesc
         
   def getShowInfo(self, showID, field='all'):
@@ -359,7 +363,7 @@ class ZattooDB(object):
     if row is not None:
       playing = {'channel':row['channel'], 'start':row['start_date'], 'action_time':row['action_time'], 'current_stream':row['current_stream'], 'streams':row['streams']}
     else:
-      c.execute('SELECT * FROM channels WHERE favourite=? AND weight=?', ['1', '0'] )
+      c.execute('SELECT * FROM channels WHERE weight=?', ['0'] )
       row = c.fetchone() 
       playing = {'channel':row['id'], 'start':datetime.datetime.now(), 'action_time':datetime.datetime.now()}
     c.close()
@@ -417,16 +421,15 @@ class ZattooDB(object):
   def getProgInfo(self, notify=False, startTime=datetime.datetime.now(), endTime=datetime.datetime.now()):
         fav = False
         if __addon__.getSetting('onlyfav') == 'true': fav = True
-        channels = self.getChannelList(fav)
+        channels = self.getChannelList(_listMode_ == 'favourites')
         
         #self.updateProgram(startTime)
         channelKeys=('\',\''.join(channels.keys()))
         channelKeys="'"+channelKeys.replace(",'index',", ",")+"'"
-        c = self.conn.cursor()
-        try:
-            c.execute('SELECT * FROM programs WHERE channel in (' + channelKeys + ')  AND start_date < ? AND end_date > ?', [endTime, startTime])
-        except: 
-            print type(channelKeys)
+        prog= self.conn.cursor()
+
+        prog.execute('SELECT * FROM programs WHERE channel in (' + channelKeys + ') AND start_date < ? AND end_date > ?', [endTime, startTime])
+
         # if Notification
         if notify:
             PopUp = xbmcgui.DialogProgressBG()
@@ -435,7 +438,7 @@ class ZattooDB(object):
             PopUp.create('ZattooBoxExt lade Programm Informationen ...', '')
             PopUp.update(bar)
         print "StartTime   " + str(startTime)
-        for row in c:
+        for row in prog:
           if notify:
             bar += 1
             percent = int(bar * 100 / counter) 
@@ -445,7 +448,8 @@ class ZattooDB(object):
             if notify:
                 PopUp.update(percent,'ZattooBoxExt lade Programm Informationen ...', 'Programm Information für ' + str(row['channel']))
             description_long = self.getShowLongDescription(row["showID"])
-        c.close()
+    
+        prog.close()
         if notify:
             PopUp.close()
         return 
