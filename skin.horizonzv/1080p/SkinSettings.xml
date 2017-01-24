@@ -310,7 +310,7 @@
                             <width>1260</width>
                             <align>left</align>
 							<label>$VAR[Home_TVShow_Label]</label>
-                            <onclick>SetProperty(HomeButton,series,home)</onclick>
+                            <onclick>SetProperty(HomeButton,tvshow,home)</onclick>
                             <onclick>ActivateWindow(1501)</onclick>
                             <!-- <enable>Library.HasContent(TVShows)</enable> -->
                         </control>
@@ -319,7 +319,7 @@
                             <width>1260</width>
                             <align>left</align>
 							<label>$VAR[Home_MusicVideo_Label]</label>
-                            <onclick>SetProperty(HomeButton,musicvideos,home)</onclick>
+                            <onclick>SetProperty(HomeButton,musicvideo,home)</onclick>
                             <onclick>ActivateWindow(1501)</onclick>
                             <!-- <enable>Library.HasContent(musicvideos)</enable> -->
                         </control>
@@ -1290,7 +1290,7 @@
                             <align>left</align>
                             <label>51318</label>
                             <label2>$INFO[Skin.String(ServerIcon_File)]</label2>
-                            <onclick>Skin.SetImage(ServerIcon_File)</onclick>
+                            <onclick>Skin.SetImage(ServerIcon_File,smb://)</onclick>
                         </control>
                         <control type="radiobutton" id="549">
                             <description>Startup Playlist</description>
@@ -1466,7 +1466,7 @@
                             <width>1260</width>
                             <align>left</align>
                             <label>$LOCALIZE[20391]</label>
-                            <onclick>SetProperty(HomeButton,musicvideos,home)</onclick>
+                            <onclick>SetProperty(HomeButton,musicvideo,home)</onclick>
                             <onclick>ActivateWindow(1500)</onclick>
                         </control>
                         <control type="button" id="614">
@@ -1488,7 +1488,7 @@
                             <width>1260</width>
                             <align>left</align>
                             <label>$LOCALIZE[20343]</label>
-                            <onclick>SetProperty(HomeButton,series,home)</onclick>
+                            <onclick>SetProperty(HomeButton,tvshow,home)</onclick>
                             <onclick>ActivateWindow(1500)</onclick>
                         </control>
                         <control type="button" id="619">
@@ -1716,7 +1716,7 @@
                             <label2>$INFO[Skin.String(Home_Custom_Back_Picture_OnlyOne)]</label2>
                             <focusedcolor>black</focusedcolor>
                             <onclick condition="Skin.String(Home_Custom_Back_Picture_OnlyOne)">Skin.Reset(Home_Custom_Back_Picture_OnlyOne)</onclick>
-                            <onclick condition="!Skin.HasSetting(Home_Custom_Back_Picture_OnlyOne_Path)+String.IsEmpty(Skin.String(Home_Custom_Back_Picture_OnlyOne))">Skin.SetImage(Home_Custom_Back_Picture_OnlyOne)</onclick>
+                            <onclick condition="!Skin.HasSetting(Home_Custom_Back_Picture_OnlyOne_Path)+String.IsEmpty(Skin.String(Home_Custom_Back_Picture_OnlyOne))">Skin.SetImage(Home_Custom_Back_Picture_OnlyOne,smb://)</onclick>
                             <onclick condition="Skin.HasSetting(Home_Custom_Back_Picture_OnlyOne_Path)+String.IsEmpty(Skin.String(Home_Custom_Back_Picture_OnlyOne))">Skin.SetPath(Home_Custom_Back_Picture_OnlyOne)</onclick>
                             <visible>Skin.HasSetting(onlyone)</visible>
                         </control>

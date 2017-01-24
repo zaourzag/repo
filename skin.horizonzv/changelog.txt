@@ -1,4 +1,10 @@
-﻿v 0.9.0.12
+﻿v 0.9.0.13
+- weiter Hauptmenüpunkte umgebaut (Serien, Musikvideo, Bilder, Disk)
+- Clearcases aus den Widgets entfernt
+- Bugfixes
+- Code aufgeräumt
+
+v 0.9.0.12
 - Umbau der Hauptmenüpunkte (eigene Inhalte könne festgelegt werden - Konfiguration über das Untermenü)
 - Widget für eigene Hauptmenüpunkte erstellt
 - Clearcases in Widgets entfernt

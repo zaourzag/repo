@@ -232,6 +232,20 @@
                         <visible>System.HasAddon(script.tvtunes)</visible>
                     </item>
                     <item>
+                        <label>Fritz Smart Home</label>
+                        <label2>$LOCALIZE[24038]</label2>
+						<onclick>InstallAddon(plugin.program.fritzact)</onclick>
+						<visible>!System.HasAddon(plugin.program.fritzact)</visible>
+                        <!-- <visible>System.HasAddon(repository.kodinerds)</visible> -->
+                    </item>
+                    <item>
+                        <label>Fritz Smart Home $INFO[System.AddonVersion(plugin.program.fritzact),(,)]</label>
+                        <label2>$LOCALIZE[5]</label2>
+                        <onclick>Addon.OpenSettings(plugin.program.fritzact)</onclick>
+                        <visible>System.HasAddon(plugin.program.fritzact)</visible>
+                        <!-- <visible>System.HasAddon(repository.kodinerds)</visible> -->
+                    </item>
+                    <item>
                         <label>German Telecast Offers</label>
                         <label2>$LOCALIZE[24038]</label2>
                         <onclick>InstallAddon(script.service.gto)</onclick>

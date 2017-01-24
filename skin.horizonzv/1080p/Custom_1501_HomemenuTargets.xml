@@ -143,7 +143,7 @@
                     <include>dialogbutton_popup</include>
 					<label>19190</label>
 					<label2>$VAR[backgroundfolder]home_music$VAR[bkg_fileext]</label2>
-					<onclick>Skin.SetImage(user_bkg_music)</onclick>
+					<onclick>Skin.SetImage(user_bkg_music,smb://)</onclick>
 				</control>
                 <control type="button" id="12">
 					<description>Position Settings</description>
@@ -251,7 +251,7 @@
                     <include>dialogbutton_popup</include>
 					<label>19190</label>
 					<label2>$VAR[backgroundfolder]home_video$VAR[bkg_fileext]</label2>
-					<onclick>Skin.SetImage(user_bkg_movie)</onclick>
+					<onclick>Skin.SetImage(user_bkg_movie,smb://)</onclick>
 				</control>
                 <control type="button" id="37">
 					<description>Position Settings</description>
@@ -351,7 +351,7 @@
                     <include>dialogbutton_popup</include>
 					<label>19190</label>
 					<label2>$VAR[backgroundfolder]home_video$VAR[bkg_fileext]</label2>
-					<onclick>Skin.SetImage(user_bkg_movie)</onclick>
+					<onclick>Skin.SetImage(user_bkg_movie,smb://)</onclick>
 				</control>
                 <control type="button" id="61">
 					<description>Position Settings</description>
@@ -451,7 +451,7 @@
                     <include>dialogbutton_popup</include>
 					<label>19190</label>
 					<label2>$VAR[backgroundfolder]home_tvshows$VAR[bkg_fileext]</label2>
-					<onclick>Skin.SetImage(user_bkg_tvshow)</onclick>
+					<onclick>Skin.SetImage(user_bkg_tvshow,smb://)</onclick>
 				</control>
                 <control type="button" id="81">
 					<description>Position Settings</description>
@@ -495,7 +495,7 @@
                 <height>870</height>
                 <height>675</height>
                 <itemgap>3</itemgap>
-                <visible>String.IsEqual(Window(Home).Property(HomeButton),musicvideos)</visible>
+                <visible>String.IsEqual(Window(Home).Property(HomeButton),musicvideo)</visible>
 				<control type="radiobutton" id="95">
 					<description>Movie Button</description>
                     <include>dialogbutton_popup</include>
@@ -551,7 +551,7 @@
                     <include>dialogbutton_popup</include>
 					<label>19190</label>
 					<label2>$VAR[backgroundfolder]home_musicvideos$VAR[bkg_fileext]</label2>
-					<onclick>Skin.SetImage(user_bkg_musicvideo)</onclick>
+					<onclick>Skin.SetImage(user_bkg_musicvideo,smb://)</onclick>
 				</control>
                 <control type="button" id="106">
 					<description>Position Settings</description>
@@ -567,7 +567,7 @@
 					<description>Open Widget Settings</description>
                     <include>dialogbutton_popup</include>
 					<label>Widget</label>
-					<onclick>SetProperty(HomeButton,musicvideos)</onclick>
+					<onclick>SetProperty(HomeButton,musicvideo)</onclick>
 					<onclick>ActivateWindow(1500)</onclick>
 					<visible>!Skin.HasSetting(HomeMenu_Custom_MusicVideo_Button)</visible>
 				</control>
@@ -575,9 +575,17 @@
 					<description>Custom Widget Button</description>
                     <include>dialogbutton_popup</include>
 					<label>Widget</label>
-					<onclick>Skin.ToggleSetting(HomeMenu_Custom_Musicvideo_Widget)</onclick>
-					<selected>Skin.HasSetting(HomeMenu_Custom_Musicvideo_Widget)</selected>
-					<visible>Skin.HasSetting(HomeMenu_Custom_Musicvideo_Button)</visible>
+					<onclick>Skin.ToggleSetting(HomeMenu_Custom_MusicVideo_Widget)</onclick>
+					<selected>Skin.HasSetting(HomeMenu_Custom_MusicVideo_Widget)</selected>
+					<visible>Skin.HasSetting(HomeMenu_Custom_MusicVideo_Button)</visible>
+				</control>
+				<control type="radiobutton" id="113">
+					<description>Settings Button</description>
+                    <include>dialogbutton_popup</include>
+					<label>verberge grüne Progressbar</label>
+					<onclick>Skin.ToggleSetting(WidgetNoPercentPlayedBar)</onclick>
+					<selected>Skin.HasSetting(WidgetNoPercentPlayedBar)</selected>
+					<visible>Skin.HasSetting(HomeMenu_Custom_MusicVideo_Button)</visible>
 				</control>
             </control>
             <control type="grouplist" id="36100"> <!-- picture -->
@@ -643,7 +651,7 @@
                     <include>dialogbutton_popup</include>
 					<label>19190</label>
 					<label2>$VAR[backgroundfolder]home_pictures$VAR[bkg_fileext]</label2>
-					<onclick>Skin.SetImage(user_bkg_pictures)</onclick>
+					<onclick>Skin.SetImage(user_bkg_pictures,smb://)</onclick>
 				</control>
                 <control type="button" id="131">
 					<description>Position Settings</description>
@@ -671,6 +679,14 @@
 					<selected>Skin.HasSetting(HomeMenu_Custom_Picture_Widget)</selected>
 					<visible>Skin.HasSetting(HomeMenu_Custom_Picture_Button)</visible>
 				</control>
+				<control type="radiobutton" id="138">
+					<description>Settings Button</description>
+                    <include>dialogbutton_popup</include>
+					<label>verberge grüne Progressbar</label>
+					<onclick>Skin.ToggleSetting(WidgetNoPercentPlayedBar)</onclick>
+					<selected>Skin.HasSetting(WidgetNoPercentPlayedBar)</selected>
+					<visible>Skin.HasSetting(HomeMenu_Custom_Picture_Button)</visible>
+				</control>
             </control>
             <control type="grouplist" id="36100"> <!-- playdisc -->
                 <left>45</left>
@@ -680,14 +696,14 @@
                 <height>675</height>
                 <itemgap>3</itemgap>
                 <visible>String.IsEqual(Window(Home).Property(HomeButton),playdisc)</visible>
-				<control type="radiobutton" id="104">
+				<control type="radiobutton" id="140">
 					<description>Movie Button</description>
                     <include>dialogbutton_popup</include>
 					<label>19218</label>
 					<onclick>Skin.ToggleSetting(HomeMenuNoDVDButton)</onclick>
 					<selected>!Skin.HasSetting(HomeMenuNoDVDButton)</selected>
 				</control>
-                <control type="radiobutton" id="105">
+                <control type="radiobutton" id="141">
 					<description>Movie Custom Button</description>
                     <include>dialogbutton_popup</include>
 					<label>- $LOCALIZE[636]</label>
@@ -695,7 +711,7 @@
 					<selected>Skin.HasSetting(HomeMenu_Custom_PlayDisc_Button)</selected>
 					<enable>!Skin.HasSetting(HomeMenuNoDVDButton)</enable>
 				</control>
-                <control type="button" id="106">
+                <control type="button" id="142">
 					<description>Movie Custom Label Button</description>
                     <include>dialogbutton_popup</include>
 					<label>- $LOCALIZE[21899]</label>
@@ -703,7 +719,7 @@
 					<onclick>Skin.SetString(Home_PlayDisc_Custom_Label)</onclick>
 					<enable>!Skin.HasSetting(HomeMenuNoDVDButton)+Skin.HasSetting(HomeMenu_Custom_PlayDisc_Button)</enable>
 				</control>
-                <control type="button" id="107">
+                <control type="button" id="143">
 					<description>Movie Custom Category Button</description>
                     <include>dialogbutton_popup</include>
 					<label>- $LOCALIZE[21866]</label>
@@ -711,7 +727,7 @@
 					<onclick>Skin.SelectBool(21866, 36912|Home_PlayDisc_Custom_Category_Video, 2|Home_PlayDisc_Custom_Category_Music, 1|Home_PlayDisc_Custom_Category_Pictures, 559|Home_PlayDisc_Custom_Category_File)</onclick>
 					<enable>!Skin.HasSetting(HomeMenuNoDVDButton)+Skin.HasSetting(HomeMenu_Custom_PlayDisc_Button)</enable>
 				</control>
-                <control type="button" id="108">
+                <control type="button" id="144">
 					<description>Movie Custom Category SubButton</description>
                     <include>dialogbutton_popup</include>
 					<label>  $LOCALIZE[15021]</label>
@@ -719,7 +735,7 @@
 					<onclick>Skin.SelectBool(21866, 36912|Home_PlayDisc_Custom_SubCategory_Video, 2|Home_PlayDisc_Custom_SubCategory_Music)</onclick>
 					<visible>!Skin.HasSetting(HomeMenuNoDVDButton)+Skin.HasSetting(HomeMenu_Custom_PlayDisc_Button)+Skin.HasSetting(Home_PlayDisc_Custom_Category_File)</visible>
 				</control>
-                <control type="button" id="109">
+                <control type="button" id="145">
 					<description>Movie Custom Path Button</description>
                     <include>dialogbutton_popup</include>
 					<label>- $LOCALIZE[573]</label>
@@ -728,16 +744,16 @@
 					<enable>!Skin.HasSetting(HomeMenuNoDVDButton)+Skin.HasSetting(HomeMenu_Custom_PlayDisc_Button)</enable>
 				</control>
 				<include content="separatorlabel">
-					<param name="separatorlabel_id" value="111" />
+					<param name="separatorlabel_id" value="149" />
 				</include>
-                <control type="button" id="112">
+                <control type="button" id="150">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
 					<label>19190</label>
 					<label2>$VAR[backgroundfolder]home_disc$VAR[bkg_fileext]</label2>
-					<onclick>Skin.SetImage(user_bkg_dvd)</onclick>
+					<onclick>Skin.SetImage(user_bkg_dvd,smb://)</onclick>
 				</control>
-                <control type="button" id="113">
+                <control type="button" id="151">
 					<description>Position Settings</description>
                     <include>dialogbutton_popup</include>
 					<label>Position</label>
@@ -745,22 +761,30 @@
 					<onclick>ActivateWindow(1301)</onclick>
 				</control>
 				<include content="separatorlabel">
-					<param name="separatorlabel_id" value="115" />
+					<param name="separatorlabel_id" value="155" />
 				</include>
-                <control type="button" id="116">
+                <control type="button" id="156">
 					<description>Open Widget Settings</description>
                     <include>dialogbutton_popup</include>
 					<label>Widget</label>
-					<onclick>SetProperty(HomeButton,picture)</onclick>
+					<onclick>SetProperty(HomeButton,playdisc)</onclick>
 					<onclick>ActivateWindow(1500)</onclick>
 					<visible>!Skin.HasSetting(HomeMenu_Custom_PlayDisc_Button)</visible>
 				</control>
-				<control type="radiobutton" id="117">
+				<control type="radiobutton" id="157">
 					<description>Custom Widget Button</description>
                     <include>dialogbutton_popup</include>
 					<label>Widget</label>
 					<onclick>Skin.ToggleSetting(HomeMenu_Custom_PlayDisc_Widget)</onclick>
 					<selected>Skin.HasSetting(HomeMenu_Custom_PlayDisc_Widget)</selected>
+					<visible>Skin.HasSetting(HomeMenu_Custom_PlayDisc_Button)</visible>
+				</control>
+				<control type="radiobutton" id="158">
+					<description>Settings Button</description>
+                    <include>dialogbutton_popup</include>
+					<label>verberge grüne Progressbar</label>
+					<onclick>Skin.ToggleSetting(WidgetNoPercentPlayedBar)</onclick>
+					<selected>Skin.HasSetting(WidgetNoPercentPlayedBar)</selected>
 					<visible>Skin.HasSetting(HomeMenu_Custom_PlayDisc_Button)</visible>
 				</control>
             </control>

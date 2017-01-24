@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window>
-    <defaultcontrol always="true">777</defaultcontrol>
+    <defaultcontrol always="true">9000</defaultcontrol>
 	<backgroundcolor>$VAR[BackgroundOverlayColor]</backgroundcolor>
     <menucontrol>9000</menucontrol>
     <include>openclose</include>
@@ -382,7 +382,7 @@
                         <description>Settings button</description>
                         <label>5</label>
 						<!-- <label2>$INFO[Weather.Plugin]</label2> -->
-                        <onclick>Addon.OpenSettings($INFO[Weather.Plugin])</onclick>
+						<onclick>ActivateWindow(servicesettings,weather)</onclick>
                         <textwidth>352</textwidth>
                         <include>SidePanelButton</include>
                     </control>

@@ -37,7 +37,7 @@
 		<control type="button" id="90250">
 			<include>ButtonHomeSubCommonValues</include>
 			<label>21417</label>
-			<onclick>SetProperty(HomeButton,$INFO[Container(9000).ListItem.Property(homemenu_id)])</onclick>
+			<onclick>SetProperty(HomeButton,$INFO[Container(9000).ListItem.Property(homemenu_id)],home)</onclick>
 			<onclick>ActivateWindow(1501)</onclick>
 		</control>
 	</include>
@@ -274,6 +274,22 @@
 			<include>HomeSubSettingsButton</include>
         </control>
     </include>
+    <include name="HomeSubMenuDashboard">
+        <!-- Dashboard -->
+        <control type="grouplist" id="9010">
+			<onup>8009</onup>
+            <include>HomeSubMenuCommonValues</include>
+            <onleft>9010</onleft>
+            <onright>9010</onright>
+            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),dashboard)</visible>
+            <control type="button" id="90123">
+                <include>ButtonHomeSubCommonValues</include>
+                <label>Widget</label>
+                <onclick>SetProperty(HomeButton,dashboard)</onclick>
+                <onclick>ActivateWindow(1500)</onclick>
+            </control>
+        </control>
+    </include>
     <include name="HomeSubMenuTVShows">
         <control type="grouplist" id="9010">
             <include>HomeSubMenuCommonValues</include>
@@ -343,25 +359,96 @@
                 <label>-</label>
                 <onclick>Control.SetFocus(9000)</onclick>
                 <onclick>ActivateWindow(1141)</onclick>
+				<visible>!Skin.HasSetting(HomeMenu_Custom_MusicVideo_Button)</visible>
             </control>
             <control type="button" id="90162">
                 <include>ButtonHomeSubCommonValues</include>
                 <label>369</label>
                 <onclick>ActivateWindow(Videos,MusicVideosTitles,return)</onclick>
                 <visible>!Skin.HasSetting(SubMenu_MusicVideo_NoTitleButton)</visible>
+				<visible>!Skin.HasSetting(HomeMenu_Custom_MusicVideo_Button)</visible>
             </control>
             <control type="button" id="90164">
                 <include>ButtonHomeSubCommonValues</include>
                 <label>135</label>
                 <onclick>ActivateWindow(Videos,MusicVideosGenres,return)</onclick>
                 <visible>!Skin.HasSetting(SubMenu_MusicVideo_NoGenreButton)</visible>
+				<visible>!Skin.HasSetting(HomeMenu_Custom_MusicVideo_Button)</visible>
             </control>
-            <!-- <control type="button" id="90179">
+			<include>HomeSubSettingsButton</include>
+        </control>
+    </include>
+    <include name="HomeSubMenuPictures">
+        <control type="grouplist" id="9010">
+            <include>HomeSubMenuCommonValues</include>
+            <onleft>9010</onleft>
+            <onright>9010</onright>
+            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),picture)</visible>
+            <control type="button" id="90147">
+                <include>ButtonHomeSubCommonValues</include>
+                <label>24001</label>
+                <onclick>ActivateWindow(Pictures,Addons,return)</onclick>
+				<visible>!Skin.HasSetting(HomeMenu_Custom_Picture_Button)</visible>
+            </control>
+			<include>HomeSubSettingsButton</include>
+        </control>
+    </include>
+    <include name="HomeSubMenuWeather">
+        <control type="grouplist" id="9010">
+            <itemgap>75</itemgap>
+            <include>HomeSubMenuCommonValues</include>
+            <onleft>9010</onleft>
+            <onright>9010</onright>
+            <onup>3005</onup>
+            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),weather)</visible>
+            <control type="button" id="90193">
+                <description>Toggle Weather Fanart Homemenu</description>
+                <include>ButtonHomeSubCommonValues</include>
+                <label>$VAR[WidgetsWeatherFanart]</label>
+                <onclick>Skin.ToggleSetting(WeatherFanartHome)</onclick>
+                <enable>!String.IsEmpty(Weather.Plugin)+!String.IsEmpty(Skin.String(weatherfanart.path))</enable>
+            </control>
+            <control type="button" id="90192">
+                <description>Toggle Weather Fanart Homemenu</description>
+                <include>ButtonHomeSubCommonValues</include>
+                <label>51469</label>
+                <onclick>RunScript(script.image.resource.select,property=weatherfanart&amp;type=resource.images.weatherfanart)</onclick>
+                <visible>System.HasAddon(script.image.resource.select)</visible>
+            </control>
+            <control type="button" id="90191">
+                <include>ButtonHomeSubCommonValues</include>
+                <label>Warnungen</label>
+                <onclick>ActivateWindow(1700)</onclick>
+            </control>
+            <control type="button" id="90190">
                 <include>ButtonHomeSubCommonValues</include>
                 <label>Widget</label>
-                <onclick>SetProperty(HomeButton,musicvideos)</onclick>
+                <onclick>SetProperty(HomeButton,weather)</onclick>
                 <onclick>ActivateWindow(1500)</onclick>
-            </control> -->
+            </control>
+        </control>
+    </include>
+    <include name="HomeSubMenuPlayDisc">
+        <control type="grouplist" id="9010">
+            <include>HomeSubMenuCommonValues</include>
+            <onleft>9010</onleft>
+            <onright>9010</onright>
+            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),playdisc)</visible>
+            <control type="button" id="90132">
+                <include>ButtonHomeSubCommonValues</include>
+                <label>Rip</label>
+                <onclick>RipCD</onclick>
+				<visible>System.HasMediadvd</visible>
+				<visible>!Skin.HasSetting(HomeMenu_Custom_PlayDisc_Button)</visible>
+            </control>
+            <control type="button" id="90133">
+                <include>ButtonHomeSubCommonValues</include>
+                <label>13391</label>
+                <onclick>EjectTray()</onclick>
+                <onclick>SetFocus(9000)</onclick>
+				<visible>System.HasMediadvd</visible>
+				<visible>!Skin.HasSetting(HomeMenu_Custom_PlayDisc_Button)</visible>
+            </control>
 			<include>HomeSubSettingsButton</include>
         </control>
     </include>
@@ -424,47 +511,6 @@
 			</control>
 		</control>
     </include>
-    <include name="HomeSubMenuPlayDisc">
-        <control type="grouplist" id="9010">
-            <include>HomeSubMenuCommonValues</include>
-            <onleft>9010</onleft>
-            <onright>9010</onright>
-            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),playdisc)</visible>
-            <control type="button" id="90131">
-                <description>Toggle DVD Widget Homemenu</description>
-                <include>ButtonHomeSubCommonValues</include>
-                <label>DVD Widget</label>
-                <onclick condition="!Skin.HasSetting(Widget_DVDLabel)">Skin.SetBool(Widget_DVDLabel)</onclick>
-                <onclick condition="Skin.HasSetting(Widget_DVDLabel)">Skin.Reset(Widget_DVDLabel)</onclick>
-            </control>
-            <control type="button" id="90132">
-                <include>ButtonHomeSubCommonValues</include>
-                <label>Rip</label>
-                <onclick>RipCD</onclick>
-            </control>
-            <control type="button" id="90133">
-                <include>ButtonHomeSubCommonValues</include>
-                <label>13391</label>
-                <onclick>EjectTray()</onclick>
-                <onclick>SetFocus(9000)</onclick>
-            </control>
-			<include>HomeSubSettingsButton</include>
-        </control>
-    </include>
-    <include name="HomeSubMenuPictures">
-        <control type="grouplist" id="9010">
-            <include>HomeSubMenuCommonValues</include>
-            <onleft>9010</onleft>
-            <onright>9010</onright>
-            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),picture)</visible>
-            <control type="button" id="90147">
-                <include>ButtonHomeSubCommonValues</include>
-                <label>24001</label>
-                <onclick>ActivateWindow(Pictures,Addons,return)</onclick>
-            </control>
-			<include>HomeSubSettingsButton</include>
-        </control>
-    </include>
     <include name="HomeSubMenuLiveTV">
         <control type="grouplist" id="9010">
             <include>HomeSubMenuCommonValues</include>
@@ -502,7 +548,7 @@
                 <onclick>SetProperty(HomeButton,livetv)</onclick>
                 <onclick>ActivateWindow(1500)</onclick>
             </control>
-			<include>HomeSubSettingsButton</include>
+			<!-- <include>HomeSubSettingsButton</include> -->
         </control>
     </include>
     <include name="HomeSubMenuRadio">
@@ -542,58 +588,7 @@
                 <onclick>SetProperty(HomeButton,radio)</onclick>
                 <onclick>ActivateWindow(1500)</onclick>
             </control>
-			<include>HomeSubSettingsButton</include>
-        </control>
-    </include>
-    <include name="HomeSubMenuWeather">
-        <control type="grouplist" id="9010">
-            <itemgap>75</itemgap>
-            <include>HomeSubMenuCommonValues</include>
-            <onleft>9010</onleft>
-            <onright>9010</onright>
-            <onup>3005</onup>
-            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),weather)</visible>
-            <control type="button" id="90146">
-                <description>Toggle Weather Fanart Homemenu</description>
-                <include>ButtonHomeSubCommonValues</include>
-                <label>$VAR[WidgetsWeatherFanart]</label>
-                <onclick>Skin.ToggleSetting(WeatherFanartHome)</onclick>
-                <enable>!String.IsEmpty(Weather.Plugin)+!String.IsEmpty(Skin.String(weatherfanart.path))</enable>
-            </control>
-            <control type="button" id="90147">
-                <description>Toggle Weather Fanart Homemenu</description>
-                <include>ButtonHomeSubCommonValues</include>
-                <label>51469</label>
-                <onclick>RunScript(script.image.resource.select,property=weatherfanart&amp;type=resource.images.weatherfanart)</onclick>
-                <visible>System.HasAddon(script.image.resource.select)</visible>
-            </control>
-            <control type="button" id="90149">
-                <include>ButtonHomeSubCommonValues</include>
-                <label>Warnungen</label>
-                <onclick>ActivateWindow(1700)</onclick>
-            </control>
-            <control type="button" id="90150">
-                <include>ButtonHomeSubCommonValues</include>
-                <label>Widget</label>
-                <onclick>SetProperty(HomeButton,weather)</onclick>
-                <onclick>ActivateWindow(1500)</onclick>
-            </control>
-        </control>
-    </include>
-    <include name="HomeSubMenuPrograms">
-        <!-- Dashboard -->
-        <control type="grouplist" id="9010">
-			<onup>8009</onup>
-            <include>HomeSubMenuCommonValues</include>
-            <onleft>9010</onleft>
-            <onright>9010</onright>
-            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),dashboard)</visible>
-            <control type="button" id="90123">
-                <include>ButtonHomeSubCommonValues</include>
-                <label>Widget</label>
-                <onclick>SetProperty(HomeButton,dashboard)</onclick>
-                <onclick>ActivateWindow(1500)</onclick>
-            </control>
+			<!-- <include>HomeSubSettingsButton</include> -->
         </control>
     </include>
     <include name="HomeSubMenu3D">
@@ -918,7 +913,7 @@
                 <include>HomeSubMenuLiveTV</include>
                 <include>HomeSubMenuRadio</include>
                 <include>HomeSubMenuWeather</include>
-                <include>HomeSubMenuPrograms</include>
+                <include>HomeSubMenuDashboard</include>
                 <include>HomeSubMenu3D</include>
                 <include>HomeSubMenuHD</include>
                 <include>HomeSubMenuFullHD</include>
