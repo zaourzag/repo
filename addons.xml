@@ -1852,6 +1852,23 @@ v0.7.0 (2016-12-26)
   </extension>
 </addon>
 
+<addon id="script.module.future" name="future" version="0.16.0" provider-name="Ed Schofield">
+	<requires>
+		<import addon="xbmc.python" version="2.24.0"/>
+	</requires>
+	<extension point="xbmc.python.module" library="lib" />
+	<extension point="xbmc.addon.metadata">
+		<platform>all</platform>
+		<language></language>
+		<summary lang="en">future is the missing compatibility layer between Python 2 and Python 3. It allows you to use a single, clean Python 3.x-compatible codebase to support both Python 2 and Python 3 with minimal overhead.</summary>
+		<description lang="en">future is the missing compatibility layer between Python 2 and Python 3. It allows you to use a single, clean Python 3.x-compatible codebase to support both Python 2 and Python 3 with minimal overhead.</description>
+		<disclaimer lang="en">Code taken from https://pypi.python.org/pypi/future</disclaimer>
+		<license>Copyright 2013-2016 Python Charmers Pty Ltd, Australia. The software is distributed under an MIT licence. See LICENSE.txt</license>
+		<website>https://pypi.python.org/pypi/future</website>
+		<source>https://pypi.python.org/pypi/future/</source>
+	</extension>
+</addon>
+
 <addon id="service.rsspopup" name="Rss Popus" version="0.3.8" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.19.0"/>			       
@@ -1910,23 +1927,24 @@ v0.7.0 (2016-12-26)
   </extension>
 </addon>
 
-<addon id="service.subtitles.subcentral" name="Subcentral.de" version="0.5.4" provider-name="L0RE">
+<addon id="service.subtitles.subcentral" name="subcentral" version="0.8.10" provider-name="L0RE">
   <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="xbmc.python" version="2.19.0"/>
+    <import addon="script.module.requests" version="2.12.4"/>
+    <import addon="script.module.beautifulsoup4" version="4.3.2"/>
   </requires>
   <extension point="xbmc.subtitle.module"
              library="service.py" />
   <extension point="xbmc.addon.metadata">
-    <summary lang="en">Subcentral</summary>
-    <description lang="en">German Subtitles from subcentral Webpage for TV Series</description>
-    <description lang="de">Untertitel aus dem Forum Subcentral für TV Serien</description>
+    <summary lang="en">Untertitel von board.tv4user.de fuer Serien in Deutsch und Englisch</summary>
+    <description lang="en">Subtitle in German/English for Serien from board.tv4user.de </description>
     <disclaimer lang="en"></disclaimer>
     <platform>all</platform>
     <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-    <forum>www.kodinerds.net/index.php/Thread/24416-RELEASE-SubCentral-de-Hochwertige-Untertitel-für-TV-Serien</forum>
-    <website>https://www.subcentral.de/</website>
+    <forum>http://www.kodinerds.net/index.php/Thread/47097-RELEASE-Untertitel-Plugin-f%C3%BCr-http-board-tv4user-de</forum>
+    <website>http://www.br.de</website>
     <email>andreas at vogler dot name</email>
-    <source>https://github.com/kodinerds/repo/tree/master/service.subtitles.subcentral</source>    
+    <source>https://github.com/kodinerds/repo/tree/master/addons/service.subtitles.tv4user</source>
   </extension>
 </addon>
 
@@ -1973,6 +1991,23 @@ v0.7.0 (2016-12-26)
     <email>birger.jesch@gmail.com</email>
     <source>https://github.com/b-jesch/service.tvh.manager</source>
   </extension>
+</addon>
+
+<addon id="script.module.lib2to3" name="future" version="3.7.0" provider-name="Python software foundation">
+	<requires>
+		<import addon="xbmc.python" version="2.24.0"/>
+	</requires>
+	<extension point="xbmc.python.module" library="lib" />
+	<extension point="xbmc.addon.metadata">
+		<platform>all</platform>
+		<language></language>
+		<summary lang="en">Part of CPython 3.7.0</summary>
+		<description lang="en">Part of Cpyton 3.7.0</description>
+		<disclaimer lang="en">Part of Cpyton 3.7.0</disclaimer>
+		<license>PYTHON SOFTWARE FOUNDATION LICENSE VERSION 2</license>
+		<website>https://github.com/python/cpython/tree/master/Lib/lib2to3</website>
+		<source>https://github.com/python/cpython/tree/master/Lib/lib2to3</source>
+	</extension>
 </addon>
 
 <addon id="service.youtv.downloader" name="Youtv Downloader" version="0.2.4" provider-name="L0RE">
@@ -2589,6 +2624,123 @@ v0.7.0 (2016-12-26)
 
 See changelog.txt for more details.</news>
 	</extension>
+</addon>
+
+<addon id="script.module.libfuturize" name="libfuturize" version="0.16.0" provider-name="Ed Schofield">
+	<requires>
+		<import addon="xbmc.python" version="2.24.0"/>
+	</requires>
+	<extension point="xbmc.python.module" library="lib" />
+	<extension point="xbmc.addon.metadata">
+		<platform>all</platform>
+		<language></language>
+		<summary lang="en">Part of python-future</summary>
+		<description lang="en">Part of python-future</description>
+		<disclaimer lang="en">Part of python-future</disclaimer>
+		<license>Check the LICENSE file for full details.</license>
+		<website>https://http://python-future.org/</website>
+		<source>https://github.com/PythonCharmers/python-future/tree/master/src/libfuturize</source>
+	</extension>
+</addon>
+
+<addon id="script.module.oauthlib" name="oauthlib" version="2.0.1" provider-name="Idan Gazit <idan@gazit.me>">
+	<requires>
+		<import addon="xbmc.python" version="2.24.0"/>
+	</requires>
+	<extension point="xbmc.python.module" library="lib" />
+	<extension point="xbmc.addon.metadata">
+		<platform>all</platform>
+		<language></language>
+		<summary lang="en">A generic, spec-compliant, thorough implementation of the OAuth request-signing logic</summary>
+		<description lang="en">A generic, spec-compliant, thorough implementation of the OAuth request-signing logic</description>
+		<disclaimer lang="en">A generic, spec-compliant, thorough implementation of the OAuth request-signing logic</disclaimer>
+		<license>OAuthLib is yours to use and abuse according to the terms of the BSD license. Check the LICENSE file for full details</license>
+		<website>https://pypi.python.org/pypi/oauthlib</website>
+		<source>https://pypi.python.org/pypi/oauthlib</source>
+	</extension>
+</addon>
+
+<addon id="script.module.past" name="past" version="0.16.0" provider-name="Ed Schofield <ed@pythoncharmers.com>">
+	<requires>
+		<import addon="xbmc.python" version="2.24.0"/>
+	</requires>
+	<extension point="xbmc.python.module" library="lib" />
+	<extension point="xbmc.addon.metadata">
+		<platform>all</platform>
+		<language></language>
+		<summary lang="en">Part of python-future</summary>
+		<description lang="en">Part of python-future</description>
+		<disclaimer lang="en">Part of python-future</disclaimer>
+		<license>Check the LICENSE file for full details.</license>
+		<website>http://python-future.org/</website>
+		<source>https://github.com/PythonCharmers/python-future/tree/master/src/past</source>
+	</extension>
+</addon>
+
+<addon id="script.module.requests_oauthlib" name="requests_oauthlib" version="0.7.0" provider-name="Ib Lundgren">
+	<requires>
+		<import addon="xbmc.python" version="2.24.0"/>
+    <import addon="script.module.oauthlib" version="2.0.1"/>    
+	</requires>
+	<extension point="xbmc.python.module" library="lib" />
+	<extension point="xbmc.addon.metadata">
+		<platform>all</platform>
+		<language></language>
+		<summary lang="en">This project provides first-class OAuth library support for Requests.</summary>
+		<description lang="en">This project provides first-class OAuth library support for Requests.</description>
+		<disclaimer lang="en">This project provides first-class OAuth library support for Requests.</disclaimer>
+		<license>ISC</license>
+		<website>https://pypi.python.org/pypi/requests-oauthlib</website>
+		<source>https://pypi.python.org/pypi/requests-oauthlib</source>
+	</extension>
+</addon>
+
+<addon id="service.popwindow" name="Pupup Windows" version="0.2.8" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.24.0"/>
+	<import addon="script.module.requests" version="2.9.1"/>	
+    </requires>
+    <extension point="xbmc.service" library="service.py" start="login" />
+	<extension point="xbmc.python.module" library="lib" />
+    <extension point="xbmc.addon.metadata">
+    <summary lang="en">Shows Popup  Windows</summary>
+    <summary lang="de">Shows Popup  Windows</summary>
+    <description lang="en">Shows Popup  Windows</description>
+    <description lang="de">Shows Popup  Windows</description>
+    <website></website>
+    <source>https://github.com/kodinerds/repo/tree/master/addons/service.popwindow</source>
+    <forum>http://www.kodinerds.net/index.php/Thread/46939-Repo-Lost-Found</forum>
+    <email>andreas at vogler dot name</email>
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="service.twitterfeed" name="Twitter Feed" version="0.8.28" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.24.0"/>
+        <import addon="script.module.requests" version="2.9.1"/>	
+        <import addon="service.popwindow" version="0.2.7"/>	
+        <import addon="script.module.future" version="0.16.0"/>	
+        <import addon="script.module.lib2to3" version="3.7.0"/>	
+        <import addon="script.module.libfuturize" version="0.16.0"/>
+        <import addon="script.module.requests_oauthlib" version="0.7.0"/>
+        <import addon="script.module.past" version="0.16.0"/>
+    </requires>
+    <extension point="xbmc.service" library="service.py" start="login" />
+	<extension point="xbmc.python.pluginsource" library="service.py" >
+	    <provides>executable</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+    <summary lang="en">Shows Twitter Messages in Kodi</summary>
+    <summary lang="de">Zeigt Twitter Nachrichten in Kodi an</summary>
+    <description lang="en">Shows Hastags from "TV Shows and Sender" or "Timline" or a "defined search word"</description>
+    <description lang="de">Zeigt Hashtags aus dem Fernsehen an oder die Timeline oder ein Suchbegriff an</description>
+    <website></website>
+    <source>https://github.com/kodinerds/repo/tree/master/addons/service.livetv.twitter</source>
+    <forum>http://www.kodinerds.net/index.php/Thread/49221-Release-Twitterfeeds/</forum>
+    <email>andreas at vogler dot name</email>
+    <platform>all</platform>
+  </extension>
 </addon>
 
 </addons>
