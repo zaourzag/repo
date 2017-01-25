@@ -18,7 +18,7 @@
 #  http://www.gnu.org/copyleft/gpl.html
 #
 
-import xbmc, xbmcgui, xbmcaddon, os, datetime, time
+import xbmc, xbmcgui, xbmcaddon, os, datetime, time, sys
 import json
 from zapisession import ZapiSession
 
@@ -258,34 +258,33 @@ class ZattooDB(object):
 
 
   def getPrograms(self, channels, get_long_description=False, startTime=datetime.datetime.now(), endTime=datetime.datetime.now()):
-    #self.updateProgram(startTime)
-    channelKeys=('\',\''.join(channels.keys()))
-    channelKeys="'"+channelKeys.replace(",'index',", ",")+"'"
+    import urllib
     c = self.conn.cursor()
-    print 'Aufruf Menu  ' + str(startTime) + ' - '+ str(endTime)
-    c.execute('SELECT * FROM programs WHERE channel in (' + channelKeys + ')  AND start_date < ? AND end_date > ?', [endTime, startTime])
-
     programList = []
-    for row in c:
-      description_long = row["description_long"]
-      if get_long_description and description_long is None: 
-        #description_long = self.getShowInfo(row["showID"],'description')
-        description_long = self.getShowLongDescription(row["showID"])
-      programList.append({
-        'channel': row['channel'],
-        'showID' : row['showID'],
-        'title' : row['title'],
-        'description' : row['description'],
-        'description_long' : description_long,
-        'year': row['year'],
-        'genre': row['genre'],
-        'country': row['country'],
-        'category': row['category'],
-        'start_date' : row['start_date'],
-        'end_date' : row['end_date'],
-        'image_small' : row['image_small'],
-        'image_large': row['image_large']
-      })
+ 
+    for chan in channels['index']:
+      c.execute('SELECT * FROM programs WHERE channel = ? AND start_date < ? AND end_date > ?', [chan, endTime, startTime])
+      r = c.fetchall()
+      for row in r:    
+        description_long = row['description_long']
+        if get_long_description and description_long is None: 
+            #description_long = self.getShowInfo(row["showID"],'description')
+            description_long = self.getShowLongDescription(row['showID'])
+        programList.append({
+            'channel': row['channel'],
+            'showID' : row['showID'],
+            'title' : row['title'],
+            'description' : row['description'],
+            'description_long' : description_long,
+            'year': row['year'],
+            'genre': row['genre'],
+            'country': row['country'],
+            'category': row['category'],
+            'start_date' : row['start_date'],
+            'end_date' : row['end_date'],
+            'image_small' : row['image_small'],
+            'image_large': row['image_large']
+            })
 
     c.close()
     return programList
@@ -421,35 +420,40 @@ class ZattooDB(object):
   def getProgInfo(self, notify=False, startTime=datetime.datetime.now(), endTime=datetime.datetime.now()):
         fav = False
         if __addon__.getSetting('onlyfav') == 'true': fav = True
-        channels = self.getChannelList(_listMode_ == 'favourites')
-        
-        #self.updateProgram(startTime)
-        channelKeys=('\',\''.join(channels.keys()))
-        channelKeys="'"+channelKeys.replace(",'index',", ",")+"'"
-        prog= self.conn.cursor()
+        channels = self.getChannelList(fav)
 
-        prog.execute('SELECT * FROM programs WHERE channel in (' + channelKeys + ') AND start_date < ? AND end_date > ?', [endTime, startTime])
+        c = self.conn.cursor()
 
-        # if Notification
+        # for startup-notify
         if notify:
             PopUp = xbmcgui.DialogProgressBG()
             counter=len(channels)
             bar = 0         # Progressbar (Null Prozent)
             PopUp.create('ZattooBoxExt lade Programm Informationen ...', '')
             PopUp.update(bar)
-        print "StartTime   " + str(startTime)
-        for row in prog:
-          if notify:
-            bar += 1
-            percent = int(bar * 100 / counter) 
-          description_long = row["description_long"]
-          if description_long is None or description_long == '': 
-            print str(row['channel']) + '  -  ' + str(startTime)
+        
+        for chan in channels['index']:
+            print str(chan) + ' - ' + str(startTime) 
+            #try:
+            c.execute('SELECT * FROM programs WHERE channel = ?', (chan,))
+            #except:
+            ch=c.fetchone()
+            print str(ch['channel'])
+            print type(ch['channel'])
+            
+            c.execute('SELECT * FROM programs WHERE channel = ? AND start_date < ? AND end_date > ?', [chan, endTime, startTime])
+                     
+            row = c.fetchone()
+
             if notify:
-                PopUp.update(percent,'ZattooBoxExt lade Programm Informationen ...', 'Programm Information für ' + str(row['channel']))
-            description_long = self.getShowLongDescription(row["showID"])
-    
-        prog.close()
+                bar += 1
+                percent = int(bar * 100 / counter) 
+            description_long = row["description_long"]
+            if description_long is None or description_long == '': 
+                if notify:
+                    PopUp.update(percent,'ZattooBoxExt lade Programm Informationen ...', 'Programm Information für ' + str(row['channel']))
+                description_long = self.getShowLongDescription(row["showID"])
+        c.close()
         if notify:
             PopUp.close()
         return 

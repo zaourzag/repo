@@ -22,7 +22,7 @@
         <setting label="31015" type="action" option="hidden" enable="!eq(-2,)" action="RunPlugin(plugin://plugin.video.zattooboxExt.beta/?mode=makelibrary)"/>
     </category>
     <category label="31020">
-        <setting label="31021" id="dbonstart" type="bool" default="true" />
+        <setting label="31021" id="dbonstart" type="bool" default="false" />
         <setting label="31022" id="onlyfav" type="bool" enable="eq(-1,true)" default="false" />
         <setting type="sep"/>
         <setting label="31023" type="action" action="RunPlugin(plugin://plugin.video.zattooboxExt.beta/?mode=reloadDB)"/>

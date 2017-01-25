@@ -550,11 +550,12 @@ class EPG(xbmcgui.WindowXML):
 				self.setControlLabel(4010 + idx, ' ')
 			else:
 				channel = channels[channels['index'][channelStart+idx]]
+				print 'TEST  ' + str(channel['id'])
 				self.setControlLabel(4010 + idx, channel['title'])
 				if channel['logo'] is not None: self.setControlImage(4110 + idx, channel['logo'])
 				else: self.setControlImage(4110 + idx, ' ')
 					
-				programs = self.db.getPrograms({channel['id']:''}, False, startTime, startTime + datetime.timedelta(hours=2))
+				programs = self.db.getPrograms( {'index':[channel['id']]}, False, startTime, startTime + datetime.timedelta(hours=2))
 				for program in programs:
 					# add channel index and logo for control-handling
 					program['channel_index'] = idx

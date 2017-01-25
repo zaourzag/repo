@@ -42,8 +42,9 @@ if REMOTE_DBG:
 import xbmc, xbmcgui, xbmcplugin, xbmcaddon
 import sys, urlparse
 import  time, datetime, threading
-from resources.library import library
+
 from resources.zattooDB import ZattooDB
+from resources.library import library
 
 __addon__ = xbmcaddon.Addon()
 __addonId__=__addon__.getAddonInfo('id')
@@ -194,7 +195,7 @@ def build_channelsList(addon_uri, addon_handle):
   channels = _zattooDB_.getChannelList(_listMode_ == 'favourites')
   if channels is not None:
     # get currently playing shows
-    program = _zattooDB_.getPrograms(channels, True)
+    program = _zattooDB_.getPrograms(channels, False)
     content = []
     # time of chanellist creation
     #content.append({'title': '[B][COLOR blue]' + time.strftime("%H:%M:%S") +'[/B][/COLOR]', 'isFolder': False, 'url':''})
@@ -402,7 +403,7 @@ def watch_channel(channel_id, start, end):
   else: startTime = datetime.datetime.fromtimestamp(int(start))
   if end == '0': endTime = datetime.datetime.now() 
   else: endTime = datetime.datetime.fromtimestamp(int(end))
-  program = _zattooDB_.getPrograms({channel_id:''}, True, startTime, endTime)
+  program = _zattooDB_.getPrograms({'index':[channel_id]}, True, startTime, endTime)
 
   listitem = xbmcgui.ListItem(channel_id)
   if program:
@@ -560,7 +561,7 @@ def makeZattooGUI():
 def makeOsdInfo():
   channel_id=_zattooDB_.get_playing()['channel']
   channelInfo = _zattooDB_.get_channelInfo(channel_id)
-  program = _zattooDB_.getPrograms({channel_id:''}, True, datetime.datetime.now(), datetime.datetime.now())
+  program = _zattooDB_.getPrograms({'index':[channel_id]}, True, datetime.datetime.now(), datetime.datetime.now())
   program=program[0]
   
   description = program['description']
@@ -715,7 +716,7 @@ class zattooOSD(xbmcgui.WindowXMLDialog):
   def onClick(self, controlID):
     channel=_zattooDB_.get_playing()['channel']
     channeltitle=_zattooDB_.get_channeltitle(channel)
-    program = _zattooDB_.getPrograms({channel:''}, True, datetime.datetime.now(), datetime.datetime.now())
+    program = _zattooDB_.getPrograms({'index':[channel]}, True, datetime.datetime.now(), datetime.datetime.now())
     program=program[0]
     self.close() #close OSD
 
@@ -762,6 +763,7 @@ class zattooOSD(xbmcgui.WindowXMLDialog):
 
 
 def main():
+
   global _listMode_
   addon_uri = sys.argv[0]
   addon_handle = int(sys.argv[1])
