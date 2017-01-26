@@ -589,7 +589,7 @@
             <visible>!Skin.HasSetting(HomeMenuNoMusicButton)</visible>
             <!-- <visible>!Skin.HasSetting(HomeMenuNoMusicButton)+Library.HasContent(Music)</visible> -->
         </item>
-        <item id="2">
+        <!-- <item id="2">
             <description>Music Files</description>
             <label>2</label>
             <label2>$VAR[backgroundfolder]home_music$VAR[bkg_fileext]</label2>
@@ -598,7 +598,7 @@
             <onclick condition="Window.IsVisible(Home)">ActivateWindow(Music,Files,return)</onclick>
             <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_music,smb://)</onclick>
             <visible>!Skin.HasSetting(HomeMenuNoMusicButton)+!Library.HasContent(Music)</visible>
-        </item>
+        </item> -->
     </include>
     <include name="HomeMenuVideo">
         <item id="3">
@@ -626,7 +626,8 @@
             <property name="homemenu_id">movies</property>
             <property name="homemenu_category">$VAR[Home_Movie_Category]</property>
             <property name="homemenu_path">$INFO[Skin.String(Home_Movie_Custom_Path)]</property>
-            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Movie_Button)">ActivateWindow(Videos,MovieTitles,return)</onclick>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Movie_Button)+Library.HasContent(movies)">ActivateWindow(Videos,videodb://movies/titles/,return)</onclick>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Movie_Button)!Library.HasContent(movies)">ActivateWindow(Videos,sources://video/,return)</onclick>
             <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(HomeMenu_Custom_Movie_Button)">ActivateWindow($VAR[Home_Movie_SubCategory],$INFO[Skin.String(Home_Movie_Custom_Path)],return)</onclick>
             <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_movie,smb://)</onclick>
             <visible>!Skin.HasSetting(HomeMenuNoMovieButton)</visible>
@@ -654,7 +655,8 @@
             <property name="homemenu_id">tvshow</property>
             <property name="homemenu_category">$VAR[Home_TVShow_Category]</property>
             <property name="homemenu_path">$INFO[Skin.String(Home_TVShow_Custom_Path)]</property>
-            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_TVShow_Button)">ActivateWindow(Videos,TVShowTitles,return)</onclick>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_TVShow_Button)+Library.HasContent(tvshows)">ActivateWindow(Videos,videodb://tvshows/titles/,return)
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_TVShow_Button)+!Library.HasContent(tvshows)">ActivateWindow(Videos,sources://video/,return)</onclick>
             <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(HomeMenu_Custom_TVShow_Button)">ActivateWindow($VAR[Home_TVShow_SubCategory],$INFO[Skin.String(Home_TVShow_Custom_Path)],return)</onclick>
             <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_tvshow,smb://)</onclick>
             <visible>!Skin.HasSetting(HomeMenuNoTVShowButton)</visible>
@@ -670,7 +672,7 @@
             <property name="homemenu_id">musicvideo</property>
             <property name="homemenu_category">$VAR[Home_MusicVideo_Category]</property>
             <property name="homemenu_path">$INFO[Skin.String(Home_MusicVideo_Custom_Path)]</property>
-            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_MusicVideo_Button)">ActivateWindow(Videos,TVShowTitles,return)</onclick>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_MusicVideo_Button)">ActivateWindow(Videos,Musicvideos,return)</onclick>
             <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(HomeMenu_Custom_MusicVideo_Button)">ActivateWindow($VAR[Home_MusicVideo_SubCategory],$INFO[Skin.String(Home_MusicVideo_Custom_Path)],return)</onclick>
             <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_musicvideo,smb://)</onclick>
             <visible>!Skin.HasSetting(HomeMenuNoMusicVideos)</visible>
