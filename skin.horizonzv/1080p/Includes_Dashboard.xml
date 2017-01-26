@@ -249,16 +249,12 @@
 				<animation effect="slide" end="0,80" time="150" condition="!Control.IsVisible(8004)">Conditional</animation>
 				<animation effect="slide" end="0,80" time="150" condition="!Control.IsVisible(8006)">Conditional</animation>
 				<animation effect="slide" end="0,160" time="150" condition="!Control.IsVisible(8004)+!Control.IsVisible(8006)">Conditional</animation>
-				<include content="FritzDect"> <!-- 8002 -->
-					<param name="FritzDect_left" value="0" />
-					<param name="FritzDect_top" value="0" />
-					<param name="FritzDect_visible" value="System.HasAddon(plugin.program.fritzact)" />
-				</include>
+				<include condition="System.HasAddon(plugin.program.fritzact)">FritzDect</include> <!-- 8002 -->
 				<include content="Dashboard_Extended">
 					<param name="dashboard_labelid" value="8003" />
 					<param name="dashboard_id" value="8004" />
 					<param name="dashbaord_extended_number" value="dashboard_eventblog1_off" />
-					<param name="dashboard_extended_visible" value="!String.IsEmpty(Container(8020).ListItem(0).Label)+String.IsEqual(Container(9000).ListItem.Property(homemenu_id),dashboard)" />
+					<param name="dashboard_extended_visible" value="!String.IsEmpty(Container(8020).ListItem(0).Label)+String.IsEqual(Container(9000).ListItem.Property(homemenu_id),dashboard)+System.HasAddon(script.extendedinfo)" />
 					<param name="dashbaord_extended_label" value="DashboardExtendedInfoLabel" />
 					<param name="dashbaord_extended_content" value="DashboardExtendedInfoContent" />
 				</include>
@@ -266,7 +262,7 @@
 					<param name="dashboard_labelid" value="8005" />
 					<param name="dashboard_id" value="8006" />
 					<param name="dashbaord_extended_number" value="dashboard_eventblog2_off" />
-					<param name="dashboard_extended_visible" value="!String.IsEmpty(Container(8021).ListItem(0).Label)+String.IsEqual(Container(9000).ListItem.Property(homemenu_id),dashboard)" />
+					<param name="dashboard_extended_visible" value="!String.IsEmpty(Container(8021).ListItem(0).Label)+String.IsEqual(Container(9000).ListItem.Property(homemenu_id),dashboard)+System.HasAddon(script.extendedinfo)" />
 					<param name="dashbaord_extended_label" value="DashboardExtendedInfoLabel2" />
 					<param name="dashbaord_extended_content" value="DashboardExtendedInfoContent2" />
 				</include>

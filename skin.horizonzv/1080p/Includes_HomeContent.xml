@@ -727,7 +727,7 @@
             <property name="homemenu_id">playdisc</property>
             <onclick condition="Window.IsVisible(Home)">PlayDVD()</onclick>
             <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_dvd,smb://)</onclick>
-            <!-- <visible>!Skin.HasSetting(HomeMenuNoDVDButton)+System.HasMediaDVD</visible> -->
+            <visible>!Skin.HasSetting(HomeMenuNoDVDButton)+System.HasMediaDVD</visible>
         </item>
     </include>
     <include name="HomeMenuCustom1">
