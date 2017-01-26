@@ -5,7 +5,7 @@
         <value condition="ControlGroup(200).HasFocus(218)+ControlGroup(200).Hasfocus()">$LOCALIZE[51001]</value>
         <value condition="ControlGroup(200).HasFocus(220)+ControlGroup(200).Hasfocus()">$LOCALIZE[51002]</value>
         <value condition="ControlGroup(300).HasFocus(301)+ControlGroup(300).Hasfocus()">$LOCALIZE[51003]</value>
-        <value condition="ControlGroup(300).HasFocus(313)+ControlGroup(300).Hasfocus()">$LOCALIZE[51004]</value>
+        <!-- <value condition="ControlGroup(300).HasFocus(313)+ControlGroup(300).Hasfocus()">$LOCALIZE[51004]</value>
         <value condition="ControlGroup(300).HasFocus(314)+ControlGroup(300).Hasfocus()">$LOCALIZE[51006]</value>
         <value condition="ControlGroup(300).HasFocus(315)+ControlGroup(300).Hasfocus()">$LOCALIZE[51008]</value>
         <value condition="ControlGroup(300).HasFocus(316)+ControlGroup(300).Hasfocus()">$LOCALIZE[51010]</value>
@@ -14,7 +14,7 @@
         <value condition="ControlGroup(300).HasFocus(320)+ControlGroup(300).Hasfocus()">$LOCALIZE[51016]</value>
         <value condition="ControlGroup(300).HasFocus(322)+ControlGroup(300).Hasfocus()">$LOCALIZE[51018]</value>
         <value condition="ControlGroup(300).HasFocus(324)+ControlGroup(300).Hasfocus()">$LOCALIZE[51019]</value>
-        <value condition="ControlGroup(300).HasFocus(325)+ControlGroup(300).Hasfocus()">$LOCALIZE[51019]</value>
+        <value condition="ControlGroup(300).HasFocus(325)+ControlGroup(300).Hasfocus()">$LOCALIZE[51019]</value> -->
         <value condition="ControlGroup(300).HasFocus(432)+ControlGroup(300).Hasfocus()">$LOCALIZE[51020]</value>
         <value condition="ControlGroup(300).HasFocus(434)+ControlGroup(300).Hasfocus()">$LOCALIZE[51021]</value>
         <value condition="ControlGroup(300).HasFocus(436)+ControlGroup(300).Hasfocus()">$LOCALIZE[51110]</value>

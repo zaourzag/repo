@@ -387,80 +387,23 @@
                             <visible>!Skin.HasSetting(HomeMenuNoWeatherButton)</visible>
                             <visible>System.HasAddon(script.image.resource.select)</visible>
                         </control>
-                        <control type="button" id="310">
+                        <!-- <control type="button" id="310">
                             <description>PlayDisc Button</description>
                             <width>1260</width>
                             <align>left</align>
 							<label>$VAR[Home_PlayDisc_Label]</label>
                             <onclick>SetProperty(HomeButton,playdisc,home)</onclick>
                             <onclick>ActivateWindow(1501)</onclick>
-                        </control>
-                        <!-- 
-                        <control type="radiobutton" id="311">
-                            <description>PlayDVD Button</description>
+                        </control> -->
+                        <control type="radiobutton" id="310">
+                            <description>PlayDisc Button</description>
                             <width>1260</width>
                             <align>left</align>
-                            <label>$LOCALIZE[341]</label>
+                            <label>341</label>
                             <focusedcolor>black</focusedcolor>
                             <onclick>Skin.ToggleSetting(HomeMenuNoDVDButton)</onclick>
                             <selected>!Skin.HasSetting(HomeMenuNoDVDButton)</selected>
                         </control>
-						<control type="radiobutton" id="303">
-                            <description>Video Button</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <label>$LOCALIZE[3]</label>
-                            <focusedcolor>black</focusedcolor>
-                            <onclick>Skin.ToggleSetting(HomeMenuNoVideosButton)</onclick>
-                            <selected>!Skin.HasSetting(HomeMenuNoVideosButton)</selected>
-                        </control>
-						<control type="radiobutton" id="303">
-                            <description>Movie Button</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <label>$LOCALIZE[20342]</label>
-                            <focusedcolor>black</focusedcolor>
-                            <onclick>Skin.ToggleSetting(HomeMenuNoMovieButton)</onclick>
-                            <selected>!Skin.HasSetting(HomeMenuNoMovieButton)</selected>
-                            <visible>Library.HasContent(Movies)</visible>
-                        </control> -->
-                        <!-- <control type="radiobutton" id="304">
-                            <description>TVShow Button</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <label>$LOCALIZE[20343]</label>
-                            <focusedcolor>black</focusedcolor>
-                            <onclick>Skin.ToggleSetting(HomeMenuNoTVShowButton)</onclick>
-                            <selected>!Skin.HasSetting(HomeMenuNoTVShowButton)</selected>
-                            <visible>Library.HasContent(TVShows)</visible>
-                        </control>
-                        <control type="radiobutton" id="305">
-                            <description>Musicvideo Button</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <label>$LOCALIZE[20391]</label>
-                            <focusedcolor>black</focusedcolor>
-                            <onclick>Skin.ToggleSetting(HomeMenuNoMusicVideos)</onclick>
-                            <selected>!Skin.HasSetting(HomeMenuNoMusicVideos)</selected>
-                        </control>
-                        <control type="radiobutton" id="306">
-                            <description>Pictures Button</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <label>$LOCALIZE[1]</label>
-                            <focusedcolor>black</focusedcolor>
-                            <onclick>Skin.ToggleSetting(HomeMenuNoPictureButton)</onclick>
-                            <selected>!Skin.HasSetting(HomeMenuNoPictureButton)</selected>
-                        </control>
-                        <control type="radiobutton" id="307">
-                            <description>Music Button</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <label>$LOCALIZE[2]</label>
-                            <focusedcolor>black</focusedcolor>
-                            <onclick>Skin.ToggleSetting(HomeMenuNoMusicButton)</onclick>
-                            <selected>!Skin.HasSetting(HomeMenuNoMusicButton)</selected>
-                        </control> -->
                         <control type="label" id="3012">
                             <!-- Extra Buttons -->
                             <width>1260</width>
@@ -475,204 +418,86 @@
                             <texture>Separator2.png</texture>
                             <colordiffuse>description</colordiffuse>
                         </control>
-                        <control type="radiobutton" id="313">
-                            <description>3D Button</description>
+                        <control type="button" id="313">
+                            <description>Custom1</description>
                             <width>1260</width>
                             <align>left</align>
-                            <label>3D $LOCALIZE[20342]</label>
                             <focusedcolor>black</focusedcolor>
-                            <onclick>Skin.ToggleSetting(HomeMenuNo3DButton)</onclick>
-                            <selected>!Skin.HasSetting(HomeMenuNo3DButton)</selected>
-                            <visible>Library.HasContent(Movies)</visible>
+							<label>$VAR[Home_Custom1_Label]</label>
+                            <onclick>SetProperty(HomeButton,custom1,home)</onclick>
+                            <onclick>ActivateWindow(1501)</onclick>
                         </control>
-                        <control type="radiobutton" id="314">
-                            <description>HD Button</description>
+                        <control type="button" id="314">
+                            <description>Custom2</description>
                             <width>1260</width>
                             <align>left</align>
-                            <label>HD $LOCALIZE[20342]</label>
                             <focusedcolor>black</focusedcolor>
-                            <onclick>Skin.ToggleSetting(HomeMenuNoHDButton)</onclick>
-                            <selected>!Skin.HasSetting(HomeMenuNoHDButton)</selected>
-                            <visible>Library.HasContent(Movies)</visible>
+							<label>$VAR[Home_Custom2_Label]</label>
+                            <onclick>SetProperty(HomeButton,custom2,home)</onclick>
+                            <onclick>ActivateWindow(1501)</onclick>
                         </control>
-                        <control type="radiobutton" id="315">
-                            <description>FULL HD Button</description>
+                        <control type="button" id="315">
+                            <description>Custom3</description>
                             <width>1260</width>
                             <align>left</align>
-                            <label>FULL HD $LOCALIZE[20342]</label>
                             <focusedcolor>black</focusedcolor>
-                            <onclick>Skin.ToggleSetting(HomeMenuNoFULLHDButton)</onclick>
-                            <selected>!Skin.HasSetting(HomeMenuNoFULLHDButton)</selected>
-                            <visible>Library.HasContent(Movies)</visible>
+							<label>$VAR[Home_Custom3_Label]</label>
+                            <onclick>SetProperty(HomeButton,custom3,home)</onclick>
+                            <onclick>ActivateWindow(1501)</onclick>
                         </control>
-                        <control type="radiobutton" id="316">
-                            <description>Doku Button</description>
+                        <control type="button" id="316">
+                            <description>Custom4</description>
                             <width>1260</width>
                             <align>left</align>
-                            <label>$LOCALIZE[19519]</label>
                             <focusedcolor>black</focusedcolor>
-                            <onclick>Skin.ToggleSetting(HomeMenuNoDokuButton)</onclick>
-                            <selected>!Skin.HasSetting(HomeMenuNoDokuButton)</selected>
-                            <visible>Library.HasContent(Movies)</visible>
+							<label>$VAR[Home_Custom4_Label]</label>
+                            <onclick>SetProperty(HomeButton,custom4,home)</onclick>
+                            <onclick>ActivateWindow(1501)</onclick>
                         </control>
-                        <control type="radiobutton" id="317">
-                            <description>Kids Button</description>
+                        <control type="button" id="317">
+                            <description>Custom5</description>
                             <width>1260</width>
                             <align>left</align>
-                            <label>$LOCALIZE[51187]</label>
                             <focusedcolor>black</focusedcolor>
-                            <onclick>Skin.ToggleSetting(HomeMenuNoKidsButton)</onclick>
-                            <selected>!Skin.HasSetting(HomeMenuNoKidsButton)</selected>
-                            <visible>Library.HasContent(Movies)</visible>
+							<label>$VAR[Home_Custom5_Label]</label>
+                            <onclick>SetProperty(HomeButton,custom5,home)</onclick>
+                            <onclick>ActivateWindow(1501)</onclick>
                         </control>
-                        <control type="button" id="3170">
+                        <control type="button" id="318">
+                            <description>Custom6</description>
                             <width>1260</width>
                             <align>left</align>
-                            <label>- $LOCALIZE[51226]</label>
-                            <label2>$VAR[Rating_Age_Kids_Label]</label2>
                             <focusedcolor>black</focusedcolor>
-							<onclick>Skin.SelectBool(51226, 51497|Rating_Age_Kids_0, 51499|Rating_Age_Kids_6, 51501|Rating_Age_Kids_12, 51503|Rating_Age_Kids_16)</onclick>
-                            <visible>!Skin.HasSetting(HomeMenuNoKidsButton)</visible>
-                            <visible>Library.HasContent(Movies)</visible>
+							<label>$VAR[Home_Custom6_Label]</label>
+                            <onclick>SetProperty(HomeButton,custom6,home)</onclick>
+                            <onclick>ActivateWindow(1501)</onclick>
                         </control>
-                        <control type="radiobutton" id="318">
-                            <description>Favourite 1</description>
+                        <control type="button" id="319">
+                            <description>Custom7</description>
                             <width>1260</width>
                             <align>left</align>
                             <focusedcolor>black</focusedcolor>
-                            <label>$LOCALIZE[636] 1 ($LOCALIZE[20342])</label>
-                            <onclick>Skin.ToggleSetting(favourite1)</onclick>
-                            <selected>Skin.HasSetting(favourite1)</selected>
+							<label>$VAR[Home_Custom7_Label]</label>
+                            <onclick>SetProperty(HomeButton,custom7,home)</onclick>
+                            <onclick>ActivateWindow(1501)</onclick>
                         </control>
-                        <control type="button" id="3180">
-                            <description>Favourite 1 Label</description>
+                        <control type="button" id="320">
+                            <description>Custom8</description>
                             <width>1260</width>
                             <align>left</align>
                             <focusedcolor>black</focusedcolor>
-                            <label>- $LOCALIZE[21899]: </label>
-                            <label2>$INFO[Skin.String(Favourite1_Playlist_Label)]</label2>
-                            <onclick>Skin.SetString(Favourite1_Playlist_Label)</onclick>
-                            <visible>Skin.HasSetting(favourite1)</visible>
+							<label>$VAR[Home_Custom8_Label]</label>
+                            <onclick>SetProperty(HomeButton,custom8,home)</onclick>
+                            <onclick>ActivateWindow(1501)</onclick>
                         </control>
-                        <control type="button" id="3181">
-                            <description>Favourite 1 Path</description>
+                        <control type="button" id="321">
+                            <description>Custom9</description>
                             <width>1260</width>
                             <align>left</align>
                             <focusedcolor>black</focusedcolor>
-                            <label>- $LOCALIZE[15311] </label>
-                            <label2>$INFO[Skin.String(Favourite1_Playlist_Path)]</label2>
-                            <onclick>Skin.SetFile(Favourite1_Playlist_Path,,special://videoplaylists/)</onclick>
-                            <visible>Skin.HasSetting(favourite1)</visible>
-                        </control>
-                        <control type="radiobutton" id="320">
-                            <description>Favourite 2</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <focusedcolor>black</focusedcolor>
-                            <label>$LOCALIZE[636] 2 ($LOCALIZE[20342])</label>
-                            <onclick>Skin.ToggleSetting(favourite2)</onclick>
-                            <selected>Skin.HasSetting(favourite2)</selected>
-                        </control>
-                        <control type="button" id="3200">
-                            <description>Favourite 2 Label</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <focusedcolor>black</focusedcolor>
-                            <label>- $LOCALIZE[21899]: </label>
-                            <label2>$INFO[Skin.String(Favourite2_Playlist_Label)]</label2>
-                            <onclick>Skin.SetString(Favourite2_Playlist_Label)</onclick>
-                            <visible>Skin.HasSetting(favourite2)</visible>
-                        </control>
-                        <control type="button" id="3201">
-                            <description>Favourite 2 Path</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <focusedcolor>black</focusedcolor>
-                            <label>$LOCALIZE[15311] </label>
-                            <label2>$INFO[Skin.String(Favourite2_Playlist_Path)]</label2>
-                            <onclick>Skin.SetFile(Favourite2_Playlist_Path,,special://videoplaylists/)</onclick>
-                            <visible>Skin.HasSetting(favourite2)</visible>
-                        </control>
-                        <control type="radiobutton" id="322">
-                            <description>Favourite 3</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <focusedcolor>black</focusedcolor>
-                            <label>$LOCALIZE[636] 3 ($LOCALIZE[2]/Radio Addon)</label>
-                            <onclick>Skin.ToggleSetting(favourite3)</onclick>
-                            <selected>Skin.HasSetting(favourite3)</selected>
-                        </control>
-                        <control type="radiobutton" id="3219">
-                            <description>Favourite 3 Label</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <focusedcolor>black</focusedcolor>
-                            <label>- $LOCALIZE[51429]</label>
-                            <onclick>Skin.Reset(Widget_UserPlaylist)</onclick>
-                            <onclick>Skin.ToggleSetting(Widget_UserPlaylist_Radio)</onclick>
-                            <selected>Skin.HasSetting(Widget_UserPlaylist_Radio)</selected>
-                            <visible>Skin.HasSetting(favourite3)</visible>
-                        </control>
-                        <control type="button" id="3220">
-                            <description>Favourite 3 Label</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <focusedcolor>black</focusedcolor>
-                            <label>- $LOCALIZE[21899]: </label>
-                            <label2>$INFO[Skin.String(Favourite3_Playlist_Label)]</label2>
-                            <onclick>Skin.SetString(Favourite3_Playlist_Label)</onclick>
-                            <visible>Skin.HasSetting(favourite3)</visible>
-                        </control>
-                        <control type="button" id="3221">
-                            <description>Favourite 3 Path</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <focusedcolor>black</focusedcolor>
-                            <label>- $LOCALIZE[15311] </label>
-                            <label2>$INFO[Skin.String(Favourite3_Playlist_Path)]</label2>
-                            <onclick>Skin.SetFile(Favourite3_Playlist_Path,,special://musicplaylists/)</onclick>
-                            <visible>Skin.HasSetting(favourite3)</visible>
-                            <visible>!Skin.HasSetting(Widget_UserPlaylist_Radio)</visible>
-                        </control>
-                        <!-- <control type="button" id="3222">
-							<description>Favourite 3 Path</description>
-							<width>840</width>
-							<align>left</align>
-							<focusedcolor>black</focusedcolor>
-							<label>- $LOCALIZE[15311] </label>
-							<label2>$INFO[Skin.String(Favourite3_Playlist_Path)]</label2>
-							<onclick>Skin.SetPath(Favourite3_Playlist_Path,plugin://plugin.audio.prime_music)</onclick>
-							<visible>Skin.HasSetting(favourite3)</visible>
-							<visible>!Skin.HasSetting(Widget_UserPlaylist_Radio)</visible>
-						</control> -->
-                        <control type="radiobutton" id="324">
-                            <description>Favourite 4</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <focusedcolor>black</focusedcolor>
-                            <label>$LOCALIZE[636] 4 ($LOCALIZE[51419])</label>
-                            <onclick>Skin.ToggleSetting(favourite4)</onclick>
-                            <selected>Skin.HasSetting(favourite4)</selected>
-                        </control>
-                        <control type="button" id="3240">
-                            <description>Favourite 4 Label</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <focusedcolor>black</focusedcolor>
-                            <label>- $LOCALIZE[21899]: </label>
-                            <label2>$INFO[Skin.String(Favourite4_Playlist_Label)]</label2>
-                            <onclick>Skin.SetString(Favourite4_Playlist_Label)</onclick>
-                            <visible>Skin.HasSetting(favourite4)</visible>
-                        </control>
-                        <control type="button" id="3241">
-                            <description>Favourite 4 Path</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <focusedcolor>black</focusedcolor>
-                            <label>- $LOCALIZE[15311] </label>
-                            <label2>$INFO[Skin.String(Favourite4_Playlist_Path)]</label2>
-                            <onclick>Skin.SetPath(Favourite4_Playlist_Path,,)</onclick>
-                            <visible>Skin.HasSetting(favourite4)</visible>
+							<label>$VAR[Home_Custom9_Label]</label>
+                            <onclick>SetProperty(HomeButton,custom9,home)</onclick>
+                            <onclick>ActivateWindow(1501)</onclick>
                         </control>
                         <control type="label" id="3014">
                             <!-- Extra Buttons -->
@@ -700,7 +525,7 @@
                             <description>Settings Button</description>
                             <width>1260</width>
                             <align>left</align>
-                            <label>System</label>
+                            <label>13000</label>
                             <focusedcolor>black</focusedcolor>
                             <onclick>Skin.ToggleSetting(HomeMenuNoSettingsButton)</onclick>
                             <selected>!Skin.HasSetting(HomeMenuNoSettingsButton)</selected>
@@ -1507,72 +1332,8 @@
                             <onclick>SetProperty(HomeButton,radio,home)</onclick>
                             <onclick>ActivateWindow(1500)</onclick>
                         </control>
-                        <control type="button" id="621">
-                            <description>Widget 3D</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <label>3D $LOCALIZE[20342]</label>
-                            <onclick>SetProperty(HomeButton,3d,home)</onclick>
-                            <onclick>ActivateWindow(1500)</onclick>
-                        </control>
-                        <control type="button" id="622">
-                            <description>Widget HD</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <label>HD $LOCALIZE[20342]</label>
-                            <onclick>SetProperty(HomeButton,hd,home)</onclick>
-                            <onclick>ActivateWindow(1500)</onclick>
-                        </control>
-                        <control type="button" id="623">
-                            <description>Widget FULL HD</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <label>FULL HD $LOCALIZE[20342]</label>
-                            <onclick>SetProperty(HomeButton,fullhd,home)</onclick>
-                            <onclick>ActivateWindow(1500)</onclick>
-                        </control>
-                        <control type="button" id="624">
-                            <description>Widget DOKU</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <label>$LOCALIZE[19519]</label>
-                            <onclick>SetProperty(HomeButton,doku,home)</onclick>
-                            <onclick>ActivateWindow(1500)</onclick>
-                        </control>
-                        <control type="button" id="625">
-                            <description>Widget KIDS</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <label>$LOCALIZE[51187]</label>
-                            <onclick>SetProperty(HomeButton,kids,home)</onclick>
-                            <onclick>ActivateWindow(1500)</onclick>
-                        </control>
-                        <control type="button" id="626">
-                            <description>Widget FAV01</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <label>$LOCALIZE[1036] 1 $INFO[Skin.String(Favourite1_Playlist_Label),(,)]</label>
-                            <onclick>SetProperty(HomeButton,fav1,home)</onclick>
-                            <onclick>ActivateWindow(1500)</onclick>
-                        </control>
-                        <control type="button" id="627">
-                            <description>Widget FAV02</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <label>$LOCALIZE[1036] 2 $INFO[Skin.String(Favourite2_Playlist_Label),(,)]</label>
-                            <onclick>SetProperty(HomeButton,fav2,home)</onclick>
-                            <onclick>ActivateWindow(1500)</onclick>
-                        </control>
-                        <control type="button" id="628">
-                            <description>Widget FAV03</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <label>$LOCALIZE[1036] 3 $INFO[Skin.String(Favourite3_Playlist_Label),(,)]</label>
-                            <onclick>SetProperty(HomeButton,fav3,home)</onclick>
-                            <onclick>ActivateWindow(1500)</onclick>
-                        </control>
                         <control type="radiobutton" id="640">
-                            <description>Settings Button</description>
+                            <description>Settings C</description>
                             <width>1260</width>
                             <align>left</align>
                             <label>130</label>
@@ -1599,7 +1360,7 @@
                             <onclick>Skin.SetPath(widget_diashow_folder)</onclick>
                             <visible>Skin.HasSetting(Widget_Diashow)</visible>
                         </control>
-                        <!-- <control type="radiobutton" id="643">
+                        <control type="radiobutton" id="643">
                             <description>DVD Widget</description>
                             <width>1260</width>
                             <align>left</align>
@@ -1607,7 +1368,7 @@
                             <focusedcolor>black</focusedcolor>
                             <onclick>Skin.ToggleSetting(Widget_DVDLabel)</onclick>
                             <selected>Skin.HasSetting(Widget_DVDLabel)</selected>
-                        </control> -->
+                        </control>
                     </control>
                     <control type="grouplist" id="800">
                         <!-- Design/Performance Settings -->

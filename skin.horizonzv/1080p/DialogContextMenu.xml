@@ -3,11 +3,6 @@
     <defaultcontrol>1000</defaultcontrol>
     <include>openclose</include>
     <include>openclosebox</include>
-    <coordinates>
-        <system>1</system>
-        <left>0</left>
-        <top>0</top>
-    </coordinates>
     <controls>
         <include>BlackBack</include>
         <control type="grouplist" id="9000">

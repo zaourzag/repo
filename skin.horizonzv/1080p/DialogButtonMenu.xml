@@ -2,11 +2,6 @@
 <window type="buttonMenu">
     <defaultcontrol>9001</defaultcontrol>
 	<backgroundcolor>$VAR[BackgroundOverlayColor]</backgroundcolor>
-    <coordinates>
-        <system>1</system>
-        <left>0</left>
-        <top>0</top>
-    </coordinates>
     <include>openclose</include>
     <controls>
         <control type="button" id="9001">

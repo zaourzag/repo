@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window type="buttonmenu" id="1152">
     <defaultcontrol always="true">100</defaultcontrol>
-    <!-- <zorder>1</zorder> -->
-    <coordinates>
-        <system>1</system>
-        <left>0</left>
-        <top>0</top>
-    </coordinates>
     <include>openclose</include>
     <include>openclosebox</include>
     <controls>

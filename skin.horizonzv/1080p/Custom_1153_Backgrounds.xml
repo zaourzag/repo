@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window type="buttonmenu" id="1153">
     <defaultcontrol always="true">9000</defaultcontrol>
-    <coordinates>
-        <system>1</system>
-        <left>0</left>
-        <top>0</top>
-    </coordinates>
     <include>openclose</include>
     <controls>
         <include>DialogBackground</include>

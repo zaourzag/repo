@@ -13,18 +13,18 @@
         <include>HomepageWidget_Picture</include>
         <include>HomepageWidget_Weather</include>
         <include>HomepageWidget_PlayDisc</include>
-        <include>HomepageWidget_PVR_TV</include>
-        <include>HomepageWidget_PVR_RADIO</include>
+        <include>HomepageWidget_Custom1</include>
+        <include>HomepageWidget_Custom2</include>
+        <include>HomepageWidget_Custom3</include>
+        <include>HomepageWidget_Custom4</include>
+        <include>HomepageWidget_Custom5</include>
+        <include>HomepageWidget_Custom6</include>
+        <include>HomepageWidget_Custom7</include>
+        <include>HomepageWidget_Custom8</include>
+        <include>HomepageWidget_Custom9</include>
+        <include>HomepageWidget _PVR_TV</include>
+        <include>HomepageWidget _PVR_RADIO</include>
         <include>HomepageWidget_System</include>
-        <include>HomepageWidget_3D</include>
-        <include>HomepageWidget_HD</include>
-        <include>HomepageWidget_FULLHD</include>
-        <include>HomepageWidget_DOKU</include>
-        <include>HomepageWidget_KIDS</include>
-        <include>HomepageWidget_FAV1</include>
-        <include>HomepageWidget_FAV2</include>
-        <include>HomepageWidget_FAV3</include>
-        <include>HomepageWidget_FAV4</include>
     </include>
     <include name="HomepageWidget_Music">
         <control type="group">
@@ -102,7 +102,7 @@
 				<!-- custom -->
 				<param name="HomePageWidget_content" value="$INFO[Skin.String(Home_Music_Custom_Path)]" />
 				<param name="HomePageWidget_target" value="$VAR[WidgetTarget]" />
-				<param name="HomePageWidget_limit" value="10" />
+				<param name="HomePageWidget_limit" value="20" />
 				<param name="HomePageWidget_sortby" value="" />
 				<param name="HomePageWidget_sortorder" value="" />
 				<param name="HomePageWidget_list_id" value="237" />
@@ -158,7 +158,7 @@
 				<!-- custom -->
 				<param name="HomePageWidget_content" value="$INFO[Skin.String(Home_Video_Custom_Path)]" />
 				<param name="HomePageWidget_target" value="$VAR[WidgetTarget]" />
-				<param name="HomePageWidget_limit" value="10" />
+				<param name="HomePageWidget_limit" value="20" />
 				<param name="HomePageWidget_sortby" value="" />
 				<param name="HomePageWidget_sortorder" value="" />
 				<param name="HomePageWidget_list_id" value="286" />
@@ -231,7 +231,7 @@
 				<!-- custom -->				
 				<param name="HomePageWidget_content" value="$INFO[Skin.String(Home_Movie_Custom_Path)]" />
 				<param name="HomePageWidget_target" value="$VAR[WidgetTarget]" />
-				<param name="HomePageWidget_limit" value="10" />
+				<param name="HomePageWidget_limit" value="20" />
 				<param name="HomePageWidget_sortby" value="" />
 				<param name="HomePageWidget_sortorder" value="" />
 				<param name="HomePageWidget_list_id" value="223" />
@@ -323,7 +323,7 @@
 				<!-- custom -->
 				<param name="HomePageWidget_content" value="$INFO[Skin.String(Home_TVShow_Custom_Path)]" />
 				<param name="HomePageWidget_target" value="$VAR[WidgetTarget]" />
-				<param name="HomePageWidget_limit" value="10" />
+				<param name="HomePageWidget_limit" value="20" />
 				<param name="HomePageWidget_sortby" value="" />
 				<param name="HomePageWidget_sortorder" value="" />
 				<param name="HomePageWidget_list_id" value="228" />
@@ -400,6 +400,7 @@
 				<param name="HomePageWidget_target" value="$VAR[WidgetTarget]" />
 				<param name="HomePageWidget_sortby" value="" />
 				<param name="HomePageWidget_sortorder" value="" />
+				<param name="HomePageWidget_limit" value="20" />
 				<param name="HomePageWidget_list_id" value="232" />
 				<param name="HomePageWidget_list_width" value="720" />
 				<param name="HomePageWidget_list_ondown" value="9000" />
@@ -444,6 +445,7 @@
 				<param name="HomePageWidget_target" value="$VAR[WidgetTarget]" />
 				<param name="HomePageWidget_sortby" value="" />
 				<param name="HomePageWidget_sortorder" value="" />
+				<param name="HomePageWidget_limit" value="20" />
 				<param name="HomePageWidget_list_id" value="234" />
 				<param name="HomePageWidget_list_width" value="720" />
 				<param name="HomePageWidget_list_ondown" value="9000" />
@@ -454,154 +456,6 @@
 				<param name="HomePageWidget_list_visible3" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),picture)" />
 			</include>
 		</control>
-    </include>
-    <include name="HomepageWidget_PlayDisc">
-        <control type="group">
-            <include>HomepageWidgetPosition</include>
-            <include>opencloseslideleft</include>
-            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),playdisc)</visible>
-            <visible>!Window.IsVisible(favourites)</visible>
-            <control type="group">
-				<include>HomepageWidgetBackground</include>
-				<visible>Skin.HasSetting(Widget_DVDLabel)+!Skin.HasSetting(HomeMenu_Custom_PlayDisc_Button)</visible>
-				<visible>System.HasMediadvd</visible>
-				<control type="group">
-					<top>12</top>
-					<left>3</left>
-					<control type="image">
-						<left>1710</left>
-						<top>48</top>
-						<height>142</height>
-						<width>142</width>
-						<texture background="true">cdart/default.png</texture>
-					</control>
-					<control type="image">
-						<left>1692</left>
-						<top>0</top>
-						<height>240</height>
-						<width>195</width>
-						<aspectratio>keep</aspectratio>
-						<texture flipx="true" background="true">clear-cases/fallback.png</texture>
-					</control>
-					<control type="label">
-						<left>1155</left>
-						<top>138</top>
-						<height>75</height>
-						<width>525</width>
-						<label>$LOCALIZE[165]</label>
-						<align>right</align>
-						<textcolor>selected</textcolor>
-					</control>
-					<control type="label">
-						<left>1155</left>
-						<top>176</top>
-						<height>75</height>
-						<width>525</width>
-						<label>$INFO[System.DVDLabel]</label>
-						<align>right</align>
-						<textcolor>white</textcolor>
-					</control>
-				</control>
-			</control>
-			<include content="HomePageWidget_list">
-				<!-- custom -->				
-				<param name="HomePageWidget_content" value="$INFO[Skin.String(Home_PlayDisc_Custom_Path)]" />
-				<param name="HomePageWidget_target" value="$VAR[WidgetTarget]" />
-				<param name="HomePageWidget_sortby" value="" />
-				<param name="HomePageWidget_sortorder" value="" />
-				<param name="HomePageWidget_list_id" value="235" />
-				<param name="HomePageWidget_list_width" value="720" />
-				<param name="HomePageWidget_list_ondown" value="9000" />
-				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,[UPPERCASE]$INFO[Container(235).ListItem.DBType][/UPPERCASE],home)" />
-				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)" />
-				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(HomeMenu_Custom_PlayDisc_Button)" />
-				<param name="HomePageWidget_list_visible2" value="Skin.HasSetting(HomeMenu_Custom_PlayDisc_Widget)" />
-				<param name="HomePageWidget_list_visible3" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),playdisc)" />
-			</include>
-        </control>
-    </include>
-    <include name="HomepageWidget_PVR_TV">
-        <control type="group">
-            <left>0</left>
-            <top>472</top>
-            <include>opencloseslideleft</include>
-            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),pvr)</visible>
-            <visible>Skin.HasSetting(Widget_Recordings)|Skin.HasSetting(Widget_PVRTimers)|Skin.HasSetting(Widget_LiveTVWidgetChannels)|Skin.HasSetting(Widget_SerienPlaner)</visible>
-            <visible>!Window.IsVisible(favourites)</visible>
-			<include content="HomePageWidget_list">
-				<!-- pvr recordings -->
-				<param name="HomePageWidget_content" value="pvr://recordings/tv/active/" />
-				<param name="HomePageWidget_target" value="video" />
-				<param name="HomePageWidget_sortby" value="date" />
-				<param name="HomePageWidget_sortorder" value="descending" />
-				<param name="HomePageWidget_limit" value="40" />
-				<param name="HomePageWidget_list_id" value="238" />
-				<param name="HomePageWidget_list_width" value="729" />
-				<param name="HomePageWidget_list_ondown" value="9000" />
-				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$LOCALIZE[20007],home)" />
-				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)" />
-				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Widget_Recordings)" />
-				<param name="HomePageWidget_list_visible2" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),pvr)" />
-				<param name="HomePageWidget_list_visible3" value="Integer.IsGreater(Container(295).NumItems,0)" />
-			</include>
-			<include content="HomePageWidget_list">
-				<!-- pvr timer -->
-				<param name="HomePageWidget_content" value="pvr://timers/tv/timers" />
-				<param name="HomePageWidget_target" value="pvr" />
-				<param name="HomePageWidget_sortby" value="date" />
-				<param name="HomePageWidget_sortorder" value="ascending" />
-				<param name="HomePageWidget_limit" value="10" />
-				<param name="HomePageWidget_list_id" value="239" />
-				<param name="HomePageWidget_list_width" value="729" />
-				<param name="HomePageWidget_list_ondown" value="9000" />
-				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$LOCALIZE[19040],home)" />
-				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)" />
-				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Widget_PVRTimers)+PVR.HasTimer" />
-				<param name="HomePageWidget_list_visible2" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),pvr)" />
-				<param name="HomePageWidget_list_visible3" value="Integer.IsGreater(Container(2951).NumItems,0)" />
-			</include>
-			<include content="HomePageWidget_list">
-				<!-- pvr channels -->
-				<param name="HomePageWidget_content" value="$INFO[Skin.String(Widget_PVR_TV_WidgetChannels_Path)]" />
-				<param name="HomePageWidget_target" value="pvr" />
-				<param name="HomePageWidget_sortby" value="number" />
-				<param name="HomePageWidget_sortorder" value="ascending" />
-				<param name="HomePageWidget_limit" value="20" />
-				<param name="HomePageWidget_list_id" value="240" />
-				<param name="HomePageWidget_list_width" value="729" />
-				<param name="HomePageWidget_list_ondown" value="9000" />
-				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$INFO[Skin.String(Widget_PVR_TV_WidgetChannels_Path)],home)" />
-				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)" />
-				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Widget_LiveTVWidgetChannels)+PVR.HasTVChannels" />
-				<param name="HomePageWidget_list_visible2" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),pvr)" />
-				<param name="HomePageWidget_list_visible3" value="!String.IsEmpty(Skin.String(Widget_PVR_TV_WidgetChannels_Path))" />
-			</include>
-        </control>
-    </include>
-    <include name="HomepageWidget_PVR_RADIO">
-        <control type="group">
-            <left>0</left>
-            <top>472</top>
-            <include>opencloseslideleft</include>
-            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),radio)</visible>
-            <visible>!Window.IsVisible(favourites)</visible>
-            <visible>Skin.HasSetting(Widget_PVR_Radio_WidgetChannels)</visible>
-			<include content="HomePageWidget_list">
-				<!-- channels -->
-				<param name="HomePageWidget_content" value="$INFO[Skin.String(Widget_PVR_Radio_WidgetChannels_Path)]" />
-				<param name="HomePageWidget_header" value="$INFO[Skin.String(Widget_PVR_Radio_WidgetChannels_Path)]" />
-				<param name="HomePageWidget_target" value="pvr" />
-				<param name="HomePageWidget_limit" value="10" />
-				<param name="HomePageWidget_sortby" value="" />
-				<param name="HomePageWidget_list_id" value="242" />
-				<param name="HomePageWidget_list_width" value="729" />
-				<param name="HomePageWidget_list_ondown" value="9000" />
-				<param name="HomePageWidget_list_onfocus" value="Container.Refresh" />
-				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Widget_PVR_Radio_WidgetChannels)" />
-				<param name="HomePageWidget_list_visible2" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),radio)" />
-				<param name="HomePageWidget_list_visible3" value="!String.IsEmpty(Skin.String(Widget_PVR_Radio_WidgetChannels_Path))" />
-			</include>
-        </control>
     </include>
     <include name="HomepageWidget_Weather">
         <control type="group">
@@ -980,6 +834,362 @@
             </control>
         </control>
     </include>
+    <include name="HomepageWidget_PlayDisc">
+        <control type="group">
+            <include>HomepageWidgetPosition</include>
+            <include>opencloseslideleft</include>
+            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),playdisc)</visible>
+            <visible>!Window.IsVisible(favourites)</visible>
+            <control type="group">
+				<include>HomepageWidgetBackground</include>
+				<visible>Skin.HasSetting(Widget_DVDLabel)+!Skin.HasSetting(HomeMenu_Custom_PlayDisc_Button)</visible>
+				<visible>System.HasMediadvd</visible>
+				<control type="group">
+					<top>12</top>
+					<left>3</left>
+					<control type="image">
+						<left>1710</left>
+						<top>48</top>
+						<height>142</height>
+						<width>142</width>
+						<texture background="true">cdart/default.png</texture>
+					</control>
+					<control type="image">
+						<left>1692</left>
+						<top>0</top>
+						<height>240</height>
+						<width>195</width>
+						<aspectratio>keep</aspectratio>
+						<texture flipx="true" background="true">clear-cases/fallback.png</texture>
+					</control>
+					<control type="label">
+						<left>1155</left>
+						<top>138</top>
+						<height>75</height>
+						<width>525</width>
+						<label>$LOCALIZE[165]</label>
+						<align>right</align>
+						<textcolor>selected</textcolor>
+					</control>
+					<control type="label">
+						<left>1155</left>
+						<top>176</top>
+						<height>75</height>
+						<width>525</width>
+						<label>$INFO[System.DVDLabel]</label>
+						<align>right</align>
+						<textcolor>white</textcolor>
+					</control>
+				</control>
+			</control>
+			<include content="HomePageWidget_list">
+				<!-- custom -->				
+				<param name="HomePageWidget_content" value="$INFO[Skin.String(Home_PlayDisc_Custom_Path)]" />
+				<param name="HomePageWidget_target" value="$VAR[WidgetTarget]" />
+				<param name="HomePageWidget_sortby" value="" />
+				<param name="HomePageWidget_sortorder" value="" />
+				<param name="HomePageWidget_limit" value="20" />
+				<param name="HomePageWidget_list_id" value="235" />
+				<param name="HomePageWidget_list_width" value="720" />
+				<param name="HomePageWidget_list_ondown" value="9000" />
+				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,[UPPERCASE]$INFO[Container(235).ListItem.DBType][/UPPERCASE],home)" />
+				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)" />
+				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(HomeMenu_Custom_PlayDisc_Button)" />
+				<param name="HomePageWidget_list_visible2" value="Skin.HasSetting(HomeMenu_Custom_PlayDisc_Widget)" />
+				<param name="HomePageWidget_list_visible3" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),playdisc)" />
+			</include>
+        </control>
+    </include>
+    <include name="HomepageWidget_Custom1">
+        <control type="group">
+            <include>HomepageWidgetPosition</include>
+            <include>opencloseslideleft</include>
+            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),custom1)</visible>
+            <visible>!Window.IsVisible(favourites)</visible>
+			<include content="HomePageWidget_list">			
+				<param name="HomePageWidget_content" value="$INFO[Skin.String(Home_Custom1_Custom_Path)]" />
+				<param name="HomePageWidget_target" value="$VAR[WidgetTarget]" />
+				<param name="HomePageWidget_sortby" value="" />
+				<param name="HomePageWidget_sortorder" value="" />
+				<param name="HomePageWidget_limit" value="20" />
+				<param name="HomePageWidget_list_id" value="240" />
+				<param name="HomePageWidget_list_width" value="720" />
+				<param name="HomePageWidget_list_ondown" value="9000" />
+				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,[UPPERCASE]$INFO[Container(240).ListItem.DBType][/UPPERCASE],home)" />
+				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)" />
+				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(HomeMenu_Custom_Custom1_Button)" />
+				<param name="HomePageWidget_list_visible2" value="Skin.HasSetting(HomeMenu_Custom_Custom1_Widget)" />
+				<param name="HomePageWidget_list_visible3" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),custom1)" />
+			</include>
+        </control>
+    </include>
+    <include name="HomepageWidget_Custom2">
+        <control type="group">
+            <include>HomepageWidgetPosition</include>
+            <include>opencloseslideleft</include>
+            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),custom2)</visible>
+            <visible>!Window.IsVisible(favourites)</visible>
+			<include content="HomePageWidget_list">			
+				<param name="HomePageWidget_content" value="$INFO[Skin.String(Home_Custom2_Custom_Path)]" />
+				<param name="HomePageWidget_target" value="$VAR[WidgetTarget]" />
+				<param name="HomePageWidget_sortby" value="" />
+				<param name="HomePageWidget_sortorder" value="" />
+				<param name="HomePageWidget_limit" value="20" />
+				<param name="HomePageWidget_list_id" value="242" />
+				<param name="HomePageWidget_list_width" value="720" />
+				<param name="HomePageWidget_list_ondown" value="9000" />
+				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,[UPPERCASE]$INFO[Container(242).ListItem.DBType][/UPPERCASE],home)" />
+				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)" />
+				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(HomeMenu_Custom_Custom2_Button)" />
+				<param name="HomePageWidget_list_visible2" value="Skin.HasSetting(HomeMenu_Custom_Custom2_Widget)" />
+				<param name="HomePageWidget_list_visible3" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),custom2)" />
+			</include>
+        </control>
+    </include>
+    <include name="HomepageWidget_Custom3">
+        <control type="group">
+            <include>HomepageWidgetPosition</include>
+            <include>opencloseslideleft</include>
+            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),custom3)</visible>
+            <visible>!Window.IsVisible(favourites)</visible>
+			<include content="HomePageWidget_list">			
+				<param name="HomePageWidget_content" value="$INFO[Skin.String(Home_Custom3_Custom_Path)]" />
+				<param name="HomePageWidget_target" value="$VAR[WidgetTarget]" />
+				<param name="HomePageWidget_sortby" value="" />
+				<param name="HomePageWidget_sortorder" value="" />
+				<param name="HomePageWidget_limit" value="20" />
+				<param name="HomePageWidget_list_id" value="244" />
+				<param name="HomePageWidget_list_width" value="720" />
+				<param name="HomePageWidget_list_ondown" value="9000" />
+				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,[UPPERCASE]$INFO[Container(244).ListItem.DBType][/UPPERCASE],home)" />
+				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)" />
+				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(HomeMenu_Custom_Custom3_Button)" />
+				<param name="HomePageWidget_list_visible2" value="Skin.HasSetting(HomeMenu_Custom_Custom3_Widget)" />
+				<param name="HomePageWidget_list_visible3" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),custom3)" />
+			</include>
+        </control>
+    </include>
+    <include name="HomepageWidget_Custom4">
+        <control type="group">
+            <include>HomepageWidgetPosition</include>
+            <include>opencloseslideleft</include>
+            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),custom4)</visible>
+            <visible>!Window.IsVisible(favourites)</visible>
+			<include content="HomePageWidget_list">			
+				<param name="HomePageWidget_content" value="$INFO[Skin.String(Home_Custom4_Custom_Path)]" />
+				<param name="HomePageWidget_target" value="$VAR[WidgetTarget]" />
+				<param name="HomePageWidget_sortby" value="" />
+				<param name="HomePageWidget_sortorder" value="" />
+				<param name="HomePageWidget_limit" value="20" />
+				<param name="HomePageWidget_list_id" value="246" />
+				<param name="HomePageWidget_list_width" value="720" />
+				<param name="HomePageWidget_list_ondown" value="9000" />
+				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,[UPPERCASE]$INFO[Container(246).ListItem.DBType][/UPPERCASE],home)" />
+				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)" />
+				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(HomeMenu_Custom_Custom4_Button)" />
+				<param name="HomePageWidget_list_visible2" value="Skin.HasSetting(HomeMenu_Custom_Custom4_Widget)" />
+				<param name="HomePageWidget_list_visible3" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),custom4)" />
+			</include>
+        </control>
+    </include>
+    <include name="HomepageWidget_Custom5">
+        <control type="group">
+            <include>HomepageWidgetPosition</include>
+            <include>opencloseslideleft</include>
+            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),custom5)</visible>
+            <visible>!Window.IsVisible(favourites)</visible>
+			<include content="HomePageWidget_list">			
+				<param name="HomePageWidget_content" value="$INFO[Skin.String(Home_Custom5_Custom_Path)]" />
+				<param name="HomePageWidget_target" value="$VAR[WidgetTarget]" />
+				<param name="HomePageWidget_sortby" value="" />
+				<param name="HomePageWidget_sortorder" value="" />
+				<param name="HomePageWidget_limit" value="20" />
+				<param name="HomePageWidget_list_id" value="248" />
+				<param name="HomePageWidget_list_width" value="720" />
+				<param name="HomePageWidget_list_ondown" value="9000" />
+				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,[UPPERCASE]$INFO[Container(248).ListItem.DBType][/UPPERCASE],home)" />
+				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)" />
+				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(HomeMenu_Custom_Custom5_Button)" />
+				<param name="HomePageWidget_list_visible2" value="Skin.HasSetting(HomeMenu_Custom_Custom5_Widget)" />
+				<param name="HomePageWidget_list_visible3" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),custom5)" />
+			</include>
+        </control>
+    </include>
+    <include name="HomepageWidget_Custom6">
+        <control type="group">
+            <include>HomepageWidgetPosition</include>
+            <include>opencloseslideleft</include>
+            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),custom6)</visible>
+            <visible>!Window.IsVisible(favourites)</visible>
+			<include content="HomePageWidget_list">			
+				<param name="HomePageWidget_content" value="$INFO[Skin.String(Home_Custom6_Custom_Path)]" />
+				<param name="HomePageWidget_target" value="$VAR[WidgetTarget]" />
+				<param name="HomePageWidget_sortby" value="" />
+				<param name="HomePageWidget_sortorder" value="" />
+				<param name="HomePageWidget_limit" value="20" />
+				<param name="HomePageWidget_list_id" value="250" />
+				<param name="HomePageWidget_list_width" value="720" />
+				<param name="HomePageWidget_list_ondown" value="9000" />
+				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,[UPPERCASE]$INFO[Container(250).ListItem.DBType][/UPPERCASE],home)" />
+				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)" />
+				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(HomeMenu_Custom_Custom6_Button)" />
+				<param name="HomePageWidget_list_visible2" value="Skin.HasSetting(HomeMenu_Custom_Custom6_Widget)" />
+				<param name="HomePageWidget_list_visible3" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),custom6)" />
+			</include>
+        </control>
+    </include>
+    <include name="HomepageWidget_Custom7">
+        <control type="group">
+            <include>HomepageWidgetPosition</include>
+            <include>opencloseslideleft</include>
+            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),custom7)</visible>
+            <visible>!Window.IsVisible(favourites)</visible>
+			<include content="HomePageWidget_list">			
+				<param name="HomePageWidget_content" value="$INFO[Skin.String(Home_Custom7_Custom_Path)]" />
+				<param name="HomePageWidget_target" value="$VAR[WidgetTarget]" />
+				<param name="HomePageWidget_sortby" value="" />
+				<param name="HomePageWidget_sortorder" value="" />
+				<param name="HomePageWidget_limit" value="20" />
+				<param name="HomePageWidget_list_id" value="252" />
+				<param name="HomePageWidget_list_width" value="720" />
+				<param name="HomePageWidget_list_ondown" value="9000" />
+				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,[UPPERCASE]$INFO[Container(252).ListItem.DBType][/UPPERCASE],home)" />
+				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)" />
+				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(HomeMenu_Custom_Custom7_Button)" />
+				<param name="HomePageWidget_list_visible2" value="Skin.HasSetting(HomeMenu_Custom_Custom7_Widget)" />
+				<param name="HomePageWidget_list_visible3" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),custom7)" />
+			</include>
+        </control>
+    </include>
+    <include name="HomepageWidget_Custom8">
+        <control type="group">
+            <include>HomepageWidgetPosition</include>
+            <include>opencloseslideleft</include>
+            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),custom8)</visible>
+            <visible>!Window.IsVisible(favourites)</visible>
+			<include content="HomePageWidget_list">			
+				<param name="HomePageWidget_content" value="$INFO[Skin.String(Home_Custom8_Custom_Path)]" />
+				<param name="HomePageWidget_target" value="$VAR[WidgetTarget]" />
+				<param name="HomePageWidget_sortby" value="" />
+				<param name="HomePageWidget_sortorder" value="" />
+				<param name="HomePageWidget_limit" value="20" />
+				<param name="HomePageWidget_list_id" value="254" />
+				<param name="HomePageWidget_list_width" value="720" />
+				<param name="HomePageWidget_list_ondown" value="9000" />
+				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,[UPPERCASE]$INFO[Container(254).ListItem.DBType][/UPPERCASE],home)" />
+				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)" />
+				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(HomeMenu_Custom_Custom8_Button)" />
+				<param name="HomePageWidget_list_visible2" value="Skin.HasSetting(HomeMenu_Custom_Custom8_Widget)" />
+				<param name="HomePageWidget_list_visible3" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),custom8)" />
+			</include>
+        </control>
+    </include>
+    <include name="HomepageWidget_Custom9">
+        <control type="group">
+            <include>HomepageWidgetPosition</include>
+            <include>opencloseslideleft</include>
+            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),custom9)</visible>
+            <visible>!Window.IsVisible(favourites)</visible>
+			<include content="HomePageWidget_list">			
+				<param name="HomePageWidget_content" value="$INFO[Skin.String(Home_Custom9_Custom_Path)]" />
+				<param name="HomePageWidget_target" value="$VAR[WidgetTarget]" />
+				<param name="HomePageWidget_sortby" value="" />
+				<param name="HomePageWidget_sortorder" value="" />
+				<param name="HomePageWidget_limit" value="20" />
+				<param name="HomePageWidget_list_id" value="256" />
+				<param name="HomePageWidget_list_width" value="720" />
+				<param name="HomePageWidget_list_ondown" value="9000" />
+				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,[UPPERCASE]$INFO[Container(256).ListItem.DBType][/UPPERCASE],home)" />
+				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)" />
+				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(HomeMenu_Custom_Custom9_Button)" />
+				<param name="HomePageWidget_list_visible2" value="Skin.HasSetting(HomeMenu_Custom_Custom9_Widget)" />
+				<param name="HomePageWidget_list_visible3" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),custom9)" />
+			</include>
+        </control>
+    </include>
+    <include name="HomepageWidget_PVR_TV">
+        <control type="group">
+            <left>0</left>
+            <top>472</top>
+            <include>opencloseslideleft</include>
+            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),pvr)</visible>
+            <visible>Skin.HasSetting(Widget_Recordings)|Skin.HasSetting(Widget_PVRTimers)|Skin.HasSetting(Widget_LiveTVWidgetChannels)|Skin.HasSetting(Widget_SerienPlaner)</visible>
+            <visible>!Window.IsVisible(favourites)</visible>
+			<include content="HomePageWidget_list">
+				<!-- pvr recordings -->
+				<param name="HomePageWidget_content" value="pvr://recordings/tv/active/" />
+				<param name="HomePageWidget_target" value="video" />
+				<param name="HomePageWidget_sortby" value="date" />
+				<param name="HomePageWidget_sortorder" value="descending" />
+				<param name="HomePageWidget_limit" value="40" />
+				<param name="HomePageWidget_list_id" value="238" />
+				<param name="HomePageWidget_list_width" value="729" />
+				<param name="HomePageWidget_list_ondown" value="9000" />
+				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$LOCALIZE[20007],home)" />
+				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)" />
+				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Widget_Recordings)" />
+				<param name="HomePageWidget_list_visible2" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),pvr)" />
+				<param name="HomePageWidget_list_visible3" value="Integer.IsGreater(Container(295).NumItems,0)" />
+			</include>
+			<include content="HomePageWidget_list">
+				<!-- pvr timer -->
+				<param name="HomePageWidget_content" value="pvr://timers/tv/timers" />
+				<param name="HomePageWidget_target" value="pvr" />
+				<param name="HomePageWidget_sortby" value="date" />
+				<param name="HomePageWidget_sortorder" value="ascending" />
+				<param name="HomePageWidget_limit" value="10" />
+				<param name="HomePageWidget_list_id" value="239" />
+				<param name="HomePageWidget_list_width" value="729" />
+				<param name="HomePageWidget_list_ondown" value="9000" />
+				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$LOCALIZE[19040],home)" />
+				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)" />
+				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Widget_PVRTimers)+PVR.HasTimer" />
+				<param name="HomePageWidget_list_visible2" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),pvr)" />
+				<param name="HomePageWidget_list_visible3" value="Integer.IsGreater(Container(2951).NumItems,0)" />
+			</include>
+			<include content="HomePageWidget_list">
+				<!-- pvr channels -->
+				<param name="HomePageWidget_content" value="$INFO[Skin.String(Widget_PVR_TV_WidgetChannels_Path)]" />
+				<param name="HomePageWidget_target" value="pvr" />
+				<param name="HomePageWidget_sortby" value="number" />
+				<param name="HomePageWidget_sortorder" value="ascending" />
+				<param name="HomePageWidget_limit" value="20" />
+				<param name="HomePageWidget_list_id" value="240" />
+				<param name="HomePageWidget_list_width" value="729" />
+				<param name="HomePageWidget_list_ondown" value="9000" />
+				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$INFO[Skin.String(Widget_PVR_TV_WidgetChannels_Path)],home)" />
+				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)" />
+				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Widget_LiveTVWidgetChannels)+PVR.HasTVChannels" />
+				<param name="HomePageWidget_list_visible2" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),pvr)" />
+				<param name="HomePageWidget_list_visible3" value="!String.IsEmpty(Skin.String(Widget_PVR_TV_WidgetChannels_Path))" />
+			</include>
+        </control>
+    </include>
+    <include name="HomepageWidget_PVR_RADIO">
+        <control type="group">
+            <left>0</left>
+            <top>472</top>
+            <include>opencloseslideleft</include>
+            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),radio)</visible>
+            <visible>!Window.IsVisible(favourites)</visible>
+            <visible>Skin.HasSetting(Widget_PVR_Radio_WidgetChannels)</visible>
+			<include content="HomePageWidget_list">
+				<!-- channels -->
+				<param name="HomePageWidget_content" value="$INFO[Skin.String(Widget_PVR_Radio_WidgetChannels_Path)]" />
+				<param name="HomePageWidget_header" value="$INFO[Skin.String(Widget_PVR_Radio_WidgetChannels_Path)]" />
+				<param name="HomePageWidget_target" value="pvr" />
+				<param name="HomePageWidget_limit" value="10" />
+				<param name="HomePageWidget_sortby" value="" />
+				<param name="HomePageWidget_list_id" value="242" />
+				<param name="HomePageWidget_list_width" value="729" />
+				<param name="HomePageWidget_list_ondown" value="9000" />
+				<param name="HomePageWidget_list_onfocus" value="Container.Refresh" />
+				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Widget_PVR_Radio_WidgetChannels)" />
+				<param name="HomePageWidget_list_visible2" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),radio)" />
+				<param name="HomePageWidget_list_visible3" value="!String.IsEmpty(Skin.String(Widget_PVR_Radio_WidgetChannels_Path))" />
+			</include>
+        </control>
+    </include>
     <include name="HomepageWidget_System">
         <control type="group">
             <left>0</left>
@@ -1079,621 +1289,6 @@
                     </control>
                 </control>
             </control>
-        </control>
-    </include>
-    <include name="HomepageWidget_3D">
-        <control type="group">
-            <include>HomepageWidgetPosition</include>
-            <include>opencloseslideleft</include>
-            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),3d)</visible>
-            <visible>!Window.IsVisible(favourites)</visible>
-            <visible>Skin.HasSetting(Widget_RecommendedMovies_3D)|Skin.HasSetting(Widget_RandomMovies_3D)|Skin.HasSetting(Widget_RecentMovies_3D)</visible>
-			<include content="HomePageWidget_list">
-				<!-- lastplayed -->
-				<param name="HomePageWidget_content" value="special://skin/playlists/3DMovies.xsp" />
-				<param name="HomePageWidget_header" value="$LOCALIZE[51495]" />
-				<param name="HomePageWidget_target" value="videos" />
-				<param name="HomePageWidget_limit" value="10" />
-				<param name="HomePageWidget_sortby" value="lastplayed" />
-				<param name="HomePageWidget_sortorder" value="descending" />
-				<param name="HomePageWidget_list_id" value="244" />
-				<param name="HomePageWidget_list_width" value="720" />
-				<param name="HomePageWidget_list_ondown" value="9000" />
-				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Widget_RecommendedMovies_3D)" />
-				<param name="HomePageWidget_list_visible2" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),3d)" />
-				<param name="HomePageWidget_list_visible3" value="Integer.IsGreater(Container(296).NumItems,0)" />
-			</include>
-			<include content="HomePageWidget_list">
-				<!-- random -->
-				<param name="HomePageWidget_content" value="special://skin/playlists/3DMovies.xsp" />
-				<param name="HomePageWidget_header" value="$LOCALIZE[20386]" />
-				<param name="HomePageWidget_target" value="videos" />
-				<param name="HomePageWidget_limit" value="10" />
-				<param name="HomePageWidget_sortby" value="random" />
-				<param name="HomePageWidget_sortorder" value="ascending" />
-				<param name="HomePageWidget_list_id" value="245" />
-				<param name="HomePageWidget_list_width" value="720" />
-				<param name="HomePageWidget_list_ondown" value="9000" />
-				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$LOCALIZE[590],home)" />
-				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)" />
-				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Widget_RandomMovies_3D)" />
-				<param name="HomePageWidget_list_visible2" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),3d)" />
-				<param name="HomePageWidget_list_visible3" value="Integer.IsGreater(Container(296).NumItems,0)" />
-			</include>
-			<include content="HomePageWidget_list">
-				<!-- recent -->
-				<param name="HomePageWidget_content" value="special://skin/playlists/3DMovies.xsp" />
-				<param name="HomePageWidget_header" value="$LOCALIZE[590]" />
-				<param name="HomePageWidget_target" value="videos" />
-				<param name="HomePageWidget_limit" value="10" />
-				<param name="HomePageWidget_sortby" value="dateadded" />
-				<param name="HomePageWidget_sortorder" value="descending" />
-				<param name="HomePageWidget_list_id" value="246" />
-				<param name="HomePageWidget_list_width" value="720" />
-				<param name="HomePageWidget_list_ondown" value="9000" />
-				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$LOCALIZE[20386],home)" />
-				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)" />
-				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Widget_RecentMovies_3D)" />
-				<param name="HomePageWidget_list_visible2" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),3d)" />
-				<param name="HomePageWidget_list_visible3" value="Integer.IsGreater(Container(296).NumItems,0)" />
-			</include>
-        </control>
-    </include>
-    <include name="HomepageWidget_HD">
-        <control type="group">
-            <include>HomepageWidgetPosition</include>
-            <include>opencloseslideleft</include>
-            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),hd)</visible>
-            <visible>!Window.IsVisible(favourites)</visible>
-            <visible>Skin.HasSetting(Widget_RecommendedMovies_HD)|Skin.HasSetting(Widget_RandomMovies_HD)|Skin.HasSetting(Widget_RecentMovies_HD)</visible>
-			<include content="HomePageWidget_list">
-				<!-- lastplayed -->
-				<param name="HomePageWidget_content" value="special://skin/playlists/HDMovies.xsp" />
-				<param name="HomePageWidget_header" value="$LOCALIZE[51495]" />
-				<param name="HomePageWidget_target" value="videos" />
-				<param name="HomePageWidget_limit" value="10" />
-				<param name="HomePageWidget_sortby" value="lastplayed" />
-				<param name="HomePageWidget_sortorder" value="descending" />
-				<param name="HomePageWidget_list_id" value="248" />
-				<param name="HomePageWidget_list_width" value="720" />
-				<param name="HomePageWidget_list_ondown" value="9000" />
-				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Widget_RecommendedMovies_HD)" />
-				<param name="HomePageWidget_list_visible2" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),hd)" />
-				<param name="HomePageWidget_list_visible3" value="Integer.IsGreater(Container(297).NumItems,0)" />
-			</include>
-			<include content="HomePageWidget_list">
-				<!-- random -->
-				<param name="HomePageWidget_content" value="special://skin/playlists/HDMovies.xsp" />
-				<param name="HomePageWidget_header" value="$LOCALIZE[20386]" />
-				<param name="HomePageWidget_target" value="videos" />
-				<param name="HomePageWidget_limit" value="10" />
-				<param name="HomePageWidget_sortby" value="random" />
-				<param name="HomePageWidget_sortorder" value="ascending" />
-				<param name="HomePageWidget_list_id" value="249" />
-				<param name="HomePageWidget_list_width" value="720" />
-				<param name="HomePageWidget_list_ondown" value="9000" />
-				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$LOCALIZE[590],home)" />
-				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)" />
-				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Widget_RandomMovies_HD)" />
-				<param name="HomePageWidget_list_visible2" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),hd)" />
-				<param name="HomePageWidget_list_visible3" value="Integer.IsGreater(Container(297).NumItems,0)" />
-			</include>
-			<include content="HomePageWidget_list">
-				<!-- recent -->
-				<param name="HomePageWidget_content" value="special://skin/playlists/HDMovies.xsp" />
-				<param name="HomePageWidget_header" value="$LOCALIZE[590]" />
-				<param name="HomePageWidget_target" value="videos" />
-				<param name="HomePageWidget_limit" value="10" />
-				<param name="HomePageWidget_sortby" value="dateadded" />
-				<param name="HomePageWidget_sortorder" value="descending" />
-				<param name="HomePageWidget_list_id" value="250" />
-				<param name="HomePageWidget_list_width" value="720" />
-				<param name="HomePageWidget_list_ondown" value="9000" />
-				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$LOCALIZE[20386],home)" />
-				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)" />
-				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Widget_RecentMovies_HD)" />
-				<param name="HomePageWidget_list_visible2" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),hd)" />
-				<param name="HomePageWidget_list_visible3" value="Integer.IsGreater(Container(297).NumItems,0)" />
-			</include>
-        </control>
-    </include>
-    <include name="HomepageWidget_FULLHD">
-        <control type="group">
-            <include>HomepageWidgetPosition</include>
-            <include>opencloseslideleft</include>
-            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),fullhd)</visible>
-            <visible>!Window.IsVisible(favourites)</visible>
-            <visible>Skin.HasSetting(Widget_RecommendedMovies_FullHD)|Skin.HasSetting(Widget_RandomMovies_FullHD)|Skin.HasSetting(Widget_RecentMovies_FullHD)</visible>
-			<include content="HomePageWidget_list">
-				<!-- lastplayed -->
-				<param name="HomePageWidget_content" value="special://skin/playlists/FULLHDMovies.xsp" />
-				<param name="HomePageWidget_header" value="$LOCALIZE[51495]" />
-				<param name="HomePageWidget_target" value="videos" />
-				<param name="HomePageWidget_limit" value="10" />
-				<param name="HomePageWidget_sortby" value="lastplayed" />
-				<param name="HomePageWidget_sortorder" value="descending" />
-				<param name="HomePageWidget_list_id" value="252" />
-				<param name="HomePageWidget_list_width" value="720" />
-				<param name="HomePageWidget_list_ondown" value="9000" />
-				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Widget_RecommendedMovies_FullHD)" />
-				<param name="HomePageWidget_list_visible2" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),fullhd)" />
-				<param name="HomePageWidget_list_visible3" value="Integer.IsGreater(Container(298).NumItems,0)" />
-			</include>
-			<include content="HomePageWidget_list">
-				<!-- random -->
-				<param name="HomePageWidget_content" value="special://skin/playlists/FULLHDMovies.xsp" />
-				<param name="HomePageWidget_header" value="$LOCALIZE[20386]" />
-				<param name="HomePageWidget_target" value="videos" />
-				<param name="HomePageWidget_limit" value="10" />
-				<param name="HomePageWidget_sortby" value="random" />
-				<param name="HomePageWidget_sortorder" value="ascending" />
-				<param name="HomePageWidget_list_id" value="253" />
-				<param name="HomePageWidget_list_width" value="720" />
-				<param name="HomePageWidget_list_ondown" value="9000" />
-				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$LOCALIZE[590],home)" />
-				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)" />
-				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Widget_RandomMovies_FullHD)" />
-				<param name="HomePageWidget_list_visible2" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),fullhd)" />
-				<param name="HomePageWidget_list_visible3" value="Integer.IsGreater(Container(298).NumItems,0)" />
-			</include>
-			<include content="HomePageWidget_list">
-				<!-- recent -->
-				<param name="HomePageWidget_content" value="special://skin/playlists/FULLHDMovies.xsp" />
-				<param name="HomePageWidget_header" value="$LOCALIZE[590]" />
-				<param name="HomePageWidget_target" value="videos" />
-				<param name="HomePageWidget_limit" value="10" />
-				<param name="HomePageWidget_sortby" value="dateadded" />
-				<param name="HomePageWidget_sortorder" value="descending" />
-				<param name="HomePageWidget_list_id" value="254" />
-				<param name="HomePageWidget_list_width" value="720" />
-				<param name="HomePageWidget_list_ondown" value="9000" />
-				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$LOCALIZE[20386],home)" />
-				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)" />
-				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Widget_RecentMovies_FullHD)" />
-				<param name="HomePageWidget_list_visible2" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),fullhd)" />
-				<param name="HomePageWidget_list_visible3" value="Integer.IsGreater(Container(298).NumItems,0)" />
-			</include>
-        </control>
-    </include>
-    <include name="HomepageWidget_DOKU">
-        <control type="group">
-            <include>HomepageWidgetPosition</include>
-            <include>opencloseslideleft</include>
-            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),doku)</visible>
-            <visible>!Window.IsVisible(favourites)</visible>
-            <visible>Skin.HasSetting(Widget_RecommendedMovies_Doku)|Skin.HasSetting(Widget_RandomMovies_Doku)|Skin.HasSetting(Widget_RecentMovies_Doku)</visible>
-			<include content="HomePageWidget_list">
-				<!-- lastplayed -->
-				<param name="HomePageWidget_content" value="special://skin/playlists/Doku.xsp" />
-				<param name="HomePageWidget_header" value="$LOCALIZE[51495]" />
-				<param name="HomePageWidget_target" value="videos" />
-				<param name="HomePageWidget_limit" value="10" />
-				<param name="HomePageWidget_sortby" value="lastplayed" />
-				<param name="HomePageWidget_sortorder" value="descending" />
-				<param name="HomePageWidget_list_id" value="256" />
-				<param name="HomePageWidget_list_width" value="720" />
-				<param name="HomePageWidget_list_ondown" value="9000" />
-				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Widget_RecommendedMovies_Doku)" />
-				<param name="HomePageWidget_list_visible2" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),doku)" />
-				<param name="HomePageWidget_list_visible3" value="Integer.IsGreater(Container(299).NumItems,0)" />
-			</include>
-			<include content="HomePageWidget_list">
-				<!-- random -->
-				<param name="HomePageWidget_content" value="special://skin/playlists/Doku.xsp" />
-				<param name="HomePageWidget_header" value="$LOCALIZE[20386]" />
-				<param name="HomePageWidget_target" value="videos" />
-				<param name="HomePageWidget_limit" value="10" />
-				<param name="HomePageWidget_sortby" value="random" />
-				<param name="HomePageWidget_sortorder" value="ascending" />
-				<param name="HomePageWidget_list_id" value="257" />
-				<param name="HomePageWidget_list_width" value="720" />
-				<param name="HomePageWidget_list_ondown" value="9000" />
-				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$LOCALIZE[590],home)" />
-				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)" />
-				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Widget_RandomMovies_Doku)" />
-				<param name="HomePageWidget_list_visible2" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),doku)" />
-				<param name="HomePageWidget_list_visible3" value="Integer.IsGreater(Container(299).NumItems,0)" />
-			</include>
-			<include content="HomePageWidget_list">
-				<!-- recent -->
-				<param name="HomePageWidget_content" value="special://skin/playlists/Doku.xsp" />
-				<param name="HomePageWidget_header" value="$LOCALIZE[590]" />
-				<param name="HomePageWidget_target" value="videos" />
-				<param name="HomePageWidget_limit" value="10" />
-				<param name="HomePageWidget_sortby" value="dateadded" />
-				<param name="HomePageWidget_sortorder" value="descending" />
-				<param name="HomePageWidget_list_id" value="258" />
-				<param name="HomePageWidget_list_width" value="720" />
-				<param name="HomePageWidget_list_ondown" value="9000" />
-				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$LOCALIZE[20386],home)" />
-				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)" />
-				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Widget_RecentMovies_Doku)" />
-				<param name="HomePageWidget_list_visible2" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),doku)" />
-				<param name="HomePageWidget_list_visible3" value="Integer.IsGreater(Container(299).NumItems,0)" />
-			</include>
-        </control>
-    </include>
-    <include name="HomepageWidget_KIDS">
-        <control type="group">
-            <include>HomepageWidgetPosition</include>
-            <include>opencloseslideleft</include>
-            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),kids)</visible>
-            <visible>!Window.IsVisible(favourites)</visible>
-            <visible>Skin.HasSetting(Widget_RecommendedMovies_Kids)|Skin.HasSetting(Widget_RandomMovies_Kids)|Skin.HasSetting(Widget_RecentMovies_Kids)</visible>
-			<include content="HomePageWidget_list">
-				<!-- lastplayed 0 -->
-				<param name="HomePageWidget_content" value="special://skin/playlists/KIDS_0.xsp" />
-				<param name="HomePageWidget_header" value="$LOCALIZE[51495]" />
-				<param name="HomePageWidget_target" value="videos" />
-				<param name="HomePageWidget_limit" value="10" />
-				<param name="HomePageWidget_sortby" value="lastplayed" />
-				<param name="HomePageWidget_sortorder" value="descending" />
-				<param name="HomePageWidget_list_id" value="260" />
-				<param name="HomePageWidget_list_width" value="720" />
-				<param name="HomePageWidget_list_ondown" value="9000" />
-				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Widget_RecommendedMovies_Kids)+Skin.HasSetting(Rating_Age_Kids_0)" />
-				<param name="HomePageWidget_list_visible2" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),kids)" />
-				<param name="HomePageWidget_list_visible3" value="Integer.IsGreater(Container(300).NumItems,0)" />
-			</include>
-			<include content="HomePageWidget_list">
-				<!-- random 0 -->
-				<param name="HomePageWidget_content" value="special://skin/playlists/KIDS_0.xsp" />
-				<param name="HomePageWidget_header" value="$LOCALIZE[20386]" />
-				<param name="HomePageWidget_target" value="videos" />
-				<param name="HomePageWidget_limit" value="10" />
-				<param name="HomePageWidget_sortby" value="random" />
-				<param name="HomePageWidget_sortorder" value="ascending" />
-				<param name="HomePageWidget_list_id" value="261" />
-				<param name="HomePageWidget_list_width" value="720" />
-				<param name="HomePageWidget_list_ondown" value="9000" />
-				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$LOCALIZE[590],home)" />
-				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)" />
-				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Widget_RandomMovies_Kids)+Skin.HasSetting(Rating_Age_Kids_0)" />
-				<param name="HomePageWidget_list_visible2" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),kids)" />
-				<param name="HomePageWidget_list_visible3" value="Integer.IsGreater(Container(300).NumItems,0)" />
-			</include>
-			<include content="HomePageWidget_list">
-				<!-- recent 0 -->
-				<param name="HomePageWidget_content" value="special://skin/playlists/KIDS_0.xsp" />
-				<param name="HomePageWidget_header" value="$LOCALIZE[590]" />
-				<param name="HomePageWidget_target" value="videos" />
-				<param name="HomePageWidget_limit" value="10" />
-				<param name="HomePageWidget_sortby" value="dateadded" />
-				<param name="HomePageWidget_sortorder" value="descending" />
-				<param name="HomePageWidget_list_id" value="262" />
-				<param name="HomePageWidget_list_width" value="720" />
-				<param name="HomePageWidget_list_ondown" value="9000" />
-				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$LOCALIZE[20386],home)" />
-				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)" />
-				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Widget_RecentMovies_Kids)+Skin.HasSetting(Rating_Age_Kids_0)" />
-				<param name="HomePageWidget_list_visible2" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),kids)" />
-				<param name="HomePageWidget_list_visible3" value="Integer.IsGreater(Container(300).NumItems,0)" />
-			</include>
-			<include content="HomePageWidget_list">
-				<!-- lastplayed 6 -->
-				<param name="HomePageWidget_content" value="special://skin/playlists/KIDS_6.xsp" />
-				<param name="HomePageWidget_header" value="$LOCALIZE[51495]" />
-				<param name="HomePageWidget_target" value="videos" />
-				<param name="HomePageWidget_limit" value="10" />
-				<param name="HomePageWidget_sortby" value="lastplayed" />
-				<param name="HomePageWidget_sortorder" value="descending" />
-				<param name="HomePageWidget_list_id" value="263" />
-				<param name="HomePageWidget_list_width" value="720" />
-				<param name="HomePageWidget_list_ondown" value="9000" />
-				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Widget_RecommendedMovies_Kids)+Skin.HasSetting(Rating_Age_Kids_6)" />
-				<param name="HomePageWidget_list_visible2" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),kids)" />
-				<param name="HomePageWidget_list_visible3" value="Integer.IsGreater(Container(301).NumItems,0)" />
-			</include>
-			<include content="HomePageWidget_list">
-				<!-- random 6 -->
-				<param name="HomePageWidget_content" value="special://skin/playlists/KIDS_6.xsp" />
-				<param name="HomePageWidget_header" value="$LOCALIZE[20386]" />
-				<param name="HomePageWidget_target" value="videos" />
-				<param name="HomePageWidget_limit" value="10" />
-				<param name="HomePageWidget_sortby" value="random" />
-				<param name="HomePageWidget_sortorder" value="ascending" />
-				<param name="HomePageWidget_list_id" value="264" />
-				<param name="HomePageWidget_list_width" value="720" />
-				<param name="HomePageWidget_list_ondown" value="9000" />
-				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$LOCALIZE[590],home)" />
-				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)" />
-				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Widget_RandomMovies_Kids)+Skin.HasSetting(Rating_Age_Kids_6)" />
-				<param name="HomePageWidget_list_visible2" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),kids)" />
-				<param name="HomePageWidget_list_visible3" value="Integer.IsGreater(Container(301).NumItems,0)" />
-			</include>
-			<include content="HomePageWidget_list">
-				<!-- recent 6 -->
-				<param name="HomePageWidget_content" value="special://skin/playlists/KIDS_6.xsp" />
-				<param name="HomePageWidget_header" value="$LOCALIZE[590]" />
-				<param name="HomePageWidget_target" value="videos" />
-				<param name="HomePageWidget_limit" value="10" />
-				<param name="HomePageWidget_sortby" value="dateadded" />
-				<param name="HomePageWidget_sortorder" value="descending" />
-				<param name="HomePageWidget_list_id" value="265" />
-				<param name="HomePageWidget_list_width" value="720" />
-				<param name="HomePageWidget_list_ondown" value="9000" />
-				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$LOCALIZE[20386],home)" />
-				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)" />
-				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Widget_RecentMovies_Kids)+Skin.HasSetting(Rating_Age_Kids_6)" />
-				<param name="HomePageWidget_list_visible2" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),kids)" />
-				<param name="HomePageWidget_list_visible3" value="Integer.IsGreater(Container(301).NumItems,0)" />
-			</include>
-			<include content="HomePageWidget_list">
-				<!-- lastplayed 12 -->
-				<param name="HomePageWidget_content" value="special://skin/playlists/KIDS_12.xsp" />
-				<param name="HomePageWidget_header" value="$LOCALIZE[51495]" />
-				<param name="HomePageWidget_target" value="videos" />
-				<param name="HomePageWidget_limit" value="10" />
-				<param name="HomePageWidget_sortby" value="lastplayed" />
-				<param name="HomePageWidget_sortorder" value="descending" />
-				<param name="HomePageWidget_list_id" value="266" />
-				<param name="HomePageWidget_list_width" value="720" />
-				<param name="HomePageWidget_list_ondown" value="9000" />
-				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Widget_RecommendedMovies_Kids)+Skin.HasSetting(Rating_Age_Kids_12)" />
-				<param name="HomePageWidget_list_visible2" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),kids)" />
-				<param name="HomePageWidget_list_visible3" value="Integer.IsGreater(Container(302).NumItems,0)" />
-			</include>
-			<include content="HomePageWidget_list">
-				<!-- random 12 -->
-				<param name="HomePageWidget_content" value="special://skin/playlists/KIDS_12.xsp" />
-				<param name="HomePageWidget_header" value="$LOCALIZE[20386]" />
-				<param name="HomePageWidget_target" value="videos" />
-				<param name="HomePageWidget_limit" value="10" />
-				<param name="HomePageWidget_sortby" value="random" />
-				<param name="HomePageWidget_sortorder" value="ascending" />
-				<param name="HomePageWidget_list_id" value="267" />
-				<param name="HomePageWidget_list_width" value="720" />
-				<param name="HomePageWidget_list_ondown" value="9000" />
-				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$LOCALIZE[590],home)" />
-				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)" />
-				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Widget_RandomMovies_Kids)+Skin.HasSetting(Rating_Age_Kids_12)" />
-				<param name="HomePageWidget_list_visible2" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),kids)" />
-				<param name="HomePageWidget_list_visible3" value="Integer.IsGreater(Container(302).NumItems,0)" />
-			</include>
-			<include content="HomePageWidget_list">
-				<!-- recent 12 -->
-				<param name="HomePageWidget_content" value="special://skin/playlists/KIDS_12.xsp" />
-				<param name="HomePageWidget_header" value="$LOCALIZE[590]" />
-				<param name="HomePageWidget_target" value="videos" />
-				<param name="HomePageWidget_limit" value="10" />
-				<param name="HomePageWidget_sortby" value="dateadded" />
-				<param name="HomePageWidget_sortorder" value="descending" />
-				<param name="HomePageWidget_list_id" value="268" />
-				<param name="HomePageWidget_list_width" value="720" />
-				<param name="HomePageWidget_list_ondown" value="9000" />
-				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$LOCALIZE[20386],home)" />
-				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)" />
-				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Widget_RecentMovies_Kids)+Skin.HasSetting(Rating_Age_Kids_12)" />
-				<param name="HomePageWidget_list_visible2" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),kids)" />
-				<param name="HomePageWidget_list_visible3" value="Integer.IsGreater(Container(302).NumItems,0)" />
-			</include>
-			<include content="HomePageWidget_list">
-				<!-- lastplayed 16 -->
-				<param name="HomePageWidget_content" value="special://skin/playlists/KIDS_16.xsp" />
-				<param name="HomePageWidget_header" value="$LOCALIZE[51495]" />
-				<param name="HomePageWidget_target" value="videos" />
-				<param name="HomePageWidget_limit" value="10" />
-				<param name="HomePageWidget_sortby" value="lastplayed" />
-				<param name="HomePageWidget_sortorder" value="descending" />
-				<param name="HomePageWidget_list_id" value="269" />
-				<param name="HomePageWidget_list_width" value="720" />
-				<param name="HomePageWidget_list_ondown" value="9000" />
-				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Widget_RecommendedMovies_Kids)+Skin.HasSetting(Rating_Age_Kids_16)" />
-				<param name="HomePageWidget_list_visible2" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),kids)" />
-				<param name="HomePageWidget_list_visible3" value="Integer.IsGreater(Container(303).NumItems,0)" />
-			</include>
-			<include content="HomePageWidget_list">
-				<!-- random 16 -->
-				<param name="HomePageWidget_content" value="special://skin/playlists/KIDS_16.xsp" />
-				<param name="HomePageWidget_header" value="$LOCALIZE[20386]" />
-				<param name="HomePageWidget_target" value="videos" />
-				<param name="HomePageWidget_limit" value="10" />
-				<param name="HomePageWidget_sortby" value="random" />
-				<param name="HomePageWidget_sortorder" value="ascending" />
-				<param name="HomePageWidget_list_id" value="270" />
-				<param name="HomePageWidget_list_width" value="720" />
-				<param name="HomePageWidget_list_ondown" value="9000" />
-				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$LOCALIZE[590],home)" />
-				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)" />
-				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Widget_RandomMovies_Kids)+Skin.HasSetting(Rating_Age_Kids_16)" />
-				<param name="HomePageWidget_list_visible2" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),kids)" />
-				<param name="HomePageWidget_list_visible3" value="Integer.IsGreater(Container(303).NumItems,0)" />
-			</include>
-			<include content="HomePageWidget_list">
-				<!-- recent 16 -->
-				<param name="HomePageWidget_content" value="special://skin/playlists/KIDS_16.xsp" />
-				<param name="HomePageWidget_header" value="$LOCALIZE[590]" />
-				<param name="HomePageWidget_target" value="videos" />
-				<param name="HomePageWidget_limit" value="10" />
-				<param name="HomePageWidget_sortby" value="dateadded" />
-				<param name="HomePageWidget_sortorder" value="descending" />
-				<param name="HomePageWidget_list_id" value="271" />
-				<param name="HomePageWidget_list_width" value="720" />
-				<param name="HomePageWidget_list_ondown" value="9000" />
-				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$LOCALIZE[20386],home)" />
-				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)" />
-				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Widget_RecentMovies_Kids)+Skin.HasSetting(Rating_Age_Kids_16)" />
-				<param name="HomePageWidget_list_visible2" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),kids)" />
-				<param name="HomePageWidget_list_visible3" value="Integer.IsGreater(Container(303).NumItems,0)" />
-			</include>
-        </control>
-    </include>
-    <include name="HomepageWidget_FAV1">
-        <control type="group">
-            <include>HomepageWidgetPosition</include>
-            <include>opencloseslideleft</include>
-            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),fav1)</visible>
-            <visible>!Window.IsVisible(favourites)</visible>
-            <visible>Skin.HasSetting(Widget_RecommendedMovies_Fav1)|Skin.HasSetting(Widget_RandomMovies_Fav1)|Skin.HasSetting(Widget_RecentMovies_Fav1)</visible>
-			<include content="HomePageWidget_list">
-				<!-- lastplayed -->
-				<param name="HomePageWidget_content" value="$INFO[Skin.String(Favourite1_Playlist_Path)]" />
-				<param name="HomePageWidget_target" value="videos" />
-				<param name="HomePageWidget_limit" value="10" />
-				<param name="HomePageWidget_sortby" value="lastplayed" />
-				<param name="HomePageWidget_sortorder" value="descending" />
-				<param name="HomePageWidget_list_id" value="273" />
-				<param name="HomePageWidget_list_width" value="720" />
-				<param name="HomePageWidget_list_ondown" value="9000" />
-				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$LOCALIZE[51495],home)" />
-				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)" />
-				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Widget_RecommendedMovies_Fav1)" />
-				<param name="HomePageWidget_list_visible2" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),fav1)" />
-				<param name="HomePageWidget_list_visible3" value="!String.IsEmpty(Skin.String(Favourite1_Playlist_Path))" />
-			</include>
-			<include content="HomePageWidget_list">
-				<!-- random -->
-				<param name="HomePageWidget_content" value="$INFO[Skin.String(Favourite1_Playlist_Path)]" />
-				<param name="HomePageWidget_header" value="$LOCALIZE[20386]" />
-				<param name="HomePageWidget_target" value="videos" />
-				<param name="HomePageWidget_limit" value="10" />
-				<param name="HomePageWidget_sortby" value="random" />
-				<param name="HomePageWidget_sortorder" value="ascending" />
-				<param name="HomePageWidget_list_id" value="274" />
-				<param name="HomePageWidget_list_width" value="720" />
-				<param name="HomePageWidget_list_ondown" value="9000" />
-				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$LOCALIZE[590],home)" />
-				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)" />
-				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Widget_RandomMovies_Fav1)" />
-				<param name="HomePageWidget_list_visible2" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),fav1)" />
-				<param name="HomePageWidget_list_visible3" value="!String.IsEmpty(Skin.String(Favourite1_Playlist_Path))" />
-			</include>
-			<include content="HomePageWidget_list">
-				<!-- recent -->
-				<param name="HomePageWidget_content" value="$INFO[Skin.String(Favourite1_Playlist_Path)]" />
-				<param name="HomePageWidget_target" value="videos" />
-				<param name="HomePageWidget_limit" value="10" />
-				<param name="HomePageWidget_sortby" value="dateadded" />
-				<param name="HomePageWidget_sortorder" value="descending" />
-				<param name="HomePageWidget_list_id" value="275" />
-				<param name="HomePageWidget_list_width" value="720" />
-				<param name="HomePageWidget_list_ondown" value="9000" />
-				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$LOCALIZE[31328],home)" />
-				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)" />
-				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Widget_RecentMovies_Fav1)" />
-				<param name="HomePageWidget_list_visible2" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),fav1)" />
-				<param name="HomePageWidget_list_visible3" value="!String.IsEmpty(Skin.String(Favourite1_Playlist_Path))" />
-			</include>
-        </control>
-    </include>
-    <include name="HomepageWidget_FAV2">
-        <control type="group">
-            <include>HomepageWidgetPosition</include>
-            <include>opencloseslideleft</include>
-            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),fav2)</visible>
-            <visible>!Window.IsVisible(favourites)</visible>
-            <visible>Skin.HasSetting(Widget_RecommendedMovies_Fav2)|Skin.HasSetting(Widget_RandomMovies_Fav2)|Skin.HasSetting(Widget_RecentMovies_Fav2)</visible>
-			<include content="HomePageWidget_list">
-				<!-- lastplayed -->
-				<param name="HomePageWidget_content" value="$INFO[Skin.String(Favourite2_Playlist_Path)]" />
-				<param name="HomePageWidget_target" value="videos" />
-				<param name="HomePageWidget_limit" value="10" />
-				<param name="HomePageWidget_sortby" value="lastplayed" />
-				<param name="HomePageWidget_sortorder" value="descending" />
-				<param name="HomePageWidget_list_id" value="277" />
-				<param name="HomePageWidget_list_width" value="720" />
-				<param name="HomePageWidget_list_ondown" value="9000" />
-				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$LOCALIZE[51495],home)" />
-				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)" />
-				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Widget_RecommendedMovies_Fav2)" />
-				<param name="HomePageWidget_list_visible2" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),fav2)" />
-				<param name="HomePageWidget_list_visible3" value="!String.IsEmpty(Skin.String(Favourite2_Playlist_Path))" />
-			</include>
-			<include content="HomePageWidget_list">
-				<!-- random -->
-				<param name="HomePageWidget_content" value="$INFO[Skin.String(Favourite2_Playlist_Path)]" />
-				<param name="HomePageWidget_target" value="videos" />
-				<param name="HomePageWidget_limit" value="10" />
-				<param name="HomePageWidget_sortby" value="random" />
-				<param name="HomePageWidget_sortorder" value="ascending" />
-				<param name="HomePageWidget_list_id" value="278" />
-				<param name="HomePageWidget_list_width" value="720" />
-				<param name="HomePageWidget_list_ondown" value="9000" />
-				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$LOCALIZE[590],home)" />
-				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)" />
-				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Widget_RandomMovies_Fav2)" />
-				<param name="HomePageWidget_list_visible2" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),fav2)" />
-				<param name="HomePageWidget_list_visible3" value="!String.IsEmpty(Skin.String(Favourite2_Playlist_Path))" />
-			</include>
-			<include content="HomePageWidget_list">
-				<!-- recent -->
-				<param name="HomePageWidget_content" value="$INFO[Skin.String(Favourite2_Playlist_Path)]" />
-				<param name="HomePageWidget_target" value="videos" />
-				<param name="HomePageWidget_limit" value="10" />
-				<param name="HomePageWidget_sortby" value="dateadded" />
-				<param name="HomePageWidget_sortorder" value="descending" />
-				<param name="HomePageWidget_list_id" value="279" />
-				<param name="HomePageWidget_list_width" value="720" />
-				<param name="HomePageWidget_list_ondown" value="9000" />
-				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$LOCALIZE[31328],home)" />
-				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)" />
-				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Widget_RecentMovies_Fav2)" />
-				<param name="HomePageWidget_list_visible2" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),fav2)" />
-				<param name="HomePageWidget_list_visible3" value="!String.IsEmpty(Skin.String(Favourite2_Playlist_Path))" />
-			</include>
-        </control>
-    </include>
-    <include name="HomepageWidget_FAV3">
-        <control type="group">
-            <include>HomepageWidgetPosition</include>
-            <include>opencloseslideleft</include>
-            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),fav3)</visible>
-            <visible>!Window.IsVisible(favourites)</visible>
-            <visible>Skin.HasSetting(Widget_UserPlaylist)|Skin.HasSetting(Widget_UserPlaylist_Radio)</visible>
-			<include content="HomePageWidget_list">
-				<!-- user playlist -->
-				<param name="HomePageWidget_content" value="$INFO[Skin.String(Favourite3_Playlist_Path)]" />
-				<param name="HomePageWidget_target" value="music" />
-				<param name="HomePageWidget_limit" value="20" />
-				<param name="HomePageWidget_sortby" value="" />
-				<param name="HomePageWidget_list_id" value="281" />
-				<param name="HomePageWidget_list_width" value="729" />
-				<param name="HomePageWidget_list_ondown" value="9000" />
-				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$INFO[Skin.String(UserPlaylistLabel)],home)" />
-				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)" />
-				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Widget_UserPlaylist)" />
-				<param name="HomePageWidget_list_visible2" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),fav3)" />
-				<param name="HomePageWidget_list_visible3" value="!String.IsEmpty(Skin.String(Favourite3_Playlist_Path))" />
-			</include>
-			<include content="HomePageWidget_list">
-				<!-- radio playlist path -->
-				<param name="HomePageWidget_content" value="$INFO[Skin.String(RadioPath)]" />
-				<param name="HomePageWidget_target" value="music" />
-				<param name="HomePageWidget_limit" value="20" />
-				<param name="HomePageWidget_sortby" value="" />
-				<param name="HomePageWidget_list_id" value="282" />
-				<param name="HomePageWidget_list_width" value="729" />
-				<param name="HomePageWidget_list_ondown" value="9000" />
-				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$LOCALIZE[51427],home)" />
-				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)" />
-				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Widget_UserPlaylist_Radio)" />
-				<param name="HomePageWidget_list_visible2" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),fav3)" />
-				<param name="HomePageWidget_list_visible3" value="!String.IsEmpty(Skin.String(RadioPath))" />
-			</include>
-        </control>
-    </include>
-    <include name="HomepageWidget_FAV4">
-        <control type="group">
-            <include>HomepageWidgetPosition</include>
-            <include>opencloseslideleft</include>
-            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),fav4)</visible>
-            <visible>!Window.IsVisible(favourites)</visible>
-            <visible>Skin.HasSetting(favourite4)</visible>
-			<include content="HomePageWidget_list">
-				<!-- user playlist -->
-				<param name="HomePageWidget_content" value="$INFO[Skin.String(Favourite4_Playlist_Path)]" />
-				<param name="HomePageWidget_target" value="music" />
-				<param name="HomePageWidget_limit" value="20" />
-				<param name="HomePageWidget_sortby" value="" />
-				<param name="HomePageWidget_list_id" value="281" />
-				<param name="HomePageWidget_list_width" value="729" />
-				<param name="HomePageWidget_list_ondown" value="9000" />
-				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$INFO[Skin.String(Favourite4_Playlist_Path)],home)" />
-				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)" />
-				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Widget_Fav4)" />
-				<param name="HomePageWidget_list_visible2" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),fav4)" />
-				<param name="HomePageWidget_list_visible3" value="!String.IsEmpty(Skin.String(Favourite4_Playlist_Path))" />
-			</include>
         </control>
     </include>
     <include name="HomepageWidgetInfoPanel_fanart">
@@ -1872,7 +1467,7 @@
                 <align>right</align>
                 <aligny>center</aligny>
                 <label>$INFO[Container($PARAM[HomePageWidget_list_id_InfoPanel]).ListItem().Title]</label>
-                <visible>![String.IsEqual(Container(9000).ListItem.Property(homemenu_id),music)|String.IsEqual(Container(9000).ListItem.Property(homemenu_id),fav3)]</visible>
+                <visible>![String.IsEqual(Container(9000).ListItem.Property(homemenu_id),music)|String.IsEqual(Container(9000).ListItem.Property(homemenu_id),custom8)]</visible>
             </control>
             <control type="label">
                 <left>0</left>
@@ -1894,7 +1489,7 @@
                 <align>right</align>
                 <aligny>center</aligny>
                 <label>$INFO[Container($PARAM[HomePageWidget_list_id_InfoPanel]).ListItem().Label]</label>
-                <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),radio)|String.IsEqual(Container(9000).ListItem.Property(homemenu_id),videos)|String.IsEqual(Container(9000).ListItem.Property(homemenu_id),fav3)</visible>
+                <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),radio)|String.IsEqual(Container(9000).ListItem.Property(homemenu_id),videos)|String.IsEqual(Container(9000).ListItem.Property(homemenu_id),custom8)</visible>
             </control>
         </control>
 		<!-- ab zeile 3 -->
@@ -2046,7 +1641,7 @@
                 <align>right</align>
                 <textcolor>grey</textcolor>
                 <label>$INFO[Container($PARAM[HomePageWidget_list_id_InfoPanel]).ListItem().Year,, / ]$INFO[Container($PARAM[HomePageWidget_list_id_InfoPanel]).ListItem().Rating,$LOCALIZE[563]: , / ]$INFO[Container($PARAM[HomePageWidget_list_id_InfoPanel]).ListItem().Studio,, / ]$INFO[Container($PARAM[HomePageWidget_list_id_InfoPanel]).ListItem().Runtime,, $LOCALIZE[12391]]$INFO[Container($PARAM[HomePageWidget_list_id_InfoPanel]).ListItem().Duration,, $LOCALIZE[12391]]</label>
-                <visible>![String.IsEqual(Container(9000).ListItem.Property(homemenu_id),music)|String.IsEqual(Container(9000).ListItem.Property(homemenu_id),radio)|String.IsEqual(Container(9000).ListItem.Property(homemenu_id),fav3)]</visible>
+                <visible>![String.IsEqual(Container(9000).ListItem.Property(homemenu_id),music)|String.IsEqual(Container(9000).ListItem.Property(homemenu_id),radio)|String.IsEqual(Container(9000).ListItem.Property(homemenu_id),custom8)]</visible>
             </control>
         </control>
     </include>
@@ -2581,7 +2176,7 @@
         <control type="list" id="296">
             <!-- 3D -->
             <width>0</width>
-            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),3d)</visible>
+            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),custom1)</visible>
             <itemlayout></itemlayout>
             <focusedlayout></focusedlayout>
             <content limit="1">special://skin/playlists/3DMovies.xsp</content>
@@ -2589,49 +2184,49 @@
         <control type="list" id="297">
             <!-- HD -->
             <width>0</width>
-            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),hd)</visible>
+            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),custom2)</visible>
             <itemlayout></itemlayout>
             <focusedlayout></focusedlayout>
             <content limit="1">special://skin/playlists/HDMovies.xsp</content>
         </control>
         <control type="list" id="298">
             <width>0</width>
-            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),fullhd)</visible>
+            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),custom3)</visible>
             <itemlayout></itemlayout>
             <focusedlayout></focusedlayout>
             <content limit="1">special://skin/playlists/FULLHDMovies.xsp</content>
         </control>
         <control type="list" id="299">
             <width>0</width>
-            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),doku)</visible>
+            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),custom4)</visible>
             <itemlayout></itemlayout>
             <focusedlayout></focusedlayout>
             <content limit="1">special://skin/playlists/Doku.xsp</content>
         </control>
         <control type="list" id="300">
             <width>0</width>
-            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),kids)+Skin.HasSetting(Rating_Age_Kids_0)</visible>
+            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),custom5)+Skin.HasSetting(Rating_Age_Kids_0)</visible>
             <itemlayout></itemlayout>
             <focusedlayout></focusedlayout>
             <content limit="1">special://skin/playlists/KIDS_0.xsp</content>
         </control>
         <control type="list" id="301">
             <width>0</width>
-            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),kids)+Skin.HasSetting(Rating_Age_Kids_6)</visible>
+            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),custom5)+Skin.HasSetting(Rating_Age_Kids_6)</visible>
             <itemlayout></itemlayout>
             <focusedlayout></focusedlayout>
             <content limit="1">special://skin/playlists/KIDS_6.xsp</content>
         </control>
         <control type="list" id="302">
             <width>0</width>
-            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),kids)+Skin.HasSetting(Rating_Age_Kids_12)</visible>
+            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),custom5)+Skin.HasSetting(Rating_Age_Kids_12)</visible>
             <itemlayout></itemlayout>
             <focusedlayout></focusedlayout>
             <content limit="1">special://skin/playlists/KIDS_12.xsp</content>
         </control>
         <control type="list" id="303">
             <width>0</width>
-            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),kids)+Skin.HasSetting(Rating_Age_Kids_16)</visible>
+            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),custom5)+Skin.HasSetting(Rating_Age_Kids_16)</visible>
             <itemlayout></itemlayout>
             <focusedlayout></focusedlayout>
             <content limit="1">special://skin/playlists/KIDS_16.xsp</content>

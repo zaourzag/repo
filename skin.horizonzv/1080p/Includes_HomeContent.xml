@@ -10,15 +10,15 @@
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPictures),1)">HomeMenuPictures</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemWeather),1)">HomeMenuWeather</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPlayDisc),1)">HomeMenuPlayDisc</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItem3D),1)">HomeMenu3D</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemHD),1)">HomeMenuHD</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFullHD),1)">HomeMenuFullHD</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemDoku),1)">HomeMenuDoku</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemKids),1)">HomeMenuKids</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav1),1)">HomeMenuFav1</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav2),1)">HomeMenuFav2</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav3),1)">HomeMenuFav3</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav4),1)">HomeMenuFav4</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom1),1)">HomeMenuCustom1</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom2),1)">HomeMenuCustom2</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom3),1)">HomeMenuCustom3</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom4),1)">HomeMenuCustom4</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom5),1)">HomeMenuCustom5</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom6),1)">HomeMenuCustom6</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom7),1)">HomeMenuCustom7</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom8),1)">HomeMenuCustom8</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom9),1)">HomeMenuCustom9</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemSettings),1)">HomeMenuSettings</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPVR),1)">HomeMenuPVR</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemRadio),1)">HomeMenuRadio</include>
@@ -35,15 +35,15 @@
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPictures),2)">HomeMenuPictures</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemWeather),2)">HomeMenuWeather</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPlayDisc),2)">HomeMenuPlayDisc</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItem3D),2)">HomeMenu3D</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemHD),2)">HomeMenuHD</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFullHD),2)">HomeMenuFullHD</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemDoku),2)">HomeMenuDoku</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemKids),2)">HomeMenuKids</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav1),2)">HomeMenuFav1</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav2),2)">HomeMenuFav2</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav3),2)">HomeMenuFav3</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav4),2)">HomeMenuFav4</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom1),2)">HomeMenuCustom1</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom2),2)">HomeMenuCustom2</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom3),2)">HomeMenuCustom3</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom4),2)">HomeMenuCustom4</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom5),2)">HomeMenuCustom5</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom6),2)">HomeMenuCustom6</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom7),2)">HomeMenuCustom7</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom8),2)">HomeMenuCustom8</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom9),2)">HomeMenuCustom9</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemSettings),2)">HomeMenuSettings</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPVR),2)">HomeMenuPVR</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemRadio),2)">HomeMenuRadio</include>
@@ -60,15 +60,15 @@
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPictures),3)">HomeMenuPictures</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemWeather),3)">HomeMenuWeather</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPlayDisc),3)">HomeMenuPlayDisc</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItem3D),3)">HomeMenu3D</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemHD),3)">HomeMenuHD</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFullHD),3)">HomeMenuFullHD</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemDoku),3)">HomeMenuDoku</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemKids),3)">HomeMenuKids</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav1),3)">HomeMenuFav1</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav2),3)">HomeMenuFav2</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav3),3)">HomeMenuFav3</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav4),3)">HomeMenuFav4</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom1),3)">HomeMenuCustom1</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom2),3)">HomeMenuCustom2</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom3),3)">HomeMenuCustom3</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom4),3)">HomeMenuCustom4</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom5),3)">HomeMenuCustom5</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom6),3)">HomeMenuCustom6</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom7),3)">HomeMenuCustom7</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom8),3)">HomeMenuCustom8</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom9),3)">HomeMenuCustom9</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemSettings),3)">HomeMenuSettings</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPVR),3)">HomeMenuPVR</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemRadio),3)">HomeMenuRadio</include>
@@ -85,15 +85,15 @@
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPictures),4)">HomeMenuPictures</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemWeather),4)">HomeMenuWeather</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPlayDisc),4)">HomeMenuPlayDisc</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItem3D),4)">HomeMenu3D</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemHD),4)">HomeMenuHD</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFullHD),4)">HomeMenuFullHD</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemDoku),4)">HomeMenuDoku</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemKids),4)">HomeMenuKids</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav1),4)">HomeMenuFav1</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav2),4)">HomeMenuFav2</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav3),4)">HomeMenuFav3</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav4),4)">HomeMenuFav4</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom1),4)">HomeMenuCustom1</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom2),4)">HomeMenuCustom2</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom3),4)">HomeMenuCustom3</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom4),4)">HomeMenuCustom4</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom5),4)">HomeMenuCustom5</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom6),4)">HomeMenuCustom6</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom7),4)">HomeMenuCustom7</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom8),4)">HomeMenuCustom8</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom9),4)">HomeMenuCustom9</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemSettings),4)">HomeMenuSettings</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPVR),4)">HomeMenuPVR</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemRadio),4)">HomeMenuRadio</include>
@@ -110,15 +110,15 @@
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPictures),5)">HomeMenuPictures</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemWeather),5)">HomeMenuWeather</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPlayDisc),5)">HomeMenuPlayDisc</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItem3D),5)">HomeMenu3D</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemHD),5)">HomeMenuHD</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFullHD),5)">HomeMenuFullHD</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemDoku),5)">HomeMenuDoku</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemKids),5)">HomeMenuKids</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav1),5)">HomeMenuFav1</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav2),5)">HomeMenuFav2</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav3),5)">HomeMenuFav3</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav4),5)">HomeMenuFav4</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom1),5)">HomeMenuCustom1</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom2),5)">HomeMenuCustom2</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom3),5)">HomeMenuCustom3</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom4),5)">HomeMenuCustom4</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom5),5)">HomeMenuCustom5</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom6),5)">HomeMenuCustom6</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom7),5)">HomeMenuCustom7</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom8),5)">HomeMenuCustom8</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom9),5)">HomeMenuCustom9</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemSettings),5)">HomeMenuSettings</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPVR),5)">HomeMenuPVR</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemRadio),5)">HomeMenuRadio</include>
@@ -135,15 +135,15 @@
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPictures),6)">HomeMenuPictures</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemWeather),6)">HomeMenuWeather</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPlayDisc),6)">HomeMenuPlayDisc</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItem3D),6)">HomeMenu3D</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemHD),6)">HomeMenuHD</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFullHD),6)">HomeMenuFullHD</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemDoku),6)">HomeMenuDoku</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemKids),6)">HomeMenuKids</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav1),6)">HomeMenuFav1</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav2),6)">HomeMenuFav2</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav3),6)">HomeMenuFav3</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav4),6)">HomeMenuFav4</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom1),6)">HomeMenuCustom1</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom2),6)">HomeMenuCustom2</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom3),6)">HomeMenuCustom3</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom4),6)">HomeMenuCustom4</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom5),6)">HomeMenuCustom5</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom6),6)">HomeMenuCustom6</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom7),6)">HomeMenuCustom7</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom8),6)">HomeMenuCustom8</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom9),6)">HomeMenuCustom9</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemSettings),6)">HomeMenuSettings</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPVR),6)">HomeMenuPVR</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemRadio),6)">HomeMenuRadio</include>
@@ -160,15 +160,15 @@
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPictures),7)">HomeMenuPictures</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemWeather),7)">HomeMenuWeather</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPlayDisc),7)">HomeMenuPlayDisc</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItem3D),7)">HomeMenu3D</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemHD),7)">HomeMenuHD</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFullHD),7)">HomeMenuFullHD</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemDoku),7)">HomeMenuDoku</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemKids),7)">HomeMenuKids</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav1),7)">HomeMenuFav1</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav2),7)">HomeMenuFav2</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav3),7)">HomeMenuFav3</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav4),7)">HomeMenuFav4</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom1),7)">HomeMenuCustom1</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom2),7)">HomeMenuCustom2</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom3),7)">HomeMenuCustom3</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom4),7)">HomeMenuCustom4</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom5),7)">HomeMenuCustom5</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom6),7)">HomeMenuCustom6</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom7),7)">HomeMenuCustom7</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom8),7)">HomeMenuCustom8</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom9),7)">HomeMenuCustom9</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemSettings),7)">HomeMenuSettings</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPVR),7)">HomeMenuPVR</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemRadio),7)">HomeMenuRadio</include>
@@ -185,15 +185,15 @@
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPictures),8)">HomeMenuPictures</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemWeather),8)">HomeMenuWeather</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPlayDisc),8)">HomeMenuPlayDisc</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItem3D),8)">HomeMenu3D</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemHD),8)">HomeMenuHD</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFullHD),8)">HomeMenuFullHD</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemDoku),8)">HomeMenuDoku</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemKids),8)">HomeMenuKids</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav1),8)">HomeMenuFav1</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav2),8)">HomeMenuFav2</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav3),8)">HomeMenuFav3</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav4),8)">HomeMenuFav4</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom1),8)">HomeMenuCustom1</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom2),8)">HomeMenuCustom2</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom3),8)">HomeMenuCustom3</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom4),8)">HomeMenuCustom4</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom5),8)">HomeMenuCustom5</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom6),8)">HomeMenuCustom6</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom7),8)">HomeMenuCustom7</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom8),8)">HomeMenuCustom8</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom9),8)">HomeMenuCustom9</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemSettings),8)">HomeMenuSettings</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPVR),8)">HomeMenuPVR</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemRadio),8)">HomeMenuRadio</include>
@@ -210,15 +210,15 @@
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPictures),9)">HomeMenuPictures</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemWeather),9)">HomeMenuWeather</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPlayDisc),9)">HomeMenuPlayDisc</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItem3D),9)">HomeMenu3D</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemHD),9)">HomeMenuHD</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFullHD),9)">HomeMenuFullHD</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemDoku),9)">HomeMenuDoku</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemKids),9)">HomeMenuKids</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav1),9)">HomeMenuFav1</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav2),9)">HomeMenuFav2</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav3),9)">HomeMenuFav3</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav4),9)">HomeMenuFav4</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom1),9)">HomeMenuCustom1</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom2),9)">HomeMenuCustom2</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom3),9)">HomeMenuCustom3</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom4),9)">HomeMenuCustom4</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom5),9)">HomeMenuCustom5</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom6),9)">HomeMenuCustom6</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom7),9)">HomeMenuCustom7</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom8),9)">HomeMenuCustom8</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom9),9)">HomeMenuCustom9</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemSettings),9)">HomeMenuSettings</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPVR),9)">HomeMenuPVR</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemRadio),9)">HomeMenuRadio</include>
@@ -235,20 +235,20 @@
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPictures),10)">HomeMenuPictures</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemWeather),10)">HomeMenuWeather</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPlayDisc),10)">HomeMenuPlayDisc</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItem3D),10)">HomeMenu3D</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemHD),10)">HomeMenuHD</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFullHD),10)">HomeMenuFullHD</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemDoku),10)">HomeMenuDoku</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemKids),10)">HomeMenuKids</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav1),10)">HomeMenuFav1</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav2),10)">HomeMenuFav2</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav3),10)">HomeMenuFav3</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav4),10)">HomeMenuFav4</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom1),10)">HomeMenuCustom1</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom2),10)">HomeMenuCustom2</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom3),10)">HomeMenuCustom3</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom4),10)">HomeMenuCustom4</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom5),10)">HomeMenuCustom5</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom6),10)">HomeMenuCustom6</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom7),10)">HomeMenuCustom7</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom8),10)">HomeMenuCustom8</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom9),10)">HomeMenuCustom9</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemSettings),10)">HomeMenuSettings</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPVR),10)">HomeMenuPVR</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemRadio),10)">HomeMenuRadio</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemNews),10)">HomeMenuNews</include>
-        <include condition="String.IsEmpty(Skin.String(HomeMenuItem3D))">HomeMenu3D</include>
+        <include condition="String.IsEmpty(Skin.String(HomeMenuItemCustom1))">HomeMenuCustom1</include>
     </include>
     <include name="HomeMenuPosition11">
         <include condition="String.IsEqual(Skin.String(HomeMenuItemMusic),11)">HomeMenuMusic</include>
@@ -260,20 +260,20 @@
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPictures),11)">HomeMenuPictures</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemWeather),11)">HomeMenuWeather</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPlayDisc),11)">HomeMenuPlayDisc</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItem3D),11)">HomeMenu3D</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemHD),11)">HomeMenuHD</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFullHD),11)">HomeMenuFullHD</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemDoku),11)">HomeMenuDoku</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemKids),11)">HomeMenuKids</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav1),11)">HomeMenuFav1</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav2),11)">HomeMenuFav2</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav3),11)">HomeMenuFav3</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav4),11)">HomeMenuFav4</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom1),11)">HomeMenuCustom1</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom2),11)">HomeMenuCustom2</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom3),11)">HomeMenuCustom3</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom4),11)">HomeMenuCustom4</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom5),11)">HomeMenuCustom5</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom6),11)">HomeMenuCustom6</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom7),11)">HomeMenuCustom7</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom8),11)">HomeMenuCustom8</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom9),11)">HomeMenuCustom9</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemSettings),11)">HomeMenuSettings</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPVR),11)">HomeMenuPVR</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemRadio),11)">HomeMenuRadio</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemNews),11)">HomeMenuNews</include>
-        <include condition="String.IsEmpty(Skin.String(HomeMenuItemHD))">HomeMenuHD</include>
+        <include condition="String.IsEmpty(Skin.String(HomeMenuItemCustom2))">HomeMenuCustom2</include>
     </include>
     <include name="HomeMenuPosition12">
         <include condition="String.IsEqual(Skin.String(HomeMenuItemMusic),12)">HomeMenuMusic</include>
@@ -285,20 +285,20 @@
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPictures),12)">HomeMenuPictures</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemWeather),12)">HomeMenuWeather</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPlayDisc),12)">HomeMenuPlayDisc</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItem3D),12)">HomeMenu3D</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemHD),12)">HomeMenuHD</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFullHD),12)">HomeMenuFullHD</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemDoku),12)">HomeMenuDoku</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemKids),12)">HomeMenuKids</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav1),12)">HomeMenuFav1</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav2),12)">HomeMenuFav2</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav3),12)">HomeMenuFav3</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav4),12)">HomeMenuFav4</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom1),12)">HomeMenuCustom1</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom2),12)">HomeMenuCustom2</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom3),12)">HomeMenuCustom3</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom4),12)">HomeMenuCustom4</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom5),12)">HomeMenuCustom5</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom6),12)">HomeMenuCustom6</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom7),12)">HomeMenuCustom7</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom8),12)">HomeMenuCustom8</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom9),12)">HomeMenuCustom9</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemSettings),12)">HomeMenuSettings</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPVR),12)">HomeMenuPVR</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemRadio),12)">HomeMenuRadio</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemNews),12)">HomeMenuNews</include>
-        <include condition="String.IsEmpty(Skin.String(HomeMenuItemFullHD))">HomeMenuFullHD</include>
+        <include condition="String.IsEmpty(Skin.String(HomeMenuItemCustom3))">HomeMenuCustom3</include>
     </include>
     <include name="HomeMenuPosition13">
         <include condition="String.IsEqual(Skin.String(HomeMenuItemMusic),13)">HomeMenuMusic</include>
@@ -310,20 +310,20 @@
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPictures),13)">HomeMenuPictures</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemWeather),13)">HomeMenuWeather</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPlayDisc),13)">HomeMenuPlayDisc</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItem3D),13)">HomeMenu3D</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemHD),13)">HomeMenuHD</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFullHD),13)">HomeMenuFullHD</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemDoku),13)">HomeMenuDoku</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemKids),13)">HomeMenuKids</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav1),13)">HomeMenuFav1</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav2),13)">HomeMenuFav2</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav3),13)">HomeMenuFav3</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav4),13)">HomeMenuFav4</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom1),13)">HomeMenuCustom1</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom2),13)">HomeMenuCustom2</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom3),13)">HomeMenuCustom3</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom4),13)">HomeMenuCustom4</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom5),13)">HomeMenuCustom5</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom6),13)">HomeMenuCustom6</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom7),13)">HomeMenuCustom7</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom8),13)">HomeMenuCustom8</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom9),13)">HomeMenuCustom9</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemSettings),13)">HomeMenuSettings</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPVR),13)">HomeMenuPVR</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemRadio),13)">HomeMenuRadio</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemNews),13)">HomeMenuNews</include>
-        <include condition="String.IsEmpty(Skin.String(HomeMenuItemDoku))">HomeMenuDoku</include>
+        <include condition="String.IsEmpty(Skin.String(HomeMenuItemCustom4))">HomeMenuCustom4</include>
     </include>
     <include name="HomeMenuPosition14">
         <include condition="String.IsEqual(Skin.String(HomeMenuItemMusic),14)">HomeMenuMusic</include>
@@ -335,20 +335,20 @@
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPictures),14)">HomeMenuPictures</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemWeather),14)">HomeMenuWeather</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPlayDisc),14)">HomeMenuPlayDisc</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItem3D),14)">HomeMenu3D</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemHD),14)">HomeMenuHD</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFullHD),14)">HomeMenuFullHD</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemDoku),14)">HomeMenuDoku</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemKids),14)">HomeMenuKids</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav1),14)">HomeMenuFav1</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav2),14)">HomeMenuFav2</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav3),14)">HomeMenuFav3</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav4),14)">HomeMenuFav4</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom1),14)">HomeMenuCustom1</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom2),14)">HomeMenuCustom2</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom3),14)">HomeMenuCustom3</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom4),14)">HomeMenuCustom4</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom5),14)">HomeMenuCustom5</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom6),14)">HomeMenuCustom6</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom7),14)">HomeMenuCustom7</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom8),14)">HomeMenuCustom8</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom9),14)">HomeMenuCustom9</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemSettings),14)">HomeMenuSettings</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPVR),14)">HomeMenuPVR</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemRadio),14)">HomeMenuRadio</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemNews),14)">HomeMenuNews</include>
-        <include condition="String.IsEmpty(Skin.String(HomeMenuItemKids))">HomeMenuKids</include>
+        <include condition="String.IsEmpty(Skin.String(HomeMenuItemCustom5))">HomeMenuCustom5</include>
     </include>
     <include name="HomeMenuPosition15">
         <include condition="String.IsEqual(Skin.String(HomeMenuItemMusic),15)">HomeMenuMusic</include>
@@ -360,20 +360,20 @@
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPictures),15)">HomeMenuPictures</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemWeather),15)">HomeMenuWeather</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPlayDisc),15)">HomeMenuPlayDisc</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItem3D),15)">HomeMenu3D</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemHD),15)">HomeMenuHD</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFullHD),15)">HomeMenuFullHD</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemDoku),15)">HomeMenuDoku</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemKids),15)">HomeMenuKids</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav1),15)">HomeMenuFav1</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav2),15)">HomeMenuFav2</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav3),15)">HomeMenuFav3</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav4),15)">HomeMenuFav4</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom1),15)">HomeMenuCustom1</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom2),15)">HomeMenuCustom2</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom3),15)">HomeMenuCustom3</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom4),15)">HomeMenuCustom4</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom5),15)">HomeMenuCustom5</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom6),15)">HomeMenuCustom6</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom7),15)">HomeMenuCustom7</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom8),15)">HomeMenuCustom8</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom9),15)">HomeMenuCustom9</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemSettings),15)">HomeMenuSettings</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPVR),15)">HomeMenuPVR</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemRadio),15)">HomeMenuRadio</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemNews),15)">HomeMenuNews</include>
-        <include condition="String.IsEmpty(Skin.String(HomeMenuItemFav1))">HomeMenuFav1</include>
+        <include condition="String.IsEmpty(Skin.String(HomeMenuItemCustom6))">HomeMenuCustom6</include>
     </include>
     <include name="HomeMenuPosition16">
         <include condition="String.IsEqual(Skin.String(HomeMenuItemMusic),16)">HomeMenuMusic</include>
@@ -385,20 +385,20 @@
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPictures),16)">HomeMenuPictures</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemWeather),16)">HomeMenuWeather</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPlayDisc),16)">HomeMenuPlayDisc</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItem3D),16)">HomeMenu3D</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemHD),16)">HomeMenuHD</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFullHD),16)">HomeMenuFullHD</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemDoku),16)">HomeMenuDoku</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemKids),16)">HomeMenuKids</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav1),16)">HomeMenuFav1</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav2),16)">HomeMenuFav2</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav3),16)">HomeMenuFav3</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav4),16)">HomeMenuFav4</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom1),16)">HomeMenuCustom1</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom2),16)">HomeMenuCustom2</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom3),16)">HomeMenuCustom3</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom4),16)">HomeMenuCustom4</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom5),16)">HomeMenuCustom5</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom6),16)">HomeMenuCustom6</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom7),16)">HomeMenuCustom7</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom8),16)">HomeMenuCustom8</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom9),16)">HomeMenuCustom9</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemSettings),16)">HomeMenuSettings</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPVR),16)">HomeMenuPVR</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemRadio),16)">HomeMenuRadio</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemNews),16)">HomeMenuNews</include>
-        <include condition="String.IsEmpty(Skin.String(HomeMenuItemFav2))">HomeMenuFav2</include>
+        <include condition="String.IsEmpty(Skin.String(HomeMenuItemCustom7))">HomeMenuCustom7</include>
     </include>
     <include name="HomeMenuPosition17">
         <include condition="String.IsEqual(Skin.String(HomeMenuItemMusic),17)">HomeMenuMusic</include>
@@ -410,20 +410,20 @@
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPictures),17)">HomeMenuPictures</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemWeather),17)">HomeMenuWeather</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPlayDisc),17)">HomeMenuPlayDisc</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItem3D),17)">HomeMenu3D</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemHD),17)">HomeMenuHD</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFullHD),17)">HomeMenuFullHD</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemDoku),17)">HomeMenuDoku</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemKids),17)">HomeMenuKids</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav1),17)">HomeMenuFav1</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav2),17)">HomeMenuFav2</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav3),17)">HomeMenuFav3</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav4),17)">HomeMenuFav4</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom1),17)">HomeMenuCustom1</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom2),17)">HomeMenuCustom2</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom3),17)">HomeMenuCustom3</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom4),17)">HomeMenuCustom4</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom5),17)">HomeMenuCustom5</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom6),17)">HomeMenuCustom6</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom7),17)">HomeMenuCustom7</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom8),17)">HomeMenuCustom8</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom9),17)">HomeMenuCustom9</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemSettings),17)">HomeMenuSettings</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPVR),17)">HomeMenuPVR</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemRadio),17)">HomeMenuRadio</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemNews),17)">HomeMenuNews</include>
-        <include condition="String.IsEmpty(Skin.String(HomeMenuItemFav3))">HomeMenuFav3</include>
+        <include condition="String.IsEmpty(Skin.String(HomeMenuItemCustom8))">HomeMenuCustom8</include>
     </include>
     <include name="HomeMenuPosition18">
         <include condition="String.IsEqual(Skin.String(HomeMenuItemMusic),18)">HomeMenuMusic</include>
@@ -435,19 +435,19 @@
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPictures),18)">HomeMenuPictures</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemWeather),18)">HomeMenuWeather</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPlayDisc),18)">HomeMenuPlayDisc</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItem3D),18)">HomeMenu3D</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemHD),18)">HomeMenuHD</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFullHD),18)">HomeMenuFullHD</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemDoku),18)">HomeMenuDoku</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemKids),18)">HomeMenuKids</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav1),18)">HomeMenuFav1</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav2),18)">HomeMenuFav2</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav3),18)">HomeMenuFav3</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav4),18)">HomeMenuFav4</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom1),18)">HomeMenuCustom1</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom2),18)">HomeMenuCustom2</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom3),18)">HomeMenuCustom3</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom4),18)">HomeMenuCustom4</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom5),18)">HomeMenuCustom5</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom6),18)">HomeMenuCustom6</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom7),18)">HomeMenuCustom7</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom8),18)">HomeMenuCustom8</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom9),18)">HomeMenuCustom9</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemSettings),18)">HomeMenuSettings</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPVR),18)">HomeMenuPVR</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemNews),18)">HomeMenuNews</include>
-        <include condition="String.IsEmpty(Skin.String(HomeMenuItemFav4))">HomeMenuFav4</include>
+        <include condition="String.IsEmpty(Skin.String(HomeMenuItemCustom9))">HomeMenuCustom9</include>
     </include>
     <include name="HomeMenuPosition19">
         <include condition="String.IsEqual(Skin.String(HomeMenuItemMusic),19)">HomeMenuMusic</include>
@@ -459,15 +459,15 @@
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPictures),19)">HomeMenuPictures</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemWeather),19)">HomeMenuWeather</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPlayDisc),19)">HomeMenuPlayDisc</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItem3D),19)">HomeMenu3D</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemHD),19)">HomeMenuHD</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFullHD),19)">HomeMenuFullHD</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemDoku),19)">HomeMenuDoku</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemKids),19)">HomeMenuKids</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav1),19)">HomeMenuFav1</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav2),19)">HomeMenuFav2</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav3),19)">HomeMenuFav3</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav4),19)">HomeMenuFav4</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom1),19)">HomeMenuCustom1</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom2),19)">HomeMenuCustom2</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom3),19)">HomeMenuCustom3</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom4),19)">HomeMenuCustom4</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom5),19)">HomeMenuCustom5</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom6),19)">HomeMenuCustom6</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom7),19)">HomeMenuCustom7</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom8),19)">HomeMenuCustom8</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom9),19)">HomeMenuCustom9</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemSettings),19)">HomeMenuSettings</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPVR),19)">HomeMenuPVR</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemRadio),19)">HomeMenuRadio</include>
@@ -484,15 +484,15 @@
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPictures),20)">HomeMenuPictures</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemWeather),20)">HomeMenuWeather</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPlayDisc),20)">HomeMenuPlayDisc</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItem3D),20)">HomeMenu3D</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemHD),20)">HomeMenuHD</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFullHD),20)">HomeMenuFullHD</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemDoku),20)">HomeMenuDoku</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemKids),20)">HomeMenuKids</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav1),20)">HomeMenuFav1</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav2),20)">HomeMenuFav2</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav3),20)">HomeMenuFav3</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav4),20)">HomeMenuFav4</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom1),20)">HomeMenuCustom1</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom2),20)">HomeMenuCustom2</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom3),20)">HomeMenuCustom3</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom4),20)">HomeMenuCustom4</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom5),20)">HomeMenuCustom5</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom6),20)">HomeMenuCustom6</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom7),20)">HomeMenuCustom7</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom8),20)">HomeMenuCustom8</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom9),20)">HomeMenuCustom9</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemSettings),20)">HomeMenuSettings</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPVR),20)">HomeMenuPVR</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemRadio),20)">HomeMenuRadio</include>
@@ -509,15 +509,15 @@
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPictures),21)">HomeMenuPictures</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemWeather),21)">HomeMenuWeather</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPlayDisc),21)">HomeMenuPlayDisc</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItem3D),21)">HomeMenu3D</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemHD),21)">HomeMenuHD</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFullHD),21)">HomeMenuFullHD</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemDoku),21)">HomeMenuDoku</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemKids),21)">HomeMenuKids</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav1),21)">HomeMenuFav1</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav2),21)">HomeMenuFav2</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav3),21)">HomeMenuFav3</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav4),21)">HomeMenuFav4</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom1),21)">HomeMenuCustom1</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom2),21)">HomeMenuCustom2</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom3),21)">HomeMenuCustom3</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom4),21)">HomeMenuCustom4</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom5),21)">HomeMenuCustom5</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom6),21)">HomeMenuCustom6</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom7),21)">HomeMenuCustom7</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom8),21)">HomeMenuCustom8</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom9),21)">HomeMenuCustom9</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemSettings),21)">HomeMenuSettings</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPVR),21)">HomeMenuPVR</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemNews),21)">HomeMenuNews</include>
@@ -534,15 +534,15 @@
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPictures),22)">HomeMenuPictures</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemWeather),22)">HomeMenuWeather</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPlayDisc),22)">HomeMenuPlayDisc</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItem3D),22)">HomeMenu3D</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemHD),22)">HomeMenuHD</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFullHD),22)">HomeMenuFullHD</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemDoku),22)">HomeMenuDoku</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemKids),22)">HomeMenuKids</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav1),22)">HomeMenuFav1</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav2),22)">HomeMenuFav2</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav3),22)">HomeMenuFav3</include>
-        <include condition="String.IsEqual(Skin.String(HomeMenuItemFav4),22)">HomeMenuFav4</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom1),22)">HomeMenuCustom1</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom2),22)">HomeMenuCustom2</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom3),22)">HomeMenuCustom3</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom4),22)">HomeMenuCustom4</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom5),22)">HomeMenuCustom5</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom6),22)">HomeMenuCustom6</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom7),22)">HomeMenuCustom7</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom8),22)">HomeMenuCustom8</include>
+        <include condition="String.IsEqual(Skin.String(HomeMenuItemCustom9),22)">HomeMenuCustom9</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemSettings),22)">HomeMenuSettings</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemPVR),22)">HomeMenuPVR</include>
         <include condition="String.IsEqual(Skin.String(HomeMenuItemRadio),22)">HomeMenuRadio</include>
@@ -601,7 +601,7 @@
         </item>
     </include>
     <include name="HomeMenuVideo">
-        <item id="19">
+        <item id="3">
             <description>Video Files</description>
             <label>$VAR[Home_Video_Label]</label>
             <label2>$VAR[backgroundfolder]home_video$VAR[bkg_fileext]</label2>
@@ -634,7 +634,7 @@
         </item>
     </include>
     <include name="HomeMenuDashboard">
-        <item id="8">
+        <item id="5">
             <description>Addons</description>
             <label>Dashboard</label>
             <label2>$VAR[backgroundfolder]home_addons$VAR[bkg_fileext]</label2>
@@ -646,7 +646,7 @@
         </item>
     </include>
     <include name="HomeMenuTVShows">
-        <item id="5">
+        <item id="6">
             <description>TV Show Library</description>
             <label>$VAR[Home_TVShow_Label]</label>
             <label2>$VAR[backgroundfolder]home_tvshows$VAR[bkg_fileext]</label2>
@@ -662,7 +662,7 @@
         </item>
     </include>
     <include name="HomeMenuMusicvideos">
-        <item id="9">
+        <item id="7">
             <description>Musicvideo Library</description>
             <label>$VAR[Home_MusicVideo_Label]</label>
             <label2>$VAR[backgroundfolder]home_musicvideos$VAR[bkg_fileext]</label2>
@@ -678,7 +678,7 @@
         </item>
     </include>
     <include name="HomeMenuPictures">
-        <item id="3">
+        <item id="8">
             <description>Pictures</description>
             <label>$VAR[Home_Picture_Label]</label>
             <label2>$VAR[backgroundfolder]home_pictures$VAR[bkg_fileext]</label2>
@@ -693,7 +693,7 @@
         </item>
     </include>
     <include name="HomeMenuWeather">
-        <item id="6">
+        <item id="9">
             <description>Weather</description>
             <label>8</label>
             <label2>$VAR[backgroundfolderweather]</label2>
@@ -706,7 +706,7 @@
         </item>
     </include>
     <include name="HomeMenuPlayDisc">
-        <item id="7">
+        <!-- <item id="10">
             <description>PlayDVD</description>
             <label>$VAR[Home_PlayDisc_Label]</label>
             <label2>$VAR[backgroundfolder]home_disc$VAR[bkg_fileext]</label2>
@@ -718,120 +718,165 @@
             <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(HomeMenu_Custom_PlayDisc_Button)">ActivateWindow($VAR[Home_PlayDisc_SubCategory],$INFO[Skin.String(Home_PlayDisc_Custom_Path)],return)</onclick>
             <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_dvd,smb://)</onclick>
             <visible>!Skin.HasSetting(HomeMenuNoDVDButton)</visible>
+        </item> -->
+        <item id="10">
+            <description>PlayDVD</description>
+            <label>427</label>
+            <label2>$VAR[backgroundfolder]home_disc$VAR[bkg_fileext]</label2>
+            <icon>$INFO[Skin.String(user_bkg_dvd)]</icon>
+            <property name="homemenu_id">playdisc</property>
+            <onclick condition="Window.IsVisible(Home)">PlayDVD()</onclick>
+            <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_dvd,smb://)</onclick>
             <!-- <visible>!Skin.HasSetting(HomeMenuNoDVDButton)+System.HasMediaDVD</visible> -->
         </item>
     </include>
-    <include name="HomeMenu3D">
-        <item id="20">
-            <description>3D</description>
-            <label>3D $LOCALIZE[20342]</label>
-            <label2>$VAR[backgroundfolder]home_3d$VAR[bkg_fileext]</label2>
-            <icon>$INFO[Skin.String(user_bkg_3d)]</icon>
-            <property name="homemenu_id">3d</property>
-            <onclick condition="Window.IsVisible(Home)">ActivateWindow(10025,special://skin/playlists/3DMovies.xsp,return)</onclick>
-            <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_3d,smb://)</onclick>
-            <visible>!Skin.HasSetting(HomeMenuNo3DButton)+Library.HasContent(Movies)</visible>
+    <include name="HomeMenuCustom1">
+        <item id="11">
+            <description>Custom 1</description>
+            <label>$VAR[Home_Custom1_Label]</label>
+            <label2>$VAR[backgroundfolder]home_custom1$VAR[bkg_fileext]</label2>
+            <icon>$INFO[Skin.String(user_bkg_custom1)]</icon>
+            <property name="homemenu_id">custom1</property>
+            <property name="homemenu_category">$VAR[Home_Custom1_Category]</property>
+            <property name="homemenu_path">$INFO[Skin.String(Home_Custom1_Custom_Path)]</property>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Custom1_Button)">SetProperty(HomeButton,custom1,home)</onclick>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Custom1_Button)">ActivateWindow(1501)</onclick>
+            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(HomeMenu_Custom_Custom1_Button)">ActivateWindow($VAR[Home_Custom1_SubCategory],$INFO[Skin.String(Home_Custom1_Custom_Path)],return)</onclick>
+            <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_custom1,smb://)</onclick>
+            <visible>Skin.HasSetting(HomeMenu_Custom_Custom1_Button)</visible>
         </item>
     </include>
-    <include name="HomeMenuHD">
-        <item id="21">
-            <description>HD</description>
-            <label>HD $LOCALIZE[20342]</label>
-            <label2>$VAR[backgroundfolder]home_hd$VAR[bkg_fileext]</label2>
-            <icon>$INFO[Skin.String(user_bkg_hd)]</icon>
-            <property name="homemenu_id">hd</property>
-            <onclick condition="Window.IsVisible(Home)">ActivateWindow(10025,special://skin/playlists/HDMovies.xsp,return)</onclick>
-            <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_hd,smb://)</onclick>
-            <visible>!Skin.HasSetting(HomeMenuNoHDButton)+Library.HasContent(Movies)</visible>
+    <include name="HomeMenuCustom2">
+        <item id="12">
+            <description>Custom 1</description>
+            <label>$VAR[Home_Custom2_Label]</label>
+            <label2>$VAR[backgroundfolder]home_custom2$VAR[bkg_fileext]</label2>
+            <icon>$INFO[Skin.String(user_bkg_custom2)]</icon>
+            <property name="homemenu_id">custom2</property>
+            <property name="homemenu_category">$VAR[Home_Custom2_Category]</property>
+            <property name="homemenu_path">$INFO[Skin.String(Home_Custom2_Custom_Path)]</property>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Custom2_Button)">SetProperty(HomeButton,custom2,home)</onclick>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Custom2_Button)">ActivateWindow(1501)</onclick>
+            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(HomeMenu_Custom_Custom2_Button)">ActivateWindow($VAR[Home_Custom2_SubCategory],$INFO[Skin.String(Home_Custom2_Custom_Path)],return)</onclick>
+            <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_custom2,smb://)</onclick>
+            <visible>Skin.HasSetting(HomeMenu_Custom_Custom2_Button)</visible>
         </item>
     </include>
-    <include name="HomeMenuFullHD">
-        <item id="22">
-            <description>FULL HD</description>
-            <label>FULL HD $LOCALIZE[20342]</label>
-            <label2>$VAR[backgroundfolder]home_fullhd$VAR[bkg_fileext]</label2>
-            <icon>$INFO[Skin.String(user_bkg_fullhd)]</icon>
-            <property name="homemenu_id">fullhd</property>
-            <onclick condition="Window.IsVisible(Home)">ActivateWindow(10025,special://skin/playlists/FULLHDMovies.xsp,return)</onclick>
-            <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_fullhd,smb://)</onclick>
-            <visible>!Skin.HasSetting(HomeMenuNoFULLHDButton)+Library.HasContent(Movies)</visible>
+    <include name="HomeMenuCustom3">
+        <item id="13">
+            <description>Custom 1</description>
+            <label>$VAR[Home_Custom3_Label]</label>
+            <label2>$VAR[backgroundfolder]home_custom3$VAR[bkg_fileext]</label2>
+            <icon>$INFO[Skin.String(user_bkg_custom3)]</icon>
+            <property name="homemenu_id">custom3</property>
+            <property name="homemenu_category">$VAR[Home_Custom3_Category]</property>
+            <property name="homemenu_path">$INFO[Skin.String(Home_Custom3_Custom_Path)]</property>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Custom3_Button)">SetProperty(HomeButton,custom3,home)</onclick>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Custom3_Button)">ActivateWindow(1501)</onclick>
+            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(HomeMenu_Custom_Custom3_Button)">ActivateWindow($VAR[Home_Custom3_SubCategory],$INFO[Skin.String(Home_Custom3_Custom_Path)],return)</onclick>
+            <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_custom3,smb://)</onclick>
+            <visible>Skin.HasSetting(HomeMenu_Custom_Custom3_Button)</visible>
         </item>
     </include>
-    <include name="HomeMenuDoku">
-        <item id="23">
-            <description>DOKU</description>
-            <label>$LOCALIZE[19519]</label>
-            <label2>$VAR[backgroundfolder]home_doku$VAR[bkg_fileext]</label2>
-            <icon>$INFO[Skin.String(user_bkg_doku)]</icon>
-            <property name="homemenu_id">doku</property>
-            <onclick condition="Window.IsVisible(Home)">ActivateWindow(10025,special://skin/playlists/Doku.xsp,return)</onclick>
-            <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_doku,smb://)</onclick>
-            <visible>!Skin.HasSetting(HomeMenuNoDokuButton)+Library.HasContent(Movies)</visible>
+    <include name="HomeMenuCustom4">
+        <item id="14">
+            <description>Custom 1</description>
+            <label>$VAR[Home_Custom4_Label]</label>
+            <label2>$VAR[backgroundfolder]home_custom4$VAR[bkg_fileext]</label2>
+            <icon>$INFO[Skin.String(user_bkg_custom4)]</icon>
+            <property name="homemenu_id">custom4</property>
+            <property name="homemenu_category">$VAR[Home_Custom4_Category]</property>
+            <property name="homemenu_path">$INFO[Skin.String(Home_Custom4_Custom_Path)]</property>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Custom4_Button)">SetProperty(HomeButton,custom4,home)</onclick>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Custom4_Button)">ActivateWindow(1501)</onclick>
+            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(HomeMenu_Custom_Custom4_Button)">ActivateWindow($VAR[Home_Custom4_SubCategory],$INFO[Skin.String(Home_Custom4_Custom_Path)],return)</onclick>
+            <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_custom4,smb://)</onclick>
+            <visible>Skin.HasSetting(HomeMenu_Custom_Custom4_Button)</visible>
         </item>
     </include>
-    <include name="HomeMenuKids">
-        <item id="24">
-            <description>Kids</description>
-            <label>$LOCALIZE[51187]</label>
-            <label2>$VAR[backgroundfolder]home_kids$VAR[bkg_fileext]</label2>
-            <icon>$INFO[Skin.String(user_bkg_kids)]</icon>
-            <property name="homemenu_id">kids</property>
-            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(Rating_Age_Kids_0)">ActivateWindow(10025,special://skin/playlists/KIDS_0.xsp,return)</onclick>
-            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(Rating_Age_Kids_6)">ActivateWindow(10025,special://skin/playlists/KIDS_6.xsp,return)</onclick>
-            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(Rating_Age_Kids_12)">ActivateWindow(10025,special://skin/playlists/KIDS_12.xsp,return)</onclick>
-            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(Rating_Age_Kids_16)">ActivateWindow(10025,special://skin/playlists/KIDS_16.xsp,return)</onclick>
-            <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_kids,smb://)</onclick>
-            <visible>!Skin.HasSetting(HomeMenuNoKidsButton)+Library.HasContent(Movies)</visible>
+    <include name="HomeMenuCustom5">
+        <item id="15">
+            <description>Custom 1</description>
+            <label>$VAR[Home_Custom5_Label]</label>
+            <label2>$VAR[backgroundfolder]home_custom5$VAR[bkg_fileext]</label2>
+            <icon>$INFO[Skin.String(user_bkg_custom5)]</icon>
+            <property name="homemenu_id">custom5</property>
+            <property name="homemenu_category">$VAR[Home_Custom5_Category]</property>
+            <property name="homemenu_path">$INFO[Skin.String(Home_Custom5_Custom_Path)]</property>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Custom5_Button)">SetProperty(HomeButton,custom5,home)</onclick>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Custom5_Button)">ActivateWindow(1501)</onclick>
+            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(HomeMenu_Custom_Custom5_Button)">ActivateWindow($VAR[Home_Custom5_SubCategory],$INFO[Skin.String(Home_Custom5_Custom_Path)],return)</onclick>
+            <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_custom5,smb://)</onclick>
+            <visible>Skin.HasSetting(HomeMenu_Custom_Custom5_Button)</visible>
         </item>
     </include>
-    <include name="HomeMenuFav1">
-        <item id="8213">
-            <label fallback="Fav1">$INFO[Skin.String(Favourite1_Playlist_Label)]</label>
-            <label2>$VAR[backgroundfolder]home_fav1$VAR[bkg_fileext]</label2>
-            <icon>$INFO[Skin.String(user_bkg_fav1)]</icon>
-            <property name="homemenu_id">fav1</property>
-            <onclick condition="Window.IsVisible(Home)">ActivateWindow(10025,$INFO[Skin.String(Favourite1_Playlist_Path)],return)</onclick>
-            <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_fav1,smb://)</onclick>
-            <visible>Skin.HasSetting(favourite1)+!String.IsEmpty(Skin.String(Favourite1_Playlist_Path))</visible>
+    <include name="HomeMenuCustom6">
+        <item id="16">
+            <description>Custom 1</description>
+            <label>$VAR[Home_Custom6_Label]</label>
+            <label2>$VAR[backgroundfolder]home_custom6$VAR[bkg_fileext]</label2>
+            <icon>$INFO[Skin.String(user_bkg_custom6)]</icon>
+            <property name="homemenu_id">custom6</property>
+            <property name="homemenu_category">$VAR[Home_Custom6_Category]</property>
+            <property name="homemenu_path">$INFO[Skin.String(Home_Custom6_Custom_Path)]</property>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Custom6_Button)">SetProperty(HomeButton,custom6,home)</onclick>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Custom6_Button)">ActivateWindow(1501)</onclick>
+            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(HomeMenu_Custom_Custom6_Button)">ActivateWindow($VAR[Home_Custom6_SubCategory],$INFO[Skin.String(Home_Custom6_Custom_Path)],return)</onclick>
+            <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_custom6,smb://)</onclick>
+            <visible>Skin.HasSetting(HomeMenu_Custom_Custom6_Button)</visible>
         </item>
     </include>
-    <include name="HomeMenuFav2">
-        <item id="8214">
-            <label fallback="Fav2">$INFO[Skin.String(Favourite2_Playlist_Label)]</label>
-            <label2>$VAR[backgroundfolder]home_fav2$VAR[bkg_fileext]</label2>
-            <icon>$INFO[Skin.String(user_bkg_fav2)]</icon>
-            <property name="homemenu_id">fav2</property>
-            <onclick condition="Window.IsVisible(Home)">ActivateWindow(10025,$INFO[Skin.String(Favourite2_Playlist_Path)],return)</onclick>
-            <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_fav2,smb://)</onclick>
-            <visible>Skin.HasSetting(favourite2)+!String.IsEmpty(Skin.String(Favourite2_Playlist_Path))</visible>
+    <include name="HomeMenuCustom7">
+        <item id="17">
+            <description>Custom 1</description>
+            <label>$VAR[Home_Custom7_Label]</label>
+            <label2>$VAR[backgroundfolder]home_custom7$VAR[bkg_fileext]</label2>
+            <icon>$INFO[Skin.String(user_bkg_custom7)]</icon>
+            <property name="homemenu_id">custom7</property>
+            <property name="homemenu_category">$VAR[Home_Custom7_Category]</property>
+            <property name="homemenu_path">$INFO[Skin.String(Home_Custom7_Custom_Path)]</property>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Custom7_Button)">SetProperty(HomeButton,custom7,home)</onclick>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Custom7_Button)">ActivateWindow(1501)</onclick>
+            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(HomeMenu_Custom_Custom7_Button)">ActivateWindow($VAR[Home_Custom7_SubCategory],$INFO[Skin.String(Home_Custom7_Custom_Path)],return)</onclick>
+            <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_custom7,smb://)</onclick>
+            <visible>Skin.HasSetting(HomeMenu_Custom_Custom7_Button)</visible>
         </item>
     </include>
-    <include name="HomeMenuFav3">
-        <item id="8215">
-            <label fallback="Fav3">$INFO[Skin.String(Favourite3_Playlist_Label)]</label>
-            <label2>$VAR[backgroundfolder]home_fav3$VAR[bkg_fileext]</label2>
-            <icon>$INFO[Skin.String(user_bkg_fav3)]</icon>
-            <property name="homemenu_id">fav3</property>
-            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(Widget_UserPlaylist)">PlayMedia($INFO[Skin.String(Favourite3_Playlist_Path)])</onclick>
-            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(Widget_UserPlaylist_Radio)">PlayMedia($INFO[Skin.String(RadioPath)])</onclick>
-            <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_fav3,smb://)</onclick>
-            <visible>Skin.HasSetting(favourite3)</visible>
+    <include name="HomeMenuCustom8">
+        <item id="18">
+            <description>Custom 1</description>
+            <label>$VAR[Home_Custom8_Label]</label>
+            <label2>$VAR[backgroundfolder]home_custom8$VAR[bkg_fileext]</label2>
+            <icon>$INFO[Skin.String(user_bkg_custom8)]</icon>
+            <property name="homemenu_id">custom8</property>
+            <property name="homemenu_category">$VAR[Home_Custom8_Category]</property>
+            <property name="homemenu_path">$INFO[Skin.String(Home_Custom8_Custom_Path)]</property>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Custom8_Button)">SetProperty(HomeButton,custom8,home)</onclick>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Custom8_Button)">ActivateWindow(1501)</onclick>
+            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(HomeMenu_Custom_Custom8_Button)">ActivateWindow($VAR[Home_Custom8_SubCategory],$INFO[Skin.String(Home_Custom8_Custom_Path)],return)</onclick>
+            <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_custom8,smb://)</onclick>
+            <visible>Skin.HasSetting(HomeMenu_Custom_Custom8_Button)</visible>
         </item>
     </include>
-    <include name="HomeMenuFav4">
-        <item id="8216">
-            <label fallback="Ordner">$INFO[Skin.String(Favourite4_Playlist_Label)]</label>
-            <label2>$VAR[backgroundfolder]home_fav2$VAR[bkg_fileext]</label2>
-            <icon>$INFO[Skin.String(user_bkg_fav4)]</icon>
-            <property name="homemenu_id">fav4</property>
-            <onclick condition="Window.IsVisible(Home)">ActivateWindow(10025,$INFO[Skin.String(Favourite4_Playlist_Path)],return)</onclick>
-            <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_fav4,smb://)</onclick>
-            <visible>Skin.HasSetting(favourite4)+!String.IsEmpty(Skin.String(Favourite4_Playlist_Path))</visible>
+    <include name="HomeMenuCustom9">
+        <item id="19">
+            <description>Custom 1</description>
+            <label>$VAR[Home_Custom9_Label]</label>
+            <label2>$VAR[backgroundfolder]home_custom9$VAR[bkg_fileext]</label2>
+            <icon>$INFO[Skin.String(user_bkg_custom9)]</icon>
+            <property name="homemenu_id">custom9</property>
+            <property name="homemenu_category">$VAR[Home_Custom9_Category]</property>
+            <property name="homemenu_path">$INFO[Skin.String(Home_Custom9_Custom_Path)]</property>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Custom9_Button)">SetProperty(HomeButton,custom9,home)</onclick>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Custom9_Button)">ActivateWindow(1501)</onclick>
+            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(HomeMenu_Custom_Custom9_Button)">ActivateWindow($VAR[Home_Custom9_SubCategory],$INFO[Skin.String(Home_Custom9_Custom_Path)],return)</onclick>
+            <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_custom9,smb://)</onclick>
+            <visible>Skin.HasSetting(HomeMenu_Custom_Custom9_Button)</visible>
         </item>
     </include>
     <include name="HomeMenuSettings">
-        <item id="13">
-            <description>Settings</description>
+        <item id="20">
+            <description>System</description>
             <label>13000</label>
             <label2>$VAR[backgroundfolder]home_settings$VAR[bkg_fileext]</label2>
             <icon>$INFO[Skin.String(user_bkg_settings)]</icon>
@@ -842,7 +887,7 @@
         </item>
     </include>
     <include name="HomeMenuPVR">
-        <item id="12">
+        <item id="21">
             <description>PVR</description>
             <label>31502</label>
             <label2>$VAR[backgroundfolder]home_livetv$VAR[bkg_fileext]</label2>
@@ -855,19 +900,19 @@
         </item>
     </include>
     <include name="HomeMenuRadio">
-        <item id="14">
+        <item id="22">
             <label>31960</label>
-            <label2>$VAR[backgroundfolder]home_fav3$VAR[bkg_fileext]</label2>
-            <icon>$INFO[Skin.String(user_bkg_fav3)]</icon>
+            <label2>$VAR[backgroundfolder]home_custom8$VAR[bkg_fileext]</label2>
+            <icon>$INFO[Skin.String(user_bkg_radio)]</icon>
             <property name="homemenu_id">radio</property>
             <onclick condition="Window.IsVisible(Home)">ActivateWindow(RadioChannels)</onclick>
-            <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_fav3,smb://)</onclick>
+            <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_radio,smb://)</onclick>
             <visible>PVR.HasRadioChannels</visible>
             <visible>!Skin.HasSetting(HomeMenuNoRadioButton)</visible>
         </item>
     </include>
     <include name="HomeMenuNews">
-        <item id="25">
+        <item id="23">
             <label>NEWS</label>
             <label2>$VAR[backgroundfolder]home_news$VAR[bkg_fileext]</label2>
             <icon>$INFO[Skin.String(user_bkg_news)]</icon>
@@ -990,6 +1035,7 @@
                         <textcolor>white</textcolor>
                         <visible>Control.HasFocus(9000)</visible>
                         <include>openclosevisible</include>
+						<scroll>false</scroll>
                     </control>
                 </itemlayout>
                 <focusedlayout width="550" height="90">
@@ -1062,7 +1108,7 @@
                         <shadowcolor>-</shadowcolor>
                         <textcolor>grey2</textcolor>
                         <align>center</align>
-                        <scroll>true</scroll>
+                        <scroll>false</scroll>
                     </control>
                     <control type="label">
                         <left>855</left>
@@ -1074,7 +1120,7 @@
                         <shadowcolor>grey</shadowcolor>
                         <textcolor>$VAR[BackgroundOverlayColor]</textcolor>
                         <align>center</align>
-                        <scroll>true</scroll>
+                        <scroll>false</scroll>
                         <animation effect="fade" end="30" condition="true">Conditional</animation>
                     </control>
                     <control type="label">
@@ -1087,7 +1133,7 @@
                         <shadowcolor>grey</shadowcolor>
                         <textcolor>grey2</textcolor>
                         <align>center</align>
-                        <scroll>true</scroll>
+                        <scroll>false</scroll>
                         <animation effect="fade" start="0" delay="160" end="100" time="200">Focus</animation>
                         <visible>Control.HasFocus(9000)</visible>
                     </control>

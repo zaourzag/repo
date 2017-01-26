@@ -74,11 +74,15 @@
                         <onclick>Skin.ResetSettings</onclick>
                         <onclick>Skin.SetBool(hideMovieCases)</onclick>
                         <onclick>Skin.SetBool(gambit_background)</onclick>
-                        <onclick>Skin.SetBool(HomeMenuNo3DButton)</onclick>
-                        <onclick>Skin.SetBool(HomeMenuNoHDButton)</onclick>
-                        <onclick>Skin.SetBool(HomeMenuNoFULLHDButton)</onclick>
-                        <onclick>Skin.SetBool(HomeMenuNoDokuButton)</onclick>
-                        <onclick>Skin.SetBool(HomeMenuNoKidsButton)</onclick>
+                        <!-- <onclick>Skin.SetBool(HomeMenu_Custom_Custom1_Button)</onclick>
+                        <onclick>Skin.SetBool(HomeMenu_Custom_Custom2_Button)</onclick>
+                        <onclick>Skin.SetBool(HomeMenu_Custom_Custom3_Button)</onclick>
+                        <onclick>Skin.SetBool(HomeMenu_Custom_Custom4_Button)</onclick>
+                        <onclick>Skin.SetBool(HomeMenu_Custom_Custom5_Button)</onclick>
+                        <onclick>Skin.SetBool(HomeMenu_Custom_Custom6_Button)</onclick>
+                        <onclick>Skin.SetBool(HomeMenu_Custom_Custom7_Button)</onclick>
+                        <onclick>Skin.SetBool(HomeMenu_Custom_Custom8_Button)</onclick>
+                        <onclick>Skin.SetBool(HomeMenu_Custom_Custom9_Button)</onclick> -->
                         <onclick>Skin.SetBool(HomeMenuNoWeatherButton)</onclick>
                         <onclick>Skin.SetBool(HomeMenuWeatherFadeout)</onclick>
                         <onclick>Skin.SetBool(WindowedTrailer)</onclick>
@@ -126,11 +130,15 @@
                         <onclick>Skin.SetBool(background_dim_1)</onclick>
                         <onclick>Skin.SetBool(standart_bkg)</onclick>
                         <onclick>Skin.SetBool(HideSysteminfo)</onclick>
-                        <onclick>Skin.SetBool(HomeMenuNo3DButton)</onclick>
-                        <onclick>Skin.SetBool(HomeMenuNoHDButton)</onclick>
-                        <onclick>Skin.SetBool(HomeMenuNoFULLHDButton)</onclick>
-                        <onclick>Skin.SetBool(HomeMenuNoDokuButton)</onclick>
-                        <onclick>Skin.SetBool(HomeMenuNoKidsButton)</onclick>
+                        <!-- <onclick>Skin.SetBool(HomeMenu_Custom_Custom1_Button)</onclick>
+                        <onclick>Skin.SetBool(HomeMenu_Custom_Custom2_Button)</onclick>
+                        <onclick>Skin.SetBool(HomeMenu_Custom_Custom3_Button)</onclick>
+                        <onclick>Skin.SetBool(HomeMenu_Custom_Custom4_Button)</onclick>
+                        <onclick>Skin.SetBool(HomeMenu_Custom_Custom5_Button)</onclick>
+                        <onclick>Skin.SetBool(HomeMenu_Custom_Custom6_Button)</onclick>
+                        <onclick>Skin.SetBool(HomeMenu_Custom_Custom7_Button)</onclick>
+                        <onclick>Skin.SetBool(HomeMenu_Custom_Custom8_Button)</onclick>
+                        <onclick>Skin.SetBool(HomeMenu_Custom_Custom9_Button)</onclick> -->
                         <onclick>Skin.SetBool(HomeMenuNoWeatherButton)</onclick>
                         <onclick>Skin.SetBool(HomeMenuNoProgramsButton)</onclick>
                         <onclick>Skin.SetBool(HomeMenuNoWeatherButton)</onclick>
@@ -188,11 +196,15 @@
                         <onclick>Skin.SetBool(HideSysteminfo)</onclick>
                         <onclick>Skin.SetBool(NeonSlide)</onclick>
                         <onclick>Skin.SetBool(HideNavArrow)</onclick>
-                        <onclick>Skin.SetBool(HomeMenuNo3DButton)</onclick>
-                        <onclick>Skin.SetBool(HomeMenuNoHDButton)</onclick>
-                        <onclick>Skin.SetBool(HomeMenuNoFULLHDButton)</onclick>
-                        <onclick>Skin.SetBool(HomeMenuNoDokuButton)</onclick>
-                        <onclick>Skin.SetBool(HomeMenuNoKidsButton)</onclick>
+                        <!-- <onclick>Skin.SetBool(HomeMenu_Custom_Custom1_Button)</onclick>
+                        <onclick>Skin.SetBool(HomeMenu_Custom_Custom2_Button)</onclick>
+                        <onclick>Skin.SetBool(HomeMenu_Custom_Custom3_Button)</onclick>
+                        <onclick>Skin.SetBool(HomeMenu_Custom_Custom4_Button)</onclick>
+                        <onclick>Skin.SetBool(HomeMenu_Custom_Custom5_Button)</onclick>
+                        <onclick>Skin.SetBool(HomeMenu_Custom_Custom6_Button)</onclick>
+                        <onclick>Skin.SetBool(HomeMenu_Custom_Custom7_Button)</onclick>
+                        <onclick>Skin.SetBool(HomeMenu_Custom_Custom8_Button)</onclick>
+                        <onclick>Skin.SetBool(HomeMenu_Custom_Custom9_Button)</onclick> -->
                         <onclick>Skin.SetBool(HomeMenuWeatherFadeout)</onclick>
                         <onclick>Skin.SetBool(standart_bkg)</onclick>
                         <onclick>Skin.SetBool(playlist)</onclick>

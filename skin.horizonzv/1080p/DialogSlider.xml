@@ -3,11 +3,6 @@
     <defaultcontrol>11</defaultcontrol>
     <include>openclose</include>
     <include>opencloseslidedown</include>
-    <coordinates>
-        <system>1</system>
-        <left>608</left>
-        <top>0</top>
-    </coordinates>
     <controls>
         <control type="image">
             <left>0</left>

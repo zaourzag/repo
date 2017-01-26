@@ -626,6 +626,17 @@
                 <align>left</align>
                 <textcolor>orange</textcolor>
                 <shadowcolor>black</shadowcolor>
+                <label>sub: $INFO[Container(9000).ListItem.Property(homemenu_category)] | </label>
+            </control>
+            <control type="label">
+                <left>30</left>
+                <top>225</top>
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>orange</textcolor>
+                <shadowcolor>black</shadowcolor>
                 <label>Path: $INFO[Container(9000).ListItem.Property(homemenu_path)] | </label>
             </control>
             <control type="label">

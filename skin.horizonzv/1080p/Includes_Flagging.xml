@@ -215,25 +215,25 @@
         <control type="button">
             <description>Video SubtitleLanguage 1</description>
 			<include>FlagDimensionButton</include>
-            <label>$INFO[ListItem.Property(SubtitleLanguage.1]</label>
+            <label>$INFO[ListItem.Property(SubtitleLanguage.1)]</label>
             <visible>!String.IsEmpty(ListItem.Property(SubtitleLanguage.1))</visible>
         </control>
         <control type="button">
             <description>Video SubtitleLanguage 2</description>
 			<include>FlagDimensionButton</include>
-            <label>$INFO[ListItem.Property(SubtitleLanguage.2]</label>
+            <label>$INFO[ListItem.Property(SubtitleLanguage.2)]</label>
             <visible>!String.IsEmpty(ListItem.Property(SubtitleLanguage.2))</visible>
         </control>
         <control type="button">
             <description>Video SubtitleLanguage 3</description>
 			<include>FlagDimensionButton</include>
-            <label>$INFO[ListItem.Property(SubtitleLanguage.3]</label>
+            <label>$INFO[ListItem.Property(SubtitleLanguage.3)]</label>
             <visible>!String.IsEmpty(ListItem.Property(SubtitleLanguage.3))</visible>
         </control>
         <control type="button">
             <description>Video SubtitleLanguage 4</description>
 			<include>FlagDimensionButton</include>
-            <label>$INFO[ListItem.Property(SubtitleLanguage.4]</label>
+            <label>$INFO[ListItem.Property(SubtitleLanguage.4)]</label>
             <visible>!String.IsEmpty(ListItem.Property(SubtitleLanguage.4))</visible>
         </control>
     </include>

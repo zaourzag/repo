@@ -12,8 +12,8 @@
         <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),playdisc)">$LOCALIZE[51388]</value>
         <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),pvr)">$LOCALIZE[51390]</value>
         <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),setting)">$LOCALIZE[51392]</value>
-        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),kids)">$LOCALIZE[20342] $LOCALIZE[51394] $VAR[Rating_Age_Kids_Label] $LOCALIZE[652]</value>
-        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),fav3)">$LOCALIZE[51396]</value>
+        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),custom5)">$LOCALIZE[20342] $LOCALIZE[51394] $VAR[Rating_Age_Kids_Label] $LOCALIZE[652]</value>
+        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),custom8)">$LOCALIZE[51396]</value>
         <value>$LOCALIZE[51393]</value>
     </variable>
     <variable name="WeatherFadeout">
@@ -89,48 +89,40 @@
         <value condition="Skin.HasSetting(WeatherFanartHome)+!String.IsEmpty(Skin.String(weatherfanart.path))"></value>
     </variable>
     <variable name="reset_user_background">
-        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),music)">Skin.Reset(user_bkg_music)</value>
         <!-- music -->
-        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),picture)">Skin.Reset(user_bkg_pictures)</value>
-        <!-- pictures -->
-        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),movies)">Skin.Reset(user_bkg_movie)</value>
+        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),music)">Skin.Reset(user_bkg_music)</value>
         <!-- movies/videos -->
-        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),tvshow)">Skin.Reset(user_bkg_tvshow)</value>
+        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),movies)">Skin.Reset(user_bkg_movie)</value>
         <!-- tvshows -->
-        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),weather)">Skin.Reset(user_bkg_weather)</value>
-        <!-- weather -->
-        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),playdisc)">Skin.Reset(user_bkg_dvd)</value>
-        <!-- play disk -->
-        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),dashboard)">Skin.Reset(user_bkg_addons)</value>
-        <!-- programs -->
-        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),musicvideo)">Skin.Reset(user_bkg_musicvideo)</value>
+        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),tvshow)">Skin.Reset(user_bkg_tvshow)</value>
         <!-- musicvideos -->
-        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),pvr)">Skin.Reset(user_bkg_pvr)</value>
+        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),musicvideo)">Skin.Reset(user_bkg_musicvideo)</value>
+        <!-- pictures -->
+        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),picture)">Skin.Reset(user_bkg_pictures)</value>
+        <!-- weather -->
+        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),weather)">Skin.Reset(user_bkg_weather)</value>
+        <!-- play disk -->
+        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),playdisc)">Skin.Reset(user_bkg_dvd)</value>
+		<!-- custom -->
+        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),custom1)">Skin.Reset(user_bkg_custom1)</value>
+        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),custom2)">Skin.Reset(user_bkg_custom2)</value>
+        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),custom3)">Skin.Reset(user_bkg_custom3)</value>
+        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),custom4)">Skin.Reset(user_bkg_custom4)</value>
+        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),custom5)">Skin.Reset(user_bkg_custom5)</value>
+        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),custom6)">Skin.Reset(user_bkg_custom6)</value>
+        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),custom7)">Skin.Reset(user_bkg_custom7)</value>
+        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),custom8)">Skin.Reset(user_bkg_custom8)</value>
+        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),custom9)">Skin.Reset(user_bkg_custom9)</value>
+        <!-- programs -->
+        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),dashboard)">Skin.Reset(user_bkg_addons)</value>
         <!-- livetv -->
-        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),setting)">Skin.Reset(user_bkg_settings)</value>
+        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),pvr)">Skin.Reset(user_bkg_pvr)</value>
         <!-- settings -->
-        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),radio)">Skin.Reset(user_bkg_fav3)</value>
+        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),setting)">Skin.Reset(user_bkg_settings)</value>
         <!-- radio -->
-        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),3d)">Skin.Reset(user_bkg_3d)</value>
-        <!-- 3d -->
-        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),hd)">Skin.Reset(user_bkg_hd)</value>
-        <!-- hd -->
-        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),fullhd)">Skin.Reset(user_bkg_fullhd)</value>
-        <!-- full hd -->
-        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),doku)">Skin.Reset(user_bkg_doku)</value>
-        <!-- doku -->
-        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),kids)">Skin.Reset(user_bkg_kids)</value>
-        <!-- kids -->
-        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),news)">Skin.Reset(user_bkg_news)</value>
+        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),radio)">Skin.Reset(user_bkg_radio)</value>
         <!-- news -->
-        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),fav1)">Skin.Reset(user_bkg_fav1)</value>
-        <!-- favourites1 -->
-        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),fav2)">Skin.Reset(user_bkg_fav2)</value>
-        <!-- favourites2 -->
-        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),fav3)">Skin.Reset(user_bkg_fav3)</value>
-        <!-- favourites3 -->
-        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),fav4)">Skin.Reset(user_bkg_fav2)</value>
-        <!-- favourites4 same 2 -->
+        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),news)">Skin.Reset(user_bkg_news)</value>
     </variable>
     <variable name="bkg_fileext">
         <value condition="!Skin.HasSetting(gambit_background)">.jpg</value>
@@ -374,14 +366,14 @@
         <value condition="ListItem.HasTimer">$LOCALIZE[31510]</value>
     </variable>
     <variable name="clearcase">
-        <value condition="!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),music)+!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),pvr)+!Skin.HasSetting(hideMovieCases)+!String.IsEmpty(ListItem.FileExtension)+!String.IsEmpty(ListItem.VideoResolution)+!ListItem.IsParentFolder+[[!String.Contains(ListItem.FileName,HDDVD)+!String.Contains(ListItem.FileName,BLURAY)+!String.Contains(ListItem.FileName,DVD)]|Skin.HasSetting(HideFileNameFlagging)]">$INFO[ListItem.VideoResolution,clear-cases/,.png]</value>
-        <value condition="!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),music)+!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),pvr)+!Skin.HasSetting(hideMovieCases)+!String.IsEmpty(ListItem.FileExtension)+String.IsEmpty(ListItem.VideoResolution)+!ListItem.IsParentFolder+[[!String.Contains(ListItem.FileName,HDDVD)+!String.Contains(ListItem.FileName,BLURAY)+!String.Contains(ListItem.FileName,DVD)]|Skin.HasSetting(HideFileNameFlagging)]">$INFO[ListItem.FileExtension,clear-cases/,.png]</value>
+        <value condition="!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),music)+!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),pvr)+!Skin.HasSetting(hideMovieCases)+!String.IsEmpty(ListItem.FileExtension)+!String.IsEmpty(ListItem.VideoResolution)+!ListItem.IsParentFolder+[[!String.Contains(ListItem.FileName,custom2DVD)+!String.Contains(ListItem.FileName,BLURAY)+!String.Contains(ListItem.FileName,DVD)]|Skin.HasSetting(HideFileNameFlagging)]">$INFO[ListItem.VideoResolution,clear-cases/,.png]</value>
+        <value condition="!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),music)+!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),pvr)+!Skin.HasSetting(hideMovieCases)+!String.IsEmpty(ListItem.FileExtension)+String.IsEmpty(ListItem.VideoResolution)+!ListItem.IsParentFolder+[[!String.Contains(ListItem.FileName,custom2DVD)+!String.Contains(ListItem.FileName,BLURAY)+!String.Contains(ListItem.FileName,DVD)]|Skin.HasSetting(HideFileNameFlagging)]">$INFO[ListItem.FileExtension,clear-cases/,.png]</value>
         <!-- <value condition="!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),music)+!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),pvr)+!Skin.HasSetting(hideMovieCases)+String.IsEmpty(ListItem.VideoCodec)+!ListItem.IsParentFolder+ListItem.IsCollection">clear-cases/moviesets.png</value> -->
         <value condition="!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),music)+!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),pvr)+!Skin.HasSetting(hideMovieCases)+ListItem.IsCollection">clear-cases/moviesets.png</value>
         <value condition="!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),music)+!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),pvr)+!Skin.HasSetting(hideMovieCases)+!ListItem.IsParentFolder+[String.Contains(ListItem.FolderPath,videodb://tvshows/)|String.Contains(ListItem.FolderPath,videodb://2/2)]">clear-cases/tvshows.png</value>
-        <!-- <value condition="!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),music)+!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),pvr)+!Skin.HasSetting(hideMovieCases)+String.Contains(ListItem.FileName,HDDVD)+!Skin.HasSetting(HideFilenameflagging)">clear-cases/hddvd.png</value>
+        <!-- <value condition="!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),music)+!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),pvr)+!Skin.HasSetting(hideMovieCases)+String.Contains(ListItem.FileName,custom2DVD)+!Skin.HasSetting(HideFilenameflagging)">clear-cases/hddvd.png</value>
         <value condition="!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),music)+!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),pvr)+!Skin.HasSetting(hideMovieCases)+String.Contains(ListItem.FileName,BLURAY)+!Skin.HasSetting(HideFilenameflagging)">clear-cases/1080.png</value>
-        <value condition="!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),music)+!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),pvr)+!Skin.HasSetting(hideMovieCases)+String.Contains(ListItem.FileName,DVD)+!String.Contains(ListItem.FileName,HDDVD)+!Skin.HasSetting(HideFilenameflagging)">clear-cases/576.png</value> -->
+        <value condition="!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),music)+!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),pvr)+!Skin.HasSetting(hideMovieCases)+String.Contains(ListItem.FileName,DVD)+!String.Contains(ListItem.FileName,custom2DVD)+!Skin.HasSetting(HideFilenameflagging)">clear-cases/576.png</value> -->
     </variable>
     <variable name="ad_mode">
         <value condition="Skin.HasSetting(ad_gui)+Container.Content(tvshows)">RunScript(script.artwork.downloader, mode=gui, mediatype=tvshow, silent=true, dbid=$INFO[ListItem.DBID])</value>
@@ -436,13 +428,13 @@
         <value condition="Skin.HasSetting(tvshow_art)+[String.IsEmpty(Player.Art(tvshow.clearart))|!Skin.HasSetting(TVShowClearart)]+Skin.HasSetting(TVShowCharacterart)+!String.IsEmpty(Player.Art(tvshow.characterart))">$INFO[Player.Art(tvshow.characterart)]</value>
         <value condition="Skin.HasSetting(tvshow_art)+Skin.HasSetting(TVShowClearart)+!String.IsEmpty(Player.Art(tvshow.clearart))">$INFO[Player.Art(tvshow.clearart)]</value>
     </variable>
-    <variable name="Rating_Age_Kids_Label">
+    <!-- <variable name="Rating_Age_Kids_Label">
         <value condition="!Skin.HasSetting(Rating_Age_Kids_0)+!Skin.HasSetting(Rating_Age_Kids_6)+!Skin.HasSetting(Rating_Age_Kids_12)+!Skin.HasSetting(Rating_Age_Kids_16)">[COLOR=description]$LOCALIZE[22080][/COLOR]</value>
         <value condition="Skin.HasSetting(Rating_Age_Kids_0)">0</value>
         <value condition="Skin.HasSetting(Rating_Age_Kids_6)">6</value>
         <value condition="Skin.HasSetting(Rating_Age_Kids_12)">12</value>
         <value condition="Skin.HasSetting(Rating_Age_Kids_16)">16</value>
-    </variable>
+    </variable> -->
     <variable name="SelectedColor">
         <!-- View Right List -->
         <value condition="!Control.HasFocus(721)+!Control.HasFocus(722)">selectedcolor</value>

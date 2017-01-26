@@ -12,6 +12,7 @@
 			<onclick>Notification(wird geschaltet ...,FritzDect ($INFO[ListItem.Label]),2000)</onclick>
 			<visible>$PARAM[FritzDect_visible]</visible>
 			<visible>Skin.HasSetting(Widget_NEWS_FritzDect)</visible>
+			<visible>System.HasAddon(plugin.program.fritzact)</visible>
 			<visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),dashboard)</visible>
 			<itemlayout height="105" width="360">
 				<control type="image">

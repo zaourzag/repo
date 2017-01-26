@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window>
     <defaultcontrol always="false">99</defaultcontrol>
-    <coordinates>
-        <system>1</system>
-        <left>1020</left>
-        <top>0</top>
-    </coordinates>
     <controls>
         <control type="button" id="99">
             <include>HiddenButton</include>

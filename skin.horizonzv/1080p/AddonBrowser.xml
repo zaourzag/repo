@@ -31,30 +31,32 @@
                     <altlabel>31050</altlabel>
                     <usealttexture>Container.SortDirection(Ascending)</usealttexture>
                 </control>
-                <control type="button" id="5">
-                    <description>Enable auto-updates</description>
+				<control type="radiobutton" id="7">
+					<description>Hide foreign</description>
                     <include>SidePanelToggleButton</include>
-                    <label>10004</label>
-                </control>
-                <!-- <control type="radiobutton" id="6">
+					<label>$LOCALIZE[25001]</label>
+					<visible>Control.IsEnabled(7)</visible>
+				</control>
+				<control type="radiobutton" id="8">
+					<description>Hide incompatible</description>
+                    <include>SidePanelToggleButton</include>
+					<label>$LOCALIZE[24999]</label>
+					<visible>Control.IsEnabled(8)</visible>
+				</control>
+				<control type="button" id="9">
+					<description>Check for repository updates</description>
+                    <include>SidePanelButton</include>
+					<label>$LOCALIZE[24034]</label>
+				</control>
+				<control type="button" id="5">
+					<description>Addon settings</description>
+                    <include>SidePanelButton</include>
+					<label>$LOCALIZE[10004]</label>
+				</control>
+                <control type="radiobutton" id="6">
                     <description>No notifications</description>
                     <include>SidePanelToggleButton</include>
                     <label>25000</label>
-                </control> -->
-                <control type="radiobutton" id="7">
-                    <description>Hide foreign</description>
-                    <include>SidePanelToggleButton</include>
-                    <label>25001</label>
-                </control>
-                <control type="radiobutton" id="8">
-                    <description>Hide broken</description>
-                    <include>SidePanelToggleButton</include>
-                    <label>24999</label>
-                </control>
-                <control type="button" id="9">
-                    <description>Check for updates</description>
-                    <include>SidePanelButton</include>
-                    <label>24034</label>
                 </control>
             </control>
             <include>SidePanelNavigation</include>
