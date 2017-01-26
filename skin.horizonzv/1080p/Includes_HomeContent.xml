@@ -627,7 +627,7 @@
             <property name="homemenu_category">$VAR[Home_Movie_Category]</property>
             <property name="homemenu_path">$INFO[Skin.String(Home_Movie_Custom_Path)]</property>
             <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Movie_Button)+Library.HasContent(movies)">ActivateWindow(Videos,videodb://movies/titles/,return)</onclick>
-            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Movie_Button)!Library.HasContent(movies)">ActivateWindow(Videos,sources://video/,return)</onclick>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Movie_Button)+!Library.HasContent(movies)">ActivateWindow(Videos,sources://video/,return)</onclick>
             <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(HomeMenu_Custom_Movie_Button)">ActivateWindow($VAR[Home_Movie_SubCategory],$INFO[Skin.String(Home_Movie_Custom_Path)],return)</onclick>
             <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_movie,smb://)</onclick>
             <visible>!Skin.HasSetting(HomeMenuNoMovieButton)</visible>
@@ -655,7 +655,7 @@
             <property name="homemenu_id">tvshow</property>
             <property name="homemenu_category">$VAR[Home_TVShow_Category]</property>
             <property name="homemenu_path">$INFO[Skin.String(Home_TVShow_Custom_Path)]</property>
-            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_TVShow_Button)+Library.HasContent(tvshows)">ActivateWindow(Videos,videodb://tvshows/titles/,return)
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_TVShow_Button)+Library.HasContent(tvshows)">ActivateWindow(Videos,videodb://tvshows/titles/,return)</onclick>
             <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_TVShow_Button)+!Library.HasContent(tvshows)">ActivateWindow(Videos,sources://video/,return)</onclick>
             <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(HomeMenu_Custom_TVShow_Button)">ActivateWindow($VAR[Home_TVShow_SubCategory],$INFO[Skin.String(Home_TVShow_Custom_Path)],return)</onclick>
             <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_tvshow,smb://)</onclick>
