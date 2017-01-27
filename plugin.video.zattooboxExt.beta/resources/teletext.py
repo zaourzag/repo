@@ -34,6 +34,8 @@ ACTION_MOVE_LEFT = 1
 ACTION_MOVE_RIGHT = 2
 ACTION_MOVE_UP = 3
 ACTION_MOVE_DOWN = 4
+ACTION_PAGE_UP = 5
+ACTION_PAGE_DOWN = 6
 ACTION_SELECT_ITEM = 7
 ACTION_PARENT_DIR = 9
 ACTION_PREVIOUS_MENU = 10
@@ -79,11 +81,18 @@ class Teletext(xbmcgui.WindowDialog):
 		self.pageImage = xbmcgui.ControlImage(260, 0, 800, 720, "")
 		self.addControl(self.pageImage)
 		
-		self.button0 = xbmcgui.ControlButton(50, 640, 170, 40, localString(31912), font='font20', alignment=2)
+		self.button0 = xbmcgui.ControlButton(50, 640, 170, 40, localString(31912), font='font20', alignment=6)
 		self.addControl(self.button0)
+		
+		self.button1 = xbmcgui.ControlButton(1090, 640, 50, 40, "<", font='font30', alignment=6)
+		self.addControl(self.button1)
+		
+		self.button2 = xbmcgui.ControlButton(1190, 640, 50, 40, ">", font='font30', alignment=6)
+		self.addControl(self.button2)
 
 		self.currentPage=100
-		self.showPage(str(self.currentPage))
+		self.subPage=1
+		self.showPage(str(self.currentPage), str(self.subPage))
 
 	def onAction(self, action):
 		if hasattr(self, 'supPageTimer'): self.supPageTimer.cancel()
@@ -99,23 +108,28 @@ class Teletext(xbmcgui.WindowDialog):
 			self.pageInputCtrl.setVisible(True)
 			if len(self.pageInput)>2:
 				self.currentPage = int(self.pageInput)
-				self.showPage(str(self.currentPage))
+				self.showPage(str(self.currentPage), str(self.subPage))
 				self.pageInput=''
 
 		elif action in [ACTION_MOVE_DOWN, ACTION_GESTURE_SWIPE_DOWN]:
 			self.currentPage=(int((self.currentPage-1)/100))*100
 			if self.currentPage<100: self.currentPage=100
-			self.showPage(str(self.currentPage))
+			self.showPage(str(self.currentPage), str(self.subPage))
 		elif action in [ACTION_MOVE_UP, ACTION_GESTURE_SWIPE_UP]:
 			self.currentPage=(int(self.currentPage/100)+1)*100
-			self.showPage(str(self.currentPage))
+			self.showPage(str(self.currentPage), str(self.subPage))
 		elif action in [ACTION_MOVE_RIGHT, ACTION_GESTURE_SWIPE_RIGHT]:
 			self.currentPage +=1
-			self.showPage(str(self.currentPage))
+			self.showPage(str(self.currentPage), str(self.subPage))
 		elif action in [ACTION_MOVE_LEFT, ACTION_GESTURE_SWIPE_LEFT]:
 			self.currentPage -=1
-			self.showPage(str(self.currentPage))
-		
+			self.showPage(str(self.currentPage), str(self.subPage))
+		elif action == ACTION_PAGE_DOWN:
+			self.subPage = self.subPage-1
+			self.showPage(str(self.currentPage),self.subPage)
+		elif action == ACTION_PAGE_UP:
+			self.subPage = self.subPage+1
+			self.showPage(str(self.currentPage),self.subPage)
 			
 	def onControl(self, control):
 		if control == self.button0:
@@ -124,10 +138,18 @@ class Teletext(xbmcgui.WindowDialog):
 			self.pageInput = dialog.numeric(0, 'Enter Site')
 			if len(self.pageInput)>2:
 				self.currentPage = int(self.pageInput)
-				self.showPage(str(self.currentPage))
+				self.showPage(str(self.currentPage), str(self.subPage))
 				self.pageInput=''
 				
-
+		elif control == self.button1:
+			self.subPage = self.subPage-1
+			self.showPage(str(self.currentPage),self.subPage)
+				
+		elif control == self.button2:
+			self.subPage = self.subPage+1
+			self.showPage(str(self.currentPage),self.subPage)
+			
+				
 	def showPage(self, page, subpage=1):
 		if (subpage==1):
 			self.pageInputCtrl.setLabel(str(self.currentPage))
@@ -158,5 +180,7 @@ class Teletext(xbmcgui.WindowDialog):
 			self.supPageTimer=threading.Timer(8, self.showPage,[page,subpage+1])
 			self.supPageTimer.start()
 		except:
+			self.subPage = 1
 			if (subpage==1):self.pageInputCtrl.setLabel('page '+page+' not found')
 			elif (subpage>2):self.showPage(page,1)
+			elif (subpage<1):self.showPage(page,1)

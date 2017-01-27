@@ -18,7 +18,7 @@
 #  http://www.gnu.org/copyleft/gpl.html
 #
 
-import xbmc, xbmcgui, xbmcaddon, os, datetime, time, sys
+import xbmc, xbmcgui, xbmcaddon, os, datetime, time
 import json
 from zapisession import ZapiSession
 
@@ -131,7 +131,9 @@ class ZattooDB(object):
     if rebuild == False:
       date = datetime.date.today().strftime('%Y-%m-%d')
       c.execute('SELECT * FROM updates WHERE date=? AND type=? ', [date, 'channels'])
-      if len(c.fetchall())>0: return
+      if len(c.fetchall())>0:
+        c.close()  
+        return
 
     # always clear db on update
     c.execute('DELETE FROM channels')
@@ -183,7 +185,9 @@ class ZattooDB(object):
 #     if self._isDBupToDate(date, 'programs'):return
     c.execute('SELECT * FROM programs WHERE start_date > ? AND end_date < ?', [fromTime+18000, fromTime+25200]) #get shows between 05:00 and 07:00
     count=c.fetchall()
-    if len(count)>0: return
+    if len(count)>0: 
+        c.close()
+        return
 
     xbmcgui.Dialog().notification(__addon__.getLocalizedString(31022), date.strftime('%A %d.%m.%Y'), __addon__.getAddonInfo('path') + '/icon.png', 5000, False)
 
@@ -254,6 +258,7 @@ class ZattooDB(object):
          'weight':row['weight'],
          'favourite':row['favourite']
     }
+    c.close()
     return channel
 
 
@@ -265,7 +270,7 @@ class ZattooDB(object):
     for chan in channels['index']:
       c.execute('SELECT * FROM programs WHERE channel = ? AND start_date < ? AND end_date > ?', [chan, endTime, startTime])
       r = c.fetchall()
-      for row in r:    
+      for row in r:
         description_long = row['description_long']
         if get_long_description and description_long is None: 
             #description_long = self.getShowInfo(row["showID"],'description')
@@ -294,6 +299,7 @@ class ZattooDB(object):
         try:
             info.execute('SELECT * FROM programs WHERE showID= ? ', [showID])
         except:
+            info.close()
             return None
         
         show = info.fetchone()
@@ -303,6 +309,7 @@ class ZattooDB(object):
             showInfo = self.zapiSession().exec_zapiCall(api, None)
             if showInfo is None:
                 longDesc=''
+                info.close()
                 return longDesc            
             longDesc = showInfo['program']['description']
             info.execute('UPDATE programs SET description_long=? WHERE showID=?', [longDesc, showID ])
@@ -336,7 +343,9 @@ class ZattooDB(object):
         else:
             api = '/zapi/program/details?program_id=' + str(showID) + '&complete=True'
             showInfo = self.zapi.exec_zapiCall(api, None)
-            if showInfo is None: return "NONE"
+            if showInfo is None: 
+                c.close()
+                return "NONE"
             showInfo = showInfo['program']
             try: c.execute('INSERT INTO showinfos(showID, info) VALUES(?, ?)',(int(showID), json.dumps(showInfo)))
             except: pass
@@ -435,24 +444,22 @@ class ZattooDB(object):
         for chan in channels['index']:
             print str(chan) + ' - ' + str(startTime) 
             #try:
-            c.execute('SELECT * FROM programs WHERE channel = ?', (chan,))
-            #except:
-            ch=c.fetchone()
-            print str(ch['channel'])
-            print type(ch['channel'])
             
             c.execute('SELECT * FROM programs WHERE channel = ? AND start_date < ? AND end_date > ?', [chan, endTime, startTime])
-                     
-            row = c.fetchone()
-
-            if notify:
-                bar += 1
-                percent = int(bar * 100 / counter) 
-            description_long = row["description_long"]
-            if description_long is None or description_long == '': 
+            r=c.fetchall()
+            
+            for row in r:
+                print str(row['channel']) + ' - ' + str(row['showID'])
                 if notify:
-                    PopUp.update(percent,'ZattooBoxExt lade Programm Informationen ...', 'Programm Information für ' + str(row['channel']))
-                description_long = self.getShowLongDescription(row["showID"])
+                    bar += 1
+                    percent = int(bar * 100 / counter) 
+                description_long = row["description_long"]
+                
+                if description_long is None: 
+                    print 'Lang ' + str(row['channel'])
+                    if notify:
+                        PopUp.update(percent,'ZattooBoxExt lade Programm Informationen ...', 'Programm Information für ' + str(row['channel']))
+                    description_long = self.getShowLongDescription(row["showID"])
         c.close()
         if notify:
             PopUp.close()

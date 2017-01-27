@@ -195,7 +195,7 @@ def build_channelsList(addon_uri, addon_handle):
   channels = _zattooDB_.getChannelList(_listMode_ == 'favourites')
   if channels is not None:
     # get currently playing shows
-    program = _zattooDB_.getPrograms(channels, False)
+    program = _zattooDB_.getPrograms(channels, True)
     content = []
     # time of chanellist creation
     #content.append({'title': '[B][COLOR blue]' + time.strftime("%H:%M:%S") +'[/B][/COLOR]', 'isFolder': False, 'url':''})
@@ -220,7 +220,8 @@ def build_channelsList(addon_uri, addon_handle):
       if len(str(nr)) == 1: 
         chnr = '  '+str(nr)
       else: chnr = str(nr)
-      
+      yy = prog.get('year','')
+      #if yy is None: yy=''
       content.append({
         'title': '[COLOR green]'+chnr+'[/COLOR]'+'  '+channels[chan]['title'] + ' - ' + prog.get('title', '')+ '  '+startend,
         'image': channels[chan]['logo'],
@@ -228,7 +229,7 @@ def build_channelsList(addon_uri, addon_handle):
         'genre': prog.get('genre',''),
         'plot':  prog.get('description_long', ''),
         #'plot': prog.get('genre','')+"  "+str(prog.get('year','')),
-        'year': prog.get('year',''),
+        'year': yy,
         'category': prog.get('category',''),
         'country': prog.get('country',''),
         'isFolder': False,
@@ -578,7 +579,7 @@ def makeOsdInfo():
   win.setProperty('country', '[COLOR blue]' + local(574) + ':  ' + '[/COLOR]' + str(program['country']))
 #  win.setProberty('category', '[COLOR blue]' + local(21866) + ':  ' + '[/COLOR]' + program['category'])
 
-# Refresh Long_Description
+
 
 class myPlayer( xbmc.Player ):
   def __init__(self, skip=False):
@@ -642,7 +643,7 @@ class zattooGUI(xbmcgui.WindowXMLDialog):
     elif action==ACTION_OSD:
       if hasattr(self, 'hideNrTimer'): self.hideNrTimer.cancel()
       self.close()
-    if action in [ACTION_SELECT_ITEM, ACTION_MOUSE_LEFT_CLICK]:
+    elif action in [ACTION_SELECT_ITEM, ACTION_MOUSE_LEFT_CLICK]:
       self.hidePrevImg()
       if(self.channelInput):
         self.channelInputTimer.cancel()
@@ -711,7 +712,7 @@ class zattooOSD(xbmcgui.WindowXMLDialog):
     if action in [ACTION_STOP, ACTION_BUILT_IN_FUNCTION]:
       self.close()
       xbmc.executebuiltin("Action(OSD)") #close hidden gui
-   
+      xbmc.executebuiltin("Action(Back)")
       
   def onClick(self, controlID):
     channel=_zattooDB_.get_playing()['channel']
@@ -740,11 +741,9 @@ class zattooOSD(xbmcgui.WindowXMLDialog):
     elif controlID==203: #Channel Down
       nr=skip_channel(+1)
       self.showChannelNr(nr+1)
-    elif controlID==205:
-      xbmc.executebuiltin("Action(Stop)")
+    elif controlID==205: #stop
       xbmc.executebuiltin("Action(OSD)")
-      if hasattr(self, 'hideNrTimer'): self.hideNrTimer.cancel()
-      self.close()
+      xbmc.executebuiltin("Action(Stop)")
     elif controlID==208:
       if xbmcgui.Dialog().yesno(channeltitle, __addon__.getLocalizedString(31907)):
          __addon__.setSetting(id="start_channel", value=channeltitle)
