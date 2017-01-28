@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.zattooboxExt.beta" version="1.6.7" name="Zattoo Box Extended Beta" provider-name="Steffen Rolapp">
+<addon id="plugin.video.zattooboxExt.beta" version="1.6.8" name="Zattoo Box Extended Beta" provider-name="Steffen Rolapp">
   <requires>
-    <import addon="xbmc.python" version="2.14.0"/>
-    <import addon="xbmc.addon" version="13.0.0" />
+    <import addon="xbmc.python" version="2.24.0"/>
+    <import addon="xbmc.addon" version="16.0.0" />
   </requires>
   <extension point="xbmc.python.pluginsource" library="plugin.py">
     <provides>video</provides>

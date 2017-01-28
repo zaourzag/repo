@@ -486,6 +486,15 @@ msgctxt "#31302"
 msgid "Only available for Premium users"
 msgstr "Nur für Premium Kunden verfügbar"
 
+msgctxt "#31303"
+msgid "Date is too big"
+msgstr "Datum ist zu gross"
+
+msgctxt "#31304"
+msgid "Date is too small"
+msgstr "Datum ist zu klein"
+
+
 
 
 msgctxt "#31901"
@@ -514,9 +523,34 @@ msgstr "Tastenfeld"
 
 
 
+msgctxt "#31913"
+msgid "Clean the program table"
+msgstr "Programm Tabelle bereinigen"
 
+msgctxt "#31914"
+msgid "Records delete"
+msgstr "Datensätze löschen"
 
+msgctxt "#31915"
+msgid "load recordings"
+msgstr "Lade Aufnahmen"
 
+msgctxt "#31916"
+msgid "Program description"
+msgstr "Programmbeschreibung"
 
+msgctxt "#31917"
+msgid "Download TV shows"
+msgstr "Lade TV-Sendungen"
 
+msgctxt "#31918"
+msgid "ZattooBoxExt - List of programs"
+msgstr "ZattooBoxExt - Programmliste"
 
+msgctxt "#31919"
+msgid "Records are not required"
+msgstr "Datensätze werden nicht benötigt"
+
+msgctxt "#31920"
+msgid "Records are not required\nDelete records now?"
+msgstr "Datensätze werden nicht benötigt\nDatensätze  jetzt löschen?"

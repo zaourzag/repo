@@ -1,4 +1,12 @@
 -------------------------------------------------
+[B] ZattooBox Extendet v1.6.8beta[/B] 28.01.2017
+-------------------------------------------------
+- Bugfix mit dem OSD behoben
+- Cleanup der Programmliste
+- diverse Startmeldungen geändert
+- diverse kleinere Bugs behoben
+
+-------------------------------------------------
 [B] ZattooBox Extendet v1.6.4beta[/B] 15.01.2017
 -------------------------------------------------
 - Touch Unterstützung für Teletext

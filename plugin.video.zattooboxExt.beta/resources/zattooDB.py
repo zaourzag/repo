@@ -22,11 +22,12 @@ import xbmc, xbmcgui, xbmcaddon, os, datetime, time
 import json
 from zapisession import ZapiSession
 
-
 __addon__ = xbmcaddon.Addon()
 _listMode_ = __addon__.getSetting('channellist')
 _channelList_=[]
-
+localString = __addon__.getLocalizedString
+local = xbmc.getLocalizedString
+_umlaut_ = {ord(u'ä'): u'ae', ord(u'ö'): u'oe', ord(u'ü'): u'ue', ord(u'ß'): u'ss'}
 
 REMOTE_DBG = False
 
@@ -62,6 +63,7 @@ class ZattooDB(object):
       xbmcgui.Dialog().ok(__addon__.getAddonInfo('name'), __addon__.getLocalizedString(31902))
       __addon__.openSettings()
       zapiSession.renew_session()
+      import sys
       sys.exit()
     
   @staticmethod
@@ -165,7 +167,8 @@ class ZattooDB(object):
     if nr>0: c.execute('INSERT INTO updates(date, type) VALUES(?, ?)', [datetime.date.today(), 'channels'])
     self.conn.commit()
     c.close()
-
+    return
+    
   def updateProgram(self, date=None, rebuild=False):
     if date is None: date = datetime.date.today()
     else: date = date.date()
@@ -189,8 +192,8 @@ class ZattooDB(object):
         c.close()
         return
 
-    xbmcgui.Dialog().notification(__addon__.getLocalizedString(31022), date.strftime('%A %d.%m.%Y'), __addon__.getAddonInfo('path') + '/icon.png', 5000, False)
-
+    xbmcgui.Dialog().notification(__addon__.getLocalizedString(31917), date.strftime('%A %d.%m.%Y'), __addon__.getAddonInfo('path') + '/icon.png', 5000, False)
+    xbmc.executebuiltin("ActivateWindow(busydialog)")
     api = '/zapi/v2/cached/program/power_guide/' + self.zapi.AccountData['account']['power_guide_hash'] + '?end=' + str(toTime) + '&start=' + str(fromTime)
 
     print "api   "+api
@@ -222,9 +225,10 @@ class ZattooDB(object):
               [cid, program['t'], program['s'], program['e'], program['et'], ', '.join(program['g']), image, program['id'] ])            
     if count>0: 
       c.execute('INSERT into updates(date, type) VALUES(?, ?)', [date, 'program'])        
-      self.conn.commit()    
+      self.conn.commit() 
+    xbmc.executebuiltin("Dialog.Close(busydialog)")
     c.close()
-    
+    return
     
   def getChannelList(self, favourites=True):
     #self.updateChannels()
@@ -432,7 +436,7 @@ class ZattooDB(object):
         channels = self.getChannelList(fav)
 
         c = self.conn.cursor()
-
+        print 'START Programm'
         # for startup-notify
         if notify:
             PopUp = xbmcgui.DialogProgressBG()
@@ -464,3 +468,38 @@ class ZattooDB(object):
         if notify:
             PopUp.close()
         return 
+
+  def cleanProg(self):
+        d = (datetime.date.today() - datetime.timedelta(days=8))
+        midnight = datetime.time(0)
+        datelow = datetime.datetime.combine(d, midnight)
+        print 'CleanUp  ' + str(datelow)
+        c = self.conn.cursor()
+        c.execute('SELECT * FROM programs WHERE start_date < ?', [datelow])
+        r=c.fetchall()
+        print 'Anzahl Records  ' + str(len(r))
+        dialog = xbmcgui.Dialog()
+        if dialog.yesno(localString(31918), str(len(r)) + ' ' + localString(31920), '', '',local(106),local(107)):
+            
+            if len(r)>0:
+                nr=len(r)
+                PopUp = xbmcgui.DialogProgress()
+                counter=len(r)
+                bar = 0         # Progressbar (Null Prozent)
+                PopUp.create('ZattooBoxExt - Programmliste aufräumen', '')
+                PopUp.update(bar)
+                for row in r:
+                    c.execute('DELETE FROM programs WHERE showID = ?', (row['showID'],))
+                    bar += 1
+                    percent = int(bar * 100 / counter)
+                    PopUp.update(percent, 'Datensätze zu löschen ' + str(nr)) 
+                    if (PopUp.iscanceled()): 
+                        c.close
+                        return
+                    nr -= 1
+            PopUp.close() 
+            print 'DEL-Commit'
+            self.conn.commit()
+            c.close()
+        return
+

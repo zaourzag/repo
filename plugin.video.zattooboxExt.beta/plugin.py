@@ -195,7 +195,7 @@ def build_channelsList(addon_uri, addon_handle):
   channels = _zattooDB_.getChannelList(_listMode_ == 'favourites')
   if channels is not None:
     # get currently playing shows
-    program = _zattooDB_.getPrograms(channels, True)
+    program = _zattooDB_.getPrograms(channels, False)
     content = []
     # time of chanellist creation
     #content.append({'title': '[B][COLOR blue]' + time.strftime("%H:%M:%S") +'[/B][/COLOR]', 'isFolder': False, 'url':''})
@@ -772,7 +772,7 @@ def main():
   #xbmcgui.Dialog().notification("HANDLE", str(action)+' '+str(addon_handle), '', 1000, False)
   
   #hack for repeat actions from keyMap 
-  if ((action=='preview' or action=='epg' or action=='channellist')and action==xbmcgui.Window(10000).getProperty('ZBElastAction')):
+  if ((action=='preview' or action=='epg' )and action==xbmcgui.Window(10000).getProperty('ZBElastAction')):
     xbmcgui.Window(10000).setProperty('ZBElastAction', '')
     xbmc.executebuiltin("Action(FullScreen)")
     if(str(_zattooDB_.get_playing()['start'])=='1970-01-01 01:00:00'):makeZattooGUI()
@@ -836,6 +836,11 @@ def main():
       _library_.delete_library()
       __addon__.setSetting(id="library_dir", value="")
       xbmc.executebuiltin('Container.Refresh')
+  elif action == 'cleanProg':
+    _zattooDB_.cleanProg()
+    
+    
+    
   '''
   elif action == 'showInfo':
     #xbmc.executebuiltin('ActivateWindow(12003)')

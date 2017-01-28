@@ -26,7 +26,7 @@
         <setting label="31022" id="onlyfav" type="bool" enable="eq(-1,true)" default="false" />
         <setting type="sep"/>
         <setting label="31023" type="action" action="RunPlugin(plugin://plugin.video.zattooboxExt.beta/?mode=reloadDB)"/>
-        
+        <setting label="31913" type="action" action="RunPlugin(plugin://plugin.video.zattooboxExt.beta/?mode=cleanProg)"/>
     </category>
     
 </settings>

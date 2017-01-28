@@ -13,9 +13,8 @@ from resources.library import library
 from resources.zattooDB import ZattooDB
 _zattooDB_ = ZattooDB()          
 __addon__ = xbmcaddon.Addon()
-_listMode_ = __addon__.getSetting('channellist')
 _library_=library()
-
+localString = __addon__.getLocalizedString
 
               
 def refreshProg():
@@ -28,9 +27,12 @@ def refreshProg():
         #update programInfo    
         startTime=datetime.datetime.now()
         endTime=datetime.datetime.now()+datetime.timedelta(minutes = 15)
-        channels = _zattooDB_.getChannelList(_listMode_ == 'favourites')
         print 'StartRefresh  ' + str(datetime.datetime.now())
-        _zattooDB_.getProgInfo(False, startTime, endTime)
+        try:
+            _zattooDB_.getProgInfo(False, startTime, endTime)
+        except:
+            print 'ERROR on REFRESH'
+            pass
         print "REFRESH Prog  " + str(datetime.datetime.now())
 
 def recInfo():
@@ -43,22 +45,20 @@ def recInfo():
            
 def start():
     import urllib
-    try:
-        _zattooDB_.updateChannels()
-    except:
-        _zattooDB_.updateChannels()
+    
+    _zattooDB_.cleanProg()
+    _zattooDB_.updateChannels()
     _zattooDB_.updateProgram()
     
+    
+    xbmcgui.Dialog().notification(localString(31916), localString(30110),  __addon__.getAddonInfo('path') + '/icon.png', 3000, False) 
+    _zattooDB_.getProgInfo(True)
+    
+    xbmcgui.Dialog().notification(localString(31106), localString(31915),  __addon__.getAddonInfo('path') + '/icon.png', 3000, False) 
     xbmc.executebuiltin("ActivateWindow(busydialog)")
     recInfo()
     _library_.make_library()   
     xbmc.executebuiltin("Dialog.Close(busydialog)")
-    
-    channels = _zattooDB_.getChannelList(_listMode_ == 'favourites')
-    Time=datetime.datetime.now()
-    _zattooDB_.getProgInfo(True, Time, Time)
-
-    xbmcgui.Dialog().notification('Programm Informationen', __addon__.getLocalizedString(30110),  __addon__.getAddonInfo('path') + '/icon.png', 5000, False) 
 
     refreshProg()  
 

@@ -32,7 +32,7 @@ __addon__ = xbmcaddon.Addon()
 __addonId__=__addon__.getAddonInfo('id')
 __settings__ = xbmcaddon.Addon(__addonId__)
 __language__ = __settings__.getLocalizedString
-
+localString = __addon__.getLocalizedString
 
 DEBUG=False
 
@@ -471,11 +471,23 @@ class EPG(xbmcgui.WindowXML):
 							 focusFunction=self._findControlBelow)
 
 	def _nextDay(self):
-		self.viewStartDate += datetime.timedelta(days=1)
+		date = (self.viewStartDate + datetime.timedelta(days=1))
+		datehigh = (datetime.datetime.today() + datetime.timedelta(days=13))
+		if date > datehigh:
+			d = datetime.datetime.strftime(datetime.datetime.date(date), '%d.%m.%Y')
+			xbmcgui.Dialog().notification(str(d), localString(31303), time=3000) 
+			return
+		self.viewStartDate = date
 		self.onRedrawEPG(self.channelIdx, self.viewStartDate)
 
 	def _previousDay(self):
-		self.viewStartDate -= datetime.timedelta(days=1)
+		date = (self.viewStartDate - datetime.timedelta(days=1))
+		datelow = (datetime.datetime.today() - datetime.timedelta(days=8))
+		if date < datelow:
+			d = datetime.datetime.strftime(datetime.datetime.date(date), '%d.%m.%Y')
+			xbmcgui.Dialog().notification(str(d), localString(31304), time=3000) 
+			return
+		self.viewStartDate = date
 		self.onRedrawEPG(self.channelIdx, self.viewStartDate)
 
 	def _moveUp(self, count=1, scrollEvent=False):
@@ -799,14 +811,14 @@ class EPG(xbmcgui.WindowXML):
 		today = datetime.date.today()
 		date = dialog.numeric(1, 'Enter date').replace(' ','0').replace('/','.')
 		datelow = (datetime.date.today() - datetime.timedelta(days=7))
-		datehigh = (datetime.date.today() + datetime.timedelta(days=14))
+		datehigh = (datetime.date.today() + datetime.timedelta(days=13))
 
 		print str(datelow)
 		if time.strptime(date, '%d.%m.%Y') < time.strptime(str(datelow), '%Y-%m-%d'):
-			xbmcgui.Dialog().notification(str(date),' Datum ist zu klein', time=3000) 
+			xbmcgui.Dialog().notification(str(date), localString(31304), time=3000) 
 			return
 		if time.strptime(date, '%d.%m.%Y') > time.strptime(str(datehigh), '%Y-%m-%d'):
-			xbmcgui.Dialog().notification(str(date),' Datum ist zu gross', time=3000) 
+			xbmcgui.Dialog().notification(str(date), localString(31303), time=3000) 
 			return
 		date = time.strptime(date, '%d.%m.%Y')
 		today = time.strptime(str(today), '%Y-%m-%d')
