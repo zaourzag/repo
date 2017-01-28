@@ -70,7 +70,7 @@ msgstr "Level3 (2)"
 
 msgctxt "#30051"
 msgid "Failed to get Device ID. Please Retry."
-msgstr "Fehler beim Abrufen der Geräte-ID Bitte erneut versuchen."
+msgstr "Fehler beim Abrufen der Geräte-ID. Bitte erneut versuchen."
 
 msgctxt "#30101"
 msgid "DAZN is not available in your country"
@@ -91,10 +91,6 @@ msgstr "Falsche E-Mail-Adresse oder falsches Passwort"
 msgctxt "#30152"
 msgid "Unable to find email address"
 msgstr "Email Adresse kann nicht gefunden werden"
-
-msgctxt "#30153"
-msgid "Password does not match"
-msgstr "Passwort stimmt nicht überein"
 
 msgctxt "#30161"
 msgid "Subscribe & Pay Now"

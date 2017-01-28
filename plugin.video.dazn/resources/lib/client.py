@@ -42,7 +42,7 @@ class Client:
         self.POST_DATA = {
                             "AssetId"            : id,
                             "Format"             : "MPEG-DASH",
-                            "PlayerId"           : addon.getSetting('device_id'),
+                            "PlayerId"           : "DAZN-" + addon.getSetting('device_id'),
                             "Secure"             : "true",
                             "PlayReadyInitiator" : "false",
                             "BadManifests"       : [],
@@ -61,14 +61,11 @@ class Client:
         
     def setToken(self, auth, result):
         log("[%s] signin: %s" % (addon_id, result))
-        if auth:
+        if auth and result == "SignedIn":
             self.TOKEN = auth["Token"]
             self.HEADERS["Authorization"] = "Bearer " + self.TOKEN
         else:
-            self.TOKEN = ""
-            dialog.ok(addon_name, result)
-        if result == "HardOffer":
-            dialog.ok(addon_name, getString(30161))
+            self.signOut()
         addon.setSetting("token", self.TOKEN)
         
     def signIn(self):
@@ -97,14 +94,16 @@ class Client:
                             "DeviceId" : addon.getSetting('device_id')
                             }
         r = self.request(self.SIGNOUT)
+        self.TOKEN = ""
         
     def refreshToken(self):
         self.POST_DATA = {
-                            "OriginalToken" : self.TOKEN
+                            "OriginalToken" : self.TOKEN,
+                            "DeviceId" : addon.getSetting('device_id')
                             }
         data = self.request(self.REFRESH)
         if data.get("odata.error", None):
-            self.errorHandler(data)
+            self.errorHandler(data, refresh=True)
         else:
             self.setToken(data["AuthToken"], data.get("Result", "RefreshAccessTokenError"))
             
@@ -126,9 +125,7 @@ class Client:
                     self.signIn()
             else:
                 dialog.ok(addon_name, getString(30101))
-            self.POST_DATA  = {}
-        else:
-            self.TOKEN = ""
+        self.POST_DATA  = {}
         
     def request(self, url):
         if self.POST_DATA:
@@ -142,23 +139,22 @@ class Client:
                 log("[%s] error: json request (%s, %s)" % (addon_id, str(r.status_code), r.headers.get("content-type", "")))
             return {}
             
-    def errorHandler(self, data):
+    def errorHandler(self, data, refresh=False):
         msg  = data["odata.error"]["message"]["value"]
         code = data["odata.error"]["code"]
         log("[%s] error: %s (%s)" % (addon_id, msg, code))
-        if code == "1":
+        if code == "1" and refresh == False:
             self.refreshToken()
-        elif code == "2" or code.lower() == "signin":
+        elif code == "2" or refresh == True:
             self.signIn()
         elif code == "7":
             dialog.ok(addon_name, getString(30107))
         elif code == "10008":
-            dialog.ok(addon_name, getString(30108))
-        elif code == "InvalidAccount" or code == "invalidPassword":
+            self.refreshToken()
+            #dialog.ok(addon_name, getString(30108))
+        elif code == "InvalidAccount" or code == "InvalidPassword":
             dialog.ok(addon_name, getString(30151))
         elif code == "unableFindEmail":
             dialog.ok(addon_name, getString(30152))
-        elif code == "passwords_doesnt_match":
-            dialog.ok(addon_name, getString(30153))
         else:
             dialog.ok(addon_name, msg)
