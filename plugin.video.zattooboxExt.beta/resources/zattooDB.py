@@ -477,11 +477,11 @@ class ZattooDB(object):
         c = self.conn.cursor()
         c.execute('SELECT * FROM programs WHERE start_date < ?', [datelow])
         r=c.fetchall()
-        print 'Anzahl Records  ' + str(len(r))
-        dialog = xbmcgui.Dialog()
-        if dialog.yesno(localString(31918), str(len(r)) + ' ' + localString(31920), '', '',local(106),local(107)):
-            
-            if len(r)>0:
+        
+        if len(r)>0:
+            print 'Anzahl Records  ' + str(len(r))
+            dialog = xbmcgui.Dialog()
+            if dialog.yesno(localString(31918), str(len(r)) + ' ' + localString(31920), '', '',local(106),local(107)):
                 nr=len(r)
                 PopUp = xbmcgui.DialogProgress()
                 counter=len(r)
@@ -498,8 +498,8 @@ class ZattooDB(object):
                         return
                     nr -= 1
             PopUp.close() 
-            print 'DEL-Commit'
-            self.conn.commit()
-            c.close()
+
+        self.conn.commit()
+        c.close()
         return
 
