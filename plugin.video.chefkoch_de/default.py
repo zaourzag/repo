@@ -20,13 +20,12 @@ baseUrl = "http://www.chefkoch.de"
 
 def index():
     content = getUrl(baseUrl+"/video/")
-    spl = content.split('class="magazin-teaser-link"')
+    spl = content.split('teaser-box teaser-box--default"')
     for i in range(1, len(spl), 1):
         entry = spl[i]
-        match = re.compile('href="(.+?)"', re.DOTALL).findall(entry)
-        url = match[0]
-        match = re.compile('title="(.+?)"', re.DOTALL).findall(entry)
-        title = cleanTitle(match[0])
+        match = re.compile('<a href="(.+?)" hreflang="de">(.+?)</a>', re.DOTALL).findall(entry)
+        url = match[0][0]        
+        title = cleanTitle(match[0][1])
         match = re.compile('src="(.+?)"', re.DOTALL).findall(entry)
         thumb = match[0]
         addDir(title, baseUrl+url, 'listVideos', thumb)
@@ -37,16 +36,16 @@ def index():
 
 def listVideos(url):
     content = getUrl(url)
-    spl = content.split('class="magazin-teaser teaser-small teaser-tv"')
+    spl = content.split('<article class="teaser-box teaser-box--default">')
     for i in range(1, len(spl), 1):
         entry = spl[i]
         match = re.compile('href="(.+?)"', re.DOTALL).findall(entry)
         url = match[0]
-        match = re.compile('alt="(.+?)"', re.DOTALL).findall(entry)
-        title = cleanTitle(match[0])
+        match = re.compile('>([^<]+)</a>', re.DOTALL).findall(entry)
+        title = cleanTitle(match[1])
         match = re.compile('src="(.+?)"', re.DOTALL).findall(entry)
         thumb = match[0]
-        match = re.compile('class="magazin-teaser-subtitle">(.+?)<', re.DOTALL).findall(entry)
+        match = re.compile('<p>(.+?)</p>', re.DOTALL).findall(entry)
         desc = cleanTitle(match[0])
         addLink(title, baseUrl+url, 'playVideo', thumb, desc)
     matchPage = re.compile('<span class="magazin-pagination-next">.+?<a href="(.+?)">(.+?)</a>', re.DOTALL).findall(content)
