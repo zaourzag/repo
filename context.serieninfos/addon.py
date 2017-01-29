@@ -196,6 +196,7 @@ if __name__ == '__main__':
     debug("TITLE :::: "+title)
     
     suchtitle=title.replace(" ","+")
+    suchtitle=suchtitle.replace("'","")
     try:
       suchtitle2 = re.compile('(.+?)\+\([0-9]+\)', re.DOTALL).findall(suchtitle)[0]     
       suchtitle=suchtitle2
