@@ -253,17 +253,17 @@ def delspiel(zeile)   :
     fp.close()    
 def menu1():    
     debug("Start Menu")
-    addDir(name="Spiel Eintragen", url="", mode="menu2", iconimage="" )
-    addDir(name="Spiel Löschen", url="", mode="delgame", iconimage="" )       
-    addDir("Settings", "Settings", 'Settings', "") 
+    addDir(name=translation(30061), url="", mode="menu2", iconimage="" )
+    addDir(name=translation(30060), url="", mode="delgame", iconimage="" )       
+    addDir(translation(30059), "Settings", 'Settings', "") 
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 
 def menu2():
-     addDir(name="Top Spiele",url="http://www.sport1.de/fussball/alle-ligen-und-wettbewerbe", mode="add_game", iconimage="" )
-     addDir(name="Nationale Liegen",url="http://www.sport1.de/fussball/alle-ligen-und-wettbewerbe/nationale-ligen", mode="add_game", iconimage="" )
-     addDir(name="Internationale Ligen und Pokalwettbewerbe",url="http://www.sport1.de/fussball/alle-ligen-und-wettbewerbe/internationale-ligen-und-pokalwettbewerbe", mode="add_game", iconimage="" )
-     addDir(name="Internationale Turniere",url="http://www.sport1.de/fussball/alle-ligen-und-wettbewerbe/internationale-turniere", mode="add_game", iconimage="" )
-     addDir(name="Internationale Klub-Wettbewerbe",url="http://www.sport1.de/fussball/alle-ligen-und-wettbewerbe/internationale-klubwettbewerbe", mode="add_game", iconimage="" )
+     addDir(name=translation(30058),url="http://www.sport1.de/fussball/alle-ligen-und-wettbewerbe", mode="add_game", iconimage="" )
+     addDir(name=translation(30057),url="http://www.sport1.de/fussball/alle-ligen-und-wettbewerbe/nationale-ligen", mode="add_game", iconimage="" )
+     addDir(name=translation(30056),url="http://www.sport1.de/fussball/alle-ligen-und-wettbewerbe/internationale-ligen-und-pokalwettbewerbe", mode="add_game", iconimage="" )
+     addDir(name=translation(30055),url="http://www.sport1.de/fussball/alle-ligen-und-wettbewerbe/internationale-turniere", mode="add_game", iconimage="" )
+     addDir(name=translation(30054),url="http://www.sport1.de/fussball/alle-ligen-und-wettbewerbe/internationale-klubwettbewerbe", mode="add_game", iconimage="" )
      xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
      
 
@@ -291,7 +291,7 @@ params = parameters_string_to_dict(sys.argv[2])
 mode = urllib.unquote_plus(params.get('mode', ''))
 url = urllib.unquote_plus(params.get('url', ''))
 name=urllib.unquote_plus(params.get('name', ''))
-debug("Mode Ist :"+mode)
+debug("Mode Is:"+mode)
 if mode=='':
     menu1()  
 if mode=="menu2":

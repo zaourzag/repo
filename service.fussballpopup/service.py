@@ -369,25 +369,25 @@ if __name__ == '__main__':
               if spielzeit=="false":
                 continue
               if kind=="game-end":
-                Meldung=" Das Spiel "+ inn[nr] +" gegen "+aus[nr] +" Endete mit "+ccontent
+                Meldung=translation(30049)+ inn[nr] +translation(30041)+aus[nr] +translation(30053)+ccontent
               if kind=="game-start":
-                Meldung=" Das Spiel "+ inn[nr] +" gegen "+aus[nr] +" hat Begonnen"
+                Meldung=translation(30049)+ inn[nr] +translation(30041)+aus[nr] +translation(30052)
               if kind=="first-half-end":
-                Meldung="Die Erste Halbzeit des Spiels "+ inn[nr] +" gegen "+aus[nr] +" ist zuende. Es steht "+ccontent                  
+                Meldung=translation(30048)+ inn[nr] +translation(30041)+aus[nr] +translation(30050)+ccontent                  
               if kind=="second-half-start":
-                Meldung="Die Zweite Halbzeit des Spiels "+ inn[nr] +" gegen "+aus[nr] +" hat begonnen. Es steht "+ccontent            
+                Meldung=translation(30047)+ inn[nr] +translation(30041)+aus[nr] +translation(30051)+ccontent            
               if kind=="second-half-end":
-                Meldung="Die Zweite Halbzeit des Spiels "+ inn[nr] +" gegen "+aus[nr] +" ist zuende. Es steht "+ccontent                          
+                Meldung=translation(30047)+ inn[nr] +translation(30041)+aus[nr] +translation(30050)+ccontent                          
               if kind=="first-extra-start":
-                Meldung="Die Erste Hälfte der Verlaengerung des Spiels "+ inn[nr] +" gegen "+aus[nr] +" hat Begonnen. Es steht "+ccontent          
+                Meldung=translation(30045)+ inn[nr] +translation(30041)+aus[nr] +translation(30051)+ccontent          
               if kind=="first-extra-end":
-                Meldung="Die Erste Hälfte der Verlaengerung des Spiels "+ inn[nr] +" gegen "+aus[nr] +" ist zuende. Es steht "+ccontent                           
+                Meldung=translation(30045)+ inn[nr] +translation(30041)+aus[nr] +translation(30050)+ccontent                           
               if kind=="second-extra-start":
-                Meldung="Die Zweite Hälfte der Verlaengerung des Spiels "+ inn[nr] +" gegen "+aus[nr] +" hat begonnen. Es steht "+ccontent                                                 
+                Meldung=translation(30043)+ inn[nr] +translation(30041)+aus[nr] +translation(30051)+ccontent                                                 
               if kind=="second-extra-end":
-                Meldung="Die Zweite Hälfte der Verlaengerung des Spiels "+ inn[nr] +" gegen "+aus[nr] +" ist zuende. Es steht "+ccontent                                                 
+                Meldung=translation(30043)+ inn[nr] +translation(30041)+aus[nr] +translation(30050)+ccontent                                                 
               if kind=="penalty-start":
-                Meldung="Das Elfmeter Schiesse des Spiels "+ inn[nr] +" gegen "+aus[nr] +" hat begonnen. Es steht "+ccontent                                                 
+                Meldung=translation(30040)+ inn[nr] +translation(30041)+aus[nr] +translation(30042)+ccontent                                                 
             if action=="card":
               if karten=="false":
                 continue
@@ -395,10 +395,10 @@ if __name__ == '__main__':
               person=element["person"]["name"]
               personid=element["person"]["id"]
               if kind=="yellow":
-                Meldung=minute +" Minute: Gelbe Karte fuer "+ person +" von "+ team 
+                Meldung=minute +translation(30039)+ person +translation(30036)+ team 
                 foto1=yellow
               if kind=="red":
-                Meldung=minute +" Minute: Rote Karte fuer "+ person +" von "+ team 
+                Meldung=minute +translation(30038)+ person +translation(30036)+ team 
             if action=="goal": 
               if tor=="false":
                 continue
@@ -407,9 +407,9 @@ if __name__ == '__main__':
               personid=element["person"]["id"]
               foto1="http://images.sport1.de/imagix/filter2/jpeg/_set=profile_picture/http://sport1.weltsport.net/gfx/person/l/"+personid+".jpg"
               if kind=="penalty":    
-                Meldung="TOOR !#n#"+minute +" Minute: Tor durch Strafstoss von "+ person +" von "+ team +". Es steht "+ccontent                    
+                Meldung=translation(30032)+minute +translation(30035)+ person +translation(30036)+ team +translation(30037)+ccontent                    
               else:   
-                Meldung="TOOR !#n#"+ minute +" Minute: Spieler "+person +" schiesst ein Tor fuer "+team+". Es steht nun : "+ ccontent                          
+                Meldung=translation(30031)+ minute +translation(30032)+person +translation(30033)+team+translation(30034)+ ccontent                          
             if action=="pso": 
               if elfmeter=="false":
                 continue                    
@@ -418,9 +418,9 @@ if __name__ == '__main__':
               personid=element["person"]["id"]  
               foto1="http://images.sport1.de/imagix/filter2/jpeg/_set=profile_picture/http://sport1.weltsport.net/gfx/person/l/"+personid+".jpg"
               if kind=="goal": 
-                Meldung="Elf Meter Schiessen Tor von "+ person +" für "+ team
+                Meldung=translation(30030)+ person +translation(30029)+ team
               if kind=="goal": 
-                Meldung="Elf Meter Schiessen Verfehl von "+ person +" für "+ team
+                Meldung=translation(30028)+ person +translation(30029)+ team
             if action=="playing":
               if spielerwechsel=="false":
                 continue
@@ -436,7 +436,7 @@ if __name__ == '__main__':
                 in_id=personid
                 Meldung=""
               if not in_spieler=="" and not out_spieler=="":
-                Meldung=minute +" Minute: "+team +" tauscht "+out_spieler +" durch "+in_spieler 
+                Meldung=minute +translation(30025)+team +translation(30026)+out_spieler +translation(30027)+in_spieler 
                 foto1="http://images.sport1.de/imagix/filter2/jpeg/_set=profile_picture/http://sport1.weltsport.net/gfx/person/l/"+out_id+".jpg"
                 foto2="http://images.sport1.de/imagix/filter2/jpeg/_set=profile_picture/http://sport1.weltsport.net/gfx/person/l/"+in_id+".jpg"
                 in_spieler=""
