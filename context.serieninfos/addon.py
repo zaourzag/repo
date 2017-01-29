@@ -78,7 +78,7 @@ class Infowindow(pyxbmct.AddonDialogWindow):
     pos=0
     def __init__(self, title='',text='',image="",lastplayd_title="",lastepisode_name="",fehlen=""):
         super(Infowindow, self).__init__(title)
-        self.setGeometry(600,600,8,8)        
+        self.setGeometry(600,600,16,8)        
         self.bild=image
         self.text=text    
         self.lastplayd_title=lastplayd_title
@@ -90,21 +90,25 @@ class Infowindow(pyxbmct.AddonDialogWindow):
 
     def set_info_controls(self):
       self.image = pyxbmct.Image(self.bild)
-      self.placeControl(self.image, 0, 0,columnspan=8,rowspan=2)
-      self.textbox=pyxbmct.TextBox()            
-      self.placeControl(self.textbox, 2, 0, columnspan=8,rowspan=3)                       
+      self.placeControl(self.image, 0, 0,columnspan=8,rowspan=3)
+      if not fehlen=="":
+         x=0
+      else:
+         x=1
+      self.textbox=pyxbmct.TextBox()       
+      self.placeControl(self.textbox, 3, 0, columnspan=8,rowspan=11+x)                       
       self.textbox.setText(self.text)
       if not fehlen=="":
         self.textboxf=pyxbmct.TextBox()                  
-        self.placeControl(self.textboxf, 5, 0, columnspan=8,rowspan=1)                       
+        self.placeControl(self.textboxf, 14, 0, columnspan=8,rowspan=1)                       
         self.textboxf.setText("Fehlende Folgen : "+ fehlen)
       
       self.textbox2=pyxbmct.TextBox()                  
-      self.placeControl(self.textbox2, 7, 0, columnspan=3,rowspan=1)                       
+      self.placeControl(self.textbox2, 15, 0, columnspan=3,rowspan=1)                       
       self.textbox2.setText("Letze Gesehene : "+ lastplayd_title)
       
       self.textbox3=pyxbmct.TextBox()            
-      self.placeControl(self.textbox3, 7, 5, columnspan=3,rowspan=1)                       
+      self.placeControl(self.textbox3, 15, 5, columnspan=3,rowspan=1)                       
       self.textbox3.setText("Vorhanden Bis : "+ lastepisode_name)      
 
       self.connectEventList(
@@ -244,8 +248,17 @@ if __name__ == '__main__':
         debug("---")
         Zusammenfassung=Zusammenfassung.replace("&uuml;","ü")
         Zusammenfassung=Zusammenfassung.replace("&auml;","ä")
-        Zusammenfassung=Zusammenfassung.replace("&ouml;","ö")
-        Zusammenfassung=Zusammenfassung.replace("&szlig;","ß")    
+        Zusammenfassung=Zusammenfassung.replace("&ouml;","ö")        
+        Zusammenfassung=Zusammenfassung.replace("&szlig;","ß")  
+        Daten = re.compile('<tr><td class="nowrap"><a href=".+?">(.+?)</a></td><td class="ac">(.+?)</td>', re.DOTALL).findall(content)
+        y=1
+        for staffel,Episoden in  Daten:
+           y=y+1
+           y=y%2
+           if y==0:
+              Zusammenfassung=Zusammenfassung+"\n"+ staffel +" : "+  Episoden +" Episoden"  
+           else:
+              Zusammenfassung=Zusammenfassung+"               "+ staffel +" : "+  Episoden +" Episoden"  
         window = Infowindow(title="SerienFino",text=Zusammenfassung,image=Bild,lastplayd_title=lastplayd_title,lastepisode_name=lastepisode_name,fehlen=fehlen)
         window.doModal()
         del window
