@@ -375,7 +375,7 @@ class ZattooDB(object):
     if row is not None:
       playing = {'channel':row['channel'], 'start':row['start_date'], 'action_time':row['action_time'], 'current_stream':row['current_stream'], 'streams':row['streams']}
     else:
-      c.execute('SELECT * FROM channels WHERE weight=?', ['0'] )
+      c.execute('SELECT * FROM channels ORDER BY weight ASC LIMIT 1')
       row = c.fetchone() 
       playing = {'channel':row['id'], 'start':datetime.datetime.now(), 'action_time':datetime.datetime.now()}
     c.close()
