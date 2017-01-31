@@ -376,7 +376,7 @@ if mode=="getseries":
     maxlink= changetitle(series)         
     Bild,Zusammenfassung,staffel_arr,folgen_arr,letztefolge,this_staffel,ende=parseserie(maxlink,sstaffel=season)
     # Window ID
-    windowid = 10135
+    windowid = 10000
     xbmcgui.Window(windowid).clearProperties()
     xbmcgui.Window(windowid).setProperty('Bild',Bild)
     xbmcgui.Window(windowid).setProperty('Zusammenfassung',Zusammenfassung)
