@@ -385,6 +385,8 @@ if mode=="getseries":
     xbmcgui.Window(windowid).setProperty('letztefolge',letztefolge)
     xbmcgui.Window(windowid).setProperty('this_staffel',this_staffel)
     xbmcgui.Window(windowid).setProperty('ende',ende)
+    xbmcgui.Window(windowid).setProperty('fehlen',fehlen)
+    
     
     
 cj.save(cookie,ignore_discard=True, ignore_expires=True)
