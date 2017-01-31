@@ -93,8 +93,8 @@ ACTION_CHANNEL_DOWN = 185
 ACTION_PAGE_UP = 5
 ACTION_PAGE_DOWN = 6
 
-SWISS = xbmcaddon.Addon('plugin.video.zattooboxExt.beta').getSetting('swiss')
-HIQ = xbmcaddon.Addon('plugin.video.zattooboxExt.beta').getSetting('hiq')
+SWISS = __addon__.getSetting('swiss')
+HIQ = __addon__.getSetting('hiq')
 
 
 
@@ -127,7 +127,7 @@ def build_directoryContent(content, addon_handle, cache=True, root=False, con='m
     record['thumbnail'] = record.get('thumbnail', "")
     record['selected'] = record.get('selected', False)
     record['genre'] = record.get('genre', "")
-    record['year'] = record.get('year', "")
+    record['year'] = record.get('year', " ")
     record['country'] = record.get('country', "")
     record['category'] = record.get('category', "")
     
@@ -193,9 +193,11 @@ def build_root(addon_uri, addon_handle):
 def build_channelsList(addon_uri, addon_handle):
   import urllib
   channels = _zattooDB_.getChannelList(_listMode_ == 'favourites')
+  li = False
   if channels is not None:
     # get currently playing shows
-    program = _zattooDB_.getPrograms(channels, False)
+    if __addon__.getSetting('dbonstart') == 'true': li = True
+    program = _zattooDB_.getPrograms(channels, li)
     content = []
     # time of chanellist creation
     #content.append({'title': '[B][COLOR blue]' + time.strftime("%H:%M:%S") +'[/B][/COLOR]', 'isFolder': False, 'url':''})
@@ -281,7 +283,7 @@ def build_recordingsList(addon_uri, addon_handle):
     li.setProperty('IsPlayable', 'true')
 
     contextMenuItems = []
-    contextMenuItems.append(('delete recording', 'RunPlugin("plugin://'+__addonId__+'/?mode=remove_recording&recording_id='+str(record['id'])+'")'))
+    contextMenuItems.append((localString(31921), 'RunPlugin("plugin://'+__addonId__+'/?mode=remove_recording&recording_id='+str(record['id'])+'")'))
     li.addContextMenuItems(contextMenuItems, replaceItems=True)
     
     xbmcplugin.addDirectoryItem(
@@ -325,6 +327,7 @@ def setup_recording(program_id):
   resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/playlist/program', params)
   xbmcgui.Dialog().ok(__addonname__, __addon__.getLocalizedString(31903))
   _library_.make_library()  # NEW added - by Samoth
+
 
 def delete_recording(recording_id):
   params = {'recording_id': recording_id}
@@ -764,6 +767,8 @@ class zattooOSD(xbmcgui.WindowXMLDialog):
 def main():
 
   global _listMode_
+  if _listMode_ == None: _listMode_='all'
+  print 'LISTMODE  ' + str(_listMode_)
   addon_uri = sys.argv[0]
   addon_handle = int(sys.argv[1])
   args = urlparse.parse_qs(sys.argv[2][1:])
@@ -816,9 +821,12 @@ def main():
     delete_recording(recording_id)
   elif action == 'reloadDB':
     _zattooDB_.reloadDB()
-    xbmcgui.Dialog().notification(__addonname__, __addon__.getLocalizedString(31250),  __addon__.getAddonInfo('path') + '/icon.png', 000, False)    
-    _library_.delete_library() # New added - by Samoth    
-    _library_.make_library
+    xbmcgui.Dialog().notification(localString(31916), localString(30110),  __addon__.getAddonInfo('path') + '/icon.png', 3000, False) 
+    _zattooDB_.getProgInfo(True)    
+    xbmcgui.Dialog().notification(localString(31106), localString(31915),  __addon__.getAddonInfo('path') + '/icon.png', 3000, False) 
+    xbmc.executebuiltin("ActivateWindow(busydialog)")
+    _library_.make_library()   
+    xbmc.executebuiltin("Dialog.Close(busydialog)")
   elif action == 'changeStream':
     dir = int(args.get('dir')[0])
     change_stream(dir)
@@ -838,7 +846,7 @@ def main():
       xbmc.executebuiltin('Container.Refresh')
   elif action == 'cleanProg':
     _zattooDB_.cleanProg()
-    
+  
     
     
   '''
@@ -848,8 +856,7 @@ def main():
     info.doModal()
     del info
   '''
-  
-  
+
   
 main()
 

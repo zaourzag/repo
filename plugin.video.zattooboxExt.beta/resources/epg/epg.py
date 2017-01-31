@@ -24,13 +24,14 @@ import threading
 import xbmc, xbmcgui, xbmcaddon, xbmcplugin
 
 from resources.zattooDB import ZattooDB
-
+_zattooDB_ = ZattooDB()
 # from notification import Notification
 from strings import *
 
 __addon__ = xbmcaddon.Addon()
 __addonId__=__addon__.getAddonInfo('id')
 __settings__ = xbmcaddon.Addon(__addonId__)
+__addonname__ = __addon__.getAddonInfo('name')
 __language__ = __settings__.getLocalizedString
 localString = __addon__.getLocalizedString
 
@@ -76,6 +77,13 @@ HALF_HOUR = datetime.timedelta(minutes=30)
 
 def debug(s):
 	if DEBUG: xbmc.log(str(s), xbmc.LOGDEBUG)
+	
+def setup_recording(program_id):
+  #print('RECORDING: '+program_id)
+  params = {'program_id': program_id}
+  resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/playlist/program', params)
+  xbmcgui.Dialog().ok(__addonname__, __addon__.getLocalizedString(31903))
+  _library_.make_library()  # NEW added - by Samoth	
 
 class Point(object):
 	def __init__(self):
@@ -252,14 +260,10 @@ class EPG(xbmcgui.WindowXML):
 			return
 			
 		elif controlId == 4350:
-			
 			self.getControl(4401).setVisible(False)
 			self.getControl(4400).setVisible(True)
-			return
-			
 		
-		
-		if controlId == 4303:
+		elif controlId == 4303:
 			self._moveUp(CHANNELS_PER_PAGE)
 		elif controlId == 4304:
 			self._moveDown(CHANNELS_PER_PAGE)
@@ -296,19 +300,22 @@ class EPG(xbmcgui.WindowXML):
 		if start > now :
 #			if not self.premiumUser: xbmcgui.Dialog().ok('Error',' ',strings(ERROR_NO_PREMIUM))
 			if xbmcgui.Dialog().yesno(program['title'], strings(RECORD_SHOW)):
-				url = "plugin://"+__addonId__+"/?mode=record_p&program_id=" + program['showID']
+				#url = 'plugin://'+__addonId__+'/?mode=record_p&program_id=' + program['showID']
+				setup_recording(program['showID'])
 			else: return
 		# else if endtime is in the past -> recall
 		elif end < now:
 			if not self.premiumUser: xbmcgui.Dialog().ok('Error',' ',strings(ERROR_NO_PREMIUM))
 			elif __addon__.getSetting('epgPlay')=='true':
 				url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] + "&showID=" + program['showID'] + "&start=" + str(start) + "&end=" + str(end)
+				
 			else:
 				ret = xbmcgui.Dialog().select(program['channel']+': '+program['title']+' '+program['start_date'].strftime('%H:%M')+' - '+program['end_date'].strftime('%H:%M'),[strings(PLAY_FROM_START), strings(RECORD_SHOW)])
 				if ret==0:  #recall
 					url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] + "&showID=" + program['showID'] + "&start=" + str(start) + "&end=" + str(end)
 				elif ret==1: #record
-					url = "plugin://"+__addonId__+"/?mode=record_p&program_id=" + program['showID']
+					#url = "plugin://"+__addonId__+"/?mode=record_p&program_id=" + program['showID']
+					setup_recording(program['showID'])
 				else: return
 		# else currently playing
 		else:
@@ -321,10 +328,11 @@ class EPG(xbmcgui.WindowXML):
 				elif ret==1:  #recall
 					url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] + "&showID=" + program['showID'] + "&start=" + str(start) + "&end=" + str(end)
 				elif ret==2: #record
-					url = "plugin://"+__addonId__+"/?mode=record_p&program_id=" + program['showID']
+					#url = "plugin://"+__addonId__+"/?mode=record_p&program_id=" + program['showID']
+					setup_recording(program['showID'])
 				else: return
 		xbmc.executebuiltin('XBMC.RunPlugin(%s)' % url)
-
+		
 
 	def setFocusId(self, controlId):
 		control = self.getControl(controlId)
@@ -508,6 +516,9 @@ class EPG(xbmcgui.WindowXML):
 		self.favourites = favourites
 
 	def onRedrawEPG(self, channelStart, startTime, focusFunction=None):
+		
+		print 'StartTime  ' + str(startTime) + ' ' + str(type(startTime))
+		
 		if self.redrawingEPG or self.isClosing:
 			debug('onRedrawEPG - already redrawing')
 			return  # ignore redraw request while redrawing
@@ -562,7 +573,7 @@ class EPG(xbmcgui.WindowXML):
 				self.setControlLabel(4010 + idx, ' ')
 			else:
 				channel = channels[channels['index'][channelStart+idx]]
-				print 'TEST  ' + str(channel['id'])
+				#print 'TEST  ' + str(channel['id'])
 				self.setControlLabel(4010 + idx, channel['title'])
 				if channel['logo'] is not None: self.setControlImage(4110 + idx, channel['logo'])
 				else: self.setControlImage(4110 + idx, ' ')
@@ -762,6 +773,7 @@ class EPG(xbmcgui.WindowXML):
 		else:
 			return ''
 
+
 	def formatDate(self, timestamp):
 		if timestamp:
  			format = xbmc.getRegion('datelong')
@@ -809,7 +821,7 @@ class EPG(xbmcgui.WindowXML):
 		format = xbmc.getRegion('dateshort')
 		dialog = xbmcgui.Dialog()
 		today = datetime.date.today()
-		date = dialog.numeric(1, 'Enter date').replace(' ','0').replace('/','.')
+		date = dialog.numeric(1, localString(31924)).replace(' ','0').replace('/','.')
 		datelow = (datetime.date.today() - datetime.timedelta(days=7))
 		datehigh = (datetime.date.today() + datetime.timedelta(days=13))
 

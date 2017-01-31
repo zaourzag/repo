@@ -18,7 +18,7 @@
 #  http://www.gnu.org/copyleft/gpl.html
 #
 
-import xbmc, xbmcgui, xbmcaddon, os, datetime, time
+import xbmc, xbmcgui, xbmcaddon, os, xbmcplugin, datetime, time
 import json
 from zapisession import ZapiSession
 
@@ -73,11 +73,12 @@ class ZattooDB(object):
 
   @staticmethod
   def convert_datetime(ts):
-    try:
-      return datetime.datetime.fromtimestamp(float(ts))
-    except ValueError:
-      return None
 
+    try:
+        return datetime.datetime.fromtimestamp(float(ts))
+    except ValueError:
+        return None
+         
   def connectSQL(self):
     import sqlite3
 
@@ -183,10 +184,9 @@ class ZattooDB(object):
     fromTime = int(time.mktime(date.timetuple()))  # UTC time for zattoo
     toTime = fromTime + 86400  # is 24h maximum zattoo is sending?
 
-
     #get program from DB and return if it's not empty
 #     if self._isDBupToDate(date, 'programs'):return
-    c.execute('SELECT * FROM programs WHERE start_date > ? AND end_date < ?', [fromTime+18000, fromTime+25200]) #get shows between 05:00 and 07:00
+    c.execute('SELECT * FROM programs WHERE start_date > ? AND end_date < ?', (fromTime+18000, fromTime+25200,)) #get shows between 05:00 and 07:00
     count=c.fetchall()
     if len(count)>0: 
         c.close()
@@ -274,21 +274,31 @@ class ZattooDB(object):
     for chan in channels['index']:
       c.execute('SELECT * FROM programs WHERE channel = ? AND start_date < ? AND end_date > ?', [chan, endTime, startTime])
       r = c.fetchall()
+    
       for row in r:
         description_long = row['description_long']
+        year = row['year']
+        country = ['country']
+        category =['category']
         if get_long_description and description_long is None: 
             #description_long = self.getShowInfo(row["showID"],'description')
-            description_long = self.getShowLongDescription(row['showID'])
+            info = self.getShowLongDescription(row['showID'])
+            print 'INFO  ' + str(type(info)) + ' ' + str(row['showID'])+ '  ' + str(info)
+            if type(info) == dict:
+                description_long = info.get('longDesc','')
+                year = info.get('Year',' ')
+                country = info.get('Country','')
+                category = info.get('category','')
         programList.append({
             'channel': row['channel'],
             'showID' : row['showID'],
             'title' : row['title'],
             'description' : row['description'],
             'description_long' : description_long,
-            'year': row['year'],
+            'year': year, #row['year'],
             'genre': row['genre'],
-            'country': row['country'],
-            'category': row['category'],
+            'country': country, #row['country'],
+            'category': category, #row['category'],
             'start_date' : row['start_date'],
             'end_date' : row['end_date'],
             'image_small' : row['image_small'],
@@ -319,7 +329,7 @@ class ZattooDB(object):
             info.execute('UPDATE programs SET description_long=? WHERE showID=?', [longDesc, showID ])
             year = showInfo['program']['year']
             if year is None: year=''
-            info.execute('UPDATE programs SET year=? WHERE showID=?', [year, showID ])
+            info.execute('UPDATE programs SET year=? WHERE showID=?', [year, showID ])          
             category = ', '.join(showInfo['program']['categories'])
             info.execute('UPDATE programs SET category=? WHERE showID=?', [category, showID ])
             country = showInfo['program']['country']
@@ -328,7 +338,7 @@ class ZattooDB(object):
             
         self.conn.commit()
         info.close()
-        return longDesc
+        return {'longDesc':longDesc, 'year':year, 'country':country, 'category':category}
         
   def getShowInfo(self, showID, field='all'):
         if field!='all':
@@ -432,7 +442,7 @@ class ZattooDB(object):
 
   def getProgInfo(self, notify=False, startTime=datetime.datetime.now(), endTime=datetime.datetime.now()):
         fav = False
-        if __addon__.getSetting('onlyfav') == 'true': fav = True
+        if __addon__.getSetting('onlyfav') == 'true': fav = 'favorites'
         channels = self.getChannelList(fav)
 
         c = self.conn.cursor()
@@ -451,8 +461,9 @@ class ZattooDB(object):
             
             c.execute('SELECT * FROM programs WHERE channel = ? AND start_date < ? AND end_date > ?', [chan, endTime, startTime])
             r=c.fetchall()
-            
             for row in r:
+                counter += 1
+            for row in r: 
                 print str(row['channel']) + ' - ' + str(row['showID'])
                 if notify:
                     bar += 1
@@ -462,7 +473,7 @@ class ZattooDB(object):
                 if description_long is None: 
                     print 'Lang ' + str(row['channel'])
                     if notify:
-                        PopUp.update(percent,'ZattooBoxExt lade Programm Informationen ...', 'Programm Information für ' + str(row['channel']))
+                        PopUp.update(percent,localString(31922), localString(31923) + str(row['channel']))
                     description_long = self.getShowLongDescription(row["showID"])
         c.close()
         if notify:
