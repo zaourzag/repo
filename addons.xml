@@ -1509,20 +1509,6 @@ v0.7.0 (2016-12-26)
         <broken>Kodinerds Repo ersetzt Lost und Found</broken>
 </addon>
 
-<addon id="repository.membrane" name="membrane's KODI Add-ons" version="1.9.0" provider-name="membrane">
-	<extension point="xbmc.addon.repository" name="membrane's XBMC Add-on Repository">
-		<info compressed="false">http://github.com/prof-membrane/repository.membrane/raw/master/addons.xml</info>
-		<checksum>http://github.com/prof-membrane/repository.membrane/raw/master/addons.xml.md5</checksum>
-		<datadir zip="true">http://github.com/prof-membrane/repository.membrane/raw/master/</datadir>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary>Install membrane's Add-ons</summary>
-		<description>Download and install addons by membrane</description>
-		<platform>all</platform>
-	</extension>
-</addon>
-
-
 <addon id="resource.images.addonicons.color" name="Alternative Addon Icons" version="1.2.1" provider-name="Barney Stinsen">
 	<extension point="kodi.resource.images" compile="false" type="addonicons" />
 	<requires>
