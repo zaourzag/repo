@@ -556,7 +556,7 @@ msgid "Records delete"
 msgstr ""
 
 msgctxt "#31915"
-msgstr "load recordings"
+msgid "Load recordings"
 msgstr ""
 
 msgctxt "#31916"
@@ -568,11 +568,25 @@ msgid "Download TV shows"
 msgstr ""
 
 msgctxt "#31918"
-msgid "ZattooBoxExt - List of programs"
+msgid "ZattooBox - List of programs"
 msgstr ""
 
 msgctxt "#31920"
 msgid "Records are not required\nDelete records now?"
 msgstr ""
 
+msgctxt "#31921"
+msgid "delete recording"
+msgstr ""
 
+msgctxt "#31922"
+msgid "ZattooBox Download program information ..."
+msgstr ""
+
+msgctxt "#31923"
+msgid "Program information for channel - "
+msgstr ""
+
+msgctxt "#31924"
+msgid "enter date"
+msgstr ""

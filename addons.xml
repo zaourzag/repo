@@ -2438,10 +2438,10 @@ See changelog.txt for more details.</news>
   </extension>
 </addon>
 
-<addon id="plugin.video.zattooboxExt.beta" version="1.6.8.2" name="Zattoo Box Extended Beta" provider-name="Steffen Rolapp">
+<addon id="plugin.video.zattooboxExt.beta" version="1.6.8.3" name="Zattoo Box Extended Beta" provider-name="Steffen Rolapp">
   <requires>
-    <import addon="xbmc.python" version="2.24.0"/>
-    <import addon="xbmc.addon" version="16.0.0" />
+    <import addon="xbmc.python" version="2.14.0"/>
+    <import addon="xbmc.addon" version="13.0.0" />
   </requires>
   <extension point="xbmc.python.pluginsource" library="plugin.py">
     <provides>video</provides>
@@ -2450,19 +2450,34 @@ See changelog.txt for more details.</news>
 
   <extension point="xbmc.addon.metadata">
     <summary lang="en">Play Live TV and recorded shows from Zattoo.</summary>
+    <summary lang="de">Zattoo Live TV, Aufnahmen und EPG</summary>
     <description lang="en">Zattoo Live TV, recorded shows and EPG.
 - switch between favourites/all channels
 - channels preview
 - EPG: live/setup recording/recall (for paying Zattoo customers)
 - search shows
 - teletext
-- settings: stream quality, default language</description>
+- settings: stream quality, default language
+- touchscreen support
+    </description>
+    <description lang="de">Zattoo Live TV, Aufnahmen und EPG.
+- wechsel zwischen Favoriten/Allen Kanälen
+- Kanalvorschau
+- EPG: Live/Aufnahmen programieren/Recall (mit Zattoo Abo)
+- Sendubgen suchen
+- Teletext
+- Einstellungen: Stream Qulität, Standart Sprache (Zweikanalton)
+- Touchscreen Unterstützung
+    </description>
    <platform>all</platform>
     <language></language>
-    <license>BSD 2-Clause</license>
-    <website></website>
-    <email>greenair.ch@gmail.com</email>
+    <license>GNU GENERAL PUBLIC LICENSEVersion 3, 29 June 2007</license>
+    <website>https://github.com/rolapp/ZattooBox/wiki/ZattooBox-Wiki</website>
+    <forum>https://github.com/rolapp/ZattooBox/issues</forum>
+    <source>https://github.com/rolapp/ZattooBox</source>
+    <email>kodi@rolapp.de</email>
     <disclaimer lang="en">Check http://www.zattoo.com for availability in your country.</disclaimer>
+    <disclaimer lang="de">Überprüfe ob http://www.zattoo.com in Deinem Land verfügbar ist.</disclaimer>
   </extension>
 </addon>
 

@@ -21,12 +21,12 @@ def refreshProg():
     import urllib
     monitor = xbmc.Monitor()
     while not monitor.abortRequested():
-        if monitor.waitForAbort(300): break
+        if monitor.waitForAbort(600): break
         from resources.zattooDB import ZattooDB
         _zattooDB_ = ZattooDB()
         #update programInfo    
         startTime=datetime.datetime.now()
-        endTime=datetime.datetime.now()+datetime.timedelta(minutes = 15)
+        endTime=datetime.datetime.now()+datetime.timedelta(minutes = 20)
         print 'StartRefresh  ' + str(datetime.datetime.now())
         try:
             _zattooDB_.getProgInfo(False, startTime, endTime)
@@ -50,13 +50,17 @@ def start():
     _zattooDB_.updateChannels()
     _zattooDB_.updateProgram()
     
+    startTime=datetime.datetime.now()#-datetime.timedelta(minutes = 60)
+    endTime=datetime.datetime.now()+datetime.timedelta(minutes = 20)
+    
     
     xbmcgui.Dialog().notification(localString(31916), localString(30110),  __addon__.getAddonInfo('path') + '/icon.png', 3000, False) 
-    _zattooDB_.getProgInfo(True)
+    _zattooDB_.getProgInfo(True, startTime, endTime)
     
     xbmcgui.Dialog().notification(localString(31106), localString(31915),  __addon__.getAddonInfo('path') + '/icon.png', 3000, False) 
     xbmc.executebuiltin("ActivateWindow(busydialog)")
     recInfo()
+    _library_.delete_library() # add by samoth
     _library_.make_library()   
     xbmc.executebuiltin("Dialog.Close(busydialog)")
 

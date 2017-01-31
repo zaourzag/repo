@@ -532,7 +532,7 @@ msgid "Records delete"
 msgstr "Datensätze löschen"
 
 msgctxt "#31915"
-msgid "load recordings"
+msgid "Load recordings"
 msgstr "Lade Aufnahmen"
 
 msgctxt "#31916"
@@ -544,8 +544,8 @@ msgid "Download TV shows"
 msgstr "Lade TV-Sendungen"
 
 msgctxt "#31918"
-msgid "ZattooBoxExt - List of programs"
-msgstr "ZattooBoxExt - Programmliste"
+msgid "ZattooBox - List of programs"
+msgstr "ZattooBox - Programmliste"
 
 msgctxt "#31919"
 msgid "Records are not required"
@@ -553,4 +553,20 @@ msgstr "Datensätze werden nicht benötigt"
 
 msgctxt "#31920"
 msgid "Records are not required\nDelete records now?"
-msgstr "Datensätze werden nicht benötigt\nDatensätze  jetzt löschen?"
+msgstr "Datensätze werden nicht benötigt\nDatensätze jetzt löschen?"
+
+msgctxt "#31921"
+msgid "delete recording"
+msgstr "Aufnahme löschen"
+
+msgctxt "#31922"
+msgid "ZattooBox Download program information ..."
+msgstr "ZattooBox lade Programm Informationen ..."
+
+msgctxt "#31923"
+msgid "Program information for channel - "
+msgstr "Programm Information für Kanal - "
+
+msgctxt "#31924"
+msgid "enter date"
+msgstr "Datum eingeben"
