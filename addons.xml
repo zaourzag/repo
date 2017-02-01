@@ -284,7 +284,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
   </extension>
 </addon>
 
-<addon id="context.serieninfos" name="Serien Infos" version="0.2.8" provider-name="L0RE">
+<addon id="context.serieninfos" name="Serien Infos" version="0.2.7" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.20.0" />
         <import addon="script.module.pyxbmct" version="1.1.7"/>
@@ -296,7 +296,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
             <visible>Window.IsActive(10025)+!Container.Content(Addons)+!Container.Content(images)+!Container.Content(movies)+!Container.Content(songs)</visible>            
         </item>
     </extension>
-    <extension point="xbmc.python.script" library="addon.py">
+    <extension point="xbmc.python.pluginsource" library="addon.py">
         <provides>video</provides>
     </extension>
     <extension point="xbmc.addon.metadata">
