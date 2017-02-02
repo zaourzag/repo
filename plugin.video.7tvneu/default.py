@@ -213,14 +213,18 @@ def sendungsmenu():
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
     
 def abisz(url):
-  url=url.replace(" ","%20")
+  url=url.replace(" ","+")
   debug("abisz URL :"+url)
   inhalt = geturl(url) 
   struktur = json.loads(inhalt) 
   debug("struktur --------")
   debug(struktur)
   for buchstabe in struktur["facet"]:
-     addDir(buchstabe, url+"/(letter)/"+buchstabe, "jsonfile", "")      
+     if   buchstabe=="#" :  
+        ubuchstabe="0-9"
+     else:
+         ubuchstabe=buchstabe
+     addDir(buchstabe, url+"/(letter)/"+ubuchstabe, "jsonfile", "") 
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 
 def jsonfile(url):
@@ -448,7 +452,7 @@ def  listdatum(url,sendername):
 def search():
    dialog = xbmcgui.Dialog()
    d = dialog.input(translation(30010), type=xbmcgui.INPUT_ALPHANUM)
-   d=d.replace(" ","%20")
+   d=d.replace(" ","+")
    debug("XYXXX :::")   
    #xbmc.executebuiltin('Notification("Inputstream", "DRM geschützte Folgen gehen nur mit Inputstream")')
    xbmc.executebuiltin('ActivateWindow("Videos","plugin://plugin.video.7tvneu?url='+d+'&mode=searchmenu")') 
@@ -456,9 +460,10 @@ def search():
    
 def searchmenu(d):
    #/type/episode/offset/1/limit/5
-   addDir("Serien", url=baseurl +"/7tvsearch/search/query/"+ d , mode="searchtext", iconimage="" ,offset=1,limit=5,type="format")      
-   addDir("Ganze Folgen", url=baseurl +"/7tvsearch/search/type/"+ d , mode="searchtext", iconimage="" ,offset=1,limit=5,type="episode")   
-   addDir("Clips", url=baseurl +"/7tvsearch/search/format/"+ d , mode="searchtext", iconimage="" ,offset=1,limit=5,type="clip")   
+   d=d.replace(" ","+")
+   addDir("Serien", url=baseurl +"/7tvsearch/search/query/"+ d , mode="searchtext", iconimage="" ,offset=0,limit=5,type="format")           
+   addDir("Ganze Folgen", url=baseurl +"/7tvsearch/search/query/"+ d , mode="searchtext", iconimage="" ,offset=0,limit=5,type="episode")   
+   addDir("Clips", url=baseurl +"/7tvsearch/search/query/"+ d , mode="searchtext", iconimage="" ,offset=0,limit=5,type="clip")   
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)         
   
 
@@ -480,7 +485,7 @@ def searchtext(url,offset,limit,type):
       else:
         addLink(title, urlt, "getvideoid", img) 
    if i>5:
-      addDir("Next", url, mode="searchtext", iconimage="" ,offset=str(int(offset)+7),limit=limit,type=type)   
+     addDir("Next", url, mode="searchtext", iconimage="" ,offset=str(int(offset)+7),limit=limit,type=type)   
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
    
 # Haupt Menu Anzeigen      
