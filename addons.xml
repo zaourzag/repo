@@ -2436,7 +2436,7 @@ See changelog.txt for more details.</news>
   </extension>
 </addon>
 
-<addon id="plugin.video.zattooboxExt.beta" version="1.6.8.3" name="Zattoo Box Extended Beta" provider-name="Steffen Rolapp">
+<addon id="plugin.video.zattooboxExt.beta" version="1.6.8.4" name="Zattoo Box Extended Beta" provider-name="Steffen Rolapp">
   <requires>
     <import addon="xbmc.python" version="2.14.0"/>
     <import addon="xbmc.addon" version="13.0.0" />

@@ -62,8 +62,9 @@ class library:
       f = open(nfoFile,"w")
       f.write(out.encode("UTF-8"))
       f.close()
-    xbmcgui.Dialog().notification('Ordner für Filme aktualisiert', __addon__.getLocalizedString(31251),  __addon__.getAddonInfo('path') + '/icon.png', 5000, False)    
-
+    #xbmcgui.Dialog().notification('Ordner für Filme aktualisiert', __addon__.getLocalizedString(31251),  __addon__.getAddonInfo('path') + '/icon.png', 5000, False)    
+      #xbmcgui.Dialog().notification(localString(31106), localString(31915),  __addon__.getAddonInfo('path') + '/icon.png', 3000, False) 
+      
 # added - by Samoth  
   def delete_library(self): 
     folder=__addon__.getSetting('library_dir') 

@@ -27,6 +27,7 @@ _listMode_ = __addon__.getSetting('channellist')
 _channelList_=[]
 localString = __addon__.getLocalizedString
 local = xbmc.getLocalizedString
+
 _umlaut_ = {ord(u'ä'): u'ae', ord(u'ö'): u'oe', ord(u'ü'): u'ue', ord(u'ß'): u'ss'}
 
 REMOTE_DBG = False
@@ -192,7 +193,7 @@ class ZattooDB(object):
         c.close()
         return
 
-    xbmcgui.Dialog().notification(__addon__.getLocalizedString(31917), date.strftime('%A %d.%m.%Y'), __addon__.getAddonInfo('path') + '/icon.png', 5000, False)
+    xbmcgui.Dialog().notification(__addon__.getLocalizedString(31917), self.formatDate(date), __addon__.getAddonInfo('path') + '/icon.png', 5000, False)
     xbmc.executebuiltin("ActivateWindow(busydialog)")
     api = '/zapi/v2/cached/program/power_guide/' + self.zapi.AccountData['account']['power_guide_hash'] + '?end=' + str(toTime) + '&start=' + str(fromTime)
 
@@ -278,8 +279,8 @@ class ZattooDB(object):
       for row in r:
         description_long = row['description_long']
         year = row['year']
-        country = ['country']
-        category =['category']
+        country = row['country']
+        category =row['category']
         if get_long_description and description_long is None: 
             #description_long = self.getShowInfo(row["showID"],'description')
             info = self.getShowLongDescription(row['showID'])
@@ -287,7 +288,7 @@ class ZattooDB(object):
             if type(info) == dict:
                 description_long = info.get('longDesc','')
                 year = info.get('Year',' ')
-                country = info.get('Country','')
+                country = info.get('country','')
                 category = info.get('category','')
         programList.append({
             'channel': row['channel'],
@@ -318,6 +319,9 @@ class ZattooDB(object):
         
         show = info.fetchone()
         longDesc = show['description_long']
+        year = show['year']
+        country = show['country']
+        category = show ['category']
         if longDesc is None:
             api = '/zapi/program/details?program_id=' + showID + '&complete=True'
             showInfo = self.zapiSession().exec_zapiCall(api, None)
@@ -450,19 +454,23 @@ class ZattooDB(object):
         # for startup-notify
         if notify:
             PopUp = xbmcgui.DialogProgressBG()
-            counter=len(channels)
+            #counter = len(channels)
+            counter = 0
+            for chan in channels['index']:
+                c.execute('SELECT * FROM programs WHERE channel = ? AND start_date < ? AND end_date > ?', [chan, endTime, startTime])
+                r=c.fetchall()
+                for row in r:
+                    counter += 1
             bar = 0         # Progressbar (Null Prozent)
             PopUp.create('ZattooBoxExt lade Programm Informationen ...', '')
             PopUp.update(bar)
         
         for chan in channels['index']:
             print str(chan) + ' - ' + str(startTime) 
-            #try:
-            
+
             c.execute('SELECT * FROM programs WHERE channel = ? AND start_date < ? AND end_date > ?', [chan, endTime, startTime])
             r=c.fetchall()
-            for row in r:
-                counter += 1
+        
             for row in r: 
                 print str(row['channel']) + ' - ' + str(row['showID'])
                 if notify:
@@ -514,3 +522,29 @@ class ZattooDB(object):
         c.close()
         return
 
+  def formatDate(self, timestamp):
+		if timestamp:
+ 			format = xbmc.getRegion('datelong')
+ 			date = timestamp.strftime(format)
+ 			date = date.replace('Monday', local(11))
+ 			date = date.replace('Tuesday', local(12))
+ 			date = date.replace('Wednesday', local(13))
+ 			date = date.replace('Thursday', local(14))
+ 			date = date.replace('Friday', local(15))
+ 			date = date.replace('Saturday', local(16))
+ 			date = date.replace('Sunday', local(17))
+ 			date = date.replace('January', local(21))
+ 			date = date.replace('February', local(22))
+ 			date = date.replace('March', local(23))
+ 			date = date.replace('April', local(24))
+ 			date = date.replace('May', local(25))
+ 			date = date.replace('June', local(26))
+ 			date = date.replace('July', local(27))
+ 			date = date.replace('August', local(28))
+ 			date = date.replace('September', local(29))
+ 			date = date.replace('October', local(30))
+ 			date = date.replace('November', local(31))
+ 			date = date.replace('December', local(32))
+			return date
+		else:
+			return ''

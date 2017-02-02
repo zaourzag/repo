@@ -463,7 +463,8 @@ def change_stream(dir):
   _zattooDB_.set_currentStream(streamNr)
 
   channelInfo = _zattooDB_.get_channelInfo(playing['channel'])
-  program = _zattooDB_.getPrograms({playing['channel']:''}, True)[0]
+  channel_id=_zattooDB_.get_playing()['channel']
+  program = _zattooDB_.getPrograms({'index':[channel_id]}, True)[0]
 
   title = channelInfo['title'] + " (stream" + str(streamNr) + ")"
   listitem = xbmcgui.ListItem(channelInfo['title'], thumbnailImage=channelInfo['logo'])
@@ -639,8 +640,8 @@ class zattooGUI(xbmcgui.WindowXMLDialog):
     if action in [ACTION_PARENT_DIR, KEY_NAV_BACK, ACTION_PREVIOUS_MENU]:
       if hasattr(self, 'hideNrTimer'): self.hideNrTimer.cancel()
       self.close()
-      xbmc.executebuiltin("Action(Back)")
-    elif action==ACTION_STOP:
+      xbmc.executebuiltin("Action(Stop)")
+    if action==ACTION_STOP:
       if hasattr(self, 'hideNrTimer'): self.hideNrTimer.cancel()
       self.close()
     elif action==ACTION_OSD:
@@ -777,11 +778,11 @@ def main():
   #xbmcgui.Dialog().notification("HANDLE", str(action)+' '+str(addon_handle), '', 1000, False)
   
   #hack for repeat actions from keyMap 
-  if ((action=='preview' or action=='epg' )and action==xbmcgui.Window(10000).getProperty('ZBElastAction')):
-    xbmcgui.Window(10000).setProperty('ZBElastAction', '')
-    xbmc.executebuiltin("Action(FullScreen)")
-    if(str(_zattooDB_.get_playing()['start'])=='1970-01-01 01:00:00'):makeZattooGUI()
-    return
+  #if ((action=='preview' or action=='epg' )and action==xbmcgui.Window(10000).getProperty('ZBElastAction')):
+    #xbmcgui.Window(10000).setProperty('ZBElastAction', '')
+    #xbmc.executebuiltin("Action(FullScreen)")
+    #if(str(_zattooDB_.get_playing()['start'])=='1970-01-01 01:00:00'):makeZattooGUI()
+    #return
   xbmcgui.Window(10000).setProperty('ZBElastAction', action)
   
   
@@ -820,11 +821,11 @@ def main():
     recording_id = args.get('recording_id')[0]
     delete_recording(recording_id)
   elif action == 'reloadDB':
+    xbmc.executebuiltin("ActivateWindow(busydialog)")
     _zattooDB_.reloadDB()
     xbmcgui.Dialog().notification(localString(31916), localString(30110),  __addon__.getAddonInfo('path') + '/icon.png', 3000, False) 
     _zattooDB_.getProgInfo(True)    
-    xbmcgui.Dialog().notification(localString(31106), localString(31915),  __addon__.getAddonInfo('path') + '/icon.png', 3000, False) 
-    xbmc.executebuiltin("ActivateWindow(busydialog)")
+    xbmcgui.Dialog().notification(localString(31106), localString(31915),  __addon__.getAddonInfo('path') + '/icon.png', 3000, False)   
     _library_.make_library()   
     xbmc.executebuiltin("Dialog.Close(busydialog)")
   elif action == 'changeStream':
@@ -836,8 +837,10 @@ def main():
     tele.doModal()
     del tele
   elif action == 'makelibrary':
+    xbmc.executebuiltin("ActivateWindow(busydialog)")
     _library_.delete_library()
     _library_.make_library()
+    xbmc.executebuiltin("Dialog.Close(busydialog)")
   elif action == 'resetdir':
     delete = xbmcgui.Dialog().yesno(__addonname__, __addon__.getLocalizedString(31911))
     if delete:

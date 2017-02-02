@@ -18,13 +18,16 @@
 #  http://www.gnu.org/copyleft/gpl.html
 #
 
-import datetime, time, locale
+import datetime, time, os, locale
 import threading
 
 import xbmc, xbmcgui, xbmcaddon, xbmcplugin
 
 from resources.zattooDB import ZattooDB
 _zattooDB_ = ZattooDB()
+
+from resources.library import library
+_library_=library()
 # from notification import Notification
 from strings import *
 
@@ -34,6 +37,10 @@ __settings__ = xbmcaddon.Addon(__addonId__)
 __addonname__ = __addon__.getAddonInfo('name')
 __language__ = __settings__.getLocalizedString
 localString = __addon__.getLocalizedString
+local = xbmc.getLocalizedString
+
+
+_datename_ = {u'Monday': u'Montag', u'Tuesday': u'Dienstag', u'Wednesday':u'Mittwoch'}
 
 DEBUG=False
 
@@ -85,6 +92,7 @@ def setup_recording(program_id):
   xbmcgui.Dialog().ok(__addonname__, __addon__.getLocalizedString(31903))
   _library_.make_library()  # NEW added - by Samoth	
 
+	
 class Point(object):
 	def __init__(self):
 		self.x = self.y = 0
@@ -302,6 +310,7 @@ class EPG(xbmcgui.WindowXML):
 			if xbmcgui.Dialog().yesno(program['title'], strings(RECORD_SHOW)):
 				#url = 'plugin://'+__addonId__+'/?mode=record_p&program_id=' + program['showID']
 				setup_recording(program['showID'])
+				return
 			else: return
 		# else if endtime is in the past -> recall
 		elif end < now:
@@ -316,6 +325,7 @@ class EPG(xbmcgui.WindowXML):
 				elif ret==1: #record
 					#url = "plugin://"+__addonId__+"/?mode=record_p&program_id=" + program['showID']
 					setup_recording(program['showID'])
+					return
 				else: return
 		# else currently playing
 		else:
@@ -330,6 +340,7 @@ class EPG(xbmcgui.WindowXML):
 				elif ret==2: #record
 					#url = "plugin://"+__addonId__+"/?mode=record_p&program_id=" + program['showID']
 					setup_recording(program['showID'])
+					return
 				else: return
 		xbmc.executebuiltin('XBMC.RunPlugin(%s)' % url)
 		
@@ -517,8 +528,8 @@ class EPG(xbmcgui.WindowXML):
 
 	def onRedrawEPG(self, channelStart, startTime, focusFunction=None):
 		
-		print 'StartTime  ' + str(startTime) + ' ' + str(type(startTime))
-		
+		import time, locale
+		print 'HeuteTIME  ' + str(time.strftime ('%B-%d/%A/%Y'))
 		if self.redrawingEPG or self.isClosing:
 			debug('onRedrawEPG - already redrawing')
 			return  # ignore redraw request while redrawing
@@ -777,7 +788,27 @@ class EPG(xbmcgui.WindowXML):
 	def formatDate(self, timestamp):
 		if timestamp:
  			format = xbmc.getRegion('datelong')
-			return timestamp.strftime(format)
+ 			date = timestamp.strftime(format)
+ 			date = date.replace('Monday', local(11))
+ 			date = date.replace('Tuesday', local(12))
+ 			date = date.replace('Wednesday', local(13))
+ 			date = date.replace('Thursday', local(14))
+ 			date = date.replace('Friday', local(15))
+ 			date = date.replace('Saturday', local(16))
+ 			date = date.replace('Sunday', local(17))
+ 			date = date.replace('January', local(21))
+ 			date = date.replace('February', local(22))
+ 			date = date.replace('March', local(23))
+ 			date = date.replace('April', local(24))
+ 			date = date.replace('May', local(25))
+ 			date = date.replace('June', local(26))
+ 			date = date.replace('July', local(27))
+ 			date = date.replace('August', local(28))
+ 			date = date.replace('September', local(29))
+ 			date = date.replace('October', local(30))
+ 			date = date.replace('November', local(31))
+ 			date = date.replace('December', local(32))
+			return date
 		else:
 			return ''
 
