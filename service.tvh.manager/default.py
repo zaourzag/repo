@@ -58,7 +58,8 @@ isUSR = 0b00000
 
 ### MAIN CLASS
 
-class Manager():
+class Manager(object):
+
     def __init__(self):
 
         self.__conn_established = None
@@ -77,7 +78,8 @@ class Manager():
         writeLog('Settings loaded, starting service with id %s' % self.rndProcNum, level=xbmc.LOGNOTICE)
         self.establishConn()
 
-    def crypt(self, pw, key, token):
+    @classmethod
+    def crypt(cls, pw, key, token):
         _pw = __addon__.getSetting(pw)
         if _pw == '' or _pw == '*':
             _key = __addon__.getSetting(key)
@@ -97,6 +99,14 @@ class Manager():
             __addon__.setSetting(pw, '*')
 
             return _pw
+
+    @classmethod
+    def notifyOSD(self, header, message, icon=xbmcgui.NOTIFICATION_INFO):
+        OSD.notification(header.encode('utf-8'), message.encode('utf-8'), icon)
+
+    @classmethod
+    def dialogOK(self, header, message):
+        OSD.ok(header.encode('utf-8'), message.encode('utf-8'))
 
     ### read addon settings
 
@@ -227,18 +237,12 @@ class Manager():
                 __s_conn.close()
                 writeLog('Mail delivered to %s.' % (self.__smtpto), level=xbmc.LOGNOTICE)
                 return True
-            except Exception, e:
+            except Exception:
                 writeLog('Mail could not be delivered. Check your settings.', xbmc.LOGERROR)
                 return False
         else:
             writeLog('"%s" completed, no Mail delivered.' % (message))
             return True
-
-    def notifyOSD(self, header, message, icon=xbmcgui.NOTIFICATION_INFO):
-        OSD.notification(header.encode('utf-8'), message.encode('utf-8'), icon)
-
-    def dialogOK(self, header, message):
-        OSD.ok(header.encode('utf-8'), message.encode('utf-8'))
 
     def readXML(self, xmlnode):
         nodedata = []
@@ -253,7 +257,7 @@ class Manager():
                     for node in nodes:
                         nodedata.append(node.childNodes[0].data)
                 break
-            except Exception, e:
+            except Exception:
                 writeLog("Could not read from %s" % self.__server, xbmc.LOGERROR)
                 self.establishConn()
         return nodedata
@@ -359,7 +363,7 @@ class Manager():
 
         writeLog('Display countdown dialog for %s secs' % __counter)
 
-        if self.__ScreensaverActive and self.__windowID: xbmc.executebuiltin('ActivateWindow(%s)') % self.__windowID
+        if self.__ScreensaverActive and self.__windowID: xbmc.executebuiltin('ActivateWindow(%s)' % (self.__windowID))
         if xbmc.getCondVisibility('VideoPlayer.isFullscreen'):
             writeLog('Countdown possibly invisible (fullscreen mode)')
             writeLog('Showing additional notification')
@@ -455,7 +459,7 @@ class Manager():
                     writeLog(_comm.stdout.readline().decode('utf-8', 'ignore').strip())
 
                 writeLog('external EPG grabber script tooks %s seconds' % ((datetime.datetime.now() - _start).seconds))
-            except Exception, e:
+            except Exception:
                 writeLog('Could not start external EPG grabber script', xbmc.LOGERROR)
 
         idle = xbmc.getGlobalIdleTime()

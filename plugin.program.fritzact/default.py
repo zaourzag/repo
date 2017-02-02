@@ -13,6 +13,8 @@ import hashlib
 import os
 import requests
 import resources.lib.tools as t
+import resources.lib.slider as Slider
+
 import sys
 from time import time
 import urllib
@@ -35,6 +37,10 @@ __s_off__ = xbmc.translatePath(os.path.join(__path__, 'resources', 'lib', 'media
 __s_absent__ = xbmc.translatePath(os.path.join(__path__, 'resources', 'lib', 'media', 'dect_absent.png'))
 __t_on__ = xbmc.translatePath(os.path.join(__path__, 'resources', 'lib', 'media', 'comet_on.png'))
 __t_absent__ = xbmc.translatePath(os.path.join(__path__, 'resources', 'lib', 'media', 'comet_absent.png'))
+__gs_on__ = xbmc.translatePath(os.path.join(__path__, 'resources', 'lib', 'media', 'dect_group_on.png'))
+__gs_off__ = xbmc.translatePath(os.path.join(__path__, 'resources', 'lib', 'media', 'dect_group_off.png'))
+__gt_on__ = xbmc.translatePath(os.path.join(__path__, 'resources', 'lib', 'media', 'comet_group_on.png'))
+__gt_absent__ = xbmc.translatePath(os.path.join(__path__, 'resources', 'lib', 'media', 'comet_group_absent.png'))
 
 class Device():
 
@@ -67,9 +73,10 @@ class Device():
         self.mode = 'n/a'
         self.lock = 'n/a'
 
-        self.set_temp = 'n/a'
-        self.comf_temp = 'n/a'
-        self.lowering_temp = 'n/a'
+        self.set_temp = ['n/a']
+        self.comf_temp = ['n/a']
+        self.lowering_temp = ['n/a']
+        self.bin_slider = 0
 
         # Switch attributes
 
@@ -82,35 +89,55 @@ class Device():
 
         if self.is_thermostat:
             self.type = 'thermostat'
-            self.temperature = self.bin2degree(int(device.find('hkr').find('tist').text or '0'))
             self.set_temp = self.bin2degree(int(device.find('hkr').find('tsoll').text or '0'))
             self.comf_temp = self.bin2degree(int(device.find('hkr').find('komfort').text or '0'))
             self.lowering_temp = self.bin2degree(int(device.find('hkr').find('absenk').text or '0'))
 
+            # get temp for slider value
+
+            self.bin_slider = int(device.find('hkr').find('tsoll').text or '0')
+
         # Power attributes
 
-        if self.has_powermeter:
-            self.power = '{:0.2f}'.format(float(device.find('powermeter').find('power').text)/1000) + ' W'
-            self.energy = '{:0.2f}'.format(float(device.find('powermeter').find('energy').text)/1000) + ' kWh'
+        try:
+            if self.has_powermeter:
+                self.power = '{:0.2f}'.format(float(device.find('powermeter').find('power').text)/1000) + ' W'
+                self.energy = '{:0.2f}'.format(float(device.find('powermeter').find('energy').text)/1000) + ' kWh'
+        except TypeError:
+            pass
 
         # Temperature attributes
 
-        if self.has_temperature:
-            self.temperature = '{:0.1f}'.format(float(device.find("temperature").find("celsius").text)/10) + ' °C'.decode('utf-8')
+        try:
+            if self.has_temperature:
+                self.temperature = '{:0.1f}'.format(float(device.find("temperature").find("celsius").text)/10) + ' °C'.decode('utf-8')
+        except TypeError:
+            pass
+
+        _group = re.match('([A-F]|\d){2}:([A-F]|\d){2}:([A-F]|\d){2}-([A-F]|\d){3}', self.actor_id)
+        if _group is not None:
+            self.type = 'group'
+
+            # ToDo: change back to group ^^
+
+            '''
+            self.type = 'thermostat'
+            self.temperature = '22.0' + ' °C'.decode('utf-8')
+            self.bin_slider = 44
+            self.set_temp = self.bin2degree(self.bin_slider)
+            '''
 
         if self.is_repeater:
             self.type = 'switch'
 
-        _group = re.match('([A-F]|\d){2}:([A-F]|\d){2}:([A-F]|\d){2}-([A-F]|\d){3}', self.actor_id)
-        if _group is not None: self.type = 'group'
-
     @classmethod
 
     def bin2degree(cls, binary_value = 0):
-        if 16 <= binary_value <= 56: return str((binary_value - 16)/2.0 + 8) + ' °C'.decode('utf-8')
-        elif binary_value == 253: return 'off'
-        elif binary_value == 254: return 'on'
-        return 'invalid'
+        if 16 <= binary_value <= 56: return '{:0.1f}'.format((binary_value - 16)/2.0 + 8) + ' °C'.decode('utf-8')
+        elif binary_value == 253: return ['off']
+        elif binary_value == 254: return ['on']
+        return ['invalid']
+
 
 class FritzBox():
 
@@ -173,7 +200,7 @@ class FritzBox():
         self.__lastLogin = int(__addon__.getSetting('lastLogin') or 0)
         self.__fbSID = __addon__.getSetting('SID') or None
 
-    def get_actors(self, handle=None, type=None):
+    def get_actors(self, handle=None, devtype=None):
 
         # Returns a list of Actor objects for querying SmartHome devices.
 
@@ -189,17 +216,20 @@ class FritzBox():
 
                 actor = Device(device)
 
-                if type is not None and type != actor.type: continue
+                if devtype is not None and devtype != actor.type: continue
 
                 if actor.is_switch:
+                # if actor.type == 'switch':
                     actor.icon = __s_absent__
                     if actor.present == 1:
-                        actor.icon = __s_on__
-                        if actor.state == 0: actor.icon = __s_off__
+                        actor.icon = __gs_on__ if actor.type == 'group' else __s_on__
+                        if actor.state == 0: actor.icon = __gs_off__ if actor.type == 'group' else __s_off__
                 elif actor.is_thermostat:
+                # elif actor.type == 'thermostat':
                     actor.icon = __t_absent__
                     if actor.present == 1:
-                        actor.icon = __t_on__
+                        actor.icon = __gt_on__ if actor.type == 'group' else __t_on__
+                        if actor.state == 0: actor.icon = __gt_absent__ if actor.type == 'group' else __t_absent__
 
                 actors.append(actor)
 
@@ -218,12 +248,13 @@ class FritzBox():
                     wid.setProperty('power', actor.power)
                     wid.setProperty('energy', actor.energy)
 
-                    wid.setProperty('set_temp', actor.set_temp)
-                    wid.setProperty('comf_temp', actor.comf_temp)
-                    wid.setProperty('lowering_temp', actor.lowering_temp)
+                    wid.setProperty('set_temp', unicode(actor.set_temp))
+                    wid.setProperty('comf_temp', unicode(actor.comf_temp))
+                    wid.setProperty('lowering_temp', unicode(actor.lowering_temp))
 
                     xbmcplugin.addDirectoryItem(handle=handle, url='', listitem=wid)
 
+                t.writeLog('<<<<', xbmc.LOGDEBUG)
                 t.writeLog('----- current state of AIN %s -----' % (actor.actor_id), level=xbmc.LOGDEBUG)
                 t.writeLog('Name:          %s' % (actor.name), level=xbmc.LOGDEBUG)
                 t.writeLog('Type:          %s' % (actor.type), level=xbmc.LOGDEBUG)
@@ -236,6 +267,7 @@ class FritzBox():
                 t.writeLog('soll Temp.:    %s' % (actor.set_temp), level=xbmc.LOGDEBUG)
                 t.writeLog('comfort Temp.: %s' % (actor.comf_temp), level=xbmc.LOGDEBUG)
                 t.writeLog('lower Temp.:   %s' % (actor.lowering_temp), level=xbmc.LOGDEBUG)
+                t.writeLog('>>>>', xbmc.LOGDEBUG)
 
             if handle is not None:
                 xbmcplugin.endOfDirectory(handle=handle, updateListing=True)
@@ -245,7 +277,12 @@ class FritzBox():
             t.writeLog('no device list available', xbmc.LOGDEBUG)
         return actors
 
-    def switch(self, cmd, ain=None):
+    def switch(self, cmd, ain=None, param=None, label=None):
+
+        t.writeLog('Provided command: %s' % (cmd), level=xbmc.LOGDEBUG)
+        t.writeLog('Provided ain:     %s' % (ain), level=xbmc.LOGDEBUG)
+        t.writeLog('Provided param:   %s' % (param), level=xbmc.LOGDEBUG)
+        t.writeLog('Provided device:  %s' % (label), level=xbmc.LOGDEBUG)
 
         # Call an actor method
 
@@ -268,8 +305,33 @@ class FritzBox():
 
             params['ain'] = ain
 
-        response = self.session.get(self.base_url + '/webservices/homeautoswitch.lua', params=params, verify=False)
-        response.raise_for_status()
+        if cmd == 'sethkrtsoll':
+            slider = Slider.SliderWindow.createSliderWindow()
+            slider.label = __LS__(30035) % (label)
+            slider.initValue = (param - 16) * 100 / 40
+            slider.doModal()
+            slider.close()
+
+            _sliderBin = int(slider.retValue) * 2
+
+            t.writeLog('Thermostat binary before/now: %s/%s' % (param, _sliderBin), level=xbmc.LOGDEBUG)
+            del slider
+
+            if param == _sliderBin: return
+            else:
+                t.writeLog('set thermostat %s to %s' % (ain, _sliderBin), level=xbmc.LOGDEBUG)
+                param = str(_sliderBin)
+
+            if param: params['param'] = param
+
+        try:
+            response = self.session.get(self.base_url + '/webservices/homeautoswitch.lua', params=params, verify=False)
+            response.raise_for_status()
+        except (requests.exceptions.HTTPError, TypeError):
+            t.writeLog('Bad request, action could not performed', level=xbmc.LOGERROR)
+            xbmcgui.Dialog().notification(__addonname__, __LS__(30014), xbmcgui.NOTIFICATION_ERROR, 3000)
+            return None
+
         return response.text.strip()
 
 # _______________________________
@@ -279,14 +341,13 @@ class FritzBox():
 
 action = None
 ain = None
-type = None
+dev_type = None
+
 _addonHandle = None
 
 fritz = FritzBox()
 
 arguments = sys.argv
-
-t.writeLog('<<<<', xbmc.LOGDEBUG)
 
 if len(arguments) > 1:
     if arguments[0][0:6] == 'plugin':
@@ -298,24 +359,37 @@ if len(arguments) > 1:
     params = t.paramsToDict(arguments[1])
     action = urllib.unquote_plus(params.get('action', ''))
     ain = urllib.unquote_plus(params.get('ain', ''))
-    type = urllib.unquote_plus(params.get('type', ''))
+    dev_type = urllib.unquote_plus(params.get('type', ''))
 
-    if type not in ['switch', 'thermostat', 'repeater', 'group']: type = None
+    if dev_type not in ['switch', 'thermostat', 'repeater', 'group']: dev_type = None
 
-    t.writeLog('Parameter hash: %s' % (arguments[1]), level=xbmc.LOGDEBUG)
+    t.writeLog('Parameter hash: %s' % (arguments[1:]), level=xbmc.LOGDEBUG)
 
-actors = fritz.get_actors(handle=_addonHandle, type=type)
+actors = fritz.get_actors(handle=_addonHandle, devtype=dev_type)
 
 if _addonHandle is None:
 
+    name = None
+    param = None
+    cmd = None
+
     if action == 'toggle':
-        fritz.switch('setswitchtoggle', ain)
+        cmd = 'setswitchtoggle'
 
     elif action == 'on':
-        fritz.switch('setswitchon', ain)
+        cmd = 'setswitchon'
 
     elif action == 'off':
-        fritz.switch('setswitchoff', ain)
+        cmd = 'setswitchoff'
+
+    elif action == 'temp':
+        for device in actors:
+            if device.actor_id == ain:
+                cmd = 'sethkrtsoll'
+                ain = ain
+                name = device.name
+                param = device.bin_slider
+                break
 
     elif action == 'setpreferredain':
         _devlist = [__LS__(30006)]
@@ -329,46 +403,50 @@ if _addonHandle is None:
             _idx = dialog.select(__LS__(30020), _devlist)
             if _idx > -1:
                 __addon__.setSetting('preferredAIN', _ainlist[_idx])
+
     elif action == 'setreadonlyain':
         _devlist = [__LS__(30006)]
         _ainlist = ['']
         for device in actors:
-            if device.type == 'switch':
-                _devlist.append(device.name)
-                _ainlist.append(device.actor_id)
+            _devlist.append(device.name)
+            _ainlist.append(device.actor_id)
         if len(_devlist) > 0:
             dialog = xbmcgui.Dialog()
             _idx = dialog.multiselect(__LS__(30020), _devlist)
             if _idx is not None:
                 __addon__.setSetting('readonlyAIN', ', '.join([_ainlist[i] for i in _idx]))
     else:
+        cmd = 'setswitchtoggle'
         if __addon__.getSetting('preferredAIN') != '':
-            action = 'toogle'
             ain =  __addon__.getSetting('preferredAIN')
-            fritz.switch('setswitchtoggle', ain)
         else:
-            if len(actors) == 1:
-                action = 'toogle'
+            if len(actors) == 1 and actors[0].is_switch:
                 ain = actors[0].actor_id
-                fritz.switch('setswitchtoggle', ain)
             else:
                 _devlist = []
                 _ainlist = []
                 for device in actors:
-                    if device.type == 'switch':
+                    if device.is_switch:
                         _alternate_state = __LS__(30031) if device.b_state == 'false' else __LS__(30030)
                         _devlist.append('%s: %s' % (device.name, _alternate_state))
-                        _ainlist.append(device.actor_id)
+                    elif device.is_thermostat:
+                        _devlist.append('%s: %s' % (device.name, device.temperature))
+
+                    _ainlist.append(device)
+
                 if len(_devlist) > 0:
                     dialog = xbmcgui.Dialog()
                     _idx = dialog.select(__LS__(30020), _devlist)
                     if _idx > -1:
-                        ain = _ainlist[_idx]
-                        fritz.switch('setswitchtoggle', ain)
-                        action = 'toogle'
-    if action != '':
-        ts = str(int(time()))
-        t.writeLog('Set timestamp: %s, device: %s, action: %s' % (ts, ain, action), xbmc.LOGDEBUG)
-        xbmcgui.Window(10000).setProperty('fritzact.timestamp', ts)
+                        device = _ainlist[_idx]
+                        ain = device.actor_id
 
-t.writeLog('>>>>', xbmc.LOGDEBUG)
+                        if device.is_thermostat:
+                            cmd = 'sethkrtsoll'
+                            name = device.name
+                            param = device.bin_slider
+    if cmd is not None:
+        fritz.switch(cmd, ain=ain, param=param, label=name)
+        ts = str(int(time()))
+        t.writeLog('Set timestamp: %s, device: %s, action was: %s' % (ts, ain, cmd), xbmc.LOGDEBUG)
+        xbmcgui.Window(10000).setProperty('fritzact.timestamp', ts)

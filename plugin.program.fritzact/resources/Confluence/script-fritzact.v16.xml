@@ -115,33 +115,69 @@
                                                         <aligny>top</aligny>
                                                         <label>$ADDON[plugin.program.fritzact 30023] $INFO[ListItem.Property(state)]</label>
                                                 </control>
-                                                <control type="label">
-                                                        <description>Actor Temperature</description>
-                                                        <left>118</left>
-                                                        <top>125</top>
-                                                        <width>155</width>
-                                                        <height>20</height>
-                                                        <font>font10</font>
-                                                        <textcolor>grey2</textcolor>
-                                                        <shadowcolor>black</shadowcolor>
-                                                        <selectedcolor>selected</selectedcolor>
-                                                        <align>right</align>
-                                                        <aligny>top</aligny>
-                                                        <label>$ADDON[plugin.program.fritzact 30024] $INFO[ListItem.Property(temperature)]</label>
+                                                <control type="group">
+                                                        <!-- <visible>String.IsEqual(ListItem.Property(type),switch)</visible> -->
+                                                        <visible>StringCompare(ListItem.Property(type),switch)</visible>
+                                                        <control type="label">
+                                                                <description>Actor Temperature</description>
+                                                                <left>118</left>
+                                                                <top>125</top>
+                                                                <width>155</width>
+                                                                <height>20</height>
+                                                                <font>font10</font>
+                                                                <textcolor>grey2</textcolor>
+                                                                <shadowcolor>black</shadowcolor>
+                                                                <selectedcolor>selected</selectedcolor>
+                                                                <align>right</align>
+                                                                <aligny>top</aligny>
+                                                                <label>$ADDON[plugin.program.fritzact 30024] $INFO[ListItem.Property(temperature)]</label>
+                                                        </control>
+                                                        <control type="label">
+                                                                <description>Actor Power Consumption</description>
+                                                                <left>118</left>
+                                                                <top>145</top>
+                                                                <width>155</width>
+                                                                <height>20</height>
+                                                                <font>font10</font>
+                                                                <textcolor>grey2</textcolor>
+                                                                <shadowcolor>black</shadowcolor>
+                                                                <selectedcolor>selected</selectedcolor>
+                                                                <align>right</align>
+                                                                <aligny>top</aligny>
+                                                                <label>$ADDON[plugin.program.fritzact 30027] $INFO[ListItem.Property(energy)]</label>
+                                                        </control>
                                                 </control>
-                                                <control type="label">
-                                                        <description>Actor Power Consumption</description>
-                                                        <left>118</left>
-                                                        <top>145</top>
-                                                        <width>155</width>
-                                                        <height>20</height>
-                                                        <font>font10</font>
-                                                        <textcolor>grey2</textcolor>
-                                                        <shadowcolor>black</shadowcolor>
-                                                        <selectedcolor>selected</selectedcolor>
-                                                        <align>right</align>
-                                                        <aligny>top</aligny>
-                                                        <label>$ADDON[plugin.program.fritzact 30027] $INFO[ListItem.Property(energy)]</label>
+                                                <control type="group">
+                                                        <!-- <visible>String.IsEqual(ListItem.Property(type),switch)</visible> -->
+                                                        <visible>StringCompare(ListItem.Property(type),thermostat)</visible>
+                                                        <control type="label">
+                                                                <description>Thermostat Temperature current</description>
+                                                                <left>118</left>
+                                                                <top>125</top>
+                                                                <width>155</width>
+                                                                <height>20</height>
+                                                                <font>font10</font>
+                                                                <textcolor>grey2</textcolor>
+                                                                <shadowcolor>black</shadowcolor>
+                                                                <selectedcolor>selected</selectedcolor>
+                                                                <align>right</align>
+                                                                <aligny>top</aligny>
+                                                                <label>$ADDON[plugin.program.fritzact 30024] $INFO[ListItem.Property(temperature)]</label>
+                                                        </control>
+                                                        <control type="label">
+                                                                <description>Thermostat Temperature set</description>
+                                                                <left>118</left>
+                                                                <top>145</top>
+                                                                <width>155</width>
+                                                                <height>20</height>
+                                                                <font>font10</font>
+                                                                <textcolor>grey2</textcolor>
+                                                                <shadowcolor>black</shadowcolor>
+                                                                <selectedcolor>selected</selectedcolor>
+                                                                <align>right</align>
+                                                                <aligny>top</aligny>
+                                                                <label>$ADDON[plugin.program.fritzact 30029] $INFO[ListItem.Property(set_temp)]</label>
+                                                        </control>
                                                 </control>
                                                 <control type="label">
                                                         <description>AIN</description>
@@ -256,33 +292,69 @@
                                                         <aligny>top</aligny>
                                                         <label>$ADDON[plugin.program.fritzact 30023] $INFO[ListItem.Property(state)]</label>
                                                 </control>
-                                                <control type="label">
-                                                        <description>Actor Temperature</description>
-                                                        <left>118</left>
-                                                        <top>125</top>
-                                                        <width>155</width>
-                                                        <height>20</height>
-                                                        <font>font10</font>
-                                                        <textcolor>grey2</textcolor>
-                                                        <shadowcolor>black</shadowcolor>
-                                                        <selectedcolor>selected</selectedcolor>
-                                                        <align>right</align>
-                                                        <aligny>top</aligny>
-                                                        <label>$ADDON[plugin.program.fritzact 30024] $INFO[ListItem.Property(temperature)]</label>
+                                                <control type="group">
+                                                        <!-- <visible>String.IsEqual(ListItem.Property(type),switch)</visible> -->
+                                                        <visible>StringCompare(ListItem.Property(type),switch)</visible>
+                                                        <control type="label">
+                                                                <description>Actor Temperature</description>
+                                                                <left>118</left>
+                                                                <top>125</top>
+                                                                <width>155</width>
+                                                                <height>20</height>
+                                                                <font>font10</font>
+                                                                <textcolor>grey2</textcolor>
+                                                                <shadowcolor>black</shadowcolor>
+                                                                <selectedcolor>selected</selectedcolor>
+                                                                <align>right</align>
+                                                                <aligny>top</aligny>
+                                                                <label>$ADDON[plugin.program.fritzact 30024] $INFO[ListItem.Property(temperature)]</label>
+                                                        </control>
+                                                        <control type="label">
+                                                                <description>Actor Power Consumption</description>
+                                                                <left>118</left>
+                                                                <top>145</top>
+                                                                <width>155</width>
+                                                                <height>20</height>
+                                                                <font>font10</font>
+                                                                <textcolor>grey2</textcolor>
+                                                                <shadowcolor>black</shadowcolor>
+                                                                <selectedcolor>selected</selectedcolor>
+                                                                <align>right</align>
+                                                                <aligny>top</aligny>
+                                                                <label>$ADDON[plugin.program.fritzact 30027] $INFO[ListItem.Property(energy)]</label>
+                                                        </control>
                                                 </control>
-                                                <control type="label">
-                                                        <description>Actor Power Consumption</description>
-                                                        <left>118</left>
-                                                        <top>145</top>
-                                                        <width>155</width>
-                                                        <height>20</height>
-                                                        <font>font10</font>
-                                                        <textcolor>grey2</textcolor>
-                                                        <shadowcolor>black</shadowcolor>
-                                                        <selectedcolor>selected</selectedcolor>
-                                                        <align>right</align>
-                                                        <aligny>top</aligny>
-                                                        <label>$ADDON[plugin.program.fritzact 30027] $INFO[ListItem.Property(energy)]</label>
+                                                <control type="group">
+                                                        <!-- <visible>String.IsEqual(ListItem.Property(type),switch)</visible> -->
+                                                        <visible>StringCompare(ListItem.Property(type),thermostat)</visible>
+                                                       <control type="label">
+                                                                <description>Thermostat Temperature current</description>
+                                                                <left>118</left>
+                                                                <top>125</top>
+                                                                <width>155</width>
+                                                                <height>20</height>
+                                                                <font>font10</font>
+                                                                <textcolor>grey2</textcolor>
+                                                                <shadowcolor>black</shadowcolor>
+                                                                <selectedcolor>selected</selectedcolor>
+                                                                <align>right</align>
+                                                                <aligny>top</aligny>
+                                                                <label>$ADDON[plugin.program.fritzact 30024] $INFO[ListItem.Property(temperature)]</label>
+                                                        </control>
+                                                        <control type="label">
+                                                                <description>Thermostat Temperature set</description>
+                                                                <left>118</left>
+                                                                <top>145</top>
+                                                                <width>155</width>
+                                                                <height>20</height>
+                                                                <font>font10</font>
+                                                                <textcolor>grey2</textcolor>
+                                                                <shadowcolor>black</shadowcolor>
+                                                                <selectedcolor>selected</selectedcolor>
+                                                                <align>right</align>
+                                                                <aligny>top</aligny>
+                                                                <label>$ADDON[plugin.program.fritzact 30029] $INFO[ListItem.Property(set_temp)]</label>
+                                                        </control>
                                                 </control>
                                                 <control type="label">
                                                         <description>AIN</description>
@@ -299,7 +371,9 @@
                                                         <label>$INFO[ListItem.Label2]</label>
                                                 </control>
                                         </focusedlayout>
-                                        <onclick>RunScript(plugin.program.fritzact,action=toggle&amp;ain=$INFO[ListItem.Label2])</onclick>
+                                        <onclick condition="StringCompare(ListItem.Property(type),switch)">RunScript(plugin.program.fritzact,action=toggle&amp;ain=$INFO[ListItem.Label2])</onclick>
+                                        <onclick condition="StringCompare(ListItem.Property(type),group)">RunScript(plugin.program.fritzact,action=toggle&amp;ain=$INFO[ListItem.Label2])</onclick>
+                                        <onclick condition="StringCompare(ListItem.Property(type),thermostat)">RunScript(plugin.program.fritzact,action=temp&amp;ain=$INFO[ListItem.Label2])</onclick>
                                         <content>plugin://plugin.program.fritzact?ts=$INFO[Window(Home).Property(fritzact.timestamp)]</content>
                                 </control>
                                 <control type="button">

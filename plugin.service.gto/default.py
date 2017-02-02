@@ -312,7 +312,7 @@ def scrapeGTOPage(enabled=__enableinfo__):
         HOME.clearProperty('GTO.%s' % (idx))
 
     HOME.setProperty('GTO.blobs', '0')
-    HOME.setProperty('GTO.provider', data.shortname)
+    HOME.setProperty('GTO.provider', __shortname__)
 
     for container in content:
 

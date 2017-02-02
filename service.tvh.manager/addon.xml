@@ -7,6 +7,7 @@
   <extension point="xbmc.python.script" library="default.py" />
   <extension point="xbmc.addon.metadata">
     <platform>linux</platform>
+    <language></language>
     <summary lang="en">TVHeadend Power Management</summary>
     <summary lang="de">Power-Management für TVHeadend</summary>
     <summary lang="pl">TVHeadend Power Management</summary>
@@ -21,5 +22,12 @@
     <website>http://vdr4bj1.no-ip.org</website>
     <email>birger.jesch@gmail.com</email>
     <source>https://github.com/b-jesch/service.tvh.manager</source>
+    <assets>
+      <icon>icon.png</icon>
+      <fanart>fanart.jpg</fanart>
+      <screenshot>resources/screenshot-01.jpg</screenshot>
+      <screenshot>resources/screenshot-02.jpg</screenshot>
+      <screenshot>resources/screenshot-03.jpg</screenshot>
+    </assets>
   </extension>
 </addon>

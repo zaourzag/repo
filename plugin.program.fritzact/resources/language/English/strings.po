@@ -73,8 +73,12 @@ msgctxt "#30013"
 msgid "This device should not be switched"
 msgstr ""
 
+msgctxt "#30014"
+msgid "Action could not performed"
+msgstr ""
+
 #Window Labels
-#empty strings from id 30013 to 30019
+#empty strings from id 30015 to 30019
 
 msgctxt "#30020"
 msgid "FritzDECT Switches"
@@ -108,8 +112,9 @@ msgctxt "#30027"
 msgid "Consumption:"
 msgstr ""
 
-#States
-#empty strings from id 30028 to 30029
+msgctxt "#30029"
+msgid "Temperature set:"
+msgstr ""
 
 msgctxt "#30030"
 msgid "off"
@@ -129,4 +134,8 @@ msgstr ""
 
 msgctxt "#30034"
 msgid "readonly"
+msgstr ""
+
+msgctxt "#30035"
+msgid "%s Value Set:"
 msgstr ""
