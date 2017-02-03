@@ -37,6 +37,7 @@ profile    = xbmc.translatePath( addon.getAddonInfo('profile') ).decode("utf-8")
 temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
 
 
+
 cookie=temp+"/cookie.jar"
 cj = cookielib.LWPCookieJar();
 
@@ -49,10 +50,8 @@ if not xbmcvfs.exists(temp):
        xbmcvfs.mkdirs(temp)
        
 
+favdatei   = xbmc.translatePath( os.path.join(temp,"favorit.txt") ).decode("utf-8")
 
-if xbmcvfs.exists(temp):
-  shutil.rmtree(temp)
-xbmcvfs.mkdirs(temp)
 
 def debug(content):
     log(content, xbmc.LOGDEBUG)
@@ -65,8 +64,8 @@ def log(msg, level=xbmc.LOGNOTICE):
     addonID = addon.getAddonInfo('id')
     xbmc.log('%s: %s' % (addonID, msg), level) 
     
-def addDir(name, url, mode, iconimage, desc="",sendername="",offset="",limit="",type=""):
-  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&sendername="+str(sendername)+"&offset="+str(offset)+"&limit="+str(limit)+"&type="+str(type)
+def addDir(name, url, mode, iconimage, desc="",sendername="",offset="",limit="",type="",bild="",title=""):
+  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&sendername="+str(sendername)+"&offset="+str(offset)+"&limit="+str(limit)+"&type="+str(type)+"&iconimage="+bild+"&title="+title
   ok = True
   liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=iconimage)
   liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc})
@@ -134,6 +133,8 @@ sendername = urllib.unquote_plus(params.get('sendername', ''))
 offset = urllib.unquote_plus(params.get('offset', ''))
 limit = urllib.unquote_plus(params.get('limit', ''))
 type = urllib.unquote_plus(params.get('type', ''))
+title = urllib.unquote_plus(params.get('title', ''))
+bild = urllib.unquote_plus(params.get('iconimage', ''))
 
 
 
@@ -170,7 +171,7 @@ def belibtesendungen(url):
       title=re.compile('teaser-formatname">(.+?)<', re.DOTALL).findall(entry)[0]
       urlv=baseurl+urlt
       debug("belibtesendungen addurl :"+urlv)
-      addDir(title, urlv, "serie", img)      
+      addDir(title, urlv, "serie", img,bild=img,title=title)      
     except:
       pass
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
@@ -198,12 +199,62 @@ def ganzefolgensender(url):
       pass
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 
+def favadd(url,title,bild):
+  debug(" favadd url :"+url)
+  textfile=url+"###"+title+"###"+bild+"\n"
+  try:
+    f=open(favdatei,'r')
+    for line in f:
+      textfile=textfile+line
+    f.close()
+  except:
+    pass
+  f=open(favdatei,'w')
+  f.write(textfile)
+  f.close()
+  xbmc.executebuiltin('Notification("Hinzufufügen",title+" hinzugefügt")')
+  xbmc.executebuiltin("Container.Refresh")
+    
 
+def favdel(url):
+  debug(" FAVDEL url :"+url)
+  textfile=""
+  f=open(favdatei,'r')
+  for line in f:
+     if not url in line and not line=="\n":
+      textfile=textfile+line
+  f.close()
+  f=open(favdatei,'w')
+  f.write(textfile)
+  f.close()
+  xbmc.executebuiltin('Notification("Löschen","Serie wurde gelöscht")')
+  xbmc.executebuiltin("Container.Refresh")  
+
+def listfav()  :
+    if xbmcvfs.exists(favdatei):
+        f=open(favdatei,'r')
+        for line in f:
+          spl=line.split('###')       
+          addDir(name=spl[1], url=spl[0], mode="serie", iconimage=spl[2].strip(), desc="",title=spl[1],bild=spl[2].strip())
+        f.close()
+    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
+    
   
-def serie(url):
+def  serie(url,bild="",title=""):
     debug("serie :"+url)
+    debug("title :"+title)
     addDir("Alle Clips", url+"/alle-clips", "listvideos", "")      
-    addDir("Ganze Folgen", url+"/ganze-folgen", "listvideos", "")    
+    addDir("Ganze Folgen", url+"/ganze-folgen", "listvideos", "")
+    found=0
+    if xbmcvfs.exists(favdatei):
+      f=open(favdatei,'r')     
+      for line in f:
+           if url in line:
+              found=1
+    if found==0:           
+             addDir("Adde Favorites", url, mode="favadd", iconimage="", desc="",title=title,bild=bild)      
+    else :
+             addDir("Delete Favorites", url, mode="favdel", iconimage="", desc="")         
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 
 def sendungsmenu():
@@ -235,7 +286,7 @@ def jsonfile(url):
      urlv=element["url"]
      image=element["images"][0]["url"]
      title=element["title"]
-     addDir(title, baseurl+"/"+urlv, "serie", image)       
+     addDir(title, baseurl+"/"+urlv, "serie", image,bild=image,title=title)       
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
    
 def allsender(begriff):
@@ -481,7 +532,7 @@ def searchtext(url,offset,limit,type):
       img=re.compile('data-src="(.+?)"', re.DOTALL).findall(entry)[0]
       title=re.compile('title="(.+?)"', re.DOTALL).findall(entry)[0]      
       if  type=="format":
-        addDir(title, urlt, "serie", img) 
+        addDir(title, urlt, "serie", img,bild=img,title=title) 
       else:
         addLink(title, urlt, "getvideoid", img) 
    if i>5:
@@ -494,6 +545,7 @@ if mode is '':
     addDir("Sendungen A-Z", url+"/ganze-folgen", "sendungsmenu", "")  
     addDir("Sendungen nach Datum", "", "verpasstdatum", "")  
     addDir("Suche","","search","")
+    addDir("Favoriten", "Favoriten", 'listfav', "") 
     addDir("Einstellungen", "", 'Settings', "")   
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 else:
@@ -508,7 +560,7 @@ else:
   if mode == 'belibtesendungen':
           belibtesendungen(url)
   if mode == 'serie':
-          serie(url)       
+          serie(url,bild,title)       
   if mode == 'listvideos':
           listvideos(url)       
   if mode == 'getvideoid':
@@ -535,3 +587,9 @@ else:
           searchmenu(url)
   if mode ==  'verpasstdatummenu':
           verpasstdatummenu(url)          
+  if mode == 'favadd':          
+          favadd(url,title,bild)          
+  if mode == 'favdel':          
+          favdel(url)                             
+  if mode == 'listfav':          
+          listfav()     
