@@ -15,7 +15,6 @@ import time
 import string
 import random
 import shutil
-import ssl
 import subprocess
 import base64
 import xbmcplugin
@@ -24,15 +23,6 @@ import xbmcaddon
 import xbmcvfs
 from HTMLParser import HTMLParser
 import resources.lib.ScrapeUtils as ScrapeUtils
-
-try:
-    _create_unverified_https_context = ssl._create_unverified_context
-except AttributeError:
-    # Legacy Python that doesn't verify HTTPS certificates by default
-    pass
-else:
-    # Handle target environment that doesn't support HTTPS verification
-    ssl._create_default_https_context = _create_unverified_https_context
 
 addon = xbmcaddon.Addon()
 addonID = addon.getAddonInfo('id')
