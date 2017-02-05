@@ -40,7 +40,7 @@ def log(msg, level=xbmc.LOGNOTICE):
 def parameters_string_to_dict(parameters):
 	paramDict = {}
 	if parameters:
-		paramPairs = parameters[0:].split("&")
+		paramPairs = parameters[1:].split("&")
 		for paramsPair in paramPairs:
 			paramSplits = paramsPair.split('=')
 			if (len(paramSplits)) == 2:
@@ -340,21 +340,17 @@ def changetitle(title):
     return maxlink
 
 addon = xbmcaddon.Addon()    
+debug("Hole Parameter")
 try:
-      params = parameters_string_to_dict(sys.argv[1])
-      debug("1")
-      debug(params)
+      params = parameters_string_to_dict(sys.argv[2])
       mode = urllib.unquote_plus(params.get('mode', ''))
-      debug("2")
       series = urllib.unquote_plus(params.get('series', ''))
-      debug("3")
       season = urllib.unquote_plus(params.get('season', ''))
-      debug("4")
+      debug("Parameter Holen geklappt")
 except:
+      debug("Parameter Holen nicht geklappt")
       mode="" 
-debug("Mode :")
-debug(mode)
-debug(sys.argv[1])
+debug("Mode ist : "+mode)
 if mode=="":      
     title=gettitle()
     lastplayd_title,lastepisode_name,fehlen=get_episodedata(title)
@@ -379,25 +375,19 @@ if mode=="":
     if mode=="fetch":
        pass
 if mode=="getseries":
-    debug("getseries")
     lastplayd_title,lastplayd_title,fehlen=get_episodedata(series)
     maxlink= changetitle(series)         
     Bild,Zusammenfassung,staffel_arr,folgen_arr,letztefolge,this_staffel,ende=parseserie(maxlink,sstaffel=season)
-    debug("Bild :"+Bild)
     # Window ID
-    WINDOW = xbmcgui.Window(12902)
-    #WINDOW.clearProperties()
-    WINDOW.setProperty('Bild',Bild)
-    WINDOW.setProperty('Zusammenfassung',Zusammenfassung)
-    for i in range(0,len(staffel_arr),1):
-      WINDOW.setProperty('staffel'+str(i),folgen_arr[i])
-    WINDOW.setProperty('letztefolge',letztefolge)
-    WINDOW.setProperty('this_staffel',this_staffel)
-    WINDOW.setProperty('ende',str(ende))
-    WINDOW.setProperty('fehlen',fehlen)
-    xxxxxx = WINDOW.getProperty('Bild')
-    debug("XXXXX" +xxxxxx)
-    
+    windowid = 10000
+    xbmcgui.Window(windowid).clearProperties()
+    xbmcgui.Window(windowid).setProperty('Bild',Bild)
+    xbmcgui.Window(windowid).setProperty('Zusammenfassung',Zusammenfassung)
+    xbmcgui.Window(windowid).setProperty('staffel_arr',staffel_arr)
+    xbmcgui.Window(windowid).setProperty('folgen_arr',folgen_arr)
+    xbmcgui.Window(windowid).setProperty('letztefolge',letztefolge)
+    xbmcgui.Window(windowid).setProperty('this_staffel',this_staffel)
+    xbmcgui.Window(windowid).setProperty('ende',ende)
     
     
 cj.save(cookie,ignore_discard=True, ignore_expires=True)
