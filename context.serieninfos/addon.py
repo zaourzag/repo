@@ -142,6 +142,7 @@ def parseserie(name,sstaffel=0) :
   htmlPage = BeautifulSoup(content, 'html.parser')
   searchitem = htmlPage.find("p",class_="box clear pad5")
   debug("-----_")
+  Zusammenfassung=""
   Zusammenfassung=searchitem.text.encode('utf-8').decode('ascii', 'ignore')
   
   debug("########## "+Zusammenfassung)
@@ -341,6 +342,9 @@ def changetitle(title):
 
 addon = xbmcaddon.Addon()    
 debug("Hole Parameter")
+debug("Argv")
+debug(sys.argv)
+debug("----")
 try:
       params = parameters_string_to_dict(sys.argv[2])
       mode = urllib.unquote_plus(params.get('mode', ''))
@@ -356,6 +360,8 @@ if mode=="":
     lastplayd_title,lastepisode_name,fehlen=get_episodedata(title)
     debug("####### :"+lastplayd_title)
     maxlink= changetitle(title)
+    Zusammenfassung=""
+    Bild=""
     if maxlink=="":
       xbmc.executebuiltin('Notification('+title+',"Serie nicht gefunden")')
     else:      
@@ -366,14 +372,16 @@ if mode=="":
         else:
           Zusammenfassung=Zusammenfassung+"          "
         Zusammenfassung= Zusammenfassung+" Staffel "+staffel_arr[i]+ ": "+ folgen_arr[i]+ " Folgen"    
-    debug("Letzte Folge :" +str(letztefolge))
-    debug("this_staffel Folge :" +str(this_staffel))
-    debug("Zuende :" +str(ende))
+    try:
+        debug("Letzte Folge :" +str(letztefolge))
+        debug("this_staffel Folge :" +str(this_staffel))
+        debug("Zuende :" +str(ende))
+    except:
+        debug("Fehler keine Letztefolge,this_staffel oder zuende")
+        
     window = Infowindow(title="SerienFino",text=Zusammenfassung,image=Bild,lastplayd_title=lastplayd_title,lastepisode_name=lastepisode_name,fehlen=fehlen)
     window.doModal()
     del window
-    if mode=="fetch":
-       pass
 if mode=="getseries":
     lastplayd_title,lastplayd_title,fehlen=get_episodedata(series)
     maxlink= changetitle(series)         
