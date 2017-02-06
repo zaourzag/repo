@@ -518,6 +518,10 @@ msgctxt "#31304"
 msgid "Date is too small"
 msgstr "Datum ist zu klein"
 
+msgctxt "#31305"
+msgid "Record series"
+msgstr ""
+
 
 
 
@@ -589,4 +593,8 @@ msgstr ""
 
 msgctxt "#31924"
 msgid "enter date"
+msgstr ""
+
+msgctxt "#31925"
+msgid "Cancel serial recording"
 msgstr ""

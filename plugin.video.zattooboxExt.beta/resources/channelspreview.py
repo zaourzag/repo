@@ -1,21 +1,23 @@
 # coding=utf-8
 #
-#    Copyright (C) 2015 Daniel Griner (griner.ch@gmail.com)
+#    copyright (C) 2017 Steffen Rolapp (github@rolapp.de)
 #
-#  This Program is free software; you can redistribute it and/or modify
-#  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation; either version 2, or (at your option)
-#  any later version.
+#    based on ZattooBoxExtended by Daniel Griner (griner.ch@gmail.com) lisence under GPL
+#    
+#    This file is part of ZattooBox
 #
-#  This Program is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-#  GNU General Public License for more details.
+#    ZattooBox is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
 #
-#  You should have received a copy of the GNU General Public License
-#  along with this Program; see the file LICENSE.txt.  If not, write to
-#  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
-#  http://www.gnu.org/copyleft/gpl.html
+#    ZattooBox is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with ZattooBox.  If not, see <http://www.gnu.org/licenses/>.
 #
 
 REMOTE_DBG = False
@@ -324,10 +326,10 @@ class ChannelsPreview(xbmcgui.WindowXML): #needs to be WindowXML or onInit won't
         if jump:
             self.showInfo(jump)
         else:
-            if hasattr(self, 'showInfoTimer'): self.showInfoTimer.cancel()
-            self.showInfoTimer = threading.Timer(0.1, self.showInfo)
-            self.showInfoTimer.start()
-        
+            #if hasattr(self, 'showInfoTimer'): self.showInfoTimer.cancel()
+            #self.showInfoTimer = threading.Timer(0.1, self.showInfo)
+            #self.showInfoTimer.start()
+            self.showInfo()
         #controlNr = self.selected%16
         #src = 'http://thumb.zattic.com/' + self.controls[controlNr]['channel'] + '/500x288.jpg?r=' + str(int(time.time()))
         #self.controls[controlNr]['image'].setImage(src, False)

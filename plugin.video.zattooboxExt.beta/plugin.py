@@ -1,24 +1,24 @@
 # coding=utf-8
 #
-#    ZattooBox Extended
+#    copyright (C) 2017 Steffen Rolapp (github@rolapp.de)
 #
-#  Copyright (C) 2015 Daniel Griner (griner.ch@gmail.com)
-#  based on ZattooBox by Pascal Nançoz (nancpasc@gmail.com)
+#    based on ZattooBoxExtended by Daniel Griner (griner.ch@gmail.com) License under GPL
+#    based on ZattooBox by Pascal Nançoz (nancpasc@gmail.com) Licence under BSD 2 clause
 #
-#  This Program is free software; you can redistribute it and/or modify
-#  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation; either version 2, or (at your option)
-#  any later version.
+#    This file is part of ZattooBox
 #
-#  This Program is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-#  GNU General Public License for more details.
+#    ZattooBox is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
 #
-#  You should have received a copy of the GNU General Public License
-#  along with this Program; see the file LICENSE.txt.  If not, write to
-#  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
-#  http://www.gnu.org/copyleft/gpl.html
+#    ZattooBox is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with ZattooBox.  If not, see <http://www.gnu.org/licenses/>.
 #
 
 
@@ -40,7 +40,7 @@ if REMOTE_DBG:
 
 
 import xbmc, xbmcgui, xbmcplugin, xbmcaddon
-import sys, urlparse
+import sys, urlparse,  os
 import  time, datetime, threading
 
 from resources.zattooDB import ZattooDB
@@ -69,7 +69,7 @@ ACTION_SELECT_ITEM = 7
 ACTION_PARENT_DIR = 9
 ACTION_PREVIOUS_MENU = 10
 ACTION_STOP = 13
-
+ACTION_SHOW_INFO = 11
 ACTION_OSD=24
 
 KEY_NAV_BACK = 92
@@ -92,9 +92,11 @@ ACTION_CHANNEL_UP = 184
 ACTION_CHANNEL_DOWN = 185
 ACTION_PAGE_UP = 5
 ACTION_PAGE_DOWN = 6
+ACTION_RECORD = 170
 
 SWISS = __addon__.getSetting('swiss')
-HIQ = __addon__.getSetting('hiq')
+accountData=_zattooDB_.zapi.get_accountData()
+premiumUser=accountData['account']['subscriptions']!=[]
 
 
 
@@ -102,7 +104,7 @@ if SWISS=="true":
     xbmc.executebuiltin( "Skin.SetBool(%s)" %'swiss')
 else:
     xbmc.executebuiltin( "Skin.Reset(%s)" %'swiss')
-if HIQ=='true':
+if premiumUser:
     xbmc.executebuiltin( "Skin.SetBool(%s)" %'hiq')
 else:
     xbmc.executebuiltin( "Skin.Reset(%s)" %'hiq')
@@ -139,9 +141,15 @@ def build_directoryContent(content, addon_handle, cache=True, root=False, con='m
     li.setInfo('video', {'category':record['category']})
     li.setProperty('fanart_image', record['thumbnail'])
     li.select(record['selected'])
-  
+    
+    if con == 'files':
+      print 'Content ' + str(con)
+      contextMenuItems = []
+      #contextMenuItems.append((localString(31921), 'RunPlugin("plugin://'+__addonId__+'/?mode=epg'+'")'))
+      li.addContextMenuItems(contextMenuItems, replaceItems=True)
+      
     xbmcplugin.addDirectoryItem(handle=addon_handle, url=record['url'], listitem=li, isFolder=record['isFolder'])
-
+    
   xbmcplugin.endOfDirectory(addon_handle, True, root, cache)
  
 def build_root(addon_uri, addon_handle):
@@ -281,8 +289,13 @@ def build_recordingsList(addon_uri, addon_handle):
     li.setThumbnailImage(record['image_url'])
     li.setArt({'thumb':record['image_url'], 'fanart':record['image_url'], 'landscape':record['image_url']})
     li.setProperty('IsPlayable', 'true')
-
+    try:
+      series=record['tv_series_id']
+    except:
+      series = 'None'
     contextMenuItems = []
+    if series != 'None':
+      contextMenuItems.append((localString(31925),'RunPlugin("plugin://'+__addonId__+'/?mode=remove_series&recording_id='+str(record['id'])+'&series='+str(series)+'")',))
     contextMenuItems.append((localString(31921), 'RunPlugin("plugin://'+__addonId__+'/?mode=remove_recording&recording_id='+str(record['id'])+'")'))
     li.addContextMenuItems(contextMenuItems, replaceItems=True)
     
@@ -315,11 +328,12 @@ def watch_recording(addon_uri, addon_handle, recording_id):
     li = xbmcgui.ListItem()
     #li.setInfo(type="Video", infoLabels={})
     li.setPath(streams[streamNr]['url'])
-
-    player= myPlayer(True)
+       
+    player= myPlayer(False)
     xbmcplugin.setResolvedUrl(addon_handle, True, li)
     #wait for 5min skip
     while (player.starting):xbmc.sleep(100)
+    print "PlayerTime " + str(player.getTotalTime())
 
 def setup_recording(program_id):
   #print('RECORDING: '+program_id)
@@ -338,6 +352,13 @@ def delete_recording(recording_id):
   xbmc.executebuiltin('Container.Refresh')
 # times in local timestamps
 
+def delete_series(recording_id, series):
+  params = {'recording_id': recording_id, 'tv_series_id':series, 'remove_recording':'true'}
+  folder=__addon__.getSetting('library_dir') # NEW added - by Samoth
+  if folder: # NEW added - by Samoth
+    _library_.delete_entry_from_library(str(recording_id)) # NEW added - by Samoth	
+  resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/series_recording/remove', params)
+  xbmc.executebuiltin('Container.Refresh')
  
 def slugify(value):
     """
@@ -351,7 +372,7 @@ def slugify(value):
     return value
 
 
-def watch_channel(channel_id, start, end):
+def watch_channel(channel_id, start, end, showID="", restart=False):
   #print('WATCH: '+channel_id+' st:'+str(start)+' en:'+str(end))
   
   #new ZattooDB instance because this is called from thread-timer on channel-nr input (sql connection doesn't work)
@@ -368,14 +389,18 @@ def watch_channel(channel_id, start, end):
   
   # (64 150 300) 600 900 1500 3000 5000
   max_bandwidth = __addon__.getSetting('max_bandwidth')
-  if start == '0': params = {'cid': channel_id, 'stream_type': 'hls', 'maxrate':max_bandwidth}
+  
+  if restart: params = {'stream_type': 'hls'}
+  elif start == '0': params = {'cid': channel_id, 'stream_type': 'hls', 'maxrate':max_bandwidth}
   else:
     zStart = datetime.datetime.fromtimestamp(int(start) - _timezone_ ).strftime("%Y-%m-%dT%H:%M:%SZ")  #5min zattoo skips back
     zEnd = datetime.datetime.fromtimestamp(int(end) - _timezone_ ).strftime("%Y-%m-%dT%H:%M:%SZ")
     params = {'cid': channel_id, 'stream_type': 'hls', 'start':zStart, 'end':zEnd, 'maxrate':max_bandwidth }
     
-  channelInfo = _zattooDB_.get_channelInfo(channel_id)  
-  resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/watch',params)
+  channelInfo = _zattooDB_.get_channelInfo(channel_id) 
+  if restart: resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/watch/selective_recall/'+channel_id+'/'+showID, params)
+  else: resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/watch',params)
+  print 'ResultData ' +str(params)
   if resultData is None:
     xbmcgui.Dialog().notification("ERROR", "NO ZAPI RESULT", channelInfo['logo'], 5000, False)
     return
@@ -423,7 +448,7 @@ def watch_channel(channel_id, start, end):
     listitem.setArt({ 'poster': program['image_small'], 'logo' : channelInfo['logo'] })
 
   #play recall
-  if (start!='0'):
+  if (start!='0') or restart:
     player= myPlayer(True)
     player.play(streams[streamNr]['url'], listitem)
     while (player.starting):xbmc.sleep(10) #wait for player to skip 5min on recall
@@ -591,7 +616,7 @@ class myPlayer( xbmc.Player ):
     self.starting=True
   def onPlayBackStarted(self):
     self.starting=False
-    if (self.skip): self.seekTime(300)
+    if (self.skip): self.seekTime(240)
 
 class zattooGUI(xbmcgui.WindowXMLDialog):
   def __init__(self, xmlFile, scriptPath):
@@ -632,6 +657,11 @@ class zattooGUI(xbmcgui.WindowXMLDialog):
     self.refreshPrevImageTimer.start()
     
   def onAction(self, action):
+    
+    channel=_zattooDB_.get_playing()['channel']
+    channeltitle=_zattooDB_.get_channeltitle(channel)
+    program = _zattooDB_.getPrograms({'index':[channel]}, True, datetime.datetime.now(), datetime.datetime.now())
+    program=program[0]
     #print('ZATTOOGUI BUTTON'+str(action.getButtonCode()))
     #print('ZATTOOGUI ACTIONID'+str(action.getId()))
     self.channelInputCtrl.setVisible(False)
@@ -656,21 +686,27 @@ class zattooGUI(xbmcgui.WindowXMLDialog):
         makeOsdInfo()
         gui = zattooOSD("zattooOSD.xml",__addon__.getAddonInfo('path'))
         gui.doModal()
-
+    elif action == ACTION_MOVE_DOWN:
+      xbmc.executebuiltin("Action(OSD)") #close hidden gui
+      xbmc.executebuiltin('RunPlugin("plugin://'+__addonId__+'/?mode=epgOSD")')
+    elif action == ACTION_MOVE_UP:
+      xbmc.executebuiltin("Action(OSD)") #close hidden gui
+      xbmc.executebuiltin('ActivateWindow(10025,"plugin://'+__addonId__+'/?mode=channellist")')
     elif action == ACTION_MOVE_LEFT:
       self.setPrevImg()
       self.showChannelNr(toggle_channel()+1)
     elif action == ACTION_MOVE_RIGHT:
       change_stream(1)
-    elif action in [ACTION_MOVE_UP, ACTION_CHANNEL_UP, ACTION_PAGE_UP]:
+    elif action in [ACTION_CHANNEL_UP, ACTION_PAGE_UP]:
       if self.hidePrevImg():return
       nr=skip_channel(+1)
       self.showChannelNr(nr+1)
-    elif action in [ACTION_MOVE_DOWN, ACTION_CHANNEL_DOWN, ACTION_PAGE_DOWN]:
+    elif action in [ACTION_CHANNEL_DOWN, ACTION_PAGE_DOWN]:
       if self.hidePrevImg():return
       nr=skip_channel(-1)
       self.showChannelNr(nr+1)
-    
+    elif action == ACTION_RECORD:
+      setup_recording(program['showID'])
     elif (action>57 and action<68): #numbers 0-9
       self.hidePrevImg()
       #print('channel ipnut'+str(action))
@@ -729,7 +765,9 @@ class zattooOSD(xbmcgui.WindowXMLDialog):
       xbmc.executebuiltin("Action(OSD)") #close hidden gui
       start = int(time.mktime(program['start_date'].timetuple()))
       end = int(time.mktime(program['end_date'].timetuple()))
-      watch_channel(channel,start,end)
+      showID = program['showID']
+      if SWISS == 'true': watch_channel(channel,start,end)
+      else: watch_channel(channel, start, end, showID, True)
     elif controlID==210: #record program
       setup_recording(program['showID'])
     elif controlID==211: #teletext
@@ -798,10 +836,15 @@ def main():
     __addon__.openSettings()
     _zattooDB_.zapi.renew_session()    
   elif action == 'watch_c':
-    cid = args.get('id','sf-1')[0]
+    cid = args.get('id','ard')[0]
     start = args.get('start', '0')[0]
     end = args.get('end', '0')[0]
-    watch_channel(cid, start, end)
+    showID = args.get('showID', '1')[0]
+    restart = args.get('restart', 'false')[0]
+    if restart == 'true': rest=True
+    else: rest=False
+    print 'Watch ' +str(showID)+str(rest)
+    watch_channel(cid, start, end, showID, rest)
   elif action == 'skip_channel':
     skipDir = args.get('skipDir')[0]
     skip_channel(int(skipDir))
@@ -820,6 +863,10 @@ def main():
   elif action == 'remove_recording':
     recording_id = args.get('recording_id')[0]
     delete_recording(recording_id)
+  elif action == 'remove_series':
+    recording_id = args.get('recording_id')[0]
+    series = args.get('series')[0]
+    delete_series(recording_id, series)
   elif action == 'reloadDB':
     xbmc.executebuiltin("ActivateWindow(busydialog)")
     _zattooDB_.reloadDB()

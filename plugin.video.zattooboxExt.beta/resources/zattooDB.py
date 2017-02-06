@@ -1,21 +1,23 @@
 # coding=utf-8
 #
-#  Copyright (C) 2015 Daniel Griner (griner.ch@gmail.com)
+#    copyright (C) 2017 Steffen Rolapp (github@rolapp.de)
 #
-#  This Program is free software; you can redistribute it and/or modify
-#  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation; either version 2, or (at your option)
-#  any later version.
+#    based on ZattooBoxExtended by Daniel Griner (griner.ch@gmail.com) license under GPL
+#    
+#    This file is part of ZattooBox
 #
-#  This Program is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-#  GNU General Public License for more details.
+#    ZattooBox is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
 #
-#  You should have received a copy of the GNU General Public License
-#  along with this Program; see the file LICENSE.txt.  If not, write to
-#  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
-#  http://www.gnu.org/copyleft/gpl.html
+#    ZattooBox is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with ZattooBox.  If not, see <http://www.gnu.org/licenses/>.
 #
 
 import xbmc, xbmcgui, xbmcaddon, os, xbmcplugin, datetime, time
@@ -74,7 +76,6 @@ class ZattooDB(object):
 
   @staticmethod
   def convert_datetime(ts):
-
     try:
         return datetime.datetime.fromtimestamp(float(ts))
     except ValueError:
@@ -114,7 +115,7 @@ class ZattooDB(object):
 
     try:
       c.execute('CREATE TABLE channels(id TEXT, title TEXT, logo TEXT, weight INTEGER, favourite BOOLEAN, PRIMARY KEY (id) )')
-      c.execute('CREATE TABLE programs(showID TEXT, title TEXT, channel TEXT, start_date TIMESTAMP, end_date TIMESTAMP, description TEXT, description_long TEXT, year TEXT, country TEXT, genre TEXT, category TEXT, image_small TEXT, image_large TEXT, updates_id INTEGER, FOREIGN KEY(channel) REFERENCES channels(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED, FOREIGN KEY(updates_id) REFERENCES updates(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED)')
+      c.execute('CREATE TABLE programs(showID TEXT, title TEXT, channel TEXT, start_date TIMESTAMP, end_date TIMESTAMP, series BOOLEAN, description TEXT, description_long TEXT, year TEXT, country TEXT, genre TEXT, category TEXT, image_small TEXT, image_large TEXT, updates_id INTEGER, FOREIGN KEY(channel) REFERENCES channels(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED, FOREIGN KEY(updates_id) REFERENCES updates(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED)')
       c.execute('CREATE TABLE updates(id INTEGER, date TIMESTAMP, type TEXT, PRIMARY KEY (id) )')
       c.execute('CREATE TABLE playing(channel TEXT, start_date TIMESTAMP, action_time TIMESTAMP, current_stream INTEGER, streams TEXT, PRIMARY KEY (channel))')
       c.execute('CREATE TABLE showinfos(showID INTEGER, info TEXT, PRIMARY KEY (showID))')
@@ -144,7 +145,7 @@ class ZattooDB(object):
     print "account  "+ self.zapi.AccountData['account']['power_guide_hash']
     api = '/zapi/v2/cached/channels/' + self.zapi.AccountData['account']['power_guide_hash'] + '?details=False'
     channelsData = self.zapi.exec_zapiCall(api, None)
-
+    
     api = '/zapi/channels/favorites'
     favoritesData = self.zapi.exec_zapiCall(api, None)
 
@@ -322,6 +323,7 @@ class ZattooDB(object):
         year = show['year']
         country = show['country']
         category = show ['category']
+        series = show['series']
         if longDesc is None:
             api = '/zapi/program/details?program_id=' + showID + '&complete=True'
             showInfo = self.zapiSession().exec_zapiCall(api, None)
@@ -339,17 +341,20 @@ class ZattooDB(object):
             country = showInfo['program']['country']
             country = country.replace('|',', ')
             info.execute('UPDATE programs SET country=? WHERE showID=?', [country, showID ])
-            
+            series = showInfo['program']['series_recording_eligible']
+            info.execute('UPDATE programs SET series=? WHERE showID=?', [series, showID])
         self.conn.commit()
         info.close()
-        return {'longDesc':longDesc, 'year':year, 'country':country, 'category':category}
+        return {'description':longDesc, 'year':year, 'country':country, 'category':category}
         
   def getShowInfo(self, showID, field='all'):
         if field!='all':
-            api = '/zapi/program/details?program_id=' + str(showID) + '&complete=True'
-            showInfo = self.zapi.exec_zapiCall(api, None)
-            return showInfo['program'].get(field, " ")
-        
+            #api = '/zapi/program/details?program_id=' + str(showID) + '&complete=True'
+            #showInfo = self.zapi.exec_zapiCall(api, None)
+            showInfo = self.getShowLongDescription(showID)
+            #return showInfo['program'].get(field, " ")
+            return showInfo[field]
+            
         #save information for recordings
         import json
         c = self.conn.cursor()
@@ -505,13 +510,13 @@ class ZattooDB(object):
                 PopUp = xbmcgui.DialogProgress()
                 counter=len(r)
                 bar = 0         # Progressbar (Null Prozent)
-                PopUp.create('ZattooBoxExt - Programmliste aufräumen', '')
+                PopUp.create(localSring(31913), '')
                 PopUp.update(bar)
                 for row in r:
                     c.execute('DELETE FROM programs WHERE showID = ?', (row['showID'],))
                     bar += 1
                     percent = int(bar * 100 / counter)
-                    PopUp.update(percent, 'Datensätze zu löschen ' + str(nr)) 
+                    PopUp.update(percent,  str(nr) + localString(31914))
                     if (PopUp.iscanceled()): 
                         c.close
                         return
@@ -548,3 +553,11 @@ class ZattooDB(object):
 			return date
 		else:
 			return ''
+
+  def getSeries(self, showID):
+        c = self.conn.cursor()
+        c.execute('SELECT series FROM programs WHERE showID = ?', [showID])
+        series = c.fetchone()
+        print str(showID)+'  '+str(series['series'])
+        c.close()
+        return series['series']

@@ -1,4 +1,14 @@
 -------------------------------------------------
+[B] ZattooBox Extendet v1.7.0beta[/B] 06.02.2017
+-------------------------------------------------
+- Serienaufnahmen hinzugefügt
+- löschen von Serienaufnahmen hinzugefügt
+- Restart für deutschland Abo hinzugefügt
+- HIQ Abo wird automatisch erkannt
+- LiveTV Bedienung leicht angepasst
+- Bug mit der wiedergabe von Aufnahmen behoben
+
+-------------------------------------------------
 [B] ZattooBox Extendet v1.6.8beta[/B] 28.01.2017
 -------------------------------------------------
 - Bugfix mit dem OSD behoben

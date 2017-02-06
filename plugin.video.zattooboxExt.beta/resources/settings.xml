@@ -5,7 +5,9 @@
         <setting label="31002" id="password" type="text" option="hidden" enable="!eq(-1,)" default=""/>
         <setting type="sep"/>
         <setting label="31003" id="swiss" type="bool" default="false" />
+<!--
         <setting label="31004" id="hiq" type="bool" default="false" enable="eq(-1,true)"/>       
+-->
         <setting type="sep"/>
         <setting label="31005" id="max_bandwidth" type="labelenum" values="600|900|1500|3000|5000" default="5000"/>
         <setting label="31006" id="audio_stream" type="labelenum" values="A|B" default="A"/>

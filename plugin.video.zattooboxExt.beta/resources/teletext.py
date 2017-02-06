@@ -1,21 +1,24 @@
 # coding=utf-8
 #
-#	Copyright (C) 2016 Daniel Griner (griner.ch@gmail.com)
 #
-#  This Program is free software; you can redistribute it and/or modify
-#  it under the terms of the GNU General Public License as published by
-#  the Free Software Foundation; either version 2, or (at your option)
-#  any later version.
+#    copyright (C) 2017 Steffen Rolapp (github@rolapp.de)
 #
-#  This Program is distributed in the hope that it will be useful,
-#  but WITHOUT ANY WARRANTY; without even the implied warranty of
-#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-#  GNU General Public License for more details.
+#    based on ZattooBoxExtended by Daniel Griner (griner.ch@gmail.com) license under GPl
 #
-#  You should have received a copy of the GNU General Public License
-#  along with this Program; see the file LICENSE.txt.  If not, write to
-#  the Free Software Foundation, 675 Mass Ave, Cambridge, MA 02139, USA.
-#  http://www.gnu.org/copyleft/gpl.html
+#    This file is part of ZattooBox
+#
+#    ZattooBox is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    ZattooBox is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with ZattooBox.  If not, see <http://www.gnu.org/licenses/>.
 #
 
 
@@ -92,7 +95,7 @@ class Teletext(xbmcgui.WindowDialog):
 
 		self.currentPage=100
 		self.subPage=1
-		self.showPage(str(self.currentPage), str(self.subPage))
+		self.showPage(str(self.currentPage)#, str(self.subPage))
 
 	def onAction(self, action):
 		if hasattr(self, 'supPageTimer'): self.supPageTimer.cancel()
@@ -155,8 +158,9 @@ class Teletext(xbmcgui.WindowDialog):
 			self.pageInputCtrl.setLabel(str(self.currentPage))
 			self.pageInputCtrl.setVisible(True)
 		url='https://zapi.zattoo.com/teletext/'+self.channelID+'/hd/'+page+'/'+str(subpage)+'.html'
+		#print 'TELETEXT  -  ' + str(url)
 		#url="https://zapi.zattoo.com/teletext/sf-1/hd/100/1.html"
-		#print('teletext image:'+url)
+		print('teletext image:'+url)
 
 		req=urllib2.Request(headers={'User-Agent':'Mozilla/5.0','Cache-Control':'max-age=0'}, url=url)
 		try:
