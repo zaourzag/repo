@@ -22,8 +22,8 @@
         <include>HomepageWidget_Custom7</include>
         <include>HomepageWidget_Custom8</include>
         <include>HomepageWidget_Custom9</include>
-        <include>HomepageWidget _PVR_TV</include>
-        <include>HomepageWidget _PVR_RADIO</include>
+        <include>HomepageWidget_PVR_TV</include>
+        <include>HomepageWidget_PVR_RADIO</include>
         <include>HomepageWidget_System</include>
     </include>
     <include name="HomepageWidget_Music">

@@ -536,7 +536,7 @@
                 <aspectratio>keep</aspectratio>
                 <colordiffuse>$VAR[BackgroundDim]</colordiffuse>
                 <imagepath>$INFO[Skin.String(Music_Folder_Path)]$INFO[MusicPlayer.Artist,,/extrafanart]</imagepath>
-                <visible>[!Visualisation.Enabled|[!Skin.HasSetting(ShowBackgroundVis)+Window.IsVisible(Home)]]</visible>
+                <visible>!Visualisation.Enabled|[!Skin.HasSetting(ShowBackgroundVis)+Window.IsVisible(Home)]</visible>
 				<visible>Skin.HasSetting(fanart)+!Control.IsVisible(2011)</visible>
             </control>
             <control type="multiimage" id="2013">
@@ -549,7 +549,7 @@
                 <imagepath>$INFO[Window(Visualisation).Property(ArtistSlideshow)]</imagepath>
                 <visible>System.HasAddon(script.artistslideshow)+!Window.IsVisible(Home)</visible>
                 <visible>Skin.HasSetting(fanart)+!String.Contains(Control.GetLabel(2012),.jpg)</visible>
-                <visible>![String.Contains(Window(Visualisation).Property(ArtistSlideshow),black)|String.Contains(Window(Visualisation).Property(ArtistSlideshow),transparent)]</visible>
+                <visible>!String.Contains(Window(Visualisation).Property(ArtistSlideshow),black)+!String.Contains(Window(Visualisation).Property(ArtistSlideshow),transparent)</visible>
                 <visible>!Visualisation.Enabled+Window.IsVisible(visualisation)</visible>
             </control>
             <control type="image">

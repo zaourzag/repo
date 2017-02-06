@@ -1,8 +1,59 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<window id="2005">
-    <defaultcontrol always="true">-</defaultcontrol>
+<?xml version="1.0" encoding="utf-8"?>
+<window>
+	<defaultcontrol></defaultcontrol>
     <include>openclose</include>
     <controls>
+		<control type="group" id="0">
+			<control type="label" id="10">
+				<left>45</left>
+				<top>15</top>
+				<width>1770</width>
+				<height>100</height>
+				<label></label>
+				<!-- <font>font12</font> -->
+				<shadowcolor>black</shadowcolor>
+			</control>
+			<control type="label" id="11">
+				<left>45</left>
+				<top>45</top>
+				<width>1770</width>
+				<height>100</height>
+				<label></label>
+				<!-- <font>font12</font> -->
+				<shadowcolor>black</shadowcolor>
+			</control>
+			<control type="label" id="12">
+				<left>45</left>
+				<top>75</top>
+				<width>1770</width>
+				<height>100</height>
+				<label></label>
+				<!-- <font>font12</font> -->
+				<shadowcolor>black</shadowcolor>
+			</control>
+		</control>
+		<control type="image" id="1">
+			<left>0</left>
+			<top>160</top>
+			<width>500</width>
+			<height>80</height>
+			<texture>SideFade.png</texture>
+			<visible>!IsEmpty(Player.SeekNumeric)</visible>
+			<include>openclosevisible</include>
+		</control>
+		<control type="label" id="1">
+			<label>[B]$INFO[Player.SeekNumeric(hh:mm:ss)][/B]</label>
+			<left>20</left>
+			<top>180</top>
+			<width>200</width>
+			<height>40</height>
+			<aligny>center</aligny>
+			<align>left</align>
+			<font>font11</font>
+			<shadowcolor>black</shadowcolor>
+			<visible>!IsEmpty(Player.SeekNumeric)</visible>
+			<include>openclosevisible</include>
+		</control>
         <control type="group" id="1">
             <left>30</left>
             <top>180</top>

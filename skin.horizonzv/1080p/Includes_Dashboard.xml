@@ -232,6 +232,7 @@
     </include>
     <include name="Dashboard">
         <control type="group">
+			<include>openclosefanart</include>
 			<visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),dashboard)</visible>
 			<control type="grouplist" id="8001">
 				<left>60</left>

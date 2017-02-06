@@ -1,4 +1,9 @@
-﻿v 0.9.0.15
+﻿v 0.9.0.18
+- TV und Radio Widget wieder aktiviert
+- Bugfix: Visualisierung unter LibreELEC kein Hintergrundbild
+- Anzeige bei Zeitsprung in Videos hinzugefügt
+
+v 0.9.0.15
 - Änderung für Hauptmenüpunkt Disk wieder rückgängig gemacht
 - Hauptmenüpunkte 3D, HD, FullHD, Doku, Kids, Fav 1-4 durch Benutzderdefiniert 1-9 ersetzt (Playlisten, Nodes etc. kann nun der Nutzer selbst anlegen und verknüpfen)
 - Fitz!Dect Anzeige unter Dashboard nur bei aktivem Addon
