@@ -931,4 +931,10 @@
 		<value condition="player.Muted">osd/AudioMute.png</value>
 		<value>osd/AudioFO2.png</value>
 	</variable>
+	<variable name="ExtendedInfoDialog">
+		<value condition="String.Contains(Window(Home).Property(contenttype),movie)">RunScript(script.extendedinfo,info=extendedinfo,dbid=$INFO[ListItem.DBID],name=$INFO[ListItem.Title])</value>
+		<value condition="String.Contains(Window(Home).Property(contenttype),tvshow)">RunScript(script.extendedinfo,info=extendedtvinfo,dbid=$INFO[ListItem.DBID],name=$INFO[ListItem.TvShowTitle])</value>
+		<value condition="String.Contains(Window(Home).Property(contenttype),season)">RunScript(script.extendedinfo,info=seasoninfo,tvshow=$INFO[ListItem.TvShowTitle],season=$INFO[ListItem.Season],silent=True)</value>
+		<value condition="String.Contains(Window(Home).Property(contenttype),episode)">RunScript(script.extendedinfo,info=extendedepisodeinfo,tvshow=$INFO[ListItem.TvShowTitle],season=$INFO[ListItem.Season],episode=$INFO[ListItem.Episode],silent=True)</value>
+	</variable>
 </includes>

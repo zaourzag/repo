@@ -498,7 +498,7 @@
             <include>openclosefanart</include>
             <include>openclosevisible</include>
             <timeperimage>4000</timeperimage>
-            <fadetime>400</fadetime>
+            <fadetime>1200</fadetime>
             <randomize>true</randomize>
             <colordiffuse>$VAR[BackgroundDim]</colordiffuse>
             <imagepath>$VAR[background]</imagepath>
@@ -1970,7 +1970,6 @@
                 <top>848</top>
                 <width>1920</width>
                 <height>135</height>
-                <visible>ListItem.IsCollection</visible>
                 <visible>ListItem.IsCollection+Control.IsVisible(742)</visible>
                 <include>openclosevisible</include>
                 <control type="group">
@@ -2121,8 +2120,8 @@
                     <left>180</left>
                     <top>978</top>
                     <control type="grouplist">
-                        <left>0</left>
-                        <top>18</top>
+                        <left>5</left>
+                        <top>25</top>
                         <width>1680</width>
                         <height>120</height>
                         <itemgap>6</itemgap>
@@ -3004,17 +3003,6 @@
             <onclick>Skin.ToggleSetting(WidgetDim)</onclick>
             <selected>Skin.HasSetting(WidgetDim)</selected>
         </control>
-        <!-- <control type="radiobutton" id="43">
-            <description>Settings Button</description>
-            <width>1110</width>
-            <height>52</height>
-            <align>left</align>
-            <textcolor>grey3</textcolor>
-            <texturenofocus>-</texturenofocus>
-            <label>51328</label>
-            <onclick>Skin.ToggleSetting(Widget_Cases)</onclick>
-            <selected>Skin.HasSetting(Widget_Cases)</selected>
-        </control> -->
 		<control type="radiobutton" id="44">
 			<description>Settings Button</description>
             <width>1110</width>

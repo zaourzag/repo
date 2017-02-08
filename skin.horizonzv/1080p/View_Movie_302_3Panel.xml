@@ -452,7 +452,7 @@
                     <left>0</left>
                     <top>30</top>
                     <include>openclosevisible</include>
-                    <visible>Window.IsVisible(videos)+Control.IsVisible(303)</visible>
+                    <visible>!Container.Content(episodes)+Window.IsVisible(videos)+Control.IsVisible(303)</visible>
                     <control type="list" id="303">
                         <left>142</left>
                         <top>90</top>

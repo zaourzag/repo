@@ -183,6 +183,7 @@
 			<texture>ArrowBig.png</texture>
 			<animation effect="rotate" end="-90" center="auto" time="0" condition="true">Conditional</animation>
 			<visible>Container(9000).HasPrevious</visible>
+			<include>openclosefanart</include>
 			<include>openclosevisible</include>
 		</control>
         <control type="image">
@@ -194,6 +195,7 @@
 			<texture>ArrowBig.png</texture>
 			<animation effect="rotate" end="90" center="auto" time="0" condition="true">Conditional</animation>
 			<visible>Container(9000).HasNext</visible>
+			<include>openclosefanart</include>
 			<include>openclosevisible</include>
 		</control>
 		<include>Clock</include>

@@ -99,8 +99,8 @@
 					<description>Music Custom Button</description>
                     <include>dialogbutton_popup</include>
 					<label>- $LOCALIZE[636]</label>
-					<onclick>Skin.ToggleSetting(HomeMenu_Custom_Music_Button)</onclick>
-					<selected>Skin.HasSetting(HomeMenu_Custom_Music_Button)</selected>
+					<onclick>Skin.ToggleSetting(Home_Music_Button)</onclick>
+					<selected>Skin.HasSetting(Home_Music_Button)</selected>
 					<enable>!Skin.HasSetting(HomeMenuNoMusicButton)</enable>
 				</control>
                 <control type="button" id="3">
@@ -109,7 +109,7 @@
 					<label>- $LOCALIZE[21899]</label>
 					<label2>$INFO[Skin.String(Home_Music_Custom_Label)]</label2>
 					<onclick>Skin.SetString(Home_Music_Custom_Label)</onclick>
-					<enable>!Skin.HasSetting(HomeMenuNoMusicButton)+Skin.HasSetting(HomeMenu_Custom_Music_Button)</enable>
+					<enable>!Skin.HasSetting(HomeMenuNoMusicButton)+Skin.HasSetting(Home_Music_Button)</enable>
 				</control>
                 <control type="button" id="4">
 					<description>Music Custom Category Button</description>
@@ -117,7 +117,7 @@
 					<label>- $LOCALIZE[21866]</label>
 					<label2>$VAR[Home_Music_Category]</label2>
 					<onclick>Skin.SelectBool(21866, 36912|Home_Music_Custom_Category_Video, 2|Home_Music_Custom_Category_Music, 1|Home_Music_Custom_Category_Pictures, 559|Home_Music_Custom_Category_File)</onclick>
-					<enable>!Skin.HasSetting(HomeMenuNoMusicButton)+Skin.HasSetting(HomeMenu_Custom_Music_Button)</enable>
+					<enable>!Skin.HasSetting(HomeMenuNoMusicButton)+Skin.HasSetting(Home_Music_Button)</enable>
 				</control>
                 <control type="button" id="5">
 					<description>Music Custom Category SubButton</description>
@@ -125,7 +125,7 @@
 					<label>  $LOCALIZE[15021]</label>
 					<label2>$VAR[Home_Music_SubCategory_Label]</label2>
 					<onclick>Skin.SelectBool(21866, 36912|Home_Music_Custom_SubCategory_Video, 2|Home_Music_Custom_SubCategory_Music)</onclick>
-					<visible>!Skin.HasSetting(HomeMenuNoMusicButton)+Skin.HasSetting(HomeMenu_Custom_Music_Button)+Skin.HasSetting(Home_Music_Custom_Category_File)</visible>
+					<visible>!Skin.HasSetting(HomeMenuNoMusicButton)+Skin.HasSetting(Home_Music_Button)+Skin.HasSetting(Home_Music_Custom_Category_File)</visible>
 				</control>
                 <control type="button" id="6">
 					<description>Movie Custom Path Button</description>
@@ -133,7 +133,7 @@
 					<label>- $LOCALIZE[573]</label>
 					<label2>$INFO[Skin.String(Home_Music_Custom_Path)]</label2>
 					<onclick>$VAR[Home_Music_Currentpath]</onclick>
-					<enable>!Skin.HasSetting(HomeMenuNoMusicButton)+Skin.HasSetting(HomeMenu_Custom_Music_Button)</enable>
+					<enable>!Skin.HasSetting(HomeMenuNoMusicButton)+Skin.HasSetting(Home_Music_Button)</enable>
 				</control>
 				<include content="separatorlabel">
 					<param name="separatorlabel_id" value="10" />
@@ -161,15 +161,15 @@
 					<label>Widget</label>
 					<onclick>SetProperty(HomeButton,music)</onclick>
 					<onclick>ActivateWindow(1500)</onclick>
-					<visible>!Skin.HasSetting(HomeMenu_Custom_Music_Button)</visible>
+					<visible>!Skin.HasSetting(Home_Music_Button)</visible>
 				</control>
 				<control type="radiobutton" id="18">
 					<description>Custom Widget Button</description>
                     <include>dialogbutton_popup</include>
 					<label>Widget</label>
-					<onclick>Skin.ToggleSetting(HomeMenu_Custom_Music_Widget)</onclick>
-					<selected>Skin.HasSetting(HomeMenu_Custom_Music_Widget)</selected>
-					<visible>Skin.HasSetting(HomeMenu_Custom_Music_Button)</visible>
+					<onclick>Skin.ToggleSetting(Home_Music_Widget)</onclick>
+					<selected>Skin.HasSetting(Home_Music_Widget)</selected>
+					<visible>Skin.HasSetting(Home_Music_Button)</visible>
 				</control>
 				<control type="radiobutton" id="19">
 					<description>Settings Button</description>
@@ -177,7 +177,7 @@
 					<label>verberge grüne Progressbar</label>
 					<onclick>Skin.ToggleSetting(WidgetNoPercentPlayedBar)</onclick>
 					<selected>Skin.HasSetting(WidgetNoPercentPlayedBar)</selected>
-					<visible>Skin.HasSetting(HomeMenu_Custom_Music_Button)</visible>
+					<visible>Skin.HasSetting(Home_Music_Button)</visible>
 				</control>
             </control>
             <control type="grouplist" id="36100"> <!-- videos -->
@@ -201,14 +201,14 @@
 					<label>- $LOCALIZE[51443]</label>
 					<onclick>Skin.ToggleSetting(HomeMenuVideosToFiles)</onclick>
 					<selected>Skin.HasSetting(HomeMenuVideosToFiles)</selected>
-					<enable>!Skin.HasSetting(HomeMenuNoVideosButton)+!Skin.HasSetting(HomeMenu_Custom_Video_Button)</enable>
+					<enable>!Skin.HasSetting(HomeMenuNoVideosButton)+!Skin.HasSetting(Home_Video_Button)</enable>
 				</control>
                 <control type="radiobutton" id="27">
 					<description>Video Custom Button</description>
                     <include>dialogbutton_popup</include>
 					<label>- $LOCALIZE[636]</label>
-					<onclick>Skin.ToggleSetting(HomeMenu_Custom_Video_Button)</onclick>
-					<selected>Skin.HasSetting(HomeMenu_Custom_Video_Button)</selected>
+					<onclick>Skin.ToggleSetting(Home_Video_Button)</onclick>
+					<selected>Skin.HasSetting(Home_Video_Button)</selected>
 					<enable>!Skin.HasSetting(HomeMenuNoVideosButton)</enable>
 				</control>
                 <control type="button" id="28">
@@ -217,7 +217,7 @@
 					<label>- $LOCALIZE[21899]</label>
 					<label2>$INFO[Skin.String(Home_Video_Custom_Label)]</label2>
 					<onclick>Skin.SetString(Home_Video_Custom_Label)</onclick>
-					<enable>!Skin.HasSetting(HomeMenuNoVideosButton)+Skin.HasSetting(HomeMenu_Custom_Video_Button)</enable>
+					<enable>!Skin.HasSetting(HomeMenuNoVideosButton)+Skin.HasSetting(Home_Video_Button)</enable>
 				</control>
                 <control type="button" id="29">
 					<description>Video Custom Category Button</description>
@@ -225,7 +225,7 @@
 					<label>- $LOCALIZE[21866]</label>
 					<label2>$VAR[Home_Video_Category]</label2>
 					<onclick>Skin.SelectBool(21866, 36912|Home_Video_Custom_Category_Video, 2|Home_Video_Custom_Category_Music, 1|Home_Video_Custom_Category_Pictures, 559|Home_Video_Custom_Category_File)</onclick>
-					<enable>!Skin.HasSetting(HomeMenuNoVideosButton)+Skin.HasSetting(HomeMenu_Custom_Video_Button)</enable>
+					<enable>!Skin.HasSetting(HomeMenuNoVideosButton)+Skin.HasSetting(Home_Video_Button)</enable>
 				</control>
                 <control type="button" id="30">
 					<description>Video Custom Category SubButton</description>
@@ -233,7 +233,7 @@
 					<label>  $LOCALIZE[15021]</label>
 					<label2>$VAR[Home_Video_SubCategory_Label]</label2>
 					<onclick>Skin.SelectBool(21866, 36912|Home_Video_Custom_SubCategory_Video, 2|Home_Video_Custom_SubCategory_Music)</onclick>
-					<visible>!Skin.HasSetting(HomeMenuNoVideosButton)+Skin.HasSetting(HomeMenu_Custom_Video_Button)+Skin.HasSetting(Home_Video_Custom_Category_File)</visible>
+					<visible>!Skin.HasSetting(HomeMenuNoVideosButton)+Skin.HasSetting(Home_Video_Button)+Skin.HasSetting(Home_Video_Custom_Category_File)</visible>
 				</control>
                 <control type="button" id="31">
 					<description>Video Custom Path Button</description>
@@ -241,7 +241,7 @@
 					<label>- $LOCALIZE[573]</label>
 					<label2>$INFO[Skin.String(Home_Video_Custom_Path)]</label2>
 					<onclick>$VAR[Home_Video_Currentpath]</onclick>
-					<enable>!Skin.HasSetting(HomeMenuNoVideosButton)+Skin.HasSetting(HomeMenu_Custom_Video_Button)</enable>
+					<enable>!Skin.HasSetting(HomeMenuNoVideosButton)+Skin.HasSetting(Home_Video_Button)</enable>
 				</control>
 				<include content="separatorlabel">
 					<param name="separatorlabel_id" value="35" />
@@ -269,15 +269,15 @@
 					<label>Widget</label>
 					<onclick>SetProperty(HomeButton,videos)</onclick>
 					<onclick>ActivateWindow(1500)</onclick>
-					<visible>!Skin.HasSetting(HomeMenu_Custom_Video_Button)</visible>
+					<visible>!Skin.HasSetting(Home_Video_Button)</visible>
 				</control>
 				<control type="radiobutton" id="42">
 					<description>Custom Widget Button</description>
                     <include>dialogbutton_popup</include>
 					<label>Widget</label>
-					<onclick>Skin.ToggleSetting(HomeMenu_Custom_Video_Widget)</onclick>
-					<selected>Skin.HasSetting(HomeMenu_Custom_Video_Widget)</selected>
-					<visible>Skin.HasSetting(HomeMenu_Custom_Video_Button)</visible>
+					<onclick>Skin.ToggleSetting(Home_Video_Widget)</onclick>
+					<selected>Skin.HasSetting(Home_Video_Widget)</selected>
+					<visible>Skin.HasSetting(Home_Video_Button)</visible>
 				</control>
 				<control type="radiobutton" id="44">
 					<description>Settings Button</description>
@@ -285,7 +285,7 @@
 					<label>verberge grüne Progressbar</label>
 					<onclick>Skin.ToggleSetting(WidgetNoPercentPlayedBar)</onclick>
 					<selected>Skin.HasSetting(WidgetNoPercentPlayedBar)</selected>
-					<visible>Skin.HasSetting(HomeMenu_Custom_Video_Button)</visible>
+					<visible>Skin.HasSetting(Home_Video_Button)</visible>
 				</control>
             </control>
             <control type="grouplist" id="36100"> <!-- movies -->
@@ -307,8 +307,8 @@
 					<description>Movie Custom Button</description>
                     <include>dialogbutton_popup</include>
 					<label>- $LOCALIZE[636]</label>
-					<onclick>Skin.ToggleSetting(HomeMenu_Custom_Movie_Button)</onclick>
-					<selected>Skin.HasSetting(HomeMenu_Custom_Movie_Button)</selected>
+					<onclick>Skin.ToggleSetting(Home_Movie_Button)</onclick>
+					<selected>Skin.HasSetting(Home_Movie_Button)</selected>
 					<enable>!Skin.HasSetting(HomeMenuNoMovieButton)</enable>
 				</control>
                 <control type="button" id="52">
@@ -317,7 +317,7 @@
 					<label>- $LOCALIZE[21899]</label>
 					<label2>$INFO[Skin.String(Home_Movie_Custom_Label)]</label2>
 					<onclick>Skin.SetString(Home_Movie_Custom_Label)</onclick>
-					<enable>!Skin.HasSetting(HomeMenuNoMovieButton)+Skin.HasSetting(HomeMenu_Custom_Movie_Button)</enable>
+					<enable>!Skin.HasSetting(HomeMenuNoMovieButton)+Skin.HasSetting(Home_Movie_Button)</enable>
 				</control>
                 <control type="button" id="53">
 					<description>Movie Custom Category Button</description>
@@ -325,7 +325,7 @@
 					<label>- $LOCALIZE[21866]</label>
 					<label2>$VAR[Home_Movie_Category]</label2>
 					<onclick>Skin.SelectBool(21866, 36912|Home_Movie_Custom_Category_Video, 2|Home_Movie_Custom_Category_Music, 1|Home_Movie_Custom_Category_Pictures, 559|Home_Movie_Custom_Category_File)</onclick>
-					<enable>!Skin.HasSetting(HomeMenuNoMovieButton)+Skin.HasSetting(HomeMenu_Custom_Movie_Button)</enable>
+					<enable>!Skin.HasSetting(HomeMenuNoMovieButton)+Skin.HasSetting(Home_Movie_Button)</enable>
 				</control>
                 <control type="button" id="54">
 					<description>Movie Custom Category SubButton</description>
@@ -333,7 +333,7 @@
 					<label>  $LOCALIZE[15021]</label>
 					<label2>$VAR[Home_Movie_SubCategory_Label]</label2>
 					<onclick>Skin.SelectBool(21866, 36912|Home_Movie_Custom_SubCategory_Video, 2|Home_Movie_Custom_SubCategory_Music)</onclick>
-					<visible>!Skin.HasSetting(HomeMenuNoMovieButton)+Skin.HasSetting(HomeMenu_Custom_Movie_Button)+Skin.HasSetting(Home_Movie_Custom_Category_File)</visible>
+					<visible>!Skin.HasSetting(HomeMenuNoMovieButton)+Skin.HasSetting(Home_Movie_Button)+Skin.HasSetting(Home_Movie_Custom_Category_File)</visible>
 				</control>
                 <control type="button" id="55">
 					<description>Movie Custom Path Button</description>
@@ -341,7 +341,7 @@
 					<label>- $LOCALIZE[573]</label>
 					<label2>$INFO[Skin.String(Home_Movie_Custom_Path)]</label2>
 					<onclick>$VAR[Home_Movie_Currentpath]</onclick>
-					<enable>!Skin.HasSetting(HomeMenuNoMovieButton)+Skin.HasSetting(HomeMenu_Custom_Movie_Button)</enable>
+					<enable>!Skin.HasSetting(HomeMenuNoMovieButton)+Skin.HasSetting(Home_Movie_Button)</enable>
 				</control>
 				<include content="separatorlabel">
 					<param name="separatorlabel_id" value="59" />
@@ -369,15 +369,15 @@
 					<label>Widget</label>
 					<onclick>SetProperty(HomeButton,movies)</onclick>
 					<onclick>ActivateWindow(1500)</onclick>
-					<visible>!Skin.HasSetting(HomeMenu_Custom_Movie_Button)</visible>
+					<visible>!Skin.HasSetting(Home_Movie_Button)</visible>
 				</control>
 				<control type="radiobutton" id="67">
 					<description>Custom Widget Button</description>
                     <include>dialogbutton_popup</include>
 					<label>Widget</label>
-					<onclick>Skin.ToggleSetting(HomeMenu_Custom_Movie_Widget)</onclick>
-					<selected>Skin.HasSetting(HomeMenu_Custom_Movie_Widget)</selected>
-					<visible>Skin.HasSetting(HomeMenu_Custom_Movie_Button)</visible>
+					<onclick>Skin.ToggleSetting(Home_Movie_Widget)</onclick>
+					<selected>Skin.HasSetting(Home_Movie_Widget)</selected>
+					<visible>Skin.HasSetting(Home_Movie_Button)</visible>
 				</control>
 				<control type="radiobutton" id="68">
 					<description>Settings Button</description>
@@ -385,7 +385,7 @@
 					<label>verberge grüne Progressbar</label>
 					<onclick>Skin.ToggleSetting(WidgetNoPercentPlayedBar)</onclick>
 					<selected>Skin.HasSetting(WidgetNoPercentPlayedBar)</selected>
-					<visible>Skin.HasSetting(HomeMenu_Custom_Movie_Button)</visible>
+					<visible>Skin.HasSetting(Home_Movie_Button)</visible>
 				</control>
             </control>
             <control type="grouplist" id="36100"> <!-- series -->
@@ -407,8 +407,8 @@
 					<description>TVShow Custom Button</description>
                     <include>dialogbutton_popup</include>
 					<label>- $LOCALIZE[636]</label>
-					<onclick>Skin.ToggleSetting(HomeMenu_Custom_TVShow_Button)</onclick>
-					<selected>Skin.HasSetting(HomeMenu_Custom_TVShow_Button)</selected>
+					<onclick>Skin.ToggleSetting(Home_TVShow_Button)</onclick>
+					<selected>Skin.HasSetting(Home_TVShow_Button)</selected>
 					<enable>!Skin.HasSetting(HomeMenuNoTVShowButton)</enable>
 				</control>
                 <control type="button" id="72">
@@ -417,7 +417,7 @@
 					<label>- $LOCALIZE[21899]</label>
 					<label2>$INFO[Skin.String(Home_TVShow_Custom_Label)]</label2>
 					<onclick>Skin.SetString(Home_TVShow_Custom_Label)</onclick>
-					<enable>!Skin.HasSetting(HomeMenuNoTVShowButton)+Skin.HasSetting(HomeMenu_Custom_TVShow_Button)</enable>
+					<enable>!Skin.HasSetting(HomeMenuNoTVShowButton)+Skin.HasSetting(Home_TVShow_Button)</enable>
 				</control>
                 <control type="button" id="73">
 					<description>TVShow Custom Category Button</description>
@@ -425,7 +425,7 @@
 					<label>- $LOCALIZE[21866]</label>
 					<label2>$VAR[Home_TVShow_Category]</label2>
 					<onclick>Skin.SelectBool(21866, 36912|Home_TVShow_Custom_Category_Video, 2|Home_TVShow_Custom_Category_Music, 1|Home_TVShow_Custom_Category_Pictures, 559|Home_TVShow_Custom_Category_File)</onclick>
-					<enable>!Skin.HasSetting(HomeMenuNoTVShowButton)+Skin.HasSetting(HomeMenu_Custom_TVShow_Button)</enable>
+					<enable>!Skin.HasSetting(HomeMenuNoTVShowButton)+Skin.HasSetting(Home_TVShow_Button)</enable>
 				</control>
                 <control type="button" id="74">
 					<description>TVShow Custom Category SubButton</description>
@@ -433,7 +433,7 @@
 					<label>  $LOCALIZE[15021]</label>
 					<label2>$VAR[Home_TVShow_SubCategory_Label]</label2>
 					<onclick>Skin.SelectBool(21866, 36912|Home_TVShow_Custom_SubCategory_Video, 2|Home_TVShow_Custom_SubCategory_Music)</onclick>
-					<visible>!Skin.HasSetting(HomeMenuNoTVShowButton)+Skin.HasSetting(HomeMenu_Custom_TVShow_Button)+Skin.HasSetting(Home_TVShow_Custom_Category_File)</visible>
+					<visible>!Skin.HasSetting(HomeMenuNoTVShowButton)+Skin.HasSetting(Home_TVShow_Button)+Skin.HasSetting(Home_TVShow_Custom_Category_File)</visible>
 				</control>
                 <control type="button" id="75">
 					<description>TVShow Custom Path Button</description>
@@ -441,7 +441,7 @@
 					<label>- $LOCALIZE[573]</label>
 					<label2>$INFO[Skin.String(Home_TVShow_Custom_Path)]</label2>
 					<onclick>$VAR[Home_TVShow_Currentpath]</onclick>
-					<enable>!Skin.HasSetting(HomeMenuNoTVShowButton)+Skin.HasSetting(HomeMenu_Custom_TVShow_Button)</enable>
+					<enable>!Skin.HasSetting(HomeMenuNoTVShowButton)+Skin.HasSetting(Home_TVShow_Button)</enable>
 				</control>
 				<include content="separatorlabel">
 					<param name="separatorlabel_id" value="79" />
@@ -469,15 +469,15 @@
 					<label>Widget</label>
 					<onclick>SetProperty(HomeButton,tvshow)</onclick>
 					<onclick>ActivateWindow(1500)</onclick>
-					<visible>!Skin.HasSetting(HomeMenu_Custom_TVShow_Button)</visible>
+					<visible>!Skin.HasSetting(Home_TVShow_Button)</visible>
 				</control>
 				<control type="radiobutton" id="87">
 					<description>Custom Widget Button</description>
                     <include>dialogbutton_popup</include>
 					<label>Widget</label>
-					<onclick>Skin.ToggleSetting(HomeMenu_Custom_TVShow_Widget)</onclick>
-					<selected>Skin.HasSetting(HomeMenu_Custom_TVShow_Widget)</selected>
-					<visible>Skin.HasSetting(HomeMenu_Custom_TVShow_Button)</visible>
+					<onclick>Skin.ToggleSetting(Home_TVShow_Widget)</onclick>
+					<selected>Skin.HasSetting(Home_TVShow_Widget)</selected>
+					<visible>Skin.HasSetting(Home_TVShow_Button)</visible>
 				</control>
 				<control type="radiobutton" id="88">
 					<description>Settings Button</description>
@@ -485,7 +485,7 @@
 					<label>verberge grüne Progressbar</label>
 					<onclick>Skin.ToggleSetting(WidgetNoPercentPlayedBar)</onclick>
 					<selected>Skin.HasSetting(WidgetNoPercentPlayedBar)</selected>
-					<visible>Skin.HasSetting(HomeMenu_Custom_TVShow_Button)</visible>
+					<visible>Skin.HasSetting(Home_TVShow_Button)</visible>
 				</control>
             </control>
             <control type="grouplist" id="36100"> <!-- musicvideos -->
@@ -507,8 +507,8 @@
 					<description>Movie Custom Button</description>
                     <include>dialogbutton_popup</include>
 					<label>- $LOCALIZE[636]</label>
-					<onclick>Skin.ToggleSetting(HomeMenu_Custom_MusicVideo_Button)</onclick>
-					<selected>Skin.HasSetting(HomeMenu_Custom_MusicVideo_Button)</selected>
+					<onclick>Skin.ToggleSetting(Home_MusicVideo_Button)</onclick>
+					<selected>Skin.HasSetting(Home_MusicVideo_Button)</selected>
 					<enable>!Skin.HasSetting(HomeMenuNoMusicVideos)</enable>
 				</control>
                 <control type="button" id="97">
@@ -517,7 +517,7 @@
 					<label>- $LOCALIZE[21899]</label>
 					<label2>$INFO[Skin.String(Home_MusicVideo_Custom_Label)]</label2>
 					<onclick>Skin.SetString(Home_MusicVideo_Custom_Label)</onclick>
-					<enable>!Skin.HasSetting(HomeMenuNoMusicVideos)+Skin.HasSetting(HomeMenu_Custom_MusicVideo_Button)</enable>
+					<enable>!Skin.HasSetting(HomeMenuNoMusicVideos)+Skin.HasSetting(Home_MusicVideo_Button)</enable>
 				</control>
                 <control type="button" id="98">
 					<description>Movie Custom Category Button</description>
@@ -525,7 +525,7 @@
 					<label>- $LOCALIZE[21866]</label>
 					<label2>$VAR[Home_MusicVideo_Category]</label2>
 					<onclick>Skin.SelectBool(21866, 36912|Home_MusicVideo_Custom_Category_Video, 2|Home_MusicVideo_Custom_Category_Music, 1|Home_MusicVideo_Custom_Category_Pictures, 559|Home_MusicVideo_Custom_Category_File)</onclick>
-					<enable>!Skin.HasSetting(HomeMenuNoMusicVideos)+Skin.HasSetting(HomeMenu_Custom_MusicVideo_Button)</enable>
+					<enable>!Skin.HasSetting(HomeMenuNoMusicVideos)+Skin.HasSetting(Home_MusicVideo_Button)</enable>
 				</control>
                 <control type="button" id="99">
 					<description>Movie Custom Category SubButton</description>
@@ -533,7 +533,7 @@
 					<label>  $LOCALIZE[15021]</label>
 					<label2>$VAR[Home_MusicVideo_SubCategory_Label]</label2>
 					<onclick>Skin.SelectBool(21866, 36912|Home_MusicVideo_Custom_SubCategory_Video, 2|Home_MusicVideo_Custom_SubCategory_Music)</onclick>
-					<visible>!Skin.HasSetting(HomeMenuNoMusicVideos)+Skin.HasSetting(HomeMenu_Custom_MusicVideo_Button)+Skin.HasSetting(Home_MusicVideo_Custom_Category_File)</visible>
+					<visible>!Skin.HasSetting(HomeMenuNoMusicVideos)+Skin.HasSetting(Home_MusicVideo_Button)+Skin.HasSetting(Home_MusicVideo_Custom_Category_File)</visible>
 				</control>
                 <control type="button" id="100">
 					<description>Movie Custom Path Button</description>
@@ -541,7 +541,7 @@
 					<label>- $LOCALIZE[573]</label>
 					<label2>$INFO[Skin.String(Home_MusicVideo_Custom_Path)]</label2>
 					<onclick>$VAR[Home_MusicVideo_Currentpath]</onclick>
-					<enable>!Skin.HasSetting(HomeMenuNoMusicVideos)+Skin.HasSetting(HomeMenu_Custom_MusicVideo_Button)</enable>
+					<enable>!Skin.HasSetting(HomeMenuNoMusicVideos)+Skin.HasSetting(Home_MusicVideo_Button)</enable>
 				</control>
 				<include content="separatorlabel">
 					<param name="separatorlabel_id" value="104" />
@@ -569,15 +569,15 @@
 					<label>Widget</label>
 					<onclick>SetProperty(HomeButton,musicvideo)</onclick>
 					<onclick>ActivateWindow(1500)</onclick>
-					<visible>!Skin.HasSetting(HomeMenu_Custom_MusicVideo_Button)</visible>
+					<visible>!Skin.HasSetting(Home_MusicVideo_Button)</visible>
 				</control>
 				<control type="radiobutton" id="112">
 					<description>Custom Widget Button</description>
                     <include>dialogbutton_popup</include>
 					<label>Widget</label>
-					<onclick>Skin.ToggleSetting(HomeMenu_Custom_MusicVideo_Widget)</onclick>
-					<selected>Skin.HasSetting(HomeMenu_Custom_MusicVideo_Widget)</selected>
-					<visible>Skin.HasSetting(HomeMenu_Custom_MusicVideo_Button)</visible>
+					<onclick>Skin.ToggleSetting(Home_MusicVideo_Widget)</onclick>
+					<selected>Skin.HasSetting(Home_MusicVideo_Widget)</selected>
+					<visible>Skin.HasSetting(Home_MusicVideo_Button)</visible>
 				</control>
 				<control type="radiobutton" id="113">
 					<description>Settings Button</description>
@@ -585,7 +585,7 @@
 					<label>verberge grüne Progressbar</label>
 					<onclick>Skin.ToggleSetting(WidgetNoPercentPlayedBar)</onclick>
 					<selected>Skin.HasSetting(WidgetNoPercentPlayedBar)</selected>
-					<visible>Skin.HasSetting(HomeMenu_Custom_MusicVideo_Button)</visible>
+					<visible>Skin.HasSetting(Home_MusicVideo_Button)</visible>
 				</control>
             </control>
             <control type="grouplist" id="36100"> <!-- picture -->
@@ -607,8 +607,8 @@
 					<description>Movie Custom Button</description>
                     <include>dialogbutton_popup</include>
 					<label>- $LOCALIZE[636]</label>
-					<onclick>Skin.ToggleSetting(HomeMenu_Custom_Picture_Button)</onclick>
-					<selected>Skin.HasSetting(HomeMenu_Custom_Picture_Button)</selected>
+					<onclick>Skin.ToggleSetting(Home_Picture_Button)</onclick>
+					<selected>Skin.HasSetting(Home_Picture_Button)</selected>
 					<enable>!Skin.HasSetting(HomeMenuNoPictureButton)</enable>
 				</control>
                 <control type="button" id="122">
@@ -617,7 +617,7 @@
 					<label>- $LOCALIZE[21899]</label>
 					<label2>$INFO[Skin.String(Home_Picture_Custom_Label)]</label2>
 					<onclick>Skin.SetString(Home_Picture_Custom_Label)</onclick>
-					<enable>!Skin.HasSetting(HomeMenuNoPictureButton)+Skin.HasSetting(HomeMenu_Custom_Picture_Button)</enable>
+					<enable>!Skin.HasSetting(HomeMenuNoPictureButton)+Skin.HasSetting(Home_Picture_Button)</enable>
 				</control>
                 <control type="button" id="123">
 					<description>Movie Custom Category Button</description>
@@ -625,7 +625,7 @@
 					<label>- $LOCALIZE[21866]</label>
 					<label2>$VAR[Home_Picture_Category]</label2>
 					<onclick>Skin.SelectBool(21866, 36912|Home_Picture_Custom_Category_Video, 2|Home_Picture_Custom_Category_Music, 1|Home_Picture_Custom_Category_Pictures, 559|Home_Picture_Custom_Category_File)</onclick>
-					<enable>!Skin.HasSetting(HomeMenuNoPictureButton)+Skin.HasSetting(HomeMenu_Custom_Picture_Button)</enable>
+					<enable>!Skin.HasSetting(HomeMenuNoPictureButton)+Skin.HasSetting(Home_Picture_Button)</enable>
 				</control>
                 <control type="button" id="124">
 					<description>Movie Custom Category SubButton</description>
@@ -633,7 +633,7 @@
 					<label>  $LOCALIZE[15021]</label>
 					<label2>$VAR[Home_Picture_SubCategory_Label]</label2>
 					<onclick>Skin.SelectBool(21866, 36912|Home_Picture_Custom_SubCategory_Video, 2|Home_Picture_Custom_SubCategory_Music)</onclick>
-					<visible>!Skin.HasSetting(HomeMenuNoPictureButton)+Skin.HasSetting(HomeMenu_Custom_Picture_Button)+Skin.HasSetting(Home_Picture_Custom_Category_File)</visible>
+					<visible>!Skin.HasSetting(HomeMenuNoPictureButton)+Skin.HasSetting(Home_Picture_Button)+Skin.HasSetting(Home_Picture_Custom_Category_File)</visible>
 				</control>
                 <control type="button" id="125">
 					<description>Movie Custom Path Button</description>
@@ -641,7 +641,7 @@
 					<label>- $LOCALIZE[573]</label>
 					<label2>$INFO[Skin.String(Home_Picture_Custom_Path)]</label2>
 					<onclick>$VAR[Home_Picture_Currentpath]</onclick>
-					<enable>!Skin.HasSetting(HomeMenuNoPictureButton)+Skin.HasSetting(HomeMenu_Custom_Picture_Button)</enable>
+					<enable>!Skin.HasSetting(HomeMenuNoPictureButton)+Skin.HasSetting(Home_Picture_Button)</enable>
 				</control>
 				<include content="separatorlabel">
 					<param name="separatorlabel_id" value="129" />
@@ -669,15 +669,15 @@
 					<label>Widget</label>
 					<onclick>SetProperty(HomeButton,picture)</onclick>
 					<onclick>ActivateWindow(1500)</onclick>
-					<visible>!Skin.HasSetting(HomeMenu_Custom_Picture_Button)</visible>
+					<visible>!Skin.HasSetting(Home_Picture_Button)</visible>
 				</control>
 				<control type="radiobutton" id="137">
 					<description>Custom Widget Button</description>
                     <include>dialogbutton_popup</include>
 					<label>Widget</label>
-					<onclick>Skin.ToggleSetting(HomeMenu_Custom_Picture_Widget)</onclick>
-					<selected>Skin.HasSetting(HomeMenu_Custom_Picture_Widget)</selected>
-					<visible>Skin.HasSetting(HomeMenu_Custom_Picture_Button)</visible>
+					<onclick>Skin.ToggleSetting(Home_Picture_Widget)</onclick>
+					<selected>Skin.HasSetting(Home_Picture_Widget)</selected>
+					<visible>Skin.HasSetting(Home_Picture_Button)</visible>
 				</control>
 				<control type="radiobutton" id="138">
 					<description>Settings Button</description>
@@ -685,109 +685,9 @@
 					<label>verberge grüne Progressbar</label>
 					<onclick>Skin.ToggleSetting(WidgetNoPercentPlayedBar)</onclick>
 					<selected>Skin.HasSetting(WidgetNoPercentPlayedBar)</selected>
-					<visible>Skin.HasSetting(HomeMenu_Custom_Picture_Button)</visible>
+					<visible>Skin.HasSetting(Home_Picture_Button)</visible>
 				</control>
             </control>
-            <!-- <control type="grouplist" id="36100">
-                <left>45</left>
-                <top>150</top>
-                <width>1110</width>
-                <height>870</height>
-                <height>675</height>
-                <itemgap>3</itemgap>
-                <visible>String.IsEqual(Window(Home).Property(HomeButton),playdisc)</visible>
-				<control type="radiobutton" id="140">
-					<description>Movie Button</description>
-                    <include>dialogbutton_popup</include>
-					<label>19218</label>
-					<onclick>Skin.ToggleSetting(HomeMenuNoDVDButton)</onclick>
-					<selected>!Skin.HasSetting(HomeMenuNoDVDButton)</selected>
-				</control>
-                <control type="radiobutton" id="141">
-					<description>Movie Custom Button</description>
-                    <include>dialogbutton_popup</include>
-					<label>- $LOCALIZE[636]</label>
-					<onclick>Skin.ToggleSetting(HomeMenu_Custom_PlayDisc_Button)</onclick>
-					<selected>Skin.HasSetting(HomeMenu_Custom_PlayDisc_Button)</selected>
-					<enable>!Skin.HasSetting(HomeMenuNoDVDButton)</enable>
-				</control>
-                <control type="button" id="142">
-					<description>Movie Custom Label Button</description>
-                    <include>dialogbutton_popup</include>
-					<label>- $LOCALIZE[21899]</label>
-					<label2>$INFO[Skin.String(Home_PlayDisc_Custom_Label)]</label2>
-					<onclick>Skin.SetString(Home_PlayDisc_Custom_Label)</onclick>
-					<enable>!Skin.HasSetting(HomeMenuNoDVDButton)+Skin.HasSetting(HomeMenu_Custom_PlayDisc_Button)</enable>
-				</control>
-                <control type="button" id="143">
-					<description>Movie Custom Category Button</description>
-                    <include>dialogbutton_popup</include>
-					<label>- $LOCALIZE[21866]</label>
-					<label2>$VAR[Home_PlayDisc_Category]</label2>
-					<onclick>Skin.SelectBool(21866, 36912|Home_PlayDisc_Custom_Category_Video, 2|Home_PlayDisc_Custom_Category_Music, 1|Home_PlayDisc_Custom_Category_Pictures, 559|Home_PlayDisc_Custom_Category_File)</onclick>
-					<enable>!Skin.HasSetting(HomeMenuNoDVDButton)+Skin.HasSetting(HomeMenu_Custom_PlayDisc_Button)</enable>
-				</control>
-                <control type="button" id="144">
-					<description>Movie Custom Category SubButton</description>
-                    <include>dialogbutton_popup</include>
-					<label>  $LOCALIZE[15021]</label>
-					<label2>$VAR[Home_PlayDisc_SubCategory_Label]</label2>
-					<onclick>Skin.SelectBool(21866, 36912|Home_PlayDisc_Custom_SubCategory_Video, 2|Home_PlayDisc_Custom_SubCategory_Music)</onclick>
-					<visible>!Skin.HasSetting(HomeMenuNoDVDButton)+Skin.HasSetting(HomeMenu_Custom_PlayDisc_Button)+Skin.HasSetting(Home_PlayDisc_Custom_Category_File)</visible>
-				</control>
-                <control type="button" id="145">
-					<description>Movie Custom Path Button</description>
-                    <include>dialogbutton_popup</include>
-					<label>- $LOCALIZE[573]</label>
-					<label2>$INFO[Skin.String(Home_PlayDisc_Custom_Path)]</label2>
-					<onclick>$VAR[Home_PlayDisc_Currentpath]</onclick>
-					<enable>!Skin.HasSetting(HomeMenuNoDVDButton)+Skin.HasSetting(HomeMenu_Custom_PlayDisc_Button)</enable>
-				</control>
-				<include content="separatorlabel">
-					<param name="separatorlabel_id" value="149" />
-				</include>
-                <control type="button" id="150">
-					<description>Background Settings</description>
-                    <include>dialogbutton_popup</include>
-					<label>19190</label>
-					<label2>$VAR[backgroundfolder]home_disc$VAR[bkg_fileext]</label2>
-					<onclick>Skin.SetImage(user_bkg_dvd,smb://)</onclick>
-				</control>
-                <control type="button" id="151">
-					<description>Position Settings</description>
-                    <include>dialogbutton_popup</include>
-					<label>Position</label>
-					<onclick>Dialog.Close(all,true)</onclick>
-					<onclick>ActivateWindow(1301)</onclick>
-				</control>
-				<include content="separatorlabel">
-					<param name="separatorlabel_id" value="155" />
-				</include>
-                <control type="button" id="156">
-					<description>Open Widget Settings</description>
-                    <include>dialogbutton_popup</include>
-					<label>Widget</label>
-					<onclick>SetProperty(HomeButton,playdisc)</onclick>
-					<onclick>ActivateWindow(1500)</onclick>
-					<visible>!Skin.HasSetting(HomeMenu_Custom_PlayDisc_Button)</visible>
-				</control>
-				<control type="radiobutton" id="157">
-					<description>Custom Widget Button</description>
-                    <include>dialogbutton_popup</include>
-					<label>Widget</label>
-					<onclick>Skin.ToggleSetting(HomeMenu_Custom_PlayDisc_Widget)</onclick>
-					<selected>Skin.HasSetting(HomeMenu_Custom_PlayDisc_Widget)</selected>
-					<visible>Skin.HasSetting(HomeMenu_Custom_PlayDisc_Button)</visible>
-				</control>
-				<control type="radiobutton" id="158">
-					<description>Settings Button</description>
-                    <include>dialogbutton_popup</include>
-					<label>verberge grüne Progressbar</label>
-					<onclick>Skin.ToggleSetting(WidgetNoPercentPlayedBar)</onclick>
-					<selected>Skin.HasSetting(WidgetNoPercentPlayedBar)</selected>
-					<visible>Skin.HasSetting(HomeMenu_Custom_PlayDisc_Button)</visible>
-				</control>
-            </control> -->
             <control type="grouplist" id="36100"> <!-- custom1 -->
                 <left>45</left>
                 <top>150</top>
@@ -797,53 +697,60 @@
                 <itemgap>3</itemgap>
                 <visible>String.IsEqual(Window(Home).Property(HomeButton),custom1)</visible>
                 <control type="radiobutton" id="141">
-					<description>Movie Custom Button</description>
+					<description>Custom Button</description>
                     <include>dialogbutton_popup</include>
 					<label>19218</label>
-					<onclick>Skin.ToggleSetting(HomeMenu_Custom_Custom1_Button)</onclick>
-					<selected>Skin.HasSetting(HomeMenu_Custom_Custom1_Button)</selected>
+					<onclick>Skin.ToggleSetting(Home_Custom1_Button)</onclick>
+					<selected>Skin.HasSetting(Home_Custom1_Button)</selected>
 				</control>
                 <control type="button" id="142">
-					<description>Movie Custom Label Button</description>
+					<description>Custom Label Button</description>
                     <include>dialogbutton_popup</include>
 					<label>- $LOCALIZE[21899]</label>
 					<label2>$INFO[Skin.String(Home_Custom1_Custom_Label)]</label2>
 					<onclick>Skin.SetString(Home_Custom1_Custom_Label)</onclick>
-					<enable>Skin.HasSetting(HomeMenu_Custom_Custom1_Button)</enable>
+					<enable>Skin.HasSetting(Home_Custom1_Button)</enable>
 				</control>
                 <control type="button" id="143">
-					<description>Movie Custom Category Button</description>
+					<description>Custom Category Button</description>
                     <include>dialogbutton_popup</include>
 					<label>- $LOCALIZE[21866]</label>
 					<label2>$VAR[Home_Custom1_Category]</label2>
 					<onclick>Skin.SelectBool(21866, 36912|Home_Custom1_Custom_Category_Video, 2|Home_Custom1_Custom_Category_Music, 1|Home_Custom1_Custom_Category_Pictures, 559|Home_Custom1_Custom_Category_File)</onclick>
-					<enable>Skin.HasSetting(HomeMenu_Custom_Custom1_Button)</enable>
+					<enable>Skin.HasSetting(Home_Custom1_Button)</enable>
 				</control>
                 <control type="button" id="144">
-					<description>Movie Custom Category SubButton</description>
+					<description>Custom Category SubButton</description>
                     <include>dialogbutton_popup</include>
 					<label>  $LOCALIZE[15021]</label>
 					<label2>$VAR[Home_Custom1_SubCategory_Label]</label2>
 					<onclick>Skin.SelectBool(21866, 36912|Home_Custom1_Custom_SubCategory_Video, 2|Home_Custom1_Custom_SubCategory_Music)</onclick>
-					<visible>Skin.HasSetting(HomeMenu_Custom_Custom1_Button)+Skin.HasSetting(Home_Custom1_Custom_Category_File)</visible>
+					<visible>Skin.HasSetting(Home_Custom1_Button)+Skin.HasSetting(Home_Custom1_Custom_Category_File)</visible>
 				</control>
                 <control type="button" id="145">
-					<description>Movie Custom Path Button</description>
+					<description>Custom Path Button</description>
                     <include>dialogbutton_popup</include>
 					<label>- $LOCALIZE[573]</label>
 					<label2>$INFO[Skin.String(Home_Custom1_Custom_Path)]</label2>
 					<onclick>$VAR[Home_Custom1_Currentpath]</onclick>
-					<enable>Skin.HasSetting(HomeMenu_Custom_Custom1_Button)</enable>
+					<enable>Skin.HasSetting(Home_Custom1_Button)</enable>
 				</control>
 				<include content="separatorlabel">
-					<param name="separatorlabel_id" value="149" />
+					<param name="separatorlabel_id" value="148" />
 				</include>
+                <control type="radiobutton" id="149">
+                    <include>dialogbutton_popup</include>
+					<label>Multiimage Background</label>
+					<onclick>Skin.ToggleSetting(Home_Background_Custom1_Multiimage)</onclick>
+					<selected>Skin.HasSetting(Home_Background_Custom1_Multiimage)</selected>
+				</control>
                 <control type="button" id="150">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
 					<label>19190</label>
 					<label2>$VAR[backgroundfolder]home_custom1$VAR[bkg_fileext]</label2>
-					<onclick>Skin.SetImage(user_bkg_custom1,smb://)</onclick>
+					<onclick condition="!Skin.HasSetting(Home_Background_Custom1_Multiimage)">Skin.SetImage(user_bkg_custom1,smb://)</onclick>
+					<onclick condition="Skin.HasSetting(Home_Background_Custom1_Multiimage)">Skin.SetPath(user_bkg_custom1,smb://)</onclick>
 				</control>
                 <control type="button" id="151">
 					<description>Position Settings</description>
@@ -855,13 +762,13 @@
 				<include content="separatorlabel">
 					<param name="separatorlabel_id" value="155" />
 				</include>
-				<control type="radiobutton" id="157">
-					<description>Custom Widget Button</description>
+                <control type="button" id="157">
+					<description>Open Widget Settings</description>
                     <include>dialogbutton_popup</include>
 					<label>Widget</label>
-					<onclick>Skin.ToggleSetting(HomeMenu_Custom_Custom1_Widget)</onclick>
-					<selected>Skin.HasSetting(HomeMenu_Custom_Custom1_Widget)</selected>
-					<enable>Skin.HasSetting(HomeMenu_Custom_Custom1_Button)</enable>
+					<onclick>SetProperty(HomeButton,custom1)</onclick>
+					<onclick>ActivateWindow(1500)</onclick>
+					<enable>Skin.HasSetting(Home_Custom1_Button)</enable>
 				</control>
 				<control type="radiobutton" id="158">
 					<description>Settings Button</description>
@@ -869,7 +776,7 @@
 					<label>verberge grüne Progressbar</label>
 					<onclick>Skin.ToggleSetting(WidgetNoPercentPlayedBar)</onclick>
 					<selected>Skin.HasSetting(WidgetNoPercentPlayedBar)</selected>
-					<enable>Skin.HasSetting(HomeMenu_Custom_Custom1_Button)</enable>
+					<enable>Skin.HasSetting(Home_Custom1_Button)</enable>
 				</control>
             </control>
             <control type="grouplist" id="36100"> <!-- custom2 -->
@@ -884,8 +791,8 @@
 					<description>Custom2 Button</description>
                     <include>dialogbutton_popup</include>
 					<label>19218</label>
-					<onclick>Skin.ToggleSetting(HomeMenu_Custom_Custom2_Button)</onclick>
-					<selected>Skin.HasSetting(HomeMenu_Custom_Custom2_Button)</selected>
+					<onclick>Skin.ToggleSetting(Home_Custom2_Button)</onclick>
+					<selected>Skin.HasSetting(Home_Custom2_Button)</selected>
 				</control>
                 <control type="button" id="142">
 					<description>Custom2 Label Button</description>
@@ -893,7 +800,7 @@
 					<label>- $LOCALIZE[21899]</label>
 					<label2>$INFO[Skin.String(Home_Custom2_Custom_Label)]</label2>
 					<onclick>Skin.SetString(Home_Custom2_Custom_Label)</onclick>
-					<enable>Skin.HasSetting(HomeMenu_Custom_Custom2_Button)</enable>
+					<enable>Skin.HasSetting(Home_Custom2_Button)</enable>
 				</control>
                 <control type="button" id="143">
 					<description>Custom2 Category Button</description>
@@ -901,7 +808,7 @@
 					<label>- $LOCALIZE[21866]</label>
 					<label2>$VAR[Home_Custom2_Category]</label2>
 					<onclick>Skin.SelectBool(21866, 36912|Home_Custom2_Custom_Category_Video, 2|Home_Custom2_Custom_Category_Music, 1|Home_Custom2_Custom_Category_Pictures, 559|Home_Custom2_Custom_Category_File)</onclick>
-					<enable>Skin.HasSetting(HomeMenu_Custom_Custom2_Button)</enable>
+					<enable>Skin.HasSetting(Home_Custom2_Button)</enable>
 				</control>
                 <control type="button" id="144">
 					<description>Custom2 Category SubButton</description>
@@ -909,7 +816,7 @@
 					<label>  $LOCALIZE[15021]</label>
 					<label2>$VAR[Home_Custom2_SubCategory_Label]</label2>
 					<onclick>Skin.SelectBool(21866, 36912|Home_Custom2_Custom_SubCategory_Video, 2|Home_Custom2_Custom_SubCategory_Music)</onclick>
-					<visible>Skin.HasSetting(HomeMenu_Custom_Custom2_Button)+Skin.HasSetting(Home_Custom2_Custom_Category_File)</visible>
+					<visible>Skin.HasSetting(Home_Custom2_Button)+Skin.HasSetting(Home_Custom2_Custom_Category_File)</visible>
 				</control>
                 <control type="button" id="145">
 					<description>Custom2 Path Button</description>
@@ -917,17 +824,24 @@
 					<label>- $LOCALIZE[573]</label>
 					<label2>$INFO[Skin.String(Home_Custom2_Custom_Path)]</label2>
 					<onclick>$VAR[Home_Custom2_Currentpath]</onclick>
-					<enable>Skin.HasSetting(HomeMenu_Custom_Custom2_Button)</enable>
+					<enable>Skin.HasSetting(Home_Custom2_Button)</enable>
 				</control>
 				<include content="separatorlabel">
-					<param name="separatorlabel_id" value="149" />
+					<param name="separatorlabel_id" value="148" />
 				</include>
+                <control type="radiobutton" id="149">
+                    <include>dialogbutton_popup</include>
+					<label>Multiimage Background</label>
+					<onclick>Skin.ToggleSetting(Home_Background_Custom2_Multiimage)</onclick>
+					<selected>Skin.HasSetting(Home_Background_Custom2_Multiimage)</selected>
+				</control>
                 <control type="button" id="150">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
 					<label>19190</label>
 					<label2>$VAR[backgroundfolder]home_custom2$VAR[bkg_fileext]</label2>
-					<onclick>Skin.SetImage(user_bkg_custom2,smb://)</onclick>
+					<onclick condition="!Skin.HasSetting(Home_Background_Custom2_Multiimage)">Skin.SetImage(user_bkg_custom2,smb://)</onclick>
+					<onclick condition="Skin.HasSetting(Home_Background_Custom2_Multiimage)">Skin.SetPath(user_bkg_custom2,smb://)</onclick>
 				</control>
                 <control type="button" id="151">
 					<description>Position Settings</description>
@@ -939,13 +853,13 @@
 				<include content="separatorlabel">
 					<param name="separatorlabel_id" value="155" />
 				</include>
-				<control type="radiobutton" id="157">
-					<description>Custom Widget Button</description>
+                <control type="button" id="157">
+					<description>Open Widget Settings</description>
                     <include>dialogbutton_popup</include>
 					<label>Widget</label>
-					<onclick>Skin.ToggleSetting(HomeMenu_Custom_Custom2_Widget)</onclick>
-					<selected>Skin.HasSetting(HomeMenu_Custom_Custom2_Widget)</selected>
-					<enable>Skin.HasSetting(HomeMenu_Custom_Custom2_Button)</enable>
+					<onclick>SetProperty(HomeButton,custom2)</onclick>
+					<onclick>ActivateWindow(1500)</onclick>
+					<enable>Skin.HasSetting(Home_Custom2_Button)</enable>
 				</control>
 				<control type="radiobutton" id="158">
 					<description>Settings Button</description>
@@ -953,7 +867,7 @@
 					<label>verberge grüne Progressbar</label>
 					<onclick>Skin.ToggleSetting(WidgetNoPercentPlayedBar)</onclick>
 					<selected>Skin.HasSetting(WidgetNoPercentPlayedBar)</selected>
-					<enable>Skin.HasSetting(HomeMenu_Custom_Custom2_Button)</enable>
+					<enable>Skin.HasSetting(Home_Custom2_Button)</enable>
 				</control>
             </control>
             <control type="grouplist" id="36100"> <!-- custom3 -->
@@ -968,8 +882,8 @@
 					<description>Movie Custom Button</description>
                     <include>dialogbutton_popup</include>
 					<label>19218</label>
-					<onclick>Skin.ToggleSetting(HomeMenu_Custom_Custom3_Button)</onclick>
-					<selected>Skin.HasSetting(HomeMenu_Custom_Custom3_Button)</selected>
+					<onclick>Skin.ToggleSetting(Home_Custom3_Button)</onclick>
+					<selected>Skin.HasSetting(Home_Custom3_Button)</selected>
 				</control>
                 <control type="button" id="142">
 					<description>Movie Custom Label Button</description>
@@ -977,7 +891,7 @@
 					<label>- $LOCALIZE[21899]</label>
 					<label2>$INFO[Skin.String(Home_Custom3_Custom_Label)]</label2>
 					<onclick>Skin.SetString(Home_Custom3_Custom_Label)</onclick>
-					<enable>Skin.HasSetting(HomeMenu_Custom_Custom3_Button)</enable>
+					<enable>Skin.HasSetting(Home_Custom3_Button)</enable>
 				</control>
                 <control type="button" id="143">
 					<description>Movie Custom Category Button</description>
@@ -985,7 +899,7 @@
 					<label>- $LOCALIZE[21866]</label>
 					<label2>$VAR[Home_Custom3_Category]</label2>
 					<onclick>Skin.SelectBool(21866, 36912|Home_Custom3_Custom_Category_Video, 2|Home_Custom3_Custom_Category_Music, 1|Home_Custom3_Custom_Category_Pictures, 559|Home_Custom3_Custom_Category_File)</onclick>
-					<enable>Skin.HasSetting(HomeMenu_Custom_Custom3_Button)</enable>
+					<enable>Skin.HasSetting(Home_Custom3_Button)</enable>
 				</control>
                 <control type="button" id="144">
 					<description>Movie Custom Category SubButton</description>
@@ -993,7 +907,7 @@
 					<label>  $LOCALIZE[15021]</label>
 					<label2>$VAR[Home_Custom3_SubCategory_Label]</label2>
 					<onclick>Skin.SelectBool(21866, 36912|Home_Custom3_Custom_SubCategory_Video, 2|Home_Custom3_Custom_SubCategory_Music)</onclick>
-					<visible>Skin.HasSetting(HomeMenu_Custom_Custom3_Button)+Skin.HasSetting(Home_Custom3_Custom_Category_File)</visible>
+					<visible>Skin.HasSetting(Home_Custom3_Button)+Skin.HasSetting(Home_Custom3_Custom_Category_File)</visible>
 				</control>
                 <control type="button" id="145">
 					<description>Movie Custom Path Button</description>
@@ -1001,17 +915,24 @@
 					<label>- $LOCALIZE[573]</label>
 					<label2>$INFO[Skin.String(Home_Custom3_Custom_Path)]</label2>
 					<onclick>$VAR[Home_Custom3_Currentpath]</onclick>
-					<enable>Skin.HasSetting(HomeMenu_Custom_Custom3_Button)</enable>
+					<enable>Skin.HasSetting(Home_Custom3_Button)</enable>
 				</control>
 				<include content="separatorlabel">
-					<param name="separatorlabel_id" value="149" />
+					<param name="separatorlabel_id" value="148" />
 				</include>
+                <control type="radiobutton" id="149">
+                    <include>dialogbutton_popup</include>
+					<label>Multiimage Background</label>
+					<onclick>Skin.ToggleSetting(Home_Background_Custom3_Multiimage)</onclick>
+					<selected>Skin.HasSetting(Home_Background_Custom3_Multiimage)</selected>
+				</control>
                 <control type="button" id="150">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
 					<label>19190</label>
 					<label2>$VAR[backgroundfolder]home_custom3$VAR[bkg_fileext]</label2>
-					<onclick>Skin.SetImage(user_bkg_custom3,smb://)</onclick>
+					<onclick condition="!Skin.HasSetting(Home_Background_Custom3_Multiimage)">Skin.SetImage(user_bkg_custom3,smb://)</onclick>
+					<onclick condition="Skin.HasSetting(Home_Background_Custom3_Multiimage)">Skin.SetPath(user_bkg_custom3,smb://)</onclick>
 				</control>
                 <control type="button" id="151">
 					<description>Position Settings</description>
@@ -1023,13 +944,13 @@
 				<include content="separatorlabel">
 					<param name="separatorlabel_id" value="155" />
 				</include>
-				<control type="radiobutton" id="157">
-					<description>Custom Widget Button</description>
+                <control type="button" id="157">
+					<description>Open Widget Settings</description>
                     <include>dialogbutton_popup</include>
 					<label>Widget</label>
-					<onclick>Skin.ToggleSetting(HomeMenu_Custom_Custom3_Widget)</onclick>
-					<selected>Skin.HasSetting(HomeMenu_Custom_Custom3_Widget)</selected>
-					<enable>Skin.HasSetting(HomeMenu_Custom_Custom3_Button)</enable>
+					<onclick>SetProperty(HomeButton,custom3)</onclick>
+					<onclick>ActivateWindow(1500)</onclick>
+					<enable>Skin.HasSetting(Home_Custom3_Button)</enable>
 				</control>
 				<control type="radiobutton" id="158">
 					<description>Settings Button</description>
@@ -1037,7 +958,7 @@
 					<label>verberge grüne Progressbar</label>
 					<onclick>Skin.ToggleSetting(WidgetNoPercentPlayedBar)</onclick>
 					<selected>Skin.HasSetting(WidgetNoPercentPlayedBar)</selected>
-					<enable>Skin.HasSetting(HomeMenu_Custom_Custom3_Button)</enable>
+					<enable>Skin.HasSetting(Home_Custom3_Button)</enable>
 				</control>
             </control>
             <control type="grouplist" id="36100"> <!-- custom4 -->
@@ -1052,8 +973,8 @@
 					<description>Movie Custom Button</description>
                     <include>dialogbutton_popup</include>
 					<label>- $LOCALIZE[636]</label>
-					<onclick>Skin.ToggleSetting(HomeMenu_Custom_Custom4_Button)</onclick>
-					<selected>Skin.HasSetting(HomeMenu_Custom_Custom4_Button)</selected>
+					<onclick>Skin.ToggleSetting(Home_Custom4_Button)</onclick>
+					<selected>Skin.HasSetting(Home_Custom4_Button)</selected>
 				</control>
                 <control type="button" id="142">
 					<description>Movie Custom Label Button</description>
@@ -1061,7 +982,7 @@
 					<label>- $LOCALIZE[21899]</label>
 					<label2>$INFO[Skin.String(Home_Custom4_Custom_Label)]</label2>
 					<onclick>Skin.SetString(Home_Custom4_Custom_Label)</onclick>
-					<enable>Skin.HasSetting(HomeMenu_Custom_Custom4_Button)</enable>
+					<enable>Skin.HasSetting(Home_Custom4_Button)</enable>
 				</control>
                 <control type="button" id="143">
 					<description>Movie Custom Category Button</description>
@@ -1069,7 +990,7 @@
 					<label>- $LOCALIZE[21866]</label>
 					<label2>$VAR[Home_Custom4_Category]</label2>
 					<onclick>Skin.SelectBool(21866, 36912|Home_Custom4_Custom_Category_Video, 2|Home_Custom4_Custom_Category_Music, 1|Home_Custom4_Custom_Category_Pictures, 559|Home_Custom4_Custom_Category_File)</onclick>
-					<enable>Skin.HasSetting(HomeMenu_Custom_Custom4_Button)</enable>
+					<enable>Skin.HasSetting(Home_Custom4_Button)</enable>
 				</control>
                 <control type="button" id="144">
 					<description>Movie Custom Category SubButton</description>
@@ -1077,7 +998,7 @@
 					<label>  $LOCALIZE[15021]</label>
 					<label2>$VAR[Home_Custom4_SubCategory_Label]</label2>
 					<onclick>Skin.SelectBool(21866, 36912|Home_Custom4_Custom_SubCategory_Video, 2|Home_Custom4_Custom_SubCategory_Music)</onclick>
-					<visible>Skin.HasSetting(HomeMenu_Custom_Custom4_Button)+Skin.HasSetting(Home_Custom4_Custom_Category_File)</visible>
+					<visible>Skin.HasSetting(Home_Custom4_Button)+Skin.HasSetting(Home_Custom4_Custom_Category_File)</visible>
 				</control>
                 <control type="button" id="145">
 					<description>Movie Custom Path Button</description>
@@ -1085,17 +1006,24 @@
 					<label>- $LOCALIZE[573]</label>
 					<label2>$INFO[Skin.String(Home_Custom4_Custom_Path)]</label2>
 					<onclick>$VAR[Home_Custom4_Currentpath]</onclick>
-					<enable>Skin.HasSetting(HomeMenu_Custom_Custom4_Button)</enable>
+					<enable>Skin.HasSetting(Home_Custom4_Button)</enable>
 				</control>
 				<include content="separatorlabel">
-					<param name="separatorlabel_id" value="149" />
+					<param name="separatorlabel_id" value="148" />
 				</include>
+                <control type="radiobutton" id="149">
+                    <include>dialogbutton_popup</include>
+					<label>Multiimage Background</label>
+					<onclick>Skin.ToggleSetting(Home_Background_Custom4_Multiimage)</onclick>
+					<selected>Skin.HasSetting(Home_Background_Custom4_Multiimage)</selected>
+				</control>
                 <control type="button" id="150">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
 					<label>19190</label>
 					<label2>$VAR[backgroundfolder]home_custom4$VAR[bkg_fileext]</label2>
-					<onclick>Skin.SetImage(user_bkg_custom4,smb://)</onclick>
+					<onclick condition="!Skin.HasSetting(Home_Background_Custom4_Multiimage)">Skin.SetImage(user_bkg_custom4,smb://)</onclick>
+					<onclick condition="Skin.HasSetting(Home_Background_Custom4_Multiimage)">Skin.SetPath(user_bkg_custom4,smb://)</onclick>
 				</control>
                 <control type="button" id="151">
 					<description>Position Settings</description>
@@ -1107,13 +1035,13 @@
 				<include content="separatorlabel">
 					<param name="separatorlabel_id" value="155" />
 				</include>
-				<control type="radiobutton" id="157">
-					<description>Custom Widget Button</description>
+                <control type="button" id="157">
+					<description>Open Widget Settings</description>
                     <include>dialogbutton_popup</include>
 					<label>Widget</label>
-					<onclick>Skin.ToggleSetting(HomeMenu_Custom_Custom4_Widget)</onclick>
-					<selected>Skin.HasSetting(HomeMenu_Custom_Custom4_Widget)</selected>
-					<enable>Skin.HasSetting(HomeMenu_Custom_Custom4_Button)</enable>
+					<onclick>SetProperty(HomeButton,custom4)</onclick>
+					<onclick>ActivateWindow(1500)</onclick>
+					<enable>Skin.HasSetting(Home_Custom4_Button)</enable>
 				</control>
 				<control type="radiobutton" id="158">
 					<description>Settings Button</description>
@@ -1121,7 +1049,7 @@
 					<label>verberge grüne Progressbar</label>
 					<onclick>Skin.ToggleSetting(WidgetNoPercentPlayedBar)</onclick>
 					<selected>Skin.HasSetting(WidgetNoPercentPlayedBar)</selected>
-					<enable>Skin.HasSetting(HomeMenu_Custom_Custom4_Button)</enable>
+					<enable>Skin.HasSetting(Home_Custom4_Button)</enable>
 				</control>
             </control>
             <control type="grouplist" id="36100"> <!-- custom5 -->
@@ -1136,8 +1064,8 @@
 					<description>Movie Custom Button</description>
                     <include>dialogbutton_popup</include>
 					<label>19218</label>
-					<onclick>Skin.ToggleSetting(HomeMenu_Custom_Custom5_Button)</onclick>
-					<selected>Skin.HasSetting(HomeMenu_Custom_Custom5_Button)</selected>
+					<onclick>Skin.ToggleSetting(Home_Custom5_Button)</onclick>
+					<selected>Skin.HasSetting(Home_Custom5_Button)</selected>
 				</control>
                 <control type="button" id="142">
 					<description>Movie Custom Label Button</description>
@@ -1145,7 +1073,7 @@
 					<label>- $LOCALIZE[21899]</label>
 					<label2>$INFO[Skin.String(Home_Custom5_Custom_Label)]</label2>
 					<onclick>Skin.SetString(Home_Custom5_Custom_Label)</onclick>
-					<enable>Skin.HasSetting(HomeMenu_Custom_Custom5_Button)</enable>
+					<enable>Skin.HasSetting(Home_Custom5_Button)</enable>
 				</control>
                 <control type="button" id="143">
 					<description>Movie Custom Category Button</description>
@@ -1153,7 +1081,7 @@
 					<label>- $LOCALIZE[21866]</label>
 					<label2>$VAR[Home_Custom5_Category]</label2>
 					<onclick>Skin.SelectBool(21866, 36912|Home_Custom5_Custom_Category_Video, 2|Home_Custom5_Custom_Category_Music, 1|Home_Custom5_Custom_Category_Pictures, 559|Home_Custom5_Custom_Category_File)</onclick>
-					<enable>Skin.HasSetting(HomeMenu_Custom_Custom5_Button)</enable>
+					<enable>Skin.HasSetting(Home_Custom5_Button)</enable>
 				</control>
                 <control type="button" id="144">
 					<description>Movie Custom Category SubButton</description>
@@ -1161,7 +1089,7 @@
 					<label>  $LOCALIZE[15021]</label>
 					<label2>$VAR[Home_Custom5_SubCategory_Label]</label2>
 					<onclick>Skin.SelectBool(21866, 36912|Home_Custom5_Custom_SubCategory_Video, 2|Home_Custom5_Custom_SubCategory_Music)</onclick>
-					<visible>Skin.HasSetting(HomeMenu_Custom_Custom5_Button)+Skin.HasSetting(Home_Custom5_Custom_Category_File)</visible>
+					<visible>Skin.HasSetting(Home_Custom5_Button)+Skin.HasSetting(Home_Custom5_Custom_Category_File)</visible>
 				</control>
                 <control type="button" id="145">
 					<description>Movie Custom Path Button</description>
@@ -1169,17 +1097,24 @@
 					<label>- $LOCALIZE[573]</label>
 					<label2>$INFO[Skin.String(Home_Custom5_Custom_Path)]</label2>
 					<onclick>$VAR[Home_Custom5_Currentpath]</onclick>
-					<enable>Skin.HasSetting(HomeMenu_Custom_Custom5_Button)</enable>
+					<enable>Skin.HasSetting(Home_Custom5_Button)</enable>
 				</control>
 				<include content="separatorlabel">
-					<param name="separatorlabel_id" value="149" />
+					<param name="separatorlabel_id" value="148" />
 				</include>
+                <control type="radiobutton" id="149">
+                    <include>dialogbutton_popup</include>
+					<label>Multiimage Background</label>
+					<onclick>Skin.ToggleSetting(Home_Background_Custom5_Multiimage)</onclick>
+					<selected>Skin.HasSetting(Home_Background_Custom5_Multiimage)</selected>
+				</control>
                 <control type="button" id="150">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
 					<label>19190</label>
 					<label2>$VAR[backgroundfolder]home_custom5$VAR[bkg_fileext]</label2>
-					<onclick>Skin.SetImage(user_bkg_custom5,smb://)</onclick>
+					<onclick condition="!Skin.HasSetting(Home_Background_Custom5_Multiimage)">Skin.SetImage(user_bkg_custom5,smb://)</onclick>
+					<onclick condition="Skin.HasSetting(Home_Background_Custom5_Multiimage)">Skin.SetPath(user_bkg_custom5,smb://)</onclick>
 				</control>
                 <control type="button" id="151">
 					<description>Position Settings</description>
@@ -1191,13 +1126,13 @@
 				<include content="separatorlabel">
 					<param name="separatorlabel_id" value="155" />
 				</include>
-				<control type="radiobutton" id="157">
-					<description>Custom Widget Button</description>
+                <control type="button" id="157">
+					<description>Open Widget Settings</description>
                     <include>dialogbutton_popup</include>
 					<label>Widget</label>
-					<onclick>Skin.ToggleSetting(HomeMenu_Custom_Custom5_Widget)</onclick>
-					<selected>Skin.HasSetting(HomeMenu_Custom_Custom5_Widget)</selected>
-					<enable>Skin.HasSetting(HomeMenu_Custom_Custom5_Button)</enable>
+					<onclick>SetProperty(HomeButton,custom5)</onclick>
+					<onclick>ActivateWindow(1500)</onclick>
+					<enable>Skin.HasSetting(Home_Custom5_Button)</enable>
 				</control>
 				<control type="radiobutton" id="158">
 					<description>Settings Button</description>
@@ -1205,7 +1140,7 @@
 					<label>verberge grüne Progressbar</label>
 					<onclick>Skin.ToggleSetting(WidgetNoPercentPlayedBar)</onclick>
 					<selected>Skin.HasSetting(WidgetNoPercentPlayedBar)</selected>
-					<enable>Skin.HasSetting(HomeMenu_Custom_Custom5_Button)</enable>
+					<enable>Skin.HasSetting(Home_Custom5_Button)</enable>
 				</control>
             </control>
             <control type="grouplist" id="36100"> <!-- custom6 -->
@@ -1220,8 +1155,8 @@
 					<description>Movie Custom Button</description>
                     <include>dialogbutton_popup</include>
 					<label>19218</label>
-					<onclick>Skin.ToggleSetting(HomeMenu_Custom_Custom6_Button)</onclick>
-					<selected>Skin.HasSetting(HomeMenu_Custom_Custom6_Button)</selected>
+					<onclick>Skin.ToggleSetting(Home_Custom6_Button)</onclick>
+					<selected>Skin.HasSetting(Home_Custom6_Button)</selected>
 				</control>
                 <control type="button" id="142">
 					<description>Movie Custom Label Button</description>
@@ -1229,7 +1164,7 @@
 					<label>- $LOCALIZE[21899]</label>
 					<label2>$INFO[Skin.String(Home_Custom6_Custom_Label)]</label2>
 					<onclick>Skin.SetString(Home_Custom6_Custom_Label)</onclick>
-					<enable>Skin.HasSetting(HomeMenu_Custom_Custom6_Button)</enable>
+					<enable>Skin.HasSetting(Home_Custom6_Button)</enable>
 				</control>
                 <control type="button" id="143">
 					<description>Movie Custom Category Button</description>
@@ -1237,7 +1172,7 @@
 					<label>- $LOCALIZE[21866]</label>
 					<label2>$VAR[Home_Custom6_Category]</label2>
 					<onclick>Skin.SelectBool(21866, 36912|Home_Custom6_Custom_Category_Video, 2|Home_Custom6_Custom_Category_Music, 1|Home_Custom6_Custom_Category_Pictures, 559|Home_Custom6_Custom_Category_File)</onclick>
-					<enable>Skin.HasSetting(HomeMenu_Custom_Custom6_Button)</enable>
+					<enable>Skin.HasSetting(Home_Custom6_Button)</enable>
 				</control>
                 <control type="button" id="144">
 					<description>Movie Custom Category SubButton</description>
@@ -1245,7 +1180,7 @@
 					<label>  $LOCALIZE[15021]</label>
 					<label2>$VAR[Home_Custom6_SubCategory_Label]</label2>
 					<onclick>Skin.SelectBool(21866, 36912|Home_Custom6_Custom_SubCategory_Video, 2|Home_Custom6_Custom_SubCategory_Music)</onclick>
-					<visible>Skin.HasSetting(HomeMenu_Custom_Custom6_Button)+Skin.HasSetting(Home_Custom6_Custom_Category_File)</visible>
+					<visible>Skin.HasSetting(Home_Custom6_Button)+Skin.HasSetting(Home_Custom6_Custom_Category_File)</visible>
 				</control>
                 <control type="button" id="145">
 					<description>Movie Custom Path Button</description>
@@ -1253,17 +1188,24 @@
 					<label>- $LOCALIZE[573]</label>
 					<label2>$INFO[Skin.String(Home_Custom6_Custom_Path)]</label2>
 					<onclick>$VAR[Home_Custom6_Currentpath]</onclick>
-					<enable>Skin.HasSetting(HomeMenu_Custom_Custom6_Button)</enable>
+					<enable>Skin.HasSetting(Home_Custom6_Button)</enable>
 				</control>
 				<include content="separatorlabel">
-					<param name="separatorlabel_id" value="149" />
+					<param name="separatorlabel_id" value="148" />
 				</include>
+                <control type="radiobutton" id="149">
+                    <include>dialogbutton_popup</include>
+					<label>Multiimage Background</label>
+					<onclick>Skin.ToggleSetting(Home_Background_Custom6_Multiimage)</onclick>
+					<selected>Skin.HasSetting(Home_Background_Custom6_Multiimage)</selected>
+				</control>
                 <control type="button" id="150">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
 					<label>19190</label>
 					<label2>$VAR[backgroundfolder]home_custom6$VAR[bkg_fileext]</label2>
-					<onclick>Skin.SetImage(user_bkg_custom6,smb://)</onclick>
+					<onclick condition="!Skin.HasSetting(Home_Background_Custom6_Multiimage)">Skin.SetImage(user_bkg_custom6,smb://)</onclick>
+					<onclick condition="Skin.HasSetting(Home_Background_Custom6_Multiimage)">Skin.SetPath(user_bkg_custom6,smb://)</onclick>
 				</control>
                 <control type="button" id="151">
 					<description>Position Settings</description>
@@ -1275,13 +1217,13 @@
 				<include content="separatorlabel">
 					<param name="separatorlabel_id" value="155" />
 				</include>
-				<control type="radiobutton" id="157">
-					<description>Custom Widget Button</description>
+                <control type="button" id="157">
+					<description>Open Widget Settings</description>
                     <include>dialogbutton_popup</include>
 					<label>Widget</label>
-					<onclick>Skin.ToggleSetting(HomeMenu_Custom_Custom6_Widget)</onclick>
-					<selected>Skin.HasSetting(HomeMenu_Custom_Custom6_Widget)</selected>
-					<enable>Skin.HasSetting(HomeMenu_Custom_Custom6_Button)</enable>
+					<onclick>SetProperty(HomeButton,custom6)</onclick>
+					<onclick>ActivateWindow(1500)</onclick>
+					<enable>Skin.HasSetting(Home_Custom6_Button)</enable>
 				</control>
 				<control type="radiobutton" id="158">
 					<description>Settings Button</description>
@@ -1289,7 +1231,7 @@
 					<label>verberge grüne Progressbar</label>
 					<onclick>Skin.ToggleSetting(WidgetNoPercentPlayedBar)</onclick>
 					<selected>Skin.HasSetting(WidgetNoPercentPlayedBar)</selected>
-					<enable>Skin.HasSetting(HomeMenu_Custom_Custom6_Button)</enable>
+					<enable>Skin.HasSetting(Home_Custom6_Button)</enable>
 				</control>
             </control>
             <control type="grouplist" id="36100"> <!-- custom7 -->
@@ -1304,8 +1246,8 @@
 					<description>Movie Custom Button</description>
                     <include>dialogbutton_popup</include>
 					<label>19218</label>
-					<onclick>Skin.ToggleSetting(HomeMenu_Custom_Custom7_Button)</onclick>
-					<selected>Skin.HasSetting(HomeMenu_Custom_Custom7_Button)</selected>
+					<onclick>Skin.ToggleSetting(Home_Custom7_Button)</onclick>
+					<selected>Skin.HasSetting(Home_Custom7_Button)</selected>
 				</control>
                 <control type="button" id="142">
 					<description>Movie Custom Label Button</description>
@@ -1313,7 +1255,7 @@
 					<label>- $LOCALIZE[21899]</label>
 					<label2>$INFO[Skin.String(Home_Custom7_Custom_Label)]</label2>
 					<onclick>Skin.SetString(Home_Custom7_Custom_Label)</onclick>
-					<enable>Skin.HasSetting(HomeMenu_Custom_Custom7_Button)</enable>
+					<enable>Skin.HasSetting(Home_Custom7_Button)</enable>
 				</control>
                 <control type="button" id="143">
 					<description>Movie Custom Category Button</description>
@@ -1321,7 +1263,7 @@
 					<label>- $LOCALIZE[21866]</label>
 					<label2>$VAR[Home_Custom7_Category]</label2>
 					<onclick>Skin.SelectBool(21866, 36912|Home_Custom7_Custom_Category_Video, 2|Home_Custom7_Custom_Category_Music, 1|Home_Custom7_Custom_Category_Pictures, 559|Home_Custom7_Custom_Category_File)</onclick>
-					<enable>Skin.HasSetting(HomeMenu_Custom_Custom7_Button)</enable>
+					<enable>Skin.HasSetting(Home_Custom7_Button)</enable>
 				</control>
                 <control type="button" id="144">
 					<description>Movie Custom Category SubButton</description>
@@ -1329,7 +1271,7 @@
 					<label>  $LOCALIZE[15021]</label>
 					<label2>$VAR[Home_Custom7_SubCategory_Label]</label2>
 					<onclick>Skin.SelectBool(21866, 36912|Home_Custom7_Custom_SubCategory_Video, 2|Home_Custom7_Custom_SubCategory_Music)</onclick>
-					<visible>Skin.HasSetting(HomeMenu_Custom_Custom7_Button)+Skin.HasSetting(Home_Custom7_Custom_Category_File)</visible>
+					<visible>Skin.HasSetting(Home_Custom7_Button)+Skin.HasSetting(Home_Custom7_Custom_Category_File)</visible>
 				</control>
                 <control type="button" id="145">
 					<description>Movie Custom Path Button</description>
@@ -1337,17 +1279,24 @@
 					<label>- $LOCALIZE[573]</label>
 					<label2>$INFO[Skin.String(Home_Custom7_Custom_Path)]</label2>
 					<onclick>$VAR[Home_Custom7_Currentpath]</onclick>
-					<enable>Skin.HasSetting(HomeMenu_Custom_Custom7_Button)</enable>
+					<enable>Skin.HasSetting(Home_Custom7_Button)</enable>
 				</control>
 				<include content="separatorlabel">
-					<param name="separatorlabel_id" value="149" />
+					<param name="separatorlabel_id" value="148" />
 				</include>
+                <control type="radiobutton" id="149">
+                    <include>dialogbutton_popup</include>
+					<label>Multiimage Background</label>
+					<onclick>Skin.ToggleSetting(Home_Background_Custom7_Multiimage)</onclick>
+					<selected>Skin.HasSetting(Home_Background_Custom7_Multiimage)</selected>
+				</control>
                 <control type="button" id="150">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
 					<label>19190</label>
 					<label2>$VAR[backgroundfolder]home_custom7$VAR[bkg_fileext]</label2>
-					<onclick>Skin.SetImage(user_bkg_custom7,smb://)</onclick>
+					<onclick condition="!Skin.HasSetting(Home_Background_Custom7_Multiimage)">Skin.SetImage(user_bkg_custom7,smb://)</onclick>
+					<onclick condition="Skin.HasSetting(Home_Background_Custom7_Multiimage)">Skin.SetPath(user_bkg_custom7,smb://)</onclick>
 				</control>
                 <control type="button" id="151">
 					<description>Position Settings</description>
@@ -1359,13 +1308,13 @@
 				<include content="separatorlabel">
 					<param name="separatorlabel_id" value="155" />
 				</include>
-				<control type="radiobutton" id="157">
-					<description>Custom Widget Button</description>
+                <control type="button" id="157">
+					<description>Open Widget Settings</description>
                     <include>dialogbutton_popup</include>
 					<label>Widget</label>
-					<onclick>Skin.ToggleSetting(HomeMenu_Custom_Custom7_Widget)</onclick>
-					<selected>Skin.HasSetting(HomeMenu_Custom_Custom7_Widget)</selected>
-					<enable>Skin.HasSetting(HomeMenu_Custom_Custom7_Button)</enable>
+					<onclick>SetProperty(HomeButton,custom7)</onclick>
+					<onclick>ActivateWindow(1500)</onclick>
+					<enable>Skin.HasSetting(Home_Custom7_Button)</enable>
 				</control>
 				<control type="radiobutton" id="158">
 					<description>Settings Button</description>
@@ -1373,7 +1322,7 @@
 					<label>verberge grüne Progressbar</label>
 					<onclick>Skin.ToggleSetting(WidgetNoPercentPlayedBar)</onclick>
 					<selected>Skin.HasSetting(WidgetNoPercentPlayedBar)</selected>
-					<enable>Skin.HasSetting(HomeMenu_Custom_Custom7_Button)</enable>
+					<enable>Skin.HasSetting(Home_Custom7_Button)</enable>
 				</control>
             </control>
             <control type="grouplist" id="36100"> <!-- custom8 -->
@@ -1388,8 +1337,8 @@
 					<description>Movie Custom Button</description>
                     <include>dialogbutton_popup</include>
 					<label>19218</label>
-					<onclick>Skin.ToggleSetting(HomeMenu_Custom_Custom8_Button)</onclick>
-					<selected>Skin.HasSetting(HomeMenu_Custom_Custom8_Button)</selected>
+					<onclick>Skin.ToggleSetting(Home_Custom8_Button)</onclick>
+					<selected>Skin.HasSetting(Home_Custom8_Button)</selected>
 				</control>
                 <control type="button" id="142">
 					<description>Movie Custom Label Button</description>
@@ -1397,7 +1346,7 @@
 					<label>- $LOCALIZE[21899]</label>
 					<label2>$INFO[Skin.String(Home_Custom8_Custom_Label)]</label2>
 					<onclick>Skin.SetString(Home_Custom8_Custom_Label)</onclick>
-					<enable>Skin.HasSetting(HomeMenu_Custom_Custom8_Button)</enable>
+					<enable>Skin.HasSetting(Home_Custom8_Button)</enable>
 				</control>
                 <control type="button" id="143">
 					<description>Movie Custom Category Button</description>
@@ -1405,7 +1354,7 @@
 					<label>- $LOCALIZE[21866]</label>
 					<label2>$VAR[Home_Custom8_Category]</label2>
 					<onclick>Skin.SelectBool(21866, 36912|Home_Custom8_Custom_Category_Video, 2|Home_Custom8_Custom_Category_Music, 1|Home_Custom8_Custom_Category_Pictures, 559|Home_Custom8_Custom_Category_File)</onclick>
-					<enable>Skin.HasSetting(HomeMenu_Custom_Custom8_Button)</enable>
+					<enable>Skin.HasSetting(Home_Custom8_Button)</enable>
 				</control>
                 <control type="button" id="144">
 					<description>Movie Custom Category SubButton</description>
@@ -1413,7 +1362,7 @@
 					<label>  $LOCALIZE[15021]</label>
 					<label2>$VAR[Home_Custom8_SubCategory_Label]</label2>
 					<onclick>Skin.SelectBool(21866, 36912|Home_Custom8_Custom_SubCategory_Video, 2|Home_Custom8_Custom_SubCategory_Music)</onclick>
-					<visible>Skin.HasSetting(HomeMenu_Custom_Custom8_Button)+Skin.HasSetting(Home_Custom8_Custom_Category_File)</visible>
+					<visible>Skin.HasSetting(Home_Custom8_Button)+Skin.HasSetting(Home_Custom8_Custom_Category_File)</visible>
 				</control>
                 <control type="button" id="145">
 					<description>Movie Custom Path Button</description>
@@ -1421,17 +1370,24 @@
 					<label>- $LOCALIZE[573]</label>
 					<label2>$INFO[Skin.String(Home_Custom8_Custom_Path)]</label2>
 					<onclick>$VAR[Home_Custom8_Currentpath]</onclick>
-					<enable>Skin.HasSetting(HomeMenu_Custom_Custom8_Button)</enable>
+					<enable>Skin.HasSetting(Home_Custom8_Button)</enable>
 				</control>
 				<include content="separatorlabel">
-					<param name="separatorlabel_id" value="149" />
+					<param name="separatorlabel_id" value="148" />
 				</include>
+                <control type="radiobutton" id="149">
+                    <include>dialogbutton_popup</include>
+					<label>Multiimage Background</label>
+					<onclick>Skin.ToggleSetting(Home_Background_Custom8_Multiimage)</onclick>
+					<selected>Skin.HasSetting(Home_Background_Custom8_Multiimage)</selected>
+				</control>
                 <control type="button" id="150">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
 					<label>19190</label>
 					<label2>$VAR[backgroundfolder]home_custom8$VAR[bkg_fileext]</label2>
-					<onclick>Skin.SetImage(user_bkg_custom8,smb://)</onclick>
+					<onclick condition="!Skin.HasSetting(Home_Background_Custom8_Multiimage)">Skin.SetImage(user_bkg_custom8,smb://)</onclick>
+					<onclick condition="Skin.HasSetting(Home_Background_Custom8_Multiimage)">Skin.SetPath(user_bkg_custom8,smb://)</onclick>
 				</control>
                 <control type="button" id="151">
 					<description>Position Settings</description>
@@ -1443,13 +1399,13 @@
 				<include content="separatorlabel">
 					<param name="separatorlabel_id" value="155" />
 				</include>
-				<control type="radiobutton" id="157">
-					<description>Custom Widget Button</description>
+                <control type="button" id="157">
+					<description>Open Widget Settings</description>
                     <include>dialogbutton_popup</include>
 					<label>Widget</label>
-					<onclick>Skin.ToggleSetting(HomeMenu_Custom_Custom8_Widget)</onclick>
-					<selected>Skin.HasSetting(HomeMenu_Custom_Custom8_Widget)</selected>
-					<enable>Skin.HasSetting(HomeMenu_Custom_Custom8_Button)</enable>
+					<onclick>SetProperty(HomeButton,custom8)</onclick>
+					<onclick>ActivateWindow(1500)</onclick>
+					<enable>Skin.HasSetting(Home_Custom8_Button)</enable>
 				</control>
 				<control type="radiobutton" id="158">
 					<description>Settings Button</description>
@@ -1457,7 +1413,7 @@
 					<label>verberge grüne Progressbar</label>
 					<onclick>Skin.ToggleSetting(WidgetNoPercentPlayedBar)</onclick>
 					<selected>Skin.HasSetting(WidgetNoPercentPlayedBar)</selected>
-					<enable>Skin.HasSetting(HomeMenu_Custom_Custom8_Button)</enable>
+					<enable>Skin.HasSetting(Home_Custom8_Button)</enable>
 				</control>
             </control>
             <control type="grouplist" id="36100"> <!-- custom9 -->
@@ -1472,8 +1428,8 @@
 					<description>Movie Custom Button</description>
                     <include>dialogbutton_popup</include>
 					<label>19218</label>
-					<onclick>Skin.ToggleSetting(HomeMenu_Custom_Custom9_Button)</onclick>
-					<selected>Skin.HasSetting(HomeMenu_Custom_Custom9_Button)</selected>
+					<onclick>Skin.ToggleSetting(Home_Custom9_Button)</onclick>
+					<selected>Skin.HasSetting(Home_Custom9_Button)</selected>
 				</control>
                 <control type="button" id="142">
 					<description>Movie Custom Label Button</description>
@@ -1481,7 +1437,7 @@
 					<label>- $LOCALIZE[21899]</label>
 					<label2>$INFO[Skin.String(Home_Custom9_Custom_Label)]</label2>
 					<onclick>Skin.SetString(Home_Custom9_Custom_Label)</onclick>
-					<enable>Skin.HasSetting(HomeMenu_Custom_Custom9_Button)</enable>
+					<enable>Skin.HasSetting(Home_Custom9_Button)</enable>
 				</control>
                 <control type="button" id="143">
 					<description>Movie Custom Category Button</description>
@@ -1489,7 +1445,7 @@
 					<label>- $LOCALIZE[21866]</label>
 					<label2>$VAR[Home_Custom9_Category]</label2>
 					<onclick>Skin.SelectBool(21866, 36912|Home_Custom9_Custom_Category_Video, 2|Home_Custom9_Custom_Category_Music, 1|Home_Custom9_Custom_Category_Pictures, 559|Home_Custom9_Custom_Category_File)</onclick>
-					<enable>Skin.HasSetting(HomeMenu_Custom_Custom9_Button)</enable>
+					<enable>Skin.HasSetting(Home_Custom9_Button)</enable>
 				</control>
                 <control type="button" id="144">
 					<description>Movie Custom Category SubButton</description>
@@ -1497,7 +1453,7 @@
 					<label>  $LOCALIZE[15021]</label>
 					<label2>$VAR[Home_Custom9_SubCategory_Label]</label2>
 					<onclick>Skin.SelectBool(21866, 36912|Home_Custom9_Custom_SubCategory_Video, 2|Home_Custom9_Custom_SubCategory_Music)</onclick>
-					<visible>Skin.HasSetting(HomeMenu_Custom_Custom9_Button)+Skin.HasSetting(Home_Custom9_Custom_Category_File)</visible>
+					<visible>Skin.HasSetting(Home_Custom9_Button)+Skin.HasSetting(Home_Custom9_Custom_Category_File)</visible>
 				</control>
                 <control type="button" id="145">
 					<description>Movie Custom Path Button</description>
@@ -1505,17 +1461,24 @@
 					<label>- $LOCALIZE[573]</label>
 					<label2>$INFO[Skin.String(Home_Custom9_Custom_Path)]</label2>
 					<onclick>$VAR[Home_Custom9_Currentpath]</onclick>
-					<enable>Skin.HasSetting(HomeMenu_Custom_Custom9_Button)</enable>
+					<enable>Skin.HasSetting(Home_Custom9_Button)</enable>
 				</control>
 				<include content="separatorlabel">
-					<param name="separatorlabel_id" value="149" />
+					<param name="separatorlabel_id" value="148" />
 				</include>
+                <control type="radiobutton" id="149">
+                    <include>dialogbutton_popup</include>
+					<label>Multiimage Background</label>
+					<onclick>Skin.ToggleSetting(Home_Background_Custom9_Multiimage)</onclick>
+					<selected>Skin.HasSetting(Home_Background_Custom9_Multiimage)</selected>
+				</control>
                 <control type="button" id="150">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
 					<label>19190</label>
 					<label2>$VAR[backgroundfolder]home_custom9$VAR[bkg_fileext]</label2>
-					<onclick>Skin.SetImage(user_bkg_custom9,smb://)</onclick>
+					<onclick condition="!Skin.HasSetting(Home_Background_Custom9_Multiimage)">Skin.SetImage(user_bkg_custom9,smb://)</onclick>
+					<onclick condition="Skin.HasSetting(Home_Background_Custom9_Multiimage)">Skin.SetPath(user_bkg_custom9,smb://)</onclick>
 				</control>
                 <control type="button" id="151">
 					<description>Position Settings</description>
@@ -1527,13 +1490,13 @@
 				<include content="separatorlabel">
 					<param name="separatorlabel_id" value="155" />
 				</include>
-				<control type="radiobutton" id="157">
-					<description>Custom Widget Button</description>
+                <control type="button" id="157">
+					<description>Open Widget Settings</description>
                     <include>dialogbutton_popup</include>
 					<label>Widget</label>
-					<onclick>Skin.ToggleSetting(HomeMenu_Custom_Custom9_Widget)</onclick>
-					<selected>Skin.HasSetting(HomeMenu_Custom_Custom9_Widget)</selected>
-					<enable>Skin.HasSetting(HomeMenu_Custom_Custom9_Button)</enable>
+					<onclick>SetProperty(HomeButton,custom9)</onclick>
+					<onclick>ActivateWindow(1500)</onclick>
+					<enable>Skin.HasSetting(Home_Custom9_Button)</enable>
 				</control>
 				<control type="radiobutton" id="158">
 					<description>Settings Button</description>
@@ -1541,7 +1504,7 @@
 					<label>verberge grüne Progressbar</label>
 					<onclick>Skin.ToggleSetting(WidgetNoPercentPlayedBar)</onclick>
 					<selected>Skin.HasSetting(WidgetNoPercentPlayedBar)</selected>
-					<enable>Skin.HasSetting(HomeMenu_Custom_Custom9_Button)</enable>
+					<enable>Skin.HasSetting(Home_Custom9_Button)</enable>
 				</control>
             </control>
         </control>

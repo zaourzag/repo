@@ -38,8 +38,9 @@
 			<include>ButtonHomeSubCommonValues</include>
 			<label>24001</label>
 			<onclick>ActivateWindow(Pictures,Addons,return)</onclick>
-			<visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_category),$LOCALIZE[1])|!Skin.HasSetting(HomeMenu_Custom_Picture_Button)</visible>
-		</control><control type="button" id="90250">
+			<visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_category),$LOCALIZE[1])|[!Skin.HasSetting(Home_Picture_Button)+String.IsEqual(Container(9000).ListItem.Property(homemenu_id),picture)]</visible>
+		</control>
+		<control type="button" id="90250">
 			<include>ButtonHomeSubCommonValues</include>
 			<label>21417</label>
 			<onclick>SetProperty(HomeButton,$INFO[Container(9000).ListItem.Property(homemenu_id)],home)</onclick>
@@ -65,7 +66,7 @@
                 <label>-</label>
                 <onclick>Control.SetFocus(9000)</onclick>
                 <onclick>ActivateWindow(1142)</onclick>
-				<visible>[String.Contains(Container(9000).ListItem.Property(homemenu_path),music)|String.Contains(Container(9000).ListItem.Property(homemenu_path),audio)]|!Skin.HasSetting(HomeMenu_Custom_Music_Button)</visible>
+				<visible>[String.Contains(Container(9000).ListItem.Property(homemenu_path),music)|String.Contains(Container(9000).ListItem.Property(homemenu_path),audio)]|!Skin.HasSetting(Home_Music_Button)</visible>
             </control>
             <control type="button" id="80101">
                 <description>Refresh Button</description>
@@ -79,7 +80,7 @@
                 <label>-</label>
                 <onclick>Control.SetFocus(9000)</onclick>
                 <onclick>ActivateWindow(1141)</onclick>
-				<visible>String.Contains(Container(9000).ListItem.Property(homemenu_path),video)+Skin.HasSetting(HomeMenu_Custom_Music_Button)</visible>
+				<visible>String.Contains(Container(9000).ListItem.Property(homemenu_path),video)+Skin.HasSetting(Home_Music_Button)</visible>
             </control>
             <control type="button" id="80104">
                 <include>ButtonHomeSubCommonValues</include>
@@ -88,7 +89,7 @@
                 <onclick>fullscreen</onclick>
                 <visible>Library.HasContent(Music)</visible>
                 <visible>!Skin.HasSetting(SubMenu_Music_NoPartymodeButton)</visible>
-				<visible>!Skin.HasSetting(HomeMenu_Custom_Music_Button)</visible>
+				<visible>!Skin.HasSetting(Home_Music_Button)</visible>
             </control>
             <control type="button" id="80105">
                 <include>ButtonHomeSubCommonValues</include>
@@ -96,7 +97,7 @@
                 <onclick>ActivateWindow(Music,Artists,return)</onclick>
                 <visible>Library.HasContent(Music)</visible>
                 <visible>!Skin.HasSetting(SubMenu_Music_NoArtistButton)</visible>
-				<visible>!Skin.HasSetting(HomeMenu_Custom_Music_Button)</visible>
+				<visible>!Skin.HasSetting(Home_Music_Button)</visible>
             </control>
             <control type="button" id="80106">
                 <include>ButtonHomeSubCommonValues</include>
@@ -104,7 +105,7 @@
                 <onclick>ActivateWindow(music,Albums,return)</onclick>
                 <visible>Library.HasContent(Music)</visible>
                 <visible>!Skin.HasSetting(SubMenu_Music_NoAlbumButton)</visible>
-				<visible>!Skin.HasSetting(HomeMenu_Custom_Music_Button)</visible>
+				<visible>!Skin.HasSetting(Home_Music_Button)</visible>
             </control>
             <control type="button" id="80107">
                 <include>ButtonHomeSubCommonValues</include>
@@ -112,13 +113,13 @@
                 <onclick>ActivateWindow(music,Songs,return)</onclick>
                 <visible>Library.HasContent(Music)</visible>
                 <visible>!Skin.HasSetting(SubMenu_Music_NoSongsButton)</visible>
-				<visible>!Skin.HasSetting(HomeMenu_Custom_Music_Button)</visible>
+				<visible>!Skin.HasSetting(Home_Music_Button)</visible>
             </control>
             <control type="button" id="80108">
                 <include>ButtonHomeSubCommonValues</include>
                 <label>744</label>
                 <onclick>ActivateWindow(Music,Files,return)</onclick>
-				<visible>!Skin.HasSetting(HomeMenu_Custom_Music_Button)</visible>
+				<visible>!Skin.HasSetting(Home_Music_Button)</visible>
             </control>
             <control type="button" id="80109">
                 <include>ButtonHomeSubCommonValues</include>
@@ -126,7 +127,7 @@
                 <onclick>ActivateWindow(music,root)</onclick>
                 <visible>Library.HasContent(Music)</visible>
                 <visible>!Skin.HasSetting(SubMenu_Music_NoLibraryButton)</visible>
-				<visible>!Skin.HasSetting(HomeMenu_Custom_Music_Button)</visible>
+				<visible>!Skin.HasSetting(Home_Music_Button)</visible>
             </control>
             <control type="button" id="80110">
                 <include>ButtonHomeSubCommonValues</include>
@@ -134,7 +135,7 @@
                 <onclick>ActivateWindow(music,Addons,return)</onclick>
                 <visible>Library.HasContent(Music)</visible>
                 <visible>!Skin.HasSetting(SubMenu_Music_NoAddonButton)</visible>
-				<visible>!Skin.HasSetting(HomeMenu_Custom_Music_Button)</visible>
+				<visible>!Skin.HasSetting(Home_Music_Button)</visible>
             </control>
             <control type="button" id="80111">
                 <include>ButtonHomeSubCommonValues</include>
@@ -142,7 +143,7 @@
                 <onclick>ActivateWindow(Music,Addons,return)</onclick>
                 <visible>!Library.HasContent(Music)</visible>
                 <visible>!Skin.HasSetting(SubMenu_Music_NoAddonButton)</visible>
-				<visible>!Skin.HasSetting(HomeMenu_Custom_Music_Button)</visible>
+				<visible>!Skin.HasSetting(Home_Music_Button)</visible>
             </control>
 			<include>HomeSubSettingsButton</include>
         </control>
@@ -165,7 +166,7 @@
                 <label>-</label>
                 <onclick>Control.SetFocus(9000)</onclick>
                 <onclick>ActivateWindow(1142)</onclick>
-				<visible>[String.Contains(Container(9000).ListItem.Property(homemenu_path),music)|String.Contains(Container(9000).ListItem.Property(homemenu_path),audio)]+Skin.HasSetting(HomeMenu_Custom_Video_Button)</visible>
+				<visible>[String.Contains(Container(9000).ListItem.Property(homemenu_path),music)|String.Contains(Container(9000).ListItem.Property(homemenu_path),audio)]+Skin.HasSetting(Home_Video_Button)</visible>
             </control>
             <control type="button" id="80121">
                 <description>Refresh Button</description>
@@ -179,7 +180,7 @@
                 <label>-</label>
                 <onclick>Control.SetFocus(9000)</onclick>
                 <onclick>ActivateWindow(1141)</onclick>
-				<visible>String.Contains(Container(9000).ListItem.Property(homemenu_path),video)|!Skin.HasSetting(HomeMenu_Custom_Video_Button)</visible>
+				<visible>String.Contains(Container(9000).ListItem.Property(homemenu_path),video)|!Skin.HasSetting(Home_Video_Button)</visible>
             </control>
             <control type="button" id="80122">
                 <include>ButtonHomeSubCommonValues</include>
@@ -187,7 +188,7 @@
                 <onclick>ActivateWindow(Videos,MovieTitles,return)</onclick>
                 <visible>Library.HasContent(Movies)</visible>
                 <visible>!Skin.HasSetting(SubMenu_Video_NoMovieButton)</visible>
-				<visible>!Skin.HasSetting(HomeMenu_Custom_Video_Button)</visible>
+				<visible>!Skin.HasSetting(Home_Video_Button)</visible>
             </control>
             <control type="button" id="80123">
                 <include>ButtonHomeSubCommonValues</include>
@@ -195,7 +196,7 @@
                 <onclick>ActivateWindow(Videos,TvShowTitles,return)</onclick>
                 <visible>Library.HasContent(TVShows)</visible>
                 <visible>!Skin.HasSetting(SubMenu_Video_NoTVShowButton)</visible>
-				<visible>!Skin.HasSetting(HomeMenu_Custom_Video_Button)</visible>
+				<visible>!Skin.HasSetting(Home_Video_Button)</visible>
             </control>
             <control type="button" id="80124">
                 <include>ButtonHomeSubCommonValues</include>
@@ -203,13 +204,13 @@
                 <onclick>ActivateWindow(Videos,MusicVideoTitles,return)</onclick>
                 <visible>Library.HasContent(MusicVideos)</visible>
                 <visible>!Skin.HasSetting(SubMenu_Video_NoMusicvideoButton)</visible>
-				<visible>!Skin.HasSetting(HomeMenu_Custom_Video_Button)</visible>
+				<visible>!Skin.HasSetting(Home_Video_Button)</visible>
             </control>
             <control type="button" id="80125">
                 <include>ButtonHomeSubCommonValues</include>
                 <label>744</label>
                 <onclick>ActivateWindow(Videos,Files,return)</onclick>
-				<visible>!Skin.HasSetting(HomeMenu_Custom_Video_Button)</visible>
+				<visible>!Skin.HasSetting(Home_Video_Button)</visible>
             </control>
             <control type="button" id="80126">
                 <include>ButtonHomeSubCommonValues</include>
@@ -217,14 +218,14 @@
                 <onclick>ActivateWindow(Videos,Root)</onclick>
                 <visible>Library.HasContent(Video)</visible>
                 <visible>!Skin.HasSetting(SubMenu_Video_NoLibraryButton)</visible>
-				<visible>!Skin.HasSetting(HomeMenu_Custom_Video_Button)</visible>
+				<visible>!Skin.HasSetting(Home_Video_Button)</visible>
             </control>
             <control type="button" id="80127">
                 <include>ButtonHomeSubCommonValues</include>
                 <label>24001</label>
                 <onclick>ActivateWindow(Videos,Addons,return)</onclick>
                 <visible>!Skin.HasSetting(SubMenu_Video_NoVideoAddonButton)</visible>
-				<visible>!Skin.HasSetting(HomeMenu_Custom_Video_Button)</visible>
+				<visible>!Skin.HasSetting(Home_Video_Button)</visible>
             </control>
 			<include>HomeSubSettingsButton</include>
         </control>
@@ -247,7 +248,7 @@
                 <label>-</label>
                 <onclick>Control.SetFocus(9000)</onclick>
                 <onclick>ActivateWindow(1142)</onclick>
-				<visible>[String.Contains(Container(9000).ListItem.Property(homemenu_path),music)|String.Contains(Container(9000).ListItem.Property(homemenu_path),audio)]+Skin.HasSetting(HomeMenu_Custom_Movie_Button)</visible>
+				<visible>[String.Contains(Container(9000).ListItem.Property(homemenu_path),music)|String.Contains(Container(9000).ListItem.Property(homemenu_path),audio)]+Skin.HasSetting(Home_Movie_Button)</visible>
             </control>
             <control type="button" id="80130">
                 <description>Refresh Button</description>
@@ -261,7 +262,7 @@
                 <label>-</label>
                 <onclick>Control.SetFocus(9000)</onclick>
                 <onclick>ActivateWindow(1141)</onclick>
-				<visible>String.Contains(Container(9000).ListItem.Property(homemenu_path),video)|!Skin.HasSetting(HomeMenu_Custom_Movie_Button)</visible>
+				<visible>String.Contains(Container(9000).ListItem.Property(homemenu_path),video)|!Skin.HasSetting(Home_Movie_Button)</visible>
             </control>
             <control type="button" id="80131">
                 <include>ButtonHomeSubCommonValues</include>
@@ -269,48 +270,48 @@
                 <onclick>ActivateWindow(Videos,MovieSets,return)</onclick>
                 <visible>Library.HasContent(MovieSets)</visible>
                 <visible>!Skin.HasSetting(SubMenu_Movie_NoSetButton)</visible>
-				<visible>!Skin.HasSetting(HomeMenu_Custom_Movie_Button)</visible>
+				<visible>!Skin.HasSetting(Home_Movie_Button)</visible>
             </control>
             <control type="button" id="80132">
                 <include>ButtonHomeSubCommonValues</include>
                 <label>369</label>
                 <onclick>ActivateWindow(Videos,MovieTitles,return)</onclick>
                 <visible>!Skin.HasSetting(SubMenu_Movie_NoTitleButton)</visible>
-				<visible>!Skin.HasSetting(HomeMenu_Custom_Movie_Button)</visible>
+				<visible>!Skin.HasSetting(Home_Movie_Button)</visible>
             </control>
             <control type="button" id="80133">
                 <include>ButtonHomeSubCommonValues</include>
                 <label>135</label>
                 <onclick>ActivateWindow(Videos,MovieGenres,return)</onclick>
                 <visible>!Skin.HasSetting(SubMenu_Movie_NoGenreButton)</visible>
-				<visible>!Skin.HasSetting(HomeMenu_Custom_Movie_Button)</visible>
+				<visible>!Skin.HasSetting(Home_Movie_Button)</visible>
             </control>
             <control type="button" id="80134">
                 <include>ButtonHomeSubCommonValues</include>
                 <label>652</label>
                 <onclick>ActivateWindow(Videos,MovieYears,return)</onclick>
                 <visible>!Skin.HasSetting(SubMenu_Movie_NoGenreButton)</visible>
-				<visible>!Skin.HasSetting(HomeMenu_Custom_Movie_Button)</visible>
+				<visible>!Skin.HasSetting(Home_Movie_Button)</visible>
             </control>
             <control type="button" id="80135">
                 <include>ButtonHomeSubCommonValues</include>
                 <label>344</label>
                 <onclick>ActivateWindow(Videos,MovieActors,return)</onclick>
                 <visible>!Skin.HasSetting(SubMenu_Movie_NoActorButton)</visible>
-				<visible>!Skin.HasSetting(HomeMenu_Custom_Movie_Button)</visible>
+				<visible>!Skin.HasSetting(Home_Movie_Button)</visible>
             </control>
             <control type="button" id="80136">
                 <include>ButtonHomeSubCommonValues</include>
                 <label>24001</label>
                 <onclick>ActivateWindow(Videos,Addons,return)</onclick>
                 <visible>!Skin.HasSetting(SubMenu_Movie_NoAddonButton)</visible>
-				<visible>!Skin.HasSetting(HomeMenu_Custom_Movie_Button)</visible>
+				<visible>!Skin.HasSetting(Home_Movie_Button)</visible>
             </control>
             <control type="button" id="80137">
                 <include>ButtonHomeSubCommonValues</include>
                 <label>744</label>
                 <onclick>ActivateWindow(Videos,Files,return)</onclick>
-				<visible>!Skin.HasSetting(HomeMenu_Custom_Movie_Button)</visible>
+				<visible>!Skin.HasSetting(Home_Movie_Button)</visible>
             </control>
 			<include>HomeSubSettingsButton</include>
         </control>
@@ -349,7 +350,7 @@
                 <label>-</label>
                 <onclick>Control.SetFocus(9000)</onclick>
                 <onclick>ActivateWindow(1142)</onclick>
-				<visible>[String.Contains(Container(9000).ListItem.Property(homemenu_path),music)|String.Contains(Container(9000).ListItem.Property(homemenu_path),audio)]+Skin.HasSetting(HomeMenu_Custom_TVShow_Button)</visible>
+				<visible>[String.Contains(Container(9000).ListItem.Property(homemenu_path),music)|String.Contains(Container(9000).ListItem.Property(homemenu_path),audio)]+Skin.HasSetting(Home_TVShow_Button)</visible>
             </control>
             <control type="button" id="80150">
                 <description>Refresh Button</description>
@@ -363,35 +364,35 @@
                 <label>-</label>
                 <onclick>Control.SetFocus(9000)</onclick>
                 <onclick>ActivateWindow(1141)</onclick>
-				<visible>String.Contains(Container(9000).ListItem.Property(homemenu_path),video)|!Skin.HasSetting(HomeMenu_Custom_TVShow_Button)</visible>
+				<visible>String.Contains(Container(9000).ListItem.Property(homemenu_path),video)|!Skin.HasSetting(Home_TVShow_Button)</visible>
             </control>
             <control type="button" id="80151">
                 <include>ButtonHomeSubCommonValues</include>
                 <label>369</label>
                 <onclick>ActivateWindow(Videos,TVShowTitles,return)</onclick>
                 <visible>!Skin.HasSetting(SubMenu_TVShow_NoTitleButton)</visible>
-				<visible>!Skin.HasSetting(HomeMenu_Custom_TVShow_Button)</visible>
+				<visible>!Skin.HasSetting(Home_TVShow_Button)</visible>
             </control>
             <control type="button" id="80152">
                 <include>ButtonHomeSubCommonValues</include>
                 <label>135</label>
                 <onclick>ActivateWindow(Videos,TVShowGenres,return)</onclick>
                 <visible>!Skin.HasSetting(SubMenu_TVShow_NoGenreButton)</visible>
-				<visible>!Skin.HasSetting(HomeMenu_Custom_TVShow_Button)</visible>
+				<visible>!Skin.HasSetting(Home_TVShow_Button)</visible>
             </control>
             <control type="button" id="80153">
                 <include>ButtonHomeSubCommonValues</include>
                 <label>652</label>
                 <onclick>ActivateWindow(Videos,TVShowYears,return)</onclick>
                 <visible>!Skin.HasSetting(SubMenu_TVShow_NoYearButton)</visible>
-				<visible>!Skin.HasSetting(HomeMenu_Custom_TVShow_Button)</visible>
+				<visible>!Skin.HasSetting(Home_TVShow_Button)</visible>
             </control>
             <control type="button" id="80154">
                 <include>ButtonHomeSubCommonValues</include>
                 <label>344</label>
                 <onclick>ActivateWindow(Videos,TVShowActors,return)</onclick>
                 <visible>!Skin.HasSetting(SubMenu_TVShow_NoActorButton)</visible>
-				<visible>!Skin.HasSetting(HomeMenu_Custom_TVShow_Button)</visible>
+				<visible>!Skin.HasSetting(Home_TVShow_Button)</visible>
             </control>
 			<include>HomeSubSettingsButton</include>
         </control>
@@ -414,7 +415,7 @@
                 <label>-</label>
                 <onclick>Control.SetFocus(9000)</onclick>
                 <onclick>ActivateWindow(1142)</onclick>
-				<visible>[String.Contains(Container(9000).ListItem.Property(homemenu_path),music)|String.Contains(Container(9000).ListItem.Property(homemenu_path),audio)]+Skin.HasSetting(HomeMenu_Custom_MusicVideo_Button)</visible>
+				<visible>[String.Contains(Container(9000).ListItem.Property(homemenu_path),music)|String.Contains(Container(9000).ListItem.Property(homemenu_path),audio)]+Skin.HasSetting(Home_MusicVideo_Button)</visible>
             </control>
             <control type="button" id="80160">
                 <description>Refresh Button</description>
@@ -428,21 +429,21 @@
                 <label>-</label>
                 <onclick>Control.SetFocus(9000)</onclick>
                 <onclick>ActivateWindow(1141)</onclick>
-				<visible>String.Contains(Container(9000).ListItem.Property(homemenu_path),video)+!Skin.HasSetting(HomeMenu_Custom_Music_Button)|!Skin.HasSetting(HomeMenu_Custom_MusicVideo_Button)</visible>
+				<visible>String.Contains(Container(9000).ListItem.Property(homemenu_path),video)+!Skin.HasSetting(Home_Music_Button)|!Skin.HasSetting(Home_MusicVideo_Button)</visible>
             </control>
             <control type="button" id="80161">
                 <include>ButtonHomeSubCommonValues</include>
                 <label>369</label>
                 <onclick>ActivateWindow(Videos,MusicVideosTitles,return)</onclick>
                 <visible>!Skin.HasSetting(SubMenu_MusicVideo_NoTitleButton)</visible>
-				<visible>!Skin.HasSetting(HomeMenu_Custom_MusicVideo_Button)</visible>
+				<visible>!Skin.HasSetting(Home_MusicVideo_Button)</visible>
             </control>
             <control type="button" id="80162">
                 <include>ButtonHomeSubCommonValues</include>
                 <label>135</label>
                 <onclick>ActivateWindow(Videos,MusicVideosGenres,return)</onclick>
                 <visible>!Skin.HasSetting(SubMenu_MusicVideo_NoGenreButton)</visible>
-				<visible>!Skin.HasSetting(HomeMenu_Custom_MusicVideo_Button)</visible>
+				<visible>!Skin.HasSetting(Home_MusicVideo_Button)</visible>
             </control>
 			<include>HomeSubSettingsButton</include>
         </control>
@@ -558,7 +559,7 @@
                 <label>Rip</label>
                 <onclick>RipCD</onclick>
 				<visible>System.HasMediadvd</visible>
-				<!-- <visible>!Skin.HasSetting(HomeMenu_Custom_PlayDisc_Button)</visible> -->
+				<!-- <visible>!Skin.HasSetting(Home_PlayDisc_Button)</visible> -->
             </control>
             <control type="button" id="80193">
                 <include>ButtonHomeSubCommonValues</include>
@@ -566,7 +567,7 @@
                 <onclick>EjectTray()</onclick>
                 <onclick>SetFocus(9000)</onclick>
 				<visible>System.HasMediadvd</visible>
-				<!-- <visible>!Skin.HasSetting(HomeMenu_Custom_PlayDisc_Button)</visible> -->
+				<!-- <visible>!Skin.HasSetting(Home_PlayDisc_Button)</visible> -->
             </control>
             <control type="button" id="80194">
                 <include>ButtonHomeSubCommonValues</include>

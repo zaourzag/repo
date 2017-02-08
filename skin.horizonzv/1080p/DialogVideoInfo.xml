@@ -827,8 +827,9 @@
                         <description>extendedinfo</description>
                         <include>dialogbutton</include>
                         <label>31034</label>
-						<onclick>RunScript(script.extendedinfo,info=openinfodialog)</onclick>
-						<visible>System.hasAddon(script.extendedinfo)</visible>
+						<onclick>$VAR[ExtendedInfoDialog]</onclick>
+						<onclick>Notification(...,$LOCALIZE[20186],4000)</onclick>
+						<visible>System.hasAddon(script.extendedinfo) + [String.IsEqual(ListItem.DbType,movie) | String.IsEqual(ListItem.DbType,tvshow) | String.IsEqual(ListItem.DbType,season) | String.IsEqual(ListItem.DbType,episode)]</visible>
                     </control>
                     <control type="button" id="10">
                         <description>Get Thumb</description>

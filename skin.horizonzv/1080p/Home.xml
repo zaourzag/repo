@@ -27,7 +27,7 @@
         <include>BackgroundOverlay</include>
         <include>NextTracksPlaylist</include>
         <control type="group">
-            <include>WidgetFakeLists</include>
+            <!-- <include>WidgetFakeLists</include> -->
             <control type="group" id="290">
                 <visible>!Window.IsVisible(1140)+!Window.IsVisible(1141)+!Window.IsVisible(1142)+!Window.IsVisible(1155)+!Window.IsVisible(selectdialog)</visible>
                 <include>HomepageWidget</include>

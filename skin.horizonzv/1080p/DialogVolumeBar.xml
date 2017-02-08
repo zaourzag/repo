@@ -14,6 +14,7 @@
                 <effect type="fade" start="100" end="0" time="500" delay="200" />
                 <effect type="slide" start="0,0" end="300,0" time="1000" delay="200" />
             </animation>
+			<animation effect="slide" end="0,100" time="250" delay="20" condition="Window.IsVisible(musicosd)|Window.IsVisible(videoosd)">Conditional</animation>
 			<control type="group">
 				<control type="progress" id="29999">
 					<include>HiddenButton</include>

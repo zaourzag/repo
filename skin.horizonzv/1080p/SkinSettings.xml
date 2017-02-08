@@ -1241,15 +1241,6 @@
                             <onclick>Skin.ToggleSetting(WidgetDim)</onclick>
                             <selected>Skin.HasSetting(WidgetDim)</selected>
                         </control>
-                        <!-- <control type="radiobutton" id="603">
-                            <description>Settings Button</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <label>51328</label>
-                            <focusedcolor>black</focusedcolor>
-                            <onclick>Skin.ToggleSetting(Widget_Cases)</onclick>
-                            <selected>Skin.HasSetting(Widget_Cases)</selected>
-                        </control> -->
                         <control type="radiobutton" id="604">
                             <description>Settings Button</description>
                             <width>1260</width>
@@ -1572,7 +1563,7 @@
 							<onclick>Skin.SelectBool(51354, 15112|standart_bkg, 51532|avengers_sw, 51534|gambit_background)</onclick>
                             <visible>!Skin.HasSetting(onlyone)</visible>
                         </control>
-                        <control type="button" id="826">
+                        <!-- <control type="button" id="826">
                             <description>User Backgroundfolder</description>
                             <width>1260</width>
                             <align>left</align>
@@ -1580,7 +1571,7 @@
                             <focusedcolor>black</focusedcolor>
                             <onclick>ActivateWindow(1153)</onclick>
                             <visible>!Skin.HasSetting(onlyone)</visible>
-                        </control>
+                        </control> -->
                         <control type="radiobutton" id="832">
                             <description>Empty Overlay Image</description>
                             <width>1260</width>

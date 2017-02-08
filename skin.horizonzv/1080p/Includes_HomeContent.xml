@@ -582,8 +582,8 @@
             <property name="homemenu_id">music</property>
             <property name="homemenu_category">$VAR[Home_Music_Category]</property>
             <property name="homemenu_path">$INFO[Skin.String(Home_Music_Custom_Path)]</property>
-            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Music_Button)">ActivateWindow(Music,root,return)</onclick>
-            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(HomeMenu_Custom_Music_Button)">ActivateWindow($VAR[Home_Music_SubCategory],$INFO[Skin.String(Home_Music_Custom_Path)],return)</onclick>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(Home_Music_Button)">ActivateWindow(Music,root,return)</onclick>
+            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(Home_Music_Button)">ActivateWindow($VAR[Home_Music_SubCategory],$INFO[Skin.String(Home_Music_Custom_Path)],return)</onclick>
             <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_music,smb://)</onclick>
             <onclick condition="!Window.IsVisible(Home)">Container.Refresh</onclick>
             <visible>!Skin.HasSetting(HomeMenuNoMusicButton)</visible>
@@ -610,9 +610,9 @@
             <property name="homemenu_label">$VAR[Home_Video_Label]</property>
             <property name="homemenu_category">$VAR[Home_Video_Category]</property>
             <property name="homemenu_path">$INFO[Skin.String(Home_Video_Custom_Path)]</property>
-            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Video_Button)+!Skin.HasSetting(HomeMenuVideosToFiles)">ActivateWindow(videos,root,return)</onclick>
-            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Video_Button)+Skin.HasSetting(HomeMenuVideosToFiles)">ActivateWindow(videos,files,return)</onclick>
-            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(HomeMenu_Custom_Video_Button)">ActivateWindow($VAR[Home_Video_SubCategory],$INFO[Skin.String(Home_Video_Custom_Path)],return)</onclick>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(Home_Video_Button)+!Skin.HasSetting(HomeMenuVideosToFiles)">ActivateWindow(videos,root,return)</onclick>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(Home_Video_Button)+Skin.HasSetting(HomeMenuVideosToFiles)">ActivateWindow(videos,files,return)</onclick>
+            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(Home_Video_Button)">ActivateWindow($VAR[Home_Video_SubCategory],$INFO[Skin.String(Home_Video_Custom_Path)],return)</onclick>
             <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_movie,smb://)</onclick>
             <visible>!Skin.HasSetting(HomeMenuNoVideosButton)</visible>
         </item>
@@ -626,9 +626,9 @@
             <property name="homemenu_id">movies</property>
             <property name="homemenu_category">$VAR[Home_Movie_Category]</property>
             <property name="homemenu_path">$INFO[Skin.String(Home_Movie_Custom_Path)]</property>
-            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Movie_Button)+Library.HasContent(movies)">ActivateWindow(Videos,videodb://movies/titles/,return)</onclick>
-            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Movie_Button)+!Library.HasContent(movies)">ActivateWindow(Videos,sources://video/,return)</onclick>
-            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(HomeMenu_Custom_Movie_Button)">ActivateWindow($VAR[Home_Movie_SubCategory],$INFO[Skin.String(Home_Movie_Custom_Path)],return)</onclick>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(Home_Movie_Button)+Library.HasContent(movies)">ActivateWindow(Videos,videodb://movies/titles/,return)</onclick>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(Home_Movie_Button)+!Library.HasContent(movies)">ActivateWindow(Videos,sources://video/,return)</onclick>
+            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(Home_Movie_Button)">ActivateWindow($VAR[Home_Movie_SubCategory],$INFO[Skin.String(Home_Movie_Custom_Path)],return)</onclick>
             <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_movie,smb://)</onclick>
             <visible>!Skin.HasSetting(HomeMenuNoMovieButton)</visible>
             <!-- <visible>!Skin.HasSetting(HomeMenuNoMovieButton)+Library.HasContent(Movies)</visible> -->
@@ -655,9 +655,9 @@
             <property name="homemenu_id">tvshow</property>
             <property name="homemenu_category">$VAR[Home_TVShow_Category]</property>
             <property name="homemenu_path">$INFO[Skin.String(Home_TVShow_Custom_Path)]</property>
-            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_TVShow_Button)+Library.HasContent(tvshows)">ActivateWindow(Videos,videodb://tvshows/titles/,return)</onclick>
-            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_TVShow_Button)+!Library.HasContent(tvshows)">ActivateWindow(Videos,sources://video/,return)</onclick>
-            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(HomeMenu_Custom_TVShow_Button)">ActivateWindow($VAR[Home_TVShow_SubCategory],$INFO[Skin.String(Home_TVShow_Custom_Path)],return)</onclick>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(Home_TVShow_Button)+Library.HasContent(tvshows)">ActivateWindow(Videos,videodb://tvshows/titles/,return)</onclick>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(Home_TVShow_Button)+!Library.HasContent(tvshows)">ActivateWindow(Videos,sources://video/,return)</onclick>
+            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(Home_TVShow_Button)">ActivateWindow($VAR[Home_TVShow_SubCategory],$INFO[Skin.String(Home_TVShow_Custom_Path)],return)</onclick>
             <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_tvshow,smb://)</onclick>
             <visible>!Skin.HasSetting(HomeMenuNoTVShowButton)</visible>
             <!-- <visible>!Skin.HasSetting(HomeMenuNoTVShowButton)+Library.HasContent(TVShows)</visible> -->
@@ -672,8 +672,8 @@
             <property name="homemenu_id">musicvideo</property>
             <property name="homemenu_category">$VAR[Home_MusicVideo_Category]</property>
             <property name="homemenu_path">$INFO[Skin.String(Home_MusicVideo_Custom_Path)]</property>
-            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_MusicVideo_Button)">ActivateWindow(Videos,Musicvideos,return)</onclick>
-            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(HomeMenu_Custom_MusicVideo_Button)">ActivateWindow($VAR[Home_MusicVideo_SubCategory],$INFO[Skin.String(Home_MusicVideo_Custom_Path)],return)</onclick>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(Home_MusicVideo_Button)">ActivateWindow(Videos,Musicvideos,return)</onclick>
+            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(Home_MusicVideo_Button)">ActivateWindow($VAR[Home_MusicVideo_SubCategory],$INFO[Skin.String(Home_MusicVideo_Custom_Path)],return)</onclick>
             <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_musicvideo,smb://)</onclick>
             <visible>!Skin.HasSetting(HomeMenuNoMusicVideos)</visible>
             <!-- <visible>!Skin.HasSetting(HomeMenuNoMusicVideos)+Library.HasContent(MusicVideos)</visible> -->
@@ -688,8 +688,8 @@
             <property name="homemenu_id">picture</property>
             <property name="homemenu_category">$VAR[Home_Picture_Category]</property>
             <property name="homemenu_path">$INFO[Skin.String(Home_Picture_Custom_Path)]</property>
-            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Picture_Button)">ActivateWindow(Pictures)</onclick>
-            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(HomeMenu_Custom_Picture_Button)">ActivateWindow($VAR[Home_Picture_SubCategory],$INFO[Skin.String(Home_Picture_Custom_Path)],return)</onclick>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(Home_Picture_Button)">ActivateWindow(Pictures)</onclick>
+            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(Home_Picture_Button)">ActivateWindow($VAR[Home_Picture_SubCategory],$INFO[Skin.String(Home_Picture_Custom_Path)],return)</onclick>
             <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_pictures,smb://)</onclick>
             <visible>!Skin.HasSetting(HomeMenuNoPictureButton)</visible>
         </item>
@@ -716,8 +716,8 @@
             <property name="homemenu_id">playdisc</property>
             <property name="homemenu_category">$VAR[Home_PlayDisc_Category]</property>
             <property name="homemenu_path">$INFO[Skin.String(Home_PlayDisc_Custom_Path)]</property>
-            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_PlayDisc_Button)">PlayDVD()</onclick>
-            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(HomeMenu_Custom_PlayDisc_Button)">ActivateWindow($VAR[Home_PlayDisc_SubCategory],$INFO[Skin.String(Home_PlayDisc_Custom_Path)],return)</onclick>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(Home_PlayDisc_Button)">PlayDVD()</onclick>
+            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(Home_PlayDisc_Button)">ActivateWindow($VAR[Home_PlayDisc_SubCategory],$INFO[Skin.String(Home_PlayDisc_Custom_Path)],return)</onclick>
             <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_dvd,smb://)</onclick>
             <visible>!Skin.HasSetting(HomeMenuNoDVDButton)</visible>
         </item> -->
@@ -741,11 +741,11 @@
             <property name="homemenu_id">custom1</property>
             <property name="homemenu_category">$VAR[Home_Custom1_Category]</property>
             <property name="homemenu_path">$INFO[Skin.String(Home_Custom1_Custom_Path)]</property>
-            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Custom1_Button)">SetProperty(HomeButton,custom1,home)</onclick>
-            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Custom1_Button)">ActivateWindow(1501)</onclick>
-            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(HomeMenu_Custom_Custom1_Button)">ActivateWindow($VAR[Home_Custom1_SubCategory],$INFO[Skin.String(Home_Custom1_Custom_Path)],return)</onclick>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(Home_Custom1_Button)">SetProperty(HomeButton,custom1,home)</onclick>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(Home_Custom1_Button)">ActivateWindow(1501)</onclick>
+            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(Home_Custom1_Button)">ActivateWindow($VAR[Home_Custom1_SubCategory],$INFO[Skin.String(Home_Custom1_Custom_Path)],return)</onclick>
             <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_custom1,smb://)</onclick>
-            <visible>Skin.HasSetting(HomeMenu_Custom_Custom1_Button)</visible>
+            <visible>Skin.HasSetting(Home_Custom1_Button)</visible>
         </item>
     </include>
     <include name="HomeMenuCustom2">
@@ -757,11 +757,11 @@
             <property name="homemenu_id">custom2</property>
             <property name="homemenu_category">$VAR[Home_Custom2_Category]</property>
             <property name="homemenu_path">$INFO[Skin.String(Home_Custom2_Custom_Path)]</property>
-            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Custom2_Button)">SetProperty(HomeButton,custom2,home)</onclick>
-            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Custom2_Button)">ActivateWindow(1501)</onclick>
-            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(HomeMenu_Custom_Custom2_Button)">ActivateWindow($VAR[Home_Custom2_SubCategory],$INFO[Skin.String(Home_Custom2_Custom_Path)],return)</onclick>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(Home_Custom2_Button)">SetProperty(HomeButton,custom2,home)</onclick>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(Home_Custom2_Button)">ActivateWindow(1501)</onclick>
+            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(Home_Custom2_Button)">ActivateWindow($VAR[Home_Custom2_SubCategory],$INFO[Skin.String(Home_Custom2_Custom_Path)],return)</onclick>
             <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_custom2,smb://)</onclick>
-            <visible>Skin.HasSetting(HomeMenu_Custom_Custom2_Button)</visible>
+            <visible>Skin.HasSetting(Home_Custom2_Button)</visible>
         </item>
     </include>
     <include name="HomeMenuCustom3">
@@ -773,11 +773,11 @@
             <property name="homemenu_id">custom3</property>
             <property name="homemenu_category">$VAR[Home_Custom3_Category]</property>
             <property name="homemenu_path">$INFO[Skin.String(Home_Custom3_Custom_Path)]</property>
-            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Custom3_Button)">SetProperty(HomeButton,custom3,home)</onclick>
-            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Custom3_Button)">ActivateWindow(1501)</onclick>
-            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(HomeMenu_Custom_Custom3_Button)">ActivateWindow($VAR[Home_Custom3_SubCategory],$INFO[Skin.String(Home_Custom3_Custom_Path)],return)</onclick>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(Home_Custom3_Button)">SetProperty(HomeButton,custom3,home)</onclick>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(Home_Custom3_Button)">ActivateWindow(1501)</onclick>
+            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(Home_Custom3_Button)">ActivateWindow($VAR[Home_Custom3_SubCategory],$INFO[Skin.String(Home_Custom3_Custom_Path)],return)</onclick>
             <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_custom3,smb://)</onclick>
-            <visible>Skin.HasSetting(HomeMenu_Custom_Custom3_Button)</visible>
+            <visible>Skin.HasSetting(Home_Custom3_Button)</visible>
         </item>
     </include>
     <include name="HomeMenuCustom4">
@@ -789,11 +789,11 @@
             <property name="homemenu_id">custom4</property>
             <property name="homemenu_category">$VAR[Home_Custom4_Category]</property>
             <property name="homemenu_path">$INFO[Skin.String(Home_Custom4_Custom_Path)]</property>
-            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Custom4_Button)">SetProperty(HomeButton,custom4,home)</onclick>
-            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Custom4_Button)">ActivateWindow(1501)</onclick>
-            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(HomeMenu_Custom_Custom4_Button)">ActivateWindow($VAR[Home_Custom4_SubCategory],$INFO[Skin.String(Home_Custom4_Custom_Path)],return)</onclick>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(Home_Custom4_Button)">SetProperty(HomeButton,custom4,home)</onclick>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(Home_Custom4_Button)">ActivateWindow(1501)</onclick>
+            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(Home_Custom4_Button)">ActivateWindow($VAR[Home_Custom4_SubCategory],$INFO[Skin.String(Home_Custom4_Custom_Path)],return)</onclick>
             <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_custom4,smb://)</onclick>
-            <visible>Skin.HasSetting(HomeMenu_Custom_Custom4_Button)</visible>
+            <visible>Skin.HasSetting(Home_Custom4_Button)</visible>
         </item>
     </include>
     <include name="HomeMenuCustom5">
@@ -805,11 +805,11 @@
             <property name="homemenu_id">custom5</property>
             <property name="homemenu_category">$VAR[Home_Custom5_Category]</property>
             <property name="homemenu_path">$INFO[Skin.String(Home_Custom5_Custom_Path)]</property>
-            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Custom5_Button)">SetProperty(HomeButton,custom5,home)</onclick>
-            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Custom5_Button)">ActivateWindow(1501)</onclick>
-            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(HomeMenu_Custom_Custom5_Button)">ActivateWindow($VAR[Home_Custom5_SubCategory],$INFO[Skin.String(Home_Custom5_Custom_Path)],return)</onclick>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(Home_Custom5_Button)">SetProperty(HomeButton,custom5,home)</onclick>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(Home_Custom5_Button)">ActivateWindow(1501)</onclick>
+            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(Home_Custom5_Button)">ActivateWindow($VAR[Home_Custom5_SubCategory],$INFO[Skin.String(Home_Custom5_Custom_Path)],return)</onclick>
             <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_custom5,smb://)</onclick>
-            <visible>Skin.HasSetting(HomeMenu_Custom_Custom5_Button)</visible>
+            <visible>Skin.HasSetting(Home_Custom5_Button)</visible>
         </item>
     </include>
     <include name="HomeMenuCustom6">
@@ -821,11 +821,11 @@
             <property name="homemenu_id">custom6</property>
             <property name="homemenu_category">$VAR[Home_Custom6_Category]</property>
             <property name="homemenu_path">$INFO[Skin.String(Home_Custom6_Custom_Path)]</property>
-            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Custom6_Button)">SetProperty(HomeButton,custom6,home)</onclick>
-            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Custom6_Button)">ActivateWindow(1501)</onclick>
-            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(HomeMenu_Custom_Custom6_Button)">ActivateWindow($VAR[Home_Custom6_SubCategory],$INFO[Skin.String(Home_Custom6_Custom_Path)],return)</onclick>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(Home_Custom6_Button)">SetProperty(HomeButton,custom6,home)</onclick>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(Home_Custom6_Button)">ActivateWindow(1501)</onclick>
+            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(Home_Custom6_Button)">ActivateWindow($VAR[Home_Custom6_SubCategory],$INFO[Skin.String(Home_Custom6_Custom_Path)],return)</onclick>
             <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_custom6,smb://)</onclick>
-            <visible>Skin.HasSetting(HomeMenu_Custom_Custom6_Button)</visible>
+            <visible>Skin.HasSetting(Home_Custom6_Button)</visible>
         </item>
     </include>
     <include name="HomeMenuCustom7">
@@ -837,11 +837,11 @@
             <property name="homemenu_id">custom7</property>
             <property name="homemenu_category">$VAR[Home_Custom7_Category]</property>
             <property name="homemenu_path">$INFO[Skin.String(Home_Custom7_Custom_Path)]</property>
-            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Custom7_Button)">SetProperty(HomeButton,custom7,home)</onclick>
-            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Custom7_Button)">ActivateWindow(1501)</onclick>
-            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(HomeMenu_Custom_Custom7_Button)">ActivateWindow($VAR[Home_Custom7_SubCategory],$INFO[Skin.String(Home_Custom7_Custom_Path)],return)</onclick>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(Home_Custom7_Button)">SetProperty(HomeButton,custom7,home)</onclick>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(Home_Custom7_Button)">ActivateWindow(1501)</onclick>
+            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(Home_Custom7_Button)">ActivateWindow($VAR[Home_Custom7_SubCategory],$INFO[Skin.String(Home_Custom7_Custom_Path)],return)</onclick>
             <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_custom7,smb://)</onclick>
-            <visible>Skin.HasSetting(HomeMenu_Custom_Custom7_Button)</visible>
+            <visible>Skin.HasSetting(Home_Custom7_Button)</visible>
         </item>
     </include>
     <include name="HomeMenuCustom8">
@@ -853,11 +853,11 @@
             <property name="homemenu_id">custom8</property>
             <property name="homemenu_category">$VAR[Home_Custom8_Category]</property>
             <property name="homemenu_path">$INFO[Skin.String(Home_Custom8_Custom_Path)]</property>
-            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Custom8_Button)">SetProperty(HomeButton,custom8,home)</onclick>
-            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Custom8_Button)">ActivateWindow(1501)</onclick>
-            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(HomeMenu_Custom_Custom8_Button)">ActivateWindow($VAR[Home_Custom8_SubCategory],$INFO[Skin.String(Home_Custom8_Custom_Path)],return)</onclick>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(Home_Custom8_Button)">SetProperty(HomeButton,custom8,home)</onclick>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(Home_Custom8_Button)">ActivateWindow(1501)</onclick>
+            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(Home_Custom8_Button)">ActivateWindow($VAR[Home_Custom8_SubCategory],$INFO[Skin.String(Home_Custom8_Custom_Path)],return)</onclick>
             <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_custom8,smb://)</onclick>
-            <visible>Skin.HasSetting(HomeMenu_Custom_Custom8_Button)</visible>
+            <visible>Skin.HasSetting(Home_Custom8_Button)</visible>
         </item>
     </include>
     <include name="HomeMenuCustom9">
@@ -869,11 +869,11 @@
             <property name="homemenu_id">custom9</property>
             <property name="homemenu_category">$VAR[Home_Custom9_Category]</property>
             <property name="homemenu_path">$INFO[Skin.String(Home_Custom9_Custom_Path)]</property>
-            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Custom9_Button)">SetProperty(HomeButton,custom9,home)</onclick>
-            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(HomeMenu_Custom_Custom9_Button)">ActivateWindow(1501)</onclick>
-            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(HomeMenu_Custom_Custom9_Button)">ActivateWindow($VAR[Home_Custom9_SubCategory],$INFO[Skin.String(Home_Custom9_Custom_Path)],return)</onclick>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(Home_Custom9_Button)">SetProperty(HomeButton,custom9,home)</onclick>
+            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(Home_Custom9_Button)">ActivateWindow(1501)</onclick>
+            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(Home_Custom9_Button)">ActivateWindow($VAR[Home_Custom9_SubCategory],$INFO[Skin.String(Home_Custom9_Custom_Path)],return)</onclick>
             <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_custom9,smb://)</onclick>
-            <visible>Skin.HasSetting(HomeMenu_Custom_Custom9_Button)</visible>
+            <visible>Skin.HasSetting(Home_Custom9_Button)</visible>
         </item>
     </include>
     <include name="HomeMenuSettings">

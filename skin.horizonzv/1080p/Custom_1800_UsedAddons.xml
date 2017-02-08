@@ -196,13 +196,13 @@
                         <visible>System.HasAddon(script.extendedinfo)</visible>
                     </item>
                     <item>
-                        <label>Gloabl Search</label>
+                        <label>Global Search</label>
                         <label2>$LOCALIZE[24038]</label2>
                         <onclick>InstallAddon(script.globalsearch)</onclick>
                         <visible>!System.HasAddon(script.globalsearch)</visible>
                     </item>
                     <item>
-                        <label>Gloabl Search Script $INFO[System.AddonVersion(script.globalsearch),(,)]</label>
+                        <label>Global Search Script $INFO[System.AddonVersion(script.globalsearch),(,)]</label>
                         <label2>$LOCALIZE[5]</label2>
                         <onclick>Addon.OpenSettings(script.globalsearch)</onclick>
                         <visible>System.HasAddon(script.globalsearch)</visible>
