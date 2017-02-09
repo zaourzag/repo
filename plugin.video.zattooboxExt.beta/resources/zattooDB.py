@@ -117,8 +117,9 @@ class ZattooDB(object):
       c.execute('CREATE TABLE channels(id TEXT, title TEXT, logo TEXT, weight INTEGER, favourite BOOLEAN, PRIMARY KEY (id) )')
       c.execute('CREATE TABLE programs(showID TEXT, title TEXT, channel TEXT, start_date TIMESTAMP, end_date TIMESTAMP, series BOOLEAN, description TEXT, description_long TEXT, year TEXT, country TEXT, genre TEXT, category TEXT, image_small TEXT, image_large TEXT, updates_id INTEGER, FOREIGN KEY(channel) REFERENCES channels(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED, FOREIGN KEY(updates_id) REFERENCES updates(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED)')
       c.execute('CREATE TABLE updates(id INTEGER, date TIMESTAMP, type TEXT, PRIMARY KEY (id) )')
-      c.execute('CREATE TABLE playing(channel TEXT, start_date TIMESTAMP, action_time TIMESTAMP, current_stream INTEGER, streams TEXT, PRIMARY KEY (channel))')
+      #c.execute('CREATE TABLE playing(channel TEXT, start_date TIMESTAMP, action_time TIMESTAMP, current_stream INTEGER, streams TEXT, PRIMARY KEY (channel))')
       c.execute('CREATE TABLE showinfos(showID INTEGER, info TEXT, PRIMARY KEY (showID))')
+      c.execute('CREATE TABLE playing(channel TEXT, current_stream INTEGER, streams TEXT, PRIMARY KEY (channel))')
 
       c.execute('CREATE INDEX program_list_idx ON programs(channel, start_date, end_date)')
       c.execute('CREATE INDEX start_date_idx ON programs(start_date)')
@@ -378,11 +379,11 @@ class ZattooDB(object):
     
 
 
-  def set_playing(self, channel=None, start=None, streams=None, streamNr=0):
+  def set_playing(self, channel=None, streams=None, streamNr=0):
     c = self.conn.cursor()
     c.execute('DELETE FROM playing')
     #c.execute('INSERT INTO playing(channel, start_date, action_time, current_stream,  streams) VALUES(?, ?, ?, ?, ?)', [channel, start, datetime.datetime.now(), streamNr, streams])
-    c.execute('INSERT INTO playing(channel, start_date, action_time, current_stream,  streams) VALUES(?, ?, ?, ?, ?)', [channel, start, '1', streamNr, streams])
+    c.execute('INSERT INTO playing(channel, current_stream,  streams) VALUES(?, ?, ?)', [channel, streamNr, streams])
 
     self.conn.commit()
     c.close()
@@ -392,7 +393,7 @@ class ZattooDB(object):
     c.execute('SELECT * FROM playing')
     row = c.fetchone()
     if row is not None:
-      playing = {'channel':row['channel'], 'start':row['start_date'], 'action_time':row['action_time'], 'current_stream':row['current_stream'], 'streams':row['streams']}
+      playing = {'channel':row['channel'], 'current_stream':row['current_stream'], 'streams':row['streams']}
     else:
       c.execute('SELECT * FROM channels ORDER BY weight ASC LIMIT 1')
       row = c.fetchone() 
@@ -433,6 +434,7 @@ class ZattooDB(object):
     c = self.conn.cursor()
     c.execute('SELECT * FROM channels WHERE title= ? ', [channeltitle])
     row = c.fetchone()
+    print 'Title ' +str(channeltitle)
     if row:
       channelid=row['id']
     self.conn.commit()

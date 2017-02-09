@@ -317,7 +317,7 @@ class EPG(xbmcgui.WindowXML):
 						return
 					elif ret==1: #recording_series
 						setup_recording({'program_id': program['showID'], 'series': 'true'})
-					return
+					else: return
 				else:
 					if xbmcgui.Dialog().yesno(program['title'], strings(RECORD_SHOW)):
 						#url = 'plugin://'+__addonId__+'/?mode=record_p&program_id=' + program['showID']
@@ -337,11 +337,12 @@ class EPG(xbmcgui.WindowXML):
 						elif ret==1: #record
 							#url = "plugin://"+__addonId__+"/?mode=record_p&program_id=" + program['showID']
 							setup_recording({'program_id': program['showID']})
+							return
 						elif ret==2: #record series
 							#url = "plugin://"+__addonId__+"/?mode=record_p&program_id=" + program['showID']
-							setup_recording({'program_id': program['showID']})
+							setup_recording({'program_id': program['showID'], 'series': 'true'})
 							return
-						return
+						else: return
 					else: 
 						ret = xbmcgui.Dialog().select(program['channel']+': '+program['title']+' '+program['start_date'].strftime('%H:%M')+' - '+program['end_date'].strftime('%H:%M'),[strings(PLAY_FROM_START), strings(RECORD_SHOW)])
 						if ret==0:  #recall

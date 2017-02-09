@@ -93,7 +93,12 @@ class ZapiSession:
 			return None
 		try:
 			resultData = json.loads(content)
-			if resultData['success'] == True:
+			if resultData['success']:
+				return resultData
+		except Exception:
+			pass
+		try:
+			if resultData['title'] == "On Demand":
 				return resultData
 		except Exception:
 			pass

@@ -141,13 +141,7 @@ def build_directoryContent(content, addon_handle, cache=True, root=False, con='m
     li.setInfo('video', {'category':record['category']})
     li.setProperty('fanart_image', record['thumbnail'])
     li.select(record['selected'])
-    
-    if con == 'files':
-      print 'Content ' + str(con)
-      contextMenuItems = []
-      #contextMenuItems.append((localString(31921), 'RunPlugin("plugin://'+__addonId__+'/?mode=epg'+'")'))
-      li.addContextMenuItems(contextMenuItems, replaceItems=True)
-      
+          
     xbmcplugin.addDirectoryItem(handle=addon_handle, url=record['url'], listitem=li, isFolder=record['isFolder'])
     
   xbmcplugin.endOfDirectory(addon_handle, True, root, cache)
@@ -173,7 +167,7 @@ def build_root(addon_uri, addon_handle):
     streamsList = []
     for stream in resultData['stream']['watch_urls']: streamsList.append(stream['url'])
     streamsList = '|'.join(streamsList)
-    _zattooDB_.set_playing(channelid, '0', streamsList, 0)
+    _zattooDB_.set_playing(channelid, streamsList, 0)
     makeZattooGUI()
 
   
@@ -379,7 +373,7 @@ def watch_channel(channel_id, start, end, showID="", restart=False):
   _zattooDB_=ZattooDB()
   #selected currently playing live TV
   playing=_zattooDB_.get_playing()
-  if (xbmc.Player().isPlaying() and channel_id == playing['channel'] and start=='0' and str(playing['start'])=='1970-01-01 01:00:00'):
+  if (xbmc.Player().isPlaying() and channel_id == playing['channel'] and start=='0' ):
     xbmc.executebuiltin("Action(FullScreen)")
     makeZattooGUI()
     return
@@ -425,7 +419,7 @@ def watch_channel(channel_id, start, end, showID="", restart=False):
   streamsList = []
   for stream in resultData['stream']['watch_urls']: streamsList.append(stream['url'])
   streamsList = '|'.join(streamsList)
-  _zattooDB_.set_playing(channel_id, start, streamsList, streamNr)
+  _zattooDB_.set_playing(channel_id, streamsList, streamNr)
 
   #make Info
   if start == '0':startTime = datetime.datetime.now()
@@ -657,7 +651,7 @@ class zattooGUI(xbmcgui.WindowXMLDialog):
     self.refreshPrevImageTimer.start()
     
   def onAction(self, action):
-    
+    _zattooDB_=ZattooDB()
     channel=_zattooDB_.get_playing()['channel']
     channeltitle=_zattooDB_.get_channeltitle(channel)
     program = _zattooDB_.getPrograms({'index':[channel]}, True, datetime.datetime.now(), datetime.datetime.now())
@@ -687,9 +681,11 @@ class zattooGUI(xbmcgui.WindowXMLDialog):
         gui = zattooOSD("zattooOSD.xml",__addon__.getAddonInfo('path'))
         gui.doModal()
     elif action == ACTION_MOVE_DOWN:
+      if self.hidePrevImg():return
       xbmc.executebuiltin("Action(OSD)") #close hidden gui
       xbmc.executebuiltin('RunPlugin("plugin://'+__addonId__+'/?mode=epgOSD")')
     elif action == ACTION_MOVE_UP:
+      if self.hidePrevImg():return
       xbmc.executebuiltin("Action(OSD)") #close hidden gui
       xbmc.executebuiltin('ActivateWindow(10025,"plugin://'+__addonId__+'/?mode=channellist")')
     elif action == ACTION_MOVE_LEFT:
@@ -698,11 +694,11 @@ class zattooGUI(xbmcgui.WindowXMLDialog):
     elif action == ACTION_MOVE_RIGHT:
       change_stream(1)
     elif action in [ACTION_CHANNEL_UP, ACTION_PAGE_UP]:
-      if self.hidePrevImg():return
+      #if self.hidePrevImg():return
       nr=skip_channel(+1)
       self.showChannelNr(nr+1)
     elif action in [ACTION_CHANNEL_DOWN, ACTION_PAGE_DOWN]:
-      if self.hidePrevImg():return
+      #if self.hidePrevImg():return
       nr=skip_channel(-1)
       self.showChannelNr(nr+1)
     elif action == ACTION_RECORD:
@@ -744,16 +740,22 @@ class zattooGUI(xbmcgui.WindowXMLDialog):
 class zattooOSD(xbmcgui.WindowXMLDialog):
   
   def onAction(self, action):
+    
     #print('ZATTOOOSD BUTTON'+str(action.getButtonCode()))
     #print('ZATTOOOSD ACTIONID'+str(action.getId()))
-    action = action.getId()  
+    action = action.getId() 
+    #self.close() 
     if action in [ACTION_PARENT_DIR, KEY_NAV_BACK, ACTION_PREVIOUS_MENU]:
+      if hasattr(self, 'hideNrTimer'): self.hideNrTimer.cancel()
       self.close()
     if action in [ACTION_STOP, ACTION_BUILT_IN_FUNCTION]:
+      if hasattr(self, 'hideNrTimer'): self.hideNrTimer.cancel()
       self.close()
-      xbmc.executebuiltin("Action(OSD)") #close hidden gui
-      xbmc.executebuiltin("Action(Back)")
-      
+      print 'Action Stop'
+      xbmc.sleep(1000)
+      xbmc.executebuiltin('Action(OSD)') #close hidden gui
+      #xbmc.executebuiltin("Action(Back)")
+
   def onClick(self, controlID):
     channel=_zattooDB_.get_playing()['channel']
     channeltitle=_zattooDB_.get_channeltitle(channel)
@@ -779,10 +781,10 @@ class zattooOSD(xbmcgui.WindowXMLDialog):
       self.close()
     elif controlID==202: #Channel Up
       nr=skip_channel(-1)
-      self.showChannelNr(nr+1)
+      #self.showChannelNr(nr+1)
     elif controlID==203: #Channel Down
       nr=skip_channel(+1)
-      self.showChannelNr(nr+1)
+      #self.showChannelNr(nr+1)
     elif controlID==205: #stop
       xbmc.executebuiltin("Action(OSD)")
       xbmc.executebuiltin("Action(Stop)")

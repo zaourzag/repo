@@ -95,7 +95,7 @@ class Teletext(xbmcgui.WindowDialog):
 
 		self.currentPage=100
 		self.subPage=1
-		self.showPage(str(self.currentPage)#, str(self.subPage))
+		self.showPage(str(self.currentPage))#, str(self.subPage))
 
 	def onAction(self, action):
 		if hasattr(self, 'supPageTimer'): self.supPageTimer.cancel()
