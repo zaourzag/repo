@@ -605,7 +605,7 @@
             <description>Video Files</description>
             <label>$VAR[Home_Video_Label]</label>
             <label2>$VAR[backgroundfolder]home_video$VAR[bkg_fileext]</label2>
-            <icon>$INFO[Skin.String(user_bkg_movie)]</icon>
+            <icon>$INFO[Skin.String(user_bkg_video)]</icon>
             <property name="homemenu_id">videos</property>
             <property name="homemenu_label">$VAR[Home_Video_Label]</property>
             <property name="homemenu_category">$VAR[Home_Video_Category]</property>
@@ -613,7 +613,7 @@
             <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(Home_Video_Button)+!Skin.HasSetting(HomeMenuVideosToFiles)">ActivateWindow(videos,root,return)</onclick>
             <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(Home_Video_Button)+Skin.HasSetting(HomeMenuVideosToFiles)">ActivateWindow(videos,files,return)</onclick>
             <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(Home_Video_Button)">ActivateWindow($VAR[Home_Video_SubCategory],$INFO[Skin.String(Home_Video_Custom_Path)],return)</onclick>
-            <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_movie,smb://)</onclick>
+            <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_video,smb://)</onclick>
             <visible>!Skin.HasSetting(HomeMenuNoVideosButton)</visible>
         </item>
     </include>
@@ -621,7 +621,7 @@
         <item id="4">
             <description>Movie Library</description>
             <label>$VAR[Home_Movie_Label]</label>
-            <label2>$VAR[backgroundfolder]home_video$VAR[bkg_fileext]</label2>
+            <label2>$VAR[backgroundfolder]home_movie$VAR[bkg_fileext]</label2>
             <icon>$INFO[Skin.String(user_bkg_movie)]</icon>
             <property name="homemenu_id">movies</property>
             <property name="homemenu_category">$VAR[Home_Movie_Category]</property>
@@ -631,7 +631,6 @@
             <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(Home_Movie_Button)">ActivateWindow($VAR[Home_Movie_SubCategory],$INFO[Skin.String(Home_Movie_Custom_Path)],return)</onclick>
             <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_movie,smb://)</onclick>
             <visible>!Skin.HasSetting(HomeMenuNoMovieButton)</visible>
-            <!-- <visible>!Skin.HasSetting(HomeMenuNoMovieButton)+Library.HasContent(Movies)</visible> -->
         </item>
     </include>
     <include name="HomeMenuDashboard">
@@ -639,10 +638,10 @@
             <description>Addons</description>
             <label>Dashboard</label>
             <label2>$VAR[backgroundfolder]home_addons$VAR[bkg_fileext]</label2>
-            <icon>$INFO[Skin.String(user_bkg_addons)]</icon>
+            <icon>$INFO[Skin.String(user_bkg_dashboard)]</icon>
             <property name="homemenu_id">dashboard</property>
             <onclick condition="Window.IsVisible(Home)">ActivateWindow(1200)</onclick>
-            <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_addons,smb://)</onclick>
+            <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_dashboard,smb://)</onclick>
             <visible>!Skin.HasSetting(HomeMenuNoProgramsButton)</visible>
         </item>
     </include>
@@ -708,19 +707,6 @@
         </item>
     </include>
     <include name="HomeMenuPlayDisc">
-        <!-- <item id="10">
-            <description>PlayDVD</description>
-            <label>$VAR[Home_PlayDisc_Label]</label>
-            <label2>$VAR[backgroundfolder]home_disc$VAR[bkg_fileext]</label2>
-            <icon>$INFO[Skin.String(user_bkg_dvd)]</icon>
-            <property name="homemenu_id">playdisc</property>
-            <property name="homemenu_category">$VAR[Home_PlayDisc_Category]</property>
-            <property name="homemenu_path">$INFO[Skin.String(Home_PlayDisc_Custom_Path)]</property>
-            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(Home_PlayDisc_Button)">PlayDVD()</onclick>
-            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(Home_PlayDisc_Button)">ActivateWindow($VAR[Home_PlayDisc_SubCategory],$INFO[Skin.String(Home_PlayDisc_Custom_Path)],return)</onclick>
-            <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_dvd,smb://)</onclick>
-            <visible>!Skin.HasSetting(HomeMenuNoDVDButton)</visible>
-        </item> -->
         <item id="10">
             <description>PlayDVD</description>
             <label>427</label>

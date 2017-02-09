@@ -296,7 +296,7 @@
                             <onclick>ActivateWindow(1501)</onclick>
                             <!-- <enable>Library.HasContent(Movies)</enable> -->
                         </control>
-                        <control type="radiobutton" id="305">
+                        <!-- <control type="radiobutton" id="305">
                             <description>Dashboard Button</description>
                             <width>1260</width>
                             <align>left</align>
@@ -304,6 +304,14 @@
                             <focusedcolor>black</focusedcolor>
                             <onclick>Skin.ToggleSetting(HomeMenuNoProgramsButton)</onclick>
                             <selected>!Skin.HasSetting(HomeMenuNoProgramsButton)</selected>
+                        </control> -->
+                        <control type="button" id="305">
+                            <description>Dashboard Button</description>
+                            <width>1260</width>
+                            <align>left</align>
+							<label>Dashboard</label>
+                            <onclick>SetProperty(HomeButton,dashboard,home)</onclick>
+                            <onclick>ActivateWindow(1501)</onclick>
                         </control>
                         <control type="button" id="306">
                             <description>TVShow Button</description>
@@ -312,7 +320,6 @@
 							<label>$VAR[Home_TVShow_Label]</label>
                             <onclick>SetProperty(HomeButton,tvshow,home)</onclick>
                             <onclick>ActivateWindow(1501)</onclick>
-                            <!-- <enable>Library.HasContent(TVShows)</enable> -->
                         </control>
                         <control type="button" id="307">
                             <description>MusicVideo Button</description>
@@ -321,7 +328,6 @@
 							<label>$VAR[Home_MusicVideo_Label]</label>
                             <onclick>SetProperty(HomeButton,musicvideo,home)</onclick>
                             <onclick>ActivateWindow(1501)</onclick>
-                            <!-- <enable>Library.HasContent(musicvideos)</enable> -->
                         </control>
                         <control type="button" id="308">
                             <description>Picture Button</description>
@@ -330,7 +336,6 @@
 							<label>$VAR[Home_Picture_Label]</label>
                             <onclick>SetProperty(HomeButton,picture,home)</onclick>
                             <onclick>ActivateWindow(1501)</onclick>
-                            <!-- <enable>Library.HasContent(Pictures)</enable> -->
                         </control>
                         <control type="radiobutton" id="309">
                             <description>Weather Button</description>
@@ -387,22 +392,13 @@
                             <visible>!Skin.HasSetting(HomeMenuNoWeatherButton)</visible>
                             <visible>System.HasAddon(script.image.resource.select)</visible>
                         </control>
-                        <!-- <control type="button" id="310">
+                        <control type="button" id="310">
                             <description>PlayDisc Button</description>
                             <width>1260</width>
                             <align>left</align>
-							<label>$VAR[Home_PlayDisc_Label]</label>
+							<label>427</label>
                             <onclick>SetProperty(HomeButton,playdisc,home)</onclick>
                             <onclick>ActivateWindow(1501)</onclick>
-                        </control> -->
-                        <control type="radiobutton" id="310">
-                            <description>PlayDisc Button</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <label>341</label>
-                            <focusedcolor>black</focusedcolor>
-                            <onclick>Skin.ToggleSetting(HomeMenuNoDVDButton)</onclick>
-                            <selected>!Skin.HasSetting(HomeMenuNoDVDButton)</selected>
                         </control>
                         <control type="label" id="3012">
                             <!-- Extra Buttons -->
@@ -521,53 +517,38 @@
                             <label>-</label>
                             <textcolor>description</textcolor>
                         </control>
-                        <control type="radiobutton" id="331">
+                        <control type="button" id="331">
                             <description>Settings Button</description>
                             <width>1260</width>
                             <align>left</align>
-                            <label>13000</label>
-                            <focusedcolor>black</focusedcolor>
-                            <onclick>Skin.ToggleSetting(HomeMenuNoSettingsButton)</onclick>
-                            <selected>!Skin.HasSetting(HomeMenuNoSettingsButton)</selected>
+							<label>13000</label>
+                            <onclick>SetProperty(HomeButton,setting,home)</onclick>
+                            <onclick>ActivateWindow(1501)</onclick>
                         </control>
-                        <control type="radiobutton" id="332">
+                        <control type="button" id="332">
                             <description>PVR Button</description>
                             <width>1260</width>
                             <align>left</align>
-                            <label>$LOCALIZE[31502]</label>
-                            <focusedcolor>black</focusedcolor>
-                            <onclick>Skin.ToggleSetting(HomeMenuNoPvrButton)</onclick>
-                            <selected>!Skin.HasSetting(HomeMenuNoPvrButton)</selected>
+							<label>31502</label>
+                            <onclick>SetProperty(HomeButton,pvr,home)</onclick>
+                            <onclick>ActivateWindow(1501)</onclick>
                         </control>
-                        <control type="radiobutton" id="333">
+                        <control type="button" id="333">
                             <description>Radio Button</description>
                             <width>1260</width>
                             <align>left</align>
-                            <label>$LOCALIZE[19183]</label>
-                            <focusedcolor>black</focusedcolor>
-                            <onclick>Skin.ToggleSetting(HomeMenuNoRadioButton)</onclick>
-                            <selected>!Skin.HasSetting(HomeMenuNoRadioButton)</selected>
+							<label>19183</label>
+                            <onclick>SetProperty(HomeButton,radio,home)</onclick>
+                            <onclick>ActivateWindow(1501)</onclick>
                         </control>
-                        <control type="radiobutton" id="334">
+                        <control type="button" id="334">
                             <description>NEWS Button</description>
                             <width>1260</width>
                             <align>left</align>
-                            <label>NEWS</label>
-                            <focusedcolor>black</focusedcolor>
-                            <onclick>Skin.ToggleSetting(HomeMenuNoNewsButton)</onclick>
-                            <selected>!Skin.HasSetting(HomeMenuNoNewsButton)</selected>
-                            <visible>System.HasAddon(plugin.program.newscenter)</visible>
+							<label>News</label>
+                            <onclick>SetProperty(HomeButton,news,home)</onclick>
+                            <onclick>ActivateWindow(1501)</onclick>
                         </control>
-                        <!-- <control type="button" id="335">
-                            <description>NEWS Speed</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <label>- NEWS Scrollspeed</label>
-                            <label2>$INFO[Skin.String(HomeMenuNewsSpeed)]</label2>
-                            <focusedcolor>black</focusedcolor>
-                            <onclick>Skin.SetNumeric(HomeMenuNewsSpeed)</onclick>
-                            <visible>System.HasAddon(plugin.program.newscenter)+!Skin.HasSetting(HomeMenuNoNewsButton)</visible>
-                        </control> -->
                     </control>
                     <control type="grouplist" id="900">
                         <!-- Submenubuttons Setting -->

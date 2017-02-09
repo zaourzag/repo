@@ -202,7 +202,7 @@
 							<label>$VAR[Home_Video_Label]</label>
                             <label2 fallback="2.">$INFO[Skin.String(HomeMenuItemVideo),,.]</label2>
                             <thumb>$VAR[backgroundfolder]home_video$VAR[bkg_fileext]</thumb>
-                            <icon>$INFO[Skin.String(user_bkg_movie)]</icon>
+                            <icon>$INFO[Skin.String(user_bkg_video)]</icon>
                             <onclick>Skin.Reset(HomeMenuItemVideo)</onclick>
                             <onclick>Skin.SetNumeric(HomeMenuItemVideo)</onclick>
                             <visible></visible>
@@ -210,7 +210,7 @@
                         <item id="3">
 							<label>$VAR[Home_Movie_Label]</label>
                             <label2 fallback="3.">$INFO[Skin.String(HomeMenuItemMovie),,.]</label2>
-                            <thumb>$VAR[backgroundfolder]home_video$VAR[bkg_fileext]</thumb>
+                            <thumb>$VAR[backgroundfolder]home_movie$VAR[bkg_fileext]</thumb>
                             <icon>$INFO[Skin.String(user_bkg_movie)]</icon>
                             <onclick>Skin.Reset(HomeMenuItemMovie)</onclick>
                             <onclick>Skin.SetNumeric(HomeMenuItemMovie)</onclick>
@@ -220,7 +220,7 @@
                             <label>Dashboard</label>
                             <label2 fallback="4.">$INFO[Skin.String(HomeMenuItemDashboard),,.]</label2>
                             <thumb>$VAR[backgroundfolder]home_addons$VAR[bkg_fileext]</thumb>
-                            <icon>$INFO[Skin.String(user_bkg_addons)]</icon>
+                            <icon>$INFO[Skin.String(user_bkg_dashboard)]</icon>
                             <onclick>Skin.Reset(HomeMenuItemDashboard)</onclick>
                             <onclick>Skin.SetNumeric(HomeMenuItemDashboard)</onclick>
                             <visible></visible>

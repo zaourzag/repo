@@ -326,7 +326,7 @@
             <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),dashboard)</visible>
             <control type="button" id="80140">
                 <include>ButtonHomeSubCommonValues</include>
-                <label>Widget</label>
+                <label>21417</label>
                 <onclick>SetProperty(HomeButton,dashboard)</onclick>
                 <onclick>ActivateWindow(1500)</onclick>
             </control>
@@ -514,7 +514,7 @@
             </control>
             <control type="button" id="80183">
                 <include>ButtonHomeSubCommonValues</include>
-                <label>Widget</label>
+                <label>21417</label>
                 <onclick>SetProperty(HomeButton,weather)</onclick>
                 <onclick>ActivateWindow(1500)</onclick>
             </control>
@@ -526,40 +526,11 @@
             <onleft>9010</onleft>
             <onright>9010</onright>
             <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),playdisc)</visible>
-            <!-- <control type="button" id="80190">
-                <description>Refresh Button</description>
-                <height>39</height>
-                <width>39</width>
-                <align>center</align>
-                <aligny>center</aligny>
-                <texturefocus>buttons/RefreshFO.png</texturefocus>
-                <texturenofocus>buttons/RefreshNF.png</texturenofocus>
-                <pulseonselect>false</pulseonselect>
-                <label>-</label>
-                <onclick>Control.SetFocus(9000)</onclick>
-                <onclick>ActivateWindow(1142)</onclick>
-				<visible>String.Contains(Container(9000).ListItem.Property(homemenu_path),music)|String.Contains(Container(9000).ListItem.Property(homemenu_path),audio)</visible>
-            </control>
-            <control type="button" id="80191">
-                <description>Refresh Button</description>
-                <height>39</height>
-                <width>39</width>
-                <align>center</align>
-                <aligny>center</aligny>
-                <texturefocus>buttons/RefreshFO.png</texturefocus>
-                <texturenofocus>buttons/RefreshNF.png</texturenofocus>
-                <pulseonselect>false</pulseonselect>
-                <label>-</label>
-                <onclick>Control.SetFocus(9000)</onclick>
-                <onclick>ActivateWindow(1141)</onclick>
-				<visible>String.Contains(Container(9000).ListItem.Property(homemenu_path),video)</visible>
-            </control> -->
             <control type="button" id="80192">
                 <include>ButtonHomeSubCommonValues</include>
                 <label>Rip</label>
                 <onclick>RipCD</onclick>
 				<visible>System.HasMediadvd</visible>
-				<!-- <visible>!Skin.HasSetting(Home_PlayDisc_Button)</visible> -->
             </control>
             <control type="button" id="80193">
                 <include>ButtonHomeSubCommonValues</include>
@@ -567,15 +538,14 @@
                 <onclick>EjectTray()</onclick>
                 <onclick>SetFocus(9000)</onclick>
 				<visible>System.HasMediadvd</visible>
-				<!-- <visible>!Skin.HasSetting(Home_PlayDisc_Button)</visible> -->
             </control>
-            <control type="button" id="80194">
+            <!-- <control type="button" id="80194">
                 <include>ButtonHomeSubCommonValues</include>
-				<label>Widget</label>
+				<label>21417</label>
 				<onclick>SetProperty(HomeButton,playdisc)</onclick>
 				<onclick>ActivateWindow(1500)</onclick>
-            </control>
-			<!-- <include>HomeSubSettingsButton</include> -->
+            </control> -->
+			<include>HomeSubSettingsButton</include>
         </control>
     </include>
     <include name="HomeSubMenuCustom1">
@@ -943,13 +913,14 @@
 				<onclick>ActivateWindow(EventLog,events://,return)</onclick>
 				<visible>system.getbool(eventlog.enabled)</visible>
 			</control>
-			<control type="button" id="80287">
+			<include>HomeSubSettingsButton</include>
+			<!-- <control type="button" id="80287">
 				<description>Toggle Systeminfo Widget</description>
 				<include>ButtonHomeSubCommonValues</include>
 				<label>$LOCALIZE[13000] Widget</label>
 				<onclick condition="!Skin.HasSetting(Widget_Systeminfo)">Skin.SetBool(Widget_Systeminfo)</onclick>
 				<onclick condition="Skin.HasSetting(Widget_Systeminfo)">Skin.Reset(Widget_Systeminfo)</onclick>
-			</control>
+			</control> -->
 		</control>
     </include>
     <include name="HomeSubMenuLiveTV">
@@ -985,7 +956,7 @@
             </control>
             <control type="button" id="80295">
                 <include>ButtonHomeSubCommonValues</include>
-                <label>Widget</label>
+                <label>21417</label>
                 <onclick>SetProperty(HomeButton,livetv)</onclick>
                 <onclick>ActivateWindow(1500)</onclick>
             </control>
@@ -1025,7 +996,7 @@
             </control>
             <control type="button" id="80305">
                 <include>ButtonHomeSubCommonValues</include>
-                <label>Widget</label>
+                <label>21417</label>
                 <onclick>SetProperty(HomeButton,radio)</onclick>
                 <onclick>ActivateWindow(1500)</onclick>
             </control>
@@ -1068,7 +1039,7 @@
             </control>
             <control type="button" id="80315">
                 <include>ButtonHomeSubCommonValues</include>
-                <label>Widget</label>
+                <label>21417</label>
                 <onclick>SetProperty(HomeButton,news)</onclick>
                 <onclick>ActivateWindow(1500)</onclick>
             </control>

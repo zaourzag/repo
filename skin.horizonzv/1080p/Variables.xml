@@ -93,6 +93,7 @@
         <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),music)">Skin.Reset(user_bkg_music)</value>
         <!-- movies/videos -->
         <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),movies)">Skin.Reset(user_bkg_movie)</value>
+        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),videos)">Skin.Reset(user_bkg_video)</value>
         <!-- tvshows -->
         <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),tvshow)">Skin.Reset(user_bkg_tvshow)</value>
         <!-- musicvideos -->
@@ -114,7 +115,7 @@
         <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),custom8)">Skin.Reset(user_bkg_custom8)</value>
         <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),custom9)">Skin.Reset(user_bkg_custom9)</value>
         <!-- programs -->
-        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),dashboard)">Skin.Reset(user_bkg_addons)</value>
+        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),dashboard)">Skin.Reset(user_bkg_dashboard)</value>
         <!-- livetv -->
         <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),pvr)">Skin.Reset(user_bkg_pvr)</value>
         <!-- settings -->

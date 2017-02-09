@@ -2990,9 +2990,9 @@
     </include>
     <include name="WidgetGeneralSettings">
 		<include content="separatorlabel">
-			<param name="separatorlabel_id" value="41" />
+			<param name="separatorlabel_id" value="190" />
 		</include>
-        <control type="radiobutton" id="42">
+        <control type="radiobutton" id="191">
             <description>Settings Button</description>
             <width>1110</width>
             <height>52</height>
@@ -3003,7 +3003,7 @@
             <onclick>Skin.ToggleSetting(WidgetDim)</onclick>
             <selected>Skin.HasSetting(WidgetDim)</selected>
         </control>
-		<control type="radiobutton" id="44">
+		<control type="radiobutton" id="192">
 			<description>Settings Button</description>
             <width>1110</width>
             <height>52</height>

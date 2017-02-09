@@ -76,7 +76,7 @@
                 <left>38</left>
                 <top>78</top>
                 <width>1185</width>
-                <label>[UPPERCASE]$INFO[Window(Home).Property(HomeButton)][/UPPERCASE]</label>
+                <label>[UPPERCASE]$VAR[WidgetPropertyLabel][/UPPERCASE]</label>
                 <align>left</align>
                 <scroll>false</scroll>
             </control>
@@ -136,14 +136,27 @@
 					<enable>!Skin.HasSetting(HomeMenuNoMusicButton)+Skin.HasSetting(Home_Music_Button)</enable>
 				</control>
 				<include content="separatorlabel">
-					<param name="separatorlabel_id" value="10" />
+					<param name="separatorlabel_id" value="8" />
 				</include>
-                <control type="button" id="11">
+                <control type="radiobutton" id="9">
+                    <include>dialogbutton_popup</include>
+					<label>Multiimage $LOCALIZE[19190]</label>
+					<onclick>Skin.ToggleSetting(Home_Background_Music_Multiimage)</onclick>
+					<selected>Skin.HasSetting(Home_Background_Music_Multiimage)</selected>
+				</control>
+                <control type="button" id="10">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
 					<label>19190</label>
-					<label2>$VAR[backgroundfolder]home_music$VAR[bkg_fileext]</label2>
-					<onclick>Skin.SetImage(user_bkg_music,smb://)</onclick>
+					<label2>$INFO[Skin.String(user_bkg_music)]</label2>
+					<onclick condition="!Skin.HasSetting(Home_Background_Music_Multiimage)">Skin.SetImage(user_bkg_music,smb://)</onclick>
+					<onclick condition="Skin.HasSetting(Home_Background_Music_Multiimage)">Skin.SetPath(user_bkg_music,smb://)</onclick>
+				</control>
+                <control type="button" id="11">
+					<description>Background Settings</description>
+                    <include>dialogbutton_popup</include>
+					<label>- Reset $LOCALIZE[19190]</label>
+					<onclick>Skin.Reset(user_bkg_music)</onclick>
 				</control>
                 <control type="button" id="12">
 					<description>Position Settings</description>
@@ -153,31 +166,14 @@
 					<onclick>ActivateWindow(1301)</onclick>
 				</control>
 				<include content="separatorlabel">
-					<param name="separatorlabel_id" value="16" />
+					<param name="separatorlabel_id" value="14" />
 				</include>
-                <control type="button" id="17">
+                <control type="button" id="15">
 					<description>Open Widget Settings</description>
                     <include>dialogbutton_popup</include>
 					<label>Widget</label>
 					<onclick>SetProperty(HomeButton,music)</onclick>
 					<onclick>ActivateWindow(1500)</onclick>
-					<visible>!Skin.HasSetting(Home_Music_Button)</visible>
-				</control>
-				<control type="radiobutton" id="18">
-					<description>Custom Widget Button</description>
-                    <include>dialogbutton_popup</include>
-					<label>Widget</label>
-					<onclick>Skin.ToggleSetting(Home_Music_Widget)</onclick>
-					<selected>Skin.HasSetting(Home_Music_Widget)</selected>
-					<visible>Skin.HasSetting(Home_Music_Button)</visible>
-				</control>
-				<control type="radiobutton" id="19">
-					<description>Settings Button</description>
-                    <include>dialogbutton_popup</include>
-					<label>verberge grüne Progressbar</label>
-					<onclick>Skin.ToggleSetting(WidgetNoPercentPlayedBar)</onclick>
-					<selected>Skin.HasSetting(WidgetNoPercentPlayedBar)</selected>
-					<visible>Skin.HasSetting(Home_Music_Button)</visible>
 				</control>
             </control>
             <control type="grouplist" id="36100"> <!-- videos -->
@@ -244,14 +240,27 @@
 					<enable>!Skin.HasSetting(HomeMenuNoVideosButton)+Skin.HasSetting(Home_Video_Button)</enable>
 				</control>
 				<include content="separatorlabel">
-					<param name="separatorlabel_id" value="35" />
+					<param name="separatorlabel_id" value="33" />
 				</include>
-                <control type="button" id="36">
+                <control type="radiobutton" id="34">
+                    <include>dialogbutton_popup</include>
+					<label>Multiimage $LOCALIZE[19190]</label>
+					<onclick>Skin.ToggleSetting(Home_Background_Video_Multiimage)</onclick>
+					<selected>Skin.HasSetting(Home_Background_Video_Multiimage)</selected>
+				</control>
+                <control type="button" id="35">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
 					<label>19190</label>
-					<label2>$VAR[backgroundfolder]home_video$VAR[bkg_fileext]</label2>
-					<onclick>Skin.SetImage(user_bkg_movie,smb://)</onclick>
+					<label2>$INFO[Skin.String(user_bkg_video)]</label2>
+					<onclick condition="!Skin.HasSetting(Home_Background_Video_Multiimage)">Skin.SetImage(user_bkg_video,smb://)</onclick>
+					<onclick condition="Skin.HasSetting(Home_Background_Video_Multiimage)">Skin.SetPath(user_bkg_video,smb://)</onclick>
+				</control>
+                <control type="button" id="36">
+					<description>Background Settings</description>
+                    <include>dialogbutton_popup</include>
+					<label>- Reset $LOCALIZE[19190]</label>
+					<onclick>Skin.Reset(user_bkg_video)</onclick>
 				</control>
                 <control type="button" id="37">
 					<description>Position Settings</description>
@@ -269,23 +278,6 @@
 					<label>Widget</label>
 					<onclick>SetProperty(HomeButton,videos)</onclick>
 					<onclick>ActivateWindow(1500)</onclick>
-					<visible>!Skin.HasSetting(Home_Video_Button)</visible>
-				</control>
-				<control type="radiobutton" id="42">
-					<description>Custom Widget Button</description>
-                    <include>dialogbutton_popup</include>
-					<label>Widget</label>
-					<onclick>Skin.ToggleSetting(Home_Video_Widget)</onclick>
-					<selected>Skin.HasSetting(Home_Video_Widget)</selected>
-					<visible>Skin.HasSetting(Home_Video_Button)</visible>
-				</control>
-				<control type="radiobutton" id="44">
-					<description>Settings Button</description>
-                    <include>dialogbutton_popup</include>
-					<label>verberge grüne Progressbar</label>
-					<onclick>Skin.ToggleSetting(WidgetNoPercentPlayedBar)</onclick>
-					<selected>Skin.HasSetting(WidgetNoPercentPlayedBar)</selected>
-					<visible>Skin.HasSetting(Home_Video_Button)</visible>
 				</control>
             </control>
             <control type="grouplist" id="36100"> <!-- movies -->
@@ -344,14 +336,27 @@
 					<enable>!Skin.HasSetting(HomeMenuNoMovieButton)+Skin.HasSetting(Home_Movie_Button)</enable>
 				</control>
 				<include content="separatorlabel">
-					<param name="separatorlabel_id" value="59" />
+					<param name="separatorlabel_id" value="57" />
 				</include>
-                <control type="button" id="60">
+                <control type="radiobutton" id="58">
+                    <include>dialogbutton_popup</include>
+					<label>Multiimage $LOCALIZE[19190]</label>
+					<onclick>Skin.ToggleSetting(Home_Background_Movie_Multiimage)</onclick>
+					<selected>Skin.HasSetting(Home_Background_Movie_Multiimage)</selected>
+				</control>
+                <control type="button" id="59">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
 					<label>19190</label>
-					<label2>$VAR[backgroundfolder]home_video$VAR[bkg_fileext]</label2>
-					<onclick>Skin.SetImage(user_bkg_movie,smb://)</onclick>
+					<label2>$INFO[Skin.String(user_bkg_movie)]</label2>
+					<onclick condition="!Skin.HasSetting(Home_Background_Movie_Multiimage)">Skin.SetImage(user_bkg_movie,smb://)</onclick>
+					<onclick condition="Skin.HasSetting(Home_Background_Movie_Multiimage)">Skin.SetPath(user_bkg_movie,smb://)</onclick>
+				</control>
+                <control type="button" id="60">
+					<description>Background Settings</description>
+                    <include>dialogbutton_popup</include>
+					<label>- Reset $LOCALIZE[19190]</label>
+					<onclick>Skin.Reset(user_bkg_movie)</onclick>
 				</control>
                 <control type="button" id="61">
 					<description>Position Settings</description>
@@ -369,26 +374,9 @@
 					<label>Widget</label>
 					<onclick>SetProperty(HomeButton,movies)</onclick>
 					<onclick>ActivateWindow(1500)</onclick>
-					<visible>!Skin.HasSetting(Home_Movie_Button)</visible>
-				</control>
-				<control type="radiobutton" id="67">
-					<description>Custom Widget Button</description>
-                    <include>dialogbutton_popup</include>
-					<label>Widget</label>
-					<onclick>Skin.ToggleSetting(Home_Movie_Widget)</onclick>
-					<selected>Skin.HasSetting(Home_Movie_Widget)</selected>
-					<visible>Skin.HasSetting(Home_Movie_Button)</visible>
-				</control>
-				<control type="radiobutton" id="68">
-					<description>Settings Button</description>
-                    <include>dialogbutton_popup</include>
-					<label>verberge grüne Progressbar</label>
-					<onclick>Skin.ToggleSetting(WidgetNoPercentPlayedBar)</onclick>
-					<selected>Skin.HasSetting(WidgetNoPercentPlayedBar)</selected>
-					<visible>Skin.HasSetting(Home_Movie_Button)</visible>
 				</control>
             </control>
-            <control type="grouplist" id="36100"> <!-- series -->
+            <control type="grouplist" id="36100"> <!-- tvshow -->
                 <left>45</left>
                 <top>150</top>
                 <width>1110</width>
@@ -444,14 +432,27 @@
 					<enable>!Skin.HasSetting(HomeMenuNoTVShowButton)+Skin.HasSetting(Home_TVShow_Button)</enable>
 				</control>
 				<include content="separatorlabel">
-					<param name="separatorlabel_id" value="79" />
+					<param name="separatorlabel_id" value="77" />
 				</include>
-                <control type="button" id="80">
+                <control type="radiobutton" id="78">
+                    <include>dialogbutton_popup</include>
+					<label>Multiimage $LOCALIZE[19190]</label>
+					<onclick>Skin.ToggleSetting(Home_Background_TVShow_Multiimage)</onclick>
+					<selected>Skin.HasSetting(Home_Background_TVShow_Multiimage)</selected>
+				</control>
+                <control type="button" id="79">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
 					<label>19190</label>
-					<label2>$VAR[backgroundfolder]home_tvshows$VAR[bkg_fileext]</label2>
-					<onclick>Skin.SetImage(user_bkg_tvshow,smb://)</onclick>
+					<label2>$INFO[Skin.String(user_bkg_tvshow)]</label2>
+					<onclick condition="!Skin.HasSetting(Home_Background_TVShow_Multiimage)">Skin.SetImage(user_bkg_tvshow,smb://)</onclick>
+					<onclick condition="Skin.HasSetting(Home_Background_TVShow_Multiimage)">Skin.SetPath(user_bkg_tvshow,smb://)</onclick>
+				</control>
+                <control type="button" id="80">
+					<description>Background Settings</description>
+                    <include>dialogbutton_popup</include>
+					<label>- Reset $LOCALIZE[19190]</label>
+					<onclick>Skin.Reset(user_bkg_tvshow)</onclick>
 				</control>
                 <control type="button" id="81">
 					<description>Position Settings</description>
@@ -469,23 +470,6 @@
 					<label>Widget</label>
 					<onclick>SetProperty(HomeButton,tvshow)</onclick>
 					<onclick>ActivateWindow(1500)</onclick>
-					<visible>!Skin.HasSetting(Home_TVShow_Button)</visible>
-				</control>
-				<control type="radiobutton" id="87">
-					<description>Custom Widget Button</description>
-                    <include>dialogbutton_popup</include>
-					<label>Widget</label>
-					<onclick>Skin.ToggleSetting(Home_TVShow_Widget)</onclick>
-					<selected>Skin.HasSetting(Home_TVShow_Widget)</selected>
-					<visible>Skin.HasSetting(Home_TVShow_Button)</visible>
-				</control>
-				<control type="radiobutton" id="88">
-					<description>Settings Button</description>
-                    <include>dialogbutton_popup</include>
-					<label>verberge grüne Progressbar</label>
-					<onclick>Skin.ToggleSetting(WidgetNoPercentPlayedBar)</onclick>
-					<selected>Skin.HasSetting(WidgetNoPercentPlayedBar)</selected>
-					<visible>Skin.HasSetting(Home_TVShow_Button)</visible>
 				</control>
             </control>
             <control type="grouplist" id="36100"> <!-- musicvideos -->
@@ -544,14 +528,27 @@
 					<enable>!Skin.HasSetting(HomeMenuNoMusicVideos)+Skin.HasSetting(Home_MusicVideo_Button)</enable>
 				</control>
 				<include content="separatorlabel">
-					<param name="separatorlabel_id" value="104" />
+					<param name="separatorlabel_id" value="102" />
 				</include>
-                <control type="button" id="105">
+                <control type="radiobutton" id="103">
+                    <include>dialogbutton_popup</include>
+					<label>Multiimage $LOCALIZE[19190]</label>
+					<onclick>Skin.ToggleSetting(Home_Background_Musicvideo_Multiimage)</onclick>
+					<selected>Skin.HasSetting(Home_Background_Musicvideo_Multiimage)</selected>
+				</control>
+                <control type="button" id="104">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
 					<label>19190</label>
-					<label2>$VAR[backgroundfolder]home_musicvideos$VAR[bkg_fileext]</label2>
-					<onclick>Skin.SetImage(user_bkg_musicvideo,smb://)</onclick>
+					<label2>$INFO[Skin.String(user_bkg_musicvideo)]</label2>
+					<onclick condition="!Skin.HasSetting(Home_Background_Musicvideo_Multiimage)">Skin.SetImage(user_bkg_musicvideo,smb://)</onclick>
+					<onclick condition="Skin.HasSetting(Home_Background_Musicvideo_Multiimage)">Skin.SetPath(user_bkg_musicvideo,smb://)</onclick>
+				</control>
+                <control type="button" id="105">
+					<description>Background Settings</description>
+                    <include>dialogbutton_popup</include>
+					<label>- Reset $LOCALIZE[19190]</label>
+					<onclick>Skin.Reset(user_bkg_musicvideo)</onclick>
 				</control>
                 <control type="button" id="106">
 					<description>Position Settings</description>
@@ -569,23 +566,6 @@
 					<label>Widget</label>
 					<onclick>SetProperty(HomeButton,musicvideo)</onclick>
 					<onclick>ActivateWindow(1500)</onclick>
-					<visible>!Skin.HasSetting(Home_MusicVideo_Button)</visible>
-				</control>
-				<control type="radiobutton" id="112">
-					<description>Custom Widget Button</description>
-                    <include>dialogbutton_popup</include>
-					<label>Widget</label>
-					<onclick>Skin.ToggleSetting(Home_MusicVideo_Widget)</onclick>
-					<selected>Skin.HasSetting(Home_MusicVideo_Widget)</selected>
-					<visible>Skin.HasSetting(Home_MusicVideo_Button)</visible>
-				</control>
-				<control type="radiobutton" id="113">
-					<description>Settings Button</description>
-                    <include>dialogbutton_popup</include>
-					<label>verberge grüne Progressbar</label>
-					<onclick>Skin.ToggleSetting(WidgetNoPercentPlayedBar)</onclick>
-					<selected>Skin.HasSetting(WidgetNoPercentPlayedBar)</selected>
-					<visible>Skin.HasSetting(Home_MusicVideo_Button)</visible>
 				</control>
             </control>
             <control type="grouplist" id="36100"> <!-- picture -->
@@ -596,14 +576,14 @@
                 <height>675</height>
                 <itemgap>3</itemgap>
                 <visible>String.IsEqual(Window(Home).Property(HomeButton),picture)</visible>
-				<control type="radiobutton" id="120">
+				<control type="radiobutton" id="114">
 					<description>Movie Button</description>
                     <include>dialogbutton_popup</include>
 					<label>19218</label>
 					<onclick>Skin.ToggleSetting(HomeMenuNoPictureButton)</onclick>
 					<selected>!Skin.HasSetting(HomeMenuNoPictureButton)</selected>
 				</control>
-                <control type="radiobutton" id="121">
+                <control type="radiobutton" id="115">
 					<description>Movie Custom Button</description>
                     <include>dialogbutton_popup</include>
 					<label>- $LOCALIZE[636]</label>
@@ -611,7 +591,7 @@
 					<selected>Skin.HasSetting(Home_Picture_Button)</selected>
 					<enable>!Skin.HasSetting(HomeMenuNoPictureButton)</enable>
 				</control>
-                <control type="button" id="122">
+                <control type="button" id="116">
 					<description>Movie Custom Label Button</description>
                     <include>dialogbutton_popup</include>
 					<label>- $LOCALIZE[21899]</label>
@@ -619,7 +599,7 @@
 					<onclick>Skin.SetString(Home_Picture_Custom_Label)</onclick>
 					<enable>!Skin.HasSetting(HomeMenuNoPictureButton)+Skin.HasSetting(Home_Picture_Button)</enable>
 				</control>
-                <control type="button" id="123">
+                <control type="button" id="117">
 					<description>Movie Custom Category Button</description>
                     <include>dialogbutton_popup</include>
 					<label>- $LOCALIZE[21866]</label>
@@ -627,7 +607,7 @@
 					<onclick>Skin.SelectBool(21866, 36912|Home_Picture_Custom_Category_Video, 2|Home_Picture_Custom_Category_Music, 1|Home_Picture_Custom_Category_Pictures, 559|Home_Picture_Custom_Category_File)</onclick>
 					<enable>!Skin.HasSetting(HomeMenuNoPictureButton)+Skin.HasSetting(Home_Picture_Button)</enable>
 				</control>
-                <control type="button" id="124">
+                <control type="button" id="118">
 					<description>Movie Custom Category SubButton</description>
                     <include>dialogbutton_popup</include>
 					<label>  $LOCALIZE[15021]</label>
@@ -635,7 +615,7 @@
 					<onclick>Skin.SelectBool(21866, 36912|Home_Picture_Custom_SubCategory_Video, 2|Home_Picture_Custom_SubCategory_Music)</onclick>
 					<visible>!Skin.HasSetting(HomeMenuNoPictureButton)+Skin.HasSetting(Home_Picture_Button)+Skin.HasSetting(Home_Picture_Custom_Category_File)</visible>
 				</control>
-                <control type="button" id="125">
+                <control type="button" id="119">
 					<description>Movie Custom Path Button</description>
                     <include>dialogbutton_popup</include>
 					<label>- $LOCALIZE[573]</label>
@@ -644,16 +624,29 @@
 					<enable>!Skin.HasSetting(HomeMenuNoPictureButton)+Skin.HasSetting(Home_Picture_Button)</enable>
 				</control>
 				<include content="separatorlabel">
-					<param name="separatorlabel_id" value="129" />
+					<param name="separatorlabel_id" value="120" />
 				</include>
-                <control type="button" id="130">
+                <control type="radiobutton" id="121">
+                    <include>dialogbutton_popup</include>
+					<label>Multiimage $LOCALIZE[19190]</label>
+					<onclick>Skin.ToggleSetting(Home_Background_Picture_Multiimage)</onclick>
+					<selected>Skin.HasSetting(Home_Background_Picture_Multiimage)</selected>
+				</control>
+                <control type="button" id="122">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
 					<label>19190</label>
-					<label2>$VAR[backgroundfolder]home_pictures$VAR[bkg_fileext]</label2>
-					<onclick>Skin.SetImage(user_bkg_pictures,smb://)</onclick>
+					<label2>$INFO[Skin.String(user_bkg_pictures)]</label2>
+					<onclick condition="!Skin.HasSetting(Home_Background_Picture_Multiimage)">Skin.SetImage(user_bkg_pictures,smb://)</onclick>
+					<onclick condition="Skin.HasSetting(Home_Background_Picture_Multiimage)">Skin.SetPath(user_bkg_pictures,smb://)</onclick>
 				</control>
-                <control type="button" id="131">
+                <control type="button" id="123">
+					<description>Background Settings</description>
+                    <include>dialogbutton_popup</include>
+					<label>- Reset $LOCALIZE[19190]</label>
+					<onclick>Skin.Reset(user_bkg_pictures)</onclick>
+				</control>
+                <control type="button" id="124">
 					<description>Position Settings</description>
                     <include>dialogbutton_popup</include>
 					<label>Position</label>
@@ -661,32 +654,71 @@
 					<onclick>ActivateWindow(1301)</onclick>
 				</control>
 				<include content="separatorlabel">
-					<param name="separatorlabel_id" value="135" />
+					<param name="separatorlabel_id" value="125" />
 				</include>
-                <control type="button" id="136">
+                <control type="button" id="111">
 					<description>Open Widget Settings</description>
                     <include>dialogbutton_popup</include>
 					<label>Widget</label>
 					<onclick>SetProperty(HomeButton,picture)</onclick>
 					<onclick>ActivateWindow(1500)</onclick>
-					<visible>!Skin.HasSetting(Home_Picture_Button)</visible>
 				</control>
-				<control type="radiobutton" id="137">
-					<description>Custom Widget Button</description>
+            </control>
+            <control type="grouplist" id="36100"> <!-- playdisc -->
+                <left>45</left>
+                <top>150</top>
+                <width>1110</width>
+                <height>870</height>
+                <height>675</height>
+                <itemgap>3</itemgap>
+                <visible>String.IsEqual(Window(Home).Property(HomeButton),playdisc)</visible>
+				<control type="radiobutton" id="130">
+					<description>Movie Button</description>
                     <include>dialogbutton_popup</include>
-					<label>Widget</label>
-					<onclick>Skin.ToggleSetting(Home_Picture_Widget)</onclick>
-					<selected>Skin.HasSetting(Home_Picture_Widget)</selected>
-					<visible>Skin.HasSetting(Home_Picture_Button)</visible>
+					<label>19218</label>
+					<onclick>Skin.ToggleSetting(HomeMenuNoDVDButton)</onclick>
+					<selected>!Skin.HasSetting(HomeMenuNoDVDButton)</selected>
 				</control>
-				<control type="radiobutton" id="138">
-					<description>Settings Button</description>
+				<include content="separatorlabel">
+					<param name="separatorlabel_id" value="131" />
+				</include>
+                <control type="radiobutton" id="132">
                     <include>dialogbutton_popup</include>
-					<label>verberge grüne Progressbar</label>
-					<onclick>Skin.ToggleSetting(WidgetNoPercentPlayedBar)</onclick>
-					<selected>Skin.HasSetting(WidgetNoPercentPlayedBar)</selected>
-					<visible>Skin.HasSetting(Home_Picture_Button)</visible>
+					<label>Multiimage $LOCALIZE[19190]</label>
+					<onclick>Skin.ToggleSetting(Home_Background_Picture_Multiimage)</onclick>
+					<selected>Skin.HasSetting(Home_Background_Picture_Multiimage)</selected>
 				</control>
+                <control type="button" id="133">
+					<description>Background Settings</description>
+                    <include>dialogbutton_popup</include>
+					<label>19190</label>
+					<label2>$INFO[Skin.String(user_bkg_dvd)]</label2>
+					<onclick condition="!Skin.HasSetting(Home_Background_Picture_Multiimage)">Skin.SetImage(user_bkg_dvd,smb://)</onclick>
+					<onclick condition="Skin.HasSetting(Home_Background_Picture_Multiimage)">Skin.SetPath(user_bkg_dvd,smb://)</onclick>
+				</control>
+                <control type="button" id="134">
+					<description>Background Settings</description>
+                    <include>dialogbutton_popup</include>
+					<label>- Reset $LOCALIZE[19190]</label>
+					<onclick>Skin.Reset(user_bkg_dvd)</onclick>
+				</control>
+                <control type="button" id="135">
+					<description>Position Settings</description>
+                    <include>dialogbutton_popup</include>
+					<label>Position</label>
+					<onclick>Dialog.Close(all,true)</onclick>
+					<onclick>ActivateWindow(1301)</onclick>
+				</control>
+				<include content="separatorlabel">
+					<param name="separatorlabel_id" value="136" />
+				</include>
+                <control type="radiobutton" id="137">
+					<description>Toggle DVD Widget Homemenu</description>
+                    <include>dialogbutton_popup</include>
+					<label>DVD Widget</label>
+					<onclick condition="!Skin.HasSetting(Widget_DVDLabel)">Skin.SetBool(Widget_DVDLabel)</onclick>
+					<onclick condition="Skin.HasSetting(Widget_DVDLabel)">Skin.Reset(Widget_DVDLabel)</onclick>
+                </control>
             </control>
             <control type="grouplist" id="36100"> <!-- custom1 -->
                 <left>45</left>
@@ -736,21 +768,27 @@
 					<enable>Skin.HasSetting(Home_Custom1_Button)</enable>
 				</control>
 				<include content="separatorlabel">
-					<param name="separatorlabel_id" value="148" />
+					<param name="separatorlabel_id" value="147" />
 				</include>
-                <control type="radiobutton" id="149">
+                <control type="radiobutton" id="148">
                     <include>dialogbutton_popup</include>
-					<label>Multiimage Background</label>
+					<label>Multiimage $LOCALIZE[19190]</label>
 					<onclick>Skin.ToggleSetting(Home_Background_Custom1_Multiimage)</onclick>
 					<selected>Skin.HasSetting(Home_Background_Custom1_Multiimage)</selected>
 				</control>
-                <control type="button" id="150">
+                <control type="button" id="149">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
 					<label>19190</label>
 					<label2>$VAR[backgroundfolder]home_custom1$VAR[bkg_fileext]</label2>
 					<onclick condition="!Skin.HasSetting(Home_Background_Custom1_Multiimage)">Skin.SetImage(user_bkg_custom1,smb://)</onclick>
 					<onclick condition="Skin.HasSetting(Home_Background_Custom1_Multiimage)">Skin.SetPath(user_bkg_custom1,smb://)</onclick>
+				</control>
+                <control type="button" id="150">
+					<description>Background Settings</description>
+                    <include>dialogbutton_popup</include>
+					<label>- Reset $LOCALIZE[19190]</label>
+					<onclick>Skin.Reset(user_bkg_custom1)</onclick>
 				</control>
                 <control type="button" id="151">
 					<description>Position Settings</description>
@@ -827,21 +865,27 @@
 					<enable>Skin.HasSetting(Home_Custom2_Button)</enable>
 				</control>
 				<include content="separatorlabel">
-					<param name="separatorlabel_id" value="148" />
+					<param name="separatorlabel_id" value="147" />
 				</include>
-                <control type="radiobutton" id="149">
+                <control type="radiobutton" id="148">
                     <include>dialogbutton_popup</include>
-					<label>Multiimage Background</label>
+					<label>Multiimage $LOCALIZE[19190]</label>
 					<onclick>Skin.ToggleSetting(Home_Background_Custom2_Multiimage)</onclick>
 					<selected>Skin.HasSetting(Home_Background_Custom2_Multiimage)</selected>
 				</control>
-                <control type="button" id="150">
+                <control type="button" id="149">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
 					<label>19190</label>
 					<label2>$VAR[backgroundfolder]home_custom2$VAR[bkg_fileext]</label2>
 					<onclick condition="!Skin.HasSetting(Home_Background_Custom2_Multiimage)">Skin.SetImage(user_bkg_custom2,smb://)</onclick>
 					<onclick condition="Skin.HasSetting(Home_Background_Custom2_Multiimage)">Skin.SetPath(user_bkg_custom2,smb://)</onclick>
+				</control>
+                <control type="button" id="150">
+					<description>Background Settings</description>
+                    <include>dialogbutton_popup</include>
+					<label>- Reset $LOCALIZE[19190]</label>
+					<onclick>Skin.Reset(user_bkg_custom2)</onclick>
 				</control>
                 <control type="button" id="151">
 					<description>Position Settings</description>
@@ -918,21 +962,27 @@
 					<enable>Skin.HasSetting(Home_Custom3_Button)</enable>
 				</control>
 				<include content="separatorlabel">
-					<param name="separatorlabel_id" value="148" />
+					<param name="separatorlabel_id" value="147" />
 				</include>
-                <control type="radiobutton" id="149">
+                <control type="radiobutton" id="148">
                     <include>dialogbutton_popup</include>
-					<label>Multiimage Background</label>
+					<label>Multiimage $LOCALIZE[19190]</label>
 					<onclick>Skin.ToggleSetting(Home_Background_Custom3_Multiimage)</onclick>
 					<selected>Skin.HasSetting(Home_Background_Custom3_Multiimage)</selected>
 				</control>
-                <control type="button" id="150">
+                <control type="button" id="149">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
 					<label>19190</label>
 					<label2>$VAR[backgroundfolder]home_custom3$VAR[bkg_fileext]</label2>
 					<onclick condition="!Skin.HasSetting(Home_Background_Custom3_Multiimage)">Skin.SetImage(user_bkg_custom3,smb://)</onclick>
 					<onclick condition="Skin.HasSetting(Home_Background_Custom3_Multiimage)">Skin.SetPath(user_bkg_custom3,smb://)</onclick>
+				</control>
+                <control type="button" id="150">
+					<description>Background Settings</description>
+                    <include>dialogbutton_popup</include>
+					<label>- Reset $LOCALIZE[19190]</label>
+					<onclick>Skin.Reset(user_bkg_custom3)</onclick>
 				</control>
                 <control type="button" id="151">
 					<description>Position Settings</description>
@@ -1009,21 +1059,27 @@
 					<enable>Skin.HasSetting(Home_Custom4_Button)</enable>
 				</control>
 				<include content="separatorlabel">
-					<param name="separatorlabel_id" value="148" />
+					<param name="separatorlabel_id" value="147" />
 				</include>
-                <control type="radiobutton" id="149">
+                <control type="radiobutton" id="148">
                     <include>dialogbutton_popup</include>
-					<label>Multiimage Background</label>
+					<label>Multiimage $LOCALIZE[19190]</label>
 					<onclick>Skin.ToggleSetting(Home_Background_Custom4_Multiimage)</onclick>
 					<selected>Skin.HasSetting(Home_Background_Custom4_Multiimage)</selected>
 				</control>
-                <control type="button" id="150">
+                <control type="button" id="149">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
 					<label>19190</label>
 					<label2>$VAR[backgroundfolder]home_custom4$VAR[bkg_fileext]</label2>
 					<onclick condition="!Skin.HasSetting(Home_Background_Custom4_Multiimage)">Skin.SetImage(user_bkg_custom4,smb://)</onclick>
 					<onclick condition="Skin.HasSetting(Home_Background_Custom4_Multiimage)">Skin.SetPath(user_bkg_custom4,smb://)</onclick>
+				</control>
+                <control type="button" id="150">
+					<description>Background Settings</description>
+                    <include>dialogbutton_popup</include>
+					<label>- Reset $LOCALIZE[19190]</label>
+					<onclick>Skin.Reset(user_bkg_custom4)</onclick>
 				</control>
                 <control type="button" id="151">
 					<description>Position Settings</description>
@@ -1100,21 +1156,27 @@
 					<enable>Skin.HasSetting(Home_Custom5_Button)</enable>
 				</control>
 				<include content="separatorlabel">
-					<param name="separatorlabel_id" value="148" />
+					<param name="separatorlabel_id" value="147" />
 				</include>
-                <control type="radiobutton" id="149">
+                <control type="radiobutton" id="148">
                     <include>dialogbutton_popup</include>
-					<label>Multiimage Background</label>
+					<label>Multiimage $LOCALIZE[19190]</label>
 					<onclick>Skin.ToggleSetting(Home_Background_Custom5_Multiimage)</onclick>
 					<selected>Skin.HasSetting(Home_Background_Custom5_Multiimage)</selected>
 				</control>
-                <control type="button" id="150">
+                <control type="button" id="149">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
 					<label>19190</label>
 					<label2>$VAR[backgroundfolder]home_custom5$VAR[bkg_fileext]</label2>
 					<onclick condition="!Skin.HasSetting(Home_Background_Custom5_Multiimage)">Skin.SetImage(user_bkg_custom5,smb://)</onclick>
 					<onclick condition="Skin.HasSetting(Home_Background_Custom5_Multiimage)">Skin.SetPath(user_bkg_custom5,smb://)</onclick>
+				</control>
+                <control type="button" id="150">
+					<description>Background Settings</description>
+                    <include>dialogbutton_popup</include>
+					<label>- Reset $LOCALIZE[19190]</label>
+					<onclick>Skin.Reset(user_bkg_custom5)</onclick>
 				</control>
                 <control type="button" id="151">
 					<description>Position Settings</description>
@@ -1191,21 +1253,27 @@
 					<enable>Skin.HasSetting(Home_Custom6_Button)</enable>
 				</control>
 				<include content="separatorlabel">
-					<param name="separatorlabel_id" value="148" />
+					<param name="separatorlabel_id" value="147" />
 				</include>
-                <control type="radiobutton" id="149">
+                <control type="radiobutton" id="148">
                     <include>dialogbutton_popup</include>
-					<label>Multiimage Background</label>
+					<label>Multiimage $LOCALIZE[19190]</label>
 					<onclick>Skin.ToggleSetting(Home_Background_Custom6_Multiimage)</onclick>
 					<selected>Skin.HasSetting(Home_Background_Custom6_Multiimage)</selected>
 				</control>
-                <control type="button" id="150">
+                <control type="button" id="149">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
 					<label>19190</label>
 					<label2>$VAR[backgroundfolder]home_custom6$VAR[bkg_fileext]</label2>
 					<onclick condition="!Skin.HasSetting(Home_Background_Custom6_Multiimage)">Skin.SetImage(user_bkg_custom6,smb://)</onclick>
 					<onclick condition="Skin.HasSetting(Home_Background_Custom6_Multiimage)">Skin.SetPath(user_bkg_custom6,smb://)</onclick>
+				</control>
+                <control type="button" id="150">
+					<description>Background Settings</description>
+                    <include>dialogbutton_popup</include>
+					<label>- Reset $LOCALIZE[19190]</label>
+					<onclick>Skin.Reset(user_bkg_custom6)</onclick>
 				</control>
                 <control type="button" id="151">
 					<description>Position Settings</description>
@@ -1282,21 +1350,27 @@
 					<enable>Skin.HasSetting(Home_Custom7_Button)</enable>
 				</control>
 				<include content="separatorlabel">
-					<param name="separatorlabel_id" value="148" />
+					<param name="separatorlabel_id" value="147" />
 				</include>
-                <control type="radiobutton" id="149">
+                <control type="radiobutton" id="148">
                     <include>dialogbutton_popup</include>
-					<label>Multiimage Background</label>
+					<label>Multiimage $LOCALIZE[19190]</label>
 					<onclick>Skin.ToggleSetting(Home_Background_Custom7_Multiimage)</onclick>
 					<selected>Skin.HasSetting(Home_Background_Custom7_Multiimage)</selected>
 				</control>
-                <control type="button" id="150">
+                <control type="button" id="149">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
 					<label>19190</label>
 					<label2>$VAR[backgroundfolder]home_custom7$VAR[bkg_fileext]</label2>
 					<onclick condition="!Skin.HasSetting(Home_Background_Custom7_Multiimage)">Skin.SetImage(user_bkg_custom7,smb://)</onclick>
 					<onclick condition="Skin.HasSetting(Home_Background_Custom7_Multiimage)">Skin.SetPath(user_bkg_custom7,smb://)</onclick>
+				</control>
+                <control type="button" id="150">
+					<description>Background Settings</description>
+                    <include>dialogbutton_popup</include>
+					<label>- Reset $LOCALIZE[19190]</label>
+					<onclick>Skin.Reset(user_bkg_custom7)</onclick>
 				</control>
                 <control type="button" id="151">
 					<description>Position Settings</description>
@@ -1373,21 +1447,27 @@
 					<enable>Skin.HasSetting(Home_Custom8_Button)</enable>
 				</control>
 				<include content="separatorlabel">
-					<param name="separatorlabel_id" value="148" />
+					<param name="separatorlabel_id" value="147" />
 				</include>
-                <control type="radiobutton" id="149">
+                <control type="radiobutton" id="148">
                     <include>dialogbutton_popup</include>
-					<label>Multiimage Background</label>
+					<label>Multiimage $LOCALIZE[19190]</label>
 					<onclick>Skin.ToggleSetting(Home_Background_Custom8_Multiimage)</onclick>
 					<selected>Skin.HasSetting(Home_Background_Custom8_Multiimage)</selected>
 				</control>
-                <control type="button" id="150">
+                <control type="button" id="149">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
 					<label>19190</label>
 					<label2>$VAR[backgroundfolder]home_custom8$VAR[bkg_fileext]</label2>
 					<onclick condition="!Skin.HasSetting(Home_Background_Custom8_Multiimage)">Skin.SetImage(user_bkg_custom8,smb://)</onclick>
 					<onclick condition="Skin.HasSetting(Home_Background_Custom8_Multiimage)">Skin.SetPath(user_bkg_custom8,smb://)</onclick>
+				</control>
+                <control type="button" id="150">
+					<description>Background Settings</description>
+                    <include>dialogbutton_popup</include>
+					<label>- Reset $LOCALIZE[19190]</label>
+					<onclick>Skin.Reset(user_bkg_custom8)</onclick>
 				</control>
                 <control type="button" id="151">
 					<description>Position Settings</description>
@@ -1464,21 +1544,27 @@
 					<enable>Skin.HasSetting(Home_Custom9_Button)</enable>
 				</control>
 				<include content="separatorlabel">
-					<param name="separatorlabel_id" value="148" />
+					<param name="separatorlabel_id" value="147" />
 				</include>
-                <control type="radiobutton" id="149">
+                <control type="radiobutton" id="148">
                     <include>dialogbutton_popup</include>
-					<label>Multiimage Background</label>
+					<label>Multiimage $LOCALIZE[19190]</label>
 					<onclick>Skin.ToggleSetting(Home_Background_Custom9_Multiimage)</onclick>
 					<selected>Skin.HasSetting(Home_Background_Custom9_Multiimage)</selected>
 				</control>
-                <control type="button" id="150">
+                <control type="button" id="149">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
 					<label>19190</label>
 					<label2>$VAR[backgroundfolder]home_custom9$VAR[bkg_fileext]</label2>
 					<onclick condition="!Skin.HasSetting(Home_Background_Custom9_Multiimage)">Skin.SetImage(user_bkg_custom9,smb://)</onclick>
 					<onclick condition="Skin.HasSetting(Home_Background_Custom9_Multiimage)">Skin.SetPath(user_bkg_custom9,smb://)</onclick>
+				</control>
+                <control type="button" id="150">
+					<description>Background Settings</description>
+                    <include>dialogbutton_popup</include>
+					<label>- Reset $LOCALIZE[19190]</label>
+					<onclick>Skin.Reset(user_bkg_custom9)</onclick>
 				</control>
                 <control type="button" id="151">
 					<description>Position Settings</description>
@@ -1505,6 +1591,283 @@
 					<onclick>Skin.ToggleSetting(WidgetNoPercentPlayedBar)</onclick>
 					<selected>Skin.HasSetting(WidgetNoPercentPlayedBar)</selected>
 					<enable>Skin.HasSetting(Home_Custom9_Button)</enable>
+				</control>
+            </control>
+            <control type="grouplist" id="36100"> <!-- settings -->
+                <left>45</left>
+                <top>150</top>
+                <width>1110</width>
+                <height>870</height>
+                <height>675</height>
+                <itemgap>3</itemgap>
+                <visible>String.IsEqual(Window(Home).Property(HomeButton),setting)</visible>
+				<control type="radiobutton" id="160">
+					<description>Movie Button</description>
+                    <include>dialogbutton_popup</include>
+					<label>19218</label>
+					<onclick>Skin.ToggleSetting(HomeMenuNoSettingsButton)</onclick>
+					<selected>!Skin.HasSetting(HomeMenuNoSettingsButton)</selected>
+				</control>
+				<include content="separatorlabel">
+					<param name="separatorlabel_id" value="161" />
+				</include>
+                <control type="radiobutton" id="162">
+                    <include>dialogbutton_popup</include>
+					<label>Multiimage $LOCALIZE[19190]</label>
+					<onclick>Skin.ToggleSetting(Home_Background_Setting_Multiimage)</onclick>
+					<selected>Skin.HasSetting(Home_Background_Setting_Multiimage)</selected>
+				</control>
+                <control type="button" id="163">
+					<description>Background Settings</description>
+                    <include>dialogbutton_popup</include>
+					<label>19190</label>
+					<label2>$INFO[Skin.String(user_bkg_settings)]</label2>
+					<onclick condition="!Skin.HasSetting(Home_Background_Setting_Multiimage)">Skin.SetImage(user_bkg_settings,smb://)</onclick>
+					<onclick condition="Skin.HasSetting(Home_Background_Setting_Multiimage)">Skin.SetPath(user_bkg_settings,smb://)</onclick>
+				</control>
+                <control type="button" id="164">
+					<description>Background Settings</description>
+                    <include>dialogbutton_popup</include>
+					<label>- Reset $LOCALIZE[19190]</label>
+					<onclick>Skin.Reset(user_bkg_settings)</onclick>
+				</control>
+                <control type="button" id="165">
+					<description>Position Settings</description>
+                    <include>dialogbutton_popup</include>
+					<label>Position</label>
+					<onclick>Dialog.Close(all,true)</onclick>
+					<onclick>ActivateWindow(1301)</onclick>
+				</control>
+				<include content="separatorlabel">
+					<param name="separatorlabel_id" value="166" />
+				</include>
+                <control type="radiobutton" id="167">
+					<description>Toggle DVD Widget Homemenu</description>
+                    <include>dialogbutton_popup</include>
+					<label>$LOCALIZE[13000] Widget</label>
+					<onclick>Skin.ToggleSetting(Widget_Systeminfo)</onclick>
+					<selected>Skin.HasSetting(Widget_Systeminfo)</selected>
+                </control>
+            </control>
+            <control type="grouplist" id="36100"> <!-- dashboard -->
+                <left>45</left>
+                <top>150</top>
+                <width>1110</width>
+                <height>870</height>
+                <height>675</height>
+                <itemgap>3</itemgap>
+                <visible>String.IsEqual(Window(Home).Property(HomeButton),dashboard)</visible>
+				<control type="radiobutton" id="168">
+					<description>Movie Button</description>
+                    <include>dialogbutton_popup</include>
+					<label>19218</label>
+					<onclick>Skin.ToggleSetting(HomeMenuNoProgramsButton)</onclick>
+					<selected>!Skin.HasSetting(HomeMenuNoProgramsButton)</selected>
+				</control>
+				<include content="separatorlabel">
+					<param name="separatorlabel_id" value="169" />
+				</include>
+                <control type="radiobutton" id="162">
+                    <include>dialogbutton_popup</include>
+					<label>Multiimage $LOCALIZE[19190]</label>
+					<onclick>Skin.ToggleSetting(Home_Background_Dashboard_Multiimage)</onclick>
+					<selected>Skin.HasSetting(Home_Background_Dashboard_Multiimage)</selected>
+				</control>
+                <control type="button" id="170">
+					<description>Background Settings</description>
+                    <include>dialogbutton_popup</include>
+					<label>19190</label>
+					<label2>$INFO[Skin.String(user_bkg_dashboard)]</label2>
+					<onclick condition="!Skin.HasSetting(Home_Background_Dashboard_Multiimage)">Skin.SetImage(user_bkg_dashboard,smb://)</onclick>
+					<onclick condition="Skin.HasSetting(Home_Background_Dashboard_Multiimage)">Skin.SetPath(user_bkg_dashboard,smb://)</onclick>
+				</control>
+                <control type="button" id="171">
+					<description>Background Settings</description>
+                    <include>dialogbutton_popup</include>
+					<label>- Reset $LOCALIZE[19190]</label>
+					<onclick>Skin.Reset(user_bkg_dashboard)</onclick>
+				</control>
+                <control type="button" id="172">
+					<description>Position Settings</description>
+                    <include>dialogbutton_popup</include>
+					<label>Position</label>
+					<onclick>Dialog.Close(all,true)</onclick>
+					<onclick>ActivateWindow(1301)</onclick>
+				</control>
+				<include content="separatorlabel">
+					<param name="separatorlabel_id" value="173" />
+				</include>
+                <control type="button" id="174">
+					<description>Open Widget Settings</description>
+                    <include>dialogbutton_popup</include>
+					<label>Widget</label>
+					<onclick>SetProperty(HomeButton,dashboard)</onclick>
+					<onclick>ActivateWindow(1500)</onclick>
+				</control>
+            </control>
+            <control type="grouplist" id="36100"> <!-- pvr livetv-->
+                <left>45</left>
+                <top>150</top>
+                <width>1110</width>
+                <height>870</height>
+                <height>675</height>
+                <itemgap>3</itemgap>
+                <visible>String.IsEqual(Window(Home).Property(HomeButton),pvr)</visible>
+				<control type="radiobutton" id="178">
+                    <include>dialogbutton_popup</include>
+					<label>19218</label>
+					<onclick>Skin.ToggleSetting(HomeMenuNoPvrButton)</onclick>
+					<selected>!Skin.HasSetting(HomeMenuNoPvrButton)</selected>
+				</control>
+				<include content="separatorlabel">
+					<param name="separatorlabel_id" value="179" />
+				</include>
+                <control type="radiobutton" id="180">
+                    <include>dialogbutton_popup</include>
+					<label>Multiimage $LOCALIZE[19190]</label>
+					<onclick>Skin.ToggleSetting(Home_Background_PVR_Multiimage)</onclick>
+					<selected>Skin.HasSetting(Home_Background_PVR_Multiimage)</selected>
+				</control>
+                <control type="button" id="181">
+					<description>Background Settings</description>
+                    <include>dialogbutton_popup</include>
+					<label>19190</label>
+					<label2>$INFO[Skin.String(user_bkg_pvr)]</label2>
+					<onclick condition="!Skin.HasSetting(Home_Background_PVR_Multiimage)">Skin.SetImage(user_bkg_pvr,smb://)</onclick>
+					<onclick condition="Skin.HasSetting(Home_Background_PVR_Multiimage)">Skin.SetPath(user_bkg_pvr,smb://)</onclick>
+				</control>
+                <control type="button" id="182">
+					<description>Background Settings</description>
+                    <include>dialogbutton_popup</include>
+					<label>- Reset $LOCALIZE[19190]</label>
+					<onclick>Skin.Reset(user_bkg_pvr)</onclick>
+				</control>
+                <control type="button" id="183">
+					<description>Position Settings</description>
+                    <include>dialogbutton_popup</include>
+					<label>Position</label>
+					<onclick>Dialog.Close(all,true)</onclick>
+					<onclick>ActivateWindow(1301)</onclick>
+				</control>
+				<include content="separatorlabel">
+					<param name="separatorlabel_id" value="184" />
+				</include>
+                <control type="button" id="185">
+					<description>Open Widget Settings</description>
+                    <include>dialogbutton_popup</include>
+					<label>Widget</label>
+					<onclick>SetProperty(HomeButton,pvr)</onclick>
+					<onclick>ActivateWindow(1500)</onclick>
+				</control>
+            </control>
+            <control type="grouplist" id="36100"> <!-- pvr radio -->
+                <left>45</left>
+                <top>150</top>
+                <width>1110</width>
+                <height>870</height>
+                <height>675</height>
+                <itemgap>3</itemgap>
+                <visible>String.IsEqual(Window(Home).Property(HomeButton),radio)</visible>
+				<control type="radiobutton" id="188">
+                    <include>dialogbutton_popup</include>
+					<label>19218</label>
+					<onclick>Skin.ToggleSetting(HomeMenuNoRadioButton)</onclick>
+					<selected>!Skin.HasSetting(HomeMenuNoRadioButton)</selected>
+				</control>
+				<include content="separatorlabel">
+					<param name="separatorlabel_id" value="189" />
+				</include>
+                <control type="radiobutton" id="190">
+                    <include>dialogbutton_popup</include>
+					<label>Multiimage $LOCALIZE[19190]</label>
+					<onclick>Skin.ToggleSetting(Home_Background_Radio_Multiimage)</onclick>
+					<selected>Skin.HasSetting(Home_Background_Radio_Multiimage)</selected>
+				</control>
+                <control type="button" id="191">
+					<description>Background Settings</description>
+                    <include>dialogbutton_popup</include>
+					<label>19190</label>
+					<label2>$INFO[Skin.String(user_bkg_radio)]</label2>
+					<onclick condition="!Skin.HasSetting(Home_Background_Radio_Multiimage)">Skin.SetImage(user_bkg_radio,smb://)</onclick>
+					<onclick condition="Skin.HasSetting(Home_Background_Radio_Multiimage)">Skin.SetPath(user_bkg_radio,smb://)</onclick>
+				</control>
+                <control type="button" id="192">
+					<description>Background Settings</description>
+                    <include>dialogbutton_popup</include>
+					<label>- Reset $LOCALIZE[19190]</label>
+					<onclick>Skin.Reset(user_bkg_radio)</onclick>
+				</control>
+                <control type="button" id="193">
+					<description>Position Settings</description>
+                    <include>dialogbutton_popup</include>
+					<label>Position</label>
+					<onclick>Dialog.Close(all,true)</onclick>
+					<onclick>ActivateWindow(1301)</onclick>
+				</control>
+				<include content="separatorlabel">
+					<param name="separatorlabel_id" value="194" />
+				</include>
+                <control type="button" id="195">
+					<description>Open Widget Settings</description>
+                    <include>dialogbutton_popup</include>
+					<label>Widget</label>
+					<onclick>SetProperty(HomeButton,radio)</onclick>
+					<onclick>ActivateWindow(1500)</onclick>
+				</control>
+            </control>
+            <control type="grouplist" id="36100"> <!-- news -->
+                <left>45</left>
+                <top>150</top>
+                <width>1110</width>
+                <height>870</height>
+                <height>675</height>
+                <itemgap>3</itemgap>
+                <visible>String.IsEqual(Window(Home).Property(HomeButton),news)</visible>
+				<control type="radiobutton" id="198">
+                    <include>dialogbutton_popup</include>
+					<label>19218</label>
+					<onclick>Skin.ToggleSetting(HomeMenuNoNewsButton)</onclick>
+					<selected>!Skin.HasSetting(HomeMenuNoNewsButton)</selected>
+				</control>
+				<include content="separatorlabel">
+					<param name="separatorlabel_id" value="199" />
+				</include>
+                <control type="radiobutton" id="200">
+                    <include>dialogbutton_popup</include>
+					<label>Multiimage $LOCALIZE[19190]</label>
+					<onclick>Skin.ToggleSetting(Home_Background_News_Multiimage)</onclick>
+					<selected>Skin.HasSetting(Home_Background_News_Multiimage)</selected>
+				</control>
+                <control type="button" id="201">
+					<description>Background Settings</description>
+                    <include>dialogbutton_popup</include>
+					<label>19190</label>
+					<label2>$INFO[Skin.String(user_bkg_news)]</label2>
+					<onclick condition="!Skin.HasSetting(Home_Background_News_Multiimage)">Skin.SetImage(user_bkg_news,smb://)</onclick>
+					<onclick condition="Skin.HasSetting(Home_Background_News_Multiimage)">Skin.SetPath(user_bkg_news,smb://)</onclick>
+				</control>
+                <control type="button" id="202">
+					<description>Background Settings</description>
+                    <include>dialogbutton_popup</include>
+					<label>- Reset $LOCALIZE[19190]</label>
+					<onclick>Skin.Reset(user_bkg_news)</onclick>
+				</control>
+                <control type="button" id="203">
+					<description>Position Settings</description>
+                    <include>dialogbutton_popup</include>
+					<label>Position</label>
+					<onclick>Dialog.Close(all,true)</onclick>
+					<onclick>ActivateWindow(1301)</onclick>
+				</control>
+				<include content="separatorlabel">
+					<param name="separatorlabel_id" value="204" />
+				</include>
+                <control type="button" id="205">
+					<description>Open Widget Settings</description>
+                    <include>dialogbutton_popup</include>
+					<label>Widget</label>
+					<onclick>SetProperty(HomeButton,news)</onclick>
+					<onclick>ActivateWindow(1500)</onclick>
 				</control>
             </control>
         </control>

@@ -6,10 +6,13 @@
         <value condition="String.Contains(Container(9000).ListItem.Property(homemenu_path),video)">videos</value>
     </variable>
     <variable name="WidgetPropertyLabel">
+        <value condition="String.IsEqual(Window(Home).Property(HomeButton),music)">$LOCALIZE[2]</value>
+        <value condition="String.IsEqual(Window(Home).Property(HomeButton),videos)">$LOCALIZE[3]</value>
         <value condition="String.IsEqual(Window(Home).Property(HomeButton),movies)">$LOCALIZE[20342]</value>
         <value condition="String.IsEqual(Window(Home).Property(HomeButton),tvshow)">$LOCALIZE[20343]</value>
         <value condition="String.IsEqual(Window(Home).Property(HomeButton),musicvideo)">$LOCALIZE[20389]</value>
-        <value condition="String.IsEqual(Window(Home).Property(HomeButton),music)">$LOCALIZE[2]</value>
+        <value condition="String.IsEqual(Window(Home).Property(HomeButton),picture)">$LOCALIZE[1]</value>
+        <value condition="String.IsEqual(Window(Home).Property(HomeButton),playdisc)">$LOCALIZE[427]</value>
         <value condition="String.IsEqual(Window(Home).Property(HomeButton),livetv)">$LOCALIZE[31502]</value>
         <value condition="String.IsEqual(Window(Home).Property(HomeButton),radio)">$LOCALIZE[31960]</value>
         <value condition="String.IsEqual(Window(Home).Property(HomeButton),weather)">$LOCALIZE[8]</value>
@@ -22,5 +25,10 @@
         <value condition="String.IsEqual(Window(Home).Property(HomeButton),custom7)">$LOCALIZE[636] 7</value>
         <value condition="String.IsEqual(Window(Home).Property(HomeButton),custom8)">$LOCALIZE[636] 8</value>
         <value condition="String.IsEqual(Window(Home).Property(HomeButton),custom9)">$LOCALIZE[636] 9</value>
+        <value condition="String.IsEqual(Window(Home).Property(HomeButton),dashboard)">Dashboard</value>
+        <value condition="String.IsEqual(Window(Home).Property(HomeButton),setting)">$LOCALIZE[13000]</value>
+        <value condition="String.IsEqual(Window(Home).Property(HomeButton),pvr)">$LOCALIZE[31502]</value>
+        <value condition="String.IsEqual(Window(Home).Property(HomeButton),radio)">$LOCALIZE[31960]</value>
+        <value condition="String.IsEqual(Window(Home).Property(HomeButton),news)">news</value>
     </variable>
 </includes>
