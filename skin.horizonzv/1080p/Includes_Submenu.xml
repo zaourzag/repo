@@ -34,13 +34,13 @@
         <pulseonselect>false</pulseonselect>
     </include>
     <include name="HomeSubSettingsButton">
-		<control type="button" id="90249">
+		<control type="button" id="$PARAM[id1]">
 			<include>ButtonHomeSubCommonValues</include>
 			<label>24001</label>
 			<onclick>ActivateWindow(Pictures,Addons,return)</onclick>
 			<visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_category),$LOCALIZE[1])|[!Skin.HasSetting(Home_Picture_Button)+String.IsEqual(Container(9000).ListItem.Property(homemenu_id),picture)]</visible>
 		</control>
-		<control type="button" id="90250">
+		<control type="button" id="$PARAM[id2]">
 			<include>ButtonHomeSubCommonValues</include>
 			<label>21417</label>
 			<onclick>SetProperty(HomeButton,$INFO[Container(9000).ListItem.Property(homemenu_id)],home)</onclick>
@@ -145,7 +145,10 @@
                 <visible>!Skin.HasSetting(SubMenu_Music_NoAddonButton)</visible>
 				<visible>!Skin.HasSetting(Home_Music_Button)</visible>
             </control>
-			<include>HomeSubSettingsButton</include>
+			<include content="HomeSubSettingsButton">
+				<param name="id1" value="80112" />
+				<param name="id2" value="80113" />
+			</include>
         </control>
     </include>
     <include name="HomeSubMenuVideos">
@@ -227,7 +230,10 @@
                 <visible>!Skin.HasSetting(SubMenu_Video_NoVideoAddonButton)</visible>
 				<visible>!Skin.HasSetting(Home_Video_Button)</visible>
             </control>
-			<include>HomeSubSettingsButton</include>
+			<include content="HomeSubSettingsButton">
+				<param name="id1" value="80128" />
+				<param name="id2" value="80129" />
+			</include>
         </control>
     </include>
     <include name="HomeSubMenuMovies">
@@ -313,7 +319,10 @@
                 <onclick>ActivateWindow(Videos,Files,return)</onclick>
 				<visible>!Skin.HasSetting(Home_Movie_Button)</visible>
             </control>
-			<include>HomeSubSettingsButton</include>
+			<include content="HomeSubSettingsButton">
+				<param name="id1" value="80138" />
+				<param name="id2" value="80139" />
+			</include>
         </control>
     </include>
     <include name="HomeSubMenuDashboard">
@@ -394,7 +403,10 @@
                 <visible>!Skin.HasSetting(SubMenu_TVShow_NoActorButton)</visible>
 				<visible>!Skin.HasSetting(Home_TVShow_Button)</visible>
             </control>
-			<include>HomeSubSettingsButton</include>
+			<include content="HomeSubSettingsButton">
+				<param name="id1" value="80154" />
+				<param name="id2" value="80155" />
+			</include>
         </control>
     </include>
     <include name="HomeSubMenuMusicVideos">
@@ -445,7 +457,10 @@
                 <visible>!Skin.HasSetting(SubMenu_MusicVideo_NoGenreButton)</visible>
 				<visible>!Skin.HasSetting(Home_MusicVideo_Button)</visible>
             </control>
-			<include>HomeSubSettingsButton</include>
+			<include content="HomeSubSettingsButton">
+				<param name="id1" value="80163" />
+				<param name="id2" value="80164" />
+			</include>
         </control>
     </include>
     <include name="HomeSubMenuPictures">
@@ -482,7 +497,10 @@
                 <onclick>ActivateWindow(1141)</onclick>
 				<visible>String.Contains(Container(9000).ListItem.Property(homemenu_path),video)</visible>
             </control>
-			<include>HomeSubSettingsButton</include>
+			<include content="HomeSubSettingsButton">
+				<param name="id1" value="80172" />
+				<param name="id2" value="80173" />
+			</include>
         </control>
     </include>
     <include name="HomeSubMenuWeather">
@@ -539,13 +557,10 @@
                 <onclick>SetFocus(9000)</onclick>
 				<visible>System.HasMediadvd</visible>
             </control>
-            <!-- <control type="button" id="80194">
-                <include>ButtonHomeSubCommonValues</include>
-				<label>21417</label>
-				<onclick>SetProperty(HomeButton,playdisc)</onclick>
-				<onclick>ActivateWindow(1500)</onclick>
-            </control> -->
-			<include>HomeSubSettingsButton</include>
+			<include content="HomeSubSettingsButton">
+				<param name="id1" value="80194" />
+				<param name="id2" value="80195" />
+			</include>
         </control>
     </include>
     <include name="HomeSubMenuCustom1">
@@ -580,7 +595,10 @@
                 <onclick>ActivateWindow(1141)</onclick>
 				<visible>String.Contains(Container(9000).ListItem.Property(homemenu_path),video)</visible>
             </control>
-			<include>HomeSubSettingsButton</include>
+			<include content="HomeSubSettingsButton">
+				<param name="id1" value="80198" />
+				<param name="id2" value="80199" />
+			</include>
         </control>
     </include>
     <include name="HomeSubMenuCustom2">
@@ -615,7 +633,10 @@
                 <onclick>ActivateWindow(1141)</onclick>
 				<visible>String.Contains(Container(9000).ListItem.Property(homemenu_path),video)</visible>
             </control>
-			<include>HomeSubSettingsButton</include>
+			<include content="HomeSubSettingsButton">
+				<param name="id1" value="80202" />
+				<param name="id2" value="80203" />
+			</include>
         </control>
     </include>
     <include name="HomeSubMenuCustom3">
@@ -650,7 +671,10 @@
                 <onclick>ActivateWindow(1141)</onclick>
 				<visible>String.Contains(Container(9000).ListItem.Property(homemenu_path),video)</visible>
             </control>
-			<include>HomeSubSettingsButton</include>
+			<include content="HomeSubSettingsButton">
+				<param name="id1" value="80212" />
+				<param name="id2" value="80213" />
+			</include>
         </control>
     </include>
     <include name="HomeSubMenuCustom4">
@@ -685,7 +709,10 @@
                 <onclick>ActivateWindow(1141)</onclick>
 				<visible>String.Contains(Container(9000).ListItem.Property(homemenu_path),video)</visible>
             </control>
-			<include>HomeSubSettingsButton</include>
+			<include content="HomeSubSettingsButton">
+				<param name="id1" value="80222" />
+				<param name="id2" value="80223" />
+			</include>
         </control>
     </include>
     <include name="HomeSubMenuCustom5">
@@ -720,7 +747,10 @@
                 <onclick>ActivateWindow(1141)</onclick>
 				<visible>String.Contains(Container(9000).ListItem.Property(homemenu_path),video)</visible>
             </control>
-			<include>HomeSubSettingsButton</include>
+			<include content="HomeSubSettingsButton">
+				<param name="id1" value="80232" />
+				<param name="id2" value="80233" />
+			</include>
         </control>
     </include>
     <include name="HomeSubMenuCustom6">
@@ -755,7 +785,10 @@
                 <onclick>ActivateWindow(1141)</onclick>
 				<visible>String.Contains(Container(9000).ListItem.Property(homemenu_path),video)</visible>
             </control>
-			<include>HomeSubSettingsButton</include>
+			<include content="HomeSubSettingsButton">
+				<param name="id1" value="80242" />
+				<param name="id2" value="80243" />
+			</include>
         </control>
     </include>
     <include name="HomeSubMenuCustom7">
@@ -790,7 +823,10 @@
                 <onclick>ActivateWindow(1141)</onclick>
 				<visible>String.Contains(Container(9000).ListItem.Property(homemenu_path),video)</visible>
             </control>
-			<include>HomeSubSettingsButton</include>
+			<include content="HomeSubSettingsButton">
+				<param name="id1" value="80252" />
+				<param name="id2" value="80253" />
+			</include>
         </control>
     </include>
     <include name="HomeSubMenuCustom8">
@@ -860,7 +896,10 @@
                 <onclick>ActivateWindow(1141)</onclick>
 				<visible>String.Contains(Container(9000).ListItem.Property(homemenu_path),video)</visible>
             </control>
-			<include>HomeSubSettingsButton</include>
+			<include content="HomeSubSettingsButton">
+				<param name="id1" value="80272" />
+				<param name="id2" value="80273" />
+			</include>
         </control>
     </include>
     <include name="HomeSubMenuSystem">
@@ -913,14 +952,10 @@
 				<onclick>ActivateWindow(EventLog,events://,return)</onclick>
 				<visible>system.getbool(eventlog.enabled)</visible>
 			</control>
-			<include>HomeSubSettingsButton</include>
-			<!-- <control type="button" id="80287">
-				<description>Toggle Systeminfo Widget</description>
-				<include>ButtonHomeSubCommonValues</include>
-				<label>$LOCALIZE[13000] Widget</label>
-				<onclick condition="!Skin.HasSetting(Widget_Systeminfo)">Skin.SetBool(Widget_Systeminfo)</onclick>
-				<onclick condition="Skin.HasSetting(Widget_Systeminfo)">Skin.Reset(Widget_Systeminfo)</onclick>
-			</control> -->
+			<include content="HomeSubSettingsButton">
+				<param name="id1" value="80286" />
+				<param name="id2" value="80287" />
+			</include>
 		</control>
     </include>
     <include name="HomeSubMenuLiveTV">
@@ -960,7 +995,6 @@
                 <onclick>SetProperty(HomeButton,livetv)</onclick>
                 <onclick>ActivateWindow(1500)</onclick>
             </control>
-			<!-- <include>HomeSubSettingsButton</include> -->
         </control>
     </include>
     <include name="HomeSubMenuRadio">
@@ -1000,7 +1034,6 @@
                 <onclick>SetProperty(HomeButton,radio)</onclick>
                 <onclick>ActivateWindow(1500)</onclick>
             </control>
-			<!-- <include>HomeSubSettingsButton</include> -->
         </control>
     </include>
     <include name="HomeSubMenuNews">

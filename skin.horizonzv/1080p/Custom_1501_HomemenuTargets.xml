@@ -656,7 +656,7 @@
 				<include content="separatorlabel">
 					<param name="separatorlabel_id" value="125" />
 				</include>
-                <control type="button" id="111">
+                <control type="button" id="126">
 					<description>Open Widget Settings</description>
                     <include>dialogbutton_popup</include>
 					<label>Widget</label>
@@ -808,14 +808,6 @@
 					<onclick>ActivateWindow(1500)</onclick>
 					<enable>Skin.HasSetting(Home_Custom1_Button)</enable>
 				</control>
-				<control type="radiobutton" id="158">
-					<description>Settings Button</description>
-                    <include>dialogbutton_popup</include>
-					<label>verberge grüne Progressbar</label>
-					<onclick>Skin.ToggleSetting(WidgetNoPercentPlayedBar)</onclick>
-					<selected>Skin.HasSetting(WidgetNoPercentPlayedBar)</selected>
-					<enable>Skin.HasSetting(Home_Custom1_Button)</enable>
-				</control>
             </control>
             <control type="grouplist" id="36100"> <!-- custom2 -->
                 <left>45</left>
@@ -903,14 +895,6 @@
 					<label>Widget</label>
 					<onclick>SetProperty(HomeButton,custom2)</onclick>
 					<onclick>ActivateWindow(1500)</onclick>
-					<enable>Skin.HasSetting(Home_Custom2_Button)</enable>
-				</control>
-				<control type="radiobutton" id="158">
-					<description>Settings Button</description>
-                    <include>dialogbutton_popup</include>
-					<label>verberge grüne Progressbar</label>
-					<onclick>Skin.ToggleSetting(WidgetNoPercentPlayedBar)</onclick>
-					<selected>Skin.HasSetting(WidgetNoPercentPlayedBar)</selected>
 					<enable>Skin.HasSetting(Home_Custom2_Button)</enable>
 				</control>
             </control>
@@ -1002,14 +986,6 @@
 					<onclick>ActivateWindow(1500)</onclick>
 					<enable>Skin.HasSetting(Home_Custom3_Button)</enable>
 				</control>
-				<control type="radiobutton" id="158">
-					<description>Settings Button</description>
-                    <include>dialogbutton_popup</include>
-					<label>verberge grüne Progressbar</label>
-					<onclick>Skin.ToggleSetting(WidgetNoPercentPlayedBar)</onclick>
-					<selected>Skin.HasSetting(WidgetNoPercentPlayedBar)</selected>
-					<enable>Skin.HasSetting(Home_Custom3_Button)</enable>
-				</control>
             </control>
             <control type="grouplist" id="36100"> <!-- custom4 -->
                 <left>45</left>
@@ -1097,14 +1073,6 @@
 					<label>Widget</label>
 					<onclick>SetProperty(HomeButton,custom4)</onclick>
 					<onclick>ActivateWindow(1500)</onclick>
-					<enable>Skin.HasSetting(Home_Custom4_Button)</enable>
-				</control>
-				<control type="radiobutton" id="158">
-					<description>Settings Button</description>
-                    <include>dialogbutton_popup</include>
-					<label>verberge grüne Progressbar</label>
-					<onclick>Skin.ToggleSetting(WidgetNoPercentPlayedBar)</onclick>
-					<selected>Skin.HasSetting(WidgetNoPercentPlayedBar)</selected>
 					<enable>Skin.HasSetting(Home_Custom4_Button)</enable>
 				</control>
             </control>
@@ -1196,14 +1164,6 @@
 					<onclick>ActivateWindow(1500)</onclick>
 					<enable>Skin.HasSetting(Home_Custom5_Button)</enable>
 				</control>
-				<control type="radiobutton" id="158">
-					<description>Settings Button</description>
-                    <include>dialogbutton_popup</include>
-					<label>verberge grüne Progressbar</label>
-					<onclick>Skin.ToggleSetting(WidgetNoPercentPlayedBar)</onclick>
-					<selected>Skin.HasSetting(WidgetNoPercentPlayedBar)</selected>
-					<enable>Skin.HasSetting(Home_Custom5_Button)</enable>
-				</control>
             </control>
             <control type="grouplist" id="36100"> <!-- custom6 -->
                 <left>45</left>
@@ -1291,14 +1251,6 @@
 					<label>Widget</label>
 					<onclick>SetProperty(HomeButton,custom6)</onclick>
 					<onclick>ActivateWindow(1500)</onclick>
-					<enable>Skin.HasSetting(Home_Custom6_Button)</enable>
-				</control>
-				<control type="radiobutton" id="158">
-					<description>Settings Button</description>
-                    <include>dialogbutton_popup</include>
-					<label>verberge grüne Progressbar</label>
-					<onclick>Skin.ToggleSetting(WidgetNoPercentPlayedBar)</onclick>
-					<selected>Skin.HasSetting(WidgetNoPercentPlayedBar)</selected>
 					<enable>Skin.HasSetting(Home_Custom6_Button)</enable>
 				</control>
             </control>
@@ -1390,14 +1342,6 @@
 					<onclick>ActivateWindow(1500)</onclick>
 					<enable>Skin.HasSetting(Home_Custom7_Button)</enable>
 				</control>
-				<control type="radiobutton" id="158">
-					<description>Settings Button</description>
-                    <include>dialogbutton_popup</include>
-					<label>verberge grüne Progressbar</label>
-					<onclick>Skin.ToggleSetting(WidgetNoPercentPlayedBar)</onclick>
-					<selected>Skin.HasSetting(WidgetNoPercentPlayedBar)</selected>
-					<enable>Skin.HasSetting(Home_Custom7_Button)</enable>
-				</control>
             </control>
             <control type="grouplist" id="36100"> <!-- custom8 -->
                 <left>45</left>
@@ -1487,14 +1431,6 @@
 					<onclick>ActivateWindow(1500)</onclick>
 					<enable>Skin.HasSetting(Home_Custom8_Button)</enable>
 				</control>
-				<control type="radiobutton" id="158">
-					<description>Settings Button</description>
-                    <include>dialogbutton_popup</include>
-					<label>verberge grüne Progressbar</label>
-					<onclick>Skin.ToggleSetting(WidgetNoPercentPlayedBar)</onclick>
-					<selected>Skin.HasSetting(WidgetNoPercentPlayedBar)</selected>
-					<enable>Skin.HasSetting(Home_Custom8_Button)</enable>
-				</control>
             </control>
             <control type="grouplist" id="36100"> <!-- custom9 -->
                 <left>45</left>
@@ -1582,14 +1518,6 @@
 					<label>Widget</label>
 					<onclick>SetProperty(HomeButton,custom9)</onclick>
 					<onclick>ActivateWindow(1500)</onclick>
-					<enable>Skin.HasSetting(Home_Custom9_Button)</enable>
-				</control>
-				<control type="radiobutton" id="158">
-					<description>Settings Button</description>
-                    <include>dialogbutton_popup</include>
-					<label>verberge grüne Progressbar</label>
-					<onclick>Skin.ToggleSetting(WidgetNoPercentPlayedBar)</onclick>
-					<selected>Skin.HasSetting(WidgetNoPercentPlayedBar)</selected>
 					<enable>Skin.HasSetting(Home_Custom9_Button)</enable>
 				</control>
             </control>

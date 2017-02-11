@@ -177,7 +177,6 @@
                         <texturenofocus>-</texturenofocus>
                         <textcolor>black</textcolor>
                         <align>center</align>
-                        <!-- <visible>System.HasAddon(service.kn.switchtimer)</visible> -->
                         <enable>!String.IsEmpty(Window(Home).Property(GTO.Info.isInFuture))</enable>
                         <onclick condition="!System.HasAddon(service.kn.switchtimer)">InstallAddon(service.kn.switchtimer)</onclick>
                         <onclick condition="System.HasAddon(service.kn.switchtimer)">RunScript(service.kn.switchtimer,action=add,channel=$INFO[Window(Home).Property(GTO.Info.Channel)],icon=$INFO[Window(Home).Property(GTO.Info.Logo)],date=$INFO[Window(Home).Property(GTO.Info.Date)],title=$INFO[Window(Home).Property(GTO.Info.Title)])</onclick>
@@ -190,7 +189,7 @@
                         <textcolor>black</textcolor>
                         <align>center</align>
                         <enable>!String.IsEmpty(Window(Home).Property(GTO.Info.isRunning))</enable>
-                        <onclick>RunScript(plugin.service.gto,"?methode=switch_channel&amp;pvrid=$INFO[Window(Home).Property(GTO.Info.ChannelID)]")</onclick>
+                        <onclick>RunScript(plugin.service.gto,action=switch_channel&amp;pvrid=$INFO[Window(Home).Property(GTO.Info.ChannelID)])</onclick>
                         <onclick>PreviousMenu</onclick>
                     </control>
                     <control type="button" id="22">

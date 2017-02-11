@@ -281,14 +281,14 @@
                                 <visible>Skin.HasSetting(wolhome)</visible>
                             </item>
                             <item id="5">
-                                <description>System</description>
+                                <description>Systemsettings</description>
                                 <label>21417</label>
                                 <label2>masks/Default_sharp.png</label2>
                                 <icon>center/Center_System.png</icon>
                                 <onclick>ActivateWindow(settings)</onclick>
                             </item>
                             <item id="6">
-                                <description>System</description>
+                                <description>Systeminfo</description>
                                 <label>10511</label>
                                 <label2>masks/Default_sharp.png</label2>
                                 <icon>center/Center_Systeminfo.png</icon>
@@ -494,7 +494,6 @@
                 <height>42</height>
                 <aspectratio>keep</aspectratio>
                 <texture border="5">$INFO[Skin.String(ServerIcon_File)]</texture>
-                <visible>Window.IsActive(Home)</visible>
             </control>
             <control type="image">
                 <description>Conditions Label</description>

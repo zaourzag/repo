@@ -106,7 +106,7 @@
 			<align>left</align>
 			<textcolor>white</textcolor>
 			<shadowcolor>grey3</shadowcolor>
-			<label>$INFO[ListItem.Property(temperature),,]$INFO[ListItem.Property(power), / , W]$INFO[ListItem.Property(energy), / , kWh]</label>
+			<label>$INFO[ListItem.Property(temperature),,]$INFO[ListItem.Property(power), / ,]$INFO[ListItem.Property(energy), / ,]</label>
 		</control>
 		<control type="image">
 			<description>background</description>
