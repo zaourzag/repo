@@ -174,8 +174,8 @@
         <sliderwidth>150</sliderwidth>
         <sliderheight>10</sliderheight>
         <texturesliderbar>osd/slider_bg.png</texturesliderbar>
-        <textureslidernib border="2" colordiffuse="grey">osd/SliderNibFO.png</textureslidernib>
-        <textureslidernibfocus border="2">osd/SliderNibFO.png</textureslidernibfocus>
+        <textureslidernib border="2" colordiffuse="grey">osd/SliderNib.png</textureslidernib>
+        <textureslidernibfocus border="2">osd/SliderNib.png</textureslidernibfocus>
         <font>ubuntu-r16b</font>
         <shadowcolor>-</shadowcolor>
         <textcolor>white</textcolor>

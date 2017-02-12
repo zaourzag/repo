@@ -317,7 +317,7 @@
                                 <icon>center/Center_Switchtimer.png</icon>
                                 <onclick>ActivateWindow(4111)</onclick>
                                 <onclick>Dialog.Close(favourites,force)</onclick>
-                                <visible>Integer.IsGreater(Skin.String(SwitchTimerActiveItems),0)</visible>
+                                <visible>Integer.IsGreater(Window(Home).Property(SwitchTimerActiveItems),0)</visible>
                             </item>
                             <item id="9">
                                 <description>PVR Timer</description>
@@ -648,6 +648,17 @@
                 <textcolor>orange</textcolor>
                 <shadowcolor>black</shadowcolor>
                 <label>WidgetTargetVar: $VAR[WidgetTarget] | </label>
+            </control>
+            <control type="label">
+                <left>30</left>
+                <top>225</top>
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>orange</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>Datum: $INFO[Container(36100).ListItem.Date] | </label>
             </control>
         </control>
 		<!-- <control type="list" id="784512">

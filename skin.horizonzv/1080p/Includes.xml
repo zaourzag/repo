@@ -772,7 +772,7 @@
                 <visible>Skin.HasSetting(NavInfo)+!Control.HasFocus(666)</visible>
                 <animation effect="slide" end="45" condition="Pvr.HasTimer">Conditional</animation>
                 <animation effect="slide" end="45" condition="Pvr.IsRecording">Conditional</animation>
-                <animation effect="slide" end="45" condition="Integer.IsGreater(Skin.String(SwitchTimerActiveItems),0)">Conditional</animation>
+                <animation effect="slide" end="45" condition="Integer.IsGreater(Window(Home).Property(SwitchTimerActiveItems),0)">Conditional</animation>
             </control>
             <control type="image">
                 <left>-60</left>
@@ -935,7 +935,7 @@
             <aspectratio>keep</aspectratio>
             <colordiffuse>white</colordiffuse>
             <texture>PVR-Switchtimer.png</texture>
-            <visible>Integer.IsGreater(Skin.String(SwitchTimerActiveItems),0)</visible>
+            <visible>Integer.IsGreater(Window(Home).Property(SwitchTimerActiveItems),0)</visible>
             <visible>!Window.IsVisible(fullscreenvideo)+!Window.IsVisible(visualisation)</visible>
         </control>
         <control type="image">
@@ -954,7 +954,7 @@
             <height>45</height>
             <texture>-</texture>
             <visible>!Window.IsVisible(Home)</visible>
-            <visible>Pvr.IsRecording|Integer.IsGreater(Skin.String(SwitchTimerActiveItems),0)</visible>
+            <visible>Pvr.IsRecording|Integer.IsGreater(Window(Home).Property(SwitchTimerActiveItems),0)</visible>
         </control>
         <control type="image">
             <description>Separator</description>
@@ -962,7 +962,7 @@
             <height>45</height>
             <texture>Separator3.png</texture>
             <visible>!Window.IsVisible(Home)</visible>
-            <visible>Pvr.HasTimer|Pvr.IsRecording|Integer.IsGreater(Skin.String(SwitchTimerActiveItems),0)</visible>
+            <visible>Pvr.HasTimer|Pvr.IsRecording|Integer.IsGreater(Window(Home).Property(SwitchTimerActiveItems),0)</visible>
         </control>
         <control type="image">
             <!-- fake -->
@@ -971,7 +971,7 @@
             <height>45</height>
             <texture>-</texture>
             <visible>!Window.IsVisible(Home)</visible>
-            <visible>Pvr.HasTimer|Pvr.IsRecording|Integer.IsGreater(Skin.String(SwitchTimerActiveItems),0)</visible>
+            <visible>Pvr.HasTimer|Pvr.IsRecording|Integer.IsGreater(Window(Home).Property(SwitchTimerActiveItems),0)</visible>
         </control>
     </include>
     <include name="PVR-TimerIcons">

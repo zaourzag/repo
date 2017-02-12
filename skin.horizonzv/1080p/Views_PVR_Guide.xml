@@ -629,7 +629,7 @@
                             <top>15</top>
                             <width>30</width>
                             <height>30</height>
-                            <texture background="true">$VAR[VARSwitchtimer]</texture>
+                            <texture>$VAR[VARSwitchtimer]</texture>
                         </control>
                         <control type="label">
                             <left>1448</left>

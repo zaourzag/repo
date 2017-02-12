@@ -314,16 +314,16 @@
         <value condition="ListItem.IsCollection">flagging/lists/set.png</value>
     </variable>
     <variable name="VARSwitchtimer">
-        <value condition="String.IsEqual(ListItem.ChannelName,Skin.String(t0:channel)) + String.IsEqual(ListItem.Date,Skin.String(t0:Date))">PVR-Switchtimer.png</value>
-        <value condition="String.IsEqual(ListItem.ChannelName,Skin.String(t1:channel)) + String.IsEqual(ListItem.Date,Skin.String(t1:Date))">PVR-Switchtimer.png</value>
-        <value condition="String.IsEqual(ListItem.ChannelName,Skin.String(t2:channel)) + String.IsEqual(ListItem.Date,Skin.String(t2:Date))">PVR-Switchtimer.png</value>
-        <value condition="String.IsEqual(ListItem.ChannelName,Skin.String(t3:channel)) + String.IsEqual(ListItem.Date,Skin.String(t3:Date))">PVR-Switchtimer.png</value>
-        <value condition="String.IsEqual(ListItem.ChannelName,Skin.String(t4:channel)) + String.IsEqual(ListItem.Date,Skin.String(t4:Date))">PVR-Switchtimer.png</value>
-        <value condition="String.IsEqual(ListItem.ChannelName,Skin.String(t5:channel)) + String.IsEqual(ListItem.Date,Skin.String(t5:Date))">PVR-Switchtimer.png</value>
-        <value condition="String.IsEqual(ListItem.ChannelName,Skin.String(t6:channel)) + String.IsEqual(ListItem.Date,Skin.String(t6:Date))">PVR-Switchtimer.png</value>
-        <value condition="String.IsEqual(ListItem.ChannelName,Skin.String(t7:channel)) + String.IsEqual(ListItem.Date,Skin.String(t7:Date))">PVR-Switchtimer.png</value>
-        <value condition="String.IsEqual(ListItem.ChannelName,Skin.String(t8:channel)) + String.IsEqual(ListItem.Date,Skin.String(t8:Date))">PVR-Switchtimer.png</value>
-        <value condition="String.IsEqual(ListItem.ChannelName,Skin.String(t9:channel)) + String.IsEqual(ListItem.Date,Skin.String(t9:Date))">PVR-Switchtimer.png</value>
+        <value condition="String.IsEqual(ListItem.ChannelName,Window(Home).Property(t0:channel)) + String.IsEqual(ListItem.Date,Window(Home).Property(t0:date))">PVR-Switchtimer.png</value>
+        <value condition="String.IsEqual(ListItem.ChannelName,Window(Home).Property(t1:channel)) + String.IsEqual(ListItem.Date,Window(Home).Property(t1:Date))">PVR-Switchtimer.png</value>
+        <value condition="String.IsEqual(ListItem.ChannelName,Window(Home).Property(t2:channel)) + String.IsEqual(ListItem.Date,Window(Home).Property(t2:Date))">PVR-Switchtimer.png</value>
+        <value condition="String.IsEqual(ListItem.ChannelName,Window(Home).Property(t3:channel)) + String.IsEqual(ListItem.Date,Window(Home).Property(t3:Date))">PVR-Switchtimer.png</value>
+        <value condition="String.IsEqual(ListItem.ChannelName,Window(Home).Property(t4:channel)) + String.IsEqual(ListItem.Date,Window(Home).Property(t4:Date))">PVR-Switchtimer.png</value>
+        <value condition="String.IsEqual(ListItem.ChannelName,Window(Home).Property(t5:channel)) + String.IsEqual(ListItem.Date,Window(Home).Property(t5:Date))">PVR-Switchtimer.png</value>
+        <value condition="String.IsEqual(ListItem.ChannelName,Window(Home).Property(t6:channel)) + String.IsEqual(ListItem.Date,Window(Home).Property(t6:Date))">PVR-Switchtimer.png</value>
+        <value condition="String.IsEqual(ListItem.ChannelName,Window(Home).Property(t7:channel)) + String.IsEqual(ListItem.Date,Window(Home).Property(t7:Date))">PVR-Switchtimer.png</value>
+        <value condition="String.IsEqual(ListItem.ChannelName,Window(Home).Property(t8:channel)) + String.IsEqual(ListItem.Date,Window(Home).Property(t8:Date))">PVR-Switchtimer.png</value>
+        <value condition="String.IsEqual(ListItem.ChannelName,Window(Home).Property(t9:channel)) + String.IsEqual(ListItem.Date,Window(Home).Property(t9:Date))">PVR-Switchtimer.png</value>
     </variable>
     <variable name="pvrsignal">
         <value condition="!Integer.IsGreater(Pvr.ActStreamSignal,5)">pvrsignal/PvrSignal0.png</value>

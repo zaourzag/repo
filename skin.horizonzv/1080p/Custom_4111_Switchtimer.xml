@@ -95,7 +95,7 @@
                 <left>1020</left>
                 <top>141</top>
                 <width>150</width>
-                <label>$INFO[Skin.String(SwitchTimerActiveItems),,/10]</label>
+                <label>$INFO[Window(Home).Property(SwitchTimerActiveItems),,/10]</label>
                 <textcolor>grey3</textcolor>
                 <align>right</align>
                 <aligny>center</aligny>
@@ -110,7 +110,7 @@
                 <textcolor>black</textcolor>
                 <texturenofocus>-</texturenofocus>
                 <onclick>RunScript(service.kn.switchtimer,action=delall)</onclick>
-                <visible>Integer.IsGreater(Skin.String(SwitchTimerActiveItems),0)</visible>
+                <visible>Integer.IsGreater(Window(Home).Property(SwitchTimerActiveItems),0)</visible>
             </control>
             <control type="list" id="36100">
                 <left>15</left>

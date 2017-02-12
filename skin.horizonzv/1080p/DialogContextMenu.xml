@@ -52,7 +52,7 @@
                     <texturefocus border="2">buttons/ShutdownButtonFO.png</texturefocus>
                     <texturenofocus border="2">buttons/ShutdownButtonNF.png</texturenofocus>
                     <label>$LOCALIZE[51483] $LOCALIZE[51481]</label>
-                    <visible>System.HasAddon(service.kn.switchtimer) + Window.IsVisible(tvguide) + Integer.IsGreater(Skin.String(SwitchTimerActiveItems),0)</visible>
+                    <visible>System.HasAddon(service.kn.switchtimer) + Window.IsVisible(tvguide) + Integer.IsGreater(Window(Home).Property(SwitchTimerActiveItems),0)</visible>
                     <onclick>ActivateWindow(4111)</onclick>
                 </control>
                 <control type="button" id="2011">

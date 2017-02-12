@@ -1,4 +1,7 @@
-﻿v 0.9.0.22
+﻿v 0.9.0.23
+- Bugfix: Umschalttimer (unter Hauptmenüpunkt "News" und in "Zentrale")
+
+v 0.9.0.22
 - Bugfix: Untermenü IDs
 - Bugfix: Widget Popups
 - Bugfix: Umschalttimer
