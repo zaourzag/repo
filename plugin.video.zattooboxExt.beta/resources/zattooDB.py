@@ -198,7 +198,7 @@ class ZattooDB(object):
     xbmcgui.Dialog().notification(__addon__.getLocalizedString(31917), self.formatDate(date), __addon__.getAddonInfo('path') + '/icon.png', 5000, False)
     xbmc.executebuiltin("ActivateWindow(busydialog)")
     api = '/zapi/v2/cached/program/power_guide/' + self.zapi.AccountData['account']['power_guide_hash'] + '?end=' + str(toTime) + '&start=' + str(fromTime)
-
+    
     print "api   "+api
     programData = self.zapi.exec_zapiCall(api, None)
 
@@ -226,9 +226,14 @@ class ZattooDB(object):
         if not c.rowcount:
             c.execute('UPDATE programs SET channel=?, title=?, start_date=?, end_date=?, description=?, genre=?, image_small=? WHERE showID=?',
               [cid, program['t'], program['s'], program['e'], program['et'], ', '.join(program['g']), image, program['id'] ])            
+    try:
+        self.conn.commit() 
+    except:
+			print 'IntegrityError: FOREIGN KEY constraint failed zattooDB 232'
+            
     if count>0: 
       c.execute('INSERT into updates(date, type) VALUES(?, ?)', [date, 'program'])        
-      self.conn.commit() 
+    
     xbmc.executebuiltin("Dialog.Close(busydialog)")
     c.close()
     return
@@ -344,7 +349,10 @@ class ZattooDB(object):
             info.execute('UPDATE programs SET country=? WHERE showID=?', [country, showID ])
             series = showInfo['program']['series_recording_eligible']
             info.execute('UPDATE programs SET series=? WHERE showID=?', [series, showID])
-        self.conn.commit()
+        try:
+            self.conn.commit()
+        except:
+			print 'IntegrityError: FOREIGN KEY constraint failed zattooDB 355'
         info.close()
         return {'description':longDesc, 'year':year, 'country':country, 'category':category}
         
