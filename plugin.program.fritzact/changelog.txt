@@ -1,6 +1,10 @@
 Changelog:
+
+- 0.0.15
+  Changes for Krypton
+
 - 0.0.14
-  Preselection of actor types implemented. See readme.md for details
+  Preselection of actor types implemented. See Readme.md for details
 
 - 0.0.13
   Bugfixes

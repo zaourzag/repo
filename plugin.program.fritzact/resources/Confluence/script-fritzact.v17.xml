@@ -367,10 +367,10 @@
                                                         <label>$INFO[ListItem.Label2]</label>
                                                 </control>
                                         </focusedlayout>
-                                        <onclick condition="String.IsEqual(ListItem.Property(type),switch)">RunScript(plugin.program.fritzact,action=toggle&amp;ain=$INFO[ListItem.Label2])</onclick>
-                                        <onclick condition="String.IsEqual(ListItem.Property(type),group)">RunScript(plugin.program.fritzact,action=toggle&amp;ain=$INFO[ListItem.Label2])</onclick>
-                                        <onclick condition="String.IsEqual(ListItem.Property(type),thermostat)">RunScript(plugin.program.fritzact,action=temp&amp;ain=$INFO[ListItem.Label2])</onclick>
-                                        <content>plugin://plugin.program.fritzact?ts=$INFO[Window(Home).Property(fritzact.timestamp)]</content>
+                                        <onclick condition="String.IsEqual(Container(58501).ListItem.Property(type),switch)">RunScript(plugin.program.fritzact,action=toggle&amp;ain=$INFO[ListItem.Label2])</onclick>
+                                        <onclick condition="String.IsEqual(Container(58501).ListItem.Property(type),group)">RunScript(plugin.program.fritzact,action=toggle&amp;ain=$INFO[ListItem.Label2])</onclick>
+                                        <onclick condition="String.IsEqual(Container(58501).ListItem.Property(type),thermostat)">RunScript(plugin.program.fritzact,action=temp&amp;ain=$INFO[ListItem.Label2])</onclick>
+                                        <content target="programs">plugin://plugin.program.fritzact?ts=$INFO[Window(Home).Property(fritzact.timestamp)]</content>
                                 </control>
                                 <control type="button">
                                         <description>right Arrow</description>
