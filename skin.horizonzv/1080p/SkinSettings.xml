@@ -1096,6 +1096,7 @@
                             <align>left</align>
                             <label>51318</label>
                             <label2>$INFO[Skin.String(ServerIcon_File)]</label2>
+                            <onclick condition="!System.HasAddon(service.skinhelper.PING)">InstallAddon(service.skinhelper.PING)</onclick>
                             <onclick>Skin.SetImage(ServerIcon_File,smb://)</onclick>
                         </control>
                         <control type="radiobutton" id="549">
@@ -1394,15 +1395,6 @@
                             <onclick>Skin.ToggleSetting(NavInfo)</onclick>
                             <selected>Skin.HasSetting(NavInfo)</selected>
                         </control>
-                        <control type="radiobutton" id="805">
-                            <description>Homepage Weatherinfo</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <label>51345</label>
-                            <onclick>Skin.ToggleSetting(homepageWeatherinfo)</onclick>
-                            <selected>Skin.HasSetting(homepageWeatherinfo)</selected>
-                            <visible>!Skin.HasSetting(NavInfo)</visible>
-                        </control>
                         <!-- <control type="radiobutton" id="806">
                             <description>NavigationsArrows</description>
                             <width>1260</width>
@@ -1589,7 +1581,16 @@
                             <onclick>Skin.ToggleSetting(HidePlayerControlsHome)</onclick>
                             <selected>!Skin.HasSetting(HidePlayerControlsHome)</selected>
                         </control>
-                        <control type="radiobutton" id="836">
+                        <control type="radiobutton" id="805">
+                            <description>Homepage Weatherinfo</description>
+                            <width>1260</width>
+                            <align>left</align>
+                            <label>51345</label>
+                            <onclick>Skin.ToggleSetting(homepageNOWeatherinfo)</onclick>
+                            <selected>Skin.HasSetting(homepageNOWeatherinfo)</selected>
+                            <!-- <visible>!Skin.HasSetting(NavInfo)</visible> -->
+                        </control>
+                        <!-- <control type="radiobutton" id="836">
                             <description>Toggle Weather Fanart Hauptmenü</description>
                             <width>1260</width>
                             <align>left</align>
@@ -1598,7 +1599,7 @@
                             <onclick>Skin.ToggleSetting(WeatherFanartHome)</onclick>
                             <selected>Skin.HasSetting(WeatherFanartHome)</selected>
                             <visible>!String.IsEmpty(Weather.Plugin)+!String.IsEmpty(Skin.String(weatherfanart.path))</visible>
-                        </control>
+                        </control> -->
                         <control type="label" id="847">
                             <!-- Music Settings -->
                             <width>1260</width>

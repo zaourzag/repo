@@ -1,4 +1,9 @@
-﻿v 0.9.0.23
+﻿v 0.9.0.24
+- Servericon in Skin integriert, Addon Skinhelper.Ping wird nun benötigt (noch nicht in der Repo)
+- kleine Wetterinfo wird nun standardmäßig im Home angezeigt (kann in den Skineinstellungen deaktiviert werden)
+- Nexttrack-Playlist wird nicht mehr im Dashboard angezeigt. Dashboard bleibt somit auch bei laufender Musik vollständig sichtbar
+
+v 0.9.0.23
 - Bugfix: Umschalttimer (unter Hauptmenüpunkt "News" und in "Zentrale")
 
 v 0.9.0.22

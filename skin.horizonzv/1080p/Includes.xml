@@ -769,6 +769,7 @@
                 <height>75</height>
                 <texture border="2">Scaled.png</texture>
                 <visible>Window.IsActive(Home)</visible>
+				<visible>Skin.HasSetting(homepageNOWeatherinfo)</visible>
                 <visible>Skin.HasSetting(NavInfo)+!Control.HasFocus(666)</visible>
                 <animation effect="slide" end="45" condition="Pvr.HasTimer">Conditional</animation>
                 <animation effect="slide" end="45" condition="Pvr.IsRecording">Conditional</animation>
@@ -784,7 +785,8 @@
                 <visible>Skin.HasSetting(NavInfo)+!Control.HasFocus(666)</visible>
             </control>
             <control type="grouplist">
-                <animation effect="slide" end="0,3" condition="Window.IsVisible(Home)">Conditional</animation>
+                <animation effect="slide" end="0,2" condition="Window.IsVisible(Home)">Conditional</animation>
+				<visible>!Window.IsVisible(Home)|Skin.HasSetting(homepageNOWeatherinfo)</visible>
                 <left>15</left>
                 <top>0</top>
                 <width>1800</width>
