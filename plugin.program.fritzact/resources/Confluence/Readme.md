@@ -33,7 +33,7 @@ nano Includes.xml
 ```
 und unterhalb der Zeile `<include file="IncludesHomeRecentlyAdded.xml" />` folgendes einfügen:
 
-    <include file="script-fritzact-xml" />
+    <include file="script-fritzact.xml" />
     
 * Das Include im Hauptfenster anmelden
 
