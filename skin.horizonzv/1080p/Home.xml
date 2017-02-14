@@ -36,9 +36,10 @@
             </control>
             <control type="group"> <!-- RSS / NavInfo / OSD -->
                 <control type="group">
-                    <animation effect="slide" start="0" end="-57" condition="!String.IsEmpty(Control.GetLabel(4444))">Conditional</animation>
-                    <animation effect="slide" start="0" end="-60" condition="Integer.IsGreater(System.ProfileCount,1)">Conditional</animation>
-                    <top>3</top>
+					<animation effect="slide" end="-50" condition="String.IsEqual(Container(4445).NumItems,1)">Conditional</animation>
+					<animation effect="slide" end="-70" condition="String.IsEqual(Container(4445).NumItems,2)">Conditional</animation>
+					<animation effect="slide" end="-110" condition="String.IsEqual(Container(4445).NumItems,3)">Conditional</animation>
+                    <top>1</top>
                     <include>RSS</include>
                 </control>
                 <visible>!ControlGroup(19).HasFocus()</visible>
@@ -366,8 +367,10 @@
                 <left>15</left>
                 <top>-3</top>
                 <animation effect="slide" start="0,0" end="0,45" time="100" condition="system.getbool(lookandfeel.enablerssfeeds)">Conditional</animation>
-                <visible>!Skin.HasSetting(NavInfo)+!String.IsEmpty(Weather.Plugin)</visible>
-                <visible>Skin.HasSetting(homepageWeatherinfo)</visible>
+                <visible>!String.IsEmpty(Weather.Plugin)</visible>
+                <visible>!Skin.HasSetting(homepageNOWeatherinfo)</visible>
+				<visible>!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),news)|!system.getbool(lookandfeel.enablerssfeeds)</visible>
+				<visible>!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),dashboard)|!system.getbool(lookandfeel.enablerssfeeds)</visible>
                 <include>opencloseslidedown</include>
                 <control type="multiimage">
                     <description>current weather icon</description>
@@ -479,7 +482,7 @@
                 </control>
             </control>
         </control>
-        <control type="grouplist"> <!-- Server- / Batteryinfos -->
+        <control type="grouplist" id="4445"> <!-- Server- / Batteryinfos -->
             <left>1868</left>
             <top>8</top>
             <width>1800</width>
@@ -487,31 +490,36 @@
             <orientation>horizontal</orientation>
             <include>opencloseslideleft</include>
             <visible>!Control.HasFocus(666)</visible>
-            <animation effect="slide" end="-36" condition="Skin.HasSetting(BatteryLevel)">Conditional</animation>
-            <animation effect="slide" end="-52" condition="Integer.IsGreater(System.ProfileCount,1)">Conditional</animation>
-            <control type="image" id="4444">
-                <width>42</width>
-                <height>42</height>
-                <aspectratio>keep</aspectratio>
-                <texture border="5">$INFO[Skin.String(ServerIcon_File)]</texture>
-            </control>
+            <animation effect="slide" end="-42" condition="String.IsEqual(Container(4445).NumItems,2)">Conditional</animation>
+            <animation effect="slide" end="-84" condition="String.IsEqual(Container(4445).NumItems,3)">Conditional</animation>
+			<control type="button" id="4444">
+				<width>38</width>
+				<height>40</height>
+				<textoffsetx>0</textoffsetx>
+				<textwidht>40</textwidht>
+				<label>1$INFO[Window(Home).Property(SkinHelperPING.numitems)]</label>
+				<texturefocus>ServerIcon.png</texturefocus>
+				<texturenofocus>ServerIcon.png</texturenofocus>
+				<!-- <visible>String.IsGreater(Window(Home).Property(SkinHelperPING.numitems),0)</visible> -->
+				<visible>String.IsEqual(Window(Home).Property(SkinHelperPING.server1),on)</visible>
+				<visible>System.HasAddon(service.skinhelper.PING)</visible>
+			</control>
             <control type="image">
                 <description>Conditions Label</description>
-                <width>42</width>
-                <height>42</height>
+                <width>40</width>
+                <height>40</height>
                 <texture>$INFO[System.ProfileThumb]</texture>
-                <aspectratio>keep</aspectratio>
+                <aspectratio>stretch</aspectratio>
                 <visible>Integer.IsGreater(System.ProfileCount,1)</visible>
             </control>
             <control type="group">
-                <left>0</left>
-                <top>0</top>
-                <width>42</width>
-                <height>42</height>
+                <width>0</width>
+                <height>0</height>
+				<visible>Skin.HasSetting(BatteryLevel)</visible>
                 <control type="progress">
                     <description>Progressbar Battery Level</description>
-                    <left>48r</left>
-                    <top>9</top>
+                    <left>0</left>
+                    <top>10</top>
                     <width>36</width>
                     <height>21</height>
                     <texturebg>Battery.png</texturebg>
@@ -521,6 +529,22 @@
                     <animation effect="rotate" end="90" center="auto" condition="true">Conditional</animation>
                     <visible>Skin.HasSetting(BatteryLevel)</visible>
                 </control>
+            </control>
+            <control type="button" id="4443"> <!-- fake -->
+                <description>Conditions Label</description>
+                <width>0</width>
+                <height>0</height>
+				<texturefocus>-</texturefocus>
+				<texturenofocus>-</texturenofocus>
+                <visible>Integer.IsGreater(System.ProfileCount,1)</visible>
+            </control>
+            <control type="button" id="4442"> <!-- fake -->
+                <description>Conditions Label</description>
+                <width>0</width>
+                <height>0</height>
+				<texturefocus>-</texturefocus>
+				<texturenofocus>-</texturenofocus>
+                <visible>Skin.HasSetting(BatteryLevel)</visible>
             </control>
         </control>
 		<control type="group"> <!-- Homemenu -->
@@ -658,7 +682,40 @@
                 <align>left</align>
                 <textcolor>orange</textcolor>
                 <shadowcolor>black</shadowcolor>
-                <label>Datum: $INFO[Container(36100).ListItem.Date] | </label>
+                <label>Ping: $INFO[Window(Home).Property(SkinHelperPING.server1)] | </label>
+            </control>
+            <control type="label">
+                <left>30</left>
+                <top>225</top>
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>orange</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>Ping: $INFO[Window(Home).Property(SkinHelperPING.server2)] | </label>
+            </control>
+            <control type="label">
+                <left>30</left>
+                <top>225</top>
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>orange</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>Ping: $INFO[Window(Home).Property(SkinHelperPING.server3)] | </label>
+            </control>
+            <control type="label">
+                <left>30</left>
+                <top>225</top>
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>orange</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>NumItems 4445: $INFO[Container(4445).NumItems] | </label>
             </control>
         </control>
 		<!-- <control type="list" id="784512">

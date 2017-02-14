@@ -245,7 +245,7 @@
 				<orientation>vertical</orientation>
 				<include>openclosefanart</include>
 				<include>openclosevisible</include>
-				<visible>!Window.IsVisible(favourites)+!Window.IsVisible(1200)+String.IsEmpty(MusicPlayer.Offset(1).Title)</visible>
+				<visible>!Window.IsVisible(favourites)+!Window.IsVisible(1200)</visible>
 				<animation effect="slide" end="0,50" time="150" condition="!Control.IsVisible(8002)">Conditional</animation>
 				<animation effect="slide" end="0,80" time="150" condition="!Control.IsVisible(8004)">Conditional</animation>
 				<animation effect="slide" end="0,80" time="150" condition="!Control.IsVisible(8006)">Conditional</animation>

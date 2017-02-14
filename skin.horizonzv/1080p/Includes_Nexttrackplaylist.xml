@@ -7,7 +7,8 @@
                 <animation effect="slide" start="0,0" end="825" time="200" condition="Window.IsVisible(favourites)">conditional</animation>
                 <visible>!Window.IsVisible(favourites)</visible>
                 <visible>Skin.HasSetting(playlist)+Player.HasAudio</visible>
-                <visible>!Control.HasFocus(20)+!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),news)+![String.IsEqual(Container(9000).ListItem.Property(homemenu_id),dashboard)+[Skin.HasSetting(dashboard_medium)|Skin.HasSetting(dashboard_big)]]</visible>
+                <visible>!Control.HasFocus(20)+!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),news)</visible>
+                <visible>!Control.HasFocus(20)+!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),dashboard)</visible>
                 <visible>![String.IsEqual(Container(9000).ListItem.Property(homemenu_id),pvr)+Skin.HasSetting(Widget_LiveTVHighlights)+String.Contains(Window.Property(TVHighlightsToday.Mode),splitmode)]</visible>
                 <visible>!String.IsEmpty(MusicPlayer.Offset(1).Title)</visible>
                 <visible>Window.IsActive(Home)</visible>

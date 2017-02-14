@@ -205,7 +205,7 @@
         </control>
         <control type="grouplist" id="1900">
             <left>60</left>
-            <top>70</top>
+            <top>90</top>
             <width>1800</width>
             <height>1215</height>
             <itemgap>0</itemgap>
@@ -218,12 +218,12 @@
                 <include>openclosefanart</include>
                 <include>openclosevisible</include>
                 <width>1800</width>
-                <height>225</height>
+                <height>215</height>
                 <control type="label">
                     <left>8</left>
                     <top>0</top>
                     <width>auto</width>
-                    <height>45</height>
+                    <height>40</height>
                     <font>impacted21</font>
                     <align>left</align>
                     <textcolor>grey</textcolor>
@@ -321,12 +321,12 @@
                 <include>openclosefanart</include>
                 <include>openclosevisible</include>
                 <width>1800</width>
-                <height>225</height>
+                <height>215</height>
                 <control type="label">
                     <left>8</left>
                     <top>0</top>
                     <width>auto</width>
-                    <height>45</height>
+                    <height>40</height>
                     <font>impacted21</font>
                     <align>left</align>
                     <textcolor>grey</textcolor>
@@ -379,12 +379,12 @@
                 <include>openclosefanart</include>
                 <include>openclosevisible</include>
                 <width>1800</width>
-                <height>225</height>
+                <height>215</height>
                 <control type="label">
                     <left>8</left>
                     <top>0</top>
                     <width>auto</width>
-                    <height>45</height>
+                    <height>40</height>
                     <font>impacted21</font>
                     <align>left</align>
                     <textcolor>grey</textcolor>
