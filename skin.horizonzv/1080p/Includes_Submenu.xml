@@ -157,7 +157,7 @@
             <onleft>9010</onleft>
             <onright>9010</onright>
             <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),videos)</visible>
-            <control type="button" id="80120">
+            <control type="button" id="80115">
                 <description>Refresh Button</description>
                 <height>39</height>
                 <width>39</width>
@@ -171,7 +171,7 @@
                 <onclick>ActivateWindow(1142)</onclick>
 				<visible>[String.Contains(Container(9000).ListItem.Property(homemenu_path),music)|String.Contains(Container(9000).ListItem.Property(homemenu_path),audio)]+Skin.HasSetting(Home_Video_Button)</visible>
             </control>
-            <control type="button" id="80121">
+            <control type="button" id="80116">
                 <description>Refresh Button</description>
                 <height>39</height>
                 <width>39</width>
@@ -185,7 +185,7 @@
                 <onclick>ActivateWindow(1141)</onclick>
 				<visible>String.Contains(Container(9000).ListItem.Property(homemenu_path),video)|!Skin.HasSetting(Home_Video_Button)</visible>
             </control>
-            <control type="button" id="80122">
+            <control type="button" id="80117">
                 <include>ButtonHomeSubCommonValues</include>
                 <label>342</label>
                 <onclick>ActivateWindow(Videos,MovieTitles,return)</onclick>
@@ -193,7 +193,7 @@
                 <visible>!Skin.HasSetting(SubMenu_Video_NoMovieButton)</visible>
 				<visible>!Skin.HasSetting(Home_Video_Button)</visible>
             </control>
-            <control type="button" id="80123">
+            <control type="button" id="80118">
                 <include>ButtonHomeSubCommonValues</include>
                 <label>20343</label>
                 <onclick>ActivateWindow(Videos,TvShowTitles,return)</onclick>
@@ -201,7 +201,7 @@
                 <visible>!Skin.HasSetting(SubMenu_Video_NoTVShowButton)</visible>
 				<visible>!Skin.HasSetting(Home_Video_Button)</visible>
             </control>
-            <control type="button" id="80124">
+            <control type="button" id="80119">
                 <include>ButtonHomeSubCommonValues</include>
                 <label>20389</label>
                 <onclick>ActivateWindow(Videos,MusicVideoTitles,return)</onclick>
@@ -209,7 +209,7 @@
                 <visible>!Skin.HasSetting(SubMenu_Video_NoMusicvideoButton)</visible>
 				<visible>!Skin.HasSetting(Home_Video_Button)</visible>
             </control>
-            <control type="button" id="80125">
+            <control type="button" id="80120">
                 <include>ButtonHomeSubCommonValues</include>
                 <label>744</label>
                 <onclick>ActivateWindow(Videos,Files,return)</onclick>
@@ -223,7 +223,7 @@
                 <visible>!Skin.HasSetting(SubMenu_Video_NoLibraryButton)</visible>
 				<visible>!Skin.HasSetting(Home_Video_Button)</visible>
             </control>
-            <control type="button" id="80127">
+            <control type="button" id="80121">
                 <include>ButtonHomeSubCommonValues</include>
                 <label>24001</label>
                 <onclick>ActivateWindow(Videos,Addons,return)</onclick>
@@ -231,8 +231,8 @@
 				<visible>!Skin.HasSetting(Home_Video_Button)</visible>
             </control>
 			<include content="HomeSubSettingsButton">
-				<param name="id1" value="80128" />
-				<param name="id2" value="80129" />
+				<param name="id1" value="80122" />
+				<param name="id2" value="80123" />
 			</include>
         </control>
     </include>

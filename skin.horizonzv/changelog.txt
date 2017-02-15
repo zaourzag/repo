@@ -1,4 +1,7 @@
-﻿v 0.9.0.25
+﻿v 0.9.0.26
+- Extra Fanarts für Filme können separat deaktiviert werden
+
+v 0.9.0.25
 - Ansicht "Perspektive": Cover vergrößert
 - Focus im Hauptmenü korrigiert (Statussymbole am oberen Rand)
 - weitere Tests mit dem Script Skinhelper.PING

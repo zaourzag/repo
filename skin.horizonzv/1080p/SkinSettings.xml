@@ -152,8 +152,7 @@
                     <include>opencloseslideleft</include>
                     <left>540</left>
                     <top>210</top>
-                    <control type="grouplist" id="200">
-                        <!-- Admin -->
+                    <control type="grouplist" id="200"> <!-- Admin -->
                         <description>Control Area</description>
                         <width>1260</width>
                         <height>720</height>
@@ -237,8 +236,7 @@
 							<visible>System.HasAddon(script.toolbox)</visible>
 						</control> -->
                     </control>
-                    <control type="grouplist" id="300">
-                        <!-- Homebuttons Setting -->
+                    <control type="grouplist" id="300"> <!-- Homebuttons Setting -->
                         <description>Control Area</description>
                         <width>1260</width>
                         <height>720</height>
@@ -550,8 +548,7 @@
                             <onclick>ActivateWindow(1501)</onclick>
                         </control>
                     </control>
-                    <control type="grouplist" id="900">
-                        <!-- Submenubuttons Setting -->
+                    <control type="grouplist" id="900"> <!-- Submenubuttons Setting -->
                         <description>Control Area</description>
                         <width>630</width>
                         <height>720</height>
@@ -608,8 +605,7 @@
                             <focusedcolor>black</focusedcolor>
                         </control>
                     </control>
-                    <control type="grouplist" id="901">
-                        <!-- SubSubmenubuttons Setting -->
+                    <control type="grouplist" id="901"> <!-- SubSubmenubuttons Setting -->
                         <description>Control Area</description>
                         <left>645</left>
                         <width>630</width>
@@ -912,8 +908,7 @@
                             <visible>ControlGroup(900).HasFocus(915)</visible>
                         </control>
                     </control>
-                    <control type="grouplist" id="500">
-                        <!-- Functions Setting -->
+                    <control type="grouplist" id="500"> <!-- Functions Setting -->
                         <description>Control Area</description>
                         <left>8</left>
                         <width>1260</width>
@@ -1178,8 +1173,7 @@
                             <!-- <visible>!String.IsEqual(System.BatteryLevel,0%)</visible> -->
                         </control>
                     </control>
-                    <control type="grouplist" id="600">
-                        <!-- Widget Settings -->
+                    <control type="grouplist" id="600"> <!-- Widget Settings -->
                         <description>Control Area</description>
                         <left>8</left>
                         <width>1260</width>
@@ -1343,8 +1337,7 @@
                             <selected>Skin.HasSetting(Widget_DVDLabel)</selected>
                         </control>
                     </control>
-                    <control type="grouplist" id="800">
-                        <!-- Design/Performance Settings -->
+                    <control type="grouplist" id="800"> <!-- Design/Performance Settings -->
                         <description>Control Area</description>
                         <left>8</left>
                         <width>1260</width>
@@ -1714,8 +1707,7 @@
                             <selected>Skin.HasSetting(BigPlotText)</selected>
                         </control>
                     </control>
-                    <control type="grouplist" id="900">
-                        <!-- Extra Art's Settings-->
+                    <control type="grouplist" id="900"> <!-- Extra Art's Settings-->
                         <description>Control Area</description>
                         <left>8</left>
                         <width>1260</width>
@@ -1834,6 +1826,16 @@
                             <onclick>Skin.ToggleSetting(Landscape)</onclick>
                             <selected>Skin.HasSetting(Landscape)</selected>
                             <visible>Skin.HasSetting(video_art)</visible>
+                        </control>
+                        <control type="radiobutton" id="909">
+                            <description>Landscape</description>
+                            <width>1260</width>
+                            <align>left</align>
+                            <focusedcolor>black</focusedcolor>
+                            <label>- Extra Fanarts</label>
+                            <onclick>Skin.ToggleSetting(no_extrafanart)</onclick>
+                            <selected>!Skin.HasSetting(no_extrafanart)</selected>
+                            <!-- <visible>Skin.HasSetting(video_art)</visible> -->
                         </control>
                         <control type="label" id="9004">
                             <!-- TVShows Settings -->

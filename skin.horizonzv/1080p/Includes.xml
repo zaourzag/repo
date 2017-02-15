@@ -630,7 +630,7 @@
                     <fadetime>800</fadetime>
                     <randomize>true</randomize>
                     <colordiffuse>$VAR[BackgroundDim]</colordiffuse>
-                    <visible>[[Container.Content(Movies)|Container.Content(musicvideos)]+Skin.HasSetting(video_art)]
+                    <visible>[[Container.Content(Movies)|Container.Content(musicvideos)]+Skin.HasSetting(video_art)+!Skin.HasSetting(no_extrafanart)]
 					|[[Container.Content(Seasons)|Container.Content(tvshows)]+Skin.HasSetting(tvshow_art)]</visible>
                     <visible>!ListItem.IsParentFolder</visible>
                     <include>openclosevisible</include>

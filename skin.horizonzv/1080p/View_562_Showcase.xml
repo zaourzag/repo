@@ -487,7 +487,7 @@
                             <timeperimage>4000</timeperimage>
                             <fadetime>800</fadetime>
                             <randomize>true</randomize>
-                            <visible>[[Container.Content(Movies)|Container.Content(musicvideos)]+Skin.HasSetting(video_art)]
+                            <visible>[[Container.Content(Movies)|Container.Content(musicvideos)]+Skin.HasSetting(video_art)+!Skin.HasSetting(no_extrafanart)]
 							|[[Container.Content(Seasons)|Container.Content(tvshows)]+Skin.HasSetting(tvshow_art)]</visible>
                             <include>opencloseslideup</include>
                         </control>
