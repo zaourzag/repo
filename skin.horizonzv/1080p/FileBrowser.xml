@@ -100,7 +100,7 @@
                     <width>316</width>
                     <height>450</height>
                     <aspectratio aligny="bottom">keep</aspectratio>
-                    <texture background="true">$INFO[ListItem.Icon]</texture>
+                    <texture>$INFO[ListItem.Icon]</texture>
                     <visible>!String.Contains(Control.GetLabel(416),*)</visible>
                 </control>
                 <control type="image">
@@ -109,7 +109,7 @@
                     <width>316</width>
                     <height>450</height>
                     <aspectratio aligny="bottom">keep</aspectratio>
-                    <texture background="true" flipx="true">$INFO[ListItem.Icon]</texture>
+                    <texture flipx="true">$INFO[ListItem.Icon]</texture>
                     <visible>String.Contains(Control.GetLabel(416),*)</visible>
                 </control>
                 <control type="panel" id="450">

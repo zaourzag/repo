@@ -94,7 +94,7 @@
                         <width>45</width>
                         <height>48</height>
                         <aspectratio>keep</aspectratio>
-                        <texture background="true">$VAR[OSDTexture]</texture>
+                        <texture>$VAR[OSDTexture]</texture>
                     </control>
                     <control type="label">
                         <description>Now Playing Info</description>

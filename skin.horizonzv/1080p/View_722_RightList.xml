@@ -188,7 +188,6 @@
                     <top>585</top>
                     <width>990</width>
                     <height>375</height>
-                    <fadetime>FadeTime</fadetime>
                     <aspectratio align="left">keep</aspectratio>
                     <texture background="true" fallback="FallbackCover.png">$INFO[ListItem.Icon]</texture>
                     <bordertexture border="5">buttons/ButtonNF.png</bordertexture>
@@ -200,7 +199,6 @@
                     <top>585</top>
                     <width>375</width>
                     <height>375</height>
-                    <fadetime>FadeTime</fadetime>
                     <aspectratio align="center">stretch</aspectratio>
                     <texture background="true" fallback="FallbackCover.png">$INFO[ListItem.Icon]</texture>
                     <bordertexture border="5">buttons/ButtonNF.png</bordertexture>
@@ -212,7 +210,6 @@
                     <top>585</top>
                     <width>3</width>
                     <height>375</height>
-                    <fadetime>FadeTime</fadetime>
                     <colordiffuse>menudiffuse</colordiffuse>
                     <texture background="true">Separator4.png</texture>
                     <visible>Container.Content(songs)|Container.Content(artists)|Container.Content(albums)</visible>
@@ -253,7 +250,6 @@
                 <width>780</width>
                 <height>435</height>
                 <aspectratio>keep</aspectratio>
-                <fadetime>FadeTime</fadetime>
                 <texture background="true">$INFO[Skin.String(Music_Folder_Path)]$INFO[ListItem.Artist,,/logo.png]</texture>
                 <visible>Container.Content(songs)|Container.Content(artists)|Container.Content(albums)</visible>
                 <visible>Skin.HasSetting(music_art)</visible>

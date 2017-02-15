@@ -20,7 +20,7 @@
                     <width>1920</width>
                     <height>15</height>
                     <colordiffuse>fanartdiffuse</colordiffuse>
-                    <texture background="true">Shadow.png</texture>
+                    <texture>Shadow.png</texture>
                 </control>
                 <control type="image">
                     <description>Busy animation</description>
@@ -29,7 +29,7 @@
                     <width>1920</width>
                     <height>15</height>
                     <colordiffuse>fanartdiffuse</colordiffuse>
-                    <texture background="true" flipy="true">Shadow.png</texture>
+                    <texture flipy="true">Shadow.png</texture>
                 </control>
                 <control type="image">
                     <description>Busy animation</description>
@@ -37,7 +37,7 @@
                     <top>225</top>
                     <width>1920</width>
                     <height>180</height>
-                    <texture background="true">BlackBack.png</texture>
+                    <texture>BlackBack.png</texture>
                 </control>
                 <control type="image">
                     <description>Busy animation</description>
@@ -45,7 +45,7 @@
                     <top>225</top>
                     <width>1920</width>
                     <height>1</height>
-                    <texture background="true">Separator2.png</texture>
+                    <texture>Separator2.png</texture>
                 </control>
                 <control type="image">
                     <description>Busy animation</description>
@@ -53,7 +53,7 @@
                     <top>405</top>
                     <width>1920</width>
                     <height>1</height>
-                    <texture background="true">Separator2.png</texture>
+                    <texture>Separator2.png</texture>
                 </control>
                 <control type="image">
                     <description>Busy animation</description>

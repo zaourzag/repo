@@ -127,7 +127,6 @@
                         <width>735</width>
                         <height>300</height>
                         <aspectratio>keep</aspectratio>
-                        <fadetime>FadeTime</fadetime>
                         <texture background="true" border="4">$INFO[ListItem.Icon]</texture>
                         <visible>String.IsEmpty(ListItem.AddonBroken)</visible>
                     </control>
@@ -137,7 +136,6 @@
                         <width>735</width>
                         <height>300</height>
                         <aspectratio>keep</aspectratio>
-                        <fadetime>FadeTime</fadetime>
                         <colordiffuse>grey2</colordiffuse>
                         <texture background="true" border="4">$INFO[ListItem.Icon]</texture>
                         <visible>!String.IsEmpty(ListItem.AddonBroken)</visible>
@@ -148,7 +146,6 @@
                         <width>720</width>
                         <height>285</height>
                         <aspectratio>keep</aspectratio>
-                        <fadetime>FadeTime</fadetime>
                         <texture background="true">Broken.png</texture>
                         <visible>!String.IsEmpty(ListItem.AddonBroken)</visible>
                     </control>
@@ -274,8 +271,7 @@
                         <colordiffuse>grey</colordiffuse>
                         <bordertexture border="10">BlackBack.png</bordertexture>
                         <bordersize>6</bordersize>
-                        <fadetime>FadeTime</fadetime>
-                        <texture background="true">$INFO[Listitem.Icon]</texture>
+                        <texture>$INFO[ListItem.Icon]</texture>
                         <visible>String.IsEmpty(ListItem.AddonBroken)</visible>
                         <aspectratio>keep</aspectratio>
                     </control>
@@ -287,8 +283,7 @@
                         <colordiffuse>grey2</colordiffuse>
                         <bordertexture border="10">BlackBack.png</bordertexture>
                         <bordersize>6</bordersize>
-                        <fadetime>FadeTime</fadetime>
-                        <texture background="true">$INFO[Listitem.Icon]</texture>
+                        <texture>$INFO[ListItem.Icon]</texture>
                         <visible>!String.IsEmpty(ListItem.AddonBroken)</visible>
                         <aspectratio>keep</aspectratio>
                     </control>
@@ -297,7 +292,6 @@
                         <top>45</top>
                         <width>196</width>
                         <height>150</height>
-                        <fadetime>FadeTime</fadetime>
                         <texture background="true">Broken.png</texture>
                         <visible>!String.IsEmpty(ListItem.AddonBroken)</visible>
                     </control>
@@ -306,7 +300,6 @@
                         <top>27</top>
                         <width>22</width>
                         <height>22</height>
-                        <fadetime>FadeTime</fadetime>
                         <aspectratio>keep</aspectratio>
                         <colordiffuse>FF76EE00</colordiffuse>
                         <texture background="true">LEDWhite.png</texture>
@@ -333,8 +326,7 @@
                             <height>240</height>
                             <bordertexture border="7">BlackBack.png</bordertexture>
                             <bordersize>9</bordersize>
-                            <fadetime>FadeTime</fadetime>
-                            <texture background="true">$INFO[Listitem.Icon]</texture>
+                            <texture>$INFO[ListItem.Icon]</texture>
                             <visible>String.IsEmpty(ListItem.AddonBroken)</visible>
                             <aspectratio>keep</aspectratio>
                         </control>
@@ -345,7 +337,6 @@
                             <height>240</height>
                             <bordertexture border="7">BlackBack.png</bordertexture>
                             <bordersize>9</bordersize>
-                            <fadetime>FadeTime</fadetime>
                             <texture background="true" colordiffuse="grey2">$INFO[Listitem.Icon]</texture>
                             <visible>!String.IsEmpty(ListItem.AddonBroken)</visible>
                             <aspectratio>keep</aspectratio>
@@ -355,7 +346,6 @@
                             <top>30</top>
                             <width>226</width>
                             <height>180</height>
-                            <fadetime>FadeTime</fadetime>
                             <texture background="true">Broken.png</texture>
                             <visible>!String.IsEmpty(ListItem.AddonBroken)</visible>
                         </control>
@@ -364,7 +354,6 @@
                             <top>14</top>
                             <width>30</width>
                             <height>30</height>
-                            <fadetime>FadeTime</fadetime>
                             <aspectratio>keep</aspectratio>
                             <colordiffuse>FF76EE00</colordiffuse>
                             <texture background="true">LEDWhite.png</texture>
@@ -535,7 +524,6 @@
                             <height>315</height>
                             <bordertexture border="30">ThumbShadow.png</bordertexture>
                             <bordersize>6</bordersize>
-                            <fadetime>FadeTime</fadetime>
                             <texture background="true">$INFO[Container(551).Listitem.Icon]</texture>
                             <visible>String.IsEmpty(ListItem.AddonBroken)</visible>
                         </control>
@@ -547,9 +535,8 @@
                             <height>315</height>
                             <bordertexture border="30">ThumbShadow.png</bordertexture>
                             <bordersize>6</bordersize>
-                            <fadetime>FadeTime</fadetime>
                             <colordiffuse>grey2</colordiffuse>
-                            <texture background="true">$INFO[Listitem.Icon]</texture>
+                            <texture>$INFO[ListItem.Icon]</texture>
                             <visible>!String.IsEmpty(ListItem.AddonBroken)</visible>
                         </control>
                         <control type="image">
@@ -558,7 +545,6 @@
                             <top>-99</top>
                             <width>285</width>
                             <height>285</height>
-                            <fadetime>FadeTime</fadetime>
                             <texture background="true">Broken.png</texture>
                             <visible>!String.IsEmpty(ListItem.AddonBroken)</visible>
                         </control>
@@ -568,7 +554,6 @@
                             <top>-99</top>
                             <width>45</width>
                             <height>45</height>
-                            <fadetime>FadeTime</fadetime>
                             <aspectratio>keep</aspectratio>
                             <colordiffuse>FF76EE00</colordiffuse>
                             <texture background="true">LEDWhite.png</texture>

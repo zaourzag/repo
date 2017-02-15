@@ -62,7 +62,6 @@
                         <aspectratio>stretch</aspectratio>
                         <bordertexture border="10">ThumbShadow.png</bordertexture>
                         <bordersize>6</bordersize>
-                        <fadetime>FadeTime</fadetime>
                         <texture background="true" fallback="FallbackCover.png">$INFO[ListItem.Icon]</texture>
                     </control>
                     <control type="image">
@@ -72,7 +71,6 @@
                         <height>90</height>
                         <colordiffuse>grey2</colordiffuse>
                         <aspectratio>stretch</aspectratio>
-                        <fadetime>FadeTime</fadetime>
                         <texture background="true" flipy="true" diffuse="ShadowWhite.png" fallback="FallbackCover.png">$INFO[ListItem.Icon]</texture>
                     </control>
                 </itemlayout>
@@ -85,7 +83,6 @@
                         <aspectratio>stretch</aspectratio>
                         <bordertexture border="10">ThumbShadowWhite.png</bordertexture>
                         <bordersize>8</bordersize>
-                        <fadetime>FadeTime</fadetime>
                         <texture background="true" fallback="FallbackCover.png">$INFO[ListItem.Icon]</texture>
                         <animation reversible="false" effect="zoom" start="-3,24,168,168" end="-18,-6,198,198" time="200">focus</animation>
                         <animation reversible="false" effect="zoom" end="-3,24,168,168" start="-18,-6,198,198" time="200">unfocus</animation>
@@ -481,7 +478,6 @@
                     <height>375</height>
                     <aspectratio>keep</aspectratio>
                     <texture background="true" fallback="special://skin/backgrounds/fallback_background.jpg">$INFO[ListItem.Art(fanart)]</texture>
-                    <fadetime>FadeTime</fadetime>
                     <visible>String.IsEmpty(Control.GetLabel(1200))|!Skin.HasSetting(music_art)</visible>
                 </control>
                 <control type="image">

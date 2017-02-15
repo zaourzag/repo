@@ -240,7 +240,7 @@
                             <height>225</height>
                             <aspectratio>scale</aspectratio>
                             <colordiffuse>grey1</colordiffuse>
-                            <texture background="true">$INFO[ListItem.Icon]</texture>
+                            <texture>$INFO[ListItem.Icon]</texture>
                             <bordertexture border="10">ThumbShadow.png</bordertexture>
                             <bordersize>6</bordersize>
                         </control>
@@ -296,7 +296,7 @@
                             <height>225</height>
                             <aspectratio>scale</aspectratio>
                             <colordiffuse>grey1</colordiffuse>
-                            <texture background="true">$INFO[ListItem.Icon]</texture>
+                            <texture>$INFO[ListItem.Icon]</texture>
                             <bordertexture border="10">ThumbShadow.png</bordertexture>
                             <bordersize>6</bordersize>
                             <visible>!Control.HasFocus(19111)</visible>
@@ -307,7 +307,7 @@
                             <width>324</width>
                             <height>225</height>
                             <aspectratio>scale</aspectratio>
-                            <texture background="true">$INFO[ListItem.Icon]</texture>
+                            <texture>$INFO[ListItem.Icon]</texture>
                             <bordertexture border="10">ThumbShadow.png</bordertexture>
                             <bordersize>6</bordersize>
                             <visible>Control.HasFocus(19111)</visible>
@@ -974,7 +974,7 @@
                             <top>0</top>
                             <width>45</width>
                             <height>45</height>
-                            <texture background="true">$INFO[ListItem.Property(Mannschaft1Logo)]</texture>
+                            <texture>$INFO[ListItem.Property(Mannschaft1Logo)]</texture>
                             <aspectratio align="left" aligny="top">stretch</aspectratio>
                         </control>
                         <control type="label">
@@ -1010,7 +1010,7 @@
                             <top>0</top>
                             <width>45</width>
                             <height>45</height>
-                            <texture background="true">$INFO[ListItem.Property(Mannschaft2Logo)]</texture>
+                            <texture>$INFO[ListItem.Property(Mannschaft2Logo)]</texture>
                             <aspectratio align="left" aligny="top">stretch</aspectratio>
                         </control>
                     </itemlayout>
@@ -1020,7 +1020,7 @@
                             <top>0</top>
                             <width>1260</width>
                             <height>54</height>
-                            <texture background="true">buttons/ButtonNFlight.png</texture>
+                            <texture>buttons/ButtonNFlight.png</texture>
                             <visible>Control.Hasfocus(88431)</visible>
                         </control>
                         <control type="label">
@@ -1039,7 +1039,7 @@
                             <top>0</top>
                             <width>45</width>
                             <height>45</height>
-                            <texture background="true">$INFO[ListItem.Property(Mannschaft1Logo)]</texture>
+                            <texture>$INFO[ListItem.Property(Mannschaft1Logo)]</texture>
                             <aspectratio align="left" aligny="top">stretch</aspectratio>
                         </control>
                         <control type="label">
@@ -1075,7 +1075,7 @@
                             <top>0</top>
                             <width>45</width>
                             <height>45</height>
-                            <texture background="true">$INFO[ListItem.Property(Mannschaft2Logo)]</texture>
+                            <texture>$INFO[ListItem.Property(Mannschaft2Logo)]</texture>
                             <aspectratio align="left" aligny="top">stretch</aspectratio>
                         </control>
                     </focusedlayout>
@@ -1146,7 +1146,7 @@
                     <width>1284</width>
                     <height>668</height>
                     <colordiffuse>grey2</colordiffuse>
-                    <texture background="true">WhiteBack.png</texture>
+                    <texture>WhiteBack.png</texture>
                 </control>
                 <control type="image">
                     <left>78</left>
@@ -1221,14 +1221,14 @@
                     <width>810</width>
                     <height>810</height>
                     <colordiffuse>grey3</colordiffuse>
-                    <texture background="true">WhiteBack.png</texture>
+                    <texture>WhiteBack.png</texture>
                 </control>
                 <control type="image">
                     <left>69</left>
                     <top>158</top>
                     <width>810</width>
                     <height>810</height>
-                    <texture background="true">$INFO[Container(88432).ListItem.Icon]</texture>
+                    <texture>$INFO[Container(88432).ListItem.Icon]</texture>
                     <aspectratio>keep</aspectratio>
                 </control>
             </control>
@@ -1255,7 +1255,7 @@
                             <top>8</top>
                             <width>120</width>
                             <height>120</height>
-                            <texture background="true">$INFO[ListItem.Icon]</texture>
+                            <texture>$INFO[ListItem.Icon]</texture>
                             <aspectratio align="left" aligny="top">keep</aspectratio>
                         </control>
                         <control type="label">
@@ -1309,7 +1309,7 @@
                             <top>8</top>
                             <width>120</width>
                             <height>120</height>
-                            <texture background="true">$INFO[ListItem.Icon]</texture>
+                            <texture>$INFO[ListItem.Icon]</texture>
                             <aspectratio align="left" aligny="top">keep</aspectratio>
                         </control>
                         <control type="label">
@@ -1591,7 +1591,7 @@
                         <top>861</top>
                         <width>300</width>
                         <height>12</height>
-                        <texture background="true">newscenter/0-pollen.png</texture>
+                        <texture>newscenter/0-pollen.png</texture>
                         <aspectratio>stretch</aspectratio>
                     </control>
                     <control type="label">
@@ -1608,7 +1608,7 @@
                         <top>861</top>
                         <width>300</width>
                         <height>12</height>
-                        <texture background="true">newscenter/1-pollen.png</texture>
+                        <texture>newscenter/1-pollen.png</texture>
                         <aspectratio>stretch</aspectratio>
                     </control>
                     <control type="label">
@@ -1625,7 +1625,7 @@
                         <top>861</top>
                         <width>300</width>
                         <height>12</height>
-                        <texture background="true">newscenter/2-pollen.png</texture>
+                        <texture>newscenter/2-pollen.png</texture>
                         <aspectratio>stretch</aspectratio>
                     </control>
                     <control type="label">
@@ -1642,7 +1642,7 @@
                         <top>861</top>
                         <width>300</width>
                         <height>12</height>
-                        <texture background="true">newscenter/3-pollen.png</texture>
+                        <texture>newscenter/3-pollen.png</texture>
                         <aspectratio>stretch</aspectratio>
                     </control>
                 </control>

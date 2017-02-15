@@ -46,7 +46,7 @@
                     <onclick>right</onclick>
                     <onclick>Filter</onclick>
                 </control>
-                <control type="button" id="3">
+                <control type="button" id="54">
                     <description>Sort by button</description>
                     <include>SidePanelButton</include>
                     <label>Skin Addons ...</label>

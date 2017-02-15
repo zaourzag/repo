@@ -335,7 +335,6 @@
                 <width>900</width>
                 <height>300</height>
                 <aspectratio>keep</aspectratio>
-                <fadetime>FadeTime</fadetime>
                 <texture>$INFO[Skin.String(Music_Folder_Path)]$INFO[ListItem.Artist,,/logo.png]</texture>
                 <visible>Skin.HasSetting(music_art)</visible>
                 <include>opencloseslideup</include>

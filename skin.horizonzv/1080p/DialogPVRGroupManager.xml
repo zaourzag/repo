@@ -380,7 +380,7 @@
                         <width>300</width>
                         <height>300</height>
                         <aspectratio aligny="bottom">keep</aspectratio>
-                        <texture background="true">$INFO[Container(11).ListItem.Icon]</texture>
+                        <texture>$INFO[Container(11).ListItem.Icon]</texture>
                         <visible>Control.HasFocus(11) | Control.HasFocus(71)</visible>
                         <include>openclosevisible</include>
                     </control>
@@ -390,7 +390,7 @@
                         <width>300</width>
                         <height>300</height>
                         <aspectratio aligny="bottom">keep</aspectratio>
-                        <texture background="true">$INFO[Container(12).ListItem.Icon]</texture>
+                        <texture>$INFO[Container(12).ListItem.Icon]</texture>
                         <visible>Control.HasFocus(12) | Control.HasFocus(72)</visible>
                         <include>openclosevisible</include>
                     </control>

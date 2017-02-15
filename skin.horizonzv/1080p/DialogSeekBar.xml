@@ -127,7 +127,7 @@
                             <width>300</width>
                             <height>150</height>
                             <aspectratio align="left" aligny="bottom">keep</aspectratio>
-                            <texture background="true" border="4">$VAR[MovieStudioLogoVar]$INFO[VideoPlayer.Studio,,.png]</texture>
+                            <texture border="4">$VAR[MovieStudioLogoVar]$INFO[VideoPlayer.Studio,,.png]</texture>
                         </control>
                         <control type="image">
                             <left>1590</left>
@@ -135,7 +135,7 @@
                             <width>300</width>
                             <height>150</height>
                             <aspectratio align="right" aligny="bottom">keep</aspectratio>
-                            <texture background="true" border="4">$VAR[extraart_player_rule]</texture>
+                            <texture border="4">$VAR[extraart_player_rule]</texture>
                             <visible>Skin.HasSetting(video_art)+!VideoPlayer.Content(episodes)</visible>
                         </control>
                         <control type="image">
@@ -144,7 +144,7 @@
                             <width>300</width>
                             <height>150</height>
                             <aspectratio align="right">keep</aspectratio>
-                            <texture background="true" border="4">$VAR[extraart_tvshow_player_rule]</texture>
+                            <texture border="4">$VAR[extraart_tvshow_player_rule]</texture>
                             <visible>Skin.HasSetting(tvshow_art)+VideoPlayer.Content(episodes)</visible>
                         </control>
                     </control>
@@ -154,16 +154,15 @@
                         <top>154</top>
                         <width>1950</width>
                         <height>165</height>
-                        <texture background="true" border="2">Underlay_light.png</texture>
+                        <texture border="2">Underlay_light.png</texture>
                     </control>
                     <control type="image">
                         <left>892</left>
                         <top>165</top>
                         <width>135</width>
                         <height>135</height>
-                        <fadetime>FadeTime</fadetime>
                         <aspectratio>keep</aspectratio>
-                        <texture background="true" border="4">$VAR[OSDTexture]</texture>
+                        <texture border="4">$VAR[OSDTexture]</texture>
                     </control>
                     <control type="group">
                         <top>180</top>
@@ -261,7 +260,7 @@
                             <width>3</width>
                             <height>195</height>
                             <colordiffuse>fanartdiffuse</colordiffuse>
-                            <texture background="true">Separator4.png</texture>
+                            <texture>Separator4.png</texture>
                         </control>
                         <control type="image">
                             <left>-15</left>
@@ -494,7 +493,7 @@
                                         <height>195</height>
                                         <width>390</width>
                                         <aspectratio align="center" aligny="bottom">keep</aspectratio>
-                                        <texture background="true">$INFO[ListItem.Icon]</texture>
+                                        <texture>$INFO[ListItem.Icon]</texture>
                                         <visible>!String.IsEmpty(ListItem.Icon)</visible>
                                     </control>
                                 </itemlayout>
@@ -503,7 +502,7 @@
                                         <height>195</height>
                                         <width>390</width>
                                         <aspectratio align="center" aligny="bottom">keep</aspectratio>
-                                        <texture background="true" diffuse="masks/mask.png">$INFO[ListItem.Icon]</texture>
+                                        <texture diffuse="masks/mask.png">$INFO[ListItem.Icon]</texture>
                                         <visible>!String.IsEmpty(ListItem.Icon)</visible>
                                     </control>
                                 </focusedlayout>

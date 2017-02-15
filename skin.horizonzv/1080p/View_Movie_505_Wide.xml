@@ -69,7 +69,7 @@
                         <top>8</top>
                         <width>525</width>
                         <height>87</height>
-                        <texture background="true">$INFO[ListItem.Icon]</texture>
+                        <texture>$INFO[ListItem.Icon]</texture>
                         <aspectratio>keep</aspectratio>
                         <visible>ListItem.IsParentFolder</visible>
                     </control>
@@ -152,7 +152,7 @@
                             <top>8</top>
                             <width>525</width>
                             <height>87</height>
-                            <texture background="true">$INFO[ListItem.Icon]</texture>
+                            <texture>$INFO[ListItem.Icon]</texture>
                             <aspectratio>keep</aspectratio>
                             <visible>ListItem.IsParentFolder</visible>
                         </control>
@@ -241,7 +241,7 @@
                         <width>309</width>
                         <height>165</height>
                         <colordiffuse>$VAR[CoverDim]</colordiffuse>
-                        <texture background="true">$INFO[ListItem.Icon]</texture>
+                        <texture>$INFO[ListItem.Icon]</texture>
                         <aspectratio>scale</aspectratio>
                     </control>
                     <control type="label">
@@ -283,7 +283,7 @@
                             <top>8</top>
                             <width>309</width>
                             <height>165</height>
-                            <texture background="true">$INFO[ListItem.Icon]</texture>
+                            <texture>$INFO[ListItem.Icon]</texture>
                             <aspectratio>scale</aspectratio>
                         </control>
                         <control type="image">
@@ -341,7 +341,7 @@
                         <width>240</width>
                         <height>342</height>
                         <colordiffuse>$VAR[CoverDim]</colordiffuse>
-                        <texture background="true">$INFO[ListItem.Icon]</texture>
+                        <texture>$INFO[ListItem.Icon]</texture>
                         <aspectratio>stretch</aspectratio>
                     </control>
                     <control type="image">
@@ -391,7 +391,7 @@
                             <top>8</top>
                             <width>240</width>
                             <height>342</height>
-                            <texture background="true">$INFO[ListItem.Icon]</texture>
+                            <texture>$INFO[ListItem.Icon]</texture>
                             <aspectratio>stretch</aspectratio>
                         </control>
                         <control type="image">
@@ -457,7 +457,6 @@
                 <top>906</top>
                 <width>300</width>
                 <height>63</height>
-                <fadetime>FadeTime</fadetime>
                 <aspectratio align="left">keep</aspectratio>
                 <texture background="true">$INFO[ListItem.Art(clearlogo)]</texture>
                 <animation effect="slide" end="0,-6" time="150" condition="Skin.HasSetting(CommonPageCount)">Conditional</animation>

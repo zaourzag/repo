@@ -322,7 +322,7 @@
                     <top>147</top>
                     <width>450</width>
                     <height>1</height>
-                    <texture background="true">Separator2.png</texture>
+                    <texture>Separator2.png</texture>
                 </control>
             </control>
         </control>

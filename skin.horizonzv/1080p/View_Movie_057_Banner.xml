@@ -108,7 +108,7 @@
                             <width>1054</width>
                             <height>195</height>
                             <aspectratio>keep</aspectratio>
-                            <texture background="true">$INFO[ListItem.Icon]</texture>
+                            <texture>$INFO[ListItem.Icon]</texture>
                             <visible>ListItem.IsParentFolder</visible>
                         </control>
                         <control type="group">
@@ -128,7 +128,6 @@
                                         <top>4</top>
                                         <width>200</width>
                                         <height>327</height>
-                                        <fadetime>FadeTime</fadetime>
                                         <texture background="true" diffuse="clear-cases/clearcase_inlay.png" fallback="FallbackCover.png">$VAR[PosterThumb]</texture>
                                         <aspectratio align="center" aligny="center">stretch</aspectratio>
                                     </control>
@@ -138,7 +137,6 @@
                                         <top>0</top>
                                         <width>225</width>
                                         <height>333</height>
-                                        <fadetime>FadeTime</fadetime>
                                         <texture background="true" fallback="clear-cases/fallback.png">$VAR[clearcase]</texture>
                                         <aspectratio align="left" aligny="top">stretch</aspectratio>
                                     </control>
@@ -232,7 +230,6 @@
                                 <width>150</width>
                                 <height>33</height>
                                 <aspectratio align="left">stretch</aspectratio>
-                                <fadetime>FadeTime</fadetime>
                                 <texture background="true" fallback="leftratingvideo/0.0.png">$INFO[ListItem.Rating,leftratingvideo/,.png]</texture>
                             </control>
                             <control type="group">
@@ -254,7 +251,6 @@
                                 <top>327</top>
                                 <width>150</width>
                                 <height>33</height>
-                                <fadetime>FadeTime</fadetime>
                                 <aspectratio align="right" aligny="bottom">keep</aspectratio>
                                 <texture background="true">$VAR[Furniture_VideoRating]</texture>
                                 <!-- <visible>Skin.HasSetting(fsk_original)|Skin.HasSetting(fsk_dual)</visible> -->
@@ -289,7 +285,7 @@
                             <width>1054</width>
                             <height>195</height>
                             <aspectratio>keep</aspectratio>
-                            <texture background="true">$INFO[ListItem.Icon]</texture>
+                            <texture>$INFO[ListItem.Icon]</texture>
                             <visible>ListItem.IsParentFolder</visible>
                         </control>
                         <control type="group">
@@ -355,7 +351,6 @@
                                 <width>150</width>
                                 <height>33</height>
                                 <aspectratio align="left">stretch</aspectratio>
-                                <fadetime>FadeTime</fadetime>
                                 <texture background="true" fallback="leftratingvideo/0.0.png">$INFO[ListItem.Rating,leftratingvideo/,.png]</texture>
                                 <visible>!Container.Content(seasons)</visible>
                             </control>
@@ -367,7 +362,6 @@
                             <top>122</top>
                             <width>150</width>
                             <height>33</height>
-                            <fadetime>FadeTime</fadetime>
                             <aspectratio align="right" aligny="bottom">keep</aspectratio>
                             <texture background="true">$VAR[Furniture_VideoRating]</texture>
                             <!-- <visible>Skin.HasSetting(fsk_original)|Skin.HasSetting(fsk_dual)</visible> -->
@@ -392,7 +386,7 @@
                             <width>1054</width>
                             <height>195</height>
                             <aspectratio>keep</aspectratio>
-                            <texture background="true">$INFO[ListItem.Icon]</texture>
+                            <texture>$INFO[ListItem.Icon]</texture>
                             <visible>ListItem.IsParentFolder</visible>
                         </control>
                         <control type="image">
@@ -465,7 +459,6 @@
                                 <width>150</width>
                                 <height>33</height>
                                 <aspectratio align="left">stretch</aspectratio>
-                                <fadetime>FadeTime</fadetime>
                                 <texture background="true" fallback="leftratingvideo/0.0.png">$INFO[ListItem.Rating,leftratingvideo/,.png]</texture>
                                 <visible>!Container.Content(seasons)</visible>
                             </control>
@@ -485,7 +478,6 @@
                             <top>38</top>
                             <width>150</width>
                             <height>33</height>
-                            <fadetime>FadeTime</fadetime>
                             <aspectratio align="right" aligny="bottom">keep</aspectratio>
                             <texture background="true">$VAR[Furniture_VideoRating]</texture>
                             <!-- <visible>Skin.HasSetting(fsk_original)|Skin.HasSetting(fsk_dual)</visible> -->
@@ -566,7 +558,6 @@
                     <top>532</top>
                     <width>315</width>
                     <height>172</height>
-                    <fadetime>FadeTime</fadetime>
                     <texture background="true">Black.png</texture>
                     <visible>![String.IsEmpty(Control.GetLabel(1099))+String.IsEmpty(Control.GetLabel(1100))]</visible>
                 </control>
@@ -580,7 +571,6 @@
                     <aspectratio>keep</aspectratio>
                     <timeperimage>5000</timeperimage>
                     <randomize>true</randomize>
-                    <fadetime>FadeTime</fadetime>
                     <visible>Skin.HasSetting(music_art)</visible>
                 </control>
                 <control type="image" id="1100">
@@ -590,7 +580,6 @@
                     <width>304</width>
                     <height>164</height>
                     <aspectratio align="left" aligny="bottom">scale</aspectratio>
-                    <fadetime>FadeTime</fadetime>
                     <texture background="true">$INFO[ListItem.Art(fanart)]</texture>
                     <visible>!String.IsEmpty(ListItem.Art(fanart))+String.IsEmpty(Control.GetLabel(1099))</visible>
                 </control>
@@ -600,7 +589,6 @@
                     <top>0</top>
                     <width>315</width>
                     <height>170</height>
-                    <fadetime>FadeTime</fadetime>
                     <texture background="true">Black.png</texture>
                     <visible>!String.IsEmpty(ListItem.Studio)</visible>
                 </control>
@@ -610,7 +598,6 @@
                     <top>6</top>
                     <width>303</width>
                     <height>162</height>
-                    <fadetime>FadeTime</fadetime>
                     <aspectratio>keep</aspectratio>
                     <texture background="true" fallback="Horizonzv.png">$VAR[MovieStudioLogoVar]$INFO[ListItem.Studio,,.png]</texture>
                     <visible>!String.IsEmpty(ListItem.Studio)</visible>
@@ -625,7 +612,6 @@
                     <top>68</top>
                     <width>318</width>
                     <height>172</height>
-                    <fadetime>FadeTime</fadetime>
                     <texture background="true">Black.png</texture>
                     <visible>!String.IsEmpty(Control.GetLabel(3203))</visible>
                 </control>
@@ -636,7 +622,6 @@
                     <width>302</width>
                     <height>160</height>
                     <aspectratio align="center" aligny="bottom">keep</aspectratio>
-                    <fadetime>FadeTime</fadetime>
                     <texture background="true">$VAR[extraart_tvshow_rule]</texture>
                     <visible>!String.IsEmpty(Control.GetLabel(3203))</visible>
                     <visible>Skin.HasSetting(tvshow_art)</visible>
@@ -647,7 +632,6 @@
                     <top>68</top>
                     <width>318</width>
                     <height>172</height>
-                    <fadetime>FadeTime</fadetime>
                     <texture background="true">Black.png</texture>
                     <visible>!String.IsEmpty(Control.GetLabel(3204))</visible>
                 </control>
@@ -658,7 +642,6 @@
                     <width>302</width>
                     <height>160</height>
                     <aspectratio align="center" aligny="bottom">keep</aspectratio>
-                    <fadetime>FadeTime</fadetime>
                     <texture background="true">$VAR[extraart_rule]</texture>
                     <visible>!String.IsEmpty(Control.GetLabel(3204))</visible>
                     <visible>Skin.HasSetting(video_art)</visible>

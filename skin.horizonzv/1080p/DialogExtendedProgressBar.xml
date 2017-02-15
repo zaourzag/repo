@@ -15,7 +15,7 @@
                 <description>background image</description>
                 <width>1800</width>
                 <height>120</height>
-                <texture background="true">KaiToastBack.png</texture>
+                <texture>KaiToastBack.png</texture>
             </control>
             <control type="image">
                 <description>Busy animation</description>
@@ -23,7 +23,7 @@
                 <top>52</top>
                 <width>38</width>
                 <height>38</height>
-                <texture background="true">Busy.png</texture>
+                <texture>Busy.png</texture>
                 <aspectratio>keep</aspectratio>
                 <colordiffuse>grey2</colordiffuse>
                 <animation effect="rotate" start="0" end="360" center="auto" time="2500" loop="true" condition="true">conditional</animation>

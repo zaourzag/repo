@@ -174,14 +174,26 @@
                     <item>
                         <label>Artwork Downloader</label>
                         <label2>$LOCALIZE[24038]</label2>
-                        <onclick>InstallAddon(script.artwork.downloader)</onclick>
-                        <visible>!System.HasAddon(script.artwork.downloader)</visible>
+                        <onclick>InstallAddon(script.cdartmanager)</onclick>
+                        <visible>!System.HasAddon(script.cdartmanager)</visible>
                     </item>
                     <item>
-                        <label>Artwork Downloader $INFO[System.AddonVersion(script.artwork.downloader),(,)]</label>
+                        <label>Artwork Downloader $INFO[System.AddonVersion(script.cdartmanager),(,)]</label>
                         <label2>$LOCALIZE[5]</label2>
-                        <onclick>Addon.OpenSettings(script.artwork.downloader)</onclick>
-                        <visible>System.HasAddon(script.artwork.downloader)</visible>
+                        <onclick>Addon.OpenSettings(script.cdartmanager)</onclick>
+                        <visible>System.HasAddon(script.cdartmanager)</visible>
+                    </item>
+                    <item>
+                        <label>CDArt Manager</label>
+                        <label2>$LOCALIZE[24038]</label2>
+                        <onclick>InstallAddon(script.cdartmanager)</onclick>
+                        <visible>!System.HasAddon(script.cdartmanager)</visible>
+                    </item>
+                    <item>
+                        <label>CDArt Manager $INFO[System.AddonVersion(script.cdartmanager),(,)]</label>
+                        <label2>$LOCALIZE[5]</label2>
+                        <onclick>Addon.OpenSettings(script.cdartmanager)</onclick>
+                        <visible>System.HasAddon(script.cdartmanager)</visible>
                     </item>
                     <item>
                         <label>Extended Info Script</label>
@@ -207,7 +219,7 @@
                         <onclick>Addon.OpenSettings(script.globalsearch)</onclick>
                         <visible>System.HasAddon(script.globalsearch)</visible>
                     </item>
-                    <item>
+                    <!-- <item>
                         <label>Radio Addon</label>
                         <label2>$LOCALIZE[24038]</label2>
                         <onclick>InstallAddon(plugin.audio.radio_de)</onclick>
@@ -218,8 +230,8 @@
                         <label2>$LOCALIZE[5]</label2>
                         <onclick>Addon.OpenSettings(plugin.audio.radio_de)</onclick>
                         <visible>System.HasAddon(plugin.audio.radio_de)</visible>
-                    </item>
-                    <item>
+                    </item> -->
+                    <!-- <item>
                         <label>TvTunes</label>
                         <label2>$LOCALIZE[24038]</label2>
                         <onclick>InstallAddon(script.tvtunes)</onclick>
@@ -230,91 +242,91 @@
                         <label2>$LOCALIZE[5]</label2>
                         <onclick>Addon.OpenSettings(script.tvtunes)</onclick>
                         <visible>System.HasAddon(script.tvtunes)</visible>
-                    </item>
+                    </item> -->
                     <item>
                         <label>Fritz Smart Home</label>
                         <label2>$LOCALIZE[24038]</label2>
 						<onclick>InstallAddon(plugin.program.fritzact)</onclick>
 						<visible>!System.HasAddon(plugin.program.fritzact)</visible>
-                        <!-- <visible>System.HasAddon(repository.kodinerds)</visible> -->
                     </item>
                     <item>
                         <label>Fritz Smart Home $INFO[System.AddonVersion(plugin.program.fritzact),(,)]</label>
                         <label2>$LOCALIZE[5]</label2>
                         <onclick>Addon.OpenSettings(plugin.program.fritzact)</onclick>
                         <visible>System.HasAddon(plugin.program.fritzact)</visible>
-                        <!-- <visible>System.HasAddon(repository.kodinerds)</visible> -->
                     </item>
                     <item>
                         <label>German Telecast Offers</label>
                         <label2>$LOCALIZE[24038]</label2>
                         <onclick>InstallAddon(script.service.gto)</onclick>
                         <visible>!System.HasAddon(plugin.service.gto)</visible>
-                        <!-- <visible>System.HasAddon(repository.kodinerds)</visible> -->
                     </item>
                     <item>
                         <label>German Telecast Offers $INFO[System.AddonVersion(plugin.service.gto),(,)]</label>
                         <label2>$LOCALIZE[5]</label2>
                         <onclick>Addon.OpenSettings(plugin.service.gto)</onclick>
                         <visible>System.HasAddon(plugin.service.gto)</visible>
-                        <!-- <visible>System.HasAddon(repository.kodinerds)</visible> -->
                     </item>
                     <item>
                         <label>KN Switchtimer Service</label>
                         <label2>$LOCALIZE[24038]</label2>
                         <onclick>InstallAddon(service.kn.switchtimer)</onclick>
                         <visible>!System.HasAddon(service.kn.switchtimer)</visible>
-                        <!-- <visible>System.HasAddon(repository.kodinerds)</visible> -->
                     </item>
                     <item>
                         <label>KN Switchtimer Service $INFO[System.AddonVersion(service.kn.switchtimer),(,)]</label>
                         <label2>$LOCALIZE[5]</label2>
                         <onclick>Addon.OpenSettings(service.kn.switchtimer)</onclick>
                         <visible>System.HasAddon(service.kn.switchtimer)</visible>
-                        <!-- <visible>System.HasAddon(repository.kodinerds)</visible> -->
                     </item>
                     <item>
                         <label>News Center</label>
                         <label2>$LOCALIZE[24038]</label2>
                         <onclick>InstallAddon(plugin.program.newscenter)</onclick>
                         <visible>!System.HasAddon(plugin.program.newscenter)</visible>
-                        <!-- <visible>System.HasAddon(repository.kodinerds)</visible> -->
                     </item>
                     <item>
                         <label>News Center $INFO[System.AddonVersion(plugin.program.newscenter),(,)]</label>
                         <label2>$LOCALIZE[5]</label2>
                         <onclick>Addon.OpenSettings(plugin.program.newscenter)</onclick>
                         <visible>System.HasAddon(plugin.program.newscenter)</visible>
-                        <!-- <visible>System.HasAddon(repository.kodinerds)</visible> -->
                     </item>
                     <item>
                         <label>Serien Planer</label>
                         <label2>$LOCALIZE[24038]</label2>
                         <onclick>InstallAddon(plugin.program.serienplaner)</onclick>
                         <visible>!System.HasAddon(plugin.program.serienplaner)</visible>
-                        <!-- <visible>System.HasAddon(repository.kodinerds)</visible> -->
                     </item>
                     <item>
                         <label>Serien Planer $INFO[System.AddonVersion(plugin.program.serienplaner),(,)]</label>
                         <label2>$LOCALIZE[5]</label2>
                         <onclick>Addon.OpenSettings(plugin.program.serienplaner)</onclick>
                         <visible>System.HasAddon(plugin.program.serienplaner)</visible>
-                        <!-- <visible>System.HasAddon(repository.kodinerds)</visible> -->
+                    </item>
+                    <item>
+                        <label>Skinhelper Ping &amp; WOL by _Andy_</label>
+                        <label2>$LOCALIZE[24038]</label2>
+                        <onclick>InstallAddon(script.skinhelper.PING)</onclick>
+                        <visible>!System.HasAddon(script.skinhelper.PING)</visible>
+                    </item>
+                    <item>
+                        <label>Skinhelper Ping &amp; WOL by _Andy_ $INFO[System.AddonVersion(script.skinhelper.PING),(,)]</label>
+                        <label2>$LOCALIZE[5]</label2>
+                        <onclick>Addon.OpenSettings(script.skinhelper.PING)</onclick>
+                        <visible>System.HasAddon(script.skinhelper.PING)</visible>
                     </item>
                     <item>
                         <label>Library Node Editor</label>
                         <label2>$LOCALIZE[24038]</label2>
                         <onclick>InstallAddon(plugin.library.node.editor)</onclick>
                         <visible>!System.HasAddon(plugin.library.node.editor)</visible>
-                        <!-- <visible>System.HasAddon(repository.kodinerds)</visible> -->
                     </item>
                     <item>
                         <label>Library Node Editor $INFO[System.AddonVersion(plugin.library.node.editor),(,)]</label>
-                        <label2>$LOCALIZE[5]</label2>
+                        <label2>$LOCALIZE[21385]</label2>
 						<onclick>Action(back)</onclick>
                         <onclick>RunAddon(plugin.library.node.editor)</onclick>
                         <visible>System.HasAddon(plugin.library.node.editor)</visible>
-                        <!-- <visible>System.HasAddon(repository.kodinerds)</visible> -->
                     </item>
                     <item>
                         <label>Resource Images Weatherfanart Multi</label>

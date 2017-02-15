@@ -34,7 +34,7 @@
                     <width>750</width>
                     <height>525</height>
                     <aspectratio>keep</aspectratio>
-                    <texture background="true" border="5">$INFO[ListItem.FilenameAndPath]</texture>
+                    <texture border="5">$INFO[ListItem.FilenameAndPath]</texture>
                     <bordertexture border="10">ThumbShadow.png</bordertexture>
                     <bordersize>7</bordersize>
                 </control>
@@ -44,7 +44,7 @@
                     <width>3</width>
                     <height>525</height>
                     <colordiffuse>fanartdiffuse</colordiffuse>
-                    <texture background="true" border="1">Separator4.png</texture>
+                    <texture border="1">Separator4.png</texture>
                 </control>
                 <control type="scrollbar" id="60">
                     <left>1898</left>
@@ -96,7 +96,7 @@
                             <width>780</width>
                             <height>54</height>
                             <colordiffuse>menudiffuse</colordiffuse>
-                            <texture background="true" border="5">buttons/ButtonNFlight.png</texture>
+                            <texture border="5">buttons/ButtonNFlight.png</texture>
                             <visible>Control.HasFocus(5)</visible>
                         </control>
                         <control type="label">

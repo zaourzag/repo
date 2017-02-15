@@ -26,7 +26,6 @@
                     <top>465</top>
                     <width>1200</width>
                     <height>1200</height>
-                    <fadetime>FadeTime</fadetime>
                     <texture background="true" fallback="cdart/default_glass.png" diffuse="masks/cdart_mask.png">$INFO[Skin.String(Music_Folder_Path),,../]$INFO[ListItem.Artist,,/]$INFO[ListItem.Album,,/cdart.png]</texture>
                     <visible>Skin.HasSetting(music_art)</visible>
                     <visible>!Container.Content(songs)</visible>
@@ -38,7 +37,6 @@
                     <top>465</top>
                     <width>1200</width>
                     <height>1200</height>
-                    <fadetime>FadeTime</fadetime>
                     <texture background="true" fallback="cdart/default_glass.png" diffuse="masks/cdart_mask.png">$INFO[ListItem.Path,,cdart.png]</texture>
                     <visible>Skin.HasSetting(music_art)</visible>
                     <visible>Container.Content(songs)</visible>
@@ -50,7 +48,6 @@
                     <top>465</top>
                     <width>1200</width>
                     <height>1200</height>
-                    <fadetime>FadeTime</fadetime>
                     <aspectratio>keep</aspectratio>
                     <texture background="true">cdart/default_glass.png</texture>
                     <visible>!Skin.HasSetting(music_art)</visible>

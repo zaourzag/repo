@@ -35,7 +35,7 @@
                 <height>230</height>
                 <width>390</width>
                 <aspectratio align="center" aligny="bottom">keep</aspectratio>
-                <texture background="true" border="4">$VAR[extraart_tvshow_player_rule_fullscreen]$VAR[extraart_player_rule]</texture>
+                <texture border="4">$VAR[extraart_tvshow_player_rule_fullscreen]$VAR[extraart_player_rule]</texture>
                 <visible>[Skin.HasSetting(tvshow_art)+VideoPlayer.Content(episodes)]|[Skin.HasSetting(video_art)+VideoPlayer.Content(movies)]</visible>
                 <visible>Window.IsVisible(fullscreenvideo)+!Window.IsVisible(SeekBar)</visible>
             </control>

@@ -37,7 +37,6 @@
                         <width>375</width>
                         <height>231</height>
                         <aspectratio>keep</aspectratio>
-                        <fadetime>FadeTime</fadetime>
                         <texture background="true" diffuse="Shine.png">$INFO[ListItem.Art(fanart)]</texture>
                     </control>
                     <control type="textbox">
@@ -148,7 +147,6 @@
                     <pagecontrol>62</pagecontrol>
                     <scrolltime>300</scrolltime>
                     <preloaditems>2</preloaditems>
-                    <fadetime>FadeTime</fadetime>
                     <visible>Container.Content(artists)|Container.Content(Albums)</visible>
                     <itemlayout height="232" width="232" condition="Container.Content(artists)">
                         <control type="group">
@@ -159,7 +157,7 @@
                                 <height>225</height>
                                 <aspectratio>stretch</aspectratio>
                                 <colordiffuse>$VAR[CoverDim]</colordiffuse>
-                                <texture background="true">$INFO[ListItem.Icon]</texture>
+                                <texture>$INFO[ListItem.Icon]</texture>
                                 <bordertexture border="1">buttons/ButtonNF.png</bordertexture>
                                 <bordersize>4</bordersize>
                             </control>
@@ -178,7 +176,7 @@
                                 <width>225</width>
                                 <height>225</height>
                                 <aspectratio>stretch</aspectratio>
-                                <texture background="true">$INFO[ListItem.Icon]</texture>
+                                <texture>$INFO[ListItem.Icon]</texture>
                                 <bordertexture border="1">buttons/ButtonNF.png</bordertexture>
                                 <bordersize>4</bordersize>
                             </control>
@@ -193,7 +191,7 @@
                                 <height>225</height>
                                 <aspectratio>stretch</aspectratio>
                                 <colordiffuse>$VAR[CoverDim]</colordiffuse>
-                                <texture background="true">$INFO[ListItem.Icon]</texture>
+                                <texture>$INFO[ListItem.Icon]</texture>
                                 <bordertexture border="1">buttons/ButtonNF.png</bordertexture>
                                 <bordersize>4</bordersize>
                                 <visible>Skin.HasSetting(hideMusicCases)</visible>
@@ -232,7 +230,7 @@
                                 <width>225</width>
                                 <height>225</height>
                                 <aspectratio>stretch</aspectratio>
-                                <texture background="true">$INFO[ListItem.Icon]</texture>
+                                <texture>$INFO[ListItem.Icon]</texture>
                                 <bordertexture border="1">buttons/ButtonNF.png</bordertexture>
                                 <bordersize>4</bordersize>
                                 <visible>Skin.HasSetting(hideMusicCases)</visible>

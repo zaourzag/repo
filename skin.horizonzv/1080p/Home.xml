@@ -3,6 +3,7 @@
     <defaultcontrol always="true">9000</defaultcontrol>
 	<backgroundcolor>$VAR[BackgroundOverlayColor]</backgroundcolor>
     <menucontrol>200</menucontrol>
+	<onload condition="System.HasAddon(script.skinhelper.PING)">RunScript(script.skinhelper.PING)</onload>
 	<onload condition="!System.HasAddon(script.image.resource.select)">InstallAddon(script.image.resource.select)</onload>
 	<onload condition="!System.HasAddon(resource.images.languageflags.colour)">InstallAddon(resource.images.languageflags.colour)</onload>
 	<!-- <onload condition="!System.HasAddon(resource.images.weathericons.outline-hd)">InstallAddon(resource.images.weathericons.outline)</onload> -->
@@ -278,6 +279,7 @@
                                 <label2>masks/Default_sharp.png</label2>
                                 <icon>center/Center_WOL.png</icon>
                                 <thumb>-</thumb>
+								<!-- <onclick>RunScript(script.skinhelper.PING,menu)</onclick> -->
                                 <onclick>ActivateWindow(1151)</onclick>
                                 <visible>Skin.HasSetting(wolhome)</visible>
                             </item>
@@ -490,6 +492,8 @@
             <orientation>horizontal</orientation>
             <include>opencloseslideleft</include>
             <visible>!Control.HasFocus(666)</visible>
+			<onfocus>Control.SetFocus(9000)</onfocus>
+			<onclick>Control.SetFocus(9000)</onclick>
             <animation effect="slide" end="-42" condition="String.IsEqual(Container(4445).NumItems,2)">Conditional</animation>
             <animation effect="slide" end="-84" condition="String.IsEqual(Container(4445).NumItems,3)">Conditional</animation>
 			<control type="button" id="4444">
@@ -497,12 +501,11 @@
 				<height>40</height>
 				<textoffsetx>0</textoffsetx>
 				<textwidht>40</textwidht>
-				<label>1$INFO[Window(Home).Property(SkinHelperPING.numitems)]</label>
+				<label>$INFO[Window(Home).Property(SkinHelperPING.servercount)]</label>
 				<texturefocus>ServerIcon.png</texturefocus>
 				<texturenofocus>ServerIcon.png</texturenofocus>
-				<!-- <visible>String.IsGreater(Window(Home).Property(SkinHelperPING.numitems),0)</visible> -->
-				<visible>String.IsEqual(Window(Home).Property(SkinHelperPING.server1),on)</visible>
-				<visible>System.HasAddon(service.skinhelper.PING)</visible>
+				<visible>Integer.IsGreater(Window(Home).Property(SkinHelperPING.servercount),0)</visible>
+				<visible>System.HasAddon(script.skinhelper.PING)</visible>
 			</control>
             <control type="image">
                 <description>Conditions Label</description>
@@ -682,7 +685,7 @@
                 <align>left</align>
                 <textcolor>orange</textcolor>
                 <shadowcolor>black</shadowcolor>
-                <label>Ping: $INFO[Window(Home).Property(SkinHelperPING.server1)] | </label>
+                <label>mac1: $INFO[Window(Home).Property(SkinHelperPing.mac1)] | </label>
             </control>
             <control type="label">
                 <left>30</left>
@@ -693,7 +696,7 @@
                 <align>left</align>
                 <textcolor>orange</textcolor>
                 <shadowcolor>black</shadowcolor>
-                <label>Ping: $INFO[Window(Home).Property(SkinHelperPING.server2)] | </label>
+                <label>on/off: $INFO[Window(Home).Property(SkinHelperPING.server1)] | </label>
             </control>
             <control type="label">
                 <left>30</left>
@@ -704,7 +707,7 @@
                 <align>left</align>
                 <textcolor>orange</textcolor>
                 <shadowcolor>black</shadowcolor>
-                <label>Ping: $INFO[Window(Home).Property(SkinHelperPING.server3)] | </label>
+                <label>Ping: $INFO[Window(Home).Property(SkinHelperPING.servercount)] | </label>
             </control>
             <control type="label">
                 <left>30</left>

@@ -332,7 +332,6 @@
 								<width>368</width>
 								<height>534</height>
 								<aspectratio>stretch</aspectratio>
-								<fadetime>FadeTime</fadetime>
 								<texture diffuse="clear-cases/clearcase_inlay.png" fallback="FallbackCover.png">$VAR[PosterThumb]</texture>
 							</control>
 							<control type="image">
@@ -341,7 +340,6 @@
 								<width>412</width>
 								<height>540</height>
 								<aspectratio>stretch</aspectratio>
-								<fadetime>FadeTime</fadetime>
 								<texture fallback="clear-cases/fallback.png">$VAR[clearcase]</texture>
 								<visible>!String.IsEqual(ListItem.DBType,tvshow)</visible>
 							</control>
@@ -351,7 +349,6 @@
 								<width>412</width>
 								<height>540</height>
 								<aspectratio>stretch</aspectratio>
-								<fadetime>FadeTime</fadetime>
 								<texture>clear-cases/tvshows.png</texture>
 								<visible>String.IsEqual(ListItem.DBType,tvshow)</visible>
 							</control>
@@ -364,7 +361,6 @@
 								<width>368</width>
 								<height>534</height>
 								<aspectratio>stretch</aspectratio>
-								<fadetime>FadeTime</fadetime>
 								<bordertexture border="10">ThumbShadow.png</bordertexture>
 								<bordersize>7</bordersize>
 								<texture fallback="FallbackCover.png">$VAR[PosterThumb]</texture>

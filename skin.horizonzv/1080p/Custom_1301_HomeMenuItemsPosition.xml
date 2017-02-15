@@ -6,13 +6,11 @@
         <!-- <include>DialogBackground</include> -->
         <control type="image">
             <include>Dimensions_Fullscreen</include>
-            <fadetime>FadeTime</fadetime>
             <texture background="true">special://skin/backgrounds/gambit/background.jpg</texture>
             <visible>Skin.HasSetting(gambit_background)</visible>
         </control>
         <control type="image">
             <include>Dimensions_Fullscreen</include>
-            <fadetime>FadeTime</fadetime>
             <texture background="true">$INFO[Container(13000).ListItem.Icon]</texture>
         </control>
         <control type="group">
@@ -53,13 +51,6 @@
                         <width>645</width>
                         <texture background="true" flipx="true">Sidefade.png</texture>
                     </control>
-                    <!-- <control type="image">
-						<left>10</left>
-						<top>584</top>
-						<height>30</height>
-						<width>430</width>
-						<texture background="true">buttons/ButtonNFlight.png</texture>
-					</control> -->
                     <control type="group">
                         <top>60</top>
                         <control type="label">

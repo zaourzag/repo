@@ -38,7 +38,7 @@
         <align>center</align>
         <aligny>center</aligny>
         <fadetime>FadeTime</fadetime>
-        <texture background="true">-</texture>
+        <texture>-</texture>
     </default>
     <default type="button">
         <left>0</left>

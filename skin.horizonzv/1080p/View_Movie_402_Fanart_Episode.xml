@@ -28,7 +28,6 @@
                 <top>75</top>
                 <width>345</width>
                 <height>105</height>
-                <fadetime>FadeTime</fadetime>
                 <aspectratio>keep</aspectratio>
                 <texture>$VAR[MovieStudioLogoVar]$INFO[ListItem.Studio,,.png]</texture>
                 <visible>!IsEmpyt(Control.GetLabel(9898))</visible>
@@ -86,7 +85,6 @@
                         <width>403</width>
                         <height>233</height>
                         <aspectratio>stretch</aspectratio>
-                        <fadetime>FadeTime</fadetime>
                         <colordiffuse>$VAR[CoverDim]</colordiffuse>
                         <texture diffuse="masks/mask.png" fallback="FallbackCover.png">$INFO[ListItem.Icon]</texture>
                         <bordertexture border="10">ThumbShadow.png</bordertexture>
@@ -108,7 +106,6 @@
                         <top>39</top>
                         <width>394</width>
                         <height>222</height>
-                        <fadetime>FadeTime</fadetime>
                         <colordiffuse>$VAR[CoverDim]</colordiffuse>
                         <texture>masks/Default.png</texture>
                         <visible>Skin.HasSetting(animation)</visible>
@@ -120,7 +117,6 @@
                         <width>392</width>
                         <height>90</height>
                         <aspectratio>stretch</aspectratio>
-                        <fadetime>FadeTime</fadetime>
                         <colordiffuse>grey2</colordiffuse>
                         <texture flipy="true" diffuse="ShadowWhite.png" fallback="FallbackCover.png">$INFO[ListItem.Icon]</texture>
                         <visible>!ListItem.IsParentFolder</visible>
@@ -151,7 +147,6 @@
 							<width>403</width>
 							<height>233</height>
                             <aspectratio>scale</aspectratio>
-                            <fadetime>FadeTime</fadetime>
                             <texture diffuse="masks/mask.png" fallback="FallbackCover.png">$INFO[ListItem.Icon]</texture>
                             <bordertexture border="10">ThumbShadowWhite.png</bordertexture>
                             <bordersize>7</bordersize>
@@ -172,7 +167,6 @@
                             <top>39</top>
                             <width>390</width>
                             <height>220</height>
-                            <fadetime>FadeTime</fadetime>
                             <texture>masks/Default.png</texture>
                             <visible>Skin.HasSetting(animation)</visible>
                             <visible>!ListItem.IsParentFolder</visible>

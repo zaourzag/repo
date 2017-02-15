@@ -313,7 +313,6 @@
                             <top>4</top>
                             <width>267</width>
                             <height>381</height>
-                            <fadetime>FadeTime</fadetime>
                             <texture background="true" diffuse="clear-cases/clearcase_inlay.png" fallback="FallbackCover.png">$INFO[ListItem.Icon]</texture>
                             <aspectratio>stretch</aspectratio>
                             <visible>!Container.Content(Episodes)|String.IsEmpty(ListItem.Art(tvshow.poster))</visible>
@@ -324,7 +323,6 @@
                             <top>4</top>
                             <width>267</width>
                             <height>381</height>
-                            <fadetime>FadeTime</fadetime>
                             <texture background="true" diffuse="clear-cases/clearcase_inlay.png" fallback="FallbackCover.png">$INFO[ListItem.Art(tvshow.poster)]</texture>
                             <aspectratio>stretch</aspectratio>
                             <visible>Container.Content(Episodes)+!String.IsEmpty(ListItem.FileExtension)</visible>
@@ -335,7 +333,6 @@
                             <top>0</top>
                             <width>303</width>
                             <height>390</height>
-                            <fadetime>FadeTime</fadetime>
                             <texture background="true" fallback="clear-cases/fallback.png">$VAR[clearcase]</texture>
                         </control>
                     </control>
@@ -347,7 +344,6 @@
                             <top>0</top>
                             <width>285</width>
                             <height>390</height>
-                            <fadetime>FadeTime</fadetime>
                             <texture background="true" fallback="FallbackCover.png">$INFO[ListItem.Icon]</texture>
                             <aspectratio>stretch</aspectratio>
                             <bordertexture border="5">buttons/ButtonNF.png</bordertexture>
@@ -360,7 +356,6 @@
                             <top>0</top>
                             <width>285</width>
                             <height>390</height>
-                            <fadetime>FadeTime</fadetime>
                             <texture background="true">$INFO[ListItem.Art(tvshow.poster)]</texture>
                             <aspectratio>stretch</aspectratio>
                             <bordertexture border="5">buttons/ButtonNF.png</bordertexture>
@@ -385,7 +380,6 @@
                                 <top>34</top>
                                 <width>645</width>
                                 <height>387</height>
-                                <fadetime>FadeTime</fadetime>
                                 <aspectratio align="center" aligny="center">keep</aspectratio>
                                 <texture background="true">$VAR[extraart_rule]</texture>
                             </control>
@@ -395,7 +389,6 @@
                                 <top>34</top>
                                 <width>645</width>
                                 <height>387</height>
-                                <fadetime>FadeTime</fadetime>
                                 <aspectratio align="center" aligny="center">keep</aspectratio>
                                 <texture background="true">$VAR[extraart_tvshow_rule]</texture>
                             </control>
@@ -416,7 +409,6 @@
                                 <top>34</top>
                                 <width>645</width>
                                 <height>387</height>
-                                <fadetime>FadeTime</fadetime>
                                 <aspectratio align="center" aligny="center">scale</aspectratio>
                                 <texture background="true">special://skin/backgrounds/mediaoverlaywhite.jpg</texture>
                                 <bordertexture border="5">buttons/ButtonNF.png</bordertexture>
@@ -430,7 +422,6 @@
                         <top>34</top>
                         <width>645</width>
                         <height>387</height>
-                        <fadetime>FadeTime</fadetime>
                         <aspectratio align="center" aligny="center">scale</aspectratio>
                         <texture background="true" fallback="FallbackCover.png">$INFO[ListItem.Icon]</texture>
                         <bordertexture border="5">buttons/ButtonNF.png</bordertexture>
@@ -442,7 +433,6 @@
                         <top>-18</top>
                         <width>180</width>
                         <height>30</height>
-                        <fadetime>FadeTime</fadetime>
                         <texture background="true">$INFO[ListItem.Rating,leftratingvideo/,.png]</texture>
                         <visible>!ListItem.IsCollection</visible>
                     </control>

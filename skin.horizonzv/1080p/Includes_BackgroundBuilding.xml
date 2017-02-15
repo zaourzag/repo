@@ -11,7 +11,7 @@
                 <top>20</top>
                 <width>994</width>
                 <height>892</height>
-                <texture background="true">InlayDark.png</texture>
+                <texture>InlayDark.png</texture>
             </control>
             <control type="image">
                 <left>82</left>
@@ -46,7 +46,7 @@
                 <top>900</top>
                 <width>984</width>
                 <height>75</height>
-                <texture background="true" border="16">ContentPanelMirror.png</texture>
+                <texture border="16">ContentPanelMirror.png</texture>
             </control>
         </control>
     </include>
@@ -59,7 +59,7 @@
                 <top>20</top>
                 <width>844</width>
                 <height>892</height>
-                <texture background="true">InlayDark.png</texture>
+                <texture>InlayDark.png</texture>
             </control>
             <control type="image">
                 <left>82</left>
@@ -94,7 +94,7 @@
                 <top>900</top>
                 <width>834</width>
                 <height>75</height>
-                <texture background="true" border="16">ContentPanelMirror.png</texture>
+                <texture border="16">ContentPanelMirror.png</texture>
             </control>
         </control>
     </include>
@@ -104,7 +104,7 @@
             <top>150</top>
             <width>1926</width>
             <height>780</height>
-            <texture background="true">ContentPanel_Wide.png</texture>
+            <texture>ContentPanel_Wide.png</texture>
         </control>
     </include>
     <include name="MediaOverlay">
@@ -126,8 +126,7 @@
                 <width>$PARAM[DialogBackgroundWidth]</width>
                 <height>$PARAM[DialogBackgroundHeight]</height>
                 <colordiffuse>grey3</colordiffuse>
-                <texture background="true" border="5">$VAR[SelectBack2]</texture>
-                <!-- <texture background="true" border="5">Underlay2.png</texture> -->
+                <texture border="5">$VAR[SelectBack2]</texture>
             </control>
             <control type="label" id="$PARAM[DialogHeaderId]">
                 <description>header label</description>

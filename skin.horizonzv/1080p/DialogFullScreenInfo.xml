@@ -39,7 +39,7 @@
                             <width>720</width>
                             <height>300</height>
                             <aspectratio align="center" aligny="center">keep</aspectratio>
-                            <texture background="true">$VAR[extraart_player_rule]</texture>
+                            <texture>$VAR[extraart_player_rule]</texture>
                         </control>
                         <control type="group">
                             <visible>!Skin.HasSetting(video_art)|[String.IsEmpty(Control.GetLabel(71))]</visible>
@@ -60,7 +60,7 @@
                                 <width>720</width>
                                 <height>300</height>
                                 <aspectratio align="center" aligny="center">keep</aspectratio>
-                                <texture background="true">$INFO[VideoPlayer.Cover]</texture>
+                                <texture>$INFO[VideoPlayer.Cover]</texture>
                                 <bordertexture border="4">buttons/ButtonNF.png</bordertexture>
                                 <bordersize>8</bordersize>
                             </control>
@@ -75,9 +75,8 @@
                             <top>45</top>
                             <width>720</width>
                             <height>300</height>
-                            <fadetime>FadeTime</fadetime>
                             <aspectratio align="center" aligny="center">keep</aspectratio>
-                            <texture background="true">$INFO[VideoPlayer.Cover]</texture>
+                            <texture>$INFO[VideoPlayer.Cover]</texture>
                             <bordertexture border="5">buttons/ButtonNF.png</bordertexture>
                             <bordersize>8</bordersize>
                         </control>

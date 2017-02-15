@@ -15,14 +15,12 @@
                     <imagepath background="true">$VAR[WeatherFanartVar]</imagepath>
                     <timeperimage>10000</timeperimage>
                     <randomize>true</randomize>
-                    <fadetime>FadeTime</fadetime>
                     <colordiffuse>$VAR[BackgroundDim]</colordiffuse>
                     <visible>Skin.HasSetting(ShowWeatherFanart)+!String.IsEmpty(Skin.String(weatherfanart.path))</visible>
                 </control>
                 <control type="image">
                     <include>openclosefanart</include>
                     <include>Dimensions_Fullscreen</include>
-                    <fadetime>FadeTime</fadetime>
                     <aspectratio>scale</aspectratio>
                     <texture background="true">special://skin/backgrounds/weather.jpg</texture>
                     <visible>!Skin.HasSetting(ShowWeatherFanart)|String.IsEmpty(Skin.String(weatherfanart.path))</visible>

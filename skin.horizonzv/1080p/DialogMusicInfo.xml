@@ -34,10 +34,9 @@
 					<width>450</width>
 					<height>450</height>
 					<aspectratio>keep</aspectratio>
-					<fadetime>FadeTime</fadetime>
 					<bordertexture border="10">ThumbShadow.png</bordertexture>
 					<bordersize>7</bordersize>
-					<texture background="true" fallback="DefaultFolder.png">$INFO[ListItem.Art(thumb)]</texture>
+					<texture fallback="DefaultFolder.png">$INFO[ListItem.Art(thumb)]</texture>
 					<visible>!Control.HasFocus(12)</visible>
 				</control>
 			</control>
@@ -67,7 +66,7 @@
 				<width>3</width>
 				<height>525</height>
 				<colordiffuse>fanartdiffuse</colordiffuse>
-				<texture background="true">Separator4.png</texture>
+				<texture>Separator4.png</texture>
 			</control>
 			<control type="group"> <!-- Song -->
 				<visible>String.IsEqual(ListItem.DBType,song)</visible>
@@ -279,7 +278,6 @@
 						<width>850</width>
 						<height>650</height>
 						<aspectratio>keep</aspectratio>
-						<fadetime>FadeTime</fadetime>
 						<bordertexture border="10">ThumbShadow.png</bordertexture>
 						<bordersize>7</bordersize>
 						<texture background="true">$INFO[ListItem.Art(fanart)]</texture>
@@ -431,7 +429,7 @@
 								<top>21</top>
 								<width>180</width>
 								<height>180</height>
-								<texture border="2" fallback="DefaultFolder.png" background="true">$INFO[ListItem.Thumb]</texture>
+								<texture border="2" fallback="DefaultFolder.png">$INFO[ListItem.Thumb]</texture>
 								<aspectratio>keep</aspectratio>
 							</control>
 							<control type="textbox">
@@ -454,7 +452,7 @@
 									<top>21</top>
 									<width>180</width>
 									<height>180</height>
-									<texture border="2" fallback="DefaultFolderSquare.png" background="true">$INFO[ListItem.Thumb]</texture>
+									<texture border="2" fallback="DefaultFolderSquare.png">$INFO[ListItem.Thumb]</texture>
 									<aspectratio>keep</aspectratio>
 								</control>
 								<control type="textbox">

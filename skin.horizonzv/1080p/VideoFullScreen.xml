@@ -157,7 +157,6 @@
                             <top>22</top>
                             <width>225</width>
                             <height>225</height>
-                            <fadetime>FadeTime</fadetime>
                             <aspectratio>keep</aspectratio>
                             <texture border="8" background="false">masks/mask_frame.png</texture>
                         </control>
@@ -167,7 +166,6 @@
                             <top>22</top>
                             <width>225</width>
                             <height>225</height>
-                            <fadetime>FadeTime</fadetime>
                             <aspectratio>keep</aspectratio>
                             <texture border="8" background="false">masks/mask_frame.png</texture>
                         </control>
@@ -178,7 +176,6 @@
                                 <top>42</top>
                                 <width>186</width>
                                 <height>186</height>
-                                <fadetime>FadeTime</fadetime>
                                 <aspectratio>keep</aspectratio>
                                 <texture background="false">$INFO[VideoPlayer.Cover]</texture>
                             </control>
@@ -188,7 +185,6 @@
                                 <top>240</top>
                                 <width>230</width>
                                 <height>75</height>
-                                <fadetime>FadeTime</fadetime>
                                 <texture border="12" background="true">ContentPanelMirror.png</texture>
                             </control>
                         </control>

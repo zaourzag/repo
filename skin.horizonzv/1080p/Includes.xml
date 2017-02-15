@@ -141,7 +141,7 @@
         <align>right</align>
     </include>
     <include name="focuseffect">
-        <animation effect="slide" start="0,8" end="0,0" time="100" condition="Skin.HasSetting(animation)">Focus</animation>
+        <animation effect="zoom" start="92" end="100" center="auto" time="80" condition="Skin.HasSetting(animation)">Focus</animation>
     </include>
     <include name="openclose">
         <animation effect="fade" time="500" condition="!Skin.HasSetting(animation)">WindowOpen</animation>
@@ -514,18 +514,17 @@
             <include>openclosefanart</include>
             <include>openclosevisible</include>
             <visible>Player.HasAudio</visible>
-            <visible>!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),weather)|[[!Skin.HasSetting(WeatherFanartHome)|String.IsEmpty(Skin.String(weatherfanart.path))]|Window.IsVisible(visualisation)]</visible>
+            <visible>!String.I background="true"sEqual(Container(9000).ListItem.Property(homemenu_id),weather)|[[!Skin.HasSetting(WeatherFanartHome)|String.IsEmpty(Skin.String(weatherfanart.path))]|Window.IsVisible(visualisation)]</visible>
             <control type="visualisation" id="2011">
                 <include>Dimensions_Fullscreen</include>
                 <include>openclosevisible</include>
-                <fadetime>FadeTime</fadetime>
                 <visible>Visualisation.Enabled+[Skin.HasSetting(ShowBackgroundVis)|Window.IsVisible(visualisation)]</visible>
             </control>
             <control type="image" id="2014">
                 <include>Dimensions_Fullscreen</include>
                 <colordiffuse>$VAR[BackgroundDim]</colordiffuse>
                 <aspectratio>keep</aspectratio>
-                <texture>$INFO[Player.Art(fanart)]</texture>
+                <texture background="true">$INFO[Player.Art(fanart)]</texture>
                 <visible>[!Visualisation.Enabled|[!Skin.HasSetting(ShowBackgroundVis)+Window.IsVisible(Home)]]+Skin.HasSetting(fanart)+!String.IsEmpty(Player.Art(fanart))+!Control.IsVisible(2013)+!String.Contains(Control.GetLabel(2012),.jpg)</visible>
             </control>
             <control type="multiimage" id="2012">
@@ -535,7 +534,7 @@
                 <randomize>true</randomize>
                 <aspectratio>keep</aspectratio>
                 <colordiffuse>$VAR[BackgroundDim]</colordiffuse>
-                <imagepath>$INFO[Skin.String(Music_Folder_Path)]$INFO[MusicPlayer.Artist,,/extrafanart]</imagepath>
+                <imagepath background="true">$INFO[Skin.String(Music_Folder_Path)]$INFO[MusicPlayer.Artist,,/extrafanart]</imagepath>
                 <visible>!Visualisation.Enabled|[!Skin.HasSetting(ShowBackgroundVis)+Window.IsVisible(Home)]</visible>
 				<visible>Skin.HasSetting(fanart)+!Control.IsVisible(2011)</visible>
             </control>
@@ -546,7 +545,7 @@
                 <randomize>true</randomize>
                 <aspectratio>keep</aspectratio>
                 <colordiffuse>$VAR[BackgroundDim]</colordiffuse>
-                <imagepath>$INFO[Window(Visualisation).Property(ArtistSlideshow)]</imagepath>
+                <imagepath background="true">$INFO[Window(Visualisation).Property(ArtistSlideshow)]</imagepath>
                 <visible>System.HasAddon(script.artistslideshow)+!Window.IsVisible(Home)</visible>
                 <visible>Skin.HasSetting(fanart)+!String.Contains(Control.GetLabel(2012),.jpg)</visible>
                 <visible>!String.Contains(Window(Visualisation).Property(ArtistSlideshow),black)+!String.Contains(Window(Visualisation).Property(ArtistSlideshow),transparent)</visible>
@@ -555,7 +554,7 @@
             <control type="image">
                 <include>Dimensions_Fullscreen</include>
                 <colordiffuse>$VAR[BackgroundDim_Video]</colordiffuse>
-                <texture border="2">Black.png</texture>
+                <texture>Black.png</texture>
                 <visible>Control.IsVisible(2011)+[Skin.HasSetting(background_dim_1)|Skin.HasSetting(background_dim_2)|Skin.HasSetting(background_dim_3)]</visible>
             </control>
         </control>
@@ -566,7 +565,7 @@
             <include>openclosevisible</include>
             <control type="image">
                 <include>Dimensions_Fullscreen</include>
-                <texture border="2">special://skin/backgrounds/media-overlay.jpg</texture>
+                <texture>special://skin/backgrounds/media-overlay.jpg</texture>
                 <visible>Window.IsVisible(home)+Skin.HasSetting(BackgroundVideo)</visible>
             </control>
             <control type="videowindow" id="2015">
@@ -588,7 +587,7 @@
                 <fadetime>1000</fadetime>
                 <randomize>true</randomize>
                 <colordiffuse>$VAR[BackgroundDim]</colordiffuse>
-                <imagepath>$INFO[Player.FolderPath,,extrafanart/]</imagepath>
+                <imagepath background="true">$INFO[Player.FolderPath,,extrafanart/]</imagepath>
                 <visible>!Control.IsVisible(2015)</visible>
             </control>
             <control type="multiimage" id="2017">
@@ -597,7 +596,7 @@
                 <fadetime>1000</fadetime>
                 <randomize>true</randomize>
                 <colordiffuse>$VAR[BackgroundDim]</colordiffuse>
-                <imagepath>$INFO[Player.Art(fanart)]</imagepath>
+                <imagepath background="true">$INFO[Player.Art(fanart)]</imagepath>
                 <visible>!Control.IsVisible(2015)+!String.Contains(Control.GetLabel(2016),.jpg)+!String.IsEmpty(Player.Art(fanart))</visible>
             </control>
         </control>
@@ -612,7 +611,6 @@
             <control type="image">
                 <visible>[!Skin.HasSetting(fanart)|String.IsEmpty(ListItem.Art(fanart))]|Control.IsVisible(562)|Control.IsVisible(742)|Control.IsVisible(740)|Control.IsVisible(302)</visible>
                 <include>Dimensions_Fullscreen</include>
-                <fadetime>FadeTime</fadetime>
                 <texture>$VAR[background_mynavs]</texture>
                 <colordiffuse>$VAR[BackgroundDim]</colordiffuse>
             </control>
@@ -672,7 +670,6 @@
             <visible>Skin.HasSetting(BackgroundDiffuseOverlay)+!Skin.HasSetting(BackgroundOverlay)</visible>
             <include>Dimensions_Fullscreen</include>
             <include>openclosefanart</include>
-            <fadetime>FadeTime</fadetime>
             <texture>DiffuseOverlay.png</texture>
         </control>
         <control type="image">
@@ -682,7 +679,6 @@
             <width>1706</width>
             <height>674</height>
             <include>openclosefanart</include>
-            <fadetime>FadeTime</fadetime>
             <texture>DiffuseOverlay.png</texture>
         </control>
         <control type="group">
@@ -690,14 +686,12 @@
             <control type="image" id="22">
                 <include>openclosefanart</include>
                 <include>Dimensions_Fullscreen</include>
-                <fadetime>FadeTime</fadetime>
                 <colordiffuse>$VAR[BackgroundOverlayColor]</colordiffuse>
                 <texture>special://skin/backgrounds/Empty.png</texture>
             </control>
             <control type="image" id="22">
                 <include>openclosefanart</include>
                 <include>Dimensions_Fullscreen</include>
-                <fadetime>FadeTime</fadetime>
                 <texture>special://skin/backgrounds/empty_overlay.png</texture>
             </control>
         </control>
@@ -712,7 +706,6 @@
             <imagepath>$VAR[WeatherFanartVar]</imagepath>
             <timeperimage>10000</timeperimage>
             <randomize>true</randomize>
-            <fadetime>FadeTime</fadetime>
         </control>
 		<control type="image">
             <include>openclosevisible</include>
@@ -1341,7 +1334,6 @@
                 <height>255</height>
                 <left>-8</left>
                 <top>8</top>
-                <fadetime>FadeTime</fadetime>
                 <texture fallback="Empty.png" diffuse="masks/cdart_mask.png">$INFO[Player.FolderPath,,cdart.png]</texture>
                 <!-- <aspectratio>keep</aspectratio> -->
             </control>
@@ -1352,7 +1344,6 @@
                 <height>255</height>
                 <left>-8</left>
                 <top>8</top>
-                <fadetime>FadeTime</fadetime>
                 <texture>$VAR[CDArtStyle]</texture>
                 <!-- <aspectratio>keep</aspectratio> -->
                 <visible>String.Contains(Control.GetLabel(69),Empty.png)</visible>
@@ -1750,7 +1741,6 @@
                     <top>3</top>
                     <width>12</width>
                     <height>316</height>
-                    <fadetime>FadeTime</fadetime>
                     <texture flipx="true">SideFade.png</texture>
                 </control>
                 <control type="image">
@@ -1770,7 +1760,6 @@
                     <height>327</height>
                     <colordiffuse>$VAR[CoverDim]</colordiffuse>
                     <aspectratio>stretch</aspectratio>
-                    <fadetime>FadeTime</fadetime>
                     <texture>$VAR[PosterThumb]</texture>
                     <visible>Skin.HasSetting(hideMovieCases)</visible>
                 </control>
@@ -1782,7 +1771,6 @@
                     <height>327</height>
                     <colordiffuse>$VAR[CoverDim]</colordiffuse>
                     <aspectratio>stretch</aspectratio>
-                    <fadetime>FadeTime</fadetime>
                     <texture border="4">buttons/ButtonNF.png</texture>
                     <visible>Skin.HasSetting(hideMovieCases)</visible>
                 </control>
@@ -1794,7 +1782,6 @@
                     <height>316</height>
                     <colordiffuse>black</colordiffuse>
                     <aspectratio aligny="bottom">stretch</aspectratio>
-                    <fadetime>FadeTime</fadetime>
                     <texture diffuse="clear-cases/clearcase_inlay.png">White.png</texture>
                     <visible>!Skin.HasSetting(hideMovieCases)</visible>
                     <include>openclosevisible</include>
@@ -1806,7 +1793,6 @@
                     <width>220</width>
                     <height>316</height>
                     <aspectratio aligny="bottom">stretch</aspectratio>
-                    <fadetime>FadeTime</fadetime>
                     <colordiffuse>$VAR[CoverDim]</colordiffuse>
                     <texture diffuse="clear-cases/clearcase_inlay.png">$VAR[PosterThumb]</texture>
                     <visible>!Skin.HasSetting(hideMovieCases)</visible>
@@ -1818,7 +1804,6 @@
                     <height>316</height>
                     <colordiffuse>dustdiffuse</colordiffuse>
                     <aspectratio aligny="bottom">stretch</aspectratio>
-                    <fadetime>FadeTime</fadetime>
                     <texture diffuse="clear-cases/clearcase_inlay.png" fallback="FallbackCover.png">Dust.png</texture>
                     <visible>!Skin.HasSetting(hideMovieCases)</visible>
                     <visible>Skin.HasSetting(dust)</visible>
@@ -1896,7 +1881,6 @@
                     <width>234</width>
                     <height>327</height>
                     <aspectratio>stretch</aspectratio>
-                    <fadetime>FadeTime</fadetime>
                     <texture>$VAR[PosterThumb]</texture>
                     <visible>Skin.HasSetting(hideMovieCases)</visible>
                 </control>
@@ -1907,7 +1891,6 @@
                     <width>234</width>
                     <height>327</height>
                     <aspectratio>stretch</aspectratio>
-                    <fadetime>FadeTime</fadetime>
                     <texture border="4">buttons/ButtonNF.png</texture>
                     <visible>Skin.HasSetting(hideMovieCases)</visible>
                 </control>
@@ -1917,7 +1900,6 @@
                     <width>224</width>
                     <height>316</height>
                     <aspectratio aligny="bottom">stretch</aspectratio>
-                    <fadetime>FadeTime</fadetime>
                     <texture diffuse="clear-cases/clearcase_inlay.png">$VAR[PosterThumb]</texture>
                     <visible>!Skin.HasSetting(hideMovieCases)</visible>
                 </control>
@@ -2139,7 +2121,6 @@
                         <top>15</top>
                         <width>270</width>
                         <height>51</height>
-                        <fadetime>FadeTime</fadetime>
                         <aspectratio align="right">keep</aspectratio>
                         <texture>$INFO[ListItem.Art(clearlogo)]</texture>
                         <visible>[Skin.HasSetting(video_art)+Container.Content(movies)]
@@ -2152,7 +2133,6 @@
                     <top>1002</top>
                     <width>180</width>
                     <height>30</height>
-                    <fadetime>FadeTime</fadetime>
                     <texture fallback="leftratingvideo/0.0.png">$INFO[ListItem.Rating,leftratingvideo/,.png]</texture>
                 </control>
             </control>
@@ -2164,7 +2144,6 @@
                 <top>225r</top>
                 <width>225</width>
                 <height>60</height>
-                <fadetime>FadeTime</fadetime>
                 <aspectratio align="right" aligny="bottom">keep</aspectratio>
                 <texture>$VAR[Furniture_VideoRating]</texture>
             </control>
@@ -2277,7 +2256,6 @@
                     <width>220</width>
                     <height>316</height>
                     <aspectratio align="right" aligny="bottom">stretch</aspectratio>
-                    <fadetime>FadeTime</fadetime>
                     <texture diffuse="clear-cases/clearcase_inlay.png">$VAR[PosterThumb]</texture>
                     <visible>!Skin.HasSetting(hideMovieCases)</visible>
                 </control>
@@ -2297,7 +2275,6 @@
                     <width>234</width>
                     <height>327</height>
                     <aspectratio align="right" aligny="bottom">stretch</aspectratio>
-                    <fadetime>FadeTime</fadetime>
                     <texture>$VAR[PosterThumb]</texture>
                     <bordertexture border="1">buttons/ButtonNF.png</bordertexture>
                     <bordersize>4</bordersize>

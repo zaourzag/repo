@@ -74,7 +74,6 @@
                     <height>300</height>
                     <aspectratio align="left" aligny="bottom">keep</aspectratio>
                     <texture diffuse="masks/flagging_mask.png">$INFO[Skin.String(Music_Folder_Path)]$INFO[ListItem.Artist,,/logo.png]</texture>
-                    <fadetime>FadeTime</fadetime>
                     <visible>Skin.HasSetting(music_art)</visible>
                     <visible>Window.IsActive(music)</visible>
                 </control>
@@ -99,7 +98,6 @@
                                 <top>4</top>
                                 <width>322</width>
                                 <height>459</height>
-                                <fadetime>FadeTime</fadetime>
                                 <texture diffuse="clear-cases/clearcase_inlay.png" fallback="FallbackCover.png">$INFO[ListItem.Icon]</texture>
                                 <aspectratio>stretch</aspectratio>
                                 <visible>!Container.Content(Episodes)|String.IsEmpty(ListItem.Art(tvshow.poster))</visible>
@@ -110,7 +108,6 @@
                                 <top>4</top>
                                 <width>322</width>
                                 <height>459</height>
-                                <fadetime>FadeTime</fadetime>
                                 <texture diffuse="clear-cases/clearcase_inlay.png" fallback="FallbackCover.png">$INFO[ListItem.Art(tvshow.poster)]</texture>
                                 <aspectratio>stretch</aspectratio>
                                 <visible>Container.Content(Episodes)+!String.IsEmpty(ListItem.FileExtension)</visible>
@@ -121,7 +118,6 @@
                                 <top>0</top>
                                 <width>363</width>
                                 <height>468</height>
-                                <fadetime>FadeTime</fadetime>
                                 <texture fallback="clear-cases/fallback.png">$VAR[clearcase]</texture>
                             </control>
                         </control>
@@ -134,7 +130,6 @@
                                 <top>0</top>
                                 <width>342</width>
                                 <height>468</height>
-                                <fadetime>FadeTime</fadetime>
                                 <texture fallback="FallbackCover.png">$INFO[ListItem.Icon]</texture>
                                 <aspectratio>stretch</aspectratio>
                                 <bordertexture border="5">buttons/ButtonNF.png</bordertexture>
@@ -147,7 +142,6 @@
                                 <top>0</top>
                                 <width>342</width>
                                 <height>468</height>
-                                <fadetime>FadeTime</fadetime>
                                 <texture>$INFO[ListItem.Art(tvshow.poster)]</texture>
                                 <aspectratio>stretch</aspectratio>
                                 <bordertexture border="5">buttons/ButtonNF.png</bordertexture>
@@ -306,7 +300,6 @@
                     <bordertexture border="8">ThumbShadowWhite.png</bordertexture>
                     <bordersize>7</bordersize>
                     <aspectratio>scale</aspectratio>
-                    <fadetime>FadeTime</fadetime>
                 </control>
                 <control type="label">
                     <left>1770</left>
@@ -499,7 +492,6 @@
                 <width>519</width>
                 <height>165</height>
                 <aspectratio align="right">keep</aspectratio>
-                <fadetime>FadeTime</fadetime>
                 <texture>$INFO[ListItem.Art(clearlogo)]</texture>
             </control>
             <control type="label">
@@ -604,7 +596,6 @@
                         <top>60</top>
                         <width>180</width>
                         <height>30</height>
-                        <fadetime>FadeTime</fadetime>
                         <texture>$INFO[ListItem.Rating,leftratingvideo/,.png]</texture>
                     </control>
                     <control type="textbox">
@@ -629,7 +620,6 @@
                 <bordertexture border="10">ThumbShadowWhite.png</bordertexture>
                 <bordersize>8</bordersize>
                 <aspectratio>stretch</aspectratio>
-                <fadetime>FadeTime</fadetime>
                 <visible>!ListItem.IsParentFolder</visible>
             </control>
             <control type="image">
@@ -639,7 +629,6 @@
                 <height>309</height>
                 <texture>$INFO[ListItem.Icon]</texture>
                 <aspectratio align="right" scalediffuse="false">keep</aspectratio>
-                <fadetime>FadeTime</fadetime>
                 <visible>ListItem.IsParentFolder</visible>
             </control>
             <control type="image">
@@ -707,7 +696,6 @@
                     <top>52</top>
                     <width>180</width>
                     <height>30</height>
-                    <fadetime>FadeTime</fadetime>
                     <texture>$INFO[ListItem.Rating,leftratingvideo/,.png]</texture>
                 </control>
                 <control type="textbox">

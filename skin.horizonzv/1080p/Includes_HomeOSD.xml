@@ -360,7 +360,6 @@
                             <width>278</width>
                             <height>278</height>
                             <aspectratio scalediffuse="false">stretch</aspectratio>
-                            <fadetime>FadeTime</fadetime>
                             <texture background="true" diffuse="masks/CdCoverMask.png">$INFO[MusicPlayer.Cover]</texture>
                             <visible>!VideoPlayer.Content(movies)+!VideoPlayer.Content(episodes)+[!Pvr.IsPlayingTv|Videoplayer.Content(Music)]</visible>
                         </control>
@@ -435,7 +434,6 @@
                             <top>405</top>
                             <width>120</width>
                             <height>120</height>
-                            <fadetime>FadeTime</fadetime>
                             <texture background="true">$VAR[OSDTexture]</texture>
                         </control>
                         <control type="group">

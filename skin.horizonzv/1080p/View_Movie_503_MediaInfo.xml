@@ -67,7 +67,6 @@
                             <top>315</top>
                             <width>180</width>
                             <height>30</height>
-                            <fadetime>FadeTime</fadetime>
                             <texture background="true" fallback="leftratingvideo/0.0.png">$INFO[ListItem.Rating,leftratingvideo/,.png]</texture>
                         </control>
                     </control>
@@ -288,7 +287,6 @@
                 <aspectratio align="right">keep</aspectratio>
                 <texture background="true">$INFO[ListItem.Art(clearlogo)]</texture>
                 <visible>Skin.HasSetting(video_art)+!Container.Content(Seasons)+!String.IsEmpty(ListItem.Art(clearlogo))</visible>
-                <fadetime>FadeTime</fadetime>
             </control>
             <control type="image">
                 <!-- Clearlogo TVShow -->
@@ -300,7 +298,6 @@
                 <aspectratio align="right">keep</aspectratio>
                 <texture background="true">$INFO[ListItem.Art(tvshow.clearlogo)]</texture>
                 <visible>Skin.HasSetting(tvshow_art)+[Container.Content(Seasons)|Container.Content(Episodes)]+!String.IsEmpty(ListItem.Art(tvshow.clearlogo))</visible>
-                <fadetime>FadeTime</fadetime>
             </control>
             <control type="image">
                 <left>1011</left>
@@ -361,7 +358,6 @@
                     <texture background="true">$VAR[BannerThumb]</texture>
                     <bordertexture border="10">ThumbShadowWhite.png</bordertexture>
                     <bordersize>7</bordersize>
-                    <fadetime>FadeTime</fadetime>
                 </control>
                 <control type="group">
                     <left>915</left>
@@ -476,7 +472,6 @@
                         <top>682</top>
                         <width>450</width>
                         <height>90</height>
-                        <fadetime>FadeTime</fadetime>
                         <colordiffuse>grey3</colordiffuse>
                         <aspectratio align="left">keep</aspectratio>
                         <texture background="true">$VAR[Furniture_VideoRating]</texture>
@@ -504,8 +499,7 @@
                         <width>795</width>
                         <height>315</height>
                         <aspectratio>keep</aspectratio>
-                        <fadetime>FadeTime</fadetime>
-                        <texture background="true">$INFO[ListItem.Icon]</texture>
+                        <texture>$INFO[ListItem.Icon]</texture>
                         <bordertexture border="8">ThumbShadow.png</bordertexture>
                         <bordersize>8</bordersize>
                     </control>
@@ -557,7 +551,6 @@
                     <texture background="true">$INFO[ListItem.Art(banner)]</texture>
                     <bordertexture border="10">ThumbShadowWhite.png</bordertexture>
                     <bordersize>7</bordersize>
-                    <fadetime>FadeTime</fadetime>
                 </control>
                 <control type="group">
                     <left>660</left>
@@ -610,7 +603,6 @@
                         <texture background="true">$INFO[ListItem.Art(banner)]</texture>
                         <bordertexture border="10">ThumbShadowWhite.png</bordertexture>
                         <bordersize>7</bordersize>
-                        <fadetime>FadeTime</fadetime>
                         <visible>!ListItem.IsCollection</visible>
                     </control>
                     <control type="group">
@@ -624,7 +616,6 @@
                             <top>278</top>
                             <width>225</width>
                             <height>60</height>
-                            <fadetime>FadeTime</fadetime>
                             <aspectratio align="left" aligny="bottom">keep</aspectratio>
                             <texture background="true">$VAR[Furniture_VideoRating]</texture>
                         </control>
@@ -667,7 +658,6 @@
                             <top>4</top>
                             <width>321</width>
                             <height>494</height>
-                            <fadetime>FadeTime</fadetime>
                             <texture background="true" diffuse="clear-cases/clearcase_inlay.png" fallback="FallbackCover.png">$INFO[ListItem.Icon]</texture>
                             <aspectratio>stretch</aspectratio>
                         </control>
@@ -677,7 +667,6 @@
                             <top>0</top>
                             <width>360</width>
                             <height>502</height>
-                            <fadetime>FadeTime</fadetime>
                             <texture background="true" fallback="clear-cases/fallback.png">$VAR[clearcase]</texture>
                         </control>
                     </control>
@@ -689,7 +678,6 @@
                         <width>390</width>
                         <height>532</height>
                         <aspectratio>keep</aspectratio>
-                        <fadetime>FadeTime</fadetime>
                         <texture background="true">$VAR[PosterThumb]</texture>
                         <bordertexture border="10">ThumbShadow.png</bordertexture>
                         <bordersize>7</bordersize>
@@ -719,7 +707,7 @@
                     <top>525</top>
                     <width>300</width>
                     <height>300</height>
-                    <texture background="true">$INFO[ListItem.Icon]</texture>
+                    <texture>$INFO[ListItem.Icon]</texture>
                 </control>
             </control>
             <control type="group">

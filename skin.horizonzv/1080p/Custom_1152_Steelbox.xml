@@ -31,7 +31,7 @@
                     <top>0</top>
                     <width>303</width>
                     <height>164</height>
-                    <texture background="true">BlackBack.png</texture>
+                    <texture>BlackBack.png</texture>
                 </control>
                 <control type="image">
                     <description>Clearlogo Image</description>
@@ -39,7 +39,7 @@
                     <top>1</top>
                     <width>303</width>
                     <height>162</height>
-                    <texture background="true">$INFO[ListItem.Art(clearlogo)]</texture>
+                    <texture>$INFO[ListItem.Art(clearlogo)]</texture>
                     <aspectratio align="center" aligny="center">keep</aspectratio>
                 </control>
             </control>
@@ -52,7 +52,7 @@
                     <top>0</top>
                     <width>303</width>
                     <height>164</height>
-                    <texture background="true">BlackBack.png</texture>
+                    <texture>BlackBack.png</texture>
                 </control>
                 <control type="image">
                     <description>Clearart Image</description>
@@ -73,7 +73,7 @@
                     <top>190</top>
                     <width>304</width>
                     <height>165</height>
-                    <texture background="true">BlackBack.png</texture>
+                    <texture>BlackBack.png</texture>
                 </control>
                 <control type="image">
                     <description>Landscape Image</description>
@@ -81,7 +81,7 @@
                     <top>192</top>
                     <width>304</width>
                     <height>164</height>
-                    <texture background="true">$INFO[ListItem.Art(landscape)]</texture>
+                    <texture>$INFO[ListItem.Art(landscape)]</texture>
                     <aspectratio align="center" aligny="center">scale</aspectratio>
                 </control>
             </control>
@@ -94,7 +94,7 @@
                     <top>190</top>
                     <width>621</width>
                     <height>165</height>
-                    <texture background="true">Black.png</texture>
+                    <texture>Black.png</texture>
                 </control>
                 <control type="image">
                     <description>Landscape Image</description>
@@ -102,7 +102,7 @@
                     <top>192</top>
                     <width>616</width>
                     <height>164</height>
-                    <texture background="true">$INFO[ListItem.Art(banner)]</texture>
+                    <texture>$INFO[ListItem.Art(banner)]</texture>
                     <aspectratio align="center" aligny="center">keep</aspectratio>
                 </control>
             </control>
@@ -115,7 +115,7 @@
                     <top>190</top>
                     <width>621</width>
                     <height>344</height>
-                    <texture background="true">BlackBack.png</texture>
+                    <texture>BlackBack.png</texture>
                 </control>
                 <control type="image">
                     <description>Discart Image</description>
@@ -123,7 +123,7 @@
                     <top>190</top>
                     <width>344</width>
                     <height>344</height>
-                    <texture background="true" fallback="cdart/default_bluray.png">$INFO[ListItem.Art(discart)]</texture>
+                    <texture fallback="cdart/default_bluray.png">$INFO[ListItem.Art(discart)]</texture>
                     <aspectratio align="right" aligny="center">keep</aspectratio>
                 </control>
             </control>
@@ -135,7 +135,7 @@
             <width>420</width>
             <height>662</height>
             <colordiffuse>grey</colordiffuse>
-            <texture background="true">clear-cases/steelbox_Shadow.png</texture>
+            <texture>clear-cases/steelbox_Shadow.png</texture>
             <aspectratio>keep</aspectratio>
         </control>
         <control type="image">
@@ -145,7 +145,7 @@
             <width>387</width>
             <height>662</height>
             <colordiffuse>grey</colordiffuse>
-            <texture background="true" diffuse="clear-cases/steelbox.png">$INFO[ListItem.Art(fanart)]</texture>
+            <texture diffuse="clear-cases/steelbox.png">$INFO[ListItem.Art(fanart)]</texture>
             <visible>!String.IsEmpty(ListItem.Art(fanart)</visible>
         </control>
         <control type="image">
@@ -155,7 +155,7 @@
             <width>387</width>
             <height>662</height>
             <colordiffuse>grey</colordiffuse>
-            <texture background="true">clear-cases/steelbox.png</texture>
+            <texture>clear-cases/steelbox.png</texture>
             <visible>String.IsEmpty(ListItem.Art(fanart)</visible>
         </control>
         <control type="image">
@@ -213,7 +213,7 @@
                     <top>0</top>
                     <width>303</width>
                     <height>177</height>
-                    <texture background="true">BlackBack.png</texture>
+                    <texture>BlackBack.png</texture>
                 </control>
                 <control type="label">
                     <left>45</left>

@@ -251,7 +251,6 @@
                                     <left>0</left>
                                     <width>120</width>
                                     <height>120</height>
-                                    <fadetime>FadeTime</fadetime>
                                     <aspectratio>scale</aspectratio>
                                     <texture fallback="BlackBack.png">$INFO[ListItem.Icon]</texture>
                                 </control>

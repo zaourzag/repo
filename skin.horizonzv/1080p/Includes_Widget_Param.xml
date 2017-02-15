@@ -1287,7 +1287,6 @@
             <control type="image">
                 <description>background</description>
                 <include>openclosemedium</include>
-                <fadetime>FadeTime</fadetime>
                 <left>-15</left>
                 <top>1</top>
                 <width>600</width>
@@ -1299,7 +1298,6 @@
             <control type="image">
                 <description>background</description>
                 <include>openclosemedium</include>
-                <fadetime>FadeTime</fadetime>
                 <left>-15</left>
                 <top>1</top>
                 <width>600</width>
@@ -1324,7 +1322,6 @@
                 <width>302</width>
                 <height>160</height>
                 <aspectratio align="left" aligny="bottom">keep</aspectratio>
-                <fadetime>FadeTime</fadetime>
                 <texture background="true">$INFO[Container($PARAM[HomePageWidget_id]).ListItem().Art(clearlogo)]$INFO[Container($PARAM[HomePageWidget_id]).ListItem().Art(tvshow.clearlogo)]</texture>
                 <visible>[String.IsEqual(Container(9000).ListItem.Property(homemenu_id),movies)+Skin.HasSetting(video_art)]|[String.IsEqual(Container(9000).ListItem.Property(homemenu_id),tvshow)+Skin.HasSetting(tvshow_art)]</visible>
             </control>
@@ -1335,7 +1332,6 @@
                 <width>302</width>
                 <height>160</height>
                 <aspectratio align="left" aligny="bottom">keep</aspectratio>
-                <fadetime>FadeTime</fadetime>
                 <texture background="true">$INFO[Container($PARAM[HomePageWidget_id]).ListItem().Art(clearlogo)]$INFO[Container($PARAM[HomePageWidget_id]).ListItem().Art(tvshow.clearlogo)]</texture>
                 <visible>[String.IsEqual(Container(9000).ListItem.Property(homemenu_id),movies)+Skin.HasSetting(video_art)]|[String.IsEqual(Container(9000).ListItem.Property(homemenu_id),tvshow)+Skin.HasSetting(tvshow_art)]</visible>
                 <visible>!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),music)</visible>
@@ -1347,7 +1343,6 @@
                 <width>302</width>
                 <height>160</height>
                 <aspectratio align="left" aligny="bottom">keep</aspectratio>
-                <fadetime>FadeTime</fadetime>
                 <texture>$INFO[Skin.String(Music_Folder_Path)]$INFO[Container($PARAM[HomePageWidget_id]).ListItem.Artist,,/logo.png]</texture>
                 <visible>Skin.HasSetting(music_art)</visible>
                 <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),music)</visible>
@@ -1359,7 +1354,6 @@
                 <width>302</width>
                 <height>160</height>
                 <aspectratio align="left" aligny="bottom">keep</aspectratio>
-                <fadetime>FadeTime</fadetime>
                 <texture background="true">$INFO[Container($PARAM[HomePageWidget_id]).ListItem().Art(clearlogo)]</texture>
                 <visible>Skin.HasSetting(video_art)</visible>
                 <visible>Control.Hasfocus($PARAM[HomePageWidget_id])</visible>
@@ -1817,7 +1811,6 @@
                             <width>161</width>
                             <height>225</height>
                             <aspectratio>stretch</aspectratio>
-                            <fadetime>FadeTime</fadetime>
                             <colordiffuse>$VAR[widgetdim]</colordiffuse>
                             <texture fallback="FallbackCover.png">$VAR[PosterThumb]</texture>
                             <visible>!Control.HasFocus($PARAM[Widget_Listlayout_id])</visible>

@@ -765,7 +765,6 @@
                                             <top>412</top>
                                             <width>255</width>
                                             <height>255</height>
-                                            <fadetime>FadeTime</fadetime>
                                             <texture colordiffuse="grey1" diffuse="masks/cdart_mask.png">White.png</texture>
                                             <visible>String.Contains(Control.GetLabel(80),Empty.png)|Player.IsInternetStream</visible>
                                         </control>
@@ -792,7 +791,6 @@
                                                     <top>225</top>
                                                     <width>255</width>
                                                     <height>255</height>
-                                                    <fadetime>FadeTime</fadetime>
                                                     <texture fallback="Empty.png" background="true" diffuse="masks/cdart_mask.png">$INFO[Player.FolderPath,,cdart.png]</texture>
                                                     <visible>Skin.HasSetting(music_art)</visible>
                                                 </control>
@@ -809,7 +807,6 @@
                                                     <top>225</top>
                                                     <width>255</width>
                                                     <height>255</height>
-                                                    <fadetime>FadeTime</fadetime>
                                                     <texture background="true" diffuse="masks/cdart_mask.png">$INFO[MusicPlayer.Cover]</texture>
                                                     <visible>String.Contains(Control.GetLabel(80),Empty.png)|!Skin.HasSetting(music_art)</visible>
                                                 </control>
@@ -992,7 +989,6 @@
                                         <width>300</width>
                                         <height>450</height>
                                         <aspectratio align="left">keep</aspectratio>
-                                        <fadetime>FadeTime</fadetime>
                                         <texture border="8" background="true">masks/Speaker.png</texture>
                                     </control>
                                     <control type="image">
@@ -1002,7 +998,6 @@
                                         <width>300</width>
                                         <height>105</height>
                                         <colordiffuse>fanartdiffuse</colordiffuse>
-                                        <fadetime>FadeTime</fadetime>
                                         <texture border="8">ContentPanelMirror.png</texture>
                                     </control>
                                     <control type="image">
@@ -1012,7 +1007,6 @@
                                         <width>300</width>
                                         <height>450</height>
                                         <aspectratio align="left">keep</aspectratio>
-                                        <fadetime>FadeTime</fadetime>
                                         <texture background="true" border="8" flipx="true">masks/Speaker.png</texture>
                                     </control>
                                     <control type="image">
@@ -1022,7 +1016,6 @@
                                         <width>300</width>
                                         <height>105</height>
                                         <colordiffuse>fanartdiffuse</colordiffuse>
-                                        <fadetime>FadeTime</fadetime>
                                         <texture border="8">ContentPanelMirror.png</texture>
                                     </control>
                                 </control>
@@ -1038,7 +1031,6 @@
                                             <top>306</top>
                                             <width>957</width>
                                             <height>120</height>
-                                            <fadetime>FadeTime</fadetime>
                                             <texture flipy="true" border="8" background="true">Shadow.png</texture>
                                         </control>
                                         <control type="image">
@@ -1047,7 +1039,6 @@
                                             <width>988</width>
                                             <height>264</height>
                                             <colordiffuse>fanartdiffuse</colordiffuse>
-                                            <fadetime>FadeTime</fadetime>
                                             <aspectratio>stretch</aspectratio>
                                             <texture flipy="true" border="15" background="true" diffuse="ContentPanelMirror3.png">masks/Radio.png</texture>
                                         </control>
@@ -1057,7 +1048,6 @@
                                             <width>987</width>
                                             <height>264</height>
                                             <aspectratio>stretch</aspectratio>
-                                            <fadetime>FadeTime</fadetime>
                                             <texture border="10" background="true">masks/Radio.png</texture>
                                         </control>
                                     </control>
@@ -1095,7 +1085,6 @@
                                             <width>105</width>
                                             <height>105</height>
                                             <aspectratio>keep</aspectratio>
-                                            <fadetime>FadeTime</fadetime>
                                             <texture diffuse="masks/mask.png" background="true">$INFO[MusicPlayer.Cover]</texture>
                                         </control>
                                         <control type="image">

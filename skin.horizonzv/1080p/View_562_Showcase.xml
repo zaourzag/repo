@@ -86,7 +86,6 @@
                                     <width>334</width>
                                     <height>334</height>
                                     <aspectratio>stretch</aspectratio>
-                                    <fadetime>FadeTime</fadetime>
                                     <colordiffuse>$VAR[CoverDim]</colordiffuse>
                                     <texture background="true" diffuse="masks/CdCoverMask_full.png" fallback="FallbackCover.png">$INFO[ListItem.Icon]</texture>
                                 </control>
@@ -96,7 +95,6 @@
                                     <width>375</width>
                                     <height>339</height>
                                     <aspectratio>stretch</aspectratio>
-                                    <fadetime>FadeTime</fadetime>
                                     <colordiffuse>$VAR[CoverDim]</colordiffuse>
                                     <texture>masks/ClearArtCD.png</texture>
                                 </control>
@@ -106,7 +104,6 @@
                                     <width>334</width>
                                     <height>117</height>
                                     <aspectratio>stretch</aspectratio>
-                                    <fadetime>FadeTime</fadetime>
                                     <colordiffuse>$VAR[CoverDim]</colordiffuse>
                                     <texture border="1" flipy="true" diffuse="ContentPanelMirror3.png" fallback="FallbackCover.png">$INFO[ListItem.Icon]</texture>
                                     <visible>Skin.HasSetting(animation)</visible>
@@ -117,7 +114,6 @@
                                     <width>375</width>
                                     <height>117</height>
                                     <aspectratio>stretch</aspectratio>
-                                    <fadetime>FadeTime</fadetime>
                                     <colordiffuse>$VAR[CoverDim]</colordiffuse>
                                     <texture background="true" border="1" flipy="true" diffuse="ContentPanelMirror3.png" fallback="FallbackCover.png">masks/ClearArtCD.png</texture>
                                     <visible>Skin.HasSetting(animation)</visible>
@@ -128,7 +124,6 @@
                                     <width>375</width>
                                     <height>102</height>
                                     <aspectratio>stretch</aspectratio>
-                                    <fadetime>FadeTime</fadetime>
                                     <texture background="true">ContentPanelMirror.png</texture>
                                     <visible>!Skin.HasSetting(animation)</visible>
                                 </control>
@@ -145,7 +140,6 @@
                                     <width>255</width>
                                     <height>375</height>
                                     <aspectratio>stretch</aspectratio>
-                                    <fadetime>FadeTime</fadetime>
                                     <colordiffuse>$VAR[CoverDim]</colordiffuse>
                                     <texture background="true" diffuse="clear-cases/clearcase_inlay.png" fallback="FallbackCover.png">$VAR[PosterThumb]</texture>
                                 </control>
@@ -155,7 +149,6 @@
                                     <width>255</width>
                                     <height>375</height>
                                     <aspectratio>stretch</aspectratio>
-                                    <fadetime>FadeTime</fadetime>
                                     <colordiffuse>dustdiffuse</colordiffuse>
                                     <texture background="true" diffuse="clear-cases/clearcase_inlay.png">Dust.png</texture>
                                     <visible>Skin.HasSetting(dust)+!ListItem.IsParentFolder</visible>
@@ -166,7 +159,6 @@
                                     <width>285</width>
                                     <height>375</height>
                                     <aspectratio>stretch</aspectratio>
-                                    <fadetime>FadeTime</fadetime>
                                     <colordiffuse>$VAR[CoverDim]</colordiffuse>
                                     <texture background="true" fallback="clear-cases/fallback.png">$VAR[clearcase]</texture>
                                 </control>
@@ -203,7 +195,6 @@
                                     <width>255</width>
                                     <height>375</height>
                                     <aspectratio>stretch</aspectratio>
-                                    <fadetime>FadeTime</fadetime>
                                     <colordiffuse>$VAR[CoverDim]</colordiffuse>
                                     <texture background="true" diffuse="masks/mask.png" fallback="FallbackCover.png">$VAR[PosterThumb]</texture>
                                 </control>
@@ -228,7 +219,6 @@
                                     <width>255</width>
                                     <height>375</height>
                                     <aspectratio>stretch</aspectratio>
-                                    <fadetime>FadeTime</fadetime>
                                     <colordiffuse>$VAR[CoverDim]</colordiffuse>
                                     <texture border="2">masks/Default.png</texture>
                                     <visible>Skin.HasSetting(animation)</visible>
@@ -268,7 +258,6 @@
                                         <width>340</width>
                                         <height>498</height>
                                         <aspectratio>stretch</aspectratio>
-                                        <fadetime>FadeTime</fadetime>
                                         <texture background="true" diffuse="masks/mask.png" fallback="FallbackCover.png">$VAR[PosterThumb]</texture>
                                     </control>
                                     <control type="image">
@@ -277,7 +266,6 @@
                                         <width>382</width>
                                         <height>507</height>
                                         <aspectratio>stretch</aspectratio>
-                                        <fadetime>FadeTime</fadetime>
                                         <texture background="true" fallback="clear-cases/fallback.png">$VAR[clearcase]</texture>
                                     </control>
                                     <control type="image">
@@ -325,7 +313,6 @@
                                         <width>345</width>
                                         <height>504</height>
                                         <aspectratio>stretch</aspectratio>
-                                        <fadetime>FadeTime</fadetime>
                                         <texture background="true" diffuse="masks/mask.png" fallback="FallbackCover.png">$VAR[PosterThumb]</texture>
                                     </control>
                                     <control type="group">
@@ -349,7 +336,6 @@
                                         <width>345</width>
                                         <height>504</height>
                                         <aspectratio>stretch</aspectratio>
-                                        <fadetime>FadeTime</fadetime>
                                         <texture>masks/Default.png</texture>
                                         <visible>Skin.HasSetting(animation)</visible>
                                     </control>
@@ -467,7 +453,6 @@
                     <top>471</top>
                     <width>180</width>
                     <height>27</height>
-                    <fadetime>FadeTime</fadetime>
                     <texture fallback="leftratingvideo/0.0.png">$INFO[ListItem.Rating,leftratingvideo/,.png]</texture>
                 </control>
             </control>
@@ -485,7 +470,6 @@
                             <width>586</width>
                             <height>332</height>
                             <aspectratio>scale</aspectratio>
-                            <fadetime>FadeTime</fadetime>
                             <texture background="true" border="1" diffuse="Shine.png" fallback="Empty.png">$INFO[ListItem.Art(fanart)]</texture>
                             <visible>[Skin.HasSetting(fanart)+String.IsEmpty(Control.GetLabel(1101))]
 							|[[Container.Content(Movies)|Container.Content(musicvideos)]+!Skin.HasSetting(video_art)]
@@ -549,7 +533,6 @@
 						<height>320</height>
 						<texture diffuse="Shine.png">$VAR[extraart_rule]$VAR[extraart_tvshow_rule]</texture>
 						<aspectratio>keep</aspectratio>
-						<fadetime>FadeTime</fadetime>
 						<visible>!ListItem.IsCollection|!String.IsEmpty(ListItem.Plot)</visible>
 						<visible>[[Container.Content(Movies)|Container.Content(Sets)|Container.Content(musicvideos)]+Skin.HasSetting(video_art)]
 						|[[Container.Content(Seasons)|Container.Content(tvshows)]+Skin.HasSetting(tvshow_art)]</visible>
@@ -585,7 +568,6 @@
                         <top>255</top>
                         <width>225</width>
                         <height>60</height>
-                        <fadetime>FadeTime</fadetime>
                         <aspectratio align="right" aligny="bottom">keep</aspectratio>
                         <texture>$VAR[Furniture_VideoRating]</texture>
                     </control>
@@ -631,7 +613,6 @@
                         <width>471</width>
                         <height>471</height>
                         <aspectratio>stretch</aspectratio>
-                        <fadetime>FadeTime</fadetime>
                         <texture diffuse="masks/CdCoverMask_full.png" fallback="FallbackCover.png">$INFO[ListItem.Icon]</texture>
                     </control>
                     <control type="image">
@@ -640,7 +621,6 @@
                         <width>525</width>
                         <height>471</height>
                         <aspectratio>stretch</aspectratio>
-                        <fadetime>FadeTime</fadetime>
                         <texture>masks/ClearArtCD.png</texture>
                     </control>
                 </control>
@@ -689,7 +669,6 @@
                             <width>586</width>
                             <height>332</height>
                             <aspectratio>scale</aspectratio>
-                            <fadetime>FadeTime</fadetime>
                             <texture border="1" diffuse="Shine.png" fallback="Empty.png">$INFO[ListItem.Art(fanart)]</texture>
                             <visible>Skin.HasSetting(fanart)+[String.IsEmpty(Control.GetLabel(1301))|!Skin.HasSetting(music_art)]</visible>
                             <include>opencloseslideup</include>
@@ -735,7 +714,6 @@
 							<width>615</width>
 							<height>320</height>
                             <aspectratio>keep</aspectratio>
-                            <fadetime>FadeTime</fadetime>
 							<texture background="true" diffuse="masks/flagging_mask.png">$INFO[Skin.String(Music_Folder_Path)]$INFO[ListItem.Artist,,/logo.png]</texture>
 							<visible>Skin.HasSetting(music_art)</visible>
                             <include>opencloseslideup</include>

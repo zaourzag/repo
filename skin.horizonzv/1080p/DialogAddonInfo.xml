@@ -31,7 +31,7 @@
                         <width>3</width>
                         <height>525</height>
                         <colordiffuse>fanartdiffuse</colordiffuse>
-                        <texture background="true">Separator4.png</texture>
+                        <texture>Separator4.png</texture>
                     </control>
                     <control type="group">
                         <left>0</left>
@@ -46,10 +46,9 @@
                             <width>450</width>
                             <height>450</height>
                             <aspectratio>keep</aspectratio>
-                            <fadetime>FadeTime</fadetime>
                             <bordertexture border="10">ThumbShadow.png</bordertexture>
                             <bordersize>7</bordersize>
-                            <texture background="true">$INFO[ListItem.Icon]</texture>
+                            <texture>$INFO[ListItem.Icon]</texture>
                             <visible>String.IsEmpty(ListItem.AddonBroken)</visible>
                         </control>
                         <control type="image">
@@ -60,11 +59,10 @@
                             <width>435</width>
                             <height>435</height>
                             <aspectratio>keep</aspectratio>
-                            <fadetime>FadeTime</fadetime>
                             <colordiffuse>grey2</colordiffuse>
                             <bordertexture border="10">ThumbShadow.png</bordertexture>
                             <bordersize>7</bordersize>
-                            <texture background="true">$INFO[ListItem.Icon]</texture>
+                            <texture>$INFO[ListItem.Icon]</texture>
                             <visible>!String.IsEmpty(ListItem.AddonBroken)</visible>
                         </control>
                         <control type="image">
@@ -72,8 +70,7 @@
                             <top>172</top>
                             <width>420</width>
                             <height>420</height>
-                            <fadetime>FadeTime</fadetime>
-                            <texture background="true">Broken.png</texture>
+                            <texture>Broken.png</texture>
                             <visible>!String.IsEmpty(ListItem.AddonBroken)</visible>
                         </control>
                         <control type="group">

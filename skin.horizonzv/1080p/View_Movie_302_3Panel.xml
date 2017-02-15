@@ -135,7 +135,6 @@
                     <top>48</top>
                     <width>576</width>
                     <height>824</height>
-                    <fadetime>FadeTime</fadetime>
                     <aspectratio align="right">stretch</aspectratio>
                     <colordiffuse>menudiffuse</colordiffuse>
                     <texture background="true" border="8">$VAR[Panel3Cover]</texture>
@@ -147,7 +146,6 @@
                     <top>50</top>
                     <width>648</width>
                     <height>648</height>
-                    <fadetime>FadeTime</fadetime>
                     <aspectratio>scale</aspectratio>
                     <colordiffuse>menudiffuse</colordiffuse>
                     <texture background="true" border="5" diffuse="ShadowWhiteFlipy.png">$VAR[Panel3Fanart]</texture>
@@ -159,7 +157,6 @@
                     <top>240</top>
                     <width>300</width>
                     <height>600</height>
-                    <fadetime>FadeTime</fadetime>
                     <aspectratio aligny="bottom">keep</aspectratio>
                     <texture background="true" diffuse="Shine.png">$INFO[Container(303).ListItem().Icon]</texture>
                     <visible>[Control.HasFocus(303)|Control.HasFocus(70)]+!String.IsEmpty(Container(303).ListItem().Icon)+!Control.IsVisible(600)</visible>
@@ -170,7 +167,6 @@
                     <top>240</top>
                     <width>300</width>
                     <height>600</height>
-                    <fadetime>FadeTime</fadetime>
                     <aspectratio aligny="bottom">keep</aspectratio>
                     <texture background="true" diffuse="Shine.png">$INFO[Container(302).ListItem().Icon]</texture>
                     <visible>[[Control.HasFocus(302)|Control.HasFocus(60)]+String.IsEmpty(ListItem.Art(poster))+!Control.IsVisible(600)]|String.IsEqual(Container.FolderPath,videodb://tvshows/actors/)|String.IsEqual(Container.FolderPath,videodb://movies/actors/)</visible>
@@ -183,7 +179,6 @@
                         <top>532</top>
                         <width>525</width>
                         <height>330</height>
-                        <fadetime>FadeTime</fadetime>
                         <colordiffuse>menudiffuse</colordiffuse>
                         <aspectratio aligny="bottom">keep</aspectratio>
                         <texture background="true" border="5">$INFO[Container(302).ListItem().Art(clearlogo)]</texture>
@@ -199,7 +194,6 @@
                         <top>532</top>
                         <width>525</width>
                         <height>330</height>
-                        <fadetime>FadeTime</fadetime>
                         <colordiffuse>menudiffuse</colordiffuse>
                         <aspectratio aligny="bottom">keep</aspectratio>
                         <texture background="true" border="5">$INFO[Container(303).ListItem().Art(clearlogo)]</texture>
@@ -215,7 +209,6 @@
                         <top>532</top>
                         <width>525</width>
                         <height>330</height>
-                        <fadetime>FadeTime</fadetime>
                         <colordiffuse>menudiffuse</colordiffuse>
                         <aspectratio aligny="bottom">keep</aspectratio>
                         <texture background="true" border="5">$INFO[Container(600).ListItem().Art(clearlogo)]</texture>
@@ -354,7 +347,6 @@
                     <top>128</top>
                     <width>510</width>
                     <height>315</height>
-                    <fadetime>FadeTime</fadetime>
                     <aspectratio>keep</aspectratio>
                     <texture background="true" border="5">$INFO[ListItem.Icon]</texture>
                     <visible>Container.Content(episodes)</visible>

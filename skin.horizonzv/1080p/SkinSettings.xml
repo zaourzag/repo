@@ -1588,7 +1588,6 @@
                             <label>51345</label>
                             <onclick>Skin.ToggleSetting(homepageNOWeatherinfo)</onclick>
                             <selected>Skin.HasSetting(homepageNOWeatherinfo)</selected>
-                            <!-- <visible>!Skin.HasSetting(NavInfo)</visible> -->
                         </control>
                         <!-- <control type="radiobutton" id="836">
                             <description>Toggle Weather Fanart Hauptmenü</description>

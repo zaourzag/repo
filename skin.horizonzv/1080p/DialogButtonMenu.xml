@@ -324,7 +324,6 @@
                     <top>465</top>
                     <width>510</width>
                     <height>180</height>
-                    <fadetime>FadeTime</fadetime>
                     <aspectratio align="left" aligny="top">keep</aspectratio>
                     <texture>$INFO[Skin.String(Music_Folder_Path)]$INFO[MusicPlayer.Artist,,/logo.png]</texture>
                     <visible>Player.HasMedia</visible>

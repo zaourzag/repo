@@ -92,7 +92,6 @@
                                 <width>170</width>
                                 <height>228</height>
                                 <aspectratio>stretch</aspectratio>
-                                <fadetime>FadeTime</fadetime>
                                 <colordiffuse>$VAR[CoverDim]</colordiffuse>
                                 <texture diffuse="masks/mask.png" fallback="FallbackCover.png">$VAR[PosterThumb]</texture>
                                 <bordertexture border="10">ThumbShadow.png</bordertexture>
@@ -119,7 +118,6 @@
                                 <width>159</width>
                                 <height>218</height>
                                 <aspectratio>stretch</aspectratio>
-                                <fadetime>FadeTime</fadetime>
                                 <colordiffuse>$VAR[CoverDim]</colordiffuse>
                                 <texture>masks/Default.png</texture>
                                 <visible>Skin.HasSetting(animation)</visible>
@@ -131,7 +129,6 @@
                                 <width>156</width>
                                 <height>75</height>
                                 <aspectratio align="center" aligny="bottom">stretch</aspectratio>
-                                <fadetime>FadeTime</fadetime>
                                 <colordiffuse>grey2</colordiffuse>
                                 <texture flipy="true" diffuse="ShadowWhiteFlipy_2.png" fallback="FallbackCover.png">$VAR[PosterThumb]</texture>
                             </control>
@@ -278,7 +275,6 @@
                 <top>885</top>
                 <width>1800</width>
                 <height>120</height>
-                <fadetime>FadeTime</fadetime>
                 <aspectratio aligny="bottom">keep</aspectratio>
                 <texture>$INFO[ListItem.Art(clearlogo)]</texture>
                 <visible>Skin.HasSetting(Fanart_ClearlogoTitle)+!String.IsEmpty(ListItem.Art(clearlogo))</visible>
@@ -295,7 +291,6 @@
                 <top>150</top>
                 <width>345</width>
                 <height>75</height>
-                <fadetime>FadeTime</fadetime>
                 <aspectratio>keep</aspectratio>
                 <texture>$INFO[ListItem.Art(clearlogo)]</texture>
                 <visible>Skin.HasSetting(Clearart)</visible>
@@ -307,7 +302,6 @@
                 <top>150</top>
                 <width>345</width>
                 <height>75</height>
-                <fadetime>FadeTime</fadetime>
                 <aspectratio>keep</aspectratio>
                 <texture>$VAR[MovieStudioLogoVar]$INFO[ListItem.Studio,,.png]</texture>
                 <visible>String.IsEmpty(ListItem.Art(clearlogo))|Skin.HasSetting(Fanart_ClearlogoTitle)</visible>
@@ -466,7 +460,6 @@
                                     <top>315</top>
                                     <width>180</width>
                                     <height>30</height>
-                                    <fadetime>FadeTime</fadetime>
                                     <texture fallback="leftratingvideo/0.0.png">$INFO[ListItem.Rating,leftratingvideo/,.png]</texture>
                                 </control>
                                 <control type="image">
@@ -476,7 +469,6 @@
                                     <top>308</top>
                                     <width>225</width>
                                     <height>60</height>
-                                    <fadetime>FadeTime</fadetime>
                                     <aspectratio align="right" aligny="bottom">keep</aspectratio>
                                     <texture>$VAR[Furniture_VideoRating]</texture>
                                 </control>
@@ -514,7 +506,6 @@
                     <height>375</height>
                     <aspectratio>keep</aspectratio>
                     <texture>$VAR[extraart_tvshow_rule]</texture>
-                    <fadetime>FadeTime</fadetime>
                     <visible>Skin.HasSetting(tvshow_art)</visible>
                 </control>
                 <control type="image">
@@ -526,7 +517,6 @@
                     <height>375</height>
                     <aspectratio>keep</aspectratio>
                     <texture diffuse="shine.png">special://skin/backgrounds/mediaoverlaywhite.jpg</texture>
-                    <fadetime>FadeTime</fadetime>
                     <visible>!Skin.HasSetting(tvshow_art)</visible>
                 </control>
                 <control type="group">

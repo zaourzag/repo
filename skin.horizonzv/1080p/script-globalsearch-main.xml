@@ -31,7 +31,6 @@
                 <height>934</height>
                 <texture background="true">$INFO[Container(111).ListItem.Property(Fanart)]</texture>
                 <aspectratio>scale</aspectratio>
-                <fadetime>FadeTime</fadetime>
                 <colordiffuse>grey2</colordiffuse>
                 <animation effect="fade" time="200">Visible</animation>
                 <animation effect="fade" time="200">Hidden</animation>
@@ -44,7 +43,6 @@
                 <height>934</height>
                 <texture background="true">$INFO[Container(121).ListItem.Property(Fanart)]</texture>
                 <aspectratio>scale</aspectratio>
-                <fadetime>FadeTime</fadetime>
                 <colordiffuse>4FFFFFFF</colordiffuse>
                 <animation effect="fade" time="200">Visible</animation>
                 <animation effect="fade" time="200">Hidden</animation>
@@ -57,7 +55,6 @@
                 <height>934</height>
                 <texture background="true">$INFO[Container(131).ListItem.Property(Fanart)]</texture>
                 <aspectratio>scale</aspectratio>
-                <fadetime>FadeTime</fadetime>
                 <colordiffuse>4FFFFFFF</colordiffuse>
                 <animation effect="fade" time="200">Visible</animation>
                 <animation effect="fade" time="200">Hidden</animation>
@@ -70,7 +67,6 @@
                 <height>934</height>
                 <texture background="true">$INFO[Container(141).ListItem.Property(Fanart)]</texture>
                 <aspectratio>scale</aspectratio>
-                <fadetime>FadeTime</fadetime>
                 <colordiffuse>4FFFFFFF</colordiffuse>
                 <animation effect="fade" time="200">Visible</animation>
                 <animation effect="fade" time="200">Hidden</animation>
@@ -83,7 +79,6 @@
                 <height>934</height>
                 <texture background="true">$INFO[Container(151).ListItem.Property(Fanart)]</texture>
                 <aspectratio>scale</aspectratio>
-                <fadetime>FadeTime</fadetime>
                 <colordiffuse>4FFFFFFF</colordiffuse>
                 <animation effect="fade" time="200">Visible</animation>
                 <animation effect="fade" time="200">Hidden</animation>
@@ -96,7 +91,6 @@
                 <height>934</height>
                 <texture background="true">$INFO[Container(161).ListItem.Property(Fanart)]</texture>
                 <aspectratio>scale</aspectratio>
-                <fadetime>FadeTime</fadetime>
                 <colordiffuse>4FFFFFFF</colordiffuse>
                 <animation effect="fade" time="200">Visible</animation>
                 <animation effect="fade" time="200">Hidden</animation>
@@ -109,7 +103,6 @@
                 <height>934</height>
                 <texture background="true">$INFO[Container(171).ListItem.Property(Fanart)]</texture>
                 <aspectratio>scale</aspectratio>
-                <fadetime>FadeTime</fadetime>
                 <colordiffuse>4FFFFFFF</colordiffuse>
                 <animation effect="fade" time="200">Visible</animation>
                 <animation effect="fade" time="200">Hidden</animation>
@@ -122,7 +115,6 @@
                 <height>934</height>
                 <texture background="true">$INFO[Container(181).ListItem.Property(Fanart)]</texture>
                 <aspectratio>scale</aspectratio>
-                <fadetime>FadeTime</fadetime>
                 <colordiffuse>4FFFFFFF</colordiffuse>
                 <animation effect="fade" time="200">Visible</animation>
                 <animation effect="fade" time="200">Hidden</animation>
@@ -135,7 +127,6 @@
 				<height>623</height>
 				<texture background="true">background.jpg</texture>
 				<aspectratio>scale</aspectratio>
-				<fadetime>FadeTime</fadetime>
 				<colordiffuse>4FFFFFFF</colordiffuse>
 				<animation effect="fade" time="200">Visible</animation>
 				<animation effect="fade" time="200">Hidden</animation>
@@ -256,7 +247,7 @@
                                 <top>10</top>
                                 <width>150</width>
                                 <height>150</height>
-                                <texture background="true">$INFO[ListItem.Icon]</texture>
+                                <texture>$INFO[ListItem.Icon]</texture>
                                 <aspectratio>scale</aspectratio>
                             </control>
                             <control type="image">
@@ -341,7 +332,7 @@
                                 <top>10</top>
                                 <width>150</width>
                                 <height>150</height>
-                                <texture background="true">$INFO[ListItem.Icon]</texture>
+                                <texture>$INFO[ListItem.Icon]</texture>
                                 <aspectratio>scale</aspectratio>
                             </control>
                             <control type="image">
@@ -470,7 +461,7 @@
                                 <top>10</top>
                                 <width>150</width>
                                 <height>150</height>
-                                <texture background="true">$INFO[ListItem.Icon]</texture>
+                                <texture>$INFO[ListItem.Icon]</texture>
                                 <aspectratio>scale</aspectratio>
                             </control>
                             <control type="image">
@@ -523,7 +514,7 @@
                                 <top>10</top>
                                 <width>150</width>
                                 <height>150</height>
-                                <texture background="true">$INFO[ListItem.Icon]</texture>
+                                <texture>$INFO[ListItem.Icon]</texture>
                                 <aspectratio>scale</aspectratio>
                             </control>
                             <control type="image">
@@ -620,7 +611,7 @@
                                 <top>10</top>
                                 <width>150</width>
                                 <height>150</height>
-                                <texture background="true">$INFO[ListItem.Icon]</texture>
+                                <texture>$INFO[ListItem.Icon]</texture>
                                 <aspectratio>scale</aspectratio>
                             </control>
                             <control type="image">
@@ -666,7 +657,7 @@
                                 <top>10</top>
                                 <width>150</width>
                                 <height>150</height>
-                                <texture background="true">$INFO[ListItem.Icon]</texture>
+                                <texture>$INFO[ListItem.Icon]</texture>
                                 <aspectratio>scale</aspectratio>
                             </control>
                             <control type="image">
@@ -753,7 +744,7 @@
                                 <top>10</top>
                                 <width>150</width>
                                 <height>150</height>
-                                <texture background="true">$INFO[ListItem.Icon]</texture>
+                                <texture>$INFO[ListItem.Icon]</texture>
                                 <aspectratio>scale</aspectratio>
                             </control>
                             <control type="image">
@@ -806,7 +797,7 @@
                                 <top>10</top>
                                 <width>150</width>
                                 <height>150</height>
-                                <texture background="true">$INFO[ListItem.Icon]</texture>
+                                <texture>$INFO[ListItem.Icon]</texture>
                                 <aspectratio>scale</aspectratio>
                             </control>
                             <control type="image">
@@ -903,7 +894,7 @@
                                 <top>10</top>
                                 <width>150</width>
                                 <height>150</height>
-                                <texture background="true">$INFO[ListItem.Icon]</texture>
+                                <texture>$INFO[ListItem.Icon]</texture>
                                 <aspectratio>scale</aspectratio>
                             </control>
                             <control type="image">
@@ -967,7 +958,7 @@
                                 <top>10</top>
                                 <width>150</width>
                                 <height>150</height>
-                                <texture background="true">$INFO[ListItem.Icon]</texture>
+                                <texture>$INFO[ListItem.Icon]</texture>
                                 <aspectratio>scale</aspectratio>
                             </control>
                             <control type="image">
@@ -1075,7 +1066,7 @@
                                 <top>10</top>
                                 <width>150</width>
                                 <height>150</height>
-                                <texture background="true">$INFO[ListItem.Icon]</texture>
+                                <texture>$INFO[ListItem.Icon]</texture>
                                 <aspectratio>scale</aspectratio>
                             </control>
                             <control type="label">
@@ -1120,7 +1111,7 @@
                                 <top>10</top>
                                 <width>150</width>
                                 <height>150</height>
-                                <texture background="true">$INFO[ListItem.Icon]</texture>
+                                <texture>$INFO[ListItem.Icon]</texture>
                                 <aspectratio>scale</aspectratio>
                             </control>
                             <control type="label">
@@ -1209,7 +1200,7 @@
                                 <top>10</top>
                                 <width>150</width>
                                 <height>150</height>
-                                <texture background="true">$INFO[ListItem.Icon]</texture>
+                                <texture>$INFO[ListItem.Icon]</texture>
                                 <aspectratio>scale</aspectratio>
                             </control>
                             <control type="label">
@@ -1254,7 +1245,7 @@
                                 <top>10</top>
                                 <width>150</width>
                                 <height>150</height>
-                                <texture background="true">$INFO[ListItem.Icon]</texture>
+                                <texture>$INFO[ListItem.Icon]</texture>
                                 <aspectratio>scale</aspectratio>
                             </control>
                             <control type="label">
@@ -1343,7 +1334,7 @@
                                 <top>10</top>
                                 <width>150</width>
                                 <height>150</height>
-                                <texture background="true">$INFO[ListItem.Icon]</texture>
+                                <texture>$INFO[ListItem.Icon]</texture>
                                 <aspectratio>scale</aspectratio>
                             </control>
                             <control type="label">
@@ -1399,7 +1390,7 @@
                                 <top>10</top>
                                 <width>150</width>
                                 <height>150</height>
-                                <texture background="true">$INFO[ListItem.Icon]</texture>
+                                <texture>$INFO[ListItem.Icon]</texture>
                                 <aspectratio>scale</aspectratio>
                             </control>
                             <control type="label">
