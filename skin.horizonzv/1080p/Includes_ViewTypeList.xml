@@ -194,7 +194,7 @@
                     <onclick>Container.SetViewMode(50)</onclick>
                     <onclick>Action(down)</onclick>
                     <include>SidePanelButton</include>
-                    <visible>!Window.IsVisible(pvr)</visible>
+					<visible>![Window.IsVisible(MyPVRChannels.xml)|Window.IsVisible(MyPVRGuide.xml)|Window.IsVisible(MyPVRRecordings.xml)|Window.IsVisible(MyPVRTimers.xml)|Window.IsVisible(MyPVRSearch.xml)]</visible>
                 </control>
                 <control type="button" id="812">
                     <description>View</description>
@@ -380,7 +380,7 @@
                     <onclick>Action(down)</onclick>
                     <include>SidePanelButton</include>
                     <visible>![Container.Content(Sets)|Container.Content(Musicvideos)|Container.Content(Movies)|Container.Content(TVShows)|Container.Content(Episodes)|Container.Content(Seasons)]</visible>
-                    <visible>!Window.IsVisible(pvr)</visible>
+					<visible>![Window.IsVisible(MyPVRChannels.xml)|Window.IsVisible(MyPVRGuide.xml)|Window.IsVisible(MyPVRRecordings.xml)|Window.IsVisible(MyPVRTimers.xml)|Window.IsVisible(MyPVRSearch.xml)]</visible>
                 </control>
                 <control type="button" id="842">
                     <description>View</description>
@@ -442,7 +442,7 @@
                     <onclick>Container.SetViewMode(11)</onclick>
                     <onclick>Action(down)</onclick>
                     <include>SidePanelButton</include>
-                    <visible>Window.IsVisible(pvr)</visible>
+					<visible>Window.IsVisible(MyPVRChannels.xml)|Window.IsVisible(MyPVRGuide.xml)|Window.IsVisible(MyPVRRecordings.xml)|Window.IsVisible(MyPVRTimers.xml)|Window.IsVisible(MyPVRSearch.xml)</visible>
                 </control>
                 <control type="button" id="854">
                     <description>View</description>
@@ -450,7 +450,7 @@
                     <onclick>Container.SetViewMode(10)</onclick>
                     <onclick>Action(down)</onclick>
                     <include>SidePanelButton</include>
-                    <visible>Window.IsVisible(pvr)</visible>
+					<visible>Window.IsVisible(MyPVRChannels.xml)|Window.IsVisible(MyPVRGuide.xml)|Window.IsVisible(MyPVRRecordings.xml)|Window.IsVisible(MyPVRTimers.xml)|Window.IsVisible(MyPVRSearch.xml)</visible>
                 </control>
             </control>
             <include>SidePanelNavigation</include>

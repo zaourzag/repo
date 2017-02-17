@@ -401,6 +401,7 @@
                     <onright>403</onright>
                     <onup condition="Control.IsVisible(402)">402</onup>
                     <onup condition="!Control.IsVisible(402)">401</onup>
+					<visible>System.HasAddon(plugin.program.serienplaner)</visible>
                     <ondown>9000</ondown>
                     <oninfo>SetProperty(Widget.Senderlogo,$INFO[Container(403).ListItem.Property(Senderlogo)],home)</oninfo>
                     <oninfo>SetProperty(Widget.Datetime,$INFO[Container(403).ListItem.Property(Datetime)],home)</oninfo>

@@ -643,7 +643,7 @@
             <width>1</width>
             <height>1</height>
             <visible>Player.HasVideo</visible>
-            <visible>!String.Contains(VideoPlayer.Title,theme.mp4)</visible>
+            <visible>!String.Contains(VideoPlayer.Title,theme.mp4)+!VideoPlayer.Content(livetv)</visible>
         </control>
         <control type="image">
             <left>0</left>
@@ -655,7 +655,6 @@
             <visible>!String.Contains(VideoPlayer.Title,theme.mp4)</visible>
         </control>
         <control type="videowindow">
-            <!-- TVTunes Video -->
             <left>0</left>
             <top>0</top>
             <width>1920</width>
@@ -802,7 +801,6 @@
                     <font>impacted24</font>
                     <textcolor>white</textcolor>
                     <visible>![Window.IsVisible(MyPVRChannels.xml)|Window.IsVisible(MyPVRGuide.xml)|Window.IsVisible(MyPVRRecordings.xml)|Window.IsVisible(MyPVRTimers.xml)|Window.IsVisible(MyPVRSearch.xml)]</visible>
-                    <!-- <visible>![Window.IsActive(pvr)+Window.IsActive(tvguide)+Window.IsActive(tvrecordings)+Window.IsActive(tvtimers)+Window.IsActive(tvsearch)]</visible> -->
                     <visible>!Window.IsVisible(eventlog)+!Window.IsVisible(SettingsCategory.xml)</visible>
                     <visible>Skin.HasSetting(NavInfo)+!Control.HasFocus(666)</visible>
                 </control>
@@ -834,7 +832,6 @@
             <!-- pvr -->
             <visible>Skin.HasSetting(NavInfo)+!Control.HasFocus(666)</visible>
             <visible>Window.IsVisible(MyPVRChannels.xml)|Window.IsVisible(MyPVRGuide.xml)|Window.IsVisible(MyPVRRecordings.xml)|Window.IsVisible(MyPVRTimers.xml)|Window.IsVisible(MyPVRSearch.xml)</visible>
-            <!-- <visible>Window.IsActive(pvr)|Window.IsActive(tvguide)|Window.IsActive(tvrecordings)|Window.IsActive(tvtimers)|Window.IsActive(tvsearch)</visible> -->
             <left>15</left>
             <top>1</top>
             <width>750</width>
@@ -846,7 +843,8 @@
                 <font>impacted24</font>
                 <textcolor>white</textcolor>
                 <label>$LOCALIZE[19020]</label>
-                <visible>Window.IsVisible(pvr)</visible>
+                <visible>
+				<visible>Window.IsVisible(MyPVRChannels.xml)|Window.IsVisible(MyPVRGuide.xml)|Window.IsVisible(MyPVRRecordings.xml)|Window.IsVisible(MyPVRTimers.xml)|Window.IsVisible(MyPVRSearch.xml)</visible></visible>
             </control>
             <control type="label">
                 <width>auto</width>
@@ -1495,7 +1493,7 @@
                 <label>$INFO[Container.NumItems,([COLOR=selected],[/COLOR]) $LOCALIZE[31025]]$INFO[Container.CurrentPage, - $LOCALIZE[31024] ([COLOR=selected]]$INFO[Container.NumPages,/,[/COLOR])]</label>
             </control>
             <control type="label">
-                <visible>!Window.IsVisible(pvr)+!Window.IsVisible(tvguide)+!Window.IsVisible(tvrecordings)+!Window.IsVisible(tvtimers)+!Window.IsVisible(tvsearch)+!Window.IsVisible(radiochannels)</visible>
+				<visible>![Window.IsVisible(MyPVRChannels.xml)|Window.IsVisible(MyPVRGuide.xml)|Window.IsVisible(MyPVRRecordings.xml)|Window.IsVisible(MyPVRTimers.xml)|Window.IsVisible(MyPVRSearch.xml)]</visible>
                 <description>Container Duration Label</description>
                 <left>0</left>
                 <top>34</top>

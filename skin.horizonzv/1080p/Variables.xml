@@ -150,7 +150,7 @@
         <value condition="Window.IsVisible(videos)+Container.Content(musicvideos)+!Skin.HasSetting(onlyone)">special://skin/backgrounds/musicvideos.jpg</value>
         <value condition="Window.IsVisible(addonbrowser)+!Skin.HasSetting(onlyone)">special://skin/backgrounds/addons.jpg</value>
         <value condition="[Window.IsVisible(music)|Window.IsVisible(musicplaylist)]+!Skin.HasSetting(onlyone)">special://skin/backgrounds/music.jpg</value>
-        <value condition="Window.IsVisible(PVR)+!Skin.HasSetting(onlyone)">special://skin/backgrounds/livetv.jpg</value>
+        <value condition="[Window.IsVisible(MyPVRChannels.xml)|Window.IsVisible(MyPVRGuide.xml)|Window.IsVisible(MyPVRRecordings.xml)|Window.IsVisible(MyPVRTimers.xml)|Window.IsVisible(MyPVRSearch.xml)]+!Skin.HasSetting(onlyone)">special://skin/backgrounds/livetv.jpg</value>
     </variable>
     <variable name="CDArtStyle">
         <value condition="Skin.HasSetting(cdart_glass)">cdart/default_glass.png</value>

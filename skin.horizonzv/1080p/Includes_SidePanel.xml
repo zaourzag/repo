@@ -306,7 +306,7 @@
                         <description>PVR</description>
                         <label>31502</label>
                         <icon>icons/LiveTVIcon.png</icon>
-                        <onclick>ActivateWindow(PVR)</onclick>
+                        <visible>Window.IsVisible(MyPVRChannels.xml)|Window.IsVisible(MyPVRGuide.xml)|Window.IsVisible(MyPVRRecordings.xml)|Window.IsVisible(MyPVRTimers.xml)|Window.IsVisible(MyPVRSearch.xml)</visible>
                         <visible>PVR.HasTVChannels</visible>
                     </item>
                     <item id="8">

@@ -58,7 +58,7 @@
                         <font>impacted24</font>
                         <textcolor>white</textcolor>
                         <visible>Skin.HasSetting(NavInfo)</visible>
-                        <visible>!Window.IsActive(pvr)</visible>
+                        <visible>![Window.IsVisible(MyPVRChannels.xml)|Window.IsVisible(MyPVRGuide.xml)|Window.IsVisible(MyPVRRecordings.xml)|Window.IsVisible(MyPVRTimers.xml)|Window.IsVisible(MyPVRSearch.xml)]</visible>
                         <visible>!Window.IsActive(SkinSettings)</visible>
                     </control>
                     <control type="label">

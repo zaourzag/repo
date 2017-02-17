@@ -1,4 +1,7 @@
-﻿v 0.9.0.26
+﻿v 0.9.0.27
+- Bugfixes im Code für PVR Window
+
+v 0.9.0.26
 - Extra Fanarts für Filme können separat deaktiviert werden
 
 v 0.9.0.25
