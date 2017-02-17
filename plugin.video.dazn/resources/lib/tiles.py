@@ -6,31 +6,31 @@ from resources import resources
 class Tiles:
 
     def __init__(self, i):
-        self.item           = {}
-        self.title          = i['Title']
-        self.subtitle       = i['SubTitle']
-        self.description    = i['Description']
-        self.start          = utc2local(i.get('Start', ''))
-        self.end            = utc2local(i.get('End', ''))
-        self.now            = datetime.datetime.now().strftime(time_format)
-        self.sport          = i.get('Sport', '')
-        self.competition    = i.get('Competition', '')
-        self.type           = i.get('Type', '')
-        self.nav            = i.get('NavigateTo', '')
-        self.related        = i.get('Related', [])
+        self.item = {}
+        self.title = i['Title']
+        self.subtitle = i.get('SubTitle', '')
+        self.description = i['Description']
+        self.start = utc2local(i.get('Start', ''))
+        self.end = utc2local(i.get('End', ''))
+        self.now = datetime.datetime.now().strftime(time_format)
+        self.sport = i.get('Sport', '')
+        self.competition = i.get('Competition', '')
+        self.type = i.get('Type', '')
+        self.nav = i.get('NavigateTo', '')
+        self.related = i.get('Related', [])
         if self.nav:
-            self.mode   = 'rails'
-            self.id     = i['NavigateTo']
-            self.params = i['AssetId']
+            self.mode = 'rails'
+            self.id = i['NavigateTo']
+            self.params = i['NavParams']
         else:
-            self.mode   = 'play'
-            self.id     = i['AssetId']
+            self.mode = 'play'
+            self.id = i['AssetId']
             self.params = ''
         self.update_item(i)
         
     def add_duration(self, i):
         if 'upcoming' in self.type.lower():
-            self.end   = self.start
+            self.end = self.start
             self.start = self.now
         elif 'live' in self.type.lower():
             self.start = self.now
@@ -40,10 +40,10 @@ class Tiles:
             self.item['duration'] = timedelta_total_seconds(end-start)
         
     def add_thumb(self, i):
-        url = api_base+"/img('%s')/$value?Quality=95&Width=720&Height=404&ResizeAction='fill'&VerticalAlignment='top'&Format='%s'"
+        url = api_base+'/image?id=%s&Quality=95&Width=720&Height=404&ResizeAction=fill&VerticalAlignment=top&Format=%s'
         image = i.get('Image', '')
         if image:
-            self.item['thumb'] = url % (image['Id'], image['ImageMimeType'])
+            self.item['thumb'] = url % ('v2', image['Id'], image['ImageMimeType'])
             
     def plot(self):
         if self.competition:
@@ -53,11 +53,11 @@ class Tiles:
         return utfenc(unicode('%s\n\nStart: %s\nSport: %s\nCompetition: %s' % (self.description, self.start, self.sport, self.competition)))
         
     def update_item(self, i):
-        self.item['mode']  = self.mode
+        self.item['mode'] = self.mode
         self.item['title'] = utfenc(self.title)
-        self.item['plot']  = utfenc(self.description)
-        self.item['id']    = self.id
-        self.item['type']  = utfenc(resources(self.type))
+        self.item['plot'] = utfenc(self.description)
+        self.item['id'] = self.id
+        self.item['type'] = utfenc(resources(self.type))
 
         if self.params:
             self.item['params'] = self.params
@@ -69,10 +69,10 @@ class Tiles:
             else:
                 sub_title = resources(self.type)
             self.item['params'] = i['Id'].split(':')[0]
-            self.item['title']  = utfenc(unicode('%s (%s)' % (self.title, sub_title)))
+            self.item['title'] = utfenc(unicode('%s (%s)' % (self.title, sub_title)))
             
-        if i.get('ListingStartTime', None):
-            self.item['date'] = utc2local(i['ListingStartTime'])[:10]
+        if self.start:
+            self.item['date'] = self.start[:10]
             
         if self.related:
             self.item['cm'] = self.related

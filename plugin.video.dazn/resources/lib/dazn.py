@@ -13,6 +13,7 @@ def rails_items(data):
     
 def rail_items(data):
     from tiles import Tiles
+    focus = data.get('StartPosition', False)
     for i in data.get('Tiles', []):
         item = Tiles(i).item
         cm = []
@@ -30,7 +31,7 @@ def rail_items(data):
                     break
             item['cm'] = cm
         items.add_item(item)
-    items.list_items()
+    items.list_items(focus)
     
 def context_items(data):
     cm_items = []

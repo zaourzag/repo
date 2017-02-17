@@ -5,11 +5,11 @@ from common import *
 class Playback:
 
     def __init__(self, data):
-        empty            = [{'ManifestUrl':'', 'LaUrl':'', 'CdnName':''}]
-        details          = data.get('PlaybackDetails', empty)
-        n                = self.location(details)
+        empty = [{'ManifestUrl':'', 'LaUrl':'', 'CdnName':''}]
+        details = data.get('PlaybackDetails', empty)
+        n = self.location(details)
         self.ManifestUrl = self.parse_data(n, details, 'ManifestUrl')
-        self.LaUrl       = self.parse_data(n, details, 'LaUrl')
+        self.LaUrl = self.parse_data(n, details, 'LaUrl')
         
     def parse_data(self, n, data, id):
         return data[n][id].replace('https','http')

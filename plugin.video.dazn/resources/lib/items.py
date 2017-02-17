@@ -7,9 +7,8 @@ class Items:
     def __init__(self):
         self.cache = True
         self.video = False
-        self.focus = False
     
-    def list_items(self, upd=False):
+    def list_items(self, focus=False, upd=False):
         if self.video:
             xbmcplugin.setContent(addon_handle, content)
             
@@ -18,40 +17,39 @@ class Items:
         if force_view:
             xbmc.executebuiltin('Container.SetViewMode(%s)' % view_id)
             
-        if self.focus:
+        if focus:
             try:
                 wnd = xbmcgui.Window(xbmcgui.getCurrentWindowId())
-                wnd.getControl(wnd.getFocusId()).selectItem(15)
+                wnd.getControl(wnd.getFocusId()).selectItem(focus+1)
             except:
                 pass
 
     def add_item(self, item):    
         data = {
-                'mode'   : item['mode'],
-                'title'  : item['title'],
-                'id'     : item.get('id', ''),
-                'params' : item.get('params','')
-                }
+            'mode': item['mode'],
+            'title': item['title'],
+            'id': item.get('id', ''),
+            'params': item.get('params','')
+        }
                     
         art = {
-                'thumb'  : item.get('thumb', icon),
-                'poster' : item.get('thumb', icon),
-                'fanart' : fanart
-                }
+            'thumb'  : item.get('thumb', icon),
+            'poster' : item.get('thumb', icon),
+            'fanart' : fanart
+        }
                 
         labels = {
-                    'title'     : item['title'],
-                    'plot'      : item.get('plot', ''),
-                    'premiered' : item.get('date', ''),
-                    'episode'   : item.get('episode', 0)
-                    }
+            'title': item['title'],
+            'plot': item.get('plot', ''),
+            'premiered': item.get('date', ''),
+            'episode': item.get('episode', 0)
+        }
         
         listitem = xbmcgui.ListItem(item['title'])
         listitem.setArt(art)
         listitem.setInfo(type='Video', infoLabels=labels)
         
         if 'play' in item['mode']:
-            self.focus = item.get('params', '') == 'Scheduled'
             self.cache = False
             self.video = True
             folder = False

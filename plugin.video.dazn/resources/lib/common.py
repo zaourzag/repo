@@ -7,27 +7,27 @@ from uuid import UUID
 from hashlib import md5
 
 addon_handle = int(sys.argv[1])
-addon        = xbmcaddon.Addon()
-dialog       = xbmcgui.Dialog()
-addon_id     = addon.getAddonInfo('id')
-addon_name  = addon.getAddonInfo('name')
-version      = addon.getAddonInfo('version')
-icon         = addon.getAddonInfo('icon')
-fanart       = addon.getAddonInfo('fanart')
-content      = addon.getSetting('content')
-view_id      = addon.getSetting('view_id')
-force_view   = addon.getSetting('force_view') == 'true'
-email        = addon.getSetting('email')
-password     = addon.getSetting('password')
-token        = addon.getSetting('token')
-language     = addon.getSetting('language')
-country      = addon.getSetting('country')
-cdn          = int(addon.getSetting('server'))
+addon = xbmcaddon.Addon()
+dialog = xbmcgui.Dialog()
+addon_id = addon.getAddonInfo('id')
+addon_name = addon.getAddonInfo('name')
+version = addon.getAddonInfo('version')
+icon = addon.getAddonInfo('icon')
+fanart = addon.getAddonInfo('fanart')
+content = addon.getSetting('content')
+view_id = addon.getSetting('view_id')
+force_view = addon.getSetting('force_view') == 'true'
+email = addon.getSetting('email')
+password = addon.getSetting('password')
+token = addon.getSetting('token')
+language = xbmc.getLanguage(0, False)
+country = addon.getSetting('country')
+cdn = int(addon.getSetting('server'))
 
-base_url     = 'https://isl.dazn.com'
-api_base     = base_url+'/isl/api/v1/dataservice/'
+base_url = 'https://isl.dazn.com'
+api_base = base_url+'/misl/%s/'
 
-time_format  = '%Y-%m-%dT%H:%M:%SZ'
+time_format = '%Y-%m-%dT%H:%M:%SZ'
 
 def log(msg):
     xbmc.log(str(msg), xbmc.LOGNOTICE)

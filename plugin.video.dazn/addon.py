@@ -11,15 +11,17 @@ def run():
         dazn.rails_items(client.rails(id,params))
     elif mode == 'rail':
         dazn.rail_items(client.rail(id,params))
+    elif mode == 'epg':
+        dazn.rail_items(client.epg())
     elif mode == 'play':
         dazn.playback(client.playback(id))
     elif mode == 'play_context':
         dazn.play_context(client.playback(id), title)
 
-args   = urlparse.parse_qs(sys.argv[2][1:])
-mode   = args.get('mode', ['rails'])[0]
-title  = args.get('title', [''])[0]
-id     = args.get('id', ['home'])[0]
+args = urlparse.parse_qs(sys.argv[2][1:])
+mode = args.get('mode', ['rails'])[0]
+title = args.get('title', [''])[0]
+id = args.get('id', ['home'])[0]
 params = args.get('params', [''])[0]
 if not args:
     args = version
