@@ -309,6 +309,7 @@ def allsender(begriff):
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
   
 def listvideos(url):
+  datetitle=addon.getSetting("datetitle")
   inhalt = geturl(url) 
   kurz_inhalt = inhalt[inhalt.find('<div class="main-zone">')+1:]
   kurz_inhalt = kurz_inhalt[:kurz_inhalt.find('<!--googleoff: index-->')]  
@@ -321,16 +322,26 @@ def listvideos(url):
       urlv=re.compile('href="(.+?)"', re.DOTALL).findall(entry)[0]
       img=re.compile('data-src="(.+?)"', re.DOTALL).findall(entry)[0]
       title=re.compile('teaser-title">(.+?)</h5>', re.DOTALL).findall(entry)[0]
-      urlv=baseurl+urlv
+      if not "http://" in urlv:
+        urlv=baseurl+urlv
       try:
         match=re.compile('<p class="teaser-info">([0-9]+):([0-9]+) Min.</p>', re.DOTALL).findall(entry)
         zeit=int(match[0][0])*60+ int(match[0][1])
       except:
         zeit=0
         pass
+      try:
+          datum=re.compile('<p class="teaser-info">(.+?)</p>', re.DOTALL).findall(entry)[0]
+      except:
+          datum=""
+      if datetitle=="true":
+        title=datum+" - "+title
       addLink(title, urlv, "getvideoid", img,duration=zeit)      
     except:
       pass
+  if "data-ajax-more=" in inhalt:
+    nexturl=baseurl+re.compile('data-ajax-more="(.+?)"', re.DOTALL).findall(inhalt)[0]
+    addDir("Next", nexturl, "listvideos", "")   
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
 
 def getvideoid(client_location):
