@@ -270,12 +270,12 @@ def abisz(url):
   struktur = json.loads(inhalt) 
   debug("struktur --------")
   debug(struktur)
-  for buchstabe in struktur["facet"]:
+  for buchstabe in sorted(struktur["facet"], key=lambda str: (str=="#", str)):
      if   buchstabe=="#" :  
         ubuchstabe="0-9"
      else:
          ubuchstabe=buchstabe
-     addDir(buchstabe, url+"/(letter)/"+ubuchstabe, "jsonfile", "") 
+     addDir(buchstabe.title(), url+"/(letter)/"+ubuchstabe, "jsonfile", "")  
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 
 def jsonfile(url):
@@ -487,15 +487,13 @@ def  listdatum(url,sendername):
    senderliste=json_data["entries"][sendername]
    for element in senderliste:
      title=element["title"]
-     urlv=element["url"]
-     desc=element["description"]
+     urlv=baseurl+element["url"]     
      dur=int(element["duration"]) /1000     
-     img=element["images"][0]["url"]
      serie=element["metadata"]["tvShowTitle"]
      time=element["airtime"]
      name=time + " " + serie + " - " + title
      
-     addLink(name, urlv, "getvideoid", "",desc=desc,duration=dur) 
+     addLink(name, urlv, "getvideoid", "") 
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
    debug("senderliste")
    debug(senderliste)
