@@ -79,25 +79,53 @@ def playstream(url):
   listitem = xbmcgui.ListItem(path=url)  
   xbmcplugin.setResolvedUrl(addon_handle,True, listitem)  
    
-def list(filter=""):
+def llist(filter=""):
    debug("Filter "+ filter)
    content=geturl("http://rps.christtvradio.de/groupsctrlist.m3u")
    ##EXTINF:-1 tvg-id="" tvg-name="" tvg-shift="" radio="true" tvg-logo="RADIO7ALBANIA.png" group-title="Albanian",Radio 7 Albania (ALB)
    #http://cp6.serverse.com:7025/live
 
    spl=content.split("#EXTINF:")   
+   radios=[]
+   groups=[]
+   names=[]
+   urls=[]
+   bilder=[]
    for i in range(1,len(spl),1):
       entry=spl[i]
       debug("entry :"+entry)
       if filter in entry:  
         try:      
           lines=entry.split("\n")
-          url=lines[1].strip()
-          logo=re.compile('tvg-logo="(.+?)"', re.DOTALL).findall(lines[0])[0]
-          name=re.compile('",(.+)', re.DOTALL).findall(lines[0])[0]
-          addLink(name, url, "playstream", "http://rps.christtvradio.de/lgs/"+logo)
+          url=lines[1].strip() 
+          line=lines[0].replace('radio=""','radio="X"')
+          debug("Line :"+line)
+          daten=re.compile('radio="(.+?)" tvg-logo="(.+?)" group-title="(.+?)",(.+)', re.DOTALL).findall(line)[0]
+          debug("DATEN")
+          debug(daten)
+          urls.append(url)
+          debug("1")          
+          radios.append(daten[0])
+          debug("2")
+          bilder.append(daten[1])          
+          debug("3")
+          groups.append(daten[2])       
+          debug("4")
+          names.append(daten[3])
+          debug("5")
         except:
-          pass
+          pass 
+   groups, radios,names,urls,bilder = (list(x) for x in zip(*sorted(zip(groups, radios,names,urls,bilder))))          
+   for i in range(1,len(names),1):
+    if 'true' in radios[i]:
+       name = names[i]+" ( Radio"
+    else:
+       name = names[i]+" ( TV"
+    name=name+" , "+groups[i]+" )"
+    url=urls[i]
+    logo=bilder[i]
+    addLink(name, url, "playstream", "http://rps.christtvradio.de/lgs/"+logo)
+   
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)        
    
 def sprache():
@@ -129,13 +157,13 @@ else:
           addon.openSettings()
   # Wenn Kategory ausgewählt wurde
   if mode == 'TV':
-          list('radio=""')
+          llist('radio=""')
   if mode == 'Gruppe':
-          list('group-title="'+ url+'"')          
+          llist('group-title="'+ url+'"')          
   if mode == 'Radio':
-          list('radio="true"')              
+          llist('radio="true"')              
   if mode == 'ALL':
-          list('')                 
+          llist('')                 
   if mode == "playstream":
           playstream(url)
   if mode == "sprache":
