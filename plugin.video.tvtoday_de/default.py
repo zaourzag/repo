@@ -110,7 +110,11 @@ def listVideosNachTag(url=""):
 				fullUrl = baseUrl+url
 			else:
 				fullUrl = url
-			thumb = re.compile('src="(http.*?.jpg)"', re.DOTALL).findall(entry)[0]
+			img = re.compile('src="(http.*?.jpg)"', re.DOTALL).findall(entry)[0]
+			if ',' in img:
+				thumb = img.split(',')[0].rstrip()+'.jpg'
+			else:
+				thumb = img
 			match3 = re.compile('data-credit="(.*?)">', re.DOTALL).findall(entry)
 			senderID = cleanTitle(match3[0].strip())
 			senderID = cleanSender(senderID.strip())
@@ -159,7 +163,11 @@ def listVideosGenre(type):
 			senderID = cleanTitle(match3[0].strip())
 			senderID = cleanSender(senderID.strip())
 			url = re.compile('<span class="logo chl_bg_m c-.+?\s+</a>\s+<a href="(.*?.html)" class="element js-hover', re.DOTALL).findall(entry)[0]
-			thumb = re.compile('data-lazy-load-src="(http.*?.jpg)"', re.DOTALL).findall(entry)[0]
+			img = re.compile('data-lazy-load-src="(http.*?.jpg)"', re.DOTALL).findall(entry)[0]
+			if ',' in img:
+				thumb = img.split(',')[0].rstrip()+'.jpg'
+			else:
+				thumb = img
 			if "mediathek/nach-sender" in url:
 				continue
 			if not baseUrl in url:
