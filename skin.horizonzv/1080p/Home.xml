@@ -3,13 +3,12 @@
     <defaultcontrol always="true">9000</defaultcontrol>
 	<backgroundcolor>$VAR[BackgroundOverlayColor]</backgroundcolor>
     <menucontrol>200</menucontrol>
-	<onload condition="System.HasAddon(script.skinhelper.PING)">RunScript(script.skinhelper.PING)</onload>
-	<onload condition="!System.HasAddon(script.image.resource.select)">InstallAddon(script.image.resource.select)</onload>
+	<onload condition="System.HasAddon(script.skinhelper.ping)">RunScript(script.skinhelper.ping)</onload>
+	<!-- <onload condition="!System.HasAddon(script.image.resource.select)">InstallAddon(script.image.resource.select)</onload>
 	<onload condition="!System.HasAddon(resource.images.languageflags.colour)">InstallAddon(resource.images.languageflags.colour)</onload>
-	<!-- <onload condition="!System.HasAddon(resource.images.weathericons.outline-hd)">InstallAddon(resource.images.weathericons.outline)</onload> -->
-	<onload condition="!System.HasAddon(service.library.data.provider)">InstallAddon(service.library.data.provider)</onload>
+	<onload condition="!System.HasAddon(resource.images.weathericons.outline-hd)">InstallAddon(resource.images.weathericons.outline)</onload>
+	<onload condition="!System.HasAddon(service.library.data.provider)">InstallAddon(service.library.data.provider)</onload> -->
     <onload condition="!Skin.HasSetting(gambit_background)+!Skin.HasSetting(avengers_sw)+!Skin.HasSetting(standart_bkg)">Skin.SetBool(standart_bkg)</onload>
-    <!-- <onload condition="!Skin.HasSetting(fsk)+!Skin.HasSetting(fsk_original)+!Skin.HasSetting(fsk_dual)">Skin.SetBool(fsk)</onload> -->
     <onload condition="!String.IsEmpty(Skin.String(homemenufocus))+Window.Previous(startup)">Control.Move(9000,$INFO[Skin.String(homemenufocus)])</onload>
     <onload condition="!Skin.HasSetting(firstrun_horizonzv)">Skin.ResetSettings</onload>
     <onload condition="!Skin.HasSetting(firstrun_horizonzv)">ActivateWindow(1155)</onload>
@@ -38,7 +37,7 @@
             <control type="group"> <!-- RSS / NavInfo / OSD -->
 				<control type="group">
 					<animation effect="slide" end="-30" condition="String.IsEqual(Container(4445).NumItems,1)">Conditional</animation>
-					<animation effect="slide" end="-60" condition="String.IsEqual(Container(4445).NumItems,2)">Conditional</animation>
+					<animation effect="slide" end="-64" condition="String.IsEqual(Container(4445).NumItems,2)">Conditional</animation>
 					<animation effect="slide" end="-110" condition="String.IsEqual(Container(4445).NumItems,3)">Conditional</animation>
 					<top>1</top>
 					<include>RSS</include>
@@ -279,9 +278,10 @@
                                 <label2>masks/Default_sharp.png</label2>
                                 <icon>center/Center_WOL.png</icon>
                                 <thumb>-</thumb>
-								<onclick>RunScript(script.skinhelper.PING,menu)</onclick>
-                                <!-- <onclick>ActivateWindow(1151)</onclick> -->
-                                <visible>Skin.HasSetting(wolhome)+System.HasAddon(script.skinhelper.PING)</visible>
+                                <onclick>ActivateWindow(1151)</onclick>
+                                <!-- <visible>System.HasAddon(script.skinhelper.ping)</visible> -->
+								<!-- <onclick>RunScript(script.skinhelper.ping,menu)</onclick> -->
+                                <!-- <visible>Skin.HasSetting(wolhome)+System.HasAddon(script.skinhelper.ping)</visible> -->
                             </item>
                             <item id="5">
                                 <description>Systemsettings</description>
@@ -502,10 +502,11 @@
 				<textoffsetx>0</textoffsetx>
 				<textwidht>40</textwidht>
 				<label>$INFO[Window(Home).Property(SkinHelperPING.serveron)]</label>
+				<texture>$INFO[Window(Home).Property(SkinHelperPING.icon)]</texture>
 				<texturefocus>ServerIcon.png</texturefocus>
 				<texturenofocus>ServerIcon.png</texturenofocus>
 				<visible>Integer.IsGreater(Window(Home).Property(SkinHelperPING.servercount),0)+Integer.IsGreater(Window(Home).Property(SkinHelperPING.serveron),0)</visible>
-				<visible>System.HasAddon(script.skinhelper.PING)</visible>
+				<visible>System.HasAddon(script.skinhelper.ping)</visible>
 			</control>
             <control type="image">
                 <description>Conditions Label</description>
@@ -608,7 +609,7 @@
             <width>1800</width>
             <orientation>horizontal</orientation>
             <itemgap>0</itemgap>
-            <control type="label">
+            <!-- <control type="label">
                 <left>30</left>
                 <top>225</top>
                 <width>auto</width>
@@ -675,7 +676,23 @@
                 <textcolor>orange</textcolor>
                 <shadowcolor>black</shadowcolor>
                 <label>WidgetTargetVar: $VAR[WidgetTarget] | </label>
-            </control>
+            </control> -->
+			<control type="image">
+				<width>38</width>
+				<height>40</height>
+				<texture>$INFO[Window(Home).Property(SkinHelperPING.icon)]</texture>
+			</control>
+			<control type="label" id="2525">
+				<left>30</left>
+				<top>225</top>
+				<width>auto</width>
+				<height>18</height>
+				<font>font12</font>
+				<align>left</align>
+				<textcolor>orange</textcolor>
+				<shadowcolor>black</shadowcolor>
+				<label>icon: $VAR[servericon] | </label>
+			</control>
 			<control type="label">
 				<left>30</left>
 				<top>225</top>

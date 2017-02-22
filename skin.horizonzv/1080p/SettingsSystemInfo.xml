@@ -1,549 +1,291 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<window id="7">
-    <defaultcontrol always="true">95</defaultcontrol>
+<window>
+	<defaultcontrol always="true">95</defaultcontrol>
     <include>openclose</include>
     <controls>
         <include>DialogBackgroundSimple</include>
-        <include>NavInfo</include>
-        <control type="group">
-            <include>openclosebox</include>
-            <include content="DialogInfoBackgroundParam">
-                <param name="DialogBackgroundLeft" value="150" />
-                <param name="DialogBackgroundTop" value="105" />
-                <param name="DialogBackgroundWidth" value="1650" />
-                <param name="DialogBackgroundHeight" value="893" />
-                <param name="DialogSeparatorTop" value="174" />
-                <param name="DialogSeparatorBottom" value="998" />
-                <param name="DialogShadowTop" value="1000" />
-                <param name="DialogHeaderLabel" value="" />
-                <param name="DialogHeaderTop" value="120" />
-                <param name="DialogHeaderId" value="40" />
-            </include>
-            <control type="group">
-                <control type="image">
-                    <left>150</left>
-                    <top>184</top>
-                    <width>1650</width>
-                    <height>588</height>
-                    <colordiffuse>menudiffuse</colordiffuse>
-                    <texture background="true">BlackBack.png</texture>
-                </control>
-                <control type="grouplist" id="9007">
-                    <left>202</left>
-                    <top>278</top>
-                    <width>390</width>
-                    <height>722</height>
-                    <itemgap>0</itemgap>
-                    <onup>9007</onup>
-                    <ondown>9007</ondown>
-                    <onright condition="Control.HasFocus(200)">49</onright>
-                    <control type="button" id="95">
-                        <description>Button Summary Values</description>
-                        <height>60</height>
-                        <width>362</width>
-                        <textoffsetx>15</textoffsetx>
-                        <align>right</align>
-                        <aligny>center</aligny>
-                        <font>impacted21</font>
-                        <focusedcolor>-</focusedcolor>
-                        <colordiffuse>selected</colordiffuse>
-                        <texturefocus flipx="true">buttons/ButtonFOlightGlow.png</texturefocus>
-                        <texturenofocus>-</texturenofocus>
-                        <pulseonselect>false</pulseonselect>
-                        <label>20037</label>
-                    </control>
-                    <control type="button" id="94">
-                        <description>Button Storage</description>
-                        <height>60</height>
-                        <width>362</width>
-                        <textoffsetx>15</textoffsetx>
-                        <align>right</align>
-                        <aligny>center</aligny>
-                        <font>impacted21</font>
-                        <focusedcolor>-</focusedcolor>
-                        <colordiffuse>selected</colordiffuse>
-                        <texturefocus flipx="true">buttons/ButtonFOlightGlow.png</texturefocus>
-                        <texturenofocus>-</texturenofocus>
-                        <pulseonselect>false</pulseonselect>
-                        <label>13277</label>
-                    </control>
-                    <control type="button" id="96">
-                        <description>Button Network</description>
-                        <height>60</height>
-                        <width>362</width>
-                        <textoffsetx>15</textoffsetx>
-                        <align>right</align>
-                        <aligny>center</aligny>
-                        <font>impacted21</font>
-                        <focusedcolor>-</focusedcolor>
-                        <colordiffuse>selected</colordiffuse>
-                        <texturefocus flipx="true">buttons/ButtonFOlightGlow.png</texturefocus>
-                        <texturenofocus>-</texturenofocus>
-                        <pulseonselect>false</pulseonselect>
-                        <label>13279</label>
-                    </control>
-                    <control type="button" id="97">
-                        <description>Button Video</description>
-                        <height>60</height>
-                        <width>362</width>
-                        <textoffsetx>15</textoffsetx>
-                        <align>right</align>
-                        <aligny>center</aligny>
-                        <font>impacted21</font>
-                        <focusedcolor>-</focusedcolor>
-                        <colordiffuse>selected</colordiffuse>
-                        <texturefocus flipx="true">buttons/ButtonFOlightGlow.png</texturefocus>
-                        <texturenofocus>-</texturenofocus>
-                        <pulseonselect>false</pulseonselect>
-                        <label>13280</label>
-                    </control>
-                    <control type="button" id="98">
-                        <description>Button Hardware</description>
-                        <height>60</height>
-                        <width>362</width>
-                        <textoffsetx>15</textoffsetx>
-                        <align>right</align>
-                        <aligny>center</aligny>
-                        <font>impacted21</font>
-                        <focusedcolor>-</focusedcolor>
-                        <colordiffuse>selected</colordiffuse>
-                        <texturefocus flipx="true">buttons/ButtonFOlightGlow.png</texturefocus>
-                        <texturenofocus>-</texturenofocus>
-                        <pulseonselect>false</pulseonselect>
-                        <label>13281</label>
-                    </control>
-                    <control type="button" id="99">
-                        <description>Button PVR</description>
-                        <height>60</height>
-                        <width>362</width>
-                        <textoffsetx>15</textoffsetx>
-                        <align>right</align>
-                        <aligny>center</aligny>
-                        <font>impacted21</font>
-                        <focusedcolor>-</focusedcolor>
-                        <colordiffuse>selected</colordiffuse>
-                        <texturefocus flipx="true">buttons/ButtonFOlightGlow.png</texturefocus>
-                        <texturenofocus>-</texturenofocus>
-                        <pulseonselect>false</pulseonselect>
-                        <label>19191</label>
-                    </control>
-                    <control type="button" id="200">
-                        <description>Statistic</description>
-                        <height>60</height>
-                        <width>362</width>
-                        <textoffsetx>15</textoffsetx>
-                        <align>right</align>
-                        <aligny>center</aligny>
-                        <font>impacted21</font>
-                        <focusedcolor>-</focusedcolor>
-                        <colordiffuse>selected</colordiffuse>
-                        <texturefocus flipx="true">buttons/ButtonFOlightGlow.png</texturefocus>
-                        <texturenofocus>-</texturenofocus>
-                        <pulseonselect>false</pulseonselect>
-                        <label>Medien</label>
-                    </control>
-                </control>
-                <control type="group">
-                    <left>600</left>
-                    <top>270</top>
-                    <visible>!ControlGroup(9007).HasFocus(200)</visible>
-                    <control type="label" id="2">
-                        <description>Label 2</description>
-                        <left>0</left>
-                        <top>0</top>
-                        <width>1125</width>
-                        <label>-</label>
-                    </control>
-                    <control type="label" id="3">
-                        <description>Label 3</description>
-                        <left>0</left>
-                        <top>45</top>
-                        <width>1125</width>
-                        <label>-</label>
-                    </control>
-                    <control type="label" id="4">
-                        <description>Label 4</description>
-                        <left>0</left>
-                        <top>90</top>
-                        <width>1125</width>
-                        <label>-</label>
-                    </control>
-                    <control type="label" id="5">
-                        <description>Label 5</description>
-                        <left>0</left>
-                        <top>135</top>
-                        <width>1125</width>
-                        <label>-</label>
-                    </control>
-                    <control type="label" id="6">
-                        <description>Label 6</description>
-                        <left>0</left>
-                        <top>180</top>
-                        <width>1125</width>
-                        <label>-</label>
-                    </control>
-                    <control type="label" id="7">
-                        <description>Label 7</description>
-                        <left>0</left>
-                        <top>225</top>
-                        <width>1125</width>
-                        <label>-</label>
-                    </control>
-                    <control type="label" id="8">
-                        <description>Label 8</description>
-                        <left>0</left>
-                        <top>270</top>
-                        <width>1125</width>
-                        <label>-</label>
-                    </control>
-                    <control type="label" id="9">
-                        <description>Label 9</description>
-                        <left>0</left>
-                        <top>315</top>
-                        <width>1125</width>
-                        <label>-</label>
-                    </control>
-                    <control type="label" id="10">
-                        <description>Label 10</description>
-                        <left>0</left>
-                        <top>360</top>
-                        <width>1125</width>
-                        <label>-</label>
-                    </control>
-                    <control type="label" id="11">
-                        <description>Label 11</description>
-                        <left>0</left>
-                        <top>405</top>
-                        <width>1125</width>
-                        <label>-</label>
-                    </control>
-                </control>
-            </control>
-            <control type="group">
-                <left>0</left>
-                <top>218</top>
-                <visible>ControlGroup(9007).HasFocus(200)</visible>
-                <control type="group">
-                    <left>840</left>
-                    <description>Medien Statistic Icons</description>
-                    <control type="image">
-                        <left>0</left>
-                        <top>0</top>
-                        <width>90</width>
-                        <height>90</height>
-                        <colordiffuse>menudiffuse</colordiffuse>
-                        <texture border="1">Icons/MoviesIcon.png</texture>
-                        <aspectratio>keep</aspectratio>
-                    </control>
-                    <control type="image">
-                        <left>450</left>
-                        <top>0</top>
-                        <width>90</width>
-                        <height>90</height>
-                        <colordiffuse>menudiffuse</colordiffuse>
-                        <texture border="1">Icons/TVShowsIcon.png</texture>
-                        <aspectratio>keep</aspectratio>
-                    </control>
-                    <control type="image">
-                        <left>0</left>
-                        <top>270</top>
-                        <width>90</width>
-                        <height>90</height>
-                        <colordiffuse>menudiffuse</colordiffuse>
-                        <texture border="1">Icons/MusicIcon.png</texture>
-                        <aspectratio>keep</aspectratio>
-                    </control>
-                    <control type="image">
-                        <left>450</left>
-                        <top>270</top>
-                        <width>90</width>
-                        <height>90</height>
-                        <colordiffuse>menudiffuse</colordiffuse>
-                        <texture border="1">Icons/MusicvideosIcon.png</texture>
-                        <aspectratio>keep</aspectratio>
-                    </control>
-                </control>
-                <control type="group" id="49">
-                    <left>450</left>
-                    <top>30</top>
-                    <width>420</width>
-                    <height>180</height>
-                    <aspectratio>keep</aspectratio>
-                    <itemgap>225</itemgap>
-                    <pagecontrol>-</pagecontrol>
-                    <orientation>horizontal</orientation>
-                    <control type="label">
-                        <left>0</left>
-                        <top>0</top>
-                        <width>435</width>
-                        <height>180</height>
-                        <align>right</align>
-                        <label>$LOCALIZE[31025]:</label>
-                    </control>
-                    <control type="label">
-                        <left>450</left>
-                        <top>0</top>
-                        <width>435</width>
-                        <height>180</height>
-                        <align>left</align>
-                        <label>$INFO[Window(Home).Property(Movies.Count)]</label>
-                    </control>
-                    <control type="label">
-                        <left>0</left>
-                        <top>38</top>
-                        <width>435</width>
-                        <height>180</height>
-                        <align>right</align>
-                        <label>$LOCALIZE[16101]:</label>
-                    </control>
-                    <control type="label">
-                        <left>450</left>
-                        <top>38</top>
-                        <width>435</width>
-                        <height>180</height>
-                        <align>left</align>
-                        <label>$INFO[Window(Home).Property(Movies.UnWatched)]</label>
-                    </control>
-                    <control type="label">
-                        <left>0</left>
-                        <top>75</top>
-                        <width>435</width>
-                        <height>180</height>
-                        <align>right</align>
-                        <label>$LOCALIZE[16102]:</label>
-                    </control>
-                    <control type="label">
-                        <left>450</left>
-                        <top>75</top>
-                        <width>435</width>
-                        <height>180</height>
-                        <align>left</align>
-                        <label>$INFO[Window(Home).Property(Movies.Watched)]</label>
-                    </control>
-                    <control type="label">
-                        <left>450</left>
-                        <top>0</top>
-                        <width>435</width>
-                        <height>180</height>
-                        <align>right</align>
-                        <label>$LOCALIZE[31025]:</label>
-                    </control>
-                    <control type="label">
-                        <left>900</left>
-                        <top>0</top>
-                        <width>435</width>
-                        <height>180</height>
-                        <align>left</align>
-                        <label>$INFO[Window(Home).Property(TVShows.Count)]</label>
-                    </control>
-                    <control type="label">
-                        <left>450</left>
-                        <top>38</top>
-                        <width>435</width>
-                        <height>180</height>
-                        <align>right</align>
-                        <label>$LOCALIZE[16101]:</label>
-                    </control>
-                    <control type="label">
-                        <left>900</left>
-                        <top>38</top>
-                        <width>435</width>
-                        <height>180</height>
-                        <align>left</align>
-                        <label>$INFO[Window(Home).Property(TVShows.UnWatched)]</label>
-                    </control>
-                    <control type="label">
-                        <left>450</left>
-                        <top>75</top>
-                        <width>435</width>
-                        <height>180</height>
-                        <align>right</align>
-                        <label>$LOCALIZE[16102]:</label>
-                    </control>
-                    <control type="label">
-                        <left>900</left>
-                        <top>75</top>
-                        <width>435</width>
-                        <height>180</height>
-                        <align>left</align>
-                        <label>$INFO[Window(Home).Property(TVShows.Watched)]</label>
-                    </control>
-                    <control type="label">
-                        <left>0</left>
-                        <top>270</top>
-                        <width>435</width>
-                        <height>180</height>
-                        <align>right</align>
-                        <label>$LOCALIZE[132]:</label>
-                    </control>
-                    <control type="label">
-                        <left>450</left>
-                        <top>270</top>
-                        <width>435</width>
-                        <height>180</height>
-                        <align>left</align>
-                        <label>$INFO[Window(Home).Property(Music.AlbumsCount)]</label>
-                    </control>
-                    <control type="label">
-                        <left>0</left>
-                        <top>308</top>
-                        <width>435</width>
-                        <height>180</height>
-                        <align>right</align>
-                        <label>$LOCALIZE[133]:</label>
-                    </control>
-                    <control type="label">
-                        <left>450</left>
-                        <top>308</top>
-                        <width>435</width>
-                        <height>180</height>
-                        <align>left</align>
-                        <label>$INFO[Window(Home).Property(Music.ArtistsCount)]</label>
-                    </control>
-                    <control type="label">
-                        <left>0</left>
-                        <top>345</top>
-                        <width>435</width>
-                        <height>180</height>
-                        <align>right</align>
-                        <label>$LOCALIZE[134]:</label>
-                    </control>
-                    <control type="label">
-                        <left>450</left>
-                        <top>345</top>
-                        <width>435</width>
-                        <height>180</height>
-                        <align>left</align>
-                        <label>$INFO[Window(Home).Property(Music.SongsCount)]</label>
-                    </control>
-                    <control type="label">
-                        <left>450</left>
-                        <top>270</top>
-                        <width>435</width>
-                        <height>180</height>
-                        <align>right</align>
-                        <label>$LOCALIZE[31025]:</label>
-                    </control>
-                    <control type="label">
-                        <left>900</left>
-                        <top>270</top>
-                        <width>435</width>
-                        <height>180</height>
-                        <align>left</align>
-                        <label>$INFO[Window(Home).Property(MusicVideos.Count)]</label>
-                    </control>
-                    <control type="label">
-                        <left>450</left>
-                        <top>308</top>
-                        <width>435</width>
-                        <height>180</height>
-                        <align>right</align>
-                        <label>$LOCALIZE[16101]:</label>
-                    </control>
-                    <control type="label">
-                        <left>900</left>
-                        <top>308</top>
-                        <width>435</width>
-                        <height>180</height>
-                        <align>left</align>
-                        <label>$INFO[Window(Home).Property(MusicVideos.UnWatched)]</label>
-                    </control>
-                    <control type="label">
-                        <left>450</left>
-                        <top>345</top>
-                        <width>435</width>
-                        <height>180</height>
-                        <align>right</align>
-                        <label>$LOCALIZE[16102]:</label>
-                    </control>
-                    <control type="label">
-                        <left>900</left>
-                        <top>345</top>
-                        <width>435</width>
-                        <height>180</height>
-                        <align>left</align>
-                        <label>$INFO[Window(Home).Property(MusicVideos.Watched)]</label>
-                    </control>
-                </control>
-            </control>
-            <control type="group">
-                <left>150</left>
-                <top>218</top>
-                <control type="image">
-                    <left>0</left>
-                    <top>555</top>
-                    <width>1650</width>
-                    <height>1</height>
-                    <texture background="true">Separator2.png</texture>
-                </control>
-                <control type="label" id="52">
-                    <description>XBMC BUILD Version</description>
-                    <left>0</left>
-                    <top>573</top>
-                    <width>1620</width>
-                    <label>144</label>
-                    <align>center</align>
-                    <textcolor>grey</textcolor>
-                    <shadowcolor>-</shadowcolor>
-                    <font>impacted21</font>
-                </control>
-                <control type="label">
-                    <description>CPU Text</description>
-                    <left>495</left>
-                    <top>645</top>
-                    <width>525</width>
-                    <height>38</height>
-                    <label>$LOCALIZE[13271] $INFO[System.CPUUsage]</label>
-                    <align>right</align>
-                    <aligny>center</aligny>
-                    <textcolor>white</textcolor>
-                    <shadowcolor>-</shadowcolor>
-                    <font>impacted22</font>
-                </control>
-                <control type="progress">
-                    <description>CPU BAR</description>
-                    <left>1050</left>
-                    <top>652</top>
-                    <width>480</width>
-                    <height>24</height>
-                    <info>System.CPUUsage</info>
-                </control>
-                <control type="group">
-                    <left>450</left>
-                    <top>705</top>
-                    <control type="label">
-                        <description>Memory Text</description>
-                        <left>45</left>
-                        <width>525</width>
-                        <height>38</height>
-                        <label>$LOCALIZE[31309] $INFO[system.memory(used.percent)]</label>
-                        <align>right</align>
-                        <aligny>center</aligny>
-                        <textcolor>white</textcolor>
-                        <shadowcolor>-</shadowcolor>
-                        <font>impacted22</font>
-                    </control>
-                    <control type="progress">
-                        <description>Memory BAR</description>
-                        <left>600</left>
-                        <top>8</top>
-                        <width>480</width>
-                        <height>24</height>
-                        <info>system.memory(used)</info>
-                    </control>
-                </control>
-                <control type="image">
-                    <description>LOGO</description>
-                    <left>45</left>
-                    <top>660</top>
-                    <width>300</width>
-                    <height>120</height>
-                    <aspectratio>keep</aspectratio>
-                    <texture background="true">Horizonzv.png</texture>
-                    <colordiffuse>menudiffuse</colordiffuse>
-                </control>
-            </control>
-        </control>
+		<control type="group">
+			<left>60</left>
+			<top>0</top>
+			<include>openclosevisible</include>
+			<control type="grouplist">
+				<left>500</left>
+				<top>105</top>
+				<height>550</height>
+				<orientation>vertical</orientation>
+				<control type="label" id="2">
+					<height>47</height>
+					<width>1280</width>
+					<font>Small</font>
+				</control>
+				<control type="label" id="3">
+					<height>47</height>
+					<width>1280</width>
+					<font>Small</font>
+				</control>
+				<control type="label" id="4">
+					<height>47</height>
+					<width>1280</width>
+					<font>Small</font>
+				</control>
+				<control type="label" id="5">
+					<height>47</height>
+					<width>1280</width>
+					<font>Small</font>
+				</control>
+				<control type="label" id="6">
+					<height>47</height>
+					<width>1280</width>
+					<font>Small</font>
+				</control>
+				<control type="label" id="7">
+					<height>47</height>
+					<width>1280</width>
+					<font>Small</font>
+				</control>
+				<control type="label" id="8">
+					<height>47</height>
+					<width>1280</width>
+					<font>Small</font>
+				</control>
+				<control type="label" id="9">
+					<height>47</height>
+					<width>1280</width>
+					<font>Small</font>
+				</control>
+				<control type="label" id="10">
+					<height>47</height>
+					<width>1280</width>
+					<font>Small</font>
+				</control>
+				<control type="label" id="11">
+					<height>47</height>
+					<width>1280</width>
+					<font>Small</font>
+				</control>
+				<control type="label" id="12">
+					<height>47</height>
+					<width>1280</width>
+					<font>Small</font>
+				</control>
+			</control>
+			<control type="textbox" id="30">
+				<left>500</left>
+				<right>50</right>
+				<top>100</top>
+				<width>1280</width>
+				<bottom>315</bottom>
+				<pagecontrol>60</pagecontrol>
+				<autoscroll delay="5000" repeat="7500" time="5000">!Control.HasFocus(60)</autoscroll>
+			</control>
+			<control type="scrollbar" id="60">
+				<right>10</right>
+				<top>93</top>
+				<height>680</height>
+				<width>18</width>
+				<bottom>312</bottom>
+				<orientation>vertical</orientation>
+				<animation effect="slide" end="26,0" time="300" tween="sine" easing="inout" condition="!Control.HasFocus(60)">conditional</animation>
+				<onleft>9000</onleft>
+				<onright>9000</onright>
+				<visible>Control.IsVisible(30)</visible>
+				<animation effect="fade" start="0" end="100" time="200" delay="300">Visible</animation>
+				<animation effect="fade" start="100" end="0" time="200">Hidden</animation>
+				<animation effect="fade" start="0" end="100" delay="300" time="320">WindowOpen</animation>
+				<animation effect="fade" start="100" end="0" time="150">WindowClose</animation>
+			</control>
+			<control type="image">
+				<left>490</left>
+				<top>90</top>
+				<right>0</right>
+				<width>1300</width>
+				<height>3</height>
+				<texture border="1">Separator1.png</texture>
+			</control>
+			<control type="group">
+				<bottom>0</bottom>
+				<height>330</height>
+				<control type="image">
+					<left>490</left>
+					<top>20</top>
+					<right>0</right>
+					<width>1300</width>
+					<height>3</height>
+					<texture border="1">Separator1.png</texture>
+				</control>
+				<control type="grouplist">
+					<top>0</top>
+					<left>500</left>
+					<orientation>vertical</orientation>
+					<control type="label">
+						<description>CPU Text</description>
+						<width>1280</width>
+						<height>85</height>
+						<label>$LOCALIZE[13271] $INFO[System.CPUUsage]</label>
+						<aligny>top</aligny>
+						<textoffsety>40</textoffsety>
+						<shadowcolor>black</shadowcolor>
+						<font>Small</font>
+					</control>
+					<control type="progress">
+						<description>CPU BAR</description>
+						<width>1280</width>
+						<height>12</height>
+						<info>System.CPUUsage</info>
+					</control>
+					<control type="label">
+						<description>Memory Text</description>
+						<width>1280</width>
+						<height>45</height>
+						<label>$LOCALIZE[31030]: $INFO[system.memory(used)] [B]/[/B] $INFO[system.memory(total)] [B]-[/B] $INFO[system.memory(used.percent)]</label>
+						<aligny>center</aligny>
+						<shadowcolor>black</shadowcolor>
+						<font>Small</font>
+					</control>
+					<control type="progress">
+						<description>Memory BAR</description>
+						<width>1280</width>
+						<height>12</height>
+						<info>system.memory(used)</info>
+					</control>
+				</control>
+				<!-- <control type="label">
+					<top>34</top>
+					<left>1210</left>
+					<width>auto</width>
+					<height>50</height>
+					<aligny>bottom</aligny>
+					<textoffsety>10</textoffsety>
+					<label>$LOCALIZE[31031]:</label>
+					<shadowcolor>black</shadowcolor>
+					<font>Small</font>
+				</control> -->
+				<control type="grouplist">
+					<description>Kodi build version</description>
+					<itemgap>10</itemgap>
+					<top>180</top>
+					<left>500</left>
+					<width>800</width>
+					<height>45</height>
+					<orientation>horizontal</orientation>
+					<control type="label">
+						<description>Build label</description>
+						<width>auto</width>
+						<height>50</height>
+						<aligny>bottom</aligny>
+						<font>Small</font>
+						<textoffsety>10</textoffsety>
+						<label>$LOCALIZE[144]</label>
+						<shadowcolor>black</shadowcolor>
+					</control>
+					<control type="label" id="52">
+						<description>Kodi Build Version</description>
+						<height>50</height>
+						<aligny>bottom</aligny>
+						<textoffsety>10</textoffsety>
+						<font>Small</font>
+						<width>auto</width>
+						<shadowcolor>black</shadowcolor>
+					</control>
+				</control>
+				<control type="grouplist">
+					<description>Build date</description>
+					<itemgap>10</itemgap>
+					<top>240</top>
+					<left>500</left>
+					<width>800</width>
+					<orientation>horizontal</orientation>
+					<control type="label">
+						<description>kodi Compiled Text</description>
+						<width>auto</width>
+						<height>50</height>
+						<label>$LOCALIZE[174]</label>
+						<font>Small</font>
+						<shadowcolor>black</shadowcolor>
+					</control>
+					<control type="label" id="53">
+						<description>Kodi Build Date</description>
+						<width>auto</width>
+						<height>50</height>
+						<font>Small</font>
+						<shadowcolor>black</shadowcolor>
+					</control>
+				</control>
+			</control>
+		</control>
+		<control type="group">
+			<left>0</left>
+			<top>0</top>
+			<depth>DepthContentPanel</depth>
+			<include>opencloseslideright</include>
+			<control type="image">
+				<left>0</left>
+				<top>0</top>
+				<width>480</width>
+				<height>1080</height>
+				<texture>BlackBack.png</texture>
+			</control>
+			<control type="grouplist" id="9000">
+				<left>30</left>
+				<top>250</top>
+				<width>420</width>
+				<height>100%</height>
+				<onup>9000</onup>
+				<ondown>9000</ondown>
+				<onright>60</onright>
+				<control type="button" id="95">
+					<description>Button Summary Values</description>
+					<texturenofocus>-</texturenofocus>
+					<width>420</width>
+					<label>$LOCALIZE[20037]</label>
+				</control>
+				<control type="button" id="94">
+					<description>Button Storage</description>
+					<texturenofocus>-</texturenofocus>
+					<width>420</width>
+					<label>$LOCALIZE[13277]</label>
+				</control>
+				<control type="button" id="96">
+					<description>Button Network</description>
+					<texturenofocus>-</texturenofocus>
+					<width>420</width>
+					<label>$LOCALIZE[13279]</label>
+				</control>
+				<control type="button" id="97">
+					<description>Button Video</description>
+					<texturenofocus>-</texturenofocus>
+					<width>420</width>
+					<label>$LOCALIZE[13280]</label>
+				</control>
+				<control type="button" id="98">
+					<description>Button Hardware</description>
+					<texturenofocus>-</texturenofocus>
+					<width>420</width>
+					<label>$LOCALIZE[13281]</label>
+				</control>
+				<control type="button" id="99">
+					<description>Button PVR</description>
+					<texturenofocus>-</texturenofocus>
+					<width>420</width>
+					<label>$LOCALIZE[19191]</label>
+				</control>
+				<control type="button" id="100">
+					<description>Button Privacy policy</description>
+					<texturenofocus>-</texturenofocus>
+					<width>420</width>
+					<label>$LOCALIZE[12389]</label>
+				</control>
+			</control>
+			<control type="image">
+				<left>30</left>
+				<top>970</top>
+				<width>400</width>
+				<height>70</height>
+				<texture>Horizonzv.png</texture>
+				<include>openclosemedium</include>
+			</control>
+		</control>
         <include>Clock</include>
-    </controls>
+        <include>NavInfo</include>
+	</controls>
 </window>

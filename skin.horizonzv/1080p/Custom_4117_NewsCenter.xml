@@ -67,7 +67,7 @@
                     <height>600</height>
                     <aspectratio align="left">keep</aspectratio>
                     <colordiffuse>grey2</colordiffuse>
-                    <texture border="1">Design-Erdicon.png</texture>
+                    <texture border="1">Design-Earthicon.png</texture>
                 </control>
                 <control type="image">
                     <visible>Container(19010).Hasfocus(80103)</visible>

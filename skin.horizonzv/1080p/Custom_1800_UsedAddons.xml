@@ -306,14 +306,14 @@
                     <item>
                         <label>Skinhelper Ping &amp; WOL by _Andy_</label>
                         <label2>$LOCALIZE[24038]</label2>
-                        <onclick>InstallAddon(script.skinhelper.PING)</onclick>
-                        <visible>!System.HasAddon(script.skinhelper.PING)</visible>
+                        <onclick>InstallAddon(script.skinhelper.ping)</onclick>
+                        <visible>!System.HasAddon(script.skinhelper.ping)</visible>
                     </item>
                     <item>
-                        <label>Skinhelper Ping &amp; WOL by _Andy_ $INFO[System.AddonVersion(script.skinhelper.PING),(,)]</label>
+                        <label>Skinhelper Ping &amp; WOL by _Andy_ $INFO[System.AddonVersion(script.skinhelper.ping),(,)]</label>
                         <label2>$LOCALIZE[5]</label2>
-                        <onclick>Addon.OpenSettings(script.skinhelper.PING)</onclick>
-                        <visible>System.HasAddon(script.skinhelper.PING)</visible>
+                        <onclick>Addon.OpenSettings(script.skinhelper.ping)</onclick>
+                        <visible>System.HasAddon(script.skinhelper.ping)</visible>
                     </item>
                     <item>
                         <label>Library Node Editor</label>

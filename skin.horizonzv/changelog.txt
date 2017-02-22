@@ -1,4 +1,11 @@
-﻿v 0.9.0.27
+﻿v 0.9.0.30
+- Addon Abhängigkeiten integriert
+- WOL Schalter in den Skin-Einstellungen angepasst
+- neues Popup für WOL
+- Code aufgeräumt
+- License aktualisiert
+
+v 0.9.0.27
 - Bugfixes im Code für PVR Window
 
 v 0.9.0.26

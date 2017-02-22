@@ -1055,45 +1055,16 @@
                             <onclick>Skin.ToggleSetting(HideJumpSMSBar)</onclick>
                             <selected>Skin.HasSetting(HideJumpSMSBar)</selected>
                         </control>
-                        <!-- <control type="radiobutton" id="545">
-                            <description>Wol Homemenu</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <label>51312</label>
-                            <focusedcolor>black</focusedcolor>
-                            <onclick>Skin.ToggleSetting(wolhome)</onclick>
-                            <selected>Skin.HasSetting(wolhome)</selected>
-                            <onclick condition="String.IsEmpty(Skin.String(MAC_Address))+!Skin.HasSetting(wolhome)">Skin.SetString(MAC_Address)</onclick>
-                        </control> -->
                         <control type="radiobutton" id="546">
                             <description>Wol XBMC Start</description>
                             <width>1260</width>
                             <align>left</align>
-                            <label>51314</label>
+                            <label>51312</label>
                             <focusedcolor>black</focusedcolor>
                             <onclick>Skin.ToggleSetting(wol_startup)</onclick>
                             <selected>Skin.HasSetting(wol_startup)</selected>
-                            <onclick condition="System.HasAddon(script.skinhelper.PING)+String.IsEmpty(Window(Home).Property(SkinHelperPING.mac1))">Addon.OpenSettings(script.skinhelper.PING)</onclick>
-                            <onclick condition="!System.HasAddon(script.skinhelper.PING)">InstallAddon(script.skinhelper.PING)</onclick>
-                        </control>
-                        <control type="button" id="547">
-                            <description>Wol MAC Address</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <label>51316</label>
-                            <label2>$INFO[Skin.String(MAC_Address)]</label2>
-                            <focusedcolor>black</focusedcolor>
-                            <onclick>Skin.SetString(MAC_Address)</onclick>
-                            <visible>Skin.HasSetting(wolhome)|Skin.HasSetting(wol_startup)</visible>
-                        </control>
-                        <control type="button" id="548">
-                            <description>Server Icon</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <label>51318</label>
-                            <label2>$INFO[Skin.String(ServerIcon_File)]</label2>
-                            <onclick condition="!System.HasAddon(service.skinhelper.PING)">InstallAddon(service.skinhelper.PING)</onclick>
-                            <onclick>Skin.SetImage(ServerIcon_File,smb://)</onclick>
+                            <onclick condition="System.HasAddon(script.skinhelper.ping)+String.IsEmpty(Window(Home).Property(SkinHelperPING.mac1))">Addon.OpenSettings(script.skinhelper.ping)</onclick>
+                            <onclick condition="!System.HasAddon(script.skinhelper.ping)">InstallAddon(script.skinhelper.ping)</onclick>
                         </control>
                         <control type="radiobutton" id="549">
                             <description>Startup Playlist</description>
