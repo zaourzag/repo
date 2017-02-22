@@ -1641,7 +1641,7 @@ Including football from the top European leagues, the best US sport, tennis and 
   </extension>
 </addon>
 
-<addon id="service.fritzbox.callmonitor" name="Fritzbox Callmonitor" version="2.0.8" provider-name="Birger Jesch, Lutz Leonhardt">
+<addon id="service.fritzbox.callmonitor" name="Fritzbox Callmonitor" version="2.0.9" provider-name="Birger Jesch, Lutz Leonhardt">
   <requires>
     <import addon="xbmc.python" version="2.24.0" />
     <import addon="xbmc.json" version="6.32.4" />
@@ -2526,7 +2526,7 @@ See changelog.txt for more details.</news>
   </extension>
 </addon>
 
-<addon id="plugin.video.osmosis" name="OSMOSIS" version="1.0.7"
+<addon id="plugin.video.osmosis" name="OSMOSIS" version="1.0.8"
 	provider-name="Stereodruid">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0" />
