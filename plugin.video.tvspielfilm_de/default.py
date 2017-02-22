@@ -106,7 +106,11 @@ def listVideosNachTag(url=""):
 				title = cleanTitle(match2[0][1].strip())+" - "+cleanTitle(match2[0][0].strip())
 			else:
 				title = cleanTitle(match1[0].strip())
-			thumb = re.compile('<img src="(http.*?.jpg)"', re.DOTALL).findall(entry)[0]
+			img = re.compile('<img src="(http.*?.jpg)"', re.DOTALL).findall(entry)[0]
+			if ',' in img:
+				thumb = img.split(',')[0].rstrip()+'.jpg'
+			else:
+				thumb = img
 			match3 = re.compile('<span class="logotype chl_bg_m c-.+?">(.*?)</span>', re.DOTALL).findall(entry)
 			senderID = cleanTitle(match3[0].strip())
 			senderID = cleanSender(senderID.strip())
@@ -159,7 +163,11 @@ def listVideosAlle():
 			else:
 				title = cleanTitle(shorten.strip())+" - "+cleanTitle(match1[0].replace(shorten, "").strip())
 			url = re.compile('<a href="(http://www.tvspielfilm.de/mediathek/.*?)"', re.DOTALL).findall(entry)[0]
-			thumb = re.compile('<img src="(http.*?.jpg)"', re.DOTALL).findall(entry)[0]
+			img = re.compile('<img src="(http.*?.jpg)"', re.DOTALL).findall(entry)[0]
+			if ',' in img:
+				thumb = img.split(',')[0].rstrip()+'.jpg'
+			else:
+				thumb = img
 			match3 = re.compile('<span class="logotype chl_bg_m c-.+?">(.*?)</span>', re.DOTALL).findall(entry)
 			senderID = cleanTitle(match3[0].strip())
 			senderID = cleanSender(senderID.strip())
@@ -212,7 +220,11 @@ def listVideosGenre(type):
 			senderID = cleanTitle(match3[0].strip())
 			senderID = cleanSender(senderID.strip())
 			url = re.compile('<a href="(http://www.tvspielfilm.de/mediathek/.*?)"', re.DOTALL).findall(entry)[0]
-			thumb = re.compile('<img src="(http.*?.jpg)"', re.DOTALL).findall(entry)[0]
+			img = re.compile('<img src="(http.*?.jpg)"', re.DOTALL).findall(entry)[0]
+			if ',' in img:
+				thumb = img.split(',')[0].rstrip()+'.jpg'
+			else:
+				thumb = img
 			if showSender == 'true':
 				name = title+senderID
 			else:
