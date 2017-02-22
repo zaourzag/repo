@@ -1,8 +1,0 @@
-<settings>
-		   <setting id="user" type="text" label="30101" default=""/>
-           <setting id="pw" type="text" option="hidden" label="30102" default=""/>
-           <setting id="bitrate" type="select" label="30109" default="Select" values="Min|Max" />
-           <setting label="30111" type="folder" id="downloaddir" value="" /> 
-		
-</settings>
- 

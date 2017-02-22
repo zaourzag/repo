@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.christtvradio" name="ChristTVRadio" version="0.2.1" provider-name="L0RE">
+<addon id="plugin.video.christtvradio" name="ChristTVRadio" version="0.2.2" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
     </requires>

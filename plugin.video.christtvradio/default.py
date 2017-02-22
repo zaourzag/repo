@@ -116,7 +116,7 @@ def llist(filter=""):
         except:
           pass 
    groups, radios,names,urls,bilder = (list(x) for x in zip(*sorted(zip(groups, radios,names,urls,bilder))))          
-   for i in range(1,len(names),1):
+   for i in range(0,len(names),1):
     if 'true' in radios[i]:
        name = names[i]+" ( Radio"
     else:
