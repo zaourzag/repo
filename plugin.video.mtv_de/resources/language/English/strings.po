@@ -205,3 +205,31 @@ msgstr ""
 msgctxt "#30218"
 msgid "Video Charts Switzerland"
 msgstr ""
+
+msgctxt "#30219"
+msgid "Single Jahrescharts 2016 TOP100"
+msgstr ""
+
+msgctxt "#30220"
+msgid "Single Jahrescharts 2015 TOP100"
+msgstr ""
+
+msgctxt "#30221"
+msgid "Single Top 20 Charts"
+msgstr ""
+
+msgctxt "#30222"
+msgid "Charts"
+msgstr ""
+
+msgctxt "#30223"
+msgid "Throwback Charts"
+msgstr ""
+
+msgctxt "#30224"
+msgid "Official weekly Charts"
+msgstr ""
+
+msgctxt "#30225"
+msgid "Ddp Charts"
+msgstr ""

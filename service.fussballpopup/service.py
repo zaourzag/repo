@@ -9,7 +9,6 @@ import re,md5
 import socket, cookielib
 import feedparser
 import HTMLParser,xbmcplugin
-import functions
 import popupwindow
 
 from dateutil import parser
