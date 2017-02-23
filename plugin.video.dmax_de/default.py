@@ -28,9 +28,6 @@ useThumbAsFanart = addon.getSetting("useThumbAsFanart") == "true"
 icon = xbmc.translatePath('special://home/addons/'+addonID+'/icon.png')
 userDataFolder = xbmc.translatePath("special://profile/addon_data/"+addonID)
 channelFavsFile = xbmc.translatePath("special://profile/addon_data/"+addonID+"/"+addonID+".favorites")
-forceViewMode = addon.getSetting("forceView") == "true"
-autoPlay = addon.getSetting("autoPlay") == "true"
-viewMode = str(addon.getSetting("viewID"))
 maxBitRate = addon.getSetting("maxBitRate")
 qual = [512000, 1024000, 1536000, 2048000, 2560000, 3072000]
 maxBitRate = qual[int(maxBitRate)]
@@ -89,8 +86,6 @@ def listVideosMain(url, thumb):
         debug("matchClips")
         addDir(translation(30007), baseUrl+"/wp-content/plugins/dni_plugin_core/ajax.php?action=dni_listing_items_filter&letter=&page=1&id="+matchClips[0]+"&post_id="+showID, 'listVideos', thumb, "")
     xbmcplugin.endOfDirectory(pluginhandle)
-    if forceViewMode:
-        xbmc.executebuiltin('Container.SetViewMode('+viewMode+')')
 
 
 def listVideos(urlMain):
@@ -125,8 +120,6 @@ def listVideos(urlMain):
     except:
         pass
     xbmcplugin.endOfDirectory(pluginhandle)
-    if forceViewMode:
-        xbmc.executebuiltin('Container.SetViewMode('+viewMode+')')
 
 def cleanit(title):
     title = title.replace("Ã¼", "ü").replace("Ã¤","ä").replace("ÃŸ","ß").replace("Ã¶","ö")
@@ -157,8 +150,6 @@ def listVideosLatest(type):
         debug("- ::: :"+title)
         addDir(title, url, 'playVideo', thumb, title)
     xbmcplugin.endOfDirectory(pluginhandle)
-    if forceViewMode:
-        xbmc.executebuiltin('Container.SetViewMode('+viewMode+')')
 
 
 def listAZ():
@@ -167,8 +158,6 @@ def listAZ():
         url = baseUrl+"/wp-content/plugins/dni_plugin_core/ajax.php?action=dni_listing_items_filter&letter="+letter.upper()+"&page=1&id=bc4&post_id=2178"
         addDir(letter.upper(), url, 'listShows', icon, "")
     xbmcplugin.endOfDirectory(pluginhandle)
-    if forceViewMode:
-        xbmc.executebuiltin('Container.SetViewMode('+viewMode+')')
 
 
 def listShows(urlMain):
@@ -201,8 +190,7 @@ def listShows(urlMain):
     except:
         pass
     xbmcplugin.endOfDirectory(pluginhandle)
-    if forceViewMode:
-        xbmc.executebuiltin('Container.SetViewMode('+viewMode+')')
+
 
 
 def listShowsFavs():
@@ -220,8 +208,6 @@ def listShowsFavs():
             addShowRDir(title, urllib.unquote_plus(url), "listVideosMain", thumb, title)
         fh.close()
     xbmcplugin.endOfDirectory(pluginhandle)
-    if forceViewMode:
-        xbmc.executebuiltin('Container.SetViewMode('+viewMode+')')
 
 
 def listSeasons(urlMain):
@@ -244,8 +230,6 @@ def listSeasons(urlMain):
       except:
           pass
     xbmcplugin.endOfDirectory(pluginhandle)
-    if forceViewMode:
-            xbmc.executebuiltin('Container.SetViewMode('+viewMode+')')
 
 
 def listEpisodes(url, text):
@@ -278,8 +262,7 @@ def listEpisodes(url, text):
             for url,img,name in names_reg:            
                addDir(name, url, 'playVideo',img, name)                   
         xbmcplugin.endOfDirectory(pluginhandle)
-        if forceViewMode:
-          xbmc.executebuiltin('Container.SetViewMode('+viewMode+')')
+
 
 
 def playVideo(url, title, thumb):
@@ -293,13 +276,10 @@ def playVideo(url, title, thumb):
             addLink(title+": Teil "+part, videoID, "playBrightCoveStream", thumb, title, "no")
             debug("matchMulti : "+ videoID)
         xbmcplugin.endOfDirectory(pluginhandle)
-        if forceViewMode:
-            xbmc.executebuiltin('Container.SetViewMode('+viewMode+')')
     elif matchSingle:
         debug("matchSingle : "+ matchSingle[0])
-        playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
-        playlist.clear()
-        playBrightCoveStream(matchSingle[0], title, thumb, "yes")
+        playBrightCoveStream(matchSingle[0],title,thumb,"yes")
+                
 
 
 def playVideoAll(url, title, thumb):
@@ -342,18 +322,6 @@ def playBrightCoveStream(bc_videoID, title, thumb, isSingle):
         else:
             listitem = xbmcgui.ListItem(title, path=streamUrl, thumbnailImage=thumb)
             xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
-        if autoPlay:
-            while True:
-                if xbmc.Player().isPlaying() and xbmc.getCondVisibility("Player.Paused"):
-                    xbmc.Player().pause()
-                    break
-                xbmc.sleep(100)
-            xbmc.sleep(500)
-            while xbmc.getCondVisibility("Player.Paused"):
-               if xbmc.Player().isPlaying():
-                    xbmc.Player().pause()
-                    break
-               xbmc.sleep(100)
 
 def queueVideo(url, name, thumb):
     playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
