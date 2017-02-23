@@ -502,7 +502,6 @@
 				<textoffsetx>0</textoffsetx>
 				<textwidht>40</textwidht>
 				<label>$INFO[Window(Home).Property(SkinHelperPING.serveron)]</label>
-				<texture>$INFO[Window(Home).Property(SkinHelperPING.icon)]</texture>
 				<texturefocus>ServerIcon.png</texturefocus>
 				<texturenofocus>ServerIcon.png</texturenofocus>
 				<visible>Integer.IsGreater(Window(Home).Property(SkinHelperPING.servercount),0)+Integer.IsGreater(Window(Home).Property(SkinHelperPING.serveron),0)</visible>
@@ -677,66 +676,6 @@
                 <shadowcolor>black</shadowcolor>
                 <label>WidgetTargetVar: $VAR[WidgetTarget] | </label>
             </control> -->
-			<control type="image">
-				<width>38</width>
-				<height>40</height>
-				<texture>$INFO[Window(Home).Property(SkinHelperPING.icon)]</texture>
-			</control>
-			<control type="label" id="2525">
-				<left>30</left>
-				<top>225</top>
-				<width>auto</width>
-				<height>18</height>
-				<font>font12</font>
-				<align>left</align>
-				<textcolor>orange</textcolor>
-				<shadowcolor>black</shadowcolor>
-				<label>icon: $VAR[servericon] | </label>
-			</control>
-			<control type="label">
-				<left>30</left>
-				<top>225</top>
-				<width>auto</width>
-				<height>18</height>
-				<font>font12</font>
-				<align>left</align>
-				<textcolor>orange</textcolor>
-				<shadowcolor>black</shadowcolor>
-				<label>mac1: $INFO[Window(Home).Property(SkinHelperPing.mac1)] | </label>
-			</control>
-			<control type="label">
-				<left>30</left>
-				<top>225</top>
-				<width>auto</width>
-				<height>18</height>
-				<font>font12</font>
-				<align>left</align>
-				<textcolor>orange</textcolor>
-				<shadowcolor>black</shadowcolor>
-				<label>server1 on/off: $INFO[Window(Home).Property(SkinHelperPING.server1)] | </label>
-			</control>
-			<control type="label">
-				<left>30</left>
-				<top>225</top>
-				<width>auto</width>
-				<height>18</height>
-				<font>font12</font>
-				<align>left</align>
-				<textcolor>orange</textcolor>
-				<shadowcolor>black</shadowcolor>
-				<label>Servercount: $INFO[Window(Home).Property(SkinHelperPING.servercount)] | </label>
-			</control>
-			<control type="label">
-				<left>30</left>
-				<top>225</top>
-				<width>auto</width>
-				<height>18</height>
-				<font>font12</font>
-				<align>left</align>
-				<textcolor>orange</textcolor>
-				<shadowcolor>black</shadowcolor>
-				<label>NumItems 4445: $INFO[Container(4445).NumItems] | </label>
-			</control>
         </control>
 		<!-- <control type="list" id="784512">
             <left>30</left>

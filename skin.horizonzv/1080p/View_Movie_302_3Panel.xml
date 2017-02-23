@@ -97,8 +97,7 @@
         <control type="group">
             <visible>Control.IsVisible(302)+!Control.HasFocus(666)</visible>
             <include>opencloseslideright</include>
-            <control type="group">
-                <!-- Panel 3 -->
+            <control type="group"> <!-- Panel 3 -->
                 <left>1170</left>
                 <top>75</top>
                 <animation type="WindowOpen">
@@ -120,7 +119,7 @@
                     <top>879</top>
                     <width>639</width>
                     <height>75</height>
-                    <texture background="true" border="16">ContentPanelMirror.png</texture>
+                    <texture border="16">ContentPanelMirror.png</texture>
                 </control>
                 <control type="image">
                     <left>81</left>
@@ -128,7 +127,7 @@
                     <width>650</width>
                     <height>878</height>
                     <colordiffuse>grey1</colordiffuse>
-                    <texture background="true">InlayDark.png</texture>
+                    <texture>InlayDark.png</texture>
                 </control>
                 <control type="image">
                     <left>135</left>
@@ -252,8 +251,7 @@
                     <visible>Container.Content(addons)</visible>
                 </control>
             </control>
-            <control type="group">
-                <!-- Panel 2 -->
+            <control type="group"> <!-- Panel 2 -->
                 <left>585</left>
                 <top>60</top>
                 <animation type="WindowOpen">
@@ -275,7 +273,7 @@
                     <top>909</top>
                     <width>654</width>
                     <height>75</height>
-                    <texture background="true" border="16">ContentPanelMirror.png</texture>
+                    <texture border="16">ContentPanelMirror.png</texture>
                 </control>
                 <control type="image">
                     <left>66</left>
@@ -283,7 +281,7 @@
                     <width>664</width>
                     <height>908</height>
                     <colordiffuse>$VAR[Panel2Color]</colordiffuse>
-                    <texture background="true">InlayDark.png</texture>
+                    <texture>InlayDark.png</texture>
                 </control>
                 <control type="label">
                     <left>150</left>
@@ -312,8 +310,9 @@
                     <height>300</height>
                     <align>left</align>
                     <include>openclosevisible</include>
-                    <visible>!Control.IsVisible(303)</visible>
+                    <!-- <visible>!Control.IsVisible(303)</visible> -->
                     <visible>Container.Content(Movies)</visible>
+                    <visible>!ListItem.IsParentFolder</visible>
                     <visible>!System.HasAddon(script.skin.info.service)+![ListItem.IsCollection|Container.Content(Sets)]|!String.IsEmpty(ListItem.Plot)</visible>
                     <include>MovieDataList_Content</include>
                 </control>
@@ -323,7 +322,7 @@
                     <width>555</width>
                     <height>3</height>
                     <colordiffuse>fanartdiffuse</colordiffuse>
-                    <visible>!Control.IsVisible(303)</visible>
+                    <!-- <visible>!Control.IsVisible(303)</visible> -->
                     <texture background="true" border="1">Separator1.png</texture>
                     <include>openclosevisible</include>
                     <visible>!String.IsEmpty(Control.GetLabel(90))</visible>
@@ -338,7 +337,7 @@
                     <font>impacted21</font>
                     <align>center</align>
                     <label>$INFO[ListItem.TVShowTitle]$INFO[ListItem.Season, ($LOCALIZE[20373] ,)]</label>
-                    <visible>!String.IsEmpty(ListItem.Label)</visible>
+                    <visible>!String.IsEmpty(ListItem.Label)+!ListItem.IsParentFolder</visible>
                     <visible>Container.Content(episodes)</visible>
                     <include>openclosevisible</include>
                 </control>
@@ -428,7 +427,7 @@
                     </control>
                 </control>
                 <control type="textbox" id="90">
-                    <left>158</left>
+                    <left>154</left>
                     <top>480</top>
                     <width>525</width>
                     <height>375</height>
@@ -436,15 +435,16 @@
                     <shadowcolor>black</shadowcolor>
                     <label>$VAR[InfoWallTextboxVar]</label>
                     <include>openclosevisible</include>
-                    <visible>!Control.IsVisible(303)</visible>
+                    <!-- <visible>!Control.IsVisible(303)</visible> -->
                     <visible>![Container.Content(TVShows)|Container.Content(seasons)|Container.Content(episodes)|Container.Content(addons)]</visible>
                     <visible>!ListItem.IsCollection|!String.IsEmpty(ListItem.Plot)</visible>
                 </control>
                 <control type="group">
                     <left>0</left>
                     <top>30</top>
-                    <include>openclosevisible</include>
-                    <visible>!Container.Content(episodes)+Window.IsVisible(videos)+Control.IsVisible(303)</visible>
+                    <!-- <include>openclosevisible</include> -->
+					<visible>!String.IsEmpty(ListItem.Label)+!ListItem.IsParentFolder</visible>
+                    <visible>!Container.Content(episodes)+Window.IsVisible(videos)</visible>
                     <control type="list" id="303">
                         <left>142</left>
                         <top>90</top>
@@ -459,7 +459,7 @@
                         <viewtype label="3 Panel">panel</viewtype>
                         <pagecontrol>70</pagecontrol>
                         <scrolltime>200</scrolltime>
-                        <visible>!String.IsEmpty(ListItem.Label)</visible>
+                        <visible>!String.IsEmpty(ListItem.Label)+!ListItem.IsParentFolder</visible>
                         <itemlayout width="540" height="52">
                             <control type="label">
                                 <left>15</left>
@@ -545,10 +545,10 @@
             </control>
             <control type="group">
                 <left>-420</left>
+                <animation effect="slide" end="30" time="200" condition="Control.HasFocus(60)">Conditional</animation>
                 <include>ScrollOffsetLabel</include>
             </control>
-            <control type="group">
-                <!-- Panel 1 -->
+            <control type="group"> <!-- Panel 1 -->
                 <animation effect="slide" end="30" time="200" condition="Control.HasFocus(60)">Conditional</animation>
                 <animation type="WindowOpen">
                     <effect type="fade" start="0" end="100" time="300" />
@@ -567,7 +567,7 @@
                         <top>939</top>
                         <width>684</width>
                         <height>75</height>
-                        <texture background="true" border="16">ContentPanelMirror.png</texture>
+                        <texture border="16">ContentPanelMirror.png</texture>
                     </control>
                     <control type="image">
                         <left>36</left>
@@ -575,7 +575,7 @@
                         <width>694</width>
                         <height>938</height>
                         <colordiffuse>$VAR[Panel1Color]</colordiffuse>
-                        <texture background="true">InlayDark.png</texture>
+                        <texture>InlayDark.png</texture>
                     </control>
                     <control type="image">
                         <left>36</left>
@@ -583,7 +583,7 @@
                         <width>694</width>
                         <height>938</height>
                         <colordiffuse>$VAR[Panel1Color]</colordiffuse>
-                        <texture background="true">InlayDark.png</texture>
+                        <texture>InlayDark.png</texture>
                     </control>
                 </control>
                 <control type="list" id="302">

@@ -1,4 +1,7 @@
-﻿v 0.9.0.30
+﻿v 0.9.0.31
+- Bugfix View 3 Panel (2. Panel)
+
+v 0.9.0.30
 - Addon Abhängigkeiten integriert
 - WOL Schalter in den Skin-Einstellungen angepasst
 - neues Popup für WOL

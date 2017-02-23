@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <includes>
-    <variable name="servericon">
-		<value>$INFO[Window(Home).Property(SkinHelperPING.icon)]</value>
-	</variable>
     <variable name="widgetdim">
         <value condition="Skin.HasSetting(WidgetDim)|Control.HasFocus(299)|Control.HasFocus(300)|Control.HasFocus(303)|Control.HasFocus(8005)|Control.HasFocus(8006)|Control.HasFocus(8007)|Control.HasFocus(8008)">grey1</value>
         <value condition="!Skin.HasSetting(WidgetDim)">white</value>
