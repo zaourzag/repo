@@ -2066,7 +2066,7 @@ Including football from the top European leagues, the best US sport, tennis and 
 	</extension>
 </addon>
 
-<addon id="skin.horizonzv" name="[RC] Horizonz V (Kodi 17)" version="0.9.0.30" provider-name="blauesgruen">
+<addon id="skin.horizonzv" name="[RC] Horizonz V (Kodi 17)" version="0.9.0.31" provider-name="blauesgruen">
 	<requires>
 		<import addon="xbmc.gui" version="5.12.0"/>
 		<import addon="script.image.resource.select" version="2.0.1"/>
