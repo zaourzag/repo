@@ -862,7 +862,7 @@ v1.9.0 (2016-10-14) moving to the new api - please report bugs
     </extension>
 </addon>
 
-<addon id="plugin.video.mtv_de" name="MTV.de" version="3.3.11" provider-name="L0RE">
+<addon id="plugin.video.mtv_de" name="MTV.de" version="3.3.12" provider-name="L0RE">
 
     <requires>
         <import addon="xbmc.python" version="2.19.0"/>
@@ -1679,7 +1679,7 @@ Including football from the top European leagues, the best US sport, tennis and 
   </extension>
 </addon>
 
-<addon id="service.fussballpopup" name="Fussball Ticker" version="0.3.11" provider-name="L0RE">
+<addon id="service.fussballpopup" name="Fussball Ticker" version="0.3.12" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>			       
         <import addon="script.module.feedparser" version="5.1.3"/>
