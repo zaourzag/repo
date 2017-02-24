@@ -29,6 +29,7 @@ icon = xbmc.translatePath('special://home/addons/'+addonID+'/icon.png')
 userDataFolder = xbmc.translatePath("special://profile/addon_data/"+addonID)
 channelFavsFile = xbmc.translatePath("special://profile/addon_data/"+addonID+"/"+addonID+".favorites")
 maxBitRate = addon.getSetting("maxBitRate")
+mobilestreams = addon.getSetting("mobilestreams")== "true"
 qual = [512000, 1024000, 1536000, 2048000, 2560000, 3072000]
 maxBitRate = qual[int(maxBitRate)]
 baseUrl = "http://www.dmax.de"
@@ -248,7 +249,7 @@ def listEpisodes(url, text):
             struktur = json.loads(jsonstring)
             for name in struktur["raw"]:  
                 title=unicode(name["title"]).encode("utf-8")            
-                addDir(title, name["url"], 'playVideo',name["image"], title)  
+                addLink(title, name["url"], 'playVideo',name["image"], title)  
         videos = content.split('\"cfct-module dni-content-grid\"')                      
         for i in range(1,len(videos),1):
            debug("####### "+ videos[i])
@@ -260,7 +261,7 @@ def listEpisodes(url, text):
            if namel==text:
             names_reg = re.compile('<a href="(.+?)" target="" onClick=".+?">.+?<img class="" src="(.+?)" alt=".+?" ><h3>(.+?)</h3></div></a>', re.DOTALL).findall(videos[i])                                    
             for url,img,name in names_reg:            
-               addDir(name, url, 'playVideo',img, name)                   
+               addLink(name, url, 'playVideo',img, name)                   
         xbmcplugin.endOfDirectory(pluginhandle)
 
 
@@ -309,17 +310,17 @@ def playBrightCoveStream(bc_videoID, title, thumb, isSingle):
     response = conn.getresponse().read()
     response = remoting.decode(response).bodies[0][1].body
     streamUrl = ""
-    for item in sorted(response['renditions'], key=lambda item: item['encodingRate'], reverse=False):
+    if mobilestreams :
+        rubrik="IOSRenditions"
+    else:
+        rubrik="renditions"
+    for item in sorted(response[rubrik], key=lambda item: item['encodingRate'], reverse=False):
         encRate = item['encodingRate']
         if encRate < maxBitRate:
             streamUrl = item['defaultURL']    
     if not streamUrl:
         streamUrl = response['FLVFullLengthURL']
     if streamUrl:
-        if isSingle:
-            listitem = xbmcgui.ListItem(title, thumbnailImage=thumb)
-            xbmc.Player().play(streamUrl, listitem)
-        else:
             listitem = xbmcgui.ListItem(title, path=streamUrl, thumbnailImage=thumb)
             xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
 
