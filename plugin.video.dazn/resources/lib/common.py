@@ -24,8 +24,7 @@ language = xbmc.getLanguage(0, False)
 country = addon.getSetting('country')
 cdn = int(addon.getSetting('server'))
 
-base_url = 'https://isl.dazn.com'
-api_base = base_url+'/misl/%s/'
+api_base = 'https://isl.dazn.com/misl/'
 
 time_format = '%Y-%m-%dT%H:%M:%SZ'
 

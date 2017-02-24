@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.dazn" version="0.7.5" name="DAZN" provider-name="Jin">
+<addon id="plugin.video.dazn" version="0.7.6" name="DAZN" provider-name="Jin">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
         <import addon="inputstream.adaptive"/>
@@ -23,6 +23,8 @@ Including football from the top European leagues, the best US sport, tennis and 
         <disclaimer lang="de_DE">Inoffizielles Addon - Benutzung auf eigene Gefahr</disclaimer>
         <disclaimer lang="en_GB">Unofficial Addon - Use at your own risk</disclaimer>
         <news>
+fix: sign in
+upd: error handler
         </news>
     </extension>
 </addon>
