@@ -2138,7 +2138,7 @@ upd: error handler
 	</extension>
 </addon>
 
-<addon id="skin.fTVfred-krypton" version="3.6.4" name="fTV Fred Edition (Krypton)" provider-name="Sualfred">
+<addon id="skin.fTVfred-krypton" version="3.6.5" name="fTV Fred Edition (Krypton)" provider-name="Sualfred">
 	<requires>
 		<import addon="xbmc.gui" version="5.12.0"/>
 		<import addon="script.toolbox" version="1.1.1"/>
@@ -2173,8 +2173,8 @@ upd: error handler
         </assets>
 		<news>Changelog:
 
-[B]3.6.4[/B]
-- Small video player cast fix
+[B]3.6.5[/B]
+- Fixed ExtendedInfo trailer loop issue
 
 See changelog.txt for more details.</news>
 	</extension>
@@ -2689,25 +2689,6 @@ Zattoo Live TV, Aufnahmen und EPG
   </extension>
 </addon>
 
-<addon id="script.screensaver.fTVscreensaver" name="fTV Screensaver" version="0.1.3" provider-name="Sualfred">
-    <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
-    </requires>    
-    <extension point="xbmc.ui.screensaver" library="screensaver.py" />
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <language/>
-        <website></website>
-        <source>https://github.com/sualfred/script.screensaver.ftvscreensaver</source>
-        <forum>http://forum.kodi.tv/showthread.php?tid=255659</forum>
-        <email>su4lfred@gmail.com</email>   
-        <summary lang="de">fTV Mosaik Screensaver</summary>
-        <summary lang="en">fTV Mosaic Screensaver</summary>        
-        <description lang="de">Slideshow von Fanarts/Postern im fTV Style</description>
-        <description lang="en">Poster and fanart slideshow based on the fTV style</description>
-    </extension>
-</addon>
-
 <addon id="repository.saxbmc" name="SaXBMC Addon Repo" version="1.0.1" provider-name="Birger Jesch">
 	<extension point="xbmc.addon.repository" name="SaXBMC Addon Repo">
 		<info compressed="true">https://raw.githubusercontent.com/b-jesch/SaXBMC/master/addons.xml</info>
@@ -2839,6 +2820,25 @@ Zattoo Live TV, Aufnahmen und EPG
     <email>andreas at vogler dot name</email>
     <platform>all</platform>
   </extension>
+</addon>
+
+<addon id="script.screensaver.fTVscreensaver" name="fTV Screensaver" version="0.1.3" provider-name="Sualfred">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+    </requires>    
+    <extension point="xbmc.ui.screensaver" library="screensaver.py" />
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <language/>
+        <website></website>
+        <source>https://github.com/sualfred/script.screensaver.ftvscreensaver</source>
+        <forum>http://forum.kodi.tv/showthread.php?tid=255659</forum>
+        <email>su4lfred@gmail.com</email>   
+        <summary lang="de">fTV Mosaik Screensaver</summary>
+        <summary lang="en">fTV Mosaic Screensaver</summary>        
+        <description lang="de">Slideshow von Fanarts/Postern im fTV Style</description>
+        <description lang="en">Poster and fanart slideshow based on the fTV style</description>
+    </extension>
 </addon>
 
 </addons>
