@@ -332,7 +332,7 @@ def ZdfGetVideo(url):
 		link = re.compile('"content": "(.*?)",', re.DOTALL).findall(content)[0]
 		response = getUrl(link,getheader)
 		ID = re.compile('"uurl":"(.*?)",', re.DOTALL).findall(response)[0]
-		LinkDirekt = getUrl("https://api.zdf.de/tmd/2/portal/vod/ptmd/mediathek/"+ID)
+		LinkDirekt = getUrl("https://api.zdf.de/tmd/2/portal/vod/ptmd/mediathek/"+ID,getheader)
 		#LinkDirekt2 = getUrl("https://api.zdf.de/tmd/2/ngplayer_2_3/vod/ptmd/mediathek/"+ID)
 		jsonObject = json.loads(LinkDirekt)
 		return ZdfExtractQuality(jsonObject)
