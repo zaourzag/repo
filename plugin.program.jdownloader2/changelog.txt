@@ -1,3 +1,7 @@
+0.0.2
+-add container
+
+0.0.1 
 -list server (multiple)
 -list downloads
 -list linkgrabber

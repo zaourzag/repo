@@ -317,7 +317,7 @@ params = parameters_string_to_dict(sys.argv[2])
 mode = params.get('mode')
 url = params.get('url')
 server_id = params.get('server_id')
-content = param.get('content')
+content = params.get('content')
 if type(url) == type(str()):
     url = str(url)
 
