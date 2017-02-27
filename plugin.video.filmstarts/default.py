@@ -647,19 +647,28 @@ def playVideo(url):
     if ul and ul.startswith("http://"):
         finalUrl=ul
     else:
-        match = re.compile('"refmedia":(.+?),', re.DOTALL).findall(content)
-        media = match[0]
-        match = re.compile('"relatedEntityId":(.+?),', re.DOTALL).findall(content)
-        ref = match[0]
-        match = re.compile('"relatedEntityType":"(.+?)"', re.DOTALL).findall(content)
-        typeRef = match[0]
-        content = geturl(baseurl + '/ws/AcVisiondataV4.ashx?media='+media+'&ref='+ref+'&typeref='+typeRef)
-        finalUrl = ""
-        match = re.compile('hd_path="(.+?)"', re.DOTALL).findall(content)
-        finalUrl = match[0]
-        if finalUrl.startswith("youtube:"):
+        try:
+          match = re.compile('"refmedia":(.+?),', re.DOTALL).findall(content)
+          media = match[0]
+          match = re.compile('"relatedEntityId":(.+?),', re.DOTALL).findall(content)
+          ref = match[0]
+          match = re.compile('"relatedEntityType":"(.+?)"', re.DOTALL).findall(content)
+          typeRef = match[0]
+          content = geturl(baseurl + '/ws/AcVisiondataV4.ashx?media='+media+'&ref='+ref+'&typeref='+typeRef)
+          finalUrl = ""
+          match = re.compile('hd_path="(.+?)"', re.DOTALL).findall(content)
+          finalUrl = match[0]
+          if finalUrl.startswith("youtube:"):
             finalUrl = getYoutubeUrl(finalUrl.split(":")[1])
+        except:
+           contentx=content.replace("\/","/").replace("&quot;",'"')
+           try:
+              teil = re.compile('"high":"(.+?)"', re.DOTALL).findall(contentx)[0]
+           except:
+             teil = re.compile('"medium":"(.+?)"', re.DOTALL).findall(contentx)[0]   
+           finalUrl="http:"+teil
     if finalUrl:
+        debug("Finalurl :"+finalUrl)
         listitem = xbmcgui.ListItem(path=finalUrl)
         xbmcplugin.setResolvedUrl(addon_handle, True, listitem)
    
