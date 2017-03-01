@@ -1,5 +1,10 @@
-﻿v 0.9.0.31
-- Bugfix View 3 Panel (2. Panel)
+﻿v 0.9.0.32
+- Bugfix: Navigation in Untermenüs
+- Code für Poster einer Kollektion geändert (für Addon Movie Set Artwork)
+- Bugfix: Beschreibung für Hauptmenüpunkte
+
+v 0.9.0.31
+- Bugfix: View 3 Panel (2. Panel)
 
 v 0.9.0.30
 - Addon Abhängigkeiten integriert
@@ -9,7 +14,7 @@ v 0.9.0.30
 - License aktualisiert
 
 v 0.9.0.27
-- Bugfixes im Code für PVR Window
+- Bugfixes: im Code für PVR Window
 
 v 0.9.0.26
 - Extra Fanarts für Filme können separat deaktiviert werden

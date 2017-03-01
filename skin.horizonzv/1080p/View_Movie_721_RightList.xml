@@ -229,6 +229,8 @@
             </control>
         </control>
         <control type="group">
+			<visible>!ListItem.IsParentFolder</visible>
+			<include>openclosevisible</include>
             <include>opencloseslideright</include>
             <visible>Control.IsVisible(721)+!Control.HasFocus(666)</visible>
             <control type="group">
@@ -299,77 +301,72 @@
                     </control>
                 </control>
             </control>
+			<control type="group">
+				<left>0</left>
+				<top>580</top>
+				<control type="group">
+					<left>30</left>
+					<top>-3</top>
+					<visible>!Skin.HasSetting(hideMovieCases)</visible>
+					<control type="image">
+						<description>case by resolution</description>
+						<left>33</left>
+						<top>4</top>
+						<width>267</width>
+						<height>381</height>
+						<texture background="true" diffuse="clear-cases/clearcase_inlay.png" fallback="FallbackCover.png">$VAR[PosterThumb]</texture>
+						<aspectratio>stretch</aspectratio>
+						<visible>!Container.Content(Episodes)|String.IsEmpty(ListItem.Art(tvshow.poster))</visible>
+					</control>
+					<control type="image">
+						<description>case by resolution</description>
+						<left>33</left>
+						<top>4</top>
+						<width>267</width>
+						<height>381</height>
+						<texture background="true" diffuse="clear-cases/clearcase_inlay.png" fallback="FallbackCover.png">$INFO[ListItem.Art(tvshow.poster)]</texture>
+						<aspectratio>stretch</aspectratio>
+						<visible>Container.Content(Episodes)+!String.IsEmpty(ListItem.FileExtension)</visible>
+					</control>
+					<control type="image">
+						<description>case by resolution</description>
+						<left>0</left>
+						<top>0</top>
+						<width>303</width>
+						<height>390</height>
+						<texture background="true" fallback="clear-cases/fallback.png">$VAR[clearcase]</texture>
+					</control>
+				</control>
+				<control type="group">
+					<visible>Skin.HasSetting(hideMovieCases)</visible>
+					<control type="image">
+						<description>Movie cover image</description>
+						<left>48</left>
+						<top>0</top>
+						<width>285</width>
+						<height>390</height>
+						<texture background="true" fallback="FallbackCover.png">$VAR[PosterThumb]</texture>
+						<aspectratio>stretch</aspectratio>
+						<bordertexture border="5">buttons/ButtonNF.png</bordertexture>
+						<bordersize>4</bordersize>
+						<visible>!Container.Content(Episodes)|String.IsEmpty(ListItem.Art(tvshow.poster))</visible>
+					</control>
+					<control type="image">
+						<description>Movie cover image</description>
+						<left>48</left>
+						<top>0</top>
+						<width>285</width>
+						<height>390</height>
+						<texture background="true" diffuse="clear-cases/clearcase_inlay.png" fallback="FallbackCover.png">$INFO[ListItem.Art(tvshow.poster)]</texture>
+						<aspectratio>stretch</aspectratio>
+						<visible>Container.Content(Episodes)+!String.IsEmpty(ListItem.FileExtension)</visible>
+					</control>
+				</control>
+			</control>
             <control type="group">
-                <control type="group" id="5">
-                    <left>0</left>
-                    <top>580</top>
-                    <control type="group">
-                        <left>30</left>
-                        <top>-3</top>
-                        <visible>!Skin.HasSetting(hideMovieCases)</visible>
-                        <control type="image">
-                            <description>case by resolution</description>
-                            <left>33</left>
-                            <top>4</top>
-                            <width>267</width>
-                            <height>381</height>
-                            <texture background="true" diffuse="clear-cases/clearcase_inlay.png" fallback="FallbackCover.png">$INFO[ListItem.Icon]</texture>
-                            <aspectratio>stretch</aspectratio>
-                            <visible>!Container.Content(Episodes)|String.IsEmpty(ListItem.Art(tvshow.poster))</visible>
-                        </control>
-                        <control type="image">
-                            <description>case by resolution</description>
-                            <left>33</left>
-                            <top>4</top>
-                            <width>267</width>
-                            <height>381</height>
-                            <texture background="true" diffuse="clear-cases/clearcase_inlay.png" fallback="FallbackCover.png">$INFO[ListItem.Art(tvshow.poster)]</texture>
-                            <aspectratio>stretch</aspectratio>
-                            <visible>Container.Content(Episodes)+!String.IsEmpty(ListItem.FileExtension)</visible>
-                        </control>
-                        <control type="image">
-                            <description>case by resolution</description>
-                            <left>0</left>
-                            <top>0</top>
-                            <width>303</width>
-                            <height>390</height>
-                            <texture background="true" fallback="clear-cases/fallback.png">$VAR[clearcase]</texture>
-                        </control>
-                    </control>
-                    <control type="group">
-                        <visible>Skin.HasSetting(hideMovieCases)</visible>
-                        <control type="image" id="5">
-                            <description>Movie cover image</description>
-                            <left>48</left>
-                            <top>0</top>
-                            <width>285</width>
-                            <height>390</height>
-                            <texture background="true" fallback="FallbackCover.png">$INFO[ListItem.Icon]</texture>
-                            <aspectratio>stretch</aspectratio>
-                            <bordertexture border="5">buttons/ButtonNF.png</bordertexture>
-                            <bordersize>4</bordersize>
-                            <visible>!Container.Content(Episodes)|String.IsEmpty(ListItem.Art(tvshow.poster))</visible>
-                        </control>
-                        <control type="image" id="6">
-                            <description>Movie cover image</description>
-                            <left>48</left>
-                            <top>0</top>
-                            <width>285</width>
-                            <height>390</height>
-                            <texture background="true">$INFO[ListItem.Art(tvshow.poster)]</texture>
-                            <aspectratio>stretch</aspectratio>
-                            <bordertexture border="5">buttons/ButtonNF.png</bordertexture>
-                            <bordersize>4</bordersize>
-                            <visible>Container.Content(Episodes)</visible>
-                        </control>
-                    </control>
-                </control>
-            </control>
-            <control type="group">
-                <visible>!ListItem.IsParentFolder</visible>
-                <include>openclosemedium</include>
                 <left>338</left>
                 <top>548</top>
+				<visible>!ListItem.IsParentFolder</visible>
                 <control type="group">
                     <control type="group">
                         <visible>!Container.Content(episodes)</visible>

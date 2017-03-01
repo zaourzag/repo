@@ -12,8 +12,8 @@
         <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),playdisc)">$LOCALIZE[51388]</value>
         <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),pvr)">$LOCALIZE[51390]</value>
         <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),setting)">$LOCALIZE[51392]</value>
-        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),custom5)">$LOCALIZE[20342] $LOCALIZE[51394] $VAR[Rating_Age_Kids_Label] $LOCALIZE[652]</value>
-        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),custom8)">$LOCALIZE[51396]</value>
+        <!-- <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),custom5)">$LOCALIZE[20342] $LOCALIZE[51394] $VAR[Rating_Age_Kids_Label] $LOCALIZE[652]</value>
+        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),custom8)">$LOCALIZE[51396]</value> -->
         <value>$LOCALIZE[51393]</value>
     </variable>
     <variable name="WeatherFadeout">
@@ -286,8 +286,8 @@
         <value condition="String.Contains(Skin.String(musicgenreicons.name),grey)+Container.Content(genres)+!ListItem.IsParentFolder+Window.IsVisible(music)">$INFO[ListItem.Label,resource://resource.images.musicgenreicons.grey/,.jpg]$VAR[MovieMusicgenreiconsExtVar]</value>
         <value condition="String.Contains(Skin.String(musicgenreicons.name),poster)+Container.Content(genres)+!ListItem.IsParentFolder+Window.IsVisible(music)">$INFO[ListItem.Label,resource://resource.images.musicgenreicons.poster/,.jpg]$VAR[MovieMusicgenreiconsExtVar]</value>
         <value condition="String.Contains(Skin.String(musicgenreicons.name),text)+Container.Content(genres)+!ListItem.IsParentFolder+Window.IsVisible(music)">$INFO[ListItem.Label,resource://resource.images.musicgenreicons.text/,.jpg]$VAR[MovieMusicgenreiconsExtVar]</value>
-        <value condition="!String.IsEmpty(ListItem.Art(poster))">$INFO[ListItem.Art(poster)]</value>
-        <value condition="String.IsEmpty(ListItem.Art(poster))+!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),tvshow)">$INFO[ListItem.Icon]</value>
+        <value condition="!String.IsEmpty(ListItem.Art(poster))+!ListItem.IsCollection">$INFO[ListItem.Art(poster)]</value>
+        <value condition="[String.IsEmpty(ListItem.Art(poster))+!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),tvshow)]|ListItem.IsCollection">$INFO[ListItem.Icon]</value>
         <value condition="Container.Content(episodes)|String.IsEqual(Container(9000).ListItem.Property(homemenu_id),tvshow)">$INFO[ListItem.Art(tvshow.poster)]</value>
     </variable>
     <variable name="LibraryEditorLabel">
@@ -444,16 +444,17 @@
     <variable name="HomeOSDTitle">
         <value condition="Player.HasAudio+!Pvr.IsPlayingRadio+[!Player.IsInternetStream|!String.IsEmpty(MusicPlayer.Artist)]">$INFO[MusicPlayer.Artist]</value>
         <value condition="Player.HasAudio+!Pvr.IsPlayingRadio+!Player.IsInternetStream+String.IsEmpty(MusicPlayer.Artist)+String.IsEmpty(Player.Title)">$INFO[Player.Filename]</value>
-        <value condition="Pvr.IsPlayingRadio">$INFO[VideoPlayer.ChannelNumber]$INFO[VideoPlayer.ChannelName, - ,]</value>
+        <value condition="Pvr.IsPlayingRadio">$INFO[MusicPlayer.ChannelNumber]$INFO[MusicPlayer.ChannelName, - ,]</value>
         <value condition="Pvr.IsPlayingTv+!String.IsEmpty(VideoPlayer.ChannelName)+!String.IsEmpty(VideoPlayer.ChannelNumber)">$INFO[VideoPlayer.ChannelNumber,, - ]$INFO[VideoPlayer.ChannelName]</value>
         <value condition="VideoPlayer.Content(episodes)+!String.IsEmpty(VideoPlayer.TVShowTitle)">$INFO[VideoPlayer.TVShowTitle]</value>
         <value condition="VideoPlayer.Content(movies)+!String.IsEmpty(VideoPlayer.Title)">$INFO[VideoPlayer.Title]</value>
         <value condition="Player.IsInternetStream+String.IsEmpty(MusicPlayer.Artist)">Internet Stream</value>
     </variable>
     <variable name="HomeOSDLabel">
-        <value condition="!String.IsEmpty(MusicPlayer.Title)">$INFO[MusicPlayer.Title]</value>
-        <value condition="!String.IsEmpty(Player.Title)">$INFO[Player.Title]</value>
-        <value condition="String.IsEmpty(Player.Title)+String.IsEmpty(MusicPlayer.Title)">$INFO[Player.Filename]</value>
+        <value condition="!String.IsEmpty(MusicPlayer.Title)+String.IsEmpty(VideoPlayer.Title)">$INFO[MusicPlayer.Title]</value>
+        <value condition="!String.IsEmpty(VideoPlayer.Title)+String.IsEmpty(MusicPlayer.Title)">$INFO[VideoPlayer.Title]</value>
+        <value condition="!String.IsEmpty(Player.Title)+String.IsEmpty(MusicPlayer.Title)+String.IsEmpty(VideoPlayer.Title)">$INFO[Player.Title]</value>
+        <value condition="String.IsEmpty(Player.Title)+String.IsEmpty(MusicPlayer.Title)+String.IsEmpty(VideoPlayer.Title)">$INFO[Player.Filename]</value>
         <value condition="Player.IsInternetStream">$INFO[MusicPlayer.Offset(0).Title]</value>
     </variable>
     <variable name="OriginalTitle">

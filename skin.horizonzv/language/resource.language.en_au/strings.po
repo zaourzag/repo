@@ -2056,3 +2056,7 @@ msgstr "klicke für mehr Informationen"
 msgctxt "#51569"
 msgid "show subdirectories"
 msgstr "zeige Unterverzeichnisse"
+
+msgctxt "#51571"
+msgid "starting ..."
+msgstr "wird gestartet ..."

@@ -235,7 +235,7 @@
 					<description>Default Category Button</description>
 					<left>0</left>
 					<top>0</top>
-					<width>300</width>
+					<width min="200" max="300">auto</width>
 					<height>45</height>
 					<font>impacted21</font>
 					<label>224</label>
