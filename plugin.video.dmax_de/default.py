@@ -57,7 +57,7 @@ def index():
     addDir(translation(30002), "", 'listAZ', icon, '')
     addDir(translation(30010), "", 'listShowsFavs', icon, '')
     addDir(translation(30003), "NEU", 'listVideosLatest', icon, '')
-    addDir(translation(30004), "BELIEBTE", 'listVideosLatest', icon, '')
+    addDir(translation(30004), "BELIEBT", 'listVideosLatest', icon, '')
     addDir(translation(30007), "KURZE CLIPS", 'listVideosLatest', icon, '')
     xbmcplugin.endOfDirectory(pluginhandle)
 
@@ -149,7 +149,7 @@ def listVideosLatest(type):
         thumb = cleanTitle(match[0]).replace("_thumb", "")
         title=cleanit(title)
         debug("- ::: :"+title)
-        addDir(title, url, 'playVideo', thumb, title)
+        addLink(title, url, 'playVideo', thumb, title)
     xbmcplugin.endOfDirectory(pluginhandle)
 
 
