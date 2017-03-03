@@ -147,19 +147,35 @@ def channels():
   d = dailymotion.Dailymotion()
   videos=d.get('/channels')
   for element in videos["list"]:
-    addDir(element["name"], element["id"], 'channel', "",desc=element["description"])  
-  xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)     
-def channel(id,page="1"):
-  debug("Channel :"+id)
+    addDir(element["name"], element["id"], 'channelmenu', "",desc=element["description"])  
+  xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)  
+  
+def channelmenu(id,page="1") :  
+  addDir("Most Recent", '/channel/'+id+"/videos?sort=recent"  , 'channel', "")    
+  addDir("Most Viewed", '/channel/'+id+"/videos?sort=visited"  , 'channeldate', "")     
+  xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)  
+
+def channeldate(url,page="1"):
+  debug("URL channeldate: "+ url)
+  addDir("Hour", url+"-hour"  , 'channel', "")   
+  addDir("Today", url+"-today"  , 'channel', "")   
+  addDir("Week", url+"-week"  , 'channel', "")   
+  addDir("Month", url+"-month" , 'channel', "")   
+  addDir("All Time", url  , 'channel', "") 
+  xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
+  
+def channel(url,page="1"):
+  debug("URL channel: "+ url)
   debug("Page :"+page)
   d = dailymotion.Dailymotion()
-  channel=d.get('/channel/'+id+"/videos?page="+page)
+  channel=d.get(url+"&page="+page)
   for element in channel["list"]:
     addLink(element["title"], element["id"], 'video', "http://www.dailymotion.com/thumbnail/video/"+element["id"])  
   page=int(page)+1
   debug("nextpage :"+str(page))
-  addDir("Next", id, "channel","",page=str(page))   
+  addDir("Next", url, "channel","",page=str(page))   
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)     
+  
 def video(id)  :
   Quality=addon.getSetting("Quality") 
   debug("Quality :"+Quality)
@@ -167,13 +183,64 @@ def video(id)  :
   video=d.get('/video/'+id+'?fields=url')
   url=video["url"]
   vid = YDStreamExtractor.getVideoInfo(url,quality=Quality) #quality is 0=SD, 1=720p, 2=1080p and is a maximum
-  stream_url = vid.streamURL() #This is what Kodi (XBMC) will play
-  listitem = xbmcgui.ListItem(path=stream_url)  
-  xbmcplugin.setResolvedUrl(addon_handle,True, listitem) 
+  try:
+      stream_url = vid.streamURL() #This is what Kodi (XBMC) will play
+      debug("stream_url :"+stream_url)
+      listitem = xbmcgui.ListItem(path=stream_url)  
+      xbmcplugin.setResolvedUrl(addon_handle,True, listitem) 
+  except:
+     xbmc.executebuiltin('XBMC.Notification("VideoURL not found","VideoURL not found")')
+     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)     
 
+
+def search(id,page="1"):
+   dialog = xbmcgui.Dialog()
+   dd= dialog.input("Search", type=xbmcgui.INPUT_ALPHANUM)
+   displaypage('/videos?fields=id,thumbnail_720_url,title,url,&search='+dd,page)
+
+def displaypage(url,page="1"):   
+   d = dailymotion.Dailymotion()
+   video=d.get(url+'&page='+page)
+   for element in video["list"]:
+     addLink(element["title"], element["id"], 'video', element["thumbnail_720_url"])  
+   page=int(page)+1
+   debug("nextpage :"+str(page))
+   addDir("Next", url, "displaypage","",page=str(page))        
+   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)     
+def user():
+    addDir("Most Popular", "/users?fields=avatar_720_url,id,username&mostpopular=1"  , 'userpage', "",page=1)    
+    addDir("Recomanded", "/users?fields=avatar_720_url,id,username&recommended=1"  , 'userpage', "",page=1)    
+    addDir("Official", "/users?fields=avatar_720_url,id,username&verified=1"  , 'userpage', "",page=1)    
+    addDir("All", "/users?fields=avatar_720_url,id,username"  , 'userpage', "",page=1)    
+    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
+    
+def userpage(url,page="1") :   
+  d = dailymotion.Dailymotion()
+  channel=d.get(url+"&page="+page)
+  for element in channel["list"]:
+      addDir(element["username"], element["id"], 'uservideo', element["avatar_720_url"])  
+  page=int(page)+1
+  debug("nextpage :"+str(page))
+  addDir("Next", url, "userpage","",page=str(page))   
+  xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)     
+  
+def uservideo(id,page="1")  :
+  debug(":uservideo:")  
+  debug(":ID:"+id)  
+  d = dailymotion.Dailymotion()
+  channel=d.get("/user/"+str(id)+"/videos?fields=id,thumbnail_720_url,title&page="+str(page))
+  for element in channel["list"]:
+      addLink(element["title"], element["id"], 'video', element["thumbnail_720_url"])  
+  page=int(page)+1
+  debug("nextpage :"+str(page))
+  addDir("Next", id, "uservideo","",page=str(page))   
+  xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)     
 
 if mode is '':
-    addDir("Channels", "", 'channels', "")   
+    addDir("Channels", "", 'channels', "")  
+    addDir("User", "", 'user', "")  
+    addDir("Live", "https://api.dailymotion.com/videos?fields=id,thumbnail_720_url,title,url,&live=1&sort=recent", 'displaypage', "")  
+    addDir("Search", '','search',"")    
     addDir("Einstellungen", "", 'Settings', "")        
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
 else:
@@ -185,5 +252,19 @@ else:
           channels() 
   if mode == 'channel':
           channel(url,page) 
+  if mode == 'channelmenu':
+          channelmenu(url,page)           
   if mode == 'video':
           video(url)   
+  if mode == 'search':
+          search(url,page) 
+  if mode == 'displaypage':
+          displaypage(url,page)     
+  if mode == 'channeldate':
+          channeldate(url,page)         
+  if mode == 'user':
+          user()       
+  if mode == 'userpage':
+          userpage(url,page)    
+  if mode == 'uservideo':
+          uservideo(url,page)                            
