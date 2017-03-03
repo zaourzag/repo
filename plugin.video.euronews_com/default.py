@@ -220,8 +220,7 @@ def ListRubriken(urls,text,x=0):
  if anz>0:
    addDir("Artikel", urls, 'startvideos', "")
  if x>0:
-     match = re.compile('<a href=([^ ]+?) class="enw-justin__header__timeline">(.+?)</a>', re.DOTALL).findall(content2)
-     addDir(match[0][1], "", 'timeline', "")
+        addDir("TimeLine", "", 'timeline', "")
  return anz    
 
  
