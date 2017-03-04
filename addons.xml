@@ -2619,29 +2619,6 @@ See changelog.txt for more details.</news>
 	</extension>
 </addon>
 
-<addon id="plugin.video.tvtoday_de" name="TV Today - Best of Mediatheken" version="1.3.4" provider-name="realvito">
-	<requires>
-		<import addon="xbmc.python" version="2.14.0"/>
-	</requires>
-	<extension point="xbmc.python.pluginsource" library="default.py">
-		<provides>video</provides>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary>Das Beste aus TV-Today</summary>
-		<description>@realvito[CR]Das Beste aus deutschen Mediatheken, ausgewählt und zusammengestellt von der Zeitschrift TV-Today (www.tvtoday.de).[CR][CR]Für mehr Informationen zu allen Neuerungen siehe - CHANGELOG.[CR]     HAVE FUN</description>
-		<disclaimer></disclaimer>
-		<language></language>
-		<platform>all</platform>
-		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-		<forum>http://www.kodinerds.net/index.php/Thread/53329-RERELEASE-TVTODAY/</forum>
-		<website>http://www.tvtoday.de/mediathek/</website>
-		<email></email>
-		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.tvtoday_de</source>
-		<news> [B]Version 1.3.4  (26.02.2017)[/B]
-					- fixed: ZDF-VideoLink verlangt neuerdings ein zweites Mal den API-Schlüssel für eine URL</news>
-	</extension>
-</addon>
-
 <addon id="plugin.program.jdownloader2" name="JD2 Beta" version="0.0.2" provider-name="SLiX">
 	<requires>
 		<import addon="xbmc.python" version="2.14.0"/>
@@ -2914,6 +2891,29 @@ Zattoo Live TV, Aufnahmen und EPG
         <forum>http://forum.xbmc.org/showthread.php?tid=142626</forum>
         <email>AddonScriptorDE at yahoo dot de</email>
   </extension>
+</addon>
+
+<addon id="plugin.video.tvtoday_de" name="TV Today - Best of Mediatheken" version="1.3.4" provider-name="realvito">
+	<requires>
+		<import addon="xbmc.python" version="2.14.0"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary>Das Beste aus TV-Today</summary>
+		<description>@realvito[CR]Das Beste aus deutschen Mediatheken, ausgewählt und zusammengestellt von der Zeitschrift TV-Today (www.tvtoday.de).[CR][CR]Für mehr Informationen zu allen Neuerungen siehe - CHANGELOG.[CR]     HAVE FUN</description>
+		<disclaimer></disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum>http://www.kodinerds.net/index.php/Thread/53329-RERELEASE-TVTODAY/</forum>
+		<website>http://www.tvtoday.de/mediathek/</website>
+		<email></email>
+		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.tvtoday_de</source>
+		<news> [B]Version 1.3.4  (26.02.2017)[/B]
+					- fixed: ZDF-VideoLink verlangt neuerdings ein zweites Mal den API-Schlüssel für eine URL</news>
+	</extension>
 </addon>
 
 </addons>
