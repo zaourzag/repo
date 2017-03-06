@@ -451,11 +451,11 @@
         <value condition="Player.IsInternetStream+String.IsEmpty(MusicPlayer.Artist)">Internet Stream</value>
     </variable>
     <variable name="HomeOSDLabel">
-        <value condition="!String.IsEmpty(MusicPlayer.Title)+String.IsEmpty(VideoPlayer.Title)">$INFO[MusicPlayer.Title]</value>
-        <value condition="!String.IsEmpty(VideoPlayer.Title)+String.IsEmpty(MusicPlayer.Title)">$INFO[VideoPlayer.Title]</value>
-        <value condition="!String.IsEmpty(Player.Title)+String.IsEmpty(MusicPlayer.Title)+String.IsEmpty(VideoPlayer.Title)">$INFO[Player.Title]</value>
-        <value condition="String.IsEmpty(Player.Title)+String.IsEmpty(MusicPlayer.Title)+String.IsEmpty(VideoPlayer.Title)">$INFO[Player.Filename]</value>
+        <value condition="!String.IsEmpty(MusicPlayer.Title)">$INFO[MusicPlayer.Title]</value>
+        <value condition="!String.IsEmpty(VideoPlayer.Title)">$INFO[VideoPlayer.Title]</value>
+        <value condition="!String.IsEmpty(Player.Title)">$INFO[Player.Title]</value>
         <value condition="Player.IsInternetStream">$INFO[MusicPlayer.Offset(0).Title]</value>
+        <value>$INFO[Player.Filename]</value>
     </variable>
     <variable name="OriginalTitle">
         <value condition="Window.IsVisible(videos)+Skin.HasSetting(OriginalTitle)+!String.IsEmpty(ListItem.OriginalTitle)+!ListItem.IsParentFolder">$INFO[ListItem.OriginalTitle]</value>

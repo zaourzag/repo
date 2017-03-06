@@ -1128,10 +1128,9 @@ Für Sport1US und Sport1+ wird ein ABO auf sport1.de benötigt.
   	</extension>
 </addon>
 
-<addon id="plugin.video.spotitube" name="Youtube Music" version="2.0.2" provider-name="LORE/realvito">
+<addon id="plugin.video.spotitube" name="Youtube Music" version="2.0.3" provider-name="LORE/realvito">
 	<requires>
 		<import addon="xbmc.python" version="2.14.0"/>
-		<import addon="script.module.requests"/>
 		<import addon="script.module.simplejson" optional="true"/>
 		<import addon="plugin.video.youtube" version="5.2.1"/>
 	</requires>
@@ -1151,22 +1150,21 @@ Für Sport1US und Sport1+ wird ein ABO auf sport1.de benötigt.
 		<website></website>
 		<email></email>
 		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.spotitube</source>
-		<news> [B]Version 2.0.1  (12.12.2016)[/B] by realvito
-					- Changed many codes and cleanup the script
-					- added: More German-Translations
-					- added: Icons for the sources in Mainmenu
-					- added: More sources from Official Charts Company/removed: old sources
-					- added: Settings in days for automatic CACHE-File deleting
-					- fixed: Playing Videos via Youtube
-					- fixed: Beatport-Playlists
-					- fixed: Hypem-Title and Hypem-Images
-					- fixed: Spotify-Genres and Spotify-Playlist-Images
-					- fixed: showing more TitleImages from the sources and also better quality
-					- removed: old Youtube-Addon settings, because there are no different versions furthermore
-					- Tested on Win 8.1/64 bit with Kodi-KRYPTON 17beta6, installed "plugin.video.youtube" Version 5.3.7 and "script.module.requests" Version 2.9.1
-					 [B]Version 2.0.2  (18.12.2016)[/B] by realvito
-					- VideoLinks werden schneller geöffnet - URL-Abfrage hakt nicht mehr
-					- Bei Problemen mit Kodi-JARVIS 16 bitte README.txt beachten !</news>
+		<news> [B]Version 2.0.3  (04.03.2017)[/B] by realvito
+					- fixed: Beatport not showing Genres
+					- fixed: Billboard-Archive-Videos take a long time to load
+					- fixed: Showing duplicate Title-Entrys in Billboard-Archive-Videos / if Title and Artist have the same Entry, they are not shown since now
+					- removed: Weblink "k-pop-hot-100" in Billboard-Genres (because of no results) + added: Entry "tropical" and "soundtracks"
+					- fixed: Showing duplicate Title-Entrys in iTunes-Videos
+					- fixed: Spotify-Playlist-Images
+					- added: Spotify-Search for: Artists, Songs, Albums + Settings for: Spotify-Search (many Users require it)
+					
+					- [B][COLOR red]comment: If the Spotify-Search does not show as much results as was selected in the settings, then duplicate entries were filtered out !!![/COLOR][/B]
+					
+					- added: Videos without "Audio" or "audio" in the YOUTUBE-description are preferred for playback
+					- fixed: Notification (VideoOSD) for TitleInfo does not automatically close on some Systems
+					- fixed: Cache-Links for Youtube queries shortened because of problems with character limit > 255 on some Windows operating systems
+					- Many other light Changes</news>
 	</extension>
 </addon>
 
@@ -2071,7 +2069,7 @@ upd: error handler
 	</extension>
 </addon>
 
-<addon id="skin.horizonzv" name="[RC] Horizonz V (Kodi 17)" version="0.9.0.32" provider-name="blauesgruen">
+<addon id="skin.horizonzv" name="[RC] Horizonz V (Kodi 17)" version="0.9.0.33" provider-name="blauesgruen">
 	<requires>
 		<import addon="xbmc.gui" version="5.12.0"/>
 		<import addon="script.image.resource.select" version="2.0.1"/>
@@ -2619,6 +2617,27 @@ See changelog.txt for more details.</news>
 	</extension>
 </addon>
 
+<addon id="plugin.program.jdownloader2" name="JD2 Beta" version="0.0.2" provider-name="SLiX">
+	<requires>
+		<import addon="xbmc.python" version="2.14.0"/>
+		<import addon="script.module.requests" version="2.9.1"/>
+		<import addon="script.module.pycryptodome" version="3.4.1"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="addon.py">
+		<provides>executable</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<language/>
+		<summary lang="en">JD2 Beta Addon</summary>
+		<description lang="en"></description>
+		<platform>all</platform>
+		<license></license>
+		<forum></forum>
+		<source></source>
+		<email></email>
+	</extension>
+</addon>
+
 <addon id="plugin.video.zattooHiQ" version="1.0.0" name="Zattoo HiQ" provider-name="Steffen Rolapp">
   <requires>
     <import addon="xbmc.python" version="2.14.0"/>
@@ -2686,27 +2705,6 @@ Zattoo Live TV, Aufnahmen und EPG
 		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.tvtoday_de</source>
 		<news> [B]Version 1.3.4  (26.02.2017)[/B]
 					- fixed: ZDF-VideoLink verlangt neuerdings ein zweites Mal den API-Schlüssel für eine URL</news>
-	</extension>
-</addon>
-
-<addon id="plugin.program.jdownloader2" name="JD2 Beta" version="0.0.2" provider-name="SLiX">
-	<requires>
-		<import addon="xbmc.python" version="2.14.0"/>
-		<import addon="script.module.requests" version="2.9.1"/>
-		<import addon="script.module.pycryptodome" version="3.4.1"/>
-	</requires>
-	<extension point="xbmc.python.pluginsource" library="addon.py">
-		<provides>executable</provides>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<language/>
-		<summary lang="en">JD2 Beta Addon</summary>
-		<description lang="en"></description>
-		<platform>all</platform>
-		<license></license>
-		<forum></forum>
-		<source></source>
-		<email></email>
 	</extension>
 </addon>
 
@@ -2843,35 +2841,6 @@ Zattoo Live TV, Aufnahmen und EPG
   </extension>
 </addon>
 
-<addon id="script.module.pycryptodome" name="Python Crypto Library" version="3.4.3" provider-name="Legrandin">
-  <requires>
-    <import addon="xbmc.python" version="2.7.0"/>
-  </requires>
-  <extension point="xbmc.python.module" library="lib" />
-  <extension point="xbmc.addon.metadata">
-    <platform>all</platform>
-  </extension>
-</addon>
-
-<addon id="script.screensaver.fTVscreensaver" name="fTV Screensaver" version="0.1.3" provider-name="Sualfred">
-    <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
-    </requires>    
-    <extension point="xbmc.ui.screensaver" library="screensaver.py" />
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <language/>
-        <website></website>
-        <source>https://github.com/sualfred/script.screensaver.ftvscreensaver</source>
-        <forum>http://forum.kodi.tv/showthread.php?tid=255659</forum>
-        <email>su4lfred@gmail.com</email>   
-        <summary lang="de">fTV Mosaik Screensaver</summary>
-        <summary lang="en">fTV Mosaic Screensaver</summary>        
-        <description lang="de">Slideshow von Fanarts/Postern im fTV Style</description>
-        <description lang="en">Poster and fanart slideshow based on the fTV style</description>
-    </extension>
-</addon>
-
 <addon id="plugin.video.myspass_de" name="Myspass.de" version="3.0" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
@@ -2894,7 +2863,7 @@ Zattoo Live TV, Aufnahmen und EPG
   </extension>
 </addon>
 
-<addon id="plugin.video.dailymotion" name="DailyMotion (dev)" version="0.1.1" provider-name="L0RE">
+<addon id="plugin.video.dailymotion" name="DailyMotion (dev)" version="0.2.0" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
         <import addon="script.module.requests" version="2.9.1"/>
@@ -2914,6 +2883,25 @@ Zattoo Live TV, Aufnahmen und EPG
         <forum>http://forum.xbmc.org/showthread.php?tid=142626</forum>
         <email>AddonScriptorDE at yahoo dot de</email>
   </extension>
+</addon>
+
+<addon id="script.screensaver.fTVscreensaver" name="fTV Screensaver" version="0.1.3" provider-name="Sualfred">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+    </requires>    
+    <extension point="xbmc.ui.screensaver" library="screensaver.py" />
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <language/>
+        <website></website>
+        <source>https://github.com/sualfred/script.screensaver.ftvscreensaver</source>
+        <forum>http://forum.kodi.tv/showthread.php?tid=255659</forum>
+        <email>su4lfred@gmail.com</email>   
+        <summary lang="de">fTV Mosaik Screensaver</summary>
+        <summary lang="en">fTV Mosaic Screensaver</summary>        
+        <description lang="de">Slideshow von Fanarts/Postern im fTV Style</description>
+        <description lang="en">Poster and fanart slideshow based on the fTV style</description>
+    </extension>
 </addon>
 
 </addons>

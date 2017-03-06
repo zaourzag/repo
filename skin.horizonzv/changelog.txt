@@ -1,4 +1,7 @@
-﻿v 0.9.0.32
+﻿v 0.9.0.33
+- Bugfix: Player Titel
+
+v 0.9.0.32
 - Bugfix: Navigation in Untermenüs
 - Code für Poster einer Kollektion geändert (für Addon Movie Set Artwork)
 - Bugfix: Beschreibung für Hauptmenüpunkte

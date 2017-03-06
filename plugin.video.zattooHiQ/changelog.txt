@@ -1,0 +1,7 @@
+=====================================
+[B] ZattooHiQ v1.0.0 [/B] 18.02.2017
+=====================================
+
+- ZattooHiQ is based on ZattooBox form Pascal Nançoz
+  and ZattooBox Extended from Daniel Griner modify by L0RE
+
