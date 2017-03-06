@@ -185,6 +185,7 @@ def video(id)  :
   vid = YDStreamExtractor.getVideoInfo(url,quality=Quality) #quality is 0=SD, 1=720p, 2=1080p and is a maximum
   try:
       stream_url = vid.streamURL() #This is what Kodi (XBMC) will play
+      stream_url=stream_url.split("|")[0]
       debug("stream_url :"+stream_url)
       listitem = xbmcgui.ListItem(path=stream_url)  
       xbmcplugin.setResolvedUrl(addon_handle,True, listitem) 
@@ -214,6 +215,25 @@ def user():
     addDir("All", "/users?fields=avatar_720_url,id,username"  , 'userpage', "",page=1)    
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
     
+def playlist(id):
+    url="https://api.dailymotion.com/playlist/"+id+"/videos?fields=id,thumbnail_720_url,title,url"
+    displaypage(url,page="1")
+    
+def playlistenmenu():
+    addDir("Most Popular", "/playlists?fields=id,name,thumbnail_720_url,&sort=most"  , 'playlisten', "",page=1)   
+    addDir("Neueste", "/playlists?fields=id,name,thumbnail_720_url,&sort=recent"  , 'playlisten', "",page=1)   
+    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
+
+def playlisten(url,page):
+   d = dailymotion.Dailymotion()
+   video=d.get(url+'&page='+page)
+   for element in video["list"]:
+     addDir(element["name"], element["id"], 'playlist', element["thumbnail_720_url"])  
+   page=int(page)+1
+   debug("nextpage :"+str(page))
+   addDir("Next", url, "playlisten","",page=str(page))        
+   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)     
+    
 def userpage(url,page="1") :   
   d = dailymotion.Dailymotion()
   channel=d.get(url+"&page="+page)
@@ -236,10 +256,12 @@ def uservideo(id,page="1")  :
   addDir("Next", id, "uservideo","",page=str(page))   
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)     
 
+  
 if mode is '':
     addDir("Channels", "", 'channels', "")  
     addDir("User", "", 'user', "")  
     addDir("Live", "https://api.dailymotion.com/videos?fields=id,thumbnail_720_url,title,url,&live=1&sort=recent", 'displaypage', "")  
+    addDir("Playlisten", "https://api.dailymotion.com/videos?fields=id,thumbnail_720_url,title,url,&live=1&sort=recent", 'playlistenmenu', "")  
     addDir("Search", '','search',"")    
     addDir("Einstellungen", "", 'Settings', "")        
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
@@ -267,4 +289,10 @@ else:
   if mode == 'userpage':
           userpage(url,page)    
   if mode == 'uservideo':
-          uservideo(url,page)                            
+          uservideo(url,page)                                      
+  if mode == 'playlistenmenu':
+          playlistenmenu()                            
+  if mode == 'playlisten':
+          playlisten(url,page)      
+  if mode == 'playlist': 
+        playlist(url)       
