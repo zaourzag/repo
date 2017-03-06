@@ -78,7 +78,7 @@ def imagereplace(icon):
   debug( "ICON :"+icon)
   return icon
   
-def addDir(name, url, mode, thump, desc="",page=1,xtype="",datum=""):
+def addDir(name, url, mode, thump, desc="",page=1,xtype="",datum=""):  
   thump=imagereplace(thump)  
   try:
      id  = re.compile('serien/(.+?)/videos/', re.DOTALL).findall(url) [0]
@@ -490,6 +490,7 @@ def serienvideos(url,page=1):
 def kinovideos(url,page=1,datum=""):   
    debug("Start serienvideos")   
    page=int(page)
+   debug("Page : "+ str(page))
    debug("serienvideos URL :"+url)
    if page >1:
     getu=url+"?page="+str(page)
@@ -764,7 +765,7 @@ else:
   if mode == 'kino':                          
           kino()
   if mode == 'kinovideos':                          
-          kinovideos(url,datum=datum)          
+          kinovideos(url,page,datum=datum)          
   if mode == 'selectwoche':                            
           selectwoche(url)
   if mode == 'filterkino':                            
