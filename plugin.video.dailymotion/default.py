@@ -48,7 +48,7 @@ if not xbmcvfs.exists(temp):
        
 xbmcplugin.setContent(int(sys.argv[1]), 'musicvideos')
 icon = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')+'/icon.png').decode('utf-8')
-useThumbAsFanart=addon.getSetting("useThumbAsFanart") == "true"
+username=addon.getSetting("User")
 
 
 
@@ -78,13 +78,8 @@ def addDir(name, url, mode, iconimage, desc="",page="1"):
   u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&page="+str(page)
   ok = True
   liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=iconimage)
-  liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc})
-  if useThumbAsFanart:
-    if not iconimage or iconimage==icon or iconimage==defaultThumb:
-      iconimage = defaultBackground    
-    liz.setArt({ 'fanart': iconimage })
-  else:
-    liz.setArt({ 'fanart': defaultBackground })    
+  liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc})  
+  liz.setArt({ 'fanart': defaultBackground })    
   ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
   return ok
   
@@ -256,8 +251,16 @@ def uservideo(id,page="1")  :
   addDir("Next", id, "uservideo","",page=str(page))   
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)     
 
+def mystuff():
+  addDir("Recomendation", "/user/"+username+"/recommended?fields=avatar_720_url,id,username,", 'userpage', "")    
+  addDir("Following", "/user/"+username+"/following?fields=avatar_720_url,id,username,", 'userpage', "")    
+  addDir("Subscription", "/user/"+username+"/subscriptions?fields=id,thumbnail_720_url,title", 'displaypage', "")    
+  addDir("Following", "/user/"+username+"/following?fields=avatar_720_url,id,username,", 'userpage', "")    
+  xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)  
   
 if mode is '':
+    if not username=="":
+      addDir("My Stuff", "", 'mystuff', "")  
     addDir("Channels", "", 'channels', "")  
     addDir("User", "", 'user', "")  
     addDir("Live", "https://api.dailymotion.com/videos?fields=id,thumbnail_720_url,title,url,&live=1&sort=recent", 'displaypage', "")  
@@ -295,4 +298,6 @@ else:
   if mode == 'playlisten':
           playlisten(url,page)      
   if mode == 'playlist': 
-        playlist(url)       
+        playlist(url)      
+  if mode == 'mystuff':
+        mystuff()  
