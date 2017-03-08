@@ -1855,7 +1855,7 @@ upd: error handler
 	</extension>
 </addon>
 
-<addon id="service.rsspopup" name="Rss Popus" version="0.3.8" provider-name="L0RE">
+<addon id="service.rsspopup" name="Rss Popus" version="0.3.9" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>			       
 	    <import addon="script.module.feedparser" version="5.1.3"/>
