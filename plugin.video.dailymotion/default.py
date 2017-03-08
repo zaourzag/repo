@@ -255,7 +255,7 @@ def mystuff():
   addDir("Recomendation", "/user/"+username+"/recommended?fields=avatar_720_url,id,username,", 'userpage', "")    
   addDir("Following", "/user/"+username+"/following?fields=avatar_720_url,id,username,", 'userpage', "")    
   addDir("Subscription", "/user/"+username+"/subscriptions?fields=id,thumbnail_720_url,title", 'displaypage', "")    
-  addDir("Following", "/user/"+username+"/following?fields=avatar_720_url,id,username,", 'userpage', "")    
+  addDir("Likes", "/user/"+username+"/likes?fields=id,thumbnail_720_url,title", 'displaypage', "")    
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)  
   
 if mode is '':
