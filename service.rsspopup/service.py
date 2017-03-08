@@ -198,7 +198,7 @@ if __name__ == '__main__':
         for i in range(len(titlelist)):  
                    if not titlelist[i] in schown:
                       popupwindow.savemessage(__addon__,titlelist[i],cimglist[i],greyoutlist[i],lesezeitlist[i],xmessage,ymessage,breitemessage,hoehemessage,breitebild,hoehebild,font,fontcolor)             
-                      schown.append(title)                   
+                      schown.append(titlelist[i])                   
       if monitor.waitForAbort(60):
         break            
       
