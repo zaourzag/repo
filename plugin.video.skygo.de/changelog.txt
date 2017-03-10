@@ -1,3 +1,5 @@
+1.0.8.1
+- Anpassung für xbmc.gui 5.13.0
 1.0.8
 - Anpassung für inputstream.adaptive Addon
 1.0.7

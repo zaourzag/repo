@@ -61,6 +61,8 @@ if params:
             xbmc.executebuiltin('Container.Refresh')
         elif params['action'] == 'buy':
             nav.playAsset(params['id'])
+    else:
+        nav.mainMenu()
 else:
     nav.mainMenu()
 

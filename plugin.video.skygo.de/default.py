@@ -13,7 +13,7 @@ plugin_base_url = sys.argv[0]
 params = dict(urlparse.parse_qsl(sys.argv[2][1:]))
 
 # Router for all plugin actions
-if params:
+if 'action' in params:
 
     print params
 
