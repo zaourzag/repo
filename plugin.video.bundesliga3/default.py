@@ -315,7 +315,7 @@ def watchlive(url,meldung="",spiel=""):
    elif "NDR" in url:
       urlnew="http://ndr_fs-lh.akamaihd.net/i/ndrfs_nds@119224/master.m3u8"                    
    elif "MDR" in url:
-      urlnew="http://mdr_sa_hls-lh.akamaihd.net/i/livetvmdrsachsenanhalt_de@106901/master.m3u8"    
+      urlnew="http://livetvsachsen.mdr.de/i/livetvmdrsachsen_de@106902/master.m3u8"                  
    elif "RBB" in url:
       urlnew="http://rbb_live-lh.akamaihd.net/i/rbb_berlin@108248/master.m3u8?bkup=off"      
    elif "SWR" in url:
