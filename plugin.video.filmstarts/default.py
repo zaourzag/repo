@@ -694,7 +694,7 @@ def trailerpage(url,page=1) :
     getu=url     
    content=geturl(getu)  
    kurz_inhalt = content[content.find('<!-- /titlebar_01 -->')+1:]
-   kurz_inhalt = kurz_inhalt[:kurz_inhalt.find('</section>')]   
+   #kurz_inhalt = kurz_inhalt[:kurz_inhalt.find('</section>')]   
    debug("--------------------------------------------")
    debug(kurz_inhalt)
    elemente=kurz_inhalt.split('article data-block')
