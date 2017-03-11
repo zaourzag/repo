@@ -1484,7 +1484,7 @@ upd: error handler
 	</extension>
 </addon>
 
-<addon id="plugin.video.filmstarts" name="Filmstarts" version="0.6.7" provider-name="L0RE">
+<addon id="plugin.video.filmstarts" name="Filmstarts" version="0.6.8" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
     </requires>
