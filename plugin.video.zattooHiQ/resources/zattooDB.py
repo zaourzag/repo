@@ -522,7 +522,7 @@ class ZattooDB(object):
                 PopUp = xbmcgui.DialogProgress()
                 counter=len(r)
                 bar = 0         # Progressbar (Null Prozent)
-                PopUp.create(localSring(31913), '')
+                PopUp.create(localString(31913), '')
                 PopUp.update(bar)
                 for row in r:
                     c.execute('DELETE FROM programs WHERE showID = ?', (row['showID'],))
@@ -533,7 +533,7 @@ class ZattooDB(object):
                         c.close
                         return
                     nr -= 1
-            PopUp.close() 
+                PopUp.close() 
 
         self.conn.commit()
         c.close()
