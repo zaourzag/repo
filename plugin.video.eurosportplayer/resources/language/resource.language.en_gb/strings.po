@@ -60,6 +60,10 @@ msgctxt "#30024"
 msgid "Very High"
 msgstr ""
 
+msgctxt "#30051"
+msgid "Failed to get Device ID. Please Retry."
+msgstr ""
+
 msgctxt "#30101"
 msgid "Videos"
 msgstr ""

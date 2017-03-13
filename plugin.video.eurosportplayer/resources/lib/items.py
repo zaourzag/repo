@@ -18,24 +18,24 @@ class Items:
 
     def add(self, item):    
         data = {
-                'mode'   : item['mode'],
-                'title'  : item['title'],
-                'id'     : item.get('id', ''),
-                'params' : item.get('params', '')
-                }
+            'mode': item['mode'],
+            'title': item['title'],
+            'id': item.get('id', ''),
+            'params': item.get('params', '')
+        }
                     
         art = {
-                'thumb'  : item.get('thumb', icon),
-                'poster' : item.get('thumb', icon),
-                'fanart' : fanart
-                }
+            'thumb': item.get('thumb', fanart),
+            'poster': item.get('thumb', fanart),
+            'fanart': fanart
+        }
                 
         labels = {
-                    'title'     : item['title'],
-                    'plot'      : item.get('plot', ''),
-                    'premiered' : item.get('date', ''),
-                    'episode'   : item.get('episode', 0)
-                    }
+            'title': item['title'],
+            'plot': item.get('plot', ''),
+            'premiered': item.get('date', ''),
+            'episode': item.get('episode', 0)
+        }
         
         listitem = xbmcgui.ListItem(item['title'])
         listitem.setArt(art)
@@ -55,31 +55,3 @@ class Items:
     def play(self, path):
         listitem = xbmcgui.ListItem(path=path)
         xbmcplugin.setResolvedUrl(addon_handle, True, listitem)
-        
-items = Items()
-
-def channel(data):
-    from channels import Channels
-    obj = data.get('PlayerObj', [])
-    for i in obj:
-        items.add(Channels(i).item)
-    items.add({'mode':'sports', 'title':getString(30101), 'plot':getString(30102)})
-    items.list()
-
-def sport(data):
-    from sports import Sports
-    sports = data.get('PlayerObj', {'sports': []})['sports']
-    for i in sports:
-        items.add(Sports(i).item)
-    items.list()
-    
-def video(data, match):
-    from catchups import Catchups
-    catchups = data.get('PlayerObj', {'catchups': []})['catchups']
-    for i in catchups:
-        if str(match) == str(i['sport']['id']):
-            items.add(Catchups(i).item)
-    items.list()
-    
-def play(path):
-    items.play(path)

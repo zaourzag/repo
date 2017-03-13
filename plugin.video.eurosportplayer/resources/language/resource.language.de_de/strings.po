@@ -21,8 +21,8 @@ msgid "Email"
 msgstr "E-Mail"
 
 msgctxt "#30002"
-msgid "Passwort"
-msgstr ""
+msgid "Password"
+msgstr "Passwort"
 
 msgctxt "#30010"
 msgid "View"
@@ -59,6 +59,10 @@ msgstr "Hoch"
 msgctxt "#30024"
 msgid "Very High"
 msgstr "Sehr Hoch"
+
+msgctxt "#30051"
+msgid "Failed to get Device ID. Please Retry."
+msgstr "Fehler beim Abrufen der Geräte-ID. Bitte erneut versuchen."
 
 msgctxt "#30101"
 msgid "Videos"
