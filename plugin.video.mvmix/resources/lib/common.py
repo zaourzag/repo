@@ -1,5 +1,5 @@
 import xbmc,xbmcaddon,xbmcgui
-import os
+import os,re
 
 id = 'plugin.video.mvmix'
 addon = xbmcaddon.Addon(id=id)
@@ -11,8 +11,7 @@ def log(msg):
 def sites():
     sites = [
             ('local', addon.getSetting('local')),('vevo', addon.getSetting('vevo')),
-            ('putpat', addon.getSetting('putpat')),('clipfish', addon.getSetting('clipfish')),
-            ('youtube', addon.getSetting('youtube')),
+            ('imvdb', addon.getSetting('imvdb')),('youtube', addon.getSetting('youtube')),
             ]
     sites = [i[0] for i in sites if i[1] == 'true']
     if yt_proxy():
@@ -26,18 +25,9 @@ def import_site(site):
     if site == 'vevo':
         from .sources import vevo
         return vevo
-    if site == 'muzu':
-        from .sources import muzu
-        return muzu
-    if site == 'myvideo':
-        from .sources import myvideo
-        return myvideo
-    if site == 'putpat':
-        from .sources import putpat
-        return putpat
-    if site == 'clipfish':
-        from .sources import clipfish
-        return clipfish
+    if site == 'imvdb':
+        from .sources import imvdb
+        return imvdb
     if site == 'youtube' or site == 'yt_proxy':
         from .sources import youtube
         return youtube
@@ -55,12 +45,13 @@ def get_yt_pxy_token():
     
 def set_yt_pxy_token(token):
     addon.setSetting('yt_pxy_token', token)
-
-def get_muzu_country():
-    return addon.getSetting('muzu_country')
     
-def set_muzu_country(country):
-    addon.setSetting('muzu_country',country)
+def clean_title(title):
+    title = re.sub('video\s*-\s*dvd|\(video\)|official\s*video|official\s*dvd|official\s*video\s*hd|(?:\(|\[)\s*official\s*(?:\)|\])|music\s*video|official\s*music\s*video|full\s*song|download\s*link', '', title, flags=re.I)
+    title = re.sub('"|\'|hd|hq|1080p|720p|60\s*fps', '', title, flags=re.I)
+    title = re.sub('\[\s*\]|\(\s*\)|\(\s*$|\[\s*$|\+\s*$', '', title, flags=re.I)
+    title = re.sub('  quality\s*$', '', title, flags=re.I)
+    return title.strip()
     
 def enter_artist():
     artist = None
@@ -150,15 +141,6 @@ def video_path():
 def iconimage():
     home = addon.getAddonInfo('path').decode('utf-8')
     return xbmc.translatePath(os.path.join(home, 'icon.png'))
-
-def playbytag():
-    return addon.getSetting('playbytag') == 'true'
-
-def resume():
-    return addon.getSetting('resume') == 'true'
-
-def local_artists():
-    return addon.getSetting('local_artists') == 'true'
     
 def limit_tag():
     return addon.getSetting('limit_tag')

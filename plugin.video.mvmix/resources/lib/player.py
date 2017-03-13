@@ -23,8 +23,7 @@ class mvmixPlayer(xbmc.Player):
         self.start_artist = artist
         self.last_artist = self.start_artist
         self.artist = artist
-        if common.resume():
-            self.set_resume_point()
+        self.set_resume_point()
         self.playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
         self.clear_playlist()
         self.add_video(artist)
@@ -83,11 +82,10 @@ class mvmixPlayer(xbmc.Player):
                 self.add_to_ignore_list()
             if artist and not video_url and not self.similar_artists:
                 self.similar_artists = lastfm.get_similar_artists(artist)
-            if common.resume():
-                resume_point = {'start_artist': self.start_artist, 'artist': self.artist,
-                                'genre_list': self.genre_list, 'video_list': self.video_list,
-                                'ignore_list': self.ignore_list}
-                resume.save_resume_point(resume_point)
+            resume_point = {'start_artist': self.start_artist, 'artist': self.artist,
+                            'genre_list': self.genre_list, 'video_list': self.video_list,
+                            'ignore_list': self.ignore_list}
+            resume.save_resume_point(resume_point)
             self.sleep(200)
             if loops == 10:
                 self.is_active = False

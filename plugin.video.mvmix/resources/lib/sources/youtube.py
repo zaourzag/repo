@@ -52,7 +52,10 @@ def get_videos(artist):
                 description = snippet['description'].lower().encode('utf-8')
                 channel = snippet['channelTitle'].lower().replace(' ','').encode('utf-8')
                 name = check_name(artist,name)
-                if artist.lower() == name.encode('utf-8').lower():
+                name_2 = check_name(artist,title)
+                if artist.lower() == name.encode('utf-8').lower() or artist.lower() == name_2.encode('utf-8').lower():
+                    if artist.lower() == name_2.encode('utf-8').lower():
+                        title = name
                     if status(trusted_channel,channel,artist,title,description) == True:
                         image = snippet.get('thumbnails', {}).get('medium', {}).get('url', '')
                         duration = ''
@@ -112,6 +115,8 @@ def get_video_url(id):
     cipher = None
     if re_match_js:
         js = re_match_js.group('js').replace('\\', '').strip('//')
+        if not js.startswith('http'):
+            js = 'http://www.youtube.com/%s' % js
         cipher = Cipher(java_script_url=js)
         
     re_match = re.search(r'\"url_encoded_fmt_stream_map\"\s*:\s*\"(?P<url_encoded_fmt_stream_map>[^"]*)\"', html)
@@ -141,7 +146,7 @@ def get_video_url(id):
 def status(trusted_channel,channel,artist,title,description):
     title = title.lower()
     artist = artist.lower().replace(' ','')
-    a = ['lyric', 'no official', 'not official', 'unofficially', 'vevo']
+    a = ['lyric', 'no official', 'not official', 'unofficial', 'vevo']
     if any(x in title for x in a):
         if 'official lyric video' in title:
             return True
@@ -180,17 +185,15 @@ def status(trusted_channel,channel,artist,title,description):
         return True
 
 def clean_title(title):
-    title = re.sub('"|\'|hd|hq|1080p|720p|60\s*fps', '', title, flags=re.I)
     try: title = title.split('|')[0]
     except: pass
     try: title = title.split(' - ')[0]
     except: pass
-    title = title.strip()
     return title
     
 def check_name(artist,name):
     if not artist.lower() == name.encode('utf-8').lower():
-        split_tags = [',','&','feat','ft']
+        split_tags = [',','&','(feat','feat','ft']
         for tag in split_tags:
             if tag in name:
                 splitted = name.split(tag)

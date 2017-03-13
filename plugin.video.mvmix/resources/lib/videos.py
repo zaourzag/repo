@@ -20,6 +20,7 @@ def get_videos(artist):
     for r in result:
         if r:
             for v in r:
+                v['title'] = common.clean_title(v['title'])
                 videos.append(v)
     videos = sort_videos(videos)
     videos = filter_videos(videos)
@@ -52,14 +53,12 @@ def clean(title):
     except: pass
     try: title = title.split('|')[0]
     except: pass
-    title = re.sub('\(video - dvd\)|\(video\)|(?:\(||\[)official video(?:\)||\])|\(official video hd\)|(?:\(|\[)official(?:\)|\])|(?:\(||\[)music video(?:\)||\])|(?:\(||\[)official music video(?:\)||\])','', title)
     title = re.sub(' and | und |(?:^|\s)der |(?:^|\s)die |(?:^|\s)das |(?:^|\s)the ','', title)
     title = re.sub('[(]feat.*?$|[(]ft.*?$|( ft(.| ).*?$)|[(]with .*?[)]| feat. .*?$','', title)
     title = re.sub('extended version|extended video', 'extended', title)
     title = re.sub('\(lyric video\)|\(official lyric video\)|\(lyric version\)|\(lyrics\)', 'lyrics', title)
     title = re.sub('(\’|\´|\`|\\xe2\\x80\\x98)', '', title)
     title = re.sub('\s|\n|([[])|([]])|\s(vs|v[.])\s|(:|;|-|\+|\~|\*|"|\'|,|\.|\?|\!|\=|\&|/)|([(])|([)])', '', title)
-    title = title.strip()
     return title
     
 def sort_videos(videos):
