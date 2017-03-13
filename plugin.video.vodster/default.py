@@ -138,7 +138,8 @@ page = urllib.unquote_plus(params.get('page', ''))
 staffel = urllib.unquote_plus(params.get('staffel', ''))
 folge = urllib.unquote_plus(params.get('folge', ''))
 
-def serie():
+
+def serie(mode,feld):
    dialog = xbmcgui.Dialog()
    d = dialog.input(translation(30010), type=xbmcgui.INPUT_ALPHANUM)
    d=d.replace(" ","%20")
@@ -150,15 +151,15 @@ def serie():
      debug("-----")
      debug(element)
      try:
-       idd=element["tvdb"]
+       idd=element[feld]
        title=element["title"]
        if not idd in ids:
          ids.append(idd)
-         addDir(title,idd,"lsserie","")
+         addDir(title,idd,mode,"")
      except:
         pass
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)      
-   
+       
 def lsserie(idd):
    serienurl="http://thetvdb.com/api/EE7293E9091690C1/series/"+idd+"/all/"
    content=getUrl(serienurl)
@@ -198,11 +199,14 @@ def sseason(idd,staffel):
      addDir("Folge "+name, idd, 'ffolge', "http://thetvdb.com/banners/_cache/"+image,staffel=staffel,folge=name)     
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
 
-def ffolge(idd,staffel,folge):
+def ffolge(idd,staffel,folge,field):
   debug("Start ffolge:")
-  url="http://api.vodster.de/avogler/links.php?api_key=ea469466-1fa9-420c-994e-42bdbbb32a38&format=json&tvdb="+idd+"&season="+staffel+"&episode="+folge
+  url="http://api.vodster.de/avogler/links.php?api_key=ea469466-1fa9-420c-994e-42bdbbb32a38&format=json&"+field+"="+idd
+  if staffel>=0:
+    url=url+"&season="+staffel+"&episode="+folge
   content=getUrl(url)
   struktur = json.loads(content)
+  providerlist=["ZDF"]
   for element in struktur:
    debug("Provider :"+ element["provider"])
    debug("Url :"+element["url"])
@@ -211,6 +215,17 @@ def ffolge(idd,staffel,folge):
     idd=re.compile('/([^/]+?).html', re.DOTALL).findall(element["url"])[0] 
     gef=1    
     addLink(element["provider"], "plugin://plugin.video.skygo.de/?action=playVod&vod_id="+idd,"playplug","")
+   if element["provider"]=="Netzkino":
+    idd=re.compile('/([^/]+)$', re.DOTALL).findall(element["url"])[0] 
+    gef=1    
+    addLink(element["provider"], "plugin://plugin.video.netzkino_de/play/?slug="+idd,"playplug","")    
+   if element["provider"] in providerlist:   
+    gef=1    
+    vid = YDStreamExtractor.getVideoInfo(element["url"],quality=1) #quality is 0=SD, 1=720p, 2=1080p and is a maximum
+    stream_url = vid.streamURL() #This is what Kodi (XBMC) will play
+    stream_url=stream_url.split("|")[0]
+    debug("stream_url :"+stream_url)
+    addLink(element["provider"], stream_url,"playplug","")
    if element["provider"]=="7TV":
     gef=1    
     addLink(element["provider"], "plugin://plugin.video.7tvneu/?url="+element["url"]+"&mode=getvideoid","playplug","")    
@@ -237,6 +252,7 @@ def playplug(url) :
   
 if mode is '':
     addDir("Serien Suche", "", 'serie', "")  
+    addDir("Filme Suche", "", 'filme', "")  
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
 else:
   # Wenn Settings ausgewählt wurde
@@ -244,12 +260,16 @@ else:
           addon.openSettings()
   # Wenn Kategory ausgewählt wurde
   if mode == 'serie':
-          serie() 
+          serie("lsserie","tvdb") 
+  if mode == 'filme':
+          serie("lsfilme","tmdb") 
   if mode == 'lsserie':
-          lsserie(url) 
+          ffolge(url,staffel,folge,"tvdb")
+  if mode == 'lsfilme':
+          ffolge(url,-1,-1,"tmdb")
   if mode == 'sseason':
            sseason(url,staffel)     
   if mode == 'ffolge':
-           ffolge(url,staffel,folge)
+           ffolge(url,staffel,folge,"tvdb")
   if mode == 'playplug':
            playplug(url) 
