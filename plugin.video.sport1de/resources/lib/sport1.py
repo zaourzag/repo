@@ -1,146 +1,200 @@
 # -*- coding: utf-8 -*-
 
-import xbmc,xbmcaddon,xbmcvfs
-import re,requests
-addon = xbmcaddon.Addon()
+from common import *
 
-class Sport1(object):
+def get_category_items():
+    return [
+                {'type':'dir', 'mode':'video_category', 'name':'Mediathek'},
+                {'type':'dir', 'mode':'tv_category', 'name':'Live-TV'},
+                {'type':'dir', 'mode':'radio_category', 'name':'Radio'}
+            ]
 
-    def __init__(self):
-        self.headers = {'User-Agent':  'iPhone',
-                        'Referer'   :  'http://video.sport1.de',
-                        'Host'      :  'video.sport1.de'}
-        self.cookies = None
+def get_video_category_items():
+    return [
+                {'type':'dir', 'mode':'videos', 'id':'0_nqmdcpgb', 'name':'Neueste Videos'},
+                {'type':'dir', 'mode':'videos', 'id':'0_y8s3i6xf', 'name':'Top Videos'},
+                {'type':'dir', 'mode':'videos', 'id':'0_ppyiwf4n', 'name':'News'},
+                {'type':'dir', 'mode':'videos', 'id':'0_a9zu407t', 'name':'Fussball'},
+                {'type':'dir', 'mode':'videos', 'id':'0_jaacx0hz', 'name':'Bundesliga Aktuell'},
+                {'type':'dir', 'mode':'videos', 'id':'0_8y23jpga', 'name':'Regionalliga'},
+                {'type':'dir', 'mode':'videos', 'id':'0_uhhrbozp', 'name':'UEFA Europa League'},
+                {'type':'dir', 'mode':'videos', 'id':'0_wich8xsf', 'name':'Fussball International'},
+                {'type':'dir', 'mode':'videos', 'id':'0_7mp3uktl', 'name':'Doppelpass'},
+                {'type':'dir', 'mode':'videos', 'id':'0_mo2ihu8w', 'name':'Basketball'},
+                {'type':'dir', 'mode':'videos', 'id':'0_019rh7kw', 'name':'Basketball Euroleague'},
+                {'type':'dir', 'mode':'videos', 'id':'0_pn8mczrd', 'name':'Basketball Beko BBL'},
+                {'type':'dir', 'mode':'videos', 'id':'0_icmwhaja', 'name':'Handball'},
+                {'type':'dir', 'mode':'videos', 'id':'0_gk0pip9o', 'name':'Volleyball'},
+                {'type':'dir', 'mode':'videos', 'id':'0_q4hdin4o', 'name':'Tennis'},
+                {'type':'dir', 'mode':'videos', 'id':'0_jf75kubn', 'name':'Eishockey'},
+                {'type':'dir', 'mode':'videos', 'id':'0_u40ck8u8', 'name':'Hockey'},
+                {'type':'dir', 'mode':'videos', 'id':'0_gsten8d4', 'name':'Poker'},
+                {'type':'dir', 'mode':'videos', 'id':'0_qi2uk5y3', 'name':'Europaspiele'},
+                {'type':'dir', 'mode':'videos', 'id':'0_a9z7y19x', 'name':'NBA'},
+                {'type':'dir', 'mode':'videos', 'id':'0_z0gb3mxb', 'name':'NBA Playoff Moments'},
+                {'type':'dir', 'mode':'videos', 'id':'0_9227gzr8', 'name':'NFL'},
+                {'type':'dir', 'mode':'videos', 'id':'0_c6ebz286', 'name':'NHL'},
+                {'type':'dir', 'mode':'videos', 'id':'0_db3anfk2', 'name':'Darts'},
+                {'type':'dir', 'mode':'videos', 'id':'0_muvilawb', 'name':'Darts Premier League'},
+                {'type':'dir', 'mode':'videos', 'id':'0_i4pge47z', 'name':'Motorsport Top Videos'},
+                {'type':'dir', 'mode':'videos', 'id':'0_z5fy2g2b', 'name':'Formel1'},
+                {'type':'dir', 'mode':'videos', 'id':'0_45uc5875', 'name':'DTM'},
+                {'type':'dir', 'mode':'videos', 'id':'0_jm2vmjdv', 'name':'WRC'},
+                {'type':'dir', 'mode':'videos', 'id':'0_zbiw72l8', 'name':'VLN'},
+                {'type':'dir', 'mode':'videos', 'id':'0_nzv2abib', 'name':'ADAC Formel 4'},
+                {'type':'dir', 'mode':'videos', 'id':'0_jcfvj2uk', 'name':'ADAC GT Masters'},
+                {'type':'dir', 'mode':'videos', 'id':'0_5z28uf65', 'name':'Boulevard'},
+                {'type':'dir', 'mode':'videos', 'id':'0_lz5w9zcl', 'name':'Die PS Profis'},
+                {'type':'dir', 'mode':'videos', 'id':'0_xzi6ed9c', 'name':'Turbo'},
+                {'type':'dir', 'mode':'videos', 'id':'0_t09zsmy7', 'name':'Auftrag Auto'},
+                {'type':'dir', 'mode':'videos', 'id':'0_1u6iputx', 'name':'Nine Knights'},
+                {'type':'dir', 'mode':'videos', 'id':'0_gmq99ilw', 'name':'Clipmasters'},
+                {'type':'dir', 'mode':'videos', 'id':'0_6l0tihks', 'name':'Specials'}
+            ]
 
-    def get_playlist(self,id):
-        result = {}
-        try:
-            url = 'http://video.sport1.de/api/playlist/%s' % (id)
-            data = requests.get(url, headers=self.headers).json()
-            return data
-        except:
-            pass
-        return result
+def get_radio_category_items():
+    return [   
+                {'type':'dir', 'mode':'live_radio', 'name':'Live'},
+                {'type':'dir', 'mode':'videos', 'id':'0_nv1vov1f', 'name':'Radio Highlights'},
+                {'type':'dir', 'mode':'videos', 'id':'0_h2dnj27a', 'name':'Podcast'},
+                {'type':'dir', 'mode':'videos', 'id':'0_ev7ho53z', 'name':'Bundesliga'},
+                {'type':'dir', 'mode':'videos', 'id':'0_3kjxbpjs', 'name':'2. Bundesliga'},
+                {'type':'dir', 'mode':'videos', 'id':'0_r3t0uc0f', 'name':'Europa League'},
+                {'type':'dir', 'mode':'videos', 'id':'0_36tbfldi', 'name':'DFB-Pokal'},
+                {'type':'dir', 'mode':'videos', 'id':'0_qol6tqkd', 'name':'DFB-Team'},
+                {'type':'dir', 'mode':'videos', 'id':'0_4g0s69pv', 'name':'Doppelpass'}
+            ]
 
-    def get_video(self,id):
-        result = {}
-        try:
-            url = 'http://video.sport1.de/api/video/%s' % (id)
-            data = requests.get(url, headers=self.headers).json()
-            return data
-        except:
-            pass
-        return result
+def get_playlist_url(data):
+    url = None
+    elements = data['elements']
+    for i in elements:
+        sub_elements = i.get('elements', '')
+        if sub_elements:
+            for s in sub_elements:
+                type = s.get('type', '')
+                if type == 'video_detailed_band':
+                    url = s['elements'][0]['url']
+                    break
+    return url
 
-    def get_tv_epg(self):
-        result = {}
-        try:
-            url = 'http://video.sport1.de/api/epg/tv'
-            data = requests.get(url, headers=self.headers).json()
-            return data
-        except:
-            pass
-        return result
+def get_video_items(data):
+    items = []
+    videos = data['videos']
+    for i in videos:
+        title = i['title']
+        image = i['image']
+        id = i['id']
+        description = utfenc(i['description'])
+        a = image.split(id)[0]
+        image = '%s%s/width/400' % (a,id)
+        duration = int(i['durationSeconds'])
+        date = i['date']
+        dt = datetime.datetime.fromtimestamp(int(date))
+        dt = str(dt)[:16]
+        name = '%s (%s)' % (title,dt)
+        url = i['url']
+        for u in url:
+            mp4 = url[u]
+            if 'high_quality' == u:
+                break
+        items.append({'type':'video', 'mode':'play_video', 'name':utfenc(name), 'id':mp4, 'description':description, 'image':image, 'duration':duration})
+    return items
 
-    def get_fm_epg(self):
-        result = {}
-        try:
-            url = 'http://video.sport1.de/api/epg/fm'
-            data = requests.get(url, headers=self.headers).json()
-            return data
-        except:
-            pass
-        return result
-        
-    def get_tv(self,url=False,cookie_file=False):
-        result = None
-        
-        self.headers.update({   'Referer'   :  'http://tv.sport1.de',
-                                'Host'      :  'tv.sport1.de'})
-        
-        if url:
-            if not '/sport1/' in url:
-                if not self.logged_in(cookie_file):
-                    self.login(cookie_file)
+def get_tv_items(data):
+    items = []
+    stations = data['stations']
+    for s in stations:
+        title = s['title']
+        current_programs = s['current_programs'][0]
+        description = current_programs['description']
+        start = current_programs['from'].split('T')[-1]
+        end = current_programs['to'].split('T')[-1]
+        link = s['link']
+        name = utfenc('%s %s %s %s' % (title,start,description,end))
+        items.append({'type':'video', 'mode':'play_tv', 'name':name, 'id':link, 'description':'', 'duration':'0'})
+    items.append({'type':'dir', 'mode':'livestream', 'name':'LIVESTREAM', 'id':'', 'description':'', 'duration':'0'})
+    return items
+
+def get_live_video_items(data):
+    items = []
+    live = re.search('id="stream_tile_livestream"(.*?)<hr>', data, re.S)
+    if live:
+        a = live.group(1)
+        items = get_event_items(items,a,live=True)
+    ondemand = re.search('id="stream_tile_ondemandstream"(.*?)<hr>', data, re.S)
+    if ondemand:
+        a = ondemand.group(1)
+        items = get_event_items(items,a,live=False)
+    return items
+    
+def get_event_items(items,a,live):
+    base_url = 'http://tv.sport1.de'
+    b = re.findall('<a (.*?)</a>', a, re.S)
+    for c in b:
+        d = re.search('href="(.+?)"', c, re.S).group(1)
+        e = re.search('src="(.+?)"', c, re.S).group(1)
+        f = re.search('<span class="Info">(.+?)<br>', c, re.S).group(1)
+        g = re.search('<strong>(.+?)</strong>', c, re.S).group(1)
+        if not d.startswith('http'):
+            d = base_url+d
+        if not e.startswith('http'):
+            e = base_url+e
+        if live:
+            h = utfenc('%s %s' % (f,g))
         else:
-            url = 'http://tv.sport1.de/mobile/'
-        
-        if self.cookies:
-            self.headers.update({'cookie':self.cookies})
-        
-        try:
-            data = requests.get(url, headers=self.headers).text
-            return data
-        except:
-            pass
-        return result
+            h = utfenc('ARCHIV: %s %s' % (f,g))
+        items.append({'type':'video', 'mode':'play_tv', 'name':h, 'id':d, 'image':e, 'description':'', 'duration':'0'})
+    return items
+    
+def get_live_radio_items(data):
+    items = []
+    for l in data:
+        m = l['season'][0]['round'][0]['match']
+        for i in m:
+            name = None
+            finished = i['finished']
+            home = i['home']['name']
+            away = i['away']['name']
+            match_time = i['match_time']
+            match_meta = i.get('match_meta', [])
+            current_minute = i.get('current_minute', '')
+            result = '%s:%s' % (i['match_result'][0]['match_result'],i['match_result'][1]['match_result'])
+            for meta in match_meta:
+                kind = meta['kind']
+                if not 'Konferenz' in str(items) and 'conference' in kind and kind.endswith('.mp3'):
+                    id = meta['content']
+                    name = '%s: Konferenz' % (match_time)
+                    item = {'type':'video', 'mode':'play_video', 'name':name, 'id':id, 'description':'', 'duration':'0'}
+                    items.insert(0, item)
+                elif kind.endswith('.mp3'):
+                    id = meta['content']
+                    name = utfenc('%s %s - %s %s %s\'' % (match_time,home,away,result,current_minute))
+            if name:
+                item = {'type':'video', 'mode':'play_video', 'name':name, 'id':id, 'description':'', 'duration':'0'}
+                items.append(item)
+    return items
 
-    def get_radio(self):
-        result = None
-        try:
-            url = self.get_date()
-            self.headers.update({   'Referer'   :  'http://api.sport1.de',
-                                    'Host'      :  'api.sport1.de'})
-            data = requests.get(url, headers=self.headers).json()
-            return data
-        except:
-            pass
-        return result
-
-    def login(self,cookie_file):
-        email = addon.getSetting('email').encode('utf-8')
-        password = addon.getSetting('password').encode('utf-8')
-        if email and password:
-            data = {'log_email'             :  email,
-                    'log_pw'                :  password,
-                    'log_goback'            :  '0',
-                    'log_persistence_cookie':  '1'}
-            url = 'https://tv.sport1.de/mobile/home/index.php'
-            try:
-                r = requests.post(url, headers=self.headers, data=data)
-                if '<div class="logged-in">' in r.text:
-                    self.cookies = r.headers['set-cookie']
-                    self.save_cookie(cookie_file)
-                else:
-                    pattern = '<span class="loginError.*?">(.*?)</span>'
-                    s = re.search(pattern, r.text)
-                    if s:
-                        msg = s.group(1)
-                    else:
-                        msg = 'Login Fehlgeschlagen'
-                    xbmc.executebuiltin(unicode('Notification(%s,%d)' % (msg,8000)).encode('utf-8'))
-            except:
-                pass
-
-    def logged_in(self,cookie_file):
-        result = False
-        try:
-            if xbmcvfs.exists(cookie_file):
-                f = xbmcvfs.File(cookie_file)
-                cookie = f.read()
-                f.close()
-                url = 'https://tv.sport1.de/mobile/home/index.php'
-                self.headers.update({'cookie':cookie})
-                text = requests.get(url, headers=self.headers).text
-                if '<div class="logged-in">' in text:
-                    self.cookies = cookie
-                    return True
-        except:
-            pass
-        return result
-
-    def save_cookie(self, cookie_file):
-        f = xbmcvfs.File(cookie_file, 'w')
-        result = f.write(self.cookies)
-        f.close()
-
-    def get_date(self):
-        result = None
-        try:
-            url = 'http://www.sport1.de/api/pages/465'
-            data = requests.get(url, headers=self.headers).json()
-            u = data['elements'][0]['elements'][0]['url']
-            return u
-        except:
-            pass
-        return result
+def get_hls(data):
+    result = ''
+    pattern2 = '<div class="player".*?src="(.*?)"'
+    pattern1 = 'file\s*:\s*"(.*?)"'
+    a = re.search(pattern1, data)
+    if a:
+        s = a
+    else:
+        s = re.search(pattern2, data)
+    if s:
+        return s.group(1)
+    else:
+        pattern = '<div class="player">(?:<p class="error">|<p>)(.*?)</p>'
+        s = re.search(pattern, data, re.S)
+        if s:
+            msg = s.group(1).strip()
+            return re.sub('(<.+?>)', '', msg)
+        pattern = '<p class="text">(.+?)</p>'
+        s = re.search(pattern, data, re.S)
+        if s:
+            msg = s.group(1).strip()
+            return re.sub('(<.+?>)', '', msg)
+    return result
