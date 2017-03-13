@@ -905,18 +905,25 @@ v1.9.0 (2016-10-14) moving to the new api - please report bugs
     </extension>
 </addon>
 
-<addon id="plugin.video.mvmix" version="1.6.3" name="Music Video Mix" provider-name="Jin">
+<addon id="plugin.video.mvmix" version="1.7.2" name="Music Video Mix" provider-name="Jin">
     <requires>
-        <import addon="xbmc.python" version="2.14.0"/> 
+        <import addon="xbmc.python" version="2.20.0"/>
     </requires>
-    <extension point="xbmc.python.pluginsource" library="mvmix.py">
+    <extension point="xbmc.python.pluginsource" library="addon.py">
         <provides>video</provides>
     </extension>
     <extension point="xbmc.addon.metadata">
         <summary>Music Video Mix Player</summary>
         <description>Randomly Play Local And Online Music Videos Based On The Last FM Similar Artists API</description>
         <platform>all</platform>
-        <forum>http://www.kodinerds.net/index.php/Thread/46548-Release-Music-Video-Mix-Player/</forum>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <news>
+add: imvdb.com (vimeo/youtube)
+fix: imvdb title (int -> str)
+del: clipfish + putpat (no more content)
+fix: youtube
+upd: clean title
+        </news>
     </extension>
 </addon>
 
