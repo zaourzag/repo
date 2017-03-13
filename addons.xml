@@ -207,7 +207,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
     </extension>
 </addon>
 
-<addon id="plugin.video.vodster" name="Vodster (dev)" version="0.1" provider-name="L0RE">
+<addon id="plugin.video.vodster" name="Vodster (dev)" version="0.1.1" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
         <import addon="script.module.requests" version="2.9.1"/>
