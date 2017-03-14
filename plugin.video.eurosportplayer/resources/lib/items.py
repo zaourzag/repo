@@ -25,8 +25,8 @@ class Items:
         }
                     
         art = {
-            'thumb': item.get('thumb', fanart),
-            'poster': item.get('thumb', fanart),
+            'thumb': item.get('thumb', fanart).replace(' ', '%20'),
+            'poster': item.get('thumb', fanart).replace(' ', '%20'),
             'fanart': fanart
         }
                 
