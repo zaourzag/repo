@@ -621,7 +621,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
 	</extension>
 </addon>
 
-<addon id="plugin.video.eurosportplayer" version="1.7.0" name="Eurosport Player" provider-name="Jin">
+<addon id="plugin.video.eurosportplayer" version="1.7.1" name="Eurosport Player" provider-name="Jin">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
     </requires>
@@ -638,7 +638,9 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
         <disclaimer lang="de_DE">Inoffizielles Addon - Benutzung auf eigene Gefahr</disclaimer>
         <disclaimer lang="en_GB">Unofficial Addon - Use at your own risk</disclaimer>
         <news>
-Note: Videos may only work with Kodi 17 and above
+Fix: Images with spaces in url
+Fix: NoneType error
+Note: Replays may only work with Kodi 17+
         </news>
     </extension>
 </addon>
