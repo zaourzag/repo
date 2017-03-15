@@ -1,4 +1,7 @@
-﻿v 0.9.0.33
+﻿v 0.9.0.34
+- Bugfix: Kanal OSD Label und Icons (danke Blaubär68)
+
+v 0.9.0.33
 - Bugfix: Player Titel
 
 v 0.9.0.32

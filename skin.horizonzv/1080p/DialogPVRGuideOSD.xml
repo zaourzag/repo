@@ -132,18 +132,17 @@
                             <top>8</top>
                             <width>30</width>
                             <height>30</height>
-                            <colordiffuse>black</colordiffuse>
                             <texture>$VAR[PVRTimerIcon]</texture>
                         </control>
                         <control type="label">
-                            <left>150</left>
+                            <left>160</left>
                             <top>0</top>
                             <width>570</width>
                             <height>45</height>
                             <textcolor>white</textcolor>
                             <align>right</align>
                             <aligny>center</aligny>
-                            <label>$VAR[PVRTimerLabel]</label>
+                            <label>$INFO[ListItem.Label]</label>
                         </control>
                     </itemlayout>
                     <focusedlayout height="52" width="765">
@@ -171,18 +170,17 @@
                                 <top>8</top>
                                 <width>30</width>
                                 <height>30</height>
-                                <colordiffuse>black</colordiffuse>
                                 <texture>$VAR[PVRTimerIcon]</texture>
                             </control>
                             <control type="label">
-                                <left>150</left>
+                                <left>160</left>
                                 <top>0</top>
                                 <width>570</width>
                                 <height>45</height>
                                 <textcolor>black</textcolor>
                                 <align>right</align>
                                 <aligny>center</aligny>
-                                <label>$VAR[PVRTimerLabel]</label>
+								<label>$INFO[ListItem.Label]</label>
                             </control>
                             <control type="image">
                                 <left>0</left>
