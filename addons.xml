@@ -2129,7 +2129,7 @@ Video Addon for hltv.org
 	</extension>
 </addon>
 
-<addon id="skin.horizonzv" name="[RC] Horizonz V (Kodi 17)" version="0.9.0.33" provider-name="blauesgruen">
+<addon id="skin.horizonzv" name="[RC] Horizonz V (Kodi 17)" version="0.9.0.34" provider-name="blauesgruen">
 	<requires>
 		<import addon="xbmc.gui" version="5.12.0"/>
 		<import addon="script.image.resource.select" version="2.0.1"/>
@@ -2137,7 +2137,7 @@ Video Addon for hltv.org
 		<import addon="resource.images.weathericons.outline" version="0.0.6"/>
 		<import addon="service.library.data.provider" version="0.3.0"/>
 	</requires>
-	<extension point="xbmc.gui.skin" debugging="false" effectslowdown="0.65">
+	<extension point="xbmc.gui.skin" debugging="false" effectslowdown="0.55">
 		<res width="1920" height="1080" aspect="16:9" default="true" folder="1080p" />
 	</extension>
 	<extension point="xbmc.addon.metadata">
