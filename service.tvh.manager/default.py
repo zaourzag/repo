@@ -44,8 +44,9 @@ OSD = xbmcgui.Dialog()
 
 PLATFORM_OE = any(dist for dist in ('LIBREELEC', 'OPENELEC') if dist in ', '.join(platform.uname()).upper())
 if PLATFORM_OE:
-    writeLog('OS seems to be LibreELEC or OpenELEC, reset sudo in settings')
-    if __addon__.getSetting('sudo').upper() == 'TRUE': __addon__.setSetting('sudo', 'false')
+    if __addon__.getSetting('sudo').upper() == 'TRUE':
+        __addon__.setSetting('sudo', 'false')
+        writeLog('OS seems to be LibreELEC or OpenELEC, reset sudo in settings')
 
 # binary Flags
 
