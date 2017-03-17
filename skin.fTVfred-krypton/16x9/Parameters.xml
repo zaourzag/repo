@@ -17,166 +17,156 @@
 		<param name="ID" default="6000" />
 		<definition>
 			<control type="group">
-				<animation easing="inout" effect="slide" end="0,0" start="0,-380" time="120" tween="sine" condition="Control.HasFocus($PARAM[ID])">Conditional</animation>
-				<animation easing="inout" effect="slide" end="0,-380" start="0,0" time="120" tween="sine" condition="!Control.HasFocus($PARAM[ID])">Conditional</animation>
-				<!-- Dialog group -->
+				<animation type="Conditional" condition="Control.HasFocus($PARAM[ID])">
+					<effect center="auto" tween="circle" easing="out" end="100" start="110" time="200" type="zoom" />
+					<effect easing="inout" end="100" start="0" time="200" tween="sine" type="fade" />
+				</animation>
+				<animation easing="inout" effect="fade" end="0" start="100" time="200" tween="sine" condition="!Control.HasFocus($PARAM[ID])">Conditional</animation>
+				<control type="image">
+					<include>FullscreenDimensions</include>
+					<texture>special://skin/extras/backgrounds/default.png</texture>
+					<colordiffuse>EFFFFFFF</colordiffuse>
+				</control>
 				<control type="group">
-					<top>-34</top>
-					<width>1920</width>
-					<height>490</height>				
-					<!-- Background -->
-					<control type="image">
-						<centerleft>50%</centerleft>
-						<width>960</width>
-						<height>380</height>
-						<texture border="32">dialogs/DialogMessageBackground.png</texture>
+					<centerleft>50%</centerleft>
+					<width>720</width>
+					<height>1080</height>
+					<control id="$PARAM[ID]1" type="button">
+						<onfocus>Control.Move($PARAM[ID],-1)</onfocus>
+						<onfocus>SetFocus($PARAM[ID])</onfocus>
+						<onfocus>Right</onfocus>
+						<onfocus>Right</onfocus>
+						<onfocus>Right</onfocus>
+						<onfocus>Right</onfocus>
+						<onfocus>Right</onfocus>
+						<onfocus>Right</onfocus>
+						<onfocus>Right</onfocus>
+						<onfocus>Right</onfocus>
+						<include>HiddenControl</include>
 					</control>
-					<!-- Control group -->
-					<control type="group">
-						<top>38</top>
-						<width>868</width>
-						<centerleft>50%</centerleft>
-						<!-- icon -->
-						<control type="group">
-							<top>10</top>
-							<left>0</left>
-							<width>116</width>
-							<height>116</height>
-							<!-- Icon back -->
+					<control id="$PARAM[ID]2" type="button">
+						<onfocus>SetFocus($PARAM[ID])</onfocus>
+						<onfocus>Left</onfocus>
+						<onfocus>Left</onfocus>
+						<onfocus>Left</onfocus>
+						<onfocus>Left</onfocus>
+						<onfocus>Left</onfocus>
+						<onfocus>Left</onfocus>
+						<onfocus>Left</onfocus>
+						<onfocus>Left</onfocus>
+						<onfocus>Control.Move($PARAM[ID],1)</onfocus>
+						<include>HiddenControl</include>
+					</control>
+					<control id="311" type="label">
+						<left>6</left>
+						<top>379</top>
+						<width>708</width>
+						<height>36</height>
+						<font>Light36</font>
+						<label>$LOCALIZE[31334]</label>
+						<textcolor>ffdadada</textcolor>
+					</control>
+					<control type="image">
+						<left>6</left>
+						<top>434</top>
+						<width>708</width>
+						<height>2</height>
+						<texture border="1">dialogs/KeyboardEditLine.png</texture>
+					</control>
+					<control type="panel" id="$PARAM[ID]">
+						<left>6</left>
+						<top>545</top>
+						<width>720</width>
+						<onback>SetFocus(50)</onback>
+						<ondown>SetFocus(50)</ondown>
+						<onup>SetFocus(50)</onup>						
+						<onleft condition="String.IsEmpty(Container($PARAM[ID]).ListItemNoWrap(-1).Label)">SetFocus(50)</onleft>
+						<onleft condition="!String.IsEmpty(Container($PARAM[ID]).ListItemNoWrap(-1).Label)">SetFocus($PARAM[ID]1)</onleft>
+						<onleft>noop</onleft>
+						<onright condition="String.IsEmpty(Container($PARAM[ID]).ListItemNoWrap(1).Label)">SetFocus(50)</onright>
+						<onright condition="!String.IsEmpty(Container($PARAM[ID]).ListItemNoWrap(1).Label)">SetFocus($PARAM[ID]2)</onright>
+						<onright>noop</onright>
+						<scrolltime>0</scrolltime>
+						<orientation>vertical</orientation>
+						<defaultcontrol>0</defaultcontrol>
+						<animation effect="slide" time="0" end="0,-40" condition="Integer.IsGreater(Container($PARAM[ID]).NumItems,9) + Integer.IsLess(Container($PARAM[ID]).NumItems,19)">Conditional</animation>
+						<animation effect="slide" time="0" end="0,-80" condition="Integer.IsGreater(Container($PARAM[ID]).NumItems,18) + Integer.IsLess(Container($PARAM[ID]).NumItems,28)">Conditional</animation>
+						<animation effect="slide" time="0" end="0,-160" condition="Integer.IsGreater(Container($PARAM[ID]).NumItems,27) + Integer.IsLess(Container($PARAM[ID]).NumItems,37)">Conditional</animation>
+						<animation effect="slide" time="0" end="0,-200" condition="Integer.IsGreater(Container($PARAM[ID]).NumItems,36) + Integer.IsLess(Container($PARAM[ID]).NumItems,46)">Conditional</animation>
+						<itemlayout height="80" width="80">
 							<control type="image">
-								<width>116</width>
-								<height>116</height>
-								<texture>dialogs/progress/bg.png</texture>
+								<width>68</width>
+								<height>68</height>
+								<texture border="3">common/button_nf.png</texture>
 							</control>
-							<control type="image">
-								<width>116</width>
-								<height>116</height>
-								<texture>dialogs/progress/bg_circle.png</texture>
+							<control type="textbox">
+								<width>68</width>
+								<height>68</height>
+								<font>Keyboard</font>
+								<align>center</align>
+								<aligny>center</aligny>
+								<textcolor>ffdadada</textcolor>
+								<label>$INFO[ListItem.Label]</label>
+								<visible>String.IsEmpty(ListItem.Property(NotAvailable)) + !String.IsEqual(ListItem.Label,Container.ListItem.SortLetter)</visible>
 							</control>
-							<!-- Icon -->
-							<control type="image">
-								<width>116</width>
-								<height>116</height>
-								<texture>dialogs/icons/abc.png</texture>
+							<control type="textbox">
+								<width>68</width>
+								<height>68</height>
+								<font>Keyboard</font>
+								<align>center</align>
+								<aligny>center</aligny>
+								<textcolor>ff000000</textcolor>
+								<label>$INFO[ListItem.Label]</label>
+								<visible>!String.IsEmpty(ListItem.Property(NotAvailable)) + !String.IsEqual(ListItem.Label,Container.ListItem.SortLetter)</visible>
 							</control>
-						</control>
-						<!-- Heading -->
-						<control type="label">
-							<left>132</left>
-							<top>24</top>
-							<width>736</width>
-							<height>54</height>
-							<font>Light30</font>
-							<textcolor>fff4f4f4</textcolor>
-							<label>31334</label>
-						</control>
-						<control id="311" type="label">
-							<left>132</left>
-							<top>58</top>
-							<width>736</width>
-							<height>54</height>
-							<font>Reg27</font>
-							<textcolor>ff7f7f7f</textcolor>
-							<label>31335</label>
-						</control>
-						<!-- Keys -->
-						<control id="$PARAM[ID]1" type="button">
-							<onfocus>Control.Move($PARAM[ID],-1)</onfocus>
-							<onfocus>SetFocus($PARAM[ID])</onfocus>
-							<onfocus>Right</onfocus>
-							<onfocus>Right</onfocus>
-							<onfocus>Right</onfocus>
-							<onfocus>Right</onfocus>
-							<onfocus>Right</onfocus>
-							<onfocus>Right</onfocus>
-							<onfocus>Right</onfocus>
-							<onfocus>Right</onfocus>
-							<onfocus>Right</onfocus>
-							<onfocus>Right</onfocus>
-							<onfocus>Right</onfocus>
-							<onfocus>Right</onfocus>
-							<onfocus>Right</onfocus>
-							<onfocus>Right</onfocus>
-							<onfocus>Right</onfocus>
-							<onfocus>Right</onfocus>
-							<include>HiddenControl</include>
-						</control>
-						<control id="$PARAM[ID]2" type="button">
-							<onfocus>SetFocus($PARAM[ID])</onfocus>
-							<onfocus>Left</onfocus>
-							<onfocus>Left</onfocus>
-							<onfocus>Left</onfocus>
-							<onfocus>Left</onfocus>
-							<onfocus>Left</onfocus>
-							<onfocus>Left</onfocus>
-							<onfocus>Left</onfocus>
-							<onfocus>Left</onfocus>
-							<onfocus>Left</onfocus>
-							<onfocus>Left</onfocus>
-							<onfocus>Left</onfocus>
-							<onfocus>Left</onfocus>
-							<onfocus>Left</onfocus>
-							<onfocus>Left</onfocus>
-							<onfocus>Left</onfocus>
-							<onfocus>Left</onfocus>
-							<onfocus>Control.Move($PARAM[ID],1)</onfocus>
-							<include>HiddenControl</include>
-						</control>
-						<control type="panel" id="$PARAM[ID]">
-							<top>171</top>
-							<width>868</width>
-							<height>104</height>
-							<onback>SetFocus(50)</onback>
-							<ondown>SetFocus(50)</ondown>
-							<onup>SetFocus(50)</onup>
-							<onleft condition="String.IsEmpty(Container($PARAM[ID]).ListItemNoWrap(-1).Label)">SetFocus(50)</onleft>
-							<onleft condition="!String.IsEmpty(Container($PARAM[ID]).ListItemNoWrap(-1).Label)">SetFocus($PARAM[ID]1)</onleft>
-							<onleft>noop</onleft>
-							<onright condition="String.IsEmpty(Container($PARAM[ID]).ListItemNoWrap(1).Label)">SetFocus(50)</onright>
-							<onright condition="!String.IsEmpty(Container($PARAM[ID]).ListItemNoWrap(1).Label)">SetFocus($PARAM[ID]2)</onright>
-							<onright>noop</onright>
-							<orientation>vertical</orientation>
-							<itemlayout height="52" width="50">
-								<control type="label">
-									<width>48</width>
-									<height>44</height>
-									<font>Light40</font>
-									<align>center</align>
-									<textcolor>ff808080</textcolor>
-									<label>$INFO[ListItem.Label]</label>
-									<visible>String.IsEmpty(ListItem.Property(NotAvailable)) + !String.IsEqual(ListItem.Label,Container.ListItem.SortLetter)</visible>
+							<control type="textbox">
+								<width>68</width>
+								<height>68</height>
+								<font>Keyboard</font>
+								<align>center</align>
+								<aligny>center</aligny>
+								<textcolor>ffffffff</textcolor>
+								<label>$INFO[ListItem.Label]</label>
+								<visible>String.IsEqual(ListItem.Label,Container.ListItem.SortLetter)</visible>
+							</control>
+						</itemlayout>
+						<focusedlayout height="80" width="80">
+							<control type="group">
+								<visible>!Control.HasFocus(6000)</visible>
+								<control type="image">
+									<width>68</width>
+									<height>68</height>
+									<texture border="3">common/button_nf.png</texture>
 								</control>
-								<control type="label">
-									<width>48</width>
-									<height>44</height>
-									<font>Light40</font>
+								<control type="textbox">
+									<width>68</width>
+									<height>68</height>
+									<font>Keyboard</font>
 									<align>center</align>
-									<textcolor>ff000000</textcolor>
-									<label>$INFO[ListItem.Label]</label>
-									<visible>!String.IsEmpty(ListItem.Property(NotAvailable)) + !String.IsEqual(ListItem.Label,Container.ListItem.SortLetter)</visible>
-								</control>
-								<control type="label">
-									<width>48</width>
-									<height>44</height>
-									<font>Light40</font>
-									<align>center</align>
-									<textcolor>FFFFFFFF</textcolor>
-									<label>$INFO[ListItem.Label]</label>
-									<visible>String.IsEqual(ListItem.Label,Container.ListItem.SortLetter)</visible>
-								</control>
-							</itemlayout>
-							<focusedlayout height="52" width="50">
-								<control type="label">
-									<width>48</width>
-									<height>44</height>
-									<font>Light40</font>
-									<align>center</align>
-									<textcolor>ffffc24b</textcolor>
+									<aligny>center</aligny>
+									<textcolor>ffdadada</textcolor>
 									<label>$INFO[ListItem.Label]</label>
 								</control>
-							</focusedlayout>
-							<content>plugin://script.skin.helper.service/?action=alphabet&amp;reload=$INFO[Container.NumItems]</content>
-						</control>
+							</control>
+							<control type="group">
+								<visible>Control.HasFocus(6000)</visible>
+								<control type="image">
+									<width>68</width>
+									<height>68</height>
+									<texture border="3">common/button_fo.png</texture>
+								</control>
+								<control type="textbox">
+									<width>68</width>
+									<height>68</height>
+									<font>Keyboard</font>
+									<align>center</align>
+									<aligny>center</aligny>
+									<textcolor>ff0c0c0c</textcolor>
+									<label>$INFO[ListItem.Label]</label>
+								</control>
+							</control>
+						</focusedlayout>
+						<content>plugin://script.skin.helper.service/?action=alphabet&amp;reload=$INFO[Container.NumItems]</content>
 					</control>
 				</control>
 			</control>
