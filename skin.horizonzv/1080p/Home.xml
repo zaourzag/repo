@@ -281,7 +281,7 @@
                                 <onclick>ActivateWindow(1151)</onclick>
                                 <!-- <visible>System.HasAddon(script.skinhelper.ping)</visible> -->
 								<!-- <onclick>RunScript(script.skinhelper.ping,menu)</onclick> -->
-                                <!-- <visible>Skin.HasSetting(wolhome)+System.HasAddon(script.skinhelper.ping)</visible> -->
+                                <visible>Skin.HasSetting(wolhome)+System.HasAddon(script.skinhelper.ping)</visible>
                             </item>
                             <item id="5">
                                 <description>Systemsettings</description>

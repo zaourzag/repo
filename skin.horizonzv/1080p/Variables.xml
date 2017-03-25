@@ -5,12 +5,13 @@
         <value condition="!Skin.HasSetting(WidgetDim)">white</value>
     </variable>
     <variable name="HomeScrollerDescription">
-        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),music)">$LOCALIZE[51380]</value>
+        <!-- <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),music)">$LOCALIZE[51380]</value> -->
         <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),dashboard)">$LOCALIZE[51382]</value>
         <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),picture)">$LOCALIZE[51384]</value>
         <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),weather)">$LOCALIZE[51386]</value>
         <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),playdisc)">$LOCALIZE[51388]</value>
         <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),pvr)">$LOCALIZE[51390]</value>
+        <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),radio)">$LOCALIZE[51380]</value>
         <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),setting)">$LOCALIZE[51392]</value>
         <!-- <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),custom5)">$LOCALIZE[20342] $LOCALIZE[51394] $VAR[Rating_Age_Kids_Label] $LOCALIZE[652]</value>
         <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),custom8)">$LOCALIZE[51396]</value> -->
@@ -926,11 +927,10 @@
 		<value>SW</value>
 	</variable>
 	<variable name="VolumeIconVar">
-		<!-- <value condition="Player.Muted">dialogs/volume/mute.png</value> -->
+		<value condition="player.Muted">osd/AudioMute.png</value>
 		<value condition="Integer.IsGreater(Player.Volume,66)">osd/AudioFO.png</value>
 		<value condition="Integer.IsGreater(Player.Volume,33)">osd/AudioFO1.png</value>
 		<value condition="player.passthrough">osd/AudioFO.png</value>
-		<value condition="player.Muted">osd/AudioMute.png</value>
 		<value>osd/AudioFO2.png</value>
 	</variable>
 	<variable name="ExtendedInfoDialog">

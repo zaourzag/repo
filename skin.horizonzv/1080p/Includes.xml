@@ -3025,4 +3025,26 @@
 			<label>----------------------------------------------------------------------------------------------------------------------------------</label>
 		</control>
     </include>
+    <include name="fakevideowindow">
+        <control type="group">
+            <!-- Fake Videowindow for flowing presentation -->
+            <control type="videowindow">
+                <left>0</left>
+                <top>0</top>
+                <width>1</width>
+                <height>1</height>
+				<visible>![Window.IsVisible(MyPVRChannels.xml)|Window.IsVisible(MyPVRGuide.xml)|Window.IsVisible(MyPVRRecordings.xml)|Window.IsVisible(MyPVRTimers.xml)|Window.IsVisible(MyPVRSearch.xml)]</visible>
+                <visible>[Window.IsVisible(Home)+!Skin.HasSetting(BackgroundVideo)]+!Window.IsVisible(fullscreenvideo)+!Window.IsVisible(movieinformation)</visible>
+            </control>
+            <control type="image">
+                <left>0</left>
+                <top>0</top>
+                <width>1</width>
+                <height>1</height>
+                <texture>Black.png</texture>
+				<visible>![Window.IsVisible(MyPVRChannels.xml)|Window.IsVisible(MyPVRGuide.xml)|Window.IsVisible(MyPVRRecordings.xml)|Window.IsVisible(MyPVRTimers.xml)|Window.IsVisible(MyPVRSearch.xml)]</visible>
+                <visible>[Window.IsVisible(Home)+!Skin.HasSetting(BackgroundVideo)]+!Window.IsVisible(fullscreenvideo)+!Window.IsVisible(movieinformation)</visible>
+            </control>
+        </control>
+    </include>
 </includes>

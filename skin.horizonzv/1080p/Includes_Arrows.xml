@@ -67,5 +67,6 @@
             <onclick>Control.SetFocus(200)</onclick>
             <visible>!Control.HasFocus(200)+Window.IsVisible(Home)</visible>
         </control>
+		<include>fakevideowindow</include>
     </include>
 </includes>

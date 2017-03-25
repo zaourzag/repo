@@ -235,6 +235,21 @@
                     <texturenofocus>-</texturenofocus>
                     <onclick>ActivateWindow(skinsettings)</onclick>
                 </control>
+                <control type="button" id="15">
+                    <description>Skin Reload button</description>
+                    <width>510</width>
+                    <height>60</height>
+                    <label>Skin Reload</label>
+                    <align>center</align>
+                    <aligny>center</aligny>
+                    <textcolor>white</textcolor>
+                    <focusedcolor>black</focusedcolor>
+                    <shadowcolor>-</shadowcolor>
+                    <textwidth>435</textwidth>
+                    <texturenofocus>-</texturenofocus>
+                    <onclick>ReloadSkin()</onclick>
+					<visible>Skin.HasSetting(skinreload)</visible>
+                </control>
                 <!-- <control type="button" id="15">
                     <description>Switcher Buttons</description>
                     <width>510</width>

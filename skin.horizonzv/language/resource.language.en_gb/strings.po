@@ -522,8 +522,8 @@ msgid "Arial based"
 msgstr "Arial-basiert"
 
 msgctxt "#31398"
-msgid "Enable playlist at startup"
-msgstr "Aktive eigene Playlist beim Start"
+msgid "Playlist at startup"
+msgstr "Eigene Playlist beim Start"
 
 msgctxt "#31400"
 msgid "[B]CONFIGURE APPEARANCE SETTINGS[/B][CR][CR]Change the skin · Set language and region · Change file listing options[CR]Set up a screensaver"
@@ -936,8 +936,8 @@ msgid "Moves the menu in the middle of the screen.[CR]Many things like SkinWidge
 msgstr "Verschiebt das Menu in die mitte des Bildschirmes.[CR]Viele Dinge wie SkinWidgets, Playlist, Favouriten ... werden automatisch angepasst."
 
 msgctxt "#51102"
-msgid "Select a background theme. It modifies strongly the overall pictures of the main menu.[CR]The theme "Gambit" improves the performance on slower systems.[CR][COLOR=grey]Thanks to "G4mbit" of the forum "XBMCNERDS" for putting it at the disposal.[/COLOR][CR][COLOR=grey]It will be disabled as soon as "only one background picture" is enabled.[/COLOR]"
-msgstr "Wähle eines der Hintergrundtheme aus. Es verändert stark den Gesamteindruck des Hauptmenüs.[CR]Das Theme "Gambit" hat den Vorteil, dass es auf schwächeren Systemen für bessere Performance sorgt.[CR][COLOR=white]Wird deaktiviert, sobald "nur ein Hintergrundbild" aktiv ist.[/COLOR][CR][COLOR=grey]Dieses Theme wurde freundlicherweise von "G4mbit" aus dem XBMCNERDS Forum zu Verfügung gestellt.[/COLOR]"
+msgid "Select a background theme. It modifies strongly the overall pictures of the main menu.[CR]The theme "Gambit" improves the performance on slower systems.[CR][COLOR=grey]Thanks to "G4mbit" of the forum "KODINERDS" for putting it at the disposal.[/COLOR][CR][COLOR=grey]It will be disabled as soon as "only one background picture" is enabled.[/COLOR]"
+msgstr "Wähle eines der Hintergrundtheme aus. Es verändert stark den Gesamteindruck des Hauptmenüs.[CR]Das Theme "Gambit" hat den Vorteil, dass es auf schwächeren Systemen für bessere Performance sorgt.[CR][COLOR=white]Wird deaktiviert, sobald "nur ein Hintergrundbild" aktiv ist.[/COLOR][CR][COLOR=grey]Dieses Theme wurde freundlicherweise von "G4mbit" aus dem KODINERDS Forum zu Verfügung gestellt.[/COLOR]"
 
 msgctxt "#51104"
 msgid "Define your own background pictures. It's possible at all themes.[CR][COLOR=white]It will be disabled as soon as "only one background picture" is enabled.[/COLOR]"
@@ -953,7 +953,7 @@ msgstr "Zeigt die Player Controls wärend der Wiedergabe links, unterhalb des Me
 
 msgctxt "#51110"
 msgid "Illustrates weather fan arts recording to the weather information.[CR][COLOR=white]A path to the pictures must be indicated, and a weather add on musst be configurated.[/COLOR][CR][COLOR=grey]Help and download on "XMBCNERDS.COM"forum.[/COLOR]"
-msgstr "Stellt Wetterfanarts, dem Wetter entsprechend dar.[CR][COLOR=white]Es muss ein Pfad zu den Bildern angegeben werden und ein Wetter Add-On muss konfiguriert sein.[/COLOR][CR][COLOR=grey]Hilfe und Download im XBMCNERDS.COM Forum.[/COLOR]"
+msgstr "Stellt Wetterfanarts, dem Wetter entsprechend dar.[CR][COLOR=white]Es muss ein Pfad zu den Bildern angegeben werden und ein Wetter Add-On muss konfiguriert sein.[/COLOR][CR][COLOR=grey]Hilfe und Download im KODINERDS.COM Forum.[/COLOR]"
 
 msgctxt "#51112"
 msgid "Please indicate/quote the path to weather fan arts."
@@ -961,7 +961,7 @@ msgstr "Hier den Pfad zu den Wetterfanarts angeben."
 
 msgctxt "#51114"
 msgid "It is possible to disable "Radio", which is one of 3 views during the playing mode in full screen."
-msgstr "Radio", eine von 3 Ansichten wärend der Wiedergabe im Vollbild, kann hier deaktiviert werden."
+msgstr ""Radio", eine von 3 Ansichten wärend der Wiedergabe im Vollbild, kann hier deaktiviert werden."
 
 msgctxt "#51116"
 msgid "Select between the views Standard, Alternative and Radio.[CR][COLOR=grey]"Radio" is always used for online music streams. It is possible to disable it.[/COLOR]"
@@ -1394,8 +1394,8 @@ msgid "Dectivate alphanumeric jumpbar"
 msgstr "Deaktiviere alphanummerischer Sprungleiste"
 
 msgctxt "#51312"
-msgid "Show wake on lan button in "central"
-msgstr "Wake on lan Schalter in "Zentrale"
+msgid "Show wake on lan button in "central""
+msgstr "Wake on lan Schalter in "Zentrale" zeigen"
 
 msgctxt "#51314"
 msgid "Perform wake on lan when starting from XBMC"
@@ -1426,8 +1426,8 @@ msgid "Disable favorites"
 msgstr "Favoriten deaktivieren"
 
 msgctxt "#51327"
-msgid "Disable "Central"
-msgstr "Zentrale" deaktivieren"
+msgid "Disable "Central""
+msgstr ""Zentrale" deaktivieren"
 
 msgctxt "#51328"
 msgid "Show clear cases"
@@ -1546,8 +1546,8 @@ msgid "Extras"
 msgstr "Extras"
 
 msgctxt "#51380"
-msgid "hear your"
-msgstr "höre deine"
+msgid "hear"
+msgstr "höre"
 
 msgctxt "#51382"
 msgid "manage your"

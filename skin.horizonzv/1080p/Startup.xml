@@ -6,8 +6,8 @@
     <onload condition="!Skin.HasSetting(firstrun_horizonzv)">Skin.SetBool(color_neutral)</onload>
     <onload condition="!Skin.HasSetting(firstrun_horizonzv)">Skin.SetBool(background_dim_1)</onload>
     <onload condition="!String.IsEmpty(Skin.String(start_volume))">SetVolume($INFO[Skin.String(start_volume)])</onload>
-    <onload condition="Skin.HasSetting(wol_startup)">WakeOnLan($INFO[Skin.String(MAC_Address)])</onload>
-    <onload condition="Skin.HasSetting(wol_startup)">Notification(Rechner: $INFO[Skin.String(MAC_Address)], wird gestartet..., 10000, DefaultIconInfo.png)</onload>
+    <!-- <onload condition="Skin.HasSetting(wol_startup)">WakeOnLan($INFO[Skin.String(MAC_Address)])</onload> -->
+    <!-- <onload condition="Skin.HasSetting(wol_startup)">Notification(Rechner: $INFO[Skin.String(MAC_Address)], wird gestartet..., 10000, DefaultIconInfo.png)</onload> -->
     <controls>
         <control type="button" id="10">
             <description>trigger</description>

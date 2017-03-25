@@ -3,13 +3,61 @@
     <zorder>2</zorder>
     <visible>!Window.IsVisible(startup)</visible>
     <controls>
-        <control type="group">
+		<control type="group">
+			<visible>!Window.IsActive(startup)</visible>
+			<visible>Player.Muted</visible>
+			<left>1810</left>
+			<top>60</top>
+            <animation type="WindowOpen" condition="Skin.HasSetting(animation)">
+                <effect type="fade" start="0" end="100" time="300"/>
+                <effect type="slide" start="300,0" end="0,0" time="500"/>
+            </animation>
+            <animation type="WindowClose" condition="Skin.HasSetting(animation)">
+                <effect type="fade" start="100" end="0" time="500" delay="200" />
+                <effect type="slide" start="0,0" end="300,0" time="1000" delay="200" />
+            </animation>
+			<animation effect="slide" end="0,100" time="250" delay="20" condition="Window.IsVisible(musicosd)|Window.IsVisible(videoosd)">Conditional</animation>
+			<control type="image">
+				<left>54</left>
+				<top>10</top>
+				<width>300</width>
+				<height>82</height>
+				<colordiffuse>grey1</colordiffuse>
+				<texture border="10">OverlayDialogBackground.png</texture>
+			</control>
+			<control type="image">
+				<left>3</left>
+				<top>0</top>
+				<width>104</width>
+				<height>102</height>
+				<colordiffuse>grey1</colordiffuse>
+				<texture>Pin.png</texture>
+			</control>
+			<control type="image">
+				<left>13</left>
+				<top>9</top>
+				<width>84</width>
+				<height>84</height>
+				<colordiffuse>grey3</colordiffuse>
+				<texture>dialogs/volume/progress/p100.png</texture>
+			</control>
+			<control type="image">
+				<left>21</left>
+				<top>16</top>
+				<width>68</width>
+				<height>68</height>
+				<fadetime>200</fadetime>
+				<texture>osd/AudioMute.png</texture>
+				<visible>Player.Muted</visible>
+			</control>
+		</control>
+        <control type="gr oup">
             <!-- Fake Videowindow for flowing presentation -->
             <control type="videowindow">
                 <left>0</left>
                 <top>0</top>
-                <width>1</width>
-                <height>1</height>
+                <width>200</width>
+                <height>200</height>
 				<visible>![Window.IsVisible(MyPVRChannels.xml)|Window.IsVisible(MyPVRGuide.xml)|Window.IsVisible(MyPVRRecordings.xml)|Window.IsVisible(MyPVRTimers.xml)|Window.IsVisible(MyPVRSearch.xml)]</visible>
                 <visible>!Window.IsVisible(Home)+!Window.IsVisible(fullscreenvideo)+!Window.IsVisible(movieinformation)</visible>
             </control>

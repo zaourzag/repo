@@ -227,6 +227,14 @@
                             <label>Skin Addons</label>
                             <onclick>ActivateWindow(1800)</onclick>
                         </control>
+                        <control type="radiobutton" id="219">
+                            <description>Reload Skin</description>
+                            <width>1260</width>
+                            <align>left</align>
+                            <label>"Skin Reload" erlauben</label>
+                            <onclick>Skin.ToggleSetting(skinreload)</onclick>
+                            <selected>Skin.HasSetting(skinreload)</selected>
+                        </control>
                         <!-- <control type="button" id="218">
 							<description>Kiosk Mode</description>
 							<width>840</width>
@@ -1056,13 +1064,13 @@
                             <selected>Skin.HasSetting(HideJumpSMSBar)</selected>
                         </control>
                         <control type="radiobutton" id="546">
-                            <description>Wol XBMC Start</description>
+                            <description>Wol Zentrale</description>
                             <width>1260</width>
                             <align>left</align>
                             <label>51312</label>
                             <focusedcolor>black</focusedcolor>
-                            <onclick>Skin.ToggleSetting(wol_startup)</onclick>
-                            <selected>Skin.HasSetting(wol_startup)</selected>
+                            <onclick>Skin.ToggleSetting(wolhome)</onclick>
+                            <selected>Skin.HasSetting(wolhome)</selected>
                             <onclick condition="System.HasAddon(script.skinhelper.ping)+String.IsEmpty(Window(Home).Property(SkinHelperPING.mac1))">Addon.OpenSettings(script.skinhelper.ping)</onclick>
                             <onclick condition="!System.HasAddon(script.skinhelper.ping)">InstallAddon(script.skinhelper.ping)</onclick>
                         </control>
@@ -1360,14 +1368,6 @@
                             <onclick>Skin.ToggleSetting(NavInfo)</onclick>
                             <selected>Skin.HasSetting(NavInfo)</selected>
                         </control>
-                        <!-- <control type="radiobutton" id="806">
-                            <description>NavigationsArrows</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <label>51346</label>
-                            <onclick>Skin.ToggleSetting(HideNavArrow)</onclick>
-                            <selected>Skin.HasSetting(HideNavArrow)</selected>
-                        </control> -->
                         <control type="radiobutton" id="808">
                             <description>Date</description>
                             <width>1260</width>
@@ -1501,15 +1501,6 @@
 							<onclick>Skin.SelectBool(51354, 15112|standart_bkg, 51532|avengers_sw, 51534|gambit_background)</onclick>
                             <visible>!Skin.HasSetting(onlyone)</visible>
                         </control>
-                        <!-- <control type="button" id="826">
-                            <description>User Backgroundfolder</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <label>51358</label>
-                            <focusedcolor>black</focusedcolor>
-                            <onclick>ActivateWindow(1153)</onclick>
-                            <visible>!Skin.HasSetting(onlyone)</visible>
-                        </control> -->
                         <control type="radiobutton" id="832">
                             <description>Empty Overlay Image</description>
                             <width>1260</width>
@@ -1552,18 +1543,8 @@
                             <align>left</align>
                             <label>51345</label>
                             <onclick>Skin.ToggleSetting(homepageNOWeatherinfo)</onclick>
-                            <selected>Skin.HasSetting(homepageNOWeatherinfo)</selected>
+                            <selected>!Skin.HasSetting(homepageNOWeatherinfo)</selected>
                         </control>
-                        <!-- <control type="radiobutton" id="836">
-                            <description>Toggle Weather Fanart Hauptmenü</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <label>51366</label>
-                            <focusedcolor>black</focusedcolor>
-                            <onclick>Skin.ToggleSetting(WeatherFanartHome)</onclick>
-                            <selected>Skin.HasSetting(WeatherFanartHome)</selected>
-                            <visible>!String.IsEmpty(Weather.Plugin)+!String.IsEmpty(Skin.String(weatherfanart.path))</visible>
-                        </control> -->
                         <control type="label" id="847">
                             <!-- Music Settings -->
                             <width>1260</width>
@@ -1932,80 +1913,8 @@
                             <label2>$VAR[CDArtStyle_Label]</label2>
                             <focusedcolor>black</focusedcolor>
 							<onclick>Skin.SelectBool(51376, 51398|cdart_glass, 51400|cdart_glass_off)</onclick>
-                            <!-- <onclick condition="!Skin.HasSetting(cdart_glass)">Skin.SetBool(cdart_glass)</onclick>
-                            <onclick condition="Skin.HasSetting(cdart_glass)">Skin.Reset(cdart_glass)</onclick> -->
-                        </control>
-                        <control type="label" id="9010">
-                            <!-- Extras Settings -->
-                            <width>1260</width>
-                            <height>15</height>
-                            <align>center</align>
-                            <label>-</label>
-                        </control>
-                        <control type="label" id="9011">
-                            <width>1260</width>
-                            <height>30</height>
-                            <align>center</align>
-                            <label>Extras</label>
-                            <textcolor>description</textcolor>
-                        </control>
-                        <control type="image" id="9012">
-                            <width>1260</width>
-                            <height>1</height>
-                            <align>center</align>
-                            <texture>Separator2.png</texture>
-                            <colordiffuse>description</colordiffuse>
                         </control>
                     </control>
-                    <!-- <control type="grouplist" id="1000">
-                        <description>Control Area</description>
-                        <left>8</left>
-                        <width>1260</width>
-                        <height>720</height>
-                        <itemgap>3</itemgap>
-                        <onup>200</onup>
-                        <ondown>200</ondown>
-                        <onleft>8000</onleft>
-                        <onright>70</onright>
-                        <orientation>vertical</orientation>
-                        <pagecontrol>70</pagecontrol>
-                        <visible>Container(8000).Hasfocus(8)</visible>
-                        <include>openclosevisible</include>
-                        <control type="button" id="1010">
-                            <width>1260</width>
-                            <align>left</align>
-                            <label>$LOCALIZE[51382] Event Blogs</label>
-                            <onclick>ActivateWindow(1201)</onclick>
-                        </control>
-                        <control type="button" id="1011">
-                            <width>1260</width>
-                            <align>left</align>
-                            <label>Location for NearEvent (Blog 1)</label>
-                            <label2>$INFO[Skin.String(NearEventLocation)]</label2>
-                            <onclick>Skin.SetString(NearEventLocation)</onclick>
-                        </control>
-                        <control type="button" id="1012">
-                            <width>1260</width>
-                            <align>left</align>
-                            <label>Searchstring for Youtube (Blog1)</label>
-                            <label2>$INFO[Skin.String(YoutubeSearchUser)]</label2>
-                            <onclick>Skin.SetString(YoutubeSearchUser)</onclick>
-                        </control>
-                        <control type="button" id="1013">
-                            <width>1260</width>
-                            <align>left</align>
-                            <label>Location for NearEvent (Blog 2)</label>
-                            <label2>$INFO[Skin.String(NearEventLocation2)]</label2>
-                            <onclick>Skin.SetString(NearEventLocation2)</onclick>
-                        </control>
-                        <control type="button" id="1014">
-                            <width>1260</width>
-                            <align>left</align>
-                            <label>Searchstring for Youtube (Blog2)</label>
-                            <label2>$INFO[Skin.String(YoutubeSearchUser2)]</label2>
-                            <onclick>Skin.SetString(YoutubeSearchUser2)</onclick>
-                        </control>
-                    </control> -->
                 </control>
                 <control type="group">
                     <!-- Infobox -->

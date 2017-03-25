@@ -1,4 +1,13 @@
-﻿v 0.9.0.34
+﻿v 0.9.0.40
+- [RC] aus dem Namen entfernt
+- im Shutdownmenu kann ein ReloadSkin() ausgelöst werden (muss in den SkinSettings aktiviert werden)
+- Bugfix: Mute Symbol auch bei passthru sichtbar
+- Bugfix: Videos laufen bei verlassen des Vollbildes flüssig weiter
+- Bugfix: SkinSettings - WOL Schalter
+- Bugfix: Sliderposition korrigiert (wieder mittig)
+- Bugfixes: für einige Texte
+
+v 0.9.0.34
 - Bugfix: Kanal OSD Label und Icons (danke Blaubär68)
 
 v 0.9.0.33
