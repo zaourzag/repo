@@ -64,8 +64,8 @@ def log(msg, level=xbmc.LOGNOTICE):
     addonID = addon.getAddonInfo('id')
     xbmc.log('%s: %s' % (addonID, msg), level) 
     
-def addDir(name, url, mode, iconimage, desc="",sendername="",offset="",limit="",type="",bild="",title=""):
-  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&sendername="+str(sendername)+"&offset="+str(offset)+"&limit="+str(limit)+"&type="+str(type)+"&iconimage="+bild+"&title="+title
+def addDir(name, url, mode, iconimage, desc="",sendername="",offset="",limit="",type="",bild="",title="",series=""):
+  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&sendername="+str(sendername)+"&offset="+str(offset)+"&limit="+str(limit)+"&type="+str(type)+"&iconimage="+bild+"&title="+title+"&series="+series
   ok = True
   liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=iconimage)
   liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc})
@@ -102,18 +102,19 @@ def geturl(url,data="x",header=""):
         return content
 
    
-def addLink(name, url, mode, iconimage, duration="", desc="", genre=''):
-	u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
-	ok = True
-	liz = xbmcgui.ListItem(name, iconImage="", thumbnailImage=iconimage)
-	liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Genre": genre})
-	liz.setProperty('IsPlayable', 'true')
-	liz.addStreamInfo('video', { 'duration' : duration })
-	liz.setProperty("fanart_image", iconimage)
-	#liz.setProperty("fanart_image", "")
-	xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
-	ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
-	return ok
+def addLink(name, url, mode, iconimage, duration="", desc="", genre='',staffel=-1,episode=-1,serie="",aired=None):
+  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
+  ok = True
+  liz = xbmcgui.ListItem(name, iconImage="", thumbnailImage=iconimage)
+  liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Genre": genre,"episode": episode, "season": staffel,"tvshowtitle":serie,"aired":aired})
+  #liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Genre": genre})
+  liz.setProperty('IsPlayable', 'true')
+  liz.addStreamInfo('video', { 'duration' : duration })
+  liz.setProperty("fanart_image", iconimage)
+  #liz.setProperty("fanart_image", "")
+  xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
+  ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
+  return ok
   
 def parameters_string_to_dict(parameters):
 	paramDict = {}
@@ -135,6 +136,7 @@ limit = urllib.unquote_plus(params.get('limit', ''))
 type = urllib.unquote_plus(params.get('type', ''))
 title = urllib.unquote_plus(params.get('title', ''))
 bild = urllib.unquote_plus(params.get('iconimage', ''))
+series = urllib.unquote_plus(params.get('series', ''))
 
 
 
@@ -190,11 +192,31 @@ def ganzefolgensender(url):
         urlt=re.compile('href="(.+?)"', re.DOTALL).findall(entry)[0]
         img=re.compile('data-src="(.+?)"', re.DOTALL).findall(entry)[0]
         serie=re.compile('<h4 class="teaser-formatname">(.+?)</h4>', re.DOTALL).findall(entry)[0]
-        folge=re.compile('<h5 class="teaser-title">(.+?)</h5>', re.DOTALL).findall(entry)[0]
-        title=serie + " - " + folge
+        folge=re.compile('<h5 class="teaser-title">(.+?)</h5>', re.DOTALL).findall(entry)[0]#      
+        try:
+          teaser =re.compile(' <p class="teaser-info">(.+?)</p>', re.DOTALL).findall(entry)[0]        
+          if not "Min." in teaser:
+             aired=teaser
+             duration=0
+          else:
+            aired=""
+            laenge =re.compile('([0-9]+):([0-9]+) Min.', re.DOTALL).findall(teaser)           
+            duration=laenge[0][0]*60+laenge[0][1]
+        except:
+             duration=0
+             aired=""
+        try: 
+            staffel=re.compile('Staffel ([0-9]+)', re.DOTALL).findall(folge)[0]  
+        except :
+             staffel=-1
+        try: 
+            episode=re.compile('Episode ([0-9]+)', re.DOTALL).findall(folge)[0]  
+        except :
+             episode=-1                   
+        title=serie + " - " + folge 
         urlv=baseurl+urlt
         debug("belibtesendungen addurl :"+urlv)
-        addLink(title, urlv, "getvideoid", img)      
+        addLink(title, urlv, "getvideoid", img,staffel=staffel,episode=episode,serie=serie,aired=aired,duration=duration)      
     except:
       pass
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
@@ -243,8 +265,8 @@ def listfav()  :
 def  serie(url,bild="",title=""):
     debug("serie :"+url)
     debug("title :"+title)
-    addDir("Alle Clips", url+"/alle-clips", "listvideos", "")      
-    addDir("Ganze Folgen", url+"/ganze-folgen", "listvideos", "")
+    addDir("Alle Clips", url+"/alle-clips", "listvideos", "",series=title)      
+    addDir("Ganze Folgen", url+"/ganze-folgen", "listvideos", "",series=title)
     found=0
     if xbmcvfs.exists(favdatei):
       f=open(favdatei,'r')     
@@ -308,7 +330,7 @@ def allsender(begriff):
          addDir(name, url, "abisz", "")      
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
   
-def listvideos(url):
+def listvideos(url,series=""):
   datetitle=addon.getSetting("datetitle")
   inhalt = geturl(url) 
   kurz_inhalt = inhalt[inhalt.find('<div class="main-zone">')+1:]
@@ -322,26 +344,41 @@ def listvideos(url):
       urlv=re.compile('href="(.+?)"', re.DOTALL).findall(entry)[0]
       img=re.compile('data-src="(.+?)"', re.DOTALL).findall(entry)[0]
       title=re.compile('teaser-title">(.+?)</h5>', re.DOTALL).findall(entry)[0]
+      try:
+          teaser =re.compile(' <p class="teaser-info">(.+?)</p>', re.DOTALL).findall(entry)[0]        
+          if not "Min." in teaser:
+             aired=teaser
+             duration=0
+          else:
+            aired=""
+            laenge =re.compile('([0-9]+):([0-9]+) Min.', re.DOTALL).findall(teaser)           
+            duration=int(laenge[0][0])*60+int(laenge[0][1])
+      except:
+             duration=0
+             aired=""
+      try: 
+            staffel=re.compile('Staffel ([0-9]+)', re.DOTALL).findall(title)[0]  
+      except :
+             staffel=-1
+      try: 
+            episode=re.compile('Episode ([0-9]+)', re.DOTALL).findall(title)[0]  
+      except :
+             episode=-1   
+             
       if not "http://" in urlv:
         urlv=baseurl+urlv
-      try:
-        match=re.compile('<p class="teaser-info">([0-9]+):([0-9]+) Min.</p>', re.DOTALL).findall(entry)
-        zeit=int(match[0][0])*60+ int(match[0][1])
-      except:
-        zeit=0
-        pass
       try:
           datum=re.compile('<p class="teaser-info">(.+?)</p>', re.DOTALL).findall(entry)[0]
       except:
           datum=""
       if datetitle=="true":
         title=datum+" - "+title
-      addLink(title, urlv, "getvideoid", img,duration=zeit)      
+      addLink(title, urlv, "getvideoid", img,duration=duration,episode=episode,serie=series,aired=aired)      
     except:
       pass
   if "data-ajax-more=" in inhalt:
     nexturl=baseurl+re.compile('data-ajax-more="(.+?)"', re.DOTALL).findall(inhalt)[0]
-    addDir("Next", nexturl, "listvideos", "")   
+    addDir("Next", nexturl, "listvideos", "",series="")   
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
 
 def getvideoid(client_location):
@@ -453,7 +490,7 @@ def playvideo(video_id,  client_location, source_id=None):
         #data=json_data["sources"][-1]["url"]               
         userAgent = 'user-agent=Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36'
         addon_handle = int(sys.argv[1])
-        listitem = xbmcgui.ListItem(path=data+"|"+userAgent)         
+        listitem = xbmcgui.ListItem(path=data)         
         #listitem.setProperty('inputstream.mpd.license_type', 'com.widevine.alpha')
         #listitem.setProperty('inputstream.mpd.license_type', 'com.widevine.alpha')
         listitem.setProperty(is_type+".license_type", "com.widevine.alpha")
@@ -468,9 +505,9 @@ def playvideo(video_id,  client_location, source_id=None):
         #listitem.setProperty('inputstreamaddon', 'inputstream.mpd')        
         xbmcplugin.setResolvedUrl(addon_handle, True, listitem)
   
-        #print "Daten lic :"+lic
-        #print "Daten token :"+token
-        #print "Daten data :"+data        
+        print "Daten lic :"+lic
+        print "Daten token :"+token
+        print "Daten data :"+data        
         return ""
 
 def verpasstdatum():
@@ -571,7 +608,7 @@ else:
   if mode == 'serie':
           serie(url,bild,title)       
   if mode == 'listvideos':
-          listvideos(url)       
+          listvideos(url,series)       
   if mode == 'getvideoid':
           getvideoid(url)     
   if mode == 'ganzefolgensender':
