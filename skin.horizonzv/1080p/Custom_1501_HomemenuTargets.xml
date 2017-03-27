@@ -1633,7 +1633,7 @@
 					<onclick>ActivateWindow(1500)</onclick>
 				</control>
             </control>
-            <control type="grouplist" id="36100"> <!-- pvr livetv-->
+            <control type="grouplist" id="36100"> <!-- pvr livetv -->
                 <left>45</left>
                 <top>150</top>
                 <width>1110</width>

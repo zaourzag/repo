@@ -1268,7 +1268,7 @@
                             <width>1260</width>
                             <align>left</align>
                             <label>$LOCALIZE[31502]</label>
-                            <onclick>SetProperty(HomeButton,livetv,home)</onclick>
+                            <onclick>SetProperty(HomeButton,pvr,home)</onclick>
                             <onclick>ActivateWindow(1500)</onclick>
                         </control>
                         <control type="button" id="620">

@@ -754,7 +754,6 @@
                 <left>45</left>
                 <top>188</top>
                 <width>1110</width>
-                <height>870</height>
                 <height>675</height>
                 <itemgap>3</itemgap>
                 <visible>String.IsEqual(Window(Home).Property(HomeButton),pvr)</visible>

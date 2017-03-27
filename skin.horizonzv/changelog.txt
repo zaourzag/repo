@@ -1,4 +1,9 @@
-﻿v 0.9.0.40
+﻿v 0.9.0.42
+- Bugfix: TV Widget Einstellungen
+- Android: Shutdownmenu - Neustart zu Nand hinzugefügt
+- Shutdownmenu Kodi-APP Neustart hinzugefügt
+
+v 0.9.0.40
 - [RC] aus dem Namen entfernt
 - im Shutdownmenu kann ein ReloadSkin() ausgelöst werden (muss in den SkinSettings aktiviert werden)
 - Bugfix: Mute Symbol auch bei passthru sichtbar

@@ -992,7 +992,7 @@
             <control type="button" id="80295">
                 <include>ButtonHomeSubCommonValues</include>
                 <label>21417</label>
-                <onclick>SetProperty(HomeButton,livetv)</onclick>
+                <onclick>SetProperty(HomeButton,pvr)</onclick>
                 <onclick>ActivateWindow(1500)</onclick>
             </control>
         </control>
