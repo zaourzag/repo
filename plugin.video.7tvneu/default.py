@@ -27,7 +27,7 @@ addon = xbmcaddon.Addon()
 translation = addon.getLocalizedString
 
 # Es geht um Videos
-xbmcplugin.setContent(addon_handle, 'movies')
+xbmcplugin.setContent(addon_handle, 'tvshows')
 
 baseurl="http://www.7tv.de"
 icon = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')+'/icon.png').decode('utf-8')
@@ -373,7 +373,7 @@ def listvideos(url,series=""):
           datum=""
       if datetitle=="true":
         title=datum+" - "+title
-      addLink(title, urlv, "getvideoid", img,duration=duration,episode=episode,serie=series,aired=aired)      
+      addLink(title, urlv, "getvideoid", img,duration=duration,episode=episode,serie=series,aired=aired,staffel=staffel)      
     except:
       pass
   if "data-ajax-more=" in inhalt:
