@@ -272,11 +272,12 @@ def playVideo(url, title, thumb):
     matchMulti = re.compile('<li data-number="(.+?)" data-guid="(.+?)"', re.DOTALL).findall(content)
     matchSingle = re.compile('name="@videoPlayer" value="(.+?)"', re.DOTALL).findall(content)
     if matchMulti:
-        addDir(title+": Alle Teile", url, "playVideoAll", thumb, title)
-        for part, videoID in matchMulti:
-            addLink(title+": Teil "+part, videoID, "playBrightCoveStream", thumb, title, "no")
-            debug("matchMulti : "+ videoID)
-        xbmcplugin.endOfDirectory(pluginhandle)
+        #addDir(title+": Alle Teile", url, "playVideoAll", thumb, title)
+        #for part, videoID in matchMulti:
+        #    addLink(title+": Teil "+part, videoID, "playBrightCoveStream", thumb, title, "no")
+        #    debug("matchMulti : "+ videoID)
+        playVideoAll(url,title,thumb)
+        #xbmcplugin.endOfDirectory(pluginhandle)
     elif matchSingle:
         debug("matchSingle : "+ matchSingle[0])
         playBrightCoveStream(matchSingle[0],title,thumb,"yes")
