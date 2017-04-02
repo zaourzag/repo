@@ -11,6 +11,7 @@ import socket
 import xbmcgui
 import xbmcaddon
 import xbmcplugin
+import time
 import HTMLParser,json
 from pyamf import remoting
 
@@ -285,22 +286,20 @@ def playVideo(url, title, thumb):
 
 
 def playVideoAll(url, title, thumb):
-    playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
-    playlist.clear()
+    pl = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
+    pl.clear()
     content = opener.open(url).read()
     matchMulti = re.compile('<li data-number="(.+?)" data-guid="(.+?)"', re.DOTALL).findall(content)
-    for part, videoID in matchMulti:
-        listitem = xbmcgui.ListItem(title+": Teil "+part, thumbnailImage=thumb)
-        if xbox:
-            pluginUrl = "plugin://video/DMAX.de/?url="+videoID+"&mode=playBrightCoveStream&isSingle=no&title="+urllib.quote_plus(title)+"&thumb="+urllib.quote_plus(thumb)
-        else:
-            pluginUrl = "plugin://plugin.video.dmax_de/?url="+videoID+"&mode=playBrightCoveStream&isSingle=no&title="+urllib.quote_plus(title)+"&thumb="+urllib.quote_plus(thumb)
-        playlist.add(pluginUrl, listitem)
-    if playlist:
-        xbmc.Player().play(playlist)
+    for part, videoID in matchMulti:         
+        listitem = xbmcgui.ListItem(title+": Teil "+part, thumbnailImage=thumb)        
+        pluginUrl=getStream(videoID)
+        pl.add(pluginUrl, listitem)        
+    if pl:
+        xbmc.Player().play(pl)   
+        time.sleep(10000)
 
 
-def playBrightCoveStream(bc_videoID, title, thumb, isSingle):
+def  getStream(bc_videoID):
     bc_playerID = 586587148001
     bc_publisherID = 1659832546
     bc_const = "ef59d16acbb13614346264dfe58844284718fb7b"
@@ -321,7 +320,12 @@ def playBrightCoveStream(bc_videoID, title, thumb, isSingle):
             streamUrl = item['defaultURL']    
     if not streamUrl:
         streamUrl = response['FLVFullLengthURL']
+    return(streamUrl)
+    
+def playBrightCoveStream(bc_videoID, title, thumb, isSingle):
+    streamUrl=getStream(bc_videoID)
     if streamUrl:
+            debug("STREAM URL :"+streamUrl)
             listitem = xbmcgui.ListItem(title, path=streamUrl, thumbnailImage=thumb)
             xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
 
