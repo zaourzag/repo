@@ -1,4 +1,17 @@
 ====================================
+[B]​ZattooHiQ v1.0.3 [/B] 02.04.2017
+​====================================
+
+- Anpassung für Yatse Remote
+
+====================================
+[B]​ZattooHiQ v1.0.2 [/B] 02.04.2017
+​====================================
+
+- Bug bei keinem Programeintrag behoben
+- Serienaufnahmen im EPG werden nur bei einem Abo angezeigt
+
+====================================
 [B]​ZattooHiQ v1.0.1 [/B] 12.03.2017
 ​====================================
 

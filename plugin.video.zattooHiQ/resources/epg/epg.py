@@ -309,14 +309,20 @@ class EPG(xbmcgui.WindowXML):
 			# if startime is in the future -> setup recording
 			if start > now :
 			#if not self.premiumUser: xbmcgui.Dialog().ok('Error',' ',strings(ERROR_NO_PREMIUM))
-				print 'SERIES:  ' + str(_zattooDB_.getSeries(program['showID']))
-				if _zattooDB_.getSeries(program['showID']):#Series record avilable
-					ret = xbmcgui.Dialog().select(program['channel']+': '+program['title']+' '+program['start_date'].strftime('%H:%M')+' - '+program['end_date'].strftime('%H:%M'),[strings(RECORD_SHOW), strings(RECORD_SERIES)])
-					if ret==0: #recording
+				if self.premiumUser:
+					print 'SERIES:  ' + str(_zattooDB_.getSeries(program['showID']))
+					if _zattooDB_.getSeries(program['showID']):#Series record avilable
+						ret = xbmcgui.Dialog().select(program['channel']+': '+program['title']+' '+program['start_date'].strftime('%H:%M')+' - '+program['end_date'].strftime('%H:%M'),[strings(RECORD_SHOW), strings(RECORD_SERIES)])
+						if ret==0: #recording
+							setup_recording({'program_id': program['showID']})
+							return
+						elif ret==1: #recording_series
+							setup_recording({'program_id': program['showID'], 'series': 'true'})
+						else: return
+					if xbmcgui.Dialog().yesno(program['title'], strings(RECORD_SHOW)):
+						#url = 'plugin://'+__addonId__+'/?mode=record_p&program_id=' + program['showID']
 						setup_recording({'program_id': program['showID']})
 						return
-					elif ret==1: #recording_series
-						setup_recording({'program_id': program['showID'], 'series': 'true'})
 					else: return
 				else:
 					if xbmcgui.Dialog().yesno(program['title'], strings(RECORD_SHOW)):

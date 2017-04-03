@@ -93,6 +93,8 @@ ACTION_CHANNEL_DOWN = 185
 ACTION_PAGE_UP = 5
 ACTION_PAGE_DOWN = 6
 ACTION_RECORD = 170
+ACTION_SKIPNEXT = 14
+ACTION_SKIPPREW = 15
 
 SWISS = __addon__.getSetting('swiss')
 accountData=_zattooDB_.zapi.get_accountData()
@@ -586,8 +588,11 @@ def makeOsdInfo():
   channel_id=_zattooDB_.get_playing()['channel']
   channelInfo = _zattooDB_.get_channelInfo(channel_id)
   program = _zattooDB_.getPrograms({'index':[channel_id]}, True, datetime.datetime.now(), datetime.datetime.now())
-  program=program[0]
-  
+  try:
+    program=program[0]
+  except:
+    xbmcgui.Dialog().ok('Error',' ','No Info')
+    
   description = program['description']
   if description is None: description = ''
   else: description = '  -  ' + description
@@ -654,8 +659,9 @@ class zattooGUI(xbmcgui.WindowXMLDialog):
     _zattooDB_=ZattooDB()
     channel=_zattooDB_.get_playing()['channel']
     channeltitle=_zattooDB_.get_channeltitle(channel)
-    program = _zattooDB_.getPrograms({'index':[channel]}, True, datetime.datetime.now(), datetime.datetime.now())
-    program=program[0]
+    #program = _zattooDB_.getPrograms({'index':[channel]}, True, datetime.datetime.now(), datetime.datetime.now())
+    #program = program[0]
+  
     #print('ZATTOOGUI BUTTON'+str(action.getButtonCode()))
     #print('ZATTOOGUI ACTIONID'+str(action.getId()))
     self.channelInputCtrl.setVisible(False)
@@ -693,11 +699,11 @@ class zattooGUI(xbmcgui.WindowXMLDialog):
       self.showChannelNr(toggle_channel()+1)
     elif action == ACTION_MOVE_RIGHT:
       change_stream(1)
-    elif action in [ACTION_CHANNEL_UP, ACTION_PAGE_UP]:
+    elif action in [ACTION_CHANNEL_UP, ACTION_PAGE_UP, ACTION_SKIPNEXT]:
       #if self.hidePrevImg():return
       nr=skip_channel(+1)
       self.showChannelNr(nr+1)
-    elif action in [ACTION_CHANNEL_DOWN, ACTION_PAGE_DOWN]:
+    elif action in [ACTION_CHANNEL_DOWN, ACTION_PAGE_DOWN, ACTION_SKIPPREW]:
       #if self.hidePrevImg():return
       nr=skip_channel(-1)
       self.showChannelNr(nr+1)
@@ -748,19 +754,27 @@ class zattooOSD(xbmcgui.WindowXMLDialog):
     if action in [ACTION_PARENT_DIR, KEY_NAV_BACK, ACTION_PREVIOUS_MENU]:
       if hasattr(self, 'hideNrTimer'): self.hideNrTimer.cancel()
       self.close()
-    if action in [ACTION_STOP, ACTION_BUILT_IN_FUNCTION]:
+    elif action in [ACTION_STOP, ACTION_BUILT_IN_FUNCTION]:
       if hasattr(self, 'hideNrTimer'): self.hideNrTimer.cancel()
       self.close()
       print 'Action Stop'
       xbmc.sleep(1000)
       xbmc.executebuiltin('Action(OSD)') #close hidden gui
       #xbmc.executebuiltin("Action(Back)")
+    elif action == ACTION_SKIPPREW:
+      xbmc.executebuiltin("Action(Left)")
+    elif action == ACTION_SKIPNEXT:
+      xbmc.executebuiltin("Action(Right)")
+    
+    
 
   def onClick(self, controlID):
     channel=_zattooDB_.get_playing()['channel']
     channeltitle=_zattooDB_.get_channeltitle(channel)
     program = _zattooDB_.getPrograms({'index':[channel]}, True, datetime.datetime.now(), datetime.datetime.now())
+
     program=program[0]
+
     self.close() #close OSD
 
     if controlID==209: #recall
