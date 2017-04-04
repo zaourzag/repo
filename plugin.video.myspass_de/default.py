@@ -11,6 +11,8 @@ import xbmcvfs
 import urllib, urllib2, socket, cookielib, re, os, shutil,json
 import time
 import datetime
+import YDStreamExtractor
+
 
 
 import ssl
@@ -39,6 +41,7 @@ cliplist=[]
 filelist=[]
 profile    = xbmc.translatePath( addon.getAddonInfo('profile') ).decode("utf-8")
 temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
+xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
 
 mainurl="http://www.myspass.de"
 #Directory für Token Anlegen
@@ -95,12 +98,6 @@ def addLink(name, url, mode, iconimage, duration="", desc="",artist_id="",genre=
   liz.setProperty('IsPlayable', 'true')
   liz.addStreamInfo('video', { 'duration' : duration })
   liz.setArt({ 'fanart': iconimage })   
-  commands = []
-  listartist = "plugin://plugin.video.ampya/?mode=songs_from_artist&url="+urllib.quote_plus(str(artist_id))  
-  listsimilar = "plugin://plugin.video.ampya/?mode=list_similar&url="+urllib.quote_plus(str(liedid))  
-  commands.append(( translation(30109) , 'ActivateWindow(Videos,'+ listartist +')'))
-  commands.append(( translation(30110) , 'ActivateWindow(Videos,'+ listsimilar +')'))
-  liz.addContextMenuItems( commands )  
   ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
   return ok
 
@@ -154,8 +151,11 @@ def startpage(url):
        episode=element["video"]["episode_nr"]
        if len(episode)==1:
          episode="0"+episode       
-       videourl=element["video"]["video_url"].replace("\/","/")
+       videourl=element["video"]["myspass_url"].replace("\/","/")
        laenge=element["video"]["play_length"]
+       if " Teil "in titel:
+         laenge=0
+         titel = re.compile('(.+?) - Teil [0-9]+', re.DOTALL).findall(titel)[0]         
        name="S"+staffel+"E"+episode+" "+sendung +" - "+titel
        addLink(name,videourl,"playvideo","http:"+thumbnail,duration=laenge,desc=desc)
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
@@ -174,8 +174,11 @@ def videos(url):
        episode=element["episode_nr"]
        if len(episode)==1:
          episode="0"+episode       
-       videourl=element["video_url"].replace("\/","/")
+       videourl=element["myspass_url"].replace("\/","/")
        laenge=element["play_length"]
+       if " Teil "in titel:
+         laenge=0
+         titel = re.compile('(.+?) - Teil [0-9]+', re.DOTALL).findall(titel)[0]
        name="S"+staffel+"E"+episode+" "+sendung +" - "+titel
        addLink(name,videourl,"playvideo","http:"+thumbnail,duration=laenge,desc=desc)
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
@@ -205,9 +208,13 @@ def show(url):
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)  
    
 def playvideo(url)      :
-  listitem = xbmcgui.ListItem(path=url)  
-  xbmcplugin.setResolvedUrl(addon_handle,True, listitem)  
-  
+        vid = YDStreamExtractor.getVideoInfo(url,quality=2) #quality is 0=SD, 1=720p, 2=1080p and is a maximum        
+        stream_url = vid.streamURL()            
+        stream_url=stream_url.split("|")[0]
+        debug("stream_url :"+stream_url)
+        listitem = xbmcgui.ListItem(path=stream_url)
+        xbmcplugin.setResolvedUrl(addon_handle,True, listitem)
+
 if mode is '':
     addDir("Home", "http://m.myspass.de/api/index.php?command=hometeaser", 'startpage',"")   
     addDir("Ganze Folgen", "http://m.myspass.de/api/index.php?command=formats", 'shows',"")   
