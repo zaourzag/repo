@@ -2885,9 +2885,10 @@ Zattoo Live TV, Aufnahmen und EPG
   </extension>
 </addon>
 
-<addon id="plugin.video.myspass_de" name="Myspass.de" version="3.0" provider-name="L0RE">
+<addon id="plugin.video.myspass_de" name="Myspass.de" version="3.0.1" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
+		<import addon="script.module.youtube.dl" version="14.810.0"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
