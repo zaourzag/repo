@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window type="buttonMenu">
-    <defaultcontrol>9001</defaultcontrol>
+    <defaultcontrol>9000</defaultcontrol>
 	<backgroundcolor>$VAR[BackgroundOverlayColor]</backgroundcolor>
     <include>openclose</include>
     <controls>
-        <control type="button" id="9001">
+        <!-- <control type="button" id="9001">
             <description>Make sure we hit the first button in the group list and not the close window button</description>
             <left>-24</left>
             <top>-24</top>
@@ -17,7 +17,7 @@
             <onright>9000</onright>
             <onup>9000</onup>
             <ondown>2</ondown>
-        </control>
+        </control> -->
         <control type="image">
             <include>openclosefanart</include>
             <include>Dimensions_Fullscreen</include>
@@ -36,329 +36,249 @@
         <include>BlackStripes</include>
         <control type="group">
             <include>opencloseslideright</include>
-            <control type="grouplist" id="9000">
-                <left>255</left>
-                <top>0</top>
-                <width>510</width>
-                <height>1080</height>
-                <onleft>9000</onleft>
-                <onright>9000</onright>
-                <onup>9000</onup>
-                <ondown>9000</ondown>
-                <itemgap>0</itemgap>
-                <align>center</align>
-                <aligny>center</aligny>
-                <!-- <control type="group" id="1">
-					<width>340</width>
-					<height>30</height>
-					<control type="image">
-						<description>background top image</description>
-						<left>0</left>
-						<top>19</top>
-						<width>340</width>
-						<height>11</height>
-						<texture border="8">buttons/ShutdownMenuTop.png</texture>
+			<animation effect="slide" end="0,300" condition="Integer.IsEqual(Container(9000).NumItems,1)">Conditional</animation>
+			<animation effect="slide" end="0,270" condition="Integer.IsEqual(Container(9000).NumItems,2)">Conditional</animation>
+			<animation effect="slide" end="0,240" condition="Integer.IsEqual(Container(9000).NumItems,3)">Conditional</animation>
+			<animation effect="slide" end="0,210" condition="Integer.IsEqual(Container(9000).NumItems,4)">Conditional</animation>
+			<animation effect="slide" end="0,180" condition="Integer.IsEqual(Container(9000).NumItems,5)">Conditional</animation>
+			<animation effect="slide" end="0,150" condition="Integer.IsEqual(Container(9000).NumItems,6)">Conditional</animation>
+			<animation effect="slide" end="0,120" condition="Integer.IsEqual(Container(9000).NumItems,7)">Conditional</animation>
+			<animation effect="slide" end="0,90" condition="Integer.IsEqual(Container(9000).NumItems,8)">Conditional</animation>
+			<animation effect="slide" end="0,60" condition="Integer.IsEqual(Container(9000).NumItems,9)">Conditional</animation>
+			<animation effect="slide" end="0,30" condition="Integer.IsEqual(Container(9000).NumItems,10)">Conditional</animation>
+			<control type="panel" id="9000">
+				<left>255</left>
+				<top>210</top>
+				<width>510</width>
+				<height min="60" max="660">auto</height>
+				<onleft>9000</onleft>
+				<onright>9000</onright>
+				<onup>9000</onup>
+				<ondown>9000</ondown>
+				<itemgap>0</itemgap>
+				<align>center</align>
+				<aligny>center</aligny>
+				<orientation>vertical</orientation>
+				<itemlayout width="510" height="60">
+					<control type="label">
+						<width>510</width>
+						<height>60</height>
+						<align>center</align>
+						<textcolor>white</textcolor>
+						<shadowcolor>-</shadowcolor>
+						<textwidth>435</textwidth>
+						<label>$INFO[ListItem.Label]</label>
 					</control>
-				</control> -->
-                <control type="button" id="2">
-                    <description>Exit button</description>
-                    <width>510</width>
-                    <height>60</height>
-                    <texturenofocus>-</texturenofocus>
-                    <align>center</align>
-                    <textcolor>white</textcolor>
-                    <focusedcolor>black</focusedcolor>
-                    <shadowcolor>-</shadowcolor>
-                    <textwidth>435</textwidth>
-                    <onclick>Quit()</onclick>
-                    <visible>System.ShowExitButton</visible>
-                    <label>13012</label>
-                </control>
-                <control type="button" id="3">
-                    <description>Shutdown button</description>
-                    <width>510</width>
-                    <height>60</height>
-                    <align>center</align>
-                    <textcolor>white</textcolor>
-                    <focusedcolor>black</focusedcolor>
-                    <shadowcolor>-</shadowcolor>
-                    <textwidth>435</textwidth>
-                    <texturenofocus>-</texturenofocus>
-                    <onclick>Powerdown()</onclick>
-                    <visible>System.CanPowerDown</visible>
-                    <label>13016</label>
-                </control>
-                <control type="button" id="4">
-                    <description>Custom Shutdown Timer</description>
-                    <width>510</width>
-                    <height>60</height>
-                    <align>center</align>
-                    <textcolor>white</textcolor>
-                    <focusedcolor>black</focusedcolor>
-                    <shadowcolor>-</shadowcolor>
-                    <textwidth>435</textwidth>
-                    <texturenofocus>-</texturenofocus>
-                    <onclick>AlarmClock(shutdowntimer,XBMC.Shutdown())</onclick>
-                    <visible>!System.HasAlarm(shutdowntimer)</visible>
-                    <visible>System.CanPowerDown|System.CanSuspend|System.CanHibernate</visible>
-                    <label>20150</label>
-                </control>
-                <control type="button" id="5">
-                    <description>Cancel Shutdown Timer</description>
-                    <width>510</width>
-                    <height>60</height>
-                    <align>center</align>
-                    <textcolor>white</textcolor>
-                    <focusedcolor>black</focusedcolor>
-                    <shadowcolor>-</shadowcolor>
-                    <textwidth>435</textwidth>
-                    <texturenofocus>-</texturenofocus>
-                    <onclick>CancelAlarm(shutdowntimer)</onclick>
-                    <visible>System.HasAlarm(shutdowntimer)</visible>
-                    <label>20151</label>
-                </control>
-                <control type="button" id="6">
-                    <description>Suspend button</description>
-                    <width>510</width>
-                    <height>60</height>
-                    <align>center</align>
-                    <textcolor>white</textcolor>
-                    <focusedcolor>black</focusedcolor>
-                    <shadowcolor>-</shadowcolor>
-                    <textwidth>435</textwidth>
-                    <texturenofocus>-</texturenofocus>
-                    <onclick>Suspend()</onclick>
-                    <visible>System.CanSuspend</visible>
-                    <label>13011</label>
-                </control>
-                <control type="button" id="7">
-                    <description>Hibernate button</description>
-                    <width>510</width>
-                    <height>60</height>
-                    <align>center</align>
-                    <textcolor>white</textcolor>
-                    <focusedcolor>black</focusedcolor>
-                    <shadowcolor>-</shadowcolor>
-                    <textwidth>435</textwidth>
-                    <texturenofocus>-</texturenofocus>
-                    <onclick>Hibernate()</onclick>
-                    <visible>System.CanHibernate</visible>
-                    <label>13010</label>
-                </control>
-                <control type="button" id="8">
-                    <description>Reboot button</description>
-                    <width>510</width>
-                    <height>60</height>
-                    <align>center</align>
-                    <textcolor>white</textcolor>
-                    <focusedcolor>black</focusedcolor>
-                    <shadowcolor>-</shadowcolor>
-                    <textwidth>435</textwidth>
-                    <texturenofocus>-</texturenofocus>
-                    <onclick>Reset()</onclick>
-                    <visible>System.CanReboot</visible>
-                    <label>13013</label>
-                </control>
-                <control type="button" id="9">
-                    <description>Reboot button</description>
-                    <width>510</width>
-                    <height>60</height>
-                    <align>center</align>
-                    <textcolor>white</textcolor>
-                    <focusedcolor>black</focusedcolor>
-                    <shadowcolor>-</shadowcolor>
-                    <textwidth>435</textwidth>
-                    <texturenofocus>-</texturenofocus>
-					<visible>System.CanReboot</visible>
-					<visible>System.Platform.Android</visible>
-					<onclick>dialog.close(all,true)</onclick>
-					<onclick>System.ExecWait("/usr/sbin/rebootfromnand")</onclick>
-					<label>$LOCALIZE[13013] $LOCALIZE[19156] Nand</label>
-                </control>
-                <control type="button" id="10">
-                    <description>Logoff button</description>
-                    <width>510</width>
-                    <height>60</height>
-                    <align>center</align>
-                    <textcolor>white</textcolor>
-                    <focusedcolor>black</focusedcolor>
-                    <shadowcolor>-</shadowcolor>
-                    <textwidth>435</textwidth>
-                    <texturenofocus>-</texturenofocus>
-                    <onclick>System.LogOff</onclick>
-                    <onclick>dialog.close(all,true)</onclick>
-                    <visible>System.HasLoginScreen|Integer.IsGreater(System.ProfileCount,1)</visible>
-                    <visible>System.Loggedon</visible>
-                    <label>$LOCALIZE[20126] $INFO[system.profilename]</label>
-                </control>
-                <control type="togglebutton" id="11">
-                    <description>Master mode button</description>
-                    <width>510</width>
-                    <height>60</height>
-                    <align>center</align>
-                    <aligny>center</aligny>
-                    <textcolor>white</textcolor>
-                    <focusedcolor>black</focusedcolor>
-                    <shadowcolor>-</shadowcolor>
-                    <textwidth>435</textwidth>
-                    <texturenofocus>-</texturenofocus>
-                    <usealttexture>!System.IsMaster</usealttexture>
-                    <alttexturenofocus>-</alttexturenofocus>
-                    <onclick>mastermode</onclick>
-                    <visible>System.HasLocks</visible>
-                    <label>20046</label>
-                    <altlabel>20045</altlabel>
-                </control>
-                <control type="button" id="12">
-                    <description>Inhibit idle shutdown</description>
-                    <width>510</width>
-                    <height>60</height>
-                    <align>center</align>
-                    <textcolor>white</textcolor>
-                    <focusedcolor>black</focusedcolor>
-                    <shadowcolor>-</shadowcolor>
-                    <textwidth>435</textwidth>
-                    <texturenofocus>-</texturenofocus>
-                    <onclick>InhibitIdleShutdown(true)</onclick>
-                    <visible>System.HasShutdown +!System.IsInhibit</visible>
-                    <label>13017</label>
-                </control>
-                <control type="button" id="13">
-                    <description>Allow idle shutdown</description>
-                    <width>510</width>
-                    <height>60</height>
-                    <align>center</align>
-                    <textcolor>white</textcolor>
-                    <focusedcolor>black</focusedcolor>
-                    <shadowcolor>-</shadowcolor>
-                    <textwidth>435</textwidth>
-                    <texturenofocus>-</texturenofocus>
-                    <onclick>InhibitIdleShutdown(false)</onclick>
-                    <visible>System.HasShutdown + System.IsInhibit</visible>
-                    <label>13018</label>
-                </control>
-                <control type="button" id="14">
-                    <description>Master mode button</description>
-                    <width>510</width>
-                    <height>60</height>
-                    <align>center</align>
-                    <aligny>center</aligny>
-                    <textcolor>white</textcolor>
-                    <focusedcolor>black</focusedcolor>
-                    <shadowcolor>-</shadowcolor>
-                    <textwidth>435</textwidth>
-                    <texturenofocus>-</texturenofocus>
-                    <onclick>ActivateWindow(skinsettings)</onclick>
-                    <label>20077</label>
-                </control>
-                <control type="button" id="15">
-                    <description>Skin Reload button</description>
-                    <width>510</width>
-                    <height>60</height>
-                    <align>center</align>
-                    <aligny>center</aligny>
-                    <textcolor>white</textcolor>
-                    <focusedcolor>black</focusedcolor>
-                    <shadowcolor>-</shadowcolor>
-                    <textwidth>435</textwidth>
-                    <texturenofocus>-</texturenofocus>
-					<onclick>RestartApp</onclick>
-                    <label>KODI $LOCALIZE[13013]</label>
-                </control>
-                <control type="button" id="16">
-                    <description>Skin Reload button</description>
-                    <width>510</width>
-                    <height>60</height>
-                    <align>center</align>
-                    <aligny>center</aligny>
-                    <textcolor>white</textcolor>
-                    <focusedcolor>black</focusedcolor>
-                    <shadowcolor>-</shadowcolor>
-                    <textwidth>435</textwidth>
-                    <texturenofocus>-</texturenofocus>
-                    <onclick>ReloadSkin()</onclick>
-					<visible>Skin.HasSetting(skinreload)</visible>
-                    <label>20183</label>
-                </control>
-            </control>
+					<control type="image">
+						<top>29</top>
+						<width>510</width>
+						<height>1</height>
+						<texture colordiffuse="menudiffuse">$INFO[ListItem.Property(separator)]</texture>
+						<visible>!String.IsEmpty(ListItem.Property(separator))</visible>
+					</control>
+				</itemlayout>
+				<focusedlayout width="510" height="60">
+					<control type="image">
+						<width>510</width>
+						<height>60</height>
+						<texture border="5">buttons/ButtonFO.png</texture>
+					</control>
+					<control type="image">
+						<top>29</top>
+						<width>510</width>
+						<height>1</height>
+						<texture colordiffuse="black">$INFO[ListItem.Property(separator)]</texture>
+						<visible>!String.IsEmpty(ListItem.Property(separator))</visible>
+					</control>
+					<control type="label">
+						<width>510</width>
+						<height>60</height>
+						<align>center</align>
+						<textcolor>black</textcolor>
+						<shadowcolor>-</shadowcolor>
+						<textwidth>435</textwidth>
+						<label>$INFO[ListItem.Label]</label>
+					</control>
+				</focusedlayout>
+				<content>
+					<item>
+						<label>$LOCALIZE[13012]</label>
+						<onclick>Quit()</onclick>
+						<visible>System.ShowExitButton</visible>
+						<visible>!Skin.HasSetting(Shutdown_noexit)</visible>
+					</item>
+					<item>
+						<label>$LOCALIZE[13016]</label>
+						<onclick>Powerdown()</onclick>
+						<visible>System.CanPowerDown</visible>
+						<visible>!Skin.HasSetting(Shutdown_noshutdown)</visible>
+					</item>
+					<item>
+						<label>$LOCALIZE[20150]</label>
+						<onclick>AlarmClock(shutdowntimer,Shutdown())</onclick>
+						<visible>!System.HasAlarm(shutdowntimer)</visible>
+						<visible>System.CanPowerDown | System.CanSuspend | System.CanHibernate</visible>
+						<visible>!Skin.HasSetting(Shutdown_notimer)</visible>
+					</item>
+					<item>
+						<label>$LOCALIZE[20151] $INFO[System.AlarmPos,(,)]</label>
+						<onclick>CancelAlarm(shutdowntimer)</onclick>
+						<visible>System.HasAlarm(shutdowntimer)</visible>
+					</item>
+					<item>
+						<label>$LOCALIZE[13011]</label>
+						<onclick>Suspend()</onclick>
+						<visible>System.CanSuspend</visible>
+						<visible>!Skin.HasSetting(Shutdown_nosuspent)</visible>
+					</item>
+					<item>
+						<label>$LOCALIZE[13010]</label>
+						<onclick>Hibernate()</onclick>
+						<visible>System.CanHibernate</visible>
+						<visible>!Skin.HasSetting(Shutdown_nohibernate)</visible>
+					</item>
+					<item>
+						<label>$LOCALIZE[13013]</label>
+						<onclick>Reset()</onclick>
+						<visible>System.CanReboot</visible>
+						<visible>!Skin.HasSetting(Shutdown_noreboot)</visible>
+					</item>
+					<item>
+						<label>$LOCALIZE[20126] $INFO[system.profilename]</label>
+						<onclick>dialog.close(all,true)</onclick>
+						<onclick>System.LogOff</onclick>
+						<visible>System.HasLoginScreen | Integer.IsGreater(System.ProfileCount,1)</visible>
+						<visible>System.Loggedon</visible>
+					</item>
+					<item>
+						<label>$LOCALIZE[20046]</label>
+						<altlabel>$LOCALIZE[20045]</altlabel>
+						<usealttexture>!System.IsMaster</usealttexture>
+						<onclick>mastermode</onclick>
+						<visible>System.HasLocks</visible>
+					</item>
+					<item>
+						<label>$LOCALIZE[13017]</label>
+						<onclick>InhibitIdleShutdown(true)</onclick>
+						<visible>System.HasShutdown +!System.IsInhibit</visible>
+						<visible>!Skin.HasSetting(shutdown_noinhibitidle)</visible>
+					</item>
+					<item>
+						<label>$LOCALIZE[13018]</label>
+						<onclick>InhibitIdleShutdown(false)</onclick>
+						<visible>System.HasShutdown + System.IsInhibit</visible>
+						<visible>!Skin.HasSetting(shutdown_noallowidle)</visible>
+					</item>
+					<item>
+						<label>Skin Einstellungen</label>
+						<onclick>dialog.close(all,true)</onclick>
+						<onclick>ActivateWindow(skinsettings)</onclick>
+					</item>
+					<item>
+						<label></label>
+						<property name="separator">Separator2.png</property>
+						<onclick>-</onclick>
+						<visible>Skin.HasSetting(shutdown_nand)|Skin.HasSetting(shutdown_restart)|Skin.HasSetting(shutdown_reload)</visible>
+					</item>
+					<item>
+						<label>KODI APP neu starten</label>
+						<onclick>RestartApp</onclick>
+						<visible>Skin.HasSetting(shutdown_restart)</visible>
+					</item>
+					<item>
+						<label>$LOCALIZE[13013] $LOCALIZE[19156] Nand</label>
+						<onclick>dialog.close(all,true)</onclick>
+						<onclick>System.ExecWait("/usr/sbin/rebootfromnand")</onclick>
+						<visible>System.CanReboot</visible>
+						<!-- <visible>System.Platform.Android</visible> -->
+						<visible>Skin.HasSetting(shutdown_nand)</visible>
+					</item>
+					<item>
+						<label>Skin neu laden</label>
+						<onclick>ReloadSkin()</onclick>
+						<visible>Skin.HasSetting(shutdown_reload)</visible>
+					</item>
+				</content>
+			</control>
         </control>
+		<include content="MiniWeather">
+			<param name="left" value="885" />
+			<param name="top" value="160" />
+		</include>
         <control type="group">
             <include>openclosemedium</include>
-            <left>855</left>
-            <top>255</top>
-            <control type="group">
-                <left>30</left>
-                <top>30</top>
-                <control type="label">
-                    <left>0</left>
-                    <width>900</width>
-                    <height>45</height>
-                    <align>left</align>
-                    <aligny>center</aligny>
-                    <font>impacted44</font>
-                    <textcolor>white</textcolor>
-                    <shadowcolor>-</shadowcolor>
-                    <label>$INFO[System.Date]</label>
-                </control>
-                <control type="label">
-                    <top>75</top>
-                    <width>750</width>
-                    <height>45</height>
-                    <align>left</align>
-                    <aligny>center</aligny>
-                    <font>impacted54</font>
-                    <textcolor>white</textcolor>
-                    <shadowcolor>-</shadowcolor>
-                    <label>$INFO[System.Time]</label>
-                </control>
-                <control type="label">
-                    <top>135</top>
-                    <width>750</width>
-                    <height>45</height>
-                    <align>left</align>
-                    <aligny>center</aligny>
-                    <font>impacted24</font>
-                    <textcolor>grey</textcolor>
-                    <shadowcolor>-</shadowcolor>
-                    <label>$INFO[System.Uptime,$LOCALIZE[51451]  ,]</label>
-                </control>
-                <control type="label">
-                    <top>360</top>
-                    <width>750</width>
-                    <height>45</height>
-                    <align>left</align>
-                    <aligny>center</aligny>
-                    <font>impacted24</font>
-                    <textcolor>grey1</textcolor>
-                    <shadowcolor>-</shadowcolor>
-                    <label>$LOCALIZE[31023]:</label>
-                    <visible>Player.HasMedia</visible>
-                </control>
-                <control type="label">
-                    <top>405</top>
-                    <width>750</width>
-                    <height>45</height>
-                    <align>left</align>
-                    <aligny>center</aligny>
-                    <font>impacted26</font>
-                    <textcolor>white</textcolor>
-                    <shadowcolor>-</shadowcolor>
-                    <label>$INFO[MusicPlayer.Artist,,[COLOR=grey1] $LOCALIZE[51449] [/COLOR]]$INFO[Player.Title]$INFO[VideoPlayer.TimeRemaining, - ,]</label>
-                    <visible>Player.HasMedia</visible>
-                </control>
-                <control type="image">
-                    <!-- Artistlogo -->
-                    <visible>Skin.HasSetting(music_art)</visible>
-                    <include>openclosevisible</include>
-                    <left>0</left>
-                    <top>465</top>
-                    <width>510</width>
-                    <height>180</height>
-                    <aspectratio align="left" aligny="top">keep</aspectratio>
-                    <texture>$INFO[Skin.String(Music_Folder_Path)]$INFO[MusicPlayer.Artist,,/logo.png]</texture>
-                    <visible>Player.HasMedia</visible>
-                </control>
-            </control>
+            <left>885</left>
+            <top>285</top>
+			<control type="label">
+				<left>0</left>
+				<width>900</width>
+				<height>45</height>
+				<align>left</align>
+				<aligny>center</aligny>
+				<font>impacted44</font>
+				<textcolor>white</textcolor>
+				<shadowcolor>-</shadowcolor>
+				<label>$INFO[System.Date]</label>
+			</control>
+			<control type="label">
+				<top>75</top>
+				<width>750</width>
+				<height>45</height>
+				<align>left</align>
+				<aligny>center</aligny>
+				<font>impacted54</font>
+				<textcolor>white</textcolor>
+				<shadowcolor>-</shadowcolor>
+				<label>$INFO[System.Time]</label>
+			</control>
+			<control type="label">
+				<top>135</top>
+				<width>750</width>
+				<height>45</height>
+				<align>left</align>
+				<aligny>center</aligny>
+				<font>impacted24</font>
+				<textcolor>grey</textcolor>
+				<shadowcolor>-</shadowcolor>
+				<label>$INFO[System.Uptime,$LOCALIZE[51451]  ,]</label>
+			</control>
+			<control type="label">
+				<top>360</top>
+				<width>750</width>
+				<height>45</height>
+				<align>left</align>
+				<aligny>center</aligny>
+				<font>impacted24</font>
+				<textcolor>grey1</textcolor>
+				<shadowcolor>-</shadowcolor>
+				<label>$LOCALIZE[31023]:</label>
+				<visible>Player.HasMedia</visible>
+			</control>
+			<control type="fadelabel">
+				<top>405</top>
+				<width>950</width>
+				<height>45</height>
+				<align>left</align>
+				<aligny>center</aligny>
+				<font>impacted26</font>
+				<textcolor>white</textcolor>
+				<shadowcolor>-</shadowcolor>
+				<label>$VAR[HomeOSDTitle]</label>
+				<label>$VAR[HomeOSDLabel]</label>
+				<visible>Player.HasMedia</visible>
+			</control>
+			<control type="image">
+				<!-- Artistlogo -->
+				<visible>Skin.HasSetting(music_art)</visible>
+				<include>openclosevisible</include>
+				<left>0</left>
+				<top>465</top>
+				<width>510</width>
+				<height>180</height>
+				<aspectratio align="left" aligny="top">keep</aspectratio>
+				<texture>$INFO[Skin.String(Music_Folder_Path)]$INFO[MusicPlayer.Artist,,/logo.png]</texture>
+				<visible>Player.HasMedia</visible>
+			</control>
         </control>
         <control type="grouplist">
             <left>15</left>

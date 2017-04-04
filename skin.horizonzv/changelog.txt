@@ -1,4 +1,7 @@
-﻿v 0.9.0.42
+﻿v 0.9.0.43
+- einzelne Punkte im "Shutdown-Menü" ab-/zuschaltbar
+
+v 0.9.0.42
 - Bugfix: TV Widget Einstellungen
 - Android: Shutdownmenu - Neustart zu Nand hinzugefügt
 - Shutdownmenu Kodi-APP Neustart hinzugefügt

@@ -146,12 +146,125 @@
                             <label>51278</label>
                             <onclick>noop</onclick>
                         </item>
+                        <item id="10">
+                            <description>Shutdown Menu</description>
+                            <label>Shutdown Menu</label>
+                            <onclick>noop</onclick>
+                        </item>
                     </content>
                 </control>
                 <control type="group" id="99">
                     <include>opencloseslideleft</include>
                     <left>540</left>
                     <top>210</top>
+                    <control type="grouplist" id="100"> <!-- Shutdown -->
+                        <description>Control Area</description>
+                        <width>1260</width>
+                        <height>720</height>
+                        <itemgap>3</itemgap>
+                        <onleft>8000</onleft>
+                        <onright>70</onright>
+                        <orientation>vertical</orientation>
+                        <pagecontrol>70</pagecontrol>
+                        <visible>Container(8000).Hasfocus(10)</visible>
+                        <control type="radiobutton" id="110">
+                            <width>1260</width>
+                            <align>left</align>
+                            <label>verberge "$LOCALIZE[13012]" Schalter</label>
+                            <onclick>Skin.ToggleSetting(Shutdown_noexit)</onclick>
+                            <selected>Skin.HasSetting(Shutdown_noexit)</selected>
+                        </control>
+                        <control type="radiobutton" id="111">
+                            <width>1260</width>
+                            <align>left</align>
+                            <label>verberge "$LOCALIZE[13016]" Schalter</label>
+                            <onclick>Skin.ToggleSetting(Shutdown_noshutdown)</onclick>
+                            <selected>Skin.HasSetting(Shutdown_noshutdown)</selected>
+                        </control>
+                        <control type="radiobutton" id="112">
+                            <width>1260</width>
+                            <align>left</align>
+                            <label>verberge "$LOCALIZE[20150]" Schalter</label>
+                            <onclick>Skin.ToggleSetting(Shutdown_notimer)</onclick>
+                            <selected>Skin.HasSetting(Shutdown_notimer)</selected>
+                        </control>
+                        <control type="radiobutton" id="113">
+                            <width>1260</width>
+                            <align>left</align>
+                            <label>verberge "$LOCALIZE[13011]" Schalter</label>
+                            <onclick>Skin.ToggleSetting(Shutdown_nosuspent)</onclick>
+                            <selected>Skin.HasSetting(Shutdown_nosuspent)</selected>
+                        </control>
+                        <control type="radiobutton" id="114">
+                            <width>1260</width>
+                            <align>left</align>
+                            <label>verberge "$LOCALIZE[13010]" Schalter</label>
+                            <onclick>Skin.ToggleSetting(Shutdown_nohibernate)</onclick>
+                            <selected>Skin.HasSetting(Shutdown_nohibernate)</selected>
+                        </control>
+                        <control type="radiobutton" id="115">
+                            <width>1260</width>
+                            <align>left</align>
+                            <label>verberge "$LOCALIZE[13013]" Schalter</label>
+                            <onclick>Skin.ToggleSetting(Shutdown_noreboot)</onclick>
+                            <selected>Skin.HasSetting(Shutdown_noreboot)</selected>
+                        </control>
+                        <control type="radiobutton" id="116">
+                            <width>1260</width>
+                            <align>left</align>
+                            <label>verberge "$LOCALIZE[13017]" Schalter</label>
+                            <onclick>Skin.ToggleSetting(shutdown_noinhibitidle)</onclick>
+                            <selected>Skin.HasSetting(shutdown_noinhibitidle)</selected>
+                        </control>
+                        <control type="radiobutton" id="117">
+                            <width>1260</width>
+                            <align>left</align>
+                            <label>verberge "$LOCALIZE[13018]" Schalter</label>
+                            <onclick>Skin.ToggleSetting(shutdown_noallowidle)</onclick>
+                            <selected>Skin.HasSetting(shutdown_noallowidle)</selected>
+                        </control>
+                        <control type="label" id="118">
+                            <width>1260</width>
+                            <height>18</height>
+                            <align>center</align>
+                            <label>-</label>
+                        </control>
+                        <control type="image" id="119">
+                            <width>1260</width>
+                            <height>1</height>
+                            <align>center</align>
+                            <texture>Separator2.png</texture>
+                            <colordiffuse>description</colordiffuse>
+                        </control>
+                        <control type="label" id="120">
+                            <!-- Extra Buttons -->
+                            <width>1260</width>
+                            <height>18</height>
+                            <align>center</align>
+                            <label>-</label>
+                        </control>
+                        <control type="radiobutton" id="121">
+                            <width>1260</width>
+                            <align>left</align>
+                            <label>zeige "KODI APP neu starten" Schalter</label>
+                            <onclick>Skin.ToggleSetting(shutdown_restart)</onclick>
+                            <selected>Skin.HasSetting(shutdown_restart)</selected>
+                        </control>
+                        <control type="radiobutton" id="122">
+                            <width>1260</width>
+                            <align>left</align>
+                            <label>zeige "Skin neu laden" Schalter</label>
+                            <onclick>Skin.ToggleSetting(shutdown_reload)</onclick>
+                            <selected>Skin.HasSetting(shutdown_reload)</selected>
+                        </control>
+                        <control type="radiobutton" id="123">
+                            <width>1260</width>
+                            <align>left</align>
+                            <label>zeige "$LOCALIZE[13013] $LOCALIZE[19156] Nand" Schalter</label>
+                            <onclick>Skin.ToggleSetting(shutdown_nand)</onclick>
+                            <selected>Skin.HasSetting(shutdown_nand)</selected>
+                        </control>
+                    </control>
                     <control type="grouplist" id="200"> <!-- Admin -->
                         <description>Control Area</description>
                         <width>1260</width>
@@ -232,8 +345,8 @@
                             <width>1260</width>
                             <align>left</align>
                             <label>"Skin Reload" erlauben</label>
-                            <onclick>Skin.ToggleSetting(skinreload)</onclick>
-                            <selected>Skin.HasSetting(skinreload)</selected>
+                            <onclick>Skin.ToggleSetting(shutdown_reload)</onclick>
+                            <selected>Skin.HasSetting(shutdown_reload)</selected>
                         </control>
                         <!-- <control type="button" id="218">
 							<description>Kiosk Mode</description>

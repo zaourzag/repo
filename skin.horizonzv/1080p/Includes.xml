@@ -1250,6 +1250,78 @@
             <effect type="rotate" center="auto" end="-750" time="15000" delay="2500" />
         </animation>
     </include>
+    <include name="MiniWeather">
+		<control type="group">
+			<left>$PARAM[left]</left>
+			<top>$PARAM[top]</top>
+			<control type="multiimage">
+				<description>current weather icon</description>
+				<left>0</left>
+				<top>9</top>
+				<width>90</width>
+				<height>75</height>
+				<imagepath>$VAR[WeatherIconVar]$INFO[Window(weather).Property(Current.FanartCode)]$VAR[WeatherIconFolderVar]</imagepath>
+				<timeperimage>100</timeperimage>
+				<randomize>false</randomize>
+				<fadetime>10</fadetime>
+				<aspectratio>keep</aspectratio>
+			</control>
+			<control type="label">
+				<description>Location label</description>
+				<left>98</left>
+				<top>15</top>
+				<width>750</width>
+				<height>22</height>
+				<align>left</align>
+				<aligny>center</aligny>
+				<font>ubuntu-r13b</font>
+				<textcolor>white</textcolor>
+				<shadowcolor>black</shadowcolor>
+				<label>$INFO[Window(Weather).Property(Location)]</label>
+			</control>
+			<control type="grouplist">
+				<left>98</left>
+				<top>38</top>
+				<width>1500</width>
+				<height>45</height>
+				<orientation>horizontal</orientation>
+				<align>left</align>
+				<itemgap>0</itemgap>
+				<control type="label">
+					<description>Temp label</description>
+					<width min="0" max="450">auto</width>
+					<height>45</height>
+					<align>left</align>
+					<aligny>center</aligny>
+					<font>ubuntu-r26b</font>
+					<textcolor>white</textcolor>
+					<shadowcolor>black</shadowcolor>
+					<label>[B]$INFO[Window(Weather).Property(Current.Temperature)][/B]</label>
+				</control>
+				<control type="label">
+					<description>Temp Units</description>
+					<width min="0" max="150">auto</width>
+					<height>33</height>
+					<font>ubuntu-r13b</font>
+					<aligny>center</aligny>
+					<label>$INFO[System.TemperatureUnits]</label>
+					<textcolor>white</textcolor>
+					<shadowcolor>black</shadowcolor>
+					<visible>!String.IsEmpty(Window(Weather).Property(Current.Temperature))</visible>
+				</control>
+				<control type="label">
+					<description>Conditions Label</description>
+					<width>750</width>
+					<height>33</height>
+					<font>ubuntu-r13b</font>
+					<aligny>center</aligny>
+					<label>$INFO[Window(Weather).Property(Current.Condition),  ]</label>
+					<textcolor>grey</textcolor>
+					<shadowcolor>black</shadowcolor>
+				</control>
+			</control>
+		</control>
+	</include>
     <include name="Clock">
         <control type="group">
             <include>openclose</include>

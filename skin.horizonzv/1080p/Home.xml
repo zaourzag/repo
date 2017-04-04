@@ -364,8 +364,21 @@
                         </content>
                     </control>
                 </control>
-            </control>
-            <control type="group"> <!-- current weather icon -->
+            </control> 
+			
+			<control type="group"> <!-- current weather icon -->
+				<animation effect="slide" start="0,0" end="0,45" time="100" condition="system.getbool(lookandfeel.enablerssfeeds)">Conditional</animation>
+				<visible>!String.IsEmpty(Weather.Plugin)</visible>
+				<visible>!Skin.HasSetting(homepageNOWeatherinfo)</visible>
+				<visible>!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),news)|!system.getbool(lookandfeel.enablerssfeeds)</visible>
+				<visible>!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),dashboard)|!system.getbool(lookandfeel.enablerssfeeds)</visible>
+				<include>opencloseslidedown</include>
+				<include content="MiniWeather">
+					<param name="left" value="15" />
+					<param name="top" value="-3" />
+				</include>
+			</control>
+            <!-- <control type="group">
                 <left>15</left>
                 <top>-3</top>
                 <animation effect="slide" start="0,0" end="0,45" time="100" condition="system.getbool(lookandfeel.enablerssfeeds)">Conditional</animation>
@@ -440,7 +453,7 @@
                         <shadowcolor>black</shadowcolor>
                     </control>
                 </control>
-            </control>
+            </control> -->
         </control>
         <control type="group">
             <visible>Window.IsVisible(1200)</visible>
