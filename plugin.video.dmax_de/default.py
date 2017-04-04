@@ -271,16 +271,14 @@ def playVideo(url, title, thumb):
     content = opener.open(url).read()
     matchMulti = re.compile('<li data-number="(.+?)" data-guid="(.+?)"', re.DOTALL).findall(content)
     matchSingle = re.compile('name="@videoPlayer" value="(.+?)"', re.DOTALL).findall(content)
-    if matchMulti:
-        #addDir(title+": Alle Teile", url, "playVideoAll", thumb, title)
-        #for part, videoID in matchMulti:
-        #    addLink(title+": Teil "+part, videoID, "playBrightCoveStream", thumb, title, "no")
-        #    debug("matchMulti : "+ videoID)
+    if matchMulti:        
         playVideoAll(url,title,thumb)
         #xbmcplugin.endOfDirectory(pluginhandle)
     elif matchSingle:
-        debug("matchSingle : "+ matchSingle[0])
-        playBrightCoveStream(matchSingle[0],title,thumb,"yes")
+        debug("matchSingle : "+ matchSingle[0])        
+        streamUrl=getStream(bc_videoID)        
+        listitem = xbmcgui.ListItem(title, path=streamUrl, thumbnailImage=thumb)
+        xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
                 
 
 
@@ -312,26 +310,35 @@ def  getStream(bc_videoID):
     conn.request("POST", "/services/messagebroker/amf?playerId=" + str(bc_playerID), str(remoting.encode(envelope).read()), {'content-type': 'application/x-amf'})    
     response = conn.getresponse().read()
     response = remoting.decode(response).bodies[0][1].body    
+    # Response ist:
+    #{'startDate': None, 'adCategories': None, 'endDate': None, 'drmMetadataURL': None, 'color': None, 'FLVFullSize': 272122334.0, 'FLVFullLengthURL': u'http://discintlhdflash-f.akamaihd.net/byocdn/media/1659832546/201412/953/1659832546_3921288417001_mp4-DCB355460006000-106.mp4', 'SWFVerificationRequired': False, 'FLVFullCodec': 3, 'hdsManifestUrl': None, 'thumbnailURL': u'http://discoveryint1.edgeboss.net/byocdn/img/1659832546/201412/481/1659832546_3921221378001_thumb-discovery-DCB355460006000-106.jpg?pubId=1659832546', 'FLVPreviewSize': 0.0, 'FLVPreviewStreamed': False, 'rentalAmount': None, 'geoRestricted': True, 'filterEndDate': None, 'customFields': None, 'FLVPreBumperControllerType': 0, 'rentalPeriod': None, 'yearProduced': None, 'IOSRenditions': [{'videoCodec': u'H264', 'defaultURL': u'http://c.brightcove.com/services/mobile/streaming/index/rendition.m3u8?assetId=3922596652001', 'encodingRate': 1240000, 'audioOnly': False, 'videoContainer': 2, 'mediaDeliveryType': 2, 'frameWidth': 640, 'frameHeight': 360, 'size': 418914295.0}, {'videoCodec': u'H264', 'defaultURL': u'http://c.brightcove.com/services/mobile/streaming/index/rendition.m3u8?assetId=3922569188001', 'encodingRate': 640000, 'audioOnly': False, 'videoContainer': 2, 'mediaDeliveryType': 2, 'frameWidth': 400, 'frameHeight': 224, 'size': 216883038.0}, {'videoCodec': u'H264', 'defaultURL': u'http://c.brightcove.com/services/mobile/streaming/index/rendition.m3u8?assetId=3922575873001', 'encodingRate': 240000, 'audioOnly': False, 'videoContainer': 2, 'mediaDeliveryType': 2, 'frameWidth': 320, 'frameHeight': 180, 'size': 81365538.0}], 'publishedDate': datetime.datetime(2014, 12, 8, 17, 3, 14, 355000), 'FLVPreBumperURL': None, 'purchaseAmount': None, 'sharedToExternalAcct': False, 'longDescription': u'Lotto King Karl in einer 35 Tonnen schweren Baumaschine gegen ein dreist\xf6ckiges Geb\xe4ude: In dieser Folge rei\xdft der S\xe4nger, Moderator und Stadionsprecher mit Schere und Mei\xdfel ein Haus ein. Da kommt Freude auf! Au\xdferdem besucht Lotto Michael Manousakis von den "Steel Buddies" und testet dessen "Hammerteile". Sabine Schmitz feiert ein Wiedersehen mit ihrem ersten Auto, einem VW Polo. Und beim "Auto-Quartett" trumpfen der Ferrari 458 und der McLaren MP4-12C ganz gro\xdf auf.', 'referenceId': u'DCB355460006000_106', 'creationDate': datetime.datetime(2014, 12, 3, 13, 55, 4, 394000), 'sharedByExternalAcct': False, 'categories': [], 'renditions': [{'videoCodec': u'H264', 'defaultURL': u'http://discintlhdflash-f.akamaihd.net/byocdn/media/1659832546/201412/208/1659832546_3922585920001_mp4-DCB355460006000-106.mp4', 'encodingRate': 542409, 'audioOnly': False, 'videoContainer': 1, 'mediaDeliveryType': 0, 'frameWidth': 480, 'frameHeight': 268, 'size': 182233038.0}, {'videoCodec': u'H264', 'defaultURL': u'http://discintlhdflash-f.akamaihd.net/byocdn/media/1659832546/201412/1720/1659832546_3922667311001_mp4-DCB355460006000-106.mp4', 'encodingRate': 1778409, 'audioOnly': False, 'videoContainer': 1, 'mediaDeliveryType': 0, 'frameWidth': 1280, 'frameHeight': 720, 'size': 593914274.0}, {'videoCodec': u'H264', 'defaultURL': u'http://discintlhdflash-f.akamaihd.net/byocdn/media/1659832546/201412/3088/1659832546_3922591176001_mp4-DCB355460006000-106.mp4', 'encodingRate': 1178409, 'audioOnly': False, 'videoContainer': 1, 'mediaDeliveryType': 0, 'frameWidth': 720, 'frameHeight': 404, 'size': 394800905.0}, {'videoCodec': u'H264', 'defaultURL': u'http://discintlhdflash-f.akamaihd.net/byocdn/media/1659832546/201412/953/1659832546_3921288417001_mp4-DCB355460006000-106.mp4', 'encodingRate': 810409, 'audioOnly': False, 'videoContainer': 1, 'mediaDeliveryType': 0, 'frameWidth': 640, 'frameHeight': 360, 'size': 272122334.0}], 'ratingEnum': None, 'submitted': False, 'excludeListedCountries': False, 'logoOverlay': {'burnIn': False, 'assetURL': u'http://discoveryint1.edgeboss.net/byocdn/img/1659832546/201401/155/1659832546_3122320618001_DMAX-bug.png?pubId=1659832546', 'clickThru': None, 'version': 0, 'tooltip': None, 'id': 3925518439001.0, 'alignment': u'top left', 'assetDTO': {'progressiveDownload': True, 'referenceId': None, 'encodingRate': None, 'audioOnly': False, 'videoContainer': -1, 'frameWidth': None, 'assetTypeEnum': 17, 'id': 3122320618001.0, 'size': 4986.0, 'absoluteURL': None, 'uploadTypeEnum': 50, 'dualDeliveryHttpURL': u'http://discoveryint1.edgeboss.net/byocdn/img/1659832546/201401/155/1659832546_3122320618001_DMAX-bug.png', 'hashCode': u'MD5:bc235ef1ed1765f44d4e6f4b1a804d36', 'defaultURL': u'http://discoveryint1.edgeboss.net/byocdn/img/1659832546/201401/155/1659832546_3122320618001_DMAX-bug.png?pubId=1659832546', 'version': 6, 'frameHeight': None, 'videoCodecEnum': 0, 'uploadTimestampMillis': 1391010523773.0, 'mimeTypeEnum': 6, 'originalFilename': u'DMAX_bug.png', 'complete': True, 'assetControllerTypeEnum': 0, 'controllerType': 0, 'absoluteStreamName': None, 'previewThumbnailURL': None, 'currentFilename': u'1659832546_3122320618001_DMAX-bug.png', 'videoDuration': 0.0, 'displayName': u'DMAX_bug.png', 'DRMEncoded': False, 'campaignPolicyId': None, 'previewThumbnailAssetId': None, 'CDNStored': True, 'fingerprinted': False, 'publisherId': 1659832546.0}}, 'publisherId': 1659832546.0, 'publisherName': u'Discovery Networks - Germany', 'videoStillURL': u'http://discoveryint1.edgeboss.net/byocdn/img/1659832546/201412/3481/1659832546_3921221377001_still-discovery-DCB355460006000-106.jpg?pubId=1659832546', 'encodingRate': 810409, 'sharedBy': None, 'allowViralSyndication': True, 'isSubmitted': False, 'lineupId': None, 'captions': None, 'shortDescription': u'Lotto King Karl in einer 35 Tonnen schweren Baumaschine gegen ein dreist\xf6ckiges Geb\xe4ude: In dieser Folge rei\xdft der S\xe4nger, Moderator und Stadionsprecher mit Schere und Mei\xdfel ein Haus ein.', 'id': 3921212119001.0, 'previewLength': 0.0, 'customFieldValues': None, 'allowedCountries': [u'li', u'de', u'at', u'lu', u'ch'], 'FLVPreBumperStreamed': False, 'version': None, 'HDSRenditions': None, 'dateFiltered': False, 'FLVFullLengthStreamed': True, 'monthlyAmount': None, 'tags': [{'image': None, 'name': u'topic:entertainment'}, {'image': None, 'name': u'series:01'}, {'image': None, 'name': u'site:DMAX Germany'}, {'image': None, 'name': u'Herbert Feuerstein'}, {'image': None, 'name': u'motorrad'}, {'image': None, 'name': u'auto'}, {'image': None, 'name': u'powerboot'}, {'image': None, 'name': u'Lotto King Karl'}, {'image': None, 'name': u'autos'}, {'image': None, 'name': u'episode:06'}, {'image': None, 'name': u'show:hammerteile'}, {'image': None, 'name': u'form:long'}], 'controllerType': 5, 'sharedSourceId': None, 'awards': None, 'linkText': None, 'FLVPreviewURL': None, 'forceAds': False, 'WMVFullAssetId': None, 'numberOfPlays': 0.0, 'cuePoints': None, 'displayName': u'Hammerteile: Einst\xfcrzende Altbauten', 'filterStartDate': None, 'language': None, 'FLVPreviewCodec': 0, 'economics': 1, 'length': 2649328.0, 'WMVFullLengthURL': None, 'adKeys': None, 'linkURL': None}
     debug("############+#")
     debug(response)   
     debug("############+#")
-    debug(response['IOSRenditions'])
+    debug(response['IOSRenditions'])    
     maxbit=0
-    for element in response['IOSRenditions']:             
-        if element["encodingRate"] < maxBitRate and maxbit < element["encodingRate"]:
+    # Mobile Streams sind in IOSRenditions Gespeichert, Webstreams in renditions
+    # Mobile Streams < 720 , Web gibt es in 720,aber spoolen geht nicht
+    if mobilestreams:
+       type="IOSRenditions"
+       type2="renditions"
+    else:
+       type="renditions"
+       type2="IOSRenditions"
+    # Sollte kein Stream im Ausgewählten Type geben (Mobile/Nicht Mobile) nutze den anderen
+    if len(response[type])<1:
+        type=type2
+    
+    # Streams durchgehen, und den mit der Höchsten Bitrarate raussuchen    
+    for element in response[type]:             
+        if element["encodingRate"] <= maxBitRate and maxbit < element["encodingRate"]:
             streamUrl = element['defaultURL']
             maxbit =  element["encodingRate"]          
+    # Wenn keinen Stream gibt nimm den Fallback
     if not streamUrl:
         streamUrl = response['FLVFullLengthURL']
     return(streamUrl)
     
-def playBrightCoveStream(bc_videoID, title, thumb, isSingle):
-    streamUrl=getStream(bc_videoID)
-    if streamUrl:
-            debug("STREAM URL :"+streamUrl)
-            listitem = xbmcgui.ListItem(title, path=streamUrl, thumbnailImage=thumb)
-            xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
-
 def queueVideo(url, name, thumb):
     playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
     listitem = xbmcgui.ListItem(name, thumbnailImage=thumb)
@@ -475,8 +482,6 @@ elif mode == 'queueVideo':
     queueVideo(url, title, thumb)
 elif mode == 'playVideoAll':
     playVideoAll(url, title, thumb)
-elif mode == 'playBrightCoveStream':
-    playBrightCoveStream(url, title, thumb, isSingle == "yes")
 elif mode == 'listShowsFavs':
     listShowsFavs()
 elif mode == 'favs':
