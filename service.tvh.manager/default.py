@@ -256,12 +256,14 @@ class Manager(object):
 
         # Check for active network connection(s)
         if self.__network and Net:
+            _port = ''
             for port in self.__monitored_ports:
-                nwc = subprocess.Popen('netstat -an | grep ESTABLISHED | grep -v "127.0.0.1" | grep ":%s "' % port, stdout=subprocess.PIPE, shell=True).communicate()
+                nwc = subprocess.Popen('netstat -an | grep -iE "(established|verbunden)" | grep -v "127.0.0.1" | grep ":%s "' % port, stdout=subprocess.PIPE, shell=True).communicate()
                 nwc = nwc[0].strip()
                 if nwc and len(nwc.split('\n')) > 0:
                     _flags |= isNET
-                    tools.writeLog('Network on port %s established and active' % (port))
+                    _port += '%s, ' % (port)
+            if _port: tools.writeLog('Network on port %s established and active' % (_port[:-2]))
         if verbose: tools.writeLog('Status flags: {0:05b} (RES/NET/PRG/REC/EPG)'.format(_flags))
         return _flags
 
@@ -469,8 +471,7 @@ class Manager(object):
                 tools.writeLog('Abort request received', level=xbmc.LOGNOTICE)
                 break
             if idle > xbmc.getGlobalIdleTime():
-                tools.writeLog('User activty detected')
-                tools.writeLog('System was %s idle' % (time.strftime('%H:%M:%S', time.gmtime(idle))))
+                tools.writeLog('User activty detected (was %s idle)' % (time.strftime('%H:%M:%S', time.gmtime(idle))))
                 break
 
             idle = xbmc.getGlobalIdleTime()
