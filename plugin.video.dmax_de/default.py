@@ -48,7 +48,6 @@ def log(msg, level=xbmc.LOGNOTICE):
     addon = xbmcaddon.Addon()
     addonID = addon.getAddonInfo('id')
     xbmc.log('%s: %s' % (addonID, msg), level) 
-    
 
 if not os.path.isdir(userDataFolder):
     os.mkdir(userDataFolder)
@@ -286,10 +285,11 @@ def playVideo(url, title, thumb):
 
 
 def playVideoAll(url, title, thumb):
+    debug("playVideoAll url"+url)
     pl = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
     pl.clear()
     content = opener.open(url).read()
-    matchMulti = re.compile('<li data-number="(.+?)" data-guid="(.+?)"', re.DOTALL).findall(content)
+    matchMulti = re.compile('<li data-number="([^"]+?)" data-guid="([^"]+?)"', re.DOTALL).findall(content)
     for part, videoID in matchMulti:         
         listitem = xbmcgui.ListItem(title+": Teil "+part, thumbnailImage=thumb)        
         pluginUrl=getStream(videoID)
@@ -300,24 +300,27 @@ def playVideoAll(url, title, thumb):
 
 
 def  getStream(bc_videoID):
+    debug("getStream bc_videoID :"+str(bc_videoID))
     bc_playerID = 586587148001
     bc_publisherID = 1659832546
     bc_const = "ef59d16acbb13614346264dfe58844284718fb7b"
+        
     conn = httplib.HTTPConnection("c.brightcove.com")
     envelope = remoting.Envelope(amfVersion=3)
     envelope.bodies.append(("/1", remoting.Request(target="com.brightcove.player.runtime.PlayerMediaFacade.findMediaById", body=[bc_const, bc_playerID, bc_videoID, bc_publisherID], envelope=envelope)))
-    conn.request("POST", "/services/messagebroker/amf?playerId=" + str(bc_playerID), str(remoting.encode(envelope).read()), {'content-type': 'application/x-amf'})
+        
+    conn.request("POST", "/services/messagebroker/amf?playerId=" + str(bc_playerID), str(remoting.encode(envelope).read()), {'content-type': 'application/x-amf'})    
     response = conn.getresponse().read()
-    response = remoting.decode(response).bodies[0][1].body
-    streamUrl = ""
-    if mobilestreams :
-        rubrik="IOSRenditions"
-    else:
-        rubrik="renditions"
-    for item in sorted(response[rubrik], key=lambda item: item['encodingRate'], reverse=False):
-        encRate = item['encodingRate']
-        if encRate < maxBitRate:
-            streamUrl = item['defaultURL']    
+    response = remoting.decode(response).bodies[0][1].body    
+    debug("############+#")
+    debug(response)   
+    debug("############+#")
+    debug(response['IOSRenditions'])
+    maxbit=0
+    for element in response['IOSRenditions']:             
+        if element["encodingRate"] < maxBitRate and maxbit < element["encodingRate"]:
+            streamUrl = element['defaultURL']
+            maxbit =  element["encodingRate"]          
     if not streamUrl:
         streamUrl = response['FLVFullLengthURL']
     return(streamUrl)
