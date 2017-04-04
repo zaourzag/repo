@@ -85,9 +85,9 @@ def charts():
            
            xbmcplugin.endOfDirectory(pluginhandle)
 def  top100charts():
-           addDir(translation(30001),"http://www.mtv.de/charts/288-single-top-100",'listVideos_old',"")
+           addDir(translation(30001),"http://www.mtv.de/charts/288-single-top-100?expanded=true",'listVideos_old',"")
            addDir(translation(30004),"http://www.mtv.de/charts/8-mtv-de-videocharts?expanded=true",'listVideos_old',"") 
-           addDir(translation(30228),"http://www.mtv.de/charts/287-midweek-single-top-100"  ,'listVideos_old',"")
+           addDir(translation(30228),"http://www.mtv.de/charts/287-midweek-single-top-100?expanded=true"  ,'listVideos_old',"")
            xbmcplugin.endOfDirectory(pluginhandle)
            
 def jahrescharts():           
@@ -97,8 +97,8 @@ def jahrescharts():
            xbmcplugin.endOfDirectory(pluginhandle)
 def themenchart():           
            addDir(translation(30211),"http://www.mtv.de/charts/293-dance-charts?expanded=true",'listVideos_old',"")    
-           addDir(translation(30229),"http://www.mtv.de/charts/289-download-charts-single",'listVideos_old',"")            
-           addDir(translation(30226),"http://www.mtv.de/charts/286-top-100-music-streaming",'listVideos_old',"") 
+           addDir(translation(30229),"http://www.mtv.de/charts/289-download-charts-single?expanded=true",'listVideos_old',"")            
+           addDir(translation(30226),"http://www.mtv.de/charts/286-top-100-music-streaming?expanded=true",'listVideos_old',"") 
            xbmcplugin.endOfDirectory(pluginhandle)
            
 def cleanTitle(title):
