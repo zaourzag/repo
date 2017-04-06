@@ -276,7 +276,7 @@ def playVideo(url, title, thumb):
         #xbmcplugin.endOfDirectory(pluginhandle)
     elif matchSingle:
         debug("matchSingle : "+ matchSingle[0])        
-        streamUrl=getStream(bc_videoID)        
+        streamUrl=getStream(matchSingle[0])        
         listitem = xbmcgui.ListItem(title, path=streamUrl, thumbnailImage=thumb)
         xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
                 
