@@ -206,7 +206,8 @@ def listShowsFavs():
             url = url[:url.find("#")]
             thumb = line[line.find("###THUMB###=")+12:]
             thumb = thumb[:thumb.find("#")]
-            addShowRDir(title, urllib.unquote_plus(url), "listVideosMain", thumb, title)
+            #addShowRDir(title, urllib.unquote_plus(url), "listVideosMain", thumb, title)
+            addShowRDir(title, urllib.unquote_plus(url), "listSeasons", thumb, title)
         fh.close()
     xbmcplugin.endOfDirectory(pluginhandle)
 
