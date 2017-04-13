@@ -339,7 +339,7 @@
 						<textoffsetx>28</textoffsetx>
 						<textcolor>ffdadada</textcolor>
 						<focusedcolor>ff222222</focusedcolor>
-						<visible>!String.IsEmpty(ListItem.Trailer)</visible>
+						<enable>!String.IsEmpty(ListItem.Trailer)</enable>
 						<texturefocus border="13,5,6,8">views/button_fo.png</texturefocus>
 						<texturenofocus border="13,3,6,6">views/button_nf.png</texturenofocus>
 					</control>
@@ -465,7 +465,7 @@
 					</include>
 					<include>ListItemResolution</include>
 					<include content="Spacer">
-						<param name="visible" value="Integer.IsGreater(ListItem.VideoResolution,710)" />
+						<param name="visible" value="Integer.IsGreater(ListItem.VideoResolution,710) | String.IsEqual(ListItem.VideoResolution,4K)" />
 					</include>
 					<control type="image">
 						<top>2</top>
@@ -691,7 +691,7 @@
 						<textoffsetx>28</textoffsetx>
 						<textcolor>ffdadada</textcolor>
 						<focusedcolor>ff222222</focusedcolor>
-						<visible>!String.IsEmpty(ListItem.Trailer)</visible>
+						<enable>!String.IsEmpty(ListItem.Trailer)</enable>
 						<texturefocus border="13,5,6,8">views/button_fo.png</texturefocus>
 						<texturenofocus border="13,3,6,6">views/button_nf.png</texturenofocus>
 					</control>
