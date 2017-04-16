@@ -176,7 +176,7 @@ oder online unter https://goo.gl/GtK41L nachlesen.
     </extension>
 </addon>
 
-<addon id="plugin.service.gto" name="German Telecast Offers" version="2.0.8" provider-name="Birger Jesch">
+<addon id="plugin.service.gto" name="German Telecast Offers" version="2.0.10" provider-name="Birger Jesch">
     <requires>
         <import addon="xbmc.python" version="2.20.0"/>
     </requires>
@@ -186,15 +186,15 @@ oder online unter https://goo.gl/GtK41L nachlesen.
 
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
-        <summary lang="en">Fetch todays TV Offers from different scrapers</summary>
-        <summary lang="de">Holt die TV Tipps des Tages aus den RSS-Feeds diverser Webseiten</summary>
+        <summary lang="en_GB">Fetch todays TV Offers from different scrapers</summary>
+        <summary lang="de_DE">Holt die TV Tipps des Tages aus den RSS-Feeds diverser Webseiten</summary>
         <language>de</language>
-        <description lang="en">Fetch todays TV Offers from different scrapers
+        <description lang="en_GB">Fetch todays TV Offers from different scrapers
 
 This plugin needs a integration into the skin!
 Please refer to the README.txt into the folder named 'integration'.
         </description>
-        <description lang="de">Holt die TV Tipps des Tages aus den RSS-Feeds diverser Webseiten.
+        <description lang="de_DE">Holt die TV Tipps des Tages aus den RSS-Feeds diverser Webseiten.
 
 Dieses Plugin benoetigt eine Skin-Integration!
 Hierfür bitte README.txt im Ordner 'integration' beachten.
@@ -204,6 +204,21 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
         <forum>http://www.kodinerds.net/index.php/Thread/50943-Release-TV-Widget-German-Telecast-Offers/</forum>
         <email>birger.jesch@gmail.com</email>
         <website>http://vdr4bj1.no-ip.org/index.php?action=list&amp;item=addon</website>
+        <news>
+            - Improvements for the plugin service
+            - Ready for Krypton, skin integration sheet added
+            - Scraper updates
+        </news>
+        <assets>
+            <icon>icon.png</icon>
+            <fanart>fanart.jpg</fanart>
+            <screenshot>resources/lib/media/screenshots/screenshot_0.jpg</screenshot>
+            <screenshot>resources/lib/media/screenshots/screenshot_1.jpg</screenshot>
+            <screenshot>resources/lib/media/screenshots/screenshot_2.jpg</screenshot>
+            <screenshot>resources/lib/media/screenshots/screenshot_3.jpg</screenshot>
+            <screenshot>resources/lib/media/screenshots/screenshot_4.jpg</screenshot>
+            <screenshot>resources/lib/media/screenshots/screenshot_5.jpg</screenshot>
+        </assets>
     </extension>
 </addon>
 
@@ -514,7 +529,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
     </extension>
 </addon>
 
-<addon id="plugin.video.dmax_de" name="DMAX.de" version="1.1.23" provider-name="L0RE">
+<addon id="plugin.video.dmax_de" name="DMAX.de" version="1.1.24" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="script.module.pyamf" version="0.6.1"/>
@@ -2200,7 +2215,7 @@ Video Addon for hltv.org
 	</extension>
 </addon>
 
-<addon id="skin.fTVfred-krypton" version="3.6.8" name="fTV Fred Edition (Krypton)" provider-name="Sualfred">
+<addon id="skin.fTVfred-krypton" version="3.7.0" name="fTV Fred Edition (Krypton)" provider-name="Sualfred">
 	<requires>
 		<import addon="xbmc.gui" version="5.12.0"/>
 		<import addon="script.toolbox" version="1.1.1"/>
@@ -2235,9 +2250,8 @@ Video Addon for hltv.org
         </assets>
 		<news>Changelog:
 
-[B]3.6.8[/B]
-- Fixed textviewer
-- minor adjustments
+[B]3.7.0[/B]
+- Small trailer button fix
 
 See changelog.txt for more details.</news>
 	</extension>
