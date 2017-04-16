@@ -206,14 +206,48 @@ def show(url):
      logo=element["latestVideo"]["original_image"].replace("\/","/")
      addDir(name, "http://m.myspass.de/api/index.php?command=seasonepisodes&id="+id, "videos", "http:"+logo, desc=desc)
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)  
-   
+
+def NEXT(url):
+ playlist = xbmc.PlayList(1)
+ content=getUrl(url)
+ urlnext=re.compile('<div class="full_episode_button desktop_only"><a href="(.+?)">', re.DOTALL).findall(content)[0]
+ urlnext="http://www.myspass.de/myspass"+urlnext
+ content=getUrl(urlnext)
+ title=re.compile('"headline":"(.+?)",', re.DOTALL).findall(content)[0]
+ desc=re.compile('"description":"(.+?)"', re.DOTALL).findall(content)[0]
+ thumb=re.compile('"thumbnailUrl":"(.+?)"', re.DOTALL).findall(content)[0]
+ debug("NEXTT URL :"+urlnext)
+ vid = YDStreamExtractor.getVideoInfo(urlnext,quality=2) #quality is 0=SD, 1=720p, 2=1080p and is a maximum        
+ stream_url = vid.streamURL()            
+ stream_url=stream_url.split("|")[0]
+ u = base_url+"?url="+urllib.quote_plus(urlnext)+"&mode="+str("NEXT")
+ listitem = xbmcgui.ListItem(path=u)
+ playlist.add(u, listitem)  
+ listitem = xbmcgui.ListItem(path=stream_url, iconImage="", thumbnailImage=thumb)
+ listitem.setInfo(type="Video", infoLabels={"Title": title, "Plot": desc})  
+ xbmcplugin.setResolvedUrl(addon_handle,True, listitem)
+ 
 def playvideo(url)      :
+        content=getUrl(url)        
+        title=re.compile('"headline":"(.+?)",', re.DOTALL).findall(content)[0]
+        desc=re.compile('"description":"(.+?)"', re.DOTALL).findall(content)[0]
+        thumb=re.compile('"thumbnailUrl":"(.+?)"', re.DOTALL).findall(content)[0]
+        playlist = xbmc.PlayList(1)
+        playlist.clear() 
         vid = YDStreamExtractor.getVideoInfo(url,quality=2) #quality is 0=SD, 1=720p, 2=1080p and is a maximum        
         stream_url = vid.streamURL()            
         stream_url=stream_url.split("|")[0]
         debug("stream_url :"+stream_url)
-        listitem = xbmcgui.ListItem(path=stream_url)
-        xbmcplugin.setResolvedUrl(addon_handle,True, listitem)
+        listitem = xbmcgui.ListItem(path=stream_url, iconImage="", thumbnailImage=thumb)
+        listitem.setInfo(type="Video", infoLabels={"Title": title, "Plot": desc})  
+        #listitem = xbmcgui.ListItem(path=stream_url)
+        playlist.add(stream_url, listitem)  
+        u = base_url+"?url="+urllib.quote_plus(url)+"&mode="+str("NEXT")
+        listitem = xbmcgui.ListItem(path=u)
+        playlist.add(u, listitem)  
+        xbmc.Player().play(playlist)
+        time.sleep(10000)
+        #xbmcplugin.setResolvedUrl(addon_handle,True, listitem)
 
 if mode is '':
     addDir("Home", "http://m.myspass.de/api/index.php?command=hometeaser", 'startpage',"")   
@@ -236,3 +270,5 @@ else:
           playvideo(url)
   if mode == 'videos':
           videos(url)                                    
+  if mode == 'NEXT' :
+           NEXT(url)
