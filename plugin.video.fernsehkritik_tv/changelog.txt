@@ -29,3 +29,6 @@
 -add download option over context menue
 2.1.4
 - Fix New VideoUrl
+2.1.5
+- Until 2.1.4 was Mantained by AddonScriptorde
+- Now Maintained by L0RE
