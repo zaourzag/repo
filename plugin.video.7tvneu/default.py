@@ -12,11 +12,12 @@ import urllib, urllib2, socket, cookielib, re, os, shutil,json
 from StringIO import StringIO
 import xml.etree.ElementTree as ET
 import time
+import requests
 from datetime import datetime
-try:
-    import urllib.parse as compat_urllib_parse
-except ImportError:  # Python 2
-    import urllib as compat_urllib_parse
+import ssl
+ssl._create_default_https_context = ssl._create_unverified_context
+
+
 
 # Setting Variablen Des Plugins
 global debuging
@@ -76,13 +77,14 @@ def addDir(name, url, mode, iconimage, desc="",sendername="",offset="",limit="",
   return ok
 
 
- 
+        
 def geturl(url,data="x",header=""):
         global cj
         print("Get Url: " +url)
         for cook in cj:
           debug(" Cookie :"+ str(cook))
-        opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))        
+        
+        opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))           
         userAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:49.0) Gecko/20100101 Firefox/49.0"
         if header=="":
           opener.addheaders = [('User-Agent', userAgent)]        
@@ -141,6 +143,7 @@ series = urllib.unquote_plus(params.get('series', ''))
 
 
 def senderlist():
+
     inhalt = geturl(baseurl) 
     image_url=re.compile('<link rel="stylesheet" type="text/css" href="(.+?)">', re.DOTALL).findall(inhalt)
     
@@ -462,7 +465,7 @@ def playvideo(video_id,  client_location, source_id=None):
         
         #client_name = 'kolibri-1.2.5'    
         client_id = salt[:2] + sha1(''.join([salt, video_id, access_token, server_id,client_location, str(source_id), salt, client_name]).encode('utf-8')).hexdigest()
-        url_api_url = 'http://vas.sim-technik.de/vas/live/v2/videos/%s/sources/url?%s' % (video_id, compat_urllib_parse.urlencode({
+        url_api_url = 'http://vas.sim-technik.de/vas/live/v2/videos/%s/sources/url?%s' % (video_id, urllib.urlencode({
             'access_token': access_token,
             'client_id': client_id,
             'client_location': client_location,
@@ -505,7 +508,7 @@ def playvideo(video_id,  client_location, source_id=None):
         #listitem.setProperty('inputstreamaddon', 'inputstream.mpd')        
         xbmcplugin.setResolvedUrl(addon_handle, True, listitem)
   
-        print "Daten lic :"+lic
+        #print "Daten lic :"+lic
         print "Daten token :"+token
         print "Daten data :"+data        
         return ""
@@ -584,10 +587,93 @@ def searchtext(url,offset,limit,type):
    if i>5:
      addDir("Next", url, mode="searchtext", iconimage="" ,offset=str(int(offset)+7),limit=limit,type=type)   
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
+
+def livetv(url):
+   from hashlib import sha1
+   cookie=temp+"/cookie.jar"
+   cj = requests.cookies.RequestsCookieJar()   
+   start="https://sso.7pass.de/connect/v1.0/authorize?response_type=code&client_id=53d94e076563326dd3000000&redirect_uri=mega-app://openidcallback&scope=openid%20email%20profile&prompt=register"
+   content = requests.get(start, allow_redirects=False,verify=False,cookies=cj)
+   content2=content.text.encode('utf-8')
+   cj=content.cookies
+   flow=re.compile('flow=(.+?)"', re.DOTALL).findall(content2)[0]   
+    
+   content = requests.get("https://7tvapp.7pass.de/api/session/init?version=1", allow_redirects=False,verify=False,cookies=cj)
+   cj=content.cookies
+   srf=cj["XSRF-TOKEN"]
+   
+   headers = {'User-Agent':         'Mozilla/5.0 (Linux; Android 6.0.1; SM-G900F Build/M4B30X; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/51.0.2704.106 Mobile Safari/537.36',
+   'X-Requested-With':              'de.prosiebensat1digital.seventv',
+   'Referer':                      'https://7tvapp.7pass.de/?source=app&flow='+flow,
+   'Content-Type':                  'application/json;charset=UTF-8',
+   'Origin':                        'https://7tvapp.7pass.de',
+   'X-XSRF-TOKEN':srf
+   }
+   values = {
+      'email' : "andreas@vogler.name",
+   }       
+   content = requests.post("https://7tvapp.7pass.de/api/session/checkMail?version=1",data=json.dumps(values), allow_redirects=False,verify=False,cookies=cj,headers=headers)
+   #cj=content.cookies   
+   
+   content = requests.get("https://www.7pass.de/connect/v1.0/login?flow="+flow, allow_redirects=False,verify=False,cookies=cj,headers=headers)
+   content2=content.text.encode('utf-8')
+   #cj=content.cookies
+   #debug("content2 :")
+   #debug(content2)
+   #exit
+   values = {'flow' : flow,
+      '_csrf' : srf,
+      'login' : "andreas@vogler.name",        
+      'password' : "Test1t",
+   }      
+   headers = {'User-Agent':         'Mozilla/5.0 (Linux; Android 6.0.1; SM-G900F Build/M4B30X; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/51.0.2704.106 Mobile Safari/537.36',
+   'X-Requested-With':              'de.prosiebensat1digital.seventv',
+   'Referer':                      'https://www.7pass.de/connect/v1.0/login?flow='+flow,
+   'Content-Type':                  'application/x-www-form-urlencoded',  
+   'Origin':                        'https://7tvapp.7pass.de',
+   }   
+   content = requests.post("https://www.7pass.de/connect/v1.0/login", data=values, allow_redirects=False,verify=False,cookies=cj,headers=headers)
+   content2=content.text.encode('utf-8')
+   newurl=re.compile('href="(.+?)"', re.DOTALL).findall(content2)[0]
+   newurl="https://www.7pass.de/connect/v1.0/"+newurl.replace("&amp;","&")
+   debug("newurl :"+newurl)
+   content = requests.get(newurl, allow_redirects=False,verify=False,cookies=cj,headers=headers)
+   content2=content.text.encode('utf-8')
+   code=re.compile('code=(.+?)"', re.DOTALL).findall(content2)[0]
+   newurl="https://sso.7pass.de/connect/v1.0/token?code="+code+"&client_id=53d94e076563326dd3000000&client_secret=34af9cf73ee141d04ce32c81b6e988ecb2d9a7751401441ad9018e687d0773c4&redirect_uri=mega-app://openidcallback&grant_type=authorization_code"
+   content = requests.post(newurl, allow_redirects=False,verify=False,cookies=cj,headers=headers)
+   content2=content.text.encode('utf-8')
+   _TOKEN=re.compile('"access_token":"(.+?)"', re.DOTALL).findall(content2)[0]   
+   
+   #_TOKEN = 'prosieben'
+   _SALT = '01!8d8F_)r9]4s[qeuXfP%'
+   _CLIENT_NAME = 'kolibri-2.0.19-splec4'
+   clip_id="343487726"
+   client_location="http://www.prosieben.de/livestream?v=343487726"
+   access_token = _SALT[:2] + sha1(''.join([clip_id, _SALT, _TOKEN, client_location, _SALT, _CLIENT_NAME]).encode('utf-8')).hexdigest()
+   newurl="http://vas-live-mdp.glomex.com/live/1.0/getprotocols?access_token=seventv-app&client_location=http%3A%2F%2Fwww.prosieben.de&client_token="+access_token+"&property_name=prosieben-de-24x7"
+   content = requests.get(newurl, allow_redirects=False,verify=False,cookies=cj,headers=headers)
+   content2=content.text.encode('utf-8')
+   
+
+   debug("++++")
+   debug(content2)
+
+   #client_location="http://www.prosieben.de/livestream?v=39790251"
+   #clientname="kolibri-2.0.19-splec4"
+   #salt = '01!8d8F_)r9]4s[qeuXfP%'
+   #clipid="39790251" 
+   #json_url="http://vas.sim-technik.de/vas/live/v2/videos/"+clipid+"/sources?access_token="+access_token+"&client_location="+client_location+"&client_name=kolibri-2.0.19-splec4&ids=605741"
+   #json_data = geturl(json_url)
+   #debug("-------------")
+   #debug(json_data)
+  # client_id = salt[:2] + sha1(''.join([clipid, salt, access_token, client_location, salt, clientname]).encode('utf-8')).hexdigest()
+  # cj.save(cookie,ignore_discard=True, ignore_expires=True) 
    
 # Haupt Menu Anzeigen      
 if mode is '':
     addDir("Sender", "Sender", 'senderlist', "") 
+    addDir("Live Pro7", "pro7", 'livetv', "") 
     addDir("Sendungen A-Z", url+"/ganze-folgen", "sendungsmenu", "")  
     addDir("Sendungen nach Datum", "", "verpasstdatum", "")  
     addDir("Suche","","search","")
@@ -634,7 +720,9 @@ else:
   if mode ==  'verpasstdatummenu':
           verpasstdatummenu(url)          
   if mode == 'favadd':          
-          favadd(url,title,bild)          
+          favadd(url,title,bild)       
+  if mode == 'livetv':          
+          livetv(url)              
   if mode == 'favdel':          
           favdel(url)                             
   if mode == 'listfav':          
