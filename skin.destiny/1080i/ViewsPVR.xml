@@ -26,7 +26,7 @@
 						<texture background="true">default/separator.png</texture>
 					</control>
 					<control type="label">
-						<left>190</left>
+						<left>220</left>
 						<top>20</top>
 						<width>40</width>
 						<height>35</height>
@@ -39,7 +39,7 @@
 						<info>ListItem.ChannelNumberLabel</info>
 					</control>
 					<control type="label">
-						<left>230</left>
+						<left>260</left>
 						<top>25</top>
 						<width>200</width>
 						<height>25</height>
@@ -98,12 +98,22 @@
 						<info>ListItem.Progress</info>
 					</control>
 					<control type="image">
-						<left>50</left>
+						<left>2</left>
 						<top>2</top>
-						<width>67</width>
-						<height>67</height>
-						<aspectratio>keep</aspectratio>
+						<width>187</width>
+						<height>73</height>
 						<texture>$INFO[ListItem.Icon]</texture>
+						<aspectratio scalediffuse="false" align="center" aligny="center">scale</aspectratio>
+						<visible>!Skin.HasSetting(livetvicon)</visible>
+					</control>
+					<control type="image">
+						<left>2</left>
+						<top>2</top>
+						<width>187</width>
+						<height>73</height>
+						<texture>$INFO[ListItem.Icon]</texture>
+						<aspectratio scalediffuse="false" align="center" aligny="center">keep</aspectratio>
+						<visible>Skin.HasSetting(livetvicon)</visible>
 					</control>
 					<control type="image">
 						<left>20</left>
@@ -132,7 +142,7 @@
 						<texture background="true">default/separator.png</texture>
 					</control>
 					<control type="label">
-						<left>190</left>
+						<left>220</left>
 						<top>22</top>
 						<width>40</width>
 						<height>35</height>
@@ -145,7 +155,7 @@
 						<info>ListItem.ChannelNumberLabel</info>
 					</control>
 					<control type="label">
-						<left>230</left>
+						<left>260</left>
 						<top>27</top>
 						<width>200</width>
 						<height>25</height>
@@ -192,9 +202,9 @@
 					</control>
 					<control type="textbox">
 						<description>Plot Value for TVShow</description>
-						<left>30</left>
+						<left>220</left>
 						<top>78</top>
-						<width>1085</width>
+						<width>905</width>
 						<height>95</height>
 						<font>primal_16</font>
 						<align>justify</align>
@@ -217,12 +227,22 @@
 						<info>ListItem.Progress</info>
 					</control>
 					<control type="image">
-						<left>50</left>
+						<left>2</left>
 						<top>2</top>
-						<width>67</width>
-						<height>67</height>
-						<aspectratio>keep</aspectratio>
+						<width>187</width>
+						<height>187</height>
 						<texture>$INFO[ListItem.Icon]</texture>
+						<aspectratio scalediffuse="false" align="center" aligny="center">scale</aspectratio>
+						<visible>!Skin.HasSetting(livetvicon)</visible>
+					</control>
+					<control type="image">
+						<left>2</left>
+						<top>2</top>
+						<width>187</width>
+						<height>187</height>
+						<texture>$INFO[ListItem.Icon]</texture>
+						<aspectratio scalediffuse="false" align="center" aligny="center">keep</aspectratio>
+						<visible>Skin.HasSetting(livetvicon)</visible>
 					</control>
 					<control type="image">
 						<left>20</left>
@@ -327,8 +347,8 @@
 			<control type="panel" id="51">
 				<left>182</left>
 				<top>163</top>
-				<width>1680</width>
-				<height>600</height>
+				<width>1700</width>
+				<height>610</height>
 				<onleft>9020</onleft>
 				<onright>9032</onright>
 				<onup>51</onup>
@@ -336,19 +356,19 @@
 				<viewtype label="50359">list</viewtype>
 				<pagecontrol>60</pagecontrol>
 				<scrolltime tween="sine" easing="out">500</scrolltime>
-				<itemlayout height="203" width="420">
+				<itemlayout height="165" width="560">
 					<control type="image">
 						<left>1</left>
 						<top>0</top>
-						<width>415</width>
-						<height>198</height>
+						<width>555</width>
+						<height>160</height>
 						<texture background="true">skin/button_klein.png</texture>
 		                <colordiffuse>$VAR[BackColorFront]</colordiffuse>
 					</control>
 					<control type="label">
-						<left>20</left>
-						<top>25</top>
-						<width>300</width>
+						<left>170</left>
+						<top>15</top>
+						<width>370</width>
 						<height>35</height>
 						<font>primal_16_Title</font>
 						<align>left</align>
@@ -359,9 +379,9 @@
 						<label>$INFO[ListItem.ChannelNumberLabel]$INFO[ListItem.Label,  ]</label>
 					</control>
 					<control type="label">
-						<left>20</left>
-						<top>105</top>
-						<width>380</width>
+						<left>170</left>
+						<top>70</top>
+						<width>370</width>
 						<height>20</height>
 						<font>primal_15</font>
 						<textcolor>$VAR[ColorFontNormal]</textcolor>
@@ -372,9 +392,9 @@
 						<label>$INFO[ListItem.StartTime] - $INFO[ListItem.EndTime] - $INFO[ListItem.Title]</label>
 					</control>		
 					<control type="label">
-						<left>20</left>
-						<top>135</top>
-						<width>380</width>
+						<left>170</left>
+						<top>100</top>
+						<width>370</width>
 						<height>20</height>
 						<font>primal_15</font>
 						<textcolor>$VAR[ColorFontNormal]</textcolor>
@@ -386,9 +406,9 @@
 					</control>
 					<control type="progress" id="3230">
 						<description>Progressbar</description>
-						<left>20</left>
-						<top>170</top>
-						<width>380</width>
+						<left>170</left>
+						<top>135</top>
+						<width>370</width>
 						<height>8</height>
 						<visible>ListItem.HasEpg</visible>
 						<info>ListItem.Progress</info>
@@ -396,9 +416,9 @@
 					</control>
 					<control type="progress">
 						<description>Progressbar</description>
-						<left>20</left>
-						<top>170</top>
-						<width>380</width>
+						<left>170</left>
+						<top>135</top>
+						<width>370</width>
 						<height>8</height>
 						<texturebg border="0" colordiffuse="$VAR[ColorFontNormal]">progress/bg.png</texturebg>
 						<lefttexture border="0" colordiffuse="$VAR[BackColorButton]">progress/blank.png</lefttexture>
@@ -407,12 +427,22 @@
 						<info>ListItem.Progress</info>
 					</control>
 					<control type="image">
-						<left>330</left>
-						<top>2</top>
-						<width>67</width>
-						<height>67</height>
+						<left>5</left>
+						<top>5</top>
+						<width>150</width>
+						<height>150</height>
 						<aspectratio>keep</aspectratio>
 						<texture>$INFO[ListItem.Icon]</texture>
+						<visible>!Skin.HasSetting(livetvicon)</visible>
+					</control>
+					<control type="image">
+						<left>5</left>
+						<top>5</top>
+						<width>150</width>
+						<height>150</height>
+						<aspectratio>keep</aspectratio>
+						<texture>$INFO[ListItem.Icon]</texture>
+						<visible>Skin.HasSetting(livetvicon)</visible>
 					</control>
 					<control type="image">
 						<left>20</left>
@@ -423,20 +453,20 @@
 						<visible>ListItem.IsRecording</visible>
 					</control>
 				</itemlayout>
-				<focusedlayout height="203" width="420">
+				<focusedlayout height="203" width="560">
 				<control type="group">
 					<control type="image">
 						<left>1</left>
 						<top>0</top>
-						<width>415</width>
-						<height>198</height>
+						<width>555</width>
+						<height>160</height>
 						<texture background="true">skin/button_klein.png</texture>
 		                <colordiffuse>$VAR[BackColorButton]</colordiffuse>
 					</control>
 					<control type="label">
-						<left>20</left>
-						<top>25</top>
-						<width>300</width>
+						<left>170</left>
+						<top>15</top>
+						<width>370</width>
 						<height>35</height>
 						<font>primal_16_Title</font>
 						<align>left</align>
@@ -447,9 +477,9 @@
 						<label>$INFO[ListItem.ChannelNumberLabel]$INFO[ListItem.Label,  ]</label>
 					</control>
 					<control type="label">
-						<left>20</left>
-						<top>105</top>
-						<width>380</width>
+						<left>170</left>
+						<top>70</top>
+						<width>370</width>
 						<height>20</height>
 						<font>primal_15</font>
 						<textcolor>$VAR[ColorFontNormal]</textcolor>
@@ -460,9 +490,9 @@
 						<label>$INFO[ListItem.StartTime] - $INFO[ListItem.EndTime] - $INFO[ListItem.Title]</label>
 					</control>
 					<control type="label">
-						<left>20</left>
-						<top>135</top>
-						<width>380</width>
+						<left>170</left>
+						<top>100</top>
+						<width>370</width>
 						<height>20</height>
 						<font>primal_15</font>
 						<textcolor>$VAR[ColorFontNormal]</textcolor>
@@ -474,23 +504,33 @@
 					</control>
 					<control type="progress">
 						<description>Progressbar</description>
-						<left>20</left>
-						<top>170</top>
-						<width>380</width>
+						<left>170</left>
+						<top>135</top>
+						<width>370</width>
 						<height>8</height>
 						<texturebg border="0" colordiffuse="$VAR[ColorFontNormal]">progress/bg.png</texturebg>
-						<lefttexture border="0" colordiffuse="$VAR[ColorButtonDialogeBack]">progress/blank.png</lefttexture>
-						<midtexture border="0" colordiffuse="$VAR[ColorButtonDialogeBack]">progress/blank.png</midtexture>
-						<righttexture border="0" colordiffuse="$VAR[ColorButtonDialogeBack]">progress/blank.png</righttexture>
+						<lefttexture border="0" colordiffuse="$VAR[ColorProgress]">progress/blank.png</lefttexture>
+						<midtexture border="0" colordiffuse="$VAR[ColorProgress]">progress/blank.png</midtexture>
+						<righttexture border="0" colordiffuse="$VAR[ColorProgress]">progress/blank.png</righttexture>
 						<info>ListItem.Progress</info>
 					</control>
 					<control type="image">
-						<left>330</left>
-						<top>2</top>
-						<width>67</width>
-						<height>67</height>
+						<left>5</left>
+						<top>5</top>
+						<width>150</width>
+						<height>150</height>
 						<aspectratio>keep</aspectratio>
 						<texture>$INFO[ListItem.Icon]</texture>
+						<visible>!Skin.HasSetting(livetvicon)</visible>
+					</control>
+					<control type="image">
+						<left>5</left>
+						<top>5</top>
+						<width>150</width>
+						<height>150</height>
+						<aspectratio>keep</aspectratio>
+						<texture>$INFO[ListItem.Icon]</texture>
+						<visible>Skin.HasSetting(livetvicon)</visible>
 					</control>
 					<control type="image">
 						<left>20</left>
@@ -573,10 +613,10 @@
 			  <autoscroll time="2000" delay="15000" repeat="5000">!Skin.HasSetting(NoPlotScroll)</autoscroll>
 		    </control>
 			<control type="image">
-			  <left>1380</left>
-			  <top>2</top>
-			  <width>200</width>
-			  <height>200</height>
+			  <left>1483</left>
+			  <top>5</top>
+			  <width>188</width>
+			  <height>188</height>
 			  <aspectratio>keep</aspectratio>
 			  <texture>$INFO[ListItem.Icon]</texture>
 		    </control>
@@ -596,7 +636,7 @@
 			  <label>($INFO[Container(51).NumItems]) $LOCALIZE[19019] - $LOCALIZE[31024] ($INFO[Container(51).CurrentPage]/$INFO[Container(51).NumPages])</label>
 			</control>
 			<control type="videowindow">
-			  <left>1470</left>
+			  <left>1490</left>
 			  <top>785</top>
 			  <width>390</width>
 			  <height>190</height>
@@ -686,6 +726,277 @@
 				<label>$INFO[RDS.Getline(0)]</label>
 			</control>
           </control>-->
+		</control>
+	</include>
+	
+	<include name="View_52_LiveTVIcon">
+		<control type="group">
+		    <include>Animation.ZoomIn</include>
+			<description>TV Channels group</description>
+			<visible>Control.IsVisible(52)</visible>
+			<control type="list" id="52">
+				<left>182</left>
+				<top>163</top>
+				<width>1675</width>
+				<height>820</height>
+				<onleft>9020</onleft>
+				<onright>9032</onright>
+				<onup>51</onup>
+				<ondown>51</ondown>
+				<viewtype label="Full Info">list</viewtype>
+				<pagecontrol>60</pagecontrol>
+				<orientation>horizontal</orientation>
+				<scrolltime tween="sine" easing="out">500</scrolltime>
+				<itemlayout height="165" width="275">
+					<control type="image">
+						<left>1</left>
+						<top>0</top>
+						<width>270</width>
+						<height>815</height>
+						<texture background="true">skin/button_klein.png</texture>
+		                <colordiffuse>$VAR[BackColorFront]</colordiffuse>
+					</control>
+					<control type="label">
+						<left>10</left>
+						<top>175</top>
+						<width>250</width>
+						<height>35</height>
+						<font>primal_16_Title</font>
+						<align>left</align>
+						<aligny>center</aligny>
+						<textcolor>$VAR[ColorFontNormal]</textcolor>
+	                    <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+						<selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
+						<label>$INFO[ListItem.ChannelNumberLabel]$INFO[ListItem.Label,  ]</label>
+					</control>
+					<control type="label">
+						<left>10</left>
+						<top>220</top>
+						<width>250</width>
+						<height>20</height>
+						<font>primal_15</font>
+						<textcolor>$VAR[ColorFontNormal]</textcolor>
+	                    <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+						<selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
+						<align>left</align>
+						<aligny>center</aligny>
+						<label>$INFO[ListItem.StartTime] - $INFO[ListItem.EndTime]</label>
+					</control>	
+					<control type="label">
+						<left>10</left>
+						<top>250</top>
+						<width>250</width>
+						<height>20</height>
+						<font>primal_15</font>
+						<textcolor>$VAR[ColorFontNormal]</textcolor>
+	                    <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+						<selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
+						<align>left</align>
+						<aligny>center</aligny>
+						<label>$INFO[ListItem.Title]</label>
+					</control>	
+					<control type="progress" id="3230">
+						<description>Progressbar</description>
+						<left>10</left>
+						<top>280</top>
+						<width>250</width>
+						<height>8</height>
+						<visible>ListItem.HasEpg</visible>
+						<info>ListItem.Progress</info>
+						<visible>!ListItem.IsRecording</visible>
+					</control>
+					<control type="progress">
+						<description>Progressbar</description>
+						<left>10</left>
+						<top>280</top>
+						<width>250</width>
+						<height>8</height>
+						<texturebg border="0" colordiffuse="$VAR[ColorFontNormal]">progress/bg.png</texturebg>
+						<lefttexture border="0" colordiffuse="$VAR[ColorProgress]">progress/blank.png</lefttexture>
+						<midtexture border="0" colordiffuse="$VAR[ColorProgress]">progress/blank.png</midtexture>
+						<righttexture border="0" colordiffuse="$VAR[ColorProgress]">progress/blank.png</righttexture>
+						<info>ListItem.Progress</info>
+					</control>
+					<control type="textbox">
+						<description>Plot Value for TVShow</description>
+						<left>10</left>
+						<top>320</top>
+						<width>250</width>
+						<height>450</height>
+						<font>primal_15</font>
+						<align>justify</align>
+						<textcolor>white</textcolor>
+	                    <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+						<pagecontrol>-</pagecontrol>
+						<label>[COLOR $VAR[ColorFontNormal]]$INFO[ListItem.Plot][/COLOR]</label>
+					</control>
+					<control type="image">
+						<left>5</left>
+						<top>5</top>
+						<width>260</width>
+						<height>150</height>
+						<aspectratio>scale</aspectratio>
+						<texture>$INFO[ListItem.Icon]</texture>
+						<visible>!Skin.HasSetting(livetvicon)</visible>
+					</control>
+					<control type="image">
+						<left>5</left>
+						<top>5</top>
+						<width>260</width>
+						<height>150</height>
+						<aspectratio>keep</aspectratio>
+						<texture>$INFO[ListItem.Icon]</texture>
+						<visible>Skin.HasSetting(livetvicon)</visible>
+					</control>
+					<control type="image">
+						<left>20</left>
+						<top>70</top>
+						<width>30</width>
+						<height>20</height>
+						<texture>PVR-IsRecording.png</texture>
+						<visible>ListItem.IsRecording</visible>
+					</control>
+				</itemlayout>
+				<focusedlayout height="203" width="275">
+				<control type="group">
+					<control type="image">
+						<left>1</left>
+						<top>0</top>
+						<width>270</width>
+						<height>815</height>
+						<texture background="true">skin/button_klein.png</texture>
+		                <colordiffuse>$VAR[BackColorFront]</colordiffuse>
+					</control>
+					<control type="image">
+						<left>1</left>
+						<top>794</top>
+						<width>270</width>
+						<height>20</height>
+						<texture background="true">skin/button_klein.png</texture>
+		                <colordiffuse>$VAR[BackColorButton]</colordiffuse>
+					</control>
+					<control type="label">
+						<left>10</left>
+						<top>175</top>
+						<width>250</width>
+						<height>35</height>
+						<font>primal_16_Title</font>
+						<align>left</align>
+						<aligny>center</aligny>
+						<textcolor>$VAR[BackColorButton]</textcolor>
+	                    <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+						<selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
+						<label>$INFO[ListItem.ChannelNumberLabel]$INFO[ListItem.Label,  ]</label>
+					</control>
+					<control type="label">
+						<left>10</left>
+						<top>220</top>
+						<width>250</width>
+						<height>20</height>
+						<font>primal_15</font>
+						<textcolor>$VAR[ColorFontNormal]</textcolor>
+	                    <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+						<selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
+						<align>left</align>
+						<aligny>center</aligny>
+						<label>$INFO[ListItem.StartTime] - $INFO[ListItem.EndTime]</label>
+					</control>	
+					<control type="label">
+						<left>10</left>
+						<top>250</top>
+						<width>250</width>
+						<height>20</height>
+						<font>primal_15</font>
+						<textcolor>$VAR[ColorFontNormal]</textcolor>
+	                    <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+						<selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
+						<align>left</align>
+						<aligny>center</aligny>
+						<label>$INFO[ListItem.Title]</label>
+					</control>	
+					<control type="progress" id="3230">
+						<description>Progressbar</description>
+						<left>10</left>
+						<top>280</top>
+						<width>250</width>
+						<height>8</height>
+						<visible>ListItem.HasEpg</visible>
+						<info>ListItem.Progress</info>
+						<visible>!ListItem.IsRecording</visible>
+					</control>
+					<control type="progress">
+						<description>Progressbar</description>
+						<left>10</left>
+						<top>280</top>
+						<width>250</width>
+						<height>8</height>
+						<texturebg border="0" colordiffuse="$VAR[ColorFontNormal]">progress/bg.png</texturebg>
+						<lefttexture border="0" colordiffuse="$VAR[ColorProgress]">progress/blank.png</lefttexture>
+						<midtexture border="0" colordiffuse="$VAR[ColorProgress]">progress/blank.png</midtexture>
+						<righttexture border="0" colordiffuse="$VAR[ColorProgress]">progress/blank.png</righttexture>
+						<info>ListItem.Progress</info>
+					</control>
+					<control type="textbox">
+						<description>Plot Value for TVShow</description>
+						<left>10</left>
+						<top>320</top>
+						<width>250</width>
+						<height>450</height>
+						<font>primal_15</font>
+						<align>justify</align>
+						<textcolor>white</textcolor>
+	                    <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+						<pagecontrol>-</pagecontrol>
+						<label>[COLOR $VAR[ColorFontNormal]]$INFO[ListItem.Plot][/COLOR]</label>
+						<autoscroll time="2000" delay="15000" repeat="5000">!Skin.HasSetting(NoPlotScroll)</autoscroll>
+					</control>
+					<control type="image">
+						<left>5</left>
+						<top>5</top>
+						<width>260</width>
+						<height>150</height>
+						<aspectratio>scale</aspectratio>
+						<texture>$INFO[ListItem.Icon]</texture>
+						<visible>!Skin.HasSetting(livetvicon)</visible>
+					</control>
+					<control type="image">
+						<left>5</left>
+						<top>5</top>
+						<width>260</width>
+						<height>150</height>
+						<aspectratio>keep</aspectratio>
+						<texture>$INFO[ListItem.Icon]</texture>
+						<visible>Skin.HasSetting(livetvicon)</visible>
+					</control>
+					<control type="image">
+						<left>20</left>
+						<top>70</top>
+						<width>30</width>
+						<height>20</height>
+						<texture>PVR-IsRecording.png</texture>
+						<visible>ListItem.IsRecording</visible>
+					</control>
+				  </control>
+				</focusedlayout>
+			</control>
+			<!--<control type="scrollbar" id="60">
+			  <include>Animation.ZoomIn</include>
+	          <include>Animation.ZoomOut</include>
+			  <left>30</left>
+			  <top>165</top>
+			  <width>10</width>
+			  <height>810</height>
+			  <texturesliderbackground>button/ScrollBarV.png</texturesliderbackground>
+			  <texturesliderbar colordiffuse="$VAR[BackColorFront]">button/ScrollBarV_bar.png</texturesliderbar>
+			  <texturesliderbarfocus colordiffuse="$VAR[BackColorButton]">button/ScrollBarV_bar_focus.png</texturesliderbarfocus>
+			  <textureslidernib>button/ScrollBarNib.png</textureslidernib>
+			  <textureslidernibfocus>button/ScrollBarNib.png</textureslidernibfocus>
+			  <onleft>9020</onleft>
+			  <onright>50</onright>
+			  <showonepage>false</showonepage>
+			  <orientation>vertical</orientation>
+			  <visible>Control.IsVisible(51)</visible>
+			</control>-->
 		</control>
 	</include>
 			

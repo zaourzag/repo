@@ -1219,8 +1219,8 @@
 				<bordertexture border="10">ThumbShadow.png</bordertexture>
 				<bordersize>6</bordersize>
 				<colordiffuse>$VAR[ColorButtonDialogeBack]</colordiffuse>
-			 </control>
-			 <control type="image">
+			  </control>
+			  <control type="image">
 				<left>12</left>
 				<top>497</top>
 				<width>375</width>
@@ -1251,7 +1251,7 @@
 				<texture background="true">home/homeicons/back.png</texture>
 				<visible>Stringcompare(ListItem.label,..)</visible> 
 			 </control>
-			 <control type="image">
+			  <control type="image">
 				<left>6</left>
 				<top>4</top>
 				<width>40</width>

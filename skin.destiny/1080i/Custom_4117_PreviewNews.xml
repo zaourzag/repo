@@ -807,8 +807,117 @@
 			</control>
         </focusedlayout>
 		      <content>
-                 <include>Newscenter</include>
-			  </content> 
+				<item id="1">
+				  <label>$INFO[Window(Home).Property(LatestNews.0.Title)]</label>
+				  <thumb>$INFO[Window(Home).Property(LatestNews.0.Logo)]</thumb>
+				  <label2>$INFO[Window(Home).Property(LatestNews.0.Date)]</label2>
+				  <property name="desc">$INFO[Window(Home).Property(LatestNews.0.Desc)]</property>
+				  <property name="headerpic">$INFO[Window(Home).Property(LatestNews.0.HeaderPic)]</property>
+				  <onclick>-</onclick>
+				  <icon>$INFO[Window(Home).Property(LatestNews.0.Logo)]</icon>
+				  <visible>!IsEmpty(Window(Home).Property(LatestNews.0.Title))</visible>
+				  <actualicon>$INFO[Window(Home).Property(LatestNews.0.Logo)]</actualicon>
+				</item>
+				<item id="2">
+				  <label>$INFO[Window(Home).Property(LatestNews.1.Title)]</label>
+				  <thumb>$INFO[Window(Home).Property(LatestNews.1.Logo)]</thumb>
+				  <label2>$INFO[Window(Home).Property(LatestNews.1.Date)]</label2>
+				  <property name="desc">$INFO[Window(Home).Property(LatestNews.1.Desc)]</property>
+				  <property name="headerpic">$INFO[Window(Home).Property(LatestNews.1.HeaderPic)]</property>
+				  <onclick>-</onclick>
+				  <icon>$INFO[Window(Home).Property(LatestNews.1.Logo)]</icon>
+				  <visible>!IsEmpty(Window(Home).Property(LatestNews.1.Title))</visible>
+				  <actualicon>$INFO[Window(Home).Property(LatestNews.1.Logo)]</actualicon>
+				</item>
+				<item id="3">
+				  <label>$INFO[Window(Home).Property(LatestNews.2.Title)]</label>
+				  <thumb>$INFO[Window(Home).Property(LatestNews.2.Logo)]</thumb>
+				  <label2>$INFO[Window(Home).Property(LatestNews.2.Date)]</label2>
+				  <property name="desc">$INFO[Window(Home).Property(LatestNews.2.Desc)]</property>
+				  <property name="headerpic">$INFO[Window(Home).Property(LatestNews.2.HeaderPic)]</property>
+				  <onclick>-</onclick>
+				  <icon>$INFO[Window(Home).Property(LatestNews.2.Logo)]</icon>
+				  <visible>!IsEmpty(Window(Home).Property(LatestNews.2.Title))</visible>
+				  <actualicon>$INFO[Window(Home).Property(LatestNews.2.Logo)]</actualicon>
+				</item>	
+				<item id="4">
+				  <label>$INFO[Window(Home).Property(LatestNews.3.Title)]</label>
+				  <thumb>$INFO[Window(Home).Property(LatestNews.3.Logo)]</thumb>
+				  <label2>$INFO[Window(Home).Property(LatestNews.3.Date)]</label2>
+				  <property name="desc">$INFO[Window(Home).Property(LatestNews.3.Desc)]</property>
+				  <property name="headerpic">$INFO[Window(Home).Property(LatestNews.3.HeaderPic)]</property>
+				  <onclick>-</onclick>
+				  <icon>$INFO[Window(Home).Property(LatestNews.3.Logo)]</icon>
+				  <visible>!IsEmpty(Window(Home).Property(LatestNews.3.Title))</visible>
+				  <actualicon>$INFO[Window(Home).Property(LatestNews.3.Logo)]</actualicon>
+				</item>
+				<item id="5">
+				  <label>$INFO[Window(Home).Property(LatestNews.4.Title)]</label>
+				  <thumb>$INFO[Window(Home).Property(LatestNews.4.Logo)]</thumb>
+				  <label2>$INFO[Window(Home).Property(LatestNews.4.Date)]</label2>
+				  <property name="desc">$INFO[Window(Home).Property(LatestNews.4.Desc)]</property>
+				  <property name="headerpic">$INFO[Window(Home).Property(LatestNews.4.HeaderPic)]</property>
+				  <onclick>-</onclick>
+				  <icon>$INFO[Window(Home).Property(LatestNews.4.Logo)]</icon>
+				  <visible>!IsEmpty(Window(Home).Property(LatestNews.4.Title))</visible>
+				  <actualicon>$INFO[Window(Home).Property(LatestNews.4.Logo)]</actualicon>
+				</item>
+				<item id="6">
+				  <label>$INFO[Window(Home).Property(LatestNews.5.Title)]</label>
+				  <thumb>$INFO[Window(Home).Property(LatestNews.5.Logo)]</thumb>
+				  <label2>$INFO[Window(Home).Property(LatestNews.5.Date)]</label2>
+				  <property name="desc">$INFO[Window(Home).Property(LatestNews.5.Desc)]</property>
+				  <property name="headerpic">$INFO[Window(Home).Property(LatestNews.5.HeaderPic)]</property>
+				  <onclick>-</onclick>
+				  <icon>$INFO[Window(Home).Property(LatestNews.5.Logo)]</icon>
+				  <visible>!IsEmpty(Window(Home).Property(LatestNews.5.Title))</visible>
+				  <actualicon>$INFO[Window(Home).Property(LatestNews.5.Logo)]</actualicon>
+				</item>
+				<item id="7">
+				  <label>$INFO[Window(Home).Property(LatestNews.6.Title)]</label>
+				  <thumb>$INFO[Window(Home).Property(LatestNews.6.Logo)]</thumb>
+				  <label2>$INFO[Window(Home).Property(LatestNews.6.Date)]</label2>
+				  <property name="desc">$INFO[Window(Home).Property(LatestNews.6.Desc)]</property>
+				  <property name="headerpic">$INFO[Window(Home).Property(LatestNews.6.HeaderPic)]</property>
+				  <onclick>-</onclick>
+				  <icon>$INFO[Window(Home).Property(LatestNews.6.Logo)]</icon>
+				  <visible>!IsEmpty(Window(Home).Property(LatestNews.6.Title))</visible>
+				  <actualicon>$INFO[Window(Home).Property(LatestNews.6.Logo)]</actualicon>
+				</item>
+				<item id="8">
+				  <label>$INFO[Window(Home).Property(LatestNews.7.Title)]</label>
+				  <thumb>$INFO[Window(Home).Property(LatestNews.7.Logo)]</thumb>
+				  <label2>$INFO[Window(Home).Property(LatestNews.7.Date)]</label2>
+				  <property name="desc">$INFO[Window(Home).Property(LatestNews.7.Desc)]</property>
+				  <property name="headerpic">$INFO[Window(Home).Property(LatestNews.7.HeaderPic)]</property>
+				  <onclick>-</onclick>
+				  <icon>$INFO[Window(Home).Property(LatestNews.7.Logo)]</icon>
+				  <visible>!IsEmpty(Window(Home).Property(LatestNews.7.Title))</visible>
+				  <actualicon>$INFO[Window(Home).Property(LatestNews.7.Logo)]</actualicon>
+				</item>
+				<item id="9">
+				  <label>$INFO[Window(Home).Property(LatestNews.8.Title)]</label>
+				  <thumb>$INFO[Window(Home).Property(LatestNews.8.Logo)]</thumb>
+				  <label2>$INFO[Window(Home).Property(LatestNews.8.Date)]</label2>
+				  <property name="desc">$INFO[Window(Home).Property(LatestNews.8.Desc)]</property>
+				  <property name="headerpic">$INFO[Window(Home).Property(LatestNews.8.HeaderPic)]</property>
+				  <onclick>-</onclick>
+				  <icon>$INFO[Window(Home).Property(LatestNews.8.Logo)]</icon>
+				  <visible>!IsEmpty(Window(Home).Property(LatestNews.8.Title))</visible>
+				  <actualicon>$INFO[Window(Home).Property(LatestNews.8.Logo)]</actualicon>
+				</item>	
+				<item id="10">
+				  <label>$INFO[Window(Home).Property(LatestNews.9.Title)]</label>
+				  <thumb>$INFO[Window(Home).Property(LatestNews.9.Logo)]</thumb>
+				  <label2>$INFO[Window(Home).Property(LatestNews.9.Date)]</label2>
+				  <property name="desc">$INFO[Window(Home).Property(LatestNews.9.Desc)]</property>
+				  <property name="headerpic">$INFO[Window(Home).Property(LatestNews.9.HeaderPic)]</property>
+				  <onclick>-</onclick>
+				  <icon>$INFO[Window(Home).Property(LatestNews.9.Logo)]</icon>
+				  <visible>!IsEmpty(Window(Home).Property(LatestNews.9.Title))</visible>
+				  <actualicon>$INFO[Window(Home).Property(LatestNews.9.Logo)]</actualicon>
+				</item>
+			</content>  
 		  </control>
 		  
 		<!-- =============================================================================================-->

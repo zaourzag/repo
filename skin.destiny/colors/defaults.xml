@@ -1,7 +1,7 @@
 <colors>
     <color name="BackColorBackground">FF211f2a</color>
 	<color name="BackColorFront">FF353340</color>
-	<color name="BackColorButton">FF176489</color>
+	<color name="BackColorButton">FFbd4622</color>
 	<color name="ColorButtonDialogeBack">FF292632</color>
 	<color name="ColorIcons">FFcbcccc</color>
 	<color name="ColorFlaggingIcons">FFcbcccc</color>
@@ -11,9 +11,10 @@
 	<color name="ColorFontUnfocus">FF9a9b9c</color>	
 	<color name="ColorFontSelected">FFFF8619</color>
 	<color name="ColorFontShadow">FF000000</color>
-	<color name="ColorButtonNoFocus">FF504f58</color>
+	<color name="ColorButtonNoFocus">FF808080</color>
 	<color name="ColorFontNormalHomemenu">FFcbcccc</color>
 	<color name="ColorFontShadowHomemenu">FF000000</color>
+	<color name="ColorInfoBack">887c4819</color>
 	
 	<color name="ColorBackHomeButton0">FF353340</color>
 	<color name="ColorBackHomeButton1">FF173a1a</color>
@@ -39,5 +40,10 @@
 	<color name="ColorBackHomeButton21">FFBA55D3</color>
 	<color name="ColorBackHomeButton22">FFD66321</color>
 	<color name="ColorBackHomeButton23">FF847308</color>
+	<color name="ColorBackHomeButton24">FF820123</color>
+	<color name="ColorBackHomeButton25">FF016b47</color>
+	<color name="ColorBackHomeButton26">FF5b4700</color>
+	<color name="ColorBackHomeButton27">FF441660</color>
+	<color name="ColorBackHomeButton28">FF1e9185</color>
 
 </colors>

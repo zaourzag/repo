@@ -72,7 +72,7 @@
       <height>550</height>
       <onup>3</onup>
       <ondown>3</ondown>
-      <onleft>5</onleft>
+      <onleft>90</onleft>
       <onright>61</onright>
       <pagecontrol>61</pagecontrol>
       <scrolltime tween="Sine" easing="out">500</scrolltime>
@@ -278,19 +278,26 @@
       <label>($INFO[Container(6).NumItems]) $LOCALIZE[31025] - $LOCALIZE[31024] ($INFO[Container(6).CurrentPage]/$INFO[Container(6).NumPages])</label>
       <visible>Control.IsVisible(6)</visible>
     </control>
-    <control type="button" id="5">
-      <description>Manual button</description>
-      <left>50</left>
-      <top>680</top>
-      <width>150</width>
-      <height>60</height>
-      <label>186</label>
-      <font>primal_16</font>
-      <align>center</align>
-      <onleft>61</onleft>
-      <onright>3</onright>
-      <onup>3</onup>
-      <ondown>3</ondown>
-    </control>
+	<control type="grouplist" id="90">
+	  <left>50</left>
+	  <top>680</top>
+	  <onleft>3</onleft>
+	  <onright>3</onright>
+	  <orientation>horizontal</orientation>
+	  <control type="button" id="5">
+		<description>Manual button</description>
+		<width>150</width>
+		<height>60</height>
+		<label>186</label>
+		<align>center</align>
+	  </control>
+	  <control type="button" id="7">
+		<description>Cancel button</description>
+		<width>150</width>
+		<height>60</height>
+		<label>186</label>
+		<align>center</align>
+	  </control>
+	</control>
   </controls>
 </window>

@@ -22,7 +22,7 @@
         <height>820</height>
         <onleft>9020</onleft>
         <onright>10000</onright>
-        <onup>1860</onup>
+        <onup>10000</onup>
         <ondown>10000</ondown>
         <pagecontrol>-</pagecontrol>
 		<focusposition>1</focusposition>
@@ -43,7 +43,7 @@
 		  <control type="label">
 			<left>120</left>
 			<top>20</top>
-			<width>200</width>
+			<width>350</width>
 			<height>80</height>
 			<font>primal_22</font>
 			<textcolor>$VAR[ColorFontNormal]</textcolor>
@@ -86,7 +86,7 @@
 		  <control type="label">
 			<left>120</left>
 			<top>20</top>
-			<width>200</width>
+			<width>350</width>
 			<height>80</height>
 			<font>primal_22</font>
 			<textcolor>$VAR[ColorFontNormal]</textcolor>
@@ -117,84 +117,70 @@
         </focusedlayout>
         <content>
           <item id="1">
-            <label>480</label>
-            <label2>50060</label2>
-            <onclick>ActivateWindow(AppearanceSettings)</onclick>
+            <label>$LOCALIZE[14200]</label>
+            <label2>$LOCALIZE[50060]</label2>
+            <onclick>ActivateWindow(PlayerSettings)</onclick>
             <thumb>home/homeicons/presentation.png</thumb>
           </item>
           <item id="2">
-            <label>157</label>
-            <label2>50061</label2>
-            <onclick>ActivateWindow(VideosSettings)</onclick>
+            <label>$LOCALIZE[14202]</label>
+            <label2>$LOCALIZE[50061]</label2>
+            <onclick>ActivateWindow(MediaSettings)</onclick>
             <thumb>home/homeicons/film.png</thumb>
           </item>
-          <!-- PVR -->
-          <item id="10">
-            <label>50062</label>
-            <label2>50063</label2>
-            <onclick>ActivateWindow(MyTVSettings)</onclick>
+          <item id="3">
+            <label>$LOCALIZE[50062]</label>
+            <label2>$LOCALIZE[50063]</label2>
+            <onclick>ActivateWindow(PVRSettings)</onclick>
             <thumb>home/homeicons/tv.png</thumb>
           </item>
-          <!-- PVR end -->
-          <item id="3">
-            <label>2</label>
-            <label2>50064</label2>
-            <onclick>ActivateWindow(MusicSettings)</onclick>
-            <thumb>home/homeicons/music.png</thumb>
-          </item>
-          <item id="4">
-            <label>1</label>
-            <label2>50065</label2>
-            <onclick>ActivateWindow(PicturesSettings)</onclick>
-            <thumb>home/homeicons/photos.png</thumb>
-          </item>
           <item id="5">
-            <label>8</label>
-            <label2>50066</label2>
-            <onclick>ActivateWindow(WeatherSettings)</onclick>
-            <thumb>home/homeicons/weather.png</thumb>
+            <label>$LOCALIZE[14206]</label>
+            <label2>$LOCALIZE[50066]</label2>
+            <onclick>ActivateWindow(InterfaceSettings)</onclick>
+            <thumb>home/homeicons/skin.png</thumb>
           </item>
           <item id="6">
-            <label>705</label>
-            <label2>50067</label2>
+            <label>$LOCALIZE[705]</label>
+            <label2>$LOCALIZE[50067]</label2>
             <onclick>ActivateWindow(ServiceSettings)</onclick>
             <thumb>home/homeicons/network.png</thumb>
           </item>
           <item id="9">
-            <label>24001</label>
-            <label2>50068</label2>
+            <label>$LOCALIZE[24001]</label>
+            <label2>$LOCALIZE[50068]</label2>
             <onclick>ActivateWindow(AddonBrowser)</onclick>
             <thumb>home/homeicons/addons.png</thumb>
           </item>
           <item id="7">
-            <label>13000</label>
-            <label2>50069</label2>
+            <label>$LOCALIZE[13000]</label>
+            <label2>$LOCALIZE[50069]</label2>
             <onclick>ActivateWindow(SystemSettings)</onclick>
             <thumb>home/homeicons/settings.png</thumb>
           </item>
-          <item id="8">
-            <label>20077</label>
-            <label2>50070</label2>
-            <onclick>ActivateWindow(SkinSettings)</onclick>
-            <thumb>home/homeicons/skin.png</thumb>
-          </item>
 		  <item id="11">
-            <label>13200</label>
-            <label2>50071</label2>
+            <label>$LOCALIZE[13200]</label>
+            <label2>$LOCALIZE[50071]</label2>
             <onclick>ActivateWindow(Profiles)</onclick>
             <thumb>home/homeicons/profiles.png</thumb>
           </item>
 		  <item id="12">
-            <label>50073</label>
-            <label2>50072</label2>
+            <label>$LOCALIZE[50073]</label>
+            <label2>$LOCALIZE[50072]</label2>
             <onclick>ActivateWindow(SystemInfo)</onclick>
             <thumb>home/homeicons/sysinfo.png</thumb>
           </item>
 		  <item id="13">
-            <label>7</label>
-            <label2>50246</label2>
+            <label>$LOCALIZE[7]</label>
+            <label2>$LOCALIZE[50246]</label2>
             <onclick>ActivateWindow(FileManager)</onclick>
             <thumb>home/homeicons/data.png</thumb>
+          </item>
+		  <item id="14">
+            <label>$LOCALIZE[20077]</label>
+            <label2>$LOCALIZE[50070]</label2>
+            <onclick>ActivateWindow(SkinSettings)</onclick>
+            <thumb>home/homeicons/blume.png</thumb>
           </item>
         </content>
       </control>

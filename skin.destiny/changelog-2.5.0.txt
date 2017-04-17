@@ -1,0 +1,4 @@
+Changelog:
+
+2.5.0
+- for Kodi 17

@@ -1,19 +1,20 @@
 <colors>
-    <color name="BackColorBackground">FF7c7c80</color>
-	<color name="BackColorFront">FFa6a6a8</color>
-	<color name="BackColorButton">FF176489</color>
-	<color name="ColorButtonDialogeBack">FFC6C6C8</color>
-	<color name="ColorIcons">FF176489</color>
-	<color name="ColorFlaggingIcons">FF176489</color>
+    <color name="BackColorBackground">FFdfdfdf</color>
+	<color name="BackColorFront">FFdfdfdf</color>
+	<color name="BackColorButton">FFbd4622</color>
+	<color name="ColorButtonDialogeBack">ffd3d3d3</color>
+	<color name="ColorIcons">FF2C2C2C</color>
+	<color name="ColorFlaggingIcons">FF2C2C2C</color>
 	<color name="ColorFontNormal">FF2C2C2C</color>
 	<color name="ColorButtonHomemenuBig">FF272530</color>	
 	<color name="ColorProgress">FF327494</color>
 	<color name="ColorFontUnfocus">FF414040</color>	
-	<color name="ColorFontSelected">FFb36c10</color>
+	<color name="ColorFontSelected">FF7c4819</color>
 	<color name="ColorFontShadow">22000000</color>
 	<color name="ColorButtonNoFocus">FFA0A0A0</color>
-	<color name="ColorFontNormalHomemenu">FFcbcccc</color>
-	<color name="ColorFontShadowHomemenu">FF000000</color>
+	<color name="ColorFontNormalHomemenu">FFC6C6C8</color>
+	<color name="ColorFontShadowHomemenu">22000000</color>
+	<color name="ColorInfoBack">886c6c6f</color>
 	
 	<color name="ColorBackHomeButton0">FF353340</color>
 	<color name="ColorBackHomeButton1">FF173a1a</color>

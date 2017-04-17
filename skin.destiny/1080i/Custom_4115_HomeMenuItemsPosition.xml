@@ -125,7 +125,12 @@
 						<onclick>Skin.Reset(HomeMenuItemPlaylist2)</onclick>
 						<onclick>Skin.Reset(HomeMenuItemPlaylist3)</onclick>
 						<onclick>Skin.Reset(HomeMenuItemPlaylist5)</onclick>
-						<onclick>Skin.Reset(HomeMenuItemPlaylist5)</onclick>
+						<onclick>Skin.Reset(HomeMenuItemPlaylist5)</onclick>						
+						<onclick>Skin.Reset(HomeMenuItemPlaylist6)</onclick>
+						<onclick>Skin.Reset(HomeMenuItemPlaylist7)</onclick>
+						<onclick>Skin.Reset(HomeMenuItemPlaylist8)</onclick>
+						<onclick>Skin.Reset(HomeMenuItemPlaylist9)</onclick>
+						<onclick>Skin.Reset(HomeMenuItemPlaylist10)</onclick>						
 						<onclick>Skin.Reset(HomeMenuItemMusic)</onclick>
 						<onclick>Skin.Reset(HomeMenuItemAddons)</onclick>
 						<onclick>Skin.Reset(HomeMenuItemConcerts)</onclick>
@@ -222,7 +227,7 @@
 						<visible></visible>
 					</item>
 					<item id="11">
-						<label>Button 1</label>
+						<label>Playlist 4</label>
 						<label2 fallback="11.">$INFO[Skin.String(HomeMenuItemPlaylist4),,.]</label2>
 						<icon>home/homeicons/film.png</icon>
 						<onclick>Skin.Reset(HomeMenuItemPlaylist4)</onclick>
@@ -230,7 +235,7 @@
 						<visible></visible>
 					</item>
 					<item id="12">
-						<label>Button 2</label>
+						<label>Playlist 5</label>
 						<label2 fallback="12.">$INFO[Skin.String(HomeMenuItemPlaylist5),,.]</label2>
 						<icon>home/homeicons/film.png</icon>
 						<onclick>Skin.Reset(HomeMenuItemPlaylist5)</onclick>
@@ -238,96 +243,136 @@
 						<visible></visible>
 					</item>
 					<item id="13">
+						<label>Playlist 6</label>
+						<label2 fallback="13.">$INFO[Skin.String(HomeMenuItemPlaylist6),,.]</label2>
+						<icon>home/homeicons/film.png</icon>
+						<onclick>Skin.Reset(HomeMenuItemPlaylist6)</onclick>
+						<onclick>Skin.SetNumeric(HomeMenuItemPlaylist6)</onclick>
+						<visible></visible>
+					</item>
+					<item id="14">
+						<label>Playlist 7</label>
+						<label2 fallback="14.">$INFO[Skin.String(HomeMenuItemPlaylist7),,.]</label2>
+						<icon>home/homeicons/film.png</icon>
+						<onclick>Skin.Reset(HomeMenuItemPlaylist7)</onclick>
+						<onclick>Skin.SetNumeric(HomeMenuItemPlaylist7)</onclick>
+						<visible></visible>
+					</item>
+					<item id="15">
+						<label>Playlist 8</label>
+						<label2 fallback="15.">$INFO[Skin.String(HomeMenuItemPlaylist8),,.]</label2>
+						<icon>home/homeicons/film.png</icon>
+						<onclick>Skin.Reset(HomeMenuItemPlaylist8)</onclick>
+						<onclick>Skin.SetNumeric(HomeMenuItemPlaylist8)</onclick>
+						<visible></visible>
+					</item>
+					<item id="16">
+						<label>Playlist 9</label>
+						<label2 fallback="16.">$INFO[Skin.String(HomeMenuItemPlaylist9),,.]</label2>
+						<icon>home/homeicons/film.png</icon>
+						<onclick>Skin.Reset(HomeMenuItemPlaylist9)</onclick>
+						<onclick>Skin.SetNumeric(HomeMenuItemPlaylist9)</onclick>
+						<visible></visible>
+					</item>
+					<item id="17">
+						<label>Playlist 10</label>
+						<label2 fallback="17.">$INFO[Skin.String(HomeMenuItemPlaylist10),,.]</label2>
+						<icon>home/homeicons/film.png</icon>
+						<onclick>Skin.Reset(HomeMenuItemPlaylist10)</onclick>
+						<onclick>Skin.SetNumeric(HomeMenuItemPlaylist10)</onclick>
+						<visible></visible>
+					</item>
+					<item id="18">
 						<label>Music</label>
-						<label2 fallback="13.">$INFO[Skin.String(HomeMenuItemMusic),,.]</label2>
+						<label2 fallback="18.">$INFO[Skin.String(HomeMenuItemMusic),,.]</label2>
 						<icon>home/homeicons/cd.png</icon>
 						<onclick>Skin.Reset(HomeMenuItemMusic)</onclick>
 						<onclick>Skin.SetNumeric(HomeMenuItemMusic)</onclick>
 						<visible></visible>
 					</item>	
-					<item id="14">
+					<item id="19">
 						<label>Addons</label>
-						<label2 fallback="14.">$INFO[Skin.String(HomeMenuItemAddons),,.]</label2>
+						<label2 fallback="19.">$INFO[Skin.String(HomeMenuItemAddons),,.]</label2>
 						<icon>home/homeicons/addons.png</icon>
 						<onclick>Skin.Reset(HomeMenuItemAddons)</onclick>
 						<onclick>Skin.SetNumeric(HomeMenuItemAddons)</onclick>
 						<visible></visible>
 					</item>
-					<item id="15">
+					<item id="20">
 						<label>Concerts</label>
-						<label2 fallback="15.">$INFO[Skin.String(HomeMenuItemConcerts),,.]</label2>
+						<label2 fallback="20.">$INFO[Skin.String(HomeMenuItemConcerts),,.]</label2>
 						<icon>home/homeicons/musicvideos.png</icon>
 						<onclick>Skin.Reset(HomeMenuItemConcerts)</onclick>
 						<onclick>Skin.SetNumeric(HomeMenuItemConcerts)</onclick>
 						<visible></visible>
 					</item>
-					<item id="16">
+					<item id="21">
 						<label>Pictures</label>
-						<label2 fallback="16.">$INFO[Skin.String(HomeMenuItemPictures),,.]</label2>
+						<label2 fallback="21.">$INFO[Skin.String(HomeMenuItemPictures),,.]</label2>
 						<icon>home/homeicons/photos.png</icon>
 						<onclick>Skin.Reset(HomeMenuItemPictures)</onclick>
 						<onclick>Skin.SetNumeric(HomeMenuItemPictures)</onclick>
 						<visible></visible>
 					</item>
-					<item id="17">
+					<item id="22">
 						<label>Weather</label>
-						<label2 fallback="17.">$INFO[Skin.String(HomeMenuItemWeather),,.]</label2>
+						<label2 fallback="22.">$INFO[Skin.String(HomeMenuItemWeather),,.]</label2>
 						<icon>home/homeicons/weather.png</icon>
 						<onclick>Skin.Reset(HomeMenuItemWeather)</onclick>
 						<onclick>Skin.SetNumeric(HomeMenuItemWeather)</onclick>
 						<visible></visible>
 					</item>
-					<item id="18">
+					<item id="23">
 						<label>Settings</label>
-						<label2 fallback="18.">$INFO[Skin.String(HomeMenuItemSettings),,.]</label2>
+						<label2 fallback="23.">$INFO[Skin.String(HomeMenuItemSettings),,.]</label2>
 						<icon>home/homeicons/sonstiges.png</icon>
 						<onclick>Skin.Reset(HomeMenuItemSettings)</onclick>
 						<onclick>Skin.SetNumeric(HomeMenuItemSettings)</onclick>
 						<visible></visible>
 					</item>
-					<item id="19">
+					<item id="24">
 						<label>PlayDisc</label>
-						<label2 fallback="19.">$INFO[Skin.String(HomeMenuItemPlayDisc),,.]</label2>
+						<label2 fallback="24.">$INFO[Skin.String(HomeMenuItemPlayDisc),,.]</label2>
 						<icon>home/homeicons/dvd.png</icon>
 						<onclick>Skin.Reset(HomeMenuItemPlayDisc)</onclick>
 						<onclick>Skin.SetNumeric(HomeMenuItemPlayDisc)</onclick>
 						<visible></visible>
 					</item>
-					<item id="20">
+					<item id="25">
 						<label>YouTube</label>
-						<label2 fallback="20.">$INFO[Skin.String(HomeMenuItemYouTube),,.]</label2>
+						<label2 fallback="25.">$INFO[Skin.String(HomeMenuItemYouTube),,.]</label2>
 						<icon>home/homeicons/youtube.png</icon>
 						<onclick>Skin.Reset(HomeMenuItemYouTube)</onclick>
 						<onclick>Skin.SetNumeric(HomeMenuItemYouTube)</onclick>
 						<visible></visible>
 					</item>
-					<item id="21">
+					<item id="26">
 						<label>Watchlist</label>
-						<label2 fallback="21.">$INFO[Skin.String(HomeMenuItemWatchlist),,.]</label2>
+						<label2 fallback="26.">$INFO[Skin.String(HomeMenuItemWatchlist),,.]</label2>
 						<icon>home/homeicons/news.png</icon>
 						<onclick>Skin.Reset(HomeMenuItemWatchlist)</onclick>
 						<onclick>Skin.SetNumeric(HomeMenuItemWatchlist)</onclick>
 						<visible></visible>
 					</item>
-					<item id="22">
+					<item id="27">
 						<label>SimplePlaylists</label>
-						<label2 fallback="22.">$INFO[Skin.String(HomeMenuItemSimplePlaylists),,.]</label2>
+						<label2 fallback="27.">$INFO[Skin.String(HomeMenuItemSimplePlaylists),,.]</label2>
 						<icon>home/homeicons/news.png</icon>
 						<onclick>Skin.Reset(HomeMenuItemSimplePlaylists)</onclick>
 						<onclick>Skin.SetNumeric(HomeMenuItemSimplePlaylists)</onclick>
 						<visible></visible>
 					</item>
-					<item id="23">
+					<item id="28">
 						<label>Search</label>
-						<label2 fallback="23.">$INFO[Skin.String(HomeMenuItemSearch),,.]</label2>
+						<label2 fallback="28.">$INFO[Skin.String(HomeMenuItemSearch),,.]</label2>
 						<icon>home/homeicons/search.png</icon>
 						<onclick>Skin.Reset(HomeMenuItemSearch)</onclick>
 						<onclick>Skin.SetNumeric(HomeMenuItemSearch)</onclick>
 						<visible></visible>
 					</item>
-					<item id="24">
+					<item id="29">
 						<label>Power</label>
-						<label2 fallback="24.">$INFO[Skin.String(HomeMenuItemPower),,.]</label2>
+						<label2 fallback="29.">$INFO[Skin.String(HomeMenuItemPower),,.]</label2>
 						<icon>home/homeicons/off.png</icon>
 						<onclick>Skin.Reset(HomeMenuItemPower)</onclick>
 						<onclick>Skin.SetNumeric(HomeMenuItemPower)</onclick>

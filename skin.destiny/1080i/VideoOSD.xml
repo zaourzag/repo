@@ -36,21 +36,8 @@
 		<midtexture border="0" colordiffuse="$VAR[ColorProgress]">progress/progress_Background.png</midtexture>
 		<righttexture>-</righttexture>
 	  </control>
-	  <control type="slider">
-		<left>10</left>
-		<top>925</top>
-		<width>1900</width>
-		<height>70</height>
-		<sliderwidth>125</sliderwidth>
-		<sliderheight>32</sliderheight>
-		<texturesliderbar colordiffuse="$VAR[ColorProgress]">progress/progress_Opaque.png</texturesliderbar>
-		<textureslidernib colordiffuse="$VAR[ColorProgress]">progress/progress_Slider.png</textureslidernib>
-		<textureslidernibfocus colordiffuse="$VAR[ColorIcons]">progress/progress_Slider.png</textureslidernibfocus>
-		<info>Player.Progress</info>
-		<action>seek</action>
-	  </control>
       <control type="grouplist" id="200">
-        <left>110</left>
+        <left>50</left>
 		<top>990</top>
 		<width>1900</width>
 		<height>120</height>
@@ -253,6 +240,16 @@
 		  <onup>404</onup>
 		</control>
 		<control type="button" id="1613">
+		  <width>80</width>
+          <height>80</height>
+		  <label>$LOCALIZE[36560]</label>
+		  <font>-</font>
+		  <texturefocus colordiffuse="$VAR[BackColorButton]">osd/subtitles.png</texturefocus>
+		  <texturenofocus colordiffuse="$VAR[ColorIcons]">osd/subtitles.png</texturenofocus>
+		  <onclick>ActivateWindow(osdcmssettings)</onclick>
+		  <visible>System.HasCMS</visible>
+		</control>
+		<control type="button" id="1614">
 		  <!--<visible>VideoPlayer.IsStereoscopic</visible>-->
 		  <width>80</width>
           <height>80</height>
@@ -301,7 +298,7 @@
 	  
 	  <!-- STEREOSCOPIC 3D !LiveTV -->
 	  <control type="group">
-	        <visible>Control.HasFocus(1613) | ControlGroup(500).HasFocus</visible>
+	        <visible>Control.HasFocus(1614) | ControlGroup(500).HasFocus</visible>
 			<animation effect="fade" time="200">VisibleChange</animation>
 			<left>1070</left>
 			<top>580</top>
@@ -342,7 +339,7 @@
 		  <onup>500</onup>
 		  <ondown>1613</ondown>
 		  <orientation>vertical</orientation>
-		  <visible>Control.HasFocus(1613) | ControlGroup(500).HasFocus</visible>
+		  <visible>Control.HasFocus(1614) | ControlGroup(500).HasFocus</visible>
 		  <include>VisibleFadeEffect</include>
 		  <control type="radiobutton" id="503">
 			  <height>50</height>

@@ -17,6 +17,9 @@
   <include file="IncludesViewWalls.xml" />
   <include file="IncludesHomePlaylistFanart.xml" />
   <include file="IncludesHomeWidgetsHorizontal.xml" />
+  <include file="IncludesHomeWidgetsVertical.xml" />
+  <include file="IncludesHomeWidgetsSubmenu.xml" />
+  <include file="IncludesHomeWidgetsSubmenuAddons.xml" />
   <include file="IncludesHomeWidgetsForeign.xml" />
   <include file="IncludesHomeWidgetsPlaying.xml" />
   <include file="IncludesCodecFlagging.xml" />
@@ -25,6 +28,7 @@
   <include file="IncludesPVR.xml"/>
   <include file="IncludesMusic.xml" />
   <include file="Variables.xml" /> 
+  <include file="script-skinshortcuts-includes.xml" />
   
   <constant name="FanartCrossfadeTime">200</constant>
   <constant name="IconCrossfadeTime">200</constant>
@@ -50,6 +54,26 @@
   <constant name="DepthBackground">-0.80</constant>
   <constant name="DepthFloor">-0.20</constant>
   <constant name="DepthSideBlade">0.15</constant>
+  
+  <include name="termo_slider">
+	  <control type="slider" id="709059">
+		  <description>Thermostat temperature Slider</description>
+		  <left>200</left>
+		  <top>330</top>
+		  <width>250</width>
+		  <height>15</height>
+		  <visible>true</visible>
+		  <texturesliderbar>button/slider_bg.png</texturesliderbar>
+		  <textureslidernib>button/SliderNibNF.png</textureslidernib>
+		  <textureslidernibfocus>button/SliderNibFO.png</textureslidernibfocus>
+		  <focusedcolor>white</focusedcolor>
+		  <orientation>horizontal</orientation>
+		  <onup>58501</onup>
+		  <ondown>58501</ondown>
+		  <onleft>709059</onleft>
+		  <onright>709059</onright>
+	   </control>
+  </include>
   
   <include name="no_tv_theme">
 	  <onfocus>SetFocus(55)</onfocus>
@@ -81,11 +105,17 @@
   </include>
   
   <include name="HomemenuLeftWebOS"><left>14</left></include>
-  <include name="HomemenuLeftTizen"><left>98</left></include>
+  <include name="HomemenuLeftTizen"><left>1400</left></include>
   <include name="HomemenuTopWebOS"><top>720</top></include>
-  <include name="HomemenuTopTizen"><top>800</top></include>
+  <include name="HomemenuTopTizen"><top>190</top></include>
+  <include name="HomemenuWidthWebOS"><width>1850</width></include>
+  <include name="HomemenuWidthTizen"><width>500</width></include>
+  <include name="HomemenuHeightWebOS"><height>350</height></include>
+  <include name="HomemenuHeightTizen"><height>720</height></include>
   <include name="HomemenuPlayerTopWebOS"><top>600</top></include>
-  <include name="HomemenuPlayerTopTizen"><top>700</top></include>
+  <include name="HomemenuPlayerTopTizen"><top>950</top></include>
+  <include name="HomemenuOrientationWebOS"><orientation>horizontal</orientation></include>
+  <include name="HomemenuOrientationTizen"><orientation>vertical</orientation></include>
   <include name="SubmenuTopWebOS"><top>720</top></include>
   <include name="SubmenuTopTizen"><top>800</top></include>
   <include name="WidgetsTopWebOS"><top>0</top></include>
@@ -137,8 +167,8 @@
 	  <visible>!Window.IsVisible(home)</visible>
     </control>
 	<control type="multiimage">
-      <posx>0</posx>
-      <posy>0</posy>
+      <left>0</left>
+      <top>0</top>
       <width>1920</width>
       <height>1080</height>
       <imagepath background="true">$INFO[Container(9000).ListItem.Thumb]</imagepath>
@@ -170,58 +200,7 @@
       <timeperimage>8000</timeperimage>
       <randomize>true</randomize>
       <fadetime>500</fadetime>
-	  <visible>Container(9000).HasFocus(3)</visible>
-	  <visible>!Skin.HasSetting(movieplaylistButton11000)</visible>
     </control>
-	<control type="multiimage">
-      <posx>0</posx>
-      <posy>0</posy>
-      <width>1920</width>
-      <height>1080</height>
-      <imagepath background="true">$INFO[Container(9000).ListItem.Icon]</imagepath>
-      <timeperimage>8000</timeperimage>
-      <randomize>true</randomize>
-      <fadetime>500</fadetime>
-	  <visible>Container(9000).HasFocus(5)</visible>
-	  <visible>!Skin.HasSetting(movieplaylistButton1800)</visible>
-    </control>
-	<control type="multiimage">
-      <posx>0</posx>
-      <posy>0</posy>
-      <width>1920</width>
-      <height>1080</height>
-      <imagepath background="true">$INFO[Container(9000).ListItem.Icon]</imagepath>
-      <timeperimage>8000</timeperimage>
-      <randomize>true</randomize>
-      <fadetime>500</fadetime>
-	  <visible>Container(9000).HasFocus(6)</visible>
-	  <visible>!Skin.HasSetting(movieplaylistButton2800)</visible>
-    </control>
-	<control type="multiimage">
-      <posx>0</posx>
-      <posy>0</posy>
-      <width>1920</width>
-      <height>1080</height>
-      <imagepath background="true">$INFO[Container(9000).ListItem.Icon]</imagepath>
-      <timeperimage>8000</timeperimage>
-      <randomize>true</randomize>
-      <fadetime>500</fadetime>
-	  <visible>Container(9000).HasFocus(7)</visible>
-	  <visible>!Skin.HasSetting(movieplaylistButton3800)</visible>
-    </control>
-	<control type="multiimage">
-      <posx>0</posx>
-      <posy>0</posy>
-      <width>1920</width>
-      <height>1080</height>
-      <imagepath background="true">$INFO[Container(9000).ListItem.Icon]</imagepath>
-      <timeperimage>8000</timeperimage>
-      <randomize>true</randomize>
-      <fadetime>500</fadetime>
-	  <visible>Container(9000).HasFocus(8)</visible>
-	  <visible>!Skin.HasSetting(movieplaylistButton12000)</visible>
-    </control>
-	<include>HomePlaylistFanart</include>
 	<control type="multiimage">
 	  <visible>Window.IsVisible(home)</visible>
 	  <left>0</left>
@@ -280,7 +259,7 @@
 	  <width>1920</width>
 	  <height>1080</height>
 	  <aspectratio scalediffuse="false" align="center" aligny="top">scale</aspectratio>
-	  <texture background="true" fallback="special://skin/backgrounds/MUSICDEFAULT.jpg">$INFO[Window(Home).Property(SkinHelper.Music.Fanart)]</texture>	 
+	  <texture background="true" fallback="special://skin/backgrounds/FALLBACK.jpg">$INFO[Window(Home).Property(SkinHelper.Music.Fanart)]</texture>	 
 	  <fadetime>FanartCrossfadeTime</fadetime>
 	  <visible>Skin.HasSetting(HomeMusicFanart)</visible>
 	  <visible>!Skin.HasSetting(MusicPath)</visible>
@@ -299,7 +278,7 @@
 	  <timeperimage>10000</timeperimage>
 	  <fadetime>2000</fadetime>
 	  <randomize>true</randomize>
-	  <visible>IsEmpty(Window.Property(ArtistSlideshowRefresh))</visible>
+	  <visible>String.IsEmpty(Window.Property(ArtistSlideshowRefresh))</visible>
 	  <visible>Skin.HasSetting(ArtistslideshowHome)</visible>
 	  <visible>Window.IsVisible(home)</visible>
 	  <visible>Player.HasAudio</visible>
@@ -314,6 +293,18 @@
 	  <aspectratio>stretch</aspectratio>
 	  <fadetime>500</fadetime>
 	</control>
+	<control type="multiimage">
+	  <left>0</left>
+	  <top>0</top>
+	  <width>1920</width>
+	  <height>1080</height>
+	  <imagepath background="true">$INFO[Container(9010).ListItem.Thumb]</imagepath>
+      <timeperimage>8000</timeperimage>
+      <randomize>true</randomize>
+      <fadetime>500</fadetime>
+	  <visible>ControlGroup(9001).HasFocus | Control.HasFocus(43444) | Control.HasFocus(43445) | Control.HasFocus(43644) | Control.HasFocus(43944)</visible> 
+	  <animation effect="fade" start="0" end="100" time="1000" delay="600" condition="ControlGroup(9001).HasFocus | Control.HasFocus(43444) | Control.HasFocus(43445) | Control.HasFocus(43644) | Control.HasFocus(43944)">Conditional</animation>
+	</control>
 	<control type="videowindow">
 	  <left>0</left>
 	  <top>0</top>
@@ -323,12 +314,21 @@
 	  <visible>Window.IsVisible(home)</visible>
 	  <visible>Player.HasVideo</visible>
 	</control>
+	<control type="image">
+	  <left>0</left>
+	  <top>0</top>
+	  <width>1920</width>
+	  <height>1080</height>
+	  <texture background="true">$VAR[VarBigWidgetsFanart]</texture>
+	  <aspectratio>stretch</aspectratio>
+	  <fadetime>500</fadetime>
+	</control>
     <control type="image">
 	  <left>0</left>
 	  <top>0</top>
 	  <width>1920</width>
 	  <height>1080</height>
-	  <texture background="true">skin/button_klein_tranz80.png</texture>
+	  <texture>skin/HMShadow2.png</texture>
 	  <aspectratio>stretch</aspectratio>
 	  <colordiffuse>$VAR[BackColorBackground]</colordiffuse>
 	  <visible>!Container(9000).HasFocus(30)</visible>
@@ -388,7 +388,29 @@
 	  <bordersize>7</bordersize>
 	  <aspectratio>stretch</aspectratio>
 	  <colordiffuse>$VAR[ColorButtonDialogeBack]</colordiffuse>
-	</control>
+	</control>	
+  </include>
+  <include name="CommonAllForSmartHome"> 
+    <control type="group">
+    <include>Animation.ZoomIn</include>
+	<control type="image">
+	  <left>0</left>
+	  <top>0</top>
+	  <width>1920</width>
+	  <height>1080</height>
+	  <texture background="true">special://skin/backgrounds/fallback_addons.jpg</texture>
+	  <aspectratio scalediffuse="false" align="center" aligny="center">stretch</aspectratio>
+    </control>
+	<control type="image">
+	  <left>0</left>
+	  <top>0</top>
+	  <width>1920</width>
+	  <height>1080</height>
+	  <texture background="true">skin/HMShadow2.png</texture>
+	  <aspectratio>stretch</aspectratio>
+	  <colordiffuse>$VAR[BackColorBackground]</colordiffuse>
+	</control>	
+   </control>
   </include>
   <!-- PVR End -->
   <include name="BehindDialogFadeOut">
@@ -542,7 +564,7 @@
       <aligny>center</aligny>
       <label>$INFO[Container.NumItems] $LOCALIZE[49984] $LOCALIZE[49983] $INFO[Container.CurrentPage]/$INFO[Container.NumPages]</label>
       <visible>!Skin.HasSetting(nopagecount)</visible>	  
-	  <visible>!Control.IsVisible(106) + !Control.IsVisible(580) + !Control.IsVisible(599) + !Control.IsVisible(601) + !Control.IsVisible(602) + !Control.IsVisible(603) + !Control.IsVisible(604) + !Control.IsVisible(605)</visible>
+	  <visible>!Control.IsVisible(106) + !Control.IsVisible(580) + !Control.IsVisible(599) + !Control.IsVisible(601) + !Control.IsVisible(602) + !Control.IsVisible(603) + !Control.IsVisible(604) + !Control.IsVisible(605) + !Control.IsVisible(612)</visible>
     </control>
   </include>
   <include name="CommonPageCountView">
@@ -646,65 +668,65 @@
 	  <textoffsetx>15</textoffsetx>
 	  <visible>Container.Content(Movies)</visible>
 	  
-	  <onclick condition="IsEmpty(Skin.String(MovieList1Title)) ">Skin.SetString(MovieList1Title,$INFO[ListItem.Title])</onclick>
-	  <onclick condition="IsEmpty(Skin.String(MovieList1Title))">Skin.SetString(MovieList1ID,$INFO[ListItem.DBID])</onclick>
-	  <onclick condition="IsEmpty(Skin.String(MovieList1Title))">Skin.SetString(MovieList1Path,$INFO[ListItem.Path])</onclick>
-	  <onclick condition="IsEmpty(Skin.String(MovieList1Title))">Skin.SetString(MovieList1Thumb,$INFO[ListItem.Art(fanart)])</onclick>
-	  <onclick condition="IsEmpty(Skin.String(MovieList1Title))">Skin.SetString(MovieList1Poster,$INFO[ListItem.Art(poster)])</onclick>
-	  <onclick condition="IsEmpty(Skin.String(MovieList1Title))">Skin.SetString(MovieList1Plot,$INFO[ListItem.Plot])</onclick>
-	  <onclick condition="IsEmpty(Skin.String(MovieList1Title))">Skin.SetString(MovieList1StarRating,$INFO[ListItem.StarRating])</onclick>
-	  <onclick condition="IsEmpty(Skin.String(MovieList1Title))">Skin.SetString(MovieList1Duration,$INFO[ListItem.Duration])</onclick>
-	  <onclick condition="IsEmpty(Skin.String(MovieList1Title))">Skin.SetString(MovieList1Genre,$INFO[ListItem.Genre])</onclick>
+	  <onclick condition="String.IsEmpty(Skin.String(MovieList1Title)) ">Skin.SetString(MovieList1Title,$INFO[ListItem.Title])</onclick>
+	  <onclick condition="String.IsEmpty(Skin.String(MovieList1Title))">Skin.SetString(MovieList1ID,$INFO[ListItem.DBID])</onclick>
+	  <onclick condition="String.IsEmpty(Skin.String(MovieList1Title))">Skin.SetString(MovieList1Path,$INFO[ListItem.Path])</onclick>
+	  <onclick condition="String.IsEmpty(Skin.String(MovieList1Title))">Skin.SetString(MovieList1Thumb,$INFO[ListItem.Art(fanart)])</onclick>
+	  <onclick condition="String.IsEmpty(Skin.String(MovieList1Title))">Skin.SetString(MovieList1Poster,$INFO[ListItem.Art(poster)])</onclick>
+	  <onclick condition="String.IsEmpty(Skin.String(MovieList1Title))">Skin.SetString(MovieList1Plot,$INFO[ListItem.Plot])</onclick>
+	  <onclick condition="String.IsEmpty(Skin.String(MovieList1Title))">Skin.SetString(MovieList1StarRating,$INFO[ListItem.StarRating])</onclick>
+	  <onclick condition="String.IsEmpty(Skin.String(MovieList1Title))">Skin.SetString(MovieList1Duration,$INFO[ListItem.Duration])</onclick>
+	  <onclick condition="String.IsEmpty(Skin.String(MovieList1Title))">Skin.SetString(MovieList1Genre,$INFO[ListItem.Genre])</onclick>
 	  
-	  <onclick condition="!IsEmpty(Skin.String(MovieList1Title)) + IsEmpty(Skin.String(MovieList2Title))">Skin.SetString(MovieList2Title,$INFO[ListItem.Title])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(MovieList1Title)) + IsEmpty(Skin.String(MovieList2Title))">Skin.SetString(MovieList2ID,$INFO[ListItem.DBID])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(MovieList1Title)) + IsEmpty(Skin.String(MovieList2Title))">Skin.SetString(MovieList2Path,$INFO[ListItem.Path])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(MovieList1Title)) + IsEmpty(Skin.String(MovieList2Title))">Skin.SetString(MovieList2Thumb,$INFO[ListItem.Art(fanart)])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(MovieList1Title)) + IsEmpty(Skin.String(MovieList2Title))">Skin.SetString(MovieList2Poster,$INFO[ListItem.Art(poster)])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(MovieList1Title)) + IsEmpty(Skin.String(MovieList2Title))">Skin.SetString(MovieList2Plot,$INFO[ListItem.Plot])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(MovieList1Title)) + IsEmpty(Skin.String(MovieList2Title))">Skin.SetString(MovieList2StarRating,$INFO[ListItem.StarRating])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(MovieList1Title)) + IsEmpty(Skin.String(MovieList2Title))">Skin.SetString(MovieList2Duration,$INFO[ListItem.Duration])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(MovieList1Title)) + IsEmpty(Skin.String(MovieList2Title))">Skin.SetString(MovieList2Genre,$INFO[ListItem.Genre])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(MovieList1Title)) + String.IsEmpty(Skin.String(MovieList2Title))">Skin.SetString(MovieList2Title,$INFO[ListItem.Title])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(MovieList1Title)) + String.IsEmpty(Skin.String(MovieList2Title))">Skin.SetString(MovieList2ID,$INFO[ListItem.DBID])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(MovieList1Title)) + String.IsEmpty(Skin.String(MovieList2Title))">Skin.SetString(MovieList2Path,$INFO[ListItem.Path])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(MovieList1Title)) + String.IsEmpty(Skin.String(MovieList2Title))">Skin.SetString(MovieList2Thumb,$INFO[ListItem.Art(fanart)])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(MovieList1Title)) + String.IsEmpty(Skin.String(MovieList2Title))">Skin.SetString(MovieList2Poster,$INFO[ListItem.Art(poster)])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(MovieList1Title)) + String.IsEmpty(Skin.String(MovieList2Title))">Skin.SetString(MovieList2Plot,$INFO[ListItem.Plot])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(MovieList1Title)) + String.IsEmpty(Skin.String(MovieList2Title))">Skin.SetString(MovieList2StarRating,$INFO[ListItem.StarRating])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(MovieList1Title)) + String.IsEmpty(Skin.String(MovieList2Title))">Skin.SetString(MovieList2Duration,$INFO[ListItem.Duration])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(MovieList1Title)) + String.IsEmpty(Skin.String(MovieList2Title))">Skin.SetString(MovieList2Genre,$INFO[ListItem.Genre])</onclick>
 	  
-	  <onclick condition="!IsEmpty(Skin.String(MovieList1Title)) + !IsEmpty(Skin.String(MovieList2Title)) + [IsEmpty(Skin.String(MovieList3Title))]">Skin.SetString(MovieList3Title,$INFO[ListItem.Title])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(MovieList1Title)) + !IsEmpty(Skin.String(MovieList2Title)) + [IsEmpty(Skin.String(MovieList3Title))]">Skin.SetString(MovieList3ID,$INFO[ListItem.DBID])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(MovieList1Title)) + !IsEmpty(Skin.String(MovieList2Title)) + [IsEmpty(Skin.String(MovieList3Title))]">Skin.SetString(MovieList3Path,$INFO[ListItem.Path])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(MovieList1Title)) + !IsEmpty(Skin.String(MovieList2Title)) + [IsEmpty(Skin.String(MovieList3Title))]">Skin.SetString(MovieList3Thumb,$INFO[ListItem.Art(fanart)])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(MovieList1Title)) + !IsEmpty(Skin.String(MovieList2Title)) + [IsEmpty(Skin.String(MovieList3Title))]">Skin.SetString(MovieList3Poster,$INFO[ListItem.Art(poster)])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(MovieList1Title)) + !IsEmpty(Skin.String(MovieList2Title)) + [IsEmpty(Skin.String(MovieList3Title))]">Skin.SetString(MovieList3Plot,$INFO[ListItem.Plot])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(MovieList1Title)) + !IsEmpty(Skin.String(MovieList2Title)) + [IsEmpty(Skin.String(MovieList3Title))]">Skin.SetString(MovieList3StarRating,$INFO[ListItem.StarRating])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(MovieList1Title)) + !IsEmpty(Skin.String(MovieList2Title)) + [IsEmpty(Skin.String(MovieList3Title))]">Skin.SetString(MovieList3Duration,$INFO[ListItem.Duration])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(MovieList1Title)) + !IsEmpty(Skin.String(MovieList2Title)) + [IsEmpty(Skin.String(MovieList3Title))]">Skin.SetString(MovieList3Genre,$INFO[ListItem.Genre])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(MovieList1Title)) + !String.IsEmpty(Skin.String(MovieList2Title)) + [String.IsEmpty(Skin.String(MovieList3Title))]">Skin.SetString(MovieList3Title,$INFO[ListItem.Title])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(MovieList1Title)) + !String.IsEmpty(Skin.String(MovieList2Title)) + [String.IsEmpty(Skin.String(MovieList3Title))]">Skin.SetString(MovieList3ID,$INFO[ListItem.DBID])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(MovieList1Title)) + !String.IsEmpty(Skin.String(MovieList2Title)) + [String.IsEmpty(Skin.String(MovieList3Title))]">Skin.SetString(MovieList3Path,$INFO[ListItem.Path])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(MovieList1Title)) + !String.IsEmpty(Skin.String(MovieList2Title)) + [String.IsEmpty(Skin.String(MovieList3Title))]">Skin.SetString(MovieList3Thumb,$INFO[ListItem.Art(fanart)])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(MovieList1Title)) + !String.IsEmpty(Skin.String(MovieList2Title)) + [String.IsEmpty(Skin.String(MovieList3Title))]">Skin.SetString(MovieList3Poster,$INFO[ListItem.Art(poster)])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(MovieList1Title)) + !String.IsEmpty(Skin.String(MovieList2Title)) + [String.IsEmpty(Skin.String(MovieList3Title))]">Skin.SetString(MovieList3Plot,$INFO[ListItem.Plot])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(MovieList1Title)) + !String.IsEmpty(Skin.String(MovieList2Title)) + [String.IsEmpty(Skin.String(MovieList3Title))]">Skin.SetString(MovieList3StarRating,$INFO[ListItem.StarRating])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(MovieList1Title)) + !String.IsEmpty(Skin.String(MovieList2Title)) + [String.IsEmpty(Skin.String(MovieList3Title))]">Skin.SetString(MovieList3Duration,$INFO[ListItem.Duration])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(MovieList1Title)) + !String.IsEmpty(Skin.String(MovieList2Title)) + [String.IsEmpty(Skin.String(MovieList3Title))]">Skin.SetString(MovieList3Genre,$INFO[ListItem.Genre])</onclick>
 
-	  <onclick condition="!IsEmpty(Skin.String(MovieList1Title)) + !IsEmpty(Skin.String(MovieList2Title)) + !IsEmpty(Skin.String(MovieList3Title)) + [IsEmpty(Skin.String(MovieList4Title))]">Skin.SetString(MovieList4Title,$INFO[ListItem.Title])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(MovieList1Title)) + !IsEmpty(Skin.String(MovieList2Title)) + !IsEmpty(Skin.String(MovieList3Title)) + [IsEmpty(Skin.String(MovieList4Title))]">Skin.SetString(MovieList4ID,$INFO[ListItem.DBID])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(MovieList1Title)) + !IsEmpty(Skin.String(MovieList2Title)) + !IsEmpty(Skin.String(MovieList3Title)) + [IsEmpty(Skin.String(MovieList4Title))]">Skin.SetString(MovieList4Path,$INFO[ListItem.Path])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(MovieList1Title)) + !IsEmpty(Skin.String(MovieList2Title)) + !IsEmpty(Skin.String(MovieList3Title)) + [IsEmpty(Skin.String(MovieList4Title))]">Skin.SetString(MovieList4Thumb,$INFO[ListItem.Art(fanart)])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(MovieList1Title)) + !IsEmpty(Skin.String(MovieList2Title)) + !IsEmpty(Skin.String(MovieList3Title)) + [IsEmpty(Skin.String(MovieList4Title))]">Skin.SetString(MovieList4Poster,$INFO[ListItem.Art(poster)])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(MovieList1Title)) + !IsEmpty(Skin.String(MovieList2Title)) + !IsEmpty(Skin.String(MovieList3Title)) + [IsEmpty(Skin.String(MovieList4Title))]">Skin.SetString(MovieList4Plot,$INFO[ListItem.Plot])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(MovieList1Title)) + !String.IsEmpty(Skin.String(MovieList2Title)) + !String.IsEmpty(Skin.String(MovieList3Title)) + [String.IsEmpty(Skin.String(MovieList4Title))]">Skin.SetString(MovieList4Title,$INFO[ListItem.Title])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(MovieList1Title)) + !String.IsEmpty(Skin.String(MovieList2Title)) + !String.IsEmpty(Skin.String(MovieList3Title)) + [String.IsEmpty(Skin.String(MovieList4Title))]">Skin.SetString(MovieList4ID,$INFO[ListItem.DBID])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(MovieList1Title)) + !String.IsEmpty(Skin.String(MovieList2Title)) + !String.IsEmpty(Skin.String(MovieList3Title)) + [String.IsEmpty(Skin.String(MovieList4Title))]">Skin.SetString(MovieList4Path,$INFO[ListItem.Path])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(MovieList1Title)) + !String.IsEmpty(Skin.String(MovieList2Title)) + !String.IsEmpty(Skin.String(MovieList3Title)) + [String.IsEmpty(Skin.String(MovieList4Title))]">Skin.SetString(MovieList4Thumb,$INFO[ListItem.Art(fanart)])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(MovieList1Title)) + !String.IsEmpty(Skin.String(MovieList2Title)) + !String.IsEmpty(Skin.String(MovieList3Title)) + [String.IsEmpty(Skin.String(MovieList4Title))]">Skin.SetString(MovieList4Poster,$INFO[ListItem.Art(poster)])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(MovieList1Title)) + !String.IsEmpty(Skin.String(MovieList2Title)) + !String.IsEmpty(Skin.String(MovieList3Title)) + [String.IsEmpty(Skin.String(MovieList4Title))]">Skin.SetString(MovieList4Plot,$INFO[ListItem.Plot])</onclick>
 	  
-	  <onclick condition="!IsEmpty(Skin.String(MovieList1Title)) + !IsEmpty(Skin.String(MovieList2Title)) + !IsEmpty(Skin.String(MovieList3Title)) + !IsEmpty(Skin.String(MovieList4Title)) + [IsEmpty(Skin.String(MovieList5Title))]">Skin.SetString(MovieList5Title,$INFO[ListItem.Title])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(MovieList1Title)) + !IsEmpty(Skin.String(MovieList2Title)) + !IsEmpty(Skin.String(MovieList3Title)) + !IsEmpty(Skin.String(MovieList4Title)) + [IsEmpty(Skin.String(MovieList5Title))]">Skin.SetString(MovieList5ID,$INFO[ListItem.DBID])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(MovieList1Title)) + !IsEmpty(Skin.String(MovieList2Title)) + !IsEmpty(Skin.String(MovieList3Title)) + !IsEmpty(Skin.String(MovieList4Title)) + [IsEmpty(Skin.String(MovieList5Title))]">Skin.SetString(MovieList5Path,$INFO[ListItem.Path])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(MovieList1Title)) + !IsEmpty(Skin.String(MovieList2Title)) + !IsEmpty(Skin.String(MovieList3Title)) + !IsEmpty(Skin.String(MovieList4Title)) + [IsEmpty(Skin.String(MovieList5Title))]">Skin.SetString(MovieList5Thumb,$INFO[ListItem.Art(fanart)])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(MovieList1Title)) + !IsEmpty(Skin.String(MovieList2Title)) + !IsEmpty(Skin.String(MovieList3Title)) + !IsEmpty(Skin.String(MovieList4Title)) + [IsEmpty(Skin.String(MovieList5Title))]">Skin.SetString(MovieList5Poster,$INFO[ListItem.Art(poster)])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(MovieList1Title)) + !IsEmpty(Skin.String(MovieList2Title)) + !IsEmpty(Skin.String(MovieList3Title)) + !IsEmpty(Skin.String(MovieList4Title)) + [IsEmpty(Skin.String(MovieList5Title))]">Skin.SetString(MovieList5Plot,$INFO[ListItem.Plot])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(MovieList1Title)) + !String.IsEmpty(Skin.String(MovieList2Title)) + !String.IsEmpty(Skin.String(MovieList3Title)) + !String.IsEmpty(Skin.String(MovieList4Title)) + [String.IsEmpty(Skin.String(MovieList5Title))]">Skin.SetString(MovieList5Title,$INFO[ListItem.Title])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(MovieList1Title)) + !String.IsEmpty(Skin.String(MovieList2Title)) + !String.IsEmpty(Skin.String(MovieList3Title)) + !String.IsEmpty(Skin.String(MovieList4Title)) + [String.IsEmpty(Skin.String(MovieList5Title))]">Skin.SetString(MovieList5ID,$INFO[ListItem.DBID])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(MovieList1Title)) + !String.IsEmpty(Skin.String(MovieList2Title)) + !String.IsEmpty(Skin.String(MovieList3Title)) + !String.IsEmpty(Skin.String(MovieList4Title)) + [String.IsEmpty(Skin.String(MovieList5Title))]">Skin.SetString(MovieList5Path,$INFO[ListItem.Path])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(MovieList1Title)) + !String.IsEmpty(Skin.String(MovieList2Title)) + !String.IsEmpty(Skin.String(MovieList3Title)) + !String.IsEmpty(Skin.String(MovieList4Title)) + [String.IsEmpty(Skin.String(MovieList5Title))]">Skin.SetString(MovieList5Thumb,$INFO[ListItem.Art(fanart)])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(MovieList1Title)) + !String.IsEmpty(Skin.String(MovieList2Title)) + !String.IsEmpty(Skin.String(MovieList3Title)) + !String.IsEmpty(Skin.String(MovieList4Title)) + [String.IsEmpty(Skin.String(MovieList5Title))]">Skin.SetString(MovieList5Poster,$INFO[ListItem.Art(poster)])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(MovieList1Title)) + !String.IsEmpty(Skin.String(MovieList2Title)) + !String.IsEmpty(Skin.String(MovieList3Title)) + !String.IsEmpty(Skin.String(MovieList4Title)) + [String.IsEmpty(Skin.String(MovieList5Title))]">Skin.SetString(MovieList5Plot,$INFO[ListItem.Plot])</onclick>
 	  
-	  <onclick condition="!IsEmpty(Skin.String(MovieList1Title)) + !IsEmpty(Skin.String(MovieList2Title)) + !IsEmpty(Skin.String(MovieList3Title)) + !IsEmpty(Skin.String(MovieList4Title)) + !IsEmpty(Skin.String(MovieList5Title)) + [IsEmpty(Skin.String(MovieList6Title))]">Skin.SetString(MovieList6Title,$INFO[ListItem.Title])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(MovieList1Title)) + !IsEmpty(Skin.String(MovieList2Title)) + !IsEmpty(Skin.String(MovieList3Title)) + !IsEmpty(Skin.String(MovieList4Title)) + !IsEmpty(Skin.String(MovieList5Title)) + [IsEmpty(Skin.String(MovieList6Title))]">Skin.SetString(MovieList6ID,$INFO[ListItem.DBID])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(MovieList1Title)) + !IsEmpty(Skin.String(MovieList2Title)) + !IsEmpty(Skin.String(MovieList3Title)) + !IsEmpty(Skin.String(MovieList4Title)) + !IsEmpty(Skin.String(MovieList5Title)) + [IsEmpty(Skin.String(MovieList6Title))]">Skin.SetString(MovieList6Path,$INFO[ListItem.Path])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(MovieList1Title)) + !IsEmpty(Skin.String(MovieList2Title)) + !IsEmpty(Skin.String(MovieList3Title)) + !IsEmpty(Skin.String(MovieList4Title)) + !IsEmpty(Skin.String(MovieList5Title)) + [IsEmpty(Skin.String(MovieList6Title))]">Skin.SetString(MovieList6Thumb,$INFO[ListItem.Art(fanart)])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(MovieList1Title)) + !IsEmpty(Skin.String(MovieList2Title)) + !IsEmpty(Skin.String(MovieList3Title)) + !IsEmpty(Skin.String(MovieList4Title)) + !IsEmpty(Skin.String(MovieList5Title)) + [IsEmpty(Skin.String(MovieList6Title))]">Skin.SetString(MovieList6Poster,$INFO[ListItem.Art(poster)])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(MovieList1Title)) + !IsEmpty(Skin.String(MovieList2Title)) + !IsEmpty(Skin.String(MovieList3Title)) + !IsEmpty(Skin.String(MovieList4Title)) + !IsEmpty(Skin.String(MovieList5Title)) + [IsEmpty(Skin.String(MovieList6Title))]">Skin.SetString(MovieList6Plot,$INFO[ListItem.Plot])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(MovieList1Title)) + !String.IsEmpty(Skin.String(MovieList2Title)) + !String.IsEmpty(Skin.String(MovieList3Title)) + !String.IsEmpty(Skin.String(MovieList4Title)) + !String.IsEmpty(Skin.String(MovieList5Title)) + [String.IsEmpty(Skin.String(MovieList6Title))]">Skin.SetString(MovieList6Title,$INFO[ListItem.Title])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(MovieList1Title)) + !String.IsEmpty(Skin.String(MovieList2Title)) + !String.IsEmpty(Skin.String(MovieList3Title)) + !String.IsEmpty(Skin.String(MovieList4Title)) + !String.IsEmpty(Skin.String(MovieList5Title)) + [String.IsEmpty(Skin.String(MovieList6Title))]">Skin.SetString(MovieList6ID,$INFO[ListItem.DBID])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(MovieList1Title)) + !String.IsEmpty(Skin.String(MovieList2Title)) + !String.IsEmpty(Skin.String(MovieList3Title)) + !String.IsEmpty(Skin.String(MovieList4Title)) + !String.IsEmpty(Skin.String(MovieList5Title)) + [String.IsEmpty(Skin.String(MovieList6Title))]">Skin.SetString(MovieList6Path,$INFO[ListItem.Path])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(MovieList1Title)) + !String.IsEmpty(Skin.String(MovieList2Title)) + !String.IsEmpty(Skin.String(MovieList3Title)) + !String.IsEmpty(Skin.String(MovieList4Title)) + !String.IsEmpty(Skin.String(MovieList5Title)) + [String.IsEmpty(Skin.String(MovieList6Title))]">Skin.SetString(MovieList6Thumb,$INFO[ListItem.Art(fanart)])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(MovieList1Title)) + !String.IsEmpty(Skin.String(MovieList2Title)) + !String.IsEmpty(Skin.String(MovieList3Title)) + !String.IsEmpty(Skin.String(MovieList4Title)) + !String.IsEmpty(Skin.String(MovieList5Title)) + [String.IsEmpty(Skin.String(MovieList6Title))]">Skin.SetString(MovieList6Poster,$INFO[ListItem.Art(poster)])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(MovieList1Title)) + !String.IsEmpty(Skin.String(MovieList2Title)) + !String.IsEmpty(Skin.String(MovieList3Title)) + !String.IsEmpty(Skin.String(MovieList4Title)) + !String.IsEmpty(Skin.String(MovieList5Title)) + [String.IsEmpty(Skin.String(MovieList6Title))]">Skin.SetString(MovieList6Plot,$INFO[ListItem.Plot])</onclick>
 	  
-	  <onclick condition="!IsEmpty(Skin.String(MovieList1Title)) + !IsEmpty(Skin.String(MovieList2Title)) + !IsEmpty(Skin.String(MovieList3Title)) + !IsEmpty(Skin.String(MovieList4Title)) + !IsEmpty(Skin.String(MovieList5Title)) + !IsEmpty(Skin.String(MovieList6Title)) + [IsEmpty(Skin.String(MovieList7Title))]">Skin.SetString(MovieList7Title,$INFO[ListItem.Title])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(MovieList1Title)) + !IsEmpty(Skin.String(MovieList2Title)) + !IsEmpty(Skin.String(MovieList3Title)) + !IsEmpty(Skin.String(MovieList4Title)) + !IsEmpty(Skin.String(MovieList5Title)) + !IsEmpty(Skin.String(MovieList6Title)) + [IsEmpty(Skin.String(MovieList7Title))]">Skin.SetString(MovieList7ID,$INFO[ListItem.DBID])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(MovieList1Title)) + !IsEmpty(Skin.String(MovieList2Title)) + !IsEmpty(Skin.String(MovieList3Title)) + !IsEmpty(Skin.String(MovieList4Title)) + !IsEmpty(Skin.String(MovieList5Title)) + !IsEmpty(Skin.String(MovieList6Title)) + [IsEmpty(Skin.String(MovieList7Title))]">Skin.SetString(MovieList7Path,$INFO[ListItem.Path])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(MovieList1Title)) + !IsEmpty(Skin.String(MovieList2Title)) + !IsEmpty(Skin.String(MovieList3Title)) + !IsEmpty(Skin.String(MovieList4Title)) + !IsEmpty(Skin.String(MovieList5Title)) + !IsEmpty(Skin.String(MovieList6Title)) + [IsEmpty(Skin.String(MovieList7Title))]">Skin.SetString(MovieList7Thumb,$INFO[ListItem.Art(fanart)])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(MovieList1Title)) + !IsEmpty(Skin.String(MovieList2Title)) + !IsEmpty(Skin.String(MovieList3Title)) + !IsEmpty(Skin.String(MovieList4Title)) + !IsEmpty(Skin.String(MovieList5Title)) + !IsEmpty(Skin.String(MovieList6Title)) + [IsEmpty(Skin.String(MovieList7Title))]">Skin.SetString(MovieList7Poster,$INFO[ListItem.Art(poster)])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(MovieList1Title)) + !IsEmpty(Skin.String(MovieList2Title)) + !IsEmpty(Skin.String(MovieList3Title)) + !IsEmpty(Skin.String(MovieList4Title)) + !IsEmpty(Skin.String(MovieList5Title)) + !IsEmpty(Skin.String(MovieList6Title)) + [IsEmpty(Skin.String(MovieList7Title))]">Skin.SetString(MovieList7Plot,$INFO[ListItem.Plot])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(MovieList1Title)) + !String.IsEmpty(Skin.String(MovieList2Title)) + !String.IsEmpty(Skin.String(MovieList3Title)) + !String.IsEmpty(Skin.String(MovieList4Title)) + !String.IsEmpty(Skin.String(MovieList5Title)) + !String.IsEmpty(Skin.String(MovieList6Title)) + [String.IsEmpty(Skin.String(MovieList7Title))]">Skin.SetString(MovieList7Title,$INFO[ListItem.Title])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(MovieList1Title)) + !String.IsEmpty(Skin.String(MovieList2Title)) + !String.IsEmpty(Skin.String(MovieList3Title)) + !String.IsEmpty(Skin.String(MovieList4Title)) + !String.IsEmpty(Skin.String(MovieList5Title)) + !String.IsEmpty(Skin.String(MovieList6Title)) + [String.IsEmpty(Skin.String(MovieList7Title))]">Skin.SetString(MovieList7ID,$INFO[ListItem.DBID])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(MovieList1Title)) + !String.IsEmpty(Skin.String(MovieList2Title)) + !String.IsEmpty(Skin.String(MovieList3Title)) + !String.IsEmpty(Skin.String(MovieList4Title)) + !String.IsEmpty(Skin.String(MovieList5Title)) + !String.IsEmpty(Skin.String(MovieList6Title)) + [String.IsEmpty(Skin.String(MovieList7Title))]">Skin.SetString(MovieList7Path,$INFO[ListItem.Path])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(MovieList1Title)) + !String.IsEmpty(Skin.String(MovieList2Title)) + !String.IsEmpty(Skin.String(MovieList3Title)) + !String.IsEmpty(Skin.String(MovieList4Title)) + !String.IsEmpty(Skin.String(MovieList5Title)) + !String.IsEmpty(Skin.String(MovieList6Title)) + [String.IsEmpty(Skin.String(MovieList7Title))]">Skin.SetString(MovieList7Thumb,$INFO[ListItem.Art(fanart)])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(MovieList1Title)) + !String.IsEmpty(Skin.String(MovieList2Title)) + !String.IsEmpty(Skin.String(MovieList3Title)) + !String.IsEmpty(Skin.String(MovieList4Title)) + !String.IsEmpty(Skin.String(MovieList5Title)) + !String.IsEmpty(Skin.String(MovieList6Title)) + [String.IsEmpty(Skin.String(MovieList7Title))]">Skin.SetString(MovieList7Poster,$INFO[ListItem.Art(poster)])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(MovieList1Title)) + !String.IsEmpty(Skin.String(MovieList2Title)) + !String.IsEmpty(Skin.String(MovieList3Title)) + !String.IsEmpty(Skin.String(MovieList4Title)) + !String.IsEmpty(Skin.String(MovieList5Title)) + !String.IsEmpty(Skin.String(MovieList6Title)) + [String.IsEmpty(Skin.String(MovieList7Title))]">Skin.SetString(MovieList7Plot,$INFO[ListItem.Plot])</onclick>
 	  
-	  <onclick condition="!IsEmpty(Skin.String(MovieList1Title)) + !IsEmpty(Skin.String(MovieList2Title)) + !IsEmpty(Skin.String(MovieList3Title)) + !IsEmpty(Skin.String(MovieList4Title)) + !IsEmpty(Skin.String(MovieList5Title)) + !IsEmpty(Skin.String(MovieList6Title)) + !IsEmpty(Skin.String(MovieList7Title)) + !IsEmpty(Skin.String(MovieList8Title)) + !IsEmpty(Skin.String(MovieList9Title)) + !IsEmpty(Skin.String(MovieList10Title))">ActivateWindow(1238)</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(MovieList1Title)) + !String.IsEmpty(Skin.String(MovieList2Title)) + !String.IsEmpty(Skin.String(MovieList3Title)) + !String.IsEmpty(Skin.String(MovieList4Title)) + !String.IsEmpty(Skin.String(MovieList5Title)) + !String.IsEmpty(Skin.String(MovieList6Title)) + !String.IsEmpty(Skin.String(MovieList7Title)) + !String.IsEmpty(Skin.String(MovieList8Title)) + !String.IsEmpty(Skin.String(MovieList9Title)) + !String.IsEmpty(Skin.String(MovieList10Title))">ActivateWindow(1238)</onclick>
   </control>
   
   <!-- Serien in Hauptmenü -->
@@ -719,83 +741,83 @@
 	  <focusedcolor>$VAR[ColorFontNormal]</focusedcolor>
 	  <visible>Container.Content(Episodes)</visible>
 	  
-	  <onclick condition="IsEmpty(Skin.String(ShowList1TVShowTitle))">Skin.SetString(ShowList1TVShowTitle,$INFO[ListItem.TVShowTitle] - $INFO[ListItem.Title])</onclick>
-	  <onclick condition="IsEmpty(Skin.String(ShowList1TVShowTitle))">Skin.SetString(ShowList1ID,$INFO[ListItem.DBID])</onclick>
-	  <onclick condition="IsEmpty(Skin.String(ShowList1TVShowTitle))">Skin.SetString(ShowList1Path,$INFO[ListItem.Path])</onclick>
-	  <onclick condition="IsEmpty(Skin.String(ShowList1TVShowTitle))">Skin.SetString(ShowList1Thumb,$INFO[ListItem.Icon])</onclick>
-	  <onclick condition="IsEmpty(Skin.String(ShowList1TVShowTitle))">Skin.SetString(ShowList1Fanart,$INFO[ListItem.Art(fanart)])</onclick>
-	  <onclick condition="IsEmpty(Skin.String(ShowList1TVShowTitle))">Skin.SetString(ShowList1Plot,$INFO[ListItem.Plot])</onclick>
+	  <onclick condition="String.IsEmpty(Skin.String(ShowList1TVShowTitle))">Skin.SetString(ShowList1TVShowTitle,$INFO[ListItem.TVShowTitle] - $INFO[ListItem.Title])</onclick>
+	  <onclick condition="String.IsEmpty(Skin.String(ShowList1TVShowTitle))">Skin.SetString(ShowList1ID,$INFO[ListItem.DBID])</onclick>
+	  <onclick condition="String.IsEmpty(Skin.String(ShowList1TVShowTitle))">Skin.SetString(ShowList1Path,$INFO[ListItem.Path])</onclick>
+	  <onclick condition="String.IsEmpty(Skin.String(ShowList1TVShowTitle))">Skin.SetString(ShowList1Thumb,$INFO[ListItem.Icon])</onclick>
+	  <onclick condition="String.IsEmpty(Skin.String(ShowList1TVShowTitle))">Skin.SetString(ShowList1Fanart,$INFO[ListItem.Art(fanart)])</onclick>
+	  <onclick condition="String.IsEmpty(Skin.String(ShowList1TVShowTitle))">Skin.SetString(ShowList1Plot,$INFO[ListItem.Plot])</onclick>
 	  
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + IsEmpty(Skin.String(ShowList2TVShowTitle))">Skin.SetString(ShowList2TVShowTitle,$INFO[ListItem.TVShowTitle] - $INFO[ListItem.Title])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + IsEmpty(Skin.String(ShowList2TVShowTitle))">Skin.SetString(ShowList2ID,$INFO[ListItem.DBID])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + IsEmpty(Skin.String(ShowList2TVShowTitle))">Skin.SetString(ShowList2Path,$INFO[ListItem.Path])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + IsEmpty(Skin.String(ShowList2TVShowTitle))">Skin.SetString(ShowList2Thumb,$INFO[ListItem.Icon])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + IsEmpty(Skin.String(ShowList2TVShowTitle))">Skin.SetString(ShowList2Fanart,$INFO[ListItem.Art(fanart)])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + IsEmpty(Skin.String(ShowList2TVShowTitle))">Skin.SetString(ShowList2Plot,$INFO[ListItem.Plot])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + String.IsEmpty(Skin.String(ShowList2TVShowTitle))">Skin.SetString(ShowList2TVShowTitle,$INFO[ListItem.TVShowTitle] - $INFO[ListItem.Title])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + String.IsEmpty(Skin.String(ShowList2TVShowTitle))">Skin.SetString(ShowList2ID,$INFO[ListItem.DBID])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + String.IsEmpty(Skin.String(ShowList2TVShowTitle))">Skin.SetString(ShowList2Path,$INFO[ListItem.Path])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + String.IsEmpty(Skin.String(ShowList2TVShowTitle))">Skin.SetString(ShowList2Thumb,$INFO[ListItem.Icon])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + String.IsEmpty(Skin.String(ShowList2TVShowTitle))">Skin.SetString(ShowList2Fanart,$INFO[ListItem.Art(fanart)])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + String.IsEmpty(Skin.String(ShowList2TVShowTitle))">Skin.SetString(ShowList2Plot,$INFO[ListItem.Plot])</onclick>
 	  
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + !IsEmpty(Skin.String(ShowList2TVShowTitle)) + [IsEmpty(Skin.String(ShowList3TVShowTitle))]">Skin.SetString(ShowList3TVShowTitle,$INFO[ListItem.TVShowTitle] - $INFO[ListItem.Title])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + !IsEmpty(Skin.String(ShowList2TVShowTitle)) + [IsEmpty(Skin.String(ShowList3TVShowTitle))]">Skin.SetString(ShowList3ID,$INFO[ListItem.DBID])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + !IsEmpty(Skin.String(ShowList2TVShowTitle)) + [IsEmpty(Skin.String(ShowList3TVShowTitle))]">Skin.SetString(ShowList3Path,$INFO[ListItem.Path])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + !IsEmpty(Skin.String(ShowList2TVShowTitle)) + [IsEmpty(Skin.String(ShowList3TVShowTitle))]">Skin.SetString(ShowList3Thumb,$INFO[ListItem.Icon])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + !IsEmpty(Skin.String(ShowList2TVShowTitle)) + [IsEmpty(Skin.String(ShowList3TVShowTitle))]">Skin.SetString(ShowList3Fanart,$INFO[ListItem.Art(fanart)])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + !IsEmpty(Skin.String(ShowList2TVShowTitle)) + [IsEmpty(Skin.String(ShowList3TVShowTitle))]">Skin.SetString(ShowList3Plot,$INFO[ListItem.Plot])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList2TVShowTitle)) + [String.IsEmpty(Skin.String(ShowList3TVShowTitle))]">Skin.SetString(ShowList3TVShowTitle,$INFO[ListItem.TVShowTitle] - $INFO[ListItem.Title])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList2TVShowTitle)) + [String.IsEmpty(Skin.String(ShowList3TVShowTitle))]">Skin.SetString(ShowList3ID,$INFO[ListItem.DBID])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList2TVShowTitle)) + [String.IsEmpty(Skin.String(ShowList3TVShowTitle))]">Skin.SetString(ShowList3Path,$INFO[ListItem.Path])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList2TVShowTitle)) + [String.IsEmpty(Skin.String(ShowList3TVShowTitle))]">Skin.SetString(ShowList3Thumb,$INFO[ListItem.Icon])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList2TVShowTitle)) + [String.IsEmpty(Skin.String(ShowList3TVShowTitle))]">Skin.SetString(ShowList3Fanart,$INFO[ListItem.Art(fanart)])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList2TVShowTitle)) + [String.IsEmpty(Skin.String(ShowList3TVShowTitle))]">Skin.SetString(ShowList3Plot,$INFO[ListItem.Plot])</onclick>
 
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + !IsEmpty(Skin.String(ShowList2TVShowTitle)) + !IsEmpty(Skin.String(ShowList3TVShowTitle)) + [IsEmpty(Skin.String(ShowList4TVShowTitle))]">Skin.SetString(ShowList4TVShowTitle,$INFO[ListItem.TVShowTitle] - $INFO[ListItem.Title])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + !IsEmpty(Skin.String(ShowList2TVShowTitle)) + !IsEmpty(Skin.String(ShowList3TVShowTitle)) + [IsEmpty(Skin.String(ShowList4TVShowTitle))]">Skin.SetString(ShowList4ID,$INFO[ListItem.DBID])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + !IsEmpty(Skin.String(ShowList2TVShowTitle)) + !IsEmpty(Skin.String(ShowList3TVShowTitle)) + [IsEmpty(Skin.String(ShowList4TVShowTitle))]">Skin.SetString(ShowList4Path,$INFO[ListItem.Path])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + !IsEmpty(Skin.String(ShowList2TVShowTitle)) + !IsEmpty(Skin.String(ShowList3TVShowTitle)) + [IsEmpty(Skin.String(ShowList4TVShowTitle))]">Skin.SetString(ShowList4Thumb,$INFO[ListItem.Icon])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + !IsEmpty(Skin.String(ShowList2TVShowTitle)) + !IsEmpty(Skin.String(ShowList3TVShowTitle)) + [IsEmpty(Skin.String(ShowList4TVShowTitle))]">Skin.SetString(ShowList4Fanart,$INFO[ListItem.Art(fanart)])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + !IsEmpty(Skin.String(ShowList2TVShowTitle)) + !IsEmpty(Skin.String(ShowList3TVShowTitle)) + [IsEmpty(Skin.String(ShowList4TVShowTitle))]">Skin.SetString(ShowList4Plot,$INFO[ListItem.Plot])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList2TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList3TVShowTitle)) + [String.IsEmpty(Skin.String(ShowList4TVShowTitle))]">Skin.SetString(ShowList4TVShowTitle,$INFO[ListItem.TVShowTitle] - $INFO[ListItem.Title])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList2TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList3TVShowTitle)) + [String.IsEmpty(Skin.String(ShowList4TVShowTitle))]">Skin.SetString(ShowList4ID,$INFO[ListItem.DBID])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList2TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList3TVShowTitle)) + [String.IsEmpty(Skin.String(ShowList4TVShowTitle))]">Skin.SetString(ShowList4Path,$INFO[ListItem.Path])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList2TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList3TVShowTitle)) + [String.IsEmpty(Skin.String(ShowList4TVShowTitle))]">Skin.SetString(ShowList4Thumb,$INFO[ListItem.Icon])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList2TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList3TVShowTitle)) + [String.IsEmpty(Skin.String(ShowList4TVShowTitle))]">Skin.SetString(ShowList4Fanart,$INFO[ListItem.Art(fanart)])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList2TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList3TVShowTitle)) + [String.IsEmpty(Skin.String(ShowList4TVShowTitle))]">Skin.SetString(ShowList4Plot,$INFO[ListItem.Plot])</onclick>
 	  
 	  
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + !IsEmpty(Skin.String(ShowList2TVShowTitle)) + !IsEmpty(Skin.String(ShowList3TVShowTitle)) + !IsEmpty(Skin.String(ShowList4TVShowTitle)) + [IsEmpty(Skin.String(ShowList5TVShowTitle))]">Skin.SetString(ShowList5TVShowTitle,$INFO[ListItem.TVShowTitle] - $INFO[ListItem.Title])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + !IsEmpty(Skin.String(ShowList2TVShowTitle)) + !IsEmpty(Skin.String(ShowList3TVShowTitle)) + !IsEmpty(Skin.String(ShowList4TVShowTitle)) + [IsEmpty(Skin.String(ShowList5TVShowTitle))]">Skin.SetString(ShowList5ID,$INFO[ListItem.DBID])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + !IsEmpty(Skin.String(ShowList2TVShowTitle)) + !IsEmpty(Skin.String(ShowList3TVShowTitle)) + !IsEmpty(Skin.String(ShowList4TVShowTitle)) + [IsEmpty(Skin.String(ShowList5TVShowTitle))]">Skin.SetString(ShowList5Path,$INFO[ListItem.Path])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + !IsEmpty(Skin.String(ShowList2TVShowTitle)) + !IsEmpty(Skin.String(ShowList3TVShowTitle)) + !IsEmpty(Skin.String(ShowList4TVShowTitle)) + [IsEmpty(Skin.String(ShowList5TVShowTitle))]">Skin.SetString(ShowList5Thumb,$INFO[ListItem.Icon])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + !IsEmpty(Skin.String(ShowList2TVShowTitle)) + !IsEmpty(Skin.String(ShowList3TVShowTitle)) + !IsEmpty(Skin.String(ShowList4TVShowTitle)) + [IsEmpty(Skin.String(ShowList5TVShowTitle))]">Skin.SetString(ShowList5Fanart,$INFO[ListItem.Art(fanart)])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + !IsEmpty(Skin.String(ShowList2TVShowTitle)) + !IsEmpty(Skin.String(ShowList3TVShowTitle)) + !IsEmpty(Skin.String(ShowList4TVShowTitle)) + [IsEmpty(Skin.String(ShowList5TVShowTitle))]">Skin.SetString(ShowList5Plot,$INFO[ListItem.Plot])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList2TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList3TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList4TVShowTitle)) + [String.IsEmpty(Skin.String(ShowList5TVShowTitle))]">Skin.SetString(ShowList5TVShowTitle,$INFO[ListItem.TVShowTitle] - $INFO[ListItem.Title])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList2TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList3TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList4TVShowTitle)) + [String.IsEmpty(Skin.String(ShowList5TVShowTitle))]">Skin.SetString(ShowList5ID,$INFO[ListItem.DBID])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList2TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList3TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList4TVShowTitle)) + [String.IsEmpty(Skin.String(ShowList5TVShowTitle))]">Skin.SetString(ShowList5Path,$INFO[ListItem.Path])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList2TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList3TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList4TVShowTitle)) + [String.IsEmpty(Skin.String(ShowList5TVShowTitle))]">Skin.SetString(ShowList5Thumb,$INFO[ListItem.Icon])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList2TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList3TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList4TVShowTitle)) + [String.IsEmpty(Skin.String(ShowList5TVShowTitle))]">Skin.SetString(ShowList5Fanart,$INFO[ListItem.Art(fanart)])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList2TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList3TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList4TVShowTitle)) + [String.IsEmpty(Skin.String(ShowList5TVShowTitle))]">Skin.SetString(ShowList5Plot,$INFO[ListItem.Plot])</onclick>
 	  
 	  
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + !IsEmpty(Skin.String(ShowList2TVShowTitle)) + !IsEmpty(Skin.String(ShowList3TVShowTitle)) + !IsEmpty(Skin.String(ShowList4TVShowTitle)) + !IsEmpty(Skin.String(ShowList5TVShowTitle)) + [IsEmpty(Skin.String(ShowList6TVShowTitle))]">Skin.SetString(ShowList6TVShowTitle,$INFO[ListItem.TVShowTitle] - $INFO[ListItem.Title])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + !IsEmpty(Skin.String(ShowList2TVShowTitle)) + !IsEmpty(Skin.String(ShowList3TVShowTitle)) + !IsEmpty(Skin.String(ShowList4TVShowTitle)) + !IsEmpty(Skin.String(ShowList5TVShowTitle)) + [IsEmpty(Skin.String(ShowList6TVShowTitle))]">Skin.SetString(ShowList6ID,$INFO[ListItem.DBID])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + !IsEmpty(Skin.String(ShowList2TVShowTitle)) + !IsEmpty(Skin.String(ShowList3TVShowTitle)) + !IsEmpty(Skin.String(ShowList4TVShowTitle)) + !IsEmpty(Skin.String(ShowList5TVShowTitle)) + [IsEmpty(Skin.String(ShowList6TVShowTitle))]">Skin.SetString(ShowList6Path,$INFO[ListItem.Path])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + !IsEmpty(Skin.String(ShowList2TVShowTitle)) + !IsEmpty(Skin.String(ShowList3TVShowTitle)) + !IsEmpty(Skin.String(ShowList4TVShowTitle)) + !IsEmpty(Skin.String(ShowList5TVShowTitle)) + [IsEmpty(Skin.String(ShowList6TVShowTitle))]">Skin.SetString(ShowList6Thumb,$INFO[ListItem.Icon])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + !IsEmpty(Skin.String(ShowList2TVShowTitle)) + !IsEmpty(Skin.String(ShowList3TVShowTitle)) + !IsEmpty(Skin.String(ShowList4TVShowTitle)) + !IsEmpty(Skin.String(ShowList5TVShowTitle)) + [IsEmpty(Skin.String(ShowList6TVShowTitle))]">Skin.SetString(ShowList6Fanart,$INFO[ListItem.Art(fanart)])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + !IsEmpty(Skin.String(ShowList2TVShowTitle)) + !IsEmpty(Skin.String(ShowList3TVShowTitle)) + !IsEmpty(Skin.String(ShowList4TVShowTitle)) + !IsEmpty(Skin.String(ShowList5TVShowTitle)) + [IsEmpty(Skin.String(ShowList6TVShowTitle))]">Skin.SetString(ShowList6Plot,$INFO[ListItem.Plot])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList2TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList3TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList4TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList5TVShowTitle)) + [String.IsEmpty(Skin.String(ShowList6TVShowTitle))]">Skin.SetString(ShowList6TVShowTitle,$INFO[ListItem.TVShowTitle] - $INFO[ListItem.Title])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList2TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList3TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList4TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList5TVShowTitle)) + [String.IsEmpty(Skin.String(ShowList6TVShowTitle))]">Skin.SetString(ShowList6ID,$INFO[ListItem.DBID])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList2TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList3TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList4TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList5TVShowTitle)) + [String.IsEmpty(Skin.String(ShowList6TVShowTitle))]">Skin.SetString(ShowList6Path,$INFO[ListItem.Path])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList2TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList3TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList4TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList5TVShowTitle)) + [String.IsEmpty(Skin.String(ShowList6TVShowTitle))]">Skin.SetString(ShowList6Thumb,$INFO[ListItem.Icon])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList2TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList3TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList4TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList5TVShowTitle)) + [String.IsEmpty(Skin.String(ShowList6TVShowTitle))]">Skin.SetString(ShowList6Fanart,$INFO[ListItem.Art(fanart)])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList2TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList3TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList4TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList5TVShowTitle)) + [String.IsEmpty(Skin.String(ShowList6TVShowTitle))]">Skin.SetString(ShowList6Plot,$INFO[ListItem.Plot])</onclick>
 	  
 	  
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + !IsEmpty(Skin.String(ShowList2TVShowTitle)) + !IsEmpty(Skin.String(ShowList3TVShowTitle)) + !IsEmpty(Skin.String(ShowList4TVShowTitle)) + !IsEmpty(Skin.String(ShowList5TVShowTitle)) + !IsEmpty(Skin.String(ShowList6TVShowTitle)) + [IsEmpty(Skin.String(ShowList7TVShowTitle))]">Skin.SetString(ShowList7TVShowTitle,$INFO[ListItem.TVShowTitle] - $INFO[ListItem.Title])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + !IsEmpty(Skin.String(ShowList2TVShowTitle)) + !IsEmpty(Skin.String(ShowList3TVShowTitle)) + !IsEmpty(Skin.String(ShowList4TVShowTitle)) + !IsEmpty(Skin.String(ShowList5TVShowTitle)) + !IsEmpty(Skin.String(ShowList6TVShowTitle)) + [IsEmpty(Skin.String(ShowList7TVShowTitle))]">Skin.SetString(ShowList7ID,$INFO[ListItem.DBID])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + !IsEmpty(Skin.String(ShowList2TVShowTitle)) + !IsEmpty(Skin.String(ShowList3TVShowTitle)) + !IsEmpty(Skin.String(ShowList4TVShowTitle)) + !IsEmpty(Skin.String(ShowList5TVShowTitle)) + !IsEmpty(Skin.String(ShowList6TVShowTitle)) + [IsEmpty(Skin.String(ShowList7TVShowTitle))]">Skin.SetString(ShowList7Path,$INFO[ListItem.Path])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + !IsEmpty(Skin.String(ShowList2TVShowTitle)) + !IsEmpty(Skin.String(ShowList3TVShowTitle)) + !IsEmpty(Skin.String(ShowList4TVShowTitle)) + !IsEmpty(Skin.String(ShowList5TVShowTitle)) + !IsEmpty(Skin.String(ShowList6TVShowTitle)) + [IsEmpty(Skin.String(ShowList7TVShowTitle))]">Skin.SetString(ShowList7Thumb,$INFO[ListItem.Icon])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + !IsEmpty(Skin.String(ShowList2TVShowTitle)) + !IsEmpty(Skin.String(ShowList3TVShowTitle)) + !IsEmpty(Skin.String(ShowList4TVShowTitle)) + !IsEmpty(Skin.String(ShowList5TVShowTitle)) + !IsEmpty(Skin.String(ShowList6TVShowTitle)) + [IsEmpty(Skin.String(ShowList7TVShowTitle))]">Skin.SetString(ShowList7Fanart,$INFO[ListItem.Art(fanart)])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + !IsEmpty(Skin.String(ShowList2TVShowTitle)) + !IsEmpty(Skin.String(ShowList3TVShowTitle)) + !IsEmpty(Skin.String(ShowList4TVShowTitle)) + !IsEmpty(Skin.String(ShowList5TVShowTitle)) + !IsEmpty(Skin.String(ShowList6TVShowTitle)) + [IsEmpty(Skin.String(ShowList7TVShowTitle))]">Skin.SetString(ShowList7Plot,$INFO[ListItem.Plot])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList2TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList3TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList4TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList5TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList6TVShowTitle)) + [String.IsEmpty(Skin.String(ShowList7TVShowTitle))]">Skin.SetString(ShowList7TVShowTitle,$INFO[ListItem.TVShowTitle] - $INFO[ListItem.Title])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList2TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList3TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList4TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList5TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList6TVShowTitle)) + [String.IsEmpty(Skin.String(ShowList7TVShowTitle))]">Skin.SetString(ShowList7ID,$INFO[ListItem.DBID])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList2TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList3TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList4TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList5TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList6TVShowTitle)) + [String.IsEmpty(Skin.String(ShowList7TVShowTitle))]">Skin.SetString(ShowList7Path,$INFO[ListItem.Path])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList2TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList3TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList4TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList5TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList6TVShowTitle)) + [String.IsEmpty(Skin.String(ShowList7TVShowTitle))]">Skin.SetString(ShowList7Thumb,$INFO[ListItem.Icon])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList2TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList3TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList4TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList5TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList6TVShowTitle)) + [String.IsEmpty(Skin.String(ShowList7TVShowTitle))]">Skin.SetString(ShowList7Fanart,$INFO[ListItem.Art(fanart)])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList2TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList3TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList4TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList5TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList6TVShowTitle)) + [String.IsEmpty(Skin.String(ShowList7TVShowTitle))]">Skin.SetString(ShowList7Plot,$INFO[ListItem.Plot])</onclick>
 	  
 	  
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + !IsEmpty(Skin.String(ShowList2TVShowTitle)) + !IsEmpty(Skin.String(ShowList3TVShowTitle)) + !IsEmpty(Skin.String(ShowList4TVShowTitle)) + !IsEmpty(Skin.String(ShowList5TVShowTitle)) + !IsEmpty(Skin.String(ShowList6TVShowTitle)) + !IsEmpty(Skin.String(ShowList7TVShowTitle)) + [IsEmpty(Skin.String(ShowList8TVShowTitle))]">Skin.SetString(ShowList8TVShowTitle,$INFO[ListItem.TVShowTitle] - $INFO[ListItem.Title])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + !IsEmpty(Skin.String(ShowList2TVShowTitle)) + !IsEmpty(Skin.String(ShowList3TVShowTitle)) + !IsEmpty(Skin.String(ShowList4TVShowTitle)) + !IsEmpty(Skin.String(ShowList5TVShowTitle)) + !IsEmpty(Skin.String(ShowList6TVShowTitle)) + !IsEmpty(Skin.String(ShowList7TVShowTitle)) + [IsEmpty(Skin.String(ShowList8TVShowTitle))]">Skin.SetString(ShowList8ID,$INFO[ListItem.DBID])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + !IsEmpty(Skin.String(ShowList2TVShowTitle)) + !IsEmpty(Skin.String(ShowList3TVShowTitle)) + !IsEmpty(Skin.String(ShowList4TVShowTitle)) + !IsEmpty(Skin.String(ShowList5TVShowTitle)) + !IsEmpty(Skin.String(ShowList6TVShowTitle)) + !IsEmpty(Skin.String(ShowList7TVShowTitle)) + [IsEmpty(Skin.String(ShowList8TVShowTitle))]">Skin.SetString(ShowList8Path,$INFO[ListItem.Path])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + !IsEmpty(Skin.String(ShowList2TVShowTitle)) + !IsEmpty(Skin.String(ShowList3TVShowTitle)) + !IsEmpty(Skin.String(ShowList4TVShowTitle)) + !IsEmpty(Skin.String(ShowList5TVShowTitle)) + !IsEmpty(Skin.String(ShowList6TVShowTitle)) + !IsEmpty(Skin.String(ShowList7TVShowTitle)) + [IsEmpty(Skin.String(ShowList8TVShowTitle))]">Skin.SetString(ShowList8Thumb,$INFO[ListItem.Icon])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + !IsEmpty(Skin.String(ShowList2TVShowTitle)) + !IsEmpty(Skin.String(ShowList3TVShowTitle)) + !IsEmpty(Skin.String(ShowList4TVShowTitle)) + !IsEmpty(Skin.String(ShowList5TVShowTitle)) + !IsEmpty(Skin.String(ShowList6TVShowTitle)) + !IsEmpty(Skin.String(ShowList7TVShowTitle)) + [IsEmpty(Skin.String(ShowList8TVShowTitle))]">Skin.SetString(ShowList8Fanart,$INFO[ListItem.Art(fanart)])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + !IsEmpty(Skin.String(ShowList2TVShowTitle)) + !IsEmpty(Skin.String(ShowList3TVShowTitle)) + !IsEmpty(Skin.String(ShowList4TVShowTitle)) + !IsEmpty(Skin.String(ShowList5TVShowTitle)) + !IsEmpty(Skin.String(ShowList6TVShowTitle)) + !IsEmpty(Skin.String(ShowList7TVShowTitle)) + [IsEmpty(Skin.String(ShowList8TVShowTitle))]">Skin.SetString(ShowList8Plot,$INFO[ListItem.Plot])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList2TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList3TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList4TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList5TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList6TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList7TVShowTitle)) + [String.IsEmpty(Skin.String(ShowList8TVShowTitle))]">Skin.SetString(ShowList8TVShowTitle,$INFO[ListItem.TVShowTitle] - $INFO[ListItem.Title])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList2TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList3TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList4TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList5TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList6TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList7TVShowTitle)) + [String.IsEmpty(Skin.String(ShowList8TVShowTitle))]">Skin.SetString(ShowList8ID,$INFO[ListItem.DBID])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList2TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList3TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList4TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList5TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList6TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList7TVShowTitle)) + [String.IsEmpty(Skin.String(ShowList8TVShowTitle))]">Skin.SetString(ShowList8Path,$INFO[ListItem.Path])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList2TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList3TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList4TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList5TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList6TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList7TVShowTitle)) + [String.IsEmpty(Skin.String(ShowList8TVShowTitle))]">Skin.SetString(ShowList8Thumb,$INFO[ListItem.Icon])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList2TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList3TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList4TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList5TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList6TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList7TVShowTitle)) + [String.IsEmpty(Skin.String(ShowList8TVShowTitle))]">Skin.SetString(ShowList8Fanart,$INFO[ListItem.Art(fanart)])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList2TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList3TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList4TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList5TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList6TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList7TVShowTitle)) + [String.IsEmpty(Skin.String(ShowList8TVShowTitle))]">Skin.SetString(ShowList8Plot,$INFO[ListItem.Plot])</onclick>
 	  
 	  
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + !IsEmpty(Skin.String(ShowList2TVShowTitle)) + !IsEmpty(Skin.String(ShowList3TVShowTitle)) + !IsEmpty(Skin.String(ShowList4TVShowTitle)) + !IsEmpty(Skin.String(ShowList5TVShowTitle)) + !IsEmpty(Skin.String(ShowList6TVShowTitle)) + !IsEmpty(Skin.String(ShowList7TVShowTitle)) + !IsEmpty(Skin.String(ShowList8TVShowTitle)) + [IsEmpty(Skin.String(ShowList9TVShowTitle))]">Skin.SetString(ShowList9TVShowTitle,$INFO[ListItem.TVShowTitle] - $INFO[ListItem.Title])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + !IsEmpty(Skin.String(ShowList2TVShowTitle)) + !IsEmpty(Skin.String(ShowList3TVShowTitle)) + !IsEmpty(Skin.String(ShowList4TVShowTitle)) + !IsEmpty(Skin.String(ShowList5TVShowTitle)) + !IsEmpty(Skin.String(ShowList6TVShowTitle)) + !IsEmpty(Skin.String(ShowList7TVShowTitle)) + !IsEmpty(Skin.String(ShowList8TVShowTitle)) + [IsEmpty(Skin.String(ShowList9TVShowTitle))]">Skin.SetString(ShowList9ID,$INFO[ListItem.DBID])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + !IsEmpty(Skin.String(ShowList2TVShowTitle)) + !IsEmpty(Skin.String(ShowList3TVShowTitle)) + !IsEmpty(Skin.String(ShowList4TVShowTitle)) + !IsEmpty(Skin.String(ShowList5TVShowTitle)) + !IsEmpty(Skin.String(ShowList6TVShowTitle)) + !IsEmpty(Skin.String(ShowList7TVShowTitle)) + !IsEmpty(Skin.String(ShowList8TVShowTitle)) + [IsEmpty(Skin.String(ShowList9TVShowTitle))]">Skin.SetString(ShowList9Path,$INFO[ListItem.Path])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + !IsEmpty(Skin.String(ShowList2TVShowTitle)) + !IsEmpty(Skin.String(ShowList3TVShowTitle)) + !IsEmpty(Skin.String(ShowList4TVShowTitle)) + !IsEmpty(Skin.String(ShowList5TVShowTitle)) + !IsEmpty(Skin.String(ShowList6TVShowTitle)) + !IsEmpty(Skin.String(ShowList7TVShowTitle)) + !IsEmpty(Skin.String(ShowList8TVShowTitle)) + [IsEmpty(Skin.String(ShowList9TVShowTitle))]">Skin.SetString(ShowList9Thumb,$INFO[ListItem.Icon])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + !IsEmpty(Skin.String(ShowList2TVShowTitle)) + !IsEmpty(Skin.String(ShowList3TVShowTitle)) + !IsEmpty(Skin.String(ShowList4TVShowTitle)) + !IsEmpty(Skin.String(ShowList5TVShowTitle)) + !IsEmpty(Skin.String(ShowList6TVShowTitle)) + !IsEmpty(Skin.String(ShowList7TVShowTitle)) + !IsEmpty(Skin.String(ShowList8TVShowTitle)) + [IsEmpty(Skin.String(ShowList9TVShowTitle))]">Skin.SetString(ShowList9Fanart,$INFO[ListItem.Art(fanart)])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + !IsEmpty(Skin.String(ShowList2TVShowTitle)) + !IsEmpty(Skin.String(ShowList3TVShowTitle)) + !IsEmpty(Skin.String(ShowList4TVShowTitle)) + !IsEmpty(Skin.String(ShowList5TVShowTitle)) + !IsEmpty(Skin.String(ShowList6TVShowTitle)) + !IsEmpty(Skin.String(ShowList7TVShowTitle)) + !IsEmpty(Skin.String(ShowList8TVShowTitle)) + [IsEmpty(Skin.String(ShowList9TVShowTitle))]">Skin.SetString(ShowList9Plot,$INFO[ListItem.Plot])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList2TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList3TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList4TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList5TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList6TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList7TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList8TVShowTitle)) + [String.IsEmpty(Skin.String(ShowList9TVShowTitle))]">Skin.SetString(ShowList9TVShowTitle,$INFO[ListItem.TVShowTitle] - $INFO[ListItem.Title])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList2TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList3TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList4TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList5TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList6TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList7TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList8TVShowTitle)) + [String.IsEmpty(Skin.String(ShowList9TVShowTitle))]">Skin.SetString(ShowList9ID,$INFO[ListItem.DBID])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList2TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList3TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList4TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList5TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList6TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList7TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList8TVShowTitle)) + [String.IsEmpty(Skin.String(ShowList9TVShowTitle))]">Skin.SetString(ShowList9Path,$INFO[ListItem.Path])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList2TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList3TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList4TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList5TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList6TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList7TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList8TVShowTitle)) + [String.IsEmpty(Skin.String(ShowList9TVShowTitle))]">Skin.SetString(ShowList9Thumb,$INFO[ListItem.Icon])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList2TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList3TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList4TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList5TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList6TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList7TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList8TVShowTitle)) + [String.IsEmpty(Skin.String(ShowList9TVShowTitle))]">Skin.SetString(ShowList9Fanart,$INFO[ListItem.Art(fanart)])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList2TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList3TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList4TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList5TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList6TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList7TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList8TVShowTitle)) + [String.IsEmpty(Skin.String(ShowList9TVShowTitle))]">Skin.SetString(ShowList9Plot,$INFO[ListItem.Plot])</onclick>
 	  
 	  
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + !IsEmpty(Skin.String(ShowList2TVShowTitle)) + !IsEmpty(Skin.String(ShowList3TVShowTitle)) + !IsEmpty(Skin.String(ShowList4TVShowTitle)) + !IsEmpty(Skin.String(ShowList5TVShowTitle)) + !IsEmpty(Skin.String(ShowList6TVShowTitle)) + !IsEmpty(Skin.String(ShowList7TVShowTitle)) + !IsEmpty(Skin.String(ShowList8TVShowTitle)) + !IsEmpty(Skin.String(ShowList9TVShowTitle)) + [IsEmpty(Skin.String(ShowList10TVShowTitle))]">Skin.SetString(ShowList10TVShowTitle,$INFO[ListItem.TVShowTitle] - $INFO[ListItem.Title])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + !IsEmpty(Skin.String(ShowList2TVShowTitle)) + !IsEmpty(Skin.String(ShowList3TVShowTitle)) + !IsEmpty(Skin.String(ShowList4TVShowTitle)) + !IsEmpty(Skin.String(ShowList5TVShowTitle)) + !IsEmpty(Skin.String(ShowList6TVShowTitle)) + !IsEmpty(Skin.String(ShowList7TVShowTitle)) + !IsEmpty(Skin.String(ShowList8TVShowTitle)) + !IsEmpty(Skin.String(ShowList9TVShowTitle)) + [IsEmpty(Skin.String(ShowList10TVShowTitle))]">Skin.SetString(ShowList10ID,$INFO[ListItem.DBID])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + !IsEmpty(Skin.String(ShowList2TVShowTitle)) + !IsEmpty(Skin.String(ShowList3TVShowTitle)) + !IsEmpty(Skin.String(ShowList4TVShowTitle)) + !IsEmpty(Skin.String(ShowList5TVShowTitle)) + !IsEmpty(Skin.String(ShowList6TVShowTitle)) + !IsEmpty(Skin.String(ShowList7TVShowTitle)) + !IsEmpty(Skin.String(ShowList8TVShowTitle)) + !IsEmpty(Skin.String(ShowList9TVShowTitle)) + [IsEmpty(Skin.String(ShowList10TVShowTitle))]">Skin.SetString(ShowList10Path,$INFO[ListItem.Path])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + !IsEmpty(Skin.String(ShowList2TVShowTitle)) + !IsEmpty(Skin.String(ShowList3TVShowTitle)) + !IsEmpty(Skin.String(ShowList4TVShowTitle)) + !IsEmpty(Skin.String(ShowList5TVShowTitle)) + !IsEmpty(Skin.String(ShowList6TVShowTitle)) + !IsEmpty(Skin.String(ShowList7TVShowTitle)) + !IsEmpty(Skin.String(ShowList8TVShowTitle)) + !IsEmpty(Skin.String(ShowList9TVShowTitle)) + [IsEmpty(Skin.String(ShowList10TVShowTitle))]">Skin.SetString(ShowList10Thumb,$INFO[ListItem.Icon])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + !IsEmpty(Skin.String(ShowList2TVShowTitle)) + !IsEmpty(Skin.String(ShowList3TVShowTitle)) + !IsEmpty(Skin.String(ShowList4TVShowTitle)) + !IsEmpty(Skin.String(ShowList5TVShowTitle)) + !IsEmpty(Skin.String(ShowList6TVShowTitle)) + !IsEmpty(Skin.String(ShowList7TVShowTitle)) + !IsEmpty(Skin.String(ShowList8TVShowTitle)) + !IsEmpty(Skin.String(ShowList9TVShowTitle)) + [IsEmpty(Skin.String(ShowList10TVShowTitle))]">Skin.SetString(ShowList10Fanart,$INFO[ListItem.Art(fanart)])</onclick>
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + !IsEmpty(Skin.String(ShowList2TVShowTitle)) + !IsEmpty(Skin.String(ShowList3TVShowTitle)) + !IsEmpty(Skin.String(ShowList4TVShowTitle)) + !IsEmpty(Skin.String(ShowList5TVShowTitle)) + !IsEmpty(Skin.String(ShowList6TVShowTitle)) + !IsEmpty(Skin.String(ShowList7TVShowTitle)) + !IsEmpty(Skin.String(ShowList8TVShowTitle)) + !IsEmpty(Skin.String(ShowList9TVShowTitle)) + [IsEmpty(Skin.String(ShowList10TVShowTitle))]">Skin.SetString(ShowList10Plot,$INFO[ListItem.Plot])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList2TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList3TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList4TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList5TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList6TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList7TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList8TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList9TVShowTitle)) + [String.IsEmpty(Skin.String(ShowList10TVShowTitle))]">Skin.SetString(ShowList10TVShowTitle,$INFO[ListItem.TVShowTitle] - $INFO[ListItem.Title])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList2TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList3TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList4TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList5TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList6TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList7TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList8TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList9TVShowTitle)) + [String.IsEmpty(Skin.String(ShowList10TVShowTitle))]">Skin.SetString(ShowList10ID,$INFO[ListItem.DBID])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList2TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList3TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList4TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList5TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList6TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList7TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList8TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList9TVShowTitle)) + [String.IsEmpty(Skin.String(ShowList10TVShowTitle))]">Skin.SetString(ShowList10Path,$INFO[ListItem.Path])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList2TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList3TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList4TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList5TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList6TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList7TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList8TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList9TVShowTitle)) + [String.IsEmpty(Skin.String(ShowList10TVShowTitle))]">Skin.SetString(ShowList10Thumb,$INFO[ListItem.Icon])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList2TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList3TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList4TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList5TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList6TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList7TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList8TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList9TVShowTitle)) + [String.IsEmpty(Skin.String(ShowList10TVShowTitle))]">Skin.SetString(ShowList10Fanart,$INFO[ListItem.Art(fanart)])</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList2TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList3TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList4TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList5TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList6TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList7TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList8TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList9TVShowTitle)) + [String.IsEmpty(Skin.String(ShowList10TVShowTitle))]">Skin.SetString(ShowList10Plot,$INFO[ListItem.Plot])</onclick>
 	  
-	  <onclick condition="!IsEmpty(Skin.String(ShowList1TVShowTitle)) + !IsEmpty(Skin.String(ShowList2TVShowTitle)) + !IsEmpty(Skin.String(ShowList3TVShowTitle)) + !IsEmpty(Skin.String(ShowList4TVShowTitle)) + !IsEmpty(Skin.String(ShowList5TVShowTitle)) + !IsEmpty(Skin.String(ShowList6TVShowTitle)) + !IsEmpty(Skin.String(ShowList7TVShowTitle)) + !IsEmpty(Skin.String(ShowList8TVShowTitle)) + !IsEmpty(Skin.String(ShowList9TVShowTitle)) + !IsEmpty(Skin.String(ShowList10TVShowTitle))">ActivateWindow(1239)</onclick>
+	  <onclick condition="!String.IsEmpty(Skin.String(ShowList1TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList2TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList3TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList4TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList5TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList6TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList7TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList8TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList9TVShowTitle)) + !String.IsEmpty(Skin.String(ShowList10TVShowTitle))">ActivateWindow(1239)</onclick>
 	</control>
 </include>
    
@@ -803,11 +825,14 @@
    <include name="CommonHomeWidgetControl">
    <control type="group">
    <visible>!Skin.HasSetting(NoWidgets)</visible>
+   <include>widget_outzoom_submenu</include>
    <include condition="!Skin.HasSetting(HomeMainMenu2)">WidgetsTopWebOS</include>
    <include condition="Skin.HasSetting(HomeMainMenu2)">WidgetsTopTizen</include>
 	 <control type="button" id="300001">
 	    <include>Animation.ZoomIn</include>
 		<animation effect="slide" end="0,-235" time="100" condition="Control.HasFocus(8306)">Conditional</animation>
+		<animation effect="slide" end="0,-125" time="100" condition="Skin.HasSetting(HomeMainMenu2)">Conditional</animation>
+		<animation effect="slide" end="-30,0" time="100" condition="Skin.HasSetting(HomeMainMenu2)">Conditional</animation>
 	    <left>110</left>
 	    <top>380</top>
 		<height>45</height>
@@ -818,12 +843,13 @@
 	    <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 		<texturenofocus colordiffuse="$VAR[ColorIcons]">-</texturenofocus>
 	    <texturefocus colordiffuse="$VAR[BackColorButton]">-</texturefocus>
-		<onclick condition="!Skin.HasSetting(recommendedmovies) + !Skin.HasSetting(unseenmovies) + !Skin.HasSetting(fsk18movies) + !Skin.HasSetting(moviessets) + !Skin.HasSetting(topratedmovies) + !Skin.HasSetting(3dmovies)">Skin.SetBool(unseenmovies)</onclick>
+		<onclick condition="!Skin.HasSetting(recommendedmovies) + !Skin.HasSetting(unseenmovies) + !Skin.HasSetting(fsk18movies) + !Skin.HasSetting(moviessets) + !Skin.HasSetting(topratedmovies) + !Skin.HasSetting(3dmovies) + !Skin.HasSetting(movieactor)">Skin.SetBool(unseenmovies)</onclick>
 		<onclick condition="Skin.HasSetting(unseenmovies)">Skin.SetBool(recommendedmovies)</onclick>
 		<onclick condition="Skin.HasSetting(recommendedmovies)">Skin.SetBool(fsk18movies)</onclick>
 		<onclick condition="Skin.HasSetting(fsk18movies)">Skin.SetBool(moviessets)</onclick>
 		<onclick condition="Skin.HasSetting(moviessets)">Skin.SetBool(topratedmovies)</onclick>
 		<onclick condition="Skin.HasSetting(topratedmovies)">Skin.SetBool(3dmovies)</onclick>
+		<onclick condition="Skin.HasSetting(3dmovies)">Skin.SetBool(movieactor)</onclick>
 		
 		<onclick condition="Skin.HasSetting(unseenmovies)">Skin.Reset(unseenmovies)</onclick>
 		<onclick condition="Skin.HasSetting(recommendedmovies)">Skin.Reset(recommendedmovies)</onclick>
@@ -831,6 +857,7 @@
 		<onclick condition="Skin.HasSetting(moviessets)">Skin.Reset(moviessets)</onclick>
 		<onclick condition="Skin.HasSetting(topratedmovies)">Skin.Reset(topratedmovies)</onclick>
 		<onclick condition="Skin.HasSetting(3dmovies)">Skin.Reset(3dmovies)</onclick>
+		<onclick condition="Skin.HasSetting(movieactor)">Skin.Reset(movieactor)</onclick>
 		<onup>1860</onup>
 		<ondown>8306</ondown>
 		<visible>Container(9000).Hasfocus(3)</visible>
@@ -838,6 +865,8 @@
 	 <control type="button" id="300002">
 	    <include>Animation.ZoomIn</include>
 		<animation effect="slide" end="0,-235" time="100" condition="Control.HasFocus(8307)">Conditional</animation>
+		<animation effect="slide" end="0,-125" time="100" condition="Skin.HasSetting(HomeMainMenu2)">Conditional</animation>
+		<animation effect="slide" end="-30,0" time="100" condition="Skin.HasSetting(HomeMainMenu2)">Conditional</animation>
 	    <left>110</left>
 	    <top>380</top>
 		<height>45</height>
@@ -859,6 +888,8 @@
 	 <control type="button" id="300003">
 	    <include>Animation.ZoomIn</include>
 		<animation effect="slide" end="0,-235" time="100" condition="Control.HasFocus(8308)">Conditional</animation>
+		<animation effect="slide" end="0,-125" time="100" condition="Skin.HasSetting(HomeMainMenu2)">Conditional</animation>
+		<animation effect="slide" end="-30,0" time="100" condition="Skin.HasSetting(HomeMainMenu2)">Conditional</animation>
 	    <left>120</left>
 	    <top>380</top>
 		<height>45</height>
@@ -879,6 +910,7 @@
 	 </control>
 	 <control type="button" id="300004">
 	    <include>Animation.ZoomIn</include>
+		<animation effect="slide" end="0,50" time="100" condition="Skin.HasSetting(HomeMainMenu2)">Conditional</animation>
 	    <left>80</left>
 	    <top>205</top>
 		<height>45</height>
@@ -889,17 +921,19 @@
 	    <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 		<texturenofocus colordiffuse="$VAR[ColorIcons]">-</texturenofocus>
 	    <texturefocus colordiffuse="$VAR[BackColorButton]">-</texturefocus>
-		<onclick condition="!Skin.HasSetting(tvhighlight) + !Skin.HasSetting(serienplaner)">Skin.SetBool(serienplaner)</onclick>
-		<onclick condition="Skin.HasSetting(serienplaner)">Skin.SetBool(tvhighlight)</onclick>		
+		<onclick condition="!Skin.HasSetting(livetvrec) + !Skin.HasSetting(serienplaner)">Skin.SetBool(serienplaner)</onclick>
+		<onclick condition="Skin.HasSetting(serienplaner)">Skin.SetBool(livetvrec)</onclick>		
 		<onclick condition="Skin.HasSetting(serienplaner)">Skin.Reset(serienplaner)</onclick>
-		<onclick condition="Skin.HasSetting(tvhighlight)">Skin.Reset(tvhighlight)</onclick>
-		<onup>9000</onup>
+		<onclick condition="Skin.HasSetting(livetvrec)">Skin.Reset(livetvrec)</onclick>
+		<onup>1860</onup>
 		<ondown>8304</ondown>
 		<visible>Container(9000).Hasfocus(1)</visible>
 	 </control>
 	 <control type="button" id="300005">
 	    <include>Animation.ZoomIn</include>
 		<animation effect="slide" end="0,-235" time="100" condition="Control.HasFocus(8309)">Conditional</animation>
+		<animation effect="slide" end="0,-125" time="100" condition="Skin.HasSetting(HomeMainMenu2)">Conditional</animation>
+		<animation effect="slide" end="-30,0" time="100" condition="Skin.HasSetting(HomeMainMenu2)">Conditional</animation>
 	    <left>120</left>
 	    <top>380</top>
 		<height>45</height>
@@ -921,6 +955,8 @@
 	 <control type="button" id="300006">
 	    <include>Animation.ZoomIn</include>
 		<animation effect="slide" end="0,-235" time="100" condition="Control.HasFocus(8322)">Conditional</animation>
+		<animation effect="slide" end="0,-125" time="100" condition="Skin.HasSetting(HomeMainMenu2)">Conditional</animation>
+		<animation effect="slide" end="-30,0" time="100" condition="Skin.HasSetting(HomeMainMenu2)">Conditional</animation>
 	    <left>110</left>
 	    <top>380</top>
 		<height>45</height>
@@ -944,6 +980,8 @@
 	 <control type="button" id="300007">
 	    <include>Animation.ZoomIn</include>
 		<animation effect="slide" end="0,-235" time="100" condition="Control.HasFocus(8317)">Conditional</animation>
+		<animation effect="slide" end="0,-125" time="100" condition="Skin.HasSetting(HomeMainMenu2)">Conditional</animation>
+		<animation effect="slide" end="-30,0" time="100" condition="Skin.HasSetting(HomeMainMenu2)">Conditional</animation>
 	    <left>110</left>
 	    <top>380</top>
 		<height>45</height>
@@ -971,13 +1009,14 @@
 		<visible>Container(9000).Hasfocus(17)</visible>
 	 </control>
     </control>
-   </include>
-   <!-- WIDGETS WECHSEL BUTTON CLOSE -->
+   
+  </include>
+  <!-- WIDGETS WECHSEL BUTTON CLOSE -->
   
   <!-- SIDEBLADE FOR VIEWS -->
   <include name="SideBladeForViews">
 	  <control type="group">
-	  <visible>!Control.IsVisible(605)</visible>
+	  <visible>!Control.IsVisible(605) + !Control.IsVisible(612)</visible>
 	  <include>Animation.ZoomIn</include>
 	  <animation effect="zoom" end="83" center="2100,100" time="300" tween="cubic" easing="inout" condition="!Window.IsVisible(tvchannels) + !Window.IsVisible(radiochannels) + !Window.IsVisible(tvguide) + !Window.IsVisible(tvrecordings) + !Window.IsVisible(tvtimers) + !Window.IsVisible(tvsearch) + [ControlGroup(9020).HasFocus | ControlGroup(9030).HasFocus | ControlGroup(9021).HasFocus]">Conditional</animation>
 		<control type="image">
@@ -1208,185 +1247,244 @@
 	  <colordiffuse>$VAR[ColorBackWebOS23]</colordiffuse>
 	  <visible>!Skin.HasSetting(homenocolorbutton)</visible>
 	</control>
+	<control type="image">
+	  <texture background="true">$INFO[ListItem.Property(BackWebOS24)]</texture>
+	  <colordiffuse>$VAR[ColorBackWebOS24]</colordiffuse>
+	  <visible>!Skin.HasSetting(homenocolorbutton)</visible>
+	</control>
+	<control type="image">
+	  <texture background="true">$INFO[ListItem.Property(BackWebOS25)]</texture>
+	  <colordiffuse>$VAR[ColorBackWebOS25]</colordiffuse>
+	  <visible>!Skin.HasSetting(homenocolorbutton)</visible>
+	</control>
+	<control type="image">
+	  <texture background="true">$INFO[ListItem.Property(BackWebOS26)]</texture>
+	  <colordiffuse>$VAR[ColorBackWebOS26]</colordiffuse>
+	  <visible>!Skin.HasSetting(homenocolorbutton)</visible>
+	</control>
+	<control type="image">
+	  <texture background="true">$INFO[ListItem.Property(BackWebOS27)]</texture>
+	  <colordiffuse>$VAR[ColorBackWebOS27]</colordiffuse>
+	  <visible>!Skin.HasSetting(homenocolorbutton)</visible>
+	</control>
+	<control type="image">
+	  <texture background="true">$INFO[ListItem.Property(BackWebOS28)]</texture>
+	  <colordiffuse>$VAR[ColorBackWebOS28]</colordiffuse>
+	  <visible>!Skin.HasSetting(homenocolorbutton)</visible>
+	</control>
   </include>
   <include name="TizenNoFocusButton">
     <control type="image">
-	  <texture background="true">skin/button_klein.png</texture>
+	  <texture background="true">home/button/submenubutton.png</texture>
 	  <colordiffuse>$VAR[ColorButtonDialogeBack]</colordiffuse>
-	  <bordertexture border="10">ThumbShadow.png</bordertexture>
-	  <bordersize>6</bordersize>
 	  <visible>Skin.HasSetting(homenocolorbutton)</visible>
 	</control>
 	<control type="image">
 	  <texture background="true">$INFO[ListItem.Property(BackTizen0)]</texture>
-	  <bordertexture border="10">ThumbShadow.png</bordertexture>
-	  <bordersize>6</bordersize>
 	  <colordiffuse>$VAR[ColorBackWebOS0]</colordiffuse>
 	  <visible>!Skin.HasSetting(homenocolorbutton)</visible>
 	</control>
 	<control type="image">
 	  <texture background="true">$INFO[ListItem.Property(BackTizen1)]</texture>
-	  <bordertexture border="10">ThumbShadow.png</bordertexture>
-	  <bordersize>6</bordersize>
 	  <colordiffuse>$VAR[ColorBackWebOS1]</colordiffuse>
 	  <visible>!Skin.HasSetting(homenocolorbutton)</visible>
 	</control>
 	<control type="image">
 	  <texture background="true">$INFO[ListItem.Property(BackTizen2)]</texture>
-	  <bordertexture border="10">ThumbShadow.png</bordertexture>
-	  <bordersize>6</bordersize>
 	  <colordiffuse>$VAR[ColorBackWebOS2]</colordiffuse>
 	  <visible>!Skin.HasSetting(homenocolorbutton)</visible>
 	</control>
 	<control type="image">
 	  <texture background="true">$INFO[ListItem.Property(BackTizen3)]</texture>
-	  <bordertexture border="10">ThumbShadow.png</bordertexture>
-	  <bordersize>6</bordersize>
 	  <colordiffuse>$VAR[ColorBackWebOS3]</colordiffuse>
 	  <visible>!Skin.HasSetting(homenocolorbutton)</visible>
 	</control>
 	<control type="image">
 	  <texture background="true">$INFO[ListItem.Property(BackTizen4)]</texture>
-	  <bordertexture border="10">ThumbShadow.png</bordertexture>
-	  <bordersize>6</bordersize>
 	  <colordiffuse>$VAR[ColorBackWebOS4]</colordiffuse>
 	  <visible>!Skin.HasSetting(homenocolorbutton)</visible>
 	</control>
 	<control type="image">
 	  <texture background="true">$INFO[ListItem.Property(BackTizen5)]</texture>
-	  <bordertexture border="10">ThumbShadow.png</bordertexture>
-	  <bordersize>6</bordersize>
 	  <colordiffuse>$VAR[ColorBackWebOS5]</colordiffuse>
 	  <visible>!Skin.HasSetting(homenocolorbutton)</visible>
 	</control>
 	<control type="image">
 	  <texture background="true">$INFO[ListItem.Property(BackTizen6)]</texture>
-	  <bordertexture border="10">ThumbShadow.png</bordertexture>
-	  <bordersize>6</bordersize>
 	  <colordiffuse>$VAR[ColorBackWebOS6]</colordiffuse>
 	  <visible>!Skin.HasSetting(homenocolorbutton)</visible>
 	</control>
 	<control type="image">
 	  <texture background="true">$INFO[ListItem.Property(BackTizen7)]</texture>
-	  <bordertexture border="10">ThumbShadow.png</bordertexture>
-	  <bordersize>6</bordersize>
 	  <colordiffuse>$VAR[ColorBackWebOS7]</colordiffuse>
 	  <visible>!Skin.HasSetting(homenocolorbutton)</visible>
 	</control>
 	<control type="image">
 	  <texture background="true">$INFO[ListItem.Property(BackTizen8)]</texture>
-	  <bordertexture border="10">ThumbShadow.png</bordertexture>
-	  <bordersize>6</bordersize>
 	  <colordiffuse>$VAR[ColorBackWebOS8]</colordiffuse>
 	  <visible>!Skin.HasSetting(homenocolorbutton)</visible>
 	</control>
 	<control type="image">
 	  <texture background="true">$INFO[ListItem.Property(BackTizen9)]</texture>
-	  <bordertexture border="10">ThumbShadow.png</bordertexture>
-	  <bordersize>6</bordersize>
 	  <colordiffuse>$VAR[ColorBackWebOS9]</colordiffuse>
 	  <visible>!Skin.HasSetting(homenocolorbutton)</visible>
 	</control>
 	<control type="image">
 	  <texture background="true">$INFO[ListItem.Property(BackTizen10)]</texture>
-	  <bordertexture border="10">ThumbShadow.png</bordertexture>
-	  <bordersize>6</bordersize>
 	  <colordiffuse>$VAR[ColorBackWebOS10]</colordiffuse>
 	  <visible>!Skin.HasSetting(homenocolorbutton)</visible>
 	</control>
 	<control type="image">
 	  <texture background="true">$INFO[ListItem.Property(BackTizen11)]</texture>
-	  <bordertexture border="10">ThumbShadow.png</bordertexture>
-	  <bordersize>6</bordersize>
 	  <colordiffuse>$VAR[ColorBackWebOS11]</colordiffuse>
 	  <visible>!Skin.HasSetting(homenocolorbutton)</visible>
 	</control>
 	<control type="image">
 	  <texture background="true">$INFO[ListItem.Property(BackTizen12)]</texture>
-	  <bordertexture border="10">ThumbShadow.png</bordertexture>
-	  <bordersize>6</bordersize>
 	  <colordiffuse>$VAR[ColorBackWebOS12]</colordiffuse>
 	  <visible>!Skin.HasSetting(homenocolorbutton)</visible>
 	</control>
 	<control type="image">
 	  <texture background="true">$INFO[ListItem.Property(BackTizen13)]</texture>
-	  <bordertexture border="10">ThumbShadow.png</bordertexture>
-	  <bordersize>6</bordersize>
 	  <colordiffuse>$VAR[ColorBackWebOS13]</colordiffuse>
 	  <visible>!Skin.HasSetting(homenocolorbutton)</visible>
 	</control>
 	<control type="image">
 	  <texture background="true">$INFO[ListItem.Property(BackTizen14)]</texture>
-	  <bordertexture border="10">ThumbShadow.png</bordertexture>
-	  <bordersize>6</bordersize>
 	  <colordiffuse>$VAR[ColorBackWebOS14]</colordiffuse>
 	  <visible>!Skin.HasSetting(homenocolorbutton)</visible>
 	</control>
 	<control type="image">
 	  <texture background="true">$INFO[ListItem.Property(BackTizen15)]</texture>
-	  <bordertexture border="10">ThumbShadow.png</bordertexture>
-	  <bordersize>6</bordersize>
 	  <colordiffuse>$VAR[ColorBackWebOS15]</colordiffuse>
 	  <visible>!Skin.HasSetting(homenocolorbutton)</visible>
 	</control>
 	<control type="image">
 	  <texture background="true">$INFO[ListItem.Property(BackTizen16)]</texture>
-	  <bordertexture border="10">ThumbShadow.png</bordertexture>
-	  <bordersize>6</bordersize>
 	  <colordiffuse>$VAR[ColorBackWebOS16]</colordiffuse>
 	  <visible>!Skin.HasSetting(homenocolorbutton)</visible>
 	</control>
 	<control type="image">
 	  <texture background="true">$INFO[ListItem.Property(BackTizen17)]</texture>
-	  <bordertexture border="10">ThumbShadow.png</bordertexture>
-	  <bordersize>6</bordersize>
 	  <colordiffuse>$VAR[ColorBackWebOS17]</colordiffuse>
 	  <visible>!Skin.HasSetting(homenocolorbutton)</visible>
 	</control>
 	<control type="image">
 	  <texture background="true">$INFO[ListItem.Property(BackTizen18)]</texture>
-	  <bordertexture border="10">ThumbShadow.png</bordertexture>
-	  <bordersize>6</bordersize>
 	  <colordiffuse>$VAR[ColorBackWebOS18]</colordiffuse>
 	  <visible>!Skin.HasSetting(homenocolorbutton)</visible>
 	</control>
 	<control type="image">
 	  <texture background="true">$INFO[ListItem.Property(BackTizen19)]</texture>
-	  <bordertexture border="10">ThumbShadow.png</bordertexture>
-	  <bordersize>6</bordersize>
 	  <colordiffuse>$VAR[ColorBackWebOS19]</colordiffuse>
 	  <visible>!Skin.HasSetting(homenocolorbutton)</visible>
 	</control>
 	<control type="image">
 	  <texture background="true">$INFO[ListItem.Property(BackTizen20)]</texture>
-	  <bordertexture border="10">ThumbShadow.png</bordertexture>
-	  <bordersize>6</bordersize>
 	  <colordiffuse>$VAR[ColorBackWebOS20]</colordiffuse>
 	  <visible>!Skin.HasSetting(homenocolorbutton)</visible>
 	</control>
 	<control type="image">
 	  <texture background="true">$INFO[ListItem.Property(BackTizen21)]</texture>
-	  <bordertexture border="10">ThumbShadow.png</bordertexture>
-	  <bordersize>6</bordersize>
 	  <colordiffuse>$VAR[ColorBackWebOS21]</colordiffuse>
 	  <visible>!Skin.HasSetting(homenocolorbutton)</visible>
 	</control>
 	<control type="image">
 	  <texture background="true">$INFO[ListItem.Property(BackTizen22)]</texture>
-	  <bordertexture border="10">ThumbShadow.png</bordertexture>
-	  <bordersize>6</bordersize>
 	  <colordiffuse>$VAR[ColorBackWebOS22]</colordiffuse>
 	  <visible>!Skin.HasSetting(homenocolorbutton)</visible>
 	</control>
 	<control type="image">
 	  <texture background="true">$INFO[ListItem.Property(BackTizen23)]</texture>
-	  <bordertexture border="10">ThumbShadow.png</bordertexture>
-	  <bordersize>6</bordersize>
 	  <colordiffuse>$VAR[ColorBackWebOS23]</colordiffuse>
+	  <visible>!Skin.HasSetting(homenocolorbutton)</visible>
+	</control>
+	<control type="image">
+	  <texture background="true">$INFO[ListItem.Property(BackTizen24)]</texture>
+	  <colordiffuse>$VAR[ColorBackWebOS24]</colordiffuse>
+	  <visible>!Skin.HasSetting(homenocolorbutton)</visible>
+	</control>
+	<control type="image">
+	  <texture background="true">$INFO[ListItem.Property(BackTizen25)]</texture>
+	  <colordiffuse>$VAR[ColorBackWebOS25]</colordiffuse>
+	  <visible>!Skin.HasSetting(homenocolorbutton)</visible>
+	</control>
+	<control type="image">
+	  <texture background="true">$INFO[ListItem.Property(BackTizen26)]</texture>
+	  <colordiffuse>$VAR[ColorBackWebOS26]</colordiffuse>
+	  <visible>!Skin.HasSetting(homenocolorbutton)</visible>
+	</control>
+	<control type="image">
+	  <texture background="true">$INFO[ListItem.Property(BackTizen27)]</texture>
+	  <colordiffuse>$VAR[ColorBackWebOS27]</colordiffuse>
+	  <visible>!Skin.HasSetting(homenocolorbutton)</visible>
+	</control>
+	<control type="image">
+	  <texture background="true">$INFO[ListItem.Property(BackTizen28)]</texture>
+	  <colordiffuse>$VAR[ColorBackWebOS28]</colordiffuse>
 	  <visible>!Skin.HasSetting(homenocolorbutton)</visible>
 	</control>
   </include>
   <!-- HOMEMENU NO FOCUS BUTTON CLOSE -->
+  <!-- HOMESUBMENU BUTTON BEGIN -->
+  <include name="WebOSSubMenuButton">
+    <control type="image">
+	  <texture background="true">home/button/submenubutton.png</texture>
+	  <colordiffuse>$VAR[ColorButtonDialogeBack]</colordiffuse>
+	  <visible>Skin.HasSetting(homenocolorbutton)</visible>
+	</control>
+	<control type="image">
+	  <texture background="true">$INFO[ListItem.Property(BackWebOS1)]</texture>
+	  <colordiffuse>$VAR[ColorBackWebOS1]</colordiffuse>
+	  <visible>!Skin.HasSetting(homenocolorbutton)</visible>
+	</control>
+	<control type="image">
+	  <texture background="true">$INFO[ListItem.Property(BackWebOS2)]</texture>
+	  <colordiffuse>$VAR[ColorBackWebOS2]</colordiffuse>
+	  <visible>!Skin.HasSetting(homenocolorbutton)</visible>
+	</control>
+	<control type="image">
+	  <texture background="true">$INFO[ListItem.Property(BackWebOS3)]</texture>
+	  <colordiffuse>$VAR[ColorBackWebOS3]</colordiffuse>
+	  <visible>!Skin.HasSetting(homenocolorbutton)</visible>
+	</control>
+	<control type="image">
+	  <texture background="true">$INFO[ListItem.Property(BackWebOS4)]</texture>
+	  <colordiffuse>$VAR[ColorBackWebOS4]</colordiffuse>
+	  <visible>!Skin.HasSetting(homenocolorbutton)</visible>
+	</control>
+	<control type="image">
+	  <texture background="true">$INFO[ListItem.Property(BackWebOS5)]</texture>
+	  <colordiffuse>$VAR[ColorBackWebOS5]</colordiffuse>
+	  <visible>!Skin.HasSetting(homenocolorbutton)</visible>
+	</control>
+	<control type="image">
+	  <texture background="true">$INFO[ListItem.Property(BackWebOS6)]</texture>
+	  <colordiffuse>$VAR[ColorBackWebOS6]</colordiffuse>
+	  <visible>!Skin.HasSetting(homenocolorbutton)</visible>
+	</control>
+	<control type="image">
+	  <texture background="true">$INFO[ListItem.Property(BackWebOS7)]</texture>
+	  <colordiffuse>$VAR[ColorBackWebOS7]</colordiffuse>
+	  <visible>!Skin.HasSetting(homenocolorbutton)</visible>
+	</control>
+	<control type="image">
+	  <texture background="true">$INFO[ListItem.Property(BackWebOS8)]</texture>
+	  <colordiffuse>$VAR[ColorBackWebOS8]</colordiffuse>
+	  <visible>!Skin.HasSetting(homenocolorbutton)</visible>
+	</control>
+	<control type="image">
+	  <texture background="true">$INFO[ListItem.Property(BackWebOS9)]</texture>
+	  <colordiffuse>$VAR[ColorBackWebOS9]</colordiffuse>
+	  <visible>!Skin.HasSetting(homenocolorbutton)</visible>
+	</control>
+	<control type="image">
+	  <texture background="true">$INFO[ListItem.Property(BackWebOS10)]</texture>
+	  <colordiffuse>$VAR[ColorBackWebOS10]</colordiffuse>
+	  <visible>!Skin.HasSetting(homenocolorbutton)</visible>
+	</control>
+  </include>
+  <!-- HOMESUBMENU BUTTON END -->
   
   
   <!-- BUTTON OBEN RECHTS -->
@@ -1421,7 +1519,7 @@
 		<height>40</height>
 		<texturefocus colordiffuse="$VAR[BackColorButton]">home/icons_oben/off.png</texturefocus>
 		<texturenofocus colordiffuse="$VAR[ColorIcons]">home/icons_oben/off.png</texturenofocus>
-		<onclick>ActivateWindow(111)</onclick>
+		<onclick>XBMC.ActivateWindow(111)</onclick>
 		<visible>!Skin.HasSetting(tablet_modus)</visible>
 	  </control> 	  
 	  <control type="button" id="1864">
@@ -1489,6 +1587,14 @@
 		<texturefocus colordiffuse="$VAR[BackColorButton]">home/icons_oben/back.png</texturefocus>
 		<texturenofocus colordiffuse="$VAR[ColorIcons]">home/icons_oben/back.png</texturenofocus>
 		<onclick>back</onclick>
+		<visible>!Skin.HasSetting(tablet_modus)</visible>
+	  </control>
+	  <control type="button" id="1872">
+		<width>40</width>
+		<height>40</height>
+		<texturefocus colordiffuse="$VAR[BackColorButton]">home/icons_oben/avm.png</texturefocus>
+		<texturenofocus colordiffuse="$VAR[ColorIcons]">home/icons_oben/avm.png</texturenofocus>
+		<onclick>ActivateWindow(4116)</onclick>
 		<visible>!Skin.HasSetting(tablet_modus)</visible>
 	  </control>
    </control>
@@ -1562,7 +1668,7 @@
 		<height>100</height>
 		<texture>$VAR[VarWeatherHomeIcon]$INFO[Window(Weather).Property(Current.OutlookIcon)]</texture>
 		<aspectratio>keep</aspectratio>
-		<visible>!Skin.HasSetting(homenoleftweather) + !IsEmpty(Weather.Plugin)</visible>
+		<visible>!Skin.HasSetting(homenoleftweather) + !String.IsEmpty(Weather.Plugin)</visible>
 		<visible>!Window.IsVisible(pvrosdguide) + !Window.IsVisible(pvrosdchannels)</visible>
 	  </control>
 	  <control type="label">
@@ -1576,7 +1682,7 @@
 		<textcolor>$VAR[ColorFontNormal]</textcolor>
 		<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 		<scroll>false</scroll>
-		<visible>!Skin.HasSetting(homenoleftweather) + !IsEmpty(Weather.Plugin)</visible>
+		<visible>!Skin.HasSetting(homenoleftweather) + !String.IsEmpty(Weather.Plugin)</visible>
 		<visible>!Window.IsVisible(pvrosdguide) + !Window.IsVisible(pvrosdchannels)</visible>
 	  </control>
 	  <control type="fadelabel">
@@ -1596,7 +1702,7 @@
 		<textcolor>$VAR[ColorFontNormal]</textcolor>
 		<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 		<scroll>false</scroll>
-		<visible>!Skin.HasSetting(homenoleftweather) + !IsEmpty(Weather.Plugin)</visible>
+		<visible>!Skin.HasSetting(homenoleftweather) + !String.IsEmpty(Weather.Plugin)</visible>
 		<visible>!Window.IsVisible(pvrosdguide) + !Window.IsVisible(pvrosdchannels)</visible>
 	  </control>
 	 </control>
@@ -1804,7 +1910,7 @@
 			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 			  <label>[COLOR $VAR[ColorFontNormal]]$INFO[ListItem.Plot][/COLOR]</label>
 			  <autoscroll time="2000" delay="10000" repeat="5000">false</autoscroll>
-			  <visible>!Stringcompare(ListItem.label,..)</visible> 
+			  <visible>!String.IsEqual(ListItem.label,..)</visible> 
 			  <visible>!ListItem.IsCollection</visible>
 			</control>
 		</itemlayout>
@@ -1860,7 +1966,7 @@
 			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 			  <label>[COLOR $VAR[ColorFontNormal]]$INFO[ListItem.Plot][/COLOR]</label>
 			  <autoscroll time="2000" delay="15000" repeat="5000">!Skin.HasSetting(NoPlotScroll)</autoscroll>
-			  <visible>!Stringcompare(ListItem.label,..)</visible> 
+			  <visible>!String.IsEqual(ListItem.label,..)</visible> 
 			  <visible>!ListItem.IsCollection</visible>
 			</control>
 		</focusedlayout>
@@ -1927,7 +2033,7 @@
 			  <selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
 			  <align>left</align>
 			  <aligny>center</aligny>
-			  <label>$VAR[ExtendedInfoYear]$VAR[ExtendedInfoRuntime, • ] • $LOCALIZE[49972] $INFO[ListItem.EndTime]</label>
+			  <label>$VAR[ExtendedInfoYear]$VAR[ExtendedInfoRuntime, • ] • $LOCALIZE[49972] $INFO[ListItem.EndTime]$VAR[mpaatext, • ]</label>
 			</control>
 		    <control type="textbox">
 			  <description>Movie Plot</description>
@@ -2001,7 +2107,7 @@
 			  <selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
 			  <align>left</align>
 			  <aligny>center</aligny>
-			  <label>$VAR[ExtendedInfoYear]$VAR[ExtendedInfoRuntime, • ] • $LOCALIZE[49972] $INFO[ListItem.EndTime]</label>
+			  <label>$VAR[ExtendedInfoYear]$VAR[ExtendedInfoRuntime, • ] • $LOCALIZE[49972] $INFO[ListItem.EndTime]$VAR[mpaatext, • ]</label>
 			</control>
 		    <control type="textbox">
 			  <description>Movie Plot</description>
@@ -2015,6 +2121,15 @@
 			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 			  <label>[COLOR $VAR[ColorFontNormal]]$INFO[ListItem.Plot][/COLOR]</label>
 			  <autoscroll time="2000" delay="15000" repeat="5000">!Skin.HasSetting(NoPlotScroll)</autoscroll>
+			</control>
+			<control type="image">
+			  <description>MPAA</description>
+			  <left>620</left>
+			  <top>25</top>
+			  <width>65</width>
+			  <height>65</height>
+			  <aspectratio>keep</aspectratio>
+			  <texture>$VAR[mpaatext]</texture>
 			</control>
 		</focusedlayout>
 	    <content target="video" sortby="year">$INFO[ListItem.FolderPath]</content>
@@ -2205,6 +2320,254 @@
 		<value condition="Control.IsVisible(901)">SetFocus(901)</value>
 	</variable>
 	
+	
+	<include name="MusicInfoArtistInfo">
+        <item>
+            <label>$LOCALIZE[21893]:</label>
+            <label2>$INFO[ListItem.Property(Artist_Born)]</label2>
+            <onclick>noop</onclick>
+            <visible>!String.String.IsEmpty(ListItem.Property(Artist_Born))</visible>
+        </item>
+		<item>
+            <label>$LOCALIZE[29904]:</label>
+            <label2>$INFO[ListItem.Artist]</label2>
+            <onclick>noop</onclick>
+            <visible>!String.String.IsEmpty(ListItem.Artist)</visible>
+        </item>
+        <item>
+            <label>$LOCALIZE[21894]:</label>
+            <label2>$INFO[ListItem.Property(Artist_Formed)]</label2>
+            <onclick>noop</onclick>
+            <visible>!String.String.IsEmpty(ListItem.Property(Artist_Formed))</visible>
+        </item>
+        <item>
+            <label>$LOCALIZE[515]:</label>
+            <label2>$INFO[ListItem.Genre]</label2>
+            <onclick>noop</onclick>
+            <visible>!String.String.IsEmpty(ListItem.Genre)</visible>
+        </item>
+        <item>
+            <label>$LOCALIZE[175]:</label>
+            <label2>$INFO[ListItem.Property(Artist_Mood)]</label2>
+            <onclick>noop</onclick>
+            <visible>!String.String.IsEmpty(ListItem.Property(Artist_Mood))</visible>
+        </item>
+        <item>
+            <label>$LOCALIZE[176]:</label>
+            <label2>$INFO[ListItem.Property(Artist_Style)]</label2>
+            <onclick>noop</onclick>
+            <visible>!String.String.IsEmpty(ListItem.Property(Artist_Style))</visible>
+        </item>
+        <item>
+            <label>$LOCALIZE[21892]:</label>
+            <label2>$INFO[ListItem.Property(Artist_Instrument)]</label2>
+            <onclick>noop</onclick>
+            <visible>!String.String.IsEmpty(ListItem.Property(Artist_Instrument))</visible>
+        </item>
+        <item>
+            <label>$LOCALIZE[21897]:</label>
+            <label2>$INFO[ListItem.Property(Artist_Died)]</label2>
+            <onclick>noop</onclick>
+            <visible>!String.String.IsEmpty(ListItem.Property(Artist_Died))</visible>
+        </item>
+        <item>
+            <label>$LOCALIZE[21896]:</label>
+            <label2>$INFO[ListItem.Property(Artist_Disbanded)]</label2>
+            <onclick>noop</onclick>
+            <visible>!String.String.IsEmpty(ListItem.Property(Artist_Disbanded))</visible>
+        </item>
+        <item>
+            <label>$LOCALIZE[21898]:</label>
+            <label2>$INFO[ListItem.Property(Artist_YearsActive)]</label2>
+            <onclick>noop</onclick>
+            <visible>!String.String.IsEmpty(ListItem.Property(Artist_YearsActive))</visible>
+        </item>
+    </include>
+    <include name="MusicInfoAlbumInfo">
+        <item>
+            <label>$LOCALIZE[557]:</label>
+            <label2>$INFO[ListItem.Artist]</label2>
+            <onclick>noop</onclick>
+            <visible>!String.String.IsEmpty(ListItem.Artist)</visible>
+        </item>
+		<item>
+            <label>$LOCALIZE[558]:</label>
+            <label2>$INFO[ListItem.Album]</label2>
+            <onclick>noop</onclick>
+            <visible>!String.String.IsEmpty(ListItem.Album)</visible>
+        </item>
+        <item>
+            <label>$LOCALIZE[515]:</label>
+            <label2>$INFO[ListItem.Genre]</label2>
+            <onclick>noop</onclick>
+            <visible>!String.String.IsEmpty(ListItem.Genre)</visible>
+        </item>
+        <item>
+            <label>$LOCALIZE[563]:</label>
+            <label2>$INFO[ListItem.RatingAndVotes]</label2>
+            <onclick>noop</onclick>
+            <visible>!String.String.IsEmpty(ListItem.RatingAndVotes)</visible>
+        </item>
+        <item>
+            <label>$LOCALIZE[38018]:</label>
+            <label2>$INFO[ListItem.Userrating]</label2>
+            <onclick>noop</onclick>
+            <visible>!String.String.IsEmpty(ListItem.Userrating)</visible>
+        </item>
+        <item>
+            <label>$LOCALIZE[175]:</label>
+            <label2>$INFO[ListItem.Property(Album_Mood)]</label2>
+            <onclick>noop</onclick>
+            <visible>!String.String.IsEmpty(ListItem.Property(Album_Mood))</visible>
+        </item>
+        <item>
+            <label>$LOCALIZE[176]:</label>
+            <label2>$INFO[ListItem.Property(Album_Style)]</label2>
+            <onclick>noop</onclick>
+            <visible>!String.String.IsEmpty(ListItem.Property(Album_Style))</visible>
+        </item>
+        <item>
+            <label>$LOCALIZE[21895]:</label>
+            <label2>$INFO[ListItem.Property(Album_Theme)]</label2>
+            <onclick>noop</onclick>
+            <visible>!String.String.IsEmpty(ListItem.Property(Album_Theme))</visible>
+        </item>
+        <item>
+            <label>146</label>
+            <label2>$INFO[ListItem.Property(Album_Type)]</label2>
+            <onclick>noop</onclick>
+            <visible>!String.String.IsEmpty(ListItem.Property(Album_Type))</visible>
+        </item>
+        <item>
+            <label>$LOCALIZE[21899]:</label>
+            <label2>$INFO[ListItem.Property(Album_Label)]</label2>
+            <onclick>noop</onclick>
+            <visible>!String.String.IsEmpty(ListItem.Property(Album_Label))</visible>
+        </item>
+        <item>
+            <label>$LOCALIZE[562]:</label>
+            <label2>$INFO[ListItem.Year]</label2>
+            <onclick>noop</onclick>
+            <visible>!String.String.IsEmpty(ListItem.Year)</visible>
+        </item>
+    </include>
+    <include name="MusicInfoSongInfo">
+        <item>
+            <label>$LOCALIZE[557]:</label>
+            <label2>$INFO[ListItem.Artist]</label2>
+            <onclick>noop</onclick>
+            <visible>!String.String.IsEmpty(ListItem.Artist)</visible>
+        </item>
+		<item>
+            <label>$LOCALIZE[179]:</label>
+            <label2>$INFO[ListItem.Title]</label2>
+            <onclick>noop</onclick>
+            <visible>!String.String.IsEmpty(ListItem.Title)</visible>
+        </item>
+        <item>
+            <label>$LOCALIZE[558]:</label>
+            <label2>$INFO[ListItem.Album]$INFO[listitem.discnumber, - $LOCALIZE[427] ]</label2>
+            <onclick>noop</onclick>
+            <visible>!String.String.IsEmpty(ListItem.Album)</visible>
+        </item>
+        <item>
+            <label>$LOCALIZE[515]:</label>
+            <label2>$INFO[ListItem.Genre]</label2>
+            <onclick>noop</onclick>
+            <visible>!String.String.IsEmpty(ListItem.Genre)</visible>
+        </item>
+        <item>
+            <label>$LOCALIZE[175]:</label>
+            <label2>$INFO[ListItem.Mood]</label2>
+            <onclick>noop</onclick>
+            <visible>!String.String.IsEmpty(ListItem.Mood)</visible>
+        </item>
+        <item>
+            <label>$LOCALIZE[562]:</label>
+            <label2>$INFO[ListItem.Year]</label2>
+            <onclick>noop</onclick>
+            <visible>!String.String.IsEmpty(ListItem.Year)</visible>
+        </item>
+        <item>
+            <label>$LOCALIZE[554]:</label>
+            <label2>$INFO[ListItem.TrackNumber]</label2>
+            <onclick>noop</onclick>
+            <visible>!String.String.IsEmpty(ListItem.TrackNumber)</visible>
+        </item>
+        <item>
+            <label>$LOCALIZE[563]:</label>
+            <label2>$INFO[ListItem.RatingAndVotes]</label2>
+            <onclick>noop</onclick>
+            <visible>!String.String.IsEmpty(ListItem.RatingAndVotes)</visible>
+        </item>
+        <item>
+            <label>$LOCALIZE[38018]:</label>
+            <label2>$INFO[ListItem.Userrating]</label2>
+            <onclick>noop</onclick>
+            <visible>!String.String.IsEmpty(ListItem.Userrating)</visible>
+        </item>
+        <item>
+            <label>$LOCALIZE[29903]:</label>
+            <label2>$INFO[ListItem.Property(Role.Composer)]</label2>
+            <onclick>noop</onclick>
+            <visible>!String.String.IsEmpty(ListItem.Property(Role.Composer))</visible>
+        </item>
+        <item>
+            <label>$LOCALIZE[29905]:</label>
+            <label2>$INFO[ListItem.Property(Role.Conductor)]</label2>
+            <onclick>noop</onclick>
+            <visible>!String.String.IsEmpty(ListItem.Property(Role.Conductor))</visible>
+        </item>
+        <item>
+            <label>$LOCALIZE[38034]:</label>
+            <label2>$INFO[ListItem.Property(Role.Orchestra)]</label2>
+            <onclick>noop</onclick>
+            <visible>!String.String.IsEmpty(ListItem.Property(Role.Orchestra))</visible>
+        </item>
+        <item>
+            <label>$LOCALIZE[38035]:</label>
+            <label2>$INFO[ListItem.Property(Role.Lyricist)]</label2>
+            <onclick>noop</onclick>
+            <visible>!String.String.IsEmpty(ListItem.Property(Role.Lyricist))</visible>
+        </item>
+        <item>
+            <label>$LOCALIZE[38036]:</label>
+            <label2>$INFO[ListItem.Property(Role.Remixer)]</label2>
+            <onclick>noop</onclick>
+            <visible>!String.String.IsEmpty(ListItem.Property(Role.Remixer))</visible>
+        </item>
+        <item>
+            <label>$LOCALIZE[38037]:</label>
+            <label2>$INFO[ListItem.Property(Role.Arranger)]</label2>
+            <onclick>noop</onclick>
+            <visible>!String.String.IsEmpty(ListItem.Property(Role.Arranger))</visible>
+        </item>
+        <item>
+            <label>$LOCALIZE[38038]:</label>
+            <label2>$INFO[ListItem.Property(Role.Engineer)]</label2>
+            <onclick>noop</onclick>
+            <visible>!String.String.IsEmpty(ListItem.Property(Role.Engineer))</visible>
+        </item>
+        <item>
+            <label>$LOCALIZE[38039]:</label>
+            <label2>$INFO[ListItem.Property(Role.Producer)]</label2>
+            <onclick>noop</onclick>
+            <visible>!String.String.IsEmpty(ListItem.Property(Role.Producer))</visible>
+        </item>
+        <item>
+            <label>$LOCALIZE[38040]:</label>
+            <label2>$INFO[ListItem.Property(Role.DJMixer)]</label2>
+            <onclick>noop</onclick>
+            <visible>!String.String.IsEmpty(ListItem.Property(Role.DJMixer))</visible>
+        </item>
+        <item>
+            <label>$LOCALIZE[38041]:</label>
+            <label2>$INFO[ListItem.Property(Role.Mixer)]</label2>
+            <onclick>noop</onclick>
+            <visible>!String.String.IsEmpty(ListItem.Property(Role.Mixer))</visible>
+        </item>
+    </include>
+	
 	<!-- ============================= ANIMATIONS BEGIN ============================== -->
 	<include name="ListFocusAnimation">
 	  <animation type="Focus" condition="Container().OnPrevious">
@@ -2271,6 +2634,12 @@
       <animation effect="slide" start="-100,-190" end="20,20" time="7000" tween="cubic" easing="inout" pulse="true" condition="!Skin.HasSetting(animation_bg)">Conditional</animation>
       <animation effect="rotate" center="360,640" start="-2" end="2" time="11000" tween="cubic" easing="inout" pulse="true" condition="!Skin.HasSetting(animation_bg)">Conditional</animation>
 	</include>	
+	<include name="widget_outzoom_submenu">
+	  <animation effect="fade" start="100" end="0" time="500" tween="sine" easing="out" condition="ControlGroup(9001).HasFocus | Control.HasFocus(43444) | Control.HasFocus(43445) | Control.HasFocus(43644) | Control.HasFocus(43944)">Conditional</animation>
+	</include>
+	<include name="widget_inzoom_submenu">
+	  <animation effect="fade" start="0" end="100" time="1000" delay="1000" condition="ControlGroup(9001).HasFocus | Control.HasFocus(43444) | Control.HasFocus(43445) | Control.HasFocus(43644) | Control.HasFocus(43944)">Conditional</animation>
+	</include>
 	<include name="box4fade">
       <animation effect="fade" time="1500" delay="300">Visible</animation>
 	  <animation effect="fade" time="500">Hidden</animation>

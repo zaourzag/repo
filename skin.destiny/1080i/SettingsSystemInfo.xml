@@ -102,6 +102,17 @@
           <pulseonselect>false</pulseonselect>
           <label>13281</label>
         </control>
+		<control type="button" id="100">
+          <description>Button Policy</description>
+          <height>90</height>
+          <width>310</width>
+          <textoffsetx>45</textoffsetx>
+          <align>right</align>
+          <aligny>center</aligny>
+          <font>primal_20</font>
+          <pulseonselect>false</pulseonselect>
+          <label>$LOCALIZE[12389]</label>
+        </control>
       </control>
       <control type="label">
 	    <include>Animation.ZoomIn</include>
@@ -269,6 +280,18 @@
           <height>14</height>
           <info>system.memory(used)</info>
         </control>
+		<control type="textbox" id="30">
+		  <left>0</left>
+		  <top>105</top>
+		  <height>500</height>
+		  <width>1200</width>
+		  <align>justify</align>
+		  <font>primal_18</font>
+		  <textcolor>$VAR[ColorFontNormal]</textcolor>
+		  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+		  <pagecontrol>60</pagecontrol>
+		  <autoscroll delay="5000" repeat="7500" time="5000">true</autoscroll>
+	    </control>
       </control>
     </control>
   </controls>

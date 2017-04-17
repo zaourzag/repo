@@ -47,7 +47,23 @@
 		  <colordiffuse>$VAR[ColorIcons]</colordiffuse>
 		  <visible>Window.IsVisible(home)</visible>
 		  <visible>Player.HasAudio</visible>
+		  <visible>!Skin.HasSetting(HomeMainMenu2)</visible>
 		</control>	
+		<control type="multiimage">
+		  <left>650</left>
+		  <top>554</top>
+		  <width>30</width>
+		  <height>60</height>
+		  <imagepath>animation/equalizer/</imagepath>
+		  <timeperimage>100</timeperimage>
+		  <randomize>true</randomize>
+		  <fadetime>10</fadetime>
+		  <visible>Player.Playing</visible>
+		  <colordiffuse>$VAR[ColorIcons]</colordiffuse>
+		  <visible>Window.IsVisible(home)</visible>
+		  <visible>Player.HasAudio</visible>
+		  <visible>Skin.HasSetting(HomeMainMenu2)</visible>
+		</control>
 		<control type="button" id="2182">
 		  <left>720</left>
 		  <top>551</top>
@@ -273,7 +289,7 @@
 			  <property name="Number">01:</property>
 			  <thumb>$INFO[MusicPlayer.Offset(1).Cover]</thumb>
 			  <onclick>Playlist.PlayOffset(1)</onclick>
-			  <visible>!IsEmpty(MusicPlayer.Offset(1).Title)</visible>
+			  <visible>!String.IsEmpty(MusicPlayer.Offset(1).Title)</visible>
 		  </item>
 		  <item>
 			  <label>$INFO[MusicPlayer.Offset(2).Title]</label>
@@ -281,7 +297,7 @@
 			  <property name="Number">02:</property>
 			  <thumb>$INFO[MusicPlayer.Offset(2).Cover]</thumb>
 			  <onclick>Playlist.PlayOffset(2)</onclick>
-			  <visible>!IsEmpty(MusicPlayer.Offset(2).Title)</visible>
+			  <visible>!String.IsEmpty(MusicPlayer.Offset(2).Title)</visible>
 		  </item>
 		  <item>
 			  <label>$INFO[MusicPlayer.Offset(3).Title]</label>
@@ -289,7 +305,7 @@
 			  <property name="Number">03:</property>
 			  <thumb>$INFO[MusicPlayer.Offset(3).Cover]</thumb>
 			  <onclick>Playlist.PlayOffset(3)</onclick>
-			  <visible>!IsEmpty(MusicPlayer.Offset(3).Title)</visible>
+			  <visible>!String.IsEmpty(MusicPlayer.Offset(3).Title)</visible>
 		  </item>
 		  <item>
 			  <label>$INFO[MusicPlayer.Offset(4).Title]</label>
@@ -297,7 +313,7 @@
 			  <property name="Number">04:</property>
 			  <thumb>$INFO[MusicPlayer.Offset(4).Cover]</thumb>
 			  <onclick>Playlist.PlayOffset(4)</onclick>
-			  <visible>!IsEmpty(MusicPlayer.Offset(4).Title)</visible>
+			  <visible>!String.IsEmpty(MusicPlayer.Offset(4).Title)</visible>
 		  </item>
 		  <item>
 			  <label>$INFO[MusicPlayer.Offset(5).Title]</label>
@@ -305,7 +321,7 @@
 			  <property name="Number">05:</property>
 			  <thumb>$INFO[MusicPlayer.Offset(5).Cover]</thumb>
 			  <onclick>Playlist.PlayOffset(5)</onclick>
-			  <visible>!IsEmpty(MusicPlayer.Offset(5).Title)</visible>
+			  <visible>!String.IsEmpty(MusicPlayer.Offset(5).Title)</visible>
 		  </item>
 		  <item>
 			  <label>$INFO[MusicPlayer.Offset(6).Title]</label>
@@ -313,7 +329,7 @@
 			  <property name="Number">06:</property>
 			  <thumb>$INFO[MusicPlayer.Offset(6).Cover]</thumb>
 			  <onclick>Playlist.PlayOffset(6)</onclick>
-			  <visible>!IsEmpty(MusicPlayer.Offset(6).Title)</visible>
+			  <visible>!String.IsEmpty(MusicPlayer.Offset(6).Title)</visible>
 		  </item>
 		  <item>
 			  <label>$INFO[MusicPlayer.Offset(7).Title]</label>
@@ -321,7 +337,7 @@
 			  <property name="Number">07:</property>
 			  <thumb>$INFO[MusicPlayer.Offset(7).Cover]</thumb>
 			  <onclick>Playlist.PlayOffset(7)</onclick>
-			  <visible>!IsEmpty(MusicPlayer.Offset(7).Title)</visible>
+			  <visible>!String.IsEmpty(MusicPlayer.Offset(7).Title)</visible>
 		  </item>
 		  <item>
 			  <label>$INFO[MusicPlayer.Offset(8).Title]</label>
@@ -329,7 +345,7 @@
 			  <property name="Number">08:</property>
 			  <thumb>$INFO[MusicPlayer.Offset(8).Cover]</thumb>
 			  <onclick>Playlist.PlayOffset(8)</onclick>
-			  <visible>!IsEmpty(MusicPlayer.Offset(8).Title)</visible>
+			  <visible>!String.IsEmpty(MusicPlayer.Offset(8).Title)</visible>
 		  </item>
 		  <item>
 			  <label>$INFO[MusicPlayer.Offset(9).Title]</label>
@@ -337,7 +353,7 @@
 			  <property name="Number">09:</property>
 			  <thumb>$INFO[MusicPlayer.Offset(9).Cover]</thumb>
 			  <onclick>Playlist.PlayOffset(9)</onclick>
-			  <visible>!IsEmpty(MusicPlayer.Offset(9).Title)</visible>
+			  <visible>!String.IsEmpty(MusicPlayer.Offset(9).Title)</visible>
 		  </item>
 		  <item>
 			  <label>$INFO[MusicPlayer.Offset(10).Title]</label>
@@ -345,7 +361,7 @@
 			  <property name="Number">10:</property>
 			  <thumb>$INFO[MusicPlayer.Offset(10).Cover]</thumb>
 			  <onclick>Playlist.PlayOffset(10)</onclick>
-			  <visible>!IsEmpty(MusicPlayer.Offset(10).Title)</visible>
+			  <visible>!String.IsEmpty(MusicPlayer.Offset(10).Title)</visible>
 		  </item>
 		  
 		  <item>
@@ -354,7 +370,7 @@
 			  <property name="Number">11:</property>
 			  <thumb>$INFO[MusicPlayer.Offset(11).Cover]</thumb>
 			  <onclick>Playlist.PlayOffset(11)</onclick>
-			  <visible>!IsEmpty(MusicPlayer.Offset(11).Title)</visible>
+			  <visible>!String.IsEmpty(MusicPlayer.Offset(11).Title)</visible>
 		  </item>
 		  <item>
 			  <label>$INFO[MusicPlayer.Offset(12).Title]</label>
@@ -362,7 +378,7 @@
 			  <property name="Number">12:</property>
 			  <thumb>$INFO[MusicPlayer.Offset(12).Cover]</thumb>
 			  <onclick>Playlist.PlayOffset(12)</onclick>
-			  <visible>!IsEmpty(MusicPlayer.Offset(12).Title)</visible>
+			  <visible>!String.IsEmpty(MusicPlayer.Offset(12).Title)</visible>
 		  </item>
 		  <item>
 			  <label>$INFO[MusicPlayer.Offset(13).Title]</label>
@@ -370,7 +386,7 @@
 			  <property name="Number">13:</property>
 			  <thumb>$INFO[MusicPlayer.Offset(13).Cover]</thumb>
 			  <onclick>Playlist.PlayOffset(13)</onclick>
-			  <visible>!IsEmpty(MusicPlayer.Offset(13).Title)</visible>
+			  <visible>!String.IsEmpty(MusicPlayer.Offset(13).Title)</visible>
 		  </item>
 		  <item>
 			  <label>$INFO[MusicPlayer.Offset(14).Title]</label>
@@ -378,7 +394,7 @@
 			  <property name="Number">14:</property>
 			  <thumb>$INFO[MusicPlayer.Offset(14).Cover]</thumb>
 			  <onclick>Playlist.PlayOffset(14)</onclick>
-			  <visible>!IsEmpty(MusicPlayer.Offset(14).Title)</visible>
+			  <visible>!String.IsEmpty(MusicPlayer.Offset(14).Title)</visible>
 		  </item>
 		  <item>
 			  <label>$INFO[MusicPlayer.Offset(15).Title]</label>
@@ -386,7 +402,7 @@
 			  <property name="Number">15:</property>
 			  <thumb>$INFO[MusicPlayer.Offset(15).Cover]</thumb>
 			  <onclick>Playlist.PlayOffset(15)</onclick>
-			  <visible>!IsEmpty(MusicPlayer.Offset(15).Title)</visible>
+			  <visible>!String.IsEmpty(MusicPlayer.Offset(15).Title)</visible>
 		  </item>
 		  <item>
 			  <label>$INFO[MusicPlayer.Offset(16).Title]</label>
@@ -394,7 +410,7 @@
 			  <property name="Number">16:</property>
 			  <thumb>$INFO[MusicPlayer.Offset(16).Cover]</thumb>
 			  <onclick>Playlist.PlayOffset(16)</onclick>
-			  <visible>!IsEmpty(MusicPlayer.Offset(16).Title)</visible>
+			  <visible>!String.IsEmpty(MusicPlayer.Offset(16).Title)</visible>
 		  </item>
 		  <item>
 			  <label>$INFO[MusicPlayer.Offset(17).Title]</label>
@@ -402,7 +418,7 @@
 			  <property name="Number">17:</property>
 			  <thumb>$INFO[MusicPlayer.Offset(17).Cover]</thumb>
 			  <onclick>Playlist.PlayOffset(17)</onclick>
-			  <visible>!IsEmpty(MusicPlayer.Offset(17).Title)</visible>
+			  <visible>!String.IsEmpty(MusicPlayer.Offset(17).Title)</visible>
 		  </item>
 		  <item>
 			  <label>$INFO[MusicPlayer.Offset(18).Title]</label>
@@ -410,7 +426,7 @@
 			  <property name="Number">18:</property>
 			  <thumb>$INFO[MusicPlayer.Offset(18).Cover]</thumb>
 			  <onclick>Playlist.PlayOffset(18)</onclick>
-			  <visible>!IsEmpty(MusicPlayer.Offset(18).Title)</visible>
+			  <visible>!String.IsEmpty(MusicPlayer.Offset(18).Title)</visible>
 		  </item>
 		  <item>
 			  <label>$INFO[MusicPlayer.Offset(19).Title]</label>
@@ -418,7 +434,7 @@
 			  <property name="Number">19:</property>
 			  <thumb>$INFO[MusicPlayer.Offset(19).Cover]</thumb>
 			  <onclick>Playlist.PlayOffset(19)</onclick>
-			  <visible>!IsEmpty(MusicPlayer.Offset(19).Title)</visible>
+			  <visible>!String.IsEmpty(MusicPlayer.Offset(19).Title)</visible>
 		  </item>
 		  <item>
 			  <label>$INFO[MusicPlayer.Offset(20).Title]</label>
@@ -426,7 +442,7 @@
 			  <property name="Number">20:</property>
 			  <thumb>$INFO[MusicPlayer.Offset(20).Cover]</thumb>
 			  <onclick>Playlist.PlayOffset(20)</onclick>
-			  <visible>!IsEmpty(MusicPlayer.Offset(20).Title)</visible>
+			  <visible>!String.IsEmpty(MusicPlayer.Offset(20).Title)</visible>
 		  </item>
 		  <item>
 			  <label>$INFO[MusicPlayer.Offset(21).Title]</label>
@@ -434,7 +450,7 @@
 			  <property name="Number">21:</property>
 			  <thumb>$INFO[MusicPlayer.Offset(21).Cover]</thumb>
 			  <onclick>Playlist.PlayOffset(21)</onclick>
-			  <visible>!IsEmpty(MusicPlayer.Offset(21).Title)</visible>
+			  <visible>!String.IsEmpty(MusicPlayer.Offset(21).Title)</visible>
 		  </item>
 		  <item>
 			  <label>$INFO[MusicPlayer.Offset(22).Title]</label>
@@ -442,7 +458,7 @@
 			  <property name="Number">22:</property>
 			  <thumb>$INFO[MusicPlayer.Offset(22).Cover]</thumb>
 			  <onclick>Playlist.PlayOffset(22)</onclick>
-			  <visible>!IsEmpty(MusicPlayer.Offset(22).Title)</visible>
+			  <visible>!String.IsEmpty(MusicPlayer.Offset(22).Title)</visible>
 		  </item>
 		  <item>
 			  <label>$INFO[MusicPlayer.Offset(23).Title]</label>
@@ -450,7 +466,7 @@
 			  <property name="Number">23:</property>
 			  <thumb>$INFO[MusicPlayer.Offset(23).Cover]</thumb>
 			  <onclick>Playlist.PlayOffset(23)</onclick>
-			  <visible>!IsEmpty(MusicPlayer.Offset(23).Title)</visible>
+			  <visible>!String.IsEmpty(MusicPlayer.Offset(23).Title)</visible>
 		  </item>
 	   </content>
 	  </control>

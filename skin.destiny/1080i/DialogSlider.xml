@@ -60,12 +60,6 @@
       <top>70</top>
       <width>250</width>
       <height>30</height>
-      <aligny>center</aligny>
-      <texturefocus>-</texturefocus>
-      <texturenofocus>-</texturenofocus>
-      <texturesliderbar>button/slider_bg.png</texturesliderbar>
-      <textureslidernib>button/SliderNibNF.png</textureslidernib>
-      <textureslidernibfocus>button/SliderNibFO.png</textureslidernibfocus>
       <onup>11</onup>
       <ondown>11</ondown>
       <onleft>11</onleft>

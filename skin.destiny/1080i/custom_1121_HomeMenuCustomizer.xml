@@ -86,6 +86,11 @@
 					<include>HomeMenuPlaylist3</include>
 	                <include>HomeMenuPlaylist4</include>
 					<include>HomeMenuPlaylist5</include>
+					<include>HomeMenuPlaylist6</include>
+					<include>HomeMenuPlaylist7</include>
+					<include>HomeMenuPlaylist8</include>
+					<include>HomeMenuPlaylist9</include>
+					<include>HomeMenuPlaylist10</include>
 				</content>
 			</control>
 			<control type="grouplist" id="90001">

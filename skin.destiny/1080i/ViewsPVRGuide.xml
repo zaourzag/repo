@@ -67,12 +67,12 @@
 						<info>ListItem.ChannelNumberLabel</info>
 					</control>-->
 					<control type="image">
-						<left>30</left>
-						<top>0</top>
-						<width>95</width>
-						<height>95</height>
-						<aspectratio>keep</aspectratio>
+						<left>0</left>
+						<top>2</top>
+						<width>158</width>
+						<height>83</height>
 						<texture>$INFO[ListItem.Icon]</texture>
+						<aspectratio scalediffuse="false" align="center" aligny="center">scale</aspectratio>
 					</control>
 					<!--<control type="label" id="1">
 						<left>0</left>
@@ -89,14 +89,6 @@
 					</control>-->
 				</channellayout>
 				<focusedchannellayout height="86" width="160">
-					<control type="image" id="1">
-						<left>-10</left>
-						<top>1</top>
-						<width>168</width>
-						<height>85</height>
-						<texture background="true">skin/button_klein.png</texture>
-		                <colordiffuse>$VAR[BackColorButton]</colordiffuse>
-					</control>
 					<!--<control type="label">
 						<left>10</left>
 						<top>38</top>
@@ -111,12 +103,20 @@
 						<info>ListItem.ChannelNumberLabel</info>
 					</control>-->
 					<control type="image">
-						<left>30</left>
-						<top>0</top>
-						<width>95</width>
-						<height>95</height>
-						<aspectratio>keep</aspectratio>
+						<left>0</left>
+						<top>2</top>
+						<width>158</width>
+						<height>83</height>
 						<texture>$INFO[ListItem.Icon]</texture>
+						<aspectratio scalediffuse="false" align="center" aligny="center">scale</aspectratio>
+					</control>
+					<control type="image" id="1">
+						<left>155</left>
+						<top>1</top>
+						<width>3</width>
+						<height>85</height>
+						<texture background="true">skin/button_klein.png</texture>
+		                <colordiffuse>$VAR[BackColorButton]</colordiffuse>
 					</control>
 					<!--<control type="label" id="1">
 						<left>0</left>

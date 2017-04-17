@@ -34,7 +34,7 @@
 			  <width>285</width>
 			  <height>403</height>
 			  <texture background="true">skin/button_klein.png</texture>
-			  <colordiffuse>$VAR[ColorButtonNoFocus]</colordiffuse>
+			  <colordiffuse>$VAR[BackColorFront]</colordiffuse>
 			</control>
 			<control type="image">
 			  <left>5</left>

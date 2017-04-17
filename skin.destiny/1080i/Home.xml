@@ -13,14 +13,19 @@
 
 	  <include>CommonHomeBack</include>	
 	  <include>HomeWidgetsHorizontal</include>	
-	  <include>HomePlaying</include>	
+	  <include>HomeWidgetsVertical</include> 
+	  <include>HomeWidgetsSubmenu</include>
+	  <include condition="System.HasAddon(plugin.service.gto)">HomeWidgetsSubmenuAddons</include>
+	  <include>HomePlaying</include>	 	
 	  <include>HomeMainMenuHorizontal</include>		
 	  <include>CommonHomeButton</include>
-	  <include>CommonHomeWidgetControl</include>			
+	  <include>CommonHomeWidgetControl</include>	
+	  <include>CommonHomeBigWidgetControl</include>  			
 	  <include>BigInfosTime</include>
 	  <include>BigInfosDatabaseCount</include>
 	  <include>BigInfosWeather</include>
 	  <include>HomeSubmenu</include>
+	  <include>HomeSubmenuAddons</include>
 
   </controls>
 </window>

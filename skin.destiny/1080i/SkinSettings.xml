@@ -210,8 +210,8 @@
         <!--========================================== HOME ========================================-->
 		<!--========================================================================================-->
         <control type="group">
-			<control type="grouplist" id="9003">
-			  <visible>Container(9060).Hasfocus(3)</visible>
+			<control type="grouplist" id="9002">
+			  <visible>Container(9060).Hasfocus(2)</visible>
 			  <left>505</left>
 			  <top>165</top>
 			  <width>1337</width>
@@ -220,8 +220,8 @@
 			  <pagecontrol>65</pagecontrol>
 			  <onleft>9060</onleft>
 			  <onright>65</onright>
-			  <onup>9003</onup>
-			  <ondown>9003</ondown>
+			  <onup>9002</onup>
+			  <ondown>9002</ondown>
 			<control type="button" id="3039">
 			  <description>Home Menü Button</description>
 			  <width>1337</width>
@@ -240,67 +240,7 @@
 			  <textoffsetx>30</textoffsetx>
 			  <onclick>ActivateWindow(4115)</onclick>
 			</control>
-			<control type="button" id="3041">
-			  <description>Home Menü Button</description>
-			  <width>1337</width>
-              <height>50</height>
-			  <font>primal_20</font>
-			  <label>$LOCALIZE[50321]</label>
-			  <textoffsetx>30</textoffsetx>
-			  <onclick>ActivateWindow(4107)</onclick>
-			</control>
-			<control type="radiobutton" id="3042">
-			  <label>$LOCALIZE[50394]</label>
-			  <width>1337</width>
-              <height>50</height>
-			  <font>primal_20</font>
-			  <textoffsetx>30</textoffsetx>
-			  <onclick>Skin.ToggleSetting(HomeMusicFanart)</onclick>
-			  <onclick>Skin.Reset(HomeMusicExtraFanart)</onclick>
-			  <onclick>Skin.Reset(ArtistslideshowHome)</onclick>
-			  <selected>Skin.HasSetting(HomeMusicFanart)</selected>
-			</control>
-			<control type="radiobutton" id="3043">
-			  <label>$LOCALIZE[50393]</label>
-			  <width>1337</width>
-              <height>50</height>
-			  <font>primal_20</font>
-			  <textoffsetx>30</textoffsetx>
-			  <onclick>Skin.ToggleSetting(ArtistslideshowHome)</onclick>
-			  <onclick>Skin.Reset(HomeMusicFanart)</onclick>
-			  <onclick>Skin.Reset(HomeMusicExtraFanart)</onclick>
-			  <selected>Skin.HasSetting(ArtistslideshowHome)</selected>
-			</control>
-			<control type="radiobutton" id="3044">
-			  <label>$LOCALIZE[50392]</label>
-			  <width>1337</width>
-              <height>50</height>
-			  <font>primal_20</font>
-			  <textoffsetx>30</textoffsetx>
-			  <onclick>Skin.ToggleSetting(HomeMusicExtraFanart)</onclick>
-			  <onclick>Skin.Reset(HomeMusicFanart)</onclick>
-			  <onclick>Skin.Reset(ArtistslideshowHome)</onclick>
-			  <selected>Skin.HasSetting(HomeMusicExtraFanart)</selected>
-			</control>
-			<control type="radiobutton" id="3045">
-			  <label>$LOCALIZE[50391]</label>
-			  <width>1337</width>
-              <height>50</height>
-			  <font>primal_20</font>
-			  <textoffsetx>30</textoffsetx>
-			  <onclick>Skin.ToggleSetting(GrabFanart)</onclick>
-			  <selected>Skin.HasSetting(GrabFanart)</selected>
-			</control>
-			<control type="radiobutton" id="3046">
-			  <label>$LOCALIZE[50390]</label>
-			  <width>1337</width>
-              <height>50</height>
-			  <font>primal_20</font>
-			  <textoffsetx>30</textoffsetx>
-			  <onclick>Skin.ToggleSetting(NoWidgets)</onclick>
-			  <selected>Skin.HasSetting(NoWidgets)</selected>
-			</control>
-			<control type="radiobutton" id="3047">
+			<control type="radiobutton" id="3041">
 			  <description>Home Menü Vertical</description>
 			  <width>1337</width>
               <height>50</height>
@@ -311,7 +251,58 @@
 			  <onclick>Skin.Reset</onclick>
 			  <selected>Skin.HasSetting(HomeMainMenu2)</selected>
 			</control>
-			<control type="radiobutton" id="3048">
+			<control type="button" id="3042">
+			  <description>Home Menü Button</description>
+			  <width>1337</width>
+              <height>50</height>
+			  <font>primal_20</font>
+			  <label>$LOCALIZE[50321]</label>
+			  <textoffsetx>30</textoffsetx>
+			  <onclick>ActivateWindow(4107)</onclick>
+			</control>
+			<control type="radiobutton" id="3043">
+			  <label>$LOCALIZE[50394]</label>
+			  <width>1337</width>
+              <height>50</height>
+			  <font>primal_20</font>
+			  <textoffsetx>30</textoffsetx>
+			  <onclick>Skin.ToggleSetting(HomeMusicFanart)</onclick>
+			  <onclick>Skin.Reset(HomeMusicExtraFanart)</onclick>
+			  <onclick>Skin.Reset(ArtistslideshowHome)</onclick>
+			  <selected>Skin.HasSetting(HomeMusicFanart)</selected>
+			</control>
+			<control type="radiobutton" id="3044">
+			  <label>$LOCALIZE[50393]</label>
+			  <width>1337</width>
+              <height>50</height>
+			  <font>primal_20</font>
+			  <textoffsetx>30</textoffsetx>
+			  <onclick>Skin.ToggleSetting(ArtistslideshowHome)</onclick>
+			  <onclick>Skin.Reset(HomeMusicFanart)</onclick>
+			  <onclick>Skin.Reset(HomeMusicExtraFanart)</onclick>
+			  <selected>Skin.HasSetting(ArtistslideshowHome)</selected>
+			</control>
+			<control type="radiobutton" id="3045">
+			  <label>$LOCALIZE[50392]</label>
+			  <width>1337</width>
+              <height>50</height>
+			  <font>primal_20</font>
+			  <textoffsetx>30</textoffsetx>
+			  <onclick>Skin.ToggleSetting(HomeMusicExtraFanart)</onclick>
+			  <onclick>Skin.Reset(HomeMusicFanart)</onclick>
+			  <onclick>Skin.Reset(ArtistslideshowHome)</onclick>
+			  <selected>Skin.HasSetting(HomeMusicExtraFanart)</selected>
+			</control>
+			<control type="radiobutton" id="3046">
+			  <label>$LOCALIZE[50391]</label>
+			  <width>1337</width>
+              <height>50</height>
+			  <font>primal_20</font>
+			  <textoffsetx>30</textoffsetx>
+			  <onclick>Skin.ToggleSetting(GrabFanart)</onclick>
+			  <selected>Skin.HasSetting(GrabFanart)</selected>
+			</control>
+			<control type="radiobutton" id="3047">
 			  <width>1337</width>
 			  <height>50</height>
 			  <font>primal_20</font>
@@ -320,7 +311,7 @@
 			  <onclick>Skin.ToggleSetting(WheaterMultiFanart)</onclick>
 			  <selected>Skin.HasSetting(WheaterMultiFanart)</selected>
 			</control>
-			<control type="radiobutton" id="3049">
+			<control type="radiobutton" id="3048">
 			  <width>1337</width>
 			  <height>50</height>
 			  <font>primal_20</font>
@@ -328,7 +319,7 @@
 			  <label>$LOCALIZE[50307]</label>
 			  <onclick>Skin.ToggleSetting(homenocolorbutton)</onclick>
 			  <selected>Skin.HasSetting(homenocolorbutton)</selected>
-			</control>
+			</control>			
           </control>
 		  <control type="scrollbar" id="65">
 		     <include>Animation.ZoomIn</include>
@@ -345,11 +336,121 @@
 			 <onright>1860</onright>
 			 <showonepage>true</showonepage>
 			 <orientation>vertical</orientation>
-			 <visible>Container(9060).Hasfocus(3)</visible>
+			 <visible>Container(9060).Hasfocus(2)</visible>
           </control>
 		</control>
 	   </control>
+	   
+	   <!--========================================================================================-->
+	   <!--====================================== WIDGETS =========================================-->
+	   <!--========================================================================================-->
+	   <control type="group">
+		  <control type="grouplist" id="9003">
+			<visible>Container(9060).Hasfocus(3)</visible>
+			<left>505</left>
+			<top>165</top>
+			<width>1337</width>
+			<height>810</height>
+			<itemgap>2</itemgap>
+			<pagecontrol>65</pagecontrol>
+			<onleft>9060</onleft>
+			<onright>65</onright>
+			<onup>9003</onup>
+			<ondown>9003</ondown>
+			<control type="radiobutton" id="3060">
+			  <label>$LOCALIZE[50390]</label>
+			  <width>1337</width>
+              <height>50</height>
+			  <font>primal_20</font>
+			  <textoffsetx>30</textoffsetx>
+			  <onclick>Skin.ToggleSetting(NoWidgets)</onclick>
+			  <selected>Skin.HasSetting(NoWidgets)</selected>
+			</control>
+		    <control type="radiobutton" id="3061">
+			  <width>1337</width>
+			  <height>50</height>
+			  <font>primal_20</font>
+			  <textoffsetx>30</textoffsetx>
+			  <label>$LOCALIZE[50405]</label>
+			  <onclick>Skin.ToggleSetting(moviewidgetstime)</onclick>
+			  <selected>Skin.HasSetting(moviewidgetstime)</selected>
+			</control>
+			<control type="button" id="3062">
+			  <description>Widget Pictures Path</description>
+			  <width>1337</width>
+			  <height>50</height>
+			  <font>primal_20</font>
+			  <textoffsetx>30</textoffsetx>
+			  <label>Bilder Widget - $LOCALIZE[49973] $INFO[Skin.String(Pictures_Folder_Path)]</label>
+			  <onclick>Skin.Reset(Pictures_Folder_Path)</onclick>
+			  <onclick>Skin.SetPath(Pictures_Folder_Path)</onclick>
+			</control>
+		</control>
+		<control type="scrollbar" id="65">
+		   <include>Animation.ZoomIn</include>
+		   <left>1850</left>
+		   <top>165</top>
+		   <width>10</width>
+		   <height>810</height>
+		   <texturesliderbackground>button/ScrollBarV.png</texturesliderbackground>
+		   <texturesliderbar colordiffuse="$VAR[BackColorFront]">button/ScrollBarV_bar.png</texturesliderbar>
+		   <texturesliderbarfocus colordiffuse="$VAR[BackColorButton]">button/ScrollBarV_bar_focus.png</texturesliderbarfocus>
+		   <textureslidernib>button/ScrollBarNib.png</textureslidernib>
+		   <textureslidernibfocus>button/ScrollBarNib.png</textureslidernibfocus>
+		   <onleft>9004</onleft>
+		   <onright>1860</onright>
+		   <showonepage>true</showonepage>
+		   <orientation>vertical</orientation>
+		   <visible>Container(9060).Hasfocus(3)</visible>
+		</control>
+	  </control>
 		
+	   <!--========================================================================================-->
+	   <!--====================================== PVR & TV ========================================-->
+	   <!--========================================================================================-->
+	   <control type="group">
+		  <control type="grouplist" id="9004">
+			<visible>Container(9060).Hasfocus(4)</visible>
+			<left>505</left>
+			<top>165</top>
+			<width>1337</width>
+			<height>810</height>
+			<itemgap>2</itemgap>
+			<pagecontrol>65</pagecontrol>
+			<onleft>9060</onleft>
+			<onright>65</onright>
+			<onup>9004</onup>
+			<ondown>9004</ondown>
+		  <control type="radiobutton" id="3070">
+			<label>$LOCALIZE[50406]</label>
+			<width>1337</width>
+			<height>50</height>
+			<font>primal_20</font>
+			<textoffsetx>30</textoffsetx>
+			<onclick>Skin.ToggleSetting(livetvicon)</onclick>
+			<selected>Skin.HasSetting(livetvicon)</selected>
+		  </control>
+		</control>
+		<control type="scrollbar" id="65">
+		   <include>Animation.ZoomIn</include>
+		   <left>1850</left>
+		   <top>165</top>
+		   <width>10</width>
+		   <height>810</height>
+		   <texturesliderbackground>button/ScrollBarV.png</texturesliderbackground>
+		   <texturesliderbar colordiffuse="$VAR[BackColorFront]">button/ScrollBarV_bar.png</texturesliderbar>
+		   <texturesliderbarfocus colordiffuse="$VAR[BackColorButton]">button/ScrollBarV_bar_focus.png</texturesliderbarfocus>
+		   <textureslidernib>button/ScrollBarNib.png</textureslidernib>
+		   <textureslidernibfocus>button/ScrollBarNib.png</textureslidernibfocus>
+		   <onleft>9004</onleft>
+		   <onright>1860</onright>
+		   <showonepage>true</showonepage>
+		   <orientation>vertical</orientation>
+		   <visible>Container(9060).Hasfocus(4)</visible>
+		</control>
+	  </control>
+
+	   
 	  <!--========================================================================================-->
 	  <!--=============================== HOME WINDOW SETTINGS ===================================-->
 	  <!--========================================================================================-->
@@ -609,6 +710,25 @@
 		  <align>left</align>
 		  <aligny>center</aligny>
 		</control>		
+		<control type="radiobutton" id="3111">
+		  <font>primal_20</font>
+		  <width>1337</width>
+		  <height>50</height>
+		  <label>Weathericons Default</label>
+		  <onclick>Skin.ToggleSetting(weathericonsdefault)</onclick>
+		  <selected>!Skin.HasSetting(weathericonsdefault)</selected>
+		  <onclick>Skin.Reset(weathericons3dcoloured)</onclick> 
+		  <onclick>Skin.Reset(weathericons3dwhite)</onclick>
+		  <onclick>Skin.Reset(weathericonsanimated)</onclick>
+		  <onclick>Skin.Reset(weathericonscoloured)</onclick>
+		  <onclick>Skin.Reset(weathericonsflat)</onclick>
+		  <onclick>Skin.Reset(weathericonsgrey)</onclick>
+		  <onclick>Skin.Reset(weathericonsoutline)</onclick>
+		  <onclick>Skin.Reset(weathericonsoutlinehd)</onclick>
+		  <onclick>Skin.Reset(weathericonstransparent)</onclick>
+		  <onclick>Skin.Reset(weathericonswhite)</onclick>
+		  <visible>System.HasAddon(resource.images.weathericons.default)</visible>
+		</control>
 		<control type="radiobutton" id="3112">
 		  <font>primal_20</font>
 		  <width>1337</width>
@@ -829,7 +949,7 @@
 			<width>440</width>
 			<height>80</height>
 			<texture background="true">skin/button_klein.png</texture>
-		    <colordiffuse>$VAR[ColorButtonNoFocus]</colordiffuse>
+		    <colordiffuse>$VAR[BackColorFront]</colordiffuse>
 		  </control>
           <control type="label">
             <left>60</left>
@@ -896,11 +1016,21 @@
             <label2>-</label2>
             <onclick>noop</onclick>
           </item>
-		  <item id="3">
+		  <item id="2">
             <label>50107</label>
             <label2>-</label2>
             <onclick>noop</onclick>
-          </item>		  
+          </item>
+		  <item id="3">
+            <label>50361</label>
+            <label2>-</label2>
+            <onclick>noop</onclick>
+          </item>	
+		  <item id="4">
+            <label>14205</label>
+            <label2>-</label2>
+            <onclick>noop</onclick>
+          </item>	  
 		  <item id="5">
             <label>14018</label>
             <label2>-</label2>

@@ -7,9 +7,9 @@
 		<top>240</top>
 	</coordinates>
 	<include>dialogeffect</include>
-	<onunload condition="!IsEmpty(Skin.String(ItemToEdit.Widget))">Skin.SetString($INFO[Window(Home).Property(Destiny.Widget)],$INFO[Skin.String(ItemToEdit.Widget)])</onunload>
-	<onunload condition="!IsEmpty(Skin.String(ItemToEdit.WidgetLabel))">Skin.SetString($INFO[Window(Home).Property(Destiny.WidgetLabel)],$INFO[Skin.String(ItemToEdit.WidgetLabel)])</onunload>
-	<onunload condition="!IsEmpty(Skin.String(ItemToEdit.WidgetType))">Skin.SetString($INFO[Window(Home).Property(Destiny.WidgetType)],$INFO[Skin.String(ItemToEdit.WidgetType)])</onunload>
+	<onunload condition="!String.IsEmpty(Skin.String(ItemToEdit.Widget))">Skin.SetString($INFO[Window(Home).Property(Destiny.Widget)],$INFO[Skin.String(ItemToEdit.Widget)])</onunload>
+	<onunload condition="!String.IsEmpty(Skin.String(ItemToEdit.WidgetLabel))">Skin.SetString($INFO[Window(Home).Property(Destiny.WidgetLabel)],$INFO[Skin.String(ItemToEdit.WidgetLabel)])</onunload>
+	<onunload condition="!String.IsEmpty(Skin.String(ItemToEdit.WidgetType))">Skin.SetString($INFO[Window(Home).Property(Destiny.WidgetType)],$INFO[Skin.String(ItemToEdit.WidgetType)])</onunload>
 	<onunload>ClearProperty(Destiny.Widget,Home)</onunload>
 	<onunload>ClearProperty(Destiny.WidgetLabel,Home)</onunload>
 	<onunload>ClearProperty(Destiny.WidgetType,Home)</onunload>

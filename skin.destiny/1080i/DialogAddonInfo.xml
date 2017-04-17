@@ -85,7 +85,7 @@
         <align>left</align>
         <aligny>center</aligny>
         <font>primal_26_Bold</font>
-        <label>[B]$INFO[ListItem.Property(Addon.Name)][/B]</label>
+        <label>[B]$INFO[ListItem.AddonName][/B]</label>
         <textcolor>$VAR[ColorFontNormal]</textcolor>
 	    <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
         <scroll>true</scroll>
@@ -99,7 +99,7 @@
           <top>0</top>
           <width>885</width>
           <height>38</height>
-          <label>$INFO[ListItem.Property(Addon.Type),$LOCALIZE[146] ]</label>
+          <label>$INFO[ListItem.AddonType,$LOCALIZE[146] ]</label>
           <align>left</align>
           <aligny>center</aligny>
           <font>primal_20</font>
@@ -112,7 +112,7 @@
           <top>45</top>
           <width>885</width>
           <height>38</height>
-          <label>$INFO[ListItem.Property(Addon.Creator),$LOCALIZE[21863]: ]</label>
+          <label>$INFO[ListItem.AddonCreator,$LOCALIZE[21863]: ]</label>
           <align>left</align>
           <aligny>center</aligny>
           <font>primal_20</font>
@@ -125,7 +125,7 @@
           <top>90</top>
           <width>885</width>
           <height>38</height>
-          <label>$INFO[ListItem.Property(Addon.Version),$LOCALIZE[24051]  ]</label>
+          <label>$INFO[ListItem.AddonVersion,$LOCALIZE[24051]  ]</label>
           <align>left</align>
           <aligny>center</aligny>
           <font>primal_20</font>
@@ -151,7 +151,7 @@
           <top>140</top>
           <width>170</width>
           <height>30</height>
-          <texture>$INFO[ListItem.Property(Addon.StarRating)]</texture>
+          <texture>$INFO[ListItem.Rating]</texture>
         </control>
         <control type="label">
           <description>Summary</description>
@@ -159,7 +159,7 @@
           <top>180</top>
           <width>885</width>
           <height>38</height>
-          <label>$INFO[ListItem.Property(Addon.Summary),$LOCALIZE[20037]:  ]</label>
+          <label>$INFO[ListItem.AddonSummary,$LOCALIZE[20037]:  ]</label>
           <align>left</align>
           <aligny>center</aligny>
           <font>primal_20</font>
@@ -180,7 +180,7 @@
 	      <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
         </control>
         <control type="group">
-          <visible>!IsEmpty(ListItem.Property(Addon.Disclaimer))</visible>
+          <visible>!IsEmpty(ListItem.AddonDisclaimer)</visible>
           <control type="label">
             <description>Description Page Count</description>
             <left>900</left>
@@ -204,7 +204,7 @@
             <align>left</align>
             <textcolor>$VAR[ColorFontNormal]</textcolor>
 	        <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
-            <label>$INFO[ListItem.Property(Addon.Description)]</label>
+            <label>$INFO[ListItem.AddonDescription]</label>
             <pagecontrol>60</pagecontrol>
 			<autoscroll time="2000" delay="15000" repeat="5000">!Skin.HasSetting(NoPlotScroll)</autoscroll>
           </control>
@@ -246,12 +246,12 @@
             <align>left</align>
             <textcolor>$VAR[ColorFontNormal]</textcolor>
 	        <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
-            <label>$INFO[ListItem.Property(Addon.Disclaimer)]</label>
+            <label>$INFO[ListItem.AddonDisclaimer]</label>
             <autoscroll time="2000" delay="15000" repeat="5000">!Skin.HasSetting(NoPlotScroll)</autoscroll>
           </control>
         </control>
         <control type="group">
-          <visible>IsEmpty(ListItem.Property(Addon.Disclaimer))</visible>
+          <visible>IsEmpty(ListItem.AddonDisclaimer)</visible>
           <control type="label">
             <description>Description Page Count</description>
             <left>900</left>
@@ -275,7 +275,7 @@
             <align>left</align>
             <textcolor>$VAR[ColorFontNormal]</textcolor>
 	        <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
-            <label>$INFO[ListItem.Property(Addon.Description)]</label>
+            <label>$INFO[ListItem.AddonDescription]</label>
             <pagecontrol>61</pagecontrol>
 			<autoscroll time="2000" delay="15000" repeat="5000">!Skin.HasSetting(NoPlotScroll)</autoscroll>
           </control>
@@ -347,17 +347,9 @@
           <textoffsetx>25</textoffsetx>
           <label>24021</label>
         </control>
-        <control type="button" id="10">
-          <description>Changelog button</description>
-          <width>330</width>
-          <height>60</height>
-          <textoffsetx>25</textoffsetx>
-          <label>24036</label>
-        </control>
-		
       </control>
       <control type="group">
-        <visible>!IsEmpty(ListItem.Property(Addon.broken))</visible>
+        <visible>!IsEmpty(ListItem.AddonBroken)</visible>
         <left>0</left>
         <top>850</top>
         <control type="image">
@@ -388,7 +380,7 @@
           <width>1200</width>
           <height>75</height>
           <font>primal_20</font>
-          <label>$INFO[ListItem.Property(Addon.broken)]</label>
+          <label>$INFO[ListItem.AddonBroken]</label>
           <align>left</align>
           <textcolor>$VAR[ColorFontNormal]</textcolor>
 	      <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>

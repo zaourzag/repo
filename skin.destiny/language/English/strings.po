@@ -45,7 +45,7 @@ msgid "Items"
 msgstr ""
 
 msgctxt "#49972"
-msgid "Ends at"
+msgid "Ends"
 msgstr ""
 
 msgctxt "#49973"
@@ -177,11 +177,11 @@ msgid "Compilations"
 msgstr ""
 
 msgctxt "#50005"
-msgid "Last seen movies"
+msgid "Last seen"
 msgstr ""
 
 msgctxt "#50006"
-msgid "Last seen Series"
+msgid "Last seen"
 msgstr ""
 
 msgctxt "#50007"
@@ -397,11 +397,11 @@ msgid "Precipitations probability"
 msgstr ""
 
 msgctxt "#50060"
-msgid "[B]CONFIGURE PRESENTATION[/B][CR]Change the Skin · Choose your language and region[CR]Change the file display · Choose your screensaver"
+msgid "Configure actions that can be used during playback · Configure how media content is played"
 msgstr ""
 
 msgctxt "#50061"
-msgid "[B]CONFIGURE VIDEO SETTINGS[/B][CR]Manage your video database · Select video playback options[CR]Change the video display · Select the subtitle font"
+msgid "Configure how the media lists display content ·  Configure how library lists are navigated · Configure database options"
 msgstr ""
 
 msgctxt "#50062"
@@ -409,43 +409,43 @@ msgid "Live TV"
 msgstr ""
 
 msgctxt "#50063"
-msgid "[B]CONFIGURE TV SETTINGS[/B][CR]Change the fullscreen · Manage your EPG"
+msgid "Change the fullscreen · Manage your EPG"
 msgstr ""
 
 msgctxt "#50064"
-msgid "[B]CONFIGURE MUSIC SETTINGS[/B][CR]Preference for music database , playback options[CR]Configure the song Submission."
+msgid "Preference for music database , playback options[CR]Configure the song Submission."
 msgstr ""
 
 msgctxt "#50065"
-msgid "[B]CONFIGURE IMAGES SETTINGS[/B][CR]Change the photo display · Configure slideshows"
+msgid "Change the photo display · Configure slideshows"
 msgstr ""
 
 msgctxt "#50066"
-msgid "[B]CONFIGURE WEATHER SETTINGS[/B][CR]Choose three cities for weather data"
+msgid "Configure skin · Configure region · Configure control · Configure screensaver · Configure master lock"
 msgstr ""
 
 msgctxt "#50067"
-msgid "[B]CONFIGURE NETWORK SETTINGS[/B][CR]Configure Remote via UPnP and HTTP[CR]Configure network shares and Internet"
+msgid "Configure Remote via UPnP and HTTP[CR]Configure network shares and Internet"
 msgstr ""
 
 msgctxt "#50068"
-msgid "[B]CONFIGURE ADDONS[/B][CR]Change Addon setting · Install new addons or uninstall your Addons."
+msgid "Change Addon setting · Install new addons or uninstall your Addons."
 msgstr ""
 
 msgctxt "#50069"
-msgid "[B]CONFIGURE SYSTEM SETTINGS[/B][CR]Setting display, remote control, power options[CR]Set Enable debugging · User rights"
+msgid "Setting display, remote control, power options[CR]Set Enable debugging · User rights"
 msgstr ""
 
 msgctxt "#50070"
-msgid "[B]CONFIGURE SKIN SETTINGS[/B][CR]Configure Destiny[CR]Adding and removing main menu items"
+msgid "Configure Destiny[CR]Adding and removing main menu items"
 msgstr ""
 
 msgctxt "#50071"
-msgid "[B]MANAGE YOUR PROFILE[/B][CR]Choose your Kodi © user profile to log in."
+msgid "Choose your Kodi © user profile to log in."
 msgstr ""
 
 msgctxt "#50072"
-msgid "[B]SYSTEM INFOS[/B][CR]All about your system."
+msgid "All about your system."
 msgstr ""
 
 msgctxt "#50073"
@@ -1215,11 +1215,11 @@ msgid "Choose playlists for Preview - playlist"
 msgstr ""
 
 msgctxt "#50271"
-msgid " - assign label"
+msgid "   - assign label"
 msgstr ""
 
 msgctxt "#50272"
-msgid "- Choose playlists"
+msgid "   - Choose playlists"
 msgstr ""
 
 msgctxt "#50273"
@@ -1350,6 +1350,9 @@ msgctxt "#50304"
 msgid "Weather Fanart Path:"
 msgstr ""
 
+msgctxt "#50305"
+msgid "   - Wähle Addon"
+msgstr "   - Wähle Addon"
 
 
 msgctxt "#50307"
@@ -1632,7 +1635,7 @@ msgid "Scrollbar off in views"
 msgstr ""
 
 msgctxt "#50389"
-msgid "Alternatives Home menu with four Eckigen tiles instead of the oblique"
+msgid "Alternatives Verticales Home menu"
 msgstr ""
 
 msgctxt "#50390"
@@ -1694,3 +1697,11 @@ msgstr ""
 msgctxt "#504044"
 msgid "Strength"
 msgstr ""
+
+msgctxt "#50405"
+msgid "Endtime display off widgets"
+msgstr ""
+
+msgctxt "#50406"
+msgid "LiveTV icons do not have a square format .. then turn it on."
+msgstr "LiveTV Icons haben kein viereckiges Format..dann anschalten."

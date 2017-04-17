@@ -21,7 +21,7 @@
 	<focusedcolor>$VAR[ColorFontSelected]</focusedcolor>
   </default>
   <default type="button">
-    <texturenofocus colordiffuse="$VAR[ColorButtonNoFocus]">skin/button_klein.png</texturenofocus>
+    <texturenofocus colordiffuse="$VAR[BackColorFront]">skin/button_klein.png</texturenofocus>
 	<texturefocus colordiffuse="$VAR[BackColorButton]">skin/button_klein.png</texturefocus>
     <font>primal_18</font>
 	<textcolor>$VAR[ColorFontNormal]</textcolor>
@@ -33,10 +33,10 @@
     <pulseonselect>no</pulseonselect>
   </default>
   <default type="togglebutton">
-    <texturenofocus colordiffuse="$VAR[ColorButtonNoFocus]">skin/button_klein.png</texturenofocus>
+    <texturenofocus colordiffuse="$VAR[BackColorFront]">skin/button_klein.png</texturenofocus>
 	<texturefocus colordiffuse="$VAR[BackColorButton]">skin/button_klein.png</texturefocus>
     <alttexturefocus colordiffuse="$VAR[BackColorButton]">skin/button_klein.png</alttexturefocus>
-    <alttexturenofocus colordiffuse="$VAR[ColorButtonNoFocus]">skin/button_klein.png</alttexturenofocus>
+    <alttexturenofocus colordiffuse="$VAR[BackColorFront]">skin/button_klein.png</alttexturenofocus>
     <textcolor>$VAR[ColorFontNormal]</textcolor>
 	<focusedcolor>$VAR[ColorFontNormal]</focusedcolor>
 	<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
@@ -70,7 +70,7 @@
     <left>0</left>
     <top>0</top>
 	<reveal>true</reveal>
-	<texturebg>Button/progress-back.png</texturebg>
+	<texturebg>button/progress-back.png</texturebg>
 	<lefttexture colordiffuse="$VAR[ColorProgress]">-</lefttexture>
 	<midtexture border="2,2,2,2" colordiffuse="$VAR[ColorProgress]">Button/progress-mid.png</midtexture>
 	<righttexture colordiffuse="$VAR[ColorProgress]">-</righttexture>
@@ -88,11 +88,11 @@
   <default type="spincontrol">
     <left>495</left>
     <top>189</top>
-    <textureup>Button/scrollup.png</textureup>
-    <texturedown>Button/scrolldown.png</texturedown>
-    <textureupfocus>Button/scrollup.png</textureupfocus>
-    <texturedownfocus>Button/scrolldown.png</texturedownfocus>
-	<texturenofocus colordiffuse="$VAR[ColorButtonNoFocus]">skin/button_klein.png</texturenofocus>
+    <textureup>button/scrollup.png</textureup>
+    <texturedown>button/scrolldown.png</texturedown>
+    <textureupfocus>button/scrollup.png</textureupfocus>
+    <texturedownfocus>button/scrolldown.png</texturedownfocus>
+	<texturenofocus colordiffuse="$VAR[BackColorFront]">skin/button_klein.png</texturenofocus>
 	<texturefocus colordiffuse="$VAR[BackColorButton]">skin/button_klein.png</texturefocus>
     <align>right</align>
     <width>43</width>
@@ -115,7 +115,7 @@
     <height>63</height>
     <spinwidth>43</spinwidth>
     <spinheight>60</spinheight>
-    <texturenofocus colordiffuse="$VAR[ColorButtonNoFocus]">skin/button_klein.png</texturenofocus>
+    <texturenofocus colordiffuse="$VAR[BackColorFront]">skin/button_klein.png</texturenofocus>
 	<texturefocus colordiffuse="$VAR[BackColorButton]">skin/button_klein.png</texturefocus>
     <textureup>button/scrollupNF.png</textureup>
     <texturedown>button/scrolldownNF.png</texturedown>
@@ -138,11 +138,11 @@
     <height>80</height>
     <radiowidth>80</radiowidth>
     <radioheight>40</radioheight>
-	<textureradioonfocus>Button/radio_on_focus.png</textureradioonfocus>
-	<textureradioonnofocus>Button/radio_on_no_focus.png</textureradioonnofocus>
-	<textureradioofffocus>Button/radio_off_focus.png</textureradioofffocus>
-	<textureradiooffnofocus>Button/radio_off_no_focus.png</textureradiooffnofocus>
-    <texturenofocus colordiffuse="$VAR[ColorButtonNoFocus]">skin/button_klein.png</texturenofocus>
+	<textureradioonfocus>button/radio_on_focus.png</textureradioonfocus>
+	<textureradioonnofocus>button/radio_on_no_focus.png</textureradioonnofocus>
+	<textureradioofffocus>button/radio_off_focus.png</textureradioofffocus>
+	<textureradiooffnofocus>button/radio_off_no_focus.png</textureradiooffnofocus>
+    <texturenofocus colordiffuse="$VAR[BackColorFront]">skin/button_klein.png</texturenofocus>
 	<texturefocus colordiffuse="$VAR[BackColorButton]">skin/button_klein.png</texturefocus>
     <label>215</label>
     <font>primal_18</font>
@@ -153,36 +153,19 @@
     <textoffsetx>10</textoffsetx>
     <aligny>center</aligny>
   </default>
-  <default type="selectbutton">
-    <left>735</left>
-    <top>502</top>
-    <width>450</width>
-    <height>75</height>
-    <label>-</label>
-    <font>primal_18</font>
-    <texturenofocus colordiffuse="$VAR[ColorButtonNoFocus]">skin/button_klein.png</texturenofocus>
-	<texturefocus colordiffuse="$VAR[BackColorButton]">skin/button_klein.png</texturefocus>
-    <texturebg colordiffuse="$VAR[BackColorButton]">skin/button_klein.png</texturebg>
-    <textureleft>button/scroll-left.png</textureleft>
-    <textureleftfocus>button/scroll-left-focus.png</textureleftfocus>
-    <textureright>button/scroll-right.png</textureright>
-    <texturerightfocus>button/scroll-right-focus.png</texturerightfocus>
-    <font>font13</font>
-    <textcolor>$VAR[ColorFontNormal]</textcolor>
-	<focusedcolor>$VAR[ColorFontNormal]</focusedcolor>
-	<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
-    <disabledcolor>$VAR[ColorFontUnfocus]</disabledcolor>
-    <aligny>center</aligny>
-  </default>
   <default type="slider">
     <controloffsetx>75</controloffsetx>
     <controloffsety>0</controloffsety>
+	<texturesliderbar border="10">button/slider_bg.png</texturesliderbar>
+    <textureslidernib>button/SliderNibNF.png</textureslidernib>
+    <textureslidernibfocus>button/SliderNibFO.png</textureslidernibfocus>
+	<orientation>horizontal</orientation>
   </default>
   <default type="sliderex">
     <height>52</height>
     <textoffsetx>10</textoffsetx>
     <aligny>center</aligny>
-    <texturenofocus colordiffuse="$VAR[ColorButtonNoFocus]">skin/button_klein.png</texturenofocus>
+    <texturenofocus colordiffuse="$VAR[BackColorFront]">skin/button_klein.png</texturenofocus>
 	<texturefocus colordiffuse="$VAR[BackColorButton]">skin/button_klein.png</texturefocus>
     <sliderwidth>150</sliderwidth>
     <sliderheight>20</sliderheight>
@@ -198,13 +181,13 @@
   <default type="mover">
     <left>90</left>
     <top>288</top>
-    <texturenofocus colordiffuse="$VAR[ColorButtonNoFocus]">skin/button_klein.png</texturenofocus>
+    <texturenofocus colordiffuse="$VAR[BackColorFront]">skin/button_klein.png</texturenofocus>
 	<texturefocus colordiffuse="$VAR[BackColorButton]">skin/button_klein.png</texturefocus>
   </default>
   <default type="resize">
     <left>90</left>
     <top>288</top>
-    <texturenofocus colordiffuse="$VAR[ColorButtonNoFocus]">skin/button_klein.png</texturenofocus>
+    <texturenofocus colordiffuse="$VAR[BackColorFront]">skin/button_klein.png</texturenofocus>
 	<texturefocus colordiffuse="$VAR[BackColorButton]">skin/button_klein.png</texturefocus>
   </default>
   <default type="edit">
@@ -212,7 +195,7 @@
     <top>300</top>
     <width>450</width>
     <height>63</height>
-    <texturenofocus colordiffuse="$VAR[ColorButtonNoFocus]">skin/button_klein.png</texturenofocus>
+    <texturenofocus colordiffuse="$VAR[BackColorFront]">skin/button_klein.png</texturenofocus>
 	<texturefocus colordiffuse="$VAR[BackColorButton]">skin/button_klein.png</texturefocus>
     <font>primal_18</font>
     <textcolor>$VAR[ColorFontNormal]</textcolor>

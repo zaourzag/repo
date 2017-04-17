@@ -116,7 +116,7 @@
       <height>90</height>
       <width>310</width>
       <textoffsetx>20</textoffsetx>
-	  <texturenofocus colordiffuse="$VAR[ColorButtonNoFocus]">skin/button_klein.png</texturenofocus>
+	  <texturenofocus colordiffuse="$VAR[BackColorFront]">skin/button_klein.png</texturenofocus>
 	  <texturefocus colordiffuse="$VAR[BackColorButton]">skin/button_klein.png</texturefocus>
       <align>right</align>
       <aligny>center</aligny>

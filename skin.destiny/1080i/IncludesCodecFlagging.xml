@@ -238,7 +238,7 @@
       <height>50</height>
 	  <aspectratio>keep</aspectratio>
 	  <texture>$VAR[mpaa]</texture>
-	  <visible>!Control.IsVisible(598)</visible>
+	  <visible>!Control.IsVisible(598) + !Control.IsVisible(604)</visible>
 	</control>
   </include>
   
