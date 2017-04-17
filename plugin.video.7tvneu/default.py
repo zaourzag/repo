@@ -509,8 +509,8 @@ def playvideo(video_id,  client_location, source_id=None):
         xbmcplugin.setResolvedUrl(addon_handle, True, listitem)
   
         #print "Daten lic :"+lic
-        print "Daten token :"+token
-        print "Daten data :"+data        
+        #print "Daten token :"+token
+        #print "Daten data :"+data        
         return ""
 
 def verpasstdatum():
@@ -673,7 +673,6 @@ def livetv(url):
 # Haupt Menu Anzeigen      
 if mode is '':
     addDir("Sender", "Sender", 'senderlist', "") 
-    addDir("Live Pro7", "pro7", 'livetv', "") 
     addDir("Sendungen A-Z", url+"/ganze-folgen", "sendungsmenu", "")  
     addDir("Sendungen nach Datum", "", "verpasstdatum", "")  
     addDir("Suche","","search","")
