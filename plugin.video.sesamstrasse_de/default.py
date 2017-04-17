@@ -10,6 +10,7 @@ import random
 import xbmcplugin
 import xbmcgui
 import xbmcaddon
+import json
 
 #addon = xbmcaddon.Addon()
 #addonID = addon.getAddonInfo('id')
@@ -20,15 +21,7 @@ pluginhandle = int(sys.argv[1])
 forceViewMode = addon.getSetting("forceViewMode") == "true"
 useThumbAsFanart = addon.getSetting("useThumbAsFanart") == "true"
 viewMode = str(addon.getSetting("viewMode"))
-max_quality = addon.getSetting("maxVideoQuality")
-if max_quality == '0':
-    quality = 'lo'
-elif max_quality == '1':
-    quality = 'hi'
-elif max_quality == '2':
-    quality = 'hq'
-else:
-    quality = 'hd'
+quality = addon.getSetting("maxVideoQuality")
 
 translation = addon.getLocalizedString
 icon = xbmc.translatePath('special://home/addons/'+addonID+'/icon.png')
@@ -73,18 +66,13 @@ def playVideo(url):
         content = opener.open(url).read()
         json_uuid = re.findall('player_image-(.+?)_', content)[0]
         json_url = 'http://www.sesamstrasse.de/sendungsinfos/sesamstrasse%s-ppjson_image-%s.json' % (suffix_id, json_uuid)
-        json = opener.open(json_url).read()
-        regex_qualities = '\.,(.+?),\.'
-        qualities = re.findall(regex_qualities, json)[-1].split(',')
-        if not (quality in qualities): quality = qualities[-1]
-        regex_url = '"src": "http://(.+?)"'
-        urls = re.findall(regex_url, json)
-        stream_url = ''
-        for url in urls:
-            if url.endswith('.mp4'):
-                stream_url = 'http://' + url[:-6] + quality + '.mp4'
-                break
-        if not stream_url: return
+        jsonstring = opener.open(json_url).read()
+        struktur = json.loads(jsonstring)
+        print("----_")        
+        qality=struktur["playlist"][str(int(quality)+3)]
+        print(qality)
+        stream_url=qality["src"]
+        print (stream_url)
     except: return
     listitem = xbmcgui.ListItem(path=stream_url)
     xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
