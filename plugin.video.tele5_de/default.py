@@ -85,13 +85,15 @@ def listcat(url,type="listVideos"):
         element=spl[i]
         try:
           url=re.compile('href="(.+?)"', re.DOTALL).findall(element)[0]
+          if not "http" in url:
+              url=baseUrl+"/"+url
           title=re.compile('<h2>(.+?)</h2>', re.DOTALL).findall(element)[0]
           thumb=re.compile('srcset="(.+?)"', re.DOTALL).findall(element)[0]    
           debug("URL :"+url)   
           if "WWE RAW" in  title:      
-            addLink(title, baseUrl+"/"+url, type, baseUrl+"/"+thumb)
-          else:
-            addDir(title, baseUrl+"/"+url, type, baseUrl+"/"+thumb)
+            addLink(title, url, type, baseUrl+"/"+thumb)
+          else:             
+            addDir(title, url, type, baseUrl+"/"+thumb)
         except:
            pass
     xbmcplugin.endOfDirectory(pluginhandle)
