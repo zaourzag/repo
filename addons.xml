@@ -1235,7 +1235,7 @@ temporarily disable SSL requests
     </extension>
 </addon>
 
-<addon id="plugin.video.tele5_de" name="Tele5.de" version="1.1.7" provider-name="L0RE">
+<addon id="plugin.video.tele5_de" name="Tele5.de" version="1.1.8" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
     </requires>
@@ -2492,7 +2492,7 @@ See changelog.txt for more details.</news>
 	</extension>
 </addon>
 
-<addon id="plugin.video.dailymotion_com" name="DailyMotion.com" version="2.2.4" provider-name="L0RE">
+<addon id="plugin.video.dailymotion_com" name="DailyMotion.com (old)" version="2.2.5" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="script.module.simple.downloader" version="1.0.0"/>
@@ -2931,7 +2931,7 @@ Zattoo Live TV, Aufnahmen und EPG
   </extension>
 </addon>
 
-<addon id="plugin.video.dailymotion" name="DailyMotion (dev)" version="0.2.3" provider-name="L0RE">
+<addon id="plugin.video.dailymotion" name="DailyMotion" version="0.2.4" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
         <import addon="script.module.requests" version="2.9.1"/>
