@@ -157,7 +157,7 @@ def startpage(url):
          laenge=0
          titel = re.compile('(.+?) - Teil [0-9]+', re.DOTALL).findall(titel)[0]         
        name="S"+staffel+"E"+episode+" "+sendung +" - "+titel
-       addLink(name,videourl,"playvideo","http:"+thumbnail,duration=laenge,desc=desc)
+       addDir(name,videourl,"playvideo","http:"+thumbnail,desc=desc)
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
    
 def videos(url):
@@ -180,7 +180,7 @@ def videos(url):
          laenge=0
          titel = re.compile('(.+?) - Teil [0-9]+', re.DOTALL).findall(titel)[0]
        name="S"+staffel+"E"+episode+" "+sendung +" - "+titel
-       addLink(name,videourl,"playvideo","http:"+thumbnail,duration=laenge,desc=desc)
+       addDir(name,videourl,"playvideo","http:"+thumbnail,desc=desc)
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
    
 def shows(url):
@@ -232,7 +232,7 @@ def playvideo(url)      :
         title=re.compile('"headline":"(.+?)",', re.DOTALL).findall(content)[0]
         desc=re.compile('"description":"(.+?)"', re.DOTALL).findall(content)[0]
         thumb=re.compile('"thumbnailUrl":"(.+?)"', re.DOTALL).findall(content)[0]
-        playlist = xbmc.PlayList(1)
+        playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
         playlist.clear() 
         vid = YDStreamExtractor.getVideoInfo(url,quality=2) #quality is 0=SD, 1=720p, 2=1080p and is a maximum        
         stream_url = vid.streamURL()            
@@ -245,8 +245,7 @@ def playvideo(url)      :
         u = base_url+"?url="+urllib.quote_plus(url)+"&mode="+str("NEXT")
         listitem = xbmcgui.ListItem(path=u)
         playlist.add(u, listitem)  
-        xbmc.Player().play(playlist)
-        time.sleep(10000)
+        xbmc.Player().play(playlist)        
         #xbmcplugin.setResolvedUrl(addon_handle,True, listitem)
 
 if mode is '':
