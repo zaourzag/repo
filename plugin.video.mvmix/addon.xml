@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<addon id="plugin.video.mvmix" version="1.7.2" name="Music Video Mix" provider-name="Jin">
+<addon id="plugin.video.mvmix" version="1.7.3" name="Music Video Mix" provider-name="Jin">
     <requires>
         <import addon="xbmc.python" version="2.20.0"/>
     </requires>
@@ -12,6 +12,8 @@
         <platform>all</platform>
         <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
         <news>
+fix: vevo
+
 add: imvdb.com (vimeo/youtube)
 fix: imvdb title (int -> str)
 del: clipfish + putpat (no more content)

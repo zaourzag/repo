@@ -13,7 +13,8 @@ def get_videos(artist):
     if artist_id:
         try:
             url = 'https://apiv2.vevo.com/artist/%s/videos' % str(artist_id)
-            params = {'size':'200', 'page':'1', 'token':token}
+            headers['Authorization'] = 'Bearer '+token
+            params = {'size':'200', 'page':'1'}
             json_data = requests.get(url, headers=headers, params=params).json()
         except:
             return False
@@ -43,8 +44,8 @@ def get_video_url(id):
     try:
         token = get_token()
         url = 'https://apiv2.vevo.com/video/%s/streams/mp4' % str(id)
-        params = {'token':token}
-        json_data = requests.get(url, headers=headers, params=params).json()
+        headers['Authorization'] = 'Bearer '+token
+        json_data = requests.get(url, headers=headers).json()
         for q in json_data:
             if q['quality'] == 'High':
                 video_url = q['url']
@@ -57,7 +58,8 @@ def get_artist_id(artist,token):
     artist_id = None
     try:
         url = 'https://apiv2.vevo.com/search'
-        params = {'query':artist, 'includecategories':'music video', 'token':token}
+        headers['Authorization'] = 'Bearer '+token
+        params = {'q':artist, 'includecategories':'music video'}
         json_data = requests.get(url, headers=headers, params=params).json()
         artists = json_data['artists']
         for a in artists:
@@ -69,11 +71,12 @@ def get_artist_id(artist,token):
     return artist_id
 
 def get_token():
-    token = None
+    token = ''
     try:
-        url = 'http://www.vevo.com/auth'
-        json_data = requests.post(url, headers=headers).json()
-        token = json_data['access_token']
+        url = 'https://accounts.vevo.com/token'
+        post_data = {'client_id': 'SPupX1tvqFEopQ1YS6SS', 'grant_type': 'urn:vevo:params:oauth:grant-type:anonymous'}
+        json_data = requests.post(url, headers=headers, data=post_data).json()
+        token = json_data['legacy_token']
     except:
         pass
     return token
