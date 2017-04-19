@@ -491,9 +491,9 @@ def playvideo(video_id,  client_location, source_id=None):
             except:
               data=ul                                 
         #data=json_data["sources"][-1]["url"]               
-        userAgent = 'user-agent=Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36'
+        userAgent = 'User-Agent=Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36'
         addon_handle = int(sys.argv[1])
-        listitem = xbmcgui.ListItem(path=data)         
+        listitem = xbmcgui.ListItem(path=data+"|"+userAgent)         
         #listitem.setProperty('inputstream.mpd.license_type', 'com.widevine.alpha')
         #listitem.setProperty('inputstream.mpd.license_type', 'com.widevine.alpha')
         listitem.setProperty(is_type+".license_type", "com.widevine.alpha")
