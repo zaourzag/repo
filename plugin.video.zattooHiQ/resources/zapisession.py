@@ -13,7 +13,7 @@ import json
 
 class ZapiSession:
 	ZAPI_AUTH_URL = 'https://zattoo.com'
-	ZAPI_URL = 'http://zattoo.com'
+	ZAPI_URL = 'https://zattoo.com'
 	DATA_FOLDER = None
 	COOKIE_FILE = None
 	ACCOUNT_FILE = None
