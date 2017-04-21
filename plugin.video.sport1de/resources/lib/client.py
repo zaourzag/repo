@@ -9,25 +9,25 @@ class Client:
         
         self.headers = {
             'User-Agent': 'iPhone',
-            'Referer': 'http://video.sport1.de',
+            'Referer': 'https://video.sport1.de',
             'Host': 'video.sport1.de'
         }
         self.cookie = cookie
 
     def get_playlist(self,id):
-        return self.json_request('http://video.sport1.de/api/playlist/%s' % (id))
+        return self.json_request('https://video.sport1.de/api/playlist/%s' % (id))
 
     def get_video(self,id):
-        return self.json_request('http://video.sport1.de/api/video/%s' % (id))
+        return self.json_request('https://video.sport1.de/api/video/%s' % (id))
 
     def get_tv_epg(self):
-        return self.json_request('http://video.sport1.de/api/epg/tv')
+        return self.json_request('https://video.sport1.de/api/epg/tv')
 
     def get_fm_epg(self):
-        return self.json_request('http://video.sport1.de/api/epg/fm')
+        return self.json_request('https://video.sport1.de/api/epg/fm')
         
     def get_tv(self, url=False):
-        self.headers['Referer'] = 'http://tv.sport1.de'
+        self.headers['Referer'] = 'https://tv.sport1.de'
         self.headers['Host'] = 'tv.sport1.de'
         
         if url:
@@ -35,7 +35,7 @@ class Client:
                 if not self.logged_in():
                     self.login()
         else:
-            url = 'http://tv.sport1.de/mobile/'
+            url = 'https://tv.sport1.de/mobile/'
         
         if self.cookie:
             self.headers['cookie'] = self.cookie
@@ -44,7 +44,7 @@ class Client:
 
     def get_radio(self):
         url = self.get_date()
-        self.headers['Referer'] = 'http://api.sport1.de'
+        self.headers['Referer'] = 'https://api.sport1.de'
         self.headers['Host'] = 'api.sport1.de'
         return self.json_request(url)
 
@@ -56,7 +56,7 @@ class Client:
                 'log_goback':  '0',
                 'log_persistence_cookie': '1'
             }
-            url = 'http://tv.sport1.de/mobile/home/index.php'
+            url = 'https://tv.sport1.de/mobile/home/index.php'
             r = requests.post(url, headers=self.headers, data=post_data)
             if '<div class="logged-in">' in r.text:
                 self.cookie = r.headers['set-cookie']
@@ -74,7 +74,7 @@ class Client:
 
     def logged_in(self):
         self.headers['cookie'] = cookie
-        text = self.get_data('http://tv.sport1.de/mobile/home/index.php')
+        text = self.get_data('https://tv.sport1.de/mobile/home/index.php')
         if '<div class="logged-in">' in text:
             self.cookie = cookie
             log('[%s] logged in' % (addon_id))
@@ -83,18 +83,18 @@ class Client:
             return False
 
     def get_date(self):
-        data = self.json_request('http://www.sport1.de/api/pages/465')
+        data = self.json_request('https://www.sport1.de/api/pages/465')
         return data['elements'][0]['elements'][0]['url']
         
     def get_data(self, url):
-        r = requests.get(url.replace('https','http'), headers=self.headers)
+        r = requests.get(url, headers=self.headers)
         if r:
             return r.text
         else:
             return ''
             
     def json_request(self, url):
-        r = requests.get(url.replace('https','http'), headers=self.headers)
+        r = requests.get(url, headers=self.headers)
         if r.headers.get('content-type', '').startswith('application/json'):
             return r.json()
         else:

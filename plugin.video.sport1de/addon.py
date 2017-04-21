@@ -65,19 +65,23 @@ def livestream():
 def play_video():
     path = args['id'][0]
     if path:
-        listitem = xbmcgui.ListItem(path=path.replace('https','http'))
-        xbmcplugin.setResolvedUrl(addon_handle, True, listitem)
+        play(path)
 
 def play_tv():
     id = args['id'][0]
     data = client.get_tv(id)
     result = sport1.get_hls(data)
     if '.m3u8' in result:
-        listitem = xbmcgui.ListItem(path=result.replace('https','http'))
-        xbmcplugin.setResolvedUrl(addon_handle, True, listitem)
+        play(result)
     else:
         log('[%s] play error: %s' % (addon_id, utfenc(result)))
         dialog.ok(addon_name, utfenc(result))
+
+def play(url):
+    if not url.startswith('http'):
+        url = 'https:' + url
+    listitem = xbmcgui.ListItem(path=url)
+    xbmcplugin.setResolvedUrl(addon_handle, True, listitem)
     
 def list_items(items):
     for i in items:
