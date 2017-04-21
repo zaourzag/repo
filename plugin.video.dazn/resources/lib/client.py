@@ -22,14 +22,14 @@ class Client:
             'Country': country
         }
 
-        self.STARTUP = api_base + 'v1/Startup'
         self.RAIL = api_base + 'v1/Rail'
-        self.RAILS = api_base + 'v1/Rails'
+        self.RAILS = api_base + 'v2/Rails'
         self.EPG = api_base + 'v1/Epg'
         self.PLAYBACK = api_base + 'v1/Playback'
-        self.SIGNIN = api_base + 'v2/SignIn'
+        self.SIGNIN = api_base + 'v3/SignIn'
         self.SIGNOUT = api_base + 'v1/SignOut'
-        self.REFRESH = api_base + 'v2/RefreshAccessToken'
+        self.PROFILE = api_base + 'v1/UserProfile'
+        self.REFRESH = api_base + 'v3/RefreshAccessToken'
 
     def rails(self, id, params=''):
         self.PARAMS['groupId'] = id
@@ -41,8 +41,8 @@ class Client:
         self.PARAMS['params'] = params
         return self.request(self.RAIL)
     
-    def epg(self, date='today'):
-        self.PARAMS['date'] = date
+    def epg(self, params):
+        self.PARAMS['date'] = params
         return self.request(self.EPG)
         
     def playback_data(self, id):
@@ -72,6 +72,8 @@ class Client:
             self.TOKEN = auth['Token']
             self.HEADERS['Authorization'] = 'Bearer ' + self.TOKEN
         else:
+            if result == 'HardOffer':
+                dialog.ok(addon_name, getString(30161))
             self.signOut()
         addon.setSetting('token', self.TOKEN)
         
@@ -90,6 +92,7 @@ class Client:
                 self.setToken(data['AuthToken'], data.get('Result', 'SignInError'))
         else:
             addon.openSettings()
+        self.POST_DATA  = {}
             
     def signOut(self):
         self.HEADERS['Authorization'] = 'Bearer ' + self.TOKEN
@@ -98,37 +101,32 @@ class Client:
         }
         r = self.request(self.SIGNOUT)
         self.TOKEN = ''
+        addon.setSetting('token', self.TOKEN)
+        
+    def userProfile(self):
+        self.HEADERS['Authorization'] = 'Bearer ' + self.TOKEN
+        data = self.request(self.PROFILE)
+        if data.get('odata.error', None):
+            self.errorHandler(data)
+        else:
+            addon.setSetting('country', data['UserCountryCode'])
         
     def refreshToken(self):
+        self.HEADERS['Authorization'] = 'Bearer ' + self.TOKEN
         self.POST_DATA = {
-            'OriginalToken': self.TOKEN,
             'DeviceId': addon.getSetting('device_id')
         }
         data = self.request(self.REFRESH)
         if data.get('odata.error', None):
+            self.signOut()
             self.errorHandler(data)
         else:
             self.setToken(data['AuthToken'], data.get('Result', 'RefreshAccessTokenError'))
             
     def startUp(self):
-        self.POST_DATA = {
-            'LandingPageKey': 'generic',
-            'Languages': language,
-            'Platform': 'web',
-            'Manufacturer': '',
-            'PromoCode': ''
-        }
-        data = self.request(self.STARTUP)
-        if data:
-            allowed = data['Region']['isAllowed']
-            if allowed == True:
-                addon.setSetting('language', data['Region']['Language'])
-                addon.setSetting('country', data['Region']['Country'])
-                if not self.TOKEN:
-                    self.signIn()
-            else:
-                dialog.ok(addon_name, getString(30101))
-        self.POST_DATA  = {}
+        if not self.TOKEN:
+            self.signIn()
+            self.userProfile()
         
     def request(self, url):
         if self.POST_DATA:
@@ -147,11 +145,9 @@ class Client:
         msg  = data['odata.error']['message']['value']
         code = str(data['odata.error']['code'])
         log('[%s] error: %s (%s)' % (addon_id, msg, code))
-        if self.ERRORS >= 3:
-            return
-        if code == '10000':
+        if code == '10000' and self.ERRORS < 3:
             self.refreshToken()
-        elif code == '401' or code == '10033':
+        elif (code == '401' or code == '10033') and self.ERRORS < 3:
             self.signIn()
         elif code == '7':
             dialog.ok(addon_name, getString(30107))

@@ -93,8 +93,8 @@ msgid "Unable to find email address"
 msgstr "Email Adresse kann nicht gefunden werden"
 
 msgctxt "#30161"
-msgid "Subscribe & Pay Now"
-msgstr "Werde Mitglied & Zahle Jetzt"
+msgid "Continue watching sport on DAZN by reactivating your subscription in 'My Account'."
+msgstr "Schaue weiterhin deinen Lieblingssport auf DAZN, indem du dein Abo in 'Mein Konto' wieder aktivierst."
 
 msgctxt "#30201"
 msgid "Catch Up"
@@ -175,3 +175,7 @@ msgstr "Samstag"
 msgctxt "#30229"
 msgid "Sunday"
 msgstr "Sonntag"
+
+msgctxt "#30230"
+msgid "Guide"
+msgstr "Programm"

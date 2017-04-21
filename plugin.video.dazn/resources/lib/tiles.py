@@ -44,13 +44,6 @@ class Tiles:
         image = i.get('Image', '')
         if image:
             self.item['thumb'] = url % (image['Id'], image['ImageMimeType'])
-            
-    def plot(self):
-        if self.competition:
-            self.competition = self.competition['Title']
-        if self.sport:
-            self.sport = self.sport['Title']
-        return utfenc(unicode('%s\n\nStart: %s\nSport: %s\nCompetition: %s' % (self.description, self.start, self.sport, self.competition)))
         
     def update_item(self, i):
         self.item['mode'] = self.mode
@@ -62,7 +55,15 @@ class Tiles:
         if self.params:
             self.item['params'] = self.params
             
-        if (self.type == 'UpComing' or 'Scheduled' in i.get('Id', '')) or (self.type == 'Highlights'):
+        if 'Epg' in i.get('Id', ''):
+            if self.competition:
+                competition = self.competition['Title']
+            if self.sport:
+                sport = self.sport['Title']
+            time = self.start[11:][:5]
+            self.item['title'] = utfenc(unicode('%s [COLOR dimgray]%s[/COLOR] %s [COLOR dimgray]%s[/COLOR]' % (time, sport, self.title, competition)))
+            
+        elif (self.type == 'UpComing' or 'Scheduled' in i.get('Id', '')) or (self.type == 'Highlights'):
             if self.type == 'UpComing':
                 day = resources(days(self.type, self.now, self.start))
                 sub_title = unicode('%s %s' % (day, self.start[11:][:5]))

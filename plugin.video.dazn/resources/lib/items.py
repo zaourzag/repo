@@ -20,7 +20,7 @@ class Items:
         if focus:
             try:
                 wnd = xbmcgui.Window(xbmcgui.getCurrentWindowId())
-                wnd.getControl(wnd.getFocusId()).selectItem(focus+1)
+                wnd.getControl(wnd.getFocusId()).selectItem(focus)
             except:
                 pass
 
@@ -33,9 +33,9 @@ class Items:
         }
                     
         art = {
-            'thumb'  : item.get('thumb', icon),
-            'poster' : item.get('thumb', icon),
-            'fanart' : fanart
+            'thumb': item.get('thumb', icon),
+            'poster': item.get('thumb', icon),
+            'fanart': fanart
         }
                 
         labels = {
@@ -63,7 +63,7 @@ class Items:
             
         xbmcplugin.addDirectoryItem(addon_handle, build_url(data), listitem, folder)
         
-    def play_item(self, item, name=False, context=False):
+    def play_item(self, item, name, context):
         path = item.ManifestUrl
         listitem = xbmcgui.ListItem()
         listitem.setProperty('inputstreamaddon', 'inputstream.adaptive')

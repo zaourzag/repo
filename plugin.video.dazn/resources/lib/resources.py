@@ -23,7 +23,7 @@ def resources(str):
         return getString(30208)
     elif str == 'Sport':
         return getString(30209)
-    elif str == 'Tournament':
+    elif str == 'Competition':
         return getString(30210)
     elif str == 'Competitor':
         return getString(30211)

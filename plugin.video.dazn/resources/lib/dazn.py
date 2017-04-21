@@ -4,8 +4,8 @@ from common import *
 from items import Items
 
 items = Items()
-        
-def rails_items(data):
+
+def rails_items(data, id):
     from rails import Rails
     for i in data.get('Rails', []):
         items.add_item(Rails(i).item)
@@ -21,11 +21,11 @@ def rail_items(data):
             cm_items = context_items(item['cm'])
             for i in cm_items:
                 d = {
-                        'mode'   : 'play_context',
-                        'title'  : i['title'],
-                        'id'     : i.get('id', ''),
-                        'params' : i.get('params','')
-                        }
+                    'mode': 'play_context',
+                    'title': i['title'],
+                    'id': i.get('id', ''),
+                    'params': i.get('params','')
+                }
                 cm.append( (i['type'], 'XBMC.RunPlugin(%s)' % build_url(d)) )
                 if len(cm) == 3:
                     break
@@ -41,10 +41,6 @@ def context_items(data):
             cm_items.append(Tiles(i).item)
     return cm_items
     
-def playback(data):
+def playback(data, name=False, context=False):
     from playback import Playback
-    items.play_item(Playback(data))
-    
-def play_context(data, title):
-    from playback import Playback
-    items.play_item(Playback(data), name=title, context=True)
+    items.play_item(Playback(data), name, context)

@@ -69,7 +69,7 @@ msgid "Level3 (2)"
 msgstr ""
 
 msgctxt "#30051"
-msgid "Failed to get Device ID Please Retry."
+msgid "Failed to get Device ID. Please Retry."
 msgstr ""
 
 msgctxt "#30101"
@@ -93,7 +93,7 @@ msgid "Unable to find email address"
 msgstr ""
 
 msgctxt "#30161"
-msgid "Subscribe & Pay Now"
+msgid "Continue watching sport on DAZN by reactivating your subscription in 'My Account'."
 msgstr ""
 
 msgctxt "#30201"
@@ -174,4 +174,8 @@ msgstr ""
 
 msgctxt "#30229"
 msgid "Sunday"
+msgstr ""
+
+msgctxt "#30230"
+msgid "Guide"
 msgstr ""
