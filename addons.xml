@@ -1142,7 +1142,7 @@ Orginal Code was from AddonScriptorDE</disclaimer>
     </extension>
 </addon>
 
-<addon id="plugin.video.sport1de" version="1.2.0" name="Sport1" provider-name="Jin">
+<addon id="plugin.video.sport1de" version="1.3.0" name="Sport1" provider-name="Jin">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
         <import addon="script.module.requests" version="2.12.4"/>
@@ -1159,7 +1159,8 @@ Für Sport1US und Sport1+ wird ein ABO auf sport1.de benötigt.
         <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
         <disclaimer>Inoffizielles Addon - Benutzung auf eigene Gefahr</disclaimer>
         <news>
-temporarily disable SSL requests
+SSL ist wieder aktiv. Libreelec User müssen demnach auf ein aktuelles Milhouse Build (Kodi 18) updaten.
+Livestream Fix, wenn http: in url fehlt.
         </news>
     </extension>
 </addon>
