@@ -145,8 +145,8 @@ def listVideos(url):
               addLink(name, str(id), 'playVideo', image,dadd=data,genre=genre,episode=folge,season=staffel)          
               #addLink("Folge :"+ folge , str(id), 'playVideo', image)          
           
-              #   addLink(h.unescape(title[i]), url, 'playVideo', thumb[i])
-            xbmcplugin.endOfDirectory(pluginhandle)
+              #   addLink(h.unescape(title[i]), url, 'playVideo', thumb[i])          
+          xbmcplugin.endOfDirectory(pluginhandle)
 
 
 def playVideo(url):
