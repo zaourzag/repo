@@ -70,3 +70,10 @@
 - fixed: Notification (VideoOSD) for TitleInfo does not automatically close on some Systems
 - fixed: Cache-Links for Youtube queries shortened because of problems with character limit > 255 on some Windows operating systems
 - Many other light Changes
+
+[B]Version 2.0.4  (25.04.2017)[/B] by realvito[CR]
+- changed: Billboard - represent information from RSS-Feeds to represent information of the HTML-Page *
+- *(Because often errors appear in the RSS-Feeds of Billboard)
+- fixed: Spotify-Genres and Spotify-Playlists are NOT opened and errors are displayed *
+- *(urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed (_ssl.c:590))
+- added: Spotify-Search for: Playlists - not public (on special request !)

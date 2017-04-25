@@ -22,7 +22,16 @@ import time
 from operator import itemgetter
 from StringIO import StringIO
 import gzip
+import ssl
 
+try:
+	_create_unverified_https_context = ssl._create_unverified_context
+except AttributeError:
+	# Legacy Python that doesn't verify HTTPS certificates by default
+	pass
+else:
+	# Handle target environment that doesn't support HTTPS verification
+	ssl._create_default_https_context = _create_unverified_https_context
 
 pluginhandle = int(sys.argv[1])
 socket.setdefaulttimeout(40)
@@ -122,7 +131,7 @@ def bpMain():
 		title = re.compile('data-name=".+?">(.*?)</a>', re.DOTALL).findall(entry)[0]
 		name = cleanTitle(title)
 		fullUrl = 'https://pro.beatport.com%s/top-100' %genreID
-		addAutoPlayDir(name,fullUrl, "listBP", pic+'beatport.png', "", "browse")
+		addAutoPlayDir(name, fullUrl, "listBP", pic+'beatport.png', "", "browse")
 	xbmcplugin.endOfDirectory(pluginhandle)
 	
 	
@@ -143,7 +152,9 @@ def listBP(type, url, limit):
 		if "(Original Mix)" in song:
 			song = song.split('(Original Mix)')[0]
 		song = cleanTitle(song)
-		if " feat." in song:
+		if "(feat." in song and " feat." in song:
+			song = song.split(')')[0]+')'
+		elif not "(feat." in song and " feat." in song:
 			firstTitle = song.split(' feat.')[0]
 			secondTitle = song.split(' feat.')[1]
 			song = firstTitle+' (feat.'+secondTitle+')'
@@ -178,9 +189,9 @@ def listBP(type, url, limit):
 	
 	
 def billboardMain():
-	addAutoPlayDir(translation(40107), urlMainBB+"/rss/charts/hot-100", "listBillboardCharts", pic+'billboard.png', "", "browse")
-	addAutoPlayDir(translation(40108), "Top 140 in Emerging", "listBillboardChartsNew", pic+'billboard.png', "", "browse")
-	addAutoPlayDir(translation(40109), "Top 140 in Overall", "listBillboardChartsNew", pic+'billboard.png', "", "browse")
+	addAutoPlayDir(translation(40107), urlMainBB+"/charts/hot-100", "listBillboardCharts_HTML", pic+'billboard.png', "", "browse")
+	addAutoPlayDir(translation(40108), "Top 140 in Emerging", "listBillboardCharts_NEW", pic+'billboard.png', "", "browse")
+	addAutoPlayDir(translation(40109), "Top 140 in Overall", "listBillboardCharts_NEW", pic+'billboard.png', "", "browse")
 	addDir(translation(40110), "", "listBillboardArchiveMain", pic+'billboard.png', "", "browse")
 	addDir(translation(40111), "genre", "listBillboardChartsTypes", pic+'billboard.png', "", "browse")
 	addDir(translation(40112), "country", "listBillboardChartsTypes", pic+'billboard.png', "", "browse")
@@ -257,49 +268,74 @@ def listBillboardArchiveVideos(type, url, limit):
 	
 def listBillboardChartsTypes(type):
 	if type == "genre":
-		addAutoPlayDir("Pop", urlMainBB+"/rss/charts/pop-songs", "listBillboardCharts", pic+'billboard.png', "", "browse")
-		addAutoPlayDir("Rock", urlMainBB+"/rss/charts/rock-songs", "listBillboardCharts", pic+'billboard.png', "", "browse")
-		addAutoPlayDir("Alternative", urlMainBB+"/rss/charts/alternative-songs", "listBillboardCharts", pic+'billboard.png', "", "browse")
-		addAutoPlayDir("R&B/Hip-Hop", urlMainBB+"/rss/charts/r-b-hip-hop-songs", "listBillboardCharts", pic+'billboard.png', "", "browse")
-		addAutoPlayDir("R&B", urlMainBB+"/rss/charts/r-and-b-songs", "listBillboardCharts", pic+'billboard.png', "", "browse")
-		addAutoPlayDir("Rap", urlMainBB+"/rss/charts/rap-song", "listBillboardCharts", pic+'billboard.png', "", "browse")
-		addAutoPlayDir("Country", urlMainBB+"/rss/charts/country-songs", "listBillboardCharts", pic+'billboard.png', "", "browse")
-		addAutoPlayDir(translation(40114), urlMainBB+"/rss/charts/latin-songs", "listBillboardCharts", pic+'billboard.png', "", "browse")
-		addAutoPlayDir(translation(40115), urlMainBB+"/rss/charts/jazz-songs", "listBillboardCharts", pic+'billboard.png', "", "browse")
-		addAutoPlayDir(translation(40116), urlMainBB+"/rss/charts/tropical-songs", "listBillboardCharts", pic+'billboard.png', "", "browse")
-		addAutoPlayDir(translation(40117), urlMainBB+"/rss/charts/soundtracks", "listBillboardCharts", pic+'billboard.png', "", "browse")
-		addAutoPlayDir("Dance/Club", urlMainBB+"/rss/charts/dance-club-play-songs", "listBillboardCharts", pic+'billboard.png', "", "browse")
-		addAutoPlayDir("Dance/Electronic", urlMainBB+"/rss/charts/dance-electronic-songs", "listBillboardCharts", pic+'billboard.png', "", "browse")
+		addAutoPlayDir("Pop", urlMainBB+"/charts/pop-songs", "listBillboardCharts_HTML", pic+'billboard.png', "", "browse")
+		addAutoPlayDir("Rock", urlMainBB+"/charts/rock-songs", "listBillboardCharts_HTML", pic+'billboard.png', "", "browse")
+		addAutoPlayDir("Alternative", urlMainBB+"/charts/alternative-songs", "listBillboardCharts_HTML", pic+'billboard.png', "", "browse")
+		addAutoPlayDir("R&B/Hip-Hop", urlMainBB+"/charts/r-b-hip-hop-songs", "listBillboardCharts_HTML", pic+'billboard.png', "", "browse")
+		addAutoPlayDir("R&B", urlMainBB+"/charts/r-and-b-songs", "listBillboardCharts_HTML", pic+'billboard.png', "", "browse")
+		addAutoPlayDir("Rap", urlMainBB+"/charts/rap-song", "listBillboardCharts_HTML", pic+'billboard.png', "", "browse")
+		addAutoPlayDir("Gospel", urlMainBB+"/charts/gospel-songs", "listBillboardCharts_HTML", pic+'billboard.png', "", "browse")
+		addAutoPlayDir("Country", urlMainBB+"/charts/country-songs", "listBillboardCharts_HTML", pic+'billboard.png', "", "browse")
+		addAutoPlayDir(translation(40114), urlMainBB+"/charts/latin-songs", "listBillboardCharts_HTML", pic+'billboard.png', "", "browse")
+		addAutoPlayDir(translation(40115), urlMainBB+"/charts/jazz-songs", "listBillboardCharts_HTML", pic+'billboard.png', "", "browse")
+		addAutoPlayDir(translation(40116), urlMainBB+"/charts/tropical-songs", "listBillboardCharts_HTML", pic+'billboard.png', "", "browse")
+		addAutoPlayDir(translation(40117), urlMainBB+"/charts/soundtracks", "listBillboardCharts_HTML", pic+'billboard.png', "", "browse")
+		addAutoPlayDir("Rhythmic", urlMainBB+"/charts/rhythmic-40", "listBillboardCharts_HTML", pic+'billboard.png', "", "browse")
+		addAutoPlayDir("Dance/Club", urlMainBB+"/charts/dance-club-play-songs", "listBillboardCharts_HTML", pic+'billboard.png', "", "browse")
+		addAutoPlayDir("Dance/Electronic", urlMainBB+"/charts/dance-electronic-songs", "listBillboardCharts_HTML", pic+'billboard.png', "", "browse")
 	elif type == "country":
-		addAutoPlayDir(translation(40118), urlMainBB+"/rss/charts/canadian-hot-100", "listBillboardCharts", pic+'billboard.png', "", "browse")
-		addAutoPlayDir(translation(40119), urlMainBB+"/rss/charts/japan-hot-100", "listBillboardCharts", pic+'billboard.png', "", "browse")
-		addAutoPlayDir(translation(40120), urlMainBB+"/rss/charts/germany-songs", "listBillboardCharts", pic+'billboard.png', "", "browse")
-		addAutoPlayDir(translation(40121), urlMainBB+"/rss/charts/france-songs", "listBillboardCharts", pic+'billboard.png', "", "browse")
-		addAutoPlayDir(translation(40122), urlMainBB+"/rss/charts/united-kingdom-songs", "listBillboardCharts", pic+'billboard.png', "", "browse")
+		addAutoPlayDir(translation(40118), urlMainBB+"/charts/canadian-hot-100", "listBillboardCharts_HTML", pic+'billboard.png', "", "browse")
+		addAutoPlayDir(translation(40119), urlMainBB+"/charts/japan-hot-100", "listBillboardCharts_HTML", pic+'billboard.png', "", "browse")
+		addAutoPlayDir(translation(40120), urlMainBB+"/charts/germany-songs", "listBillboardCharts_HTML", pic+'billboard.png', "", "browse")
+		addAutoPlayDir(translation(40121), urlMainBB+"/charts/france-songs", "listBillboardCharts_HTML", pic+'billboard.png', "", "browse")
+		addAutoPlayDir(translation(40122), urlMainBB+"/charts/united-kingdom-songs", "listBillboardCharts_HTML", pic+'billboard.png', "", "browse")
 	elif type == "other":
-		addAutoPlayDir(translation(40123), urlMainBB+"/rss/charts/radio-songs", "listBillboardCharts", pic+'billboard.png', "", "browse")
-		addAutoPlayDir("Digital", urlMainBB+"/rss/charts/digital-songs", "listBillboardCharts", pic+'billboard.png', "", "browse")
-		addAutoPlayDir(translation(40124), urlMainBB+"/rss/charts/streaming-songs", "listBillboardCharts", pic+'billboard.png', "", "browse")
-		addAutoPlayDir(translation(40125), urlMainBB+"/rss/charts/on-demand-songs", "listBillboardCharts", pic+'billboard.png', "", "browse")
+		addAutoPlayDir(translation(40123), urlMainBB+"/charts/radio-songs", "listBillboardCharts_HTML", pic+'billboard.png', "", "browse")
+		addAutoPlayDir("Digital", urlMainBB+"/charts/digital-song-sales", "listBillboardCharts_HTML", pic+'billboard.png', "", "browse")
+		addAutoPlayDir(translation(40124), urlMainBB+"/charts/streaming-songs", "listBillboardCharts_HTML", pic+'billboard.png', "", "browse")
+		addAutoPlayDir(translation(40125), urlMainBB+"/charts/on-demand-streaming-songs", "listBillboardCharts_HTML", pic+'billboard.png', "", "browse")
+		addAutoPlayDir("TOP on Twitter", urlMainBB+"/charts/twitter-emerging-artists", "listBillboardCharts_HTML", pic+'billboard.png', "", "browse")
 	xbmcplugin.endOfDirectory(pluginhandle)
 	
 	
-def listBillboardCharts(type, url, limit):
+def listBillboardCharts_HTML(type, url, limit):
 	if type == "play":
 		musicVideos = []
 		playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
 		playlist.clear()
 	content = cache(url, 1)
-	match = re.compile('<item>\s*.+?<artist>(.*?)</artist>.+?<chart_item_title>(.*?)</chart_item_title>.+?<rank_this_week>(.*?)</rank_this_week>', re.DOTALL).findall(content)
+	content = content[content.find('<div class="chart-data js-chart-data" data-trackaction="Chart List"')+1:]
+	content = content[:content.find('<audio class="chart__audio-element js-audio-element"></audio>')]
+	spl = content.split('<div class="chart-row__main-display">')
 	pos = 1
-	for artist, song, position in match:
-		title = cleanTitle(artist+ " - " +song)
+	for i in range(1,len(spl),1):
+		entry = spl[i]
+		position = re.compile('<span class="chart-row__current-week">(.*?)</span>', re.DOTALL).findall(entry)[0]
+		try:
+			thumb = re.compile('data-imagesrc="(.*?)"', re.DOTALL).findall(entry)[0]
+		except:
+			try:
+				thumb = re.compile('style="background-image.+?(http.*?.jpg)', re.DOTALL).findall(entry)[0]
+			except:
+				thumb = pic+'noimage.png'
+		song = re.compile('<h2 class="chart-row__song">(.*?)</h2>', re.DOTALL).findall(entry)[0]
+		try:
+			artist = re.compile('data-tracklabel="Artist Name">\s+(.*?)\s+</a>', re.DOTALL).findall(entry)[0]
+		except:
+			artist = re.compile('<h3 class="chart-row__artist">\s+(.*?)\s+</h3>', re.DOTALL).findall(entry)[0]
+		title = cleanTitle(artist.strip()+" - "+song.strip())
+		filtered = False
+		for entry2 in blacklist:
+			if entry2.strip().lower() and entry2.strip().lower() in title.lower():
+				filtered = True
+		if filtered:
+			continue
 		if type == "browse":
 			name = '[B][COLOR chartreuse]'+str(position)+' •  [/COLOR]'+title+'[/B]'
-			addLink(name, title.replace(" - ", " "), "playYTByTitle", "")
+			addLink(name, title.replace(" - ", " "), "playYTByTitle", thumb)
 		else:
 			url = "plugin://"+addonID+"/?url="+urllib.quote_plus(title.replace(" - ", " "))+"&mode=playYTByTitle"
-			musicVideos.append([title, url, ""])
+			musicVideos.append([title, url, thumb])
 			if limit and int(limit) == pos:
 				break
 			pos += 1
@@ -315,7 +351,7 @@ def listBillboardCharts(type, url, limit):
 		xbmc.Player().play(playlist)
 	
 	
-def listBillboardChartsNew(type, url, limit):
+def listBillboardCharts_NEW(type, url, limit):
 	if type == "play":
 		musicVideos = []
 		playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
@@ -325,12 +361,18 @@ def listBillboardChartsNew(type, url, limit):
 	content = content[:content.find("</table>")]
 	match = re.compile('<tr>.+?<td>(.*?)</td>.+?<td><a href=".+?">(.*?)</a></td>.+?<td>(.*?)</td>.+?<td>(.*?)</td>.+?</tr>', re.DOTALL).findall(content)
 	pos = 1
-	for position, artist, title, signal in match:
-		if "(" in title:
-			title = title.split('(')[0].strip()
-		title = cleanTitle(artist+" - "+title)
+	for position, artist, song, signal in match:
+		if "(" in song:
+			song = song.split('(')[0].strip()
+		title = cleanTitle(artist.strip()+" - "+song.strip())
+		filtered = False
+		for entry2 in blacklist:
+			if entry2.strip().lower() and entry2.strip().lower() in title.lower():
+				filtered = True
+		if filtered:
+			continue
 		if type == "browse":
-			name = '[B][COLOR chartreuse]'+position+' •  [/COLOR]'+title+'[/B]'
+			name = '[B][COLOR chartreuse]'+str(position)+' •  [/COLOR]'+title+'[/B]'
 			addLink(name, title.replace(" - ", " "), "playYTByTitle", "")
 		else:
 			url = "plugin://"+addonID+"/?url="+urllib.quote_plus(title.replace(" - ", " "))+"&mode=playYTByTitle"
@@ -371,10 +413,10 @@ def listHypem(type, url, limit):
 	for i in range(1,len(spl),1):
 		entry = spl[i]
 		rank = re.compile('>(.*?)</span>', re.DOTALL).findall(entry)[0]
-		match2 = re.compile('style="background.+?(http://static-ak.hypem.*?jpg)', re.DOTALL).findall(entry)
-		thumb = ""
-		if match2:
-			thumb = match2[0].replace('_120.jpg', '_500.jpg')
+		try:
+			thumb = re.compile('style="background.+?(http://static-ak.hypem.*?jpg)', re.DOTALL).findall(entry)[0].replace('_120.jpg', '_500.jpg')
+		except:
+			thumb = pic+'noimage.png'
 		artist = re.compile('href="/artist/.+?">(.*?)</a>', re.DOTALL).findall(entry)[0]
 		title = re.compile('class="base-title">(.*?)</span>', re.DOTALL).findall(entry)[0]
 		remix = re.compile('class="remix-link">(.*?)</span>', re.DOTALL).findall(entry)
@@ -474,7 +516,7 @@ def listItunesVideos(type, genreID, limit):
 				thumb = item['im:image'][2]['label']
 				#thumb = thumb.split('/170x170')[0]+"/400x400bb-85.jpg"
 			except:
-				thumb = ""
+				thumb = pic+'noimage.png'
 			aired = item['im:releaseDate']['attributes']['label']
 			filtered = False
 			for entry2 in blacklist:
@@ -537,11 +579,11 @@ def listOC(type, url, limit):
 	for i in range(1,len(spl),1):
 		count += 1
 		entry=spl[i]
-		thumb = re.findall('<img src="(.*?)"',entry,re.S)[0]
-		if "images-amazon" in thumb:
-			thumb = thumb.split('img/small?url=')[1]
+		img = re.findall('<img src="(.*?)"',entry,re.S)[0]
+		if "images-amazon" in img:
+			thumb = img.split('img/small?url=')[1]
 		else:
-			thumb = thumb.replace("img/small", "img/big")
+			thumb = img.replace("img/small", "img/big")
 		song = re.findall('<a href=".+?">(.*?)</a>',entry,re.S)[0]
 		artist = re.findall('<a href=".+?">(.*?)</a>',entry,re.S)[1]
 		if "/" in artist:
@@ -593,7 +635,7 @@ def listSpotifyGenres(url):
 		try:
 			thumb = item['genre']['iconUrl']
 		except:
-			thumb = ""
+			thumb = pic+'noimage.png'
 		if not "top lists" in title.strip().lower():
 			addDir(title, "https://api.tunigo.com/v3/space/"+genreID+"?region="+spotifyRegion+"&page=0&per_page=50&platform=web", "listSpotifyPlaylists", thumb)
 	xbmcplugin.endOfDirectory(pluginhandle)
@@ -616,7 +658,7 @@ def listSpotifyPlaylists(url):
 				#thumb = "https://u.scdn.co/images/pl/default/"+thumb
 				thumb = "https://i.scdn.co/image/"+thumb
 		except:
-			thumb = ""
+			thumb = pic+'noimage.png'
 		addAutoPlayDir(title, uriUrl, "listSpotifyVideos", thumb, description, "browse")
 	match = re.compile('page=(.+?)&per_page=(.+?)&', re.DOTALL).findall(url)
 	currentPage = int(match[0][0])
@@ -681,7 +723,7 @@ def listSpotifyVideos(type, url, limit):
 			else:
 				thumb = re.findall('data-size-[0-9]+="(.*?)"',entry,re.S)[0]
 		except:
-			thumb = ""
+			thumb = pic+'noimage.png'
 		rank = re.compile('class="track-row-number">(.*?)</div>', re.DOTALL).findall(entry)[0]
 		filtered = False
 		for entry2 in blacklist:
@@ -722,17 +764,22 @@ def SearchSpotify():
 	artistSEARCH = cache("https://api.spotify.com/v1/search?query="+word+"&type=artist"+Province+"&offset=0&limit="+spotifySearchSize, 1)
 	trackSEARCH = cache("https://api.spotify.com/v1/search?query="+word+"&type=track"+Province+"&offset=0&limit="+spotifySearchSize, 1)
 	albumSEARCH = cache("https://api.spotify.com/v1/search?query="+word+"&type=album"+Province+"&offset=0&limit="+spotifySearchSize, 1)
+	userlistSEARCH = cache("https://api.spotify.com/v1/search?query="+word+"&type=playlist&offset=0&limit="+spotifySearchSize, 1)
 	strukturARTIST = json.loads(artistSEARCH)
 	if len(strukturARTIST['artists']['items']) > 0:
-		addDir('[B][COLOR orangered] •  •  •  [/COLOR]ARTIST[COLOR orangered]  •  •  •[/COLOR][/B]', word, "listSpotifyArtists", pic+'searchartists.jpg')
+		addDir('[B][COLOR orangered] •  •  •  [/COLOR]ARTIST[COLOR orangered]  •  •  •[/COLOR][/B]', word, "listSpotifyArtists", pic+'searchartists.png')
 		dateiGefunden = True
 	strukturTRACK = json.loads(trackSEARCH)
 	if len(strukturTRACK['tracks']['items']) > 0:
-		addDir('[B][COLOR orangered] •  •  •  [/COLOR]SONG[COLOR orangered]     •  •  •[/COLOR][/B]', word, "listSpotifyTracks", pic+'searchsongs.jpg')
+		addDir('[B][COLOR orangered] •  •  •  [/COLOR]SONG[COLOR orangered]     •  •  •[/COLOR][/B]', word, "listSpotifyTracks", pic+'searchsongs.png')
 		dateiGefunden = True
 	strukturALBUM = json.loads(albumSEARCH)
 	if len(strukturALBUM['albums']['items']) > 0:
-		addDir('[B][COLOR orangered] •  •  •  [/COLOR]ALBUM[COLOR orangered]  •  •  •[/COLOR][/B]', word, "listSpotifyAlbums", pic+'searchalbums.jpg')
+		addDir('[B][COLOR orangered] •  •  •  [/COLOR]ALBUM[COLOR orangered]  •  •  •[/COLOR][/B]', word, "listSpotifyAlbums", pic+'searchalbums.png')
+		dateiGefunden = True
+	strukturUSERLIST = json.loads(userlistSEARCH)
+	if len(strukturUSERLIST['playlists']['items']) > 0:
+		addDir('[B][COLOR orangered] •  •  •  [/COLOR]PLAYLIST  (not public)[COLOR orangered]  •  •  •[/COLOR][/B]', word, "listSpotifyUserlists", pic+'searchuserlists.png')
 		dateiGefunden = True
 	if not dateiGefunden:
 		addDir(translation(40205), word, "spotifyMain", pic+'noresults.png')
@@ -760,7 +807,7 @@ def listSpotifyArtists(url):
 		try:
 			thumb = video['images'][0]['url']
 		except:
-			thumb = ""
+			thumb = pic+'noimage.png'
 		rating = video['popularity']
 		uriUrl = video['uri']
 		liked = video['followers']['total']
@@ -800,7 +847,7 @@ def listSpotifyTracks(url):
 		try:
 			thumb = video['album']['images'][0]['url']
 		except:
-			thumb = ""
+			thumb = pic+'noimage.png'
 		#rating = video['popularity']
 		#uriUrl = video['uri']
 		filtered = False
@@ -843,7 +890,7 @@ def listSpotifyAlbums(url):
 		try:
 			thumb = video['images'][0]['url']
 		except:
-			thumb = ""
+			thumb = pic+'noimage.png'
 		#rating = video['popularity']
 		uriUrl = video['uri']
 		version = video['album_type']
@@ -853,6 +900,41 @@ def listSpotifyAlbums(url):
 		nextPage = videos['albums']['next']
 		if 'https://api.spotify.com' in nextPage:
 			addDir(translation(40206), nextPage, "listSpotifyAlbums", pic+'nextpage.png')
+	except:
+		pass
+	xbmcplugin.endOfDirectory(pluginhandle)
+	
+	
+def listSpotifyUserlists(url):
+	HOME()
+	musicIsolated = set()
+	if 'https://api.spotify.com' in url:
+		Forward = cache(url, 1)
+		x=0
+	else:
+		Original = cache("https://api.spotify.com/v1/search?query="+url+"&type=playlist&offset=0&limit="+spotifySearchSize, 1)
+		x=1
+	if x == 1:
+		videos = json.loads(Original)
+	else:
+		videos = json.loads(Forward)
+	for video in videos['playlists']['items']:
+		artist = cleanTitle(video['name']).encode('utf-8')
+		try:
+			thumb = video['images'][0]['url']
+		except:
+			thumb = pic+'noimage.png'
+		uriUrl = video['uri']
+		user = cleanTitle(video['owner']['id']).encode('utf-8')
+		name = artist.title().strip()+"  [COLOR FFFFA500][User: "+user.title().strip()+"][/COLOR]"
+		if name in musicIsolated or 'playlist' in artist.strip().lower() or artist == "":
+			continue
+		musicIsolated.add(artist)
+		addAutoPlayDir(name, uriUrl, "listSpotifyVideos", thumb, "", "browse")
+	try:
+		nextPage = videos['playlists']['next']
+		if 'https://api.spotify.com' in nextPage:
+			addDir(translation(40206), nextPage, "listSpotifyUserlists", pic+'nextpage.png')
 	except:
 		pass
 	xbmcplugin.endOfDirectory(pluginhandle)
@@ -1064,10 +1146,10 @@ elif mode == 'listBillboardArchiveVideos':
 	listBillboardArchiveVideos(type, url, limit)
 elif mode == 'listBillboardChartsTypes':
 	listBillboardChartsTypes(url)
-elif mode == 'listBillboardCharts':
-	listBillboardCharts(type, url, limit)
-elif mode == 'listBillboardChartsNew':
-	listBillboardChartsNew(type, url, limit)
+elif mode == 'listBillboardCharts_HTML':
+	listBillboardCharts_HTML(type, url, limit)
+elif mode == 'listBillboardCharts_NEW':
+	listBillboardCharts_NEW(type, url, limit)
 elif mode == 'hypemMain':
 	hypemMain()
 elif mode == 'listHypem':
@@ -1098,6 +1180,8 @@ elif mode == 'listSpotifyTracks':
 	listSpotifyTracks(url) 
 elif mode == 'listSpotifyAlbums':
 	listSpotifyAlbums(url)
+elif mode == 'listSpotifyUserlists':
+	listSpotifyUserlists(url)
 elif mode == 'playYTByTitle':
 	playYTByTitle(url)
 elif mode == 'queueVideo':
