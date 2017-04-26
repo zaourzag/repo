@@ -929,7 +929,7 @@ def listSpotifyUserlists(url):
 		name = artist.title().strip()+"  [COLOR FFFFA500][User: "+user.title().strip()+"][/COLOR]"
 		if name in musicIsolated or 'playlist' in artist.strip().lower() or artist == "":
 			continue
-		musicIsolated.add(artist)
+		musicIsolated.add(name)
 		addAutoPlayDir(name, uriUrl, "listSpotifyVideos", thumb, "", "browse")
 	try:
 		nextPage = videos['playlists']['next']
