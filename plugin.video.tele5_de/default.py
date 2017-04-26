@@ -103,20 +103,27 @@ def listVideos(url):
           debug("URL :"+ url)
           content=getUrl(url)
           #http://tele5.flowcenter.de/gg/play/l/17:pid=vplayer_1560&tt=1&se=1&rpl=1&ssd=1&ssp=1&sst=1&lbt=1&
+          #<div class="fwlist" lid="14" pid="vplayer_3780" tt="1" ssp="1" sst="1" lbt="1" ></div>		</div>
           y=0
           try:
-              lid,pid,tt,se,rpl,ssd,ssp,sst,lbt=re.compile('<div class="fwlist" lid="(.+?)" pid="(.+?)" tt="(.+?)" se="(.+?)" rpl="(.+?)" ssd="(.+?)" ssp="(.+?)" sst="(.+?)" lbt="(.+?)" >', re.DOTALL).findall(content)[0]
-              url="http://tele5.flowcenter.de/gg/play/l/"+lid+":pid="+ pid +"&tt="+ tt +"&se="+ se +"&rpl="+ rpl +"&ssd="+ ssd +"&ssp="+ ssp +"&sst="+ sst +"&lbt="+lbt +"&"
+              divtag=re.compile('(<div class="fwlist".+?>)', re.DOTALL).findall(content)[0]
+              debug("DIVTAG :"+divtag)
+              lid=re.compile('lid="(.+?)"', re.DOTALL).findall(divtag)[0]
+              debug("LID :"+lid)
+              all=re.compile('(.+?)="(.+?)"', re.DOTALL).findall(divtag)
+              url="http://tele5.flowcenter.de/gg/play/l/"+lid+":"
+              for type,inhalt in all:
+               if not type=="lod":
+                  url=url+type+"="+inhalt                  
+              #url="http://tele5.flowcenter.de/gg/play/l/"+lid+":pid="+ pid +"&tt="+ tt +"&se="+ se +"&rpl="+ rpl +"&ssd="+ ssd +"&ssp="+ ssp +"&sst="+ sst +"&lbt="+lbt +"&"
+              debug("URL: "+url)
+          
           except:
-              try:
-                  lid,pid,se,rpl,ssd,ssp,sst,lbt,oh=re.compile('<div class="fwlist" lid="(.+?)" pid="(.+?)" se="(.+?)" rpl="(.+?)" ssd="(.+?)" ssp="(.+?)" sst="(.+?)" lbt="(.+?) oh="(.+?)" >', re.DOTALL).findall(content)[0]                  
-                  url="http://tele5.flowcenter.de/gg/play/l/"+lid+":pid="+ pid +"&oh="+ oh +"&se="+ se +"&rpl="+ rpl +"&ssd="+ ssd +"&ssp="+ ssp +"&sst="+ sst +"&lbt="+lbt +"&"
-              except:
-                  cid=re.compile('<div class="fwplayer" cid="(.+?)" >', re.DOTALL).findall(content)[0]
-                  img=re.compile('<img style="width:100%;" src="(.+?)"', re.DOTALL).findall(content)[0]                                    
-                  addLink(translation(30002), str(cid), 'playVideo', img)    
-                  #playVideo(cid)
-                  y=1
+              cid=re.compile('<div class="fwplayer" cid="(.+?)" >', re.DOTALL).findall(content)[0]
+              img=re.compile('<img style="width:100%;" src="(.+?)"', re.DOTALL).findall(content)[0]                                    
+              addLink(translation(30002), str(cid), 'playVideo', img)    
+              #playVideo(cid)
+              y=1
           if y==0:                                                                                    
             debug("NEWURL: "+url)
             content=getUrl(url)
