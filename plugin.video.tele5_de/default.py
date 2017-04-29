@@ -73,14 +73,12 @@ def index():
 
 
 def listcat(url,type="listVideos"):
-    content = getUrl(url)
-    content = content[content.find('<a id="skipNavigation22" class="invisible">&nbsp;</a>'):]
-    content = content[:content.find('<div class="ce_tvprogramme first last block">')]
-    spl = content.split('ce_teaserelemen')     
-    debug("Length :"+str(len(spl)))
-    if len(spl)==2:
-       listVideos(url)
-    else:
+      starturl=url
+      content = getUrl(url)
+      content = content[content.find('<a id="skipNavigation22" class="invisible">&nbsp;</a>'):]
+      content = content[:content.find('<div class="ce_tvprogramme first last block">')]      
+      spl = content.split('ce_teaserelemen')  
+      anz=0
       for i in range(0, len(spl), 1):
         element=spl[i]
         try:
@@ -89,23 +87,28 @@ def listcat(url,type="listVideos"):
               url=baseUrl+"/"+url
           title=re.compile('<h2>(.+?)</h2>', re.DOTALL).findall(element)[0]
           thumb=re.compile('srcset="(.+?)"', re.DOTALL).findall(element)[0]    
-          debug("URL :"+url)   
+          debug("listcat URL :"+url)   
+          debug("listcat type :"+type)   
           if "WWE RAW" in  title:      
             addLink(title, url, type, baseUrl+"/"+thumb)
+            anz=anz+1
           else:             
             addDir(title, url, type, baseUrl+"/"+thumb)
+            anz=anz+1
         except:
            pass
-    xbmcplugin.endOfDirectory(pluginhandle)
+      if anz==0:
+        listVideos(starturl)
+      xbmcplugin.endOfDirectory(pluginhandle)
 
 
 def listVideos(url):
-          debug("URL :"+ url)
+          debug("listVideos URL :"+ url)
           content=getUrl(url)
           #http://tele5.flowcenter.de/gg/play/l/17:pid=vplayer_1560&tt=1&se=1&rpl=1&ssd=1&ssp=1&sst=1&lbt=1&
           #<div class="fwlist" lid="14" pid="vplayer_3780" tt="1" ssp="1" sst="1" lbt="1" ></div>		</div>
           y=0
-          try:
+          try:                                  
               divtag=re.compile('(<div class="fwlist".+?>)', re.DOTALL).findall(content)[0]
               debug("DIVTAG :"+divtag)
               lid=re.compile('lid="(.+?)"', re.DOTALL).findall(divtag)[0]
@@ -114,7 +117,7 @@ def listVideos(url):
               url="http://tele5.flowcenter.de/gg/play/l/"+lid+":"
               for type,inhalt in all:
                if not type=="lod":
-                  url=url+type+"="+inhalt                  
+                  url=url+type+"="+inhalt                                    
               #url="http://tele5.flowcenter.de/gg/play/l/"+lid+":pid="+ pid +"&tt="+ tt +"&se="+ se +"&rpl="+ rpl +"&ssd="+ ssd +"&ssp="+ ssp +"&sst="+ sst +"&lbt="+lbt +"&"
               debug("URL: "+url)
           
