@@ -47,10 +47,10 @@ def set_yt_pxy_token(token):
     addon.setSetting('yt_pxy_token', token)
     
 def clean_title(title):
-    title = re.sub('video\s*-\s*dvd|\(video\)|official\s*video|official\s*dvd|official\s*video\s*hd|(?:\(|\[)\s*official\s*(?:\)|\])|music\s*video|official\s*music\s*video|full\s*song|download\s*link', '', title, flags=re.I)
-    title = re.sub('"|\'|hd|hq|1080p|720p|60\s*fps', '', title, flags=re.I)
+    title = re.sub('video\s*-\s*dvd|\(video\)|official\s*video|offizielles\s*video|official\s*dvd|official\s*video\s*hd|(?:\(|\[)\s*official\s*(?:\)|\])|music\s*video|official\s*music\s*video|full\s*song|download\s*link', '', title, flags=re.I)
+    title = re.sub('"|\'|hd|hq|1080p|720p|\d+\s*fps|\s*new\!\s*$|track\s*\d+$|widescreen|(?:\s*|\.).flv', '', title, flags=re.I)
+    title = re.sub('  quality\s*$|\s*\+\s*download', '', title, flags=re.I)
     title = re.sub('\[\s*\]|\(\s*\)|\(\s*$|\[\s*$|\+\s*$', '', title, flags=re.I)
-    title = re.sub('  quality\s*$', '', title, flags=re.I)
     return title.strip()
     
 def enter_artist():

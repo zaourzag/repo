@@ -19,7 +19,7 @@ def get_videos(artist):
                 'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.36 Safari/537.36',
                 'Accept-Encoding': 'gzip, deflate'}
     params = {'part':'snippet','type':'video','maxResults':'50',#'videoDefinition':'high',
-                'q':'%s official' % artist,'key':'AIzaSyCky6iU_p2VjvpXwTSOpPVLsGFIdR51lQE',
+                'q':'%s video' % artist,'key':'AIzaSyCky6iU_p2VjvpXwTSOpPVLsGFIdR51lQE',
                 }
     if yt_proxy:
         try:
@@ -39,12 +39,7 @@ def get_videos(artist):
                 id = item['id']['videoId']
                 snippet = item['snippet']
                 t = snippet['title'].encode('utf-8')
-                try:
-                    t = re.sub('「',' - ', t)
-                except:
-                    pass
-                t = t.replace('–', '-')
-                spl = t.split(' - ')
+                spl = split_title(t)
                 name = spl[0].strip().decode('utf-8')
                 title = spl[1].strip().decode('utf-8')
                 if len(spl) > 2:
@@ -172,7 +167,7 @@ def status(trusted_channel,channel,artist,title,description):
     e = ['official video', 'music video', 'taken from', 'itunes.apple.com', 'smarturl.it', 'j.mp']
     if any(x in description for x in e):
         return True
-    f = ['official video', 'music video', 'us version']
+    f = ['official video', 'offizielles video', 'music video', 'us version']
     if any(x in title for x in f):
         return True
     g = ['records', 'official']
@@ -183,6 +178,21 @@ def status(trusted_channel,channel,artist,title,description):
         return True
     if trusted_channel == channel:
         return True
+
+def split_title(t):
+    try:
+        t = re.sub('「',' - ', t)
+    except:
+        pass
+    t = t.replace('–', '-')
+    if re.search(' - ', t):
+        return t.split(' - ')
+    elif re.search('- ', t):
+        return t.split('- ')
+    elif re.search(' -', t):
+        return t.split(' -')
+    else:
+        return t.split('-')
 
 def clean_title(title):
     try: title = title.split('|')[0]
