@@ -3,7 +3,7 @@
 #    copyright (C) 2017 Steffen Rolapp (github@rolapp.de)
 #
 #    based on ZattooBoxExtended by Daniel Griner (griner.ch@gmail.com) license under GPL
-#    
+#
 #    This file is part of ZattooHiQ
 #
 #    zattooHiQ is free software: you can redistribute it and/or modify
@@ -68,7 +68,7 @@ class ZattooDB(object):
       zapiSession.renew_session()
       import sys
       sys.exit()
-    
+
   @staticmethod
   def adapt_datetime(ts):
     # http://docs.python.org/2/library/sqlite3.html#registering-an-adapter-callable
@@ -80,7 +80,7 @@ class ZattooDB(object):
         return datetime.datetime.fromtimestamp(float(ts))
     except ValueError:
         return None
-         
+
   def connectSQL(self):
     import sqlite3
 
@@ -138,7 +138,7 @@ class ZattooDB(object):
       date = datetime.date.today().strftime('%Y-%m-%d')
       c.execute('SELECT * FROM updates WHERE date=? AND type=? ', [date, 'channels'])
       if len(c.fetchall())>0:
-        c.close()  
+        c.close()
         return
 
     # always clear db on update
@@ -146,7 +146,7 @@ class ZattooDB(object):
     print "account  "+ self.zapi.AccountData['account']['power_guide_hash']
     api = '/zapi/v2/cached/channels/' + self.zapi.AccountData['account']['power_guide_hash'] + '?details=False'
     channelsData = self.zapi.exec_zapiCall(api, None)
-    
+
     api = '/zapi/channels/favorites'
     favoritesData = self.zapi.exec_zapiCall(api, None)
 
@@ -172,7 +172,7 @@ class ZattooDB(object):
     self.conn.commit()
     c.close()
     return
-    
+
   def updateProgram(self, date=None, rebuild=False):
     if date is None: date = datetime.date.today()
     else: date = date.date()
@@ -191,14 +191,14 @@ class ZattooDB(object):
 #     if self._isDBupToDate(date, 'programs'):return
     c.execute('SELECT * FROM programs WHERE start_date > ? AND end_date < ?', (fromTime+18000, fromTime+25200,)) #get shows between 05:00 and 07:00
     count=c.fetchall()
-    if len(count)>0: 
+    if len(count)>0:
         c.close()
         return
 
     xbmcgui.Dialog().notification(__addon__.getLocalizedString(31917), self.formatDate(date), __addon__.getAddonInfo('path') + '/icon.png', 5000, False)
     xbmc.executebuiltin("ActivateWindow(busydialog)")
     api = '/zapi/v2/cached/program/power_guide/' + self.zapi.AccountData['account']['power_guide_hash'] + '?end=' + str(toTime) + '&start=' + str(fromTime)
-    
+
     print "api   "+api
     programData = self.zapi.exec_zapiCall(api, None)
 
@@ -209,35 +209,35 @@ class ZattooDB(object):
           continue
        c.execute('SELECT * FROM channels WHERE id==?', [cid])
        countt=c.fetchall()
-       if len(countt)==0: 
+       if len(countt)==0:
          print "Sender NICHT : "+cid
        for program in channel['programs']:
         count+=1
         if program['i'] != None:
           image = "http://images.zattic.com/" + program['i']
           #http://images.zattic.com/system/images/6dcc/8817/50d1/dfab/f21c/format_480x360.jpg
-        else: image = ""          
+        else: image = ""
         try:
-            print 'INSERT OR IGNORE INTO programs(channel, title, start_date, end_date, description, genre, image_small, showID) VALUES(%, %, %, %, %, %, %)',cid, program['t'], program['s'], program['e'], program['et'], ', '.join(program['g']), image, program['id'] 
+            print 'INSERT OR IGNORE INTO programs(channel, title, start_date, end_date, description, genre, image_small, showID) VALUES(%, %, %, %, %, %, %)',cid, program['t'], program['s'], program['e'], program['et'], ', '.join(program['g']), image, program['id']
         except:
             pass
         c.execute('INSERT OR IGNORE INTO programs(channel, title, start_date, end_date, description, genre, image_small, showID) VALUES(?, ?, ?, ?, ?, ?, ?, ?)',
-            [cid, program['t'], program['s'], program['e'], program['et'], ', '.join(program['g']), image, program['id'] ])          
+            [cid, program['t'], program['s'], program['e'], program['et'], ', '.join(program['g']), image, program['id'] ])
         if not c.rowcount:
             c.execute('UPDATE programs SET channel=?, title=?, start_date=?, end_date=?, description=?, genre=?, image_small=? WHERE showID=?',
-              [cid, program['t'], program['s'], program['e'], program['et'], ', '.join(program['g']), image, program['id'] ])            
-                
-    if count>0: 
-      c.execute('INSERT into updates(date, type) VALUES(?, ?)', [date, 'program']) 
-             
+              [cid, program['t'], program['s'], program['e'], program['et'], ', '.join(program['g']), image, program['id'] ])
+
+    if count>0:
+      c.execute('INSERT into updates(date, type) VALUES(?, ?)', [date, 'program'])
+
     try:
-        self.conn.commit() 
+        self.conn.commit()
     except:
         print 'IntegrityError: FOREIGN KEY constraint failed zattooDB 232'
     xbmc.executebuiltin("Dialog.Close(busydialog)")
     c.close()
     return
-    
+
   def getChannelList(self, favourites=True):
     #self.updateChannels()
     c = self.conn.cursor()
@@ -273,22 +273,42 @@ class ZattooDB(object):
     c.close()
     return channel
 
+  def getPopularList(self):
+    channels=self.getChannelList(False)
+    popularList = {'index':[]}
+    nr=0
+    #max 10 items per request -> request 3times for 30 items
+    for page in range(3):
+  		api = '/zapi/v2/cached/' + self.zapi.SessionData['session']['power_guide_hash'] + '/teaser_collections/most_watched_live_now_de?page='+str(page)+'&per_page=10'
+  		mostWatched = self.zapi.exec_zapiCall(api, None)
+  		if mostWatched is None: continue
+  		for data in mostWatched['teasers']:
+  			data=data['teasable']
+  			popularList[data['cid']]={
+  				'id': str(data['cid']),
+  				'title': data['t'],
+  				'logo': channels[data['cid']]['logo'],
+  				'nr':nr
+  			}
+  			popularList['index'].append(str(data['cid']))
+  			nr+=1
+    return popularList
 
   def getPrograms(self, channels, get_long_description=False, startTime=datetime.datetime.now(), endTime=datetime.datetime.now()):
     import urllib
     c = self.conn.cursor()
     programList = []
- 
+
     for chan in channels['index']:
       c.execute('SELECT * FROM programs WHERE channel = ? AND start_date < ? AND end_date > ?', [chan, endTime, startTime])
       r = c.fetchall()
-    
+
       for row in r:
         description_long = row['description_long']
         year = row['year']
         country = row['country']
         category =row['category']
-        if get_long_description and description_long is None: 
+        if get_long_description and description_long is None:
             #description_long = self.getShowInfo(row["showID"],'description')
             info = self.getShowLongDescription(row['showID'])
             print 'INFO  ' + str(type(info)) + ' ' + str(row['showID'])+ '  ' + str(info)
@@ -323,7 +343,7 @@ class ZattooDB(object):
         except:
             info.close()
             return None
-        
+
         show = info.fetchone()
         longDesc = show['description_long']
         year = show['year']
@@ -338,12 +358,12 @@ class ZattooDB(object):
                 year=''
                 category=''
                 info.close()
-                return {'description':longDesc, 'year':year, 'country':country, 'category':category}          
+                return {'description':longDesc, 'year':year, 'country':country, 'category':category}
             longDesc = showInfo['program']['description']
             info.execute('UPDATE programs SET description_long=? WHERE showID=?', [longDesc, showID ])
             year = showInfo['program']['year']
             if year is None: year=''
-            info.execute('UPDATE programs SET year=? WHERE showID=?', [year, showID ])          
+            info.execute('UPDATE programs SET year=? WHERE showID=?', [year, showID ])
             category = ', '.join(showInfo['program']['categories'])
             info.execute('UPDATE programs SET category=? WHERE showID=?', [category, showID ])
             country = showInfo['program']['country']
@@ -357,7 +377,7 @@ class ZattooDB(object):
 			print 'IntegrityError: FOREIGN KEY constraint failed zattooDB 355'
         info.close()
         return {'description':longDesc, 'year':year, 'country':country, 'category':category}
-        
+
   def getShowInfo(self, showID, field='all'):
         if field!='all':
             #api = '/zapi/program/details?program_id=' + str(showID) + '&complete=True'
@@ -365,7 +385,7 @@ class ZattooDB(object):
             showInfo = self.getShowLongDescription(showID)
             #return showInfo['program'].get(field, " ")
             return showInfo[field]
-            
+
         #save information for recordings
         import json
         c = self.conn.cursor()
@@ -377,7 +397,7 @@ class ZattooDB(object):
         else:
             api = '/zapi/program/details?program_id=' + str(showID) + '&complete=True'
             showInfo = self.zapi.exec_zapiCall(api, None)
-            if showInfo is None: 
+            if showInfo is None:
                 c.close()
                 return "NONE"
             showInfo = showInfo['program']
@@ -386,7 +406,7 @@ class ZattooDB(object):
         self.conn.commit()
         c.close()
         return showInfo
-    
+
 
 
   def set_playing(self, channel=None, streams=None, streamNr=0):
@@ -406,7 +426,7 @@ class ZattooDB(object):
       playing = {'channel':row['channel'], 'current_stream':row['current_stream'], 'streams':row['streams']}
     else:
       c.execute('SELECT * FROM channels ORDER BY weight ASC LIMIT 1')
-      row = c.fetchone() 
+      row = c.fetchone()
       playing = {'channel':row['id'], 'start':datetime.datetime.now(), 'action_time':datetime.datetime.now()}
     c.close()
     return playing
@@ -424,12 +444,23 @@ class ZattooDB(object):
     self.conn.commit()
     c.close()
     '''
+
+    #delete zapi files to force new login    
+    profilePath = xbmc.translatePath(__addon__.getAddonInfo('profile'))
+    try:
+        os.remove(os.path.join(profilePath, 'cookie.cache'))
+        os.remove(os.path.join(profilePath, 'session.cache'))
+        os.remove(os.path.join(profilePath, 'account.cache'))
+        os.remove(os.path.join(profilePath, 'apicall.cache'))
+    except:
+        pass
+    
     self._createTables()
 
     self.updateChannels(True)
     self.updateProgram(datetime.datetime.now(), True)
-  
-  
+
+
   def get_channeltitle(self, channelid):
     c = self.conn.cursor()
     c.execute('SELECT * FROM channels WHERE id= ? ', [channelid])
@@ -438,7 +469,7 @@ class ZattooDB(object):
       channeltitle=row['title']
     self.conn.commit()
     c.close()
-    return channeltitle 
+    return channeltitle
 
   def get_channelid(self, channeltitle):
     c = self.conn.cursor()
@@ -450,7 +481,7 @@ class ZattooDB(object):
     self.conn.commit()
     c.close()
     return channelid
-  
+
   def get_channelweight(self, weight):
     c = self.conn.cursor()
     c.execute('SELECT * FROM channels WHERE weight= ? ', [weight])
@@ -481,21 +512,21 @@ class ZattooDB(object):
             bar = 0         # Progressbar (Null Prozent)
             PopUp.create('zattooHiQ lade Programm Informationen ...', '')
             PopUp.update(bar)
-        
+
         for chan in channels['index']:
-            print str(chan) + ' - ' + str(startTime) 
+            print str(chan) + ' - ' + str(startTime)
 
             c.execute('SELECT * FROM programs WHERE channel = ? AND start_date < ? AND end_date > ?', [chan, endTime, startTime])
             r=c.fetchall()
-        
-            for row in r: 
+
+            for row in r:
                 print str(row['channel']) + ' - ' + str(row['showID'])
                 if notify:
                     bar += 1
-                    percent = int(bar * 100 / counter) 
+                    percent = int(bar * 100 / counter)
                 description_long = row["description_long"]
-                
-                if description_long is None: 
+
+                if description_long is None:
                     print 'Lang ' + str(row['channel'])
                     if notify:
                         PopUp.update(percent,localString(31922), localString(31923) + str(row['channel']))
@@ -503,37 +534,38 @@ class ZattooDB(object):
         c.close()
         if notify:
             PopUp.close()
-        return 
+        return
 
-  def cleanProg(self):
+  def cleanProg(self, silent=False):
         d = (datetime.datetime.today() - datetime.timedelta(days=8))
         midnight = datetime.time(0)
         datelow = datetime.datetime.combine(d, midnight)
         print 'CleanUp  ' + str(datelow)
         c = self.conn.cursor()
-        c.execute('SELECT * FROM programs WHERE start_date < ?', [datelow])
+        c.execute('SELECT * FROM programs WHERE start_date < ?', ["2017-04-13 00:00:00"])
         r=c.fetchall()
-        
+
         if len(r)>0:
             print 'Anzahl Records  ' + str(len(r))
             dialog = xbmcgui.Dialog()
-            if dialog.yesno(localString(31918), str(len(r)) + ' ' + localString(31920), '', '',local(106),local(107)):
-                nr=len(r)
-                PopUp = xbmcgui.DialogProgress()
-                counter=len(r)
+            if (silent or  dialog.yesno(localString(31918), str(len(r)) + ' ' + localString(31920), '', '',local(106),local(107))):
+                count=len(r)
                 bar = 0         # Progressbar (Null Prozent)
-                PopUp.create(localString(31913), '')
-                PopUp.update(bar)
+                if (not silent):
+                  PopUp = xbmcgui.DialogProgress()
+                  PopUp.create(localString(31913), '')
+                  PopUp.update(bar)
+
                 for row in r:
                     c.execute('DELETE FROM programs WHERE showID = ?', (row['showID'],))
-                    bar += 1
-                    percent = int(bar * 100 / counter)
-                    PopUp.update(percent,  str(nr) + localString(31914))
-                    if (PopUp.iscanceled()): 
-                        c.close
-                        return
-                    nr -= 1
-                PopUp.close() 
+                    if (not silent):
+                      bar += 1
+                      PopUp.update(int(bar * 100 / count),  str(count-bar) + localString(31914))
+                      if (PopUp.iscanceled()):
+                          c.close
+                          return
+
+                if (not silent): PopUp.close()
 
         self.conn.commit()
         c.close()

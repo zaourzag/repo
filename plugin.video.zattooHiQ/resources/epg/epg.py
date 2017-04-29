@@ -165,6 +165,7 @@ class EPG(xbmcgui.WindowXML):
 		# find nearest half hour
 		self.viewStartDate = datetime.datetime.today()
 		self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30, seconds=self.viewStartDate.second)
+    	xbmcgui.Window(10000).setProperty('zattoo_runningView',"epg")
 
 	def getControl(self, controlId):
 		try:
@@ -178,9 +179,12 @@ class EPG(xbmcgui.WindowXML):
 			return None
 
 	def close(self):
-		if not self.isClosing:
-			self.isClosing = True
-			super(EPG, self).close()
+		xbmc.executebuiltin('ActivateWindow(10025,"plugin://'+__addonId__+'")')
+		xbmcgui.Window(10000).setProperty('zattoo_runningView',"")
+		#super(EPG, self).close()
+    	#if not self.isClosing:
+		#	self.isClosing = True
+		#	super(EPG, self).close()
 
 	def onInit(self):
 		self.db = ZattooDB()
@@ -440,10 +444,10 @@ class EPG(xbmcgui.WindowXML):
 			self.setControlLabel(self.C_MAIN_TIME, '')
 
 		self.setControlText(self.C_MAIN_DESCRIPTION, '')
-		#if hasattr(self, 'descriptionTimer'):self.descriptionTimer.cancel() 
-		#self.descriptionTimer= threading.Timer(0.3, self._showDescription, [program['showID']])
-		#self.descriptionTimer.start()
-		self._showDescription(program['showID'])
+		if hasattr(self, 'descriptionTimer'):self.descriptionTimer.cancel() 
+		self.descriptionTimer= threading.Timer(0.2, self._showDescription, [program['showID']])
+		self.descriptionTimer.start()
+		#self._showDescription(program['showID'])
 		#self.setControlImage(self.C_MAIN_LOGO, program['channel_logo'])
 
 		if program['image_small'] is not None:
@@ -454,7 +458,7 @@ class EPG(xbmcgui.WindowXML):
 # 			self.setControlImage(self.C_MAIN_BACKGROUND, program['image_large'])
 	
 	def _showDescription(self, id):
-		description = self.db.getShowInfo(id,'description')
+		description = ZattooDB().getShowInfo(id,'description')
 		if description == '': description = strings(NO_DESCRIPTION)
 		self.setControlText(self.C_MAIN_DESCRIPTION, description)
 

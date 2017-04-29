@@ -12,13 +12,13 @@
 
 			<control type="label">
 				<description>Date label</description>
-				<right>30</right>
+				<left>10</left>
 				<top>10</top>
 				<width>350</width>
 				<height>15</height>
-				<align>right</align>
-				<font>font30</font>
-				<textcolor>C0FFFFFF</textcolor>
+				<align>left</align>
+				<font>zattoo45</font>
+				<textcolor>F0FFFFFF</textcolor>
 				<shadowcolor>black</shadowcolor>
 				<!--<label>$INFO[System.Date(d.m.yy.)] $INFO[System.Time(hh:mm)]</label>-->
 				<label>$INFO[System.Time(hh:mm)]</label>
@@ -37,14 +37,25 @@
 				<texture border="20">ContentPanel.png</texture>
 				<colordiffuse>FFFFFFFF</colordiffuse>
 			</control>
-
-			<control type="image" id="1">
-				<description>poster</description>
+			
+			<!--
+    		<control type="image" id="1">
+				<description>PosterBG</description>
 				<left>15</left>
 				<top>15</top>
 				<width>340</width>
 				<height>240</height>
-				<aspectratio>keep</aspectratio>
+				<texture>ContentPanel.png</texture>
+				<colordiffuse>FF000000</colordiffuse>
+			</control>
+			-->
+			<control type="image" id="1">
+				<description>poster</description>
+				<left>15</left>
+				<top>17</top>
+				<width>340</width>
+				<height>240</height>
+				<aspectratio>stretch</aspectratio>
 				<!--<texture diffuse="ClearCase/EmptyCaseMask.png">$INFO[Player.Art(poster)]</texture>-->
 				<texture>$INFO[Window(Home).Property(showThumb)]</texture>
 			</control>
@@ -97,7 +108,7 @@
 				<height>25</height>
 				<align>center</align>
 				<textcolor>white</textcolor>
-				<font>font12</font>
+				<font>font16</font>
 				<label>$INFO[Window(Home).Property(channelInfo)]</label>
 				<scroll>true</scroll>
 				<scrollspeed>50</scrollspeed>
@@ -147,7 +158,7 @@
 				<description>channel logo</description>
 				<left>140</left>
 				<top>0</top>
-				<width>96</width>
+				<width>120</width>
 				<height>96</height>
 				<aspectratio>keep</aspectratio>
 				<!--<bordertexture border="5">ContentPanel.png</bordertexture>
@@ -280,7 +291,8 @@
 				<onleft>206</onleft>
 				<onright>208</onright>
 			</control>
-			
+
+<!--			
 			<control type="button" id="208">
 				<width>48</width>
 				<height>48</height>
@@ -290,8 +302,36 @@
 				<font>-</font>
 				<texturefocus>OSDBookmarksFO.png</texturefocus>
 				<texturenofocus>OSDBookmarksNF.png</texturenofocus>
-<!--				<onclick>ActivateWindow(VideoBookmarks)</onclick> -->
 				<visible>!VideoPlayer.Content(LiveTV)</visible>
+				<onleft>207</onleft>
+				<onright>209</onright>
+			</control>
+-->
+
+			<control type="button" id="208">
+				<width>48</width>
+				<height>48</height>
+				<left>490</left>
+				<top>100</top>
+				<label>298</label>
+				<font>-</font>
+				<texturefocus>OSDFavoriteActiveFO.png</texturefocus>
+				<texturenofocus>OSDFavoriteActiveNF.png</texturenofocus>
+				<visible>Skin.HasSetting(favourite)</visible>
+				<onleft>207</onleft>
+				<onright>209</onright>
+			</control>
+
+			<control type="button" id="208">
+				<width>48</width>
+				<height>48</height>
+				<left>490</left>
+				<top>100</top>
+				<label>298</label>
+				<font>-</font>
+				<texturefocus>OSDFavoriteFO.png</texturefocus>
+				<texturenofocus>OSDFavoriteNF.png</texturenofocus>
+				<visible>!Skin.HasSetting(favourite)</visible>
 				<onleft>207</onleft>
 				<onright>209</onright>
 			</control>
@@ -364,9 +404,31 @@
 				<onright>201</onright>
 			</control>
 			
+			<!--
+			<control type="progress" id="350">
+		      <description>My first progress control</description>
+		      <left>-25</left>
+		      <top>160</top>
+		      <width>1010</width>
+		      <height>10</height>
+		      <texturebg>osdprogressback.png</texturebg>
+		      <midtexture>osdprogressmid1.png</midtexture>
+		      <info>$INFO[Window(Home).Property(progress)]</info>
+			</control>
+			-->
+						
+			<control type="progress" id="350">
+		      <description>My first progress control</description>
+		      <left>-17</left>
+		      <top>-73</top>
+		      <width>340</width>
+		      <height>10</height>
+		      <texturebg>osdprogressback.png</texturebg>
+		      <midtexture>osdprogressmid.png</midtexture>
+		      <info>$INFO[Window(Home).Property(progress)]</info>
+			</control>			
 
 		</control>
-
 	</controls>
 
 </window>

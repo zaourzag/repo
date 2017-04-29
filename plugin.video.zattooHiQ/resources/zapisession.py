@@ -16,15 +16,18 @@ class ZapiSession:
 	ZAPI_URL = 'https://zattoo.com'
 	DATA_FOLDER = None
 	COOKIE_FILE = None
+	SESSION_FILE = None
 	ACCOUNT_FILE = None
 	HttpHandler = None
 	Username = None
 	Password = None
+	SessionData = None
 	AccountData = None
 
 	def __init__(self, dataFolder):
 		self.DATA_FOLDER = dataFolder
-		self.COOKIE_FILE = os.path.join(dataFolder, 'session.cache')
+		self.COOKIE_FILE = os.path.join(dataFolder, 'cookie.cache')
+		self.SESSION_FILE = os.path.join(dataFolder, 'session.cache')
 		self.ACCOUNT_FILE = os.path.join(dataFolder, 'account.cache')
 		self.APICALL_FILE = os.path.join(dataFolder, 'apicall.cache')
 		self.HttpHandler = urllib2.build_opener()
@@ -36,13 +39,15 @@ class ZapiSession:
 		return self.restore_session() or self.renew_session()
 
 	def restore_session(self):
-		if os.path.isfile(self.COOKIE_FILE) and os.path.isfile(self.ACCOUNT_FILE):
+		if os.path.isfile(self.COOKIE_FILE) and os.path.isfile(self.ACCOUNT_FILE) and os.path.isfile(self.SESSION_FILE):
 			with open(self.ACCOUNT_FILE, 'r') as f:
 				accountData = json.loads(base64.b64decode(f.readline()))
 			if accountData['success'] == True:
 				self.AccountData = accountData
 				with open(self.COOKIE_FILE, 'r') as f:
 					self.set_cookie(base64.b64decode(f.readline()))
+				with open(self.SESSION_FILE, 'r') as f:
+					self.SessionData = json.loads(base64.b64decode(f.readline()))
 				return True
 		return False
 
@@ -50,7 +55,7 @@ class ZapiSession:
 		if cookieContent is not None:
 			return re.search("beaker\.session\.id\s*=\s*([^\s;]*)", cookieContent).group(1)
 		return None
-	
+
 	def get_accountData(self):
 		accountData={}
 		if os.path.isfile(self.ACCOUNT_FILE):
@@ -65,6 +70,12 @@ class ZapiSession:
 	def persist_sessionId(self, sessionId):
 		with open(self.COOKIE_FILE, 'w') as f:
 			f.write(base64.b64encode(sessionId))
+
+	def persist_sessionData(self, sessionData):
+		with open(self.SESSION_FILE, 'w') as f:
+			f.write(base64.b64encode(json.dumps(sessionData)))
+
+
 
 	def set_cookie(self, sessionId):
 		self.HttpHandler.addheaders.append(('Cookie', 'beaker.session.id=' + sessionId))
@@ -93,13 +104,14 @@ class ZapiSession:
 			return None
 		try:
 			resultData = json.loads(content)
-			if resultData['success']:
-				return resultData
-		except Exception:
-			pass
-		try:
-			if resultData['title'] == "On Demand":
-				return resultData
+			return resultData        			#if resultData['success']:
+			#	return resultData
+		#except Exception:
+			#pass
+		#try:
+			#if resultData['title'] == "On Demand":
+				#return resultData
+        
 		except Exception:
 			pass
 		return None
@@ -109,14 +121,18 @@ class ZapiSession:
 		html = handle.read()
 		return re.search("window\.appToken\s*=\s*'(.*)'", html).group(1)
 
-	def announce(self):
+	def session(self):
 		api = '/zapi/session/hello'
 		params = {"client_app_token" : self.fetch_appToken(),
 				  "uuid"	: "d7512e98-38a0-4f01-b820-5a5cf98141fe",
 				  "lang"	: "en",
 				  "format"	: "json"}
-		resultData = self.exec_zapiCall(api, params, 'session')
-		return resultData is not None
+		sessionData = self.exec_zapiCall(api, params, 'session')
+		if sessionData is not None:
+			self.SessionData = sessionData
+			self.persist_sessionData(sessionData)
+			return True
+		return False
 
 	def login(self):
 		api = '/zapi/account/login'
@@ -129,4 +145,4 @@ class ZapiSession:
 		return False
 
 	def renew_session(self):
-		return self.announce() and self.login()
+		return self.session() and self.login()

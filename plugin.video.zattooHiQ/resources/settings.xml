@@ -6,15 +6,20 @@
         <setting type="sep"/>
         <setting label="31003" id="swiss" type="bool" default="false" />
 <!--
-        <setting label="31004" id="hiq" type="bool" default="false" enable="eq(-1,true)"/>       
+        <setting label="31004" id="hiq" type="bool" default="false" enable="eq(-1,true)"/>
 -->
+		<setting label="310067" type="bool" id="show_favourites" default="false"/>
         <setting type="sep"/>
         <setting label="31005" id="max_bandwidth" type="labelenum" values="600|900|1500|3000|5000" default="5000"/>
         <setting label="31006" id="audio_stream" type="labelenum" values="A|B" default="A"/>
+        <setting label="310065" id="dash" type="bool" default="false"/>
         <setting type="sep"/>
         <setting label="31007" type="bool" id="start_liveTV" default="false"/>
+<!--
         <setting label="31008" type="text" id="start_channel" default="Das Erste HD" enable="false"/>
-    </category>
+-->
+		<setting label="31009" type="action" action="RunPlugin(plugin://plugin.video.zattooHiQ/?mode=selectStartChannel)" enable="eq(-1,true)"/>
+	</category>
     <category label="31010">
         <setting label="31011"  id="time_offset" type="labelenum" values="-2|-1|0|1|2" default="-2"/>
         <setting label="31012" type="bool" id="epgPlay" default="false"/>
@@ -30,5 +35,22 @@
         <setting label="31023" type="action" action="RunPlugin(plugin://plugin.video.zattooHiQ/?mode=reloadDB)"/>
         <setting label="31913" type="action" action="RunPlugin(plugin://plugin.video.zattooHiQ/?mode=cleanProg)"/>
     </category>
-    
+    <category label="31030">
+		<setting label="31032" type="action" action="RunPlugin(plugin://plugin.video.zattooHiQ/?mode=editKeyMap)"/>
+        <setting label="32010" id="key_OSD" type="text" default="" enable="false" visible="gt(0,)"/>
+        <setting label="32011" id="key_prevChan" type="text" default="" enable="false" visible="gt(0,)"/>
+        <setting label="32012" id="key_nextChan" type="text" default="" enable="false" visible="gt(0,)"/>
+        <setting label="32013" id="key_toggleChan" type="text" default="" enable="false" visible="gt(0,)"/>
+        <setting label="32014" id="key_audio" type="text" default="" enable="false" visible="gt(0,)"/>
+        <setting label="32015" id="key_pause" type="text" default="" enable="false" visible="gt(0,)"/>
+        <setting label="32016" id="key_stop" type="text" default="" enable="false" visible="gt(0,)"/>
+        <setting label="32017" id="key_record" type="text" default="" enable="false" visible="gt(0,)"/>
+        <setting label="32018" id="key_Teletext" type="text" default="" enable="false" visible="gt(0,)"/>
+        <setting label="32019" id="key_Preview" type="text" default="" enable="false" visible="gt(0,)"/>
+        <setting label="32020" id="key_List" type="text" default="" enable="false" visible="gt(0,)"/>
+        <setting label="32021" id="key_EPG" type="text" default="" enable="false" visible="gt(0,)"/>
+    </category>
+
+
+
 </settings>

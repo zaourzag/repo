@@ -21,26 +21,27 @@
 
 import xbmc, xbmcgui, xbmcaddon, datetime, time
 import os, urlparse
-from resources.library import library 
+from resources.library import library
 from resources.zattooDB import ZattooDB
-_zattooDB_ = ZattooDB()          
+_zattooDB_ = ZattooDB()
 __addon__ = xbmcaddon.Addon()
 _library_=library()
 localString = __addon__.getLocalizedString
 SWISS = __addon__.getSetting('swiss')
-              
+
+
 def refreshProg():
     import urllib
     monitor = xbmc.Monitor()
     while not monitor.abortRequested():
         if monitor.waitForAbort(600): break
-        from resources.zattooDB import ZattooDB
-        _zattooDB_ = ZattooDB()
-        #update programInfo    
+        #from resources.zattooDB import ZattooDB
+        #_zattooDB_ = ZattooDB()
+        #update programInfo
         startTime=datetime.datetime.now()
         endTime=datetime.datetime.now()+datetime.timedelta(minutes = 120)
         print 'StartRefresh  ' + str(datetime.datetime.now())
-        
+
         try:
             getProgNextDay()
             _zattooDB_.getProgInfo(False, startTime, endTime)
@@ -51,49 +52,58 @@ def refreshProg():
 
 def recInfo():
     import urllib
-    
+    from resources.zattooDB import ZattooDB
+    _zattooDB_ = ZattooDB()
+
     resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/playlist', None)
     if resultData is None: return
     for record in resultData['recordings']:
-        _zattooDB_.getShowInfo(record['program_id'])  
-           
+        _zattooDB_.getShowInfo(record['program_id'])
+
 def start():
     import urllib
-    
-    _zattooDB_.cleanProg()
+
+    #re-import ZattooDB to prevent "convert_timestamp" error
+    from resources.zattooDB import ZattooDB
+    _zattooDB_ = ZattooDB()
+
+    _zattooDB_.cleanProg(True)
     _zattooDB_.updateChannels()
     _zattooDB_.updateProgram()
-    
+
     startTime=datetime.datetime.now()#-datetime.timedelta(minutes = 60)
     endTime=datetime.datetime.now()+datetime.timedelta(minutes = 20)
-    
-    
-    xbmcgui.Dialog().notification(localString(31916), localString(30110),  __addon__.getAddonInfo('path') + '/icon.png', 3000, False) 
+
+
+    xbmcgui.Dialog().notification(localString(31916), localString(30110),  __addon__.getAddonInfo('path') + '/icon.png', 3000, False)
     _zattooDB_.getProgInfo(True, startTime, endTime)
-    
+
     if SWISS == 'true':
-        xbmcgui.Dialog().notification(localString(31106), localString(31915),  __addon__.getAddonInfo('path') + '/icon.png', 3000, False) 
+        #xbmcgui.Dialog().notification(localString(31106), localString(31915),  __addon__.getAddonInfo('path') + '/icon.png', 3000, False)
         xbmc.executebuiltin("ActivateWindow(busydialog)")
         recInfo()
         _library_.delete_library() # add by samoth
-        _library_.make_library()   
+        _library_.make_library()
         xbmc.executebuiltin("Dialog.Close(busydialog)")
-    
-        refreshProg()  
-        
+
+        refreshProg()
+
 def getProgNextDay():
-    
+    from resources.zattooDB import ZattooDB
+    _zattooDB_ = ZattooDB()
+
     start = datetime.time(18, 0, 0)
     now = datetime.datetime.now().time()
     tomorrow = datetime.datetime.today() + datetime.timedelta(days=1)
-    
+
     if now > start:
         print 'NextDay ' + str(start) + ' - ' + str(now) + ' - ' + str(tomorrow)
         _zattooDB_.updateProgram(tomorrow)
-        
 
 
-if __addon__.getSetting('dbonstart') == 'true': start()
+
+if __addon__.getSetting('dbonstart') == 'true':
+	start()
 print "No DB--SERVICE"
 
 

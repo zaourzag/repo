@@ -1,3 +1,20 @@
+﻿====================================
+[B]​ZattooHiQ v2.0.8 [/B] 02.04.2017
+​====================================
+
+- DASH stream (experimentell Kodi17)
+- Vorschau der am meisten geschauten Kanäle
+- auto-liveTV Kanalauswahl Dialog (oder letzter Kanal)
+- starte auto-liveTV nur beim ersten Programmstart
+- liveTV KeyMap (eigene Keys für die hidden GUI definieren)
+- recall wechselt zu liveTV bei Suche in Zukunft
+- synchronisiere Aufnahme Abspielposition mit Zattoo
+- Kanal in OSD zu Favoriten hinzufügen/entfernen
+- Fortschrittsanzeige der Sendung in OSD
+- Zattoo-Neuanmeldung bei "Datenbank neu erstellen" erzwingen
+- EPG Beschreibung verzögert laden
+- Infos bei Start laden korrigiert
+
 ====================================
 [B]​ZattooHiQ v1.0.3 [/B] 02.04.2017
 ​====================================

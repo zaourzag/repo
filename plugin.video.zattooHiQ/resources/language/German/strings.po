@@ -356,13 +356,30 @@ msgctxt "#31006"
 msgid "Default Audio"
 msgstr "Standard Ton"
 
+msgctxt "#310065"
+msgid "[COLOR ff333333]use DASH stream (Kodi17, experimental)[/COLOR]"
+msgstr "[COLOR ff333333]DASH stream (Kodi17, experimentell)[/COLOR]"
+
+msgctxt "#310067"
+msgid "Only show favourite channels"
+msgstr "Nur Favoriten-Kanäle anzeigen"
+
+
 msgctxt "#31007"
-msgid "liveTV on start"
-msgstr "liveTV beim Start"
+msgid "liveTV on first start"
+msgstr "liveTV beim ersten Start"
 
 msgctxt "#31008"
 msgid "Channel"
 msgstr "Kanal"
+
+msgctxt "#31009"
+msgid "select Channel"
+msgstr "Kanal auswählen"
+
+msgctxt "#310095"
+msgid "last played channel"
+msgstr "letzter gespielter Kanal"
 
 
 
@@ -381,7 +398,7 @@ msgstr "im EPG immer abspielen"
 
 msgctxt "#31013"
 msgid "select folder for library"
-msgstr "Verzeichnis for Bibliothek auswählen"
+msgstr "Verzeichnis für Bibliothek auswählen"
 
 msgctxt "#31014"
 msgid "Reset Folder"
@@ -390,7 +407,6 @@ msgstr "Verzeichnis zurücksetzen"
 msgctxt "#31015"
 msgid "make library files"
 msgstr "Bibliothek Dateien erstellen"
-
 
 
 ### Datenbank ###
@@ -407,11 +423,28 @@ msgid "Renew Database"
 msgstr "Datenbank neu erstellen"
 
 msgctxt "#31022"
-msgid "Load only favortites"
-msgstr "Nur Favortiten laden"
+msgid "load only favorites"
+msgstr "Nur Favoriten laden"
+
+
+
+### liveTV KeyMap ###
+msgctxt "#31030"
+msgid "liveTV KeyMap"
+msgstr ""
+
+msgctxt "#31032"
+msgid "edit KeyMap"
+msgstr "KeyMap bearbeiten"
+
+
+
 
 
 ### Haupmenu ###
+msgctxt "#31099"
+msgid "Most Popular"
+msgstr "Am meisten geschaut"
 
 msgctxt "#31100"
 msgid "All Channels"
@@ -498,6 +531,13 @@ msgctxt "#31305"
 msgid "Record series"
 msgstr "Serie aufnehmen"
 
+msgctxt "#31306"
+msgid "Position found on Zattoo:"
+msgstr "Position auf Zattoo gefunden:"
+
+msgctxt "#31307"
+msgid "skip to this position?"
+msgstr "starte von dieser Position?"
 
 
 
@@ -516,6 +556,16 @@ msgstr "Aufnahme-Anfrage wurde an Zattoo übermittelt.\nDie Sendung sollte nun i
 msgctxt "#31907"
 msgid "Set the channel as the start channel"
 msgstr "Den Kanal als Startkanal festlegen"
+
+msgctxt "#31908"
+msgid "Add channel to favourites?"
+msgstr "Den Kanal zu Favoriten hinzufügen?"
+
+msgctxt "#31909"
+msgid "Remove channel from favourites?"
+msgstr "Den Kanal aus den Favoriten entfernen?"
+
+
 
 msgctxt "#31911"
 msgid "Delete the recording directory and the recorded movies?\nThe recordings are not deleted at Zattoo."
@@ -578,3 +628,72 @@ msgstr "Datum eingeben"
 msgctxt "#31925"
 msgid "Cancel serial recording"
 msgstr "Serienaufnahme abbrechen"
+
+
+
+
+
+
+### KeyMap ###
+msgctxt "#32000"
+msgid "select cmd to change key"
+msgstr "wähle Befehl um den Key zu ändern"
+
+msgctxt "#32001"
+msgid "press key"
+msgstr "drücke Key"
+
+msgctxt "#32002"
+msgid "not key"
+msgstr ""
+
+msgctxt "#32010"
+msgid "open OSD"
+msgstr "zeige OSD"
+
+msgctxt "#32011"
+msgid "previous channel"
+msgstr "Kanal runter"
+
+msgctxt "#32012"
+msgid "next channel"
+msgstr "Kanal hoch"
+
+msgctxt "#32013"
+msgid "toggle channel (PiP)"
+msgstr "Kanal Umschalter (PiP) "
+
+msgctxt "#32014"
+msgid "switch audio channel"
+msgstr "Audiokanal umschalten"
+
+msgctxt "#32015"
+msgid "pause"
+msgstr "Pause"
+
+msgctxt "#32016"
+msgid "stop"
+msgstr "Stop"
+
+msgctxt "#32017"
+msgid "record current show"
+msgstr "Sendung aufnehmen"
+
+msgctxt "#32018"
+msgid "open Teletext"
+msgstr "Teletext anzeigen"
+
+msgctxt "#32019"
+msgid "show Preview"
+msgstr "Vorschau"
+
+msgctxt "#32020"
+msgid "show EPG"
+msgstr "EPG"
+
+msgctxt "#32021"
+msgid "show Channellist"
+msgstr "Kanalliste"
+
+
+

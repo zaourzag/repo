@@ -20,50 +20,12 @@
 #    along with zattooHiQ.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-REMOTE_DBG = False
-
-# append pydev remote debugger
-if REMOTE_DBG:
-    # Make pydev debugger works for auto reload.
-    # Note pydevd module need to be copied in XBMC\system\python\Lib\pysrc
-    try:
-        import pysrc.pydevd as pydevd  # with the addon script.module.pydevd, only use `import pydevd`
-    # stdoutToServer and stderrToServer redirect stdout and stderr to eclipse console
-        #pydevd.settrace('localhost', stdoutToServer=True, stderrToServer=True, suspend=False)
-        pydevd.settrace('localhost', port=5678, stdoutToServer=True, stderrToServer=True)
-    except ImportError:
-        sys.stderr.write("Error: You must add org.python.pydev.debug.pysrc to your PYTHONPATH.")
-        sys.exit(1)
-
-
-import xbmc, xbmcgui, xbmcaddon, time, threading
+import xbmc, xbmcgui, xbmcaddon, time, datetime, threading
 from resources.zattooDB import ZattooDB
 from resources.guiactions import *
 
 __addon__ = xbmcaddon.Addon()
 __addonId__=__addon__.getAddonInfo('id')
-
-'''
-class EPGTest(xbmcgui.WindowXML):
-    CHANNELS_PER_PAGE = 9
-    #def __new__(cls):
-        # GreenAir: change path
-    #    return super(EPGTest, cls).__new__(cls, 'script-tvguide-main.xml', __addon__.getAddonInfo('path') + '/resources/epg')
-
-    def __init__(self):
-        super(EPGTest, self).__init__()
-#          self.notification = None
-        self.redrawingEPG = False
-
-    def getControl(self, controlId):
-        i=10
-
-    def close(self):
-        super(EPG, self).close()
-
-    def onInit(self):
-        i=10
-'''
 
 class ChannelsPreview(xbmcgui.WindowXML): #needs to be WindowXML or onInit won't fire
     #print('FAV:'+str(fav))
@@ -83,6 +45,7 @@ class ChannelsPreview(xbmcgui.WindowXML): #needs to be WindowXML or onInit won't
         self.startChannel = 0
         self.refreshTimerRunning=False
         self.updateNr=0
+        xbmcgui.Window(10000).setProperty('zattoo_runningView',"preview")
 
     def onInit(self):
         self.highLabel=''
@@ -96,14 +59,12 @@ class ChannelsPreview(xbmcgui.WindowXML): #needs to be WindowXML or onInit won't
         print('HASFOCUS')
     '''
 
-    
-
     def onAction(self, action):
         actionID = action.getId()
         #print('previewAction'+str(action))
         if actionID in [ACTION_PARENT_DIR, KEY_NAV_BACK, ACTION_PREVIOUS_MENU]:
             self.close()
-            #print('SELF CLOSE')
+             #print('SELF CLOSE')
             self.refreshTimerRunning=False
             #xbmc.executebuiltin("PreviousMenu")
         #elif actionID in [ACTION_BUILT_IN_FUNCTION]:
@@ -118,10 +79,9 @@ class ChannelsPreview(xbmcgui.WindowXML): #needs to be WindowXML or onInit won't
             self.moveHighlight(5)
         elif actionID in [ACTION_SELECT_ITEM, ACTION_MOUSE_LEFT_CLICK]:
             self.refreshTimerRunning=False
-            #self.close()
             url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + self.controls[self.selected%16]['channel']
             xbmc.executebuiltin('XBMC.RunPlugin(%s)' % url)
-            xbmc.executebuiltin("Action(FullScreen)")
+            #xbmc.executebuiltin("Action(FullScreen)")
         elif actionID == ACTION_MOUSE_MOVE:
             x=int(action.getAmount1()/(self.getWidth()/5))
             y=int(action.getAmount2()/(self.getHeight()/4))
@@ -213,7 +173,6 @@ class ChannelsPreview(xbmcgui.WindowXML): #needs to be WindowXML or onInit won't
         allControls.append(self.infoDesc)
         allControls.append(self.infoPlot)
 
-
         self.addControls(allControls)
         self.highlightImage.setImage(addonPath + '/resources/channel-highlight.png')
         self.infoPlot.autoScroll(5000, 1800, 5000)
@@ -238,8 +197,9 @@ class ChannelsPreview(xbmcgui.WindowXML): #needs to be WindowXML or onInit won't
     def showChannels(self):
         start=int(self.selected/16)*16
         channels = self.channels
-        programms = ZattooDB().getPrograms(channels)
+        self.programms = ZattooDB().getPrograms(channels, False, datetime.datetime.now(), datetime.datetime.now())
 
+        #xbmcgui.lock()
         for nr in range(0, 16):
             current = start + nr
             control = self.controls[nr]
@@ -254,10 +214,11 @@ class ChannelsPreview(xbmcgui.WindowXML): #needs to be WindowXML or onInit won't
                 currenChannel= channels[channels['index'][current]]
                 title = ''
                 control['program']=''
-                for search in programms:
+                for search in self.programms:
                     if search['channel'] == currenChannel['id']:
-                        title = search ['title']
+                        title = search['title']
                         control['program']=search
+                        break
 
                 control['logo'].setImage(currenChannel['logo'])
                 control['label'].setLabel(title)
@@ -279,7 +240,9 @@ class ChannelsPreview(xbmcgui.WindowXML): #needs to be WindowXML or onInit won't
                 control['image'].setImage(src, False)
                 #xbmc.sleep(50)
                 #self.preloadImageSrc=src
-
+       
+        #xbmcgui.unlock()
+        
     '''
     def refreshPreviewImages(self):
         now = int(time.time())
@@ -315,10 +278,10 @@ class ChannelsPreview(xbmcgui.WindowXML): #needs to be WindowXML or onInit won't
         controlNr+=step
         self.selected+=step
         if self.selected<0:
-            self.selected=len(self.channels)+self.selected+1
+            self.selected=len(self.channels)-2 #+self.selected+1
             self.showChannels()
         elif self.selected>len(self.channels)-2:
-            self.selected=self.selected-len(self.channels)+1
+            self.selected=0 #self.selected-len(self.channels)+1
             self.showChannels()
         elif controlNr>15 or controlNr<0:
             self.showChannels()
@@ -326,6 +289,7 @@ class ChannelsPreview(xbmcgui.WindowXML): #needs to be WindowXML or onInit won't
         if jump:
             self.showInfo(jump)
         else:
+            i=10
             #if hasattr(self, 'showInfoTimer'): self.showInfoTimer.cancel()
             #self.showInfoTimer = threading.Timer(0.1, self.showInfo)
             #self.showInfoTimer.start()
@@ -335,7 +299,7 @@ class ChannelsPreview(xbmcgui.WindowXML): #needs to be WindowXML or onInit won't
         #self.controls[controlNr]['image'].setImage(src, False)
 
 
-    def showInfo(self, jump=False):
+    def showInfo(self, jump=True):
         controlNr = self.selected%16
         
         endPos=self.getControlPos(controlNr)
@@ -350,12 +314,22 @@ class ChannelsPreview(xbmcgui.WindowXML): #needs to be WindowXML or onInit won't
                 xbmc.sleep(10)
         self.highlightImage.setPosition(endPos['x'], endPos['y'])
  
-        title=self.controls[controlNr]['label'].getLabel()
+        #refresh image
+        if hasattr(self, 'refreshImageTimer'): self.refreshImageTimer.cancel()
+        src = 'http://thumb.zattic.com/' + self.controls[controlNr]['channel'] + '/256x144.jpg?r=' + str(int(time.time()))
+        self.refreshImageTimer = threading.Timer(1, lambda: self.controls[controlNr]['image'].setImage(src, False))
+        self.refreshImageTimer.start()
+                
+        
+
+        #program= self.controls[controlNr]['program']
+        program=ZattooDB().getPrograms({'index':[self.controls[controlNr]['channel']]}, False, datetime.datetime.now(), datetime.datetime.now())[0]
+        
         self.controls[controlNr]['label'].setLabel('')
-        self.highLabel=title
+        self.highLabel=program['title']
         self.scrollLabel.reset()
         self.scrollLabel.setPosition(endPos['x']+6,endPos['y']+149)
-        self.scrollLabel.addLabel(title)
+        self.scrollLabel.addLabel(program['title'])
 
         #update info
         channel=self.channels[self.channels['index'][self.selected]]
@@ -364,7 +338,6 @@ class ChannelsPreview(xbmcgui.WindowXML): #needs to be WindowXML or onInit won't
         self.infoTitle.reset()
         self.infoDesc.reset()
         
-        program= self.controls[controlNr]['program']
         if (not program):
             self.infoChannelTitle.setLabel('[B]'+channel ['title'] +'[/B]\n ')
             self.infoTitle.addLabel('[B] [/B]')
@@ -385,3 +358,8 @@ class ChannelsPreview(xbmcgui.WindowXML): #needs to be WindowXML or onInit won't
             if (not plot): plot="No description "
             self.infoPlot.setText(plot)
 
+    def close(self):
+           xbmc.executebuiltin('ActivateWindow(10025,"plugin://'+__addonId__+'")')
+           xbmcgui.Window(10000).setProperty('zattoo_runningView',"")
+           #super(ChannelsPreview, self).close()
+    
