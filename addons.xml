@@ -923,7 +923,7 @@ v1.9.0 (2016-10-14) moving to the new api - please report bugs
     </extension>
 </addon>
 
-<addon id="plugin.video.mvmix" version="1.7.3" name="Music Video Mix" provider-name="Jin">
+<addon id="plugin.video.mvmix" version="1.7.4" name="Music Video Mix" provider-name="Jin">
     <requires>
         <import addon="xbmc.python" version="2.20.0"/>
     </requires>
@@ -936,6 +936,8 @@ v1.9.0 (2016-10-14) moving to the new api - please report bugs
         <platform>all</platform>
         <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
         <news>
+upd: youtube search            
+
 fix: vevo
 
 add: imvdb.com (vimeo/youtube)
