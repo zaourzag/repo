@@ -40,8 +40,8 @@ from resources.zattooDB import ZattooDB
 from resources.library import library
 from resources.guiactions import *
 
-import resources.MyFont as MyFont
-MyFont.addFont( "zattoo45" , "NotoSans-Bold.ttf" , "45", style="bold") # style and aspect are optional.
+#import resources.MyFont as MyFont
+#MyFont.addFont( "zattoo45" , "NotoSans-Bold.ttf" , "45", style="bold") # style and aspect are optional.
 
 
 __addon__ = xbmcaddon.Addon()
