@@ -2703,7 +2703,7 @@ See changelog.txt for more details.</news>
 </addon>
 
 
-<addon id="plugin.video.zattooHiQ" version="1.1.0" name="Zattoo HiQ" provider-name="Steffen Rolapp">
+<addon id="plugin.video.zattooHiQ" version="1.1.1" name="Zattoo HiQ" provider-name="Steffen Rolapp">
 
   <requires>
     <import addon="xbmc.python" version="2.14.0"/>
