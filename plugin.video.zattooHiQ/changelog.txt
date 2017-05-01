@@ -1,6 +1,19 @@
-﻿====================================
-[B]​ZattooHiQ v2.0.8 [/B] 02.04.2017
-​====================================
+﻿=================================================
+[B]​ZattooHiQ v1.1.2 [/B] 30.04.2017 by GreenAir
+​=================================================
+- Zattoo GUI: zeige preview/list/epg Funktionen überarbeitet
+- liveTv KeyMap: falsche Aktionen (EPG/Kanalliste)
+- EPG: starte Touchbedienung Button hinter Bild
+- EPG: kein "videowindow"
+
+Änderungen by rolapp
+-----------------------
+- BusyDialog bei Kodi start entfernt
+
+
+================================================
+[B]​ZattooHiQ v1.1.0 [/B] 27.04.2017 by GreenAir
+​================================================
 
 - DASH stream (experimentell Kodi17)
 - Vorschau der am meisten geschauten Kanäle
@@ -14,7 +27,6 @@
 - Zattoo-Neuanmeldung bei "Datenbank neu erstellen" erzwingen
 - EPG Beschreibung verzögert laden
 - Infos bei Start laden korrigiert
-
 ====================================
 [B]​ZattooHiQ v1.0.3 [/B] 02.04.2017
 ​====================================
