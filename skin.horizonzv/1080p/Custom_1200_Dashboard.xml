@@ -22,7 +22,7 @@
                 <colordiffuse>menudiffuse</colordiffuse>
                 <texture background="true">Shadow.png</texture>
             </control>
-            <control type="label">
+            <!-- <control type="label">
                 <left>0</left>
                 <top>90</top>
                 <width>1920</width>
@@ -32,7 +32,7 @@
                 <textcolor>white</textcolor>
                 <label>$LOCALIZE[51382] $LOCALIZE[24000](s)</label>
                 <include>openclosevisible</include>
-            </control>
+            </control> -->
             <control type="group">
                 <!-- Addons 8006-->
                 <left>60</left>

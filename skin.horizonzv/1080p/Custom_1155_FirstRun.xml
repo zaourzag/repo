@@ -215,10 +215,10 @@
                         <onclick>Skin.SetBool(Widget_RecentMusicVideos)</onclick>
                         <onclick>Skin.SetBool(Widget_RecentAlbums)</onclick>
                         <onclick>Skin.SetBool(Widget_RecentTVShows)</onclick>
-                        <onclick>Skin.SetBool(Widget_RecommendedMovies)</onclick>
+                        <!-- <onclick>Skin.SetBool(Widget_RecommendedMovies)</onclick>
                         <onclick>Skin.SetBool(Widget_RecommendedTVShows)</onclick>
                         <onclick>Skin.SetBool(Widget_RecommendedMusicVideos)</onclick>
-                        <onclick>Skin.SetBool(Widget_RecommendedMusic)</onclick>
+                        <onclick>Skin.SetBool(Widget_RecommendedMusic)</onclick> -->
                         <onclick>Skin.SetBool(HomeWeatherWidgetToday)</onclick>
                         <!-- <onclick>Skin.SetBool(Widget_Addon)</onclick> -->
                         <onclick>Skin.SetBool(Widget_Systeminfo)</onclick>

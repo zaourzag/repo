@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window type="buttonMenu">
+	<zorder>6</zorder>
     <defaultcontrol>9000</defaultcontrol>
 	<backgroundcolor>$VAR[BackgroundOverlayColor]</backgroundcolor>
     <include>openclose</include>
@@ -170,7 +171,7 @@
 						<visible>!Skin.HasSetting(shutdown_noallowidle)</visible>
 					</item>
 					<item>
-						<label>Skin Einstellungen</label>
+						<label>$LOCALIZE[14261]</label>
 						<onclick>dialog.close(all,true)</onclick>
 						<onclick>ActivateWindow(skinsettings)</onclick>
 					</item>
@@ -181,7 +182,7 @@
 						<visible>Skin.HasSetting(shutdown_nand)|Skin.HasSetting(shutdown_restart)|Skin.HasSetting(shutdown_reload)</visible>
 					</item>
 					<item>
-						<label>KODI APP neu starten</label>
+						<label>$LOCALIZE[51581]</label>
 						<onclick>RestartApp</onclick>
 						<visible>Skin.HasSetting(shutdown_restart)</visible>
 					</item>
@@ -194,21 +195,21 @@
 						<visible>Skin.HasSetting(shutdown_nand)</visible>
 					</item>
 					<item>
-						<label>Skin neu laden</label>
+						<label>$LOCALIZE[51579]</label>
 						<onclick>ReloadSkin()</onclick>
 						<visible>Skin.HasSetting(shutdown_reload)</visible>
 					</item>
 				</content>
 			</control>
         </control>
-		<include content="MiniWeather">
-			<param name="left" value="885" />
-			<param name="top" value="160" />
-		</include>
         <control type="group">
             <include>openclosemedium</include>
             <left>885</left>
             <top>285</top>
+			<include content="MiniWeather">
+				<param name="left" value="0" />
+				<param name="top" value="225" />
+			</include>
 			<control type="label">
 				<left>0</left>
 				<width>900</width>
@@ -265,7 +266,19 @@
 				<shadowcolor>-</shadowcolor>
 				<label>$VAR[HomeOSDTitle]</label>
 				<label>$VAR[HomeOSDLabel]</label>
-				<visible>Player.HasMedia</visible>
+				<visible>Player.HasAudio</visible>
+			</control>
+			<control type="label">
+				<top>405</top>
+				<width>950</width>
+				<height>45</height>
+				<align>left</align>
+				<aligny>center</aligny>
+				<font>impacted26</font>
+				<textcolor>white</textcolor>
+				<shadowcolor>-</shadowcolor>
+				<label>$VAR[HomeOSDTitle]$INFO[Player.TimeRemaining, - ,]</label>
+				<visible>Player.HasVideo</visible>
 			</control>
 			<control type="image">
 				<!-- Artistlogo -->

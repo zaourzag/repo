@@ -174,14 +174,14 @@
                     <item>
                         <label>Artwork Downloader</label>
                         <label2>$LOCALIZE[24038]</label2>
-                        <onclick>InstallAddon(script.cdartmanager)</onclick>
-                        <visible>!System.HasAddon(script.cdartmanager)</visible>
+                        <onclick>InstallAddon(script.artwork.downloader)</onclick>
+                        <visible>!System.HasAddon(script.artwork.downloader)</visible>
                     </item>
                     <item>
-                        <label>Artwork Downloader $INFO[System.AddonVersion(script.cdartmanager),(,)]</label>
+                        <label>Artwork Downloader $INFO[System.AddonVersion(script.artwork.downloader),(,)]</label>
                         <label2>$LOCALIZE[5]</label2>
-                        <onclick>Addon.OpenSettings(script.cdartmanager)</onclick>
-                        <visible>System.HasAddon(script.cdartmanager)</visible>
+                        <onclick>Addon.OpenSettings(script.artwork.downloader)</onclick>
+                        <visible>System.HasAddon(script.artwork.downloader)</visible>
                     </item>
                     <item>
                         <label>CDArt Manager</label>

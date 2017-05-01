@@ -1551,7 +1551,7 @@ msgstr "höre"
 
 msgctxt "#51382"
 msgid "manage your"
-msgstr "verwalte dein(e)"
+msgstr "verwalte dein"
 
 msgctxt "#51384"
 msgid "experience your"
@@ -2060,3 +2060,23 @@ msgstr "zeige Unterverzeichnisse"
 msgctxt "#51571"
 msgid "starting ..."
 msgstr "wird gestartet ..."
+
+msgctxt "#51573"
+msgid "hide"
+msgstr "verberge"
+
+msgctxt "#51575"
+msgid "show"
+msgstr "zeige"
+
+msgctxt "#51577"
+msgid "button"
+msgstr "Schalter"
+
+msgctxt "#51579"
+msgid "skin reload"
+msgstr "Skin neu laden"
+
+msgctxt "#51581"
+msgid "KODI APP reload"
+msgstr "KODI APP neu starten"
