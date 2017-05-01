@@ -38,17 +38,18 @@
     <category label="31030">
 		<setting label="31032" type="action" action="RunPlugin(plugin://plugin.video.zattooHiQ/?mode=editKeyMap)"/>
         <setting label="32010" id="key_OSD" type="text" default="" enable="false" visible="gt(0,)"/>
-        <setting label="32011" id="key_prevChan" type="text" default="" enable="false" visible="gt(0,)"/>
-        <setting label="32012" id="key_nextChan" type="text" default="" enable="false" visible="gt(0,)"/>
-        <setting label="32013" id="key_toggleChan" type="text" default="" enable="false" visible="gt(0,)"/>
-        <setting label="32014" id="key_audio" type="text" default="" enable="false" visible="gt(0,)"/>
-        <setting label="32015" id="key_pause" type="text" default="" enable="false" visible="gt(0,)"/>
-        <setting label="32016" id="key_stop" type="text" default="" enable="false" visible="gt(0,)"/>
-        <setting label="32017" id="key_record" type="text" default="" enable="false" visible="gt(0,)"/>
-        <setting label="32018" id="key_Teletext" type="text" default="" enable="false" visible="gt(0,)"/>
-        <setting label="32019" id="key_Preview" type="text" default="" enable="false" visible="gt(0,)"/>
-        <setting label="32020" id="key_List" type="text" default="" enable="false" visible="gt(0,)"/>
+        <setting label="32011" id="key_info" type="text" default="" enable="false" visible="gt(0,)"/>
+        <setting label="32012" id="key_prevChan" type="text" default="" enable="false" visible="gt(0,)"/>
+        <setting label="32013" id="key_nextChan" type="text" default="" enable="false" visible="gt(0,)"/>
+        <setting label="32014" id="key_toggleChan" type="text" default="" enable="false" visible="gt(0,)"/>
+        <setting label="32015" id="key_audio" type="text" default="" enable="false" visible="gt(0,)"/>
+        <setting label="32016" id="key_pause" type="text" default="" enable="false" visible="gt(0,)"/>
+        <setting label="32017" id="key_stop" type="text" default="" enable="false" visible="gt(0,)"/>
+        <setting label="32018" id="key_record" type="text" default="" enable="false" visible="gt(0,)"/>
+        <setting label="32019" id="key_Teletext" type="text" default="" enable="false" visible="gt(0,)"/>
+        <setting label="32020" id="key_Preview" type="text" default="" enable="false" visible="gt(0,)"/>
         <setting label="32021" id="key_EPG" type="text" default="" enable="false" visible="gt(0,)"/>
+        <setting label="32022" id="key_List" type="text" default="" enable="false" visible="gt(0,)"/>
     </category>
 
 

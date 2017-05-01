@@ -196,7 +196,7 @@ class ZattooDB(object):
         return
 
     xbmcgui.Dialog().notification(__addon__.getLocalizedString(31917), self.formatDate(date), __addon__.getAddonInfo('path') + '/icon.png', 5000, False)
-    xbmc.executebuiltin("ActivateWindow(busydialog)")
+    #xbmc.executebuiltin("ActivateWindow(busydialog)")
     api = '/zapi/v2/cached/program/power_guide/' + self.zapi.AccountData['account']['power_guide_hash'] + '?end=' + str(toTime) + '&start=' + str(fromTime)
 
     print "api   "+api
@@ -234,7 +234,7 @@ class ZattooDB(object):
         self.conn.commit()
     except:
         print 'IntegrityError: FOREIGN KEY constraint failed zattooDB 232'
-    xbmc.executebuiltin("Dialog.Close(busydialog)")
+    #xbmc.executebuiltin("Dialog.Close(busydialog)")
     c.close()
     return
 

@@ -79,12 +79,12 @@ def start():
     _zattooDB_.getProgInfo(True, startTime, endTime)
 
     if SWISS == 'true':
-        #xbmcgui.Dialog().notification(localString(31106), localString(31915),  __addon__.getAddonInfo('path') + '/icon.png', 3000, False)
-        xbmc.executebuiltin("ActivateWindow(busydialog)")
+        xbmcgui.Dialog().notification(localString(31106), localString(31915),  __addon__.getAddonInfo('path') + '/icon.png', 3000, False)
+        #xbmc.executebuiltin("ActivateWindow(busydialog)")
         recInfo()
         _library_.delete_library() # add by samoth
         _library_.make_library()
-        xbmc.executebuiltin("Dialog.Close(busydialog)")
+        #xbmc.executebuiltin("Dialog.Close(busydialog)")
 
         refreshProg()
 

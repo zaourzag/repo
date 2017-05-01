@@ -648,50 +648,55 @@ msgid "not key"
 msgstr ""
 
 msgctxt "#32010"
-msgid "open OSD"
-msgstr "zeige OSD"
+msgid "open Zattoo OSD"
+msgstr "zeige Zattoo OSD"
 
 msgctxt "#32011"
+msgid "open player info"
+msgstr "zeige Player Info"
+
+
+msgctxt "#32012"
 msgid "previous channel"
 msgstr "Kanal runter"
 
-msgctxt "#32012"
+msgctxt "#32013"
 msgid "next channel"
 msgstr "Kanal hoch"
 
-msgctxt "#32013"
+msgctxt "#32014"
 msgid "toggle channel (PiP)"
 msgstr "Kanal Umschalter (PiP) "
 
-msgctxt "#32014"
+msgctxt "#32015"
 msgid "switch audio channel"
 msgstr "Audiokanal umschalten"
 
-msgctxt "#32015"
+msgctxt "#32016"
 msgid "pause"
 msgstr "Pause"
 
-msgctxt "#32016"
+msgctxt "#32017"
 msgid "stop"
 msgstr "Stop"
 
-msgctxt "#32017"
+msgctxt "#32018"
 msgid "record current show"
 msgstr "Sendung aufnehmen"
 
-msgctxt "#32018"
+msgctxt "#32019"
 msgid "open Teletext"
 msgstr "Teletext anzeigen"
 
-msgctxt "#32019"
+msgctxt "#32020"
 msgid "show Preview"
 msgstr "Vorschau"
 
-msgctxt "#32020"
+msgctxt "#32021"
 msgid "show EPG"
 msgstr "EPG"
 
-msgctxt "#32021"
+msgctxt "#32022"
 msgid "show Channellist"
 msgstr "Kanalliste"
 

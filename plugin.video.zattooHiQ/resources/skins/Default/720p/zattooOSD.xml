@@ -17,7 +17,7 @@
 				<width>350</width>
 				<height>15</height>
 				<align>left</align>
-				<font>zattoo45</font>
+				<font>font45_title</font>
 				<textcolor>F0FFFFFF</textcolor>
 				<shadowcolor>black</shadowcolor>
 				<!--<label>$INFO[System.Date(d.m.yy.)] $INFO[System.Time(hh:mm)]</label>-->
@@ -37,7 +37,7 @@
 				<texture border="20">ContentPanel.png</texture>
 				<colordiffuse>FFFFFFFF</colordiffuse>
 			</control>
-			
+
 			<!--
     		<control type="image" id="1">
 				<description>PosterBG</description>
@@ -113,7 +113,7 @@
 				<scroll>true</scroll>
 				<scrollspeed>50</scrollspeed>
 			</control>
-			
+
 			<control type="label" id="1">
 				<description>genre</description>
 				<left>15</left>
@@ -127,7 +127,7 @@
 				<scroll>true</scroll>
 				<scrollspeed>50</scrollspeed>
 			</control>
-			
+
 			<control type="label" id="1">
 				<description>year</description>
 				<left>15</left>
@@ -141,7 +141,7 @@
 				<scroll>true</scroll>
 				<scrollspeed>50</scrollspeed>
 			</control>
-			
+
 			<control type="label" id="1">
 				<description>Country</description>
 				<left>15</left>
@@ -153,6 +153,34 @@
 				<font>font12</font>
 				<label>$INFO[Window(Home).Property(country)]</label>
 			</control>
+
+<!--
+			<control type="label" id="1">
+				<description>Video info</description>
+				<left>15</left>
+				<top>380</top>
+				<width>340</width>
+				<height>25</height>
+				<align>left</align>
+				<textcolor>white</textcolor>
+				<font>font12</font>
+				<label>[COLOR blue]Video:[/COLOR]</label>
+			</control>
+
+
+			<control type="label" id="1">
+				<description>Video</description>
+				<left>75</left>
+				<top>380</top>
+				<width>340</width>
+				<height>25</height>
+				<align>left</align>
+				<textcolor>white</textcolor>
+				<font>font12</font>
+				<label>$INFO[VideoPlayer.VideoCodec] $INFO[VideoPlayer.VideoResolution]</label>
+			</control>
+-->
+
 
 			<control type="image" id="1">
 				<description>channel logo</description>
@@ -200,7 +228,7 @@
 				<onleft>303</onleft>
 				<onright>202</onright>
 			</control>
-			
+
 			<control type="button" id="202">
 				<left>70</left>
 				<top>100</top>
@@ -213,7 +241,7 @@
 				<onleft>201</onleft>
 				<onright>203</onright>
 			</control>
-			
+
 			<control type="button" id="203">
 				<left>140</left>
 				<top>100</top>
@@ -246,7 +274,7 @@
 				<onleft>203</onleft>
 				<onright>205</onright>
 			</control>
-			
+
 			<control type="button" id="205">
 				<width>48</width>
 				<height>48</height>
@@ -260,7 +288,7 @@
 				<onleft>204</onleft>
 				<onright>206</onright>
 			</control>
-			
+
 			<control type="button" id="206">
 				<width>48</width>
 				<height>48</height>
@@ -292,7 +320,7 @@
 				<onright>208</onright>
 			</control>
 
-<!--			
+<!--
 			<control type="button" id="208">
 				<width>48</width>
 				<height>48</height>
@@ -335,7 +363,7 @@
 				<onleft>207</onleft>
 				<onright>209</onright>
 			</control>
-			
+
 			<control type="button" id="209">
 				<left>560</left>
 				<top>100</top>
@@ -345,7 +373,7 @@
 				<texturenofocus>osdreplaynf.png</texturenofocus>
 				<onleft>208</onleft>
 				<onright>210</onright>
-				<visible>Skin.HasSetting(hiq)</visible>visible>  
+				<visible>Skin.HasSetting(hiq)</visible>visible>
 			</control>
 
 			<control type="button" id="210">
@@ -357,7 +385,7 @@
 				<texturenofocus>osdrecordnf1.png</texturenofocus>
 				<onleft>209</onleft>
 				<onright>211</onright>
-				<visible>Skin.HasSetting(swiss)</visible> 
+				<visible>Skin.HasSetting(swiss)</visible>
 			</control>
 
 			<control type="button" id="211">
@@ -370,7 +398,7 @@
 				<onleft>210</onleft>
 				<onright>301</onright>
 			</control>
-			
+
 			<control type="button" id="301">
 				<left>770</left>
 				<top>100</top>
@@ -403,7 +431,7 @@
 				<onleft>302</onleft>
 				<onright>201</onright>
 			</control>
-			
+
 			<!--
 			<control type="progress" id="350">
 		      <description>My first progress control</description>
@@ -416,7 +444,7 @@
 		      <info>$INFO[Window(Home).Property(progress)]</info>
 			</control>
 			-->
-						
+
 			<control type="progress" id="350">
 		      <description>My first progress control</description>
 		      <left>-17</left>
@@ -426,7 +454,7 @@
 		      <texturebg>osdprogressback.png</texturebg>
 		      <midtexture>osdprogressmid.png</midtexture>
 		      <info>$INFO[Window(Home).Property(progress)]</info>
-			</control>			
+			</control>
 
 		</control>
 	</controls>

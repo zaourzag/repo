@@ -31,7 +31,6 @@ if REMOTE_DBG:
     sys.stderr.write("Error: You must add org.python.pydev.debug.pysrc to your PYTHONPATH.")
     sys.exit(1)
 
-
 import xbmc, xbmcgui, xbmcplugin, xbmcaddon
 import sys, urlparse,  os
 import  time, datetime, threading
@@ -39,10 +38,6 @@ import  time, datetime, threading
 from resources.zattooDB import ZattooDB
 from resources.library import library
 from resources.guiactions import *
-
-#import resources.MyFont as MyFont
-#MyFont.addFont( "zattoo45" , "NotoSans-Bold.ttf" , "45", style="bold") # style and aspect are optional.
-
 
 __addon__ = xbmcaddon.Addon()
 __addonId__=__addon__.getAddonInfo('id')
@@ -428,6 +423,7 @@ def watch_channel(channel_id, start, end, showID="", restart=False, showOSD=Fals
     if DASH:
       listitem.setProperty('inputstreamaddon', 'inputstream.adaptive')
       listitem.setProperty('inputstream.adaptive.manifest_type', 'mpd')
+
     xbmc.Player().play(streams[streamNr]['url'], listitem)
     makeZattooGUI(showOSD)
     return
@@ -598,7 +594,7 @@ def selectStartChannel():
  
 
 def editKeyMap():
-    cmds=['OSD', 'prevChan', 'nextChan', 'toggleChan', 'audio', 'pause', 'stop', 'record', 'Teletext', 'Preview', 'List', 'EPG']
+    cmds=['OSD', 'info', 'prevChan', 'nextChan', 'toggleChan', 'audio', 'pause', 'stop', 'record', 'Teletext', 'Preview', 'EPG', 'List']
     cmdsText=[]
     nr=0
     for cmd in cmds:
@@ -709,21 +705,22 @@ class zattooGUI(xbmcgui.WindowXMLDialog):
 
   def onAction(self, action):
     key=str(action.getButtonCode())
-    action = action.getId()
+    actionID = action.getId()
 
     #ignore mousemove
-    if action==107: return
+    if actionID==107: return
 
     #_zattooDB_=ZattooDB()
     #channel=_zattooDB_.get_playing()['channel']
     #channeltitle=_zattooDB_.get_channeltitle(channel)
 
-    #print('ZATTOOGUI BUTTON'+str(action.getButtonCode()))
-    #print('ZATTOOGUI ACTIONID'+str(action.getId()))
+    #print('ZATTOOGUI BUTTON'+str(actionID.getButtonCode()))
+    #print('ZATTOOGUI ACTIONID'+str(actionID.getId()))
     #self.channelInputCtrl.setVisible(False)
 
     #user defined keys
     if key==__addon__.getSetting('key_OSD'): self.act_showOSD()
+    elif key==__addon__.getSetting('key_info'): xbmc.executebuiltin("Action(CodecInfo)")
     elif key==__addon__.getSetting('key_Preview'): self.act_showPreview()
     elif key==__addon__.getSetting('key_EPG'): self.act_showEPG()
     elif key==__addon__.getSetting('key_List'): self.act_showList()
@@ -736,24 +733,30 @@ class zattooGUI(xbmcgui.WindowXMLDialog):
     elif key==__addon__.getSetting('key_stop'): self.close()
     elif key==__addon__.getSetting('key_record'): self.act_record()
 
-    #default actions/keys
-    elif action in [ACTION_PARENT_DIR, KEY_NAV_BACK, ACTION_PREVIOUS_MENU, ACTION_OSD]:
+    #default actionIDs/keys
+    elif actionID in [ACTION_PARENT_DIR, KEY_NAV_BACK, ACTION_PREVIOUS_MENU, ACTION_OSD]:
       self.close()
       xbmc.executebuiltin("Action(Back)")
-    elif action  == ACTION_STOP:
+    elif actionID  == ACTION_STOP:
       self.close()
       xbmc.Player().stop()  
-    elif action in [ACTION_SELECT_ITEM, ACTION_MOUSE_LEFT_CLICK]: self.act_showOSD()
-    elif action == ACTION_MOVE_DOWN: self.act_showEPG()
-    elif action == ACTION_MOVE_UP: self.act_showList()
-    elif action == ACTION_MOVE_LEFT: self.act_toggleChan()
-    elif action == ACTION_MOVE_RIGHT: self.act_changeStream()
-    elif action in [ACTION_CHANNEL_UP, ACTION_PAGE_UP, ACTION_SKIPNEXT]: self.act_prevChan()
-    elif action in [ACTION_CHANNEL_DOWN, ACTION_PAGE_DOWN, ACTION_SKIPPREW]: self.act_nextChan()
-    elif action == ACTION_RECORD: self.act_record()
-    elif (action>57 and action<68):self.act_numbers(action)
-    elif action == ACTION_BUILT_IN_FUNCTION:self.close() #keymap functions
-    
+    elif actionID in [ACTION_SELECT_ITEM, ACTION_MOUSE_LEFT_CLICK]: self.act_showOSD()
+    elif actionID == ACTION_MOVE_DOWN: self.act_showEPG()
+    elif actionID == ACTION_MOVE_UP: self.act_showList()
+    elif actionID == ACTION_MOVE_LEFT: self.act_toggleChan()
+    elif actionID == ACTION_MOVE_RIGHT: self.act_changeStream()
+    elif actionID in [ACTION_CHANNEL_UP, ACTION_PAGE_UP, ACTION_SKIPNEXT]: self.act_prevChan()
+    elif actionID in [ACTION_CHANNEL_DOWN, ACTION_PAGE_DOWN, ACTION_SKIPPREW]: self.act_nextChan()
+    elif actionID == ACTION_RECORD: self.act_record()
+    elif (actionID>57 and actionID<68):self.act_numbers(actionID)
+    elif actionID == ACTION_BUILT_IN_FUNCTION:self.close() #keymap functions
+    '''
+    else:
+      win = xbmcgui.Window(12005)
+      ret=win.onAction(action)
+      xbmc.executebuiltin("Action(Info,12005)")
+    '''
+
   def act_showOSD(self):
     self.hideToggleImg()
       
@@ -767,15 +770,16 @@ class zattooGUI(xbmcgui.WindowXMLDialog):
 
   def act_showPreview(self):    
     xbmc.executebuiltin('RunPlugin("plugin://'+__addonId__+'/?mode=previewOSD")')  
-    xbmc.executebuiltin("Action(OSD)") #close hidden gui
+    self.close()
     
   def act_showEPG(self):    
-    xbmc.executebuiltin("Action(OSD)") #close hidden gui
     xbmc.executebuiltin('RunPlugin("plugin://'+__addonId__+'/?mode=epgOSD")')
-    
+    self.close()
+        
   def act_showList(self):
-    xbmc.executebuiltin("Action(OSD)") #close hidden gui
     xbmc.executebuiltin('ActivateWindow(10025,"plugin://'+__addonId__+'/?mode=channellist")')
+    self.close()
+    
       
   def act_teletext(self):    
     from resources.teletext import Teletext
@@ -804,10 +808,11 @@ class zattooGUI(xbmcgui.WindowXMLDialog):
       self.showChannelNr(nr+1)
       
   def act_nextChan(self):
+      start_time = time.time()
       self.hideChannelNr()
       nr=skip_channel(+1)
       self.showChannelNr(nr+1)
-      
+        
   def act_record(self):
       program = _zattooDB_.getPrograms({'index':[channel]}, True, datetime.datetime.now(), datetime.datetime.now())
       program=program[0]
@@ -827,7 +832,7 @@ class zattooGUI(xbmcgui.WindowXMLDialog):
 
   def showChannelNr(self, channelNr):
     if not hasattr(self, 'channelInputCtrl'):
-      self.channelInputCtrl = xbmcgui.ControlLabel(1000, 0, 270, 75,'', font='zattoo45', alignment=1)
+      self.channelInputCtrl = xbmcgui.ControlLabel(1000, 0, 270, 75,'', font='font35_title', alignment=1)
       self.addControl(self.channelInputCtrl)
     self.channelNr=channelNr
     self.channelInput=''
@@ -1097,12 +1102,4 @@ def main():
     del info
   '''
 
-
 main()
-
-
-
-
-
-
-

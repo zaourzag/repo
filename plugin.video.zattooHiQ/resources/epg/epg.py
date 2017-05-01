@@ -273,7 +273,7 @@ class EPG(xbmcgui.WindowXML):
 			self.close()
 			return
 			
-		elif controlId == 4350:
+		elif controlId == 4350: #touch start
 			self.getControl(4401).setVisible(False)
 			self.getControl(4400).setVisible(True)
 		
