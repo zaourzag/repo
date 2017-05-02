@@ -176,7 +176,7 @@ oder online unter https://goo.gl/GtK41L nachlesen.
     </extension>
 </addon>
 
-<addon id="plugin.service.gto" name="German Telecast Offers" version="2.0.10" provider-name="Birger Jesch">
+<addon id="plugin.service.gto" name="German Telecast Offers" version="2.0.11" provider-name="Birger Jesch">
     <requires>
         <import addon="xbmc.python" version="2.20.0"/>
     </requires>
@@ -205,9 +205,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
         <email>birger.jesch@gmail.com</email>
         <website>http://vdr4bj1.no-ip.org/index.php?action=list&amp;item=addon</website>
         <news>
-            - Improvements for the plugin service
-            - Ready for Krypton, skin integration sheet added
-            - Scraper updates
+            Info window on Krypton integrated, skin integration updated
         </news>
         <assets>
             <icon>icon.png</icon>
@@ -218,6 +216,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
             <screenshot>resources/lib/media/screenshots/screenshot_3.jpg</screenshot>
             <screenshot>resources/lib/media/screenshots/screenshot_4.jpg</screenshot>
             <screenshot>resources/lib/media/screenshots/screenshot_5.jpg</screenshot>
+            <screenshot>resources/lib/media/screenshots/screenshot_6.jpg</screenshot>
         </assets>
     </extension>
 </addon>
@@ -1819,24 +1818,25 @@ Video Addon for hltv.org
   </extension>
 </addon>
 
-<addon id="service.kn.switchtimer" name="KN Switchtimer Service" provider-name="Birger Jesch" version="2.0.2">
+<addon id="service.kn.switchtimer" name="KN Switchtimer Service" provider-name="Birger Jesch" version="2.0.3">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
+        <import addon="script.module.dateutil" version="2.5.3"/>
         <import addon="xbmc.json" version="6.20.0"/>
     </requires>
     <extension point="xbmc.service" library="service.py" start="login" />
     <extension point="xbmc.python.script" library="handler.py" />
     <extension point="kodi.context.item" library="addtimer.py">
-            <item>
-                <label>30040</label>
-                <visible>System.HasAddon(service.kn.switchtimer) + Window.IsVisible(tvguide)</visible>
-            </item>
-    </extension>
-    <extension point="kodi.context.item" library="deltimer.py">
-            <item>
-                <label>30041</label>
-                <visible>System.HasAddon(service.kn.switchtimer) + Window.IsVisible(tvguide)</visible>
-            </item>
+            <menu id="kodi.core.main">
+                <item library="addtimer.py">
+                    <label>30040</label>
+                    <visible>System.HasAddon(service.kn.switchtimer) + Window.IsVisible(tvguide)</visible>
+                </item>
+                <item library="deltimer.py">
+                    <label>30041</label>
+                    <visible>System.HasAddon(service.kn.switchtimer) + Window.IsVisible(tvguide)</visible>
+                </item>
+            </menu>
     </extension>
     <extension point="xbmc.addon.metadata">
         <summary lang="en">A switch timer for the PVR module of Kodi</summary>
@@ -1849,7 +1849,7 @@ Video Addon for hltv.org
         <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
         <website>http://vdr4bj1.no-ip.org</website>
         <source>https://github.com/b-jesch/service.kn.switchtimer</source>
-        <email>Birger.Jesch@gmail.com</email>
+        <email>birger.jesch@gmail.com</email>
         <language/>
     </extension>
 </addon>
@@ -1967,21 +1967,24 @@ Video Addon for hltv.org
     </extension>
 </addon>
 
-<addon id="service.sleepy.watchdog" name="Sleepy Watchdog" version="0.1.19" provider-name="Birger Jesch, thanks to Martin Schlosser">
+<addon id="service.sleepy.watchdog" name="Sleepy Watchdog" version="0.1.20" provider-name="Birger Jesch">
+  <requires>
+    <import addon="xbmc.python" version="2.24.0"/>
+  </requires>
   <extension point="xbmc.service"
              library="default.py" start="[login|startup]" />
   <extension point="xbmc.addon.metadata">
     <platform>all</platform>
-    <summary lang="en">Sleepy Watchdog - he's watching while You sleep</summary>
-    <summary lang="de">Sleepy Watchdog - er passt auf, während Du schläfst</summary>
-    <summary lang="uk">Sleepy Watchdog - він чатує, поки Ви спите</summary>
-    <description lang="en">This Idle Timer management performs defined actions after an adjusted amount of inactivity time. Those actions are stop playing Audio, Video or TV for example or some actions to execute shutdown variations like suspend, reboot poweroff or hibernate.</description>
-    <description lang="de">Dieser Timer führt vorher definierte Aktionen nach einer einstellbaren Inaktivitätszeit aus. Die Aktionen können zum Beispiel das Stoppen von Audio, Video oder TV-Streams sein, aber auch das Herunterfahren des Systems in verschiedenen Modi (Suspend, Reboot, PowerOff, Bereitschaft) wird angeboten.</description>
-    <description lang="uk">Цей Таймер Простою виконує задані дії, після встановленого часу неактивності. Наприклад, зупиняє відтворення Аудіо, Відео, TV-Потоків чи інші дії (як Призупинення, Вимкнення, Перезавантаження або Гібернація) до Системи.</description>
-    <disclaimer lang="uk">Використовуйте на власний Ризик. Ця Служба, може вступати в конфлікт з іншими сервісами (н.д. Запису).</disclaimer>
-    <disclaimer lang="de">Benutzung auf eigene Gefahr. Dieser Dienst könnte mit anderen Diensten (z.B. Aufnahmedienste) kollidieren.</disclaimer>
-    <disclaimer lang="en">Use at your own risk. This service could conflict to other services (e.g recording services).</disclaimer>
-    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    <summary lang="en_GB">Sleepy Watchdog - he's watching while You sleep</summary>
+    <summary lang="de_DE">Sleepy Watchdog - er passt auf, während Du schläfst</summary>
+    <summary lang="uk_UA">Sleepy Watchdog - він чатує, поки Ви спите</summary>
+    <description lang="en_GB">This Idle Timer management performs defined actions after an adjusted amount of inactivity time. Those actions are stop playing Audio, Video or TV for example or some actions to execute shutdown variations like suspend, reboot poweroff or hibernate.</description>
+    <description lang="de_DE">Dieser Timer führt vorher definierte Aktionen nach einer einstellbaren Inaktivitätszeit aus. Die Aktionen können zum Beispiel das Stoppen von Audio, Video oder TV-Streams sein, aber auch das Herunterfahren des Systems in verschiedenen Modi (Suspend, Reboot, PowerOff, Bereitschaft) wird angeboten.</description>
+    <description lang="uk_UA">Цей Таймер Простою виконує задані дії, після встановленого часу неактивності. Наприклад, зупиняє відтворення Аудіо, Відео, TV-Потоків чи інші дії (як Призупинення, Вимкнення, Перезавантаження або Гібернація) до Системи.</description>
+    <disclaimer lang="uk_UA">Використовуйте на власний Ризик. Ця Служба, може вступати в конфлікт з іншими сервісами (н.д. Запису).</disclaimer>
+    <disclaimer lang="de_DE">Benutzung auf eigene Gefahr. Dieser Dienst könnte mit anderen Diensten (z.B. Aufnahmedienste) kollidieren.</disclaimer>
+    <disclaimer lang="en_GB">Use at your own risk. This service could conflict to other services (e.g recording services).</disclaimer>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 3, June 2007</license>
     <forum>http://www.kodinerds.net/index.php/Thread/43876-RELEASE-Sleepy-WatchDog-Wenn-alles-vor-der-Glotze-schl%C3%A4ft/</forum>
     <website>http://vdr4bj1.no-ip.org</website>
     <email></email>
