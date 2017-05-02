@@ -10,6 +10,7 @@ RAN_API_BASE = 'http://contentapi.sim-technik.de'
 def get_playlist_url(m3u8_url, height=720):
     import re
     try:
+        print("get_playlist_url "+m3u8_url)
         response = requests.get(m3u8_url)
         m3u8 = response.read()
         stream_url_prefix = m3u8_url[:m3u8_url.rfind('/') + 1]
@@ -33,6 +34,7 @@ def get_playlist_url(m3u8_url, height=720):
 def list_videos(resource):
     try:
         json_url = RAN_API_BASE + resource
+        print ("###########"+json_url)
         response = requests.get(json_url, headers={'Accept-Encoding': 'gzip'})
         videos = response.json()['contents']
     except:
@@ -102,6 +104,7 @@ def get_number_livestreams():
 
 def _get_videos(video_id, access_token, client_name, client_location, salt, source_id=None):
     from hashlib import sha1
+    print("-XYZ----")
     ## Step 1
     if source_id is None:
         json_url = 'http://vas.sim-technik.de/vas/live/v2/videos/%s?' \
@@ -125,18 +128,34 @@ def _get_videos(video_id, access_token, client_name, client_location, salt, sour
                'access_token=%s&client_location=%s&client_name=%s&' \
                'client_id=%s&server_id=%s&source_ids=%s' \
                % (video_id, access_token, client_location, client_name, client_id_2, server_id, source_id)
-    response = requests.get(json_url, headers={'Accept-Encoding': 'gzip'})
+    response = requests.get(json_url, headers={'Accept-Encoding': 'gzip'})        
     videos = response.json()['sources']
     return sorted(videos, key=lambda k: k.get('bitrate'))
 
 
 def get_video_url(resource, height):
-    json_url = RAN_API_BASE + resource
+    from hashlib import sha1
+    json_url = RAN_API_BASE + resource    
     response = requests.get(json_url, headers={'Accept-Encoding': 'gzip'})
     json_data = response.json()
     if json_data['type'] == 'livestream':
         url = json_data['stream_url']
-        return get_playlist_url(url, height)
+        salt = "01iegahthei8yok0Eopai6jah5Qui0qu"
+        access_token="ran-app"
+        location="http://app.ran.de/"+url
+        client_token=salt[:2] + sha1(''.join([url,salt,access_token,location])).hexdigest()
+        newurl="https://vas-live-mdp.glomex.com/live/1.0/getprotocols?access_token="+access_token+"&client_location="+location+"&client_token="+client_token+"&property_name="+url        
+        response = requests.get(newurl, headers={'Accept-Encoding': 'gzip'})
+        
+        servertoken=response.json()["server_token"]
+
+        protokol="hls"        
+        client_token=salt[:2] + sha1(''.join([url,salt,access_token,servertoken,location+protokol])).hexdigest()          
+        url2="https://vas-live-mdp.glomex.com/live/1.0/geturls?access_token="+access_token+"&client_location="+location+"&client_token="+client_token+"&property_name=" +url+"&protocols=" + protokol+"&server_token=" + servertoken
+        response = requests.get(url2, headers={'Accept-Encoding': 'gzip'})
+        jsondata=response.json()        
+        urld=jsondata["urls"][protokol]["clear"]["url"]        
+        return get_playlist_url(urld, height)
     else:
         video_id = json_data['video_id']
         """
