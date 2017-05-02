@@ -5,13 +5,24 @@ Um die TV Highlights des Tages in Estuary zu integrieren sind folgende Schritte 
 
 If You want to use the plugin as widget you have to perfom following steps. The example described here is an example under Linux. All files resides in folder 'integration/Estuary' of the addon:
 
-        cd $HOME/.kodi/addons/plugin.service.gto/integration/Estuary
+        cd $HOME/.kodi/addons/plugin.service.gto/integration/skin.estuary
 
-1. Kopieren des Sraper-Icons in den Skin Ordner / Copy skin icon to Estuary folder:
+1. Kopieren des Scraper-Icons und des Widgets in den Skin Ordner / Copy skin icon and widget to Estuary folder:
 
         sudo cp -r icons /usr/share/kodi/addons/skin.estuary/extras/
+        sudo cp gto-widget.xml /usr/share/kodi/addons/skin.estuary/xml/
 
-2. Das Widget in den PVR-Bereich des Skins einbinden / Insert the widget into the PVR section of the skin.
+2. Das Widget als include anmelden / Register the include:
+
+        sudo nano /usr/share/kodi/addons/skin.estuary/xml/Includes_Home.xml
+        
+   In Zeile 3 einfügen (nach `<includes>`) / Insert in line 3 (after `<includes>`):
+   
+        <include file="gto-widget.xml"/>
+
+    Speichern und beenden. Save changes and exit
+    
+3. Das Widget in den PVR-Bereich des Skins einbinden / Insert the widget into the PVR section of the skin.
    Dazu die Home.xml öffnen und nach den PVR Includes suchen / Open the Home.xml and search for the PVR includes.
    
         sudo nano /usr/share/kodi/addons/skin.estuary/xml/Home.xml
@@ -24,7 +35,7 @@ If You want to use the plugin as widget you have to perfom following steps. The 
     Jedes Widget hat folgende Struktur, die Widgetliste wird mit `</control>` abgeschlossen / Every widget has a same structure, widget list is closed with a `</control>` tag.
     Vor dem `</control>`-Tag einfügen / Insert before `</control>` tag:
      
-        <include content="WidgetListChannels" condition="System.HasPVRAddon + System.HasAddon(plugin.service.gto)">
+        <include content="WidgetListGTO" condition="System.HasPVRAddon + System.HasAddon(plugin.service.gto)">
             <param name="content_path" value="plugin://plugin.service.gto?action=getcontent&amp;ts=$INFO[Window(Home).Property(GTO.timestamp)]"/>
             <param name="widget_header" value="$ADDON[plugin.service.gto 30104]: $INFO[Window(Home).Property(GTO.Provider)]"/>
             <param name="widget_target" value="pvr"/>
@@ -53,7 +64,7 @@ Beispiel / Example:
             <param name="list_id" value="12200"/>
         </include>
         ...
-        <include content="WidgetListChannels" condition="System.HasPVRAddon + System.HasAddon(plugin.service.gto)">
+        <include content="WidgetListGTO" condition="System.HasPVRAddon + System.HasAddon(plugin.service.gto)">
             <param name="content_path" value="plugin://plugin.service.gto?action=getcontent&amp;ts=$INFO[Window(Home).Property(GTO.timestamp)]"/>
             <param name="widget_header" value="$ADDON[plugin.service.gto 30104]: $INFO[Window(Home).Property(GTO.Provider)]"/>
             <param name="widget_target" value="pvr"/>
@@ -63,7 +74,7 @@ Beispiel / Example:
         </include>
     </control>
     
-3. Icon für den Scraperwechsel hinzufügen / Add an icon for the scraper change (optional)
+4. Icon für den Scraperwechsel hinzufügen / Add an icon for the scraper change (optional)
 
         sudo nano /usr/share/kodi/addons/skin.estuary/xml/Includes_Home.xml
         

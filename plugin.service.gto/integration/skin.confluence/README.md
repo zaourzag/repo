@@ -5,7 +5,7 @@ Um die TV Highlights des Tages in Confluence zu integrieren sind folgende Schrit
 
 If You want to use the plugin as widget you have to perfom following steps. The example described here is an example under Linux. All files resides in folder 'integration/Confluence' of the addon:
 
-        cd $HOME/.kodi/addons/plugin.service.gto/integration/Confluence
+        cd $HOME/.kodi/addons/plugin.service.gto/integration/skin.confluence
 
 1. Kopieren des XML Files in den Confluence Skin Ordner / Copy XML to Confluence folder
 
