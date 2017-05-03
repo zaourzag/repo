@@ -549,7 +549,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
     </extension>
 </addon>
 
-<addon id="plugin.video.7tvneu" name="7TV" version="0.5.18" provider-name="L0RE">
+<addon id="plugin.video.7tvneu" name="7TV" version="0.5.19" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="script.module.requests" version="2.12.4"/>
