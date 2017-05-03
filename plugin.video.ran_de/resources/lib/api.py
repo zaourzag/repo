@@ -3,6 +3,7 @@ import requests
 import time
 import datetime
 import gui
+import xbmcgui,xbmcplugin,sys
 
 RAN_API_BASE = 'http://contentapi.sim-technik.de'
 
@@ -54,6 +55,7 @@ def list_videos(resource):
                 if stream_date_start <= timestamp_now:
                     duration_in_seconds = stream_date_end - timestamp_now
                     playable = True
+                    print("YYY: "+video["resource"])
                     title = '[B][COLOR red]%s[/COLOR][/B]' % video['teaser']['title']
                     year = datetime.datetime.now().year
                 else:
@@ -146,16 +148,25 @@ def get_video_url(resource, height):
         client_token=salt[:2] + sha1(''.join([url,salt,access_token,location])).hexdigest()
         newurl="https://vas-live-mdp.glomex.com/live/1.0/getprotocols?access_token="+access_token+"&client_location="+location+"&client_token="+client_token+"&property_name="+url        
         response = requests.get(newurl, headers={'Accept-Encoding': 'gzip'})
+        print(response.json())
         
         servertoken=response.json()["server_token"]
 
-        protokol="hls"        
+        protokol="dash"        
         client_token=salt[:2] + sha1(''.join([url,salt,access_token,servertoken,location+protokol])).hexdigest()          
         url2="https://vas-live-mdp.glomex.com/live/1.0/geturls?access_token="+access_token+"&client_location="+location+"&client_token="+client_token+"&property_name=" +url+"&protocols=" + protokol+"&server_token=" + servertoken
         response = requests.get(url2, headers={'Accept-Encoding': 'gzip'})
-        jsondata=response.json()        
-        urld=jsondata["urls"][protokol]["clear"]["url"]        
-        return get_playlist_url(urld, height)
+        jsondata=response.json()    
+        print(jsondata)        
+        print("###############################")        
+        urld=jsondata["urls"][protokol]["clear"]["url"]                
+        addon_handle = int(sys.argv[1])
+        listitem = xbmcgui.ListItem(path=urld)         
+        listitem.setProperty("inputstream.adaptive.license_type", "com.widevine.alpha")
+        listitem.setProperty("inputstream.adaptive.manifest_type", "mpd")
+        listitem.setProperty('inputstreamaddon', "inputstream.adaptive")             
+        xbmcplugin.setResolvedUrl(addon_handle, True, listitem)                    
+        return ""
     else:
         video_id = json_data['video_id']
         """

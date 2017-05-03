@@ -10,7 +10,9 @@ def play(**kwargs):
     addon = xbmcaddon.Addon(id='plugin.video.ran_de')
     height = (234, 270, 396, 480, 540, 720)[int(addon.getSetting('video.quality'))]
     resource = urllib.unquote_plus(kwargs['resource'])
-    gui.play(api.get_video_url(resource, height))
+    video=api.get_video_url(resource, height)
+    if not video=="":
+     gui.play(video)
 
 
 def videos(**kwargs):
