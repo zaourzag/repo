@@ -1,4 +1,12 @@
 ﻿=================================================
+[B]​ZattooHiQ v1.1.3 [/B] 04.05.2017 
+​=================================================
+- Absturz des plugins auf Libreelec behoben
+- Fehler beim Fortschrittsbalken bei Android Kodi16 behoben
+- Korrektur wenn keine 'id' beim Befehl watch_c mitgeschickt wird: 
+- kleinen Fehler im OSD behoben
+
+=================================================
 [B]​ZattooHiQ v1.1.2 [/B] 30.04.2017 by GreenAir
 ​=================================================
 - Zattoo GUI: zeige preview/list/epg Funktionen überarbeitet

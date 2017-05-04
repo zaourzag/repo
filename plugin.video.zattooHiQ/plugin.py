@@ -631,14 +631,16 @@ def makeOsdInfo():
   win.setProperty('showThumb', program['image_small'])
   win.setProperty('channelLogo', channelInfo['logo'])
   win.setProperty('plot', program['description_long'])
-  win.setProperty('genre', '[COLOR blue]'+ local(135) + ':  ' + '[/COLOR]'+ str(program['genre']))
-  win.setProperty('year', '[COLOR blue]' + local(345) + ':  ' + '[/COLOR]' + str(program['year']) + '   ' + '[COLOR blue]' + local(21866) + ':  ' + '[/COLOR]' + str(program['category']))
-  win.setProperty('country', '[COLOR blue]' + local(574) + ':  ' + '[/COLOR]' + str(program['country']))
+  win.setProperty('genre', '[COLOR blue]'+ local(135) + ':  ' + '[/COLOR]'+ program['genre'])
+  win.setProperty('year', '[COLOR blue]' + local(345) + ':  ' + '[/COLOR]' + program['year'] + '   ' + '[COLOR blue]' + local(21866) + ':  ' + '[/COLOR]' + program['category'])
+  win.setProperty('country', '[COLOR blue]' + local(574) + ':  ' + '[/COLOR]' + program['country'])
   
   played = datetime.datetime.now()-program['start_date']
   total = program['end_date'] - program['start_date']
-  win.setProperty('progress', str((100/total.total_seconds())*played.total_seconds()))
-  
+  #win.setProperty('progress', str((100/total.total_seconds())*played.total_seconds()))
+  win.setProperty('progress', str((float(100)/total.seconds)*played.seconds))
+
+
   win.setProperty('favourite', str(channelInfo['favourite']))
   if channelInfo['favourite']==1: xbmc.executebuiltin( "Skin.SetBool(%s)" %'favourite')
   else: xbmc.executebuiltin( "Skin.Reset(%s)" %'favourite')
@@ -1030,7 +1032,8 @@ def main():
     __addon__.openSettings()
     _zattooDB_.zapi.renew_session()
   elif action == 'watch_c':
-    cid = args.get('id','ard')[0]
+    cid = args.get('id',['ard'])[0]
+    if cid=="current": cid=_zattooDB_.get_playing()['channel'] 
     start = args.get('start', '0')[0]
     end = args.get('end', '0')[0]
     showID = args.get('showID', '1')[0]

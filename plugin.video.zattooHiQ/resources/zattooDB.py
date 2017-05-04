@@ -542,7 +542,7 @@ class ZattooDB(object):
         datelow = datetime.datetime.combine(d, midnight)
         print 'CleanUp  ' + str(datelow)
         c = self.conn.cursor()
-        c.execute('SELECT * FROM programs WHERE start_date < ?', ["2017-04-13 00:00:00"])
+        c.execute('SELECT * FROM programs WHERE start_date < ?', [datelow])
         r=c.fetchall()
 
         if len(r)>0:
