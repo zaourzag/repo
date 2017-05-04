@@ -143,11 +143,12 @@ def get_video_url(resource, height):
     if json_data['type'] == 'livestream':
         url = json_data['stream_url']
         salt = "01iegahthei8yok0Eopai6jah5Qui0qu"
+        userAgent = 'User-Agent=Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36'
         access_token="ran-app"
         location="http://app.ran.de/"+url
         client_token=salt[:2] + sha1(''.join([url,salt,access_token,location])).hexdigest()
         newurl="https://vas-live-mdp.glomex.com/live/1.0/getprotocols?access_token="+access_token+"&client_location="+location+"&client_token="+client_token+"&property_name="+url        
-        response = requests.get(newurl, headers={'Accept-Encoding': 'gzip'})
+        response = requests.get(newurl, headers={'Accept-Encoding': 'gzip','user-agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36'})
         print(response.json())
         
         servertoken=response.json()["server_token"]
@@ -155,13 +156,13 @@ def get_video_url(resource, height):
         protokol="dash"        
         client_token=salt[:2] + sha1(''.join([url,salt,access_token,servertoken,location+protokol])).hexdigest()          
         url2="https://vas-live-mdp.glomex.com/live/1.0/geturls?access_token="+access_token+"&client_location="+location+"&client_token="+client_token+"&property_name=" +url+"&protocols=" + protokol+"&server_token=" + servertoken
-        response = requests.get(url2, headers={'Accept-Encoding': 'gzip'})
+        response = requests.get(url2, headers={'Accept-Encoding': 'gzip','user-agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36'})
         jsondata=response.json()    
         print(jsondata)        
         print("###############################")        
         urld=jsondata["urls"][protokol]["clear"]["url"]                
         addon_handle = int(sys.argv[1])
-        listitem = xbmcgui.ListItem(path=urld)         
+        listitem = xbmcgui.ListItem(path=urld+"|"+userAgent)         
         listitem.setProperty("inputstream.adaptive.license_type", "com.widevine.alpha")
         listitem.setProperty("inputstream.adaptive.manifest_type", "mpd")
         listitem.setProperty('inputstreamaddon', "inputstream.adaptive")             
