@@ -129,7 +129,6 @@ def get_live_video_items(data):
     return items
     
 def get_event_items(items,a,live):
-    base_url = 'https://tv.sport1.de'
     b = re.findall('<a (.*?)</a>', a, re.S)
     for c in b:
         d = re.search('href="(.+?)"', c, re.S).group(1)
@@ -137,9 +136,9 @@ def get_event_items(items,a,live):
         f = re.search('<span class="Info">(.+?)<br>', c, re.S).group(1)
         g = re.search('<strong>(.+?)</strong>', c, re.S).group(1)
         if not d.startswith('http'):
-            d = base_url+d
+            d = tv_base+d
         if not e.startswith('http'):
-            e = base_url+e
+            e = tv_base+e
         if live:
             h = utfenc('%s %s' % (f,g))
         else:

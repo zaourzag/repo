@@ -16,6 +16,11 @@ email = addon.getSetting('email')
 password = addon.getSetting('password')
 cookie = addon.getSetting('cookie')
 
+www_base = 'http://www.sport1.de'
+video_base = 'http://video.sport1.de'
+tv_base = 'http://tv.sport1.de'
+api_base = 'http://api.sport1.de'
+
 def log(msg):
     xbmc.log(str(msg), xbmc.LOGNOTICE)
 
