@@ -2,7 +2,7 @@
 
 import json,os,sys,urllib,urlparse
 import time,datetime,random,re
-import xbmc,xbmcaddon,xbmcgui,xbmcplugin
+import xbmc,xbmcaddon,xbmcgui,xbmcplugin,xbmcvfs
 from uuid import UUID
 from hashlib import md5
 
@@ -27,12 +27,10 @@ cdn = int(addon.getSetting('server'))
 api_base = 'https://isl.dazn.com/misl/'
 
 time_format = '%Y-%m-%dT%H:%M:%SZ'
+date_format = '%Y-%m-%d'
 
 def log(msg):
     xbmc.log(str(msg), xbmc.LOGNOTICE)
-    
-def getString(id):
-    return addon.getLocalizedString(id)
 
 def build_url(query):
     return sys.argv[0] + '?' + urllib.urlencode(query)
@@ -43,6 +41,12 @@ def utfenc(str):
     except:
         pass
     return str
+    
+def getString(id):
+    return addon.getLocalizedString(id)
+
+def time_stamp(str_date):
+    return datetime.datetime.fromtimestamp(time.mktime(time.strptime(str_date,time_format)))
 
 def timedelta_total_seconds(timedelta):
     return (
@@ -60,7 +64,9 @@ def uniq_id():
     mac_addr = xbmc.getInfoLabel('Network.MacAddress')
     if not ":" in mac_addr: mac_addr = xbmc.getInfoLabel('Network.MacAddress')
     # hack response busy
-    if not ":" in mac_addr:
+    i = 0
+    while not ":" in mac_addr and i < 3:
+        i += 1
         time.sleep(1)
         mac_addr = xbmc.getInfoLabel('Network.MacAddress')
     if ":" in mac_addr:
@@ -79,18 +85,24 @@ def days(title, now, start):
             return 'Today'
         elif str(today + datetime.timedelta(days=1)) == start[:10]:
             return 'Tomorrow'
-        elif str(today + datetime.timedelta(days=2)) == start[:10]:
-            return (today + datetime.timedelta(days=2)).strftime('%A')
-        elif str(today + datetime.timedelta(days=3)) == start[:10]:
-            return (today + datetime.timedelta(days=3)).strftime('%A')
-        elif str(today + datetime.timedelta(days=4)) == start[:10]:
-            return (today + datetime.timedelta(days=4)).strftime('%A')
-        elif str(today + datetime.timedelta(days=5)) == start[:10]:
-            return (today + datetime.timedelta(days=5)).strftime('%A')
-        elif str(today + datetime.timedelta(days=6)) == start[:10]:
-            return (today + datetime.timedelta(days=6)).strftime('%A')
-        elif str(today + datetime.timedelta(days=7)) == start[:10]:
-            return (today + datetime.timedelta(days=7)).strftime('%A')
-        elif str(today + datetime.timedelta(days=8)) == start[:10]:
-            return (today + datetime.timedelta(days=8)).strftime('%A')
+        for i in range(2,8):
+            if str(today + datetime.timedelta(days=i)) == start[:10]:
+                return (today + datetime.timedelta(days=i)).strftime('%A')
     return title
+
+def epg_date(date):
+    return datetime.datetime.fromtimestamp(time.mktime(time.strptime(date, date_format)))
+
+def get_prev_day(date):
+    return (date - datetime.timedelta(days=1))
+
+def get_next_day(date):
+    return (date + datetime.timedelta(days=1))
+
+def input_date():
+    date = 'today'
+    dg = dialog.input(getString(30230), type=xbmcgui.INPUT_DATE)
+    if dg:
+        spl = dg.split('/')
+        date = '%s-%s-%s' % (spl[2], spl[1], spl[0])
+    return date

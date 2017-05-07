@@ -35,7 +35,7 @@ class Items:
         art = {
             'thumb': item.get('thumb', icon),
             'poster': item.get('thumb', icon),
-            'fanart': fanart
+            'fanart': item.get('fanart', fanart)
         }
                 
         labels = {

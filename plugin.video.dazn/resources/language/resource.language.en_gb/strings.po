@@ -45,7 +45,7 @@ msgid "Advanced"
 msgstr ""
 
 msgctxt "#30021"
-msgid "Server Selection"
+msgid "CDN"
 msgstr ""
 
 msgctxt "#30025"
@@ -140,6 +140,22 @@ msgctxt "#30211"
 msgid "Competitors"
 msgstr ""
 
+msgctxt "#30212"
+msgid "Schedule"
+msgstr ""
+
+msgctxt "#30213"
+msgid "Watch highlights"
+msgstr ""
+
+msgctxt "#30214"
+msgid "Go to the sport"
+msgstr ""
+
+msgctxt "#30215"
+msgid "Go to the competition"
+msgstr ""
+
 msgctxt "#30221"
 msgid "Today"
 msgstr ""
@@ -177,5 +193,5 @@ msgid "Sunday"
 msgstr ""
 
 msgctxt "#30230"
-msgid "Guide"
+msgid "Enter Date"
 msgstr ""

@@ -7,39 +7,56 @@ items = Items()
 
 def rails_items(data, id):
     from rails import Rails
+    if id == 'home':
+        epg = {
+            'mode': 'epg',
+            'title': utfenc(getString(30212)),
+            'plot': 'Schedule',
+            'params': 'today'
+        }
+        items.add_item(epg)
     for i in data.get('Rails', []):
         items.add_item(Rails(i).item)
     items.list_items()
     
-def rail_items(data):
+def rail_items(data, list=True):
     from tiles import Tiles
+    from context import Context
     focus = data.get('StartPosition', False)
     for i in data.get('Tiles', []):
-        item = Tiles(i).item
-        cm = []
-        if item.get('cm', None):
-            cm_items = context_items(item['cm'])
-            for i in cm_items:
-                d = {
-                    'mode': 'play_context',
-                    'title': i['title'],
-                    'id': i.get('id', ''),
-                    'params': i.get('params','')
-                }
-                cm.append( (i['type'], 'XBMC.RunPlugin(%s)' % build_url(d)) )
-                if len(cm) == 3:
-                    break
-            item['cm'] = cm
+        context = Context()
+        item = Tiles(i).item       
+        if item.get('related', None):
+            cm_items = []
+            for i in item['related']:
+                if i.get('Videos', []):
+                    cm_items.append(Tiles(i).item)
+            context.related(cm_items)
+        item['cm'] = context.goto(item)
         items.add_item(item)
-    items.list_items(focus)
+    if list:
+        items.list_items(focus)
+        
+def epg_items(data, params):
+    from context import Context
+    from resources import resources
+    update = False if params == 'today' else True
+    date = epg_date(data['Date'])
+    cm = Context().epg_date()
     
-def context_items(data):
-    cm_items = []
-    from tiles import Tiles
-    for i in data:
-        if i.get('Videos', []):
-            cm_items.append(Tiles(i).item)
-    return cm_items
+    def date_item(day):
+        return {
+            'mode': 'epg',
+            'title': '%s (%s)' % (resources(day.strftime('%A')), day.strftime(date_format)),
+            'plot': '%s (%s)' % (resources(date.strftime('%A')), date.strftime(date_format)),
+            'params': day,
+            'cm': cm
+        }
+    
+    items.add_item(date_item(get_prev_day(date)))
+    rail_items(data, list=False)
+    items.add_item(date_item(get_next_day(date)))
+    items.list_items(upd=update)
     
 def playback(data, name=False, context=False):
     from playback import Playback
