@@ -125,7 +125,7 @@
                 <top>$PARAM[DialogBackgroundTop]</top>
                 <width>$PARAM[DialogBackgroundWidth]</width>
                 <height>$PARAM[DialogBackgroundHeight]</height>
-                <colordiffuse>grey3</colordiffuse>
+                <colordiffuse>$VAR[BackgroundOverlayColorDialog]</colordiffuse>
                 <texture border="5">$VAR[SelectBack2]</texture>
             </control>
             <control type="label" id="$PARAM[DialogHeaderId]">

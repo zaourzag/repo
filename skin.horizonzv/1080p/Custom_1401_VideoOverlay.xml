@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window type="dialog" id="1401">
     <defaultcontrol always="true">2</defaultcontrol>
-    <!-- <zorder>1</zorder> -->
     <visible>Player.HasVideo</visible>
     <controls>
         <control type="group">

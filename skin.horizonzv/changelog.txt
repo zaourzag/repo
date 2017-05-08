@@ -1,4 +1,7 @@
-﻿v 0.9.0.50
+﻿v 0.9.0.51
+- Bugfix Numerisches Keyboard
+
+v 0.9.0.50
 - Texte für Shutdownmenü angepasst/übersetzt
 - Bugfix in User-Addon (onclick)
 

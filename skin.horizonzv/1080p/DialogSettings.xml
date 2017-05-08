@@ -2,7 +2,6 @@
 <window>
     <defaultcontrol>5</defaultcontrol>
     <include>openclose</include>
-	<!-- <zorder>6</zorder> -->
     <controls>
         <control type="group">
 			<include>openclosevisible</include>
