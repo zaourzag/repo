@@ -9,3 +9,5 @@
 - Wrong file
 1.0.7
 - Fixed Live Stream
+1.1.16
+- Updates

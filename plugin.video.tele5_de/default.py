@@ -11,6 +11,7 @@ import xbmcgui
 import xbmcaddon
 import HTMLParser
 import json
+from bs4 import BeautifulSoup
 
 reload(sys)
 sys.setdefaultencoding('utf-8')
@@ -72,14 +73,13 @@ def index():
   listcat(baseUrl+"/re-play/uebersicht","listcat")
 
 
-def listcat(url,type="listVideos"):
+def listcat(url,type="listcat"):
+      debug("listcat :"+url)
       starturl=url
       content = getUrl(url)
-      content = content[content.find('<a id="skipNavigation22" class="invisible">&nbsp;</a>'):]
-      content = content[:content.find('<div class="ce_tvprogramme first last block">')]      
       spl = content.split('ce_teaserelemen')  
       anz=0
-      for i in range(0, len(spl), 1):
+      for i in range(1, len(spl), 1):
         element=spl[i]
         try:
           url=re.compile('href="(.+?)"', re.DOTALL).findall(element)[0]
@@ -88,51 +88,69 @@ def listcat(url,type="listVideos"):
           title=re.compile('<h2>(.+?)</h2>', re.DOTALL).findall(element)[0]
           thumb=re.compile('srcset="(.+?)"', re.DOTALL).findall(element)[0]    
           debug("listcat URL :"+url)   
-          debug("listcat type :"+type)   
-          if "WWE RAW" in  title:      
-            addLink(title, url, type, baseUrl+"/"+thumb)
-            anz=anz+1
-          else:             
-            addDir(title, url, type, baseUrl+"/"+thumb)
-            anz=anz+1
+          debug("listcat type :"+type)                        
+          addDir(title, url, type, baseUrl+"/"+thumb)
+          anz=anz+1
         except:
            pass
-      if anz==0:
-        listVideos(starturl)
+      listVideos(starturl)
       xbmcplugin.endOfDirectory(pluginhandle)
 
 
 def listVideos(url):
           debug("listVideos URL :"+ url)
-          content=getUrl(url)
+          content=getUrl(url)          
+          
           #http://tele5.flowcenter.de/gg/play/l/17:pid=vplayer_1560&tt=1&se=1&rpl=1&ssd=1&ssp=1&sst=1&lbt=1&
           #<div class="fwlist" lid="14" pid="vplayer_3780" tt="1" ssp="1" sst="1" lbt="1" ></div>		</div>
           y=0
-          try:                                  
+          try:    
+              debug("1.")          
               divtag=re.compile('(<div class="fwlist".+?>)', re.DOTALL).findall(content)[0]
               debug("DIVTAG :"+divtag)
               lid=re.compile('lid="(.+?)"', re.DOTALL).findall(divtag)[0]
               debug("LID :"+lid)
-              all=re.compile('(.+?)="(.+?)"', re.DOTALL).findall(divtag)
+              all=re.compile('([^ =]+?)="(.+?)"', re.DOTALL).findall(divtag)
               url="http://tele5.flowcenter.de/gg/play/l/"+lid+":"
               for type,inhalt in all:
-               if not type=="lod":
+               if not type=="lid":
                   url=url+type+"="+inhalt                                    
               #url="http://tele5.flowcenter.de/gg/play/l/"+lid+":pid="+ pid +"&tt="+ tt +"&se="+ se +"&rpl="+ rpl +"&ssd="+ ssd +"&ssp="+ ssp +"&sst="+ sst +"&lbt="+lbt +"&"
               debug("URL: "+url)
           
           except:
-              cid=re.compile('<div class="fwplayer" cid="(.+?)" >', re.DOTALL).findall(content)[0]
-              img=re.compile('<img style="width:100%;" src="(.+?)"', re.DOTALL).findall(content)[0]                                    
-              addLink(translation(30002), str(cid), 'playVideo', img)    
-              #playVideo(cid)
+            #try:
               y=1
-          if y==0:                                                                                    
+              debug("2.")          
+              htmlPage = BeautifulSoup(content, 'html.parser')
+              debug("2a")              
+              searchitems = htmlPage.findAll("div",{"class" :"ce_area"})              
+              debug("2b")
+              #print(searchitems)
+              for searchitem in searchitems: 
+                debug("2c")    
+                try:                
+                  cid=searchitem.find("div",{"class":"fwplayer"}) 
+                  print(cid)
+                  title=searchitem.h3.string
+                  debug(title)
+                  img="http://www.tele5.de/"+searchitem.find('img')['src']                                
+                  debug(img)
+                  addLink(title, str(cid), 'playVideo', img)    
+                except:
+                   pass
+              #playVideo(cid)
+            #except:
+            #   pass
+          if y==0:    
+            debug("3.")                    
             debug("NEWURL: "+url)
             content=getUrl(url)
-            content=re.compile('\{(.+)\}', re.DOTALL).findall(content)[0]
-            content=re.compile('\{(.+)\}', re.DOTALL).findall(content)[0]
-            content="{"+content+"}"
+            debug("##########")
+            debug(content)
+
+            content=re.compile('\{"id"(.+)\},', re.DOTALL).findall(content)[0]
+            content='{"id"'+content+"}"
             debug("CONTENT:")
             debug(content)
             struktur = json.loads(content) 

@@ -1,4 +1,7 @@
-﻿0.5.1
+﻿0.6.0
+- Bugfixes
+- Improvments
+0.5.1
 - Bugfixes
 - Video get marked as Playd
 - News Section Added
