@@ -13,8 +13,8 @@ class Tiles:
         self.start = utc2local(i.get('Start', ''))
         self.end = utc2local(i.get('End', ''))
         self.now = datetime.datetime.now().strftime(time_format)
-        self.sport = i.get('Sport', '')
-        self.competition = i.get('Competition', '')
+        self.sport = i.get('Sport', [])
+        self.competition = i.get('Competition', [])
         self.type = i.get('Type', '')
         self.nav = i.get('NavigateTo', '')
         self.related = i.get('Related', [])
@@ -25,26 +25,25 @@ class Tiles:
         else:
             self.mode = 'play'
             self.id = i['AssetId']
-            self.params = ''
+            self.params = i['EventId']
         self.update_item(i)
-        
+
     def add_duration(self, i):
-        if 'upcoming' in self.type.lower():
+        if 'UpComing' in self.type:
             self.end = self.start
             self.start = self.now
-        elif 'live' in self.type.lower():
+        elif 'Live' in self.type:
             self.start = self.now
         if self.start and self.end:
-            start = datetime.datetime.fromtimestamp(time.mktime(time.strptime(self.start,time_format)))
-            end = datetime.datetime.fromtimestamp(time.mktime(time.strptime(self.end,time_format)))
-            self.item['duration'] = timedelta_total_seconds(end-start)
-        
+            self.item['duration'] = timedelta_total_seconds(time_stamp(self.end)-time_stamp(self.start))
+
     def add_thumb(self, i):
-        url = api_base+'v2/image?id=%s&Quality=95&Width=720&Height=404&ResizeAction=fill&VerticalAlignment=top&Format=%s'
+        url = api_base+'v2/image?id=%s&Quality=95&Width=%s&Height=%s&ResizeAction=fill&VerticalAlignment=top&Format=%s'
         image = i.get('Image', '')
         if image:
-            self.item['thumb'] = url % (image['Id'], image['ImageMimeType'])
-        
+            self.item['thumb'] = url % (image['Id'], '720', '404', image['ImageMimeType'])
+            self.item['fanart'] = url % (image['Id'], '1280', '720', image['ImageMimeType'])
+
     def update_item(self, i):
         self.item['mode'] = self.mode
         self.item['title'] = utfenc(self.title)
@@ -54,29 +53,32 @@ class Tiles:
 
         if self.params:
             self.item['params'] = self.params
-            
+
         if 'Epg' in i.get('Id', ''):
             if self.competition:
                 competition = self.competition['Title']
             if self.sport:
                 sport = self.sport['Title']
             time = self.start[11:][:5]
-            self.item['title'] = utfenc(unicode('%s [COLOR dimgray]%s[/COLOR] %s [COLOR dimgray]%s[/COLOR]' % (time, sport, self.title, competition)))
-            
+            if self.type == 'Live':
+                self.item['title'] = utfenc(unicode('[COLOR red]%s[/COLOR] [COLOR dimgray]%s[/COLOR] %s [COLOR dimgray]%s[/COLOR]' % (time, sport, self.title, competition)))
+            else:
+                self.item['title'] = utfenc(unicode('%s [COLOR dimgray]%s[/COLOR] %s [COLOR dimgray]%s[/COLOR]' % (time, sport, self.title, competition)))
+
         elif (self.type == 'UpComing' or 'Scheduled' in i.get('Id', '')) or (self.type == 'Highlights'):
             if self.type == 'UpComing':
                 day = resources(days(self.type, self.now, self.start))
                 sub_title = unicode('%s %s' % (day, self.start[11:][:5]))
             else:
                 sub_title = resources(self.type)
-            self.item['params'] = i['Id'].split(':')[0]
             self.item['title'] = utfenc(unicode('%s (%s)' % (self.title, sub_title)))
-            
+
         if self.start:
             self.item['date'] = self.start[:10]
-            
-        if self.related:
-            self.item['cm'] = self.related
-        
+
+        self.item['related'] = self.related
+        self.item['sport'] = self.sport
+        self.item['competition'] = self.competition
+
         self.add_thumb(i)
         self.add_duration(i)

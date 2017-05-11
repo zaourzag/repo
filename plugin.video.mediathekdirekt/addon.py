@@ -22,6 +22,7 @@ maxFileAge = int(addon.getSetting("maxFileAge"))
 maxFileAge = maxFileAge*60
 showTopicsDirectly = str(addon.getSetting("showTopicsDirectly")).lower()
 hideAD = str(addon.getSetting("hideAD")).lower()
+playBestQuality = str(addon.getSetting("playBestQuality")).lower()
 
 if not os.path.isdir(addon_work_folder):
     os.mkdir(addon_work_folder)
@@ -42,7 +43,7 @@ def index():
     for entry in channels:
         addDir(entry, entry, 'showChannel', getFanart(entry), length)
     addDir(translation(30006), "", 'updateData', "", length)
-    xbmcplugin.endOfDirectory(pluginhandle)
+    endOfDirectory()
 
 def showChannel(channel = ""):
     today = date.today()
@@ -60,7 +61,7 @@ def showChannel(channel = ""):
         else:
             addDir(translation(30004), channel, 'sortTopicsInitials', fanart, 6)
         addDir(translation(30005), channel, 'sortTitleInitials', fanart, 6)
-    xbmcplugin.endOfDirectory(pluginhandle)
+    endOfDirectory()
 
 def sortByYears(channel = ""):
     data = getData()
@@ -87,7 +88,7 @@ def sortByYears(channel = ""):
     addDir(translation(30007), channel, 'searchDate', getFanart(channel), length)
     for entry in result:
         addDir(entry, channel+'|'+entry, 'sortByMonths', getFanart(channel), length)
-    xbmcplugin.endOfDirectory(pluginhandle)
+    endOfDirectory()
 
 def sortByMonths(channelYear = ""):
     data = getData()
@@ -112,7 +113,7 @@ def sortByMonths(channelYear = ""):
     result.sort()
     for entry in result:
         addDir(entry, channel+'|'+entry, 'sortByDays', getFanart(channel), len(result))
-    xbmcplugin.endOfDirectory(pluginhandle)
+    endOfDirectory()
 
 def sortByDays(channelMMYY = ""):
     data = getData()
@@ -138,7 +139,7 @@ def sortByDays(channelMMYY = ""):
     for entry in result:
         params = str(channel+'|'+entry)
         addDir(entry, params, 'showDay', getFanart(channel), len(result))
-    xbmcplugin.endOfDirectory(pluginhandle)
+    endOfDirectory()
 
 def showDay(channelDate):
     xbmcplugin.setContent(pluginhandle, 'movies');
@@ -161,7 +162,7 @@ def showDay(channelDate):
     result.sort(key=lambda entry: entry[1])
     for entry in result:
         addVideo(entry)
-    xbmcplugin.endOfDirectory(pluginhandle)
+    endOfDirectory()
 
 def sortTitleInitials(channel = ""):
     data = getData()
@@ -183,7 +184,7 @@ def sortTitleInitials(channel = ""):
     result.sort()
     for entry in result:
         addDir(entry, channel+'|'+entry, 'sortTitles', fanart, len(result))
-    xbmcplugin.endOfDirectory(pluginhandle)
+    endOfDirectory()
 
 
 def sortTopicsInitials(channel = ""):
@@ -217,7 +218,7 @@ def sortTopicsInitials(channel = ""):
     result.sort()
     for entry in result:
         addDir(entry, channel+'|'+entry, 'sortTopics', fanart, len(result))
-    xbmcplugin.endOfDirectory(pluginhandle)
+    endOfDirectory()
 
 def sortTitles(channelInitial="|"):
     xbmcplugin.setContent(pluginhandle, 'movies');
@@ -251,6 +252,15 @@ def sortTitles(channelInitial="|"):
     result.sort(key=lambda entry: entry[1].lower())
     for entry in result:
         addVideo(entry)
+    endOfDirectory()
+
+def endOfDirectory():
+    xbmcplugin.addSortMethod(pluginhandle, xbmcplugin.SORT_METHOD_UNSORTED)
+    xbmcplugin.addSortMethod(pluginhandle, xbmcplugin.SORT_METHOD_LABEL)       
+    xbmcplugin.addSortMethod(pluginhandle, xbmcplugin.SORT_METHOD_DATE)
+    xbmcplugin.addSortMethod(pluginhandle, xbmcplugin.SORT_METHOD_PROGRAM_COUNT)
+    xbmcplugin.addSortMethod(pluginhandle, xbmcplugin.SORT_METHOD_VIDEO_RUNTIME)
+    xbmcplugin.addSortMethod(pluginhandle, xbmcplugin.SORT_METHOD_GENRE)
     xbmcplugin.endOfDirectory(pluginhandle)
 
 def sortTopics(channelInitial="|"):
@@ -318,7 +328,7 @@ def sortTopics(channelInitial="|"):
     result.sort(key=lambda entry: entry.lower())
     for entry in result:
         addDir(entry.encode('utf8'), channel.encode('utf8')+'|'+entry.encode('utf8'), 'sortTopic', fanart, len(result))
-    xbmcplugin.endOfDirectory(pluginhandle)
+    endOfDirectory()
 
 def sortTopic(channelTopic = "|"):
     xbmcplugin.setContent(pluginhandle, 'movies');
@@ -350,7 +360,7 @@ def sortTopic(channelTopic = "|"):
     result.sort(key=lambda entry: entry[1].lower())
     for entry in result:
         addVideo(entry)
-    xbmcplugin.endOfDirectory(pluginhandle)
+    endOfDirectory()
 
 def search(channel=""):
     xbmcplugin.setContent(pluginhandle, 'movies');
@@ -399,7 +409,7 @@ def search(channel=""):
             result.sort(key=lambda entry: entry[1].lower())
             for entry in result:
                 addVideo(entry)
-        xbmcplugin.endOfDirectory(pluginhandle)
+        endOfDirectory()
 
 def searchDate(channelDate = ""):
     xbmcplugin.setContent(pluginhandle, 'movies');
@@ -429,13 +439,32 @@ def searchDate(channelDate = ""):
             result.sort(key=lambda entry: entry[1].lower())
         for entry in result:
             addVideo(entry)
-    xbmcplugin.endOfDirectory(pluginhandle)
+    endOfDirectory()
 
 def updateData():
     target = urllib.URLopener()
     target.retrieve("http://www.mediathekdirekt.de/good.json", jsonFile)
 
+def getBestQuality(video_url):
+    if playBestQuality == "true":
+        #list [start_url, hq_url, hdURL]
+        urls = [video_url,"",""];
+        #create hqURL
+        urls[1] = urls[0].replace('1456k_p13v11', '2328k_p35v11').replace('1456k_p13v12', '2328k_p35v12').replace('1496k_p13v13', '2328k_p35v13').replace('2256k_p14v11', '2328k_p35v11').replace('2256k_p14v12', '2328k_p35v12').replace('2296k_p14v13', '2328k_p35v13')
+        urls[2] = urls[1].replace('2328k_p35v12', '3328k_p36v12').replace('2328k_p35v13', '3328k_p36v13').replace('.hq.mp4', '.hd.mp4').replace('.l.mp4', '.xl.mp4').replace('_C.mp4', '_X.mp4')
+        if("pd-videos.daserste.de/" in urls[1]):
+            urls[2] = urls[1].replace('/960-1.mp4','/1280-1.mp4')
+        for entry in reversed(urls):
+            if len(entry) > 0:
+                #check if file exists
+                code = urllib.urlopen(entry).getcode()
+                if str(code) == "200":
+                    return entry
+    return video_url
+
 def downloadFile(video_url):
+    #get best qualiy url
+    bq_url = getBestQuality(video_url)
     #get filname from video_url
     filename = video_url.split('/')[-1]
     filetype = filename.split('.')[-1]
@@ -445,7 +474,7 @@ def downloadFile(video_url):
     target = urllib.URLopener()
     fullPath = xbmc.translatePath(download_dir+filename)
     target.retrieve(video_url,fullPath)
-    xbmcgui.Dialog().ok(addonID, translation(30101), str(fullPath))
+    dialog.ok(addonID, translation(30101), str(fullPath))
 
 #getData() returns all entrys of json file
 #entry[0] = channel
@@ -503,12 +532,17 @@ def addVideo(entry):
         premiered = str(date[2]+'-'+date[1]+'-'+date[0])
         year = date[-4:]
         duration = entry[4]
+        #sort by dateadded y-m-d ex: 2009-04-05 23:16:04
+        dateadded = premiered+' 00:00:00'
+        #duration is given in HH:MM:SS Kodi wants it to be in seconds
+        if (len(duration) == 8):
+            duration = str(int(duration[:2])*60*60 + int(duration[3:5])*60 + int(duration[-2:]))
         description = "["+date +"] "+entry[5]+"..."
-        url = entry[6]
+        url = getBestQuality(entry[6])
         link = entry[7]
         fanart = getFanart(channel)
         li = xbmcgui.ListItem(title)
-        li.setInfo(type="Video", infoLabels={"Title": title, "date": date, "Duration": duration, "Genre": topic, "Year": year, "PlotOutline": description, "Plot": description, "Studio": channel, "premiered": premiered, "aired": premiered, "dateadded": premiered+' '+duration})
+        li.setInfo(type="Video", infoLabels={"Title": title, "date": date, "dateadded": dateadded, "Duration": duration, "Genre": topic, "Year": year, "PlotOutline": description, "Plot": description, "Studio": channel, "premiered": premiered, "aired": premiered, "dateadded": dateadded})
         li.setArt({'thumb': fanart})
         li.setProperty("fanart_image", fanart)
         li.setProperty('IsPlayable', 'true')

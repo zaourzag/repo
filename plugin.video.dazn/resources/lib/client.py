@@ -6,7 +6,6 @@ from .common import *
 class Client:
 
     def __init__(self):
-
         self.TOKEN = token
         self.POST_DATA = {}
         self.ERRORS = 0
@@ -25,6 +24,7 @@ class Client:
         self.RAIL = api_base + 'v1/Rail'
         self.RAILS = api_base + 'v2/Rails'
         self.EPG = api_base + 'v1/Epg'
+        self.EVENT = api_base + 'v1/Event'
         self.PLAYBACK = api_base + 'v1/Playback'
         self.SIGNIN = api_base + 'v3/SignIn'
         self.SIGNOUT = api_base + 'v1/SignOut'
@@ -44,6 +44,10 @@ class Client:
     def epg(self, params):
         self.PARAMS['date'] = params
         return self.request(self.EPG)
+    
+    def event(self, id):
+        self.PARAMS['Id'] = id
+        return self.request(self.EVENT)
         
     def playback_data(self, id):
         self.POST_DATA = {
@@ -93,6 +97,8 @@ class Client:
         else:
             addon.openSettings()
         self.POST_DATA  = {}
+        if self.TOKEN:
+            self.userProfile()
             
     def signOut(self):
         self.HEADERS['Authorization'] = 'Bearer ' + self.TOKEN
@@ -126,7 +132,6 @@ class Client:
     def startUp(self):
         if not self.TOKEN:
             self.signIn()
-            self.userProfile()
         
     def request(self, url):
         if self.POST_DATA:
@@ -151,9 +156,9 @@ class Client:
             self.signIn()
         elif code == '7':
             dialog.ok(addon_name, getString(30107))
+        elif code == '10006':
+            dialog.ok(addon_name, getString(30101))
         elif code == '10008':
             dialog.ok(addon_name, getString(30108))
         elif code == '10049':
             dialog.ok(addon_name, getString(30151))
-        else:
-            dialog.ok(addon_name, msg)

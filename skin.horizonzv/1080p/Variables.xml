@@ -828,7 +828,7 @@
         <value>ContentPanel_scratched.png</value>
     </variable>
     <variable name="SelectBack2">
-        <value condition="!Window.IsVisible(script-TVHighlights-DialogWindow.xml)+!Window.IsVisible(virtualkeyboard)+!Window.IsVisible(script-RSS_Editor-rssEditor.xml)+!Window.IsVisible(script-RSS_Editor-setEditor.xml)+!Window.IsVisible(1102)">Underlay2.png</value>
+        <value condition="!Window.IsVisible(script-TVHighlights-DialogWindow.xml)+!Window.IsVisible(virtualkeyboard)+!Window.IsVisible(script-RSS_Editor-rssEditor.xml)+!Window.IsVisible(script-RSS_Editor-setEditor.xml)+!Window.IsVisible(1102)">White.png</value>
         <value condition="Window.IsVisible(script-RSS_Editor-setEditor.xml)|Window.IsVisible(script-RSS_Editor-rssEditor.xml)|Window.IsVisible(1102)">Black.png</value>
         <value>ContentPanel_scratched.png</value>
     </variable>

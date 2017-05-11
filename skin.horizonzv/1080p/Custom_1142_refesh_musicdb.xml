@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window type="dialog" id="1142">
     <defaultcontrol always="true">11</defaultcontrol>
-    <!-- <zorder>2</zorder> -->
     <include>openclose</include>
     <include>opencloseslidedown</include>
     <controls>

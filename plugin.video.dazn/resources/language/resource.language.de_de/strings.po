@@ -45,8 +45,8 @@ msgid "Advanced"
 msgstr "Fortgeschritten"
 
 msgctxt "#30021"
-msgid "Server Selection"
-msgstr "Server Auswahl"
+msgid "CDN"
+msgstr "CDN"
 
 msgctxt "#30025"
 msgid "Automatic"
@@ -134,11 +134,27 @@ msgstr "Alle Sportarten"
 
 msgctxt "#30210"
 msgid "Tournaments"
-msgstr "Turniere & Ligen"
+msgstr "Wettbewerbe"
 
 msgctxt "#30211"
 msgid "Competitors"
 msgstr "Konkurrenten"
+
+msgctxt "#30212"
+msgid "Schedule"
+msgstr "Vorschau"
+
+msgctxt "#30213"
+msgid "Watch highlights"
+msgstr "Highlights ansehen"
+
+msgctxt "#30214"
+msgid "Go to the sport"
+msgstr "Gehe zum Sport"
+
+msgctxt "#30215"
+msgid "Go to the competition"
+msgstr "Gehe zum Wettbewerb"
 
 msgctxt "#30221"
 msgid "Today"
@@ -177,5 +193,5 @@ msgid "Sunday"
 msgstr "Sonntag"
 
 msgctxt "#30230"
-msgid "Guide"
-msgstr "Programm"
+msgid "Enter Date"
+msgstr "Datum eingeben"

@@ -145,9 +145,9 @@
                         <height>720</height>
                         <itemgap>3</itemgap>
                         <onleft>8000</onleft>
-                        <onright>70</onright>
+                        <!-- <onright>70</onright> -->
                         <orientation>vertical</orientation>
-                        <pagecontrol>70</pagecontrol>
+                        <!-- <pagecontrol>70</pagecontrol> -->
                         <visible>Container(8000).Hasfocus(10)</visible>
                         <control type="radiobutton" id="110">
                             <width>1260</width>
@@ -348,7 +348,6 @@
                         <ondown>300</ondown>
                         <onleft>8000</onleft>
                         <onright>71</onright>
-                        <onright>400</onright>
                         <orientation>vertical</orientation>
                         <pagecontrol>71</pagecontrol>
                         <visible>Container(8000).HasFocus(2)</visible>
@@ -660,9 +659,8 @@
                         <ondown>900</ondown>
                         <onleft>8000</onleft>
                         <onright>901</onright>
-                        <onright>400</onright>
                         <orientation>vertical</orientation>
-                        <pagecontrol>71</pagecontrol>
+                        <!-- <pagecontrol>71</pagecontrol> -->
                         <visible>Container(8000).HasFocus(9)</visible>
                         <include>openclosevisible</include>
                         <control type="button" id="910">

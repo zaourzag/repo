@@ -117,6 +117,7 @@
                     <param name="width" value="250"/>
                     <param name="label" value="$ADDON[plugin.service.gto 30107]"/>
                     <param name="onclick" value="RunScript(service.kn.switchtimer,action=add,channel=$INFO[Window(Home).Property(GTO.Info.Channel)],icon=$INFO[Window(Home).Property(GTO.Info.Logo)],date=$INFO[Window(Home).Property(GTO.Info.Date)],title=$INFO[Window(Home).Property(GTO.Info.Title)])"/>
+                    <param name="onclick_2" value="Dialog.Close(all)"/>
                     <param name="visible">!IsEmpty(Window(Home).Property(GTO.Info.isInFuture)) + System.HasAddon(service.kn.switchtimer)</param>
                 </include>
                 <include content="DefaultDialogButton">
@@ -125,6 +126,7 @@
                     <param name="width" value="250"/>
                     <param name="label" value="$ADDON[plugin.service.gto 30108]"/>
                     <param name="onclick" value="RunScript(plugin.service.gto,action=switch_channel&amp;pvrid=$INFO[Window(Home).Property(GTO.Info.ChannelID)])"/>
+                    <param name="onclick_2" value="Dialog.Close(all)"/>
                     <param name="visible">!IsEmpty(Window(Home).Property(GTO.Info.isRunning)) + System.HasAddon(service.kn.switchtimer)</param>
                 </include>
                 <include content="DefaultDialogButton">
@@ -132,7 +134,7 @@
                     <param name="id" value="22" />
                     <param name="width" value="250"/>
                     <param name="label" value="$ADDON[plugin.service.gto 30119]"/>
-                    <param name="onclick" value="PreviousMenu"/>
+                    <param name="onclick" value="Dialog.Close(all)"/>
                 </include>
                 <onup>1</onup>
                 <ondown>1</ondown>
