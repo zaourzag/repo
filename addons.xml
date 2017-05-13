@@ -2226,7 +2226,7 @@ Video Addon for hltv.org
 	</extension>
 </addon>
 
-<addon id="skin.fTVfred-krypton" version="3.7.0b" name="fTV Fred Edition (Krypton)" provider-name="Sualfred">
+<addon id="skin.fTVfred-krypton" version="3.7.1" name="fTV Fred Edition (Krypton)" provider-name="Sualfred">
 	<requires>
 		<import addon="xbmc.gui" version="5.12.0"/>
 		<import addon="script.toolbox" version="1.1.1"/>
@@ -2261,8 +2261,8 @@ Video Addon for hltv.org
         </assets>
 		<news>Changelog:
 
-[B]3.7.0[/B]
-- Small trailer button fix
+[B]3.7.1[/B]
+- Small bugfixes
 
 See changelog.txt for more details.</news>
 	</extension>
@@ -2955,6 +2955,24 @@ Zattoo Live TV, Aufnahmen und EPG
   </extension>
 </addon>
 
+<addon id="script.module.pydes"
+       name="pyDes"
+       version="2.0.1"
+       provider-name="Todd Whiteman">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+  </requires>
+  <extension point="xbmc.python.module"
+             library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">A pure python module which implements the DES and Triple-DES encryption algorithms.</summary>
+    <website>http://twhiteman.netfirms.com/des.html</website> 
+    <license>Public Domain</license> 
+    <platform>all</platform> 
+    <source>http://sourceforge.net/projects/pydes/</source> 
+  </extension>
+</addon>
+
 <addon id="script.screensaver.fTVscreensaver" name="fTV Screensaver" version="0.1.3" provider-name="Sualfred">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
@@ -2972,24 +2990,6 @@ Zattoo Live TV, Aufnahmen und EPG
         <description lang="de">Slideshow von Fanarts/Postern im fTV Style</description>
         <description lang="en">Poster and fanart slideshow based on the fTV style</description>
     </extension>
-</addon>
-
-<addon id="script.module.pydes"
-       name="pyDes"
-       version="2.0.1"
-       provider-name="Todd Whiteman">
-  <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
-  </requires>
-  <extension point="xbmc.python.module"
-             library="lib" />
-  <extension point="xbmc.addon.metadata">
-    <summary lang="en">A pure python module which implements the DES and Triple-DES encryption algorithms.</summary>
-    <website>http://twhiteman.netfirms.com/des.html</website> 
-    <license>Public Domain</license> 
-    <platform>all</platform> 
-    <source>http://sourceforge.net/projects/pydes/</source> 
-  </extension>
 </addon>
 
 </addons>
