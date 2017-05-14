@@ -2955,10 +2955,7 @@ Zattoo Live TV, Aufnahmen und EPG
   </extension>
 </addon>
 
-<addon id="script.module.pydes"
-       name="pyDes"
-       version="2.0.1"
-       provider-name="Todd Whiteman">
+<addon id="script.module.pydes" name="pyDes" version="2.0.1" provider-name="Todd Whiteman">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
   </requires>
