@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.module.pydes"
-       name="pyDes"
-       version="2.0.1"
-       provider-name="Todd Whiteman">
+<addon id="script.module.pydes" name="pyDes" version="2.0.1" provider-name="Todd Whiteman">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
   </requires>
