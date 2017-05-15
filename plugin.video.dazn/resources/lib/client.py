@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import simple_requests as requests
+from credentials import Credentials
 from .common import *
 
 class Client:
@@ -82,10 +83,11 @@ class Client:
         addon.setSetting('token', self.TOKEN)
         
     def signIn(self):
-        if re.match(r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$', email) and len(password) > 4:
+        credentials = Credentials()
+        if '@' in credentials.email and len(credentials.password) > 4:
             self.POST_DATA = {
-                'Email': utfenc(email),
-                'Password': utfenc(password),
+                'Email': utfenc(credentials.email),
+                'Password': utfenc(credentials.password),
                 'DeviceId': addon.getSetting('device_id'),
                 'Platform': 'web'
             }
@@ -95,7 +97,7 @@ class Client:
             else:
                 self.setToken(data['AuthToken'], data.get('Result', 'SignInError'))
         else:
-            addon.openSettings()
+            dialog.ok(addon_name, getString(30004))
         self.POST_DATA  = {}
         if self.TOKEN:
             self.userProfile()

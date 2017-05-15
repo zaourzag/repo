@@ -13,8 +13,8 @@ def run():
         dazn.rail_items(client.rail(id, params))
     elif mode == 'epg':
         date = params
-        if id == 'input_date':
-            date = input_date()
+        if id == 'date':
+            date = get_date()
         dazn.epg_items(client.epg(date), date)
     elif mode == 'play':
         dazn.playback(client.playback(id))

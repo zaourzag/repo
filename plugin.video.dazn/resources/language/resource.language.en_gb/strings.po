@@ -17,11 +17,19 @@ msgid "General"
 msgstr ""
 
 msgctxt "#30001"
-msgid "Email"
+msgid "Save credentials"
 msgstr ""
 
 msgctxt "#30002"
-msgid "Password"
+msgid "DAZN Login: Email"
+msgstr ""
+
+msgctxt "#30003"
+msgid "DAZN Login: Password"
+msgstr ""
+
+msgctxt "#30004"
+msgid "Please sign in using your account details. Go to www.dazn.com on another device to retrieve your forgotten email or password."
 msgstr ""
 
 msgctxt "#30010"
@@ -149,11 +157,11 @@ msgid "Watch highlights"
 msgstr ""
 
 msgctxt "#30214"
-msgid "Go to the sport"
+msgid "Change to sport"
 msgstr ""
 
 msgctxt "#30215"
-msgid "Go to the competition"
+msgid "Change to competition"
 msgstr ""
 
 msgctxt "#30221"
