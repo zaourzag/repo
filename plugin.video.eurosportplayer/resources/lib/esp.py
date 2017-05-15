@@ -12,6 +12,7 @@ def channel(data):
         for i in obj:
             if i.get('streams', None):
                 items.add(Channels(i).item)
+    items.add({'mode':'epg', 'title':getString(30103), 'plot':getString(30103)})
     items.add({'mode':'sports', 'title':getString(30101), 'plot':getString(30102)})
     items.list()
 
@@ -30,6 +31,22 @@ def video(data, match):
         for i in catchups:
             if str(match) == str(i['sport']['id']):
                 items.add(Catchups(i).item)
+    items.list()
+    
+def epg(data):
+    from epg import EPG
+    if data.get('PlayerObj', []):
+        for i in data['PlayerObj']:
+            items.add(EPG(i).item)
+    items.list()
+    
+def tvschedule(data, match):
+    from tvschedules import TVSchedules
+    if data.get('PlayerObj', []):
+        for i in data['PlayerObj']:
+            if str(match) == str(i['channel']):
+                for s in i['tvschedules']:
+                    items.add(TVSchedules(s).item)
     items.list()
     
 def play(id, data):

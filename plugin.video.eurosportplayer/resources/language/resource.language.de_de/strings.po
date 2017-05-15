@@ -17,12 +17,16 @@ msgid "General"
 msgstr "Allgemein"
 
 msgctxt "#30001"
-msgid "Email"
-msgstr "E-Mail"
+msgid "Save credentials"
+msgstr "Anmeldeinformationen speichern"
 
 msgctxt "#30002"
-msgid "Password"
-msgstr "Passwort"
+msgid "Eurosport Player Login: Email"
+msgstr "Eurosport Player Login: E-Mail"
+
+msgctxt "#30003"
+msgid "Eurosport Player Login: Password"
+msgstr "Eurosport Player Login: Passwort"
 
 msgctxt "#30010"
 msgid "View"
@@ -71,3 +75,7 @@ msgstr "Videos"
 msgctxt "#30102"
 msgid "Video on Demand"
 msgstr "Video auf Abruf"
+
+msgctxt "#30103"
+msgid "Schedule"
+msgstr "Vorschau"
