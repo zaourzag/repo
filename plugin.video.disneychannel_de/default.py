@@ -11,6 +11,9 @@ import datetime
 import xbmcplugin
 import xbmcgui
 import xbmcaddon
+import json
+import requests
+import cookielib
 
 #addon = xbmcaddon.Addon()
 #addonID = addon.getAddonInfo('id')
@@ -25,6 +28,8 @@ icon = xbmc.translatePath('special://home/addons/'+addonID+'/icon.png')
 urlMain = "http://disneychannel.de"
 opener = urllib2.build_opener()
 opener.addheaders = [('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; rv:25.0) Gecko/20100101 Firefox/25.0')]
+cj = cookielib.LWPCookieJar();
+session = requests.Session()
 
 def debug(content):
     log(content, xbmc.LOGDEBUG)
@@ -36,7 +41,13 @@ def log(msg, level=xbmc.LOGNOTICE):
     addon = xbmcaddon.Addon()
     addonID = addon.getAddonInfo('id')
     xbmc.log('%s: %s' % (addonID, msg), level) 
-    
+
+def geturl(session,url,headers=""):
+    r = session.get(url,headers=headers)
+    return r.content
+
+
+        
 def index():
     addDir(translation(30106), urlMain+"/_fta_stream/search.json?q=video&filter[type]=Video&filter[start_date_s]="+(datetime.date.today()-datetime.timedelta(days=0)).strftime("%Y-%m-%d")+"&limit=50&offset=0", 'listVideos', icon)
     addDir(translation(30001), urlMain+"/_fta_stream/search.json?q=video&filter[type]=Video&filter[start_date_s]="+(datetime.date.today()-datetime.timedelta(days=1)).strftime("%Y-%m-%d")+"&limit=50&offset=0", 'listVideos', icon)
@@ -65,15 +76,36 @@ def listVideos(url):
         xbmc.executebuiltin('Container.SetViewMode('+viewMode+')')
 
 
-def playVideo(url):
+def playVideo(url):  
     debug("playVideo URL : "+url)
-    content = opener.open(url).read()
+    headers = {'User-Agent':         'Mozilla/5.0 (Linux; Android 6.0.1; SM-G900F Build/M4B30X; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/51.0.2704.106 Mobile Safari/537.36',
+               'Upgrade-Insecure-Requests':              '1',
+               'Accept':                      'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
+              }
+    content = geturl(session,url,headers=headers)
     match = re.compile('embedURL":"(.+?)",', re.DOTALL).findall(content)
     debug("Playvideo URL2 : "+match[0])
-    content = opener.open(match[0]).read()
-    match2 = re.compile('"downloadUrl":"(.+?)"', re.DOTALL).findall(content)
+
+    content = geturl(session,match[0],headers=headers)
+    match2 = re.compile('EmbedVideo=(.+?);<', re.DOTALL).findall(content)
     debug("Playvideo URL3 : "+match2[0])
-    finalURL = match2[0]
+    struktur = json.loads(match2[0])
+    debug(struktur)
+    elemente=struktur["video"]["flavors"]
+    width=0
+    height=0
+    bitrate=0
+    url=""
+    for element in elemente:
+     if element["width"] > width or element["height"] >height or element["bitrate"]>bitrate:
+       width=element["width"]
+       height=element["height"]
+       bitrate=element["bitrate"]
+       url4=element["url"]
+    
+    debug("Playvideo URL4 : "+url4)
+    finalURL = url4
+    
     finalURL=finalURL.replace("https","http")
     listitem = xbmcgui.ListItem(path=finalURL)
     xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
