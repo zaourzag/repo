@@ -5,7 +5,7 @@ import json
 
 def get_playlist_url(cid, SESSION):
     from resources.lib.api import get_json_data
-    json_data = get_json_data('http://zattoo.com/zapi/watch', SESSION, {'stream_type':'hls', 'cid':cid})
+    json_data = get_json_data('https://zattoo.com/zapi/watch', SESSION, {'stream_type':'hls', 'cid':cid})
     return json.loads(json_data)['stream']['url']
     
 def get_stream_url(cid, SESSION, MAX_BITRATE):

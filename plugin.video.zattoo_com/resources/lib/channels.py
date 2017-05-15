@@ -32,7 +32,7 @@ def list_channels(session, pg_hash, USE_FANARTS = False):
         pg_hash = addon.getSetting('pg_hash')
         session = addon.getSetting('session')
     try:
-        json_data = json.loads(get_json_data('http://zattoo.com/zapi/v2/cached/channels/%s?details=True' % pg_hash, session))
+        json_data = json.loads(get_json_data('https://zattoo.com/zapi/v2/cached/channels/%s?details=True' % pg_hash, session))
     except urllib2.HTTPError:
         from resources.lib.api import login
         login()
@@ -40,7 +40,7 @@ def list_channels(session, pg_hash, USE_FANARTS = False):
         addon = xbmcaddon.Addon(id = 'plugin.video.zattoo_com')
         pg_hash = addon.getSetting('pg_hash')
         session = addon.getSetting('session')
-        json_data = json.loads(get_json_data('http://zattoo.com/zapi/v2/cached/channels/%s?details=True' % pg_hash, session))
+        json_data = json.loads(get_json_data('https://zattoo.com/zapi/v2/cached/channels/%s?details=True' % pg_hash, session))
     except urllib2.URLError:
         from resources.lib.functions import warning
         warning('Keine Netzwerkverbindung!')

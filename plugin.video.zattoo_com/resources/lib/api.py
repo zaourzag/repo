@@ -8,7 +8,7 @@ addon = xbmcaddon.Addon(id = 'plugin.video.zattoo_com')
 
 def get_app_token():
     try:
-        html = urllib2.urlopen('http://zattoo.com/').read()
+        html = urllib2.urlopen('https://zattoo.com/').read()
         return search("window\.appToken\s*=\s*'(.*)'", html).group(1)
     except urllib2.URLError:
         from resources.lib.functions import warning
@@ -24,7 +24,7 @@ def extract_session_id(cookie):
 def get_session_cookie():
     header = {'Accept': 'application/json', 'Content-Type': 'application/x-www-form-urlencoded'}
     post_data = 'lang=en&client_app_token=%s&uuid=d7512e98-38a0-4f01-b820-5a5cf98141fe&format=json' % get_app_token()
-    req = urllib2.Request('http://zattoo.com/zapi/session/hello', post_data, header)
+    req = urllib2.Request('https://zattoo.com/zapi/session/hello', post_data, header)
     return extract_session_id(urllib2.urlopen(req).info().getheader('Set-Cookie'))
 
 def update_pg_hash(hash):

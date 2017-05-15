@@ -9,7 +9,7 @@ URI = sys.argv[0]
 ADDON_HANDLE = int(sys.argv[1])
 
 def list_epg_item(pid, SESSION):
-    url = 'http://zattoo.com/zapi/program/details?program_id=%s&complete=True' % pid
+    url = 'https://zattoo.com/zapi/program/details?program_id=%s&complete=True' % pid
     json_data = get_json_data(url, SESSION)
     program_info = json.loads(json_data)['program']
     channel_name = program_info['channel_name'].encode('utf-8')
