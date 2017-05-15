@@ -637,6 +637,10 @@ msgctxt "#31925"
 msgid "Cancel serial recording"
 msgstr ""
 
+msgctxt "#31926"
+msgid "Toggle wached"
+msgstr ""
+
 
 
 

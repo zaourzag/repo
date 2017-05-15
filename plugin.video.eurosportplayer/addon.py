@@ -15,7 +15,13 @@ def run():
         cache.cache_data(data)
         esp.sport(data)
     elif mode == 'videos':
-        esp.video(cache.get_cache_data(),id)
+        esp.video(cache.get_cache_data(), id)
+    elif mode == 'epg':
+        data = client.epg()
+        cache.cache_data(data)
+        esp.epg(data)
+    elif mode == 'tvschedule':
+        esp.tvschedule(cache.get_cache_data(), id)
     elif mode == 'play':
         esp.play(id, client.token())
 
@@ -29,9 +35,8 @@ log('[%s] arguments: %s' % (addon_id, str(args)))
 
 if mode == 'root':
     if uniq_id():
-        if email and password:
+        client.set_user_data()
+        if client.dvs['hkey']:
             run()
-        else:
-            addon.openSettings()
 else:
     run()

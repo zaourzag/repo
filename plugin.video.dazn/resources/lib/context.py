@@ -11,7 +11,7 @@ class Context:
     def epg_date(self):
         d = {
             'mode': 'epg',
-            'id': 'input_date'
+            'id': 'date'
         }
         self.cm.append( (utfenc(getString(30230)), 'ActivateWindow(Videos, %s)' % build_url(d)) )
         return self.cm

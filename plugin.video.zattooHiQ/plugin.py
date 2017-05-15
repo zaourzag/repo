@@ -257,17 +257,29 @@ def build_recordingsList(addon_uri, addon_handle):
       else: cast.append(person['person'])
 
     meta.update({'title':label,'year':showInfo['year'], 'plot':showInfo['description'], 'country':showInfo['description'],'director':director, 'cast':cast, 'genre':', '.join(showInfo['genres'])  })
-
+    
+    '''
+    #mark watched
+    if (position>end-660):  #10min padding from zattoo +1min safety margin
+        meta.update({'overlay':7, 'playcount':12})
+    '''
+      
     li = xbmcgui.ListItem(label)
     li.setInfo('video',meta)
     li.setThumbnailImage(record['image_url'])
     li.setArt({'thumb':record['image_url'], 'fanart':record['image_url'], 'landscape':record['image_url']})
-    #li.setProperty('IsPlayable', 'true') #is played by myPlayer
+    li.setProperty('IsPlayable', 'true') 
+    
+    li.setProperty("TotalTime", str(end-start))
+    li.setProperty("ResumeTime", str(position-start+300)) #skip 5min zattoo padding 
+    li.setProperty('zStartTime', str(start))
+    
     try:
       series=record['tv_series_id']
     except:
       series = 'None'
     contextMenuItems = []
+    contextMenuItems.append((localString(31926), 'Action(ToggleWatched)'))
     if series != 'None':
       contextMenuItems.append((localString(31925),'RunPlugin("plugin://'+__addonId__+'/?mode=remove_series&recording_id='+str(record['id'])+'&series='+str(series)+'")',))
     contextMenuItems.append((localString(31921), 'RunPlugin("plugin://'+__addonId__+'/?mode=remove_recording&recording_id='+str(record['id'])+'")'))
@@ -275,7 +287,7 @@ def build_recordingsList(addon_uri, addon_handle):
 
     xbmcplugin.addDirectoryItem(
       handle=addon_handle,
-      url=addon_uri + '?' + urllib.urlencode({'mode': 'watch_r', 'id': record['id'], 'starttime':start, 'position':position}),
+      url=addon_uri + '?' + urllib.urlencode({'mode': 'watch_r', 'id': record['id']}),
       listitem=li,
       isFolder=False
     )
@@ -284,10 +296,10 @@ def build_recordingsList(addon_uri, addon_handle):
   xbmcplugin.addSortMethod(addon_handle, 2)
   xbmcplugin.addSortMethod(addon_handle, 9)
 
-def watch_recording(addon_uri, addon_handle, recording_id, startTime, position):
+def watch_recording(addon_uri, addon_handle, recording_id):
   #if xbmc.Player().isPlaying(): return
-  startTime=int(startTime)
-  position=int(position)
+  startTime=int(xbmc.getInfoLabel('ListItem.Property(zStartTime)'))
+ 
   max_bandwidth = __addon__.getSetting('max_bandwidth')
   if DASH: stream_type='dash'
   else: stream_type='hls'
@@ -302,30 +314,24 @@ def watch_recording(addon_uri, addon_handle, recording_id, startTime, position):
     elif len(streams) > 1 and  __addon__.getSetting('audio_stream') == 'B' and streams[1]['audio_channel'] == 'B': streamNr = 1
     else: streamNr = 0
     
-    li = xbmcgui.ListItem()
+    li = xbmcgui.ListItem(path=streams[streamNr]['url'])
     if DASH:
         li.setProperty('inputstreamaddon', 'inputstream.adaptive')
         li.setProperty('inputstream.adaptive.manifest_type', 'mpd')
 
-    #xbmcplugin.setResolvedUrl(addon_handle, True, li)
-    prePadding=resultData['stream']['padding']['pre']
-    positionSkip=0
-    if (startTime!=position):
-        pos=str(datetime.timedelta(seconds=(position-startTime)))
-        ret = xbmcgui.Dialog().yesno('Zattoo Position', __addon__.getLocalizedString(31306)+'\n'+pos,'' , __addon__.getLocalizedString(31307))
-        if ret:positionSkip= position-startTime
-
-    player= myPlayer(prePadding+positionSkip)
-    player.play(streams[streamNr]['url'], li)
-    while (player.playing):
+    xbmcplugin.setResolvedUrl(addon_handle, True, li)
+    
+    xbmc.sleep(2000)
+    player=xbmc.Player()
+    while (player.isPlaying()):
         try: pos=player.getTime()
         except: pass
         xbmc.sleep(100) 
 
     #send watched position to zattoo
-    zStoptime=datetime.datetime.fromtimestamp(startTime+round(pos)-prePadding - _timezone_ ).strftime("%Y-%m-%dT%H:%M:%SZ")
+    zStoptime=datetime.datetime.fromtimestamp(startTime+round(pos)-300 - _timezone_ ).strftime("%Y-%m-%dT%H:%M:%SZ")
     resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/playlist/recording', {'recording_id': recording_id, 'position': zStoptime})
-  
+
 
 def setup_recording(program_id):
   #print('RECORDING: '+program_id)
@@ -383,8 +389,13 @@ def watch_channel(channel_id, start, end, showID="", restart=False, showOSD=Fals
   else:  stream_type='hls'
 
   if restart: params = {'stream_type': stream_type}
-  elif start == '0': params = {'cid': channel_id, 'stream_type': stream_type, 'maxrate':max_bandwidth}
+  elif start == '0':
+    startTime = datetime.datetime.now()
+    endTime = datetime.datetime.now()
+    params = {'cid': channel_id, 'stream_type': stream_type, 'maxrate':max_bandwidth}
   else:
+    startTime = datetime.datetime.fromtimestamp(int(start))
+    endTime = datetime.datetime.fromtimestamp(int(end))
     zStart = datetime.datetime.fromtimestamp(int(start) - _timezone_ ).strftime("%Y-%m-%dT%H:%M:%SZ")  #5min zattoo skips back
     zEnd = datetime.datetime.fromtimestamp(int(end) - _timezone_ ).strftime("%Y-%m-%dT%H:%M:%SZ")
     params = {'cid': channel_id, 'stream_type': stream_type, 'start':zStart, 'end':zEnd, 'maxrate':max_bandwidth }
@@ -413,27 +424,7 @@ def watch_channel(channel_id, start, end, showID="", restart=False, showOSD=Fals
   streamsList = '|'.join(streamsList)
   _zattooDB_.set_playing(channel_id, streamsList, streamNr)
 
-  #xbmc.Player().play(streams[streamNr]['url'], xbmcgui.ListItem(channel_id))
-  #return
-
-
-  #play liveTV: info is created in OSD
-  if (start=='0'):
-    listitem = xbmcgui.ListItem(channel_id)
-    if DASH:
-      listitem.setProperty('inputstreamaddon', 'inputstream.adaptive')
-      listitem.setProperty('inputstream.adaptive.manifest_type', 'mpd')
-
-    xbmc.Player().play(streams[streamNr]['url'], listitem)
-    makeZattooGUI(showOSD)
-    return
-
-  #12005:fullscreenvideo
-  #if (xbmcgui.getCurrentWindowId()!=12005):xbmc.executebuiltin("Action(FullScreen)")
-
   #make Info
-  startTime = datetime.datetime.fromtimestamp(int(start))
-  endTime = datetime.datetime.fromtimestamp(int(end))
   program = _zattooDB_.getPrograms({'index':[channel_id]}, True, startTime, endTime)
 
   listitem = xbmcgui.ListItem(channel_id)
@@ -452,10 +443,15 @@ def watch_channel(channel_id, start, end, showID="", restart=False, showOSD=Fals
     listitem.setProperty('inputstreamaddon', 'inputstream.adaptive')
     listitem.setProperty('inputstream.adaptive.manifest_type', 'mpd')
 
-  player= myPlayer(290)
-  player.startTime=startTime
-  player.play(streams[streamNr]['url'], listitem)
-  while (player.playing):xbmc.sleep(100)
+  #play liveTV: info is created in OSD
+  if (start=='0'):
+    xbmc.Player().play(streams[streamNr]['url'], listitem)
+    makeZattooGUI(showOSD)
+  else:
+    player= myPlayer(290)
+    player.startTime=startTime
+    player.play(streams[streamNr]['url'], listitem)
+    while (player.playing):xbmc.sleep(100)
       
 def skip_channel(skipDir):
   #new ZattooDB instance because this is called from thread-timer on channel-nr input (sql connection doesn't work)
@@ -1051,9 +1047,7 @@ def main():
     xbmc.executebuiltin('Container.Refresh')
   elif action == 'watch_r':
     recording_id = args.get('id')[0]
-    startTime = args.get('starttime')[0]
-    position =  args.get('position')[0]
-    watch_recording(addon_uri, addon_handle, recording_id, startTime, position)
+    watch_recording(addon_uri, addon_handle, recording_id)
   elif action == 'record_p':
     program_id = args.get('program_id')[0]
     setup_recording(program_id)

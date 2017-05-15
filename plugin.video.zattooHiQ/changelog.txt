@@ -1,4 +1,11 @@
 ﻿=================================================
+[B]​ZattooHiQ v1.1.4 [/B] 13.05.2017 by GreenAir
+​=================================================
+- Aufnahmen: Abspielposition sync mit zattoo überarbeitet
+- Aufnahmen: 'Gesehen' umschalten in Kontextmenu
+- Aufnahmen: Bookmarks funktionieren
+
+=================================================
 [B]​ZattooHiQ v1.1.3 [/B] 04.05.2017 
 ​=================================================
 - Absturz des plugins auf Libreelec behoben

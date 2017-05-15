@@ -629,6 +629,11 @@ msgctxt "#31925"
 msgid "Cancel serial recording"
 msgstr "Serienaufnahme abbrechen"
 
+msgctxt "#31926"
+msgid "Toggle wached"
+msgstr "'Gesehen' umschalten"
+
+
 
 
 

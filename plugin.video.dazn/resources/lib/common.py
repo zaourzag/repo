@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import json,os,sys,urllib,urlparse
-import time,datetime,random,re
-import xbmc,xbmcaddon,xbmcgui,xbmcplugin,xbmcvfs
-from uuid import UUID
-from hashlib import md5
+import time,datetime
+import xbmc,xbmcaddon,xbmcgui,xbmcplugin
 
 addon_handle = int(sys.argv[1])
 addon = xbmcaddon.Addon()
@@ -17,12 +15,14 @@ fanart = addon.getAddonInfo('fanart')
 content = addon.getSetting('content')
 view_id = addon.getSetting('view_id')
 force_view = addon.getSetting('force_view') == 'true'
-email = addon.getSetting('email')
-password = addon.getSetting('password')
 token = addon.getSetting('token')
 language = xbmc.getLanguage(0, False)
 country = addon.getSetting('country')
 cdn = int(addon.getSetting('server'))
+store_creds = addon.getSetting('store_creds') == 'true'
+if not store_creds:
+    addon.setSetting('email', '')
+    addon.setSetting('password', '')
 
 api_base = 'https://isl.dazn.com/misl/'
 
@@ -60,19 +60,22 @@ def utc2local(date_string):
         offset = datetime.datetime.fromtimestamp(epoch) - datetime.datetime.utcfromtimestamp(epoch)
         return (utc + offset).strftime(time_format)
 
-def uniq_id():
+def uniq_id(t=1):
+    import uuid
+    from hashlib import md5
     mac_addr = xbmc.getInfoLabel('Network.MacAddress')
     if not ":" in mac_addr: mac_addr = xbmc.getInfoLabel('Network.MacAddress')
     # hack response busy
     i = 0
     while not ":" in mac_addr and i < 3:
         i += 1
-        time.sleep(1)
+        time.sleep(t)
         mac_addr = xbmc.getInfoLabel('Network.MacAddress')
-    if ":" in mac_addr:
-        mac_addr = str(UUID(md5(str(mac_addr.decode("utf-8"))).hexdigest()))
-        addon.setSetting('device_id', mac_addr)
+    if ":" in mac_addr and t == 1:
+        addon.setSetting('device_id', str(uuid.UUID(md5(str(mac_addr.decode("utf-8"))).hexdigest())))
         return True
+    elif ":" in mac_addr and t == 2:
+        return uuid.uuid5(uuid.NAMESPACE_DNS, str(mac_addr)).bytes
     else:
         log("[%s] error: failed to get device id (%s)" % (addon_id, str(mac_addr)))
         dialog.ok(addon_name, getString(30051))
@@ -99,10 +102,10 @@ def get_prev_day(date):
 def get_next_day(date):
     return (date + datetime.timedelta(days=1))
 
-def input_date():
+def get_date():
     date = 'today'
-    dg = dialog.input(getString(30230), type=xbmcgui.INPUT_DATE)
-    if dg:
-        spl = dg.split('/')
+    dlg = dialog.numeric(1, getString(30230))
+    if dlg:
+        spl = dlg.split('/')
         date = '%s-%s-%s' % (spl[2], spl[1], spl[0])
     return date
