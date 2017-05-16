@@ -133,8 +133,16 @@ def listVideos(url):
                   cid=searchitem.find("div",{"class":"fwplayer"}) 
                   print(cid)
                   title=searchitem.h3.string
+                  try:
+                    utitle=searchitem.p.string
+                  except:
+                     utitle=""
+                  if not utitle=="":
+                   title=title +" - "+ utitle
                   debug(title)
-                  img="http://www.tele5.de/"+searchitem.find('img')['src']                                
+                  img=searchitem.find('img')['src']
+                  if not "http" in img:
+                    img="http://www.tele5.de/"+img
                   debug(img)
                   addLink(title, str(cid), 'playVideo', img)    
                 except:
