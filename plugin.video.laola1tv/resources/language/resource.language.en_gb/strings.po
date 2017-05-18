@@ -17,11 +17,15 @@ msgid "General"
 msgstr ""
 
 msgctxt "#30001"
-msgid "Email"
+msgid "Save credentials"
 msgstr ""
 
 msgctxt "#30002"
-msgid "Password"
+msgid "Laola1 Login: Email"
+msgstr ""
+
+msgctxt "#30003"
+msgid "Laola1 Login: Password"
 msgstr ""
 
 msgctxt "#30005"
@@ -82,6 +86,10 @@ msgstr ""
 
 msgctxt "#30032"
 msgid "Russian"
+msgstr ""
+
+msgctxt "#30051"
+msgid "Failed to get Device ID. Please Retry."
 msgstr ""
 
 msgctxt "#30101"

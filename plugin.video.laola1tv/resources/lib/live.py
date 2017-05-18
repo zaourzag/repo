@@ -5,13 +5,13 @@ from common import *
 class Live:
 
     def __init__(self, i):
-        self.item  = {}
-        self.a     = i['@attributes']
-        self.live  = self.a['islive']
+        self.item = {}
+        self.a = i['@attributes']
+        self.live = self.a['islive']
         self.start = self.a['scheduled_start'][:16]
-        self.end   = self.a['scheduled_end'][:16]
+        self.end = self.a['scheduled_end'][:16]
         self.sport = i['sport']
-        self.liga  = i['liga']
+        self.liga = i['liga']
         self.update_item(i)
         
     def title(self, i):
@@ -34,12 +34,11 @@ class Live:
             return timedelta_total_seconds(end-start)
         
     def update_item(self, i):
-        self.item['mode']     = 'play'
-        self.item['params']   = 'true'
-        self.item['title']    = self.title(i)
-        self.item['id']       = self.a['id']
-        self.item['plot']     = self.description()
-        self.item['thumb']    = i['image']
-        self.item['date']     = self.start[:10]
+        self.item['mode'] = 'play'
+        self.item['params'] = 'true'
+        self.item['title'] = self.title(i)
+        self.item['id'] = self.a['id']
+        self.item['plot'] = self.description()
+        self.item['thumb'] = i['image']
+        self.item['date'] = self.start[:10]
         self.item['duration'] = self.duration()
-        self.item['thumb']    = i['image']

@@ -17,12 +17,16 @@ msgid "General"
 msgstr "Allgemein"
 
 msgctxt "#30001"
-msgid "Email"
-msgstr "E-Mail"
+msgid "Save credentials"
+msgstr "Anmeldeinformationen speichern"
 
 msgctxt "#30002"
-msgid "Password"
-msgstr "Passwort"
+msgid "Laola1 Login: Email"
+msgstr "Laola1 Login: E-Mail"
+
+msgctxt "#30003"
+msgid "Laola1 Login: Password"
+msgstr "Laola1 Login: Passwort"
 
 msgctxt "#30005"
 msgid "Language"
@@ -83,6 +87,10 @@ msgstr "Englisch"
 msgctxt "#30032"
 msgid "Russian"
 msgstr "Russisch"
+
+msgctxt "#30051"
+msgid "Failed to get Device ID. Please Retry."
+msgstr "Fehler beim Abrufen der Geräte-ID. Bitte erneut versuchen."
 
 msgctxt "#30101"
 msgid "Live"

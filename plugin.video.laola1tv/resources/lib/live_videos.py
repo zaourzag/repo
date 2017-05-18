@@ -5,12 +5,12 @@ from common import *
 class Live_Videos:
 
     def __init__(self, i):
-        self.item           = {}
-        self.live           = i['live']
-        self.start          = i['scheduled'][:22]
-        self.item['mode']   = 'play'
-        self.item['title']  = self.title(i)
-        self.item['id']     = i['page']
+        self.item = {}
+        self.live = i['live']
+        self.start = i['scheduled'][:22]
+        self.item['mode'] = 'play'
+        self.item['title'] = self.title(i)
+        self.item['id'] = i['page']
         self.item['params'] = 'true'
 
         if i.get('image', None):

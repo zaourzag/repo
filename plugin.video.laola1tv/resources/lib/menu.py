@@ -5,10 +5,10 @@ from common import *
 class Menu:
 
     def __init__(self, i, mode):
-        self.item           = {}
-        self.item['mode']   = mode
-        self.item['title']  = utfenc(i['title'])
-        self.item['id']     = i['page']
+        self.item = {}
+        self.item['mode'] = mode
+        self.item['title'] = utfenc(i['title'])
+        self.item['id'] = i['page']
         self.item['params'] = i['pagetype']
 
         if i.get('logo', None):

@@ -5,10 +5,10 @@ from common import *
 class Videos:
 
     def __init__(self, i):
-        self.item           = {}
-        self.item['mode']   = 'play'
-        self.item['title']  = utfenc(i['title'])
-        self.item['id']     = i['page']
+        self.item = {}
+        self.item['mode'] = 'play'
+        self.item['title'] = utfenc(i['title'])
+        self.item['id'] = i['page']
         self.item['params'] = 'false'
 
         if i.get('image', None):

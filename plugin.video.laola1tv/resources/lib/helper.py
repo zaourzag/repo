@@ -7,22 +7,22 @@ def unas_url(data):
         return data['data']['stream-access'][0]
     else:
         message = data.get('message', 'error')
-        dialog.ok('Laola1 TV', utfenc(message))
-        
+        dialog.ok(addon_name, utfenc(message))
+
 def user(data):
     if data.get('error', None):
         return data['error'][0]
     elif data.get('result', None):
-        return 'country=%s premium=%s' % (data['result']['country'], data['result']['premium'])
+        return 'login=success country=%s premium=%s' % (data['result']['country'], data['result']['premium'])
+    else:
+        return 'error'
 
 def master(data):
-    y = ['350','750','1000','1500','6000']
-    z = y[int(quality)]
     a = re.search('auth="(.*?)"', data)
     b = re.search('url="(http.*?)"', data)
     c = re.search('comment="(.*?)"', data)
     if a and b:
-        return '%s?hdnea=%s&b=0-%s' % (b.group(1), a.group(1), z)
+        return '%s?hdnea=%s' % (b.group(1), a.group(1))
     elif c:
         dialog.ok('Laola1 TV', utfenc(c.group(1)))
 
