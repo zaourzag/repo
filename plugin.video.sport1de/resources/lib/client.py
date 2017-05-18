@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import requests
+from credentials import Credentials
 from common import *
 
 class Client:
@@ -49,10 +50,11 @@ class Client:
         return self.json_request(url)
 
     def login(self):
-        if email and password:
+        credentials = Credentials()
+        if credentials.email and credentials.password:
             post_data = {
-                'log_email': email,
-                'log_pw': password,
+                'log_email': credentials.email,
+                'log_pw': credentials.password,
                 'log_goback':  '0',
                 'log_persistence_cookie': '1'
             }

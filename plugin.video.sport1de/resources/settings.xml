@@ -1,6 +1,5 @@
 <settings>
     <category label="Einstellungen">
-        <setting label="Email" type="text" id="email" default=""/>
-        <setting label="Passwort" type="text" id="password" option="hidden"  enable="!eq(-1,)" default=""/>
+        <setting label="Anmeldeinformationen speichern" type="bool" id="store_creds" default="false"/>
     </category>
 </settings>

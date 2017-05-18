@@ -79,7 +79,7 @@ def play_tv():
 
 def play(url):
     if not url.startswith('http'):
-        url = 'http:' + url
+        url = 'https:' + url
     listitem = xbmcgui.ListItem(path=url.replace('https','http'))
     xbmcplugin.setResolvedUrl(addon_handle, True, listitem)
     
