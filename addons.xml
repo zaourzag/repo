@@ -1144,26 +1144,26 @@ Orginal Code was from AddonScriptorDE</disclaimer>
     </extension>
 </addon>
 
-<addon id="plugin.video.sport1de" version="1.3.1" name="Sport1" provider-name="Jin">
+<addon id="plugin.video.sport1de" version="1.4.0" name="Sport1" provider-name="Jin">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
         <import addon="script.module.requests" version="2.12.4"/>
+        <import addon="script.module.pydes" version="2.0.1"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="addon.py">
         <provides>video</provides>
     </extension>
     <extension point="xbmc.addon.metadata">
         <summary>Sportnachrichten - aktuelle News und Livestreams</summary>
-        <description>
-Für Sport1US und Sport1+ wird ein ABO auf sport1.de benötigt.
-        </description>
+        <description>Für Sport1US und Sport1+ wird ein ABO auf sport1.de benötigt.</description>
         <platform>all</platform>
         <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
         <disclaimer>Inoffizielles Addon - Benutzung auf eigene Gefahr</disclaimer>
         <news>
+v1.4.0
+- Sicherheitsupdate (benötigt script.module.pydes)
+v1.3.1
 SSL wieder deaktiviert
-
-Livestream Fix, wenn http: in url fehlt.
         </news>
     </extension>
 </addon>
