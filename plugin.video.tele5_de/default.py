@@ -107,8 +107,8 @@ def listVideos(url):
           try:    
               debug("1.")          
               divtag=re.compile('(<div class="fwlist".+?>)', re.DOTALL).findall(content)[0]
-              debug("DIVTAG :"+divtag)
-              lid=re.compile('lid="(.+?)"', re.DOTALL).findall(divtag)[0]
+              debug("DIVTAG :"+divtag)              
+              cid=re.compile('lid="(.+?)"', re.DOTALL).findall(divtag)[0]
               debug("LID :"+lid)
               all=re.compile('([^ =]+?)="(.+?)"', re.DOTALL).findall(divtag)
               url="http://tele5.flowcenter.de/gg/play/l/"+lid+":"
@@ -130,8 +130,8 @@ def listVideos(url):
               for searchitem in searchitems: 
                 debug("2c")    
                 try:                
-                  cid=searchitem.find("div",{"class":"fwplayer"}) 
-                  print(cid)
+                  cid=searchitem.find("div",{"class":"fwplayer"})["cid"]                                  
+                  print(":::XX:::"+cid)
                   title=searchitem.h3.string
                   try:
                     utitle=searchitem.p.string
