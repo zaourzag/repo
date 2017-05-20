@@ -149,29 +149,36 @@ def get_event_items(items,a,live):
 def get_live_radio_items(data):
     items = []
     for l in data:
-        m = l['season'][0]['round'][0]['match']
-        for i in m:
-            name = None
-            finished = i['finished']
-            home = i['home']['name']
-            away = i['away']['name']
-            match_time = i['match_time']
-            match_meta = i.get('match_meta', [])
-            current_minute = i.get('current_minute', '')
-            result = '%s:%s' % (i['match_result'][0]['match_result'],i['match_result'][1]['match_result'])
-            for meta in match_meta:
-                kind = meta['kind']
-                if not 'Konferenz' in str(items) and 'conference' in kind and kind.endswith('.mp3'):
-                    id = meta['content']
-                    name = '%s: Konferenz' % (match_time)
+        name_1 = l.get('name', '')
+        m = l['season'][0]['round']
+        for r in m:
+            name_2 = r.get('name', '')
+            for i in r['match']:
+                id = None
+                finished = i['finished']
+                if i.get('home', None):
+                    home = i['home']['name']
+                    away = i['away']['name']
+                else:
+                    home = name_1
+                    away = name_2
+                match_time = i['match_time']
+                match_meta = i.get('match_meta', [])
+                current_minute = i.get('current_minute', '')
+                result = '%s:%s' % (i['match_result'][0]['match_result'],i['match_result'][1]['match_result'])
+                for meta in match_meta:
+                    kind = meta['kind']
+                    if not 'Konferenz' in str(items) and 'conference' in kind and kind.endswith('.mp3'):
+                        id = meta['content']
+                        name = '%s: Konferenz' % (match_time)
+                        item = {'type':'video', 'mode':'play_video', 'name':name, 'id':id, 'description':'', 'duration':'0'}
+                        items.insert(0, item)
+                    elif kind.endswith('.mp3'):
+                        id = meta['content']
+                        name = utfenc('%s %s - %s %s %s\'' % (match_time,home,away,result,current_minute))
+                if id:
                     item = {'type':'video', 'mode':'play_video', 'name':name, 'id':id, 'description':'', 'duration':'0'}
-                    items.insert(0, item)
-                elif kind.endswith('.mp3'):
-                    id = meta['content']
-                    name = utfenc('%s %s - %s %s %s\'' % (match_time,home,away,result,current_minute))
-            if name:
-                item = {'type':'video', 'mode':'play_video', 'name':name, 'id':id, 'description':'', 'duration':'0'}
-                items.append(item)
+                    items.append(item)
     return items
 
 def get_hls(data):

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.sport1de" version="1.4.0" name="Sport1" provider-name="Jin">
+<addon id="plugin.video.sport1de" version="1.4.1" name="Sport1" provider-name="Jin">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
         <import addon="script.module.requests" version="2.12.4"/>
@@ -15,10 +15,12 @@
         <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
         <disclaimer>Inoffizielles Addon - Benutzung auf eigene Gefahr</disclaimer>
         <news>
+v1.4.1
+- fix Live Radio
 v1.4.0
 - Sicherheitsupdate (benötigt script.module.pydes)
 v1.3.1
-SSL wieder deaktiviert
+- SSL wieder deaktiviert
         </news>
     </extension>
 </addon>
