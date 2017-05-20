@@ -78,7 +78,7 @@ class Client:
             'p': utfenc(credentials.password)
         }
         r = requests.post(self.v2 + 'session', headers=self.headers, data=data)
-        return r.headers.get('set-cookie', '')
+        addon.setSetting('cookie', r.headers.get('set-cookie', ''))
         
     def logout(self):
         if cookie:
@@ -88,16 +88,25 @@ class Client:
     def session(self):
         self.headers['cookie'] = cookie
         r = requests.get(self.v2 + 'session', headers=self.headers)
-        return r.headers.get('set-cookie', '')
+        addon.setSetting('cookie', r.headers.get('set-cookie', ''))
 
     def deletesession(self):
         if cookie:
             self.headers['cookie'] = cookie
             r = requests.post(self.v3 + 'user/session/premium/delete', headers=self.headers)
 
-    def user(self, _cookie_):
-        self.headers['cookie'] = _cookie_
-        return self.json_request(self.v2 + 'user')
+    def user(self):
+        self.headers['cookie'] = cookie
+        data = self.json_request(self.v2 + 'user')
+        if data.get('error', None):
+            log('[%s] user: %s' % (addon_id, data['error'][0]))
+            self.login()
+        elif data.get('result', None):
+            log('[%s] user: country=%s premium=%s' % (addon_id, data['result']['country'], data['result']['premium']))
+            self.session()
+        else:
+            log('[%s] user: %s' % (addon_id, 'error - reset cookie'))
+            addon.setSetting('cookie', '')
         
     def json_request(self, url):
         if self.post_data:

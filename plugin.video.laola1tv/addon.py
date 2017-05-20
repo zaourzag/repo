@@ -2,7 +2,6 @@
 
 from resources.lib.client import Client
 from resources.lib import laola
-from resources.lib import helper
 from resources.lib import cache
 from resources.lib.common import *
 
@@ -13,7 +12,7 @@ def run():
         data = client.menu()
         cache.cache_data(data)
         laola.menu(data)
-        login()
+        client.user()
     elif mode == 'sports':
         laola.sports(cache.get_cache_data(), title)
     elif mode == 'sub_menu':
@@ -27,19 +26,25 @@ def run():
         client.deletesession()
         
 def path():
-    url = helper.unas_url(client.player(id, params))
+    url = unas_url(client.player(id, params))
     if url:
-        return helper.master(client.unas_xml(url))
+        return master(client.unas_xml(url))
 
-def login():
-    _cookie_ = helper.create_cookie(client.session())
-    if not _cookie_:
-        _cookie_ = helper.create_cookie(client.login())
-        log('[%s] login: %s' % (addon_id, user(_cookie_)))
-    addon.setSetting('cookie', _cookie_)
-    
-def user(_cookie_):
-    return helper.user(client.user(_cookie_))
+def unas_url(data):
+    if data.get('status', 'error') == 'success':
+        return data['data']['stream-access'][0]
+    else:
+        message = data.get('message', 'error')
+        dialog.ok(addon_name, utfenc(message))
+
+def master(data):
+    a = re.search('auth="(.*?)"', data)
+    b = re.search('url="(http.*?)"', data)
+    c = re.search('comment="(.*?)"', data)
+    if a and b:
+        return '%s?hdnea=%s' % (b.group(1), a.group(1))
+    elif c:
+        dialog.ok('Laola1 TV', utfenc(c.group(1)))
 
 args = urlparse.parse_qs(sys.argv[2][1:])
 mode = args.get('mode', ['root'])[0]
