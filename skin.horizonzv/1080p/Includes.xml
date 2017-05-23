@@ -1228,8 +1228,7 @@
     </include>
     <include name="DiscartMovies">
         <visible>Skin.HasSetting(video_art)</visible>
-        <visible>!ListItem.IsParentFolder+!Container.Content(sets)</visible>
-        <visible>!ListItem.IsCollection</visible>
+        <visible>!ListItem.IsParentFolder+!Container.Content(sets)+!ListItem.IsCollection</visible>
         <texture>$INFO[ListItem.Art(discart)]</texture>
         <!-- <texture fallback="cdart/default_bluray.png">$INFO[ListItem.Art(discart)]</texture> -->
         <animation type="Visible" reversible="false">
@@ -3119,4 +3118,16 @@
             </control>
         </control>
     </include>
+    <include name="BackgroundOverlayColorDefault">
+        <value condition="Skin.HasSetting(color_blue)">blue</value>
+        <value condition="Skin.HasSetting(color_selectedhome)">selectedhome</value>
+        <value condition="Skin.HasSetting(color_selected)">selected</value>
+        <value condition="Skin.HasSetting(color_black)">black</value>
+        <value condition="Skin.HasSetting(color_green)">green</value>
+        <value condition="Skin.HasSetting(color_red)">red</value>
+        <value condition="Skin.HasSetting(color_grey)">grey1</value>
+        <value condition="Skin.HasSetting(color_darkgold)">darkgold</value>
+        <value condition="Skin.HasSetting(color_orange)">orange</value>
+        <value condition="Skin.HasSetting(color_custom)">$INFO[Skin.String(CustomColor)]</value>
+	</include>
 </includes>

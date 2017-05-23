@@ -126,9 +126,9 @@
                         <top>30</top>
                         <width>410</width>
                         <height>240</height>
-                        <aspectratio>stretch</aspectratio>
+                        <aspectratio>keep</aspectratio>
                         <colordiffuse>$VAR[CoverDim]</colordiffuse>
-                        <texture fallback="FallbackCover.png">$INFO[ListItem.Icon]</texture>
+                        <texture>$INFO[ListItem.Icon]</texture>
                         <include>openclosevisible</include>
                         <visible>ListItem.IsParentFolder</visible>
                     </control>
@@ -176,8 +176,9 @@
                             <top>30</top>
                             <width>410</width>
                             <height>240</height>
-                            <aspectratio>stretch</aspectratio>
-                            <texture fallback="FallbackCover.png">$INFO[ListItem.Icon]</texture>
+                            <aspectratio>keep</aspectratio>
+                            <texture>$INFO[ListItem.Icon]</texture>
+                            <bordertexture border="10">ThumbShadowWhite.png</bordertexture>
                             <include>openclosevisible</include>
                             <visible>ListItem.IsParentFolder</visible>
                         </control>

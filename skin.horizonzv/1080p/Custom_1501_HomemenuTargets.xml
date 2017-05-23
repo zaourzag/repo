@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window id="1501" type="dialog">
     <defaultcontrol always="true">36100</defaultcontrol>
-	<backgroundcolor>$VAR[BackgroundOverlayColor]</backgroundcolor>
+	<backgroundcolor>$VAR[BackgroundOverlayTransition]</backgroundcolor>
     <onunload>ClearProperty(HomeButton)</onunload>
     <controls>
         <!-- <include>BlackBack</include> -->

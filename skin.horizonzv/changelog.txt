@@ -1,4 +1,8 @@
-﻿v 0.9.0.51
+﻿v 0.9.0.52
+- Hintergrundfarbe bei Fensterwechsel geändert
+- Ansicht Showcase und Perspective optimiert
+
+v 0.9.0.51
 - Bugfix Numerisches Keyboard
 
 v 0.9.0.50

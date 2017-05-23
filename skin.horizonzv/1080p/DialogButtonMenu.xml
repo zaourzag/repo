@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window type="buttonMenu">
     <defaultcontrol>9000</defaultcontrol>
-	<backgroundcolor>$VAR[BackgroundOverlayColor]</backgroundcolor>
+	<backgroundcolor>$VAR[BackgroundOverlayTransition]</backgroundcolor>
     <include>openclose</include>
     <controls>
         <!-- <control type="button" id="9001">

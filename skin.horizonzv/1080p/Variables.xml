@@ -203,46 +203,24 @@
         <value condition="Skin.HasSetting(color_custom)">$LOCALIZE[51530] $INFO[Skin.String(CustomColor),(,)]</value>
     </variable>
     <variable name="BackgroundOverlayColor">
-        <value condition="Skin.HasSetting(color_blue)">blue</value>
-        <value condition="Skin.HasSetting(color_selectedhome)">selectedhome</value>
-        <value condition="Skin.HasSetting(color_selected)">selected</value>
-        <value condition="Skin.HasSetting(color_black)">black</value>
-        <value condition="Skin.HasSetting(color_green)">green</value>
-        <value condition="Skin.HasSetting(color_red)">red</value>
-        <value condition="Skin.HasSetting(color_grey)">grey1</value>
-        <value condition="Skin.HasSetting(color_darkgold)">darkgold</value>
-        <value condition="Skin.HasSetting(color_orange)">orange</value>
+        <include>BackgroundOverlayColorDefault</include>
         <value condition="Skin.HasSetting(color_neutral)">FFFFFFFF</value>
-        <value condition="Skin.HasSetting(color_custom)">$INFO[Skin.String(CustomColor)]</value>
         <value>FFFFFFFF</value>
     </variable>
     <variable name="BackgroundOverlayColorDialog">
-        <value condition="Skin.HasSetting(color_blue)">blue</value>
-        <value condition="Skin.HasSetting(color_selectedhome)">selectedhome</value>
-        <value condition="Skin.HasSetting(color_selected)">selected</value>
-        <value condition="Skin.HasSetting(color_black)">black</value>
-        <value condition="Skin.HasSetting(color_green)">green</value>
-        <value condition="Skin.HasSetting(color_red)">red</value>
-        <value condition="Skin.HasSetting(color_grey)">grey1</value>
-        <value condition="Skin.HasSetting(color_darkgold)">darkgold</value>
-        <value condition="Skin.HasSetting(color_orange)">orange</value>
-        <value condition="Skin.HasSetting(color_neutral)">red</value>
-        <value condition="Skin.HasSetting(color_custom)">$INFO[Skin.String(CustomColor)]</value>
+        <include>BackgroundOverlayColorDefault</include>
+        <value condition="Skin.HasSetting(color_neutral)">FFFFFFFF</value>
         <value>red</value>
     </variable>
     <variable name="BackgroundOverlayColorWidget">
-        <value condition="Skin.HasSetting(color_blue)">blue</value>
-        <value condition="Skin.HasSetting(color_selectedhome)">selectedhome</value>
-        <value condition="Skin.HasSetting(color_selected)">selected</value>
-        <value condition="Skin.HasSetting(color_black)">black</value>
-        <value condition="Skin.HasSetting(color_green)">green</value>
-        <value condition="Skin.HasSetting(color_red)">red</value>
-        <value condition="Skin.HasSetting(color_grey)">grey1</value>
-        <value condition="Skin.HasSetting(color_darkgold)">darkgold</value>
-        <value condition="Skin.HasSetting(color_orange)">orange</value>
-        <value condition="Skin.HasSetting(color_neutral)">black</value>
-        <value condition="Skin.HasSetting(color_custom)">$INFO[Skin.String(CustomColor)]</value>
+        <include>BackgroundOverlayColorDefault</include>
+        <value condition="Skin.HasSetting(color_neutral)">FFFFFFFF</value>
         <value>black</value>
+    </variable>
+    <variable name="BackgroundOverlayTransition">
+        <include>BackgroundOverlayColorDefault</include>
+        <value condition="Skin.HasSetting(color_neutral)">grey2</value>
+        <value>grey2</value>
     </variable>
     <variable name="MusicVisualisierung">
         <value condition="Skin.HasSetting(altnowplaying)">$LOCALIZE[51536]</value>
@@ -274,6 +252,10 @@
         <value condition="String.IsEmpty(ListItem.Art(banner))">SetBanner.png</value>
     </variable>
     <variable name="PosterThumb">
+		<value condition="ListItem.IsParentFolder">$INFO[ListItem.Icon]</value>
+        <value condition="!String.IsEmpty(ListItem.Art(poster))+!ListItem.IsCollection">$INFO[ListItem.Art(poster)]</value>
+        <value condition="[String.IsEmpty(ListItem.Art(poster))+!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),tvshow)]|ListItem.IsCollection">$INFO[ListItem.Icon]</value>
+        <value condition="Container.Content(episodes)|String.IsEqual(Container(9000).ListItem.Property(homemenu_id),tvshow)">$INFO[ListItem.Art(tvshow.poster)]</value>
         <value condition="String.Contains(Skin.String(studiologos.name),coloured)+Container.Content(studios)+!ListItem.IsParentFolder+!Window.IsVisible(music)">$INFO[ListItem.Label,resource://resource.images.studios.coloured/,]$VAR[MovieMovieStudiosVar]</value>
         <value condition="String.Contains(Skin.String(studiologos.name),white)+Container.Content(studios)+!ListItem.IsParentFolder+!Window.IsVisible(music)">$INFO[ListItem.Label,resource://resource.images.studios.white/,]$VAR[MovieMovieStudiosVar]</value>
         <value condition="String.Contains(Skin.String(moviegenreicons.name),coloured)+Container.Content(genres)+!ListItem.IsParentFolder+!Window.IsVisible(music)">$INFO[ListItem.Label,resource://resource.images.moviegenreicons.coloured/,]$VAR[MovieMoviegenreiconsExtVar]</value>
@@ -287,9 +269,7 @@
         <value condition="String.Contains(Skin.String(musicgenreicons.name),grey)+Container.Content(genres)+!ListItem.IsParentFolder+Window.IsVisible(music)">$INFO[ListItem.Label,resource://resource.images.musicgenreicons.grey/,.jpg]$VAR[MovieMusicgenreiconsExtVar]</value>
         <value condition="String.Contains(Skin.String(musicgenreicons.name),poster)+Container.Content(genres)+!ListItem.IsParentFolder+Window.IsVisible(music)">$INFO[ListItem.Label,resource://resource.images.musicgenreicons.poster/,.jpg]$VAR[MovieMusicgenreiconsExtVar]</value>
         <value condition="String.Contains(Skin.String(musicgenreicons.name),text)+Container.Content(genres)+!ListItem.IsParentFolder+Window.IsVisible(music)">$INFO[ListItem.Label,resource://resource.images.musicgenreicons.text/,.jpg]$VAR[MovieMusicgenreiconsExtVar]</value>
-        <value condition="!String.IsEmpty(ListItem.Art(poster))+!ListItem.IsCollection">$INFO[ListItem.Art(poster)]</value>
-        <value condition="[String.IsEmpty(ListItem.Art(poster))+!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),tvshow)]|ListItem.IsCollection">$INFO[ListItem.Icon]</value>
-        <value condition="Container.Content(episodes)|String.IsEqual(Container(9000).ListItem.Property(homemenu_id),tvshow)">$INFO[ListItem.Art(tvshow.poster)]</value>
+		<value>$INFO[ListItem.Icon]</value>
     </variable>
     <variable name="LibraryEditorLabel">
         <value condition="Container.Content(movies)">$LOCALIZE[42205]</value>
@@ -828,7 +808,7 @@
         <value>ContentPanel_scratched.png</value>
     </variable>
     <variable name="SelectBack2">
-        <value condition="!Window.IsVisible(script-TVHighlights-DialogWindow.xml)+!Window.IsVisible(virtualkeyboard)+!Window.IsVisible(script-RSS_Editor-rssEditor.xml)+!Window.IsVisible(script-RSS_Editor-setEditor.xml)+!Window.IsVisible(1102)">White.png</value>
+        <value condition="!Window.IsVisible(script-TVHighlights-DialogWindow.xml)+!Window.IsVisible(virtualkeyboard)+!Window.IsVisible(script-RSS_Editor-rssEditor.xml)+!Window.IsVisible(script-RSS_Editor-setEditor.xml)+!Window.IsVisible(1102)">BlackBack.png</value>
         <value condition="Window.IsVisible(script-RSS_Editor-setEditor.xml)|Window.IsVisible(script-RSS_Editor-rssEditor.xml)|Window.IsVisible(1102)">Black.png</value>
         <value>ContentPanel_scratched.png</value>
     </variable>

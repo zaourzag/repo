@@ -28,7 +28,7 @@
                     <top>388</top>
                     <width>900</width>
                     <height>60</height>
-                    <colordiffuse>$VAR[BackgroundOverlayColorDialog]</colordiffuse>
+                    <colordiffuse>$VAR[BackgroundOverlayTransition]</colordiffuse>
                     <texture>WhiteBack.png</texture>
                 </control>
             </control>

@@ -31,10 +31,10 @@
                         <left>0</left>
                         <top>0</top>
                         <control type="wraplist" id="541">
-                            <hitrect x="0" y="-15" w="1920" h="285" />
+							<animation effect="slide" end="-50" condition="Skin.HasSetting(hideMovieCases)+!Container.Content(episodes)">Conditional</animation>
                             <left>-255</left>
                             <top>370</top>
-                            <width>2325</width>
+                            <width>2375</width>
                             <height>1575</height>
                             <onleft>541</onleft>
                             <onright>541</onright>
@@ -64,6 +64,17 @@
                                         <aspectratio>stretch</aspectratio>
                                         <colordiffuse>$VAR[CoverDim]</colordiffuse>
                                         <texture diffuse="clear-cases/clearcase_inlay.png" fallback="FallbackCover.png">$VAR[PosterThumb]</texture>
+										<visible>!ListItem.IsParentFolder</visible>
+                                    </control>
+                                    <control type="image">
+                                        <left>10</left>
+                                        <top>213</top>
+                                        <width>295</width>
+                                        <height>435</height>
+                                        <aspectratio>keep</aspectratio>
+                                        <colordiffuse>$VAR[CoverDim]</colordiffuse>
+                                        <texture diffuse="clear-cases/clearcase_inlay.png" fallback="FallbackCover.png">$VAR[PosterThumb]</texture>
+										<visible>ListItem.IsParentFolder</visible>
                                     </control>
                                     <control type="image">
                                         <left>0</left>
@@ -93,6 +104,7 @@
                                         <colordiffuse>$VAR[CoverDim]</colordiffuse>
                                         <texture flipy="true" diffuse="ContentPanelMirror3.png" fallback="FallbackCover.png">$VAR[PosterThumb]</texture>
                                         <visible>Skin.HasSetting(animation)</visible>
+										<visible>!ListItem.IsParentFolder</visible>
                                     </control>
                                     <control type="image">
                                         <left>1</left>
@@ -158,6 +170,17 @@
                                         <aspectratio>stretch</aspectratio>
                                         <colordiffuse>$VAR[CoverDim]</colordiffuse>
                                         <texture diffuse="masks/mask.png" fallback="FallbackCover.png">$VAR[PosterThumb]</texture>
+										<visible>!ListItem.IsParentFolder</visible>
+                                    </control>
+                                    <control type="image">
+                                        <left>0</left>
+                                        <top>213</top>
+                                        <width>305</width>
+                                        <height>435</height>
+                                        <aspectratio>keep</aspectratio>
+                                        <colordiffuse>$VAR[CoverDim]</colordiffuse>
+                                        <texture diffuse="masks/mask.png" fallback="FallbackCover.png">$VAR[PosterThumb]</texture>
+										<visible>ListItem.IsParentFolder</visible>
                                     </control>
                                     <control type="group">
                                         <left>1</left>
@@ -188,6 +211,7 @@
                                         <colordiffuse>$VAR[CoverDim]</colordiffuse>
                                         <texture flipy="true" diffuse="ContentPanelMirror3.png" fallback="FallbackCover.png">$VAR[PosterThumb]</texture>
                                         <visible>Skin.HasSetting(animation)</visible>
+										<visible>!ListItem.IsParentFolder</visible>
                                     </control>
                                     <control type="image">
                                         <left>0</left>
@@ -228,6 +252,17 @@
                                         <aspectratio>stretch</aspectratio>
                                         <colordiffuse>$VAR[CoverDim]</colordiffuse>
                                         <texture diffuse="masks/mask.png" fallback="FallbackCover.png">$INFO[ListItem.Icon]</texture>
+										<visible>!ListItem.IsParentFolder</visible>
+                                    </control>
+                                    <control type="image">
+                                        <left>0</left>
+                                        <top>213</top>
+                                        <width>475</width>
+                                        <height>355</height>
+                                        <aspectratio>keep</aspectratio>
+                                        <colordiffuse>$VAR[CoverDim]</colordiffuse>
+                                        <texture diffuse="masks/mask.png" fallback="FallbackCover.png">$INFO[ListItem.Icon]</texture>
+										<visible>ListItem.IsParentFolder</visible>
                                     </control>
                                     <control type="group">
                                         <left>0</left>
@@ -258,6 +293,7 @@
                                         <colordiffuse>$VAR[CoverDim]</colordiffuse>
                                         <texture flipy="true" diffuse="ContentPanelMirror3.png" fallback="FallbackCover.png">$INFO[ListItem.Icon]</texture>
                                         <visible>Skin.HasSetting(animation)</visible>
+										<visible>!ListItem.IsParentFolder</visible>
                                     </control>
                                     <control type="image">
                                         <left>0</left>
@@ -306,6 +342,16 @@
                                         <height>435</height>
                                         <aspectratio>stretch</aspectratio>
                                         <texture diffuse="clear-cases/clearcase_inlay.png" fallback="FallbackCover.png">$VAR[PosterThumb]</texture>
+										<visible>!ListItem.IsParentFolder</visible>
+                                    </control>
+                                    <control type="image">
+                                        <left>50</left>
+                                        <top>213</top>
+                                        <width>295</width>
+                                        <height>435</height>
+                                        <aspectratio>keep</aspectratio>
+                                        <texture diffuse="clear-cases/clearcase_inlay.png" fallback="FallbackCover.png">$VAR[PosterThumb]</texture>
+										<visible>ListItem.IsParentFolder</visible>
                                     </control>
                                     <control type="image">
                                         <left>14</left>
@@ -323,6 +369,7 @@
                                         <aspectratio>stretch</aspectratio>
                                         <texture flipy="true" diffuse="ContentPanelMirror3.png" fallback="FallbackCover.png">$VAR[PosterThumb]</texture>
                                         <visible>Skin.HasSetting(animation)</visible>
+										<visible>!ListItem.IsParentFolder</visible>
                                     </control>
                                     <control type="image">
                                         <left>40</left>
@@ -411,6 +458,16 @@
                                             <height>435</height>
                                             <aspectratio>stretch</aspectratio>
                                             <texture diffuse="masks/mask.png" fallback="FallbackCover.png">$VAR[PosterThumb]</texture>
+											<visible>!ListItem.IsParentFolder</visible>
+                                        </control>
+                                        <control type="image">
+                                            <left>0</left>
+                                            <top>213</top>
+                                            <width>305</width>
+                                            <height>435</height>
+                                            <aspectratio>keep</aspectratio>
+                                            <texture diffuse="masks/mask.png" fallback="FallbackCover.png">$VAR[PosterThumb]</texture>
+											<visible>ListItem.IsParentFolder</visible>
                                         </control>
                                         <control type="group">
                                             <left>0</left>
@@ -444,6 +501,7 @@
                                             <aspectratio>stretch</aspectratio>
                                             <texture flipy="true" diffuse="ContentPanelMirror3.png" fallback="FallbackCover.png">$VAR[PosterThumb]</texture>
                                             <visible>Skin.HasSetting(animation)</visible>
+											<visible>!ListItem.IsParentFolder</visible>
                                         </control>
                                         <control type="image">
                                             <left>0</left>
@@ -496,6 +554,16 @@
                                             <height>355</height>
                                             <aspectratio>stretch</aspectratio>
                                             <texture diffuse="masks/mask.png" fallback="FallbackCover.png">$INFO[ListItem.Icon]</texture>
+											<visible>!ListItem.IsParentFolder</visible>
+                                        </control>
+                                        <control type="image">
+                                            <left>0</left>
+                                            <top>213</top>
+                                            <width>475</width>
+                                            <height>355</height>
+                                            <aspectratio>keep</aspectratio>
+                                            <texture diffuse="masks/mask.png" fallback="FallbackCover.png">$INFO[ListItem.Icon]</texture>
+											<visible>ListItem.IsParentFolder</visible>
                                         </control>
                                         <control type="group">
                                             <left>0</left>
@@ -524,6 +592,7 @@
                                             <aspectratio>stretch</aspectratio>
                                             <texture flipy="true" diffuse="ContentPanelMirror3.png" fallback="FallbackCover.png">$INFO[ListItem.Icon]</texture>
                                             <visible>Skin.HasSetting(animation)</visible>
+											<visible>!ListItem.IsParentFolder</visible>
                                         </control>
                                         <control type="image">
                                             <left>0</left>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window id="0">
     <defaultcontrol always="true">9000</defaultcontrol>
-	<backgroundcolor>$VAR[BackgroundOverlayColor]</backgroundcolor>
+	<backgroundcolor>$VAR[BackgroundOverlayTransition]</backgroundcolor>
     <menucontrol>200</menucontrol>
 	<onload condition="System.HasAddon(script.skinhelper.ping)">RunScript(script.skinhelper.ping)</onload>
 	<!-- <onload condition="!System.HasAddon(script.image.resource.select)">InstallAddon(script.image.resource.select)</onload>
@@ -36,7 +36,7 @@
             </control>
             <control type="group"> <!-- RSS / NavInfo / OSD -->
 				<control type="group">
-					<animation effect="slide" end="-30" condition="String.IsEqual(Container(4445).NumItems,1)">Conditional</animation>
+					<animation effect="slide" end="-58" condition="String.IsEqual(Container(4445).NumItems,1)">Conditional</animation>
 					<animation effect="slide" end="-64" condition="String.IsEqual(Container(4445).NumItems,2)">Conditional</animation>
 					<animation effect="slide" end="-110" condition="String.IsEqual(Container(4445).NumItems,3)">Conditional</animation>
 					<top>1</top>
