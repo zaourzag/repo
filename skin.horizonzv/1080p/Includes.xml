@@ -3118,16 +3118,4 @@
             </control>
         </control>
     </include>
-    <include name="BackgroundOverlayColorDefault">
-        <value condition="Skin.HasSetting(color_blue)">blue</value>
-        <value condition="Skin.HasSetting(color_selectedhome)">selectedhome</value>
-        <value condition="Skin.HasSetting(color_selected)">selected</value>
-        <value condition="Skin.HasSetting(color_black)">black</value>
-        <value condition="Skin.HasSetting(color_green)">green</value>
-        <value condition="Skin.HasSetting(color_red)">red</value>
-        <value condition="Skin.HasSetting(color_grey)">grey1</value>
-        <value condition="Skin.HasSetting(color_darkgold)">darkgold</value>
-        <value condition="Skin.HasSetting(color_orange)">orange</value>
-        <value condition="Skin.HasSetting(color_custom)">$INFO[Skin.String(CustomColor)]</value>
-	</include>
 </includes>

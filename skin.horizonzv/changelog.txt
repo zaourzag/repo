@@ -1,4 +1,7 @@
-﻿v 0.9.0.52
+﻿v 0.9.0.53
+- Bugfix Farbakzente
+
+v 0.9.0.52
 - Hintergrundfarbe bei Fensterwechsel geändert
 - Ansicht Showcase und Perspective optimiert
 

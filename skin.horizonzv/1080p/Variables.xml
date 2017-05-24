@@ -203,22 +203,58 @@
         <value condition="Skin.HasSetting(color_custom)">$LOCALIZE[51530] $INFO[Skin.String(CustomColor),(,)]</value>
     </variable>
     <variable name="BackgroundOverlayColor">
-        <include>BackgroundOverlayColorDefault</include>
+        <value condition="Skin.HasSetting(color_blue)">blue</value>
+        <value condition="Skin.HasSetting(color_selectedhome)">selectedhome</value>
+        <value condition="Skin.HasSetting(color_selected)">selected</value>
+        <value condition="Skin.HasSetting(color_black)">black</value>
+        <value condition="Skin.HasSetting(color_green)">green</value>
+        <value condition="Skin.HasSetting(color_red)">red</value>
+        <value condition="Skin.HasSetting(color_grey)">grey1</value>
+        <value condition="Skin.HasSetting(color_darkgold)">darkgold</value>
+        <value condition="Skin.HasSetting(color_orange)">orange</value>
+        <value condition="Skin.HasSetting(color_custom)">$INFO[Skin.String(CustomColor)]</value>
         <value condition="Skin.HasSetting(color_neutral)">FFFFFFFF</value>
         <value>FFFFFFFF</value>
     </variable>
     <variable name="BackgroundOverlayColorDialog">
-        <include>BackgroundOverlayColorDefault</include>
+        <value condition="Skin.HasSetting(color_blue)">blue</value>
+        <value condition="Skin.HasSetting(color_selectedhome)">selectedhome</value>
+        <value condition="Skin.HasSetting(color_selected)">selected</value>
+        <value condition="Skin.HasSetting(color_black)">black</value>
+        <value condition="Skin.HasSetting(color_green)">green</value>
+        <value condition="Skin.HasSetting(color_red)">red</value>
+        <value condition="Skin.HasSetting(color_grey)">grey1</value>
+        <value condition="Skin.HasSetting(color_darkgold)">darkgold</value>
+        <value condition="Skin.HasSetting(color_orange)">orange</value>
+        <value condition="Skin.HasSetting(color_custom)">$INFO[Skin.String(CustomColor)]</value>
         <value condition="Skin.HasSetting(color_neutral)">FFFFFFFF</value>
         <value>red</value>
     </variable>
     <variable name="BackgroundOverlayColorWidget">
-        <include>BackgroundOverlayColorDefault</include>
+        <value condition="Skin.HasSetting(color_blue)">blue</value>
+        <value condition="Skin.HasSetting(color_selectedhome)">selectedhome</value>
+        <value condition="Skin.HasSetting(color_selected)">selected</value>
+        <value condition="Skin.HasSetting(color_black)">black</value>
+        <value condition="Skin.HasSetting(color_green)">green</value>
+        <value condition="Skin.HasSetting(color_red)">red</value>
+        <value condition="Skin.HasSetting(color_grey)">grey1</value>
+        <value condition="Skin.HasSetting(color_darkgold)">darkgold</value>
+        <value condition="Skin.HasSetting(color_orange)">orange</value>
+        <value condition="Skin.HasSetting(color_custom)">$INFO[Skin.String(CustomColor)]</value>
         <value condition="Skin.HasSetting(color_neutral)">FFFFFFFF</value>
         <value>black</value>
     </variable>
     <variable name="BackgroundOverlayTransition">
-        <include>BackgroundOverlayColorDefault</include>
+        <value condition="Skin.HasSetting(color_blue)">blue</value>
+        <value condition="Skin.HasSetting(color_selectedhome)">selectedhome</value>
+        <value condition="Skin.HasSetting(color_selected)">selected</value>
+        <value condition="Skin.HasSetting(color_black)">black</value>
+        <value condition="Skin.HasSetting(color_green)">green</value>
+        <value condition="Skin.HasSetting(color_red)">red</value>
+        <value condition="Skin.HasSetting(color_grey)">grey1</value>
+        <value condition="Skin.HasSetting(color_darkgold)">darkgold</value>
+        <value condition="Skin.HasSetting(color_orange)">orange</value>
+        <value condition="Skin.HasSetting(color_custom)">$INFO[Skin.String(CustomColor)]</value>
         <value condition="Skin.HasSetting(color_neutral)">grey2</value>
         <value>grey2</value>
     </variable>

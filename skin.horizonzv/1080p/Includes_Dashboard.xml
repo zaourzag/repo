@@ -271,6 +271,7 @@
 			<control type="group" id="8007">
 				<left>60</left>
 				<top>538</top>
+				<animation effect="slide" start="0,0" end="0,-112" time="400" delay="250" condition="Window.IsVisible(favourites)">Conditional</animation>
 				<control type="label" id="8008">
 					<left>5</left>
 					<top>0</top>
