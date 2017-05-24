@@ -19,8 +19,6 @@ LOGIN_STATUS = { 'SUCCESS': 'T_100',
                   'SESSION_INVALID': 'S_218',
                   'OTHER_SESSION':'T_206' }
 
-licence_url = 'https://wvguard.sky.de/WidevineLicenser/WidevineLicenser|User-Agent=Mozilla%2F5.0%20(X11%3B%20Linux%20x86_64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20Chrome%2F49.0.2623.87%20Safari%2F537.36&Referer=http%3A%2F%2Fwww.skygo.sky.de%2Ffilm%2Fscifi--fantasy%2Fjupiter-ascending%2Fasset%2Ffilmsection%2F144836.html&Content-Type=|R{SSM}|'
-
 addon = xbmcaddon.Addon()
 addon_handle = int(sys.argv[1])
 autoKillSession = addon.getSetting('autoKillSession')
@@ -30,15 +28,32 @@ print autoKillSession
 datapath = xbmc.translatePath(addon.getAddonInfo('profile'))
 cookiePath = datapath + 'COOKIES'
 
+platform = 0
+osAndroid = 1
+if xbmc.getCondVisibility('system.platform.android'):
+    platform = osAndroid
+
+license_url = 'https://wvguard.sky.de/WidevineLicenser/WidevineLicenser|User-Agent=Mozilla%2F5.0%20(X11%3B%20Linux%20x86_64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20Chrome%2F49.0.2623.87%20Safari%2F537.36&Referer=http%3A%2F%2Fwww.skygo.sky.de%2Ffilm%2Fscifi--fantasy%2Fjupiter-ascending%2Fasset%2Ffilmsection%2F144836.html&Content-Type=|R{SSM}|'
+license_type = 'com.widevine.alpha'
+android_deviceid = ''
+if platform == osAndroid:
+    import uuid
+    license_url = ''
+    license_type = 'com.microsoft.playready'
+            
+    if addon.getSetting('android_deviceid'):
+        android_deviceid = addon.getSetting('android_deviceid')
+    else:
+        android_deviceid = str(uuid.uuid1())
+        addon.setSetting('android_deviceid', android_deviceid)
+
 # Get installed inputstream addon
 def getInputstreamAddon():
-    is_types = ['inputstream.adaptive', 'inputstream.smoothstream']
-    for i in is_types:
-        r = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "id": 1, "method": "Addons.GetAddonDetails", "params": {"addonid":"' + i + '", "properties": ["enabled"]}}')
-        data = json.loads(r)
-        if not "error" in data.keys():
-            if data["result"]["addon"]["enabled"] == True:
-                return i
+    r = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "id": 1, "method": "Addons.GetAddonDetails", "params": {"addonid":"inputstream.adaptive", "properties": ["enabled"]}}')
+    data = json.loads(r)
+    if not "error" in data.keys():
+        if data["result"]["addon"]["enabled"] == True:
+            return True
         
     return None
 
@@ -52,7 +67,9 @@ class SkyGo:
     def __init__(self):
         self.sessionId = ''
         self.cookiePath = cookiePath
-        self.licence_url = licence_url
+        self.license_url = license_url
+        self.license_type = license_type
+        self.android_deviceId = android_deviceid
 
         # Create session with old cookies
         self.session = requests.session()
@@ -95,7 +112,7 @@ class SkyGo:
         # Try to login
         login = "email="+username
         if not re.match(r"^[A-Za-z0-9\.\+_-]+@[A-Za-z0-9\._-]+\.[a-zA-Z]*$", username):
-        	login = "customerCode="+username
+            login = "customerCode="+username
 
         r = self.session.get("https://www.skygo.sky.de/SILK/services/public/session/login?version=12354&platform=web&product=SG&"+login+"&password="+password+"&remMe=true")
         #Parse jsonp
@@ -209,9 +226,12 @@ class SkyGo:
         return r.json()['detail']
 
     def get_init_data(self, session_id, apix_id):
-        init_data = 'kid={UUID}&sessionId='+session_id+'&apixId='+apix_id+'&platformId=&product=BW&channelId='
-        init_data = struct.pack('1B', *[30])+init_data
-        init_data = base64.urlsafe_b64encode(init_data)
+        if platform == osAndroid:
+            init_data = 'sessionId='+self.sessionId+'&apixId='+apix_id+'&deviceId=' + self.android_deviceId +'&platformId=AndP&product=BW&version=1.7.1&DeviceFriendlyName=Android'
+        else:
+            init_data = 'kid={UUID}&sessionId='+session_id+'&apixId='+apix_id+'&platformId=&product=BW&channelId='
+            init_data = struct.pack('1B', *[30])+init_data
+            init_data = base64.urlsafe_b64encode(init_data)
         return init_data
 
     def parentalCheck(self, parental_rating, play=False):
@@ -237,6 +257,12 @@ class SkyGo:
         return True
 
     def play(self, manifest_url, package_code, parental_rating=0, info_tag=None, apix_id=None):
+        # Inputstream settings
+        is_addon = getInputstreamAddon()
+        if not is_addon:
+            xbmcgui.Dialog().notification('SkyGo Fehler', 'Addon "inputstream.adaptive" fehlt!', xbmcgui.NOTIFICATION_ERROR, 2000, True)
+            return False
+        
         #Jugendschutz
         if not self.parentalCheck(parental_rating, play=True):
             xbmcgui.Dialog().notification('SkyGo - FSK ' + str(parental_rating), 'Keine Berechtigung zum Abspielen dieses Eintrages', xbmcgui.NOTIFICATION_ERROR, 2000, True)
@@ -252,17 +278,13 @@ class SkyGo:
                 li = xbmcgui.ListItem(path=manifest_url)
                 if info_tag:
                     li.setInfo('video', info_tag)
-                # Inputstream settings
-                is_addon = getInputstreamAddon()
-                if not is_addon:
-                    xbmcgui.Dialog().notification('SkyGo Fehler', 'Inputstream Addon fehlt!', xbmcgui.NOTIFICATION_ERROR, 2000, True)
-                    return False
-                li.setProperty(is_addon + '.license_type', 'com.widevine.alpha')
-                li.setProperty(is_addon + '.manifest_type', 'ism')
+
+                li.setProperty('inputstream.adaptive.license_type', self.license_type)
+                li.setProperty('inputstream.adaptive.manifest_type', 'ism')
                 if init_data:
-                    li.setProperty(is_addon + '.license_key', self.licence_url)
-                    li.setProperty(is_addon + '.license_data', init_data)
-                li.setProperty('inputstreamaddon', is_addon)
+                    li.setProperty('inputstream.adaptive.license_key', self.license_url)
+                    li.setProperty('inputstream.adaptive.license_data', init_data)
+                li.setProperty('inputstreamaddon', 'inputstream.adaptive')
                 # Start Playing
                 xbmcplugin.setResolvedUrl(addon_handle, True, listitem=li)
             else:
@@ -270,4 +292,3 @@ class SkyGo:
         else:
             xbmcgui.Dialog().notification('SkyGo Fehler', 'Fehler bei Login', xbmcgui.NOTIFICATION_ERROR, 2000, True)
             print 'Fehler beim Einloggen'
-

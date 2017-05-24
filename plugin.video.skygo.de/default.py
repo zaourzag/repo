@@ -22,10 +22,15 @@ if 'action' in params:
     elif params['action'] == 'playClip':
         clips.playClip(params['id'])
     elif params['action'] == 'playLive':
-        liveTv.playLiveTv(params['channel_id'])
+        liveTv.playLiveTv(params['manifest_url'], params['package_code'])
 
+    elif params['action'] == 'listLiveTvChannelDirs':
+        nav.listLiveTvChannelDirs()
     elif params['action'] == 'listLiveTvChannels':
-        nav.listLiveChannels()
+        channeldir_name = ''
+        if 'channeldir_name' in params:
+            channeldir_name = params['channeldir_name']
+        nav.listLiveTvChannels(channeldir_name)
 
     elif params['action'] == 'watchlist':
         if 'list' in params:

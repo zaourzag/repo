@@ -1,0 +1,2 @@
+1.0.3.1
+- Anpassung für xbmc.gui 5.13.0
