@@ -96,7 +96,8 @@ class Resolver:
         start_point = re.search('start=(\d+)', url)
         _id_ = re.search('http.*?/embed/(.+?)(\?|$)', url)
         if _id_:
-            url = 'https://www.youtube.com/watch?v=%s' % (_id_.group(1))
+            _id_ = _id_.group(1)
+            url = 'https://www.youtube.com/watch?v=%s' % (_id_)
         html = requests.get(url).text
         if start_point:
             duration = re.search('<meta itemprop="duration" content="PT(?P<minutes>\d+)M(?P<seconds>\d+)S">', html)
