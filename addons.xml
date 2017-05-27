@@ -926,7 +926,7 @@ v2.0.0
     </extension>
 </addon>
 
-<addon id="plugin.video.mvmix" version="1.8.0" name="Music Video Mix" provider-name="Jin">
+<addon id="plugin.video.mvmix" version="1.8.1" name="Music Video Mix" provider-name="Jin">
     <requires>
         <import addon="xbmc.python" version="2.20.0"/>
     </requires>
@@ -939,7 +939,7 @@ v2.0.0
         <platform>all</platform>
         <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
         <news>
-v1.8.0
+v1.8.1
 - minor updates
 - removed youtube proxy
         </news>
