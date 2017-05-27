@@ -10,13 +10,14 @@ class Resolver:
         self.resolved_url = None
         self.startpercent = False
         
-        log(url)
-        
         if 'twitch' in url:
             self.twitch(url)
             
         elif 'stream.me' in url:
             self.stream_me(url)
+            
+        elif 'oddshot' in url:
+            self.oddshot(url)
             
         elif 'hitbox' in url:
             self.hitbox(url)
@@ -38,7 +39,6 @@ class Resolver:
             if s:
                 seconds += int(s.group(1))
             return seconds
-                
         
         if 'channel=' in url:
             _id_ = url.split('channel=')[1]
@@ -67,6 +67,10 @@ class Resolver:
         data = requests.get(url).text
         self.resolved_url = re.search('"hlsmp4":\{"href":"(.+?)"', data).group(1)
         
+    def oddshot(self, url):
+        data = requests.get(url).text
+        self.resolved_url = re.search('"url":"(.+?)"', data).group(1)
+        
     def hitbox(self, url):
         channel = re.sub('\?.+?$', '', url.split('embed/')[1])
         api = 'http://www.hitbox.tv/api/player/config/live/%s'
@@ -83,16 +87,28 @@ class Resolver:
         
         from .signature.cipher import Cipher
         
+        def time_to_seconds(t):
+            seconds = 0
+            seconds += int(duration.group('minutes'))*60
+            seconds += int(duration.group('seconds'))
+            return seconds
+        
+        start_point = re.search('start=(\d+)', url)
         _id_ = re.search('http.*?/embed/(.+?)(\?|$)', url)
         if _id_:
             url = 'https://www.youtube.com/watch?v=%s' % (_id_.group(1))
         html = requests.get(url).text
+        if start_point:
+            duration = re.search('<meta itemprop="duration" content="PT(?P<minutes>\d+)M(?P<seconds>\d+)S">', html)
+            if duration:
+                self.startpercent = str((100*int(start_point.group(1)))/time_to_seconds(duration))
         pos = html.find('<script>var ytplayer')
         if pos >= 0:
             html2 = html[pos:]
             pos = html2.find('</script>')
             if pos:
                 html = html2[:pos]
+                
         re_match_js = re.search(r'\"js\"[^:]*:[^"]*\"(?P<js>.+?)\"', html)
         js = ''
         cipher = None
@@ -124,8 +140,17 @@ class Resolver:
                         break
                         
         if not self.resolved_url and _id_:
-            params = {'video_id':_id_.group(1)}
+            params = {
+                'video_id': _id_,
+                'eurl': 'https://youtube.googleapis.com/v/' + _id_,
+                'ssl_stream': '1',
+                'ps': 'default',
+                'el': 'default'
+            }
             url = 'https://www.youtube.com/get_video_info'
             data = requests.get(url, params=params).text
             params = dict(urlparse.parse_qsl(data))
-            self.resolved_url = params.get('hlsvp', '')
+            hls = params.get('hlsvp', '')
+            if hls:
+                text = requests.get(hls).text
+                self.resolved_url =  text.splitlines()[-1]

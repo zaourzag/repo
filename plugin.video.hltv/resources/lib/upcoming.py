@@ -2,15 +2,16 @@
 
 from common import *
 
-class Archive:
+class Upcoming:
 
     def __init__(self, i):
         self.item = {}
-        unixtime = re.search('unix="(.+?)"', i).group(1)[:10]
+        unixtime = re.search('data-unix="(.+?)"', i).group(1)[:10]
         self.date = date(unixtime)
-        self.teams = re.findall('<td class="teams">(.+?)</td>', i, re.DOTALL)
+        self.teams = re.findall('<div class="team">(.+?)</div>', i, re.DOTALL)
+        self.name = re.search('<td class="placeholder-text-cell">(.+?)</td>', i, re.DOTALL)
         self.url = re.search('<a href="(.+?)"', i, re.DOTALL).group(1)
-        self.info = re.search('<div class="online text-ellipsis">(.+?)</div>', i, re.DOTALL)
+        self.info = re.search('<span class="event-name">(.+?)<', i, re.DOTALL)
         
         self.title = self.get_title()
         
@@ -19,9 +20,9 @@ class Archive:
         
     def get_title(self):
         if self.teams:
-            team1 = re.search('title="(.+?)"', self.teams[0]).group(1)
-            team2 = re.search('title="(.+?)"', self.teams[1]).group(1)
-            return utfenc('%s %s vs %s' % (self.date, team1, team2))
+            return utfenc('%s %s vs %s' % (self.date, self.teams[0].strip(), self.teams[1].strip()))
+        elif self.name:
+            return utfenc('{0} {1}'.format(self.date, self.name.group(1)))
         else:
             return None
         

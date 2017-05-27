@@ -2,7 +2,6 @@
 
 from resources.lib.client import Client
 from resources.lib import hltv
-from resources.lib import helper
 from resources.lib.common import *
 
 client = Client()
@@ -23,5 +22,4 @@ elif mode == 'archive':
 elif mode == 'details':
     hltv.details_items(client.request(base_hltv+id))
 elif mode == 'play':
-    playback_url = helper.get_playback_url(id, client.request(id))
-    hltv.play(playback_url)
+    hltv.play(id)
