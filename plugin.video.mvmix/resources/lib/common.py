@@ -14,8 +14,6 @@ def sites():
             ('imvdb', addon.getSetting('imvdb')),('youtube', addon.getSetting('youtube')),
             ]
     sites = [i[0] for i in sites if i[1] == 'true']
-    if yt_proxy():
-        sites = ['yt_proxy' if x=='youtube' else x for x in sites]
     return sites
 
 def import_site(site):
@@ -28,23 +26,9 @@ def import_site(site):
     if site == 'imvdb':
         from .sources import imvdb
         return imvdb
-    if site == 'youtube' or site == 'yt_proxy':
+    if site == 'youtube':
         from .sources import youtube
         return youtube
-
-def yt_proxy():
-    return addon.getSetting('yt_proxy') == 'true'
-
-def proxy_location():
-    l = ['de','nl','fr','uk','qc','fl','co','wa']
-    s = addon.getSetting('proxy_location')
-    return l[int(s)]
-
-def get_yt_pxy_token():
-    return addon.getSetting('yt_pxy_token')
-    
-def set_yt_pxy_token(token):
-    addon.setSetting('yt_pxy_token', token)
     
 def clean_title(title):
     title = re.sub('video\s*-\s*dvd|\(video\)|official\s*video|offizielles\s*video|official\s*dvd|official\s*video\s*hd|(?:\(|\[)\s*official\s*(?:\)|\])|music\s*video|official\s*music\s*video|full\s*song|download\s*link', '', title, flags=re.I)

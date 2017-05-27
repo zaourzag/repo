@@ -20,11 +20,10 @@ def get_videos(artist):
     for r in result:
         if r:
             for v in r:
-                v['title'] = common.clean_title(v['title'])
                 videos.append(v)
-    videos = sort_videos(videos)
     videos = filter_videos(videos)
     videos = remove_duplicates(videos)
+    videos = sort_videos(videos)
     complete_time = time.time() - start_time
     common.log('[mvmixPlayer] mode: %s - time: %s' % ('get_videos',str(complete_time)))
     return videos
@@ -65,6 +64,7 @@ def sort_videos(videos):
     sorted_video_list = []
     for site in sites:
         for video in videos:
+            video['title'] = common.clean_title(video['title'])
             video_site = video['site']
             if video_site == site:
                 sorted_video_list.append(video)  
@@ -76,5 +76,5 @@ def filter_videos(videos):
     videos = [x for x in videos if not re.findall(common.utf_enc(x['artist'][0]), common.utf_enc(x['title']), re.IGNORECASE)]
     ignore_list = common.ignore_list()
     for i in ignore_list:
-        videos = [x for x in videos if not (i['id'] == x['id'] and i['site'] == x['site'])]
+        videos = [x for x in videos if not (str(i['id']) == str(x['id']) and i['site'] == x['site'])]
     return videos

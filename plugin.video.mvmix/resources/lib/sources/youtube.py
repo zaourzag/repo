@@ -6,10 +6,6 @@ import json, urlparse, re, urllib
 from .signature.cipher import Cipher
 
 site = 'youtube'
-yt_proxy = common.yt_proxy()
-if yt_proxy:
-    location = common.proxy_location()
-    site = 'yt_proxy'
 
 def get_videos(artist):
     videos = []
@@ -21,16 +17,10 @@ def get_videos(artist):
     params = {'part':'snippet','type':'video','maxResults':'50',#'videoDefinition':'high',
                 'q':'%s video' % artist,'key':'AIzaSyCky6iU_p2VjvpXwTSOpPVLsGFIdR51lQE',
                 }
-    if yt_proxy:
-        try:
-            json_data = pxy_request(url, params).json()
-        except:
-            return False
-    else:
-        try:
-            json_data = requests.get(url, params=params, headers=headers).json()
-        except:
-            return False
+    try:
+        json_data = requests.get(url, params=params, headers=headers).json()
+    except:
+        return False
     try:
         items = json_data['items']
         first = True
@@ -74,37 +64,16 @@ def get_video_url(id):
     url = 'https://youtube.com/watch'
     html = ''
     cookie = ''
-    if yt_proxy:
-        try:
-            token = common.get_yt_pxy_token()
-            r = pxy_request(url, params)
-            html = r.text
-            c = r.headers.get('set-cookie')
-            s = re.search('s=(.+?)(?:$|;)', c)
-            if s and token:
-                cookie = 's=%s; token=%s' % (s.group(1), token)
-        except:
-            pass
-    else:
-        try:
-            html = requests.get(url, params=params, headers=headers).text
-        except:
-            pass
+    try:
+        html = requests.get(url, params=params, headers=headers).text
+    except:
+        pass
     pos = html.find('<script>var ytplayer')
     if pos >= 0:
         html2 = html[pos:]
         pos = html2.find('</script>')
         if pos:
             html = html2[:pos]
-    #proxy html
-    else:
-        p = re.search('<source src="(.+?)"', html, re.DOTALL)
-        if p and cookie:
-            src = '%s|Cookie=%s' % (p.group(1),urllib.quote_plus(cookie))
-            return src
-        else:
-            return video_url
-    #standard html
     re_match_js = re.search(r'\"js\"[^:]*:[^"]*\"(?P<js>.+?)\"', html)
     js = ''
     cipher = None
@@ -141,21 +110,21 @@ def get_video_url(id):
 def status(trusted_channel,channel,artist,title,description):
     title = title.lower()
     artist = artist.lower().replace(' ','')
-    a = ['lyric', 'no official', 'not official', 'unofficial', 'vevo']
+    a = ['lyric', 'no official', 'not official', 'unofficial', 'un-official', 'non-official', 'vevo']
     if any(x in title for x in a):
         if 'official lyric video' in title:
             return True
         else:
             return False
     b = ['parody', 'parodie', 'fan made', 'fanmade', 'vocal cover',
-        'custom video', 'music video cover', 'music video montage', 
+        'custom video', 'music video cover', 'music video montage', 'video preview',
         'guitar cover', 'drum through', 'guitar walk', 'drum walk',
         'guitar demo', '(drums)', 'drum cam',
         'drumcam', '(guitar)',
-        'our cover of', 'in this episode of', 'official comment',
+        'our cover of', 'in this episode of', 'official comment', 'short video about',
         'full set', 'full album stream',
-        '"reaction"', 'reaction!', 'video reaction',
-        'splash news']
+        '"reaction"', 'reaction!', 'video reaction', '(review)',
+        'splash news', 'not an official']
     if any(x in title for x in b) or any(x in description for x in b):
         return False
     c = [' animated ']
@@ -168,7 +137,7 @@ def status(trusted_channel,channel,artist,title,description):
     if any(x in description for x in e):
         return True
     f = ['official video', 'offizielles video', 'music video', 'us version']
-    if any(x in title for x in f):
+    if any(x in title for x in f) and description:
         return True
     g = ['records', 'official']
     if any(x in channel for x in g):
@@ -185,6 +154,8 @@ def split_title(t):
     except:
         pass
     t = t.replace('–', '-')
+    if not '-' in t and '"' in t:
+        t = re.sub(' "', ' - ', t)
     if re.search(' - ', t):
         return t.split(' - ')
     elif re.search('- ', t):
@@ -211,23 +182,3 @@ def check_name(artist,name):
                     name = splitted[0].strip()
                     break
     return name
-
-def pxy_request(url,params):
-    proxfree = 'https://www.proxfree.com'
-    headers = headers={'User-Agent':'iPhone'}
-    r = requests.head(proxfree, headers=headers, stream=True)
-    cookie = r.headers.get('set-cookie')
-    s = re.search('s=(.+?)(?:$|;)', cookie)
-    token = re.search('token=(.+?)(?:$|;)', cookie)
-    if s and token:
-        cookie = 's=%s; token=%s; default=5' % (s.group(1),token.group(1))
-        common.set_yt_pxy_token(token.group(1))
-    proxy = 'https://%s.proxfree.com/request.php?do=go' % location
-    headers.update({'Cookie':cookie})
-    if params:
-        link = '%s?%s' % (url,urllib.urlencode(params))
-    else:
-        link = url
-    form_data = {'get':link, 'pfserverDropdown':proxy, 'pfipDropdown':'default'}
-    response = requests.post(proxy, headers=headers, data=form_data)
-    return response
