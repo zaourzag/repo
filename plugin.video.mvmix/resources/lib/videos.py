@@ -22,8 +22,8 @@ def get_videos(artist):
             for v in r:
                 videos.append(v)
     videos = filter_videos(videos)
-    videos = remove_duplicates(videos)
     videos = sort_videos(videos)
+    videos = remove_duplicates(videos)
     complete_time = time.time() - start_time
     common.log('[mvmixPlayer] mode: %s - time: %s' % ('get_videos',str(complete_time)))
     return videos

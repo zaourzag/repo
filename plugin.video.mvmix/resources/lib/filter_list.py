@@ -89,6 +89,7 @@ filter_list = [
     '\[new\]',
     '\(audio\)',
     'official audio',
+    'track video',
     '\(.*?stream\)',
     'dsds',
     'new album',
