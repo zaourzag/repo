@@ -1562,7 +1562,7 @@ v0.8.0
         <broken>Kodinerds Repo ersetzt Lost und Found</broken>
 </addon>
 
-<addon id="plugin.video.hltv" version="0.2.0" name="HLTV" provider-name="Jin">
+<addon id="plugin.video.hltv" version="0.2.1" name="HLTV" provider-name="Jin">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
     </requires>
@@ -1579,6 +1579,7 @@ v0.8.0
         <disclaimer lang="de_DE">Inoffizielles Addon - Benutzung auf eigene Gefahr</disclaimer>
         <disclaimer lang="en_GB">Unofficial Addon - Use at your own risk</disclaimer>
         <news>
+v0.2.1
 addon update after website changes
         </news>
     </extension>
