@@ -2784,6 +2784,30 @@ Zattoo Live TV, Aufnahmen und EPG
 	</extension>
 </addon>
 
+<addon id="script.module.oauth2client"
+       name="oauth2client"
+       version="1.4.7" 
+       provider-name="Google">
+  <requires>
+    <import addon="xbmc.python" version="2.14.0"/>
+	<import addon="script.module.httplib2" version="0.8.0" />
+	<import addon="script.module.uritemplate" version="0.6" />
+	<import addon="script.module.six" version="1.9.0" />
+  </requires>
+  <extension point="xbmc.python.module"
+             library="lib" />
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <language></language>
+    <summary lang="en">Google Oauth2Client libraries</summary>
+    <description lang="en">A packaged version of the libraries needed for Google Oauth2 Client access to their API via python.</description>
+    <disclaimer lang="en">Source code from https://github.com/google/oauth2client</disclaimer>
+    <license>Apache 2.0</license>
+    <website>http://google.github.io/oauth2client/</website>
+    <source>https://github.com/google/oauth2client</source>
+  </extension>
+</addon>
+
 <addon id="repository.saxbmc" name="SaXBMC Addon Repo" version="1.0.1" provider-name="Birger Jesch">
 	<extension point="xbmc.addon.repository" name="SaXBMC Addon Repo">
 		<info compressed="true">https://raw.githubusercontent.com/b-jesch/SaXBMC/master/addons.xml</info>
