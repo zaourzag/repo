@@ -5,7 +5,7 @@ Inoffizielles Kodi-Addon für Maxdome
 Voraussetzungen:
 
 - Kodi 17
-- Aktuelles inputstream.mpd Addon
+- Aktuelles inputstream.adaptive Addon
 - widevine Bibliotheken
 - Einen Account bei Maxdome ;)
 
