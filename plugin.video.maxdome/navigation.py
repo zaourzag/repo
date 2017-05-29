@@ -24,7 +24,7 @@ poster_height = '306'
 
 # Get installed inputstream addon
 def getInputstreamAddon():
-    is_types = ['inputstream.adaptive', 'inputstream.mpd']
+    is_types = ['inputstream.adaptive', 'inputstream.adaptive']
     for i in is_types:
         r = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "id": 1, "method": "Addons.GetAddonDetails", "params": {"addonid":"' + i + '", "properties": ["enabled"]}}')
         data = json.loads(r)
@@ -461,7 +461,7 @@ class Navigation:
             # Inputstream settings
             is_addon = getInputstreamAddon()
             if not is_addon:
-               xbmcgui.Dialog().notification('Maxdome Fehler', 'Inputstream Addon fehlt!', xbmcgui.NOTIFICATION_ERROR, 2000, True)
+               xbmcgui.Dialog().notification('Maxdome Fehler', 'inputstream.adaptive Addon fehlt!', xbmcgui.NOTIFICATION_ERROR, 2000, True)
                return False
  
             li.setProperty(is_addon + '.license_type', 'com.widevine.alpha')
