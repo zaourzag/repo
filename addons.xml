@@ -1068,7 +1068,7 @@ v1.8.1
 	</extension>
 </addon>
 
-<addon id="plugin.video.skygo.de" name="SkyGo" version="1.9.7" provider-name="jojo, frankr612, Maven, Linkinsoldier">
+<addon id="plugin.video.skygo.de" name="SkyGo" version="1.9.7.1" provider-name="jojo, frankr612, Maven, Linkinsoldier">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
     <import addon="script.module.requests" version="2.9.1"/>
