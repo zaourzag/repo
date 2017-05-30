@@ -1,16 +1,20 @@
-﻿v 0.9.0.53
-- Bugfix Farbakzente
+﻿v 0.9.0.54
+- Bugfix: Farbe in Dialogen
+- Bugfix: PVR Widget (Aufnahmen)
+
+v 0.9.0.53
+- Bugfix: Farbakzente
 
 v 0.9.0.52
 - Hintergrundfarbe bei Fensterwechsel geändert
 - Ansicht Showcase und Perspective optimiert
 
 v 0.9.0.51
-- Bugfix Numerisches Keyboard
+- Bugfix: Numerisches Keyboard
 
 v 0.9.0.50
 - Texte für Shutdownmenü angepasst/übersetzt
-- Bugfix in User-Addon (onclick)
+- Bugfix: in User-Addon (onclick)
 
 v 0.9.0.43
 - einzelne Punkte im "Shutdown-Menü" ab-/zuschaltbar

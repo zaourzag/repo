@@ -1105,7 +1105,7 @@
 			<include content="HomePageWidget_list">
 				<!-- pvr recordings -->
 				<param name="HomePageWidget_content" value="pvr://recordings/tv/active/" />
-				<param name="HomePageWidget_target" value="video" />
+				<param name="HomePageWidget_target" value="videos" />
 				<param name="HomePageWidget_sortby" value="date" />
 				<param name="HomePageWidget_sortorder" value="descending" />
 				<param name="HomePageWidget_limit" value="40" />

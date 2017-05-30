@@ -227,7 +227,7 @@
         <value condition="Skin.HasSetting(color_darkgold)">darkgold</value>
         <value condition="Skin.HasSetting(color_orange)">orange</value>
         <value condition="Skin.HasSetting(color_custom)">$INFO[Skin.String(CustomColor)]</value>
-        <value condition="Skin.HasSetting(color_neutral)">FFFFFFFF</value>
+        <value condition="Skin.HasSetting(color_neutral)">red</value> <!-- !! -->
         <value>red</value>
     </variable>
     <variable name="BackgroundOverlayColorWidget">
@@ -845,7 +845,7 @@
     </variable>
     <variable name="SelectBack2">
         <value condition="!Window.IsVisible(script-TVHighlights-DialogWindow.xml)+!Window.IsVisible(virtualkeyboard)+!Window.IsVisible(script-RSS_Editor-rssEditor.xml)+!Window.IsVisible(script-RSS_Editor-setEditor.xml)+!Window.IsVisible(1102)">BlackBack.png</value>
-        <value condition="Window.IsVisible(script-RSS_Editor-setEditor.xml)|Window.IsVisible(script-RSS_Editor-rssEditor.xml)|Window.IsVisible(1102)">Black.png</value>
+        <value condition="Window.IsVisible(script-RSS_Editor-setEditor.xml)|Window.IsVisible(script-RSS_Editor-rssEditor.xml)|Window.IsVisible(virtualkeyboard)|Window.IsVisible(1102)">Black.png</value>
         <value>ContentPanel_scratched.png</value>
     </variable>
     <variable name="SelectLabel">

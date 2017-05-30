@@ -630,8 +630,7 @@
                 <align>left</align>
                 <textcolor>orange</textcolor>
                 <shadowcolor>black</shadowcolor>
-                <label>8004 sichtbar | </label>
-				<visible>Control.IsVisible(8004)</visible>
+                <label>$INFO[Container(9000).ListItem.Property(homemenu_path)]</label>
             </control>
             <control type="label">
                 <left>30</left>

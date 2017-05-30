@@ -4,6 +4,7 @@
         <value condition="String.Contains(Container(9000).ListItem.Property(homemenu_path),music)">music</value>
         <value condition="String.Contains(Container(9000).ListItem.Property(homemenu_path),audio)">music</value>
         <value condition="String.Contains(Container(9000).ListItem.Property(homemenu_path),video)">videos</value>
+        <value>videos</value>
     </variable>
     <variable name="WidgetPropertyLabel">
         <value condition="String.IsEqual(Window(Home).Property(HomeButton),music)">$LOCALIZE[2]</value>
