@@ -2805,6 +2805,29 @@ Zattoo Live TV, Aufnahmen und EPG
     </extension>
 </addon>
 
+<addon id="plugin.video.sporttotal" name="Sport total (Development)" version="0.1" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.24.0"/>
+        <import addon="script.module.beautifulsoup4" version="4.3.2"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+  <extension point="xbmc.addon.metadata">    
+    <summary lang="de">Regional Fussball Liegen von https://www.sporttotal.tv</summary>
+    <summary lang="en">Regional Fussball Liegen von https://www.sporttotal.tv</summary>
+    <language>de</language>
+    <description lang="de">Regional Fussball Liegen von https://www.sporttotal.tv</description>
+    <description lang="en">Regional Fussball Liegen von https://www.sporttotal.tv</description>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    <website></website>
+    <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.sporttotal</source>
+    <forum>http://www.kodinerds.net/</forum>
+    <email>andreas at vogler dot name</email>
+    <platform>all</platform>
+  </extension>
+</addon>
+
 <addon id="repository.saxbmc" name="SaXBMC Addon Repo" version="1.0.1" provider-name="Birger Jesch">
 	<extension point="xbmc.addon.repository" name="SaXBMC Addon Repo">
 		<info compressed="true">https://raw.githubusercontent.com/b-jesch/SaXBMC/master/addons.xml</info>
