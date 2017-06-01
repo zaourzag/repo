@@ -130,16 +130,47 @@ def top20(url)      :
         htmlPage = BeautifulSoup(content, 'html.parser')        
         liste = htmlPage.find("div",{"class" :"place2"})        
         elemente=liste.findAll("div",{"class" :"template"})
-        for element in elemente:        
-          BegegnungLabel=element.find("span",{"class" :"BegegnungLabel"}).string.encode("utf-8")
-          BegegnungLabel2=element.find("span",{"class" :"BegegnungLabel2"}).string.encode("utf-8")
-          staffelnameLabel=element.find("span",{"class" :"staffelnameLabel"}).string.encode("utf-8")
+        for element in elemente:  
+          debug(element)
+          try:          
+            tBegegnungLabel3=element.find("span",{"class" :"tBegegnungLabel3"}).string.encode("utf-8")
+          except:
+            tBegegnungLabel3=""
+          try:        
+            BegegnungLabel=element.find("span",{"class" :"BegegnungLabel"}).string.encode("utf-8")
+          except:
+            try:
+                BegegnungLabel=element.find("span",{"class" :"tBegegnungLabel"}).string.encode("utf-8")         
+            except:
+                continue
+          try:
+            BegegnungLabel2=element.find("span",{"class" :"BegegnungLabel2"}).string.encode("utf-8")
+          except:
+            BegegnungLabel2=element.find("span",{"class" :"tBegegnungLabel2"}).string.encode("utf-8")
+          try:
+            staffelnameLabel=element.find("span",{"class" :"staffelnameLabel"}).string.encode("utf-8")
+          except:
+            staffelnameLabel=element.find("span",{"class" :"tstaffelnameLabel"}).string.encode("utf-8")
+          
           dates=element.findAll("span",{"class" :"Spieldatum"})
+          if len(dates)==0:
+            dates=element.findAll("span",{"class" :"tSpieldatum"})
           datum=dates[0].string.encode("utf-8")
-          zeit=dates[1].string.encode("utf-8")
-          urln_sub=element.find("a",{"class" :"LiveLink"})['href']        
+          try:
+              zeit=dates[1].string.encode("utf-8")
+          except:
+               zeit=""
+          try:
+             urln_sub=element.find("a",{"class" :"LiveLink"})['href']        
+          except:
+             urln_sub=element.find("a",{"class" :"tLiveLink"})['href']        
           urllink="https://www.sporttotal.tv/"+urln_sub
-          addLink(BegegnungLabel +" "+BegegnungLabel2 +"( "+ datum+" "+zeit +" )", urllink, 'playvideo', "")    
+          if tBegegnungLabel3=="":
+             subject=BegegnungLabel +" - "+BegegnungLabel2 +"( "+ datum+" "+zeit +" )"
+          else:
+             subject=tBegegnungLabel3+" ( "+BegegnungLabel +" - "+BegegnungLabel2 +" "+ datum+" "+zeit +" )"
+            
+          addLink(subject, urllink, 'playvideo', "")    
         xbmcplugin.endOfDirectory(addon_handle)
 def playvideo(url):
   content=getUrl(url) 
@@ -155,9 +186,24 @@ def liegen():
   addDir("Oberliega Niedersachsen", "https://www.sporttotal.tv/ligen.aspx?CM=agi4", 'Top20',"https://www.sporttotal.tv/cpics/block4-4.png")   
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
   
+def Vereine(url):
+  xurl="https://www.sporttotal.tv/Vereine.aspx"
+  content=getUrl(xurl)
+  htmlPage = BeautifulSoup(content, 'html.parser')        
+  liste = htmlPage.findAll("div",{"class" :"place4a"})        
+  for element in liste:   
+          name=element.find("div",{"class" :"vdhb1"}).string.encode("utf-8")
+          url="https://www.sporttotal.tv/"+ element.find("a")["href"]
+          bild = "https://www.sporttotal.tv/"+element.find("img")["src"]
+          addDir(name, url, 'Top20',bild)   
+  xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)           
+  
 if mode is '':
     addDir("TOPSPIEL DER WOCHE", "https://www.sporttotal.tv/default.aspx", 'Top20',"")   
+    addDir("Top Clips", "https://www.sporttotal.tv/topclips.aspx", 'Top20',"")   
+    addDir("Vereine", "", 'Vereine',"")   
     addDir("Liegen", "", 'liegen',"")   
+    addDir("Live", "https://www.sporttotal.tv/livegames.aspx", 'Top20',"")   
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
 else:
   # Wenn Settings ausgewählt wurde
@@ -168,4 +214,6 @@ else:
   if mode == 'playvideo':
           playvideo(url) 
   if mode == 'liegen':
-          liegen()           
+          liegen()                        
+  if mode == 'Vereine':
+          Vereine(url)            
