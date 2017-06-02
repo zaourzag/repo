@@ -506,11 +506,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
 	</extension>
 </addon>
 
-<<<<<<< HEAD
-<addon id="plugin.video.disneychannel_de" name="DisneyChannel.de" version="1.1.9" provider-name="L0RE">
-=======
 <addon id="plugin.video.disneychannel_de" name="DisneyChannel.de" version="1.1.10" provider-name="L0RE">
->>>>>>> 2ec66c06e27d18bd98d3eb0dc7042e7929654430
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="script.module.requests" version="2.12.4"/>
