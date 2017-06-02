@@ -6,7 +6,6 @@ import socket
 import sys
 import re
 import os
-import json
 import datetime
 import xbmcplugin
 import xbmcgui
@@ -112,9 +111,11 @@ def playVideo(url):
 
 
 def playLive():
-    content = opener.open(urlMain+"/livestream").read()
-    match = re.compile('"hlsStreamUrl":"(.+?)"', re.DOTALL).findall(content)
-    listitem = xbmcgui.ListItem(path=match[0])
+    url="http://cdnapi.kaltura.com/p/1068292/sp/106829200/playManifest/entryId/1_woce098v/format/applehttp/protocol/http/uiConfId/27176231/a.m3u8?responseFormat=json"
+    content = opener.open(url).read()
+    jsonstring = json.loads(content)
+    urln=jsonstring["flavors"][0]["url"]
+    listitem = xbmcgui.ListItem(path=urln)
     xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
 
 
