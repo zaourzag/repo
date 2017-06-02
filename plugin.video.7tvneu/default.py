@@ -292,7 +292,7 @@ def  serie(url,bild="",title=""):
 
 def sendungsmenu():
     addDir("Sender", "sixx", "allsender", "")      
-    addDir("Generes", "Anime", "allsender", "")   
+    addDir("Genres", "Anime", "allsender", "")   
     addDir("Alle Sendungen", baseurl+"/queue/format", "abisz", "")   
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
     
