@@ -3,6 +3,7 @@
 import json,os,sys,urllib,urlparse
 import time,datetime,random,re
 import xbmc,xbmcaddon,xbmcgui,xbmcplugin
+import HTMLParser
 
 addon_handle = int(sys.argv[1])
 addon = xbmcaddon.Addon()
@@ -34,6 +35,13 @@ def utfenc(str):
     except:
         pass
     return str
+
+def html_unescape(html):
+    try:
+        html = HTMLParser.HTMLParser().unescape(html)
+    except:
+        pass
+    return html
 
 def timedelta_total_seconds(timedelta):
     return (

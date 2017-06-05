@@ -8,9 +8,9 @@ class Archive:
         self.item = {}
         unixtime = re.search('unix="(.+?)"', i).group(1)[:10]
         self.date = date(unixtime)
-        self.teams = re.findall('<td class="teams">(.+?)</td>', i, re.DOTALL)
+        self.teams = re.findall('<td class="team-cell">(.+?)</td>', i, re.DOTALL)
         self.url = re.search('<a href="(.+?)"', i, re.DOTALL).group(1)
-        self.info = re.search('<div class="online text-ellipsis">(.+?)</div>', i, re.DOTALL)
+        self.event = re.search('<span class="event-name">(.+?)</span>', i, re.DOTALL)
         
         self.title = self.get_title()
         
@@ -26,11 +26,11 @@ class Archive:
             return None
         
     def get_plot(self):
-        if self.info:
-            info = self.info.group(1).strip()
+        if self.event:
+            event = self.event.group(1).strip()
         else:
-            info = ''
-        return utfenc('%s\n%s' % (self.title, info))
+            event = ''
+        return utfenc('%s\n%s' % (self.title, event))
         
     def update_item(self):
         self.item['mode'] = 'details'

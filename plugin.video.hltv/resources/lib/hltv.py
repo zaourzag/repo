@@ -20,11 +20,11 @@ def home_items(data):
     live = re.findall('<div class="live-matches">(.*?)<div class="section-spacer">', data, re.DOTALL)
     if live:
         for l in re.findall('<div class="live-match">(.*?)</table>', live[0], re.DOTALL):
-            items.add_item(Live(l).item)
+            items.add_item(Live(html_unescape(l)).item)
     upcoming = re.findall('<div class="upcoming-matches">(.*?)<div class="results">', data, re.DOTALL)
     if upcoming:
         for u in re.findall('(<a href=".*?)</table>', upcoming[0], re.DOTALL):
-            items.add_item(Upcoming(u).item)
+            items.add_item(Upcoming(html_unescape(u)).item)
     items.list_items()
     
 def archive_items(data):
@@ -32,15 +32,15 @@ def archive_items(data):
     results = re.findall('<div class="results">(.*?)<div class="results">', data, re.DOTALL)
     if results:
         for r in re.findall('<div class="result-con"(.*?)</table>', results[0], re.DOTALL):
-            items.add_item(Archive(r).item)
+            items.add_item(Archive(html_unescape(r)).item)
     items.list_items()
     
 def details_items(data):
     from details import Details
     for each_stream in re.findall('<div class="stream-box\s*"(.*?)</div>', data, re.DOTALL):
-        items.add_item(Details(each_stream).item)
+        items.add_item(Details(html_unescape(each_stream)).item)
     for each_highlight in re.findall('<div class="highlight\s*(.*?)</div>', data, re.DOTALL):
-        items.add_item(Details(each_highlight).item)
+        items.add_item(Details(html_unescape(each_highlight)).item)
     items.list_items()    
 
 def play(url):
