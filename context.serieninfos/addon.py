@@ -387,4 +387,3 @@ if mode=="getseries":
     xbmcgui.Window(windowid).setProperty('ende',ende)
     
     
-cj.save(cookie,ignore_discard=True, ignore_expires=True)
