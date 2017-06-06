@@ -4,27 +4,24 @@ import sys
 import xbmc
 import xbmcaddon
 import xbmcgui,xbmcvfs
-import json,cookielib,urllib2,re,urlparse,os
+import json,urllib2,re,urlparse,os
 import pyxbmct
 from difflib import SequenceMatcher
 from bs4 import BeautifulSoup
 from datetime import datetime    
 import urllib
+import requests
+from cookielib import LWPCookieJar
 
 addon = xbmcaddon.Addon()
 
 profile    = xbmc.translatePath( addon.getAddonInfo('profile') ).decode("utf-8")
 temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
+session = requests.session()
 
 if not xbmcvfs.exists(temp):       
        xbmcvfs.mkdirs(temp)
        
-cookie=temp+"/cookie.jar"
-cj = cookielib.LWPCookieJar();
-
-if xbmcvfs.exists(cookie):
-    cj.load(cookie,ignore_discard=True, ignore_expires=True)
-
 
 def debug(content):
     log(content, xbmc.LOGDEBUG)
@@ -48,29 +45,22 @@ def parameters_string_to_dict(parameters):
 	return paramDict
   
   
-def geturl(url,data="x",header=""):
-        global cj
-        print("Get Url: " +url)
-        for cook in cj:
-          debug(" Cookie :"+ str(cook))
-        opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))        
-        userAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:49.0) Gecko/20100101 Firefox/49.0"
-        if header=="":
-          opener.addheaders = [('User-Agent', userAgent)]        
-        else:
-          opener.addheaders = header        
-        try:
-          if data!="x" :
-             content=opener.open(url,data=data).read()
-          else:
-             content=opener.open(url).read()
-        except urllib2.HTTPError as e:
-             #print e.code   
-             cc=e.read()  
-             debug("Error : " +cc)
-       
-        opener.close()
-        return content
+def geturl(url,data="x",header=""): 
+   
+    headers = {'User-Agent':         'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:53.0) Gecko/20100101 Firefox/53.0', 
+    }        
+    ip=addon.getSetting("ip")
+    port=addon.getSetting("port")    
+    if not ip=="" and not port=="":
+      px="http://"+ip+":"+str(port)
+      proxies = {
+        'http': px,
+        'https': px,
+      }    
+      content = session.get(url, allow_redirects=True,verify=False,headers=headers,proxies=proxies)    
+    else:
+      content = session.get(url, allow_redirects=True,verify=False,headers=headers)    
+    return content.text
 
 
 def similar(a, b):
@@ -304,8 +294,7 @@ def changetitle(title):
       suchtitle=suchtitle2
     except:
       pass    
-   
-    xc=geturl("http://www.serienjunkies.de/suchen.php")
+    xc=geturl("http://www.serienjunkies.de")  
     url="http://www.serienjunkies.de/suchen.php?s="+suchtitle+"+XXXX&a=s&t=0"    
     debug("URL :"+url)
     content=geturl(url)
