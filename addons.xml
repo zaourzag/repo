@@ -663,7 +663,7 @@ v1.8.0
     </extension>
 </addon>
 
-<addon id="plugin.video.fernsehkritik_tv" name="Fernsehkritik.tv" version="2.1.5" provider-name="L0RE">
+<addon id="plugin.video.fernsehkritik_tv" name="Massengeschmack (Light)" version="2.1.6" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.19.0"/>
     </requires>
@@ -682,28 +682,6 @@ v1.8.0
         <forum>http://forum.xbmc.org/showthread.php?tid=</forum>
         <email>AddonScriptorDE at yahoo dot de</email>
         <website>http://www.fernsehkritik.tv</website>
-    </extension>
-</addon>
-
-<addon id="plugin.video.filmstarts_de" name="FilmStarts.de (Old)" version="2.1.8" provider-name="L0RE">
-    <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <summary lang="de">Deutsche Trailer, Filmnews und Interviews</summary>
-        <summary lang="en">German trailers, movie-news and interviews</summary>
-        <language>de</language>
-        <description lang="de">Deutsche Trailer, Filmnews und Interviews</description>
-        <description lang="en">German trailers, movie-news and interviews</description>
-        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-        <source>https://github.com/AddonScriptorDE/plugin.video.filmstarts_de</source>
-        <forum>http://forum.xbmc.org/showthread.php?tid=132563</forum>
-        <email>AddonScriptorDE at yahoo dot de</email>
-        <website>http://www.filmstarts.de</website>
     </extension>
 </addon>
 
@@ -947,7 +925,7 @@ v1.8.1
     </extension>
 </addon>
 
-<addon id="plugin.video.n24_de" name="N24.de" version="2.0.13" provider-name="AddonScriptorDE">
+<addon id="plugin.video.n24_de" name="N24.de" version="2.0.14" provider-name="AddonScriptorDE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
     </requires>
@@ -956,6 +934,7 @@ v1.8.1
     </extension>
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
+        <broken>mUss neu geschrieben werden</broken>
         <summary lang="de">N24 Mediathek und Livestream</summary>
         <summary lang="en">N24 Media Library and Livestream</summary>
         <language>de</language>
@@ -1121,7 +1100,7 @@ v1.8.1
   </extension>
 </addon>
 
-<addon id="plugin.video.spiegel_tv" name="Spiegel.tv" version="1.1.4" provider-name="L0RE">
+<addon id="plugin.video.spiegel_tv" name="Spiegel.tv" version="1.1.5" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
     </requires>
@@ -1132,6 +1111,7 @@ v1.8.1
         <platform>all</platform>
         <summary lang="de">Spiegel TV Mediathek (Reportagen/Dokumentationen)</summary>
         <summary lang="en">Spiegel TV media library</summary>
+        <broken>Muss Neu geschrieben werden</broken>
         <language>de</language>
         <description lang="de">Spiegel TV Mediathek (Reportagen/Dokumentationen)</description>
         <description lang="en">Spiegel TV media library</description>
@@ -2511,28 +2491,6 @@ See changelog.txt for more details.</news>
 		<disclaimer></disclaimer>
 		<platform>linux</platform>
 	</extension>
-</addon>
-
-<addon id="plugin.video.dailymotion_com" name="DailyMotion.com (old)" version="2.2.5" provider-name="L0RE">
-    <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
-        <import addon="script.module.simple.downloader" version="1.0.0"/>
-        <import addon="script.module.requests" version="2.4.3"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <summary lang="en">Movies, TV, Music, User-Clips, 3D and Livestreams</summary>
-        <language></language>
-        <description lang="en">Movies, TV, Music, User-Clips, 3D and Livestreams</description>
-        <disclaimer lang="en">Some parts of this addon may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
-        <website>http://www.dailymotion.com</website>
-        <source>https://github.com/AddonScriptorDE/plugin.video.dailymotion_com</source>
-        <forum>http://forum.xbmc.org/showthread.php?tid=142626</forum>
-        <email>AddonScriptorDE at yahoo dot de</email>
-    </extension>
 </addon>
 
 <addon id="repository.kodinerds_S905" name="kodinerds.net Binary Addons for AML S905 based devices" version="1.0.3" provider-name="L0RE">
