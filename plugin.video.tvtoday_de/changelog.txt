@@ -80,3 +80,9 @@
 
 [B]Version 1.3.4  (26.02.2017)[/B]
  - fixed: ZDF-VideoLink verlangt neuerdings ein zweites Mal den API-Schlüssel für eine URL
+
+[B]Version 1.3.5  (11.06.2017)[/B]
+ - fixed: ARTE-VideoLink zur Weiterleitung an ARTE-plugin
+ - added: Meldung=MediathekLink der Sendung ist NICHT in TvToday vorhanden
+ - changed: SprachFiles des Addons geändert von "strings.xml" zu "strings.po"
+ - optimized: Wiedergabequalität von ARD-Links (mp4)

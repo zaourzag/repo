@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<addon id="plugin.video.tvspielfilm_de" name="TV Spielfilm - Das Beste aus den Mediatheken" version="1.0.4" provider-name="realvito">
+<addon id="plugin.video.tvspielfilm_de" name="TV Spielfilm - Das Beste aus den Mediatheken" version="1.0.5" provider-name="realvito">
 	<requires>
 		<import addon="xbmc.python" version="2.14.0"/>
 	</requires>
@@ -7,9 +7,12 @@
 		<provides>video</provides>
 	</extension>
 	<extension point="xbmc.addon.metadata">
-		<summary>Das Beste aus TV-Spielfilm</summary>
-		<description>@realvito[CR]Das Beste aus deutschen Mediatheken, ausgewählt und zusammengestellt von der Zeitschrift TV-Spielfilm (www.tvspielfilm.de).[CR][CR]Für mehr Informationen zu allen Neuerungen siehe - CHANGELOG.[CR]     HAVE FUN</description>
-		<disclaimer></disclaimer>
+		<summary lang="en">The best from TV-Spielfilm</summary>
+		<summary lang="de">Das Beste aus TV-Spielfilm</summary>
+		<description lang="en">@realvito[CR]The best from german Mediatheken, selected and compiled by the magazine TV-Spielfilm (www.tvspielfilm.de).[CR][CR]For more information about all new features see - CHANGELOG.[CR]     HAVE FUN</description>
+		<description lang="de">@realvito[CR]Das Beste aus deutschen Mediatheken, ausgewählt und zusammengestellt von der Zeitschrift TV-Spielfilm (www.tvspielfilm.de).[CR][CR]Für mehr Informationen zu allen Neuerungen siehe - CHANGELOG.[CR]     HAVE FUN</description>
+		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
 		<language></language>
 		<platform>all</platform>
 		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
@@ -17,7 +20,12 @@
 		<website>http://www.tvspielfilm.de/mediathek/</website>
 		<email></email>
 		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.tvspielfilm_de</source>
-		<news> [B]Version 1.0.4  (26.02.2017)[/B]
-					- fixed: ZDF-VideoLink verlangt neuerdings ein zweites Mal den API-Schlüssel für eine URL</news>
+		<news>[B][COLOR orangered]Version 1.0.5  (11.06.2017)[/COLOR][/B][CR]
+- fixed: ARTE-VideoLink zur Weiterleitung an ARTE-plugin
+- added: Rubrik - SENDER sortiert (Auflistung der abspielbaren Titel nach Sender)
+- added: Meldung=MediathekLink der Sendung ist NICHT in TvSpielfilm vorhanden
+- changed: SprachFiles des Addons geändert von "strings.xml" zu "strings.po"
+- optimized: Wiedergabequalität von ARD-Links (mp4)
+		</news>
 	</extension>
 </addon>
