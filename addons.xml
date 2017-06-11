@@ -321,7 +321,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
   </extension>
 </addon>
 
-<addon id="context.serieninfos" name="Serien Infos" version="0.2.10" provider-name="L0RE">
+<addon id="context.serieninfos" name="Serien Infos" version="0.2.11" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.20.0" />
         <import addon="script.module.pyxbmct" version="1.1.7"/>
@@ -551,7 +551,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
     </extension>
 </addon>
 
-<addon id="plugin.video.7tvneu" name="7TV" version="0.5.20" provider-name="L0RE">
+<addon id="plugin.video.7tvneu" name="7TV" version="0.5.21" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="script.module.requests" version="2.12.4"/>
@@ -1030,7 +1030,7 @@ v1.8.1
     </extension>
 </addon>
 
-<addon id="plugin.video.sesamstrasse_de" name="Sesamstrasse.de" version="1.0.7" provider-name="L0RE">
+<addon id="plugin.video.sesamstrasse_de" name="Sesamstrasse.de" version="1.0.8" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
     </requires>
@@ -1237,7 +1237,7 @@ v1.3.1
     </extension>
 </addon>
 
-<addon id="plugin.video.tele5_de" name="Tele5.de" version="1.2.1" provider-name="L0RE">
+<addon id="plugin.video.tele5_de" name="Tele5.de" version="1.2.2" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
         <import addon="script.module.beautifulsoup4" version="4.3.2"/>
