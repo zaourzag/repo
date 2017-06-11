@@ -74,7 +74,7 @@ def log(msg, level=xbmc.LOGNOTICE):
     xbmc.log('%s: %s' % (addonID, msg), level) 
     
 def addDir(name, url, mode, iconimage, desc="",sendername="",offset="",limit="",type="",bild="",title="",series=""):
-  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&sendername="+str(sendername)+"&offset="+str(offset)+"&limit="+str(limit)+"&type="+str(type)+"&iconimage="+bild+"&title="+title+"&series="+series
+  u = sys.argv[0]+"?url="+urllib.quote_plus(url.encode("utf-8"))+"&mode="+str(mode)+"&sendername="+str(sendername)+"&offset="+str(offset)+"&limit="+str(limit)+"&type="+str(type)+"&iconimage="+bild+"&title="+title+"&series="+series
   ok = True
   liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=iconimage)
   liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc})
@@ -165,8 +165,8 @@ def senderlist():
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 
 def sender(url):
-    addDir("Beliebteste Sendungen", url, "belibtesendungen", "")      
-    addDir("Neue Ganze Folgen", url, "ganzefolgensender", "")           
+    addDir("Beliebte Sendungen", url, "belibtesendungen", "")      
+    addDir("Aktuelle Ganze Folgen", url, "ganzefolgensender", "")           
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
     
 def belibtesendungen(url):
@@ -245,7 +245,7 @@ def favadd(url,title,bild):
   f=open(favdatei,'w')
   f.write(textfile)
   f.close()
-  xbmc.executebuiltin('Notification("Hinzufufügen",title+" hinzugefügt")')
+  xbmc.executebuiltin('Notification(7tv - Favoriten, [COLOR green]'+title+' hinzugefügt[/COLOR],5000,'+icon+')')
   xbmc.executebuiltin("Container.Refresh")
     
 
@@ -260,7 +260,7 @@ def favdel(url):
   f=open(favdatei,'w')
   f.write(textfile)
   f.close()
-  xbmc.executebuiltin('Notification("Löschen","Serie wurde gelöscht")')
+  xbmc.executebuiltin('Notification(7tv - Favoriten, [COLOR red]SERIE wurde gelöscht ![/COLOR],5000,'+icon+')')
   xbmc.executebuiltin("Container.Refresh")  
 
 def listfav()  :
@@ -285,9 +285,9 @@ def  serie(url,bild="",title=""):
            if url in line:
               found=1
     if found==0:           
-             addDir("Adde Favorites", url, mode="favadd", iconimage="", desc="",title=title,bild=bild)      
+             addDir("Favoriten hinzufügen...", url, mode="favadd", iconimage="", desc="",title=title,bild=bild)
     else :
-             addDir("Delete Favorites", url, mode="favdel", iconimage="", desc="")         
+             addDir("Favoriten löschen...", url, mode="favdel", iconimage="", desc="")
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 
 def sendungsmenu():
@@ -389,7 +389,7 @@ def listvideos(url,series=""):
       pass
   if "data-ajax-more=" in inhalt:
     nexturl=baseurl+re.compile('data-ajax-more="(.+?)"', re.DOTALL).findall(inhalt)[0]
-    addDir("Next", nexturl, "listvideos", "",series="")   
+    addDir("[COLOR chartreuse]Nächste Seite  >>>[/COLOR]", nexturl, "listvideos", "",series="")
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
 
 def getvideoid(client_location):
@@ -527,7 +527,7 @@ def verpasstdatum():
    d = dialog.input(translation(30009), type=xbmcgui.INPUT_DATE)
    d=d.replace(' ','0')  
    d= d[6:] +  d[3:5] + d[:2]
-   xbmc.executebuiltin('ActivateWindow("Videos","plugin://plugin.video.7tvneu?url='+d+'&mode=verpasstdatummenu")') 
+   return verpasstdatummenu(d)
 
 def verpasstdatummenu(d):
    url=baseurl+"/missedshows/data/"+d
@@ -563,7 +563,7 @@ def search():
    d=d.replace(" ","+")
    debug("XYXXX :::")   
    #xbmc.executebuiltin('Notification("Inputstream", "DRM geschützte Folgen gehen nur mit Inputstream")')
-   xbmc.executebuiltin('ActivateWindow("Videos","plugin://plugin.video.7tvneu?url='+d+'&mode=searchmenu")') 
+   return searchmenu(d)
    debug("WWWW :::")
    
 def searchmenu(d):
@@ -593,7 +593,7 @@ def searchtext(url,offset,limit,type):
       else:
         addLink(title, urlt, "getvideoid", img) 
    if i>5:
-     addDir("Next", url, mode="searchtext", iconimage="" ,offset=str(int(offset)+7),limit=limit,type=type)   
+     addDir("[COLOR chartreuse]Nächste Seite  >>>[/COLOR]", url, mode="searchtext", iconimage="" ,offset=str(int(offset)+7),limit=limit,type=type)
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 
 def livetv(url):

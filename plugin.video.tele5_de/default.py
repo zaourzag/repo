@@ -70,7 +70,13 @@ def getUrl(url,data="x"):
         return content
 
 def index():
-  listcat(baseUrl+"/re-play/uebersicht","listcat")
+  addDir("Uebersicht", baseUrl+"/re-play/uebersicht", "listcat","")
+  addDir("Eigenprodutionen", baseUrl+"/re-play/eigenproduktionen", "listcat","")
+  addDir("Serien", baseUrl+"/re-play/Serien", "listcat","")
+  addDir("Spielfilme", baseUrl+"/re-play/spielfilme", "listcat","")
+  addDir("Lucha Undergroud", baseUrl+"/re-play/lucha-underground", "listcat","")
+# listcat(baseUrl+"/re-play/uebersicht","listcat")
+  xbmcplugin.endOfDirectory(pluginhandle)
 
 
 def listcat(url,type="listcat"):

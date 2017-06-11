@@ -49,6 +49,7 @@ def index():
             date = date[:date.rfind('.')].strip()
             duration = match[0][1]
             title = date+" - "+title
+	    print("ADD :"+url)
         addLink(title, url, 'playVideo', thumb, "", duration)
     xbmcplugin.endOfDirectory(pluginhandle)
     if forceViewMode:
@@ -56,26 +57,38 @@ def index():
 
 
 def playVideo(url):
-    global quality
-    try:
-        if ',sesamstrasse' in url:
-            regex_suffix_id = ',sesamstrasse(.+?).html'
-            try: suffix_id = re.findall(regex_suffix_id, url)[0]
-            except: suffix_id = '3000'
-        else: suffix_id = '3000'
-        content = opener.open(url).read()
-        json_uuid = re.findall('player_image-(.+?)_', content)[0]
-        json_url = 'http://www.sesamstrasse.de/sendungsinfos/sesamstrasse%s-ppjson_image-%s.json' % (suffix_id, json_uuid)
-        jsonstring = opener.open(json_url).read()
-        struktur = json.loads(jsonstring)
-        print("----_")        
-        qality=struktur["playlist"][str(int(quality)+3)]
-        print(qality)
-        stream_url=qality["src"]
-        print (stream_url)
-    except: return
-    listitem = xbmcgui.ListItem(path=stream_url)
-    xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
+  print(".......")
+  print(url)
+  global quality
+  try:
+    if ',sesamstrasse' in url:
+      regex_suffix_id = ',sesamstrasse(.+?).html'
+      try: suffix_id = re.findall(regex_suffix_id, url)[0]
+      except: suffix_id = '3000'
+    else: suffix_id = '3000'
+    content = opener.open(url).read()
+    json_uuid = re.findall('player_image-(.+?)_', content)[0]
+    json_url = 'http://www.sesamstrasse.de/sendungsinfos/sesamstrasse%s-ppjson_image-%s.json' % (suffix_id, json_uuid)
+    print(json_url)
+    jsonstring = opener.open(json_url).read()
+    struktur = json.loads(jsonstring)
+    print("----_")  
+    print(struktur)
+    try:		
+      qality=struktur["playlist"][str(int(quality)+3)]
+      stream_url=qality["src"]
+    except:
+      print ("except")
+      for qa in  struktur["playlist"]:
+          print(qa)
+          if int(qa)>0:
+            print("---"+str(int(qa)))
+            stream_url=struktur["playlist"][str(qa)]["src"]
+            print ("Streamurl :"+stream_url)                
+  except: pass
+  print ("Streamurl :"+stream_url)
+  listitem = xbmcgui.ListItem(path=stream_url)
+  xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
 
 
 def queueVideo(url, name, thumb):
