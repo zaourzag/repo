@@ -74,7 +74,7 @@ def log(msg, level=xbmc.LOGNOTICE):
     xbmc.log('%s: %s' % (addonID, msg), level) 
     
 def addDir(name, url, mode, iconimage, desc="",sendername="",offset="",limit="",type="",bild="",title="",series=""):
-  u = sys.argv[0]+"?url="+urllib.quote_plus(url.encode("utf-8"))+"&mode="+str(mode)+"&sendername="+str(sendername)+"&offset="+str(offset)+"&limit="+str(limit)+"&type="+str(type)+"&iconimage="+bild+"&title="+title+"&series="+series
+  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&sendername="+str(sendername)+"&offset="+str(offset)+"&limit="+str(limit)+"&type="+str(type)+"&iconimage="+bild+"&title="+title+"&series="+series
   ok = True
   liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=iconimage)
   liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc})
@@ -308,7 +308,8 @@ def abisz(url):
         ubuchstabe="0-9"
      else:
          ubuchstabe=buchstabe
-     addDir(buchstabe.title(), url+"/(letter)/"+ubuchstabe, "jsonfile", "")  
+     debug(ubuchstabe)
+     addDir(buchstabe.title(), url+"/(letter)/"+ubuchstabe.encode("utf-8"), "jsonfile", "")  
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 
 def jsonfile(url):
@@ -336,7 +337,7 @@ def allsender(begriff):
          debug("Nicht gefunden")
          continue
       filter=re.compile('<a href="#tvshow-all" data-href="(.+?)">(.+?)</a>', re.DOTALL).findall(entry)
-      for url,name in filter:
+      for url,name in filter:        
          url=baseurl+url
          addDir(name, url, "abisz", "")      
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
