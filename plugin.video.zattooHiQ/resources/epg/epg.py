@@ -244,6 +244,7 @@ class EPG(xbmcgui.WindowXML):
 		elif actionId == ACTION_RIGHT:
 			self._right(currentFocus)
 		elif actionId == ACTION_UP:
+
 			self._up(currentFocus)
 		elif actionId == ACTION_DOWN:
 			self._down(currentFocus)
@@ -532,9 +533,9 @@ class EPG(xbmcgui.WindowXML):
 		if control is not None:
 			self.setFocus(control)
 		elif control is None:
-			self.focusPoint.y = self.epgView.bottom
-			self.onRedrawEPG(self.channelIdx - CHANNELS_PER_PAGE, self.viewStartDate,
-							 focusFunction=self._findControlAbove)
+			self.focusPoint.y = self.epgView.top
+			self.onRedrawEPG(self.channelIdx - 1, self.viewStartDate,
+							 focusFunction=self._findControlBelow)
 
 	def _down(self, currentFocus):
 		'''
@@ -549,9 +550,9 @@ class EPG(xbmcgui.WindowXML):
 		if control is not None:
 			self.setFocus(control)
 		elif control is None:
-			self.focusPoint.y = self.epgView.top
-			self.onRedrawEPG(self.channelIdx + CHANNELS_PER_PAGE, self.viewStartDate,
-							 focusFunction=self._findControlBelow)
+			self.focusPoint.y = self.epgView.bottom
+			self.onRedrawEPG(self.channelIdx + 1, self.viewStartDate,
+							 focusFunction=self._findControlAbove)
 
 	def _nextDay(self):
 		date = (self.viewStartDate + datetime.timedelta(days=1))
@@ -608,9 +609,12 @@ class EPG(xbmcgui.WindowXML):
 
 		channels = self.db.getChannelList(self.favourites)
 		
+		#if channelStart < 0:
+			#channelStart = len(channels) - (int((float(len(channels))/8 - len(channels)/8)*8))
+		#elif channelStart > len(channels) -1: channelStart = 0
 		if channelStart < 0:
-			channelStart = len(channels) - (int((float(len(channels))/8 - len(channels)/8)*8))
-		elif channelStart > len(channels) -1: channelStart = 0
+			channelStart = 0
+		elif channelStart > len(channels) -1: channelStart = len(channels) - 2
 		self.channelIdx = channelStart
 
 		
@@ -936,16 +940,17 @@ class EPG(xbmcgui.WindowXML):
 			self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30,
 													 seconds=self.viewStartDate.second)
 			self.onRedrawEPG(self.channelIdx, self.viewStartDate)
-		if date < today:
+		elif date < today:
 			self.viewStartDate = datetime.datetime.today()
 			delta = str(timedelta).replace('-','')[:2]
 			self.viewStartDate -= datetime.timedelta(days=int(delta))
 			self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30,
 													 seconds=self.viewStartDate.second)
 			self.onRedrawEPG(self.channelIdx, self.viewStartDate)
-		if date == today:
+			
+		else:
 			self.viewStartDate = datetime.datetime.today()
 			self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30,
-													 seconds=self.viewStartDate.second)
+													 seconds=self.viewStartDate.second)								 
 			self.onRedrawEPG(self.channelIdx, self.viewStartDate)
 		

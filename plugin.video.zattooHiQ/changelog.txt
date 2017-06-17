@@ -1,4 +1,10 @@
-﻿=================================================
+﻿==================================================
+[B]​ZattooHiQ v1.1.5 [/B] 13.05.2017 Steffen Rolapp
+​==================================================
+- Bedienung im EPG angepasst am Ende der Liste jetzt scrollen statt Seitenwechsel, 
+  Seitenwechsel funktioniert noch mit PageUp und PageDown
+
+=================================================
 [B]​ZattooHiQ v1.1.4 [/B] 13.05.2017 by GreenAir
 ​=================================================
 - Aufnahmen: Abspielposition sync mit zattoo überarbeitet
