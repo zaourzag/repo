@@ -124,10 +124,10 @@ class Infowindow(pyxbmct.AddonDialogWindow):
         posnew=self.textbox.getPosition()
         debug("POSITION : "+ str(posnew))
 
-def parseserie(name,sstaffel=0) :
+def parseserie(name,sstaffel=0) :  
   newlink="http://www.serienjunkies.de/"+name+"/alle-serien-staffeln.html"
   url="https://www.google.de/search?q="+newlink  
-  debug("URL :"+newlink)
+  debug("parseserie URL :"+newlink)
   content=geturl(url).encode('utf-8')            
   match = re.compile('"(http://webcache.googleusercontent.com/[^"]+)"', re.DOTALL).findall(content)
   content=geturl(match[0]).encode('utf-8')   
@@ -297,8 +297,10 @@ def changetitle(title):
       suchtitle2 = re.compile('(.+?)\+\([0-9]+\)', re.DOTALL).findall(suchtitle)[0]     
       suchtitle=suchtitle2
     except:
-      pass    
-    content=geturl("https://www.google.de/search?q=https://www.serienjunkies.de/%20"+suchtitle+"alle-serien-staffeln.html'").encode('utf-8')
+      pass 
+    urls="https://www.google.de/search?q=https://www.serienjunkies.de/"+suchtitle+"/alle-serien-staffeln.html'"
+    print(urls)
+    content=geturl(urls).encode('utf-8')
     match = re.compile('/([^\/]+?)/alle-serien-staffeln.html', re.DOTALL).findall(content)
     name=match[0]
     print(name.encode('utf-8'))
