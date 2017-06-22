@@ -125,9 +125,12 @@ class Infowindow(pyxbmct.AddonDialogWindow):
         debug("POSITION : "+ str(posnew))
 
 def parseserie(name,sstaffel=0) :
-  newlink="http://www.serienjunkies.de"+name+"alle-serien-staffeln.html"
+  newlink="http://www.serienjunkies.de/"+name+"/alle-serien-staffeln.html"
+  url="https://www.google.de/search?q="+newlink  
   debug("URL :"+newlink)
-  content=geturl(newlink)            
+  content=geturl(url).encode('utf-8')            
+  match = re.compile('"(http://webcache.googleusercontent.com/[^"]+)"', re.DOTALL).findall(content)
+  content=geturl(match[0]).encode('utf-8')   
   
   htmlPage = BeautifulSoup(content, 'html.parser')
   searchitem = htmlPage.find("p",class_="box clear pad5")
@@ -286,7 +289,8 @@ def get_episodedata(title):
   return lastplayd_title,lastepisode_name,fehlen
 
 def changetitle(title):
-     
+    debug("changetitle")
+    debug("Title :"+title)
     suchtitle=title.replace(" ","+")
     suchtitle=suchtitle.replace("'","")
     try:
@@ -294,40 +298,12 @@ def changetitle(title):
       suchtitle=suchtitle2
     except:
       pass    
-    xc=geturl("http://www.serienjunkies.de")  
-    url="http://www.serienjunkies.de/suchen.php?s="+suchtitle+"+XXXX&a=s&t=0"    
-    debug("URL :"+url)
-    content=geturl(url)
-    
-    match = re.compile('<div class="sminibox"><a href="(.+?)"><img src="(.+?)"[^"]+?alt="(.+?)"/>', re.DOTALL).findall(content)
-    maxlink=""
-    maxnr=0
-    for link,image,name in match:
-      name_comp=name.replace(" ","")
-      try:
-        name_comp1 = re.compile('(.+?)\([0-9]+\)', re.DOTALL).findall(name_comp)[0]
-        name_comp=name_comp1
-      except:
-         pass
-      title_comp=title.replace(" ","")
-      try:
-        title_comp1 = re.compile('(.+?)\([0-9]+\)', re.DOTALL).findall(title_comp)[0]
-        title_comp=title_comp1
-      except:
-         pass
-      xy=similar(title_comp,name_comp)
-      if xy>0.8:
-          if xy>maxnr:
-            maxnr=xy
-            maxlink=link
-          debug("Treffer")
-      else:
-           debug("Kein Treffer")
-      debug("name_comp :"+name_comp)
-      debug("title_comp : "+title_comp)
-      debug("#############" + str(xy))
-    debug("maxlink : "+maxlink)        
-    return maxlink
+    content=geturl("https://www.google.de/search?q=https://www.serienjunkies.de/%20"+suchtitle+"alle-serien-staffeln.html'").encode('utf-8')
+    match = re.compile('/([^\/]+?)/alle-serien-staffeln.html', re.DOTALL).findall(content)
+    name=match[0]
+    print(name.encode('utf-8'))
+    print("--+--")
+    return name.encode('utf-8')
 
 addon = xbmcaddon.Addon()    
 debug("Hole Parameter")
