@@ -257,7 +257,7 @@ class LoungeRipper():
 
             # Ask for multiple processing if it's not done before
 
-            if self.del_tf and self.process_all is None:
+            if self.profile['mode'] > 0 and self.del_tf and self.process_all is None:
                 self.process_all = False if self.Dialog.yesno(__addonname__, __LS__(30059), autoclose=60000) == 0 else True
                 self.notifyLog('Process multiple files: %s' % (self.process_all))
                 

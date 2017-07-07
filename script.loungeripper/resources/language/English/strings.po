@@ -163,7 +163,7 @@ msgstr ""
 #Exception and message strings
 
 msgctxt "#30050"
-msgid "There aren't active Profiles enabled. Go to Settimgs and enable at least one active Profile."
+msgid "There aren't active Profiles enabled. Go to Settings and enable at least one active Profile."
 msgstr ""
 
 msgctxt "#30051"

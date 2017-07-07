@@ -241,7 +241,9 @@
 				<top>100</top>
 				<width>48</width>
 				<height>48</height>
+<!--
 				<label>Pause</label>
+-->
 				<font>-</font>
 				<texturefocus colordiffuse="$VAR[MainColorOne]">icon_backFO.png</texturefocus>
 				<texturenofocus>icon_backNF.png</texturenofocus>
@@ -254,7 +256,9 @@
 				<top>100</top>
 				<width>48</width>
 				<height>48</height>
+<!--
 				<label>ChannelUp</label>
+-->
 				<font>-</font>
 				<texturefocus colordiffuse="$VAR[MainColorOne]">OSDChannelUPFO.png</texturefocus>
 				<texturenofocus>OSDChannelUPNF.png</texturenofocus>
@@ -267,7 +271,9 @@
 				<top>100</top>
 				<width>48</width>
 				<height>48</height>
+<!--
 				<label>ChannelDown</label>
+-->
 				<font>-</font>
 				<texturefocus colordiffuse="$VAR[MainColorOne]">OSDChannelDownFO.png</texturefocus>
 				<texturenofocus>OSDChannelDownNF.png</texturenofocus>
@@ -280,7 +286,9 @@
 				<height>48</height>
 				<left>210</left>
 				<top>100</top>
+<!--
 				<label>31351</label>
+-->
 				<altlabel>208</altlabel>
 				<font>-</font>
 				<texturefocus colordiffuse="$VAR[MainColorOne]">OSDPauseFO.png</texturefocus>
@@ -300,7 +308,9 @@
 				<height>48</height>
 				<left>280</left>
 				<top>100</top>
+<!--
 				<label>31352</label>
+-->
 				<font>-</font>
 				<texturefocus>OSDStopFO.png</texturefocus>
 				<texturenofocus>OSDStopNF.png</texturenofocus>
@@ -314,7 +324,9 @@
 				<height>48</height>
 				<left>350</left>
 				<top>100</top>
+<!--
 				<label>13395</label>
+-->
 				<font>-</font>
 				<texturefocus colordiffuse="$VAR[MainColorOne]">OSDVideoFO.png</texturefocus>
 				<texturenofocus>OSDVideoNF.png</texturenofocus>
@@ -328,7 +340,9 @@
 				<height>48</height>
 				<left>420</left>
 				<top>100</top>
+<!--
 				<label>13396</label>
+-->
 				<font>-</font>
 				<texturefocus>OSDAudioFO.png</texturefocus>
 				<texturenofocus>OSDAudioNF.png</texturenofocus>
@@ -361,7 +375,9 @@
 				<height>48</height>
 				<left>490</left>
 				<top>100</top>
+<!--
 				<label>298</label>
+-->
 				<font>-</font>
 				<texturefocus>OSDFavoriteActiveFO.png</texturefocus>
 				<texturenofocus>OSDFavoriteActiveNF.png</texturenofocus>
@@ -375,7 +391,9 @@
 				<height>48</height>
 				<left>490</left>
 				<top>100</top>
+<!--
 				<label>298</label>
+-->
 				<font>-</font>
 				<texturefocus>OSDFavoriteFO.png</texturefocus>
 				<texturenofocus>OSDFavoriteNF.png</texturenofocus>

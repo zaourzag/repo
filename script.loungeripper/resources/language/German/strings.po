@@ -158,7 +158,7 @@ msgid "%s has Operation '%s' successfully completed."
 msgstr "%s hat die Aufgabe '%s' erfolgreich abgeschlossen."
 
 msgctxt "#30050"
-msgid "There aren't active Profiles enabled. Go to Settimgs and enable at least one active Profile."
+msgid "There aren't active Profiles enabled. Go to Settings and enable at least one active Profile."
 msgstr "Es sind keine aktiven Profile freigegeben. Schalte mindestens ein aktives Profil in den Einstellungen frei."
 
 msgctxt "#30051"
