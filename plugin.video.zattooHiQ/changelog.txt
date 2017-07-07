@@ -1,4 +1,9 @@
 ﻿==================================================
+[B]ZazzooHiQ v1.1.7 [/B] 07.07.2017 Steffen Rolapp
+==================================================
+- Fehler im OSD bei Kodi 18 behoben
+
+==================================================
 [B]​ZattooHiQ v1.1.5 [/B] 13.05.2017 Steffen Rolapp
 ​==================================================
 - Bedienung im EPG angepasst am Ende der Liste jetzt scrollen statt Seitenwechsel, 
