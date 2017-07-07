@@ -43,9 +43,6 @@ def log(msg, level=xbmc.LOGNOTICE):
     addonID = addon.getAddonInfo('id')
     xbmc.log('%s: %s' % (addonID, msg), level) 
 def getUrl(url,data="x"):
-        https=addon.getSetting("https")
-        if https=="true":
-           url=url.replace("https","http")
         debug("Get Url: " +url)
         opener = urllib2.build_opener(urllib2.HTTPCookieProcessor())
         userAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:49.0) Gecko/20100101 Firefox/49.0"
@@ -67,6 +64,7 @@ def getUrl(url,data="x"):
              return ""
              
         opener.close()
+        debug(content)
         return content
 
 def index():
@@ -92,6 +90,12 @@ def listcat(url,type="listcat"):
           if not "http" in url:
               url=baseUrl+"/"+url
           title=re.compile('<h2>(.+?)</h2>', re.DOTALL).findall(element)[0]
+          try:
+            subtitle=re.compile('<span class="shortdesc">(.+?)</span>', re.DOTALL).findall(element)[0]          
+          except:
+            subtitle=""
+          if not subtitle=="":
+            title=title +" - "+subtitle
           thumb=re.compile('srcset="(.+?)"', re.DOTALL).findall(element)[0]    
           debug("listcat URL :"+url)   
           debug("listcat type :"+type)                        
@@ -105,8 +109,7 @@ def listcat(url,type="listcat"):
 
 def listVideos(url):
           debug("listVideos URL :"+ url)
-          content=getUrl(url)          
-          
+          content=getUrl(url)                      
           #http://tele5.flowcenter.de/gg/play/l/17:pid=vplayer_1560&tt=1&se=1&rpl=1&ssd=1&ssp=1&sst=1&lbt=1&
           #<div class="fwlist" lid="14" pid="vplayer_3780" tt="1" ssp="1" sst="1" lbt="1" ></div>		</div>
           y=0
@@ -128,21 +131,38 @@ def listVideos(url):
             #try:
               y=1
               debug("2.")          
-              htmlPage = BeautifulSoup(content, 'html.parser')
+              htmlPage = BeautifulSoup(content, 'html.parser')              
               debug("2a")              
-              searchitems = htmlPage.findAll("div",{"class" :"ce_area"})              
+              searchitems = htmlPage.findAll("div",{"class" :"ce_area"})                       
+              if len(searchitems) <= 0:
+                debug("2a+")
+                searchitems = htmlPage.findAll("div",{"class" :"ce_videoelement first block"})                
+                debug("+")
               debug("2b")
-              #print(searchitems)
               for searchitem in searchitems: 
-                debug("2c")    
-                try:                
+                debug("2c")
+                debug(searchitem)                   
+                try:          
+                  debug(searchitem)                
                   cid=searchitem.find("div",{"class":"fwplayer"})["cid"]                                  
-                  print(":::XX:::"+cid)
-                  title=searchitem.h3.string
+                  debug(":::XX:::"+cid)
+                  title=""
                   try:
+                    debug("3a")
+                    title=searchitem.h3.string
                     utitle=searchitem.p.string
                   except:
-                     utitle=""
+                      debug("3b")
+                      debug(title+"###")
+                      if title=="":
+                          debug("3c")
+                          contentn=getUrl("https://tele5.flowcenter.de/gg/play/p/"+cid)
+                          title=re.compile('"title":"(.+?)"', re.DOTALL).findall(contentn)[0]
+                          debug("Title:"+title)
+                          utitle=""
+                      else:
+                          debug("3d")
+                          utitle=""
                   if not utitle=="":
                    title=title +" - "+ utitle
                   debug(title)
@@ -151,7 +171,7 @@ def listVideos(url):
                     img="http://www.tele5.de/"+img
                   debug(img)
                   addLink(title, str(cid), 'playVideo', img)    
-                except:
+                except:                   
                    pass
               #playVideo(cid)
             #except:
@@ -160,8 +180,7 @@ def listVideos(url):
             debug("3.")                    
             debug("NEWURL: "+url)
             content=getUrl(url)
-            debug("##########")
-            debug(content)
+            debug("##########")            
 
             content=re.compile('\{"id"(.+)\},', re.DOTALL).findall(content)[0]
             content='{"id"'+content+"}"
@@ -196,7 +215,7 @@ def playVideo(url):
     addon_handle = int(sys.argv[1])
     urlneu="http://tele5.flowcenter.de/gg/play/p/"+url+":mobile=0&nsrc="+url+"&" 
     content = getUrl(urlneu)
-    file=re.compile('"file":"(.+?)"', re.DOTALL).findall(content)[0]
+    file=re.compile('"file":"(.+?)"', re.DOTALL).findall(content)[-2]
     file=file.replace("\/","/")
     content = getUrl(file)
     mpg=re.compile(' <BaseURL>(.+?)</BaseURL>', re.DOTALL).findall(content)[-1]    
