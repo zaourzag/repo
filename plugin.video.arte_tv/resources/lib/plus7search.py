@@ -8,7 +8,9 @@ import xbmcaddon
 import xbmcgui
 
 def list_search_results(search_string, language, scope = ''):
+    search_string=urllib.quote_plus(search_string)
     search_url = 'http://www.arte.tv/guide/%s/programs?q=%s&scope=%s' % (language, search_string, scope) # scope='plus7'
+    print(search_url)
     try:
         json_data = urllib2.urlopen(search_url).read()
     except: return False

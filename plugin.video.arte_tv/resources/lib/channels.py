@@ -11,6 +11,7 @@ import os.path
 
 def list_all_channels(language = 'de'):
     api_url = 'http://www.arte.tv/papi/tvguide/videos/channels/%s/0.json' % language[0].upper()
+    print(api_url)
     try:
         json_data = urllib2.urlopen(api_url).read()
         video_channels = json.loads(json_data)['videoChannelList']

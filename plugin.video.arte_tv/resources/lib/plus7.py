@@ -29,8 +29,8 @@ def list_index():
                'mode=list-videos&sort=LAST_CHANCE')
     add_folder(translate(30010), os.path.join(addon_path, 'resources', 'media', 'plus7.png'), 'mode=list-clusters')
     add_folder(translate(30011), os.path.join(addon_path, 'resources', 'media', 'plus7.png'), 'mode=list-channels')
-    add_folder(translate(30005), os.path.join(addon_path, 'resources', 'media', 'plus7.png'),
-               'mode=plus7-search&scope=plus7')
+    #add_folder(translate(30005), os.path.join(addon_path, 'resources', 'media', 'plus7.png'),'mode=plus7-search&scope=plus7')
+    add_folder(translate(30005), os.path.join(addon_path, 'resources', 'media', 'plus7.png'),'mode=plus7-search')
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
 
@@ -50,6 +50,7 @@ def list_videos(
     language_code = language[0].upper()
     url = 'http://www.arte.tv/papi/tvguide/videos/plus7/program/%s/%s/%s/%s/%i/%s/%i/%i/DE_FR.json' % (
     language_code, detail_level, category, cluster, recommended, sort, limit, offset)
+    print(url)
     try:
         json_data = urllib2.urlopen(url).read()
         videos = json.loads(json_data)['program%sList' % language.upper()]
