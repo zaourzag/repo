@@ -86,3 +86,6 @@
  - added: Meldung=MediathekLink der Sendung ist NICHT in TvToday vorhanden
  - changed: SprachFiles des Addons geändert von "strings.xml" zu "strings.po"
  - optimized: Wiedergabequalität von ARD-Links (mp4)
+
+[B]Version 1.3.6  (09.07.2017)[/B]
+ - fixed: Sender-Kennung wird teilweise falsch angezeigt

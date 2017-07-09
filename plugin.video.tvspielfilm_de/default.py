@@ -113,7 +113,7 @@ def listVideos_Day_Channel(url=""):
 				thumb = img.split(',')[0].rstrip()+'.jpg'
 			else:
 				thumb = img
-			match3 = re.compile('<span class="logotype chl_bg_m c-.+?">(.*?)</span>', re.DOTALL).findall(entry)
+			match3 = re.compile('<span class="logotype chl_bg_m.+?">(.*?)</span>', re.DOTALL).findall(entry)
 			channelID = cleanTitle(match3[0].strip())
 			channelID = cleanStation(channelID.strip())
 			url = re.compile('<div class="teaser">\s+<a href="(http://www.tvspielfilm.de/mediathek/.*?)"', re.DOTALL).findall(entry)[0]
@@ -195,7 +195,7 @@ def listVideosNew():
 				thumb = img.split(',')[0].rstrip()+'.jpg'
 			else:
 				thumb = img
-			match3 = re.compile('<span class="logotype chl_bg_m c-.+?">(.*?)</span>', re.DOTALL).findall(entry)
+			match3 = re.compile('<span class="logotype chl_bg_m.+?">(.*?)</span>', re.DOTALL).findall(entry)
 			channelID = cleanTitle(match3[0].strip())
 			channelID = cleanStation(channelID.strip())
 			if showTVchannel == 'true':
@@ -521,27 +521,27 @@ def cleanTitle(title):
 	return title
 
 def cleanStation(channelID):
-	ChannelCode = ('ARD','Das Erste','ONE','ZDF','2NEO','ZNEO','ZINFO','3SAT','Arte','ARTE','BR','HR','MDR','NDR','N3','ORF','PHOEN','RBB','SR','SWR','SWR/SR','WDR','RTL','RTL2','VOX','SRTL','SUPER')
+	ChannelCode = ('ARD','Das Erste','ONE','ZDF','2NEO','ZNEO','2INFO','ZINFO','3SAT','Arte','ARTE','BR','HR','KIKA','MDR','NDR','N3','ORF','PHOEN','RBB','SR','SWR','SWR/SR','WDR','RTL','RTL2','VOX','SRTL','SUPER')
 	if channelID in ChannelCode and channelID != "":
 		try:
 			channelID = channelID.replace(' ', '')
-			if 'ARD' in channelID:
+			if 'ARD' in channelID or 'DasErste' in channelID:
 				channelID = '  (DasErste)'
 			elif 'ONE' in channelID:
 				channelID = '  (ARDone)'
-			elif 'Arte' in channelID:
+			elif 'Arte' in channelID or 'ARTE' in channelID:
 				channelID = '  (ARTE)'
+			elif '2INFO' in channelID or 'ZINFO' in channelID:
+				channelID = '  (ZDFinfo)'
 			elif '2NEO' in channelID or 'ZNEO' in channelID:
 				channelID = '  (ZDFneo)'
-			elif 'ZINFO' in channelID:
-				channelID = '  (ZDFinfo)'
 			elif '3SAT' in channelID:
 				channelID = '  (3sat)'
 			elif 'NDR' in channelID or 'N3' in channelID:
 				channelID = '  (NDR)'
 			elif 'PHOEN' in channelID:
 				channelID = '  (PHOENIX)'
-			elif 'SR' in channelID or 'SWR' in channelID:
+			elif 'SR' in channelID and not 'SRTL' in channelID or 'SWR' in channelID:
 				channelID = '  (SWR)'
 			elif 'SRTL' in channelID or 'SUPER' in channelID:
 				channelID = '  (SRTL)'

@@ -162,7 +162,7 @@ def listVideosGenre(type):
 			match3 = re.compile('<span class="h6 text">(.*?)</span>', re.DOTALL).findall(entry)
 			channelID = cleanTitle(match3[0].strip())
 			channelID = cleanStation(channelID.strip())
-			url = re.compile('<span class="logo chl_bg_m c-.+?\s+</a>\s+<a href="(.*?.html)" class="element js-hover', re.DOTALL).findall(entry)[0]
+			url = re.compile('<span class="logo chl_bg_m.+?\s+</a>\s+<a href="(.*?.html)" class="element js-hover', re.DOTALL).findall(entry)[0]
 			img = re.compile('data-lazy-load-src="(http.*?.jpg)"', re.DOTALL).findall(entry)[0]
 			if ',' in img:
 				thumb = img.split(',')[0].rstrip()+'.jpg'
@@ -445,27 +445,27 @@ def cleanTitle(title):
 	return title
 
 def cleanStation(channelID):
-	ChannelCode = ('ARD','Das Erste','ONE','ZDF','2NEO','ZNEO','ZINFO','3SAT','Arte','ARTE','BR','HR','MDR','NDR','N3','ORF','PHOEN','RBB','SR','SWR','SWR/SR','WDR','RTL','RTL2','VOX','SRTL','SUPER')
+	ChannelCode = ('ARD','Das Erste','ONE','ZDF','2NEO','ZNEO','2INFO','ZINFO','3SAT','Arte','ARTE','BR','HR','KIKA','MDR','NDR','N3','ORF','PHOEN','RBB','SR','SWR','SWR/SR','WDR','RTL','RTL2','VOX','SRTL','SUPER')
 	if channelID in ChannelCode and channelID != "":
 		try:
 			channelID = channelID.replace(' ', '')
-			if 'ARD' in channelID:
+			if 'ARD' in channelID or 'DasErste' in channelID:
 				channelID = '  (DasErste)'
 			elif 'ONE' in channelID:
 				channelID = '  (ARDone)'
-			elif 'Arte' in channelID:
+			elif 'Arte' in channelID or 'ARTE' in channelID:
 				channelID = '  (ARTE)'
+			elif '2INFO' in channelID or 'ZINFO' in channelID:
+				channelID = '  (ZDFinfo)'
 			elif '2NEO' in channelID or 'ZNEO' in channelID:
 				channelID = '  (ZDFneo)'
-			elif 'ZINFO' in channelID:
-				channelID = '  (ZDFinfo)'
 			elif '3SAT' in channelID:
 				channelID = '  (3sat)'
 			elif 'NDR' in channelID or 'N3' in channelID:
 				channelID = '  (NDR)'
 			elif 'PHOEN' in channelID:
 				channelID = '  (PHOENIX)'
-			elif 'SR' in channelID or 'SWR' in channelID:
+			elif 'SR' in channelID and not 'SRTL' in channelID or 'SWR' in channelID:
 				channelID = '  (SWR)'
 			elif 'SRTL' in channelID or 'SUPER' in channelID:
 				channelID = '  (SRTL)'

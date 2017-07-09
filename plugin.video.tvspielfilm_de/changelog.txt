@@ -23,3 +23,7 @@
  - added: Meldung=MediathekLink der Sendung ist NICHT in TvSpielfilm vorhanden
  - changed: SprachFiles des Addons geändert von "strings.xml" zu "strings.po"
  - optimized: Wiedergabequalität von ARD-Links (mp4)
+
+[B]Version 1.0.6  (09.07.2017)[/B]
+ - fixed: Sender-Kennung wird teilweise falsch angezeigt
+ - changed: SenderIcons (Rubrik - SENDER sortiert) erneuert
