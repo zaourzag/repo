@@ -288,8 +288,9 @@
 				<top>100</top>
 <!--
 				<label>31351</label>
--->
+
 				<altlabel>208</altlabel>
+-->
 				<font>-</font>
 				<texturefocus colordiffuse="$VAR[MainColorOne]">OSDPauseFO.png</texturefocus>
 				<texturenofocus>OSDPauseNF.png</texturenofocus>
