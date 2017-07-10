@@ -408,6 +408,9 @@ msgctxt "#31015"
 msgid "make library files"
 msgstr "Bibliothek Dateien erstellen"
 
+msgctxt "#31016"
+msgid "Only finished recordings"
+msgstr "nur fertige Aufnahmen anzeigen"
 
 ### Datenbank ###
 msgctxt "#31020"

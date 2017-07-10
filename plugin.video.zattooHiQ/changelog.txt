@@ -1,4 +1,9 @@
 ﻿==================================================
+[B]ZattooHiQ v1.1.8 [/B]10.07.2017 Steffen Rolapp
+==================================================
+- Option nur fertige Aufnahmen anzeigen hinzugefügt
+
+==================================================
 [B]ZattooHiQ v1.1.7 [/B] 07.07.2017 Steffen Rolapp
 ==================================================
 - Fehler im OSD bei Kodi 18 behoben

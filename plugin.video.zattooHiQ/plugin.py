@@ -62,7 +62,7 @@ accountData=_zattooDB_.zapi.get_accountData()
 premiumUser=accountData['account']['subscriptions']!=[]
 
 DASH = __addon__.getSetting('dash')=='true'
-
+RECREADY = __addon__.getSetting('rec_ready')
 
 if SWISS=="true": xbmc.executebuiltin( "Skin.SetBool(%s)" %'swiss')
 else: xbmc.executebuiltin( "Skin.Reset(%s)" %'swiss')
@@ -242,7 +242,8 @@ def build_recordingsList(addon_uri, addon_handle):
     color='red'
     if (now>start): color='orange'
     if (now>end): color='green'
-
+    if RECREADY == "true":
+      if color != "green": continue
     label=datetime.datetime.fromtimestamp(start).strftime('%d.%m.%Y. %H:%M')+' ' # NEW changed - by Samoth
     if record['episode_title']:
       label+='[COLOR '+color+']'+record['title']+'[/COLOR]: '+record['episode_title']

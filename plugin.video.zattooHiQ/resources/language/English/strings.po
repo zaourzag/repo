@@ -426,6 +426,9 @@ msgctxt "#31015"
 msgid "make library files"
 msgstr ""
 
+msgctxt "#31016"
+msgid "Only finished recordings"
+msgstr ""
 
 
 ### Datenbank ###
