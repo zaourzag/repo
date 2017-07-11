@@ -70,7 +70,7 @@
 				<param name="HomePageWidget_target" value="music" />
 				<param name="HomePageWidget_limit" value="10" />
 				<param name="HomePageWidget_sortby" value="dateadded" />
-				<param name="HomePageWidget_sortorder" value="descending" />
+				<param name="HomePageWidget_sortorder" value="ascending" />
 				<param name="HomePageWidget_list_id" value="212" />
 				<param name="HomePageWidget_list_width" value="729" />
 				<param name="HomePageWidget_list_ondown" value="9000" />
@@ -87,7 +87,7 @@
 				<param name="HomePageWidget_target" value="music" />
 				<param name="HomePageWidget_limit" value="10" />
 				<param name="HomePageWidget_sortby" value="lastplayed" />
-				<param name="HomePageWidget_sortorder" value="descending" />
+				<param name="HomePageWidget_sortorder" value="ascending" />
 				<param name="HomePageWidget_list_id" value="213" />
 				<param name="HomePageWidget_list_width" value="729" />
 				<param name="HomePageWidget_list_ondown" value="9000" />

@@ -1,4 +1,8 @@
-﻿v 0.9.0.54
+﻿v 0.9.0.56
+- Bugfix: Musik-Widget (Sortierung)
+- Bugfix: View - Musik-Fanart Cover und Navigation
+
+v 0.9.0.54
 - Bugfix: Farbe in Dialogen
 - Bugfix: PVR Widget (Aufnahmen)
 
