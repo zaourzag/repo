@@ -396,7 +396,7 @@ def listvideos(url,series=""):
 def getvideoid(client_location):
   debug("getvideoid client_location :"+client_location)
   inhalt = geturl(client_location)
-  video_id=re.compile('"clip_id": "(.+?)"', re.DOTALL).findall(inhalt)[0]  
+  video_id=re.compile('"cid":(.+?),', re.DOTALL).findall(inhalt)[0]  
 
   source_id = None
   videos = playvideo(video_id, client_location,  source_id)
