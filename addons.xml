@@ -2897,10 +2897,7 @@ Zattoo Live TV, Aufnahmen und EPG
   </extension>
 </addon>
 
-<addon id="metadata.musicvideos.themoviedb.org"
-       name="The Movie Database Concert"
-       version="3.9.4"
-       provider-name="Team Kodi mod mb RudizonE">
+<addon id="metadata.musicvideos.themoviedb.org" name="The Movie Database Concert" version="3.9.4" provider-name="Team Kodi mod mb RudizonE">
   <requires>
     <import addon="xbmc.metadata" version="2.1.0"/>
     <import addon="metadata.common.imdb.com" version="2.7.8"/>
@@ -3214,7 +3211,7 @@ Zattoo Live TV, Aufnahmen und EPG
   </extension>
 </addon>
 
-<addon id="service.calendar" name="KN Calendar Reminder" version="0.0.6" provider-name="Birger Jesch">
+<addon id="service.calendar" name="KN Calendar Reminder" version="0.0.7" provider-name="Birger Jesch">
   <requires>
     <import addon="xbmc.python" version="2.25.0"/>
     <import addon="script.module.oauth2client" version="1.4.7"/>
