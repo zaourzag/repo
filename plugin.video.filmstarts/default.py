@@ -10,6 +10,7 @@ import xbmc
 import xbmcvfs
 import urllib, urllib2, socket, cookielib, re, os, shutil,json
 import time
+import base64
 from datetime import datetime
 from datetime import timedelta
 
@@ -27,6 +28,9 @@ translation = addon.getLocalizedString
 xbmcplugin.setContent(addon_handle, 'movies')
 
 baseurl="http://www.filmstarts.de"
+xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_UNSORTED)
+xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
+
 
 icon = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')+'/icon.png').decode('utf-8')
 bitrate=addon.getSetting("bitrate")
@@ -66,6 +70,12 @@ def ersetze(inhalt):
    inhalt=inhalt.replace('&#304;','i') 
    inhalt=inhalt.replace('&#350;','Ş') 
    inhalt=inhalt.replace('&#223;','ß') 
+   inhalt=inhalt.replace('&auml;','ä') 
+   inhalt=inhalt.replace('&Auml;','Ä') 
+   inhalt=inhalt.replace('&uuml;','ü') 
+   inhalt=inhalt.replace('&Uuml;','Ü') 
+   inhalt=inhalt.replace('&ouml;','ö') 
+   inhalt=inhalt.replace('&ouml;','Ö') 
    return inhalt
 
 def imagereplace(icon):   
@@ -166,7 +176,13 @@ def geturl(url,data="x",header=""):
              debug("Error : " +cc)
        
         opener.close()
-        cj.save(cookie,ignore_discard=True, ignore_expires=True) 
+        cj.save(cookie,ignore_discard=True, ignore_expires=True)         
+        match = re.compile('class="(ACr[^ "]+)', re.DOTALL).findall(content)
+        for gefunden in match:           
+          ziel=gefunden.replace("ACr","")
+          print(ziel)
+          ziel=base64.b64decode(ziel)
+          content=content.replace(gefunden,ziel)
         return content
 
 def trailer():
@@ -177,9 +193,9 @@ def trailer():
     addDir(translation(30012), baseurl+"/trailer/archiv/", 'filterart', "")
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 def kino():
-    addDir(translation(30013), "http://www.filmstarts.de/filme-imkino/kinostart/", 'kinovideos', "")
-    addDir(translation(30014), "http://www.filmstarts.de/filme-imkino/neu/", 'kinovideos', "")
-    addDir(translation(30015), "http://www.filmstarts.de/filme-imkino/besten-filme/user-wertung/", 'kinovideos', "")     
+    addDir(translation(30013), "http://www.filmstarts.de/filme-imkino/kinostart/", 'kinovideosneu', "",datum="N")
+    addDir(translation(30014), "http://www.filmstarts.de/filme-imkino/neu/", 'kinovideosneu', "",datum="J")
+    addDir(translation(30015), "http://www.filmstarts.de/filme-imkino/besten-filme/user-wertung/", 'kinovideosneu', "",datum="N")     
     addDir(translation(30016), "http://www.filmstarts.de/filme-imkino/kinderfilme/", 'kinovideos', "")             
     addDir(translation(30017), "", 'selectwoche', "")             
     addDir(translation(30018), "http://www.filmstarts.de/filme/besten/user-wertung/", 'filterkino', "")         
@@ -447,14 +463,54 @@ def archivevideos(url,page=1):
      addDir(translation(30006), url, 'archivevideos', "",page=page+1)
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)     
    
-def serienvideos(url,page=1):   
+def kinovideosneu(url,page=1,datum="N"):   
    debug("Start serienvideos")   
    page=int(page)
    debug("serienvideos URL :"+url)
-   if page >1: 
+   if page >1:
     getu=url+"?page="+str(page)
    else:
     getu=url     
+   content=geturl(getu)   
+   elemente=content.split('<div class="meta ">')
+   for i in range(0,len(elemente)-1,1):
+     try:
+          element=elemente[i]    
+          debug(element)          
+          image = re.compile('data-src="(.+?)"', re.DOTALL).findall(element)[0]
+          urlgs = re.compile('class="([^ "]+) thumbnail-container thumbnail-link" title="(.+?)">', re.DOTALL).findall(element)
+          urlg=urlgs[0][0]
+          name=urlgs[0][1]  
+          name=ersetze(name)          
+          if not "http://" in urlg:
+            urlg=baseurl+urlg
+          debug("URLG : "+urlg)
+          try:
+            desc = re.compile('<div class="synopsis">(.+?)</div>', re.DOTALL).findall(element)[0]          
+            desc=ersatze(desc)
+          except:
+            desc=""
+          addLink(name, urlg, 'playVideo', image,desc=desc)                           
+     except:
+        debug("....")
+        debug(element)
+   if datum=="N":  
+       addDir(translation(30006), url, 'kinovideosneu', "",page=page+1,datum=datum)
+  
+
+   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)   
+
+def kinovideos(url,page=1,datum=""):   
+   debug("Start serienvideos")   
+   page=int(page)
+   debug("Page : "+ str(page))
+   debug("serienvideos URL :"+url)
+   if page >1:
+    getu=url+"?page="+str(page)
+   else:
+    getu=url     
+   if not datum=="":
+    getu=getu+datum    
    content=geturl(getu)   
    elemente=content.split('<div class="data_box">')
    for i in range(1,len(elemente),1):
@@ -464,26 +520,69 @@ def serienvideos(url,page=1):
           debug("Element :")        
           debug (element)
           image = re.compile("src='(.+?)'", re.DOTALL).findall(element)[0]
-          urlg = re.compile('href="(.+?)"', re.DOTALL).findall(element)[0]
-          urlg=urlg.replace(".html","/videos/")
-          name= re.compile("title='(.+?)'", re.DOTALL).findall(element)[0] 
-          name=ersetze(name)
           try:
-            desc= re.compile('<p class="margin_5t">([^<]+)', re.DOTALL).findall(element)[0]           
+            urlg = re.compile('button btn-primary " href="(.+?)"', re.DOTALL).findall(element)[0]          
           except:
-            desc=""                              
+            urlg = re.compile('acLnk ([^ ]+?) button btn-primary', re.DOTALL).findall(element)[0]                    
+            urlg=decodeurl(urlg)
+            debug("URLG ::"+urlg)
+          name= re.compile("title='(.+?)'", re.DOTALL).findall(element)[0] 
+          desc=re.compile("<p>([^<]+)</p>", re.DOTALL).findall(element)[0]
+          
+          match=re.compile('<span itemprop="genre">(.+?)</span>', re.DOTALL).findall(element)          
+          genres=[]
+          for namex in match:
+            genres.append(namex)
+          genstr=",".join(genres)
+          debug("GENRES")
+          debug(genstr)          
+           
+          try:           
+            kurz_inhalt = element[element.find('<span class="film_info lighten fl">Von </span>')+1:]
+            kurz_inhalt = kurz_inhalt[:kurz_inhalt.find('</div>')]          
+            ressigeur= re.compile('title="(.+?)"', re.DOTALL).findall(kurz_inhalt)[0] 
+          except:
+             ressigeur=""
+          debug("Ressigeur :"+ ressigeur)
+          
+          try:
+            match=re.compile('<span class="acLnk ([^"]+)">[^"]+?<span class="note">(.+?)</span></span>', re.DOTALL).findall(element)
+            bewertung=""
+            debug("X")
+            for link, note in match:
+              debug("y")
+              link=decodeurl(link)
+              debug("Notes: "+note)
+              debug("link: "+link)
+              if "spiegel" in link:
+               bewertung=note
+            debug("bewertung :"+ bewertung)
+          except:
+             bewertung=""
+          
+          name=ersetze(name)
           if not "http://" in urlg:
             urlg=baseurl+urlg
           debug("URLG : "+urlg)
-          addDir(name, urlg, 'tvstaffeln', image,desc=desc)                  
+          addLink(name, urlg, 'playVideo', image,desc=desc,genre=genstr,director=ressigeur,bewertung=bewertung)                  
      except:
         debug("....")
         debug(element)
+   if not datum =="":       
+      try:
+        Start=datetime.strptime(datum, "%Y-%m-%d")
+      except TypeError:
+        Start=datetime(*(time.strptime(datum, "%Y-%m-%d")[0:6]))
+      Nextweek = Start + timedelta(days=7)
+      Beforweek = Start - timedelta(days=7)
+      nx=Nextweek.strftime("%Y-%m-%d")
+      bx=Beforweek.strftime("%Y-%m-%d")
+      addDir(translation(30040), url, 'kinovideos', "",datum=nx)      
+      addDir(translation(30041), url, 'kinovideos', "",datum=bx)              
    if 'fr">Nächste<i class="icon-arrow-right">' in content:  
-     addDir(translation(30006), url, 'serienvideos', "",page=page+1)
-  
+     addDir(translation(30006), url, 'kinovideos', "",page=page+1)
+   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)      
 
-   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)   
 
    
    
@@ -765,7 +864,9 @@ else:
   if mode == 'kino':                          
           kino()
   if mode == 'kinovideos':                          
-          kinovideos(url,page,datum=datum)          
+          kinovideos(url,page,datum=datum)       
+  if mode == 'kinovideosneu':                          
+          kinovideosneu(url,page,datum=datum)                
   if mode == 'selectwoche':                            
           selectwoche(url)
   if mode == 'filterkino':                            
