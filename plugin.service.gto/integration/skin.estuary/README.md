@@ -100,7 +100,7 @@ Beispiel / Example:
                 <visible>System.HasAddon(plugin.service.gto)</visible>
 			</item>
 			
-5. DefaultDialogButton um weiteren Click erweitern / Extend DefaultDialogBuuton with 2nd click
+5. DefaultDialogButton um weiteren Click erweitern / Extend DefaultDialogButton with 2nd click
 
         sudo nano /usr/share/kodi/addons/skin.estuary/xml/Includes_Buttons.xml
     

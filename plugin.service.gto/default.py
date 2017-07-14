@@ -47,7 +47,7 @@ def notifyOSD(header, message, icon=xbmcgui.NOTIFICATION_INFO, disp=4000, enable
     if enabled:
         OSD.notification(header.encode('utf-8'), message.encode('utf-8'), icon, disp)
 
-def writeLog(message, level=xbmc.LOGNOTICE):
+def writeLog(message, level=xbmc.LOGDEBUG):
         try:
             xbmc.log('[%s %s]: %s' % (__addonID__, __version__,  message.encode('utf-8')), level)
         except Exception:
@@ -62,7 +62,7 @@ writeLog('Getting PVR translations from %s' % (__usertranslations__), xbmc.LOGDE
 with open(__usertranslations__, 'r') as transfile:
     ChannelTranslate=transfile.read().rstrip('\n')
 
-infoprops = ['Title', 'Picture', 'Subtitle', 'Description', 'Channel', 'ChannelID', 'Logo', 'Date', 'StartTime', 'RunTime', 'EndTime', 'Genre', 'Cast', 'isRunning', 'isInFuture']
+infoprops = ['Title', 'Picture', 'Subtitle', 'Description', 'Channel', 'ChannelID', 'Logo', 'Date', 'StartTime', 'RunTime', 'EndTime', 'Genre', 'Cast', 'isRunning', 'isInFuture', 'isInDB', 'dbTitle', 'dbOriginalTitle', 'Fanart', 'dbTrailer', 'dbRating', 'dbUserRating']
 
 # convert HTML Entities to unicode chars
 
@@ -147,7 +147,7 @@ def changeScraper():
 
     _idx = xbmcgui.Dialog().select(__LS__(30111), _scrapers)
     if _idx > -1:
-        writeLog('selected scrapermodule is %s' % (_scraperdict[_idx]['module']), level=xbmc.LOGDEBUG)
+        writeLog('selected scrapermodule is %s' % (_scraperdict[_idx]['module']))
         __addon__.setSetting('scraper', _scraperdict[_idx]['module'])
         __addon__.setSetting('setscraper', _scraperdict[_idx]['shortname'])
 
@@ -177,12 +177,12 @@ def channelName2channelId(channelname):
     res = json.loads(xbmc.executeJSONRPC(json.dumps(query, encoding='utf-8')))
 
     # translate via json if necessary
-    trans = json.loads(str(ChannelTranslate))
-    for tr in trans:
-        for names in tr['name']:
+    translations = json.loads(str(ChannelTranslate))
+    for translation in translations:
+        for names in translation['name']:
             if channelname.lower() == names.lower():
-                writeLog("Translating %s to %s" % (channelname, tr['pvrname']), level=xbmc.LOGDEBUG)
-                channelname = tr['pvrname']
+                writeLog("Translating %s to %s" % (channelname, translation['pvrname']))
+                channelname = translation['pvrname']
                 break
     
     if 'result' in res and 'channels' in res['result']:
@@ -191,11 +191,11 @@ def channelName2channelId(channelname):
 
             # prefer HD Channel if available
             if __prefer_hd__ and  (channelname + " HD").lower() == channels['label'].lower():
-                writeLog("GTO found HD priorized channel %s" % (channels['label']), level=xbmc.LOGDEBUG)
+                writeLog("GTO found HD priorized channel %s" % (channels['label']))
                 return channels['channelid']
 
             if channelname.lower() == channels['label'].lower():
-                writeLog("GTO found channel %s" % (channels['label']), level=xbmc.LOGDEBUG)
+                writeLog("GTO found channel %s" % (channels['label']))
                 return channels['channelid']
     return False
 
@@ -213,7 +213,7 @@ def pvrchannelid2channelname(channelid, fallback):
         res = res['result'].get('channels')
         for channels in res:
             if channels['channelid'] == channelid:
-                writeLog("GTO found id for channel %s" % (channels['label']), level=xbmc.LOGDEBUG)
+                writeLog("GTO found id for channel %s" % (channels['label']))
                 return channels['label']
     return fallback + '*'
 
@@ -233,7 +233,7 @@ def pvrchannelid2logo(channelid, fallback):
         return fallback
 
 def switchToChannel(pvrid):
-    writeLog('Switch to channel id %s' % (pvrid), level=xbmc.LOGDEBUG)
+    writeLog('Switch to channel id %s' % (pvrid))
     query = {
         "jsonrpc": "2.0",
         "id": 1,
@@ -244,13 +244,39 @@ def switchToChannel(pvrid):
     if 'result' in res and res['result'] == 'OK':
         return True
     else:
-        writeLog('Couldn\'t switch to channel id %s' % (pvrid), level=xbmc.LOGDEBUG)
+        writeLog('Couldn\'t switch to channel id %s' % (pvrid))
     return False
+
+def isInDataBase(title):
+    writeLog('Check if \'%s\' is in database' % (title))
+    params = {'isInDB': 'no'}
+    query = {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "method": "VideoLibrary.GetMovies",
+        "params": {"properties": ["title", "originaltitle", "fanart", "trailer", "rating", "userrating"],
+                   "sort": {"method": "label"},
+                   "filter": {"field": "title", "operator": "contains", "value": title}}}
+    res = json.loads(xbmc.executeJSONRPC(json.dumps(query, encoding='utf-8')))
+
+    if 'result' in res and res['result'] != '' and 'movies' in res['result']:
+        params.update({'isInDB': 'yes',
+                       'db_title': res['result']['movies'][0]['title'],
+                       'db_originaltitle': res['result']['movies'][0]['originaltitle'],
+                       'db_fanart': res['result']['movies'][0]['fanart'],
+                       'db_trailer': res['result']['movies'][0]['trailer'],
+                       'db_rating': str(round(float(res['result']['movies'][0]['rating']),1)),
+                       'db_userrating': str(res['result']['movies'][0]['userrating'])})
+        writeLog('Found %s possible similar movie(s) in database, select first' % (len(res['result']['movies'])))
+    else:
+        writeLog('No similar movies in database found')
+    return params
+
 
 # clear all info properties (info window) in Home Window
 
 def clearInfoProperties():
-    writeLog('clear all info properties (used in info popup)', level=xbmc.LOGDEBUG)
+    writeLog('clear all info properties (used in info popup)')
     for property in infoprops:
         HOME.clearProperty('GTO.Info.%s' % (property))
 
@@ -262,11 +288,11 @@ def refreshWidget(handle=None, notify=__enableinfo__):
     widget = 1
     for i in range(1, blobs, 1):
 
-        writeLog('Processing blob GTO.%s for widget #%s' % (i, widget), level=xbmc.LOGDEBUG)
+        writeLog('Processing blob GTO.%s for widget #%s' % (i, widget))
         blob = eval(HOME.getProperty('GTO.%s' % (i)))
 
         if __pvronly__ and blob['pvrid'] == 'False':
-            writeLog("Channel %s is not in PVR, discard entry" % (blob['channel']), level=xbmc.LOGDEBUG)
+            writeLog("Channel %s is not in PVR, discard entry" % (blob['channel']))
             HOME.setProperty('PVRisReady', 'no')
             continue
 
@@ -290,7 +316,8 @@ def refreshWidget(handle=None, notify=__enableinfo__):
     if handle is not None:
         xbmcplugin.endOfDirectory(handle=handle, updateListing=True)
 
-    HOME.setProperty('GTO.timestamp', str(int(time.time())))
+    ts = str(int(time.time()))
+    HOME.setProperty('GTO.timestamp', ts)
     xbmc.executebuiltin('Container.Refresh')
 
 def scrapeGTOPage(enabled=__enableinfo__):
@@ -299,7 +326,7 @@ def scrapeGTOPage(enabled=__enableinfo__):
     data.err404 = xbmc.translatePath(os.path.join(__path__, 'resources', 'lib', 'media', data.err404))
 
     notifyOSD(__LS__(30010), __LS__(30018) % ((data.shortname).decode('utf-8')), icon=getScraperIcon(data.icon), enabled=enabled)
-    writeLog('Start scraping from %s' % (data.rssurl), level=xbmc.LOGDEBUG)
+    writeLog('Start scraping from %s' % (data.rssurl))
 
     content = getUnicodePage(data.rssurl, container=data.selector)
     if not content: return
@@ -323,7 +350,7 @@ def scrapeGTOPage(enabled=__enableinfo__):
         channel = pvrchannelid2channelname(pvrchannelID, data.channel)
         details = getUnicodePage(data.detailURL)
 
-        writeLog('Scraping details from %s' % (data.detailURL), level=xbmc.LOGDEBUG)
+        writeLog('Scraping details from %s' % (data.detailURL))
         data.scrapeDetailPage(details, data.detailselector)
 
         # calculate runtime
@@ -336,7 +363,7 @@ def scrapeGTOPage(enabled=__enableinfo__):
         now = datetime.datetime.now()
         now_secs = (now - now.replace(hour=0, minute=0, second=0, microsecond=0)).total_seconds()
         if end < now_secs:
-            writeLog('Broadcast has finished already, discard blob', level=xbmc.LOGDEBUG)
+            writeLog('Broadcast has finished already, discard blob')
             continue
         _st = '%s.%s.%s %s' % (now.day, now.month, now.year, data.starttime)
         try:
@@ -363,39 +390,53 @@ def scrapeGTOPage(enabled=__enableinfo__):
                 'rating': unicode(data.rating)
                }
 
-        writeLog('', level=xbmc.LOGDEBUG)
-        writeLog('blob:            #%s' % (idx), level=xbmc.LOGDEBUG)
-        writeLog('Title:           %s' % (blob['title']), level=xbmc.LOGDEBUG)
-        writeLog('Thumb:           %s' % (blob['thumb']), level=xbmc.LOGDEBUG)
-        writeLog('Date & time:     %s' % (blob['datetime']), level=xbmc.LOGDEBUG)
-        writeLog('Start time:      %s' % (blob['time']), level=xbmc.LOGDEBUG)
-        writeLog('End time:        %s' % (blob['endtime']), level=xbmc.LOGDEBUG)
-        writeLog('Running time:    %s' % (blob['runtime']), level=xbmc.LOGDEBUG)
-        writeLog('Channel (GTO):   %s' % (blob['channel']), level=xbmc.LOGDEBUG)
-        writeLog('Channel (PVR):   %s' % (blob['pvrchannel']), level=xbmc.LOGDEBUG)
-        writeLog('ChannelID (PVR): %s' % (blob['pvrid']), level=xbmc.LOGDEBUG)
-        writeLog('Channel logo:    %s' % (blob['logo']), level=xbmc.LOGDEBUG)
-        writeLog('Genre:           %s' % (blob['genre']), level=xbmc.LOGDEBUG)
-        writeLog('Extrainfos:      %s' % (blob['extrainfos']), level=xbmc.LOGDEBUG)
-        writeLog('Cast:            %s' % (blob['cast']), level=xbmc.LOGDEBUG)
-        writeLog('Rating:          %s' % (blob['rating']), level=xbmc.LOGDEBUG)
-        writeLog('Popup:           %s' % (blob['popup']), level=xbmc.LOGDEBUG)
-        writeLog('', level=xbmc.LOGDEBUG)
+        # look for similar database entries
+
+        blob.update(isInDataBase(blob['title']))
+
+        writeLog('')
+        writeLog('blob:            #%s' % (idx))
+        writeLog('Title:           %s' % (blob['title']))
+        writeLog('is in Database:  %s' % (blob['isInDB']))
+        if blob['isInDB'] == 'yes':
+            writeLog('   Title:        %s' % blob['db_title'])
+            writeLog('   orig. Title:  %s' % blob['db_originaltitle'])
+            writeLog('   Fanart:       %s' % blob['db_fanart'])
+            writeLog('   Trailer:      %s' % blob['db_trailer'])
+            writeLog('   Rating:       %s' % blob['db_rating'])
+            writeLog('   User rating:  %s' % blob['db_userrating'])
+        writeLog('Thumb:           %s' % (blob['thumb']))
+        writeLog('Date & time:     %s' % (blob['datetime']))
+        writeLog('Start time:      %s' % (blob['time']))
+        writeLog('End time:        %s' % (blob['endtime']))
+        writeLog('Running time:    %s' % (blob['runtime']))
+        writeLog('Channel (GTO):   %s' % (blob['channel']))
+        writeLog('Channel (PVR):   %s' % (blob['pvrchannel']))
+        writeLog('ChannelID (PVR): %s' % (blob['pvrid']))
+        writeLog('Channel logo:    %s' % (blob['logo']))
+        writeLog('Genre:           %s' % (blob['genre']))
+        writeLog('Extrainfos:      %s' % (blob['extrainfos']))
+        writeLog('Cast:            %s' % (blob['cast']))
+        writeLog('Rating:          %s' % (blob['rating']))
+        writeLog('Popup:           %s' % (blob['popup']))
+        writeLog('')
 
         HOME.setProperty('GTO.%s' % (idx), str(blob))
         idx += 1
 
+    ts = str(int(time.time()))
     HOME.setProperty('GTO.blobs', str(idx - 1))
-    HOME.setProperty('GTO.timestamp', str(int(time.time())))
-    writeLog('%s items scraped and written to blobs' % (idx - 1), level=xbmc.LOGDEBUG)
+    HOME.setProperty('GTO.timestamp', ts)
+    writeLog('%s items scraped and written to blobs @%s' % (idx - 1, ts))
+    xbmc.executebuiltin('Container.Refresh')
 
 # Set details to Window (INFO Labels)
 
 def showInfoWindow(blobId, showWindow=True):
-    writeLog('Collect and set details to home/info screen for blob #%s' % (blobId or '<unknown>'), level=xbmc.LOGDEBUG)
+    writeLog('Collect and set details to home/info screen for blob #%s' % (blobId or '<unknown>'))
 
     if blobId is None:
-        writeLog('No ID provided')
+        writeLog('No ID provided', level=xbmc.LOGFATAL)
         return False
 
     blob = eval(HOME.getProperty('GTO.%s' % (blobId)))
@@ -406,13 +447,13 @@ def showInfoWindow(blobId, showWindow=True):
         if blob['pvrid'] != 'False':
             timestamp = date2timeStamp(blob['datetime'], '%d.%m.%Y %H:%M')
             if timestamp >= int(time.time()):
-                writeLog('Start time of title \'%s\' is @%s, enable switchtimer button' % (blob['title'], blob['time']), level=xbmc.LOGDEBUG)
+                writeLog('Start time of title \'%s\' is @%s, enable switchtimer button' % (blob['title'], blob['time']))
                 HOME.setProperty("GTO.Info.isInFuture", "yes")
             elif timestamp < int(time.time()) < timestamp + 60 * int(blob['runtime']):
-                writeLog('Title \'%s\' is currently running, enable switch button' % (blob['title']), level=xbmc.LOGDEBUG)
+                writeLog('Title \'%s\' is currently running, enable switch button' % (blob['title']))
                 HOME.setProperty("GTO.Info.isRunning", "yes")
         else:
-            writeLog('No PVR Channel available for %s, disable buttons' % (blob['channel']), level=xbmc.LOGDEBUG)
+            writeLog('No PVR Channel available for %s, disable buttons' % (blob['channel']))
     except (ImportError, ValueError):
         writeLog('Could not make time conversion, strptime locked', level=xbmc.LOGERROR)
 
@@ -428,6 +469,14 @@ def showInfoWindow(blobId, showWindow=True):
     HOME.setProperty("GTO.Info.EndTime", blob['endtime'])
     HOME.setProperty("GTO.Info.Genre", blob['genre'])
     HOME.setProperty("GTO.Info.Cast", blob['cast'])
+    HOME.setProperty("GTO.Info.isInDB", blob['isInDB'])
+    if blob['isInDB'] == 'yes':
+        HOME.setProperty("GTO.Info.dbTitle", blob['db_title'])
+        HOME.setProperty("GTO.Info.dbOriginalTitle", blob['db_originaltitle'])
+        HOME.setProperty("GTO.Info.Fanart", blob['db_fanart'])
+        HOME.setProperty("GTO.Info.dbTrailer", blob['db_trailer'])
+        HOME.setProperty("GTO.Info.dbRating", blob['db_rating'])
+        HOME.setProperty("GTO.Info.dbUserRating", blob['db_userrating'])
 
     if showWindow:
         Popup = xbmcgui.WindowXMLDialog(__xml__, __path__)
@@ -448,7 +497,7 @@ arguments = sys.argv
 if len(arguments) > 1:
 
     if arguments[0][0:6] == 'plugin':
-        writeLog('calling script as plugin source', level=xbmc.LOGDEBUG)
+        writeLog('calling script as plugin source')
         _addonHandle = int(arguments[1])
         arguments.pop(0)
         arguments[1] = arguments[1][1:]
@@ -458,13 +507,13 @@ if len(arguments) > 1:
     blob = urllib.unquote_plus(params.get('blob', ''))
     pvrid = urllib.unquote_plus(params.get('pvrid', ''))
 
-    writeLog('provided parameter hash: %s' % (arguments[1]), level=xbmc.LOGDEBUG)
+    writeLog('provided parameter hash: %s' % (arguments[1]))
 
     if action == 'scrape':
         scrapeGTOPage()
 
     elif action == 'getcontent':
-        writeLog('Filling widget with handle #%s' % (_addonHandle), level=xbmc.LOGDEBUG)
+        writeLog('Filling widget with handle #%s' % (_addonHandle))
         refreshWidget(handle=_addonHandle, notify=False)
 
     elif action == 'refresh':
