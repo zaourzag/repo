@@ -398,7 +398,7 @@ class EPG(xbmcgui.WindowXML):
 			if start > now : return
 			elif end < now : return
 			else:
-				if (__addon__.getSetting('epgPlay')=='true') or (not self.premiumUser):
+				if (__addon__.getSetting('epgPlay')=='true') or (not self.premiumUser) or (not _zattooDB_.getRestart(program['showID'])):
 					url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] + "&showID=" + program['showID']
 				else:
 					ret = xbmcgui.Dialog().select(program['channel']+': '+program['title']+' '+program['start_date'].strftime('%H:%M')+' - '+program['end_date'].strftime('%H:%M'), [strings(WATCH_CHANNEL), strings(PLAY_FROM_START)])

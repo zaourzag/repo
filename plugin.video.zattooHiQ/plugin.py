@@ -64,6 +64,7 @@ premiumUser=accountData['account']['subscriptions']!=[]
 DASH = __addon__.getSetting('dash')=='true'
 RECREADY = __addon__.getSetting('rec_ready')
 
+
 if SWISS=="true": xbmc.executebuiltin( "Skin.SetBool(%s)" %'swiss')
 else: xbmc.executebuiltin( "Skin.Reset(%s)" %'swiss')
 
@@ -391,7 +392,12 @@ def watch_channel(channel_id, start, end, showID="", restart=False, showOSD=Fals
   if DASH: stream_type='dash'
   else:  stream_type='hls'
 
-  if restart: params = {'stream_type': stream_type}
+
+  if restart: 
+    startTime = datetime.datetime.fromtimestamp(int(start))
+    endTime = datetime.datetime.fromtimestamp(int(end))
+    params = {'stream_type': stream_type, 'maxrate':max_bandwidth}
+
   elif start == '0':
     startTime = datetime.datetime.now()
     endTime = datetime.datetime.now()
@@ -407,7 +413,8 @@ def watch_channel(channel_id, start, end, showID="", restart=False, showOSD=Fals
 
   if restart: resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/watch/selective_recall/'+channel_id+'/'+showID, params)
   else: resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/watch',params)
-  print 'ResultData ' +str(params)
+  #resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/watch',params)
+  print 'ResultData ' +str(resultData)
   if resultData is None:
     xbmcgui.Dialog().notification("ERROR", "NO ZAPI RESULT", channelInfo['logo'], 5000, False)
     return
@@ -615,12 +622,25 @@ def makeZattooGUI(showOSD=False):
     del gui
 
 def makeOsdInfo():
-  channel_id=_zattooDB_.get_playing()['channel']
+  channel_id=_zattooDB_.get_playing()['channel'] 
   channelInfo = _zattooDB_.get_channelInfo(channel_id)
   program = _zattooDB_.getPrograms({'index':[channel_id]}, True, datetime.datetime.now(), datetime.datetime.now())
+  
   try: program=program[0]
   except: xbmcgui.Dialog().ok('Error',' ','No Info')
-
+  if _zattooDB_.getRestart(program['showID']) == 1: res = True
+  else: res = False
+  
+  print 'PARAMS  ' + str(SWISS) + '  ' +str(premiumUser) + '  ' + str(res)
+  if (SWISS == 'true') and (premiumUser == True):
+    print 'RestartOSD   1'
+    xbmc.executebuiltin( "Skin.SetBool(%s)" %'hiq')
+  elif (SWISS == 'false') and (premiumUser is True) and (res is True):
+    print 'RestartOSD ' + str(res)
+    xbmc.executebuiltin( "Skin.SetBool(%s)" %'hiq')
+  else:
+    xbmc.executebuiltin( "Skin.Reset(%s)" %'hiq')
+    print 'RestartOSD   0'
   description = program['description']
   if description is None: description = ''
   else: description = '  -  ' + description

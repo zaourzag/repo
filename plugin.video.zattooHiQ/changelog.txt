@@ -1,4 +1,11 @@
 ﻿==================================================
+[B]ZattooHiQ v1.1.9 [/B]16.07.2017 Steffen Rolapp
+==================================================
+- Fehler by Restart Deutschland behoben
+- Restart Funktion wird nur angezeigt wenn Verfügbar
+- Fehler im Auto Refresh ProgrammInfos behoben
+
+==================================================
 [B]ZattooHiQ v1.1.8 [/B]10.07.2017 Steffen Rolapp
 ==================================================
 - Option nur fertige Aufnahmen anzeigen hinzugefügt

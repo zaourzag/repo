@@ -44,6 +44,7 @@ def refreshProg():
 
         try:
             getProgNextDay()
+            print "Next Day"
             _zattooDB_.getProgInfo(False, startTime, endTime)
         except:
             print 'ERROR on REFRESH'
@@ -86,7 +87,7 @@ def start():
         _library_.make_library()
         #xbmc.executebuiltin("Dialog.Close(busydialog)")
 
-        refreshProg()
+    refreshProg()
 
 def getProgNextDay():
     from resources.zattooDB import ZattooDB

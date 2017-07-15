@@ -103,7 +103,9 @@ class ZattooDB(object):
 
     try: c.execute('DROP TABLE channels')
     except: pass
-    try: c.execute('DROP TABLE programs')
+    try: 
+        c.execute('DROP TABLE programs')
+        print "DROP PROGRAM TABlE"
     except: pass
     try: c.execute('DROP TABLE updates')
     except: pass
@@ -115,7 +117,7 @@ class ZattooDB(object):
 
     try:
       c.execute('CREATE TABLE channels(id TEXT, title TEXT, logo TEXT, weight INTEGER, favourite BOOLEAN, PRIMARY KEY (id) )')
-      c.execute('CREATE TABLE programs(showID TEXT, title TEXT, channel TEXT, start_date TIMESTAMP, end_date TIMESTAMP, series BOOLEAN, description TEXT, description_long TEXT, year TEXT, country TEXT, genre TEXT, category TEXT, image_small TEXT, image_large TEXT, updates_id INTEGER, FOREIGN KEY(channel) REFERENCES channels(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED, FOREIGN KEY(updates_id) REFERENCES updates(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED)')
+      c.execute('CREATE TABLE programs(showID TEXT, title TEXT, channel TEXT, start_date TIMESTAMP, end_date TIMESTAMP, restart BOOLEAN, series BOOLEAN, description TEXT, description_long TEXT, year TEXT, country TEXT, genre TEXT, category TEXT, image_small TEXT, image_large TEXT, updates_id INTEGER, FOREIGN KEY(channel) REFERENCES channels(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED, FOREIGN KEY(updates_id) REFERENCES updates(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED)')
       c.execute('CREATE TABLE updates(id INTEGER, date TIMESTAMP, type TEXT, PRIMARY KEY (id) )')
       #c.execute('CREATE TABLE playing(channel TEXT, start_date TIMESTAMP, action_time TIMESTAMP, current_stream INTEGER, streams TEXT, PRIMARY KEY (channel))')
       c.execute('CREATE TABLE showinfos(showID INTEGER, info TEXT, PRIMARY KEY (showID))')
@@ -199,9 +201,9 @@ class ZattooDB(object):
     #xbmc.executebuiltin("ActivateWindow(busydialog)")
     api = '/zapi/v2/cached/program/power_guide/' + self.zapi.AccountData['account']['power_guide_hash'] + '?end=' + str(toTime) + '&start=' + str(fromTime)
 
-    print "api   "+api
+    print "apiData   "+api
     programData = self.zapi.exec_zapiCall(api, None)
-
+    print str(programData)
     count=0
     for channel in programData['channels']:
        cid = channel['cid']
@@ -353,6 +355,7 @@ class ZattooDB(object):
         if longDesc is None:
             api = '/zapi/program/details?program_id=' + showID + '&complete=True'
             showInfo = self.zapiSession().exec_zapiCall(api, None)
+            print 'Showinfo  ' + str(showInfo)
             if showInfo is None:
                 longDesc=''
                 year=''
@@ -371,6 +374,14 @@ class ZattooDB(object):
             info.execute('UPDATE programs SET country=? WHERE showID=?', [country, showID ])
             series = showInfo['program']['series_recording_eligible']
             info.execute('UPDATE programs SET series=? WHERE showID=?', [series, showID])
+            
+            try:
+                restart = showInfo['program']['selective_recall_until']
+                info.execute('UPDATE programs SET restart=? WHERE showID=?', [True, showID])
+                print 'Restart  ' + str(restart)
+            except:
+                print 'No Restart'
+                info.execute('UPDATE programs SET restart=? WHERE showID=?', [False, showID])
         try:
             self.conn.commit()
         except:
@@ -448,10 +459,12 @@ class ZattooDB(object):
     #delete zapi files to force new login    
     profilePath = xbmc.translatePath(__addon__.getAddonInfo('profile'))
     try:
+        
         os.remove(os.path.join(profilePath, 'cookie.cache'))
         os.remove(os.path.join(profilePath, 'session.cache'))
         os.remove(os.path.join(profilePath, 'account.cache'))
         os.remove(os.path.join(profilePath, 'apicall.cache'))
+        
     except:
         pass
     
@@ -605,3 +618,11 @@ class ZattooDB(object):
         print str(showID)+'  '+str(series['series'])
         c.close()
         return series['series']
+  
+  def getRestart(self, showID):
+        c = self.conn.cursor()
+        c.execute('SELECT restart FROM programs WHERE showID = ?', [showID])
+        restart = c.fetchone()
+        print str(showID)+'  '+str(restart['restart'])
+        c.close()
+        return restart['restart']
