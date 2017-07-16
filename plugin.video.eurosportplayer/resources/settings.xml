@@ -1,6 +1,11 @@
 <settings>
     <category label="30000">
         <setting label="30001" type="bool" id="store_creds" default="false"/>
+        <setting label="30002" type="text" visible="false" id="email" default=""/>
+        <setting label="30003" type="text" visible="false" id="password" default=""/>
+        <setting label="30004" type="text" visible="false" id="device_id" default=""/>
+        <setting label="30005" type="text" visible="false" id="userid" default=""/>
+        <setting label="30006" type="text" visible="false" id="hkey" default=""/>
     </category>
     <category label="30010">
         <setting label="30011" type="bool" id="force_view" default="false"/>
