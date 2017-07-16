@@ -352,6 +352,7 @@ class ZattooDB(object):
         country = show['country']
         category = show ['category']
         series = show['series']
+        restart = show['restart']
         if longDesc is None:
             api = '/zapi/program/details?program_id=' + showID + '&complete=True'
             showInfo = self.zapiSession().exec_zapiCall(api, None)
@@ -378,7 +379,7 @@ class ZattooDB(object):
             try:
                 restart = showInfo['program']['selective_recall_until']
                 info.execute('UPDATE programs SET restart=? WHERE showID=?', [True, showID])
-                print 'Restart  ' + str(restart)
+                print 'Restart  ' +str(showID) + '  ' + str(restart)
             except:
                 print 'No Restart'
                 info.execute('UPDATE programs SET restart=? WHERE showID=?', [False, showID])
@@ -463,11 +464,11 @@ class ZattooDB(object):
         os.remove(os.path.join(profilePath, 'cookie.cache'))
         os.remove(os.path.join(profilePath, 'session.cache'))
         os.remove(os.path.join(profilePath, 'account.cache'))
-        os.remove(os.path.join(profilePath, 'apicall.cache'))
-        
+        #os.remove(os.path.join(profilePath, 'apicall.cache'))
+        #os.remove(os.path.join(profilePath, 'zattoo.db'))
     except:
         pass
-    
+
     self._createTables()
 
     self.updateChannels(True)

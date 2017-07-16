@@ -1,4 +1,9 @@
 ﻿==================================================
+[B]ZattooHiQ v1.2.0 [/B]16.07.2017 Steffen Rolapp
+==================================================
+- Restart Deutschland nochmal überarbeitet
+
+==================================================
 [B]ZattooHiQ v1.1.9 [/B]16.07.2017 Steffen Rolapp
 ==================================================
 - Fehler by Restart Deutschland behoben

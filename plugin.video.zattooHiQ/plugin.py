@@ -375,10 +375,10 @@ def slugify(value):
 
 
 def watch_channel(channel_id, start, end, showID="", restart=False, showOSD=False):
-  #print('WATCH: '+channel_id+' st:'+str(start)+' en:'+str(end))
+  print('WATCH: '+channel_id+' st:'+str(start)+' en:'+str(end))
   #new ZattooDB instance because this is called from thread-timer on channel-nr input (sql connection doesn't work)
   _zattooDB_=ZattooDB()
-  
+
   #selected currently playing live TV
   playing=_zattooDB_.get_playing()
   if (xbmc.Player().isPlaying() and channel_id == playing['channel'] and start=='0'):
@@ -628,19 +628,21 @@ def makeOsdInfo():
   
   try: program=program[0]
   except: xbmcgui.Dialog().ok('Error',' ','No Info')
-  if _zattooDB_.getRestart(program['showID']) == 1: res = True
-  else: res = False
+  # Prüfen ob Restart möglich
   
-  print 'PARAMS  ' + str(SWISS) + '  ' +str(premiumUser) + '  ' + str(res)
-  if (SWISS == 'true') and (premiumUser == True):
-    print 'RestartOSD   1'
-    xbmc.executebuiltin( "Skin.SetBool(%s)" %'hiq')
-  elif (SWISS == 'false') and (premiumUser is True) and (res is True):
-    print 'RestartOSD ' + str(res)
-    xbmc.executebuiltin( "Skin.SetBool(%s)" %'hiq')
-  else:
-    xbmc.executebuiltin( "Skin.Reset(%s)" %'hiq')
-    print 'RestartOSD   0'
+  #if _zattooDB_.getRestart(program['showID']) == 1: res = True
+  #else: res = False
+  
+  #print 'PARAMS  ' + str(SWISS) + '  ' +str(premiumUser) + '  ' + str(res)
+  #if (SWISS == 'true') and (premiumUser == True):
+    #print 'RestartOSD   1'
+    #xbmc.executebuiltin( "Skin.SetBool(%s)" %'hiq')
+  #elif (SWISS == 'false') and (premiumUser is True) and (res is True):
+    #print 'RestartOSD ' + str(res)
+    #xbmc.executebuiltin( "Skin.SetBool(%s)" %'hiq')
+  #else:
+    #xbmc.executebuiltin( "Skin.Reset(%s)" %'hiq')
+    #print 'RestartOSD   0'
   description = program['description']
   if description is None: description = ''
   else: description = '  -  ' + description

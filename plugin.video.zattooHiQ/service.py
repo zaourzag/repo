@@ -87,7 +87,7 @@ def start():
         _library_.make_library()
         #xbmc.executebuiltin("Dialog.Close(busydialog)")
 
-    refreshProg()
+
 
 def getProgNextDay():
     from resources.zattooDB import ZattooDB
@@ -105,7 +105,7 @@ def getProgNextDay():
 
 if __addon__.getSetting('dbonstart') == 'true':
 	start()
-print "No DB--SERVICE"
 
+refreshProg()
 
 

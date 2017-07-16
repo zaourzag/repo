@@ -398,14 +398,15 @@ class EPG(xbmcgui.WindowXML):
 			if start > now : return
 			elif end < now : return
 			else:
-				if (__addon__.getSetting('epgPlay')=='true') or (not self.premiumUser) or (not _zattooDB_.getRestart(program['showID'])):
+				if (__addon__.getSetting('epgPlay')=='true') or (not self.premiumUser):# or (not _zattooDB_.getRestart(program['showID'])):
 					url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] + "&showID=" + program['showID']
 				else:
 					ret = xbmcgui.Dialog().select(program['channel']+': '+program['title']+' '+program['start_date'].strftime('%H:%M')+' - '+program['end_date'].strftime('%H:%M'), [strings(WATCH_CHANNEL), strings(PLAY_FROM_START)])
 					if ret==0:  #watch live
 						url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] + "&showID=" + program['showID']
 					elif ret==1:  #recall
-						url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] + "&showID=" + program['showID'] + "&restart=true"
+					
+						url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] +"&showID=" + program['showID'] + "&restart=true" + "&start=" + str(start) + "&end=" + str(end)
 					else: return
 		xbmc.executebuiltin('XBMC.RunPlugin(%s)' % url)
 		
@@ -434,10 +435,17 @@ class EPG(xbmcgui.WindowXML):
 
 		program = self._getProgramFromControl(controlInFocus)
 		if program is None: return
-		if program['description'] == None:
-			self.setControlLabel(self.C_MAIN_TITLE, '[B]%s[/B]' % program['title'])
+		# Test auf Restart
+		if _zattooDB_.getRestart(program['showID']):
+			if program['description'] == None:
+				self.setControlLabel(self.C_MAIN_TITLE, '[B][COLOR gold]R[/COLOR][/B]  [B]%s[/B]' % program['title'])
+			else:
+				self.setControlLabel(self.C_MAIN_TITLE, '[B][COLOR gold]R[/COLOR][/B]  [B]%s[/B]  -  [B]%s[/B]' % (program['title'], program['description']))
 		else:
-			self.setControlLabel(self.C_MAIN_TITLE, '[B]%s[/B]  -  [B]%s[/B]' % (program['title'], program['description']))
+			if program['description'] == None:
+				self.setControlLabel(self.C_MAIN_TITLE, '[B]%s[/B]' % program['title'])
+			else:
+				self.setControlLabel(self.C_MAIN_TITLE, '[B]%s[/B]  -  [B]%s[/B]' % (program['title'], program['description']))
 
 		if program['start_date'] or program['end_date']:
 			self.setControlLabel(self.C_MAIN_TIME,'[B]%s - %s[/B]' % (self.formatTime(program['start_date']), self.formatTime(program['end_date'])))
