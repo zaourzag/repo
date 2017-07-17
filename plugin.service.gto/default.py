@@ -247,6 +247,7 @@ def switchToChannel(pvrid):
         writeLog('Couldn\'t switch to channel id %s' % (pvrid))
     return False
 
+
 def isInDataBase(title):
     writeLog('Check if \'%s\' is in database' % (title))
     params = {'isInDB': 'no'}
@@ -256,17 +257,17 @@ def isInDataBase(title):
         "method": "VideoLibrary.GetMovies",
         "params": {"properties": ["title", "originaltitle", "fanart", "trailer", "rating", "userrating"],
                    "sort": {"method": "label"},
-                   "filter": {"field": "title", "operator": "contains", "value": title}}}
+                   "filter": {"field": "title", "operator": "is", "value": title}}}
     res = json.loads(xbmc.executeJSONRPC(json.dumps(query, encoding='utf-8')))
 
     if 'result' in res and res['result'] != '' and 'movies' in res['result']:
-        params.update({'isInDB': 'yes',
-                       'db_title': res['result']['movies'][0]['title'],
-                       'db_originaltitle': res['result']['movies'][0]['originaltitle'],
-                       'db_fanart': res['result']['movies'][0]['fanart'],
-                       'db_trailer': res['result']['movies'][0]['trailer'],
-                       'db_rating': str(round(float(res['result']['movies'][0]['rating']),1)),
-                       'db_userrating': str(res['result']['movies'][0]['userrating'])})
+        params.update({'isInDB': unicode('yes'),
+                       'db_title': unicode(res['result']['movies'][0]['title']),
+                       'db_originaltitle': unicode(res['result']['movies'][0]['originaltitle']),
+                       'db_fanart': unicode(res['result']['movies'][0]['fanart']),
+                       'db_trailer': unicode(res['result']['movies'][0]['trailer']),
+                       'db_rating': unicode(str(round(float(res['result']['movies'][0]['rating']),1))),
+                       'db_userrating': unicode(str(res['result']['movies'][0]['userrating']))})
         writeLog('Found %s possible similar movie(s) in database, select first' % (len(res['result']['movies'])))
     else:
         writeLog('No similar movies in database found')
@@ -309,6 +310,7 @@ def refreshWidget(handle=None, notify=__enableinfo__):
         wid.setProperty('EndTime', blob['endtime'])
         wid.setProperty('ChannelID', blob['pvrid'])
         wid.setProperty('BlobID', str(i))
+        wid.setProperty('isInDB', blob['isInDB'])
 
         if handle is not None: xbmcplugin.addDirectoryItem(handle=handle, url='', listitem=wid)
         widget += 1
@@ -422,6 +424,7 @@ def scrapeGTOPage(enabled=__enableinfo__):
         writeLog('')
 
         HOME.setProperty('GTO.%s' % (idx), str(blob))
+        writeLog(str(blob))
         idx += 1
 
     ts = str(int(time.time()))

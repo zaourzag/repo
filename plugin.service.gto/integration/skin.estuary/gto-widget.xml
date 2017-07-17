@@ -66,10 +66,10 @@
 						</control>
 						<control type="image">
 							<left>260</left>
-							<top>30</top>
-							<width>32</width>
-							<height>32</height>
-							<texture>$VAR[WallWatchedIconVar]</texture>
+							<width>48</width>
+							<height>48</height>
+							<texture>movie.png</texture>
+							<visible>String.IsEqual(ListItem.Property(isInDB),yes)</visible>
 						</control>
 					</control>
 				</itemlayout>
@@ -131,10 +131,10 @@
 						</control>
 						<control type="image">
 							<left>260</left>
-							<top>30</top>
-							<width>32</width>
-							<height>32</height>
-							<texture>$VAR[WallWatchedIconVar]</texture>
+							<width>48</width>
+							<height>48</height>
+							<texture>movie.png</texture>
+							<visible>String.IsEqual(ListItem.Property(isInDB),yes)</visible>
 						</control>
 					</control>
 				</focusedlayout>

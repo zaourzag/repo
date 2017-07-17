@@ -68,6 +68,7 @@ Beispiel 'onclick' für TV Highlights Element - Öffnet Popup generiert vom Plug
     - ListItem.Property(RunTime)      Laufzeit in Minuten (105) / run time
     - ListItem.Property(ChannelID)    PVR Channel ID, wird zum Umschalten per json benötigt / Channel ID of PVR, needed for channel switch
     - ListItem.Property(BlobID)       ID der Datenblase zur Sendung ID / data blob ID of the broadcast
+    - ListItem.Property(isInDB)       'yes|no' Film befindet sich in lokaler DB / movie exist in local database
 
 #### Info-Window (werden als Properties in Window(Home) gesetzt) / Info windows (resides as properties in Window(Home)):
 
