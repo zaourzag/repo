@@ -4,4 +4,6 @@
    <setting id="username" label="30102" type="text" default=""/>
    <setting id="password" label="30103" type="text" option="hidden" enable="!eq(-1,)" default=""/>
    <setting id="showFanart" label="30104" type="bool" default="false"/>
+   <setting id="pg_hash" label="30105" type="text" default="" visible="false"/>
+   <setting id="session" label="30106" type="text" default="" visible="false"/>
 </settings>
