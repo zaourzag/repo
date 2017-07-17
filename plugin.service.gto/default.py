@@ -268,11 +268,30 @@ def isInDataBase(title):
                        'db_trailer': unicode(res['result']['movies'][0]['trailer']),
                        'db_rating': unicode(str(round(float(res['result']['movies'][0]['rating']),1))),
                        'db_userrating': unicode(str(res['result']['movies'][0]['userrating']))})
-        writeLog('Found %s possible similar movie(s) in database, select first' % (len(res['result']['movies'])))
+        writeLog('Found %s exact matches for movie(s) in database, select first' % (len(res['result']['movies'])))
     else:
-        writeLog('No similar movies in database found')
-    return params
+        writeLog('No movies with exact match in database found')
+        query = {
+            "jsonrpc": "2.0",
+            "id": 1,
+            "method": "VideoLibrary.GetMovies",
+            "params": {"properties": ["title", "originaltitle", "fanart", "trailer", "rating", "userrating"],
+                       "sort": {"method": "label"},
+                       "filter": {"field": "title", "operator": "contains", "value": title}}}
+        res = json.loads(xbmc.executeJSONRPC(json.dumps(query, encoding='utf-8')))
 
+        if 'result' in res and res['result'] != '' and 'movies' in res['result']:
+            params.update({'isInDB': unicode('yes'),
+                           'db_title': unicode(res['result']['movies'][0]['title']),
+                           'db_originaltitle': unicode(res['result']['movies'][0]['originaltitle']),
+                           'db_fanart': unicode(res['result']['movies'][0]['fanart']),
+                           'db_trailer': unicode(res['result']['movies'][0]['trailer']),
+                           'db_rating': unicode(str(round(float(res['result']['movies'][0]['rating']), 1))),
+                           'db_userrating': unicode(str(res['result']['movies'][0]['userrating']))})
+            writeLog('Found %s possible similar movie(s) in database, select first' % (len(res['result']['movies'])))
+        else:
+            writeLog('No similar movie(s) found in database')
+    return params
 
 # clear all info properties (info window) in Home Window
 
@@ -424,7 +443,6 @@ def scrapeGTOPage(enabled=__enableinfo__):
         writeLog('')
 
         HOME.setProperty('GTO.%s' % (idx), str(blob))
-        writeLog(str(blob))
         idx += 1
 
     ts = str(int(time.time()))
