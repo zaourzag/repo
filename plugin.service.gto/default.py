@@ -14,6 +14,7 @@ import xbmcvfs
 import time
 import datetime
 import json
+import re
 
 __addon__ = xbmcaddon.Addon()
 __addonID__ = __addon__.getAddonInfo('id')
@@ -247,6 +248,7 @@ def switchToChannel(pvrid):
         writeLog('Couldn\'t switch to channel id %s' % (pvrid))
     return False
 
+
 def isInDataBase(title):
     writeLog('Check if \'%s\' is in database' % (title))
     params = {'isInDB': 'no'}
@@ -256,22 +258,60 @@ def isInDataBase(title):
         "method": "VideoLibrary.GetMovies",
         "params": {"properties": ["title", "originaltitle", "fanart", "trailer", "rating", "userrating"],
                    "sort": {"method": "label"},
-                   "filter": {"field": "title", "operator": "contains", "value": title}}}
+                   "filter": {"field": "title", "operator": "is", "value": title}}}
     res = json.loads(xbmc.executeJSONRPC(json.dumps(query, encoding='utf-8')))
+    if not 'movies' in res['result']:
+        if len(title.split()) < 3:
+            writeLog('Word count too small for fuzzy filter')
+            return params
+        writeLog('No movie(s) with exact matches found, try more fuzzy filter')
+        query = {
+            "jsonrpc": "2.0",
+            "id": 1,
+            "method": "VideoLibrary.GetMovies",
+            "params": {"properties": ["title", "originaltitle", "fanart", "trailer", "rating", "userrating"],
+                       "sort": {"method": "label"},
+                       "filter": {"field": "title", "operator": "contains", "value": title}}}
+        res = json.loads(xbmc.executeJSONRPC(json.dumps(query, encoding='utf-8')))
+        if not 'movies' in res['result']:
+            writeLog('No movie(s) with similar title found, replacing special chars')
+            query = {
+                "jsonrpc": "2.0",
+                "id": 1,
+                "method": "VideoLibrary.GetMovies",
+                "params": {"properties": ["title", "originaltitle", "fanart", "trailer", "rating", "userrating"],
+                           "sort": {"method": "label"},
+                           "filter": {"field": "title", "operator": "contains", "value": title.replace(' - ', ': ')}}}
+            res = json.loads(xbmc.executeJSONRPC(json.dumps(query, encoding='utf-8')))
+            if not 'movies' in res['result']:
+                titlepart = re.findall('[:-]', title)
+                if len(titlepart) > 0:
+                    writeLog('Search for \'%s\'' % (title.split(titlepart[0])[0].strip()))
+                    query = {
+                        "jsonrpc": "2.0",
+                        "id": 1,
+                        "method": "VideoLibrary.GetMovies",
+                        "params": {
+                            "properties": ["title", "originaltitle", "fanart", "trailer", "rating", "userrating"],
+                            "sort": {"method": "label"},
+                            "filter": {"field": "title", "operator": "contains", "value": title.split(titlepart[0])[0].strip()}}}
+                    res = json.loads(xbmc.executeJSONRPC(json.dumps(query, encoding='utf-8')))
+                else:
+                    writeLog('Sorry, no matches')
+                    return params
+                if not 'movies' in res['result']:
+                    writeLog('Sorry, no matches')
+                    return params
 
-    if 'result' in res and res['result'] != '' and 'movies' in res['result']:
-        params.update({'isInDB': 'yes',
-                       'db_title': res['result']['movies'][0]['title'],
-                       'db_originaltitle': res['result']['movies'][0]['originaltitle'],
-                       'db_fanart': res['result']['movies'][0]['fanart'],
-                       'db_trailer': res['result']['movies'][0]['trailer'],
-                       'db_rating': str(round(float(res['result']['movies'][0]['rating']),1)),
-                       'db_userrating': str(res['result']['movies'][0]['userrating'])})
-        writeLog('Found %s possible similar movie(s) in database, select first' % (len(res['result']['movies'])))
-    else:
-        writeLog('No similar movies in database found')
+    writeLog('Found %s matches for movie(s) in database, select first' % (len(res['result']['movies'])))
+    params.update({'isInDB': unicode('yes'),
+                   'db_title': unicode(res['result']['movies'][0]['title']),
+                   'db_originaltitle': unicode(res['result']['movies'][0]['originaltitle']),
+                   'db_fanart': unicode(res['result']['movies'][0]['fanart']),
+                   'db_trailer': unicode(res['result']['movies'][0]['trailer']),
+                   'db_rating': unicode(str(round(float(res['result']['movies'][0]['rating']), 1))),
+                   'db_userrating': unicode(str(res['result']['movies'][0]['userrating']))})
     return params
-
 
 # clear all info properties (info window) in Home Window
 
@@ -309,6 +349,7 @@ def refreshWidget(handle=None, notify=__enableinfo__):
         wid.setProperty('EndTime', blob['endtime'])
         wid.setProperty('ChannelID', blob['pvrid'])
         wid.setProperty('BlobID', str(i))
+        wid.setProperty('isInDB', blob['isInDB'])
 
         if handle is not None: xbmcplugin.addDirectoryItem(handle=handle, url='', listitem=wid)
         widget += 1

@@ -7,9 +7,10 @@ If You want to use the plugin as widget you have to perfom following steps. The 
 
         cd $HOME/.kodi/addons/plugin.service.gto/integration/skin.confluence
 
-1. Kopieren des XML Files in den Confluence Skin Ordner / Copy XML to Confluence folder
+1. Kopieren des XML Files und der Icons in den Confluence Skin Ordner / Copy XML and icons to Confluence folder
 
         sudo cp script-gto.xml /usr/share/kodi/addons/skin.confluence/720p/
+        sudo cp icons/*.png /usr/share/kodi/addons/skin.confluence/media/
 
 2. Script als include am Skin "anmelden". Hierzu die Datei "/usr/share/kodi/addons/skin.confluence/720p/includes.xml" editieren, und unterhalb von:
    Make script known to the skin. For this purpose, edit "/usr/share/kodi/addons/skin.confluence/720p/includes.xml" and include below:

@@ -66,11 +66,20 @@
                                                         <bordertexture border="5">button-nofocus.png</bordertexture>
                                                         <bordersize>5</bordersize>
                                                 </control>
+                                                <control type="image">
+                                                        <description>is in DB Label</description>
+                                                        <left>182</left>
+                                                        <top>10</top>
+                                                        <width>48</width>
+                                                        <height>48</height>
+                                                        <texture>movie.png</texture>
+                                                        <visible>String.IsEqual(ListItem.Property(isInDB),yes)</visible>
+                                                </control>
                                                 <control type="label">
                                                         <description>Genre</description>
                                                         <left>20</left>
                                                         <top>15</top>
-                                                        <width>200</width>
+                                                        <width>160</width>
                                                         <height>14</height>
                                                         <font>font10</font>
                                                         <textcolor>grey2</textcolor>
@@ -179,10 +188,19 @@
                                                         <bordersize>5</bordersize>
                                                         <visible>!Control.HasFocus(58051)</visible>
                                                 </control>
+                                                <control type="image">
+                                                        <description>is in DB Label</description>
+                                                        <left>182</left>
+                                                        <top>10</top>
+                                                        <width>48</width>
+                                                        <height>48</height>
+                                                        <texture>movie.png</texture>
+                                                        <visible>String.IsEqual(ListItem.Property(isInDB),yes)</visible>
+                                                </control>
                                                 <control type="label">
                                                         <left>20</left>
                                                         <top>15</top>
-                                                        <width>200</width>
+                                                        <width>160</width>
                                                         <height>14</height>
                                                         <font>font10</font>
                                                         <textcolor>grey2</textcolor>
