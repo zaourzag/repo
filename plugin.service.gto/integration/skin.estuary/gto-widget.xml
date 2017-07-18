@@ -65,7 +65,8 @@
 							<aligny>top</aligny>
 						</control>
 						<control type="image">
-							<left>260</left>
+							<left>243</left>
+							<top>22</top>
 							<width>48</width>
 							<height>48</height>
 							<texture>movie.png</texture>
@@ -130,7 +131,8 @@
 							<aligny>top</aligny>
 						</control>
 						<control type="image">
-							<left>260</left>
+							<left>243</left>
+							<top>22</top>
 							<width>48</width>
 							<height>48</height>
 							<texture>movie.png</texture>
