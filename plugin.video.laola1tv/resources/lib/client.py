@@ -73,12 +73,24 @@ class Client:
         
     def login(self):
         credentials = Credentials()
-        data = {
-            'e': utfenc(credentials.email),
-            'p': utfenc(credentials.password)
-        }
-        r = requests.post(self.v2 + 'session', headers=self.headers, data=data)
-        addon.setSetting('cookie', r.headers.get('set-cookie', ''))
+        if credentials.email and credentials.password:
+            post_data = {
+                'e': utfenc(credentials.email),
+                'p': utfenc(credentials.password)
+            }
+            r = requests.post(self.v2 + 'session', headers=self.headers, data=post_data)
+            if r.headers.get('content-type', '').startswith('application/json'):
+                data = r.json()
+                if data.get('error', None):
+                    log('[%s] login: %s' % (addon_id, data['error'][0]))
+                    credentials.reset()
+                elif data.get('result', None):
+                    log('[%s] login: premium=%s' % (addon_id, data['result']['premium']))
+                    addon.setSetting('cookie', r.headers.get('set-cookie', ''))
+                    credentials.save()
+                else:
+                    log('[%s] login: %s' % (addon_id, 'error - reset cookie'))
+                    addon.setSetting('cookie', '')
         
     def logout(self):
         if cookie:
