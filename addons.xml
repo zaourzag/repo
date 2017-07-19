@@ -1063,7 +1063,7 @@ v1.8.1
 	</extension>
 </addon>
 
-<addon id="plugin.video.skygo.de" name="Sky Go" version="1.10.3" provider-name="jojo, frankr612, Maven, Linkinsoldier">
+<addon id="plugin.video.skygo.de" name="Sky Go" version="1.10.4" provider-name="jojo, frankr612, Maven, Linkinsoldier">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
     <import addon="script.module.requests" version="2.9.1"/>
@@ -3307,7 +3307,7 @@ Zattoo Live TV, Aufnahmen und EPG
 	</extension>
 </addon>
 
-<addon id="plugin.video.skyticket.de" name="Sky Ticket" version="1.0.3" provider-name="jojo, frankr612, Maven, Linkinsoldier">
+<addon id="plugin.video.skyticket.de" name="Sky Ticket" version="1.0.4" provider-name="jojo, frankr612, Maven, Linkinsoldier">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
     <import addon="script.module.requests" version="2.9.1"/>
