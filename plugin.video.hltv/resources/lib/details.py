@@ -22,7 +22,8 @@ class Details:
             views = ''
             if self.viewers:
                 views = self.viewers.group(1)
-            return utfenc('%s (%s) %s' % (self.name.group(1), self.language.group(1), views))
+            name = re.sub('<.+?>', '', self.name.group(1))
+            return utfenc('%s (%s) %s' % (name, self.language.group(1), views))
         
     def update_item(self):
         self.item['mode'] = 'play'
