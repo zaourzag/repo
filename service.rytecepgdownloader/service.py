@@ -112,38 +112,17 @@ def service():
                 if not common.blocked(a):
                     DOWNLOADER()
             a = True
-            
-import json as jsoninterface
-
-def get_installedversion():
-    # retrieve current installed version
-    json_query = xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method": "Application.GetProperties", "params": {"properties": ["version", "name"]}, "id": 1 }')
-    json_query = unicode(json_query, 'utf-8', errors='ignore')
-    json_query = jsoninterface.loads(json_query)
-    version_installed = []
-    if json_query.has_key('result') and json_query['result'].has_key('version'):
-        version_installed  = json_query['result']['version']['major']
-    return version_installed
 
 if __name__ == '__main__':
-
-    version = get_installedversion()
-    common.log(version)
-    if int(version) < 18:
     
-        if common.get_xml_path() and common.get_activation_code():
+    if common.get_xml_path() and common.get_activation_code():
 
-            if common.manual_download() == True:
-                dialog = xbmcgui.Dialog()
-                ret = dialog.yesno('Rytec EPG Downloader', 'Start Manual Download')
-                if ret:
-                    manual = True
-                    DOWNLOADER(manual)
-                    ok = dialog.ok('Rytec EPG Downloader', 'Manual Download Finished')
-            else:
-                service()
-                
-    else:
-        dialog = xbmcgui.Dialog()
-        ok = dialog.ok('Rytec EPG Downloader', 'Currently broken in Kodi 18. Please disable.')
-        
+        if common.manual_download() == True:
+            dialog = xbmcgui.Dialog()
+            ret = dialog.yesno('Rytec EPG Downloader', 'Start Manual Download')
+            if ret:
+                manual = True
+                DOWNLOADER(manual)
+                ok = dialog.ok('Rytec EPG Downloader', 'Manual Download Finished')
+        else:
+            service()
