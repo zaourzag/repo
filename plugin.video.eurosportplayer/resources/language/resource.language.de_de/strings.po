@@ -12,14 +12,6 @@ msgstr ""
 "Language: de_DE\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgctxt "#30000"
-msgid "General"
-msgstr "Allgemein"
-
-msgctxt "#30001"
-msgid "Save credentials"
-msgstr "Anmeldeinformationen speichern"
-
 msgctxt "#30002"
 msgid "Eurosport Player Login: Email"
 msgstr "Eurosport Player Login: E-Mail"
@@ -43,26 +35,6 @@ msgstr "Ansicht: Inhalt"
 msgctxt "#30013"
 msgid "View: ID"
 msgstr "Ansicht: ID"
-
-msgctxt "#30020"
-msgid "Video Quality"
-msgstr "Video Qualität"
-
-msgctxt "#30021"
-msgid "Low"
-msgstr "Niedrig"
-
-msgctxt "#30022"
-msgid "Medium"
-msgstr "Mittel"
-
-msgctxt "#30023"
-msgid "High"
-msgstr "Hoch"
-
-msgctxt "#30024"
-msgid "Very High"
-msgstr "Sehr Hoch"
 
 msgctxt "#30051"
 msgid "Failed to get Device ID. Please Retry."

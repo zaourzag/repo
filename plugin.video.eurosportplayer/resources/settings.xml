@@ -1,15 +1,13 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
-    <category label="30000">
-        <setting label="30001" type="bool" id="store_creds" default="false"/>
-        <setting label="30002" type="text" visible="false" id="email" default=""/>
-        <setting label="30003" type="text" visible="false" id="password" default=""/>
-        <setting label="30004" type="text" visible="false" id="device_id" default=""/>
-        <setting label="30005" type="text" visible="false" id="userid" default=""/>
-        <setting label="30006" type="text" visible="false" id="hkey" default=""/>
-    </category>
     <category label="30010">
         <setting label="30011" type="bool" id="force_view" default="false"/>
         <setting label="30012" type="select" id="content" enable="eq(-1,true)" values="videos|movies|tvshows|episodes|musicvideos" default="videos"/>
         <setting label="30013" type="number" id="view_id" enable="eq(-2,true)" default="55"/>
+        <setting label="device_id" type="text" id="device_id" default="" visible="false"/>
+        <setting label="email" type="text" id="email" default="" visible="false"/>
+        <setting label="password" type="text" id="password" default="" visible="false"/>
+        <setting label="userid" type="text" id="userid" default="" visible="false"/>
+        <setting label="hkey" type="text" id="hkey" default="" visible="false"/>
     </category>
 </settings>

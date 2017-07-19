@@ -53,7 +53,8 @@ class Client:
         log('[%s] geolocation: %s' % (addon_id, self.context['g']))
 
     def set_user_ref(self):
-        user_ref = self.ep_login()
+        credentials = Credentials()
+        user_ref = self.ep_login(credentials)
         if user_ref.get('Response', None):
             log('[%s] login: %s' % (addon_id, utfenc(user_ref['Response']['Message'])))
         if user_ref.get('Id', '') and user_ref.get('Hkey', ''):
@@ -61,6 +62,9 @@ class Client:
             addon.setSetting('userid', user_ref['Id'])
             self.dvs['hkey'] = user_ref['Hkey']
             addon.setSetting('hkey', user_ref['Hkey'])
+            credentials.save()
+        else:
+            credentials.reset()
     
     def channels(self):
         encoded = urllib.urlencode({'data':json.dumps(self.dvs), 'context':json.dumps(self.context)})
@@ -77,8 +81,7 @@ class Client:
         url = self.EPG + '?' + encoded
         return self.json_request(url)
         
-    def ep_login(self):
-        credentials = Credentials()
+    def ep_login(self, credentials):
         login_data = {
             'email': utfenc(credentials.email), 
             'password': utfenc(credentials.password), 

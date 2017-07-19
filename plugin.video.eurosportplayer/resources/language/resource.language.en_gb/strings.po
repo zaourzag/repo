@@ -12,14 +12,6 @@ msgstr ""
 "Language: en_GB\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-msgctxt "#30000"
-msgid "General"
-msgstr ""
-
-msgctxt "#30001"
-msgid "Save credentials"
-msgstr ""
-
 msgctxt "#30002"
 msgid "Eurosport Player Login: Email"
 msgstr ""
@@ -42,26 +34,6 @@ msgstr ""
 
 msgctxt "#30013"
 msgid "View: ID"
-msgstr ""
-
-msgctxt "#30020"
-msgid "Video Quality"
-msgstr ""
-
-msgctxt "#30021"
-msgid "Low"
-msgstr ""
-
-msgctxt "#30022"
-msgid "Medium"
-msgstr ""
-
-msgctxt "#30023"
-msgid "High"
-msgstr ""
-
-msgctxt "#30024"
-msgid "Very High"
 msgstr ""
 
 msgctxt "#30051"
