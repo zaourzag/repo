@@ -64,6 +64,7 @@ class Client:
                 self.cookie = r.headers['set-cookie']
                 addon.setSetting('cookie', self.cookie)
                 log('[%s] login successful' % (addon_id))
+                credentials.save()
             else:
                 pattern = '<span class="loginError.*?">(.*?)</span>'
                 s = re.search(pattern, r.text)
@@ -73,6 +74,7 @@ class Client:
                     msg = 'Login Fehlgeschlagen'
                 log('[%s] login error: %s' % (addon_id, utfenc(msg)))
                 dialog.ok(addon_name, utfenc(msg))
+                credentials.reset()
 
     def logged_in(self):
         self.headers['cookie'] = cookie

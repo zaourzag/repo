@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.sport1de" version="1.4.1" name="Sport1" provider-name="Jin">
+<addon id="plugin.video.sport1de" version="1.5.0" name="Sport1" provider-name="Jin">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
         <import addon="script.module.requests" version="2.12.4"/>
@@ -9,18 +9,17 @@
         <provides>video</provides>
     </extension>
     <extension point="xbmc.addon.metadata">
+        <news>
+- added non defined settings to settings.xml
+- minor fixes/updates
+        </news>
         <summary>Sportnachrichten - aktuelle News und Livestreams</summary>
         <description>Für Sport1US und Sport1+ wird ein ABO auf sport1.de benötigt.</description>
+        <disclaimer>Inoffizielles Addon - Benutzung auf eigene Gefahr</disclaimer>
         <platform>all</platform>
         <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-        <disclaimer>Inoffizielles Addon - Benutzung auf eigene Gefahr</disclaimer>
-        <news>
-v1.4.1
-- fix Live Radio
-v1.4.0
-- Sicherheitsupdate (benötigt script.module.pydes)
-v1.3.1
-- SSL wieder deaktiviert
-        </news>
+        <website>https://www.sport1.de</website>
+        <email>[jin] at [xyz] dot [de]</email>
+        <source>https://github.com/kodinerds/repo/tree/master/plugin.video.sport1de</source>
     </extension>
 </addon>

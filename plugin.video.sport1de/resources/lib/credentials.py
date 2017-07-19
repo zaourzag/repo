@@ -8,7 +8,8 @@ class Credentials:
     def __init__(self):
         self.email = addon.getSetting('email')
         self.password = addon.getSetting('password')
-        self.set_credentials()
+        self.credentials = False
+        self.run()
 
     def encode(self, data):
         k = pyDes.triple_des(uniq_id(t=2), pyDes.CBC, "\0\0\0\0\0\0\0\0", padmode=pyDes.PAD_PKCS5)
@@ -20,13 +21,20 @@ class Credentials:
         d = k.decrypt(base64.b64decode(data))
         return d
 
-    def set_credentials(self):
+    def run(self):
         if self.email and self.password:
             self.email = self.decode(self.email)
             self.password = self.decode(self.password)
+            self.credentials = True
         else:
             self.email = dialog.input('Sport1 Login: E-Mail', type=xbmcgui.INPUT_ALPHANUM)
             self.password = dialog.input('Sport1 Login: Passwort', type=xbmcgui.INPUT_ALPHANUM, option=xbmcgui.ALPHANUM_HIDE_INPUT)
-            if store_creds:
-                addon.setSetting('email', self.encode(self.email))
-                addon.setSetting('password', self.encode(self.password))
+
+    def save(self):
+        if not self.credentials:
+            addon.setSetting('email', self.encode(self.email))
+            addon.setSetting('password', self.encode(self.password))
+            
+    def reset(self):
+        addon.setSetting('email', '')
+        addon.setSetting('password', '')

@@ -13,10 +13,6 @@ version = addon.getAddonInfo('version')
 icon = addon.getAddonInfo('icon')
 fanart = addon.getAddonInfo('fanart')
 cookie = addon.getSetting('cookie')
-store_creds = addon.getSetting('store_creds') == 'true'
-if not store_creds:
-    addon.setSetting('email', '')
-    addon.setSetting('password', '')
 
 www_base = 'http://www.sport1.de'
 video_base = 'http://video.sport1.de'

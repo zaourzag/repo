@@ -84,10 +84,7 @@ def get_video_items(data):
     for i in videos:
         title = i['title']
         image = i['image']
-        id = i['id']
         description = utfenc(i['description'])
-        a = image.split(id)[0]
-        image = '%s%s/width/400' % (a,id)
         duration = int(i['durationSeconds'])
         date = i['date']
         dt = datetime.datetime.fromtimestamp(int(date))
@@ -165,7 +162,11 @@ def get_live_radio_items(data):
                 match_time = i['match_time']
                 match_meta = i.get('match_meta', [])
                 current_minute = i.get('current_minute', '')
-                result = '%s:%s' % (i['match_result'][0]['match_result'],i['match_result'][1]['match_result'])
+                match_result = i.get('match_result', '')
+                if match_result:
+                    result = '%s:%s' % (i['match_result'][0]['match_result'],i['match_result'][1]['match_result'])
+                else:
+                    result = match_result
                 for meta in match_meta:
                     kind = meta['kind']
                     if not 'Konferenz' in str(items) and 'conference' in kind and kind.endswith('.mp3'):
