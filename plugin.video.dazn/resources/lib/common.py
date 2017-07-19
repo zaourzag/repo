@@ -16,13 +16,10 @@ content = addon.getSetting('content')
 view_id = addon.getSetting('view_id')
 force_view = addon.getSetting('force_view') == 'true'
 token = addon.getSetting('token')
-language = xbmc.getLanguage(0, False)
 country = addon.getSetting('country')
-cdn = int(addon.getSetting('server'))
-store_creds = addon.getSetting('store_creds') == 'true'
-if not store_creds:
-    addon.setSetting('email', '')
-    addon.setSetting('password', '')
+language = xbmc.getLanguage(0, False)
+if not language:
+    language = addon.getSetting('language')
 
 api_base = 'https://isl.dazn.com/misl/'
 
@@ -72,7 +69,8 @@ def uniq_id(t=1):
         time.sleep(t)
         mac_addr = xbmc.getInfoLabel('Network.MacAddress')
     if ":" in mac_addr and t == 1:
-        addon.setSetting('device_id', str(uuid.UUID(md5(str(mac_addr.decode("utf-8"))).hexdigest())))
+        device_id = str(uuid.UUID(md5(str(mac_addr.decode("utf-8"))).hexdigest()))
+        addon.setSetting('device_id', device_id)
         return True
     elif ":" in mac_addr and t == 2:
         return uuid.uuid5(uuid.NAMESPACE_DNS, str(mac_addr)).bytes
@@ -80,7 +78,7 @@ def uniq_id(t=1):
         log("[%s] error: failed to get device id (%s)" % (addon_id, str(mac_addr)))
         dialog.ok(addon_name, getString(30051))
         return False
-    
+
 def days(title, now, start):
     today = datetime.date.today()
     if start and not title == 'Live':

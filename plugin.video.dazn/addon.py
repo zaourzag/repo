@@ -28,9 +28,9 @@ id = args.get('id', ['home'])[0]
 params = args.get('params', [''])[0]
 if not args:
     args = version
-log('[%s] arguments: %s' % (addon_id, str(args)))
+log('[%s] country: %s language: %s arguments: %s' % (addon_id, country, language, str(args)))
 
-if id == 'home':
+if args == version:
     if uniq_id():
         client.startUp()
         if client.TOKEN:

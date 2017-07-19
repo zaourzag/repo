@@ -43,6 +43,9 @@ class Tiles:
         if image:
             self.item['thumb'] = url % (image['Id'], '720', '404', image['ImageMimeType'])
             self.item['fanart'] = url % (image['Id'], '1280', '720', image['ImageMimeType'])
+        background = i.get('BackgroundImage', '')
+        if background:
+            self.item['fanart'] = url % (background['Id'], '1280', '720', background['ImageMimeType'])
 
     def update_item(self, i):
         self.item['mode'] = self.mode

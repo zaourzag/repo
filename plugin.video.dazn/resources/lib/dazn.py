@@ -41,21 +41,22 @@ def epg_items(data, params):
     from context import Context
     from resources import resources
     update = False if params == 'today' else True
-    date = epg_date(data['Date'])
-    cm = Context().epg_date()
-    
-    def date_item(day):
-        return {
-            'mode': 'epg',
-            'title': '%s (%s)' % (resources(day.strftime('%A')), day.strftime(date_format)),
-            'plot': '%s (%s)' % (resources(date.strftime('%A')), date.strftime(date_format)),
-            'params': day,
-            'cm': cm
-        }
-    
-    items.add_item(date_item(get_prev_day(date)))
-    rail_items(data, list=False)
-    items.add_item(date_item(get_next_day(date)))
+    if data.get('Date'):
+        date = epg_date(data['Date'])
+        cm = Context().epg_date()
+
+        def date_item(day):
+            return {
+                'mode': 'epg',
+                'title': '%s (%s)' % (resources(day.strftime('%A')), day.strftime(date_format)),
+                'plot': '%s (%s)' % (resources(date.strftime('%A')), date.strftime(date_format)),
+                'params': day,
+                'cm': cm
+            }
+
+        items.add_item(date_item(get_prev_day(date)))
+        rail_items(data, list=False)
+        items.add_item(date_item(get_next_day(date)))
     items.list_items(upd=update)
     
 def playback(data, name=False, context=False):

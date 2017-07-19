@@ -98,9 +98,11 @@ class Client:
                 self.setToken(data['AuthToken'], data.get('Result', 'SignInError'))
         else:
             dialog.ok(addon_name, getString(30004))
-        self.POST_DATA  = {}
         if self.TOKEN:
+            credentials.save()
             self.userProfile()
+        else:
+            credentials.reset()
             
     def signOut(self):
         self.HEADERS['Authorization'] = 'Bearer ' + self.TOKEN
@@ -118,6 +120,7 @@ class Client:
             self.errorHandler(data)
         else:
             addon.setSetting('country', data['UserCountryCode'])
+            addon.setSetting('language', data['UserLanguageLocaleKey'])
         
     def refreshToken(self):
         self.HEADERS['Authorization'] = 'Bearer ' + self.TOKEN
@@ -138,6 +141,7 @@ class Client:
     def request(self, url):
         if self.POST_DATA:
             r = requests.post(url, headers=self.HEADERS, data=self.POST_DATA, params=self.PARAMS)
+            self.POST_DATA  = {}
         else:
             r = requests.get(url, headers=self.HEADERS, params=self.PARAMS)
         if r.headers.get('content-type', '').startswith('application/json'):
