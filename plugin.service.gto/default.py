@@ -304,13 +304,16 @@ def isInDataBase(title):
                     return params
 
     writeLog('Found %s matches for movie(s) in database, select first' % (len(res['result']['movies'])))
+    _fanart = urllib.unquote_plus(res['result']['movies'][0]['fanart']).split('://', 1)[1][:-1]
+    _userrating = '0'
+    if res['result']['movies'][0]['userrating'] != '': _userrating = res['result']['movies'][0]['userrating']
     params.update({'isInDB': unicode('yes'),
                    'db_title': unicode(res['result']['movies'][0]['title']),
                    'db_originaltitle': unicode(res['result']['movies'][0]['originaltitle']),
-                   'db_fanart': unicode(res['result']['movies'][0]['fanart']),
+                   'db_fanart': unicode(_fanart),
                    'db_trailer': unicode(res['result']['movies'][0]['trailer']),
-                   'db_rating': unicode(str(round(float(res['result']['movies'][0]['rating']), 1))),
-                   'db_userrating': unicode(str(res['result']['movies'][0]['userrating']))})
+                   'db_rating': round(float(res['result']['movies'][0]['rating']), 1),
+                   'db_userrating': int(_userrating)})
     return params
 
 # clear all info properties (info window) in Home Window
@@ -338,18 +341,22 @@ def refreshWidget(handle=None, notify=__enableinfo__):
 
         HOME.setProperty('PVRisReady', 'yes')
 
-        wid = xbmcgui.ListItem(label=blob['title'], label2=blob['pvrchannel'], iconImage=blob['logo'])
+        wid = xbmcgui.ListItem(label=blob['title'], label2=blob['pvrchannel'])
         wid.setInfo('video', {'title' : blob['title'], 'genre' : blob['genre'], 'plot' : blob['extrainfos'],
                               'cast' : blob['cast'].split(','), 'duration' : int(blob['runtime'])*60})
         wid.setArt({'thumb' : blob['thumb'], 'icon' : blob['logo']})
 
-        wid.setProperty('ChannelLogo', blob['logo'])
         wid.setProperty('DateTime', blob['datetime'])
         wid.setProperty('StartTime', blob['time'])
         wid.setProperty('EndTime', blob['endtime'])
         wid.setProperty('ChannelID', blob['pvrid'])
         wid.setProperty('BlobID', str(i))
         wid.setProperty('isInDB', blob['isInDB'])
+        if blob['isInDB'] == 'yes':
+            wid.setProperty('dbTitle', blob['db_title'])
+            wid.setInfo('video', {'originaltitle': blob['db_originaltitle'], 'fanart': blob['db_fanart'],
+                                  'trailer': blob['db_trailer'], 'rating': blob['db_rating'],
+                                  'userrating': blob['db_userrating']})
 
         if handle is not None: xbmcplugin.addDirectoryItem(handle=handle, url='', listitem=wid)
         widget += 1
@@ -476,7 +483,7 @@ def scrapeGTOPage(enabled=__enableinfo__):
 def showInfoWindow(blobId, showWindow=True):
     writeLog('Collect and set details to home/info screen for blob #%s' % (blobId or '<unknown>'))
 
-    if blobId is None:
+    if blobId is '' or None:
         writeLog('No ID provided', level=xbmc.LOGFATAL)
         return False
 
@@ -516,8 +523,8 @@ def showInfoWindow(blobId, showWindow=True):
         HOME.setProperty("GTO.Info.dbOriginalTitle", blob['db_originaltitle'])
         HOME.setProperty("GTO.Info.Fanart", blob['db_fanart'])
         HOME.setProperty("GTO.Info.dbTrailer", blob['db_trailer'])
-        HOME.setProperty("GTO.Info.dbRating", blob['db_rating'])
-        HOME.setProperty("GTO.Info.dbUserRating", blob['db_userrating'])
+        HOME.setProperty("GTO.Info.dbRating", str(blob['db_rating']))
+        HOME.setProperty("GTO.Info.dbUserRating", str(blob['db_userrating']))
 
     if showWindow:
         Popup = xbmcgui.WindowXMLDialog(__xml__, __path__)

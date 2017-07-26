@@ -54,23 +54,34 @@ Beispiel 'onclick' für TV Highlights Element - Öffnet Popup generiert vom Plug
         RunScript(plugin.service.gto,action=infopopup&blob=$INFO[ListItem.Property(BlobID))
     </onclick>
 
-#### ListItem Labels und Properties / ListItems and Properties:
+#### ListItem InfoLabels und Properties / ListItems InfoLabels and Properties:
 
     - ListItem.Label                  Titel der Sendung (Tatort) / Broadcast title
+    - ListItem.Title                  dto.
     - ListItem.Label2                 PVR Sender (Das Erste HD) / PVR channel name
     - ListItem.Thumb                  Screenshot aus dem Titel der Sendung /screenshot of broadcast
+    - ListItem.Icon                   Senderlogo / PVR station logo
     - ListItem.Genre                  Genre (Krimi, Komödie, Doku etc.) / genre
     - ListItem.Plot                   Beschreibung des Inhaltes der Sendung /content description of broadcast
+    - ListItem.Cast                   Darsteller / cast
+    - ListItem.Duration               Laufzeit in Minuten / Runtime in minutes
 
     - ListItem.Property(DateTime)     Startdatum und Zeit, wie in Kodi Einstellungen Datum und Zeit (ohne Sek.) / Datetime of broadcast start
     - ListItem.Property(StartTime)    Startzeit (20:15) / start time
     - ListItem.Property(EndTime)      Ende der Sendung (22:00) / end time
-    - ListItem.Property(RunTime)      Laufzeit in Minuten (105) / run time
     - ListItem.Property(ChannelID)    PVR Channel ID, wird zum Umschalten per json benötigt / Channel ID of PVR, needed for channel switch
     - ListItem.Property(BlobID)       ID der Datenblase zur Sendung ID / data blob ID of the broadcast
     - ListItem.Property(isInDB)       'yes|no' Film befindet sich in lokaler DB / movie exist in local database
 
-#### Info-Window (werden als Properties in Window(Home) gesetzt) / Info windows (resides as properties in Window(Home)):
+    if Property(isInDB) = 'yes':      Es werden zusätzliche Video-Infolabels gesetzt (additional infolabels for type 'video')
+
+    - ListItem.Originaltitle          Originaltitel aus Datenbank / original title from database
+    - ListItem.Fanart                 Fanart
+    - ListItem.Trailer                Trailer
+    - ListItem.Rating                 Rating
+    - ListItem.Userrating             User rating
+
+#### Properties für Info-Window (werden als Properties in Window(Home) gesetzt) / Properties for info window (resides as properties in Window(Home)):
 
     - GTO.provider                    Provider/Anbieter (scraper.shortname)
     - GTO.Info.Title                  Titel der Sendung / title
@@ -86,7 +97,7 @@ Beispiel 'onclick' für TV Highlights Element - Öffnet Popup generiert vom Plug
     - GTO.Info.Cast                   Darsteller / cast
     - GTO.Info.isInDB                 'yes|no' (ähnlicher) Film existiert bereits in Bibliothek / (similar) movie already exists in database
 
-    if 'yes':
+    if Property(isInDB) = 'yes':      Es werden zusätzliche Properties gesetzt (additional properties)
 
     - GTO.Info.dbTitle                Titel der Sendung aus Datenbank (DB)
     - GTO.Info.dbOriginalTitle        Originaltitel aus DB
