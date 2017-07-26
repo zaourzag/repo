@@ -554,7 +554,7 @@ def Folge(url,csrftoken,type):
     if type=="html5":
       debug("Folge  html5")
       match = re.compile('"file":"([^"]+)"', re.DOTALL).findall(content)
-      stream=match[1].replace("\\u0026","&")
+      stream=match[0].replace("\\u0026","&")
       debug("1")
       debug("stream :" + stream)
       content2=opener.open(stream).read()   
