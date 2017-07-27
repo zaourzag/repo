@@ -182,28 +182,23 @@ name = urllib.unquote_plus(params.get('name', ''))
 
 def ListRubriken(urls,text,x=0):
  debug("ListRubriken url : "+urls)
- content2 = getUrl(urls)
- content = content2[content2.find('<section class="enw-block enw-block'):]
- content = content[:content.find('<div class="base-leaderboard">')]
- urlliste = content.split('<h3 class="enw-blockTopbar__title">') 
+ content = getUrl(urls)
+ urlliste = content.split('3 class="enw-blockTopbar__title qa-section-title')      
+ print("###")
+ print( urlliste)
  anz=0
  urlold=[]
  for i in range(1, len(urlliste), 1):
-   element=urlliste[i]   
-   if "enw-btn__carouselNext" not in element:
-      name = element[:element.find('</h3>')]
-      name=artikeltext(name.strip())
-      debug("++name : "+name )
-      url=""
-      if "<" in name:
-          match = re.compile('<a href="(.+?)">(.+?)</a>', re.DOTALL).findall(name)
-          if not "http:" in match[0][0]:
-             url="http://"+language2+".euronews.com"+match[0][0]
-          else:
-             url=match[0][0]
-          name=match[0][1]
-      if "no_comment" in name:
-          name="No Comment"
+   try:
+      element=urlliste[i]  
+      print("#########")   
+      print (element)
+      match = re.compile('<a[^>]+href="(.+?)">([^<]+?)</a>', re.DOTALL).findall(element)
+      if not "http:" in match[0][0]:
+         url="http://"+language2+".euronews.com"+match[0][0]
+      else:
+         url=match[0][0]
+      name=match[0][1]      
       name=cleanTitle(name)
       if url=="":
         url=name
@@ -216,9 +211,11 @@ def ListRubriken(urls,text,x=0):
           debug(" ListRubrioken url: "+url)         
           debug(" ListRubrioken name: "+name)
           addDir(name, url, 'Rubrik', "", "",text=text) 
-        anz=anz+1
+          anz=anz+1
+   except:
+      pass
  if anz>0:
-   addDir("Artikel", urls, 'startvideos', "")
+      addDir("Artikel", urls, 'startvideos', "")
  if x>0:
         addDir("TimeLine", "", 'timeline', "")
  return anz    
@@ -240,8 +237,8 @@ def startvideos(url):
   for i in range(1, len(Artikelliste), 1):        
    try:
     element=Artikelliste[i]         
-    debug("--------------------")
-    debug(element)
+    #debug("--------------------")
+    #debug(element)
     match = re.compile('<h[0-9] class="media__body__title">(.+?)</h[0-9]>', re.DOTALL).findall(element)
     title1=artikeltext(match[0])
     debug("Title1 :"+title1)
@@ -255,7 +252,7 @@ def startvideos(url):
       else:
         urln=match[0]
     match = re.compile('src="(.+?)"', re.DOTALL).findall(element)
-    bild=match[0]
+    bild=match[0]   
     if not "http" in bild:
        continue
     debug("bild :"+bild)
@@ -329,7 +326,8 @@ def Rubriknews(urls,text="0"):
    if not text=="-1":
       addDir("Next", urls, 'Rubriknews', "", "",text=str(anz))           
 def index():  
-  ListRubriken("http://"+language2+".euronews.com","",x=1)
+  #ListRubriken("http://"+language2+".euronews.com","",x=1)
+  Rubriknews("http://"+language2+".euronews.com")
   addLink(translation(30001), "", 'playLive', "")
   addDir("Shows", "http://de.euronews.com/programme", 'Sendungen', "")
   addDir("Search", "", 'search', "")
@@ -403,10 +401,8 @@ def playVideo(url):
        title_artikel=datum + " "+ title_artikel
        match = re.compile('og:image" content="(.+?)"', re.DOTALL).findall(content)
        if match:
-         text = content[content.find('<div class="article__content" itemprop="articleBody">'):]
-         text=text.replace('<div class="article__content" itemprop="articleBody">','')
-         text = text[:text.find('<blockquote class="twitter-tweet"')]
-         text = text[:text.find('</div>')]
+         text = content[content.find('<div class="article__content js-responsive-iframes-container" itemprop="articleBody">'):]
+         text=text.replace('<div class="article__content js-responsive-iframes-container" itemprop="articleBody">','')
          text=artikeltext(text)
          bild=match[0]
          if text=="":
