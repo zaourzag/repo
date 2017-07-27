@@ -59,8 +59,8 @@ Beispiel 'onclick' für TV Highlights Element - Öffnet Popup generiert vom Plug
     - ListItem.Label                  Titel der Sendung (Tatort) / Broadcast title
     - ListItem.Title                  dto.
     - ListItem.Label2                 PVR Sender (Das Erste HD) / PVR channel name
-    - ListItem.Thumb                  Screenshot aus dem Titel der Sendung /screenshot of broadcast
-    - ListItem.Icon                   Senderlogo / PVR station logo
+    - ListItem.Art(Thumb)             Screenshot aus dem Titel der Sendung /screenshot of broadcast
+    - ListItem.Art(Logo)              Senderlogo / PVR station logo
     - ListItem.Genre                  Genre (Krimi, Komödie, Doku etc.) / genre
     - ListItem.Plot                   Beschreibung des Inhaltes der Sendung /content description of broadcast
     - ListItem.Cast                   Darsteller / cast

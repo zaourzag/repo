@@ -47,7 +47,7 @@ def getSettings():
     writeLog('Show notifications:       %s' % (__enableinfo__))
     writeLog('Prefer HD channel:        %s' % (__prefer_hd__))
     writeLog('Refresh interval content: %s secs' % (__mdelay__))
-    writeLog('Refresh interval screen:  %s secs' % (__screenrefresh__))
+    writeLog('Refresh interval widget:  %s secs' % (__screenrefresh__))
     writeLog('Refreshing ratio:         %s' % (__refreshratio__))
 
     xbmc.executebuiltin('XBMC.RunScript(plugin.service.gto,action=scrape)')

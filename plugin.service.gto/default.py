@@ -229,7 +229,7 @@ def pvrchannelid2logo(channelid, fallback):
             }
     res = json.loads(xbmc.executeJSONRPC(json.dumps(query, encoding='utf-8')))
     if 'result' in res and 'channeldetails' in res['result'] and 'thumbnail' in res['result']['channeldetails']:
-        return res['result']['channeldetails']['thumbnail']
+        return urllib.unquote_plus(res['result']['channeldetails']['thumbnail']).split('://', 1)[1][:-1]
     else:
         return fallback
 
@@ -251,57 +251,48 @@ def switchToChannel(pvrid):
 
 def isInDataBase(title):
     writeLog('Check if \'%s\' is in database' % (title))
+
+    titlepart = re.findall('[:-]', title)
     params = {'isInDB': 'no'}
-    query = {
-        "jsonrpc": "2.0",
-        "id": 1,
-        "method": "VideoLibrary.GetMovies",
-        "params": {"properties": ["title", "originaltitle", "fanart", "trailer", "rating", "userrating"],
-                   "sort": {"method": "label"},
-                   "filter": {"field": "title", "operator": "is", "value": title}}}
-    res = json.loads(xbmc.executeJSONRPC(json.dumps(query, encoding='utf-8')))
-    if not 'movies' in res['result']:
-        if len(title.split()) < 3:
-            writeLog('Word count too small for fuzzy filter')
-            return params
-        writeLog('No movie(s) with exact matches found, try more fuzzy filter')
-        query = {
-            "jsonrpc": "2.0",
-            "id": 1,
-            "method": "VideoLibrary.GetMovies",
-            "params": {"properties": ["title", "originaltitle", "fanart", "trailer", "rating", "userrating"],
+    query = {"jsonrpc": "2.0", "id": 1, "method": "VideoLibrary.GetMovies"}
+    rpcQuery = [{"params": {"properties": ["title", "originaltitle", "fanart", "trailer", "rating", "userrating"],
                        "sort": {"method": "label"},
-                       "filter": {"field": "title", "operator": "contains", "value": title}}}
+                       "filter": {"field": "title", "operator": "is", "value": title}}},
+                {"params": {"properties": ["title", "originaltitle", "fanart", "trailer", "rating", "userrating"],
+                       "sort": {"method": "label"},
+                       "filter": {"field": "title", "operator": "contains", "value": title}}},
+                {"params": {"properties": ["title", "originaltitle", "fanart", "trailer", "rating", "userrating"],
+                       "sort": {"method": "label"},
+                       "filter": {"field": "title", "operator": "contains", "value": title.replace(' - ', ': ')}}}]
+    if len(titlepart) > 0:
+        rpcQuery.append({"params": {"properties": ["title", "originaltitle", "fanart", "trailer", "rating", "userrating"],
+                       "sort": {"method": "label"},
+                       "filter": {"field": "title", "operator": "contains", "value": title.split(titlepart[0])[0].strip()}}})
+
+    for i in range(0, len(rpcQuery) + 1):
+        if i == 0:
+            writeLog('Try exact matching of search pattern')
+            query.update(rpcQuery[i])
+        elif i == 1:
+            writeLog('No movie(s) with exact pattern found, try fuzzy filters')
+            if len(title.split()) < 3:
+                writeLog('Word count to small for fuzzy filters')
+                return params
+        elif i == 2:
+            writeLog('No movie(s) with similar pattern found, replacing special chars')
+        elif i == 3:
+            writeLog('Split title into titleparts')
+            if len(titlepart) == 0:
+                writeLog('Sorry, splitting isn\'t possible')
+                return params
+            writeLog('Search for \'%s\'' % (title.split(titlepart[0])[0].strip()))
+        else:
+            writeLog('Sorry, no matches')
+            return params
+
+        query.update(rpcQuery[i])
         res = json.loads(xbmc.executeJSONRPC(json.dumps(query, encoding='utf-8')))
-        if not 'movies' in res['result']:
-            writeLog('No movie(s) with similar title found, replacing special chars')
-            query = {
-                "jsonrpc": "2.0",
-                "id": 1,
-                "method": "VideoLibrary.GetMovies",
-                "params": {"properties": ["title", "originaltitle", "fanart", "trailer", "rating", "userrating"],
-                           "sort": {"method": "label"},
-                           "filter": {"field": "title", "operator": "contains", "value": title.replace(' - ', ': ')}}}
-            res = json.loads(xbmc.executeJSONRPC(json.dumps(query, encoding='utf-8')))
-            if not 'movies' in res['result']:
-                titlepart = re.findall('[:-]', title)
-                if len(titlepart) > 0:
-                    writeLog('Search for \'%s\'' % (title.split(titlepart[0])[0].strip()))
-                    query = {
-                        "jsonrpc": "2.0",
-                        "id": 1,
-                        "method": "VideoLibrary.GetMovies",
-                        "params": {
-                            "properties": ["title", "originaltitle", "fanart", "trailer", "rating", "userrating"],
-                            "sort": {"method": "label"},
-                            "filter": {"field": "title", "operator": "contains", "value": title.split(titlepart[0])[0].strip()}}}
-                    res = json.loads(xbmc.executeJSONRPC(json.dumps(query, encoding='utf-8')))
-                else:
-                    writeLog('Sorry, no matches')
-                    return params
-                if not 'movies' in res['result']:
-                    writeLog('Sorry, no matches')
-                    return params
+        if 'movies' in res['result']: break
 
     writeLog('Found %s matches for movie(s) in database, select first' % (len(res['result']['movies'])))
     _fanart = urllib.unquote_plus(res['result']['movies'][0]['fanart']).split('://', 1)[1][:-1]
@@ -342,9 +333,9 @@ def refreshWidget(handle=None, notify=__enableinfo__):
         HOME.setProperty('PVRisReady', 'yes')
 
         wid = xbmcgui.ListItem(label=blob['title'], label2=blob['pvrchannel'])
-        wid.setInfo('video', {'title' : blob['title'], 'genre' : blob['genre'], 'plot' : blob['extrainfos'],
-                              'cast' : blob['cast'].split(','), 'duration' : int(blob['runtime'])*60})
-        wid.setArt({'thumb' : blob['thumb'], 'icon' : blob['logo']})
+        wid.setInfo('video', {'title': blob['title'], 'genre': blob['genre'], 'plot': blob['extrainfos'],
+                              'cast': blob['cast'].split(','), 'duration': int(blob['runtime'])*60})
+        wid.setArt({'thumb': blob['thumb'], 'logo': blob['logo']})
 
         wid.setProperty('DateTime', blob['datetime'])
         wid.setProperty('StartTime', blob['time'])
