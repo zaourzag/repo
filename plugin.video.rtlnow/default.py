@@ -10,10 +10,11 @@ import xbmc
 import xbmcvfs
 import urllib, urllib2, socket, cookielib, re, os, shutil,json
 import base64
+import ssl
 
 
 # Setting Variablen Des Plugins
-global debuging
+
 base_url = sys.argv[0]
 addon_handle = int(sys.argv[1])
 args = urlparse.parse_qs(sys.argv[2][1:])
@@ -21,6 +22,9 @@ addon = xbmcaddon.Addon()
 # Lade Sprach Variablen
 translation = addon.getLocalizedString
 
+
+
+    
 
 profile    = xbmc.translatePath( addon.getAddonInfo('profile') ).decode("utf-8")
 temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
@@ -36,6 +40,25 @@ def log(msg, level=xbmc.LOGNOTICE):
     addon = xbmcaddon.Addon()
     addonID = addon.getAddonInfo('id')
     xbmc.log('%s: %s' % (addonID, msg), level) 
+
+
+cert=addon.getSetting("cert")
+debug("##")
+debug(cert)
+if cert=="false":
+  try:
+      debug("#######")      
+      _create_unverified_https_context = ssl._create_unverified_context
+  except AttributeError:
+    # Legacy Python that doesn't verify HTTPS certificates by default
+      pass
+  else:
+    # Handle target environment that doesn't support HTTPS verification
+      ssl._create_default_https_context = _create_unverified_https_context
+
+
+
+
     
   
 def addLink(name, url, mode, iconimage, duration="", desc="", genre=''):

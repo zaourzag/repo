@@ -1,0 +1,3 @@
+<settings>
+     <setting label="Certifikatsprüfung" type="bool" id="cert" default="true"/>
+</settings>
