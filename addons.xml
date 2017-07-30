@@ -1589,7 +1589,7 @@ Vous pouvez regarder le sport que vous aimez, vivez et sur demande à un moment 
         <broken>Kodinerds Repo ersetzt Lost und Found</broken>
 </addon>
 
-<addon id="plugin.video.hltv" version="0.2.3" name="HLTV" provider-name="Jin">
+<addon id="plugin.video.hltv" version="0.2.4" name="HLTV" provider-name="Jin">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
     </requires>
