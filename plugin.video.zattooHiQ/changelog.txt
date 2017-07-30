@@ -1,4 +1,11 @@
-﻿==================================================
+﻿
+==================================================
+[B]ZattooHiQ v1.2.2 [/B]30.07.2017 Steffen Rolapp
+==================================================
+- Timzonen - Offset für Android angepasst
+- Timzonen - Offset in den Settings erweitert
+
+==================================================
 [B]ZattooHiQ v1.2.1 [/B]30.07.2017 Steffen Rolapp
 ==================================================
 - Datenbank wir bei Opdate automatisch aktualisiert

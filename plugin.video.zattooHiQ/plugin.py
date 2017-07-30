@@ -66,6 +66,7 @@ RECREADY = __addon__.getSetting('rec_ready')
 VERSION = __addon__.getAddonInfo('version')
 OLDVERSION = _zattooDB_.get_version(VERSION)
 
+#reload DB on Update
 print "Old Version: " + str(OLDVERSION)
 print "Version: " + str(VERSION)
 if OLDVERSION != VERSION:
@@ -73,21 +74,26 @@ if OLDVERSION != VERSION:
    _zattooDB_.reloadDB()
  
 
-
 if SWISS=="true": xbmc.executebuiltin( "Skin.SetBool(%s)" %'swiss')
 else: xbmc.executebuiltin( "Skin.Reset(%s)" %'swiss')
 
 if premiumUser: xbmc.executebuiltin( "Skin.SetBool(%s)" %'hiq')
 else: xbmc.executebuiltin( "Skin.Reset(%s)" %'hiq')
 
+# get Timezone Offset
 from tzlocal import get_localzone
 import pytz
 try:
   tz = get_localzone()
   offset=tz.utcoffset(datetime.datetime.now()).total_seconds()
   _timezone_=int(offset)
-except:
-  _timezone_ = int(__addon__.getSetting('time_offset'))*60*-60 #-time.altzone
+except:pass
+
+try:
+  offset = time.altzone
+  _timezone_ = -int(offset)
+except:pass
+
 
 
 def build_directoryContent(content, addon_handle, cache=True, root=False, con='movies'):
@@ -417,7 +423,7 @@ def watch_channel(channel_id, start, end, showID="", restart=False, showOSD=Fals
     zStart = datetime.datetime.fromtimestamp(int(start) - _timezone_ ).strftime("%Y-%m-%dT%H:%M:%SZ")  #5min zattoo skips back
     zEnd = datetime.datetime.fromtimestamp(int(end) - _timezone_ ).strftime("%Y-%m-%dT%H:%M:%SZ")
     params = {'cid': channel_id, 'stream_type': stream_type, 'start':zStart, 'end':zEnd, 'maxrate':max_bandwidth }
-
+    print "RECALL: " +str(zStart) + "  " + str(startTime) + "  " +str(_timezone_)
   channelInfo = _zattooDB_.get_channelInfo(channel_id)
 
   if restart: resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/watch/selective_recall/'+channel_id+'/'+showID, params)
@@ -694,9 +700,10 @@ class myPlayer(xbmc.Player):
         self.playing=False
     def onPlayBackStopped(self):
         self.playing=False;
+        
     def onPlayBackEnded(self):        
         self.playing=False;
-
+       
 
 class zattooGUI(xbmcgui.WindowXMLDialog):
 
@@ -1020,15 +1027,6 @@ class KeyListener(xbmcgui.WindowXMLDialog):
         key = dialog.key
         del dialog
         return key
-
-
-
-
-
-
-
-
-
 
 
 def main():
