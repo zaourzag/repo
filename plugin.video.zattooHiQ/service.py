@@ -67,9 +67,16 @@ def start():
     #re-import ZattooDB to prevent "convert_timestamp" error
     from resources.zattooDB import ZattooDB
     _zattooDB_ = ZattooDB()
-
     _zattooDB_.cleanProg(True)
+    
+    #re-import ZattooDB to prevent "convert_timestamp" error
+    from resources.zattooDB import ZattooDB
+    _zattooDB_ = ZattooDB()
     _zattooDB_.updateChannels()
+    
+    #re-import ZattooDB to prevent "convert_timestamp" error
+    from resources.zattooDB import ZattooDB
+    _zattooDB_ = ZattooDB()
     _zattooDB_.updateProgram()
 
     startTime=datetime.datetime.now()#-datetime.timedelta(minutes = 60)
@@ -102,6 +109,16 @@ def getProgNextDay():
         _zattooDB_.updateProgram(tomorrow)
 
 
+# start
+
+#delete zapi files to force new login    
+profilePath = xbmc.translatePath(__addon__.getAddonInfo('profile'))
+try:
+    os.remove(os.path.join(profilePath, 'cookie.cache'))
+    os.remove(os.path.join(profilePath, 'session.cache'))
+    os.remove(os.path.join(profilePath, 'account.cache'))
+except:
+    pass
 
 if __addon__.getSetting('dbonstart') == 'true':
 	start()

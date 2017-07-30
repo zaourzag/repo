@@ -122,7 +122,8 @@ class ZattooDB(object):
       #c.execute('CREATE TABLE playing(channel TEXT, start_date TIMESTAMP, action_time TIMESTAMP, current_stream INTEGER, streams TEXT, PRIMARY KEY (channel))')
       c.execute('CREATE TABLE showinfos(showID INTEGER, info TEXT, PRIMARY KEY (showID))')
       c.execute('CREATE TABLE playing(channel TEXT, current_stream INTEGER, streams TEXT, PRIMARY KEY (channel))')
-
+      c.execute('CREATE TABLE version(version TEXT, PRIMARY KEY (version))')
+      
       c.execute('CREATE INDEX program_list_idx ON programs(channel, start_date, end_date)')
       c.execute('CREATE INDEX start_date_idx ON programs(start_date)')
       c.execute('CREATE INDEX end_date_idx ON programs(end_date)')
@@ -313,10 +314,10 @@ class ZattooDB(object):
         if get_long_description and description_long is None:
             #description_long = self.getShowInfo(row["showID"],'description')
             info = self.getShowLongDescription(row['showID'])
-            print 'INFO  ' + str(type(info)) + ' ' + str(row['showID'])+ '  ' + str(info)
+            print 'ProgINFO  ' + str(type(info)) + ' ' + str(row['showID'])+ '  ' + str(info)
             if type(info) == dict:
-                description_long = info.get('longDesc','')
-                year = info.get('Year',' ')
+                description_long = info.get('description','')
+                year = info.get('year',' ')
                 country = info.get('country','')
                 category = info.get('category','')
         programList.append({
@@ -464,8 +465,8 @@ class ZattooDB(object):
         os.remove(os.path.join(profilePath, 'cookie.cache'))
         os.remove(os.path.join(profilePath, 'session.cache'))
         os.remove(os.path.join(profilePath, 'account.cache'))
-        #os.remove(os.path.join(profilePath, 'apicall.cache'))
-        #os.remove(os.path.join(profilePath, 'zattoo.db'))
+        os.remove(os.path.join(profilePath, 'apicall.cache'))
+
     except:
         pass
 
@@ -555,9 +556,12 @@ class ZattooDB(object):
         midnight = datetime.time(0)
         datelow = datetime.datetime.combine(d, midnight)
         print 'CleanUp  ' + str(datelow)
-        c = self.conn.cursor()
-        c.execute('SELECT * FROM programs WHERE start_date < ?', [datelow])
-        r=c.fetchall()
+        try:
+            c = self.conn.cursor()
+            c.execute('SELECT * FROM programs WHERE start_date < ?', [datelow])
+            r=c.fetchall()
+        except:
+            return
 
         if len(r)>0:
             print 'Anzahl Records  ' + str(len(r))
@@ -627,3 +631,26 @@ class ZattooDB(object):
         print str(showID)+'  '+str(restart['restart'])
         c.close()
         return restart['restart']
+
+  def get_version(self, version):
+        try:
+            c = self.conn.cursor()
+            c.execute('SELECT version FROM version')
+            row = c.fetchone()
+            version = row['version']
+            c.close
+            return version
+        except:
+            self._createTables()
+            self.set_version(version)
+            
+        
+        
+            
+  def set_version(self, version):
+    c = self.conn.cursor()
+    c.execute('DELETE FROM version')
+    c.execute('INSERT INTO version(version) VALUES(?)', [version])
+    self.conn.commit()
+    c.close()
+    

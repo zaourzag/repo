@@ -441,7 +441,7 @@ msgid "Load program information at Kodi start"
 msgstr ""
 
 msgctxt "#31023"
-msgid "Renew Database"
+msgid "Renew Database and clear Cache"
 msgstr ""
 
 msgctxt "#31022"

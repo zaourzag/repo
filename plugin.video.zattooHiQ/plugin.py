@@ -63,6 +63,15 @@ premiumUser=accountData['account']['subscriptions']!=[]
 
 DASH = __addon__.getSetting('dash')=='true'
 RECREADY = __addon__.getSetting('rec_ready')
+VERSION = __addon__.getAddonInfo('version')
+OLDVERSION = _zattooDB_.get_version(VERSION)
+
+print "Old Version: " + str(OLDVERSION)
+print "Version: " + str(VERSION)
+if OLDVERSION != VERSION:
+   _zattooDB_.set_version(VERSION)
+   _zattooDB_.reloadDB()
+ 
 
 
 if SWISS=="true": xbmc.executebuiltin( "Skin.SetBool(%s)" %'swiss')
@@ -600,7 +609,7 @@ def selectStartChannel():
  
 
 def editKeyMap():
-    cmds=['OSD', 'info', 'prevChan', 'nextChan', 'toggleChan', 'audio', 'pause', 'stop', 'record', 'Teletext', 'Preview', 'EPG', 'List']
+    cmds=['OSD', 'info', 'prevChan', 'nextChan', 'toggleChan', 'audio', 'pause', 'stop', 'record', 'Teletext', 'Preview', 'EPG', 'List', 'playercontrol']
     cmdsText=[]
     nr=0
     for cmd in cmds:
@@ -616,6 +625,7 @@ def editKeyMap():
 
 def makeZattooGUI(showOSD=False):
   if (xbmcgui.Window(10000).getProperty('zattooGUI')!="True"):
+    
     gui = zattooGUI("zattooGUI.xml", __addon__.getAddonInfo('path'))
     if showOSD: gui.act_showOSD()
     gui.doModal()
@@ -689,8 +699,11 @@ class myPlayer(xbmc.Player):
 
 
 class zattooGUI(xbmcgui.WindowXMLDialog):
+
+
   def __init__(self, xmlFile, scriptPath):
     xbmcgui.Window(10000).setProperty('zattooGUI', 'True')
+    
     self.playing= _zattooDB_.get_playing()
     self.channelID = self.playing['channel']
     channels = _zattooDB_.getChannelList(_listMode_ == 'favourites')
@@ -702,8 +715,8 @@ class zattooGUI(xbmcgui.WindowXMLDialog):
     self.addControl(self.toggleImg)
     
     self.toggleChannelID=xbmcgui.Window(10000).getProperty('toggleChannel')
-    if self.toggleChannelID!="": self.showToggleImg()
-
+    
+    
   def showToggleImg(self):
     self.toggleImgBG.setPosition(1022, 574)
     self.toggleImg.setPosition(1024, 576)
@@ -712,7 +725,8 @@ class zattooGUI(xbmcgui.WindowXMLDialog):
   def hideToggleImg(self):
     if self.toggleChannelID!="":  
       self.toggleChannelID=""
-      xbmcgui.Window(10000).setProperty('toggleChannel','')  
+      xbmcgui.Window(10000).setProperty('toggleChannel','')
+      
       self.toggleImgBG.setPosition(1280, 574)
       self.toggleImg.setPosition(1280, 576)
       if hasattr(self, 'refreshToggleImgTimer'): self.refreshToggleImgTimer.cancel()
@@ -732,13 +746,14 @@ class zattooGUI(xbmcgui.WindowXMLDialog):
 
     #ignore mousemove
     if actionID==107: return
+    
 
     #_zattooDB_=ZattooDB()
     #channel=_zattooDB_.get_playing()['channel']
     #channeltitle=_zattooDB_.get_channeltitle(channel)
-
-    #print('ZATTOOGUI BUTTON'+str(actionID.getButtonCode()))
-    #print('ZATTOOGUI ACTIONID'+str(actionID.getId()))
+    print ('Action: '+str(action))
+    print('ZATTOOGUI BUTTON'+str(key))
+    print('ZATTOOGUI ACTIONID'+str(actionID))
     #self.channelInputCtrl.setVisible(False)
 
     #user defined keys
@@ -756,8 +771,9 @@ class zattooGUI(xbmcgui.WindowXMLDialog):
     elif key==__addon__.getSetting('key_stop'): self.close()
     elif key==__addon__.getSetting('key_record'): self.act_record()
 
+
     #default actionIDs/keys
-    elif actionID in [ACTION_PARENT_DIR, KEY_NAV_BACK, ACTION_PREVIOUS_MENU, ACTION_OSD]:
+    elif actionID in [ACTION_PARENT_DIR, KEY_NAV_BACK, ACTION_PREVIOUS_MENU]:
       self.close()
       xbmc.executebuiltin("Action(Back)")
     elif actionID  == ACTION_STOP:
@@ -773,13 +789,10 @@ class zattooGUI(xbmcgui.WindowXMLDialog):
     elif actionID == ACTION_RECORD: self.act_record()
     elif (actionID>57 and actionID<68):self.act_numbers(actionID)
     elif actionID == ACTION_BUILT_IN_FUNCTION:self.close() #keymap functions
-    '''
-    else:
-      win = xbmcgui.Window(12005)
-      ret=win.onAction(action)
-      xbmc.executebuiltin("Action(Info,12005)")
-    '''
-
+      
+    
+  
+    
   def act_showOSD(self):
     self.hideToggleImg()
       
@@ -1113,8 +1126,7 @@ def main():
   elif action == 'cleanProg':
     _zattooDB_.cleanProg()
   elif action == 'popular': showPreview('popular')
-
-
+ 
 
   '''
   elif action == 'showInfo':
@@ -1123,5 +1135,6 @@ def main():
     info.doModal()
     del info
   '''
+
 
 main()

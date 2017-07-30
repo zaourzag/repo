@@ -52,6 +52,7 @@
         <setting label="32020" id="key_Preview" type="text" default="" enable="false" visible="gt(0,)"/>
         <setting label="32021" id="key_EPG" type="text" default="" enable="false" visible="gt(0,)"/>
         <setting label="32022" id="key_List" type="text" default="" enable="false" visible="gt(0,)"/>
+
     </category>
 
 
