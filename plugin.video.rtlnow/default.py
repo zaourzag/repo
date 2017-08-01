@@ -22,7 +22,7 @@ addon = xbmcaddon.Addon()
 # Lade Sprach Variablen
 translation = addon.getLocalizedString
 cj = cookielib.LWPCookieJar();
-
+xbmcplugin.setContent(addon_handle, 'tvshows')  
 
     
 
@@ -175,11 +175,21 @@ def rubrik(name) :
     for kapitel in kapitelliste["formatTabs"]["items"]:
       debug(kapitel)       
       idd=kapitel["id"]
-      name=kapitel["headline"]
-      menu.append(addDir(name , url=str(idd), mode="staffel", iconimage="",duration="",desc=""))        
+      name=kapitel["headline"]      
+      urlx="http://api.tvnow.de/v3/formatlists/"+str(idd)+"?maxPerPage=9&fields=formatTabPages.container.movies.free&page=1"      
+      content2 = cache.cacheFunction(getUrl,urlx)    
+      if '"free":true' in content2:
+      #      debug(staffelinfo)
+          menu.append(addDir(name , url=str(idd), mode="staffel", iconimage="",duration="",desc=""))        
   xbmcplugin.addDirectoryItems(addon_handle,menu)
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
-  
+def get_sec(time_str):
+    h, m, s = time_str.split(':')
+    return int(h) * 3600 + int(m) * 60 + int(s)
+def get_min(time_str):
+    h, m, s = time_str.split(':')
+    return int(h) * 3600 + int(m) * 60 + int(s) /60
+        
 def staffel(idd) :    
   menu=[]
   xy=[]
@@ -209,14 +219,25 @@ def staffel(idd) :
           idd=folge["id"]
           bild="https://ais.tvnow.de/tvnow/movie/"+str(idd)+"/600x600/title.jpg"
           stream=folge["manifest"]["dashclear"]
-          laenge=folge["duration"]
+          laenge=get_sec(folge["duration"])          
+          laengemin=get_min(folge["duration"])          
           staffel=str(folge["season"])
-          folgenr=str(folge["episode"])                           
+          folgenr=str(folge["episode"]) 
+          plot=folge["articleLong"].encode('utf-8')  
+          plotshort=folge["articleShort"].encode('utf-8')  
+          startdate=folge["broadcastStartDate"]  .encode('utf-8')   
+          tagline=folge["teaserText"]  .encode('utf-8')   
+          type=folge["format"]["categoryId"]
+          ftype="episode"
+          if type=="serie":
+            ftype="episode"
           zusatz=""
           if int(folgenr)>0:
-             zusatz=" S"+staffel+"E"+folgenr
+             zusatz=" ("+startdate+ " )"
           listitem = xbmcgui.ListItem(path=stream,label=name+zusatz,iconImage=bild,thumbnailImage=bild)
-          listitem.addStreamInfo('video', {'duration': laenge})
+          listitem.setProperty('IsPlayable', 'true')
+          listitem.addStreamInfo('video', {'duration': laenge,'plot' : plot,'plotoutline' : plotshort,'tagline':tagline,'mediatype':ftype })
+          listitem.setInfo(type="Video", infoLabels={'duration': laenge,"Title": name, "Plot": plot,'plotoutline': plotshort,'tagline':tagline,'mediatype':ftype ,"episode": folgenr, "season":staffel})          
           listitem.setProperty(u'IsPlayable', u'true')
           #listitem.setInfo(type='video')
           listitem.setProperty('inputstreamaddon', 'inputstream.adaptive')
