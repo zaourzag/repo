@@ -58,10 +58,11 @@ if cert=="false":
       ssl._create_default_https_context = _create_unverified_https_context
 
 
-
-import StorageServer
-cache = StorageServer.StorageServer("plugin.video.rtlnow", 12) # (Your plugin name, Cache time in hours
-    
+try:
+   import StorageServer
+ except:
+   import storageserverdummy as StorageServer
+ cache = StorageServer.StorageServer("plugin.video.rtlnow", 12) # (Your plugin name, Cache time in hours
 
      
 def addLink(name, url, mode, iconimage, duration="", desc="", genre=''):
@@ -281,18 +282,20 @@ def  login():
       addon.setSetting("freeonly", "true")
       return 0
   debug(content)
+def clearcache():
+
 def index():
     debug("START")    
     menu=[]
     debug("New MENU")
-    login()
+    ret=login()
     content = cache.cacheFunction(getUrl,"https://api.tvnow.de/v3/settings")      
     settings = json.loads(content)
     aliases=settings["settings"]["nowtv"]["production"]["stations"]["aliases"]    
     for name,value in aliases.items():
       if not name=="toggoplus" :
           menu.append(addDir(value , url=name, mode="serien", iconimage="",duration="",desc=""))   
-    menu.append(addDir("Settings", "", 'Settings', ""))        
+    menu.append(addDir("Settings", "", 'Settings', ""))    
     xbmcplugin.addDirectoryItems(addon_handle,menu)
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)    
     
