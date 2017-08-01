@@ -1,3 +1,6 @@
+2.0.18
+- add record capabilities
+
 2.0.14
 - Some more properties, e.g. search titles in local database and flag the result
 

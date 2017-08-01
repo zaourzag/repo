@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<addon id="plugin.service.gto" name="German Telecast Offers" version="2.0.18" provider-name="Birger Jesch">
+<addon id="plugin.service.gto" name="German Telecast Offers" version="2.0.20" provider-name="Birger Jesch">
     <requires>
         <import addon="xbmc.python" version="2.20.0"/>
+        <import addon="script.module.dateutil" version="2.5.3"/>
     </requires>
     <extension point="xbmc.python.script" library="default.py" />
     <extension point="xbmc.service" library="starter.py" start="startup">

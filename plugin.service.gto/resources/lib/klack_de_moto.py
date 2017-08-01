@@ -27,11 +27,11 @@ class Scraper():
 
         # Properties
 
-        self.enabled = True
+        self.enabled = False
         self.baseurl = 'http://www.klack.de'
-        self.rssurl = 'http://www.klack.de/xml/tippsRSS.xml'
-        self.friendlyname = 'klack.de - TV Highlights'
-        self.shortname = 'klack.de'
+        self.rssurl = 'http://www.klack.de/xml/motorsportRSS.xml'
+        self.friendlyname = 'klack.de - Motorsport'
+        self.shortname = 'klack.de - Motorsport'
         self.icon = 'klack.png'
         self.selector = '<item>'
         self.detailselector = '<table id="content">'

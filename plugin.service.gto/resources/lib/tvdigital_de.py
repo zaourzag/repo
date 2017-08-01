@@ -2,7 +2,10 @@
 
 import re
 import urllib2
+import datetime
+from dateutil import parser
 
+RSS_TIME_FORMAT = '%Y-%m-%d %H:%M:%S'
 
 class Scraper():
     def __init__(self):
@@ -13,14 +16,13 @@ class Scraper():
         self.title = ''
         self.thumb = False
         self.detailURL = ''
-        self.starttime = '00:00'
+        self.startdate = ''
+        self.enddate = ''
         self.runtime = '0'
         self.genre = ''
-        self.extrainfos = ''
+        self.plot = ''
         self.cast = ''
         self.rating = ''
-
-        self.endtime = '00:00'
 
         # Properties
 
@@ -57,8 +59,8 @@ class Scraper():
             pass
 
         try:
-            self.date = re.compile('<title>(.+?)</title>', re.DOTALL).findall(content)[0].split(' | ')[1].split()[1]
-            self.starttime = re.compile('<title>(.+?)</title>', re.DOTALL).findall(content)[0].split(' | ')[1].split()[2]
+            _ts = re.compile('<title>(.+?)</title>', re.DOTALL).findall(content)[0].split(' | ')[1].split(' ', 1)[1]
+            self.startdate = datetime.datetime.strftime(parser.parse(_ts), RSS_TIME_FORMAT)
         except IndexError:
             pass
 
@@ -72,8 +74,8 @@ class Scraper():
                 content = container[0]
 
                 try:
-                    self.extrainfos = re.compile('<h2 class="title">Beschreibung</h2>(.+?)</div>', re.DOTALL).findall(content)[0]
-                    self.extrainfos = re.compile('<p>(.+?)</p>', re.DOTALL).findall(self.extrainfos)[0]
+                    self.plot = re.compile('<h2 class="title">Beschreibung</h2>(.+?)</div>', re.DOTALL).findall(content)[0]
+                    self.plot = re.compile('<p>(.+?)</p>', re.DOTALL).findall(self.plot)[0]
                     self.genre = re.compile('<div class="genre">(.+?)</div>', re.DOTALL).findall(content)[0].split(' / ')[0]
                 except IndexError:
                     pass
@@ -94,11 +96,19 @@ class Scraper():
 
                 self.thumb = self.checkResource(self.thumb, self.err404)
 
+
                 # Broadcast Info (stop)
+
+                _start = parser.parse(self.startdate)
                 try:
-                    self.endtime = re.compile('<div class="broadcast-time">(.+?)</div>', re.DOTALL).findall(content)[0].split(' - ')[1]
+                    _s = re.compile('<div class="broadcast-time">(.+?)</div>', re.DOTALL).findall(content)[0].split(' - ')[1]
+                    _stop = _start.replace(hour=int(_s[0:2]), minute=int(_s[3:5]))
                 except IndexError:
-                    pass
+                    _stop = _start
+
+                if _start > _stop: _stop += datetime.timedelta(days=1)
+                self.enddate = datetime.datetime.strftime(_stop, RSS_TIME_FORMAT)
+                self.runtime = str((_stop - _start).seconds / 60)
 
                 # Rating
                 try:
