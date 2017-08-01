@@ -151,13 +151,14 @@ def serien(name,page=1):
     title=serieelement["title"].encode('utf-8')
     debug(title)
     seoUrl=serieelement["seoUrl"]
-    if serieelement["hasFreeEpisodes"]==True or freeonly=="false" :
+    if (serieelement["hasFreeEpisodes"]==True or freeonly=="false") :
       menu.append(addDir(title , url=str(seoUrl), mode="rubrik", iconimage="",duration="",desc=""))
   xbmcplugin.addDirectoryItems(addon_handle,menu)
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)    
 
 def rubrik(name) :
   menu=[]
+  freeonly=addon.getSetting("freeonly")
   debug("Rubrik New Menu")
   #xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)   
   xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_NONE)
@@ -168,18 +169,27 @@ def rubrik(name) :
   url=basurl+div+endeurl
   debug(url)
   content = cache.cacheFunction(getUrl,url)      
-  kapitelliste = json.loads(content)    
-  if (kapitelliste["formatTabs"]["total"]==1):
-    idd=kapitelliste["formatTabs"]["items"][0]["id"]   
+  kapitelliste = json.loads(content)   
+  try:
+    serienanzahl=kapitelliste["formatTabs"]["total"]  
+    debug("serienanzahl gefunden :"+ str(serienanzahl))
+  except:
+    serienanzahl=1
+   
+  if (serienanzahl==1):
+    try:
+      idd=kapitelliste["formatTabs"]["items"][0]["id"]   
+    except:
+      idd=kapitelliste["id"]
     staffel(str(idd))
   else:
     for kapitel in kapitelliste["formatTabs"]["items"]:
       debug(kapitel)       
       idd=kapitel["id"]
       name=kapitel["headline"]      
-      urlx="http://api.tvnow.de/v3/formatlists/"+str(idd)+"?maxPerPage=9&fields=formatTabPages.container.movies.free&page=1"      
+      urlx="http://api.tvnow.de/v3/formatlists/"+str(idd)+"?maxPerPage=9&fields=formatTabPages.container.movies.free,formatTabPages.container.movies.isDrm&page=1"      
       content2 = cache.cacheFunction(getUrl,urlx)    
-      if '"free":true' in content2:
+      if ('"free":true' in content2 or freeonly=="false") and '"isDrm":false' in content2 :
       #      debug(staffelinfo)
           menu.append(addDir(name , url=str(idd), mode="staffel", iconimage="",duration="",desc=""))        
   xbmcplugin.addDirectoryItems(addon_handle,menu)
@@ -200,18 +210,32 @@ def staffel(idd) :
   #http://api.tvnow.de/v3/formatlists/41018?maxPerPage=9&fields=*,formatTabPages.*,formatTabPages.container.*,formatTabPages.container.movies.*,formatTabPages.container.movies.format.*,formatTabPages.container.movies.paymentPaytypes.*,formatTabPages.container.movies.pictures&page=1http://api.tvnow.de/v3/formatlists/41016?maxPerPage=9&fields=*,formatTabPages.*,formatTabPages.container.*,formatTabPages.container.movies.*,formatTabPages.container.movies.format.*,formatTabPages.container.movies.paymentPaytypes.*,formatTabPages.container.movies.pictures&page=1
   url="http://api.tvnow.de/v3/formatlists/"+idd+"?maxPerPage=9&fields=*,formatTabPages.*,formatTabPages.container.*,formatTabPages.container.movies.*,formatTabPages.container.movies.format.*,formatTabPages.container.movies.paymentPaytypes.*,formatTabPages.container.movies.pictures&page=1http://api.tvnow.de/v3/formatlists/41016?maxPerPage=9&fields=*,formatTabPages.*,formatTabPages.container.*,formatTabPages.container.movies.*,formatTabPages.container.movies.format.*,formatTabPages.container.movies.paymentPaytypes.*,formatTabPages.container.movies.pictures&page=1"
   debug("staffel :"+url)
-  content = cache.cacheFunction(getUrl,url) 
-  folgen = json.loads(content)
-  liste=folgen["formatTabPages"]["items"]
+  try:
+     content = cache.cacheFunction(getUrl,url)
+     folgen = json.loads(content)
+     li=folgen["formatTabPages"]     
+  except:  
+    url='http://api.tvnow.de/v3/movies?filter={%22FormatId%22:'+idd+'}&fields=*,format,paymentPaytypes,pictures,trailers&maxPerPage=5000&order=BroadcastStartDate%20desc2B'+idd+'}%26fields%3D*%2Cformat%2CpaymentPaytypes%2Cpictures%2Ctrailers%26maxPerPage%3D50%26order%3DBroadcastStartDate%2Bdesc'
+    debug("NEWURL :"+url)
+    content = cache.cacheFunction(getUrl,url) 
+    li = json.loads(content)
+  
+  liste=li["items"]
   debug(liste)
   menu=[]
-  for element in liste:
+  for element in liste:      
+      debug("###")
+      debug(element)      
       try:
+        if element["container"]["movies"]==None:
+          continue
         elemente2=element["container"]["movies"]["items"]
-      except:
-        continue              
-      for folge in elemente2:          
+        debug("ELEMENT2")
+      except:        
+        elemente2=[element]
+      for folge in elemente2:         
         debug("++")
+        debug(folge)
         debug(folge["free"])
         debug(folge["isDrm"])
         freeonly=addon.getSetting("freeonly")
@@ -227,15 +251,16 @@ def staffel(idd) :
           folgenr=str(folge["episode"]) 
           plot=folge["articleLong"].encode('utf-8')  
           plotshort=folge["articleShort"].encode('utf-8')  
-          startdate=folge["broadcastStartDate"]  .encode('utf-8')   
-          tagline=folge["teaserText"]  .encode('utf-8')   
-          type=folge["format"]["categoryId"]
+          startdate=folge["broadcastStartDate"]  .encode('utf-8')    
+          tagline=folge["teaserText"]  .encode('utf-8') 
+          try:          
+            type=folge["format"]["categoryId"]
+          except:
+            type=""
           ftype="episode"
           if type=="serie":
             ftype="episode"
-          zusatz=""
-          if int(folgenr)>0:
-             zusatz=" ("+startdate+ " )"
+          zusatz=" ("+startdate+ " )"
           listitem = xbmcgui.ListItem(path=stream,label=name+zusatz,iconImage=bild,thumbnailImage=bild)
           listitem.setProperty('IsPlayable', 'true')
           listitem.addStreamInfo('video', {'duration': laenge,'plot' : plot,'plotoutline' : plotshort,'tagline':tagline,'mediatype':ftype })
