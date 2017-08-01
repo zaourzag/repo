@@ -259,8 +259,8 @@ def  login():
      addon.setSetting("freeonly", "true")
      return 0
   url="https://api.tvnow.de/v3/backend/login"
-  values = {'password' : "test1t",
-        'email' : "andreas@vogler.name",        
+  values = {'password' : password,
+        'email' : username,        
     }
   data = urllib.urlencode(values)
   debug("######")
