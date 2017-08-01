@@ -1,3 +1,6 @@
 <settings>
      <setting label="Certifikatsprüfung" type="bool" id="cert" default="true"/>
+     <setting id="user" type="text" label="Email" default=""/>
+     <setting id="pass" type="text" label="Password" default=""/>
+     <setting id="freeonly" type="bool" label="Nur Freie Anzeigen" default="false" visible="false"/>
 </settings>

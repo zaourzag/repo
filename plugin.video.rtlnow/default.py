@@ -21,13 +21,14 @@ args = urlparse.parse_qs(sys.argv[2][1:])
 addon = xbmcaddon.Addon()
 # Lade Sprach Variablen
 translation = addon.getLocalizedString
-
+cj = cookielib.LWPCookieJar();
 
 
     
 
 profile    = xbmc.translatePath( addon.getAddonInfo('profile') ).decode("utf-8")
 temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
+
 
 
 def debug(content):
@@ -58,21 +59,24 @@ if cert=="false":
 
 
 
-
+import StorageServer
+cache = StorageServer.StorageServer("plugin.video.rtlnow", 12) # (Your plugin name, Cache time in hours
     
-  
+
+     
 def addLink(name, url, mode, iconimage, duration="", desc="", genre=''):
-	u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
-	ok = True
-	liz = xbmcgui.ListItem(name, iconImage="", thumbnailImage=iconimage)
-	liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Genre": genre})
-	liz.setProperty('IsPlayable', 'true')
-	liz.addStreamInfo('video', { 'duration' : duration })
-	liz.setProperty("fanart_image", iconimage)
+  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
+  ok = True
+  liz = xbmcgui.ListItem(name, iconImage="", thumbnailImage=iconimage)
+  liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Genre": genre})
+  liz.setProperty('IsPlayable', 'true')
+  liz.addStreamInfo('video', { 'duration' : duration })
+  liz.setProperty("fanart_image", iconimage)
 	#liz.setProperty("fanart_image", defaultBackground)
-	xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
-	ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
-	return ok
+  xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
+  return u,liz,True
+	#ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
+	#return ok
   
 def getUrl(url,data="x",header=""):
         global cj
@@ -96,20 +100,7 @@ def getUrl(url,data="x",header=""):
              debug("Error : " +cc)
 
         opener.close()
-        return content
-
-
-        
-
-def playlive(url):
-    playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
-    playlist.clear()    
-    listitem = xbmcgui.ListItem("Teil1", thumbnailImage="")        
-    playlist.add("http://discintlhdflash-f.akamaihd.net/byocdn/media/1659832546/1659832546_1331791774001_swamploggers-310-1.mp4", listitem)                    
-    listitem = xbmcgui.ListItem("Teil2", thumbnailImage="")    
-    playlist.add("http://discintlhdflash-f.akamaihd.net/byocdn/media/1659832546/1659832546_1331791774001_swamploggers-310-2.mp4", listitem)                         
-    xbmc.Player().play(playlist)
-  
+        return content    
 
 def parameters_string_to_dict(parameters):
 	paramDict = {}
@@ -128,18 +119,10 @@ def addDir(name, url, mode, iconimage, desc="", duration=""):
     liz.setArt({ 'fanart': iconimage })
     liz.setArt({ 'thumb': iconimage })
     liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Duration": duration})
-    ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
-    return ok   
+    #ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
+    return u,liz,True
 
-def getUrl(url, cookie=None):
-    req = urllib2.Request(url)
-    req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; rv:25.0) Gecko/20100101 Firefox/25.0')
-    if cookie != None:
-        req.add_header('Cookie', cookie)
-    response = urllib2.urlopen(req)
-    link = response.read()
-    response.close()
-    return link
+
 
        
 params = parameters_string_to_dict(sys.argv[2])
@@ -151,24 +134,31 @@ hideShowName = urllib.unquote_plus(params.get('hideshowname', '')) == 'True'
 nextPage = urllib.unquote_plus(params.get('nextpage', '')) == 'True'
 einsLike = urllib.unquote_plus(params.get('einslike', '')) == 'True'    
 def serien(name,page=1):
- xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
- xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_LABEL)
- starturl='http://api.tvnow.de/v3/formats?filter='
- filter=urllib.quote_plus('{"Disabled": "0", "Station":"' + name +'"}')
- url=starturl+filter+'&fields=title,station,title,titleGroup,seoUrl,categoryId,*&maxPerPage=5000&page='+str(page)
- debug(url)
- content=getUrl(url)
- serienliste = json.loads(content)
- for serieelement in serienliste["items"]:
-  title=serieelement["title"].encode('utf-8')
-  debug(title)
-  seoUrl=serieelement["seoUrl"]
-  if serieelement["hasFreeEpisodes"]==True:
-    addDir(title , url=str(seoUrl), mode="rubrik", iconimage="",duration="",desc="")   
- xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)    
+  xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
+  xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_LABEL)
+  menu=[]
+  debug("Serien New Menu")
+  starturl='http://api.tvnow.de/v3/formats?filter='
+  filter=urllib.quote_plus('{"Disabled": "0", "Station":"' + name +'"}')
+  url=starturl+filter+'&fields=title,station,title,titleGroup,seoUrl,categoryId,*&maxPerPage=5000&page='+str(page)
+  debug(url)  
+  content = cache.cacheFunction(getUrl,url) 
+  serienliste = json.loads(content)
+  freeonly=addon.getSetting("freeonly") 
+  items=[]
+  for serieelement in serienliste["items"]:
+    title=serieelement["title"].encode('utf-8')
+    debug(title)
+    seoUrl=serieelement["seoUrl"]
+    if serieelement["hasFreeEpisodes"]==True or freeonly=="false" :
+      menu.append(addDir(title , url=str(seoUrl), mode="rubrik", iconimage="",duration="",desc=""))
+  xbmcplugin.addDirectoryItems(addon_handle,menu)
+  xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)    
 
 def rubrik(name) :
-  #xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
+  menu=[]
+  debug("Rubrik New Menu")
+  #xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)   
   xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_NONE)
   #http://api.tvnow.de/v3/formats/seo?fields=*,.*,formatTabs.*,formatTabs.headline&name=chicago-fire
   basurl="http://api.tvnow.de/v3/formats/seo?fields="
@@ -176,78 +166,118 @@ def rubrik(name) :
   endeurl="&name="+name
   url=basurl+div+endeurl
   debug(url)
-  content=getUrl(url)
-  kapitelliste = json.loads(content)
+  content = cache.cacheFunction(getUrl,url)      
+  kapitelliste = json.loads(content)    
   if (kapitelliste["formatTabs"]["total"]==1):
-     idd=kapitelliste["formatTabs"]["items"][0]["id"]   
-     staffel(str(idd))
+    idd=kapitelliste["formatTabs"]["items"][0]["id"]   
+    staffel(str(idd))
   else:
     for kapitel in kapitelliste["formatTabs"]["items"]:
-      debug(kapitel)
+      debug(kapitel)       
       idd=kapitel["id"]
       name=kapitel["headline"]
-      addDir(name , url=str(idd), mode="staffel", iconimage="",duration="",desc="")
-    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
+      menu.append(addDir(name , url=str(idd), mode="staffel", iconimage="",duration="",desc=""))        
+  xbmcplugin.addDirectoryItems(addon_handle,menu)
+  xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
   
 def staffel(idd) :    
-   #http://api.tvnow.de/v3/formatlists/41018?maxPerPage=9&fields=*,formatTabPages.*,formatTabPages.container.*,formatTabPages.container.movies.*,formatTabPages.container.movies.format.*,formatTabPages.container.movies.paymentPaytypes.*,formatTabPages.container.movies.pictures&page=1http://api.tvnow.de/v3/formatlists/41016?maxPerPage=9&fields=*,formatTabPages.*,formatTabPages.container.*,formatTabPages.container.movies.*,formatTabPages.container.movies.format.*,formatTabPages.container.movies.paymentPaytypes.*,formatTabPages.container.movies.pictures&page=1
-       url="http://api.tvnow.de/v3/formatlists/"+idd+"?maxPerPage=9&fields=*,formatTabPages.*,formatTabPages.container.*,formatTabPages.container.movies.*,formatTabPages.container.movies.format.*,formatTabPages.container.movies.paymentPaytypes.*,formatTabPages.container.movies.pictures&page=1http://api.tvnow.de/v3/formatlists/41016?maxPerPage=9&fields=*,formatTabPages.*,formatTabPages.container.*,formatTabPages.container.movies.*,formatTabPages.container.movies.format.*,formatTabPages.container.movies.paymentPaytypes.*,formatTabPages.container.movies.pictures&page=1"
-       debug("staffel :"+url)
-       content=getUrl(url)
-       folgen = json.loads(content)
-       liste=folgen["formatTabPages"]["items"]
-       debug(liste)
-       for element in liste:
-          try:
-             elemente2=element["container"]["movies"]["items"]
-          except:
-              continue              
-          for folge in elemente2:          
-            debug("++")
-            debug(folge["free"])
-            debug(folge["isDrm"])
-            if folge["isDrm"]==False and folge["free"]==True:
-              debug("--")
-              name=folge["title"].encode('utf-8')          
-              idd=folge["id"]
-              bild="https://ais.tvnow.de/tvnow/movie/"+str(idd)+"/600x600/title.jpg"
-              stream=folge["manifest"]["dashclear"]
-              laenge=folge["duration"]
-              staffel=str(folge["season"])
-              folgenr=str(folge["episode"])                           
-              zusatz=""
-              if int(folgenr)>0:
-                 zusatz=" S"+staffel+"E"+folgenr
-              listitem = xbmcgui.ListItem(path=stream,label=name+zusatz,iconImage=bild,thumbnailImage=bild)
-              listitem.addStreamInfo('video', {'duration': laenge})
-              listitem.setProperty(u'IsPlayable', u'true')
-              #listitem.setInfo(type='video')
-              listitem.setProperty('inputstreamaddon', 'inputstream.adaptive')
-              listitem.setProperty('inputstream.adaptive.manifest_type', 'mpd')
-              ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=stream, listitem=listitem)
-              #addLink(name, stream, "playvideo", bild) 
-       xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
+  menu=[]
+  xy=[]
+  global cache
+  debug("Lade staffel neu")
+  #http://api.tvnow.de/v3/formatlists/41018?maxPerPage=9&fields=*,formatTabPages.*,formatTabPages.container.*,formatTabPages.container.movies.*,formatTabPages.container.movies.format.*,formatTabPages.container.movies.paymentPaytypes.*,formatTabPages.container.movies.pictures&page=1http://api.tvnow.de/v3/formatlists/41016?maxPerPage=9&fields=*,formatTabPages.*,formatTabPages.container.*,formatTabPages.container.movies.*,formatTabPages.container.movies.format.*,formatTabPages.container.movies.paymentPaytypes.*,formatTabPages.container.movies.pictures&page=1
+  url="http://api.tvnow.de/v3/formatlists/"+idd+"?maxPerPage=9&fields=*,formatTabPages.*,formatTabPages.container.*,formatTabPages.container.movies.*,formatTabPages.container.movies.format.*,formatTabPages.container.movies.paymentPaytypes.*,formatTabPages.container.movies.pictures&page=1http://api.tvnow.de/v3/formatlists/41016?maxPerPage=9&fields=*,formatTabPages.*,formatTabPages.container.*,formatTabPages.container.movies.*,formatTabPages.container.movies.format.*,formatTabPages.container.movies.paymentPaytypes.*,formatTabPages.container.movies.pictures&page=1"
+  debug("staffel :"+url)
+  content = cache.cacheFunction(getUrl,url) 
+  folgen = json.loads(content)
+  liste=folgen["formatTabPages"]["items"]
+  debug(liste)
+  menu=[]
+  for element in liste:
+      try:
+        elemente2=element["container"]["movies"]["items"]
+      except:
+        continue              
+      for folge in elemente2:          
+        debug("++")
+        debug(folge["free"])
+        debug(folge["isDrm"])
+        freeonly=addon.getSetting("freeonly")
+        if folge["isDrm"]==False and folge["free"]==True or freeonly=="false":
+          debug("--")
+          name=folge["title"].encode('utf-8')          
+          idd=folge["id"]
+          bild="https://ais.tvnow.de/tvnow/movie/"+str(idd)+"/600x600/title.jpg"
+          stream=folge["manifest"]["dashclear"]
+          laenge=folge["duration"]
+          staffel=str(folge["season"])
+          folgenr=str(folge["episode"])                           
+          zusatz=""
+          if int(folgenr)>0:
+             zusatz=" S"+staffel+"E"+folgenr
+          listitem = xbmcgui.ListItem(path=stream,label=name+zusatz,iconImage=bild,thumbnailImage=bild)
+          listitem.addStreamInfo('video', {'duration': laenge})
+          listitem.setProperty(u'IsPlayable', u'true')
+          #listitem.setInfo(type='video')
+          listitem.setProperty('inputstreamaddon', 'inputstream.adaptive')
+          listitem.setProperty('inputstream.adaptive.manifest_type', 'mpd')
+          xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=stream, listitem=listitem)
+          #addLink(name, stream, "playvideo", bild)          
+          xbmcplugin.addDirectoryItems(addon_handle,menu)              
+  xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 
-def playvideo(url):
-   debug("#######")
-   debug("playvideo :"+ url)
-   listitem = xbmcgui.ListItem(url)  
-   listitem.setProperty(u'IsPlayable', u'true')
-   listitem.setProperty('inputstreamaddon', 'inputstream.adaptive')
-   listitem.setProperty('inputstream.adaptive.manifest_type', 'mpd')
-   
-   xbmcplugin.setResolvedUrl(addon_handle, True, listitem)
+
        
-   
-# Haupt Menu Anzeigen      
-if mode is '':  
-    content=getUrl("https://api.tvnow.de/v3/settings")
+def  login():
+  debug("Start login")
+  username=addon.getSetting("user")
+  password=addon.getSetting("pass")
+  if username=="" and password=="":
+     debug("Kein Password")
+     addon.setSetting("freeonly", "true")
+     return 0
+  url="https://api.tvnow.de/v3/backend/login"
+  values = {'password' : "test1t",
+        'email' : "andreas@vogler.name",        
+    }
+  data = urllib.urlencode(values)
+  debug("######")
+  debug(data)
+  try:
+    content = getUrl(url,data=data)         
+    userdata = json.loads(content)
+    debug(userdata)
+    if userdata["subscriptionState"]==5:      
+      debug("Login ok")
+      addon.setSetting("freeonly", "false")
+      return 1
+    else :
+      debug("Login No Subscription")
+      addon.setSetting("freeonly", "true")
+      return 0
+  except:
+      debug("Wrong Login")
+      addon.setSetting("freeonly", "true")
+      return 0
+  debug(content)
+def index():
+    debug("START")    
+    menu=[]
+    debug("New MENU")
+    login()
+    content = cache.cacheFunction(getUrl,"https://api.tvnow.de/v3/settings")      
     settings = json.loads(content)
     aliases=settings["settings"]["nowtv"]["production"]["stations"]["aliases"]    
     for name,value in aliases.items():
-       if not name=="toggoplus" :
-          addDir(value , url=name, mode="serien", iconimage="",duration="",desc="")         
-    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
+      if not name=="toggoplus" :
+          menu.append(addDir(value , url=name, mode="serien", iconimage="",duration="",desc=""))   
+    menu.append(addDir("Settings", "", 'Settings', ""))        
+    xbmcplugin.addDirectoryItems(addon_handle,menu)
+    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)    
+    
+# Haupt Menu Anzeigen      
+if mode is '':     
+    index()    
 else:  
   if mode == 'serien':
           serien(url)     
@@ -257,3 +287,5 @@ else:
           staffel(url)             
   if mode == 'playvideo':
           playvideo(url) 
+  if mode == 'Settings':
+          addon.openSettings()          
