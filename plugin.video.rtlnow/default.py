@@ -60,9 +60,9 @@ if cert=="false":
 
 try:
    import StorageServer
- except:
+except:
    import storageserverdummy as StorageServer
- cache = StorageServer.StorageServer("plugin.video.rtlnow", 12) # (Your plugin name, Cache time in hours
+cache = StorageServer.StorageServer("plugin.video.rtlnow", 12) # (Your plugin name, Cache time in hours
 
      
 def addLink(name, url, mode, iconimage, duration="", desc="", genre=''):
@@ -282,7 +282,6 @@ def  login():
       addon.setSetting("freeonly", "true")
       return 0
   debug(content)
-def clearcache():
 
 def index():
     debug("START")    
