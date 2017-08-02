@@ -62,7 +62,9 @@ try:
    import StorageServer
 except:
    import storageserverdummy as StorageServer
-cache = StorageServer.StorageServer("plugin.video.rtlnow", 12) # (Your plugin name, Cache time in hours
+
+cachezeit=addon.getSetting("cachetime")   
+cache = StorageServer.StorageServer("plugin.video.rtlnow", cachezeit) # (Your plugin name, Cache time in hours
 
      
 def addLink(name, url, mode, iconimage, duration="", desc="", genre=''):
@@ -151,8 +153,10 @@ def serien(name,page=1):
     title=serieelement["title"].encode('utf-8')
     debug(title)
     seoUrl=serieelement["seoUrl"]
+    logo=serieelement["defaultLogo"]
+    desc=serieelement["infoTextLong"]
     if (serieelement["hasFreeEpisodes"]==True or freeonly=="false") :
-      menu.append(addDir(title , url=str(seoUrl), mode="rubrik", iconimage="",duration="",desc=""))
+      menu.append(addDir(title , url=str(seoUrl), mode="rubrik", iconimage=logo,duration="",desc=desc))
   xbmcplugin.addDirectoryItems(addon_handle,menu)
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)    
 
@@ -320,9 +324,13 @@ def index():
     for name,value in aliases.items():
       if not name=="toggoplus" :
           menu.append(addDir(value , url=name, mode="serien", iconimage="",duration="",desc=""))   
+    menu.append(addDir("Cache Loeschen", "", 'clearcache', ""))    
     menu.append(addDir("Settings", "", 'Settings', ""))    
     xbmcplugin.addDirectoryItems(addon_handle,menu)
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)    
+def clearcache():
+    debug("CLear Cache")
+    cache.delete("%")
     
 # Haupt Menu Anzeigen      
 if mode is '':     
@@ -336,5 +344,7 @@ else:
           staffel(url)             
   if mode == 'playvideo':
           playvideo(url) 
+  if mode == 'clearcache':
+          clearcache()           
   if mode == 'Settings':
           addon.openSettings()          
