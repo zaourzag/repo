@@ -394,7 +394,7 @@ def sendermenu():
     ret=login()
     content = cache.cacheFunction(getUrl,"https://api.tvnow.de/v3/settings")      
     settings = json.loads(content)
-    aliases=settings["settings"]["nowtv"]["production"]["stations"]["aliases"]    
+    aliases=settings["settings"]["nowtv"]["local"]["stations"]["aliases"]    
     for name,value in aliases.items():
       if not name=="toggoplus" :
           menu.append(addDir(value , url=name, mode="serien", iconimage="",duration="",desc=""))   
