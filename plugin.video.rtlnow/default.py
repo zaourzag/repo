@@ -11,6 +11,7 @@ import xbmcvfs
 import urllib, urllib2, socket, cookielib, re, os, shutil,json
 import base64
 import ssl
+import hashlib
 
 
 # Setting Variablen Des Plugins
@@ -28,7 +29,8 @@ xbmcplugin.setContent(addon_handle, 'tvshows')
 
 profile    = xbmc.translatePath( addon.getAddonInfo('profile') ).decode("utf-8")
 temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
-
+if not xbmcvfs.exists(temp):  
+  xbmcvfs.mkdirs(temp)
 
 
 def debug(content):
@@ -236,6 +238,7 @@ def staffel(idd,url) :
   liste=li["items"]
   debug(liste)
   menu=[]
+  menulist=""
   for element in liste:      
       debug("###")
       debug(element)      
@@ -254,7 +257,7 @@ def staffel(idd,url) :
         freeonly=addon.getSetting("freeonly")
         if folge["isDrm"]==False and folge["free"]==True or freeonly=="false":
           debug("--")
-          name=folge["title"].encode('utf-8')          
+          name=folge["title"]         
           idd=folge["id"]
           bild="https://ais.tvnow.de/tvnow/movie/"+str(idd)+"/600x600/title.jpg"
           stream=folge["manifest"]["dashclear"]
@@ -262,10 +265,10 @@ def staffel(idd,url) :
           laengemin=get_min(folge["duration"])          
           sstaffel=str(folge["season"])
           folgenr=str(folge["episode"]) 
-          plot=folge["articleLong"].encode('utf-8')  
-          plotshort=folge["articleShort"].encode('utf-8')  
-          startdate=folge["broadcastStartDate"]  .encode('utf-8')    
-          tagline=folge["teaserText"]  .encode('utf-8') 
+          plot=folge["articleLong"] 
+          plotshort=folge["articleShort"]
+          startdate=folge["broadcastStartDate"]    
+          tagline=folge["teaserText"] 
           try:          
             type=folge["format"]["categoryId"]
           except:
@@ -274,20 +277,57 @@ def staffel(idd,url) :
           if type=="serie":
             ftype="episode"
           zusatz=" ("+startdate+ " )"
-          listitem = xbmcgui.ListItem(path=stream,label=name+zusatz,iconImage=bild,thumbnailImage=bild)
+          title=name+zusatz
+          haswert=hashlib.md5(title.encode('utf-8')).hexdigest()
+          zeile=haswert+"###"+stream+"###"+title+"###"+bild+"###"+str(laenge)+"###"+plot+"###"+plotshort+"###"+tagline+"###"+ftype          
+          menulist=menulist+zeile.replace("\n"," ").encode('utf-8')+"\n"   
+          listitem = xbmcgui.ListItem(path="plugin://plugin.video.rtlnow/?nummer="+haswert+"&mode=hashplay",label=title,iconImage=bild,thumbnailImage=bild)
           listitem.setProperty('IsPlayable', 'true')
           listitem.addStreamInfo('video', {'duration': laenge,'plot' : plot,'plotoutline' : plotshort,'tagline':tagline,'mediatype':ftype })
-          listitem.setInfo(type="Video", infoLabels={'duration': laenge,"Title": name, "Plot": plot,'plotoutline': plotshort,'tagline':tagline,'mediatype':ftype ,"episode": folgenr, "season":sstaffel})          
+          listitem.setInfo(type="Video", infoLabels={'duration': laenge,"Title": title, "Plot": plot,'plotoutline': plotshort,'tagline':tagline,'mediatype':ftype ,"episode": folgenr, "season":sstaffel})          
+          #listitem.setInfo(type='video')          
+          xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url="plugin://plugin.video.rtlnow/?nummer="+haswert+"&mode=hashplay", listitem=listitem)
+          #addLink(name, stream, "playvideo", bild)          
+          xbmcplugin.addDirectoryItems(addon_handle,menu) 
+  f = open( os.path.join(temp,"menu.txt"), 'w')  
+  f.write(menulist)
+  f.close()          
+  xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
+
+ 
+def hashplay(idd):
+  debug("hashplay url :"+idd)
+  f=xbmcvfs.File( os.path.join(temp,"menu.txt"),"r")   
+  daten=f.read()
+  zeilen=daten.split('\n')  
+  for zeile in zeilen:    
+    debug ("Read Zeile :"+zeile)
+    felder=zeile.split("###")
+    debug("Felder ")
+    debug(felder)
+    if felder[0]==idd:    
+          debug("Gefunden")
+          stream=felder[1]
+          title=felder[2]          
+          bild=felder[3]                      
+          laenge=felder[4] 
+          plot=felder[5] 
+          plotshort=felder[6] 
+          tagline=felder[7] 
+          ftype=felder[8] 
+          listitem = xbmcgui.ListItem(path=stream,label=title,iconImage=bild,thumbnailImage=bild)
+          listitem.setProperty('IsPlayable', 'true')
+          listitem.addStreamInfo('video', {'duration': laenge,'plot' : plot,'plotoutline' : plotshort,'tagline':tagline,'mediatype':ftype })          
+          listitem.setInfo(type="Video", infoLabels={'duration': laenge,"Title": title, "Plot": plot,'plotoutline': plotshort,'tagline':tagline,'mediatype':ftype})          
           listitem.setProperty(u'IsPlayable', u'true')
-          #listitem.setInfo(type='video')
           listitem.setProperty('inputstreamaddon', 'inputstream.adaptive')
           listitem.setProperty('inputstream.adaptive.manifest_type', 'mpd')
           xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=stream, listitem=listitem)
+          xbmcplugin.setResolvedUrl(addon_handle,True, listitem)    
           #addLink(name, stream, "playvideo", bild)          
-          xbmcplugin.addDirectoryItems(addon_handle,menu)              
-  xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
-
-
+          
+          
+          
        
 def  login():
   debug("Start login")
@@ -400,6 +440,8 @@ else:
   if mode == 'sendermenu':
           sendermenu()            
   if mode == 'genre':
-          genre(url)                      
+          genre(url) 
+  if mode == 'hashplay':
+          hashplay(nummer)                 
   if mode == 'Settings':
           addon.openSettings()          
