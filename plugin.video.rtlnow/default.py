@@ -115,8 +115,8 @@ def parameters_string_to_dict(parameters):
 				paramDict[paramSplits[0]] = paramSplits[1]
 	return paramDict
   
-def addDir(name, url, mode, iconimage, desc="", duration=""):
-    u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
+def addDir(name, url, mode, iconimage, desc="", duration="",nummer=0):
+    u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&nummer="+str(nummer)
     ok = True
     liz = xbmcgui.ListItem(name)
     liz.setArt({ 'fanart': iconimage })
@@ -131,28 +131,36 @@ def addDir(name, url, mode, iconimage, desc="", duration=""):
 params = parameters_string_to_dict(sys.argv[2])
 mode = urllib.unquote_plus(params.get('mode', ''))
 url = urllib.unquote_plus(params.get('url', ''))
+nummer = urllib.unquote_plus(params.get('nummer', ''))
 name = urllib.unquote_plus(params.get('name', ''))
 showName = urllib.unquote_plus(params.get('showName', ''))
 hideShowName = urllib.unquote_plus(params.get('hideshowname', '')) == 'True'
 nextPage = urllib.unquote_plus(params.get('nextpage', '')) == 'True'
 einsLike = urllib.unquote_plus(params.get('einslike', '')) == 'True'    
-def serien(name,page=1):
+def serien(url):
   xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
   xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_LABEL)
   menu=[]
   debug("Serien New Menu")
-  starturl='http://api.tvnow.de/v3/formats?filter='
-  filter=urllib.quote_plus('{"Disabled": "0", "Station":"' + name +'"}')
-  url=starturl+filter+'&fields=title,station,title,titleGroup,seoUrl,categoryId,*&maxPerPage=5000&page='+str(page)
+  
   debug(url)  
   content = cache.cacheFunction(getUrl,url) 
   serienliste = json.loads(content)
   freeonly=addon.getSetting("freeonly") 
   items=[]
-  for serieelement in serienliste["items"]:
+  try:
+    liste=serienliste["movies"]["items"]
+  except:
+    liste=serienliste["items"]
+  for serieelement in liste:
     title=serieelement["title"].encode('utf-8')
     debug(title)
     seoUrl=serieelement["seoUrl"]
+    try:
+      #Genre
+      serieelement=serieelement["format"]
+    except:
+      pass
     logo=serieelement["defaultLogo"]
     desc=serieelement["infoTextLong"]
     if (serieelement["hasFreeEpisodes"]==True or freeonly=="false") :
@@ -185,7 +193,8 @@ def rubrik(name) :
       idd=kapitelliste["formatTabs"]["items"][0]["id"]   
     except:
       idd=kapitelliste["id"]
-    staffel(str(idd))
+    uurl="http://api.tvnow.de/v3/formatlists/"+str(idd)+"?maxPerPage=9&fields=*,formatTabPages.*,formatTabPages.container.*,formatTabPages.container.movies.*,formatTabPages.container.movies.format.*,formatTabPages.container.movies.paymentPaytypes.*,formatTabPages.container.movies.pictures&page=1http://api.tvnow.de/v3/formatlists/41016?maxPerPage=9&fields=*,formatTabPages.*,formatTabPages.container.*,formatTabPages.container.movies.*,formatTabPages.container.movies.format.*,formatTabPages.container.movies.paymentPaytypes.*,formatTabPages.container.movies.pictures&page=1"
+    staffel(str(idd),uurl)
   else:
     for kapitel in kapitelliste["formatTabs"]["items"]:
       debug(kapitel)       
@@ -195,7 +204,8 @@ def rubrik(name) :
       content2 = cache.cacheFunction(getUrl,urlx)    
       if ('"free":true' in content2 or freeonly=="false") and '"isDrm":false' in content2 :
       #      debug(staffelinfo)
-          menu.append(addDir(name , url=str(idd), mode="staffel", iconimage="",duration="",desc=""))        
+          uurl="http://api.tvnow.de/v3/formatlists/"+str(idd)+"?maxPerPage=9&fields=*,formatTabPages.*,formatTabPages.container.*,formatTabPages.container.movies.*,formatTabPages.container.movies.format.*,formatTabPages.container.movies.paymentPaytypes.*,formatTabPages.container.movies.pictures&page=1http://api.tvnow.de/v3/formatlists/41016?maxPerPage=9&fields=*,formatTabPages.*,formatTabPages.container.*,formatTabPages.container.movies.*,formatTabPages.container.movies.format.*,formatTabPages.container.movies.paymentPaytypes.*,formatTabPages.container.movies.pictures&page=1"
+          menu.append(addDir(name , url=uurl,nummer=str(idd), mode="staffel", iconimage="",duration="",desc=""))        
   xbmcplugin.addDirectoryItems(addon_handle,menu)
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 def get_sec(time_str):
@@ -205,14 +215,13 @@ def get_min(time_str):
     h, m, s = time_str.split(':')
     return int(h) * 3600 + int(m) * 60 + int(s) /60
         
-def staffel(idd) :    
+def staffel(idd,url) :    
   menu=[]
   xy=[]
   global cache
   login()
   debug("Lade staffel neu")
-  #http://api.tvnow.de/v3/formatlists/41018?maxPerPage=9&fields=*,formatTabPages.*,formatTabPages.container.*,formatTabPages.container.movies.*,formatTabPages.container.movies.format.*,formatTabPages.container.movies.paymentPaytypes.*,formatTabPages.container.movies.pictures&page=1http://api.tvnow.de/v3/formatlists/41016?maxPerPage=9&fields=*,formatTabPages.*,formatTabPages.container.*,formatTabPages.container.movies.*,formatTabPages.container.movies.format.*,formatTabPages.container.movies.paymentPaytypes.*,formatTabPages.container.movies.pictures&page=1
-  url="http://api.tvnow.de/v3/formatlists/"+idd+"?maxPerPage=9&fields=*,formatTabPages.*,formatTabPages.container.*,formatTabPages.container.movies.*,formatTabPages.container.movies.format.*,formatTabPages.container.movies.paymentPaytypes.*,formatTabPages.container.movies.pictures&page=1http://api.tvnow.de/v3/formatlists/41016?maxPerPage=9&fields=*,formatTabPages.*,formatTabPages.container.*,formatTabPages.container.movies.*,formatTabPages.container.movies.format.*,formatTabPages.container.movies.paymentPaytypes.*,formatTabPages.container.movies.pictures&page=1"
+  #http://api.tvnow.de/v3/formatlists/41018?maxPerPage=9&fields=*,formatTabPages.*,formatTabPages.container.*,formatTabPages.container.movies.*,formatTabPages.container.movies.format.*,formatTabPages.container.movies.paymentPaytypes.*,formatTabPages.container.movies.pictures&page=1http://api.tvnow.de/v3/formatlists/41016?maxPerPage=9&fields=*,formatTabPages.*,formatTabPages.container.*,formatTabPages.container.movies.*,formatTabPages.container.movies.format.*,formatTabPages.container.movies.paymentPaytypes.*,formatTabPages.container.movies.pictures&page=1  
   debug("staffel :"+url)
   try:
      content = cache.cacheFunction(getUrl,url)
@@ -251,7 +260,7 @@ def staffel(idd) :
           stream=folge["manifest"]["dashclear"]
           laenge=get_sec(folge["duration"])          
           laengemin=get_min(folge["duration"])          
-          staffel=str(folge["season"])
+          sstaffel=str(folge["season"])
           folgenr=str(folge["episode"]) 
           plot=folge["articleLong"].encode('utf-8')  
           plotshort=folge["articleShort"].encode('utf-8')  
@@ -268,7 +277,7 @@ def staffel(idd) :
           listitem = xbmcgui.ListItem(path=stream,label=name+zusatz,iconImage=bild,thumbnailImage=bild)
           listitem.setProperty('IsPlayable', 'true')
           listitem.addStreamInfo('video', {'duration': laenge,'plot' : plot,'plotoutline' : plotshort,'tagline':tagline,'mediatype':ftype })
-          listitem.setInfo(type="Video", infoLabels={'duration': laenge,"Title": name, "Plot": plot,'plotoutline': plotshort,'tagline':tagline,'mediatype':ftype ,"episode": folgenr, "season":staffel})          
+          listitem.setInfo(type="Video", infoLabels={'duration': laenge,"Title": name, "Plot": plot,'plotoutline': plotshort,'tagline':tagline,'mediatype':ftype ,"episode": folgenr, "season":sstaffel})          
           listitem.setProperty(u'IsPlayable', u'true')
           #listitem.setInfo(type='video')
           listitem.setProperty('inputstreamaddon', 'inputstream.adaptive')
@@ -312,8 +321,33 @@ def  login():
       addon.setSetting("freeonly", "true")
       return 0
   debug(content)
-
+  
+     
+def genre(url):
+    menu=[]
+    #https://api.tvnow.de/v3/channels/station/rtl?fields=*&filter=%7B%22Active%22:true%7D&maxPerPage=500&page=1     
+    urln="https://api.tvnow.de/v3/channels/station/"+url+"?fields=*&filter=%7B%22Active%22:true%7D&maxPerPage=50&page=1"
+    content = cache.cacheFunction(getUrl,urln)      
+    genres = json.loads(content)
+    for genre in genres["items"]:
+       id=genre["id"]
+       name=genre["title"]
+       image="https://ais.tvnow.de/tvnow/cms/"+genre["defaultImage"]+"/300x169/image2.jpg"
+       menu.append(addDir(name , url=url, mode="listgenre", iconimage=image,duration="",desc="",nummer=id))   
+    xbmcplugin.addDirectoryItems(addon_handle,menu)
+    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)    
+    
 def index():
+    menu=[]
+    menu.append(addDir("Nach Sendern", "", 'sendermenu', ""))      
+    menu.append(addDir("Themen" , url="rtl", mode="genre", iconimage="",duration="",desc=""))
+    menu.append(addDir("Cache Loeschen", "", 'clearcache', ""))    
+    menu.append(addDir("Settings", "", 'Settings', ""))    
+    xbmcplugin.addDirectoryItems(addon_handle,menu)
+    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)        
+
+    
+def sendermenu():
     debug("START")    
     menu=[]
     debug("New MENU")
@@ -324,10 +358,20 @@ def index():
     for name,value in aliases.items():
       if not name=="toggoplus" :
           menu.append(addDir(value , url=name, mode="serien", iconimage="",duration="",desc=""))   
-    menu.append(addDir("Cache Loeschen", "", 'clearcache', ""))    
-    menu.append(addDir("Settings", "", 'Settings', ""))    
     xbmcplugin.addDirectoryItems(addon_handle,menu)
-    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)    
+    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)   
+
+def genremenu(url):
+     menu=[]     
+     content = cache.cacheFunction(getUrl,url)      
+     genres = json.loads(content)
+     if genres["total"]>1:
+       menu.append(addDir("Alle Serien" , url=url, mode="serien", iconimage="",duration="",desc=""))   
+       menu.append(addDir("Genres" , url=url, mode="genre", iconimage="",duration="",desc=""))   
+       xbmcplugin.addDirectoryItems(addon_handle,menu)
+       xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)    
+
+       
 def clearcache():
     debug("CLear Cache")
     cache.delete("%")
@@ -336,15 +380,26 @@ def clearcache():
 if mode is '':     
     index()    
 else:  
+  if mode == 'listgenre':
+          urln="https://api.tvnow.de/v3/channels/"+nummer+"?fields=[%22*%22,%22movies%22,[%22id%22,%22title%22,%22episode%22,%22broadcastStartDate%22,%22blockadeText%22,%22free%22,%22replaceMovieInformation%22,%22seoUrl%22,%22pictures%22,[%22*%22],%22packages%22,[%22*%22],%22format%22,[%22*%22]]]"
+          serien(urln)   
   if mode == 'serien':
-          serien(url)     
+          starturl='http://api.tvnow.de/v3/formats?filter='
+          filter=urllib.quote_plus('{"Disabled": "0", "Station":"' + url +'"}')
+          urln=starturl+filter+'&fields=title,station,title,titleGroup,seoUrl,categoryId,*&maxPerPage=5000&page=1'
+          serien(urln)     
   if mode == 'rubrik':
           rubrik(url)             
   if mode == 'staffel':
-          staffel(url)             
+          url="http://api.tvnow.de/v3/formatlists/"+nummer+"?maxPerPage=9&fields=*,formatTabPages.*,formatTabPages.container.*,formatTabPages.container.movies.*,formatTabPages.container.movies.format.*,formatTabPages.container.movies.paymentPaytypes.*,formatTabPages.container.movies.pictures&page=1http://api.tvnow.de/v3/formatlists/41016?maxPerPage=9&fields=*,formatTabPages.*,formatTabPages.container.*,formatTabPages.container.movies.*,formatTabPages.container.movies.format.*,formatTabPages.container.movies.paymentPaytypes.*,formatTabPages.container.movies.pictures&page=1"
+          staffel(nummer,url)             
   if mode == 'playvideo':
           playvideo(url) 
   if mode == 'clearcache':
           clearcache()           
+  if mode == 'sendermenu':
+          sendermenu()            
+  if mode == 'genre':
+          genre(url)                      
   if mode == 'Settings':
           addon.openSettings()          
