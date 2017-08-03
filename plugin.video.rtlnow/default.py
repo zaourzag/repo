@@ -391,6 +391,7 @@ def index():
     menu.append(addDir("Nach Sendern", "", 'sendermenu', ""))      
     menu.append(addDir("Themen" , url="rtl", mode="genre", iconimage="",duration="",desc=""))
     menu.append(addDir("Rubriken" , url="", mode="katalog", iconimage="",duration="",desc=""))
+    menu.append(addDir("Genres" , url="", mode="genreliste", iconimage="",duration="",desc=""))
     menu.append(addDir("Cache Loeschen", "", 'clearcache', ""))    
     menu.append(addDir("Settings", "", 'Settings', ""))    
     xbmcplugin.addDirectoryItems(addon_handle,menu)
@@ -456,6 +457,21 @@ def clearcache():
     debug("CLear Cache")
     cache.delete("%")
     
+def genreliste():
+ menu=[] 
+ url="https://cdn.static-fra.de/tvnow/app/e81664b7.main.js"    
+ content = cache.cacheFunction(getUrl,url)     
+ liste=re.compile('return\[([^\]]+?)\]\}return', re.DOTALL).findall(content)[0]
+ elemente=liste.replace('"',"").split(",")
+ for element in elemente:
+   uri="https://api.tvnow.de/v3/formats/genre/"+element+"?fields=*&filter=%7B%22station%22:%22none%22%7D&maxPerPage=50&order=NameLong+asc&page=1"
+   menu.append(addDir(element , url=uri, mode="lsserie", iconimage="",duration="",desc=""))
+ xbmcplugin.addDirectoryItems(addon_handle,menu)
+ xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)   
+    
+    
+#OPTIONS https://api.tvnow.de/v3/formats/genre/Crime?fields=*&filter=%7B%22station%22:%22none%22%7D&maxPerPage=50&order=NameLong+asc&page=1
+    
 # Haupt Menu Anzeigen      
 if mode is '':     
     index()    
@@ -468,6 +484,8 @@ else:
           filter=urllib.quote_plus('{"Disabled": "0", "Station":"' + url +'"}')
           urln=starturl+filter+'&fields=title,id,seoUrl,defaultLogo,infoTextLong,hasFreeEpisodes,categoryId&maxPerPage=5000&page=1'
           serien(urln)     
+  if mode == 'lsserie':
+           serien(url)
   if mode == 'rubrik':
           rubrik(url)             
   if mode == 'staffel':
@@ -486,6 +504,8 @@ else:
   if mode == 'katalog':
           katalog()             
   if mode == 'hashplay':
-          hashplay(nummer)                 
+          hashplay(nummer)  
+  if mode == 'genreliste':
+             genreliste() 
   if mode == 'Settings':
           addon.openSettings()          
