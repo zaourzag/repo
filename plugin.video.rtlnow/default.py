@@ -12,6 +12,7 @@ import urllib, urllib2, socket, cookielib, re, os, shutil,json
 import base64
 import ssl
 import hashlib
+from collections import OrderedDict
 
 
 # Setting Variablen Des Plugins
@@ -163,9 +164,15 @@ def serien(url):
       serieelement=serieelement["format"]
     except:
       pass
-    logo=serieelement["defaultLogo"]
-    desc=serieelement["infoTextLong"]
-    if (serieelement["hasFreeEpisodes"]==True or freeonly=="false") :
+    try:
+      logo=serieelement["defaultLogo"]
+      desc=serieelement["infoTextLong"]
+      freeep=serieelement["hasFreeEpisodes"]
+    except:
+      logo=""
+      desc=""
+      freeep="true"
+    if (freeep==True or freeonly=="false") :
       menu.append(addDir(title , url=str(seoUrl), mode="rubrik", iconimage=logo,duration="",desc=desc))
   xbmcplugin.addDirectoryItems(addon_handle,menu)
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)    
@@ -396,11 +403,11 @@ def sendermenu():
     debug("New MENU")
     ret=login()
     content = cache.cacheFunction(getUrl,"https://api.tvnow.de/v3/settings")      
-    settings = json.loads(content)
-    aliases=settings["settings"]["nowtv"]["local"]["stations"]["aliases"]    
+    settings = json.loads(content, object_pairs_hook=OrderedDict)    
+    aliases=settings["settings"]["nowtv"]["local"]["stations"]["aliases"]  
     for name,value in aliases.items():
       if not name=="toggoplus" :
-          menu.append(addDir(value , url=name, mode="serien", iconimage="",duration="",desc=""))   
+          menu.append(addDir(value , url=name, mode="serien", iconimage="https://cdn.static-fra.de/tvnow/styles/modules/headerstations/"+name+".png",duration="",desc=""))   
     xbmcplugin.addDirectoryItems(addon_handle,menu)
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)   
 
