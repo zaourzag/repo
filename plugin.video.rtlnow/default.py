@@ -408,7 +408,8 @@ def sendermenu():
     aliases=settings["settings"]["nowtv"]["local"]["stations"]["aliases"]  
     for name,value in aliases.items():
       if not name=="toggoplus" :
-          menu.append(addDir(value , url=name, mode="serien", iconimage="https://cdn.static-fra.de/tvnow/styles/modules/headerstations/"+name+".png",duration="",desc=""))   
+          newimg=os.path.join(xbmcaddon.Addon().getAddonInfo('path'),"logos",name +".png")
+          menu.append(addDir(value , url=name, mode="serien", iconimage=newimg,duration="",desc=""))   
     xbmcplugin.addDirectoryItems(addon_handle,menu)
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)   
 
