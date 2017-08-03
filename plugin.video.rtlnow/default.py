@@ -383,7 +383,7 @@ def index():
     menu=[]
     menu.append(addDir("Nach Sendern", "", 'sendermenu', ""))      
     menu.append(addDir("Themen" , url="rtl", mode="genre", iconimage="",duration="",desc=""))
-    menu.append(addDir("Meist gesehen" , url="", mode="topliste", iconimage="",duration="",desc=""))
+    menu.append(addDir("Rubriken" , url="", mode="katalog", iconimage="",duration="",desc=""))
     menu.append(addDir("Cache Loeschen", "", 'clearcache', ""))    
     menu.append(addDir("Settings", "", 'Settings', ""))    
     xbmcplugin.addDirectoryItems(addon_handle,menu)
@@ -414,9 +414,23 @@ def genremenu(url):
        xbmcplugin.addDirectoryItems(addon_handle,menu)
        xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)    
 
-def topliste()   :    
+
+       
+def katalog():
+  menu=[]
+  url="https://api.tvnow.de/v3/pages/nowtv/tvnow?fields=teaserSets.headline,teaserSets.id"
+  content = cache.cacheFunction(getUrl,url)     
+  objekte = json.loads(content)
+  liste=objekte["teaserSets"]["items"]
+  for serie in liste:
+     name=serie["headline"]
+     id=serie["id"]
+     menu.append(addDir(name , url=str(id), mode="katalogliste", iconimage="",duration="",desc=""))
+  xbmcplugin.addDirectoryItems(addon_handle,menu)
+  xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)        
+def katalogliste(idd)   :    
    menu=[]
-   url="https://api.tvnow.de/v3/teasersets/6371?fields=[%22teaserSetInformations%22,[%22format%22,[%22id%22,%22title%22,%22seoUrl%22,%22defaultDvdImage%22,%22infoText%22]]]"
+   url="https://api.tvnow.de/v3/teasersets/"+idd+"?fields=[%22teaserSetInformations%22,[%22format%22,[%22id%22,%22title%22,%22seoUrl%22,%22defaultDvdImage%22,%22infoText%22]]]"
    content = cache.cacheFunction(getUrl,url)     
    objekte = json.loads(content)
    liste=objekte["teaserSetInformations"]["items"]
@@ -459,8 +473,10 @@ else:
           sendermenu()            
   if mode == 'genre':
           genre(url) 
-  if mode == 'topliste':
-          topliste()           
+  if mode == 'katalogliste':
+          katalogliste(url)           
+  if mode == 'katalog':
+          katalog()             
   if mode == 'hashplay':
           hashplay(nummer)                 
   if mode == 'Settings':
