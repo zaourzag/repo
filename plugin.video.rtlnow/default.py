@@ -219,7 +219,7 @@ def get_min(time_str):
         
 def staffel(idd,url) :    
   menu=[]
-  xy=[]
+  xy=[]  
   global cache
   login()
   debug("Lade staffel neu")
@@ -236,6 +236,11 @@ def staffel(idd,url) :
     li = json.loads(content)
   
   liste=li["items"]
+  totla=li["total"]
+  if total >1 :
+    play=0
+  else:
+    play=1
   debug(liste)
   menu=[]
   menulist=""
@@ -383,6 +388,7 @@ def index():
     menu=[]
     menu.append(addDir("Nach Sendern", "", 'sendermenu', ""))      
     menu.append(addDir("Themen" , url="rtl", mode="genre", iconimage="",duration="",desc=""))
+    menu.append(addDir("Meist gesehen" , url="", mode="topliste", iconimage="",duration="",desc=""))
     menu.append(addDir("Cache Loeschen", "", 'clearcache', ""))    
     menu.append(addDir("Settings", "", 'Settings', ""))    
     xbmcplugin.addDirectoryItems(addon_handle,menu)
@@ -413,6 +419,21 @@ def genremenu(url):
        xbmcplugin.addDirectoryItems(addon_handle,menu)
        xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)    
 
+def topliste()   :    
+   menu=[]
+   url="https://api.tvnow.de/v3/teasersets/6371?fields=[%22teaserSetInformations%22,[%22format%22,[%22id%22,%22title%22,%22seoUrl%22,%22defaultDvdImage%22,%22infoText%22]]]"
+   content = cache.cacheFunction(getUrl,url)     
+   objekte = json.loads(content)
+   liste=objekte["teaserSetInformations"]["items"]
+   for serie in liste:
+     id=serie["format"]["id"]
+     seoUrl=serie["format"]["seoUrl"]
+     title=serie["format"]["title"]
+     logo=serie["format"]["defaultDvdImage"]
+     desc=serie["format"]["infoText"]
+     menu.append(addDir(title , url=str(seoUrl), mode="rubrik", iconimage=logo,duration="",desc=desc))
+   xbmcplugin.addDirectoryItems(addon_handle,menu)
+   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)   
        
 def clearcache():
     debug("CLear Cache")
@@ -428,7 +449,7 @@ else:
   if mode == 'serien':
           starturl='http://api.tvnow.de/v3/formats?filter='
           filter=urllib.quote_plus('{"Disabled": "0", "Station":"' + url +'"}')
-          urln=starturl+filter+'&fields=title,id,seoUrl,defaultLogo,infoTextLong,hasFreeEpisodes&maxPerPage=5000&page=1'
+          urln=starturl+filter+'&fields=title,id,seoUrl,defaultLogo,infoTextLong,hasFreeEpisodes,categoryId&maxPerPage=5000&page=1'
           serien(urln)     
   if mode == 'rubrik':
           rubrik(url)             
@@ -443,6 +464,8 @@ else:
           sendermenu()            
   if mode == 'genre':
           genre(url) 
+  if mode == 'topliste':
+          topliste()           
   if mode == 'hashplay':
           hashplay(nummer)                 
   if mode == 'Settings':
