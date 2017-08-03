@@ -424,8 +424,9 @@ def katalog():
   liste=objekte["teaserSets"]["items"]
   for serie in liste:
      name=serie["headline"]
-     id=serie["id"]
-     menu.append(addDir(name , url=str(id), mode="katalogliste", iconimage="",duration="",desc=""))
+     idd=str(serie["id"])
+     if not idd=="2255":
+       menu.append(addDir(name , url=str(idd), mode="katalogliste", iconimage="",duration="",desc=""))
   xbmcplugin.addDirectoryItems(addon_handle,menu)
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)        
 def katalogliste(idd)   :    
