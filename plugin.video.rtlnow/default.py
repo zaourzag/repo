@@ -236,11 +236,6 @@ def staffel(idd,url) :
     li = json.loads(content)
   
   liste=li["items"]
-  totla=li["total"]
-  if total >1 :
-    play=0
-  else:
-    play=1
   debug(liste)
   menu=[]
   menulist=""
@@ -287,7 +282,7 @@ def staffel(idd,url) :
           title=name+zusatz
           haswert=hashlib.md5(title.encode('utf-8')).hexdigest()
           zeile=haswert+"###"+stream+"###"+title+"###"+bild+"###"+str(laenge)+"###"+plot+"###"+plotshort+"###"+tagline+"###"+ftype          
-          menulist=menulist+zeile.replace("\n"," ").encode('utf-8')+"\n"   
+          menulist=menulist+zeile.replace("\n"," ").encode('utf-8')+"\n"             
           listitem = xbmcgui.ListItem(path="plugin://plugin.video.rtlnow/?nummer="+haswert+"&mode=hashplay",label=title,iconImage=bild,thumbnailImage=bild)
           listitem.setProperty('IsPlayable', 'true')
           listitem.addStreamInfo('video', {'duration': laenge,'plot' : plot,'plotoutline' : plotshort,'tagline':tagline,'mediatype':ftype })
