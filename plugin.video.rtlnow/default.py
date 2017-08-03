@@ -255,7 +255,7 @@ def staffel(idd,url) :
         debug(folge["free"])
         debug(folge["isDrm"])
         freeonly=addon.getSetting("freeonly")
-        if folge["isDrm"]==False and folge["free"]==True or freeonly=="false":
+        if not folge["isDrm"]==True and folge["free"]==True or freeonly=="false":
           debug("--")
           name=folge["title"]         
           idd=folge["id"]
@@ -276,6 +276,8 @@ def staffel(idd,url) :
           ftype="episode"
           if type=="serie":
             ftype="episode"
+          if type=="film":
+            ftype="movie"            
           zusatz=" ("+startdate+ " )"
           title=name+zusatz
           haswert=hashlib.md5(title.encode('utf-8')).hexdigest()
@@ -426,12 +428,12 @@ else:
   if mode == 'serien':
           starturl='http://api.tvnow.de/v3/formats?filter='
           filter=urllib.quote_plus('{"Disabled": "0", "Station":"' + url +'"}')
-          urln=starturl+filter+'&fields=title,station,title,titleGroup,seoUrl,categoryId,*&maxPerPage=5000&page=1'
+          urln=starturl+filter+'&fields=title,id,seoUrl,defaultLogo,infoTextLong,hasFreeEpisodes&maxPerPage=5000&page=1'
           serien(urln)     
   if mode == 'rubrik':
           rubrik(url)             
   if mode == 'staffel':
-          url="http://api.tvnow.de/v3/formatlists/"+nummer+"?maxPerPage=9&fields=*,formatTabPages.*,formatTabPages.container.*,formatTabPages.container.movies.*,formatTabPages.container.movies.format.*,formatTabPages.container.movies.paymentPaytypes.*,formatTabPages.container.movies.pictures&page=1http://api.tvnow.de/v3/formatlists/41016?maxPerPage=9&fields=*,formatTabPages.*,formatTabPages.container.*,formatTabPages.container.movies.*,formatTabPages.container.movies.format.*,formatTabPages.container.movies.paymentPaytypes.*,formatTabPages.container.movies.pictures&page=1"
+          url="http://api.tvnow.de/v3/formatlists/"+nummer+"?maxPerPage=5000&fields=[%22formatTabPages%22,[%22container%22,[%22movies%22,[%22free%22,%22isDrm%22,%22title%22,%22id%22,%22manifest%22,[%22dashclear%22],%22duration%22,%22season%22,%22episode%22,%22articleLong%22,%22articleShort%22,%22broadcastStartDate%22,%22teaserText%22,%22format%22,[%22categoryId%22]]]]]&page=1"
           staffel(nummer,url)             
   if mode == 'playvideo':
           playvideo(url) 
