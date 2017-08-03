@@ -425,7 +425,7 @@ def katalog():
   for serie in liste:
      name=serie["headline"]
      idd=str(serie["id"])
-     if not idd=="2255":
+     if not idd=="2255" and not idd=="7619":
        menu.append(addDir(name , url=str(idd), mode="katalogliste", iconimage="",duration="",desc=""))
   xbmcplugin.addDirectoryItems(addon_handle,menu)
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)        
