@@ -129,7 +129,8 @@ def parseserie(name,sstaffel=0) :
   url="https://www.google.de/search?q="+newlink  
   debug("parseserie URL :"+newlink)
   content=geturl(url).encode('utf-8')            
-  match = re.compile('"(http://webcache.googleusercontent.com/[^"]+)"', re.DOTALL).findall(content)
+  match = re.compile('"(http[s]*://webcache.googleusercontent.com/[^"]+)"', re.DOTALL).findall(content)
+  debug ("Cache URL:"+match[0])
   content=geturl(match[0]).encode('utf-8')   
   
   htmlPage = BeautifulSoup(content, 'html.parser')
