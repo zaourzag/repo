@@ -26,7 +26,19 @@ translation = addon.getLocalizedString
 cj = cookielib.LWPCookieJar();
 xbmcplugin.setContent(addon_handle, 'tvshows')  
 
-    
+def AddonEnabled(addon_id):
+    result = xbmc.executeJSONRPC('{"jsonrpc":"2.0","method":"Addons.GetAddonDetails","id":1,\
+                                   "params":{"addonid":"%s", "properties": ["enabled"]}}' % addon_id)
+    return False if '"error":' in result or '"enabled":false' in result else True
+
+is_addon=""
+if AddonEnabled('inputstream.adaptive'):
+    is_addon = 'inputstream.adaptive'    
+
+if not is_addon:
+        Log('No Inputstream Addon found or activated')
+        Dialog.notification("Inpuitstream Fehler", 'Inputstream nicht eingeschaltet', xbmcgui.NOTIFICATION_ERROR)
+        exit    
 
 profile    = xbmc.translatePath( addon.getAddonInfo('profile') ).decode("utf-8")
 temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
@@ -148,7 +160,7 @@ def serien(url):
   
   debug(url)  
   content = cache.cacheFunction(getUrl,url) 
-  serienliste = json.loads(content)
+  serienliste = json.loads(content, object_pairs_hook=OrderedDict)
   freeonly=addon.getSetting("freeonly") 
   items=[]
   try:
@@ -190,7 +202,7 @@ def rubrik(name) :
   url=basurl+div+endeurl
   debug(url)
   content = cache.cacheFunction(getUrl,url)      
-  kapitelliste = json.loads(content)   
+  kapitelliste = json.loads(content, object_pairs_hook=OrderedDict)   
   try:
     serienanzahl=kapitelliste["formatTabs"]["total"]  
     debug("serienanzahl gefunden :"+ str(serienanzahl))
@@ -225,6 +237,7 @@ def get_min(time_str):
     return int(h) * 3600 + int(m) * 60 + int(s) /60
         
 def staffel(idd,url) :    
+  xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
   menu=[]
   xy=[]  
   global cache
@@ -234,13 +247,13 @@ def staffel(idd,url) :
   debug("staffel :"+url)
   try:
      content = cache.cacheFunction(getUrl,url)
-     folgen = json.loads(content)
+     folgen = json.loads(content, object_pairs_hook=OrderedDict)
      li=folgen["formatTabPages"]     
   except:  
     url='http://api.tvnow.de/v3/movies?filter={%22FormatId%22:'+idd+'}&fields=*,format,paymentPaytypes,pictures,trailers&maxPerPage=5000&order=BroadcastStartDate%20desc2B'+idd+'}%26fields%3D*%2Cformat%2CpaymentPaytypes%2Cpictures%2Ctrailers%26maxPerPage%3D50%26order%3DBroadcastStartDate%2Bdesc'
     debug("NEWURL :"+url)
     content = cache.cacheFunction(getUrl,url) 
-    li = json.loads(content)
+    li = json.loads(content, object_pairs_hook=OrderedDict)
   
   liste=li["items"]
   debug(liste)
@@ -262,7 +275,7 @@ def staffel(idd,url) :
         debug(folge["free"])
         debug(folge["isDrm"])
         freeonly=addon.getSetting("freeonly")
-        if not folge["isDrm"]==True and folge["free"]==True or freeonly=="false":
+        if not folge["isDrm"]==True and ( folge["free"]==True or freeonly=="false"):
           debug("--")
           name=folge["title"]         
           idd=folge["id"]
@@ -293,7 +306,7 @@ def staffel(idd,url) :
           listitem = xbmcgui.ListItem(path="plugin://plugin.video.rtlnow/?nummer="+haswert+"&mode=hashplay",label=title,iconImage=bild,thumbnailImage=bild)
           listitem.setProperty('IsPlayable', 'true')
           listitem.addStreamInfo('video', {'duration': laenge,'plot' : plot,'plotoutline' : plotshort,'tagline':tagline,'mediatype':ftype })
-          listitem.setInfo(type="Video", infoLabels={'duration': laenge,"Title": title, "Plot": plot,'plotoutline': plotshort,'tagline':tagline,'mediatype':ftype ,"episode": folgenr, "season":sstaffel})          
+          listitem.setInfo(type="Video", infoLabels={'duration': laenge,"Title": title, "Plot": plot,'plotoutline': plotshort,'tagline':tagline,'mediatype':ftype ,"episode": folgenr, "season":sstaffel,"sorttitle":"S"+sstaffel+"E"+folgenr+" "+title})                    
           #listitem.setInfo(type='video')          
           xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url="plugin://plugin.video.rtlnow/?nummer="+haswert+"&mode=hashplay", listitem=listitem)
           #addLink(name, stream, "playvideo", bild)          
@@ -377,7 +390,7 @@ def genre(url):
     #https://api.tvnow.de/v3/channels/station/rtl?fields=*&filter=%7B%22Active%22:true%7D&maxPerPage=500&page=1     
     urln="https://api.tvnow.de/v3/channels/station/"+url+"?fields=*&filter=%7B%22Active%22:true%7D&maxPerPage=50&page=1"
     content = cache.cacheFunction(getUrl,urln)      
-    genres = json.loads(content)
+    genres = json.loads(content, object_pairs_hook=OrderedDict)
     for genre in genres["items"]:
        id=genre["id"]
        name=genre["title"]
@@ -394,6 +407,7 @@ def index():
     menu.append(addDir("Genres" , url="", mode="genreliste", iconimage="",duration="",desc=""))
     menu.append(addDir("Cache Loeschen", "", 'clearcache', ""))    
     menu.append(addDir("Settings", "", 'Settings', ""))    
+    menu.append(addDir("Inputstream Einstellungen", "", 'inputsettings', ""))        
     xbmcplugin.addDirectoryItems(addon_handle,menu)
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)        
 
@@ -429,7 +443,7 @@ def katalog():
   menu=[]
   url="https://api.tvnow.de/v3/pages/nowtv/tvnow?fields=teaserSets.headline,teaserSets.id"
   content = cache.cacheFunction(getUrl,url)     
-  objekte = json.loads(content)
+  objekte = json.loads(content ,object_pairs_hook=OrderedDict)
   liste=objekte["teaserSets"]["items"]
   for serie in liste:
      name=serie["headline"]
@@ -442,7 +456,7 @@ def katalogliste(idd)   :
    menu=[]
    url="https://api.tvnow.de/v3/teasersets/"+idd+"?fields=[%22teaserSetInformations%22,[%22format%22,[%22id%22,%22title%22,%22seoUrl%22,%22defaultDvdImage%22,%22infoText%22]]]"
    content = cache.cacheFunction(getUrl,url)     
-   objekte = json.loads(content)
+   objekte = json.loads(content, object_pairs_hook=OrderedDict)
    liste=objekte["teaserSetInformations"]["items"]
    for serie in liste:
      id=serie["format"]["id"]
@@ -470,7 +484,9 @@ def genreliste():
  xbmcplugin.addDirectoryItems(addon_handle,menu)
  xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)   
     
-    
+def inputsettings()    :
+  xbmcaddon.Addon(is_addon).openSettings()
+
 #OPTIONS https://api.tvnow.de/v3/formats/genre/Crime?fields=*&filter=%7B%22station%22:%22none%22%7D&maxPerPage=50&order=NameLong+asc&page=1
     
 # Haupt Menu Anzeigen      
@@ -509,4 +525,6 @@ else:
   if mode == 'genreliste':
              genreliste() 
   if mode == 'Settings':
-          addon.openSettings()          
+          addon.openSettings()     
+  if mode == 'inputsettings':
+          inputsettings()                       
