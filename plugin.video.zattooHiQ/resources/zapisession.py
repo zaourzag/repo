@@ -6,10 +6,16 @@
 # 	modified by Daniel Griner
 #
 
-
+import xbmc, xbmcgui, xbmcplugin, xbmcaddon
 import os, re, base64
 import urllib, urllib2
 import json
+
+__addon__ = xbmcaddon.Addon()
+__addonId__=__addon__.getAddonInfo('id')
+__addonname__ = __addon__.getAddonInfo('name')
+DEBUG = __addon__.getSetting('debug')
+
 
 class ZapiSession:
 	ZAPIAuthUrl = None
@@ -23,7 +29,7 @@ class ZapiSession:
 	Password = None
 	SessionData = None
 	AccountData = None
-
+	
 	def __init__(self, dataFolder):
 		self.DATA_FOLDER = dataFolder
 		self.COOKIE_FILE = os.path.join(dataFolder, 'cookie.cache')
@@ -33,11 +39,12 @@ class ZapiSession:
 		self.HttpHandler = urllib2.build_opener()
 		self.HttpHandler.addheaders = [('Content-type', 'application/x-www-form-urlencoded'), ('Accept', 'application/json')]
 
-        def init_session(self, username, password, api_url="https://zattoo.com", api_auth_url="https://zattoo.com"):
+	def init_session(self, username, password, api_url="https://zattoo.com", api_auth_url="https://zattoo.com"):
 		self.Username = username
 		self.Password = password
 		self.ZAPIAuthUrl = api_auth_url
 		self.ZAPIUrl = api_url
+		if DEBUG: print "ZAPIURL " + str (api_url)
 		return self.restore_session() or self.renew_session()
 
 	def restore_session(self):
@@ -124,7 +131,7 @@ class ZapiSession:
 
 		handle = urllib2.urlopen(self.ZAPIUrl + '/')
 		html = handle.read()
-		print "App-Token:" + str(re.search("window\.appToken\s*=\s*'(.*)'", html).group(1))
+		#print "App-Token:" + str(re.search("window\.appToken\s*=\s*'(.*)'", html).group(1))
 		return re.search("window\.appToken\s*=\s*'(.*)'", html).group(1)
 		
 

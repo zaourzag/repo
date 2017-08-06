@@ -29,7 +29,7 @@ _listMode_ = __addon__.getSetting('channellist')
 _channelList_=[]
 localString = __addon__.getLocalizedString
 local = xbmc.getLocalizedString
-
+DEBUG = __addon__.getSetting('debug')
 _umlaut_ = {ord(u'ä'): u'ae', ord(u'ö'): u'oe', ord(u'ü'): u'ue', ord(u'ß'): u'ss'}
 
 REMOTE_DBG = False
@@ -58,8 +58,9 @@ class ZattooDB(object):
 
   def zapiSession(self):
     zapiSession   = ZapiSession(xbmc.translatePath(__addon__.getAddonInfo('profile')).decode('utf-8'))
+    if DEBUG: print "APIURL " + str( __addon__.getSetting('api_url'))
     if zapiSession.init_session(__addon__.getSetting('username'), __addon__.getSetting('password'),
-                                __addon__.getSetting('api_url'), __addon__.getSetting('api_auth_url')):
+                                __addon__.getSetting('zapi_url'), __addon__.getSetting('zapi_auth_url')):
       return zapiSession
     else:
       # show home window, zattooHiQ settings and quit
@@ -106,7 +107,7 @@ class ZattooDB(object):
     except: pass
     try: 
         c.execute('DROP TABLE programs')
-        print "DROP PROGRAM TABlE"
+        #print "DROP PROGRAM TABlE"
     except: pass
     try: c.execute('DROP TABLE updates')
     except: pass
@@ -147,7 +148,7 @@ class ZattooDB(object):
 
     # always clear db on update
     c.execute('DELETE FROM channels')
-    print "account  "+ self.zapi.AccountData['account']['power_guide_hash']
+    #print "account  "+ self.zapi.AccountData['account']['power_guide_hash']
     api = '/zapi/v2/cached/channels/' + self.zapi.AccountData['account']['power_guide_hash'] + '?details=False'
     channelsData = self.zapi.exec_zapiCall(api, None)
 
@@ -199,13 +200,13 @@ class ZattooDB(object):
         c.close()
         return
 
-    xbmcgui.Dialog().notification(__addon__.getLocalizedString(31917), self.formatDate(date), __addon__.getAddonInfo('path') + '/icon.png', 5000, False)
+    #xbmcgui.Dialog().notification(__addon__.getLocalizedString(31917), self.formatDate(date), __addon__.getAddonInfo('path') + '/icon.png', 5000, False)
     #xbmc.executebuiltin("ActivateWindow(busydialog)")
     api = '/zapi/v2/cached/program/power_guide/' + self.zapi.AccountData['account']['power_guide_hash'] + '?end=' + str(toTime) + '&start=' + str(fromTime)
 
-    print "apiData   "+api
+    #print "apiData   "+api
     programData = self.zapi.exec_zapiCall(api, None)
-    print str(programData)
+    #print str(programData)
     count=0
     for channel in programData['channels']:
        cid = channel['cid']
@@ -214,7 +215,7 @@ class ZattooDB(object):
        c.execute('SELECT * FROM channels WHERE id==?', [cid])
        countt=c.fetchall()
        if len(countt)==0:
-         print "Sender NICHT : "+cid
+         if DEBUG: print "Sender NICHT : "+cid
        for program in channel['programs']:
         count+=1
         if program['i'] != None:
@@ -222,7 +223,7 @@ class ZattooDB(object):
           #http://images.zattic.com/system/images/6dcc/8817/50d1/dfab/f21c/format_480x360.jpg
         else: image = ""
         try:
-            print 'INSERT OR IGNORE INTO programs(channel, title, start_date, end_date, description, genre, image_small, showID) VALUES(%, %, %, %, %, %, %)',cid, program['t'], program['s'], program['e'], program['et'], ', '.join(program['g']), image, program['id']
+            if DEBUG: print 'INSERT OR IGNORE INTO programs(channel, title, start_date, end_date, description, genre, image_small, showID) VALUES(%, %, %, %, %, %, %)',cid, program['t'], program['s'], program['e'], program['et'], ', '.join(program['g']), image, program['id']
         except:
             pass
         c.execute('INSERT OR IGNORE INTO programs(channel, title, start_date, end_date, description, genre, image_small, showID) VALUES(?, ?, ?, ?, ?, ?, ?, ?)',
@@ -315,7 +316,7 @@ class ZattooDB(object):
         if get_long_description and description_long is None:
             #description_long = self.getShowInfo(row["showID"],'description')
             info = self.getShowLongDescription(row['showID'])
-            print 'ProgINFO  ' + str(type(info)) + ' ' + str(row['showID'])+ '  ' + str(info)
+            #print 'ProgINFO  ' + str(type(info)) + ' ' + str(row['showID'])+ '  ' + str(info)
             if type(info) == dict:
                 description_long = info.get('description','')
                 year = info.get('year',' ')
@@ -358,7 +359,7 @@ class ZattooDB(object):
         if longDesc is None:
             api = '/zapi/program/details?program_id=' + showID + '&complete=True'
             showInfo = self.zapiSession().exec_zapiCall(api, None)
-            print 'Showinfo  ' + str(showInfo)
+            #print 'Showinfo  ' + str(showInfo)
             if showInfo is None:
                 longDesc=''
                 year=''
@@ -381,9 +382,9 @@ class ZattooDB(object):
             try:
                 restart = showInfo['program']['selective_recall_until']
                 info.execute('UPDATE programs SET restart=? WHERE showID=?', [True, showID])
-                print 'Restart  ' +str(showID) + '  ' + str(restart)
+                #print 'Restart  ' +str(showID) + '  ' + str(restart)
             except:
-                print 'No Restart'
+                #print 'No Restart'
                 info.execute('UPDATE programs SET restart=? WHERE showID=?', [False, showID])
         try:
             self.conn.commit()
@@ -491,7 +492,7 @@ class ZattooDB(object):
     c = self.conn.cursor()
     c.execute('SELECT * FROM channels WHERE title= ? ', [channeltitle])
     row = c.fetchone()
-    print 'Title ' +str(channeltitle)
+    #print 'Title ' +str(channeltitle)
     if row:
       channelid=row['id']
     self.conn.commit()
@@ -514,7 +515,7 @@ class ZattooDB(object):
         channels = self.getChannelList(fav)
 
         c = self.conn.cursor()
-        print 'START Programm'
+        #print 'START Programm'
         # for startup-notify
         if notify:
             PopUp = xbmcgui.DialogProgressBG()
@@ -530,20 +531,20 @@ class ZattooDB(object):
             PopUp.update(bar)
 
         for chan in channels['index']:
-            print str(chan) + ' - ' + str(startTime)
+            #print str(chan) + ' - ' + str(startTime)
 
             c.execute('SELECT * FROM programs WHERE channel = ? AND start_date < ? AND end_date > ?', [chan, endTime, startTime])
             r=c.fetchall()
 
             for row in r:
-                print str(row['channel']) + ' - ' + str(row['showID'])
+                #print str(row['channel']) + ' - ' + str(row['showID'])
                 if notify:
                     bar += 1
                     percent = int(bar * 100 / counter)
                 description_long = row["description_long"]
 
                 if description_long is None:
-                    print 'Lang ' + str(row['channel'])
+                    #print 'Lang ' + str(row['channel'])
                     if notify:
                         PopUp.update(percent,localString(31922), localString(31923) + str(row['channel']))
                     description_long = self.getShowLongDescription(row["showID"])
@@ -556,7 +557,7 @@ class ZattooDB(object):
         d = (datetime.datetime.today() - datetime.timedelta(days=8))
         midnight = datetime.time(0)
         datelow = datetime.datetime.combine(d, midnight)
-        print 'CleanUp  ' + str(datelow)
+        #print 'CleanUp  ' + str(datelow)
         try:
             c = self.conn.cursor()
             c.execute('SELECT * FROM programs WHERE start_date < ?', [datelow])
@@ -565,7 +566,7 @@ class ZattooDB(object):
             return
 
         if len(r)>0:
-            print 'Anzahl Records  ' + str(len(r))
+            #print 'Anzahl Records  ' + str(len(r))
             dialog = xbmcgui.Dialog()
             if (silent or  dialog.yesno(localString(31918), str(len(r)) + ' ' + localString(31920), '', '',local(106),local(107))):
                 count=len(r)
@@ -621,7 +622,7 @@ class ZattooDB(object):
         c = self.conn.cursor()
         c.execute('SELECT series FROM programs WHERE showID = ?', [showID])
         series = c.fetchone()
-        print str(showID)+'  '+str(series['series'])
+        #print str(showID)+'  '+str(series['series'])
         c.close()
         return series['series']
   
@@ -629,7 +630,7 @@ class ZattooDB(object):
         c = self.conn.cursor()
         c.execute('SELECT restart FROM programs WHERE showID = ?', [showID])
         restart = c.fetchone()
-        print str(showID)+'  '+str(restart['restart'])
+        #print str(showID)+'  '+str(restart['restart'])
         c.close()
         return restart['restart']
 

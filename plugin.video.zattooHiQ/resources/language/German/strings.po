@@ -344,6 +344,14 @@ msgctxt "#31003"
 msgid "Swiss IP address"
 msgstr "Schweizer IP Adresse"
 
+msgctxt "#310031"
+msgid "zapi_auth_url"
+msgstr "zapi_auth_url"
+
+msgctxt "#310032"
+msgid "zapi_url"
+msgstr "zapi_url"
+
 msgctxt "#31004"
 msgid "ZATTOO HIQ"
 msgstr "ZATTOO HIQ"
@@ -381,6 +389,9 @@ msgctxt "#310095"
 msgid "last played channel"
 msgstr "letzter gespielter Kanal"
 
+msgctxt "#310096"
+msgid "Debug"
+msgstr "Debug"
 
 
 ### EPG/Aufnahmen ###

@@ -1,5 +1,12 @@
 ﻿
 ==================================================
+[B]ZattooHiQ v1.2.3 [/B]30.07.2017 Steffen Rolapp
+==================================================
+- Benachrichtigung bei Progamminfo Update entfernt
+- debug Option in Settings
+- Zapi-URL  Eingabe in Settings
+
+==================================================
 [B]ZattooHiQ v1.2.2 [/B]30.07.2017 Steffen Rolapp
 ==================================================
 - Timzonen - Offset für Android angepasst

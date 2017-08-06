@@ -65,10 +65,11 @@ DASH = __addon__.getSetting('dash')=='true'
 RECREADY = __addon__.getSetting('rec_ready')
 VERSION = __addon__.getAddonInfo('version')
 OLDVERSION = _zattooDB_.get_version(VERSION)
+DEBUG = __addon__.getSetting('debug')
 
 #reload DB on Update
-print "Old Version: " + str(OLDVERSION)
-print "Version: " + str(VERSION)
+#print "Old Version: " + str(OLDVERSION)
+#print "Version: " + str(VERSION)
 if OLDVERSION != VERSION:
    _zattooDB_.set_version(VERSION)
    _zattooDB_.reloadDB()
@@ -390,7 +391,7 @@ def slugify(value):
 
 
 def watch_channel(channel_id, start, end, showID="", restart=False, showOSD=False):
-  print('WATCH: '+channel_id+' st:'+str(start)+' en:'+str(end))
+  #print('WATCH: '+channel_id+' st:'+str(start)+' en:'+str(end))
   #new ZattooDB instance because this is called from thread-timer on channel-nr input (sql connection doesn't work)
   _zattooDB_=ZattooDB()
 
@@ -423,13 +424,13 @@ def watch_channel(channel_id, start, end, showID="", restart=False, showOSD=Fals
     zStart = datetime.datetime.fromtimestamp(int(start) - _timezone_ ).strftime("%Y-%m-%dT%H:%M:%SZ")  #5min zattoo skips back
     zEnd = datetime.datetime.fromtimestamp(int(end) - _timezone_ ).strftime("%Y-%m-%dT%H:%M:%SZ")
     params = {'cid': channel_id, 'stream_type': stream_type, 'start':zStart, 'end':zEnd, 'maxrate':max_bandwidth }
-    print "RECALL: " +str(zStart) + "  " + str(startTime) + "  " +str(_timezone_)
+    #print "RECALL: " +str(zStart) + "  " + str(startTime) + "  " +str(_timezone_)
   channelInfo = _zattooDB_.get_channelInfo(channel_id)
 
   if restart: resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/watch/selective_recall/'+channel_id+'/'+showID, params)
   else: resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/watch',params)
   #resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/watch',params)
-  print 'ResultData ' +str(resultData)
+  #print 'ResultData ' +str(resultData)
   if resultData is None:
     xbmcgui.Dialog().notification("ERROR", "NO ZAPI RESULT", channelInfo['logo'], 5000, False)
     return
@@ -758,9 +759,9 @@ class zattooGUI(xbmcgui.WindowXMLDialog):
     #_zattooDB_=ZattooDB()
     #channel=_zattooDB_.get_playing()['channel']
     #channeltitle=_zattooDB_.get_channeltitle(channel)
-    print ('Action: '+str(action))
-    print('ZATTOOGUI BUTTON'+str(key))
-    print('ZATTOOGUI ACTIONID'+str(actionID))
+    #print ('Action: '+str(action))
+    #print('ZATTOOGUI BUTTON'+str(key))
+    #print('ZATTOOGUI ACTIONID'+str(actionID))
     #self.channelInputCtrl.setVisible(False)
 
     #user defined keys
@@ -915,7 +916,7 @@ class zattooOSD(xbmcgui.WindowXMLDialog):
     elif action in [ACTION_STOP, ACTION_BUILT_IN_FUNCTION]:
       if hasattr(self, 'hideNrTimer'): self.hideNrTimer.cancel()
       self.close()
-      print 'Action Stop'
+      #print 'Action Stop'
       xbmc.sleep(1000)
       xbmc.executebuiltin('Action(OSD)') #close hidden gui
       #xbmc.executebuiltin("Action(Back)")
@@ -1033,7 +1034,7 @@ def main():
 
   global _listMode_
   if _listMode_ == None: _listMode_='all'
-  print 'LISTMODE  ' + str(_listMode_)
+  #print 'LISTMODE  ' + str(_listMode_)
   addon_uri = sys.argv[0]
   addon_handle = int(sys.argv[1])
   args = urlparse.parse_qs(sys.argv[2][1:])
@@ -1133,6 +1134,6 @@ def main():
     info.doModal()
     del info
   '''
-
+if DEBUG: print "ZattooHIQ-DEBUG"
 
 main()
