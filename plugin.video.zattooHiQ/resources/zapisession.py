@@ -12,8 +12,8 @@ import urllib, urllib2
 import json
 
 class ZapiSession:
-	ZAPI_AUTH_URL = 'https://zattoo.com'
-	ZAPI_URL = 'https://zattoo.com'
+	ZAPIAuthUrl = None
+	ZAPIUrl = None
 	DATA_FOLDER = None
 	COOKIE_FILE = None
 	SESSION_FILE = None
@@ -33,9 +33,11 @@ class ZapiSession:
 		self.HttpHandler = urllib2.build_opener()
 		self.HttpHandler.addheaders = [('Content-type', 'application/x-www-form-urlencoded'), ('Accept', 'application/json')]
 
-	def init_session(self, username, password):
+        def init_session(self, username, password, api_url="https://zattoo.com", api_auth_url="https://zattoo.com"):
 		self.Username = username
 		self.Password = password
+		self.ZAPIAuthUrl = api_auth_url
+		self.ZAPIUrl = api_url
 		return self.restore_session() or self.renew_session()
 
 	def restore_session(self):
@@ -96,7 +98,7 @@ class ZapiSession:
 	# zapiCall with params=None creates GET request otherwise POST
 
 	def exec_zapiCall(self, api, params, context='default'):
-		url = self.ZAPI_AUTH_URL + api if context == 'session' else self.ZAPI_URL + api
+		url = self.ZAPIAuthUrl + api if context == 'session' else self.ZAPIUrl + api
 		content = self.request_url(url, params)
 		if content is None and context != 'session' and self.renew_session():
 			content = self.request_url(url, params)
@@ -104,7 +106,9 @@ class ZapiSession:
 			return None
 		try:
 			resultData = json.loads(content)
-			return resultData        			#if resultData['success']:
+			return resultData
+        
+			#if resultData['success']:
 			#	return resultData
 		#except Exception:
 			#pass
@@ -118,7 +122,7 @@ class ZapiSession:
 
 	def fetch_appToken(self):
 
-		handle = urllib2.urlopen(self.ZAPI_URL + '/')
+		handle = urllib2.urlopen(self.ZAPIUrl + '/')
 		html = handle.read()
 		print "App-Token:" + str(re.search("window\.appToken\s*=\s*'(.*)'", html).group(1))
 		return re.search("window\.appToken\s*=\s*'(.*)'", html).group(1)
@@ -149,3 +153,4 @@ class ZapiSession:
 
 	def renew_session(self):
 		return self.session() and self.login()
+

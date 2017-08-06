@@ -58,7 +58,8 @@ class ZattooDB(object):
 
   def zapiSession(self):
     zapiSession   = ZapiSession(xbmc.translatePath(__addon__.getAddonInfo('profile')).decode('utf-8'))
-    if zapiSession.init_session(__addon__.getSetting('username'), __addon__.getSetting('password')):
+    if zapiSession.init_session(__addon__.getSetting('username'), __addon__.getSetting('password'),
+                                __addon__.getSetting('api_url'), __addon__.getSetting('api_auth_url')):
       return zapiSession
     else:
       # show home window, zattooHiQ settings and quit

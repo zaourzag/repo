@@ -5,6 +5,9 @@
         <setting label="31002" id="password" type="text" option="hidden" enable="!eq(-1,)" default=""/>
         <setting type="sep"/>
         <setting label="31003" id="swiss" type="bool" default="false" />
+	<setting type="sep"/>
+	<setting label="310031" id="zapi_auth_url" type="text" default="https://zattoo.com" />
+	<setting label="310032" id="zapi_url" type="text" default="https://zattoo.com" />
 <!--
         <setting label="31004" id="hiq" type="bool" default="false" enable="eq(-1,true)"/>
 -->
