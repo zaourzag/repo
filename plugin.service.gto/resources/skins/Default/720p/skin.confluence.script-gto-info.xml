@@ -101,7 +101,7 @@
                         <top>50</top>
                         <height>10</height>
                         <font>font10</font>
-                        <label>$INFO[Window(Home).Property(GTO.Info.StartTime)] - $INFO[Window(Home).Property(GTO.Info.EndTime)]</label>
+                        <label>$INFO[Window(Home).Property(GTO.Info.Date)] - $INFO[Window(Home).Property(GTO.Info.EndTime)]</label>
                         <align>left</align>
                         <aligny>center</aligny>
                 </control>

@@ -11,8 +11,20 @@ class Scraper():
 
     def __init__(self):
 
-        # Items
+        # Properties
 
+        self.enabled = True
+        self.baseurl = 'http://www.klack.de'
+        self.rssurl = 'http://www.klack.de/xml/motorsportRSS.xml'
+        self.friendlyname = 'klack.de - Motorsport'
+        self.shortname = 'klack.de - Motorsport'
+        self.icon = 'klack.png'
+        self.selector = '<item>'
+        self.detailselector = '<table id="content">'
+        self.err404 = 'klackde_dummy.jpg'
+
+
+    def reset(self):
         self.channel = ''
         self.title = ''
         self.thumb = False
@@ -25,17 +37,6 @@ class Scraper():
         self.cast = ''
         self.rating = ''
 
-        # Properties
-
-        self.enabled = False
-        self.baseurl = 'http://www.klack.de'
-        self.rssurl = 'http://www.klack.de/xml/motorsportRSS.xml'
-        self.friendlyname = 'klack.de - Motorsport'
-        self.shortname = 'klack.de - Motorsport'
-        self.icon = 'klack.png'
-        self.selector = '<item>'
-        self.detailselector = '<table id="content">'
-        self.err404 = 'klackde_dummy.jpg'
 
     def checkResource(self, resource, fallback):
         if not resource: return fallback
@@ -52,19 +53,21 @@ class Scraper():
 
     def scrapeRSS(self, content):
 
+        self.reset()
+
         try:
             self.channel = re.compile('<title>(.+?)</title>', re.DOTALL).findall(content)[0].split(': ')[0]
             self.detailURL = re.compile('<link>(.+?)</link>', re.DOTALL).findall(content)[0]
             self.title = re.compile('<title>(.+?)</title>', re.DOTALL).findall(content)[0].split(': ')[1]
             self.thumb = re.compile('<img align="left" src="(.+?)"', re.DOTALL).findall(content)[0].replace('150x100.jpg', '500x333.jpg')
-            self.thumb = self.checkResource(self.thumb, self.err404)
         except IndexError:
             pass
 
+        self.thumb = self.checkResource(self.thumb, self.err404)
         try:
             self.plot = re.compile('<description>(.+?)</description>', re.DOTALL).findall(content)[0].split('</a>')[1][:-3]
         except IndexError:
-            pass
+            self.plot = re.compile('<description>(.+?)</description>', re.DOTALL).findall(content)[0].split('<br>')[1][:-3]
 
         try:
             self.startdate = (re.compile('<dc:date>(.+?)</dc:date>', re.DOTALL).findall(content)[0][0:19]).replace('T', ' ')

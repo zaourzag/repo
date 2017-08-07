@@ -94,7 +94,7 @@ class Starter():
                 xbmc.executebuiltin('XBMC.RunScript(plugin.service.gto,action=refresh)')
                 _attempts -= 1
 
-            writeLog('Remaining next action in %s seconds' % (__screenrefresh__))
+            writeLog('Next action %s seconds remaining' % (__screenrefresh__))
             if monitor.waitForAbort(__screenrefresh__): break
             _c += 1
 

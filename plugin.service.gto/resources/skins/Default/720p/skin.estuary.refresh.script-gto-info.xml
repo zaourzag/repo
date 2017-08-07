@@ -66,7 +66,7 @@
 						<param name="label" value="[COLOR=button_focus]Kanal: [/COLOR] $INFO[Window(Home).Property(GTO.Info.Channel]" />
 					</include>
 					<include content="InfoDialogMetadata">
-                        <param name="label" value="[COLOR=button_focus]Uhrzeit: [/COLOR] $INFO[Window(Home).Property(GTO.Info.StartTime)] - $INFO[Window(Home).Property(GTO.Info.EndTime)]" />
+                        <param name="label" value="[COLOR=button_focus]Uhrzeit: [/COLOR] $INFO[Window(Home).Property(GTO.Info.Date)] - $INFO[Window(Home).Property(GTO.Info.EndTime)]" />
 					</include>
 					<include content="InfoDialogMetadata">
 						<param name="label" value="[COLOR=button_focus]Laufzeit: [/COLOR] $INFO[Window(Home).Property(GTO.Info.RunTime),, Min]" />

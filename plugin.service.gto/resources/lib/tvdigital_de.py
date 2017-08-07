@@ -10,6 +10,20 @@ RSS_TIME_FORMAT = '%Y-%m-%d %H:%M:%S'
 class Scraper():
     def __init__(self):
 
+        # Properties
+
+        self.enabled = True
+        self.baseurl = 'https://www.tvdigital.de'
+        self.rssurl = 'https://www.tvdigital.de/rss/tipp/spielfilm/'
+        self.friendlyname = 'TV Digital Spielfilm Highlights'
+        self.shortname = 'TV Digital'
+        self.icon = 'tvd.png'
+        self.selector = '<item>'
+        self.detailselector = '<div id="main-content" class="clearfix">'
+        self.err404 = 'tvd_dummy.jpg'
+
+    def reset(self):
+
         # Items
 
         self.channel = ''
@@ -23,18 +37,6 @@ class Scraper():
         self.plot = ''
         self.cast = ''
         self.rating = ''
-
-        # Properties
-
-        self.enabled = True
-        self.baseurl = 'https://www.tvdigital.de'
-        self.rssurl = 'https://www.tvdigital.de/rss/tipp/spielfilm/'
-        self.friendlyname = 'TV Digital Spielfilm Highlights'
-        self.shortname = 'TV Digital'
-        self.icon = 'tvd.png'
-        self.selector = '<item>'
-        self.detailselector = '<div id="main-content" class="clearfix">'
-        self.err404 = 'tvd_dummy.jpg'
 
     def checkResource(self, resource, fallback):
         if not resource: return fallback
@@ -50,6 +52,8 @@ class Scraper():
         return fallback
 
     def scrapeRSS(self, content):
+
+        self.reset()
 
         try:
             self.channel = re.compile('<title>(.+?)</title>', re.DOTALL).findall(content)[0].split(' | ')[2]

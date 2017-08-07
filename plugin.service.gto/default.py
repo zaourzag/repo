@@ -368,7 +368,13 @@ def isInDataBase(title):
         if 'movies' in res['result']: break
 
     writeLog('Found %s matches for movie(s) in database, select first' % (len(res['result']['movies'])))
-    _fanart = urllib.unquote_plus(res['result']['movies'][0]['fanart']).split('://', 1)[1][:-1]
+
+    try:
+        _fanart = urllib.unquote_plus(res['result']['movies'][0]['fanart']).split('://', 1)[1][:-1]
+    except IndexError:
+        writeLog('Fanart: %s' % (urllib.unquote_plus(res['result']['movies'][0]['fanart'])))
+        _fanart = ''
+
     _userrating = '0'
     if res['result']['movies'][0]['userrating'] != '': _userrating = res['result']['movies'][0]['userrating']
     params.update({'isInDB': True,

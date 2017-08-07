@@ -11,6 +11,20 @@ RSS_TIME_FORMAT = '%Y-%m-%d %H:%M:%S'
 class Scraper():
     def __init__(self):
 
+        # Properties
+
+        self.enabled = True
+        self.baseurl = 'http://www.tvspielfilm.de'
+        self.rssurl = 'http://www.tvspielfilm.de/tv-programm/rss/filme.xml'
+        self.friendlyname = 'TV Spielfilm Highlights'
+        self.shortname = 'TV Spielfilm'
+        self.icon = 'tvspielfilm.png'
+        self.selector = '<item>'
+        self.detailselector = '<section id="content">'
+        self.err404 = 'tvspielfilm_dummy.jpg'
+
+    def reset(self):
+
         # Items, do not change!
 
         self.channel = ''
@@ -25,17 +39,6 @@ class Scraper():
         self.cast = ''
         self.rating = ''
 
-        # Properties
-
-        self.enabled = True
-        self.baseurl = 'http://www.tvspielfilm.de'
-        self.rssurl = 'http://www.tvspielfilm.de/tv-programm/rss/filme.xml'
-        self.friendlyname = 'TV Spielfilm Highlights'
-        self.shortname = 'TV Spielfilm'
-        self.icon = 'tvspielfilm.png'
-        self.selector = '<item>'
-        self.detailselector = '<section id="content">'
-        self.err404 = 'tvspielfilm_dummy.jpg'
 
     def checkResource(self, resource, fallback):
         if not resource or resource == '': return fallback
@@ -53,6 +56,8 @@ class Scraper():
     # Feed Scraper
 
     def scrapeRSS(self, content):
+
+        self.reset()
 
         try:
             self.starttime = re.compile('<title>(.+?)</title>', re.DOTALL).findall(content)[0].split(' | ')[0]
