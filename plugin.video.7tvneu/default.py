@@ -376,8 +376,7 @@ def listvideos(url,series=""):
             episode=re.compile('Episode ([0-9]+)', re.DOTALL).findall(title)[0]  
       except :
              episode=-1   
-             
-      if not "http://" in urlv:
+      if not (("http://" in urlv) or ("https://" in urlv)):
         urlv=baseurl+urlv
       try:
           datum=re.compile('<p class="teaser-info">(.+?)</p>', re.DOTALL).findall(entry)[0]
