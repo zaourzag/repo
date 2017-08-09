@@ -639,7 +639,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
 	</extension>
 </addon>
 
-<addon id="plugin.video.eurosportplayer" version="1.9.0" name="Eurosport Player" provider-name="Jin">
+<addon id="plugin.video.eurosportplayer" version="1.9.9" name="Eurosport Player" provider-name="Jin">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
         <import addon="script.module.pydes" version="2.0.1"/>
@@ -649,8 +649,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
     </extension>
     <extension point="xbmc.addon.metadata">
         <news>
-- added non defined settings to settings.xml
-- minor fixes/updates
+This addon is no longer working after a complete new eurosport player has been released
         </news>
         
         <summary lang="de_DE">Eurosport live, jederzeit und überall</summary>
@@ -666,6 +665,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
         <website>https://www.eurosportplayer.com</website>
         <email>[jin] at [xyz] dot [de]</email>
         <source>https://github.com/kodinerds/repo/tree/master/plugin.video.eurosportplayer</source>
+        <broken>needs complete rewrite after new player has been released</broken>
     </extension>
 </addon>
 
