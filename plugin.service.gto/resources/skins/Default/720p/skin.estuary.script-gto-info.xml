@@ -15,9 +15,9 @@
 				<param name="header_id" value="1" />
 			</include>
             <control type="label">
-                      <left>20</left>
+                      <left>10</left>
                       <top>70</top>
-                      <width>620</width>
+                      <width>560</width>
                       <height>36</height>
                       <font>font24_title</font>
                       <label>$INFO[Window(Home).Property(GTO.Info.Title)]</label>
@@ -25,25 +25,52 @@
                       <aligny>center</aligny>
             </control>
             <control type="image">
-                      <left>30</left>
-                      <top>120</top>
+                <description>Icon isInDB</description>
+                <left>600</left>
+                <top>70</top>
+                <width>48</width>
+                <height>48</height>
+                <texture border="1">movie.png</texture>
+                <visible>String.IsEqual(Window(Home).Property(GTO.Info.isInDB),True)</visible>
+            </control>
+            <control type="image">
+                <description>Icon hasTimer</description>
+                <left>600</left>
+                <top>70</top>
+                <width>48</width>
+                <height>48</height>
+                <texture border="1">timer.png</texture>
+                <visible>String.IsEqual(Window(Home).Property(GTO.Info.hasTimer),True) + !String.IsEqual(Window(Home).Property(GTO.Info.isInDB),True)</visible>
+            </control>
+            <control type="image">
+                <description>Icon hasTimer</description>
+                <left>560</left>
+                <top>70</top>
+                <width>48</width>
+                <height>48</height>
+                <texture border="1">timer.png</texture>
+                <visible>String.IsEqual(Window(Home).Property(GTO.Info.hasTimer),True) + String.IsEqual(Window(Home).Property(GTO.Info.isInDB),True)</visible>
+            </control>
+            <control type="image">
+                      <left>20</left>
+                      <top>100</top>
                       <width>260</width>
                       <height>195</height>
                       <aspectratio>keep</aspectratio>
                       <texture border="1">$INFO[Window(Home).Property(GTO.Info.Picture)]</texture>
             </control>
             <control type="group">
-                <left>320</left>
-                <top>135</top>
-                <width>170</width>
+                <left>300</left>
+                <top>115</top>
+                <width>190</width>
                 <control type="label">
                         <description>Channel</description>
                         <top>0</top>
                         <height>10</height>
                         <font>font12</font>
-                        <label>$INFO[Window(Home).Property(GTO.Info.Channel]</label>
+                        <label>$INFO[Window(Home).Property(GTO.Info.Channel)]</label>
                         <align>left</align>
-                        <aligny>center</aligny>
+                        <aligny>top</aligny>
                 </control>
                 <control type="label">
                         <description>Genre</description>
@@ -52,7 +79,7 @@
                         <font>font10</font>
                         <label>$INFO[Window(Home).Property(GTO.Info.Genre)]</label>
                         <align>left</align>
-                        <aligny>center</aligny>
+                        <aligny>top</aligny>
                 </control>
                 <control type="label">
                         <description>Start, End</description>
@@ -61,7 +88,7 @@
                         <font>font10</font>
                         <label>$INFO[Window(Home).Property(GTO.Info.Date)] - $INFO[Window(Home).Property(GTO.Info.EndTime)]</label>
                         <align>left</align>
-                        <aligny>center</aligny>
+                        <aligny>top</aligny>
                 </control>
                 <control type="label">
                         <top>70</top>
@@ -69,21 +96,21 @@
                         <font>font10</font>
                         <label>$INFO[Window(Home).Property(GTO.Info.RunTime)] min</label>
                         <align>left</align>
-                        <aligny>center</aligny>
+                        <aligny>top</aligny>
                 </control>
             </control>
             <control type="image">
-                    <left>500</left>
-                    <top>130</top>
+                    <left>520</left>
+                    <top>115</top>
                     <width>120</width>
                     <height>80</height>
                     <aspectratio>keep</aspectratio>
                     <texture border="1">$INFO[Window(Home).Property(GTO.Info.Logo)]</texture>
             </control>
             <control type="textbox">
-                    <left>320</left>
-                    <top>230</top>
-                    <width>300</width>
+                    <left>300</left>
+                    <top>210</top>
+                    <width>320</width>
                     <height>60</height>
                     <font>font10</font>
                     <scrolltime>200</scrolltime>
@@ -92,9 +119,9 @@
                     <align>left</align>
             </control>
             <control type="textbox">
-                    <left>30</left>
-                    <top>320</top>
-                    <width>600</width>
+                    <left>20</left>
+                    <top>300</top>
+                    <width>620</width>
                     <height>140</height>
                     <font>font12</font>
                     <textcolor>white</textcolor>
@@ -134,7 +161,7 @@
                     <param name="id" value="22" />
                     <param name="width" value="220"/>
                     <param name="label" value="$ADDON[plugin.service.gto 30112]"/>
-                    <param name="onclick_1" value="RunScript(plugin.service.gto,action=record&amp;broadcastid=$INFO[Window(Home).Property(GTO.Info.BroadcastID)]&amp;blob=$INFO[Window(Home).Property(GTO.Info.BlobID)])"/>
+                    <param name="onclick" value="RunScript(plugin.service.gto,action=record&amp;broadcastid=$INFO[Window(Home).Property(GTO.Info.BroadcastID)]&amp;blob=$INFO[Window(Home).Property(GTO.Info.BlobID)])"/>
                     <param name="onclick_2" value="Dialog.Close(all)"/>
                     <param name="visible">!String.IsEmpty(Window(Home).Property(GTO.Info.BroadcastID)) + String.IsEqual(Window(Home).Property(GTO.Info.hasTimer),False)</param>
                 </include>

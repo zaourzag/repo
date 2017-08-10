@@ -70,7 +70,7 @@
 							<width>48</width>
 							<height>48</height>
 							<texture>movie.png</texture>
-							<visible>String.IsEqual(ListItem.Property(isInDB),yes)</visible>
+							<visible>String.IsEqual(ListItem.Property(isInDB),True)</visible>
 						</control>
 					</control>
 				</itemlayout>
@@ -136,7 +136,23 @@
 							<width>48</width>
 							<height>48</height>
 							<texture>movie.png</texture>
-							<visible>String.IsEqual(ListItem.Property(isInDB),yes)</visible>
+							<visible>String.IsEqual(ListItem.Property(isInDB),True)</visible>
+						</control>
+						<control type="image">
+							<left>210</left>
+							<top>22</top>
+							<width>48</width>
+							<height>48</height>
+							<texture>timer.png</texture>
+							<visible>String.IsEqual(ListItem.Property(hasTimer),True) + String.IsEqual(ListItem.Property(isInDB),True)</visible>
+						</control>
+						<control type="image">
+							<left>243</left>
+							<top>22</top>
+							<width>48</width>
+							<height>48</height>
+							<texture>timer.png</texture>
+							<visible>String.IsEqual(ListItem.Property(hasTimer),True) + !String.IsEqual(ListItem.Property(isInDB),True)</visible>
 						</control>
 					</control>
 				</focusedlayout>

@@ -72,6 +72,27 @@
 						<param name="label" value="[COLOR=button_focus]Laufzeit: [/COLOR] $INFO[Window(Home).Property(GTO.Info.RunTime),, Min]" />
 					</include>
 				</control>
+				<control type="grouplist">
+					<orientation>horizontal</orientation>
+					<left>1400</left>
+					<top>770</top>
+					<height>64</height>
+					<width>200</width>
+					<control type="image">
+						<description>Icon isInDB</description>
+						<width>64</width>
+						<height>64</height>
+						<texture border="1">movie.png</texture>
+						<visible>String.IsEqual(Window(Home).Property(GTO.Info.isInDB),True)</visible>
+					</control>
+					<control type="image">
+						<description>Icon hasTimer</description>
+						<width>64</width>
+						<height>64</height>
+						<texture border="1">timer.png</texture>
+						<visible>String.IsEqual(Window(Home).Property(GTO.Info.hasTimer),True)</visible>
+					</control>
+				</control>
             </control>
             <control type="group" >
             <include>OpenClose_Right</include>

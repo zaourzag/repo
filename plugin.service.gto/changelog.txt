@@ -1,3 +1,7 @@
+2.0.22
+- some skin modifications
+- sports scraper added
+
 2.0.18
 - add record capabilities
 

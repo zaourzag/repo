@@ -67,8 +67,8 @@ Als Condition lässt sich das Vorhandensein einer Broadcast-ID verwenden. Danebe
     - ListItem.Label                  Titel der Sendung (Tatort) / Broadcast title
     - ListItem.Title                  dto.
     - ListItem.Label2                 PVR Sender (Das Erste HD) / PVR channel name
-    - ListItem.Art(Thumb)             Screenshot aus dem Titel der Sendung /screenshot of broadcast
-    - ListItem.Art(Logo)              Senderlogo / PVR station logo
+    - ListItem.Art(thumb)             Screenshot aus dem Titel der Sendung /screenshot of broadcast
+    - ListItem.Art(logo)              Senderlogo / PVR station logo
     - ListItem.Genre                  Genre (Krimi, Komödie, Doku etc.) / genre
     - ListItem.Plot                   Beschreibung des Inhaltes der Sendung /content description of broadcast
     - ListItem.Cast                   Darsteller / cast
@@ -84,7 +84,7 @@ Als Condition lässt sich das Vorhandensein einer Broadcast-ID verwenden. Danebe
     if Property(isInDB) = 'True':     Es werden zusätzliche Video-Infolabels gesetzt (additional infolabels for type 'video')
 
     - ListItem.Originaltitle          Originaltitel aus Datenbank / original title from database
-    - ListItem.Art(Fanart)            Fanart
+    - ListItem.Art(fanart)            Fanart
     - ListItem.Trailer                Trailer
     - ListItem.Rating                 Rating
     - ListItem.Userrating             User rating
@@ -103,7 +103,7 @@ Als Condition lässt sich das Vorhandensein einer Broadcast-ID verwenden. Danebe
     - GTO.Info.StartTime              Startzeit (hh:mm) / start time
     - GTO.Info.EndTime                Endzeit (hh:mm) / end time
     - GTO.Info.Cast                   Darsteller / cast
-    - GTO.Info.hasTimer               gesetzter Aufnahmetimer (True/False)
+    - GTO.Info.hasTimer               gesetzter Aufnahmetimer (True/False) /active recording timer
     - GTO.Info.BroadcastID            Broadcast-ID des Timers
     - GTO.Info.isInDB                 'True|False' (ähnlicher) Film existiert bereits in Bibliothek / (similar) movie already exists in database
     - GTO.Info.isInFuture             'True|False' Sendung liegt in der Zukunft / Broadcast is in Future
