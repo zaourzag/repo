@@ -130,7 +130,7 @@ msgstr "Aujourd'hui"
 
 msgctxt "#30222"
 msgid "Tomorrow"
-msgstr ""
+msgstr "Demain"
 
 msgctxt "#30223"
 msgid "Monday"
@@ -163,3 +163,7 @@ msgstr "Dimanche"
 msgctxt "#30230"
 msgid "Enter Date"
 msgstr "Entrer la date"
+
+msgctxt "#30231"
+msgid "Show highlights only"
+msgstr "Afficher uniquement les faits saillants"

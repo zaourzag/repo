@@ -9,13 +9,13 @@ client = Client()
 def run():
     if mode == 'rails':
         dazn.rails_items(client.rails(id, params), id)
-    elif mode == 'rail':
-        dazn.rail_items(client.rail(id, params))
-    elif mode == 'epg':
+    elif 'rail' in mode:
+        dazn.rail_items(client.rail(id, params), mode)
+    elif 'epg' in mode:
         date = params
         if id == 'date':
             date = get_date()
-        dazn.epg_items(client.epg(date), date)
+        dazn.epg_items(client.epg(date), date, mode)
     elif mode == 'play':
         dazn.playback(client.playback(id))
     elif mode == 'play_context':

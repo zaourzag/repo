@@ -22,10 +22,10 @@ class Client:
             'Country': country
         }
 
-        self.RAIL = api_base + 'v1/Rail'
+        self.RAIL = api_base + 'v2/Rail'
         self.RAILS = api_base + 'v2/Rails'
         self.EPG = api_base + 'v1/Epg'
-        self.EVENT = api_base + 'v1/Event'
+        self.EVENT = api_base + 'v2/Event'
         self.PLAYBACK = api_base + 'v1/Playback'
         self.SIGNIN = api_base + 'v3/SignIn'
         self.SIGNOUT = api_base + 'v1/SignOut'

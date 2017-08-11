@@ -15,6 +15,16 @@ class Context:
         }
         self.cm.append( (utfenc(getString(30230)), 'ActivateWindow(Videos, %s)' % build_url(d)) )
         return self.cm
+    
+    def highlights(self, item, mode):
+        d = {
+            'mode': mode,
+            'title': utfenc(item['title']),
+            'id': item.get('id', ''),
+            'params': item.get('params','')
+        }
+        self.cm.append( (utfenc(getString(30231)), 'ActivateWindow(Videos, %s)' % build_url(d)) )
+        return self.cm
         
     def related(self, cm_items): 
         for i in cm_items:

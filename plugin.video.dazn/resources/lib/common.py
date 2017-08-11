@@ -3,6 +3,8 @@
 import json,os,sys,urllib,urlparse
 import time,datetime
 import xbmc,xbmcaddon,xbmcgui,xbmcplugin
+import uuid
+from hashlib import md5
 
 addon_handle = int(sys.argv[1])
 addon = xbmcaddon.Addon()
@@ -51,15 +53,13 @@ def timedelta_total_seconds(timedelta):
         (timedelta.seconds + timedelta.days * 24 * 3600) * 10 ** 6) / 10 ** 6
 
 def utc2local(date_string):
-    if date_string:
+    if str(date_string).startswith('2'):
         utc = datetime.datetime(*(time.strptime(date_string, time_format)[0:6]))
         epoch = time.mktime(utc.timetuple())
         offset = datetime.datetime.fromtimestamp(epoch) - datetime.datetime.utcfromtimestamp(epoch)
         return (utc + offset).strftime(time_format)
 
 def uniq_id(t=1):
-    import uuid
-    from hashlib import md5
     mac_addr = xbmc.getInfoLabel('Network.MacAddress')
     if not ":" in mac_addr: mac_addr = xbmc.getInfoLabel('Network.MacAddress')
     # hack response busy

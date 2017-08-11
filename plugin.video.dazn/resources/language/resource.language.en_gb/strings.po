@@ -163,3 +163,7 @@ msgstr ""
 msgctxt "#30230"
 msgid "Enter Date"
 msgstr ""
+
+msgctxt "#30231"
+msgid "Show highlights only"
+msgstr ""

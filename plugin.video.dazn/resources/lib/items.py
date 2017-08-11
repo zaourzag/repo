@@ -24,7 +24,7 @@ class Items:
             except:
                 pass
 
-    def add_item(self, item):    
+    def add_item(self, item):
         data = {
             'mode': item['mode'],
             'title': item['title'],
@@ -66,6 +66,8 @@ class Items:
     def play_item(self, item, name, context):
         path = item.ManifestUrl
         listitem = xbmcgui.ListItem()
+        listitem.setContentLookup(False)
+        listitem.setMimeType('application/dash+xml')
         listitem.setProperty('inputstreamaddon', 'inputstream.adaptive')
         listitem.setProperty('inputstream.adaptive.manifest_type', 'mpd')
         listitem.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')

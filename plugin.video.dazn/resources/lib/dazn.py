@@ -2,6 +2,7 @@
 
 from common import *
 from items import Items
+from context import Context
 
 items = Items()
 
@@ -12,33 +13,47 @@ def rails_items(data, id):
             'mode': 'epg',
             'title': utfenc(getString(30212)),
             'plot': 'Schedule',
-            'params': 'today'
+            'params': 'today',
         }
+        epg['cm'] = Context().highlights(epg, mode='epg_highlights')
         items.add_item(epg)
     for i in data.get('Rails', []):
-        items.add_item(Rails(i).item)
+        item = Rails(i).item
+        if item.get('id', '') == 'CatchUp':
+            item['cm'] = Context().highlights(item, mode='rail_highlights')
+        items.add_item(item)
     items.list_items()
     
-def rail_items(data, list=True):
+def rail_items(data, mode, list=True):
     from tiles import Tiles
-    from context import Context
+    highlights = True if 'highlights' in mode else False
     focus = data.get('StartPosition', False)
     for i in data.get('Tiles', []):
         context = Context()
-        item = Tiles(i).item       
-        if item.get('related', None):
-            cm_items = []
-            for i in item['related']:
-                if i.get('Videos', []):
-                    cm_items.append(Tiles(i).item)
-            context.related(cm_items)
-        item['cm'] = context.goto(item)
-        items.add_item(item)
+        item = Tiles(i).item
+        if highlights:
+            if item['type'] == 'Highlights':
+                item['cm'] = context.goto(item)
+                items.add_item(item)
+            elif item.get('related', []):
+                for i in item['related']:
+                    if i.get('Videos', []) and i.get('Type', None) == 'Highlights':
+                        _item = Tiles(i).item
+                        _item['cm'] = context.goto(_item)
+                        items.add_item(_item)
+        else:
+            if item.get('related', []):
+                cm_items = []
+                for i in item['related']:
+                    if i.get('Videos', []):
+                        cm_items.append(Tiles(i).item)
+                context.related(cm_items)
+            item['cm'] = context.goto(item)
+            items.add_item(item)
     if list:
         items.list_items(focus)
         
-def epg_items(data, params):
-    from context import Context
+def epg_items(data, params, mode):
     from resources import resources
     update = False if params == 'today' else True
     if data.get('Date'):
@@ -47,7 +62,7 @@ def epg_items(data, params):
 
         def date_item(day):
             return {
-                'mode': 'epg',
+                'mode': mode,
                 'title': '%s (%s)' % (resources(day.strftime('%A')), day.strftime(date_format)),
                 'plot': '%s (%s)' % (resources(date.strftime('%A')), date.strftime(date_format)),
                 'params': day,
@@ -55,7 +70,7 @@ def epg_items(data, params):
             }
 
         items.add_item(date_item(get_prev_day(date)))
-        rail_items(data, list=False)
+        rail_items(data, mode, list=False)
         items.add_item(date_item(get_next_day(date)))
     items.list_items(upd=update)
     
