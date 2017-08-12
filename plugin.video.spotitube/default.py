@@ -43,7 +43,7 @@ translation = addon.getLocalizedString
 region = xbmc.getLanguage(xbmc.ISO_639_1, region=True).split("-")[1]
 icon = os.path.join(addonPath, 'icon.png').decode('utf-8')
 fanart = os.path.join(addonPath, 'fanart.jpg').decode('utf-8')
-pic = os.path.join(addonPath, 'resources/images/')
+pic = os.path.join(addonPath, 'resources/media/')
 blacklist = addon.getSetting("blacklist").split(',')
 infoEnabled = addon.getSetting("showInfo") == "true"
 infoType = addon.getSetting("infoType")
@@ -52,13 +52,14 @@ infoDuration = int(addon.getSetting("infoDuration"))
 useThumbAsFanart = addon.getSetting("useThumbAsFanart") == 'true'
 cachePath = os.path.join(xbmc.translatePath(addon.getSetting("cacheDir")))
 cacheDays = int(addon.getSetting("cacheLong"))
+beatportShowSubGenres = addon.getSetting("beatportShowSubGenres") == 'true'
+deezerSearchSize = str(addon.getSetting("deezerSearchSize"))
+deezerVideoSize = str(addon.getSetting("deezerVideoSize"))
 itunesShowSubGenres = addon.getSetting("itunesShowSubGenres") == 'true'
 itunesForceCountry = addon.getSetting("itunesForceCountry") == 'true'
 itunesCountry = addon.getSetting("itunesCountry")
 spotifyForceCountry = addon.getSetting("spotifyForceCountry") == 'true'
 spotifyCountry = addon.getSetting("spotifyCountry")
-spotifyShowAll = addon.getSetting("spotifyShowAll") == 'true'
-spotifySearchSize = addon.getSetting("spotifySearchSize")
 forceView = addon.getSetting("forceView") == 'true'
 viewIDGenres = str(addon.getSetting("viewIDGenres"))
 viewIDPlaylists = str(addon.getSetting("viewIDPlaylists"))
@@ -79,11 +80,6 @@ if spotifyForceCountry and spotifyCountry:
 else:
 	spotifyRegion = region
 	
-if spotifyShowAll:
-	Province = ""
-else:
-	Province = "&market="+spotifyRegion
-	
 if not os.path.isdir(dataPath):
 	os.makedirs(dataPath)
 	
@@ -99,16 +95,14 @@ elif cachePath != "" and os.path.isdir(cachePath):
 		for root, dirs, files in os.walk(cachePath):
 			for name in files:
 				filename = os.path.join(root, name).decode('utf-8')
-				if os.path.exists(filename):
-					if os.path.getmtime(filename) < now - (60*60*24*xDays): # Check if CACHE-File exists and remove CACHE-File after defined xDays
-						os.unlink(filename)
-	
-	
-def HOME():
-	addDir('[COLOR orangered]<<<<< [/COLOR]'+translation(40201)+'[COLOR orangered] <<<<<[/COLOR]', "", "spotifyMain", pic+'spotify.png')
-	
+				try:
+					if os.path.exists(filename):
+						if os.path.getmtime(filename) < now - (60*60*24*xDays): # Check if CACHE-File exists and remove CACHE-File after defined xDays
+							os.unlink(filename)
+				except: pass
 	
 def index():
+	addDir(translation(40203), "", "SearchDeezer", pic+'deepsearch.gif')
 	addDir(translation(40101), "", "bpMain", pic+'beatport.png')
 	addDir(translation(40102), "", "billboardMain", pic+'billboard.png')
 	addDir(translation(40103), "", "hypemMain", pic+'hypem.png')
@@ -118,22 +112,27 @@ def index():
 	addDir(translation(40202), "", "Settings", pic+'settings.png')
 	xbmcplugin.endOfDirectory(pluginhandle)
 	
-	
 def bpMain():
-	addAutoPlayDir(translation(40135), urlMainBP+"/top-100", "listBP", pic+'beatport.png', "", "browse")
 	content = cache('https://pro.beatport.com', 30)
-	content = content[content.find('<div class="mobile-menu-body">')+1:]
+	content = content[content.find('<span class="genres-text">Genres</span>')+1:]
 	content = content[:content.find('<!-- End Mobile Touch Menu -->')]
-	spl = content.split('class="genre-drop-list-item"')
-	for i in range(1,len(spl),1):
-		entry = spl[i]
-		genreID = re.compile('<a href="(.*?)" class="genre"', re.DOTALL).findall(entry)[0]
-		title = re.compile('data-name=".+?">(.*?)</a>', re.DOTALL).findall(entry)[0]
-		name = cleanTitle(title)
-		fullUrl = 'https://pro.beatport.com%s/top-100' %genreID
-		addAutoPlayDir(name, fullUrl, "listBP", pic+'beatport.png', "", "browse")
+	match = re.compile('<a href="(.*?)" class="(.*?)" data-name=".+?">(.*?)</a>', re.DOTALL).findall(content)
+	oTitle = translation(40135)
+	addAutoPlayDir(oTitle, urlMainBP+"/top-100", "listBP", pic+'beatport.png', "", "browse")
+	for genreID, type, title in match:
+		topUrl = urlMainBP+genreID+'/top-100'
+		subUrl = urlMainBP+genreID
+		title = cleanTitle(title)
+		if not 'subgenre' in type:
+			if beatportShowSubGenres:
+				title = '[COLOR FF1E90FF]'+title+'[/COLOR]'
+			addAutoPlayDir(title, topUrl, "listBP", pic+'beatport.png', "", "browse")
+		elif beatportShowSubGenres:
+			title = '     '+title
+			addAutoPlayDir(title, subUrl, "listBP", pic+'beatport.png', "", "browse")
 	xbmcplugin.endOfDirectory(pluginhandle)
-	
+	if forceView:
+		xbmc.executebuiltin('Container.SetViewMode('+viewIDGenres+')')
 	
 def listBP(type, url, limit):
 	if type == "play":
@@ -148,19 +147,34 @@ def listBP(type, url, limit):
 		count += 1
 		entry = spl[i]
 		artist = re.compile('data-artist=".+?">(.*?)</a>', re.DOTALL).findall(entry)[0]
-		song = re.compile('title="(.*?)"', re.DOTALL).findall(entry)[0]
-		if "(Original Mix)" in song:
-			song = song.split('(Original Mix)')[0]
+		song = re.compile('<span class="buk-track-primary-title" title=".+?">(.*?)</span>', re.DOTALL).findall(entry)[0]
+		remix = re.compile('<span class="buk-track-remixed">(.*?)</span>', re.DOTALL).findall(entry)
+		if "(original mix)" in song.lower():
+			song = song.lower().split('(original mix)')[0]
 		song = cleanTitle(song)
-		if "(feat." in song and " feat." in song:
+		if "(feat." in song.lower() and " feat." in song.lower():
 			song = song.split(')')[0]+')'
-		elif not "(feat." in song and " feat." in song:
-			firstTitle = song.split(' feat.')[0]
-			secondTitle = song.split(' feat.')[1]
+		elif not "(feat." in song.lower() and " feat." in song.lower():
+			firstTitle = song.lower().split(' feat.')[0]
+			secondTitle = song.lower().split(' feat.')[1]
 			song = firstTitle+' (feat.'+secondTitle+')'
-		title = cleanTitle(artist+" - "+song)
-		thumb = re.compile('data-src="(https:.*?.jpg)"', re.DOTALL).findall(entry)[0]
-		thumb = thumb.replace("/30x30/","/500x500/").replace("/60x60/","/500x500/").replace("/95x95/","/500x500/").replace("/250x250/","/500x500/")
+		if remix and not "original" in remix[0].lower():
+			newRemix = remix[0].replace('[', '').replace(']', '')
+			song += ' ['+newRemix.strip()+']'
+		title = cleanTitle(artist.strip()+" - "+song.strip())
+		newName = title
+		try:
+			oldDate = re.compile('<p class="buk-track-released">(.*?)</p>', re.DOTALL).findall(entry)[0]
+			convert = time.strptime(oldDate,'%Y-%m-%d')
+			newDate = time.strftime('%d.%m.%Y',convert)
+			newName += '   [COLOR deepskyblue]['+str(newDate)+'][/COLOR]'
+		except: pass
+		try:
+			photo = re.compile('data-src="(https:.*?.jpg)"', re.DOTALL).findall(entry)[0]
+			thumb = photo.split('image_size_hq/')[0]+'image/'+photo.split('/')[-1]
+			#thumb = thumb.replace("/30x30/","/500x500/").replace("/60x60/","/500x500/").replace("/95x95/","/500x500/").replace("/250x250/","/500x500/")
+		except:
+			thumb = pic+'noimage.png'
 		filtered = False
 		for entry2 in blacklist:
 			if entry2.strip().lower() and entry2.strip().lower() in title.lower():
@@ -168,7 +182,7 @@ def listBP(type, url, limit):
 		if filtered:
 			continue
 		if type == "browse":
-			name = '[B][COLOR chartreuse]'+str(count)+' •  [/COLOR]'+title+'[/B]'
+			name = '[COLOR chartreuse]'+str(count)+' •  [/COLOR]'+newName
 			addLink(name, title.replace(" - ", " "), "playYTByTitle", thumb)
 		else:
 			url = "plugin://"+addonID+"/?url="+urllib.quote_plus(title.replace(" - ", " "))+"&mode=playYTByTitle"
@@ -187,7 +201,6 @@ def listBP(type, url, limit):
 			playlist.add(url, listitem)
 		xbmc.Player().play(playlist)
 	
-	
 def billboardMain():
 	addAutoPlayDir(translation(40107), urlMainBB+"/charts/hot-100", "listBillboardCharts_HTML", pic+'billboard.png', "", "browse")
 	addAutoPlayDir(translation(40108), "Top 140 in Emerging", "listBillboardCharts_NEW", pic+'billboard.png', "", "browse")
@@ -198,12 +211,10 @@ def billboardMain():
 	addDir(translation(40113), "other", "listBillboardChartsTypes", pic+'billboard.png', "", "browse")
 	xbmcplugin.endOfDirectory(pluginhandle)
 	
-	
 def listBillboardArchiveMain():
 	for i in range(datetime.date.today().year,1957,-1):
 		addAutoPlayDir(str(i), urlMainBB+"/archive/charts/"+str(i), "listBillboardArchive", pic+'billboard.png', "", "browse")
 	xbmcplugin.endOfDirectory(pluginhandle)
-	
 	
 def listBillboardArchive(url):
 	content = cache(url, 30)
@@ -212,7 +223,8 @@ def listBillboardArchive(url):
 		if not "billboard 200" in title.lower() and not "album" in title.lower():
 			addAutoPlayDir(cleanTitle(title), urlMainBB+url, "listBillboardArchiveVideos", pic+'billboard.png', "", "browse")
 	xbmcplugin.endOfDirectory(pluginhandle)
-	
+	if forceView:
+		xbmc.executebuiltin('Container.SetViewMode('+viewIDPlaylists+')')
 	
 def listBillboardArchiveVideos(type, url, limit):
 	if type == "play":
@@ -227,11 +239,15 @@ def listBillboardArchiveVideos(type, url, limit):
 	pos = 1
 	for i in range(1,len(spl),1):
 		entry = spl[i]
-		song = re.compile('>(.*?)</td>', re.DOTALL).findall(entry)[0]
 		try:
-			artist = re.compile('<td class="views-field views-field-field-chart-item-artist".+?<a href="/artist/.+?">(.*?)</a>', re.DOTALL).findall(entry)[0]
+			song = re.compile('>\s+(.*?)</td>', re.DOTALL).findall(entry)[0]
+		except: pass
+		try:
+			artist = re.compile('<td class="views-field views-field-field-chart-item-arti.+?">\s+<a href="/artist/.+?">(.*?)</a> </td>', re.DOTALL).findall(entry)[0]
 		except:
-			artist = re.compile('<td class="views-field views-field-field-chart-item-artist".+?>(.*?)</td>', re.DOTALL).findall(entry)[0]
+			try:
+				artist = re.compile('<td class="views-field views-field-field-chart-item-arti.+?">(.*?)</td>\s+</tr>', re.DOTALL).findall(entry)[0]
+			except: pass
 		if song.strip().lower() != artist.strip().lower():
 			title = cleanTitle(artist.strip()+" - "+song.strip())
 			newTitle = song.strip().lower()
@@ -265,7 +281,6 @@ def listBillboardArchiveVideos(type, url, limit):
 			playlist.add(url, listitem)
 		xbmc.Player().play(playlist)
 	
-	
 def listBillboardChartsTypes(type):
 	if type == "genre":
 		addAutoPlayDir("Pop", urlMainBB+"/charts/pop-songs", "listBillboardCharts_HTML", pic+'billboard.png', "", "browse")
@@ -296,7 +311,8 @@ def listBillboardChartsTypes(type):
 		addAutoPlayDir(translation(40125), urlMainBB+"/charts/on-demand-streaming-songs", "listBillboardCharts_HTML", pic+'billboard.png', "", "browse")
 		addAutoPlayDir("TOP on Twitter", urlMainBB+"/charts/twitter-emerging-artists", "listBillboardCharts_HTML", pic+'billboard.png', "", "browse")
 	xbmcplugin.endOfDirectory(pluginhandle)
-	
+	if forceView:
+		xbmc.executebuiltin('Container.SetViewMode('+viewIDGenres+')')
 	
 def listBillboardCharts_HTML(type, url, limit):
 	if type == "play":
@@ -331,7 +347,7 @@ def listBillboardCharts_HTML(type, url, limit):
 		if filtered:
 			continue
 		if type == "browse":
-			name = '[B][COLOR chartreuse]'+str(position)+' •  [/COLOR]'+title+'[/B]'
+			name = '[COLOR chartreuse]'+str(position)+' •  [/COLOR]'+title
 			addLink(name, title.replace(" - ", " "), "playYTByTitle", thumb)
 		else:
 			url = "plugin://"+addonID+"/?url="+urllib.quote_plus(title.replace(" - ", " "))+"&mode=playYTByTitle"
@@ -350,13 +366,15 @@ def listBillboardCharts_HTML(type, url, limit):
 			playlist.add(url, listitem)
 		xbmc.Player().play(playlist)
 	
-	
 def listBillboardCharts_NEW(type, url, limit):
 	if type == "play":
 		musicVideos = []
 		playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
 		playlist.clear()
-	content = cache('http://realtime.billboard.com/', 1)
+	if "Top 140 in Emerging" in url:
+		content = cache('http://realtime.billboard.com/?chart=emergingartists', 1)
+	elif "Top 140 in Overall" in url:
+		content = cache('http://realtime.billboard.com/?chart=last24hours', 1)
 	content = content[content.find("<h1>"+url+"</h1>"):]
 	content = content[:content.find("</table>")]
 	match = re.compile('<tr>.+?<td>(.*?)</td>.+?<td><a href=".+?">(.*?)</a></td>.+?<td>(.*?)</td>.+?<td>(.*?)</td>.+?</tr>', re.DOTALL).findall(content)
@@ -372,7 +390,7 @@ def listBillboardCharts_NEW(type, url, limit):
 		if filtered:
 			continue
 		if type == "browse":
-			name = '[B][COLOR chartreuse]'+str(position)+' •  [/COLOR]'+title+'[/B]'
+			name = '[COLOR chartreuse]'+str(position)+' •  [/COLOR]'+title
 			addLink(name, title.replace(" - ", " "), "playYTByTitle", "")
 		else:
 			url = "plugin://"+addonID+"/?url="+urllib.quote_plus(title.replace(" - ", " "))+"&mode=playYTByTitle"
@@ -391,38 +409,37 @@ def listBillboardCharts_NEW(type, url, limit):
 			playlist.add(url, listitem)
 		xbmc.Player().play(playlist)
 	
-	
 def hypemMain():
 	addAutoPlayDir(translation(40136), urlMainHypem+"/popular?ax=1&sortby=shuffle", 'listHypem', pic+'hypem.png', "", "browse")
 	addAutoPlayDir(translation(40137), urlMainHypem+"/popular/lastweek?ax=1&sortby=shuffle", 'listHypem', pic+'hypem.png', "", "browse")
 	addAutoPlayDir(translation(40138), "", 'listTimeMachine', pic+'hypem.png', "", "browse")
 	xbmcplugin.endOfDirectory(pluginhandle)
 	
-	
 def listHypem(type, url, limit):
 	musicVideos = []
 	if type == "play":
 		playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
 		playlist.clear()
-	if url == urlMainHypem+"/popular?ax=1&sortby=shuffle":
-		content = cache(url, 0)
-	else:
-		content = cache(url, 1)
+	content = cache(url, 1)
 	match = re.compile('class="rank">(.*?)</h3>', re.DOTALL).findall(content)
 	spl = content.split('<span class="rank"')
 	for i in range(1,len(spl),1):
 		entry = spl[i]
 		rank = re.compile('>(.*?)</span>', re.DOTALL).findall(entry)[0]
 		try:
-			thumb = re.compile('style="background.+?(http://static-ak.hypem.*?jpg)', re.DOTALL).findall(entry)[0].replace('_120.jpg', '_500.jpg')
+			photo = re.compile('<span style="background.+?http://static-ak.hypem([^"]+);', re.DOTALL).findall(entry)[0]
+			if "/solid_color" in photo and ".jpg" in photo:
+				thumb = "http://static-ak.hypem.net"+photo.split('/solid_color')[1].replace(')', '') #.replace('_320.jpg)', '_500.jpg')
+			else:
+				thumb = pic+'noimage.png'
 		except:
 			thumb = pic+'noimage.png'
 		artist = re.compile('href="/artist/.+?">(.*?)</a>', re.DOTALL).findall(entry)[0]
-		title = re.compile('class="base-title">(.*?)</span>', re.DOTALL).findall(entry)[0]
+		song = re.compile('class="base-title">(.*?)</span>', re.DOTALL).findall(entry)[0]
 		remix = re.compile('class="remix-link">(.*?)</span>', re.DOTALL).findall(entry)
 		if remix:
-			title += ' ('+remix[0]+')'
-		title = cleanTitle(artist.strip()+" - "+title.strip())
+			song += ' ['+remix[0].strip()+']'
+		title = cleanTitle(artist.strip()+" - "+song.strip())
 		filtered = False
 		for entry2 in blacklist:
 			if entry2.strip().lower() and entry2.strip().lower() in title.lower():
@@ -437,9 +454,11 @@ def listHypem(type, url, limit):
 	musicVideos = sorted(musicVideos, key=itemgetter(0))
 	if type == "browse":
 		for rank, title, url, thumb in musicVideos:
-			name = '[B][COLOR chartreuse]'+str(rank)+' •  [/COLOR]'+title+'[/B]'
+			name = '[COLOR chartreuse]'+str(rank)+' •  [/COLOR]'+title
 			addLink(name, url.replace(" - ", " "), "playYTByTitle", thumb)
 		xbmcplugin.endOfDirectory(pluginhandle)
+		if forceView:
+			xbmc.executebuiltin('Container.SetViewMode('+viewIDVideos+')')
 	else:
 		if limit:
 			musicVideos = musicVideos[:int(limit)]
@@ -448,7 +467,6 @@ def listHypem(type, url, limit):
 			listitem = xbmcgui.ListItem(title, thumbnailImage=thumb)
 			playlist.add(url, listitem)
 		xbmc.Player().play(playlist)
-	
 	
 def listTimeMachine():
 	for i in range(1, 210, 1):
@@ -460,7 +478,8 @@ def listTimeMachine():
 		month = months[int(dt.strftime("%m")) - 1]
 		addAutoPlayDir(dt.strftime("%d. %b - %Y").replace("Mar", translation(40156)).replace("May", translation(40157)).replace("Oct", translation(40158)).replace("Dec", translation(40159)), urlMainHypem+"/popular/week:"+month+"-"+dt.strftime("%d-%Y")+"?ax=1&sortby=shuffle", 'listHypem', pic+'hypem.png', "", "browse")
 	xbmcplugin.endOfDirectory(pluginhandle)
-	
+	if forceView:
+		xbmc.executebuiltin('Container.SetViewMode('+viewIDPlaylists+')')
 	
 def itunesMain():
 	content = cache("https://itunes.apple.com/"+iTunesRegion+"/genre/music/id34", 30)
@@ -468,20 +487,19 @@ def itunesMain():
 	content = content[:content.find('</div>')]
 	match = re.compile('<li><a href="https://itunes.apple.com/.+?/genre/.+?/id(.*?)"(.*?)title=".+?">(.*?)</a>', re.DOTALL).findall(content)
 	oTitle = translation(40135)
-	if itunesShowSubGenres:
-		oTitle = '[B]'+oTitle+'[/B]'
 	addAutoPlayDir(oTitle, "0", "listItunesVideos", pic+'itunes.png', "", "browse")
 	for genreID, type, title in match:
 		title = cleanTitle(title)
 		if 'class="top-level-genre"' in type:
 			if itunesShowSubGenres:
-				title = '[B][COLOR FF1E90FF]'+title+'[/COLOR][/B]'
+				title = '[COLOR FF1E90FF]'+title+'[/COLOR]'
 			addAutoPlayDir(title, genreID, "listItunesVideos", pic+'itunes.png', "", "browse")
 		elif itunesShowSubGenres:
 			title = '     '+title
 			addAutoPlayDir(title, genreID, "listItunesVideos", pic+'itunes.png', "", "browse")
 	xbmcplugin.endOfDirectory(pluginhandle)
-	
+	if forceView:
+		xbmc.executebuiltin('Container.SetViewMode('+viewIDGenres+')')
 	
 def listItunesVideos(type, genreID, limit):
 	if type == "play":
@@ -500,8 +518,8 @@ def listItunesVideos(type, genreID, limit):
 		for item in response['feed']['entry']:
 			artist = item['im:artist']['label'].encode('utf-8')
 			song = item['im:name']['label'].encode('utf-8')
-			if " (" in song:
-				song = song[:song.rfind(' (')]
+			#if " (" in song:
+				#song = song[:song.rfind(' (')]
 			title = cleanTitle(artist.strip()+" - "+song.strip())
 			newTitle = song.strip().lower()
 			if newTitle in musicIsolated:
@@ -511,10 +529,10 @@ def listItunesVideos(type, genreID, limit):
 				artist = artist[:30]
 			if len(song) > 30:
 				song = song[:30]
-			shortenTitle = artist.strip()+" - "+song.strip()
+			shortenTitle = cleanTitle(artist.strip()+" - "+song.strip())
 			try:
 				thumb = item['im:image'][2]['label']
-				#thumb = thumb.split('/170x170')[0]+"/400x400bb-85.jpg"
+				#thumb = thumb.split('/170x170')[0]+"/320x320bb-85.jpg"
 			except:
 				thumb = pic+'noimage.png'
 			aired = item['im:releaseDate']['attributes']['label']
@@ -546,7 +564,6 @@ def listItunesVideos(type, genreID, limit):
 	except:
 		pass
 	
-	
 def ocMain():
 	addAutoPlayDir(translation(40139), urlMainOC+"/charts/singles-chart/", "listOC", pic+'official.png', "", "browse")
 	addAutoPlayDir(translation(40140), urlMainOC+"/charts/uk-top-40-singles-chart/", "listOC", pic+'official.png', "", "browse")
@@ -564,7 +581,8 @@ def ocMain():
 	addAutoPlayDir("R&B", urlMainOC+"/charts/r-and-b-singles-chart/", "listOC", pic+'official.png', "", "browse")
 	addAutoPlayDir(translation(40152), urlMainOC+"/charts/rock-and-metal-singles-chart/", "listOC", pic+'official.png', "", "browse")
 	xbmcplugin.endOfDirectory(pluginhandle)
-	
+	if forceView:
+		xbmc.executebuiltin('Container.SetViewMode('+viewIDGenres+')')
 	
 def listOC(type, url, limit):
 	if type == "play":
@@ -579,11 +597,13 @@ def listOC(type, url, limit):
 	for i in range(1,len(spl),1):
 		count += 1
 		entry=spl[i]
-		img = re.findall('<img src="(.*?)"',entry,re.S)[0]
-		if "images-amazon" in img:
-			thumb = img.split('img/small?url=')[1]
+		photo = re.findall('<img src="(.*?)"',entry,re.S)[0]
+		if "images-amazon" in photo or "coverartarchive.org" in photo:
+			thumb = photo.split('img/small?url=')[1]
+		elif "/img/small?url=/images/artwork/" in photo:
+			thumb = photo.replace("/img/small?url=", "")
 		else:
-			thumb = img.replace("img/small", "img/big")
+			thumb = pic+'noimage.png'
 		song = re.findall('<a href=".+?">(.*?)</a>',entry,re.S)[0]
 		artist = re.findall('<a href=".+?">(.*?)</a>',entry,re.S)[1]
 		if "/" in artist:
@@ -596,7 +616,7 @@ def listOC(type, url, limit):
 		if filtered:
 			continue
 		if type == "browse":
-			name = '[B][COLOR chartreuse]'+str(count)+' •  [/COLOR]'+title.title()+'[/B]'
+			name = '[COLOR chartreuse]'+str(count)+' •  [/COLOR]'+title.title()
 			addLink(name, title.replace(" - ", " "), "playYTByTitle", thumb)
 		else:
 			url = "plugin://"+addonID+"/?url="+urllib.quote_plus(title.replace(" - ", " "))+"&mode=playYTByTitle"
@@ -615,14 +635,11 @@ def listOC(type, url, limit):
 			playlist.add(url, listitem)
 		xbmc.Player().play(playlist)
 	
-	
 def spotifyMain():
 	addDir(translation(40153), "https://api.tunigo.com/v3/space/toplists?region="+spotifyRegion+"&page=0&per_page=50&platform=web", "listSpotifyPlaylists", pic+'spotify.png')
 	addDir(translation(40154), "https://api.tunigo.com/v3/space/featured-playlists?region="+spotifyRegion+"&page=0&per_page=50&dt="+datetime.datetime.now().strftime("%Y-%m-%dT%H:%M").replace(":","%3A")+"%3A00&platform=web", "listSpotifyPlaylists", pic+'spotify.png')
 	addDir(translation(40155), "https://api.tunigo.com/v3/space/genres?region="+spotifyRegion+"&per_page=1000&platform=web", "listSpotifyGenres", pic+'spotify.png')
-	addDir(translation(40203), "", "SearchSpotify", pic+'searching.jpg')
 	xbmcplugin.endOfDirectory(pluginhandle)
-	
 	
 def listSpotifyGenres(url):
 	content = cache(url, 30)
@@ -642,7 +659,6 @@ def listSpotifyGenres(url):
 	if forceView:
 		xbmc.executebuiltin('Container.SetViewMode('+viewIDGenres+')')
 	
-	
 def listSpotifyPlaylists(url):
 	content = cache(url, 1)
 	response = json.loads(content)
@@ -654,7 +670,7 @@ def listSpotifyPlaylists(url):
 		uriUrl = item['playlist']['uri']
 		try:
 			thumb = item['playlist']['image']
-			if (not "http://" in thumb or not "https://" in thumb):
+			if not thumb.startswith("http"):
 				#thumb = "https://u.scdn.co/images/pl/default/"+thumb
 				thumb = "https://i.scdn.co/image/"+thumb
 		except:
@@ -670,7 +686,6 @@ def listSpotifyPlaylists(url):
 	if forceView:
 		xbmc.executebuiltin('Container.SetViewMode('+viewIDPlaylists+')')
 	
-	
 def listSpotifyVideos(type, url, limit):
 	musicVideos = []
 	musicIsolated = set()
@@ -684,9 +699,9 @@ def listSpotifyVideos(type, url, limit):
 		spl = content.split('music-paused item')
 		x=0
 	else:
-		kurz_inhalt = content[content.find('<ul class="track-list">')+1:]
-		kurz_inhalt = kurz_inhalt[:kurz_inhalt.find('<button id')]
-		spl = kurz_inhalt.split('class="track-row"')
+		result = content[content.find('<ul class="track-list">')+1:]
+		result = result[:result.find('<button id')]
+		spl = result.split('class="track-row"')
 		x=1
 	for i in range(1,len(spl),1):
 		entry = spl[i]
@@ -698,11 +713,10 @@ def listSpotifyVideos(type, url, limit):
 			artist = re.compile('class="artist.+?>(.*?)<', re.DOTALL).findall(entry)[0]
 		else:
 			artist = re.compile('data-artists="(.*?)"', re.DOTALL).findall(entry)[0]
-		#song = song[song.find(".")+1:].strip()
-		if "(Original Mix)" in song:
-			song = song.split('(Original Mix)')[0]
-		if " [" in song:
-			song = song.split(' [')[0]
+		if "(original mix)" in song.lower():
+			song = song.lower().split('(original mix)')[0]
+		#if " [" in song:
+			#song = song.split(' [')[0]
 		if " - " in song:
 			firstTitle = song[:song.rfind(' - ')]
 			secondTitle = song[song.rfind(' - ')+3:]
@@ -711,10 +725,8 @@ def listSpotifyVideos(type, url, limit):
 			artist = artist.split(',')[0]
 		if artist.islower():
 			artist = artist.title()
-		if artist == "":
-			continue
-		title = cleanTitle(artist+" - "+song)
-		if title in musicIsolated:
+		title = cleanTitle(artist.strip()+" - "+song.strip())
+		if title in musicIsolated or artist == "":
 			continue
 		musicIsolated.add(title)
 		try:
@@ -740,7 +752,7 @@ def listSpotifyVideos(type, url, limit):
 	if type == "browse":
 		for rank, title, url, thumb in musicVideos:
 			count += 1
-			name = '[B][COLOR chartreuse]'+str(count)+' •  [/COLOR]'+title+'[/B]'
+			name = '[COLOR chartreuse]'+str(count)+' •  [/COLOR]'+title
 			addLink(name, url.replace(" - ", " "), "playYTByTitle", thumb)
 		xbmcplugin.endOfDirectory(pluginhandle)
 		if forceView:
@@ -754,198 +766,271 @@ def listSpotifyVideos(type, url, limit):
 			playlist.add(url, listitem)
 		xbmc.Player().play(playlist)
 	
-	
-def SearchSpotify():
-	dateiGefunden = False
+def SearchDeezer():
+	someReceived = False
 	dialog = xbmcgui.Dialog()
 	word = dialog.input(translation(40204), type=xbmcgui.INPUT_ALPHANUM)
 	word = urllib.quote(word, safe='')
 	if word == "": return
-	artistSEARCH = cache("https://api.spotify.com/v1/search?query="+word+"&type=artist"+Province+"&offset=0&limit="+spotifySearchSize, 1)
-	trackSEARCH = cache("https://api.spotify.com/v1/search?query="+word+"&type=track"+Province+"&offset=0&limit="+spotifySearchSize, 1)
-	albumSEARCH = cache("https://api.spotify.com/v1/search?query="+word+"&type=album"+Province+"&offset=0&limit="+spotifySearchSize, 1)
-	userlistSEARCH = cache("https://api.spotify.com/v1/search?query="+word+"&type=playlist&offset=0&limit="+spotifySearchSize, 1)
+	artistSEARCH = cache("http://api.deezer.com/2.0/search/artist?q="+word+"&limit="+deezerSearchSize+"&strict=on&output=json&index=0", 1)
+	trackSEARCH = cache("http://api.deezer.com/2.0/search/track?q="+word+"&limit="+deezerSearchSize+"&strict=on&output=json&index=0", 1)
+	albumSEARCH = cache("http://api.deezer.com/2.0/search/album?q="+word+"&limit="+deezerSearchSize+"&strict=on&output=json&index=0", 1)
+	playlistSEARCH = cache("http://api.deezer.com/2.0/search/playlist?q="+word+"&limit="+deezerSearchSize+"&strict=on&output=json&index=0", 1)
+	userlistSEARCH = cache("http://api.deezer.com/2.0/search/user?q="+word+"&limit="+deezerSearchSize+"&strict=on&output=json&index=0", 1)
 	strukturARTIST = json.loads(artistSEARCH)
-	if len(strukturARTIST['artists']['items']) > 0:
-		addDir('[B][COLOR orangered] •  •  •  [/COLOR]ARTIST[COLOR orangered]  •  •  •[/COLOR][/B]', word, "listSpotifyArtists", pic+'searchartists.png')
-		dateiGefunden = True
+	if strukturARTIST['total'] != 0:
+		addDir('[B][COLOR orangered] •  •  •  [/COLOR]ARTIST[COLOR orangered]  •  •  •[/COLOR][/B]', word, "listDeezerArtists", pic+'searchartists.png')
+		someReceived = True
 	strukturTRACK = json.loads(trackSEARCH)
-	if len(strukturTRACK['tracks']['items']) > 0:
-		addDir('[B][COLOR orangered] •  •  •  [/COLOR]SONG[COLOR orangered]     •  •  •[/COLOR][/B]', word, "listSpotifyTracks", pic+'searchsongs.png')
-		dateiGefunden = True
+	if strukturTRACK['total'] != 0:
+		addDir('[B][COLOR orangered] •  •  •  [/COLOR]SONG[COLOR orangered]     •  •  •[/COLOR][/B]', word, "listDeezerTracks", pic+'searchsongs.png')
+		someReceived = True
 	strukturALBUM = json.loads(albumSEARCH)
-	if len(strukturALBUM['albums']['items']) > 0:
-		addDir('[B][COLOR orangered] •  •  •  [/COLOR]ALBUM[COLOR orangered]  •  •  •[/COLOR][/B]', word, "listSpotifyAlbums", pic+'searchalbums.png')
-		dateiGefunden = True
+	if strukturALBUM['total'] != 0:
+		addDir('[B][COLOR orangered] •  •  •  [/COLOR]ALBUM[COLOR orangered]  •  •  •[/COLOR][/B]', word, "listDeezerAlbums", pic+'searchalbums.png')
+		someReceived = True
+	strukturPLAYLIST = json.loads(playlistSEARCH)
+	if strukturPLAYLIST['total'] != 0:
+		addDir('[B][COLOR orangered] •  •  •  [/COLOR]PLAYLIST[COLOR orangered]  •  •  •[/COLOR][/B]', word, "listDeezerPlaylists", pic+'searchplaylists.png')
+		someReceived = True
 	strukturUSERLIST = json.loads(userlistSEARCH)
-	if len(strukturUSERLIST['playlists']['items']) > 0:
-		addDir('[B][COLOR orangered] •  •  •  [/COLOR]PLAYLIST  (not public)[COLOR orangered]  •  •  •[/COLOR][/B]', word, "listSpotifyUserlists", pic+'searchuserlists.png')
-		dateiGefunden = True
-	if not dateiGefunden:
-		addDir(translation(40205), word, "spotifyMain", pic+'noresults.png')
+	if strukturUSERLIST['total'] != 0:
+		addDir('[B][COLOR orangered] •  •  •  [/COLOR]USER[COLOR orangered]     •  •  •[/COLOR][/B]', word, "listDeezerUserlists", pic+'searchuserlists.png')
+		someReceived = True
+	if not someReceived:
+		addDir(translation(40205), word, "", pic+'noresults.png')
 	xbmcplugin.endOfDirectory(pluginhandle)
 	
-	
-def listSpotifyArtists(url):
-	HOME()
+def listDeezerArtists(url):
+	musicVideos = []
 	musicIsolated = set()
-	if 'https://api.spotify.com' in url:
+	if url.startswith('http://api.deezer.com/2.0/search/'):
 		Forward = cache(url, 1)
-		x=0
+		response = json.loads(Forward)
 	else:
-		Original = cache("https://api.spotify.com/v1/search?query="+url+"&type=artist"+Province+"&offset=0&limit="+spotifySearchSize, 1)
-		x=1
-	if x == 1:
-		videos = json.loads(Original)
-	else:
-		videos = json.loads(Forward)
-	for video in videos['artists']['items']:
-		artist = cleanTitle(video['name']).encode('utf-8')
-		if artist.strip().lower() in musicIsolated or 'playlist' in artist.strip().lower() or artist == "":
+		Original = cache("http://api.deezer.com/2.0/search/artist?q="+url+"&limit="+deezerSearchSize+"&strict=on&output=json&index=0", 1)
+		response = json.loads(Original)
+	for item in response['data']:
+		artist = cleanTitle(item["name"].encode('utf-8'))
+		if artist.strip().lower() in musicIsolated or artist == "":
 			continue
 		musicIsolated.add(artist)
 		try:
-			thumb = video['images'][0]['url']
+			thumb = item["picture_big"].encode('utf-8')
+			if thumb.endswith('artist//500x500-000000-80-0-0.jpg'):
+				thumb = pic+'noavatar.gif'
 		except:
-			thumb = pic+'noimage.png'
-		rating = video['popularity']
-		uriUrl = video['uri']
-		liked = video['followers']['total']
-		different = " [B][COLOR deepskyblue][Popular: "+str(rating)+"[/COLOR] - [COLOR FFFFA500]Followed: "+str(liked)+"][/COLOR][/B]"
-		name = ("{:50}{:^7}".format(artist, different))
-		addAutoPlayDir(name, uriUrl, "listSpotifyVideos", thumb, "", "browse")
+			thumb = pic+'noavatar.gif'
+		liked = item['nb_fan']
+		tracksUrl = item['tracklist'].encode('utf-8').split('top?limit=')[0]+"top?limit="+deezerVideoSize+"&index=0"
+		musicVideos.append([int(liked), artist, tracksUrl, thumb])
+	musicVideos = sorted(musicVideos, key=itemgetter(0), reverse=True)
+	for liked, artist, tracksUrl, thumb in musicVideos:
+		name = artist+"   [COLOR FFFFA500][Fans: "+str(liked).strip()+"][/COLOR]"
+		addAutoPlayDir(name, tracksUrl, "listDeezerVideos", thumb, "", "browse")
 	try:
-		nextPage = videos['artists']['next']
-		if 'https://api.spotify.com' in nextPage:
-			addDir(translation(40206), nextPage, "listSpotifyArtists", pic+'nextpage.png')
-	except:
-		pass
+		nextPage = response['next']
+		if 'http://api.deezer.com/2.0/search/' in nextPage:
+			addDir(translation(40206), nextPage, "listDeezerArtists", pic+'nextpage.png')
+	except: pass
 	xbmcplugin.endOfDirectory(pluginhandle)
+	if forceView:
+		xbmc.executebuiltin('Container.SetViewMode('+viewIDPlaylists+')')
 	
-	
-def listSpotifyTracks(url):
-	HOME()
+def listDeezerTracks(url):
 	musicIsolated = set()
-	if 'https://api.spotify.com' in url:
+	if url.startswith('http://api.deezer.com/2.0/search/'):
 		Forward = cache(url, 1)
-		x=0
+		response = json.loads(Forward)
 	else:
-		Original = cache("https://api.spotify.com/v1/search?query="+url+"&type=track"+Province+"&offset=0&limit="+spotifySearchSize, 1)
-		x=1
-	if x == 1:
-		videos = json.loads(Original)
-	else:
-		videos = json.loads(Forward)
-	for video in videos['tracks']['items']:
-		artist = video['artists'][0]['name'].encode('utf-8')
-		song = video['name'].encode('utf-8')
-		title = cleanTitle(artist+" - "+song)
+		Original = cache("http://api.deezer.com/2.0/search/track?q="+url+"&limit="+deezerSearchSize+"&strict=on&output=json&index=0", 1)
+		response = json.loads(Original)
+	for item in response['data']:
+		artist = item['artist']['name'].encode('utf-8')
+		song = item['title'].encode('utf-8')
+		title = cleanTitle(artist.strip()+" - "+song.strip())
 		if title in musicIsolated or artist == "":
 			continue
 		musicIsolated.add(title)
-		album = video['album']['name'].encode('utf-8')
+		album = cleanTitle(item['album']['title'].encode('utf-8'))
 		try:
-			thumb = video['album']['images'][0]['url']
+			thumb = item['album']['cover_big'].encode('utf-8')
 		except:
 			thumb = pic+'noimage.png'
-		#rating = video['popularity']
-		#uriUrl = video['uri']
+		#rank = item['rank']
 		filtered = False
 		for entry2 in blacklist:
 			if entry2.strip().lower() and entry2.strip().lower() in title.lower():
 				filtered = True
 		if filtered:
 			continue
-		name = title.strip()+"  [COLOR deepskyblue][Album: "+album.strip()+"][/COLOR]"
+		name = title+"   [COLOR deepskyblue][Album: "+album+"][/COLOR]"
 		addLink(name, title.replace(" - ", " "), "playYTByTitle", thumb)
 	try:
-		nextPage = videos['tracks']['next']
-		if 'https://api.spotify.com' in nextPage:
-			addDir(translation(40206), nextPage, "listSpotifyTracks", pic+'nextpage.png')
-	except:
-		pass
+		nextPage = response['next']
+		if 'http://api.deezer.com/2.0/search/' in nextPage:
+			addDir(translation(40206), nextPage, "listDeezerTracks", pic+'nextpage.png')
+	except: pass
 	xbmcplugin.endOfDirectory(pluginhandle)
+	if forceView:
+		xbmc.executebuiltin('Container.SetViewMode('+viewIDPlaylists+')')
 	
-	
-def listSpotifyAlbums(url):
-	HOME()
+def listDeezerAlbums(url):
 	musicIsolated = set()
-	if 'https://api.spotify.com' in url:
+	if url.startswith('http://api.deezer.com/2.0/search/'):
 		Forward = cache(url, 1)
-		x=0
+		response = json.loads(Forward)
 	else:
-		Original = cache("https://api.spotify.com/v1/search?query="+url+"&type=album"+Province+"&offset=0&limit="+spotifySearchSize, 1)
-		x=1
-	if x == 1:
-		videos = json.loads(Original)
-	else:
-		videos = json.loads(Forward)
-	for video in videos['albums']['items']:
-		artist = video['artists'][0]['name'].encode('utf-8')
-		album = video['name'].encode('utf-8')
-		title = cleanTitle(artist+" - "+album)
+		Original = cache("http://api.deezer.com/2.0/search/album?q="+url+"&limit="+deezerSearchSize+"&strict=on&output=json&index=0", 1)
+		response = json.loads(Original)
+	for item in response['data']:
+		artist = item['artist']['name'].encode('utf-8')
+		album = item['title'].encode('utf-8')
+		title = cleanTitle(artist.strip()+" - "+album.strip())
 		if title in musicIsolated or artist == "":
 			continue
 		musicIsolated.add(title)
 		try:
-			thumb = video['images'][0]['url']
+			thumb = item['cover_big'].encode('utf-8')
 		except:
 			thumb = pic+'noimage.png'
-		#rating = video['popularity']
-		uriUrl = video['uri']
-		version = video['album_type']
-		name = title.strip()+"  [COLOR deepskyblue]["+version.title().strip()+"][/COLOR]"
-		addAutoPlayDir(name, uriUrl, "listSpotifyVideos", thumb, "", "browse")
+		numbers = item['nb_tracks']
+		tracksUrl = item['tracklist'].encode('utf-8')+"?limit="+deezerVideoSize+"&index=0"
+		version = item['record_type'].encode('utf-8')
+		name = title+"   [COLOR deepskyblue]["+version.title().strip()+"[/COLOR] - [COLOR FFFFA500]Tracks: "+str(numbers).strip()+"][/COLOR]"
+		addAutoPlayDir(name, tracksUrl, "listDeezerVideos", thumb, "", "browse")
 	try:
-		nextPage = videos['albums']['next']
-		if 'https://api.spotify.com' in nextPage:
-			addDir(translation(40206), nextPage, "listSpotifyAlbums", pic+'nextpage.png')
-	except:
-		pass
+		nextPage = response['next']
+		if 'http://api.deezer.com/2.0/search/' in nextPage:
+			addDir(translation(40206), nextPage, "listDeezerAlbums", pic+'nextpage.png')
+	except: pass
 	xbmcplugin.endOfDirectory(pluginhandle)
+	if forceView:
+		xbmc.executebuiltin('Container.SetViewMode('+viewIDPlaylists+')')
 	
-	
-def listSpotifyUserlists(url):
-	HOME()
+def listDeezerPlaylists(url):
 	musicIsolated = set()
-	if 'https://api.spotify.com' in url:
+	if url.startswith('http://api.deezer.com/2.0/search/'):
 		Forward = cache(url, 1)
-		x=0
+		response = json.loads(Forward)
 	else:
-		Original = cache("https://api.spotify.com/v1/search?query="+url+"&type=playlist&offset=0&limit="+spotifySearchSize, 1)
-		x=1
-	if x == 1:
-		videos = json.loads(Original)
-	else:
-		videos = json.loads(Forward)
-	for video in videos['playlists']['items']:
-		artist = cleanTitle(video['name']).encode('utf-8')
+		Original = cache("http://api.deezer.com/2.0/search/playlist?q="+url+"&limit="+deezerSearchSize+"&strict=on&output=json&index=0", 1)
+		response = json.loads(Original)
+	for item in response['data']:
+		artist = cleanTitle(item['title'].encode('utf-8'))
 		try:
-			thumb = video['images'][0]['url']
+			thumb = item['picture_big'].encode('utf-8')
 		except:
 			thumb = pic+'noimage.png'
-		uriUrl = video['uri']
-		user = cleanTitle(video['owner']['id']).encode('utf-8')
-		name = artist.title().strip()+"  [COLOR FFFFA500][User: "+user.title().strip()+"][/COLOR]"
-		if name in musicIsolated or 'playlist' in artist.strip().lower() or artist == "":
+		numbers = item['nb_tracks']
+		tracksUrl = item['tracklist'].encode('utf-8')+"?limit="+deezerVideoSize+"&index=0"
+		user = cleanTitle(item['user']['name'].encode('utf-8'))
+		name = artist.title()+"   [COLOR deepskyblue][User: "+user.title()+"[/COLOR] - [COLOR FFFFA500]Tracks: "+str(numbers).strip()+"][/COLOR]"
+		special = artist+" - "+user.title()
+		if special in musicIsolated or artist == "":
+			continue
+		musicIsolated.add(special)
+		addAutoPlayDir(name, tracksUrl, "listDeezerVideos", thumb, "", "browse")
+	try:
+		nextPage = response['next']
+		if 'http://api.deezer.com/2.0/search/' in nextPage:
+			addDir(translation(40206), nextPage, "listDeezerPlaylists", pic+'nextpage.png')
+	except: pass
+	xbmcplugin.endOfDirectory(pluginhandle)
+	if forceView:
+		xbmc.executebuiltin('Container.SetViewMode('+viewIDPlaylists+')')
+	
+def listDeezerUserlists(url):
+	musicIsolated = set()
+	if url.startswith('http://api.deezer.com/2.0/search/'):
+		Forward = cache(url, 1)
+		response = json.loads(Forward)
+	else:
+		Original = cache("http://api.deezer.com/2.0/search/user?q="+url+"&limit="+deezerSearchSize+"&strict=on&output=json&index=0", 1)
+		response = json.loads(Original)
+	for item in response['data']:
+		user = cleanTitle(item['name'].encode('utf-8'))
+		try:
+			thumb = item['picture_big'].encode('utf-8')
+			if thumb.endswith('user//500x500-000000-80-0-0.jpg'):
+				thumb = pic+'noavatar.gif'
+		except:
+			thumb = pic+'noavatar.gif'
+		tracksUrl = item['tracklist'].encode('utf-8')+"?limit="+deezerVideoSize+"&index=0"
+		name = user.title()
+		if name in musicIsolated or user == "":
 			continue
 		musicIsolated.add(name)
-		addAutoPlayDir(name, uriUrl, "listSpotifyVideos", thumb, "", "browse")
+		addAutoPlayDir(name, tracksUrl, "listDeezerVideos", thumb, "", "browse")
 	try:
-		nextPage = videos['playlists']['next']
-		if 'https://api.spotify.com' in nextPage:
-			addDir(translation(40206), nextPage, "listSpotifyUserlists", pic+'nextpage.png')
-	except:
-		pass
+		nextPage = response['next']
+		if 'http://api.deezer.com/2.0/search/' in nextPage:
+			addDir(translation(40206), nextPage, "listDeezerUserlists", pic+'nextpage.png')
+	except: pass
 	xbmcplugin.endOfDirectory(pluginhandle)
+	if forceView:
+		xbmc.executebuiltin('Container.SetViewMode('+viewIDPlaylists+')')
 	
+def listDeezerVideos(type, url, thumb, limit):
+	musicVideos = []
+	musicIsolated = set()
+	count = 0
+	if type == "play":
+		playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
+		playlist.clear()
+	if not "&index=0" in url:
+		Forward = cache(url, 1)
+		response = json.loads(Forward)
+	else:
+		Original = cache(url, 1)
+		response = json.loads(Original)
+	for item in response['data']:
+		song = item['title'].encode('utf-8')
+		if song.isupper():
+			song = song.title()
+		artist = item['artist']['name'].encode('utf-8')
+		#rank = item['rank']
+		title = cleanTitle(artist.strip()+" - "+song.strip())
+		if title in musicIsolated or artist == "":
+			continue
+		musicIsolated.add(title)
+		filtered = False
+		for entry2 in blacklist:
+			if entry2.strip().lower() and entry2.strip().lower() in title.lower():
+				filtered = True
+		if filtered:
+			continue
+		if type == "play":
+			url = "plugin://"+addonID+"/?url="+urllib.quote_plus(title.replace(" - ", " "))+"&mode=playYTByTitle"
+		else:
+			url = title
+		musicVideos.append([title, url, thumb])
+	if type == "browse":
+		for title, url, thumb in musicVideos:
+			count += 1
+			name = '[COLOR chartreuse]'+str(count)+' •  [/COLOR]'+title
+			addLink(name, url.replace(" - ", " "), "playYTByTitle", thumb)
+		try:
+			nextPage = response['next']
+			if 'http://api.deezer.com/2.0/' in nextPage:
+				addAutoPlayDir(translation(40206), nextPage, "listDeezerVideos", thumb, "", "browse")
+		except: pass
+		xbmcplugin.endOfDirectory(pluginhandle)
+		if forceView:
+			xbmc.executebuiltin('Container.SetViewMode('+viewIDVideos+')')
+	else:
+		if limit:
+			musicVideos = musicVideos[:int(limit)]
+		random.shuffle(musicVideos)
+		for title, url, thumb in musicVideos:
+			listitem = xbmcgui.ListItem(title, thumbnailImage=thumb)
+			playlist.add(url, listitem)
+		xbmc.Player().play(playlist)
 	
 def playYTByTitle(title):
 	try:
 		finalUrl = ""
 		youtubeID = getYoutubeId(title)
-		#if not youtubeID:
-			#xbmc.executebuiltin('Notification(Youtube Music : [COLOR red]!!! URL - ERROR !!![/COLOR], ERROR = [COLOR red]No *VideoLink* found on YOUTUBE ![/COLOR],6000,'+icon+')')
 		pluginID = 'plugin.video.youtube'
 		plugin = xbmcaddon.Addon(id=pluginID)
 		finalUrl = 'plugin://'+plugin.getAddonInfo('id')+'/play/?video_id='+youtubeID
@@ -957,9 +1042,8 @@ def playYTByTitle(title):
 	except:
 		pass
 	
-	
 def getYoutubeId(title):
-	title = urllib.quote_plus(title.lower())
+	title = urllib.quote_plus(title.lower()).replace('%5B', '').replace('%5D', '').replace('%28', '').replace('%29', '')
 	videoBest = False
 	movieID = []
 	content = cache("https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=5&order=relevance&q=%s&key=%s" %(title,token), 1)
@@ -983,12 +1067,10 @@ def getYoutubeId(title):
 		xbmc.executebuiltin('Notification(Youtube Music : [COLOR red]!!! URL - ERROR !!![/COLOR], ERROR = [COLOR red]No *SingleEntry* found on YOUTUBE ![/COLOR],6000,'+icon+')')
 	return videoBest
 	
-	
 def queueVideo(url, name, thumb):
 	playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
 	listitem = xbmcgui.ListItem(name, iconImage=thumb, thumbnailImage=thumb)
 	playlist.add(url, listitem)
-	
 	
 def makeRequest(url,headers=False):
 	req = urllib2.Request(url)
@@ -996,19 +1078,17 @@ def makeRequest(url,headers=False):
 		for key in headers:
 			req.add_header(key, headers[key])
 	else:
-		req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:49.0) Gecko/20100101 Firefox/32.0')
-		req.add_header('Accept-Encoding','gzip,deflate')
-	response = urllib2.urlopen(req)
+		req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:49.0) Gecko/20100101 Firefox/49.0')
+		req.add_header('Accept-Encoding','gzip, deflate')
+	response = urllib2.urlopen(req, timeout=30)
 	if response.info().get('Content-Encoding') == 'gzip':
 		buf = StringIO(response.read())
 		f = gzip.GzipFile(fileobj=buf)
 		link = f.read()
-		f.close()
 	else:
 		link = response.read()
-		response.close()
+	response.close()
 	return link
-	
 	
 def cache(url, duration=0):
 	cacheFile = os.path.join(cachePath, (''.join(c for c in unicode(url, 'utf-8') if c not in '/\\:?"*|<>')).strip())
@@ -1025,7 +1105,6 @@ def cache(url, duration=0):
 		fh.write(content)
 		fh.close()
 	return content
-	
 	
 def showInfo():
 	count = 0
@@ -1054,17 +1133,15 @@ def showInfo():
 	else:
 		pass
 	
-	
 def cleanTitle(title):
 	title = title.replace("&lt;", "<").replace("&gt;", ">").replace("&amp;", "&").replace("&#39;", "'").replace("&#039;", "'").replace("&quot;", "\"").replace("&szlig;", "ß").replace("&ndash;", "-").replace("#", "").replace('–', '-').replace(';', ' ')
 	title = title.replace("&#x00c4", "Ä").replace("&#x00e4", "ä").replace("&#x00d6", "Ö").replace("&#x00f6", "ö").replace("&#x00dc", "Ü").replace("&#x00fc", "ü").replace("&#x00df", "ß")
 	title = title.replace("&Auml;", "Ä").replace("&Ouml;", "Ö").replace("&Uuml;", "Ü").replace("&auml;", "ä").replace("&ouml;", "ö").replace("&uuml;", "ü")
 	title = title.replace("&agrave;", "à").replace("&aacute;", "á").replace("&egrave;", "è").replace("&eacute;", "é").replace("&igrave;", "ì").replace("&iacute;", "í")
-	title = title.replace("&ograve;", "ò").replace("&oacute;", "ó").replace("&ugrave;", "ù").replace("&uacute;", "ú").replace(" ft ", " feat. ").replace(" FT ", " feat. ").replace(" Ft ", " feat. ").replace("Ft.", "feat.").replace("ft.", "feat.").replace("Feat.", "feat.").replace("Featuring", "feat.")
+	title = title.replace("&ograve;", "ò").replace("&oacute;", "ó").replace("&ugrave;", "ù").replace("&uacute;", "ú").replace(" ft ", " feat. ").replace(" FT ", " feat. ").replace(" Ft ", " feat. ").replace("Ft.", "feat.").replace("ft.", "feat.").replace(" FEAT ", " feat. ").replace(" Feat ", " feat. ").replace("Feat.", "feat.").replace("Featuring", "feat.")
 	title = title.replace("\\'", "'").replace("&x27;", "'").replace("&iexcl;", "¡").replace("&raquo;", "»").replace("&laquo;", "«").replace("►", "*").replace("◄", "*")
 	title = title.strip()
 	return title
-	
 	
 def parameters_string_to_dict(parameters):
 	paramDict = {}
@@ -1075,7 +1152,6 @@ def parameters_string_to_dict(parameters):
 			if (len(paramSplits)) == 2:
 				paramDict[paramSplits[0]] = paramSplits[1]
 	return paramDict
-	
 	
 def addLink(name, url, mode, iconimage):
 	u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
@@ -1092,7 +1168,6 @@ def addLink(name, url, mode, iconimage):
 	ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
 	return ok
 	
-	
 def addDir(name, url, mode, iconimage="", description="", type="", limit=""):
 	u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&type="+str(type)+"&limit="+str(limit)
 	ok = True
@@ -1103,9 +1178,8 @@ def addDir(name, url, mode, iconimage="", description="", type="", limit=""):
 	ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
 	return ok
 	
-	
 def addAutoPlayDir(name, url, mode, iconimage="", description="", type="", limit=""):
-	u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&type="+str(type)+"&limit="+str(limit)
+	u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&type="+str(type)+"&limit="+str(limit)+'&thumb='+urllib.quote_plus(iconimage)
 	ok = True
 	liz = xbmcgui.ListItem(name, iconImage="DefaultMusicVideos.png", thumbnailImage=iconimage)
 	liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": description, 'mediatype':'video'})
@@ -1122,7 +1196,6 @@ def addAutoPlayDir(name, url, mode, iconimage="", description="", type="", limit
 	ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
 	return ok
 	
-	
 params = parameters_string_to_dict(sys.argv[2])
 name = urllib.unquote_plus(params.get('name', ''))
 url = urllib.unquote_plus(params.get('url', ''))
@@ -1130,7 +1203,6 @@ mode = urllib.unquote_plus(params.get('mode', ''))
 thumb = urllib.unquote_plus(params.get('thumb', ''))
 type = urllib.unquote_plus(params.get('type', ''))
 limit = urllib.unquote_plus(params.get('limit', ''))
-	
 	
 if mode == 'bpMain':
 	bpMain()
@@ -1172,16 +1244,20 @@ elif mode == 'listSpotifyPlaylists':
 	listSpotifyPlaylists(url)
 elif mode == 'listSpotifyVideos':
 	listSpotifyVideos(type, url, limit)
-elif mode == 'SearchSpotify':
-	SearchSpotify()
-elif mode == 'listSpotifyArtists':
-	listSpotifyArtists(url) 
-elif mode == 'listSpotifyTracks':
-	listSpotifyTracks(url) 
-elif mode == 'listSpotifyAlbums':
-	listSpotifyAlbums(url)
-elif mode == 'listSpotifyUserlists':
-	listSpotifyUserlists(url)
+elif mode == 'SearchDeezer':
+	SearchDeezer()
+elif mode == 'listDeezerArtists':
+	listDeezerArtists(url) 
+elif mode == 'listDeezerTracks':
+	listDeezerTracks(url) 
+elif mode == 'listDeezerAlbums':
+	listDeezerAlbums(url)
+elif mode == 'listDeezerPlaylists':
+	listDeezerPlaylists(url)
+elif mode == 'listDeezerUserlists':
+	listDeezerUserlists(url)
+elif mode == 'listDeezerVideos':
+	listDeezerVideos(type, url, thumb, limit)
 elif mode == 'playYTByTitle':
 	playYTByTitle(url)
 elif mode == 'queueVideo':

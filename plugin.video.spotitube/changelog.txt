@@ -71,10 +71,18 @@
 - fixed: Cache-Links for Youtube queries shortened because of problems with character limit > 255 on some Windows operating systems
 - Many other light Changes
 
-[B]Version 2.0.4 + 2.0.5  (26.04.2017)[/B] by realvito[CR]
+[B]Version 2.0.4 + 2.0.5  (26.04.2017)[/B] by realvito
 - changed: Billboard - represent information from RSS-Feeds to represent information of the HTML-Page *
 - *(Because often errors appear in the RSS-Feeds of Billboard)
 - fixed: Spotify-Genres and Spotify-Playlists are NOT opened and errors are displayed *
 - *(urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed (_ssl.c:590))
 - added: Spotify-Search for: Playlists - not public (on special request !)
 - quickfix: typing error in the script
+
+[B]Version 2.0.6  (12.08.2017)[/B] by realvito
+- changed: Beatport - show Subgenres and Title-ReleaseDates
+- fixed: Billboard - not showing "New in the last 24 hours"
+- fixed: Billboard - text errors in "Billboard-Archive-Videos"
+- fixed: Hypem - show HIDDEN Video-Images (not the colored ones)
+- removed: complete Spotify-Search (because a diffcult LOGIN is required since 29.05.17 and their policies don't allow the distribution of specialcodes)
+- added: Deezer-Search for: Artists, Songs, Albums, Playlists, User + Settings for: Deezer-Search (not as good as Spotify, but interesting)
