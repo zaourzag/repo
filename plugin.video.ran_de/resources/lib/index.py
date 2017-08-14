@@ -27,13 +27,13 @@ def index():
         live_caption = '[B]Live (%s)[/B]' % live_caption
     else:
         live_caption = 'Live (%s)' % live_caption
-    gui.add_folder(live_caption, thumbnails.THUMB_MAIN, {'f': 'videos', 'resource': '/ran-app/v1/livestreams.json'})
-    gui.add_folder('Neueste Videos', thumbnails.THUMB_MAIN, {'f': 'videos', 'resource': '/ran-app/v1/videos.json'})
-    gui.add_folder('Fussball', thumbnails.THUMB_MAIN, {'f': 'videos', 'resource': '/ran-app/v1/videos/fussball.json'})
-    gui.add_folder('Tennis', thumbnails.THUMB_MAIN, {'f': 'videos', 'resource': '/ran-app/v1/videos/tennis.json'})
-    gui.add_folder('NFL', thumbnails.THUMB_MAIN, {'f': 'videos', 'resource': '/ran-app/v1/videos/us-sport.json'})
-    gui.add_folder('Boxen', thumbnails.THUMB_MAIN, {'f': 'videos', 'resource': '/ran-app/v1/videos/boxen.json'})
-    gui.add_folder('Golf', thumbnails.THUMB_MAIN, {'f': 'videos', 'resource': '/ran-app/v1/videos/golf.json'})
+    gui.add_folder(live_caption, thumbnails.THUMB_MAIN, {'f': 'videos', 'resource': '/ran-mega/mobile/v1/livestreams.json'})
+    gui.add_folder('Neueste Videos', thumbnails.THUMB_MAIN, {'f': 'videos', 'resource': '/ran-mega/mobile/v1/videos.json'})
+    gui.add_folder('Fussball', thumbnails.THUMB_MAIN, {'f': 'videos', 'resource': '/ran-mega/mobile/v1/videos/fussball.json'})
+    gui.add_folder('Tennis', thumbnails.THUMB_MAIN, {'f': 'videos', 'resource': '/ran-mega/mobile/v1/videos/tennis.json'})
+    gui.add_folder('NFL', thumbnails.THUMB_MAIN, {'f': 'videos', 'resource': '/ran-mega/mobile/v1/videos/us-sport.json'})
+    gui.add_folder('Boxen', thumbnails.THUMB_MAIN, {'f': 'videos', 'resource': '/ran-mega/mobile/v1/videos/boxen.json'})
+    gui.add_folder('Golf', thumbnails.THUMB_MAIN, {'f': 'videos', 'resource': '/ran-mega/mobile/v1/videos/golf.json'})
     gui.end_listing()
 
 

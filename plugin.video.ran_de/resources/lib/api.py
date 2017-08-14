@@ -5,8 +5,7 @@ import datetime
 import gui
 import xbmcgui,xbmcplugin,sys
 
-RAN_API_BASE = 'http://contentapi.sim-technik.de'
-
+RAN_API_BASE = 'https://middleware.7tv.de'
 
 def get_playlist_url(m3u8_url, height=720):
     import re
@@ -87,21 +86,22 @@ def list_videos(resource):
 
 
 def get_number_livestreams():
-    try:
-        json_url = RAN_API_BASE + '/ran-app/v1/livestreams.json'
-        response = requests.get(json_url, headers={'Accept-Encoding': 'gzip'})
-        videos = response.json()['contents']
-        timestamp_now = time.time()
-        number_livestreams = 0
-        for video in videos:
-            stream_date_end = video['streamdate_end']
-            if stream_date_end >= timestamp_now:
-                stream_date_start = video['streamdate_start']
-                if stream_date_start <= timestamp_now:
-                    number_livestreams += 1
-        return number_livestreams
-    except:
-        return 0
+	print("get_number_livestreams")
+	try:
+		json_url = RAN_API_BASE + '/ran-mega/mobile/v1/livestreams.json'
+		response = requests.get(json_url, headers={'Accept-Encoding': 'gzip'})
+		videos = response.json()['contents']
+		timestamp_now = time.time()
+		number_livestreams = 0
+		for video in videos:
+			stream_date_end = video['streamdate_end']
+			if stream_date_end >= timestamp_now:
+				stream_date_start = video['streamdate_start']
+				if stream_date_start <= timestamp_now:
+					number_livestreams += 1
+		return number_livestreams
+	except:
+		return 0
 
 
 def _get_videos(video_id, access_token, client_name, client_location, salt, source_id=None):
@@ -144,7 +144,7 @@ def get_video_url(resource, height):
         url = json_data['stream_url']
         salt = "01iegahthei8yok0Eopai6jah5Qui0qu"
         userAgent = 'User-Agent=Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36'
-        access_token="ran-app"
+        access_token="ran-mega/mobile"
         location="http://app.ran.de/"+url
         client_token=salt[:2] + sha1(''.join([url,salt,access_token,location])).hexdigest()
         newurl="https://vas-live-mdp.glomex.com/live/1.0/getprotocols?access_token="+access_token+"&client_location="+location+"&client_token="+client_token+"&property_name="+url        
