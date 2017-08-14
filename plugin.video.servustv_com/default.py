@@ -47,13 +47,14 @@ def log(msg, level=xbmc.LOGNOTICE):
     xbmc.log('%s: %s' % (addonID, msg), level) 
 
 def index():
-    addDir(translation(30001), urlMain+"/"+siteVersion, 'liste', defaultFanart)
-    addDir(translation(30002), urlMain+"/"+siteVersion+"/Videos", 'listGenres', defaultFanart)
-    addDir(translation(30008), urlMain+"/"+siteVersion+"/Themen", 'liste', defaultFanart)
-    addDir(translation(30010), "", 'search', defaultFanart)
-    addLink(translation(30011), "", 'playLiveStream', defaultFanart)
-    addDir(translation(30107), translation(30107), 'Settings', "")     
-    xbmcplugin.endOfDirectory(pluginhandle)
+	addDir(translation(30001), urlMain+"/"+siteVersion, 'liste', defaultFanart)
+	addDir(translation(30002), urlMain+"/"+siteVersion+"/Videos", 'listGenres', defaultFanart)
+	addDir(translation(30008), urlMain+"/"+siteVersion+"/Themen", 'liste', defaultFanart)
+	addDir("Sendungen", urlMain+"/"+siteVersion+"/Sendungen", 'liste', defaultFanart)	
+	addDir(translation(30010), "", 'search', defaultFanart)
+	addLink(translation(30011), "", 'playLiveStream', defaultFanart)
+	addDir(translation(30107), translation(30107), 'Settings', "")     
+	xbmcplugin.endOfDirectory(pluginhandle)
 def liste(url):
     debug("listGenres url "+url)
     xbmcplugin.addSortMethod(pluginhandle, xbmcplugin.SORT_METHOD_LABEL)
