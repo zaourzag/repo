@@ -43,7 +43,7 @@
     </extension>
 </addon>
 
-<addon id="plugin.audio.prime_music" name="Amazon Prime Music" version="0.5.1.1" provider-name="piet">
+<addon id="plugin.audio.prime_music" name="Amazon Prime Music" version="0.5.2" provider-name="piet">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="script.module.mechanize" version="0.2.6"/>
@@ -574,7 +574,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
   </extension>
 </addon>
 
-<addon id="plugin.video.doku5.com" name="Doku5" version="1.0.2" provider-name="itouch5000">
+<addon id="plugin.video.doku5.com" name="Doku5" version="1.0.3" provider-name="itouch5000">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="script.module.requests" version="2.7.0"/>
@@ -999,7 +999,7 @@ This addon is no longer working after a complete new eurosport player has been r
     </extension>
 </addon>
 
-<addon id="plugin.video.ran_de" name="ran" version="2.2.5" provider-name="PUR3 u. L0RE">
+<addon id="plugin.video.ran_de" name="ran" version="2.2.6" provider-name="PUR3 u. L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
     </requires>
