@@ -144,10 +144,12 @@ def get_video_url(resource, height):
         url = json_data['stream_url']
         salt = "01iegahthei8yok0Eopai6jah5Qui0qu"
         userAgent = 'User-Agent=Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36'
-        access_token="ran-mega/mobile"
+        #https://vas-live-mdp.glomex.com/live/1.0/getprotocols?access_token=ran-app&client_location=http%3A%2F%2Fapp.ran.de%2Fran-ri-event03&client_token=01687d1ae1a5e3022c022b74756dfe7d0082e041c1&property_name=ran-ri-event03
+        access_token="ran-app"
         location="http://app.ran.de/"+url
         client_token=salt[:2] + sha1(''.join([url,salt,access_token,location])).hexdigest()
-        newurl="https://vas-live-mdp.glomex.com/live/1.0/getprotocols?access_token="+access_token+"&client_location="+location+"&client_token="+client_token+"&property_name="+url        
+        newurl="https://vas-live-mdp.glomex.com/live/1.0/getprotocols?access_token="+access_token+"&client_location="+location+"&client_token="+client_token+"&property_name="+url 
+        print(newurl)        
         response = requests.get(newurl, headers={'Accept-Encoding': 'gzip','user-agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36'})
         print(response.json())
         
