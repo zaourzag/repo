@@ -999,7 +999,7 @@ This addon is no longer working after a complete new eurosport player has been r
     </extension>
 </addon>
 
-<addon id="plugin.video.ran_de" name="ran" version="2.2.6" provider-name="PUR3 u. L0RE">
+<addon id="plugin.video.ran_de" name="ran" version="2.2.7" provider-name="PUR3 u. L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
     </requires>
