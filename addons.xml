@@ -913,7 +913,7 @@ This addon is no longer working after a complete new eurosport player has been r
     </extension>
 </addon>
 
-<addon id="plugin.video.mtv_de" name="MTV.de" version="3.3.14" provider-name="L0RE">
+<addon id="plugin.video.mtv_de" name="MTV.de" version="3.3.15" provider-name="L0RE">
 
     <requires>
         <import addon="xbmc.python" version="2.19.0"/>
