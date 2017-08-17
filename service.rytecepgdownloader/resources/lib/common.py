@@ -181,10 +181,16 @@ def merge_epg():
     i=1
     total = len(files)
     for xmltv in files:
-        if (xmltv.endswith('.gz') or xmltv.endswith('.xml')) and not xmltv.startswith('merged_epg.xml'):
+        if (xmltv.endswith('.gz') or xmltv.endswith('.xml') or xmltv.endswith('.xz')) and not xmltv.startswith('merged_epg.xml'):
             try:
                 if xmltv.endswith('.gz'):
                     inF = gzip.GzipFile(fileobj=StringIO(xbmcvfs.File(os.path.join(xml_path,xmltv)).read()))
+                elif xmltv.endswith('.xz'):
+                    try:
+                        import lzma
+                    except ImportError:
+                        from backports import lzma
+                    inF = lzma.open(xbmcvfs.File(os.path.join(xml_path,xmltv)), 'rb')
                 else:
                     inF = xbmcvfs.File(os.path.join(xml_path,xmltv))
                 b = inF.read()
