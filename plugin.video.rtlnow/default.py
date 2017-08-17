@@ -432,10 +432,15 @@ def genre(url):
     
 def index():
     menu=[]
+    ret,token=login()
+    freeonly=addon.getSetting("freeonly")
+    kodi18=addon.getSetting("kodi18")
     menu.append(addDir("Nach Sendern", "", 'sendermenu', ""))      
     menu.append(addDir("Themen" , url="rtl", mode="genre", iconimage="",duration="",desc=""))
     menu.append(addDir("Rubriken" , url="", mode="katalog", iconimage="",duration="",desc=""))
     menu.append(addDir("Genres" , url="", mode="genreliste", iconimage="",duration="",desc=""))
+    if freeonly=="false" and kodi18 == "true":
+        menu.append(addDir("LiveTV",url="", mode="livetv", iconimage="",duration="",desc=""))    
     menu.append(addDir("Cache Loeschen", "", 'clearcache', ""))    
     menu.append(addDir("Settings", "", 'Settings', ""))    
     menu.append(addDir("Inputstream Einstellungen", "", 'inputsettings', ""))        
@@ -517,6 +522,34 @@ def genreliste():
     
 def inputsettings()    :
   xbmcaddon.Addon(is_addon).openSettings()
+  
+def livetv():
+    ret,token=login()    
+    if token=="0":
+        dialog = xbmcgui.Dialog()
+        dialog.notification("Fuer Plus", 'Nur fuer Plusmitglieder', xbmcgui.NOTIFICATION_ERROR)
+        return    
+    url="https://api.tvnow.de/v3/epgs/movies/nownext?fields=*,nowNextEpgTeasers.*,nowNextEpgMovies.*"
+    content = getUrl(url) 
+    objekte = json.loads(content, object_pairs_hook=OrderedDict)
+    for element in objekte["items"]:
+       try:
+        name = element["name"]       
+        url  = element["nowNextEpgMovies"]["items"][0]["manifest"]["dash"]
+        image=element["nowNextEpgMovies"]["items"][0]["image"]
+       except:
+         continue
+       listitem = xbmcgui.ListItem(path=url,label=name,iconImage=image,thumbnailImage=image)
+       listitem.setProperty('IsPlayable', 'true')          
+       listitem.setInfo(type="Video", infoLabels={"Title": name })                 
+       listitem.setProperty('inputstreamaddon', 'inputstream.adaptive')
+       listitem.setProperty('inputstream.adaptive.manifest_type', 'mpd')          
+       licstring='https://widevine.rtl.de/index/proxy|x-auth-token='+token+"&Content-Type=|R{SSM}|"
+       listitem.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')                
+       listitem.setProperty('inputstream.adaptive.license_key', licstring)                
+       debug("LICENSE: " + licstring)                              
+       xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=url, listitem=listitem)
+    xbmcplugin.setResolvedUrl(addon_handle,True, listitem)    
 
 #OPTIONS https://api.tvnow.de/v3/formats/genre/Crime?fields=*&filter=%7B%22station%22:%22none%22%7D&maxPerPage=50&order=NameLong+asc&page=1
     
@@ -559,3 +592,5 @@ else:
           addon.openSettings()     
   if mode == 'inputsettings':
           inputsettings()                       
+  if mode == 'livetv':
+          livetv()
