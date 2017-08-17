@@ -37,7 +37,8 @@ if AddonEnabled('inputstream.adaptive'):
 
 if not is_addon:
         Log('No Inputstream Addon found or activated')
-        Dialog.notification("Inpuitstream Fehler", 'Inputstream nicht eingeschaltet', xbmcgui.NOTIFICATION_ERROR)
+        dialog = xbmcgui.Dialog()
+        dialog.notification("Inpuitstream Fehler", 'Inputstream nicht eingeschaltet', xbmcgui.NOTIFICATION_ERROR)
         exit    
 
 profile    = xbmc.translatePath( addon.getAddonInfo('profile') ).decode("utf-8")
@@ -192,6 +193,7 @@ def serien(url):
 def rubrik(name) :
   menu=[]
   freeonly=addon.getSetting("freeonly")
+  kodi18=addon.getSetting("kodi18")
   debug("Rubrik New Menu")
   #xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)   
   xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_NONE)
@@ -214,7 +216,7 @@ def rubrik(name) :
       idd=kapitelliste["formatTabs"]["items"][0]["id"]   
     except:
       idd=kapitelliste["id"]
-    uurl="http://api.tvnow.de/v3/formatlists/"+str(idd)+"?maxPerPage=9&fields=*,formatTabPages.*,formatTabPages.container.*,formatTabPages.container.movies.*,formatTabPages.container.movies.format.*,formatTabPages.container.movies.paymentPaytypes.*,formatTabPages.container.movies.pictures&page=1http://api.tvnow.de/v3/formatlists/41016?maxPerPage=9&fields=*,formatTabPages.*,formatTabPages.container.*,formatTabPages.container.movies.*,formatTabPages.container.movies.format.*,formatTabPages.container.movies.paymentPaytypes.*,formatTabPages.container.movies.pictures&page=1"
+    uurl="http://api.tvnow.de/v3/formatlists/"+str(idd)+"?maxPerPage=9&fields=*,formatTabPages.*,formatTabPages.container.*,formatTabPages.container.movies.*,formatTabPages.container.movies.format.*,formatTabPages.container.movies.paymentPaytypes.*,formatTabPages.container.movies.pictures&page=1"
     staffel(str(idd),uurl)
   else:
     for kapitel in kapitelliste["formatTabs"]["items"]:
@@ -223,9 +225,9 @@ def rubrik(name) :
       name=kapitel["headline"]      
       urlx="http://api.tvnow.de/v3/formatlists/"+str(idd)+"?maxPerPage=9&fields=formatTabPages.container.movies.free,formatTabPages.container.movies.isDrm&page=1"      
       content2 = cache.cacheFunction(getUrl,urlx)    
-      if ('"free":true' in content2 or freeonly=="false") and '"isDrm":false' in content2 :
+      if ('"free":true' in content2 or freeonly=="false") and ('"isDrm":false' in content2  or kodi18 == "true"):
       #      debug(staffelinfo)
-          uurl="http://api.tvnow.de/v3/formatlists/"+str(idd)+"?maxPerPage=9&fields=*,formatTabPages.*,formatTabPages.container.*,formatTabPages.container.movies.*,formatTabPages.container.movies.format.*,formatTabPages.container.movies.paymentPaytypes.*,formatTabPages.container.movies.pictures&page=1http://api.tvnow.de/v3/formatlists/41016?maxPerPage=9&fields=*,formatTabPages.*,formatTabPages.container.*,formatTabPages.container.movies.*,formatTabPages.container.movies.format.*,formatTabPages.container.movies.paymentPaytypes.*,formatTabPages.container.movies.pictures&page=1"
+          uurl="http://api.tvnow.de/v3/formatlists/"+str(idd)+"?maxPerPage=9&fields=*,formatTabPages.*,formatTabPages.container.*,formatTabPages.container.movies.*,formatTabPages.container.movies.format.*,formatTabPages.container.movies.paymentPaytypes.*,formatTabPages.container.movies.pictures&page=1"
           menu.append(addDir(name , url=uurl,nummer=str(idd), mode="staffel", iconimage="",duration="",desc=""))        
   xbmcplugin.addDirectoryItems(addon_handle,menu)
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
@@ -241,7 +243,7 @@ def staffel(idd,url) :
   menu=[]
   xy=[]  
   global cache
-  login()
+  ret,token=login()
   debug("Lade staffel neu")
   #http://api.tvnow.de/v3/formatlists/41018?maxPerPage=9&fields=*,formatTabPages.*,formatTabPages.container.*,formatTabPages.container.movies.*,formatTabPages.container.movies.format.*,formatTabPages.container.movies.paymentPaytypes.*,formatTabPages.container.movies.pictures&page=1http://api.tvnow.de/v3/formatlists/41016?maxPerPage=9&fields=*,formatTabPages.*,formatTabPages.container.*,formatTabPages.container.movies.*,formatTabPages.container.movies.format.*,formatTabPages.container.movies.paymentPaytypes.*,formatTabPages.container.movies.pictures&page=1  
   debug("staffel :"+url)
@@ -271,16 +273,24 @@ def staffel(idd,url) :
         elemente2=[element]
       for folge in elemente2:         
         debug("++")
-        debug(folge)
-        debug(folge["free"])
-        debug(folge["isDrm"])
-        freeonly=addon.getSetting("freeonly")
-        if not folge["isDrm"]==True and ( folge["free"]==True or freeonly=="false"):
+        debug(folge)        
+        freeonly=addon.getSetting("freeonly")        
+        kodi18=addon.getSetting("kodi18")
+        try:
+          debug(folge["isDrm"])
+          debug(folge["free"])
+        except:
+           continue
+        if ( not folge["isDrm"]==True or kodi18=="true") and ( folge["free"]==True or freeonly=="false"):
           debug("--")
           name=folge["title"]         
           idd=folge["id"]
           bild="https://ais.tvnow.de/tvnow/movie/"+str(idd)+"/600x600/title.jpg"
-          stream=folge["manifest"]["dashclear"]
+          stream=folge["manifest"]["dashclear"].strip()
+          try:
+                streamcode=folge["manifest"]["dash"].strip()
+          except:
+                streamcode="0"
           laenge=get_sec(folge["duration"])          
           laengemin=get_min(folge["duration"])          
           sstaffel=str(folge["season"])
@@ -288,7 +298,7 @@ def staffel(idd,url) :
           plot=folge["articleLong"] 
           plotshort=folge["articleShort"]
           startdate=folge["broadcastStartDate"]    
-          tagline=folge["teaserText"] 
+          tagline=folge["teaserText"]           
           try:          
             type=folge["format"]["categoryId"]
           except:
@@ -301,7 +311,7 @@ def staffel(idd,url) :
           zusatz=" ("+startdate+ " )"
           title=name+zusatz
           haswert=hashlib.md5(title.encode('utf-8')).hexdigest()
-          zeile=haswert+"###"+stream+"###"+title+"###"+bild+"###"+str(laenge)+"###"+plot+"###"+plotshort+"###"+tagline+"###"+ftype          
+          zeile=haswert+"###"+stream+"###"+title+"###"+bild+"###"+str(laenge)+"###"+plot+"###"+plotshort+"###"+tagline+"###"+ftype+"###"+streamcode+"###"+str(token)+"###"
           menulist=menulist+zeile.replace("\n"," ").encode('utf-8')+"\n"             
           listitem = xbmcgui.ListItem(path="plugin://plugin.video.rtlnow/?nummer="+haswert+"&mode=hashplay",label=title,iconImage=bild,thumbnailImage=bild)
           listitem.setProperty('IsPlayable', 'true')
@@ -337,6 +347,13 @@ def hashplay(idd):
           plotshort=felder[6] 
           tagline=felder[7] 
           ftype=felder[8] 
+          streamcode=felder[9] 
+          token=felder[10] 
+          kodi18=addon.getSetting("kodi18")
+          if kodi18=="true" :
+             if not streamcode=="0":
+               stream=streamcode
+               debug("STREAM : #" +stream +"#")
           listitem = xbmcgui.ListItem(path=stream,label=title,iconImage=bild,thumbnailImage=bild)
           listitem.setProperty('IsPlayable', 'true')
           listitem.addStreamInfo('video', {'duration': laenge,'plot' : plot,'plotoutline' : plotshort,'tagline':tagline,'mediatype':ftype })          
@@ -344,6 +361,15 @@ def hashplay(idd):
           listitem.setProperty(u'IsPlayable', u'true')
           listitem.setProperty('inputstreamaddon', 'inputstream.adaptive')
           listitem.setProperty('inputstream.adaptive.manifest_type', 'mpd')
+          if kodi18=="true" :
+              if token=="0" and not streamcode=="0":
+                    dialog = xbmcgui.Dialog()
+                    dialog.notification("Login Notwendig", 'Es ist min. Ein Freier Watchbox account Notwendig', xbmcgui.NOTIFICATION_ERROR)
+              else:
+                licstring='https://widevine.rtl.de/index/proxy|x-auth-token='+token+"&Content-Type=|R{SSM}|"
+                listitem.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')                
+                listitem.setProperty('inputstream.adaptive.license_key', licstring)                
+                debug("LICENSE: " + licstring)                              
           xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=stream, listitem=listitem)
           xbmcplugin.setResolvedUrl(addon_handle,True, listitem)    
           #addLink(name, stream, "playvideo", bild)          
@@ -358,30 +384,35 @@ def  login():
   if username=="" and password=="":
      debug("Kein Password")
      addon.setSetting("freeonly", "true")
-     return 0
+     return 0,"0"
   url="https://api.tvnow.de/v3/backend/login"
   values = {'password' : password,
         'email' : username,        
     }
   data = urllib.urlencode(values)
-  debug("######")
+  debug("######LOGINDATA#####")
   debug(data)
   try:
     content = getUrl(url,data=data)         
     userdata = json.loads(content)
+    try:
+       token=userdata["token"]
+    except:
+     return 0,"0"
     debug(userdata)
+    debug("### Subscriptioon ### "+ str(userdata["subscriptionState"]))
     if userdata["subscriptionState"]==5:      
       debug("Login ok")
       addon.setSetting("freeonly", "false")
-      return 1
-    else :
-      debug("Login No Subscription")
+
+      return 1,token
+    else :      
       addon.setSetting("freeonly", "true")
-      return 0
+      return 0,token
   except:
       debug("Wrong Login")
       addon.setSetting("freeonly", "true")
-      return 0
+      return 0,"0"
   debug(content)
   
      
@@ -416,7 +447,7 @@ def sendermenu():
     debug("START")    
     menu=[]
     debug("New MENU")
-    ret=login()
+    ret,token=login()
     content = cache.cacheFunction(getUrl,"https://api.tvnow.de/v3/settings")      
     settings = json.loads(content, object_pairs_hook=OrderedDict)    
     aliases=settings["settings"]["nowtv"]["local"]["stations"]["aliases"]  
