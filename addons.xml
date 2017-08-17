@@ -1993,7 +1993,7 @@ Vous pouvez regarder le sport que vous aimez, vivez et sur demande à un moment 
   </extension>
 </addon>
 
-<addon id="service.rytecepgdownloader" name="Rytec EPG Downloader" version="17.8.10" provider-name="Jin">
+<addon id="service.rytecepgdownloader" name="Rytec EPG Downloader" version="17.8.18" provider-name="Jin">
     <requires>
         <import addon="xbmc.python" version="2.14.0"/>
         <import addon="script.module.requests"/>
@@ -2001,8 +2001,8 @@ Vous pouvez regarder le sport que vous aimez, vivez et sur demande à un moment 
     <extension point="xbmc.service" library="service.py" start="startup" />
     <extension point="xbmc.addon.metadata">
         <news>
-- updated settings to new sources list*
-* you will probably have to reset your settings - also file names have changed
+- fixed/updated sources scraper
+NOTE: Due to updates by rytec, this addon might completely break in a couple of months
         </news>
         <platform>all</platform>
         <summary>XMLTV EPG Downloader</summary>
