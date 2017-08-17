@@ -68,11 +68,11 @@ def getUrl(url,data="x"):
         return content
 
 def index():
-  addDir("Uebersicht", baseUrl+"/re-play/uebersicht", "listcat","")
-  addDir("Eigenprodutionen", baseUrl+"/re-play/eigenproduktionen", "listcat","")
-  addDir("Serien", baseUrl+"/re-play/Serien", "listcat","")
-  addDir("Spielfilme", baseUrl+"/re-play/spielfilme", "listcat","")
-  addDir("Lucha Undergroud", baseUrl+"/re-play/lucha-underground", "listcat","")
+  addDir("Uebersicht", baseUrl+"/videos/uebersichtt", "listcat","")
+  addDir("Eigenprodutionen", baseUrl+"/videos/eigenproduktionen", "listcat","")
+  addDir("Serien", baseUrl+"/videos/serien", "listcat","")
+  addDir("Spielfilme", baseUrl+"/videos/spielfilme", "listcat","")
+  addDir("Lucha Undergroud", baseUrl+"/videos/lucha-underground", "listcat","")
 # listcat(baseUrl+"/re-play/uebersicht","listcat")
   xbmcplugin.endOfDirectory(pluginhandle)
 
