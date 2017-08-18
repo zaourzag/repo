@@ -50,11 +50,33 @@ def index():
 	addDir(translation(30001), urlMain+"/"+siteVersion, 'liste', defaultFanart)
 	addDir(translation(30002), urlMain+"/"+siteVersion+"/Videos", 'listGenres', defaultFanart)
 	addDir(translation(30008), urlMain+"/"+siteVersion+"/Themen", 'liste', defaultFanart)
-	addDir("Sendungen", urlMain+"/"+siteVersion+"/Sendungen", 'liste', defaultFanart)	
+	addDir("Sendungen", urlMain+"/"+siteVersion+"/Sendungen", 'listabisz', defaultFanart)	
 	addDir(translation(30010), "", 'search', defaultFanart)
 	addLink(translation(30011), "", 'playLiveStream', defaultFanart)
 	addDir(translation(30107), translation(30107), 'Settings', "")     
 	xbmcplugin.endOfDirectory(pluginhandle)
+    
+    
+def listabisz(url):
+    content = opener.open(url).read()
+    content = content[content.find('<div class="mol teaser columns large-3 medium-6 small-14 medium-large-4 u-margin-bottom ">'):]
+    spl = content.split('<div class="mol teaser columns')                         
+    for i in range(1, len(spl), 1):
+      entry = spl[i]              
+      debug(entry)
+      debug("----")
+      match = re.compile('<a href="(.+?)" >', re.DOTALL).findall(entry)
+      url=match[0]
+      match = re.compile('src="(.+?)"', re.DOTALL).findall(entry)
+      img=match[0]           
+      match = re.compile('ato headline  teaser-s">([^<]+)<', re.DOTALL).findall(entry)
+      title=match[0].strip()
+      debug("title : "+title)
+      debug("url : "+url)
+      debug("img : "+urlMain+img)
+      addDir(cleanTitle(title), urlMain+url+"/Videos", 'listVideos', urlMain+img)
+    
+    xbmcplugin.endOfDirectory(pluginhandle)      
 def liste(url):
     debug("listGenres url "+url)
     xbmcplugin.addSortMethod(pluginhandle, xbmcplugin.SORT_METHOD_LABEL)
@@ -69,8 +91,8 @@ def liste(url):
       url=match[0]
       match = re.compile('src="(.+?)"', re.DOTALL).findall(entry)
       img=match[0]
-      match = re.compile('teaser-s">([^<]+)<', re.DOTALL).findall(entry)      
-      title=match[0]
+      match = re.compile('teaser-s">([^<]+)<', re.DOTALL).findall(entry)           
+      title=match[0].strip()
       debug("title : "+title)
       debug("url : "+url)
       debug("img : "+urlMain+img)
@@ -126,8 +148,13 @@ def listGenres(url):
 def listVideos(url):
     xbmc.log("XXX listVideos url :"+ url)
     debug("listVideos url : "+url)
-    content = opener.open(url).read()    
-    content = content[content.find('<div class="Flow-block">'):]
+    try:
+        content1 = opener.open(url).read()    
+    except:
+        dialog = xbmcgui.Dialog()
+        dialog.notification("Keine Videos", 'Keine Videos', xbmcgui.NOTIFICATION_ERROR)
+        exit
+    content = content1[content1.find('<div class="Flow-block">'):]
     spl = content.split('<div class="mol teaser')
     for i in range(1, len(spl), 1):
         entry = spl[i]
@@ -149,6 +176,17 @@ def listVideos(url):
                 thumb = urlMain+match[0].replace("_stvd_teaser_small.jpg",".jpg").replace("_stvd_teaser_large.jpg",".jpg")
                 debug("listVideos title : "+title)
                 addLink(title, url, 'playVideo', thumb, "", duration)
+    try:                
+        spl = content1.split('<div class="playlist-info">')            
+        for i in range(1, len(spl), 1):
+            entry = spl[i]    
+            match = re.compile('<a class="ato link arrow-link-small js-playlist-detail-link" target="_self" href="(.+?)">', re.DOTALL).findall(entry)    
+            url=match[0]
+            match = re.compile('detail-title">(.+?)</h4>', re.DOTALL).findall(entry)    
+            title=match[0]                
+            addLink(title, url, 'playVideo', "", "",0)
+    except:
+       pass
     match = re.compile('class="next-site">.+?href="(.+?)"', re.DOTALL).findall(content)
     if match:        
         addDir(translation(30003), urlMain+cleanTitle(match[0]), 'listVideos', "")
@@ -280,6 +318,8 @@ elif mode == 'search':
     search()
 elif mode == 'liste':
     liste(url)       
+elif mode == 'listabisz':
+    listabisz(url)    
 elif mode == 'Settings':
           addon.openSettings()
 else:
