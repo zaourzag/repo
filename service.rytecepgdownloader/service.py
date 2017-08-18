@@ -49,7 +49,7 @@ class DOWNLOADER:
         return ret
         
     def run_rytec(self, description):
-    
+        ret = False
         if not self.sources_list: 
             self.sources_list = rytec.get_sources_list()
          
@@ -57,6 +57,7 @@ class DOWNLOADER:
             ret = rytec.get_epg(source, description)
             if ret:
                 break
+        return ret
         
     def run(self):
     
@@ -72,7 +73,7 @@ class DOWNLOADER:
                 ret = self.download_epg(description, epg_url)
                 
             if not ret and not description.startswith('http'):
-                self.run_rytec(description)
+                ret = self.run_rytec(description)
                 
         self.progress('update', 70, 'Merging XML Data', ' ', 'Please Wait...This May Take Awhile')
                 
@@ -83,6 +84,12 @@ class DOWNLOADER:
             common.delete_temp_merged()
         
         self.progress('close', '', '', '', '')
+        
+        if self.manual:
+            if ret:
+                ok = dialog.ok('Rytec EPG Downloader', 'Manual Download Finished')
+            else:
+                ok = dialog.ok('Rytec EPG Downloader', 'Manual Download Failed')
             
     def progress(self, method, i, line1, line2, line3):
     
@@ -123,6 +130,5 @@ if __name__ == '__main__':
             if ret:
                 manual = True
                 DOWNLOADER(manual)
-                ok = dialog.ok('Rytec EPG Downloader', 'Manual Download Finished')
         else:
             service()

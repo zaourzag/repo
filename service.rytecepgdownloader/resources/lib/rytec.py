@@ -73,12 +73,13 @@ class RYTEC:
         
         try:
             root = ET.fromstring(data)
-            for source in root.findall('source'):
-                sd = source.find('description').text
-                url = source.find('url').text
-                if description == sd.strip():
-                    epg_url = url
-                    break
+            for cat in root.findall('sourcecat'):
+                for source in cat:
+                    sd = source.find('description').text
+                    url = source.find('url').text
+                    if description == sd.strip():
+                        epg_url = url
+                        break
         except Exception as e:
             common.log('[Rytec EPG Downloader]: error in get epg url')
             common.log(e)
