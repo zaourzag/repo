@@ -2200,7 +2200,7 @@ NOTE: Due to updates by rytec, this addon might completely break in a couple of 
 	</extension>
 </addon>
 
-<addon id="skin.horizonzv" name="Horizonz V (Kodi 17)" version="0.9.0.56" provider-name="blauesgruen">
+<addon id="skin.horizonzv" name="Horizonz V (Kodi 17)" version="0.9.0.60" provider-name="blauesgruen">
 	<requires>
 		<import addon="xbmc.gui" version="5.12.0"/>
 		<import addon="script.image.resource.select" version="2.0.1"/>
