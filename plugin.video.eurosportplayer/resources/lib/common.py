@@ -17,10 +17,13 @@ fanart = addon.getAddonInfo('fanart')
 force_view = addon.getSetting('force_view') == 'true'
 content = addon.getSetting('content')
 view_id = addon.getSetting('view_id')
-userid = addon.getSetting('userid')
-hkey = addon.getSetting('hkey')
 
 base_url = 'http://www.eurosportplayer.com'
+global_base = 'https://global-api.svcs.eurosportplayer.com/'
+search_base = 'https://search-api.svcs.eurosportplayer.com/'
+
+time_format = '%Y-%m-%dT%H:%M:%SZ'
+date_format = '%Y-%m-%d'
 
 def log(msg):
     xbmc.log(str(msg), xbmc.LOGNOTICE)
@@ -38,17 +41,62 @@ def utfenc(str):
         pass
     return str
 
-def clearString(str):
-    try:
-        str = re.sub('\(  .+?\)$|<.+?>|wifi tablet ios|none', '', str, flags=re.I)
-    except:
-        pass
-    return str
+def time_stamp(str_date):
+    return datetime.datetime.fromtimestamp(time.mktime(time.strptime(str_date,time_format)))
+
+def plot_time(date_string):
+    return datetime.datetime(*(time.strptime(date_string, time_format)[0:6])).strftime('%H:%M')
+
+def add_zero(s):
+    s = s.strip()
+    if not len(s) == 2:
+        s = '0'+s
+    return s
+
+def remove_zero(s):
+    if s.startswith('0'):
+        s = s[1:]
+    return s
+
+def runtime_to_seconds(runtime):
+    spl = runtime.split(':')
+    seconds = 0
+    seconds += int(remove_zero(spl[0]))*60*60
+    seconds += int(remove_zero(spl[1]))*60
+    seconds += int(remove_zero(spl[2]))
+    return seconds
 
 def timedelta_total_seconds(timedelta):
     return (
         timedelta.microseconds + 0.0 +
         (timedelta.seconds + timedelta.days * 24 * 3600) * 10 ** 6) / 10 ** 6
+
+def utc2local(date_string):
+    if str(date_string).startswith('2'):
+        utc = datetime.datetime(*(time.strptime(date_string, time_format)[0:6]))
+        epoch = time.mktime(utc.timetuple())
+        offset = datetime.datetime.fromtimestamp(epoch) - datetime.datetime.utcfromtimestamp(epoch)
+        return (utc + offset).strftime(time_format)
+
+def epg_date(date=False):
+    if not date:
+        date = datetime.datetime.now().strftime(date_format)
+    return datetime.datetime.fromtimestamp(time.mktime(time.strptime(date, date_format)))
+
+def get_prev_day(date):
+    return (date - datetime.timedelta(days=1))
+
+def get_next_day(date):
+    return (date + datetime.timedelta(days=1))
+
+def get_date():
+    date = epg_date()
+    dlg = dialog.numeric(1, getString(30230))
+    if dlg:
+        spl = dlg.split('/')
+        date = '%s-%s-%s' % (spl[2], add_zero(spl[1]), add_zero(spl[0]))
+    prev_date = get_prev_day(epg_date(date))
+    return prev_date.strftime(date_format), date
 
 def uniq_id(t=1):
     mac_addr = xbmc.getInfoLabel('Network.MacAddress')
@@ -66,6 +114,6 @@ def uniq_id(t=1):
     elif ":" in mac_addr and t == 2:
         return uuid.uuid5(uuid.NAMESPACE_DNS, str(mac_addr)).bytes
     else:
-        log("[%s] error: failed to get device id (%s)" % (addon_id, str(mac_addr)))
+        log("[{0}] error: failed to get device id ({1})".format(addon_id, str(mac_addr)))
         dialog.ok(addon_name, getString(30051))
         return False

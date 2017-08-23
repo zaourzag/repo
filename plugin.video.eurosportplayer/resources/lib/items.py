@@ -8,10 +8,12 @@ class Items:
         self.cache = True
         self.video = False
     
-    def list(self):
+    def list(self, sort=False, upd=False):
         if self.video:
             xbmcplugin.setContent(addon_handle, content)
-        xbmcplugin.endOfDirectory(addon_handle, cacheToDisc=self.cache)
+        if sort:
+            xbmcplugin.addSortMethod(addon_handle, 1)
+        xbmcplugin.endOfDirectory(addon_handle, cacheToDisc=self.cache, updateListing=upd)
         
         if force_view:
             xbmc.executebuiltin('Container.SetViewMode(%s)' % view_id)
@@ -25,9 +27,9 @@ class Items:
         }
                     
         art = {
-            'thumb': item.get('thumb', fanart).replace(' ', '%20'),
-            'poster': item.get('thumb', fanart).replace(' ', '%20'),
-            'fanart': fanart
+            'thumb': item.get('thumb', fanart),
+            'poster': item.get('thumb', fanart),
+            'fanart': item.get('fanart', fanart)
         }
                 
         labels = {
@@ -50,8 +52,17 @@ class Items:
         else:
             folder = True
             
+        if item.get('cm', None):
+            listitem.addContextMenuItems( item['cm'] )
+
         xbmcplugin.addDirectoryItem(addon_handle, build_url(data), listitem, folder)
         
-    def play(self, path):
-        listitem = xbmcgui.ListItem(path=path)
+    def play(self, path, token):
+        listitem = xbmcgui.ListItem()
+        listitem.setContentLookup(False)
+        listitem.setMimeType('application/x-mpegURL')
+        listitem.setProperty('inputstreamaddon', 'inputstream.adaptive')
+        listitem.setProperty('inputstream.adaptive.manifest_type', 'hls')
+        listitem.setProperty('inputstream.adaptive.license_key', '|authorization='+token)
+        listitem.setPath(path)
         xbmcplugin.setResolvedUrl(addon_handle, True, listitem)

@@ -7,7 +7,9 @@
         <setting label="device_id" type="text" id="device_id" default="" visible="false"/>
         <setting label="email" type="text" id="email" default="" visible="false"/>
         <setting label="password" type="text" id="password" default="" visible="false"/>
-        <setting label="userid" type="text" id="userid" default="" visible="false"/>
-        <setting label="hkey" type="text" id="hkey" default="" visible="false"/>
+        <setting label="access_token" type="text" id="access_token" default="" visible="false"/>
+        <setting label="refresh_token" type="text" id="refresh_token" default="" visible="false"/>
+        <setting label="language" type="text" id="language" default="" visible="false"/>
+        <setting label="country" type="text" id="country" default="" visible="false"/>
     </category>
 </settings>

@@ -2,7 +2,6 @@
 
 from resources.lib.client import Client
 from resources.lib import esp
-from resources.lib import cache
 from resources.lib.common import *
 
 client = Client()
@@ -11,19 +10,18 @@ def run():
     if mode == 'root':
         esp.channel(client.channels())
     elif mode == 'sports':
-        data = client.catchups()
-        cache.cache_data(data)
-        esp.sport(data)
+        esp.sport(client.categories())
     elif mode == 'videos':
-        esp.video(cache.get_cache_data(), id)
-    elif mode == 'epg':
-        data = client.epg()
-        cache.cache_data(data)
-        esp.epg(data)
-    elif mode == 'tvschedule':
-        esp.tvschedule(cache.get_cache_data(), id)
+        esp.video(client.videos(id), id)
+    elif 'epg' in mode:
+        prev_date = params
+        date = id
+        if date == 'date':
+            prev_date, date = get_date()
+        esp.epg(client.epg(prev_date, date), prev_date, date)
     elif mode == 'play':
-        esp.play(id, client.token())
+        if id:
+            esp.play(client.streams(id))
 
 args = urlparse.parse_qs(sys.argv[2][1:])
 mode = args.get('mode', ['root'])[0]
@@ -31,12 +29,14 @@ id = args.get('id', [''])[0]
 params = args.get('params', [''])[0]
 if not args:
     args = version
-log('[%s] arguments: %s' % (addon_id, str(args)))
+log('[{0}] arguments: {1}'.format(addon_id, str(args)))
 
 if mode == 'root':
     if uniq_id():
-        client.set_user_data()
-        if client.dvs['hkey']:
+        if not client.ACCESS_TOKEN:
+            client.login()
+        if client.ACCESS_TOKEN:
+            client.profile()
             run()
 else:
     run()

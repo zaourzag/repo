@@ -8,125 +8,131 @@ class Client:
 
     def __init__(self):
         
-        VS_URL = 'http://videoshop.ws.eurosport.com/JsonProductService.svc/'
-        CRM_URL = 'https://playercrm.ssl.eurosport.com/JsonPlayerCrmApi.svc/'
+        self.IDENTITY_URL = global_base + 'v2/user/identity'
+        self.USER_URL = global_base + 'v2/user/profile'
+        self.TOKEN_URL = global_base + 'token'
+        self.GRAPHQL_URL = search_base + 'svc/search/v2/graphql'
         
-        self.CRM_LOGIN = CRM_URL + 'Login'
-        self.CHANNELS = VS_URL  + 'GetAllChannelsCache'
-        self.CATCHUPS = VS_URL  + 'GetAllCatchupCache'
-        self.TOKEN = VS_URL  + 'GetToken'
-        self.EPG = VS_URL + 'FindUpcomingEPG'
-
-        self.headers = {
-            'User-Agent': 'iPhone',
-            'Referer': base_url
-        }
-
-        self.context = {
-            'g': '', 
-            'd': '2',
-            's': '1',
-            'p': '1',
-            'b': 'apple'
-        }
-
-        self.dvs = {
-            'userid': userid, 
-            'hkey': hkey, 
-            'languageid': '',
+        self.API_KEY = '2I84ZDjA2raVJ3hyTdADwdwxgDz7r62J8J0W8bE8N8VVILY446gDlrEB33fqLaXD'
+        
+        self.LANGUAGE = addon.getSetting('language')
+        self.COUNTRY = addon.getSetting('country')
+        self.ACCESS_TOKEN = addon.getSetting('access_token')
+        self.REFRESH_TOKEN = addon.getSetting('refresh_token')
+        
+        self.HEADERS = {
+            'accept': 'application/json',
+            'content-type': 'application/json',
+            'authorization': self.ACCESS_TOKEN
         }
         
-        self.set_location()
+        self.DATA = {
+            'query': '',
+            'operationName': '',
+            'variables': {}
+        }
         
-    def set_user_data(self):
-        if not self.dvs['userid'] and not self.dvs['hkey']:
-            self.set_user_ref()
-
-    def set_location(self):
-        data = self.get_data(base_url)
-        c = re.search("crmlanguageid\s*:\s*'(\d+)'", data)
-        if c:
-            self.dvs['languageid'] = c.group(1)
-        g = re.search("geoloc\s*:\s*'(\w+)'", data)
-        if g:
-            self.context['g'] = g.group(1)
-        log('[%s] geolocation: %s' % (addon_id, self.context['g']))
-
-    def set_user_ref(self):
-        credentials = Credentials()
-        user_ref = self.ep_login(credentials)
-        if user_ref.get('Response', None):
-            log('[%s] login: %s' % (addon_id, utfenc(user_ref['Response']['Message'])))
-        if user_ref.get('Id', '') and user_ref.get('Hkey', ''):
-            self.dvs['userid'] = user_ref['Id']
-            addon.setSetting('userid', user_ref['Id'])
-            self.dvs['hkey'] = user_ref['Hkey']
-            addon.setSetting('hkey', user_ref['Hkey'])
-            credentials.save()
-        else:
-            credentials.reset()
-    
     def channels(self):
-        encoded = urllib.urlencode({'data':json.dumps(self.dvs), 'context':json.dumps(self.context)})
-        url = self.CHANNELS + '?' + encoded
-        return self.json_request(url)
-
-    def catchups(self):
-        encoded = urllib.urlencode({'data':json.dumps(self.dvs), 'context':json.dumps(self.context)})
-        url = self.CATCHUPS + '?' + encoded
-        return self.json_request(url)
+        self.DATA['query'] = '{ onNow: query(index: "eurosport_global_on_now", type: "Airing", page_size: 500) @context(uiLang: "%s") { hits { hit { ... on Airing { type liveBroadcast linear runTime startDate endDate expires genres playbackUrls { href rel templated } channel { callsign } photos { uri width height } mediaConfig { state productType type } titles { language title descriptionLong } } } } } }' % (self.LANGUAGE)
+        return requests.post(self.GRAPHQL_URL, headers=self.HEADERS, json=self.DATA).json()
     
-    def epg(self):
-        encoded = urllib.urlencode({'data':json.dumps(self.dvs), 'context':json.dumps(self.context)})
-        url = self.EPG + '?' + encoded
-        return self.json_request(url)
-        
-    def ep_login(self, credentials):
-        login_data = {
-            'email': utfenc(credentials.email), 
-            'password': utfenc(credentials.password), 
-            'udid': addon.getSetting('device_id')
+    def categories(self):
+        self.DATA['query'] = '{ ListByTitle(title: "sports_filter") { list { ... on Category { id: sport sport tags { type displayName } defaultAssetImage { rawImage width height photos { imageLocation width height } } } } } } '
+        return requests.post(self.GRAPHQL_URL, headers=self.HEADERS, json=self.DATA).json()
+    
+    def videos(self, id):
+        self.DATA['query'] = '{ sport_%s:query (index: "eurosport_global",sort: new,page: 1,page_size: 100,type: ["Video","Airing"],must: {termsFilters: [{attributeName: "category", values: ["%s"]}]},must_not: {termsFilters: [{attributeName: "mediaConfigState", values: ["OFF"]}]},should: {termsFilters: [{attributeName: "mediaConfigProductType", values: ["VOD"]},{attributeName: "type", values: ["Video"]}]}) @context(uiLang: "%s") { ... on QueryResponse { ...queryResponse }} }fragment queryResponse on QueryResponse {meta { hits }hits {hit { ... on Airing { ... airingData } ... on Video { ... videoData } }}}fragment airingData on Airing {type contentId mediaId liveBroadcast linear partnerProgramId programId runTime startDate endDate expires genres playbackUrls { href rel templated } channel { id parent callsign partnerId } photos { id uri width height } mediaConfig { state productType type } titles { language title descriptionLong descriptionShort episodeName } }fragment videoData on Video {type contentId epgPartnerProgramId programId appears releaseDate expires runTime genres media { playbackUrls { href rel templated } } titles { title titleBrief episodeName summaryLong summaryShort tags { type value displayName } } photos { rawImage width height photos { imageLocation width height } } }' % (id, id, self.LANGUAGE)
+        return requests.post(self.GRAPHQL_URL, headers=self.HEADERS, json=self.DATA).json()
+    
+    def epg(self, prev_date, date):
+        self.DATA['query'] = '{ Airings: query(index: "eurosport_global_all", type: "Airing", from: "%sT22:00:00.000Z", to: "%sT21:59:59.999Z", sort: new, page_size: 500) @context(uiLang: "%s") { hits { hit { ... on Airing {type contentId mediaId liveBroadcast linear partnerProgramId programId runTime startDate endDate expires genres playbackUrls { href rel templated } channel { id parent callsign partnerId } photos { id uri width height } mediaConfig { state productType type } titles { language title descriptionLong descriptionShort episodeName } } } } } }' % (prev_date, date, self.LANGUAGE)
+        return requests.post(self.GRAPHQL_URL, headers=self.HEADERS, json=self.DATA).json()
+    
+    def streams(self, url):
+        headers = {
+            'accept': 'application/vnd.media-service+json; version=1',
+            'authorization': self.ACCESS_TOKEN
         }
-        encoded = urllib.urlencode({'data':json.dumps(login_data), 'context':json.dumps(self.context)})
-        url = self.CRM_LOGIN + '?' + encoded
-        return self.json_request(url)
-        
-    def logged_in(self, data):
-        if data.get('Response', None):
-            code = data['Response']['ResponseCode']
-            msg = data['Response']['ResponseMessage']
-            if code == 1 or code == 4:
-                return True
-            else:
-                if not code == 2:
-                    dialog.ok(addon_name, utfenc(msg))
-                log('[%s] error: %s' % (addon_id, utfenc(msg)))
-        return False
-        
-    def token(self):
+        json_data = requests.get(url.format(scenario='browser~unlimited'), headers=headers).json()
+        json_data['token'] = self.ACCESS_TOKEN
+        return json_data
     
-        def get_url():
-            encoded = urllib.urlencode({'data':json.dumps(self.dvs), 'context':json.dumps(self.context)})
-            return self.TOKEN + '?' + encoded
+    def authorization(self, grant_type='refresh_token', token=''):
+        if token == '':
+            token = addon.getSetting('device_id')
+        headers = {
+            'accept': 'application/json',
+            'content-type': 'application/x-www-form-urlencoded',
+            'authorization': 'Bearer ' + self.API_KEY
+        }
+        data = {
+            'grant_type': grant_type,
+            'platform': 'browser',
+            'token': token
+        }
+        return requests.post(self.TOKEN_URL, headers=headers, data=data).json()
         
-        data = self.json_request(get_url())
-        if not self.logged_in(data):
-            self.set_user_ref()
-            data = self.json_request(get_url())
-        return data
+    def authentication(self, credentials):
+        headers = {
+            'accept': 'application/vnd.identity-service+json; version=1.0',
+            'content-type': 'application/json',
+            'authorization': self.authorization(grant_type='client_credentials')['access_token']
+        }
+        data = {
+            "type": "email-password",
+            "email": {
+                "address": credentials.email
+            },
+            "password": {
+                "value": credentials.password
+            }
+        }
+        return requests.post(self.IDENTITY_URL, headers=headers, json=data).json()
+    
+    def user(self):
+        headers = {
+            'accept': 'application/vnd.identity-service+json; version=1.0',
+            'content-type': 'application/json',
+            'authorization': self.ACCESS_TOKEN
+        }
+        return requests.get(self.USER_URL, headers=headers).json()
+    
+    def user_settings(self, data):
+        log('[{0}] {1}'.format(addon_id, 'token refreshed'))
+        self.ACCESS_TOKEN = data['access_token']
+        self.REFRESH_TOKEN = data['refresh_token']
+        self.HEADERS['authorization'] = self.ACCESS_TOKEN
+        addon.setSetting('access_token', self.ACCESS_TOKEN)
+        addon.setSetting('refresh_token', self.REFRESH_TOKEN)
         
-    def get_data(self, url):
-        r = requests.get(url, headers=self.headers, allow_redirects=True)
-        if r:
-            return r.text
-        else:
-            log('[%s] error: request failed (%s)' % (addon_id, str(r.status_code)))
-            return ''
-            
-    def json_request(self, url):
-        r = requests.get(url, headers=self.headers)
-        if r.headers.get('content-type', '').startswith('application/json'):
-            return r.json()
-        else:
-            log('[%s] error: json request failed (%s)' % (addon_id, str(r.status_code)))
-            return {}
+    def profile(self):
+        json_data = self.user()
+        if json_data.get('message', ''):
+            log('[{0}] {1}'.format(addon_id, utfenc(json_data['message'][:100])))
+            self.user_settings(self.authorization(token=self.REFRESH_TOKEN))
+            json_data = self.user()
+        properties = json_data['profile']['profileProperty']
+        for i in properties:
+            name = i['name']
+            if name == 'country':
+                self.COUNTRY = i['value']
+                addon.setSetting('country', self.COUNTRY)
+            if name == 'language':
+                self.LANGUAGE = i['value']
+                addon.setSetting('language', self.LANGUAGE)
+        log('[{0}] country: {1} language: {2}'.format(addon_id, self.COUNTRY, self.LANGUAGE))
+                
+    def login(self):
+        code = None
+        credentials = Credentials()
+        if credentials.email and credentials.password:
+            json_data = self.authentication(credentials)
+            if json_data.get('message'):
+                log('[{0}] {1}'.format(addon_id, utfenc(json_data['message'][:100])))
+            else:
+                log('[{0}] {1}'.format(addon_id, 'logged in'))
+                credentials.save()
+                code = json_data['code']
+        if code:
+            self.user_settings(self.authorization(grant_type='urn:mlbam:params:oauth:grant_type:token', token=code))
+            self.profile()

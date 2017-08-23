@@ -51,3 +51,43 @@ msgstr ""
 msgctxt "#30103"
 msgid "Schedule"
 msgstr ""
+
+msgctxt "#30221"
+msgid "Today"
+msgstr ""
+
+msgctxt "#30222"
+msgid "Tomorrow"
+msgstr ""
+
+msgctxt "#30223"
+msgid "Monday"
+msgstr ""
+
+msgctxt "#30224"
+msgid "Tuesday"
+msgstr ""
+
+msgctxt "#30225"
+msgid "Wednesday"
+msgstr ""
+
+msgctxt "#30226"
+msgid "Thursday"
+msgstr ""
+
+msgctxt "#30227"
+msgid "Friday"
+msgstr ""
+
+msgctxt "#30228"
+msgid "Saturday"
+msgstr ""
+
+msgctxt "#30229"
+msgid "Sunday"
+msgstr ""
+
+msgctxt "#30230"
+msgid "Enter Date"
+msgstr ""

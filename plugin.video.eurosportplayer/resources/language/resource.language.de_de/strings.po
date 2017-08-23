@@ -46,8 +46,48 @@ msgstr "Videos"
 
 msgctxt "#30102"
 msgid "Video on Demand"
-msgstr "Video auf Abruf"
+msgstr "Videos auf Abruf"
 
 msgctxt "#30103"
 msgid "Schedule"
-msgstr "Vorschau"
+msgstr "Programm"
+
+msgctxt "#30221"
+msgid "Today"
+msgstr "Heute"
+
+msgctxt "#30222"
+msgid "Tomorrow"
+msgstr "Morgen"
+
+msgctxt "#30223"
+msgid "Monday"
+msgstr "Montag"
+
+msgctxt "#30224"
+msgid "Tuesday"
+msgstr "Dienstag"
+
+msgctxt "#30225"
+msgid "Wednesday"
+msgstr "Mittwoch"
+
+msgctxt "#30226"
+msgid "Thursday"
+msgstr "Donnerstag"
+
+msgctxt "#30227"
+msgid "Friday"
+msgstr "Freitag"
+
+msgctxt "#30228"
+msgid "Saturday"
+msgstr "Samstag"
+
+msgctxt "#30229"
+msgid "Sunday"
+msgstr "Sonntag"
+
+msgctxt "#30230"
+msgid "Enter Date"
+msgstr "Datum eingeben"
