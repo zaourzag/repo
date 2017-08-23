@@ -12,7 +12,7 @@
 			<shadowcolor>black</shadowcolor>
 			<label>$VAR[$PARAM[dashbaord_extended_label]]</label>
 			<include>openclosevisible</include>
-			<visible>System.HasAddon(script.extendedinfo)</visible>
+			<!-- <visible>System.HasAddon(script.extendedinfo)</visible> -->
 			<visible>$PARAM[dashboard_extended_visible]</visible>
 		</control>
 		<control type="list" id="$PARAM[dashboard_id]">
@@ -28,7 +28,7 @@
 			<pagecontrol>-</pagecontrol>
 			<scrolltime tween="circle" easing="out">800</scrolltime>
 			<orientation>horizontal</orientation>
-			<visible>System.HasAddon(script.extendedinfo)</visible>
+			<!-- <visible>System.HasAddon(script.extendedinfo)</visible> -->
 			<visible>$PARAM[dashboard_extended_visible]</visible>
 			<visible>!Skin.HasSetting($PARAM[dashbaord_extended_number])</visible>
 			<autoscroll time="3000" delay="5000" repeat="5000">!Control.HasFocus(8009)+!Control.HasFocus(8006)+!Control.HasFocus(8004)+!String.IsEmpty(Container($PARAM[dashboard_id]).ListItem(6).Label)+Skin.HasSetting(animation)</autoscroll>
@@ -255,7 +255,7 @@
 					<param name="dashboard_labelid" value="8003" />
 					<param name="dashboard_id" value="8004" />
 					<param name="dashbaord_extended_number" value="dashboard_eventblog1_off" />
-					<param name="dashboard_extended_visible" value="!String.IsEmpty(Container(8020).ListItem(0).Label)+String.IsEqual(Container(9000).ListItem.Property(homemenu_id),dashboard)+System.HasAddon(script.extendedinfo)" />
+					<param name="dashboard_extended_visible" value="!String.IsEmpty(Container(8020).ListItem(0).Label)+String.IsEqual(Container(9000).ListItem.Property(homemenu_id),dashboard)" />
 					<param name="dashbaord_extended_label" value="DashboardExtendedInfoLabel" />
 					<param name="dashbaord_extended_content" value="DashboardExtendedInfoContent" />
 				</include>
@@ -263,7 +263,7 @@
 					<param name="dashboard_labelid" value="8005" />
 					<param name="dashboard_id" value="8006" />
 					<param name="dashbaord_extended_number" value="dashboard_eventblog2_off" />
-					<param name="dashboard_extended_visible" value="!String.IsEmpty(Container(8021).ListItem(0).Label)+String.IsEqual(Container(9000).ListItem.Property(homemenu_id),dashboard)+System.HasAddon(script.extendedinfo)" />
+					<param name="dashboard_extended_visible" value="!String.IsEmpty(Container(8021).ListItem(0).Label)+String.IsEqual(Container(9000).ListItem.Property(homemenu_id),dashboard)" />
 					<param name="dashbaord_extended_label" value="DashboardExtendedInfoLabel2" />
 					<param name="dashbaord_extended_content" value="DashboardExtendedInfoContent2" />
 				</include>
@@ -298,7 +298,7 @@
 				<top>0</top>
 				<width>1</width>
 				<height>1</height>
-				<visible>System.HasAddon(script.extendedinfo)</visible>
+				<!-- <visible>System.HasAddon(script.extendedinfo)</visible> -->
 				<itemlayout height="130" width="360">
 				</itemlayout>
 				<focusedlayout height="130" width="360">
@@ -310,7 +310,7 @@
 				<top>0</top>
 				<width>1</width>
 				<height>1</height>
-				<visible>System.HasAddon(script.extendedinfo)</visible>
+				<!-- <visible>System.HasAddon(script.extendedinfo)</visible> -->
 				<itemlayout height="1" width="1">
 				</itemlayout>
 				<focusedlayout height="1" width="1">

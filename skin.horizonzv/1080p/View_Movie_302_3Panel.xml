@@ -529,7 +529,7 @@
                                 <visible>Container(302).ListItem().IsResumable</visible>
                             </control>
                         </focusedlayout>
-                        <content target="video">$INFO[ListItem.FolderPath]</content>
+                        <content target="videos">$INFO[ListItem.FolderPath]</content>
                     </control>
                     <control type="scrollbar" id="70">
                         <left>687</left>

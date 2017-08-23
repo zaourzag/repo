@@ -1,4 +1,8 @@
-﻿v 0.9.0.56
+﻿v 0.9.0.60
+- Hauptmenü: Widget für News, GTO überarbeitet. Widget konfiguration neu aufgebaut und verbessert
+- Hauptmenü: Widget für Dashboard erweitert. Video Addon Pfade können nun auch ausgewählt werden
+
+v 0.9.0.56
 - Bugfix: Musik-Widget (Sortierung)
 - Bugfix: View - Musik-Fanart Cover und Navigation
 

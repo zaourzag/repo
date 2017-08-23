@@ -209,7 +209,7 @@
                     <label>$INFO[ListItem.Year]</label>
                 </control>
             </focusedlayout>
-            <content target="video" sortby="year">$INFO[ListItem.FolderPath]</content>
+            <content target="videos" sortby="year">$INFO[ListItem.FolderPath]</content>
         </control>
     </include>
 </includes>

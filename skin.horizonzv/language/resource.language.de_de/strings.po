@@ -1970,8 +1970,8 @@ msgid "YouTube playlists"
 msgstr "YouTube Playlists"
 
 msgctxt "#51548"
-msgid "Trailer (Apple)"
-msgstr "Trailer (Apple)"
+msgid "Video Addon Path"
+msgstr "Video Addon Pfad"
 
 msgctxt "#51549"
 msgid "new dvd releases (Rotten Tomatoes)"
@@ -2080,3 +2080,7 @@ msgstr "Skin neu laden"
 msgctxt "#51581"
 msgid "KODI APP reload"
 msgstr "KODI APP neu starten"
+
+msgctxt "#51583"
+msgid "required"
+msgstr "wird benötigt"
