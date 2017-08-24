@@ -404,7 +404,7 @@ def refreshWidget(handle=None, notify=__enableinfo__):
         writeLog('Processing blob GTO.%s for widget #%s' % (i, widget))
         blob = eval(HOME.getProperty('GTO.%s' % (i)))
 
-        if __pvronly__ and blob['pvrid'] == 'False':
+        if __pvronly__ and not blob['pvrid']:
             writeLog("Channel %s is not in PVR, discard entry" % (blob['channel']))
             HOME.setProperty('PVRisReady', 'no')
             continue
