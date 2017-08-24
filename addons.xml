@@ -3111,7 +3111,7 @@ NOTE: Streams are available in SD only
     </extension>
 </addon>
 
-<addon id="plugin.program.serienplaner" name="Serienplaner" version="0.1.1" provider-name="sveni_lee">
+<addon id="plugin.program.serienplaner" name="Serienplaner" version="0.1.2" provider-name="sveni_lee">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
         <import addon="script.module.feedparser" version="5.1.3"/>
