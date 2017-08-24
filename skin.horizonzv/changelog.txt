@@ -1,4 +1,7 @@
-﻿v 0.9.0.61
+﻿v 0.9.0.62
+- Bugfix Serienplaner (Content wurde nicht angezeigt)
+
+v 0.9.0.61
 - Code aufgeräumt
 - Bugfix Serienplaner (ohne Addon, wird man immer nach der Installation gefragt)
 

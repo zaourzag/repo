@@ -446,7 +446,7 @@
                     <focusedlayout height="180" width="360" condition="!Control.HasFocus(403)">
                         <include>HomeNewsCenterItemLayout</include>
                     </focusedlayout>
-					<include condition="!String.IsEmpty(Window.Property(SerienPlaner.1.Channel))+Skin.HasSetting(Widget_NEWS_SerienPlaner)+System.HasAddon(plugin.program.serienplaner)">Content_Serienplaner</include>
+					<include condition="System.HasAddon(plugin.program.serienplaner)">Content_Serienplaner</include>
                 </control>
             </control>
         </control>
