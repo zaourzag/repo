@@ -28,7 +28,8 @@ class Credentials:
             self.credentials = True
         else:
             self.email = dialog.input(getString(30002), type=xbmcgui.INPUT_ALPHANUM)
-            self.password = dialog.input(getString(30003), type=xbmcgui.INPUT_ALPHANUM, option=xbmcgui.ALPHANUM_HIDE_INPUT)
+            if self.email:
+                self.password = dialog.input(getString(30003), type=xbmcgui.INPUT_ALPHANUM, option=xbmcgui.ALPHANUM_HIDE_INPUT)
 
     def save(self):
         if not self.credentials:

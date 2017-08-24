@@ -64,8 +64,9 @@ def epg(data, prev_date, date):
     items.list(upd=update)
     
 def play(data):
-    for i in data['stream']:
-        path = data['stream'][i]
-        break
-    token = data['token']
-    items.play(path, token)
+    if data.get('stream'):
+        for i in data['stream']:
+            path = data['stream'][i].replace('desktop','wired50')
+            break
+        token = data['token']
+        items.play(path, token)

@@ -53,7 +53,9 @@ class Client:
             'accept': 'application/vnd.media-service+json; version=1',
             'authorization': self.ACCESS_TOKEN
         }
-        json_data = requests.get(url.format(scenario='browser~unlimited'), headers=headers).json()
+        json_data = requests.get(url.format(scenario='browser'), headers=headers).json()
+        if json_data.get('errors', ''):
+            log('[{0}] {1}'.format(addon_id, utfenc(json_data['errors'][0][:100])))
         json_data['token'] = self.ACCESS_TOKEN
         return json_data
     
@@ -128,11 +130,12 @@ class Client:
         if credentials.email and credentials.password:
             json_data = self.authentication(credentials)
             if json_data.get('message'):
-                log('[{0}] {1}'.format(addon_id, utfenc(json_data['message'][:100])))
+                msg = utfenc(json_data['message'][:100])
             else:
-                log('[{0}] {1}'.format(addon_id, 'logged in'))
+                msg = 'logged in'
                 credentials.save()
                 code = json_data['code']
+            log('[{0}] {1}'.format(addon_id, msg))
         if code:
             self.user_settings(self.authorization(grant_type='urn:mlbam:params:oauth:grant_type:token', token=code))
             self.profile()
