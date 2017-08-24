@@ -194,7 +194,7 @@
                         <onclick>Dialog.Close(all)</onclick>
                     </control>
                     <control type="button" id="22">
-                        <description>Switch button</description>
+                        <description>Record button</description>
                         <width min="225" max="300">auto</width>
                         <label>$ADDON[plugin.service.gto 30112]</label>
                         <texturenofocus>-</texturenofocus>

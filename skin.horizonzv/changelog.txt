@@ -1,4 +1,8 @@
-﻿v 0.9.0.60
+﻿v 0.9.0.61
+- Code aufgeräumt
+- Bugfix Serienplaner (ohne Addon, wird man immer nach der Installation gefragt)
+
+v 0.9.0.60
 - Hauptmenü: Widget für News, GTO überarbeitet. Widget konfiguration neu aufgebaut und verbessert
 - Hauptmenü: Widget für Dashboard erweitert. Video Addon Pfade können nun auch ausgewählt werden
 
