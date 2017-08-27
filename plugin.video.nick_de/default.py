@@ -197,12 +197,13 @@ def listShowsNight(url):
     content = content[:content.find("</ul>")]
     match = re.compile('<li class=\'item\'><a href="([^"]+)" target=""><img alt="([^"]+)" src="([^"]+)" title="" /></a></li>', re.DOTALL).findall(content)
     for element in match:        
-        title = element[1]
+        title = cleanTitle(element[1])
         thumb = element[2]
         url = urlMainnight+element[0]
-        addDir(title, url, 'playVideoJR', thumb)
+        addDir(title, url, 'listVideosnight', thumb)
     xbmcplugin.endOfDirectory(pluginhandle)
 
+    
 
 def listVideosJR(url,page=1):
     urln=url+"&page="+str(page)
@@ -223,6 +224,7 @@ def listVideosJR(url,page=1):
     xbmcplugin.endOfDirectory(pluginhandle)             
     
 def playVideoJR(url):
+    debug("------")
     content = getUrl(url)
     id = re.compile('data-contenturi="(.+?)"', re.DOTALL).findall(content)[0]
     url2="http://media.mtvnservices.com/pmt/e1/access/index.html?uri="+id+"&configtype=edge"
@@ -244,25 +246,19 @@ def playVideoJR(url):
 
 
 def listVideosnight(url):
-    xbmc.log("NICK :listVideosnight url "+ url)
-    content = opener.open(url).read()        
-    if "<ol class='playlist'>" in content:
-        content = content[content.find("<ol class='playlist'>"):]
-        content = content[:content.find("</ol>")]                         
-    spl = content.split("playlist-item' data-item-id")     
+    debug("listVideos URL: "+ url)
+    content = opener.open(url).read()
+    spl = content.split("<li class='playlist-item'")
     for i in range(1, len(spl), 1):
         entry = spl[i]
-        xbmc.log("NICK :listVideosnight "+ entry)
-        match = re.compile("<p class='subtitle'>([^<]+)", re.DOTALL).findall(entry)
-        title = match[-1]
+        title = re.compile("class='subtitle'>(.*?)<", re.DOTALL).findall(entry)[1]                                    
         title = cleanTitle(title)
         match = re.compile('src="(.+?)"', re.DOTALL).findall(entry)
-        thumb = match[0]
+        thumb = match[0].replace("140x105","640x")
         match = re.compile("href='(.+?)'", re.DOTALL).findall(entry)
         url = match[0]
-        addLink(title, url, 'playVideo', thumb)
-    xbmcplugin.endOfDirectory(pluginhandle)
-    
+        addLink(title, url, 'playVideo', thumb)        
+    xbmcplugin.endOfDirectory(pluginhandle)             
 
 def playVideo(url):
     xbmc.log("NICK : "+ url) 
