@@ -123,7 +123,12 @@ def listVideos(url):
     for i in range(1, len(spl), 1):
         entry = spl[i]
         match1 = re.compile("class='title'>(.+?)<", re.DOTALL).findall(entry)
-        match2 = re.compile("class='subtitle'>(.*?)<", re.DOTALL).findall(entry)
+        match2 = re.compile("class='subtitle'.+?>(.*?)<", re.DOTALL).findall(entry)                             
+        dauer = re.compile("<p class='duration'>(.+?)</p>", re.DOTALL).findall(entry)[0]
+        listing=dauer.split(":")
+        dauer=int(listing[0])*60+int(listing[1])
+        debug("++-+++")
+        debug(dauer)
         title = match1[0]
         if match2 and match2[0]:
             title = title+" - "+match2[0]
@@ -134,7 +139,7 @@ def listVideos(url):
         url = match[0]
         if not urlMain in url:
           url=urlMain+url
-        addLink(title, url, 'playVideo', thumb)
+        addLink(title, url, 'playVideo', thumb,duration=dauer)
     xbmcplugin.endOfDirectory(pluginhandle)
     
 
@@ -263,24 +268,30 @@ def playVideo(url):
     xbmc.log("NICK : "+ url) 
     content = opener.open(url).read()
     # data-mrss="http://api.mtvnn.com/v2/mrss.xml?uri=mgid:sensei:video:mtvnn.com:local_playlist-42c03a89f16e99f0d018"
-    match1 = re.compile('data-mrss="([^"]+)"', re.DOTALL).findall(content)
+    match1 = re.compile('mrss=([^"]+)"', re.DOTALL).findall(content)
     #mrss     : 'http://api.mtvnn.com/v2/mrss?uri=mgid:sensei:video:mtvnn.com:local_playlist-a3dff586129cb4d17dc5',
     match2 = re.compile('mrss[\s]*: \'([^\']+)\'', re.DOTALL).findall(content)                        
     match3 = re.compile("mrss[\s]*:[^']*'([^']+?)'", re.DOTALL).findall(content)
     debug("------+++++-----")
-    debug(content)
+    debug(match1)
+    debug(match2)
+    debug(match3)
+    debug("##############")
     #swf = re.compile('"(.+?.swf)[?|"]', re.DOTALL).findall(content)[0]
     swf = re.compile('"(/[^"]+?.swf)[\?"]', re.DOTALL).findall(content)[0]
     debug ("SWF :: "+swf)
     if not "http" in swf:
       swf="http://www.nicknight.de"+ swf
     if urlMain in url:
-        content = opener.open(match1[0]).read()
+        content = opener.open(match1[1]).read()
     elif urlMainJR in url :
         content = opener.open(match2[0]).read()
     elif urlMainnight in url:
         content = opener.open(match3[0]).read()
-    match = re.compile("<media:content.+?url='(.+?)'", re.DOTALL).findall(content)
+    debug("Content")
+    debug("----------------")
+    debug(content)
+    match = re.compile("<media:content.+?url=['\"](.+?)['\"]", re.DOTALL).findall(content)
     content = opener.open(match[0]).read()
     match = re.compile('type="video/mp4" bitrate="(.+?)">.+?<src>(.+?)</src>', re.DOTALL).findall(content)
     bitrate = 0
