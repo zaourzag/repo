@@ -32,10 +32,11 @@ def AddonEnabled(addon_id):
     return False if '"error":' in result or '"enabled":false' in result else True
 
 is_addon=""
+inputstreamcomp=addon.getSetting("inputstreamcomp") 
 if AddonEnabled('inputstream.adaptive'):
     is_addon = 'inputstream.adaptive'    
 
-if not is_addon:
+if not is_addon or inputstreamcomp=="true":
         Log('No Inputstream Addon found or activated')
         dialog = xbmcgui.Dialog()
         dialog.notification("Inpuitstream Fehler", 'Inputstream nicht eingeschaltet', xbmcgui.NOTIFICATION_ERROR)
