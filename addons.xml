@@ -3145,6 +3145,25 @@ NOTE: Streams are available in SD only
     </extension>
 </addon>
 
+<addon id="plugin.video.4playersweb" name="4players (Webbased)" version="0.1" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.20.0" />
+        <import addon="script.module.beautifulsoup4" version="4.3.2"/>
+        <import addon="script.module.requests" version="2.12.4"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="addon.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en">Videos from 4players</summary>
+        <description lang="en">Videos from 4players</description>
+        <platform>all</platform>
+        <language>en</language>
+        <license>GNU General Public License, v2</license>
+        <email></email>
+    </extension>
+</addon>
+
 <addon id="repository.saxbmc" name="SaXBMC Addon Repo" version="1.0.1" provider-name="Birger Jesch">
 	<extension point="xbmc.addon.repository" name="SaXBMC Addon Repo">
 		<info compressed="true">https://raw.githubusercontent.com/b-jesch/SaXBMC/master/addons.xml</info>
@@ -3403,7 +3422,7 @@ NOTE: Streams are available in SD only
   </extension>
 </addon>
 
-<addon id="plugin.video.rtlnow" name="TV Now (DEV)" version="0.4.5" provider-name="L0RE">
+<addon id="plugin.video.rtlnow" name="TV Now (DEV)" version="0.4.6" provider-name="L0RE">
  <requires>
         <import addon="xbmc.python" version="2.1.0"/>   
         <import addon="script.common.plugin.cache" version="2.5.5"/> # Add this    
