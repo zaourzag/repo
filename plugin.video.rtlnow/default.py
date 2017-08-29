@@ -31,25 +31,6 @@ def AddonEnabled(addon_id):
                                    "params":{"addonid":"%s", "properties": ["enabled"]}}' % addon_id)
     return False if '"error":' in result or '"enabled":false' in result else True
 
-is_addon=""
-inputstreamcomp=addon.getSetting("inputstreamcomp") 
-if AddonEnabled('inputstream.adaptive'):
-    is_addon = 'inputstream.adaptive'    
-
-if not is_addon or inputstreamcomp=="true":
-        log('No Inputstream Addon found or activated')
-        log('inputstreamcomp')
-        log(inputstreamcomp)
-        dialog = xbmcgui.Dialog()
-        dialog.notification("Inpuitstream Fehler", 'Inputstream nicht eingeschaltet', xbmcgui.NOTIFICATION_ERROR)
-        exit    
-
-profile    = xbmc.translatePath( addon.getAddonInfo('profile') ).decode("utf-8")
-temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
-if not xbmcvfs.exists(temp):  
-  xbmcvfs.mkdirs(temp)
-
-
 def debug(content):
     log(content, xbmc.LOGDEBUG)
     
@@ -60,6 +41,24 @@ def log(msg, level=xbmc.LOGNOTICE):
     addon = xbmcaddon.Addon()
     addonID = addon.getAddonInfo('id')
     xbmc.log('%s: %s' % (addonID, msg), level) 
+
+is_addon=""
+inputstreamcomp=addon.getSetting("inputstreamcomp") 
+if AddonEnabled('inputstream.adaptive'):
+    is_addon = 'inputstream.adaptive'    
+
+if not is_addon or inputstreamcomp=="true":
+        debug('No Inputstream Addon found or activated')
+        debug('inputstreamcomp')
+        debug(inputstreamcomp)
+        dialog = xbmcgui.Dialog()
+        dialog.notification("Inpuitstream Fehler", 'Inputstream nicht eingeschaltet', xbmcgui.NOTIFICATION_ERROR)
+        exit    
+
+profile    = xbmc.translatePath( addon.getAddonInfo('profile') ).decode("utf-8")
+temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
+if not xbmcvfs.exists(temp):  
+  xbmcvfs.mkdirs(temp)
 
 
 cert=addon.getSetting("cert")
