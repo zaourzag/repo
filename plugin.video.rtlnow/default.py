@@ -47,7 +47,7 @@ inputstreamcomp=addon.getSetting("inputstreamcomp")
 if AddonEnabled('inputstream.adaptive'):
     is_addon = 'inputstream.adaptive'    
 
-if not is_addon or inputstreamcomp=="true":
+if not is_addon and not inputstreamcomp=="true":
         debug('No Inputstream Addon found or activated')
         debug('inputstreamcomp')
         debug(inputstreamcomp)
