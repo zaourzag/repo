@@ -3180,6 +3180,31 @@ NOTE: Streams are available in SD only
 	</extension>
 </addon>
 
+<addon id="context.kodinerds.thumpup" name="Empfehlungen für Kodinerds" version="0.2.15" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.20.0" />
+        <import addon="script.module.beautifulsoup4" version="4.3.2"/>
+        <import addon="script.module.requests" version="2.12.4"/>
+    </requires>
+    <extension point="kodi.context.item" library="addon.py">
+        <item>
+            <label>Kodinerds Empfehlen</label>
+            <visible>Window.IsActive(10025)+!Container.Content(Addons)+!Container.Content(images)+!Container.Content(movies)+!Container.Content(songs)</visible>            
+        </item>
+    </extension>
+    <extension point="xbmc.python.pluginsource" library="addon.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en">Empfielt eine Serie für https://www.kodinerds.net/index.php/Thread/58034-L0RE-s-Test-thread/</summary>
+        <description lang="en">Empfielt eine Serie für https://www.kodinerds.net/index.php/Thread/58034-L0RE-s-Test-thread</description>
+        <platform>all</platform>
+        <language>en</language>
+        <license>GNU General Public License, v2</license>
+        <email></email>
+    </extension>
+</addon>
+
 <addon id="script.module.libfuturize" name="libfuturize" version="0.16.0" provider-name="Ed Schofield">
 	<requires>
 		<import addon="xbmc.python" version="2.24.0"/>
