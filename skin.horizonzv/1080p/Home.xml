@@ -621,6 +621,42 @@
             <width>1800</width>
             <orientation>horizontal</orientation>
             <itemgap>0</itemgap>
+			<control type="label">
+                <left>30</left>
+                <top>225</top>
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>orange</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>$INFO[Window.Property(SerienPlaner.1.Channel)] |</label>
+				<!-- <visible>!String.IsEmpty(Window.Property(SerienPlaner.1.Channel))</visible> -->
+            </control>
+			<control type="label">
+                <left>30</left>
+                <top>225</top>
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>orange</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>Widget_NEWS_SerienPlaner ON |</label>
+				<visible>Skin.HasSetting(Widget_NEWS_SerienPlaner)+System.HasAddon(plugin.program.serienplaner)</visible>
+            </control>
+			<control type="label">
+                <left>30</left>
+                <top>225</top>
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>orange</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>plugin.program.serienplaner INSTALLIERT |</label>
+				<visible>System.HasAddon(plugin.program.serienplaner)</visible>
+            </control>
             <!-- <control type="label">
                 <left>30</left>
                 <top>225</top>

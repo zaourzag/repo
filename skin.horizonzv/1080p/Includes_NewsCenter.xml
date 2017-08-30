@@ -111,6 +111,13 @@
             <texture>$INFO[ListItem.Property(headerpic)]</texture>
             <bordersize>5</bordersize>
         </control>
+        <control type="image">
+            <left>8</left>
+            <top>52</top>
+            <width>338</width>
+            <height>45</height>
+            <texture>BlackBack.png</texture>
+        </control>
         <control type="label">
             <left>15</left>
             <top>52</top>
@@ -118,9 +125,9 @@
             <height>45</height>
             <font>impacted14</font>
             <align>center</align>
-            <textcolor>description</textcolor>
+            <textcolor>white</textcolor>
             <shadowcolor>black</shadowcolor>
-            <label>$INFO[ListItem.Label]</label>
+			<label>$PARAM[NewsCenter_Label1]</label>
         </control>
         <control type="image">
             <description>background</description>
@@ -254,7 +261,9 @@
 					<visible>!String.IsEmpty(Window(Home).Property(LatestNews.1.Title))+Skin.HasSetting(Widget_NEWS_NewsCenter)+System.HasAddon(plugin.program.newscenter)</visible>
                     <autoscroll time="3000" delay="5000" repeat="5000">!ControlGroup(290).HasFocus+!String.IsEmpty(Container(401).ListItem(6).Label)+Skin.HasSetting(animation)</autoscroll>
                     <itemlayout height="180" width="360">
-                        <include>HomeNewsCenterItemLayout</include>
+						<include content="HomeNewsCenterItemLayout">
+							<param name="NewsCenter_Label1" value="$INFO[ListItem.Label]" />
+						</include>
                     </itemlayout>
                     <focusedlayout height="180" width="360" condition="Control.HasFocus(401)">
 						<include content="HomeNewsCenterFocusedLayout">
@@ -264,7 +273,9 @@
 						</include>
                     </focusedlayout>
                     <focusedlayout height="180" width="360" condition="!Control.HasFocus(401)">
-                        <include>HomeNewsCenterItemLayout</include>
+						<include content="HomeNewsCenterItemLayout">
+							<param name="NewsCenter_Label1" value="$INFO[ListItem.Label]" />
+						</include>
                     </focusedlayout>
                     <include>Content_Newscenter</include>
                 </control>
@@ -347,7 +358,9 @@
 					<visible>Integer.IsGreater(Window(Home).Property(GTO.Blobs),0)+Skin.HasSetting(Widget_NEWS_TVHighlights_gto)+System.HasAddon(plugin.service.gto)</visible>
                     <autoscroll time="3000" delay="5000" repeat="5000">!ControlGroup(290).HasFocus+!String.IsEmpty(Container(402).ListItem(6).Label)+Skin.HasSetting(animation)</autoscroll>
                     <itemlayout height="180" width="360">
-                        <include>HomeNewsCenterItemLayout</include>
+						<include content="HomeNewsCenterItemLayout">
+							<param name="NewsCenter_Label1" value="$INFO[ListItem.Label]" />
+						</include>
                     </itemlayout>
                     <focusedlayout height="180" width="360" condition="Control.HasFocus(402)">
 						<include content="HomeNewsCenterFocusedLayout">
@@ -357,7 +370,9 @@
 						</include>
                     </focusedlayout>
                     <focusedlayout height="180" width="360" condition="!Control.HasFocus(402)">
-                        <include>HomeNewsCenterItemLayout</include>
+						<include content="HomeNewsCenterItemLayout">
+							<param name="NewsCenter_Label1" value="$INFO[ListItem.Label]" />
+						</include>
                     </focusedlayout>
 					<content target="pvr">plugin://plugin.service.gto?action=getcontent&amp;ts=$INFO[Window(Home).Property(GTO.timestamp)]</content>
                 </control>
@@ -434,7 +449,9 @@
                     <orientation>horizontal</orientation>
                     <autoscroll time="3000" delay="5000" repeat="5000">!ControlGroup(290).HasFocus+!String.IsEmpty(Container(403).ListItem(6).Label)+Skin.HasSetting(animation)</autoscroll>
                     <itemlayout height="180" width="360">
-                        <include>HomeNewsCenterItemLayout</include>
+						<include content="HomeNewsCenterItemLayout">
+							<param name="NewsCenter_Label1" value="$INFO[ListItem.Label2]" />
+						</include>
                     </itemlayout>
                     <focusedlayout height="180" width="360" condition="Control.HasFocus(403)">
 						<include content="HomeNewsCenterFocusedLayout">
@@ -444,7 +461,9 @@
 						</include>
                     </focusedlayout>
                     <focusedlayout height="180" width="360" condition="!Control.HasFocus(403)">
-                        <include>HomeNewsCenterItemLayout</include>
+						<include content="HomeNewsCenterItemLayout">
+							<param name="NewsCenter_Label1" value="$INFO[ListItem.Label2]" />
+						</include>
                     </focusedlayout>
 					<include condition="System.HasAddon(plugin.program.serienplaner)">Content_Serienplaner</include>
                 </control>

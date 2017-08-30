@@ -82,6 +82,24 @@
 					<texture>$INFO[ListItem.Art(poster)]</texture>
 				</control>
 				<control type="image">
+					<left>8</left>
+					<top>75</top>
+					<width>338</width>
+					<height>45</height>
+					<texture>BlackBack.png</texture>
+				</control>
+				<control type="label">
+					<left>14</left>
+					<top>75</top>
+					<width>322</width>
+					<height>45</height>
+					<font>impacted14</font>
+					<align>center</align>
+					<textcolor>white</textcolor>
+					<shadowcolor>black</shadowcolor>
+					<label>$INFO[ListItem.Label]$INFO[ListItem.Property(eventname)]</label>
+				</control>
+				<control type="image">
 					<description>background</description>
 					<left>0</left>
 					<top>0</top>
@@ -202,6 +220,24 @@
 						<animation effect="fade" start="100" end="0" time="200" delay="7000">Focus</animation>
 					</control>
 					<control type="image">
+						<left>8</left>
+						<top>75</top>
+						<width>338</width>
+						<height>45</height>
+						<texture>BlackBack.png</texture>
+					</control>
+					<control type="label">
+						<left>14</left>
+						<top>75</top>
+						<width>322</width>
+						<height>45</height>
+						<font>impacted14</font>
+						<align>center</align>
+						<textcolor>white</textcolor>
+						<shadowcolor>black</shadowcolor>
+						<label>$INFO[ListItem.Label]$INFO[ListItem.Property(eventname)]</label>
+					</control>
+					<control type="image">
 						<description>background</description>
 						<left>0</left>
 						<top>0</top>
@@ -211,19 +247,6 @@
 						<texture border="4">masks/Default_sharp.png</texture>
 						<animation effect="fade" start="100" end="50" time="150" condition="!Control.HasFocus($PARAM[dashboard_id])">Conditional</animation>
 						<animation effect="fade" start="50" end="100" time="150" condition="Control.HasFocus($PARAM[dashboard_id])">Conditional</animation>
-					</control>
-					<control type="label">
-						<left>2</left>
-						<top>90</top>
-						<width>348</width>
-						<height>30</height>
-						<font>impacted18</font>
-						<align>center</align>
-						<textcolor>white</textcolor>
-						<shadowcolor>grey3</shadowcolor>
-						<label>$INFO[ListItem.Label]$INFO[ListItem.Property(eventname)]</label>
-						<visible>Control.HasFocus($PARAM[dashboard_id])</visible>
-						<animation effect="fade" start="100" end="0" time="200" delay="7000">Focus</animation>
 					</control>
 				</control>
 			</focusedlayout>
