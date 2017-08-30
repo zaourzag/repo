@@ -84,8 +84,7 @@ def gettitle()  :
   if title=="":
      title = xbmc.getInfoLabel("ListItem.Title").decode('UTF-8')      
   if title=="":
-     title=sys.listitem.getLabel()
-  debug("TITLE :::: "+title)     
+     title=sys.listitem.getLabel()  
   return title
 
 
@@ -105,14 +104,21 @@ debug("Mode ist : "+mode)
 if mode=="":  
     username=addon.getSetting("username")
     password=addon.getSetting("password")
+    if username=="" or password=="":
+      dialog = xbmcgui.Dialog()
+      ok = dialog.ok('Username oder Password fehlt', 'Username oder Password fehlt')
+      exit    
     title=gettitle()
-    content=geturl("https://www.kodinerds.net/")
+    content=geturl("https://www.kodinerds.net/")    
     newurl=re.compile('method="post" action="(.+?)"', re.DOTALL).findall(content)[0]
     sec_token=re.compile("SECURITY_TOKEN = '(.+?)'", re.DOTALL).findall(content)[0]
     content=geturl("https://www.kodinerds.net/index.php/Login/",data="username="+username+"&action=login&password="+password+"&useCookies=1&submitButton=Anmelden&url="+newurl+"&t="+sec_token)
+    if "Angaben sind ung" in content or "Anmelden oder registrieren"in content:
+      dialog = xbmcgui.Dialog()
+      ok = dialog.ok('Username oder Password ungueltig', 'Username oder Password ungueltig')
+      exit    
     content=geturl("https://www.kodinerds.net/index.php/Thread/58034-L0RE-s-Test-thread/")
-    debug(content)
-    debug("---")
+
     sec_token=re.compile("SECURITY_TOKEN = '(.+?)'", re.DOTALL).findall(content)[0]
     hash=re.compile('name="tmpHash" value="(.+?)"', re.DOTALL).findall(content)[0]
     timestamp=re.compile('data-timestamp="(.+?)"', re.DOTALL).findall(content)[0]   
@@ -121,13 +127,17 @@ if mode=="":
       'className' : 'wbb\data\post\PostAction',
       'interfaceName': 'wcf\data\IMessageQuickReplyAction',
       'parameters[objectID]': '58034',
-      'parameters[data][message]' : "Aus Kodi Empfolen :"+ title,
+      'parameters[data][message]' : "Aus Kodi Empfolen :"+ title.encode("utf-8"),
       'parameters[data][tmpHash]' : hash,
       'parameters[lastPostTime]':timestamp,
       'parameters[pageNo]':'1'
     }
     data = urllib.urlencode(values)
     content=geturl("https://www.kodinerds.net/index.php/AJAXProxy/?t="+sec_token,data=data)
+    if content == ""  : 
+      dialog = xbmcgui.Dialog()
+      ok = dialog.ok('Posten hat nicht Geklappt', 'Posten hat nicht Geklappt. Posten nur alle 30 Sek möglich')
+      exit    
     debug(content)
     
     
