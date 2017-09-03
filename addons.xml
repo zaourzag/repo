@@ -600,9 +600,10 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
     </extension>
 </addon>
 
-<addon id="plugin.video.euronews_com" name="euronews.com" version="2.0.21" provider-name="L0RE">
+<addon id="plugin.video.euronews_com" name="euronews.com" version="2.0.22" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="script.module.beautifulsoup4" version="4.3.2"/>        
 		<import addon="script.module.pyxbmct" version="1.1.7"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="default.py">
