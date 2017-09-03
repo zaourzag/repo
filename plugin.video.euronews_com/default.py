@@ -284,7 +284,8 @@ def Rubrik(url):
    
 def index():  
   #ListRubriken("http://"+language2+".euronews.com","",x=1)
-  Rubriken("http://"+language2+".euronews.com")
+  addLink("Live","","playlive","")
+  Rubriken("http://"+language2+".euronews.com")  
   xbmcplugin.endOfDirectory(pluginhandle)   
 
 def  Play(url):  
@@ -296,6 +297,16 @@ def infofenster(title_artikel,text,bild):
     window.doModal()
     del window
 
+def playlive():
+  url="http://www.euronews.com/api/watchlive.json"
+  content = getUrl(url)   
+  urln=re.compile('"url":"(.+?)"', re.DOTALL).findall(content)[0]
+  urln=urln.replace("\/","/")  
+  content = getUrl(urln)  
+  url2=re.compile('"primary":"(.+?)"', re.DOTALL).findall(content)[0]
+  url2=url2.replace("\/","/")  
+  Play(url2)
+    
 if mode == 'PlayVideo':
      playVideo(url)       
 if mode == "":
@@ -308,3 +319,5 @@ if  mode == "Play":
     Play(url)    
 if  mode == "infofenster":
     infofenster(name,text,bild)        
+if mode  == "playlive":
+    playlive()
