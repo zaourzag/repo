@@ -642,7 +642,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
 	</extension>
 </addon>
 
-<addon id="plugin.video.eurosportplayer" version="2.0.1" name="Eurosport Player" provider-name="Jin">
+<addon id="plugin.video.eurosportplayer" version="2.0.2" name="Eurosport Player" provider-name="Jin">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
         <import addon="inputstream.adaptive" version="2.0.10"/>
@@ -653,8 +653,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
     </extension>
     <extension point="xbmc.addon.metadata">
         <news>
-- use 50fps streams
-- release for new eurosport player
+addon flagged as broken because stream crashes when token expires
         </news>
         
         <summary lang="de_DE">Eurosport live, jederzeit und überall</summary>
@@ -670,6 +669,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
         <website>https://www.eurosportplayer.com</website>
         <email>[jin] at [xyz] dot [de]</email>
         <source>https://github.com/kodinerds/repo/tree/master/plugin.video.eurosportplayer</source>
+        <broken>stream crashes when token expires</broken>
     </extension>
 </addon>
 
