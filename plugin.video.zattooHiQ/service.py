@@ -82,7 +82,9 @@ def start():
     startTime=datetime.datetime.now()#-datetime.timedelta(minutes = 60)
     endTime=datetime.datetime.now()+datetime.timedelta(minutes = 20)
 
-
+    #re-import ZattooDB to prevent "convert_timestamp" error
+    from resources.zattooDB import ZattooDB
+    _zattooDB_ = ZattooDB()
     #xbmcgui.Dialog().notification(localString(31916), localString(30110),  __addon__.getAddonInfo('path') + '/icon.png', 3000, False)
     _zattooDB_.getProgInfo(True, startTime, endTime)
 
