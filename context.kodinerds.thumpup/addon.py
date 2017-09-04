@@ -77,14 +77,16 @@ def gettitle()  :
     title=info.getTVShowTitle()
   except:
     pass
-  try:
-      title=xbmc.getInfoLabel('ListItem.TVShowTitle')
-  except:
-       pass
   if title=="":
-     title = xbmc.getInfoLabel("ListItem.Title").decode('UTF-8')      
+    try:
+        title=xbmc.getInfoLabel('ListItem.TVShowTitle')
+    except:
+        pass
   if title=="":
-     title=sys.listitem.getLabel()  
+   try:
+      title=xbmc.getInfoLabel('ListItem.Title')
+   except:
+      pass
   return title
 
 
@@ -109,6 +111,10 @@ if mode=="":
       ok = dialog.ok('Username oder Password fehlt', 'Username oder Password fehlt')
       exit    
     title=gettitle()
+    if title=="":
+       dialog = xbmcgui.Dialog()
+       ok = dialog.ok('Fehler', 'Selectiertes File Hat kein Serie Hinterlegt')
+       exit
     content=geturl("https://www.kodinerds.net/")    
     newurl=re.compile('method="post" action="(.+?)"', re.DOTALL).findall(content)[0]
     sec_token=re.compile("SECURITY_TOKEN = '(.+?)'", re.DOTALL).findall(content)[0]
@@ -127,7 +133,7 @@ if mode=="":
       'className' : 'wbb\data\post\PostAction',
       'interfaceName': 'wcf\data\IMessageQuickReplyAction',
       'parameters[objectID]': '58034',
-      'parameters[data][message]' : "Aus Kodi Empfolen :"+ title.encode("utf-8"),
+      'parameters[data][message]' : 'Aus Kodi Empfolen : "'+ title.encode("utf-8")+'"',
       'parameters[data][tmpHash]' : hash,
       'parameters[lastPostTime]':timestamp,
       'parameters[pageNo]':'1'
