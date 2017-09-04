@@ -3181,7 +3181,7 @@ NOTE: Streams are available in SD only
 	</extension>
 </addon>
 
-<addon id="context.kodinerds.thumpup" name="Empfehlungen für Kodinerds" version="0.3.0" provider-name="L0RE">
+<addon id="context.kodinerds.thumpup" name="Empfehlungen für Kodinerds" version="0.3.1" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.20.0" />
         <import addon="script.module.beautifulsoup4" version="4.3.2"/>
