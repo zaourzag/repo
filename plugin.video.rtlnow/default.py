@@ -430,7 +430,7 @@ def  login():
       return 1,token
     else :      
       addon.setSetting("freeonly", "true")
-      return 0,token
+      return 1,token
   except:
       debug("Wrong Login")
       addon.setSetting("freeonly", "true")
@@ -461,7 +461,7 @@ def index():
     menu.append(addDir("Themen" , url="rtl", mode="genre", iconimage="",duration="",desc=""))
     menu.append(addDir("Rubriken" , url="", mode="katalog", iconimage="",duration="",desc=""))
     menu.append(addDir("Genres" , url="", mode="genreliste", iconimage="",duration="",desc=""))
-    if freeonly=="false" and kodi18 == "true":
+    if ret==1 and kodi18 == "true":
         menu.append(addDir("LiveTV",url="", mode="livetv", iconimage="",duration="",desc=""))    
     menu.append(addDir("Cache Loeschen", "", 'clearcache', ""))    
     menu.append(addDir("Settings", "", 'Settings', ""))    
