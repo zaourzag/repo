@@ -1,0 +1,45 @@
+<keymap>
+	<fullscreenvideo>
+		<keyboard>
+			<!-- Skip Channel Up -->
+			<up>RunPlugin("plugin://plugin.video.zattooHiQ/?mode=skip_channel&amp;skipDir=1")</up>
+			<!-- Skip Channel Down -->
+			<down>RunPlugin("plugin://plugin.video.zattooHiQ/?mode=skip_channel&amp;skipDir=-1")</down>
+			<!-- Toggle channel -->
+			<left>RunPlugin("plugin://plugin.video.zattooHiQ/?mode=toggle_channel")</left>
+			<!-- Change Audio Stream -->
+			<right>RunPlugin("plugin://plugin.video.zattooHiQ/?mode=changeStream")</right>
+			<!-- Show ZattooOSD -->
+			<return>RunPlugin("plugin://plugin.video.zattooHiQ/?mode=showInfo")</return>
+			<enter>RunPlugin("plugin://plugin.video.zattooHiQ/?mode=showInfo")</enter>
+			<!-- Teletext -->
+			<v>RunPlugin("plugin://plugin.video.zattooHiQ/?mode=teletext")</v>
+			<!-- EPG -->
+			<e>RunPlugin("plugin://plugin.video.zattooHiQ/?mode=epg")</e>
+			<!-- Channellist -->
+			<h>ActivateWindow(10025,"plugin://plugin.video.zattooHiQ/?mode=channellist")</h>
+			<!-- Recordlist -->
+			<b>ActivateWindow(10025,"plugin://plugin.video.zattooHiQ/?mode=recordings")</b>
+			<!-- Preview -->
+			<c>RunPlugin("plugin://plugin.video.zattooHiQ/?mode=preview")</c>
+			<!-- Record -->
+			<k>RunPlugin("plugin://plugin.video.zattooHiQ/?mode=record_l")</k>
+			<!-- Numbers -->
+			<zero>RunPlugin("plugin://plugin.video.zattooHiQ/?mode=nr&amp;nr=58")</zero>
+			<one>RunPlugin("plugin://plugin.video.zattooHiQ/?mode=nr&amp;nr=59")</one>
+			<two>RunPlugin("plugin://plugin.video.zattooHiQ/?mode=nr&amp;nr=60")</two>
+			<three>RunPlugin("plugin://plugin.video.zattooHiQ/?mode=nr&amp;nr=61")</three>
+			<four>RunPlugin("plugin://plugin.video.zattooHiQ/?mode=nr&amp;nr=62")</four>
+			<five>RunPlugin("plugin://plugin.video.zattooHiQ/?mode=nr&amp;nr=63")</five>
+			<six>RunPlugin("plugin://plugin.video.zattooHiQ/?mode=nr&amp;nr=64")</six>
+			<seven>RunPlugin("plugin://plugin.video.zattooHiQ/?mode=nr&amp;nr=65")</seven>
+			<eight>RunPlugin("plugin://plugin.video.zattooHiQ/?mode=nr&amp;nr=66")</eight>
+			<nine>RunPlugin("plugin://plugin.video.zattooHiQ/?mode=nr&amp;nr=67")</nine>
+		</keyboard>
+		<mouse>
+			<leftclick>RunPlugin("plugin://plugin.video.zattooHiQ/?mode=showInfo")</leftclick>
+			
+		</mouse>
+	</fullscreenvideo>
+</keymap>
+

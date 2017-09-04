@@ -25,10 +25,12 @@ from resources.library import library
 from resources.zattooDB import ZattooDB
 _zattooDB_ = ZattooDB()
 __addon__ = xbmcaddon.Addon()
+__addondir__  = xbmc.translatePath( __addon__.getAddonInfo('profile') ) 
+
 _library_=library()
 localString = __addon__.getLocalizedString
 SWISS = __addon__.getSetting('swiss')
-
+DEBUG = __addon__.getSetting('debug')
 
 def refreshProg():
     import urllib
@@ -81,7 +83,7 @@ def start():
 
     startTime=datetime.datetime.now()#-datetime.timedelta(minutes = 60)
     endTime=datetime.datetime.now()+datetime.timedelta(minutes = 20)
-
+    
     #re-import ZattooDB to prevent "convert_timestamp" error
     from resources.zattooDB import ZattooDB
     _zattooDB_ = ZattooDB()
@@ -112,15 +114,78 @@ def getProgNextDay():
 
 
 # start
+class myPlayer(xbmc.Player):
+    
+    def __init__(self, skip=0):
+      self.skip=skip
+      self.startTime=0
+      self.playing=True
+      
+      
+    def onPlayBackStarted(self):
+      #self.loadKeymap()
+      if (self.skip>0):
+        self.seekTime(self.skip)
+        self.startTime=self.startTime-datetime.timedelta(seconds=self.skip)
+      xbmc.sleep(200)
+      playingFile=xbmc.getInfoLabel('Player.Filenameandpath')
+      print "playingfile: " + str(playingFile)
+      if playingFile.find('dash-live')>-1 or playingFile.find('hls-live')>-1:
+			self.loadKeymap()
+     
+      else: #start recall while playing -> unload keymap
+        self.unloadKeymap()
+        
+    def onPlayBackSeek(self, time, seekOffset):
+      if self.startTime+datetime.timedelta(milliseconds=time) > datetime.datetime.now():
+        channel=_zattooDB_.get_playing()['channel']
+        _zattooDB_.set_playing() #clear setplaying to start channel in watch_channel
+        xbmc.executebuiltin('RunPlugin("plugin://'+__addonId__+'/?mode=watch_c&id='+channel+'&showOSD=1")')
+        self.playing=False
+        
+    def onPlayBackStopped(self):
+      self.unloadKeymap()        
+      self.playing=False;
+      
+    def onPlayBackEnded(self): 
+      self.unloadKeymap()          
+      self.playing=False;
+     
+        
+    def loadKeymap(self):
+      #xbmcgui.Dialog().notification('zattooBoxExt', 'loadKeymap')
+      
+      source = __addondir__ + '/zattooKeymap.xml'
+      dest = xbmc.translatePath('special://profile/keymaps/zattooKeymap.xml')
+      if os.path.isfile(dest): return
+      with open(source, 'r') as file: content = file.read()
+      with open(dest, 'w') as file: file.write(content)
+      xbmc.sleep(200)
+      xbmc.executebuiltin('XBMC.Action(reloadkeymaps)')
 
+    def unloadKeymap(self):
+      #xbmcgui.Dialog().notification('zattooBoxExt', 'unloadKeymap')
+      path=xbmc.translatePath('special://profile/keymaps/zattooKeymap.xml')
+      if os.path.isfile(path):
+        try:
+          os.remove(path)
+          xbmc.sleep(200)
+          xbmc.executebuiltin('XBMC.Action(reloadkeymaps)')
+        except:pass
+
+
+player=myPlayer()
+
+#xbmc.sleep(2000)
 #delete zapi files to force new login    
-profilePath = xbmc.translatePath(__addon__.getAddonInfo('profile'))
-try:
-    os.remove(os.path.join(profilePath, 'cookie.cache'))
-    os.remove(os.path.join(profilePath, 'session.cache'))
-    os.remove(os.path.join(profilePath, 'account.cache'))
-except:
-    pass
+#profilePath = xbmc.translatePath(__addon__.getAddonInfo('profile'))
+#try:
+    #os.remove(os.path.join(profilePath, 'cookie.cache'))
+    #os.remove(os.path.join(profilePath, 'session.cache'))
+    #os.remove(os.path.join(profilePath, 'account.cache'))
+#except:
+    #pass
+
 
 if __addon__.getSetting('dbonstart') == 'true':
 	start()

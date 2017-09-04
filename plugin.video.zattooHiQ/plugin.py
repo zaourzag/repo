@@ -38,10 +38,13 @@ import  time, datetime, threading
 from resources.zattooDB import ZattooDB
 from resources.library import library
 from resources.guiactions import *
+from resources.keymap import KeyMap
 
 __addon__ = xbmcaddon.Addon()
 __addonId__=__addon__.getAddonInfo('id')
 __addonname__ = __addon__.getAddonInfo('name')
+__addondir__  = xbmc.translatePath( __addon__.getAddonInfo('profile') ) 
+
 
 _timezone_ = int(__addon__.getSetting('time_offset'))*60*-60 #-time.altzone
 
@@ -51,6 +54,7 @@ else: _listMode_ ='all'
 _channelList_=[]
 _zattooDB_=ZattooDB()
 _library_=library()
+_keymap_=KeyMap()
 
 _umlaut_ = {ord(u'ä'): u'ae', ord(u'ö'): u'oe', ord(u'ü'): u'ue', ord(u'ß'): u'ss'}
 
@@ -66,6 +70,7 @@ RECREADY = __addon__.getSetting('rec_ready')
 VERSION = __addon__.getAddonInfo('version')
 OLDVERSION = _zattooDB_.get_version(VERSION)
 DEBUG = __addon__.getSetting('debug')
+KEYMAP = __addon__.getSetting('keymap')
 
 #reload DB on Update
 #print "Old Version: " + str(OLDVERSION)
@@ -80,6 +85,7 @@ else: xbmc.executebuiltin( "Skin.Reset(%s)" %'swiss')
 
 if premiumUser: xbmc.executebuiltin( "Skin.SetBool(%s)" %'hiq')
 else: xbmc.executebuiltin( "Skin.Reset(%s)" %'hiq')
+
 
 # get Timezone Offset
 from tzlocal import get_localzone
@@ -162,7 +168,7 @@ def build_root(addon_uri, addon_handle):
     for stream in resultData['stream']['watch_urls']: streamsList.append(stream['url'])
     streamsList = '|'.join(streamsList)
     _zattooDB_.set_playing(channelid, streamsList, 0)
-    makeZattooGUI()
+
     xbmcgui.Window(10000).setProperty('ZBEplayOnStart', 'false')
 
 
@@ -179,15 +185,14 @@ def build_root(addon_uri, addon_handle):
     {'title': localString(31105), 'image': iconPath, 'isFolder': True, 'url': addon_uri + '?' + urllib.urlencode({'mode': 'search'})},
     {'title': localString(31106), 'image': iconPath, 'isFolder': True, 'url': addon_uri + '?' + urllib.urlencode({'mode': 'recordings'})},
 #    {'title': localString(31023), 'image': iconPath, 'isFolder': True, 'url': addon_uri + '?' + urllib.urlencode({'mode': 'reloadDB'})},
-    {'title': '[COLOR ff888888]' + localString(31107) + '[/COLOR]', 'image': iconPath, 'isFolder': False, 'url': addon_uri + '?' + urllib.urlencode({'mode': 'show_settings'})},
+#    {'title': '[COLOR ff888888]' + localString(31107) + '[/COLOR]', 'image': iconPath, 'isFolder': False, 'url': addon_uri + '?' + urllib.urlencode({'mode': 'show_settings'})},
     ]
   build_directoryContent(content, addon_handle, True, False, 'files')
 
   #update db
   _zattooDB_.updateChannels()
   _zattooDB_.updateProgram()
-
-
+ 
 def build_channelsList(addon_uri, addon_handle):
   import urllib
   channels = _zattooDB_.getChannelList(_listMode_ == 'favourites')
@@ -399,7 +404,7 @@ def watch_channel(channel_id, start, end, showID="", restart=False, showOSD=Fals
   playing=_zattooDB_.get_playing()
   if (xbmc.Player().isPlaying() and channel_id == playing['channel'] and start=='0'):
     xbmc.executebuiltin("Action(FullScreen)")
-    makeZattooGUI()
+
     return
 
   # (64 150 300) 600 900 1500 3000 5000
@@ -471,10 +476,19 @@ def watch_channel(channel_id, start, end, showID="", restart=False, showOSD=Fals
 
   #play liveTV: info is created in OSD
   if (start=='0'):
-    xbmc.Player().play(streams[streamNr]['url'], listitem)
-    makeZattooGUI(showOSD)
+    _zattooDB_=ZattooDB()
+    channelList = _zattooDB_.getChannelList(_listMode_ == 'favourites')
+    #print "ChannelList: " + str(channelList)
+    currentChannel = _zattooDB_.get_playing()['channel']
+    nr=channelList[currentChannel]['nr']
+    player=xbmc.Player()
+    #player.startTime=startTime
+    player.play(streams[streamNr]['url'], listitem)
+    #while (player.playing):xbmc.sleep(100)
+    show_channelNr(nr+1)
   else:
-    player= myPlayer(290)
+    #player= myPlayer(290)
+    player=xbmc.Player()
     player.startTime=startTime
     player.play(streams[streamNr]['url'], listitem)
     while (player.playing):xbmc.sleep(100)
@@ -615,26 +629,20 @@ def selectStartChannel():
   else: __addon__.setSetting('start_channel', chanList[ret])
  
 
-def editKeyMap():
-    cmds=['OSD', 'info', 'prevChan', 'nextChan', 'toggleChan', 'audio', 'pause', 'stop', 'record', 'Teletext', 'Preview', 'EPG', 'List', 'playercontrol']
-    cmdsText=[]
-    nr=0
-    for cmd in cmds:
-        cmdsText.append(localString(32010+int(nr)))
-        nr+=1
-    dialog=xbmcgui.Dialog()
-    cmd = dialog.select(localString(32000), cmdsText)
-    if cmd==-1:return
-
-    newkey = KeyListener.record_key()
-    __addon__.setSetting('key_'+cmds[cmd], newkey)
-
-
-def makeZattooGUI(showOSD=False):
+ 
+def input_numbers(nr):
   if (xbmcgui.Window(10000).getProperty('zattooGUI')!="True"):
     
     gui = zattooGUI("zattooGUI.xml", __addon__.getAddonInfo('path'))
-    if showOSD: gui.act_showOSD()
+    if nr: gui.act_numbers(int(nr))
+    gui.doModal()
+    del gui
+
+def show_channelNr(nr):
+  if (xbmcgui.Window(10000).getProperty('zattooGUI')!="True"):
+    
+    gui = zattooGUI("zattooGUI.xml", __addon__.getAddonInfo('path'))
+    if nr: gui.showChannelNr(int(nr))
     gui.doModal()
     del gui
 
@@ -645,21 +653,9 @@ def makeOsdInfo():
   
   try: program=program[0]
   except: xbmcgui.Dialog().ok('Error',' ','No Info')
-  # Prüfen ob Restart möglich
   
-  #if _zattooDB_.getRestart(program['showID']) == 1: res = True
-  #else: res = False
   
-  #print 'PARAMS  ' + str(SWISS) + '  ' +str(premiumUser) + '  ' + str(res)
-  #if (SWISS == 'true') and (premiumUser == True):
-    #print 'RestartOSD   1'
-    #xbmc.executebuiltin( "Skin.SetBool(%s)" %'hiq')
-  #elif (SWISS == 'false') and (premiumUser is True) and (res is True):
-    #print 'RestartOSD ' + str(res)
-    #xbmc.executebuiltin( "Skin.SetBool(%s)" %'hiq')
-  #else:
-    #xbmc.executebuiltin( "Skin.Reset(%s)" %'hiq')
-    #print 'RestartOSD   0'
+ 
   description = program['description']
   if description is None: description = ''
   else: description = '  -  ' + description
@@ -684,30 +680,10 @@ def makeOsdInfo():
   else: xbmc.executebuiltin( "Skin.Reset(%s)" %'favourite')
 #  win.setProberty('category', '[COLOR blue]' + local(21866) + ':  ' + '[/COLOR]' + program['category'])
 
-class myPlayer(xbmc.Player):
-    def __init__(self, skip=0):
-      self.skip=skip
-      self.startTime=0
-      self.playing=True
-    def onPlayBackStarted(self):
-      if (self.skip>0):
-        self.seekTime(self.skip)
-        self.startTime=self.startTime-datetime.timedelta(seconds=self.skip)
-    def onPlayBackSeek(self, time, seekOffset):
-      if self.startTime+datetime.timedelta(milliseconds=time) > datetime.datetime.now():
-        channel=_zattooDB_.get_playing()['channel']
-        _zattooDB_.set_playing() #clear setplaying to start channel in watch_channel
-        xbmc.executebuiltin('RunPlugin("plugin://'+__addonId__+'/?mode=watch_c&id='+channel+'&showOSD=1")')
-        self.playing=False
-    def onPlayBackStopped(self):
-        self.playing=False;
-        
-    def onPlayBackEnded(self):        
-        self.playing=False;
-       
 
+  dialog.textviewer(header, text)
+  
 class zattooGUI(xbmcgui.WindowXMLDialog):
-
 
   def __init__(self, xmlFile, scriptPath):
     xbmcgui.Window(10000).setProperty('zattooGUI', 'True')
@@ -717,151 +693,18 @@ class zattooGUI(xbmcgui.WindowXMLDialog):
     channels = _zattooDB_.getChannelList(_listMode_ == 'favourites')
     self.showChannelNr(channels[self.channelID]['nr']+1)
 
-    self.toggleImgBG =xbmcgui.ControlImage(1280, 574, 260, 148, __addon__.getAddonInfo('path') + '/resources/teletextBG.png', aspectRatio=1)
-    self.addControl(self.toggleImgBG)
-    self.toggleImg =xbmcgui.ControlImage(1280, 576, 256, 144, '', aspectRatio=1)
-    self.addControl(self.toggleImg)
-    
-    self.toggleChannelID=xbmcgui.Window(10000).getProperty('toggleChannel')
-    
-    
-  def showToggleImg(self):
-    self.toggleImgBG.setPosition(1022, 574)
-    self.toggleImg.setPosition(1024, 576)
-    self.refreshToggleImg()
-
-  def hideToggleImg(self):
-    if self.toggleChannelID!="":  
-      self.toggleChannelID=""
-      xbmcgui.Window(10000).setProperty('toggleChannel','')
-      
-      self.toggleImgBG.setPosition(1280, 574)
-      self.toggleImg.setPosition(1280, 576)
-      if hasattr(self, 'refreshToggleImgTimer'): self.refreshToggleImgTimer.cancel()
-      xbmcgui.Dialog().notification('Toggle', 'toggle end', __addon__.getAddonInfo('path') + '/icon.png', 5000, False)
-
-
-  def refreshToggleImg(self):
-    self.toggleImg.setImage('http://thumb.zattic.com/'+self.toggleChannelID+'/256x144.jpg?r='+str(int(time.time())), False)
-    if hasattr(self, 'refreshToggleImgTimer'): self.refreshToggleImgTimer.cancel()
-    self.refreshToggleImgTimer=  threading.Timer(16, self.refreshToggleImg)
-    self.refreshToggleImgTimer.start()
-  
-
   def onAction(self, action):
     key=str(action.getButtonCode())
     actionID = action.getId()
 
-    #ignore mousemove
-    if actionID==107: return
-    
-
-    #_zattooDB_=ZattooDB()
-    #channel=_zattooDB_.get_playing()['channel']
-    #channeltitle=_zattooDB_.get_channeltitle(channel)
-    #print ('Action: '+str(action))
-    #print('ZATTOOGUI BUTTON'+str(key))
-    #print('ZATTOOGUI ACTIONID'+str(actionID))
-    #self.channelInputCtrl.setVisible(False)
-
-    #user defined keys
-    if key==__addon__.getSetting('key_OSD'): self.act_showOSD()
-    elif key==__addon__.getSetting('key_info'): xbmc.executebuiltin("Action(CodecInfo)")
-    elif key==__addon__.getSetting('key_Preview'): self.act_showPreview()
-    elif key==__addon__.getSetting('key_EPG'): self.act_showEPG()
-    elif key==__addon__.getSetting('key_List'): self.act_showList()
-    elif key==__addon__.getSetting('key_Teletext'): self.act_teletext()
-    elif key==__addon__.getSetting('key_nextChan'): self.act_nextChan()
-    elif key==__addon__.getSetting('key_prevChan'): self.act_prevChan()
-    elif key==__addon__.getSetting('key_toggleChan'): self.act_toggleChan()
-    elif key==__addon__.getSetting('key_audio'):  self.act_changeStream()
-    elif key==__addon__.getSetting('key_pause'): xbmc.Player().pause()
-    elif key==__addon__.getSetting('key_stop'): self.close()
-    elif key==__addon__.getSetting('key_record'): self.act_record()
-
-
-    #default actionIDs/keys
-    elif actionID in [ACTION_PARENT_DIR, KEY_NAV_BACK, ACTION_PREVIOUS_MENU]:
-      self.close()
-      xbmc.executebuiltin("Action(Back)")
+    if (actionID>57 and actionID<68):self.act_numbers(actionID)
     elif actionID  == ACTION_STOP:
       self.close()
       xbmc.Player().stop()  
-    elif actionID in [ACTION_SELECT_ITEM, ACTION_MOUSE_LEFT_CLICK]: self.act_showOSD()
-    elif actionID == ACTION_MOVE_DOWN: self.act_showEPG()
-    elif actionID == ACTION_MOVE_UP: self.act_showList()
-    elif actionID == ACTION_MOVE_LEFT: self.act_toggleChan()
-    elif actionID == ACTION_MOVE_RIGHT: self.act_changeStream()
-    elif actionID in [ACTION_CHANNEL_UP, ACTION_PAGE_UP, ACTION_SKIPNEXT]: self.act_prevChan()
-    elif actionID in [ACTION_CHANNEL_DOWN, ACTION_PAGE_DOWN, ACTION_SKIPPREW]: self.act_nextChan()
-    elif actionID == ACTION_RECORD: self.act_record()
-    elif (actionID>57 and actionID<68):self.act_numbers(actionID)
-    elif actionID == ACTION_BUILT_IN_FUNCTION:self.close() #keymap functions
-      
+    elif actionID in [ACTION_PARENT_DIR, KEY_NAV_BACK, ACTION_PREVIOUS_MENU]: self.close()
+    elif actionID == ACTION_BUILT_IN_FUNCTION:self.close()
     
-  
-    
-  def act_showOSD(self):
-    self.hideToggleImg()
-      
-    if(self.channelInput):
-      self.channelInputTimer.cancel()
-      self.channelInputTimeout()
-    else:
-      makeOsdInfo()
-      gui = zattooOSD("zattooOSD.xml",__addon__.getAddonInfo('path'))
-      gui.doModal()
-
-  def act_showPreview(self):    
-    xbmc.executebuiltin('RunPlugin("plugin://'+__addonId__+'/?mode=previewOSD")')  
-    self.close()
-    
-  def act_showEPG(self):    
-    xbmc.executebuiltin('RunPlugin("plugin://'+__addonId__+'/?mode=epgOSD")')
-    self.close()
-        
-  def act_showList(self):
-    xbmc.executebuiltin('ActivateWindow(10025,"plugin://'+__addonId__+'/?mode=channellist")')
-    self.close()
-    
-      
-  def act_teletext(self):    
-    from resources.teletext import Teletext
-    tele = Teletext()
-    tele.doModal()
-    del tele     
-            
-  def act_toggleChan(self):
-      self.hideChannelNr()
-      self.showChannelNr(toggle_channel()+1)
-      self.toggleChannelID=xbmcgui.Window(10000).getProperty('toggleChannel')
-      self.showToggleImg()
-            
-  def act_changeStream(self): 
-      if not DASH: change_stream(1)
-      else:
-          streams=xbmc.Player().getAvailableAudioStreams()
-          dialog=xbmcgui.Dialog()
-          ret = dialog.select('audio streams', streams)
-          if ret==-1: return
-          xbmc.Player().setAudioStream(ret)
-          
-  def act_prevChan(self):
-      self.hideChannelNr()
-      nr=skip_channel(-1)
-      self.showChannelNr(nr+1)
-      
-  def act_nextChan(self):
-      start_time = time.time()
-      self.hideChannelNr()
-      nr=skip_channel(+1)
-      self.showChannelNr(nr+1)
-        
-  def act_record(self):
-      program = _zattooDB_.getPrograms({'index':[channel]}, True, datetime.datetime.now(), datetime.datetime.now())
-      program=program[0]
-      setup_recording(program['showID'])
-       
+ 
   def act_numbers(self,action):
       #print('channel ipnut'+str(action))
       if hasattr(self, 'channelInputTimer'): self.channelInputTimer.cancel()
@@ -883,18 +726,20 @@ class zattooGUI(xbmcgui.WindowXMLDialog):
     self.channelInputCtrl.setLabel(str(channelNr))
     self.channelInputCtrl.setVisible(True)
     if hasattr(self, 'hideNrTimer'): self.hideNrTimer.cancel()
-    self.hideNrTimer=threading.Timer(5, self.hideChannelNr)
+    self.hideNrTimer=threading.Timer(2, self.hideChannelNr)
     self.hideNrTimer.start()
 
   def hideChannelNr(self):
     self.channelInputCtrl.setLabel(' ')
     self.channelInputCtrl.setVisible(False)
+    self.close()
 
   def channelInputTimeout(self):
     skip=int(self.channelInput)-self.channelNr
     self.showChannelNr(int(self.channelInput))
     skip_channel(skip)
-
+    self.close()
+    
   def close(self):
     if hasattr(self, 'hideNrTimer'): self.hideNrTimer.cancel()
     xbmcgui.Window(10000).setProperty('zattooGUI', 'False')
@@ -994,41 +839,6 @@ class zattooOSD(xbmcgui.WindowXMLDialog):
 
 
 
-class KeyListener(xbmcgui.WindowXMLDialog):
-    TIMEOUT = 3
-
-    def __new__(cls):
-        gui_api = tuple(map(int, xbmcaddon.Addon('xbmc.gui').getAddonInfo('version').split('.')))
-        file_name = "DialogNotification.xml" if gui_api >= (5, 11, 0) else "DialogKaiToast.xml"
-        return super(KeyListener, cls).__new__(cls, file_name, "")
-
-    def __init__(self):
-        self.key = None
-
-    def onInit(self):
-        try:
-            self.getControl(401).addLabel(localString(32001)+' in 3sec')
-            #self.getControl(402).addLabel(localString(32002))
-        except AttributeError:
-            self.getControl(401).setLabel(localString(32001)+' in 3sec')
-            #self.getControl(402).setLabel(localString(32002))
-
-    def onAction(self, action):
-        code = action.getButtonCode()
-        self.key = None if code == 0 else str(code)
-        self.close()
-
-    @staticmethod
-    def record_key():
-        dialog = KeyListener()
-        timeout = threading.Timer(KeyListener.TIMEOUT, dialog.close)
-        timeout.start()
-        dialog.doModal()
-        timeout.cancel()
-        key = dialog.key
-        del dialog
-        return key
-
 
 def main():
 
@@ -1039,16 +849,16 @@ def main():
   addon_handle = int(sys.argv[1])
   args = urlparse.parse_qs(sys.argv[2][1:])
   action=args.get('mode', ['root'])[0]
-
-  #xbmcgui.Dialog().notification("HANDLE", str(action)+' '+str(addon_handle), '', 1000, False)
-
-  #hack for repeat actions from keyMap
-  #if ((action=='preview' or action=='epg' )and action==xbmcgui.Window(10000).getProperty('ZBElastAction')):
-    #xbmcgui.Window(10000).setProperty('ZBElastAction', '')
-    #xbmc.executebuiltin("Action(FullScreen)")
-    #if(str(_zattooDB_.get_playing()['start'])=='1970-01-01 01:00:00'):makeZattooGUI()
-    #return
+  
+  channel=_zattooDB_.get_playing()['channel']
+  channeltitle=_zattooDB_.get_channeltitle(channel)
+  program = _zattooDB_.getPrograms({'index':[channel]}, True, datetime.datetime.now(), datetime.datetime.now())
+  program=program[0]
+  
   xbmcgui.Window(10000).setProperty('ZBElastAction', action)
+
+  _keymap_.saveKeyMap()
+  _keymap_.toggleKeyMap()
 
 
   if action is 'root': build_root(addon_uri, addon_handle)
@@ -1060,7 +870,10 @@ def main():
   elif action == 'recordings': build_recordingsList(addon_uri, addon_handle)
   elif action == 'search': search_show(addon_uri, addon_handle)
   elif action == 'selectStartChannel': selectStartChannel()
-  elif action == 'editKeyMap': editKeyMap()
+  elif action == 'editKeyMap': _keymap_.editKeyMap()
+  elif action == 'deleteKeyMap': _keymap_.deleteKeyMap()
+  elif action == 'showKeyMap': showkeymap()
+  elif action == 'record_l': setup_recording(program['showID'])
   elif action == 'show_settings':
     __addon__.openSettings()
     _zattooDB_.zapi.renew_session()
@@ -1104,8 +917,14 @@ def main():
     _library_.make_library()
     xbmc.executebuiltin("Dialog.Close(busydialog)")
   elif action == 'changeStream':
-    dir = int(args.get('dir')[0])
-    change_stream(dir)
+    
+    if not DASH: change_stream(1)
+    else:
+      streams=xbmc.Player().getAvailableAudioStreams()
+      dialog=xbmcgui.Dialog()
+      ret = dialog.select('audio streams', streams)
+      if ret==-1: return
+      xbmc.Player().setAudioStream(ret)
   elif action == 'teletext':
     from resources.teletext import Teletext
     tele = Teletext()
@@ -1125,15 +944,14 @@ def main():
   elif action == 'cleanProg':
     _zattooDB_.cleanProg()
   elif action == 'popular': showPreview('popular')
- 
-
-  '''
-  elif action == 'showInfo':
-    #xbmc.executebuiltin('ActivateWindow(12003)')
-    info = osdInfo()
-    info.doModal()
-    del info
-  '''
-if DEBUG: print "ZattooHIQ-DEBUG"
-
+  elif action == 'showInfo': 
+    makeOsdInfo()
+    osd = zattooOSD("zattooOSD.xml",__addon__.getAddonInfo('path'))
+    osd.doModal()
+    del osd
+    
+  elif action == 'nr':
+    nr = args.get('nr')[0]
+    input_numbers(nr)
+   
 main()

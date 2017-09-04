@@ -1,4 +1,11 @@
-﻿
+﻿==================================================
+[B]ZattooHiQ v1.3 [/B]04.09.2017 Steffen Rolapp
+==================================================
+- Einstellungen aus dem Haupmenu entfernt
+- HiddenGUI zur Livebild Bedienung entfernt
+- Keymap für Livebildbedienung hinzugefügt
+- Auswahl zwichen default und User Keymap
+
 ==================================================
 [B]ZattooHiQ v1.2.3 [/B]30.07.2017 Steffen Rolapp
 ==================================================

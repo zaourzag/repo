@@ -350,7 +350,7 @@ msgstr ""
 
 ####  Settings   ####
 
-### Zattoo Einstellungen ###
+
 msgctxt "#31000"
 msgid "Zattoo settings"
 msgstr ""
@@ -468,11 +468,24 @@ msgid "liveTV KeyMap"
 msgstr ""
 
 msgctxt "#31032"
-msgid "edit KeyMap"
+msgid "edit User KeyMap"
 msgstr ""
 
+msgctxt "#31033"
+msgid "Select KeyMap"
+msgstr ""
 
+msgctxt "#31034"
+msgid "User KeyMap"
+msgstr ""
 
+msgctxt "#31035"
+msgid "Default KeyMap"
+msgstr ""
+
+msgctxt "#31036"
+msgid "show Default KeyMap"
+msgstr ""
 
 
 ### Hauptmenu ###
@@ -677,50 +690,50 @@ msgid "open Zattoo OSD"
 msgstr ""
 
 msgctxt "#32011"
-msgid "open player info"
-msgstr ""
-
-msgctxt "#32012"
 msgid "previous channel"
 msgstr ""
 
-msgctxt "#32013"
+msgctxt "#32012"
 msgid "next channel"
 msgstr ""
 
-msgctxt "#32014"
+msgctxt "#32013"
 msgid "toggle channel (PiP)"
 msgstr ""
 
-msgctxt "#32015"
+msgctxt "#32014"
 msgid "switch audio channel"
 msgstr ""
 
-msgctxt "#32016"
-msgid "pause"
-msgstr ""
-
-msgctxt "#32017"
-msgid "stop"
-msgstr ""
-
-msgctxt "#32018"
+msgctxt "#32015"
 msgid "record current show"
 msgstr ""
 
-msgctxt "#32019"
+msgctxt "#32016"
 msgid "open Teletext"
 msgstr ""
 
-msgctxt "#32020"
+msgctxt "#32017"
 msgid "show Preview"
 msgstr ""
 
-msgctxt "#32021"
+msgctxt "#32018"
 msgid "show EPG"
 msgstr ""
 
-msgctxt "#32022"
+msgctxt "#32019"
 msgid "show Channellist"
+msgstr ""
+
+msgctxt "#32020"
+msgid "show Recordlist"
+msgstr ""
+
+msgctxt "#32021"
+msgid "pause"
+msgstr ""
+
+msgctxt "#32022"
+msgid "stop"
 msgstr ""
 
