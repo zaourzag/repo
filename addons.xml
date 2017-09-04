@@ -3165,6 +3165,27 @@ NOTE: Streams are available in SD only
     </extension>
 </addon>
 
+<addon id="plugin.video.L0RE.cinetrailer" name="Cinetrailer (Dev)" version="0.1" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="script.module.requests" version="2.12.4"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="de">Trailer von CineTrailer.tv </summary>
+        <summary lang="de">Trailer von CineTrailer.tv </summary>
+        <language></language>
+        <description lang="en">Trailer von CineTrailer.tv </description>       
+        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <source>https://github.com/kodinerds/repo</source>
+        <forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
+        <email>andreas at vogler dot name</email>
+    </extension>
+</addon>
+
 <addon id="repository.saxbmc" name="SaXBMC Addon Repo" version="1.0.1" provider-name="Birger Jesch">
 	<extension point="xbmc.addon.repository" name="SaXBMC Addon Repo">
 		<info compressed="true">https://raw.githubusercontent.com/b-jesch/SaXBMC/master/addons.xml</info>
