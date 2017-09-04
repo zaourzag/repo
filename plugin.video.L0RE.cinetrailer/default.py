@@ -72,8 +72,34 @@ page = urllib.unquote_plus(params.get('page', ''))
 
 def index():  
   #ListRubriken("http://"+language2+".euronews.com","",x=1)
-  addDir("Neueste Trailer","","newlist","",page=1)
+  addDir("Neueste Trailer","https://res.cinetrailer.tv/api/v1/de/movies/newest?pageSize=20&isDebug=false","newlist","",page=1)
+  addDir("Demnächst im Kino","https://res.cinetrailer.tv/api/v1/de/movies/comingsoon?pageSize=20&isDebug=false","newlist","",page=1)
+  addDir("Home Video","https://res.cinetrailer.tv/api/v1/de/movies/homevideo?pageSize=20&isDebug=false","newlist","",page=1)
+  addDir("Im Kino","https://res.cinetrailer.tv/api/v1/de/movies/incinemas?orderBy=&pageSize=20&isDebug=false","newlist","",page=1)
+  addDir("Genres","","genres","")
   xbmcplugin.endOfDirectory(pluginhandle)   
+  
+def genres():
+  url="https://res.cinetrailer.tv/api/v1/de/categories"
+  token=getsession()
+  values = {
+      'Model' : 'Huawei MLA-TL10',
+      'AppVersion' : '3.3.15',
+      'OsVersion': '4.4.4',
+      'OsName': 'android',
+      'Market': 'android',   
+      'Authorization': 'Bearer '+token,
+      #'TimeStamp': '2017-09-04 11:04:45'
+  }  
+  content = requests.get(url,allow_redirects=False,verify=False,cookies=cj,headers=values).text.encode('utf-8')
+  struktur = json.loads(content)
+  for genre in struktur["categories"]:
+    idd=genre["id"]
+    title=genre["title"].encode('utf-8')
+    url="https://res.cinetrailer.tv/api/v1/de/movies/search?pageSize=20&desc=true&orderBy=date&categoryId="+str(idd)
+    addDir(title,url,"newlist","",page=1)
+  xbmcplugin.endOfDirectory(pluginhandle)     
+  
 def getsession():
   url="https://res.cinetrailer.tv/Token"
   values = {
@@ -103,9 +129,9 @@ def Play(url):
     xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)  
     debug(struktur)
     
-def newlist(page=1):
-   token=getsession()
-   url="https://res.cinetrailer.tv/api/v1/de/movies/newest?pageSize=20&isDebug=false&pageNumber="+str(page)
+def newlist(url,page=1):
+   token=getsession()  
+   nurl=url +"&pageNumber="+str(page)
    debug("URL newlist :"+url)
    values = {
       'Model' : 'Huawei MLA-TL10',
@@ -116,7 +142,8 @@ def newlist(page=1):
       'Authorization': 'Bearer '+token,
       #'TimeStamp': '2017-09-04 11:04:45'
     }  
-   content = requests.get(url,allow_redirects=False,verify=False,cookies=cj,headers=values).text.encode('utf-8')
+   debug("Newlist url :"+url)
+   content = requests.get(nurl,allow_redirects=False,verify=False,cookies=cj,headers=values).text.encode('utf-8')
    struktur = json.loads(content)
    debug(struktur)
    count=0
@@ -126,12 +153,15 @@ def newlist(page=1):
       name=trailer["title"].encode('utf-8')
       addLink(name,str(id),"Play",image)
       count+=1
-   if struktur["page_count"] > page:
-     addDir("Next","","newlist","",page=str(int(page)+1))
+   if int(struktur["page_count"]) > int(page):
+     debug("## NEXT ##")
+     addDir("Next",url,"newlist","",page=str(int(page)+1))
    xbmcplugin.endOfDirectory(pluginhandle) 
 if mode == "":
     index()
 if mode == "newlist":
-     newlist(page)
+     newlist(url,page)
 if mode == "Play":
      Play(url)
+if mode == "genres":
+     genres()
