@@ -1515,7 +1515,7 @@ Vous pouvez regarder le sport que vous aimez, vivez et sur demande à un moment 
     </extension>
 </addon>
 
-<addon id="plugin.video.cinetrailer.tv" name="CineTrailer.tv" version="0.0.9" provider-name="L0RE">
+<addon id="plugin.video.cinetrailer.tv" name="CineTrailer.tv (old)" version="0.0.10" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.19.0"/>
     </requires>
@@ -3165,10 +3165,11 @@ NOTE: Streams are available in SD only
     </extension>
 </addon>
 
-<addon id="plugin.video.L0RE.cinetrailer" name="Cinetrailer (Dev)" version="0.1.1" provider-name="L0RE">
+<addon id="plugin.video.L0RE.cinetrailer" name="Cinetrailer" version="0.2" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="script.module.requests" version="2.12.4"/>
+        <import addon="script.common.plugin.cache" version="2.5.5"/> # Add this 
     </requires>
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
