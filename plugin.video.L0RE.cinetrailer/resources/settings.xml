@@ -1,3 +1,5 @@
 <settings>
-   <setting id="language" type="enum" label="30100" values="English|Greek|French|German|Italian|Spanish|Portuguese|Polish|Russian|Ukrainian|Turkish|Arabic|Persian" default="0"/>
+  <setting label="Cache Time" type="slider" id="cachetime" default="24" range="0,1,100" option="int" /> 
+  <setting id="quality" type="select" label="Quality" values="xxlarge|xlarge|HD 720p|HD 480p" default="xxlarge"/>
+  <setting id="language" type="select" label="Language" values="uk|it|de|fr|es" default="de"/>
 </settings>
