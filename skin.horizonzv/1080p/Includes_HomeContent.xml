@@ -927,7 +927,7 @@
                 <left>-8</left>
                 <top>795</top>
                 <width>1935</width>
-                <height>93</height>
+                <height>97</height>
                 <colordiffuse>$VAR[BackgroundOverlayColor]</colordiffuse>
                 <texture background="true">MenuStripe.png</texture>
             </control>

@@ -1,4 +1,7 @@
-﻿v 0.9.0.64
+﻿v 0.9.0.65
+- Bugfix Fritz Smart Home Addon (onclick)
+
+v 0.9.0.64
 - leichte Design Änderung im Bereich News und Dashboard
 - Code aufgeräumt
 

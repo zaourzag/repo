@@ -630,8 +630,7 @@
                 <align>left</align>
                 <textcolor>orange</textcolor>
                 <shadowcolor>black</shadowcolor>
-                <label>$INFO[Window.Property(SerienPlaner.1.Channel)] |</label>
-				<!-- <visible>!String.IsEmpty(Window.Property(SerienPlaner.1.Channel))</visible> -->
+                <label>$INFO[Container(8002).ListItem.Property(type)] |</label>
             </control>
 			<control type="label">
                 <left>30</left>

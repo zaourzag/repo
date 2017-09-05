@@ -8,7 +8,9 @@
 			<widht>1800</widht>
 			<height>105</height>
 			<orientation>horizontal</orientation>
-			<onclick>RunScript(plugin.program.fritzact,action=toggle&amp;ain=$INFO[ListItem.Label2])</onclick>
+			<onclick condition="String.IsEqual(ListItem.Property(type),switch)">RunScript(plugin.program.fritzact,action=toggle&amp;ain=$INFO[ListItem.Label2])</onclick>
+			<onclick condition="String.IsEqual(ListItem.Property(type),group)">RunScript(plugin.program.fritzact,action=toggle&amp;ain=$INFO[ListItem.Label2])</onclick>
+			<onclick condition="String.IsEqual(ListItem.Property(type),thermostat)">RunScript(plugin.program.fritzact,action=temp&amp;ain=$INFO[ListItem.Label2])</onclick>
 			<onclick>Notification(wird geschaltet ...,FritzDect ($INFO[ListItem.Label]),2000)</onclick>
 			<visible>Skin.HasSetting(Widget_NEWS_FritzDect)+System.HasAddon(plugin.program.fritzact)</visible>
 			<visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),dashboard)</visible>
