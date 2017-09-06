@@ -1756,12 +1756,11 @@ Vous pouvez regarder le sport que vous aimez, vivez et sur demande à un moment 
   </extension>
 </addon>
 
-<addon id="service.fritzbox.callmonitor" name="Fritzbox Callmonitor" version="2.0.10" provider-name="Birger Jesch, Lutz Leonhardt">
+<addon id="service.fritzbox.callmonitor" name="Fritzbox Callmonitor" version="2.0.12" provider-name="Birger Jesch, Lutz Leonhardt">
   <requires>
     <import addon="xbmc.python" version="2.24.0" />
     <import addon="xbmc.json" version="6.32.4" />
     <import addon="script.module.requests" version="2.3.0" />
-    <import addon="script.module.pil" version="1.1.7" />
     <import addon="script.module.six" version="1.9.0" />
   </requires>
   <extension point="xbmc.service" library="default.py" start="login" />
