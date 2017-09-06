@@ -107,7 +107,8 @@ def newlist(url,page=1):
      link=smart_str(element.find("a")["href"])
      img=element.find("img")["src"]
      name=smart_str(element.find("h3",attrs={"class":"pg-name"}).text)
-     folge=smart_str(element.find_all("span")[1].text)     
+     x=element.find("p")
+     folge=smart_str(x.find("span").text)     
      if not folge=="Folge 0":
         endn=name+ " "+folge
      else:
