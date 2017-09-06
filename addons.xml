@@ -2348,7 +2348,7 @@ See changelog.txt for more details.</news>
 	</extension>
 </addon>
 
-<addon id="plugin.program.fritzact" name="Fritz Smart Home" version="0.0.15" provider-name="Birger Jesch">
+<addon id="plugin.program.fritzact" name="Fritz Smart Home" version="0.0.16" provider-name="Birger Jesch">
     <requires>
         <import addon="xbmc.python" version="2.24.0" />
         <import addon="script.module.requests" version="2.9.1" />
