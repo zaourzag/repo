@@ -2,4 +2,6 @@
 <settings>
    <setting id="ip" type="text" label="Proxy NAME/IP" default=""/>
    <setting id="port" type="number" label="Proxy Port" default=""/>
+   <setting id="NEWType" type="select" label="Neue Videos" values="Alle|Top|Meistgesehen|PC|One|PS4|PSVR|PS4P|PC-VR|Switch|Handhelds|Select" default="Alle"/>
+   <setting id="Type" type="select" label="SpieleTyp" values="Alle Systeme|PC|XBox One|Playstation 4|XBox 360|Playstation 3|Switch|Wii U|Select" default="Alle Systeme"/>
 </settings>
