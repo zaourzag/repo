@@ -74,14 +74,14 @@ page = urllib.unquote_plus(params.get('page', ''))
 
 def index():  
   #ListRubriken("http://"+language2+".euronews.com","",x=1)
-  addDir("Drama","http://www.zeeone.de/Handlers/GenreLazyLoadHandler.ashx?genre=Drama","newlist","",page=1)
-  addDir("Action","http://www.zeeone.de/Handlers/GenreLazyLoadHandler.ashx?genre=Action","newlist","",page=1)
-  addDir("Liebe","http://www.zeeone.de/Handlers/GenreLazyLoadHandler.ashx?genre=Liebe","newlist","",page=1)
-  addDir("Komödie","http://www.zeeone.de/Handlers/GenreLazyLoadHandler.ashx?genre=Komödie","newlist","",page=1)
-  addDir("Familie","http://www.zeeone.de/Handlers/GenreLazyLoadHandler.ashx?genre=Familie","newlist","",page=1)
-  addDir("Kino","http://www.zeeone.de/Handlers/GenreLazyLoadHandler.ashx?genre=Kino","newlist","",page=1)
-  addDir("Serie","http://www.zeeone.de/Handlers/GenreLazyLoadHandler.ashx?genre=Serie","newlist","",page=1)
-  addDir("Musik","http://www.zeeone.de/Handlers/GenreLazyLoadHandler.ashx?genre=Musik","newlist","",page=1)
+  addDir("Drama","http://www.zeeone.de/Handlers/GenreLazyLoadHandler.ashx?genre=Drama&pageType=BollyThek","newlist","",page=1)
+  addDir("Action","http://www.zeeone.de/Handlers/GenreLazyLoadHandler.ashx?genre=Action&pageType=BollyThek","newlist","",page=1)
+  addDir("Liebe","http://www.zeeone.de/Handlers/GenreLazyLoadHandler.ashx?genre=Liebe&pageType=BollyThek","newlist","",page=1)
+  addDir("Komödie","http://www.zeeone.de/Handlers/GenreLazyLoadHandler.ashx?genre=Komödie&pageType=BollyThek","newlist","",page=1)
+  addDir("Familie","http://www.zeeone.de/Handlers/GenreLazyLoadHandler.ashx?genre=Familie&pageType=BollyThek","newlist","",page=1)
+  addDir("Kino","http://www.zeeone.de/Handlers/GenreLazyLoadHandler.ashx?genre=Kino&pageType=BollyThek","newlist","",page=1)
+  addDir("Serie","http://www.zeeone.de/Handlers/GenreLazyLoadHandler.ashx?genre=Serie&pageType=BollyThek","newlist","",page=1)
+  addDir("Musik","http://www.zeeone.de/Handlers/GenreLazyLoadHandler.ashx?genre=Musik&pageType=BollyThek","newlist","",page=1)
   xbmcplugin.endOfDirectory(pluginhandle)  
   
 
@@ -89,7 +89,7 @@ def Play(url):
     debug("Play url: "+url)
     content = requests.get(url,allow_redirects=False,verify=False,cookies=cj).text.encode('utf-8')
     #debug(content)
-    urln=re.compile('file: "([^"]+)",', re.DOTALL).findall(content)[0]    
+    urln=re.compile('file: [\'"]([^"\']+)[\'"]', re.DOTALL).findall(content)[0]    
     listitem = xbmcgui.ListItem(path=urln)
     xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
 
