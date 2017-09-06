@@ -108,6 +108,20 @@ class KeyMap:
       builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=skip_channel&amp;skipDir=-1")')
       builder.end("key")
       
+    # Channel pageup
+      key = __addon__.getSetting('key_nextChan')
+      if key.isdigit():builder.start("key", {"id":key})
+      else: builder.start('pageup', {})
+      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=skip_channel&amp;skipDir=1")')
+      builder.end("key")
+      
+    # Channel pageDown  
+      key = __addon__.getSetting('key_prevChan')
+      if key.isdigit():builder.start("key", {"id":key})
+      else: builder.start('pagedown', {})
+      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=skip_channel&amp;skipDir=-1")')
+      builder.end("key")
+      
     # toggle channel
       key = __addon__.getSetting('key_toggleChan')
       if key.isdigit():builder.start("key", {"id":key})
@@ -262,7 +276,7 @@ class KeyMap:
     KEYMAP = __addon__.getSetting('keymap')
     if KEYMAP == "1":
       source = __addondir__ + '/userKeymap.xml'
-    elif KEYMAP == "0":
+    else:
       source =__addon__.getAddonInfo('path') + '/resources/keymap/defaultKeymap.xml'
     dest = __addondir__ + '/zattooKeymap.xml'
     with open(source, 'r') as file: content = file.read()

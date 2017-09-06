@@ -3,8 +3,10 @@
 		<keyboard>
 			<!-- Skip Channel Up -->
 			<up>RunPlugin("plugin://plugin.video.zattooHiQ/?mode=skip_channel&amp;skipDir=1")</up>
+			<pageup>RunPlugin("plugin://plugin.video.zattooHiQ/?mode=skip_channel&amp;skipDir=1")</pageup>
 			<!-- Skip Channel Down -->
 			<down>RunPlugin("plugin://plugin.video.zattooHiQ/?mode=skip_channel&amp;skipDir=-1")</down>
+			<pagedown>RunPlugin("plugin://plugin.video.zattooHiQ/?mode=skip_channel&amp;skipDir=1")</pagedown>
 			<!-- Toggle channel -->
 			<left>RunPlugin("plugin://plugin.video.zattooHiQ/?mode=toggle_channel")</left>
 			<!-- Change Audio Stream -->

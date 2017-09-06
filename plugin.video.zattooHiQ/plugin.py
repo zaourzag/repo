@@ -681,7 +681,6 @@ def makeOsdInfo():
 #  win.setProberty('category', '[COLOR blue]' + local(21866) + ':  ' + '[/COLOR]' + program['category'])
 
 
-  dialog.textviewer(header, text)
   
 class zattooGUI(xbmcgui.WindowXMLDialog):
 
