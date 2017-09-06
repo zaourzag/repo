@@ -1,5 +1,8 @@
 Changelog:
 
+- 0.0.16
+  Control IDs in widget for Krypton changed
+
 - 0.0.15
   Changes for Krypton
 
