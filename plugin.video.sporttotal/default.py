@@ -28,7 +28,7 @@ cliplist=[]
 filelist=[]
 profile    = xbmc.translatePath( addon.getAddonInfo('profile') ).decode("utf-8")
 temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
-xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
+
 
 mainurl="http://www.myspass.de"
 #Directory für Token Anlegen
@@ -63,8 +63,8 @@ def parameters_string_to_dict(parameters):
   return paramDict
   
     
-def addDir(name, url, mode, iconimage, desc=""):
-  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
+def addDir(name, url, mode, iconimage, desc="",live=1):
+  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&live="+str(live)
   liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=iconimage)
   liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc})
   if useThumbAsFanart:
@@ -123,9 +123,10 @@ def getUrl(url,data="x"):
 params = parameters_string_to_dict(sys.argv[2])
 mode = urllib.unquote_plus(params.get('mode', ''))
 url = urllib.unquote_plus(params.get('url', ''))
+live = urllib.unquote_plus(params.get('live', ''))
 
 
-def top20(url)      :
+def top20(url,live=0)      :
         content=getUrl(url)        
         htmlPage = BeautifulSoup(content, 'html.parser')        
         liste = htmlPage.find("div",{"class" :"place2"})        
@@ -165,11 +166,17 @@ def top20(url)      :
           except:
              urln_sub=element.find("a",{"class" :"tLiveLink"})['href']        
           urllink="https://www.sporttotal.tv/"+urln_sub
-          if tBegegnungLabel3=="":
-             subject=BegegnungLabel +" - "+BegegnungLabel2 +"( "+ datum+" "+zeit +" )"
-          else:
-             subject=tBegegnungLabel3+" ( "+BegegnungLabel +" - "+BegegnungLabel2 +" "+ datum+" "+zeit +" )"
-            
+          if live=="1":
+            if tBegegnungLabel3=="":
+              subject=datum+" "+zeit +" - "+ BegegnungLabel +" - "+BegegnungLabel2 
+            else:
+              subject=datum+" "+zeit +" - "+ tBegegnungLabel3+" ( "+BegegnungLabel +" - "+BegegnungLabel2+" )"
+          else:             
+            if tBegegnungLabel3=="":
+              subject=BegegnungLabel +" - "+BegegnungLabel2 +"( "+ datum+" "+zeit +" )"
+            else:
+              subject=tBegegnungLabel3+" ( "+BegegnungLabel +" - "+BegegnungLabel2 +" "+ datum+" "+zeit +" )"
+            xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
           addLink(subject, urllink, 'playvideo', "")    
         xbmcplugin.endOfDirectory(addon_handle)
 def playvideo(url):
@@ -187,6 +194,7 @@ def liegen():
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
   
 def Vereine(url):
+  xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
   xurl="https://www.sporttotal.tv/Vereine.aspx"
   content=getUrl(xurl)
   htmlPage = BeautifulSoup(content, 'html.parser')        
@@ -203,14 +211,14 @@ if mode is '':
     addDir("Top Clips", "https://www.sporttotal.tv/topclips.aspx", 'Top20',"")   
     addDir("Vereine", "", 'Vereine',"")   
     addDir("Liegen", "", 'liegen',"")   
-    addDir("Live", "https://www.sporttotal.tv/livegames.aspx", 'Top20',"")   
+    addDir("Live", "https://www.sporttotal.tv/livegames.aspx", 'Top20',"",live=1)   
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
 else:
   # Wenn Settings ausgewählt wurde
   if mode == 'Settings':
           addon.openSettings()
   if mode == 'Top20':
-          top20(url)
+          top20(url,live)
   if mode == 'playvideo':
           playvideo(url) 
   if mode == 'liegen':
