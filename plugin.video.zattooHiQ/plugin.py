@@ -489,9 +489,9 @@ def watch_channel(channel_id, start, end, showID="", restart=False, showOSD=Fals
   else:
     #player= myPlayer(290)
     player=xbmc.Player()
-    player.startTime=startTime
+    #player.startTime=startTime
     player.play(streams[streamNr]['url'], listitem)
-    while (player.playing):xbmc.sleep(100)
+    #while (player.playing):xbmc.sleep(100)
       
 def skip_channel(skipDir):
   #new ZattooDB instance because this is called from thread-timer on channel-nr input (sql connection doesn't work)
@@ -852,7 +852,9 @@ def main():
   channel=_zattooDB_.get_playing()['channel']
   channeltitle=_zattooDB_.get_channeltitle(channel)
   program = _zattooDB_.getPrograms({'index':[channel]}, True, datetime.datetime.now(), datetime.datetime.now())
-  program=program[0]
+  try:
+    program=program[0]
+  except:pass
   
   xbmcgui.Window(10000).setProperty('ZBElastAction', action)
 
