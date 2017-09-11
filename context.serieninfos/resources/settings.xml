@@ -2,4 +2,7 @@
 <settings>
    <setting id="ip" type="text" label="Proxy NAME/IP" default=""/>
    <setting id="port" type="number" label="Proxy Port" default=""/>
+   <setting id="protokoll" type="select" label="Proxy Protokoll" values="http:|socks5:" default="http:"/>
+   <setting id="username" type="text" label="Proxy Username" default=""/>
+   <setting id="password" type="text" label="Proxy Password" default=""/>
 </settings>

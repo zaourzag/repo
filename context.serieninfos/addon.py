@@ -51,12 +51,19 @@ def geturl(url,data="x",header=""):
     }        
     ip=addon.getSetting("ip")
     port=addon.getSetting("port")    
+    protokoll=addon.getSetting("protokoll")   
+    username=addon.getSetting("username")   
+    password=addon.getSetting("password")      
     if not ip=="" and not port=="":
-      px="http://"+ip+":"+str(port)
+      if not username=="" and notpassword=="":
+        px=protokoll+"//"+username+":"+password+"@"+ip+":"+str(port)
+      else:
+        px=protokoll+"//"+ip+":"+str(port)      
       proxies = {
         'http': px,
         'https': px,
       }    
+      debug("Proxy :"+px)      
       content = session.get(url, allow_redirects=True,verify=False,headers=headers,proxies=proxies)    
     else:
       content = session.get(url, allow_redirects=True,verify=False,headers=headers)    
