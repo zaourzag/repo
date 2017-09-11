@@ -384,7 +384,10 @@ def hashplay(idd):
           content = getUrl(deeplink)
           referer=re.compile("webLink = '(.+?)'", re.DOTALL).findall(content)[0]                
           headerfelder="user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36&Referer="+referer
-          listitem = xbmcgui.ListItem(path=stream+"|"+headerfelder,label=title,iconImage=bild,thumbnailImage=bild)
+          if kodi18=="true" :                
+                listitem = xbmcgui.ListItem(path=stream+"|"+headerfelder,label=title,iconImage=bild,thumbnailImage=bild)
+          else:
+                listitem = xbmcgui.ListItem(path=stream,label=title,iconImage=bild,thumbnailImage=bild)
           listitem.setProperty('IsPlayable', 'true')
           listitem.addStreamInfo('video', {'duration': laenge,'plot' : plot,'plotoutline' : plotshort,'tagline':tagline,'mediatype':ftype })          
           listitem.setInfo(type="Video", infoLabels={'duration': laenge,"Title": title, "Plot": plot,'plotoutline': plotshort,'tagline':tagline,'mediatype':ftype})          
@@ -400,8 +403,11 @@ def hashplay(idd):
                 debug(licstring)
                 listitem.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')                
                 listitem.setProperty('inputstream.adaptive.license_key', licstring)                
-                debug("LICENSE: " + licstring)                              
-          xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=stream+"|"+headerfelder, listitem=listitem)
+                debug("LICENSE: " + licstring)      
+          if kodi18=="true" :                
+                xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=stream+"|"+headerfelder, listitem=listitem)
+          else:
+                xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=stream, listitem=listitem)
           xbmcplugin.setResolvedUrl(addon_handle,True, listitem)    
           #addLink(name, stream, "playvideo", bild)          
           
