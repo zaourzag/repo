@@ -203,8 +203,7 @@ def listBP(type, url, limit):
 	
 def billboardMain():
 	addAutoPlayDir(translation(40107), urlMainBB+"/charts/hot-100", "listBillboardCharts_HTML", pic+'billboard.png', "", "browse")
-	addAutoPlayDir(translation(40108), "Top 140 in Emerging", "listBillboardCharts_NEW", pic+'billboard.png', "", "browse")
-	addAutoPlayDir(translation(40109), "Top 140 in Overall", "listBillboardCharts_NEW", pic+'billboard.png', "", "browse")
+	addAutoPlayDir(translation(40108), urlMainBB+"/charts/billboard-200", "listBillboardCharts_HTML", pic+'billboard.png', "", "browse")
 	addDir(translation(40110), "", "listBillboardArchiveMain", pic+'billboard.png', "", "browse")
 	addDir(translation(40111), "genre", "listBillboardChartsTypes", pic+'billboard.png', "", "browse")
 	addDir(translation(40112), "country", "listBillboardChartsTypes", pic+'billboard.png', "", "browse")
@@ -309,7 +308,7 @@ def listBillboardChartsTypes(type):
 		addAutoPlayDir("Digital", urlMainBB+"/charts/digital-song-sales", "listBillboardCharts_HTML", pic+'billboard.png', "", "browse")
 		addAutoPlayDir(translation(40124), urlMainBB+"/charts/streaming-songs", "listBillboardCharts_HTML", pic+'billboard.png', "", "browse")
 		addAutoPlayDir(translation(40125), urlMainBB+"/charts/on-demand-streaming-songs", "listBillboardCharts_HTML", pic+'billboard.png', "", "browse")
-		addAutoPlayDir("TOP on Twitter", urlMainBB+"/charts/twitter-emerging-artists", "listBillboardCharts_HTML", pic+'billboard.png', "", "browse")
+		addAutoPlayDir("TOP on Youtube", urlMainBB+"/charts/youtube", "listBillboardCharts_HTML", pic+'billboard.png', "", "browse")
 	xbmcplugin.endOfDirectory(pluginhandle)
 	if forceView:
 		xbmc.executebuiltin('Container.SetViewMode('+viewIDGenres+')')
@@ -328,7 +327,7 @@ def listBillboardCharts_HTML(type, url, limit):
 		entry = spl[i]
 		position = re.compile('<span class="chart-row__current-week">(.*?)</span>', re.DOTALL).findall(entry)[0]
 		try:
-			thumb = re.compile('data-imagesrc="(.*?)"', re.DOTALL).findall(entry)[0]
+			thumb = re.compile('data-imagesrc="(http.*?.jpg)"', re.DOTALL).findall(entry)[0]
 		except:
 			try:
 				thumb = re.compile('style="background-image.+?(http.*?.jpg)', re.DOTALL).findall(entry)[0]
@@ -338,7 +337,7 @@ def listBillboardCharts_HTML(type, url, limit):
 		try:
 			artist = re.compile('data-tracklabel="Artist Name">\s+(.*?)\s+</a>', re.DOTALL).findall(entry)[0]
 		except:
-			artist = re.compile('<h3 class="chart-row__artist">\s+(.*?)\s+</h3>', re.DOTALL).findall(entry)[0]
+			artist = re.compile('<span class="chart-row__artist">\s+(.*?)\s+</span>', re.DOTALL).findall(entry)[0]
 		title = cleanTitle(artist.strip()+" - "+song.strip())
 		filtered = False
 		for entry2 in blacklist:
@@ -353,49 +352,6 @@ def listBillboardCharts_HTML(type, url, limit):
 			url = "plugin://"+addonID+"/?url="+urllib.quote_plus(title.replace(" - ", " "))+"&mode=playYTByTitle"
 			musicVideos.append([title, url, thumb])
 			if limit and int(limit) == pos:
-				break
-			pos += 1
-	if type == "browse":
-		xbmcplugin.endOfDirectory(pluginhandle)
-		if forceView:
-			xbmc.executebuiltin('Container.SetViewMode('+viewIDVideos+')')
-	else:
-		random.shuffle(musicVideos)
-		for title, url, thumb in musicVideos:
-			listitem = xbmcgui.ListItem(title, thumbnailImage=thumb)
-			playlist.add(url, listitem)
-		xbmc.Player().play(playlist)
-	
-def listBillboardCharts_NEW(type, url, limit):
-	if type == "play":
-		musicVideos = []
-		playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
-		playlist.clear()
-	if "Top 140 in Emerging" in url:
-		content = cache('http://realtime.billboard.com/?chart=emergingartists', 1)
-	elif "Top 140 in Overall" in url:
-		content = cache('http://realtime.billboard.com/?chart=last24hours', 1)
-	content = content[content.find("<h1>"+url+"</h1>"):]
-	content = content[:content.find("</table>")]
-	match = re.compile('<tr>.+?<td>(.*?)</td>.+?<td><a href=".+?">(.*?)</a></td>.+?<td>(.*?)</td>.+?<td>(.*?)</td>.+?</tr>', re.DOTALL).findall(content)
-	pos = 1
-	for position, artist, song, signal in match:
-		if "(" in song:
-			song = song.split('(')[0].strip()
-		title = cleanTitle(artist.strip()+" - "+song.strip())
-		filtered = False
-		for entry2 in blacklist:
-			if entry2.strip().lower() and entry2.strip().lower() in title.lower():
-				filtered = True
-		if filtered:
-			continue
-		if type == "browse":
-			name = '[COLOR chartreuse]'+str(position)+' •  [/COLOR]'+title
-			addLink(name, title.replace(" - ", " "), "playYTByTitle", "")
-		else:
-			url = "plugin://"+addonID+"/?url="+urllib.quote_plus(title.replace(" - ", " "))+"&mode=playYTByTitle"
-			musicVideos.append([title, url, ""])
-			if limit and int(limit)==pos:
 				break
 			pos += 1
 	if type == "browse":
@@ -1220,8 +1176,6 @@ elif mode == 'listBillboardChartsTypes':
 	listBillboardChartsTypes(url)
 elif mode == 'listBillboardCharts_HTML':
 	listBillboardCharts_HTML(type, url, limit)
-elif mode == 'listBillboardCharts_NEW':
-	listBillboardCharts_NEW(type, url, limit)
 elif mode == 'hypemMain':
 	hypemMain()
 elif mode == 'listHypem':
