@@ -223,13 +223,32 @@ def playvideo(url):
   videos = htmlPage.find_all('jwplayer:source')
   listename=[]
   listeurl=[]
+  quality=addon.getSetting("quality") 
+  fallback=addon.getSetting("fallback") 
+  nr=100
+  i=0
   for video in videos:
     file=video["file"]
-    quali=video["label"]
+    quali=video["label"]    
     listename.append(quali)
     listeurl.append(file)
-  dialog = xbmcgui.Dialog()
-  nr=dialog.select("Qualität", listename)
+    i+=1
+    if quali==quality:
+       nr=i
+       
+  if not quality=="Select":
+     if nr==100:
+        if fallback=="Select":
+          dialog = xbmcgui.Dialog()
+          nr=dialog.select("Qualität", listename)
+        if fallback=="Max":
+           nr=0
+        if fallback=="Min":
+           nr=-1
+    
+  else:
+     dialog = xbmcgui.Dialog()
+     nr=dialog.select("Qualität", listename)
   listitem = xbmcgui.ListItem(path=listeurl[nr])
   xbmcplugin.setResolvedUrl(addon_handle, True, listitem)
 
