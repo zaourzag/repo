@@ -105,7 +105,7 @@ def getUrl(url,data="x",header=""):
         for cook in cj:
           debug(" Cookie :"+ str(cook))
         opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
-        userAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:49.0) Gecko/20100101 Firefox/49.0"
+        userAgent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36"
         if header=="":
           opener.addheaders = [('User-Agent', userAgent)]
         else:
@@ -324,6 +324,7 @@ def staffel(idd,url) :
           plotshort=folge["articleShort"]
           startdate=folge["broadcastStartDate"]    
           tagline=folge["teaserText"]           
+          deeplink=folge["deeplinkUrl"] 
           try:          
             type=folge["format"]["categoryId"]
           except:
@@ -336,7 +337,7 @@ def staffel(idd,url) :
           zusatz=" ("+startdate+ " )"
           title=name+zusatz
           haswert=hashlib.md5(title.encode('utf-8')).hexdigest()
-          zeile=haswert+"###"+stream+"###"+title+"###"+bild+"###"+str(laenge)+"###"+plot+"###"+plotshort+"###"+tagline+"###"+ftype+"###"+streamcode+"###"+str(token)+"###"
+          zeile=haswert+"###"+stream+"###"+title+"###"+bild+"###"+str(laenge)+"###"+plot+"###"+plotshort+"###"+tagline+"###"+ftype+"###"+streamcode+"###"+str(token)+"###"+str(deeplink)+"###"
           menulist=menulist+zeile.replace("\n"," ").encode('utf-8')+"\n"             
           listitem = xbmcgui.ListItem(path="plugin://plugin.video.rtlnow/?nummer="+haswert+"&mode=hashplay",label=title,iconImage=bild,thumbnailImage=bild)
           listitem.setProperty('IsPlayable', 'true')
@@ -374,12 +375,16 @@ def hashplay(idd):
           ftype=felder[8] 
           streamcode=felder[9] 
           token=felder[10] 
+          deeplink=felder[11] 
           kodi18=addon.getSetting("kodi18")
           if kodi18=="true" :
              if not streamcode=="0":
                stream=streamcode
                debug("STREAM : #" +stream +"#")
-          listitem = xbmcgui.ListItem(path=stream,label=title,iconImage=bild,thumbnailImage=bild)
+          content = getUrl(deeplink)
+          referer=re.compile("webLink = '(.+?)'", re.DOTALL).findall(content)[0]                
+          headerfelder="user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36&Referer="+referer
+          listitem = xbmcgui.ListItem(path=stream+"|"+headerfelder,label=title,iconImage=bild,thumbnailImage=bild)
           listitem.setProperty('IsPlayable', 'true')
           listitem.addStreamInfo('video', {'duration': laenge,'plot' : plot,'plotoutline' : plotshort,'tagline':tagline,'mediatype':ftype })          
           listitem.setInfo(type="Video", infoLabels={'duration': laenge,"Title": title, "Plot": plot,'plotoutline': plotshort,'tagline':tagline,'mediatype':ftype})          
@@ -390,12 +395,13 @@ def hashplay(idd):
               if token=="0" and not streamcode=="0":
                     dialog = xbmcgui.Dialog()
                     dialog.notification("Login Notwendig", 'Es ist min. Ein Freier Watchbox account Notwendig', xbmcgui.NOTIFICATION_ERROR)
-              else:
-                licstring='https://widevine.rtl.de/index/proxy|x-auth-token='+token+"&Content-Type=|R{SSM}|"
+              else:               
+                licstring='https://widevine.rtl.de/index/proxy|x-auth-token='+token+"&"+headerfelder+"&Content-Type=|R{SSM}|"
+                debug(licstring)
                 listitem.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')                
                 listitem.setProperty('inputstream.adaptive.license_key', licstring)                
                 debug("LICENSE: " + licstring)                              
-          xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=stream, listitem=listitem)
+          xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=stream+"|"+headerfelder, listitem=listitem)
           xbmcplugin.setResolvedUrl(addon_handle,True, listitem)    
           #addLink(name, stream, "playvideo", bild)          
           
@@ -568,16 +574,18 @@ def livetv():
         image=element["nowNextEpgMovies"]["items"][0]["image"]
        except:
          continue
-       listitem = xbmcgui.ListItem(path=url,label=name,iconImage=image,thumbnailImage=image)
+       referer="https://www.tvnow.de/"+name+"/live-tv" 
+       headerfelder="user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36&Referer="+referer         
+       listitem = xbmcgui.ListItem(path=url+"||"+headerfelder,label=name,iconImage=image,thumbnailImage=image)
        listitem.setProperty('IsPlayable', 'true')          
        listitem.setInfo(type="Video", infoLabels={"Title": name })                 
        listitem.setProperty('inputstreamaddon', 'inputstream.adaptive')
-       listitem.setProperty('inputstream.adaptive.manifest_type', 'mpd')          
-       licstring='https://widevine.rtl.de/index/proxy|x-auth-token='+token+"&Content-Type=|R{SSM}|"
+       listitem.setProperty('inputstream.adaptive.manifest_type', 'mpd')                        
+       licstring='https://widevine.rtl.de/index/proxy|x-auth-token='+token+"&"+headerfelder+"&Content-Type=|R{SSM}|"
        listitem.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')                
        listitem.setProperty('inputstream.adaptive.license_key', licstring)                
        debug("LICENSE: " + licstring)                              
-       xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=url, listitem=listitem)
+       xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=url+"||"+headerfelder, listitem=listitem)
     xbmcplugin.setResolvedUrl(addon_handle,True, listitem)    
 
 #OPTIONS https://api.tvnow.de/v3/formats/genre/Crime?fields=*&filter=%7B%22station%22:%22none%22%7D&maxPerPage=50&order=NameLong+asc&page=1
@@ -599,7 +607,7 @@ else:
   if mode == 'rubrik':
           rubrik(url)             
   if mode == 'staffel':
-          url="http://api.tvnow.de/v3/formatlists/"+nummer+"?maxPerPage=500&fields=[%22formatTabPages%22,[%22container%22,[%22movies%22,[%22free%22,%22isDrm%22,%22title%22,%22id%22,%22manifest%22,[%22dashclear%22,%22dash%22],%22duration%22,%22season%22,%22episode%22,%22articleLong%22,%22articleShort%22,%22broadcastStartDate%22,%22teaserText%22,%22format%22,[%22categoryId%22]]]]]"
+          url="http://api.tvnow.de/v3/formatlists/"+nummer+"?maxPerPage=500&fields=[%22formatTabPages%22,[%22container%22,[%22movies%22,[%22free%22,%22isDrm%22,%22title%22,%22id%22,%22deeplinkUrl%22,%22manifest%22,[%22dashclear%22,%22dash%22],%22duration%22,%22season%22,%22episode%22,%22articleLong%22,%22articleShort%22,%22broadcastStartDate%22,%22teaserText%22,%22format%22,[%22categoryId%22]]]]]"
           staffel(nummer,url)             
   if mode == 'playvideo':
           playvideo(url) 
