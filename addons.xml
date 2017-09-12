@@ -1403,10 +1403,10 @@ Orginal Code was from AddonScriptorDE</disclaimer>
     </extension>
 </addon>
 
-<addon id="plugin.video.dazn" version="1.0.1" name="DAZN" provider-name="Jin">
+<addon id="plugin.video.dazn" version="1.0.2" name="DAZN" provider-name="Jin">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
-        <import addon="inputstream.adaptive" version="2.0.2"/>
+        <import addon="inputstream.adaptive" version="2.0.10"/>
         <import addon="script.module.pydes" version="2.0.1"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="addon.py">
@@ -1414,6 +1414,10 @@ Orginal Code was from AddonScriptorDE</disclaimer>
     </extension>
     <extension point="xbmc.addon.metadata">
         <news>
+- drop support for libressl
+- inputstream adaptive version bump
+- minor updates
+
 - list highlights only in schedule and catch up via context menu
 - fix possible error 'mktime argument out of range'
         </news>
