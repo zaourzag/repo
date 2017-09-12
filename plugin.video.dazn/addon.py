@@ -28,7 +28,7 @@ id = args.get('id', ['home'])[0]
 params = args.get('params', [''])[0]
 if not args:
     args = version
-log('[%s] country: %s language: %s arguments: %s' % (addon_id, country, language, str(args)))
+log('[{0}] country: {1} language: {2} arguments: {3}'.format(addon_id, country, language, str(args)))
 
 if args == version:
     if uniq_id():

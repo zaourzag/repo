@@ -19,9 +19,7 @@ view_id = addon.getSetting('view_id')
 force_view = addon.getSetting('force_view') == 'true'
 token = addon.getSetting('token')
 country = addon.getSetting('country')
-language = xbmc.getLanguage(0, False)
-if not language:
-    language = addon.getSetting('language')
+language = addon.getSetting('language')
 
 api_base = 'https://isl.dazn.com/misl/'
 
@@ -33,6 +31,10 @@ def log(msg):
 
 def build_url(query):
     return sys.argv[0] + '?' + urllib.urlencode(query)
+
+def get_language():
+    language = xbmc.getLanguage().split(' (')[0]
+    return xbmc.convertLanguage(language, xbmc.ISO_639_1)
     
 def utfenc(str):
     try:
@@ -75,7 +77,7 @@ def uniq_id(t=1):
     elif ":" in mac_addr and t == 2:
         return uuid.uuid5(uuid.NAMESPACE_DNS, str(mac_addr)).bytes
     else:
-        log("[%s] error: failed to get device id (%s)" % (addon_id, str(mac_addr)))
+        log("[{0}] error: failed to get device id ({1})".format(addon_id, str(mac_addr)))
         dialog.ok(addon_name, getString(30051))
         return False
 

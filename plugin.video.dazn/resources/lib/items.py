@@ -15,7 +15,7 @@ class Items:
         xbmcplugin.endOfDirectory(addon_handle, cacheToDisc=self.cache, updateListing=upd)
         
         if force_view:
-            xbmc.executebuiltin('Container.SetViewMode(%s)' % view_id)
+            xbmc.executebuiltin('Container.SetViewMode({0})'.format(view_id))
             
         if focus:
             try:

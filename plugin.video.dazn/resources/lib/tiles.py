@@ -7,9 +7,9 @@ class Tiles:
 
     def __init__(self, i):
         self.item = {}
-        self.title = i['Title']
+        self.title = utfenc(i['Title'])
         self.subtitle = i.get('SubTitle', '')
-        self.description = i['Description']
+        self.description = utfenc(i['Description'])
         self.start = utc2local(i.get('Start', ''))
         self.end = utc2local(i.get('End', ''))
         self.now = datetime.datetime.now().strftime(time_format)
@@ -38,19 +38,19 @@ class Tiles:
             self.item['duration'] = timedelta_total_seconds(time_stamp(self.end)-time_stamp(self.start))
 
     def add_thumb(self, i):
-        url = api_base+'v2/image?id=%s&Quality=95&Width=%s&Height=%s&ResizeAction=fill&VerticalAlignment=top&Format=%s'
+        url = api_base+'v2/image?id={0}&Quality=95&Width={1}&Height={2}&ResizeAction=fill&VerticalAlignment=top&Format={3}'
         image = i.get('Image', '')
         if image:
-            self.item['thumb'] = url % (image['Id'], '720', '404', image['ImageMimeType'])
-            self.item['fanart'] = url % (image['Id'], '1280', '720', image['ImageMimeType'])
+            self.item['thumb'] = url.format(image['Id'], '720', '404', image['ImageMimeType'])
+            self.item['fanart'] = url.format(image['Id'], '1280', '720', image['ImageMimeType'])
         background = i.get('BackgroundImage', '')
         if background:
-            self.item['fanart'] = url % (background['Id'], '1280', '720', background['ImageMimeType'])
+            self.item['fanart'] = url.format(background['Id'], '1280', '720', background['ImageMimeType'])
 
     def update_item(self, i):
         self.item['mode'] = self.mode
-        self.item['title'] = utfenc(self.title)
-        self.item['plot'] = utfenc(self.description)
+        self.item['title'] = self.title
+        self.item['plot'] = self.description
         self.item['id'] = self.id
         self.item['type'] = utfenc(resources(self.type))
 
@@ -59,22 +59,22 @@ class Tiles:
 
         if 'Epg' in i.get('Id', ''):
             if self.competition:
-                competition = self.competition['Title']
+                competition = utfenc(self.competition['Title'])
             if self.sport:
-                sport = self.sport['Title']
+                sport = utfenc(self.sport['Title'])
             time = self.start[11:][:5]
             if self.type == 'Live':
-                self.item['title'] = utfenc(unicode('[COLOR red]%s[/COLOR] [COLOR dimgray]%s[/COLOR] %s [COLOR dimgray]%s[/COLOR]' % (time, sport, self.title, competition)))
+                self.item['title'] = '[COLOR red]{0}[/COLOR] [COLOR dimgray]{1}[/COLOR] {2} [COLOR dimgray]{3}[/COLOR]'.format(time, sport, self.title, competition)
             else:
-                self.item['title'] = utfenc(unicode('%s [COLOR dimgray]%s[/COLOR] %s [COLOR dimgray]%s[/COLOR]' % (time, sport, self.title, competition)))
+                self.item['title'] = '{0} [COLOR dimgray]{1}[/COLOR] {2} [COLOR dimgray]{3}[/COLOR]'.format(time, sport, self.title, competition)
 
         elif (self.type == 'UpComing' or 'Scheduled' in i.get('Id', '')) or (self.type == 'Highlights'):
             if self.type == 'UpComing':
                 day = resources(days(self.type, self.now, self.start))
-                sub_title = unicode('%s %s' % (day, self.start[11:][:5]))
+                sub_title = '{0} {1}'.format(day, self.start[11:][:5])
             else:
                 sub_title = resources(self.type)
-            self.item['title'] = utfenc(unicode('%s (%s)' % (self.title, sub_title)))
+            self.item['title'] = '{0} ({1})'.format(self.title, utfenc(sub_title))
 
         if self.start:
             self.item['date'] = self.start[:10]

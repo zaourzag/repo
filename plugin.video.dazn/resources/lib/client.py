@@ -2,7 +2,7 @@
 
 import simple_requests as requests
 from credentials import Credentials
-from .common import *
+from common import *
 
 class Client:
 
@@ -22,6 +22,7 @@ class Client:
             'Country': country
         }
 
+        self.STARTUP = api_base + 'v2/Startup'
         self.RAIL = api_base + 'v2/Rail'
         self.RAILS = api_base + 'v2/Rails'
         self.EPG = api_base + 'v1/Epg'
@@ -29,28 +30,37 @@ class Client:
         self.PLAYBACK = api_base + 'v1/Playback'
         self.SIGNIN = api_base + 'v3/SignIn'
         self.SIGNOUT = api_base + 'v1/SignOut'
-        self.PROFILE = api_base + 'v1/UserProfile'
         self.REFRESH = api_base + 'v3/RefreshAccessToken'
+        
+        if not self.TOKEN:
+            self.signIn()
+            
+    def content_data(self, url):
+        data = self.request(url)
+        if data.get('odata.error', None):
+            self.errorHandler(data)
+        return data
 
     def rails(self, id, params=''):
         self.PARAMS['groupId'] = id
         self.PARAMS['params'] = params
-        return self.request(self.RAILS)
+        return self.content_data(self.RAILS)
         
     def rail(self, id, params=''):
         self.PARAMS['id'] = id
         self.PARAMS['params'] = params
-        return self.request(self.RAIL)
+        return self.content_data(self.RAIL)
     
     def epg(self, params):
         self.PARAMS['date'] = params
-        return self.request(self.EPG)
+        return self.content_data(self.EPG)
     
     def event(self, id):
         self.PARAMS['Id'] = id
-        return self.request(self.EVENT)
+        return self.content_data(self.EVENT)
         
     def playback_data(self, id):
+        self.HEADERS['Authorization'] = 'Bearer ' + self.TOKEN
         self.POST_DATA = {
             'AssetId': id,
             'Format': 'MPEG-DASH',
@@ -63,7 +73,6 @@ class Client:
         return self.request(self.PLAYBACK)
         
     def playback(self, id):
-        self.HEADERS['Authorization'] = 'Bearer ' + self.TOKEN
         data = self.playback_data(id)
         if data.get('odata.error', None):
             self.errorHandler(data)
@@ -72,7 +81,7 @@ class Client:
         return data
         
     def setToken(self, auth, result):
-        log('[%s] signin: %s' % (addon_id, result))
+        log('[{0}] signin: {1}'.format(addon_id, result))
         if auth and result == 'SignedIn':
             self.TOKEN = auth['Token']
             self.HEADERS['Authorization'] = 'Bearer ' + self.TOKEN
@@ -100,7 +109,6 @@ class Client:
             dialog.ok(addon_name, getString(30004))
         if self.TOKEN:
             credentials.save()
-            self.userProfile()
         else:
             credentials.reset()
             
@@ -112,15 +120,6 @@ class Client:
         r = self.request(self.SIGNOUT)
         self.TOKEN = ''
         addon.setSetting('token', self.TOKEN)
-        
-    def userProfile(self):
-        self.HEADERS['Authorization'] = 'Bearer ' + self.TOKEN
-        data = self.request(self.PROFILE)
-        if data.get('odata.error', None):
-            self.errorHandler(data)
-        else:
-            addon.setSetting('country', data['UserCountryCode'])
-            addon.setSetting('language', data['UserLanguageLocaleKey'])
         
     def refreshToken(self):
         self.HEADERS['Authorization'] = 'Bearer ' + self.TOKEN
@@ -135,8 +134,29 @@ class Client:
             self.setToken(data['AuthToken'], data.get('Result', 'RefreshAccessTokenError'))
             
     def startUp(self):
-        if not self.TOKEN:
-            self.signIn()
+        kodi_language = get_language()
+        self.POST_DATA = {
+            'LandingPageKey': 'generic',
+            'Languages': '{0}, {1}'.format(kodi_language, language),
+            'Platform': 'web',
+            'Manufacturer': '',
+            'PromoCode': ''
+        }
+        data = self.request(self.STARTUP)
+        region = data.get('Region', {})
+        if region.get('isAllowed', False) == True:
+            addon.setSetting('country', region['Country'])
+            supported = False
+            languages = data['SupportedLanguages']
+            for i in languages:
+                if i == kodi_language:
+                    supported = True
+                    addon.setSetting('language', i)
+                    break
+            if not supported:
+                addon.setSetting('language', region['Language'])
+        else:
+            dialog.ok(addon_name, getString(30101))
         
     def request(self, url):
         if self.POST_DATA:
@@ -148,20 +168,22 @@ class Client:
             return r.json()
         else:
             if not r.status_code == 204:
-                log('[%s] error: %s (%s, %s)' % (addon_id, url, str(r.status_code), r.headers.get('content-type', '')))
+                log('[{0}] error: {1} ({2}, {3})'.format(addon_id, url, str(r.status_code), r.headers.get('content-type', '')))
             return {}
             
     def errorHandler(self, data):
         self.ERRORS += 1
         msg  = data['odata.error']['message']['value']
         code = str(data['odata.error']['code'])
-        log('[%s] error: %s (%s)' % (addon_id, msg, code))
+        log('[{0}] error: {1} ({2})'.format(addon_id, msg, code))
         if code == '10000' and self.ERRORS < 3:
             self.refreshToken()
         elif (code == '401' or code == '10033') and self.ERRORS < 3:
             self.signIn()
         elif code == '7':
             dialog.ok(addon_name, getString(30107))
+        elif code == '3001':
+            self.startUp()
         elif code == '10006':
             dialog.ok(addon_name, getString(30101))
         elif code == '10008':

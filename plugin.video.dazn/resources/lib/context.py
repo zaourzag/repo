@@ -13,7 +13,7 @@ class Context:
             'mode': 'epg',
             'id': 'date'
         }
-        self.cm.append( (utfenc(getString(30230)), 'ActivateWindow(Videos, %s)' % build_url(d)) )
+        self.cm.append( (utfenc(getString(30230)), 'ActivateWindow(Videos, {0})'.format(build_url(d)) ) )
         return self.cm
     
     def highlights(self, item, mode):
@@ -23,7 +23,7 @@ class Context:
             'id': item.get('id', ''),
             'params': item.get('params','')
         }
-        self.cm.append( (utfenc(getString(30231)), 'ActivateWindow(Videos, %s)' % build_url(d)) )
+        self.cm.append( (utfenc(getString(30231)), 'ActivateWindow(Videos, {0})'.format(build_url(d)) ) )
         return self.cm
         
     def related(self, cm_items): 
@@ -35,7 +35,7 @@ class Context:
                     'id': i.get('id', ''),
                     'params': i.get('params','')
                 }
-                self.cm.append( (utfenc(getString(30213)), 'XBMC.RunPlugin(%s)' % build_url(d)) )
+                self.cm.append( (utfenc(getString(30213)), 'XBMC.RunPlugin({0})'.format(build_url(d)) ) )
                 break
         return self.cm
                 
@@ -48,7 +48,7 @@ class Context:
                 'id': 'sport',
                 'params': i['Id']
             }
-            self.cm.append( (utfenc(getString(30214)), 'ActivateWindow(Videos, %s)' % build_url(d) ) )
+            self.cm.append( (utfenc(getString(30214)), 'ActivateWindow(Videos, {0})'.format(build_url(d)) ) )
             
         if item.get('competition', None):
             i = item['competition']
@@ -58,6 +58,6 @@ class Context:
                 'id': 'competition',
                 'params': i['Id']
             }
-            self.cm.append( (utfenc(getString(30215)), 'ActivateWindow(Videos, %s)' % build_url(d) ) )
+            self.cm.append( (utfenc(getString(30215)), 'ActivateWindow(Videos, {0})'.format(build_url(d)) ) )
             
         return self.cm

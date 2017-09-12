@@ -12,13 +12,17 @@ msgstr ""
 "Language: fr_CA\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "#30001"
+msgid "Login successful: save credentials?"
+msgstr "Connexion réussie: Enregistrer les informations d'identification?"
+
 msgctxt "#30002"
-msgid "DAZN Login: Email"
-msgstr "DAZN Login: Email"
+msgid " Login: Email"
+msgstr " Login: Email"
 
 msgctxt "#30003"
-msgid "DAZN Login: Password"
-msgstr "DAZN Login: Mot de passe"
+msgid " Login: Password"
+msgstr " Login: Mot de passe"
 
 msgctxt "#30004"
 msgid "Please sign in using your account details. Go to www.dazn.com on another device to retrieve your forgotten email or password."

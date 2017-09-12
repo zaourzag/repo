@@ -14,5 +14,5 @@ class Playback:
             r = requests.head(i['ManifestUrl'])
             if r.status_code == 200:
                 self.ManifestUrl = i['ManifestUrl']
-                self.LaUrl = i['LaUrl'].replace('https', 'http')
+                self.LaUrl = i['LaUrl']
                 break

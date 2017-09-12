@@ -63,8 +63,8 @@ def epg_items(data, params, mode):
         def date_item(day):
             return {
                 'mode': mode,
-                'title': '%s (%s)' % (resources(day.strftime('%A')), day.strftime(date_format)),
-                'plot': '%s (%s)' % (resources(date.strftime('%A')), date.strftime(date_format)),
+                'title': '{0} ({1})'.format(resources(day.strftime('%A')), day.strftime(date_format)),
+                'plot': '{0} ({1})'.format(resources(date.strftime('%A')), date.strftime(date_format)),
                 'params': day,
                 'cm': cm
             }
