@@ -12,13 +12,17 @@ msgstr ""
 "Language: de_DE\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+msgctxt "#30001"
+msgid "Login successful: save credentials?"
+msgstr "Anmeldung erfolgreich: Anmeldeinformationen speichern?"
+
 msgctxt "#30002"
-msgid "Eurosport Player Login: Email"
-msgstr "Eurosport Player Login: E-Mail"
+msgid " Login: Email"
+msgstr " Login: E-Mail"
 
 msgctxt "#30003"
-msgid "Eurosport Player Login: Password"
-msgstr "Eurosport Player Login: Passwort"
+msgid " Login: Password"
+msgstr " Login: Passwort"
 
 msgctxt "#30010"
 msgid "View"

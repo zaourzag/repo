@@ -8,10 +8,9 @@ items = Items()
 
 def channel(data):
     from hits import Hits
-    hits = data['data']['onNow']['hits']
+    hits = data['data']['Airings']
     for i in hits:
-        hit = i['hit']
-        item = Hits(hit).item
+        item = Hits(i).item
         if item.get('id'):
             items.add(item)
     date = epg_date()
@@ -22,7 +21,7 @@ def channel(data):
 
 def sport(data):
     from sports import Sports
-    hits = data['data']['ListByTitle']['list']
+    hits = data['data']['sports_filter']['list']
     for i in hits:
         items.add(Sports(i).item)
     items.list(sort=True)
@@ -56,10 +55,10 @@ def epg(data, prev_date, date):
     cm = Context().epg_date()
     
     items.add(date_item(get_prev_day(epg_date(prev_date)), epg_date(prev_date)))
-    hits = data['data']['Airings']['hits']
-    for i in reversed(hits):
-        hit = i['hit']
-        items.add(Hits(hit, epg=True).item)
+    hits = data['data']['Airings']
+    hits = sorted(hits, key=lambda k: k.get('startDate'))
+    for i in hits:
+        items.add(Hits(i, epg=True).item)
     items.add(date_item(epg_date(date), get_next_day(epg_date(date))))
     items.list(upd=update)
     
@@ -68,5 +67,8 @@ def play(data):
         for i in data['stream']:
             path = data['stream'][i].replace('desktop','wired50')
             break
-        token = data['token']
-        items.play(path, token)
+        key = data['license_key']
+        items.play(path, key)
+    
+def license_renewal(license_key):
+    items.add_token(license_key)

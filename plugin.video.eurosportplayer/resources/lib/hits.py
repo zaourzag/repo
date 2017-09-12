@@ -13,7 +13,7 @@ class Hits:
         self.photos = i['photos']
         self.duration = runtime_to_seconds(i['runTime'])
         self.linear = False
-        self.language = addon.getSetting('language')
+        self.language = language
         if self.type == 'Airing':
             self.airing(i)
         elif self.type == 'Video':

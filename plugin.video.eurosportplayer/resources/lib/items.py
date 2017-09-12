@@ -16,7 +16,7 @@ class Items:
         xbmcplugin.endOfDirectory(addon_handle, cacheToDisc=self.cache, updateListing=upd)
         
         if force_view:
-            xbmc.executebuiltin('Container.SetViewMode(%s)' % view_id)
+            xbmc.executebuiltin('Container.SetViewMode({0})'.format(view_id))
 
     def add(self, item):    
         data = {
@@ -57,12 +57,17 @@ class Items:
 
         xbmcplugin.addDirectoryItem(addon_handle, build_url(data), listitem, folder)
         
-    def play(self, path, token):
+    def play(self, path, license_key):
         listitem = xbmcgui.ListItem()
         listitem.setContentLookup(False)
         listitem.setMimeType('application/x-mpegURL')
         listitem.setProperty('inputstreamaddon', 'inputstream.adaptive')
         listitem.setProperty('inputstream.adaptive.manifest_type', 'hls')
-        listitem.setProperty('inputstream.adaptive.license_key', '|authorization='+token)
+        listitem.setProperty('inputstream.adaptive.license_key', license_key)
         listitem.setPath(path)
         xbmcplugin.setResolvedUrl(addon_handle, True, listitem)
+        
+    def add_token(self, license_key):
+        listitem = xbmcgui.ListItem()
+        xbmcplugin.addDirectoryItem(addon_handle, license_key, listitem)
+        xbmcplugin.endOfDirectory(addon_handle, cacheToDisc=False)

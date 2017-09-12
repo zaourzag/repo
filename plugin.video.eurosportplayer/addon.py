@@ -22,6 +22,8 @@ def run():
     elif mode == 'play':
         if id:
             esp.play(client.streams(id))
+    elif mode == 'license_renewal':
+        esp.license_renewal(client.license_key())
 
 args = urlparse.parse_qs(sys.argv[2][1:])
 mode = args.get('mode', ['root'])[0]
@@ -29,14 +31,11 @@ id = args.get('id', [''])[0]
 params = args.get('params', [''])[0]
 if not args:
     args = version
-log('[{0}] arguments: {1}'.format(addon_id, str(args)))
+log('[{0}] country: {1} language: {2} arguments: {3}'.format(addon_id, country, language, str(args)))
 
 if mode == 'root':
     if uniq_id():
-        if not client.ACCESS_TOKEN:
-            client.login()
         if client.ACCESS_TOKEN:
-            client.profile()
             run()
 else:
     run()

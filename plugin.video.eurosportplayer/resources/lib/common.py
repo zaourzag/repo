@@ -17,6 +17,10 @@ fanart = addon.getAddonInfo('fanart')
 force_view = addon.getSetting('force_view') == 'true'
 content = addon.getSetting('content')
 view_id = addon.getSetting('view_id')
+country = addon.getSetting('country')
+language = xbmc.getLanguage(0, False)
+if not language:
+    language = addon.getSetting('language')
 
 base_url = 'http://www.eurosportplayer.com'
 global_base = 'https://global-api.svcs.eurosportplayer.com/'

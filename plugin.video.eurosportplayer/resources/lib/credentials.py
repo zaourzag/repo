@@ -27,14 +27,15 @@ class Credentials:
             self.password = self.decode(self.password)
             self.credentials = True
         else:
-            self.email = dialog.input(getString(30002), type=xbmcgui.INPUT_ALPHANUM)
+            self.email = dialog.input(addon_name + getString(30002), type=xbmcgui.INPUT_ALPHANUM)
             if self.email:
-                self.password = dialog.input(getString(30003), type=xbmcgui.INPUT_ALPHANUM, option=xbmcgui.ALPHANUM_HIDE_INPUT)
+                self.password = dialog.input(addon_name + getString(30003), type=xbmcgui.INPUT_ALPHANUM, option=xbmcgui.ALPHANUM_HIDE_INPUT)
 
     def save(self):
         if not self.credentials:
-            addon.setSetting('email', self.encode(self.email))
-            addon.setSetting('password', self.encode(self.password))
+            if dialog.yesno(addon_name, getString(30001)) == True:
+                addon.setSetting('email', self.encode(self.email))
+                addon.setSetting('password', self.encode(self.password))
             
     def reset(self):
         addon.setSetting('email', '')
