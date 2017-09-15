@@ -6,18 +6,14 @@ import xbmcaddon
 import xbmcgui,xbmcvfs
 import json,urllib2,re,urlparse,os
 import pyxbmct
+from thetvdb import TheTvDb
 from difflib import SequenceMatcher
-from bs4 import BeautifulSoup
-from datetime import datetime    
-import urllib
-import requests
-from cookielib import LWPCookieJar
 
 addon = xbmcaddon.Addon()
 
 profile    = xbmc.translatePath( addon.getAddonInfo('profile') ).decode("utf-8")
 temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
-session = requests.session()
+
 
 if not xbmcvfs.exists(temp):       
        xbmcvfs.mkdirs(temp)
@@ -51,27 +47,18 @@ def geturl(url,data="x",header=""):
     }        
     ip=addon.getSetting("ip")
     port=addon.getSetting("port")    
-    protokoll=addon.getSetting("protokoll")   
-    username=addon.getSetting("username")   
-    password=addon.getSetting("password")      
     if not ip=="" and not port=="":
-      if not username=="" and notpassword=="":
-        px=protokoll+"//"+username+":"+password+"@"+ip+":"+str(port)
-      else:
-        px=protokoll+"//"+ip+":"+str(port)      
+      px="http://"+ip+":"+str(port)
       proxies = {
         'http': px,
         'https': px,
       }    
-      debug("Proxy :"+px)      
       content = session.get(url, allow_redirects=True,verify=False,headers=headers,proxies=proxies)    
     else:
       content = session.get(url, allow_redirects=True,verify=False,headers=headers)    
     return content.text
 
 
-def similar(a, b):
-    return SequenceMatcher(None, a, b).ratio()
     
 class Infowindow(pyxbmct.AddonDialogWindow):
     text=""
@@ -131,99 +118,8 @@ class Infowindow(pyxbmct.AddonDialogWindow):
         posnew=self.textbox.getPosition()
         debug("POSITION : "+ str(posnew))
 
-def parseserie(name,sstaffel=0) :
-  newlink="http://www.serienjunkies.de"+name+"alle-serien-staffeln.html"
-  debug("URL :"+newlink)
-  content=geturl(newlink)            
-  
-  htmlPage = BeautifulSoup(content, 'html.parser')
-  searchitem = htmlPage.find("p",class_="box clear pad5")
-  debug("-----_")
-  Zusammenfassung=""
-  Zusammenfassung=searchitem.text.encode('utf-8').decode('ascii', 'ignore')
-  
-  debug("########## "+Zusammenfassung)
-  searchitem = htmlPage.find("table", attrs={'id':'epsum'})
-  rows = searchitem.find_all('tr')
-  staffel_arr=[]
-  folgen_arr=[]
-  deutsch_arr=[]
-  englisch_arr=[]
-  for row in rows:
-    cols = row.find_all('td')
-    spalte=0
-    for col in cols:  
-      cont=col.text 
-      if spalte==0:
-         Staffelnummer = re.compile('Staffel ([0-9]+)', re.DOTALL).findall(cont)[0]
-         staffel_arr.append(Staffelnummer)
-      if spalte==1:
-         folgen_arr.append(cont)
-      if spalte==2:
-         deutsch_arr.append(cont)
-      if spalte==3:
-         englisch_arr.append(cont)
-      spalte=spalte+1     
-      
-  searchitem = htmlPage.find("meta",attrs={'property':'og:image'})
-  image=searchitem['content']
-  
-  searchitem = htmlPage.find("table", attrs={'class':'eplist'})
-  rows = searchitem.find_all('tr')
-  folge_arr=[]
-  de_datum_arr=[]
-  de_name_arr=[]
-  en_datum_arr=[]
-  en_name_arr=[]
-  
-  for row in rows:
-    cols = row.find_all('td')
-    for spalte in range(0,4,1):
-      try:           
-        cont=cols[spalte].text.encode('utf-8').decode('ascii', 'ignore') 
-      except:
-         cont=""
-      if spalte==0:
-         folge_arr.append(cont)
-      if spalte==1:
-         en_datum_arr.append(cont)
-      if spalte==2:
-         en_name_arr.append(cont)
-      if spalte==3:
-         de_name_arr.append(cont)
-      if spalte==4:
-         de_datum_arr.append(cont)         
-  lastst=""      
-  now=datetime.today()  
-  if int(sstaffel) > 0:        
-    for i in range(0,len(en_name_arr),1):     
-      try:        
-        if folge_arr[i].startswith(str(sstaffel)+"x"):
-            mydate = datetime.strptime(en_datum_arr[i], "%d.%m.%Y")
-            if not "TBA" in en_name_arr[i] and mydate < now:
-                  lastst=folge_arr[i]
-            else:          
-              break
-      except:
-         pass         
-  else:
-     lastst="-1"  
-  lf=""  
-  for i in range(0,len(en_name_arr),1):     
-      try:
-         mydate = datetime.strptime(en_datum_arr[i], "%d.%m.%Y")
-         if not "TBA" in en_name_arr[i] and mydate < now :
-           lf=folge_arr[i]
-         else:
-            break
-      except:
-         pass
-  if "Episoden eingestellt." in Zusammenfassung:
-    ende=1
-  else: 
-    ende=0
-  return (image,Zusammenfassung,staffel_arr,folgen_arr,lf,lastst,ende)
 
+        
 
 def gettitle()  :
   title=""
@@ -291,50 +187,10 @@ def get_episodedata(title):
     pass
 
   return lastplayd_title,lastepisode_name,fehlen
+  
+def similar(a, b):
+    return SequenceMatcher(None, a, b).ratio()
 
-def changetitle(title):
-     
-    suchtitle=title.replace(" ","+")
-    suchtitle=suchtitle.replace("'","")
-    try:
-      suchtitle2 = re.compile('(.+?)\+\([0-9]+\)', re.DOTALL).findall(suchtitle)[0]     
-      suchtitle=suchtitle2
-    except:
-      pass    
-    xc=geturl("http://www.serienjunkies.de")  
-    url="http://www.serienjunkies.de/suchen.php?s="+suchtitle+"&a=s&t=0"    
-    debug("URL :"+url)
-    content=geturl(url)
-    
-    match = re.compile('<div class="sminibox"><a href="(.+?)"><img src="(.+?)"[^"]+?alt="(.+?)"/>', re.DOTALL).findall(content)
-    maxlink=""
-    maxnr=0
-    for link,image,name in match:
-      name_comp=name.replace(" ","")
-      try:
-        name_comp1 = re.compile('(.+?)\([0-9]+\)', re.DOTALL).findall(name_comp)[0]
-        name_comp=name_comp1
-      except:
-         pass
-      title_comp=title.replace(" ","")
-      try:
-        title_comp1 = re.compile('(.+?)\([0-9]+\)', re.DOTALL).findall(title_comp)[0]
-        title_comp=title_comp1
-      except:
-         pass
-      xy=similar(title_comp,name_comp)
-      if xy>0.8:
-          if xy>maxnr:
-            maxnr=xy
-            maxlink=link
-          debug("Treffer")
-      else:
-           debug("Kein Treffer")
-      debug("name_comp :"+name_comp)
-      debug("title_comp : "+title_comp)
-      debug("#############" + str(xy))
-    debug("maxlink : "+maxlink)        
-    return maxlink
 
 addon = xbmcaddon.Addon()    
 debug("Hole Parameter")
@@ -353,44 +209,89 @@ except:
 debug("Mode ist : "+mode)
 if mode=="":      
     title=gettitle()
-    lastplayd_title,lastepisode_name,fehlen=get_episodedata(title)
-    debug("####### :"+lastplayd_title)
-    maxlink= changetitle(title)
-    Zusammenfassung=""
-    Bild=""
-    if maxlink=="":
-      xbmc.executebuiltin('Notification('+title+',"Serie nicht gefunden")')
-    else:      
-      Bild,Zusammenfassung,staffel_arr,folgen_arr,letztefolge,this_staffel,ende=parseserie(maxlink,sstaffel=0) 
-      for i in range(0,len(staffel_arr),1):
-        if i%2 == 0:
-          Zusammenfassung=Zusammenfassung+"\n"
-        else:
-          Zusammenfassung=Zusammenfassung+"          "
-        Zusammenfassung= Zusammenfassung+" Staffel "+staffel_arr[i]+ ": "+ folgen_arr[i]+ " Folgen"    
+    lastplayd_title,lastepisode_name,fehlen=get_episodedata(title)    
+    tvdb = TheTvDb()
+    wert=tvdb.search_series(title)
+    count=0
+    gefunden=0
+    wertnr=0
+    for serie in wert:
+      serienname=serie["seriesName"]
+      nummer=similar(title,serienname)
+      if nummer >wertnr:
+        wertnr=nummer
+        gefunden=count
+      count+=1
+    debug("1. +++suche++"+title)
+    debug(wert)
+    idd=wert[gefunden]["id"]
+    seriesName=wert[gefunden]["seriesName"]
+    serienstart=wert[gefunden]["firstAired"]
+    wert1=tvdb.get_last_episode_for_series(idd)
+    debug("2. ++++last+++")
+    debug(wert1)
+    leztefolge=wert1["airdate.label"].decode("utf-8")
+    
+    serie=tvdb.get_series(idd)
+    debug("3. ++++++serie++++")    
+    debug(serie)
+    Bild=serie["art"]["banner"]
+    status=serie["status"].decode("utf-8")
+    statustext="Der Status der Serie ist : "+status
+    if status=="Continuing":
+      statustext="Status:         läuft".decode("utf-8")
+    if status=="Ended":
+      statustext="Status:         Abgesetzt"
+    #Continuing
     try:
-        debug("Letzte Folge :" +str(letztefolge))
-        debug("this_staffel Folge :" +str(this_staffel))
-        debug("Zuende :" +str(ende))
+      sender= serie["studio"][0].decode("utf-8")
     except:
-        debug("Fehler keine Letztefolge,this_staffel oder zuende")
-        
-    window = Infowindow(title="SerienFino",text=Zusammenfassung,image=Bild,lastplayd_title=lastplayd_title,lastepisode_name=lastepisode_name,fehlen=fehlen)
+       sender=""
+    if sender=="":
+       sendertext=""
+    else:
+       sendertext="Sender:         "+sender
+    titlesuche = serie["title"].decode("utf-8")
+    
+    next=tvdb.get_nextaired_episode(idd)
+    debug("4. ++++++next+++")
+    debug(next)
+    try:
+      nextfolge=next["airdate.label"].decode("utf-8")
+    except:
+       nextfolge=""
+    if nextfolge=="":
+      textnext=""
+    else:
+       textnext="Naechste Folge: "+nextfolge
+    summ=tvdb.get_series_episodes_summary(idd)
+    debug("5.++++++SUM++++++++")
+    debug(summ)
+    anzahLstaffeln = int(sorted(summ["airedSeasons"],key=int)[-1])
+    debug(anzahLstaffeln)
+    #anzahLstaffeln=len(summ["airedSeasons"])
+    Seasons=[]
+    zusatz=""
+    counter=0
+    for i in range(0,anzahLstaffeln+1):        
+       query="airedSeason=%s" % i
+       season=tvdb.get_series_episodes_by_query(idd, query)
+       debug("6.++++++Season++++++++"+str(i))
+       debug(season)
+
+       anz=len(season)
+       if not anz==0:
+        if counter%2 == 0:
+            zusatz=zusatz+"\n"
+        else:
+            zusatz=zusatz+"          "
+        zusatz= zusatz+" Staffel "+str(i)+ ": "+ str(anz)+ " Folgen"
+        counter+=1
+    
+    Zusammenfassung="Serienname: "+seriesName+"\nSerienstart : "+serienstart +"\nAnzahl Staffeln : "+str(anzahLstaffeln)+"\n"+statustext+u"\n"+"Letzte Folge: "+leztefolge+"\n"+textnext+zusatz
+    window = Infowindow(title="Serieninfo",text=Zusammenfassung,image=Bild,lastplayd_title=lastplayd_title,lastepisode_name=lastepisode_name,fehlen=fehlen)
     window.doModal()
     del window
-if mode=="getseries":
-    lastplayd_title,lastplayd_title,fehlen=get_episodedata(series)
-    maxlink= changetitle(series)         
-    Bild,Zusammenfassung,staffel_arr,folgen_arr,letztefolge,this_staffel,ende=parseserie(maxlink,sstaffel=season)
-    # Window ID
-    windowid = 10000
-    xbmcgui.Window(windowid).clearProperties()
-    xbmcgui.Window(windowid).setProperty('Bild',Bild)
-    xbmcgui.Window(windowid).setProperty('Zusammenfassung',Zusammenfassung)
-    xbmcgui.Window(windowid).setProperty('staffel_arr',staffel_arr)
-    xbmcgui.Window(windowid).setProperty('folgen_arr',folgen_arr)
-    xbmcgui.Window(windowid).setProperty('letztefolge',letztefolge)
-    xbmcgui.Window(windowid).setProperty('this_staffel',this_staffel)
-    xbmcgui.Window(windowid).setProperty('ende',ende)
+
     
     
