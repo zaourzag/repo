@@ -107,7 +107,7 @@ def addDir(name, url, mode, thump, desc="",page=1,xtype="",datum=""):
   ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
   return ok
   
-def addLink(name, url, mode, thump, duration="", desc="", genre='',director="",bewertung=""):
+def addLink(name, url, mode, thump, duration="", desc="", genre='',director="",bewertung="",referer=""):
   debug("URL ADDLINK :"+url)
   thump=imagereplace(thump) 
   try:
@@ -116,7 +116,7 @@ def addLink(name, url, mode, thump, duration="", desc="", genre='',director="",b
   except:
      icon=thump  
   debug( icon  )
-  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
+  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&referer="+str(referer)
   ok = True
   liz = xbmcgui.ListItem(name,thumbnailImage=thump)
   liz.setArt({ 'fanart' : icon })
@@ -154,7 +154,7 @@ def decodeurl(url):
     return ziel
 
     
-def geturl(url,data="x",header=""):
+def geturl(url,data="x",header="",referer=""):
         global cj
         debug("Get Url: " +url)
         for cook in cj:
@@ -165,6 +165,9 @@ def geturl(url,data="x",header=""):
           opener.addheaders = [('User-Agent', userAgent)]        
         else:
           opener.addheaders = header        
+        if not referer=="":
+           opener.addheaders = [('Referer', referer)]
+
         try:
           if data!="x" :
              content=opener.open(url,data=data).read()
@@ -174,6 +177,7 @@ def geturl(url,data="x",header=""):
              #debug( e.code )  
              cc=e.read()  
              debug("Error : " +cc)
+             content=""
        
         opener.close()
         cj.save(cookie,ignore_discard=True, ignore_expires=True)         
@@ -248,7 +252,7 @@ def newsvideos(url,page=1):
         debug("LINK :"+link)
         debug("title :"+title)
       img = re.compile("src='(.+?)'", re.DOTALL).findall(element)[0]                  
-      addLink(title, baseurl+link, 'playVideo', img)
+      addLink(title, baseurl+link, 'playVideo', img,referer=url)
    try:
       xyx = re.compile('(<li class="navnextbtn">[^<]+<span class="acLnk)', re.DOTALL).findall(content)[0]        
       addDir(translation(30046), url, 'newsvideos', "",page=page+1)
@@ -359,7 +363,7 @@ def neuetrailer(url,page=1):
           text=match[0][1]
           debug("IMG :"+ image)
           if not urlx=="":
-            addLink(text, baseurl+urlx, 'playVideo', image)
+            addLink(text, baseurl+urlx, 'playVideo', image,referer=url)
         except:
           pass
     if 'fr">Nächste<i class="icon-arrow-right">' in content:  
@@ -455,7 +459,7 @@ def archivevideos(url,page=1):
         name=match[0][1]
         urlx=match[0][0]     
         if not "En savoir plus" in name :
-            addLink(name, baseurl+urlx, 'playVideo', image)
+            addLink(name, baseurl+urlx, 'playVideo', image,referer=url)
      except:
         debug("....")
         debug(element)
@@ -477,11 +481,14 @@ def kinovideosneu(url,page=1,datum="N"):
      try:
           element=elemente[i]    
           debug(element)          
-          image = re.compile('data-src="(.+?)"', re.DOTALL).findall(element)[0]
+          image = re.compile('src=["\'](.+?)["\']', re.DOTALL).findall(element)[0]
+          debug("Bild :"+image)
           urlgs = re.compile('class="([^ "]+) thumbnail-container thumbnail-link" title="(.+?)">', re.DOTALL).findall(element)
           urlg=urlgs[0][0]
+          debug("urlg :"+urlg)
           name=urlgs[0][1]  
-          name=ersetze(name)          
+          name=ersetze(name) 
+          debug("name :"+name)          
           if not "http://" in urlg:
             urlg=baseurl+urlg
           debug("URLG : "+urlg)
@@ -490,7 +497,7 @@ def kinovideosneu(url,page=1,datum="N"):
             desc=ersatze(desc)
           except:
             desc=""
-          addLink(name, urlg, 'playVideo', image,desc=desc)                           
+          addLink(name, urlg, 'playVideo', image,desc=desc,referer=url)                           
      except:
         debug("....")
         debug(element)
@@ -515,19 +522,22 @@ def kinovideos(url,page=1,datum=""):
    elemente=content.split('<div class="data_box">')
    for i in range(1,len(elemente),1):
      try:
-        element=elemente[i]       
+        element=elemente[i]  
+        debug("RUn")        
         if not "button btn-disabled" in element:          
           debug("Element :")        
           debug (element)
-          image = re.compile("src='(.+?)'", re.DOTALL).findall(element)[0]
+          image = re.compile('src=["\'](.+?)["\']', re.DOTALL).findall(element)[0]
+          debug("Image :"+image)
           try:
-            urlg = re.compile('button btn-primary " href="(.+?)"', re.DOTALL).findall(element)[0]          
+            urlg = re.compile('button btn-primary " href="(.+?)"', re.DOTALL).findall(element)[0]                                      
           except:
             urlg = re.compile('acLnk ([^ ]+?) button btn-primary', re.DOTALL).findall(element)[0]                    
             urlg=decodeurl(urlg)
-            debug("URLG ::"+urlg)
+          debug("URLG ::"+urlg)
           name= re.compile("title='(.+?)'", re.DOTALL).findall(element)[0] 
-          desc=re.compile("<p>([^<]+)</p>", re.DOTALL).findall(element)[0]
+          
+          desc=re.compile("<p[^>]+>([^<]+)<", re.DOTALL).findall(element)[0]
           
           match=re.compile('<span itemprop="genre">(.+?)</span>', re.DOTALL).findall(element)          
           genres=[]
@@ -564,7 +574,7 @@ def kinovideos(url,page=1,datum=""):
           if not "http://" in urlg:
             urlg=baseurl+urlg
           debug("URLG : "+urlg)
-          addLink(name, urlg, 'playVideo', image,desc=desc,genre=genstr,director=ressigeur,bewertung=bewertung)                  
+          addLink(name, urlg, 'playVideo', image,desc=desc,genre=genstr,director=ressigeur,bewertung=bewertung,referer=url)                  
      except:
         debug("....")
         debug(element)
@@ -584,91 +594,6 @@ def kinovideos(url,page=1,datum=""):
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)      
 
 
-   
-   
-def kinovideos(url,page=1,datum=""):   
-   debug("Start serienvideos")   
-   page=int(page)
-   debug("Page : "+ str(page))
-   debug("serienvideos URL :"+url)
-   if page >1:
-    getu=url+"?page="+str(page)
-   else:
-    getu=url     
-   if not datum=="":
-    getu=getu+datum    
-   content=geturl(getu)   
-   elemente=content.split('<div class="data_box">')
-   for i in range(1,len(elemente),1):
-     try:
-        element=elemente[i]       
-        if not "button btn-disabled" in element:          
-          debug("Element :")        
-          debug (element)
-          image = re.compile("src='(.+?)'", re.DOTALL).findall(element)[0]
-          try:
-            urlg = re.compile('button btn-primary " href="(.+?)"', re.DOTALL).findall(element)[0]          
-          except:
-            urlg = re.compile('acLnk ([^ ]+?) button btn-primary', re.DOTALL).findall(element)[0]                    
-            urlg=decodeurl(urlg)
-            debug("URLG ::"+urlg)
-          name= re.compile("title='(.+?)'", re.DOTALL).findall(element)[0] 
-          desc=re.compile("<p>([^<]+)</p>", re.DOTALL).findall(element)[0]
-          
-          match=re.compile('<span itemprop="genre">(.+?)</span>', re.DOTALL).findall(element)          
-          genres=[]
-          for namex in match:
-            genres.append(namex)
-          genstr=",".join(genres)
-          debug("GENRES")
-          debug(genstr)          
-           
-          try:           
-            kurz_inhalt = element[element.find('<span class="film_info lighten fl">Von </span>')+1:]
-            kurz_inhalt = kurz_inhalt[:kurz_inhalt.find('</div>')]          
-            ressigeur= re.compile('title="(.+?)"', re.DOTALL).findall(kurz_inhalt)[0] 
-          except:
-             ressigeur=""
-          debug("Ressigeur :"+ ressigeur)
-          
-          try:
-            match=re.compile('<span class="acLnk ([^"]+)">[^"]+?<span class="note">(.+?)</span></span>', re.DOTALL).findall(element)
-            bewertung=""
-            debug("X")
-            for link, note in match:
-              debug("y")
-              link=decodeurl(link)
-              debug("Notes: "+note)
-              debug("link: "+link)
-              if "spiegel" in link:
-               bewertung=note
-            debug("bewertung :"+ bewertung)
-          except:
-             bewertung=""
-          
-          name=ersetze(name)
-          if not "http://" in urlg:
-            urlg=baseurl+urlg
-          debug("URLG : "+urlg)
-          addLink(name, urlg, 'playVideo', image,desc=desc,genre=genstr,director=ressigeur,bewertung=bewertung)                  
-     except:
-        debug("....")
-        debug(element)
-   if not datum =="":       
-      try:
-        Start=datetime.strptime(datum, "%Y-%m-%d")
-      except TypeError:
-        Start=datetime(*(time.strptime(datum, "%Y-%m-%d")[0:6]))
-      Nextweek = Start + timedelta(days=7)
-      Beforweek = Start - timedelta(days=7)
-      nx=Nextweek.strftime("%Y-%m-%d")
-      bx=Beforweek.strftime("%Y-%m-%d")
-      addDir(translation(30040), url, 'kinovideos', "",datum=nx)      
-      addDir(translation(30041), url, 'kinovideos', "",datum=bx)              
-   if 'fr">Nächste<i class="icon-arrow-right">' in content:  
-     addDir(translation(30006), url, 'kinovideos', "",page=page+1)
-   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)      
-   
    
 def tvstaffeln(url):
     content=geturl(url)
@@ -719,7 +644,7 @@ def tvfolgen(url,xtype):
                 match = re.compile('<a href="(.+?)">([^<]+)</a>', re.DOTALL).findall(element2)
                 name=match[0][1]
                 urlx=match[0][0]                   
-                addLink(name, baseurl+urlx, 'playVideo', image)    
+                addLink(name, baseurl+urlx, 'playVideo', image,referer=url)    
     else:
         kurz_inhalt = content[content.find('<div class="list-line margin_20b">')+1:]
         kurz_inhalt = kurz_inhalt[:kurz_inhalt.find('<div class="social">')]    
@@ -732,41 +657,29 @@ def tvfolgen(url,xtype):
                 match = re.compile('<a href="(.+?)">([^<]+)</a>', re.DOTALL).findall(element2)
                 name=match[0][1]
                 urlx=match[0][0]                   
-                addLink(name, baseurl+urlx, 'playVideo', image)    
+                addLink(name, baseurl+urlx, 'playVideo', image,referer=url)    
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)      
     
-def playVideo(url):
+def playVideo(url,referer):
     debug("Playvideo URL:"+url)
-    content = geturl(url)
+    content = geturl(url,referer=referer)
+    debug("CONTENT PLAYVIDEO")
+    debug(content)
+    debug("-------")
     try:
-      match = re.compile('"html5PathHD":"(.*?)"', re.DOTALL).findall(content)
-      ul=decodeurl(match[0])    
+      match = re.compile("<iframe[^>]+?src=['\"](.+?)['\"]", re.DOTALL).findall(content)
+      debug("LINK : "+match[1])
+      if  "_video" in match[1]:
+        newurl=baseurl+match[1]
+        content = geturl(newurl,referer=url)
     except:
-       ul=""
-    finalUrl=""
-    if ul and ul.startswith("http://"):
-        finalUrl=ul
-    else:
-        try:
-          match = re.compile('"refmedia":(.+?),', re.DOTALL).findall(content)
-          media = match[0]
-          match = re.compile('"relatedEntityId":(.+?),', re.DOTALL).findall(content)
-          ref = match[0]
-          match = re.compile('"relatedEntityType":"(.+?)"', re.DOTALL).findall(content)
-          typeRef = match[0]
-          content = geturl(baseurl + '/ws/AcVisiondataV4.ashx?media='+media+'&ref='+ref+'&typeref='+typeRef)
-          finalUrl = ""
-          match = re.compile('hd_path="(.+?)"', re.DOTALL).findall(content)
-          finalUrl = match[0]
-          if finalUrl.startswith("youtube:"):
-            finalUrl = getYoutubeUrl(finalUrl.split(":")[1])
-        except:
-           contentx=content.replace("\/","/").replace("&quot;",'"')
-           try:
-              teil = re.compile('"high":"(.+?)"', re.DOTALL).findall(contentx)[0]
-           except:
-             teil = re.compile('"medium":"(.+?)"', re.DOTALL).findall(contentx)[0]   
-           finalUrl="http:"+teil
+      pass
+    contentx=content.replace("\/","/").replace("&quot;",'"')
+    try:
+     teil = re.compile('"high":"(.+?)"', re.DOTALL).findall(contentx)[0]
+    except:
+     teil = re.compile('"medium":"(.+?)"', re.DOTALL).findall(contentx)[0]   
+    finalUrl="http:"+teil
     if finalUrl:
         debug("Finalurl :"+finalUrl)
         listitem = xbmcgui.ListItem(path=finalUrl)
@@ -782,6 +695,7 @@ page = urllib.unquote_plus(params.get('page', ''))
 name = urllib.unquote_plus(params.get('name', ''))
 xtype = urllib.unquote_plus(params.get('xtype', ''))
 datum = urllib.unquote_plus(params.get('datum', ''))
+referer = urllib.unquote_plus(params.get('referer', ''))
 
 
 def trailerpage(url,page=1) :
@@ -838,7 +752,7 @@ else:
   if mode == 'archivevideos':
           archivevideos(url,page)               
   if mode == 'playVideo':
-          playVideo(url)                     
+          playVideo(url,referer)                     
   if mode == 'types':
           types(url)                               
   if mode == 'sprache':
@@ -850,7 +764,7 @@ else:
   if mode == 'filterserien':
           filterserien()              
   if mode == 'serienvideos':
-          serienvideos(url,page)       
+          kinovideos(url,page)       
   if mode == 'tvstaffeln':                 
           tvstaffeln(url)
   if mode == 'tvfolgen':                 
