@@ -8,10 +8,12 @@
 	<rule field="filename" operator="doesnotcontain">
         <value>.XXX.</value>
 		<value>XXX</value>
+	   <value>erotik</value>
     </rule>
 	<rule field="genre" operator="isnot">
         <value>XXX</value>
 		<value>xxx</value>
+ 	   <value>erotik</value>
     </rule>
     <limit>20</limit>
     <order direction="descending">dateadded</order>
