@@ -1,0 +1,20 @@
+language: python
+
+python:
+  - "2.7"
+
+script:
+  - make clean-report
+  - make lint
+  - make test
+  - codeclimate-test-reporter
+
+addons:
+  apt:
+    packages:
+      - make
+
+notifications:
+  email:
+    on_success: change
+    on_failure: always
