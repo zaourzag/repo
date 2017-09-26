@@ -4,66 +4,39 @@ from common import *
 
 def get_category_items():
     return [
-                {'type':'dir', 'mode':'video_category', 'name':'Mediathek'},
                 {'type':'dir', 'mode':'tv_category', 'name':'Live-TV'},
-                {'type':'dir', 'mode':'radio_category', 'name':'Radio'}
+                #{'type':'dir', 'mode':'live_radio', 'name':'Radio'},
+                {'type':'dir', 'mode':'video_category', 'name':'Mediathek'}
             ]
 
-def get_video_category_items():
-    return [
-                {'type':'dir', 'mode':'videos', 'id':'0_nqmdcpgb', 'name':'Neueste Videos'},
-                {'type':'dir', 'mode':'videos', 'id':'0_y8s3i6xf', 'name':'Top Videos'},
-                {'type':'dir', 'mode':'videos', 'id':'0_ppyiwf4n', 'name':'News'},
-                {'type':'dir', 'mode':'videos', 'id':'0_a9zu407t', 'name':'Fussball'},
-                {'type':'dir', 'mode':'videos', 'id':'0_jaacx0hz', 'name':'Bundesliga Aktuell'},
-                {'type':'dir', 'mode':'videos', 'id':'0_8y23jpga', 'name':'Regionalliga'},
-                {'type':'dir', 'mode':'videos', 'id':'0_uhhrbozp', 'name':'UEFA Europa League'},
-                {'type':'dir', 'mode':'videos', 'id':'0_wich8xsf', 'name':'Fussball International'},
-                {'type':'dir', 'mode':'videos', 'id':'0_7mp3uktl', 'name':'Doppelpass'},
-                {'type':'dir', 'mode':'videos', 'id':'0_mo2ihu8w', 'name':'Basketball'},
-                {'type':'dir', 'mode':'videos', 'id':'0_019rh7kw', 'name':'Basketball Euroleague'},
-                {'type':'dir', 'mode':'videos', 'id':'0_pn8mczrd', 'name':'Basketball Beko BBL'},
-                {'type':'dir', 'mode':'videos', 'id':'0_icmwhaja', 'name':'Handball'},
-                {'type':'dir', 'mode':'videos', 'id':'0_gk0pip9o', 'name':'Volleyball'},
-                {'type':'dir', 'mode':'videos', 'id':'0_q4hdin4o', 'name':'Tennis'},
-                {'type':'dir', 'mode':'videos', 'id':'0_jf75kubn', 'name':'Eishockey'},
-                {'type':'dir', 'mode':'videos', 'id':'0_u40ck8u8', 'name':'Hockey'},
-                {'type':'dir', 'mode':'videos', 'id':'0_gsten8d4', 'name':'Poker'},
-                {'type':'dir', 'mode':'videos', 'id':'0_qi2uk5y3', 'name':'Europaspiele'},
-                {'type':'dir', 'mode':'videos', 'id':'0_a9z7y19x', 'name':'NBA'},
-                {'type':'dir', 'mode':'videos', 'id':'0_z0gb3mxb', 'name':'NBA Playoff Moments'},
-                {'type':'dir', 'mode':'videos', 'id':'0_9227gzr8', 'name':'NFL'},
-                {'type':'dir', 'mode':'videos', 'id':'0_c6ebz286', 'name':'NHL'},
-                {'type':'dir', 'mode':'videos', 'id':'0_db3anfk2', 'name':'Darts'},
-                {'type':'dir', 'mode':'videos', 'id':'0_muvilawb', 'name':'Darts Premier League'},
-                {'type':'dir', 'mode':'videos', 'id':'0_i4pge47z', 'name':'Motorsport Top Videos'},
-                {'type':'dir', 'mode':'videos', 'id':'0_z5fy2g2b', 'name':'Formel1'},
-                {'type':'dir', 'mode':'videos', 'id':'0_45uc5875', 'name':'DTM'},
-                {'type':'dir', 'mode':'videos', 'id':'0_jm2vmjdv', 'name':'WRC'},
-                {'type':'dir', 'mode':'videos', 'id':'0_zbiw72l8', 'name':'VLN'},
-                {'type':'dir', 'mode':'videos', 'id':'0_nzv2abib', 'name':'ADAC Formel 4'},
-                {'type':'dir', 'mode':'videos', 'id':'0_jcfvj2uk', 'name':'ADAC GT Masters'},
-                {'type':'dir', 'mode':'videos', 'id':'0_5z28uf65', 'name':'Boulevard'},
-                {'type':'dir', 'mode':'videos', 'id':'0_lz5w9zcl', 'name':'Die PS Profis'},
-                {'type':'dir', 'mode':'videos', 'id':'0_xzi6ed9c', 'name':'Turbo'},
-                {'type':'dir', 'mode':'videos', 'id':'0_t09zsmy7', 'name':'Auftrag Auto'},
-                {'type':'dir', 'mode':'videos', 'id':'0_1u6iputx', 'name':'Nine Knights'},
-                {'type':'dir', 'mode':'videos', 'id':'0_gmq99ilw', 'name':'Clipmasters'},
-                {'type':'dir', 'mode':'videos', 'id':'0_6l0tihks', 'name':'Specials'}
-            ]
+def get_video_category_items(data, id):
+    items = []
+    if id:
+        children = find_children(data['children'][0]['children'], id)
+    else:
+        children = data['children'][0]['children']
+    for child in children:
+        sub_children = child['children']
+        resource = child['resource']
+        if sub_children:
+            items.append({'type': 'dir', 'mode': 'video_category', 'name': utfenc(child['title']), 'id': child['slug']})
+        elif resource:
+            items.append({'type': 'dir', 'mode': 'videos', 'name': utfenc(child['title']), 'id': resource})
+    return items
 
-def get_radio_category_items():
-    return [   
-                {'type':'dir', 'mode':'live_radio', 'name':'Live'},
-                {'type':'dir', 'mode':'videos', 'id':'0_nv1vov1f', 'name':'Radio Highlights'},
-                {'type':'dir', 'mode':'videos', 'id':'0_h2dnj27a', 'name':'Podcast'},
-                {'type':'dir', 'mode':'videos', 'id':'0_ev7ho53z', 'name':'Bundesliga'},
-                {'type':'dir', 'mode':'videos', 'id':'0_3kjxbpjs', 'name':'2. Bundesliga'},
-                {'type':'dir', 'mode':'videos', 'id':'0_r3t0uc0f', 'name':'Europa League'},
-                {'type':'dir', 'mode':'videos', 'id':'0_36tbfldi', 'name':'DFB-Pokal'},
-                {'type':'dir', 'mode':'videos', 'id':'0_qol6tqkd', 'name':'DFB-Team'},
-                {'type':'dir', 'mode':'videos', 'id':'0_4g0s69pv', 'name':'Doppelpass'}
-            ]
+def get_children(children, search_slug):
+    for i in children:
+        if search_slug == i['slug']:
+            return i['children']
+
+def find_children(data, id):
+    search_slug = ''
+    spl = id.split('/')
+    for i in spl:
+        if i:
+            search_slug += '/'+i
+            data = get_children(data, search_slug)
+    return data
 
 def get_playlist_url(data):
     url = None
@@ -72,8 +45,7 @@ def get_playlist_url(data):
         sub_elements = i.get('elements', '')
         if sub_elements:
             for s in sub_elements:
-                type = s.get('type', '')
-                if type == 'video_detailed_band':
+                if 'video_detailed' in s.get('type', ''):
                     url = s['elements'][0]['url']
                     break
     return url
@@ -84,18 +56,20 @@ def get_video_items(data):
     for i in videos:
         title = i['title']
         image = i['image']
-        description = utfenc(i['description'])
         duration = int(i['durationSeconds'])
         date = i['date']
         dt = datetime.datetime.fromtimestamp(int(date))
         dt = str(dt)[:16]
-        name = '%s (%s)' % (title,dt)
+        description = '%s\n%s' % (utfenc(i['description']), dt)
         url = i['url']
-        for u in url:
-            mp4 = url[u]
-            if 'high_quality' == u:
-                break
-        items.append({'type':'video', 'mode':'play_video', 'name':utfenc(name), 'id':mp4, 'description':description, 'image':image, 'duration':duration})
+        if url:
+            for u in url:
+                mp4 = url[u]
+                if 'high_quality' == u:
+                    break
+        else:
+            mp4 = i['media']
+        items.append({'type':'video', 'mode':'play_video', 'name':utfenc(title), 'id':mp4, 'description':utfenc(description), 'image':image, 'duration':duration})
     return items
 
 def get_tv_items(data):
@@ -126,60 +100,35 @@ def get_live_video_items(data):
     return items
     
 def get_event_items(items,a,live):
-    b = re.findall('<a (.*?)</a>', a, re.S)
+    b = re.findall('<div style=(.*?)</a>', a, re.S)
     for c in b:
         d = re.search('href="(.+?)"', c, re.S).group(1)
-        e = re.search('src="(.+?)"', c, re.S).group(1)
-        f = re.search('<span class="Info">(.+?)<br>', c, re.S).group(1)
-        g = re.search('<strong>(.+?)</strong>', c, re.S).group(1)
-        if not d.startswith('http'):
-            d = tv_base+d
-        if not e.startswith('http'):
-            e = tv_base+e
-        if live:
-            h = utfenc('%s %s' % (f,g))
-        else:
-            h = utfenc('ARCHIV: %s %s' % (f,g))
-        items.append({'type':'video', 'mode':'play_tv', 'name':h, 'id':d, 'image':e, 'description':'', 'duration':'0'})
+        e = re.search('data-background="(.+?)"', c, re.S).group(1)
+        f = re.search('<span class="dateInfo">(.+?)</span>', c, re.S)
+        g = re.search('<span class="event">(.+?)</span>', c, re.S)
+        if f and g:
+            if not d.startswith('http'):
+                d = tv_base+d
+            if not e.startswith('http'):
+                e = tv_base+e
+            if live:
+                h = utfenc('%s %s' % (f.group(1)[:18],g.group(1)))
+            else:
+                h = utfenc('ARCHIV: %s %s' % (f.group(1)[:18],g.group(1)))
+            items.append({'type':'video', 'mode':'play_tv', 'name':h, 'id':d, 'image':e, 'description':'', 'duration':'0'})
     return items
     
 def get_live_radio_items(data):
     items = []
-    for l in data:
-        name_1 = l.get('name', '')
-        m = l['season'][0]['round']
-        for r in m:
-            name_2 = r.get('name', '')
-            for i in r['match']:
-                id = None
-                finished = i['finished']
-                if i.get('home', None):
-                    home = i['home']['name']
-                    away = i['away']['name']
-                else:
-                    home = name_1
-                    away = name_2
-                match_time = i['match_time']
-                match_meta = i.get('match_meta', [])
-                current_minute = i.get('current_minute', '')
-                match_result = i.get('match_result', '')
-                if match_result:
-                    result = '%s:%s' % (i['match_result'][0]['match_result'],i['match_result'][1]['match_result'])
-                else:
-                    result = match_result
-                for meta in match_meta:
-                    kind = meta['kind']
-                    if not 'Konferenz' in str(items) and 'conference' in kind and kind.endswith('.mp3'):
-                        id = meta['content']
-                        name = '%s: Konferenz' % (match_time)
-                        item = {'type':'video', 'mode':'play_video', 'name':name, 'id':id, 'description':'', 'duration':'0'}
-                        items.insert(0, item)
-                    elif kind.endswith('.mp3'):
-                        id = meta['content']
-                        name = utfenc('%s %s - %s %s %s\'' % (match_time,home,away,result,current_minute))
-                if id:
-                    item = {'type':'video', 'mode':'play_video', 'name':name, 'id':id, 'description':'', 'duration':'0'}
-                    items.append(item)
+    content = data['content']
+    for i in content:
+        url = i['url']
+        desc = i['description']
+        if not url and desc.startswith('http'):
+            url = desc
+        description = '%s\n%s' % (i['startzeit'][:22], desc)
+        item = {'type':'video', 'mode':'play_video', 'name':utfenc(i['titel']), 'id':url, 'description':utfenc(description), 'duration':i['duration']}
+        items.append(item)
     return items
 
 def get_hls(data):
@@ -195,6 +144,11 @@ def get_hls(data):
         return s.group(1)
     else:
         pattern = '<div class="player">(?:<p class="error">|<p>)(.*?)</p>'
+        s = re.search(pattern, data, re.S)
+        if s:
+            msg = s.group(1).strip()
+            return re.sub('(<.+?>)', '', msg)
+        pattern = '<div class="article streams">(.+?)</p>'
         s = re.search(pattern, data, re.S)
         if s:
             msg = s.group(1).strip()

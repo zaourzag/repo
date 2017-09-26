@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.sport1de" version="1.5.0" name="Sport1" provider-name="Jin">
+<addon id="plugin.video.sport1de" version="2.0.0" name="Sport1" provider-name="Jin">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
         <import addon="script.module.requests" version="2.12.4"/>
+        <import addon="inputstream.adaptive" version="2.0.10"/>
         <import addon="script.module.pydes" version="2.0.1"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="addon.py">
@@ -10,8 +11,10 @@
     </extension>
     <extension point="xbmc.addon.metadata">
         <news>
-- added non defined settings to settings.xml
-- minor fixes/updates
+- fix login and video section
+- use inputstream adaptive for hls playback
+- drop support for libressl
+- removed radio due to playback issues
         </news>
         <summary>Sportnachrichten - aktuelle News und Livestreams</summary>
         <description>Für Sport1US und Sport1+ wird ein ABO auf sport1.de benötigt.</description>

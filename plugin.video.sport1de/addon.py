@@ -3,74 +3,54 @@
 from resources.lib.common import *
 from resources.lib.client import Client
 from resources.lib import sport1
+from resources.lib import cache
 
 client = Client()
 
 def categories():
-    items = sport1.get_category_items()
-    list_items(items)
+    cache.cache_data(client.get_video_root())
+    list_items(sport1.get_category_items())
     xbmcplugin.endOfDirectory(addon_handle)
 
 def tv_category():
     data = client.get_tv_epg()
     if data:
-        items = sport1.get_tv_items(data)
-        list_items(items)
+        list_items(sport1.get_tv_items(data))
     xbmcplugin.endOfDirectory(addon_handle)
 
 def video_category():
-    items = sport1.get_video_category_items()
-    list_items(items)
-    xbmcplugin.endOfDirectory(addon_handle)
-
-def radio_category():
-    items = sport1.get_radio_category_items()
-    list_items(items)
-    xbmcplugin.endOfDirectory(addon_handle)
-
-def playlist():
-    id = args['id'][0]
-    data = client.get_page(id)
+    data = cache.get_cache_data()
     if data:
-        url = sport1.get_playlist_url(data)
-        if url:
-            data = client.get_playlist(url)
-            if data:
-                items = sport1.get_video_items(data,quality)
-                list_items(items)
+        list_items(sport1.get_video_category_items(data, args.get('id', [False])[0]))
     xbmcplugin.endOfDirectory(addon_handle)
 
 def live_radio():
-    data = client.get_radio()
+    data = client.get_fm_epg()
     if data:
-        items = sport1.get_live_radio_items(data)
-        list_items(items)
+        list_items(sport1.get_live_radio_items(data))
     xbmcplugin.endOfDirectory(addon_handle)
 
 def videos():
-    id = args['id'][0]
-    data = client.get_playlist(id)
-    if data:
-        items = sport1.get_video_items(data)
-        list_items(items)
+    url = sport1.get_playlist_url(client.get_resource(args['id'][0]))
+    if url:
+        data = client.get_playlist(url)
+        if data:
+            list_items(sport1.get_video_items(data))
     xbmcplugin.endOfDirectory(addon_handle)
 
 def livestream():
     data = client.get_tv()
     if data:
-        items = sport1.get_live_video_items(data)
-        list_items(items)
+        list_items(sport1.get_live_video_items(data))
     xbmcplugin.endOfDirectory(addon_handle)
     
 def play_video():
-    path = args['id'][0]
+    path = args.get('id', [''])[0]
     if path:
         play(path)
 
 def play_tv():
-    id = args['id'][0]
-    data = client.get_tv(id)
-    result = sport1.get_hls(data)
+    result = sport1.get_hls(client.get_tv(args['id'][0]))
     if '.m3u8' in result:
         play(result)
     else:
@@ -80,7 +60,10 @@ def play_tv():
 def play(url):
     if not url.startswith('http'):
         url = 'https:' + url
-    listitem = xbmcgui.ListItem(path=url.replace('https','http'))
+    listitem = xbmcgui.ListItem(path=url)
+    if 'm3u8' in url:
+        listitem.setProperty('inputstreamaddon', 'inputstream.adaptive')
+        listitem.setProperty('inputstream.adaptive.manifest_type', 'hls')
     xbmcplugin.setResolvedUrl(addon_handle, True, listitem)
     
 def list_items(items):
