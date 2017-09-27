@@ -4,8 +4,8 @@ from common import *
 
 def get_category_items():
     return [
-                {'type':'dir', 'mode':'tv_category', 'name':'Live-TV'},
-                #{'type':'dir', 'mode':'live_radio', 'name':'Radio'},
+                {'type':'dir', 'mode':'tv_category', 'name':'TV'},
+                {'type':'dir', 'mode':'live_radio', 'name':'Radio'},
                 {'type':'dir', 'mode':'video_category', 'name':'Mediathek'}
             ]
 
@@ -15,6 +15,8 @@ def get_video_category_items(data, id):
         children = find_children(data['children'][0]['children'], id)
     else:
         children = data['children'][0]['children']
+        items.append({'type': 'dir', 'mode': 'videos', 'name': 'Neue Videos', 'id': video_base + '/api/playlist/neue-videos'})
+        items.append({'type': 'dir', 'mode': 'videos', 'name': 'Top Videos', 'id': video_base + '/api/playlist/top-videos'})
     for child in children:
         sub_children = child['children']
         resource = child['resource']
@@ -76,15 +78,18 @@ def get_tv_items(data):
     items = []
     stations = data['stations']
     for s in stations:
-        title = s['title']
+        channel = s['title']
         current_programs = s['current_programs'][0]
-        description = current_programs['description']
-        start = current_programs['from'].split('T')[-1]
-        end = current_programs['to'].split('T')[-1]
+        title = current_programs['title']
+        subtitle = current_programs['subtitle']
+        description = current_programs['long_description']
+        start = current_programs['from'].split('T')[-1][:-3]
+        end = current_programs['to'].split('T')[-1][:-3]
         link = s['link']
-        name = utfenc('%s %s %s %s' % (title,start,description,end))
-        items.append({'type':'video', 'mode':'play_tv', 'name':name, 'id':link, 'description':'', 'duration':'0'})
-    items.append({'type':'dir', 'mode':'livestream', 'name':'LIVESTREAM', 'id':'', 'description':'', 'duration':'0'})
+        name = '%s %s %s %s %s' % (channel,start,title,subtitle,end)
+        items.append({'type':'video', 'mode':'play_tv', 'name':utfenc(name.replace('Live', '[COLOR red]Live[/COLOR]')), 'id':link, 'description':utfenc(description), 'duration':'0'})
+    items.append({'type':'dir', 'mode':'livestream', 'name':'Weitere Livestreams', 'id':'', 'description':''})
+    items.append({'type':'dir', 'mode':'replay', 'name':'Sendung verpasst?', 'id':'', 'description':''})
     return items
 
 def get_live_video_items(data):
@@ -117,6 +122,31 @@ def get_event_items(items,a,live):
                 h = utfenc('ARCHIV: %s %s' % (f.group(1)[:18],g.group(1)))
             items.append({'type':'video', 'mode':'play_tv', 'name':h, 'id':d, 'image':e, 'description':'', 'duration':'0'})
     return items
+
+def get_replay_items(data):
+    items = []
+    tiles = re.search('<div class="stream_tiles(.*?)<div class="arrow right"></div>', data, re.S)
+    if tiles:
+        items = replay_items(tiles.group(1))
+    return items
+
+def replay_items(a):
+    items = []
+    b = re.findall('<div style=(.*?)</ul>', a, re.S)
+    for c in b:
+        d = re.search('href="(.+?)"', c, re.S).group(1)
+        e = re.search('background: url\(\'(.+?)\'', c, re.S).group(1)
+        f = re.search('<b>(.+?)</b>', c, re.S).group(1)
+        g = re.search('<span class="event">(.+?)</span>', c, re.S).group(1)
+        p = re.search('<p class="text">(.+?)</p>', c, re.S).group(1)
+        p = re.sub('.+?<br>', '', p)
+        if not d.startswith('http'):
+            d = tv_base+d
+        if not e.startswith('http'):
+            e = tv_base+e
+        h = '%s %s' % (f[:16],g)
+        items.insert(0, {'type':'video', 'mode':'play_tv', 'name':utfenc(h), 'id':d, 'image':e, 'description':utfenc(p), 'duration':'0'})
+    return items
     
 def get_live_radio_items(data):
     items = []
@@ -127,6 +157,9 @@ def get_live_radio_items(data):
         if not url and desc.startswith('http'):
             url = desc
         description = '%s\n%s' % (i['startzeit'][:22], desc)
+        if 'streamtheworld' in url:
+            file = os.path.basename(url)
+            url = 'http://playerservices.streamtheworld.com/api/livestream-redirect/' + os.path.splitext(file)[0]
         item = {'type':'video', 'mode':'play_video', 'name':utfenc(i['titel']), 'id':url, 'description':utfenc(description), 'duration':i['duration']}
         items.append(item)
     return items
@@ -148,7 +181,7 @@ def get_hls(data):
         if s:
             msg = s.group(1).strip()
             return re.sub('(<.+?>)', '', msg)
-        pattern = '<div class="article streams">(.+?)</p>'
+        pattern = '<div class="article streams">(.+?)(?:<a class|</p>)'
         s = re.search(pattern, data, re.S)
         if s:
             msg = s.group(1).strip()

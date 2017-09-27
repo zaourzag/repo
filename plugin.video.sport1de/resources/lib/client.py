@@ -9,6 +9,7 @@ class Client:
     def __init__(self):
         
         self.headers = {
+            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',
             'Referer': video_base,
             'Host': 'video.sport1.de'
         }
@@ -31,16 +32,21 @@ class Client:
 
     def get_fm_epg(self):
         return self.json_request(video_base + '/api/epg/fm/amazon')
+    
+    def get_replay(self):
+        self.headers['Referer'] = tv_base
+        self.headers['Host'] = 'tv.sport1.de'
+        return self.get_data(tv_base + '/sport1/sendungen/sendung-verpasst/')
         
     def get_tv(self, url=False):
         self.headers['Referer'] = tv_base
         self.headers['Host'] = 'tv.sport1.de'
         
         if url:
-            if not '/sport1/' in url:
-                s = requests.Session()
-                self.headers['cookie'] = cookie
-                text = s.get(tv_base + '/home/index.php', headers=self.headers).text
+            s = requests.Session()
+            self.headers['cookie'] = cookie
+            text = s.get(url, headers=self.headers).text
+            if '/nutzer/bestellung.php?buy_abo' in text:
                 if 'sso_tv_sport1_logged_in=true' in text:
                     self.cookie = cookie
                     log('[%s] logged in' % (addon_id))

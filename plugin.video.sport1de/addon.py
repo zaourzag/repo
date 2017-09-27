@@ -21,7 +21,7 @@ def tv_category():
 def video_category():
     data = cache.get_cache_data()
     if data:
-        list_items(sport1.get_video_category_items(data, args.get('id', [False])[0]))
+        list_items(sport1.get_video_category_items(data, id))
     xbmcplugin.endOfDirectory(addon_handle)
 
 def live_radio():
@@ -31,7 +31,10 @@ def live_radio():
     xbmcplugin.endOfDirectory(addon_handle)
 
 def videos():
-    url = sport1.get_playlist_url(client.get_resource(args['id'][0]))
+    if 'api/playlist' in id:
+        url = id
+    else:
+        url = sport1.get_playlist_url(client.get_resource(id))
     if url:
         data = client.get_playlist(url)
         if data:
@@ -43,14 +46,19 @@ def livestream():
     if data:
         list_items(sport1.get_live_video_items(data))
     xbmcplugin.endOfDirectory(addon_handle)
+
+def replay():
+    data = client.get_replay()
+    if data:
+        list_items(sport1.get_replay_items(data))
+    xbmcplugin.endOfDirectory(addon_handle)
     
 def play_video():
-    path = args.get('id', [''])[0]
-    if path:
-        play(path)
+    if id:
+        play(id)
 
 def play_tv():
-    result = sport1.get_hls(client.get_tv(args['id'][0]))
+    result = sport1.get_hls(client.get_tv(id))
     if '.m3u8' in result:
         play(result)
     else:
@@ -81,10 +89,10 @@ def add_dir(item):
 def add_video(item):
     name = item['name']
     duration = item['duration']
-    id = item['id']
+    _id = item['id']
     image = item.get('image', icon)
     plot = item['description']
-    u = build_url({'mode': item['mode'], 'name':name, 'id':id})
+    u = build_url({'mode': item['mode'], 'name':name, 'id':_id})
     item=xbmcgui.ListItem(item['name'], iconImage="DefaultVideo.png", thumbnailImage=image)
     item.setInfo(type='Video', infoLabels={'Title':name, 'Plot':plot})
     item.addStreamInfo('video', {'duration':duration})
@@ -93,6 +101,7 @@ def add_video(item):
 
 args = urlparse.parse_qs(sys.argv[2][1:])
 mode = args.get('mode', None)
+id = args.get('id', [''])[0]
 log('[%s] Arguments: %s' % (addon_id, str(args)))
 
 if mode==None:
