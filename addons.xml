@@ -39,9 +39,11 @@
 	</extension>
 </addon>
 
-<addon id="plugin.video.tvspielfilm_de" name="TV Spielfilm - Das Beste aus den Mediatheken" version="1.0.6" provider-name="realvito">
+<addon id="plugin.video.tvspielfilm_de" name="TV Spielfilm - Das Beste aus den Mediatheken" version="1.0.7" provider-name="realvito">
 	<requires>
 		<import addon="xbmc.python" version="2.14.0"/>
+		<import addon="plugin.video.arte_tv" optional="true"/>
+		<import addon="plugin.video.arteplussept" optional="true"/>
 	</requires>
 	<extension point="xbmc.python.pluginsource" library="default.py">
 		<provides>video</provides>
@@ -60,9 +62,9 @@
 		<website>http://www.tvspielfilm.de/mediathek/</website>
 		<email></email>
 		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.tvspielfilm_de</source>
-		<news>[B][COLOR orangered]Version 1.0.6  (09.07.2017)[/COLOR][/B][CR]
-- fixed: Sender-Kennung wird teilweise falsch angezeigt
-- changed: SenderIcons (Rubrik - SENDER sortiert) erneuert
+		<news>[B][COLOR orangered]Version 1.0.7  (27.09.2017)[/COLOR][/B][CR]
+- fixed: seit kurzem enthalten einige ARD-VideoLinks KEIN "http:" mehr und werden deshalb NICHT abgespielt
+- optimized: nochmals Wiedergabequalität von ARD-Links (mp4)
 		</news>
 	</extension>
 </addon>
@@ -152,31 +154,6 @@ Zattoo Live TV, Aufnahmen und EPG
     <forum>http://www.animexx.de</forum>
     <email>andreas at vogler dot name</email>
     <platform>all</platform>
-  </extension>
-</addon>
-
-<addon id="service.sleepy.watchdog" name="Sleepy Watchdog" version="0.1.20" provider-name="Birger Jesch">
-  <requires>
-    <import addon="xbmc.python" version="2.24.0"/>
-  </requires>
-  <extension point="xbmc.service"
-             library="default.py" start="[login|startup]" />
-  <extension point="xbmc.addon.metadata">
-    <platform>all</platform>
-    <summary lang="en_GB">Sleepy Watchdog - he's watching while You sleep</summary>
-    <summary lang="de_DE">Sleepy Watchdog - er passt auf, während Du schläfst</summary>
-    <summary lang="uk_UA">Sleepy Watchdog - він чатує, поки Ви спите</summary>
-    <description lang="en_GB">This Idle Timer management performs defined actions after an adjusted amount of inactivity time. Those actions are stop playing Audio, Video or TV for example or some actions to execute shutdown variations like suspend, reboot poweroff or hibernate.</description>
-    <description lang="de_DE">Dieser Timer führt vorher definierte Aktionen nach einer einstellbaren Inaktivitätszeit aus. Die Aktionen können zum Beispiel das Stoppen von Audio, Video oder TV-Streams sein, aber auch das Herunterfahren des Systems in verschiedenen Modi (Suspend, Reboot, PowerOff, Bereitschaft) wird angeboten.</description>
-    <description lang="uk_UA">Цей Таймер Простою виконує задані дії, після встановленого часу неактивності. Наприклад, зупиняє відтворення Аудіо, Відео, TV-Потоків чи інші дії (як Призупинення, Вимкнення, Перезавантаження або Гібернація) до Системи.</description>
-    <disclaimer lang="uk_UA">Використовуйте на власний Ризик. Ця Служба, може вступати в конфлікт з іншими сервісами (н.д. Запису).</disclaimer>
-    <disclaimer lang="de_DE">Benutzung auf eigene Gefahr. Dieser Dienst könnte mit anderen Diensten (z.B. Aufnahmedienste) kollidieren.</disclaimer>
-    <disclaimer lang="en_GB">Use at your own risk. This service could conflict to other services (e.g recording services).</disclaimer>
-    <license>GNU GENERAL PUBLIC LICENSE. Version 3, June 2007</license>
-    <forum>http://www.kodinerds.net/index.php/Thread/43876-RELEASE-Sleepy-WatchDog-Wenn-alles-vor-der-Glotze-schl%C3%A4ft/</forum>
-    <website>http://vdr4bj1.no-ip.org</website>
-    <email></email>
-    <source>https://github.com/b-jesch/service.sleepy.watchdog</source>
   </extension>
 </addon>
 
@@ -315,10 +292,11 @@ Zattoo Live TV, Aufnahmen und EPG
   </extension>
 </addon>
 
-<addon id="plugin.video.sport1de" version="1.5.0" name="Sport1" provider-name="Jin">
+<addon id="plugin.video.sport1de" version="2.0.1" name="Sport1" provider-name="Jin">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
         <import addon="script.module.requests" version="2.12.4"/>
+        <import addon="inputstream.adaptive" version="2.0.10"/>
         <import addon="script.module.pydes" version="2.0.1"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="addon.py">
@@ -326,8 +304,10 @@ Zattoo Live TV, Aufnahmen und EPG
     </extension>
     <extension point="xbmc.addon.metadata">
         <news>
-- added non defined settings to settings.xml
-- minor fixes/updates
+- fix login, video section and radio
+- add sendung verpasst
+- use inputstream adaptive for hls playback
+- drop support for libressl
         </news>
         <summary>Sportnachrichten - aktuelle News und Livestreams</summary>
         <description>Für Sport1US und Sport1+ wird ein ABO auf sport1.de benötigt.</description>
@@ -406,41 +386,6 @@ Zattoo Live TV, Aufnahmen und EPG
     </extension>
 </addon>
 
-<addon id="service.kn.switchtimer" name="KN Switchtimer Service" provider-name="Birger Jesch" version="2.0.5">
-    <requires>
-        <import addon="xbmc.python" version="2.24.0"/>
-        <import addon="script.module.dateutil" version="2.5.3"/>
-        <import addon="xbmc.json" version="6.20.0"/>
-    </requires>
-    <extension point="xbmc.service" library="service.py" start="login" />
-    <extension point="xbmc.python.script" library="handler.py" />
-    <extension point="kodi.context.item" library="addtimer.py">
-            <menu id="kodi.core.main">
-                <item library="addtimer.py">
-                    <label>30040</label>
-                    <visible>System.HasAddon(service.kn.switchtimer) + Window.IsVisible(tvguide)</visible>
-                </item>
-                <item library="deltimer.py">
-                    <label>30041</label>
-                    <visible>System.HasAddon(service.kn.switchtimer) + Window.IsVisible(tvguide)</visible>
-                </item>
-            </menu>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <summary lang="en_GB">A switch timer for the PVR module of Kodi</summary>
-        <summary lang="de_DE">Ein Umschalttimer für das PVR-Modul von Kodi</summary>
-        <description lang="en_GB">Switching with the KN switchtimer from every point of view inside Kodi to a tv or radio broadcast at a given time - no more miss your favorite shows or sports events on tv.</description>
-        <description lang="de_DE">Mit dem KN Switchtimer schaltest Du auf Deine programmierte Sendung zur richtigen Zeit um - egal wo Du Dich gerade befindest. Nie wieder die Lieblingssendung oder wichtige Sportereignisse verpassen.</description>
-        <disclaimer lang="en_GB">Use at your own risk.</disclaimer>
-        <disclaimer lang="de_DE">Benutzung auf eigene Gefahr</disclaimer>
-        <platform>all</platform>
-        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-        <website>http://vdr4bj1.no-ip.org</website>
-        <source>https://github.com/b-jesch/service.kn.switchtimer</source>
-        <email>birger.jesch@gmail.com</email>
-    </extension>
-</addon>
-
 <addon id="plugin.video.mediathekdirekt" name="Mediathek Direkt" version="0.0.11" provider-name="P_Aeh">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
@@ -484,51 +429,6 @@ Zattoo Live TV, Aufnahmen und EPG
     </extension>
 </addon>
 
-<addon id="plugin.service.gto" name="German Telecast Offers" version="2.0.23" provider-name="Birger Jesch">
-    <requires>
-        <import addon="xbmc.python" version="2.25.0"/>
-        <import addon="xbmc.json" version="7.0.0"/>
-        <import addon="script.module.dateutil" version="2.5.3"/>
-    </requires>
-    <extension point="xbmc.python.script" library="default.py" />
-    <extension point="xbmc.service" library="starter.py" start="startup">
-    </extension>
-
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <summary lang="en_GB">Fetch todays TV Offers from different scrapers</summary>
-        <summary lang="de_DE">Holt die TV Tipps des Tages aus den RSS-Feeds diverser Webseiten</summary>
-        <language>de</language>
-        <description lang="en_GB">Fetch todays TV Offers from different scrapers
-
-This plugin needs a integration into the skin!
-Please refer to the README.txt into the folder named 'integration'.
-        </description>
-        <description lang="de_DE">Holt die TV Tipps des Tages aus den RSS-Feeds diverser Webseiten.
-
-Dieses Plugin benoetigt eine Skin-Integration!
-Hierfür bitte README.txt im Ordner 'integration' beachten.
-        </description>
-        <license>GNU GENERAL PUBLIC LICENSE. Version 3, June 2007</license>
-        <source>https://github.com/b-jesch/plugin.service.gto</source>
-        <forum>http://www.kodinerds.net/index.php/Thread/50943-Release-TV-Widget-German-Telecast-Offers/</forum>
-        <email>birger.jesch@gmail.com</email>
-        <website>http://vdr4bj1.no-ip.org/index.php?action=list&amp;item=addon</website>
-        <news>
-            Recording capabilities added, some new tv/sports scrapers added
-        </news>
-        <assets>
-            <icon>icon.png</icon>
-            <fanart>fanart.jpg</fanart>
-            <screenshot>resources/lib/media/screenshots/screenshot_0.jpg</screenshot>
-            <screenshot>resources/lib/media/screenshots/screenshot_1.jpg</screenshot>
-            <screenshot>resources/lib/media/screenshots/screenshot_2.jpg</screenshot>
-            <screenshot>resources/lib/media/screenshots/screenshot_3.jpg</screenshot>
-            <screenshot>resources/lib/media/screenshots/screenshot_4.jpg</screenshot>
-        </assets>
-    </extension>
-</addon>
-
 
 <addon id="plugin.program.newscenter" name="NewsCenter" version="0.0.9" provider-name="NewsCenter">
     <requires>
@@ -560,36 +460,6 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
         <email>-</email>
         <website>-</website>
     </extension>
-</addon>
-
-<addon id="service.tvh.manager" name="TVHeadend Power and Recording Management" version="0.3.22" provider-name="Birger Jesch">
-  <requires>
-    <import addon="xbmc.python" version="2.20.0" />
-    <import addon="script.module.requests" version="2.9.1" />
-  </requires>
-  <extension point="xbmc.service" library="default.py" start="[login|startup]" />
-  <extension point="xbmc.python.script" library="default.py" />
-  <extension point="xbmc.addon.metadata">
-    <platform>linux</platform>
-    <summary lang="en">TVHeadend Power Management</summary>
-    <summary lang="de">Power-Management für TVHeadend</summary>
-    <summary lang="pl">TVHeadend Power Management</summary>
-    <description lang="en">Poweroff management for current active recordings and wakeup procedures for future schedules using the XML-Interface of TVHeadend. This plugin delivers optional Emails via SMTP if an automatic scheduled Recording ended successfully. The plugin starts the system periodically on an user defined cycle and time for e.g. EPG-Updates if there is a longer inactivity time of the system.</description>
-    <description lang="de">PowerOff-Management für aktuell laufende Aufnahmen und Aufweckmechanismen für spätere timergesteuerte Aufnahmen unter Nutzung des XML-Interfaces von TVHeadend. Das Plugin versendet optional Emails via SMTP, wenn eine automatische Aufnahme erfolgreich abgeschlossen wurde. Zusätzlich wird das System zyklisch zu einer einstellbaren Zeit aufgeweckt, um z.B das EPG zu aktualisieren.</description>
-    <description lang="pl">Program zarządzający włączeniem i wyłączeniem systemu dla bieżących aktywnych nagrań ustawionych w harmonogramie interfejsu XML programu : TVHeadend. Wtyczka oferuje opcjonalnie wysłanie wiadomości e-mail za pośrednictwem protokołu SMTP, jeśli automatyczne nagrywanie zakończyło się powodzeniem. Wtyczka może także uruchamiać system okresowo w czasie zdefiniowanym przez użytkownika dla uaktualnienia EPG, jeśli jest dłuższy czas braku aktywności systemu.</description>
-    <disclaimer lang="de">Benutzung auf eigene Gefahr. Keine Haftung für nicht gesetzte Timer, nicht durchgeführte Aufnahmen und andere Seiteneffekte!</disclaimer>
-    <disclaimer lang="en">Use at your own risk. No liability for not set timers, lack of recording and other side effects!</disclaimer>
-    <disclaimer lang="pl">Używasz na własne ryzyko. Nie ponosimy odpowiedzialności za nieprawidłowe nastawienia czasu nagrania, braku nagrania i innych skutków ubocznych!</disclaimer>
-    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-    <forum>http://forum.xbmc.org/showthread.php?tid=115758</forum>
-    <website>http://vdr4bj1.no-ip.org</website>
-    <email>birger.jesch@gmail.com</email>
-    <source>https://github.com/b-jesch/service.tvh.manager</source>
-    <assets>
-      <icon>icon.png</icon>
-      <fanart>fanart.jpg</fanart>
-    </assets>
-  </extension>
 </addon>
 
 
@@ -2657,9 +2527,11 @@ Orginal Code was from AddonScriptorDE</disclaimer>
   </extension>
 </addon>
 
-<addon id="plugin.video.tvtoday_de" name="TV Today - Best of Mediatheken" version="1.3.6" provider-name="realvito">
+<addon id="plugin.video.tvtoday_de" name="TV Today - Best of Mediatheken" version="1.3.7" provider-name="realvito">
 	<requires>
 		<import addon="xbmc.python" version="2.14.0"/>
+		<import addon="plugin.video.arte_tv" optional="true"/>
+		<import addon="plugin.video.arteplussept" optional="true"/>
 	</requires>
 	<extension point="xbmc.python.pluginsource" library="default.py">
 		<provides>video</provides>
@@ -2678,8 +2550,9 @@ Orginal Code was from AddonScriptorDE</disclaimer>
 		<website>http://www.tvtoday.de/mediathek/</website>
 		<email></email>
 		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.tvtoday_de</source>
-		<news>[B][COLOR orangered]Version 1.3.6  (09.07.2017)[/COLOR][/B][CR]
-- fixed: Sender-Kennung wird teilweise falsch angezeigt
+		<news>[B][COLOR orangered]Version 1.3.7  (27.09.2017)[/COLOR][/B][CR]
+- fixed: seit kurzem enthalten einige ARD-VideoLinks KEIN "http:" mehr und werden deshalb NICHT abgespielt
+- optimized: nochmals Wiedergabequalität von ARD-Links (mp4)
 		</news>
 	</extension>
 </addon>
@@ -3066,26 +2939,6 @@ oder online unter https://goo.gl/GtK41L nachlesen.
             <screenshot>resources/screenshots/screenshot-03.jpg</screenshot>
         </assets>
     </extension>
-</addon>
-
-<addon id="plugin.video.ipcams" name="Surveillance Cameras" version="0.0.2" provider-name="brat, BJ1">
-  <extension point="xbmc.python.pluginsource" library="default.py">
-    <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <platform>all</platform>
-    <summary lang="en">Surveillance Cameras</summary>
-    <summary lang="de">Überwachungskameras</summary>
-    <description lang="en">Take a look to the pictures of your installed surveillance cameras. You are able to select one of a maximum number of three cameras.</description>
-    <description lang="de">Schau' Dir die Bilder Deiner installierten Überwachungskameras an. Du kannst eine von maximal drei Kameras auswählen.</description>
-    <disclaimer lang="en">Use at your own risk. This is not a replacment for professional equipment.</disclaimer>
-    <disclaimer lang="de">Benutzung auf eigene Gefahr. ersetzt keine professionelle Ausrüstung.</disclaimer>
-    <license>GNU GENERAL PUBLIC LICENSE. Version 3, June 2007</license>
-    <forum></forum>
-    <website></website>
-    <email>birger.jesch@gmail.com</email>
-    <source>https://github.com/b-jesch/plugin.video.ipcams</source>
-  </extension>
 </addon>
 
 <addon id="plugin.video.bundesliga3" name="3. Liga" version="0.3.18" provider-name="L0RE">

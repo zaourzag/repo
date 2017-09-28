@@ -27,3 +27,7 @@
 [B]Version 1.0.6  (09.07.2017)[/B]
  - fixed: Sender-Kennung wird teilweise falsch angezeigt
  - changed: SenderIcons (Rubrik - SENDER sortiert) erneuert
+
+[B]Version 1.0.7  (27.09.2017)[/B]
+ - fixed: seit kurzem enthalten einige ARD-VideoLinks KEIN "http:" mehr und werden deshalb NICHT abgespielt
+ - optimized: nochmals Wiedergabequalität von ARD-Links (mp4)

@@ -30,7 +30,7 @@ args = urlparse.parse_qs(sys.argv[2][1:])
 
 addonID = 'plugin.video.tvtoday_de'
 addon = xbmcaddon.Addon(id=addonID)
-socket.setdefaulttimeout(40)
+socket.setdefaulttimeout(30)
 translation = addon.getLocalizedString
 addonPath = xbmc.translatePath(addon.getAddonInfo('path')).decode('utf-8')
 dataPath = xbmc.translatePath(addon.getAddonInfo('profile')).decode('utf-8')
@@ -71,7 +71,6 @@ def index():
 	d = m3.split('.'); w3 = ("Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag")[date(int(d[2]), int(d[1]), int(d[0])).weekday()]
 	d = m4.split('.'); w4 = ("Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag")[date(int(d[2]), int(d[1]), int(d[0])).weekday()]
 	d = m5.split('.'); w5 = ("Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag")[date(int(d[2]), int(d[1]), int(d[0])).weekday()]
-
 	addDir("Auswahl vom "+w1+", den "+m1, baseUrl+dateUrl+s1+".html", 'listVideosDay', icon)
 	addDir("Auswahl vom "+w2+", den "+m2, baseUrl+dateUrl+s2+".html", 'listVideosDay', icon)
 	addDir("Auswahl vom "+w3+", den "+m3, baseUrl+dateUrl+s3+".html", 'listVideosDay', icon)
@@ -271,6 +270,8 @@ def ArdGetVideo(id):
 		if preferredStreamType == "0" and muvidLinks:
 			for muvidLink in muvidLinks:
 				stream = muvidLink["_stream"]
+				if not stream.startswith('http'):
+					stream =  "http:"+stream
 				if muvidLink["_quality"] == 'auto' and 'mil/master.m3u8' in stream:
 					mp4URL = stream
 					xbmc.log("[TvToday](ArdGetVideo) m3u8-Stream (ARD+3) : %s" %(mp4URL), xbmc.LOGNOTICE)
@@ -296,6 +297,8 @@ def ArdGetVideo(id):
 				else:
 					ARD_Url = stream
 					xbmc.log("[TvToday](ArdGetVideo) Wir haben 1 Stream (ARD+3) - wähle Diesen : %s" %(ARD_Url), xbmc.LOGNOTICE)
+				if not ARD_Url.startswith('http'):
+					ARD_Url =  "http:"+ARD_Url
 				mp4URL = VideoBEST(ARD_Url) # *mp4URL* Qualität nachbessern, überprüfen, danach abspielen
 		finalURL = mp4URL
 		if not finalURL:
@@ -403,7 +406,7 @@ def queueVideo(url,name,thumb):
 def VideoBEST(best_url):
 	# *mp4URL* Qualität nachbessern, überprüfen, danach abspielen
 	standards = [best_url,"",""]
-	if ('pd-videos.daserste.de' in standards[0]):
+	if ('pd-videos.daserste.de' in standards[0] or 'pdvideosdaserste-' in standards[0]):
 		standards[1] = standards[0].replace('/960-1', '/1280-1')
 	else:
 		standards[1] = standards[0].replace('1456k_p13v11', '2328k_p35v11').replace('1456k_p13v12', '2328k_p35v12').replace('1496k_p13v13', '2328k_p35v13').replace('2256k_p14v11', '2328k_p35v11').replace('2256k_p14v12', '2328k_p35v12').replace('2296k_p14v13', '2328k_p35v13').replace('.hq.mp4', '.hd.mp4').replace('.l.mp4', '.xl.mp4').replace('_C.mp4', '_X.mp4')
@@ -421,17 +424,16 @@ def getUrl(url,headers=False):
 		for key in headers:
 			req.add_header(key, headers[key])
 	else:
-		req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:49.0) Gecko/20100101 Firefox/32.0')
-		req.add_header('Accept-Encoding','gzip,deflate')
-	response = urllib2.urlopen(req)
+		req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:49.0) Gecko/20100101 Firefox/49.0')
+		req.add_header('Accept-Encoding','gzip, deflate')
+	response = urllib2.urlopen(req, timeout=30)
 	if response.info().get('Content-Encoding') == 'gzip':
 		buf = StringIO(response.read())
 		f = gzip.GzipFile(fileobj=buf)
 		link = f.read()
-		f.close()
 	else:
 		link = response.read()
-		response.close()
+	response.close()
 	return link
 
 def cleanTitle(title):
@@ -490,7 +492,7 @@ def parameters_string_to_dict(parameters):
 	return paramDict
 
 def addDir(name, url, mode, iconimage):
-	u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)+"&thumb="+urllib.quote_plus(iconimage)
+	u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)+"&iconimage="+urllib.quote_plus(iconimage)
 	ok = True
 	liz = xbmcgui.ListItem(name, iconImage="DefaultFolder.png", thumbnailImage=iconimage)
 	liz.setInfo(type="Video", infoLabels={"Title": name})
@@ -525,7 +527,7 @@ params = parameters_string_to_dict(sys.argv[2])
 name = urllib.unquote_plus(params.get('name', ''))
 url = urllib.unquote_plus(params.get('url', ''))
 mode = urllib.unquote_plus(params.get('mode', ''))
-thumb = urllib.unquote_plus(params.get('thumb', ''))
+iconimage = urllib.unquote_plus(params.get('iconimage', ''))
 plot = urllib.unquote_plus(params.get('plot', ''))
 
 if mode == 'listVideosDay':
