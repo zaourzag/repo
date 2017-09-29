@@ -1114,6 +1114,7 @@ Vous pouvez regarder le sport que vous aimez, vivez et sur demande à un moment 
     </extension>
 </addon>
 
+
 <addon id="skin.fTVfred-krypton" version="3.7.4" name="fTV Fred Edition (Krypton)" provider-name="Sualfred">
 	<requires>
 		<import addon="xbmc.gui" version="5.12.0"/>
