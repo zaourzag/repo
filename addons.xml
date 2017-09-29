@@ -630,22 +630,6 @@ Vous pouvez regarder le sport que vous aimez, vivez et sur demande à un moment 
   </extension>
 </addon>
 
-<addon id="repository.kodinerds_RPi" name="kodinerds.net Binary Addons for Rasperry 1" version="1.0.3" provider-name="L0RE">
-	<extension point="xbmc.addon.repository" name="L0RE">
-		<info compressed="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/RPi/addons.xml</info>
-		<checksum>https://raw.githubusercontent.com/kodinerds/binary-repo/master/RPi/addons.xml.md5</checksum>
-		<datadir zip="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/RPi/</datadir>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="en">Official Repository of Kodinerds</summary>
-		<summary lang="de">Offizielles Repository der Kodinerds</summary>
-		<description lang="en">This is the official Repository of the german Community 'Kodinerds' which you'll find at www.kodinerds.net. Most of the hosted Addons are supported by the members of the Community. Enjoy!</description>
-		<description lang="de">Das ist das offizielle Repository der deutschen Community 'Kodinerds', welche Du unter www.kodinerds.net findest. Die meisten der hier gehosteten Addons werden von den Mitgliedern der Community aktiv supported. Viel Spaß!</description>
-		<disclaimer></disclaimer>
-		<platform>linux</platform>
-	</extension>
-</addon>
-
 <addon id="resource.uisounds.destiny" version="1.0.3" name="Destiny UI Sounds (Normal)" provider-name="Jugger">
   <requires>
     <import addon="kodi.resource" version="1.0.0"/>
@@ -1114,6 +1098,7 @@ Vous pouvez regarder le sport que vous aimez, vivez et sur demande à un moment 
     </extension>
 </addon>
 
+
 <addon id="skin.fTVfred-krypton" version="3.7.4" name="fTV Fred Edition (Krypton)" provider-name="Sualfred">
 	<requires>
 		<import addon="xbmc.gui" version="5.12.0"/>
@@ -1257,23 +1242,6 @@ NOTE: Due to updates by rytec, this addon might completely break in a couple of 
         <email>AddonScriptorDE at yahoo dot de</email>
   </extension>
 </addon>
-
-<addon id="repository.netflix" name="Netflix Addon Repository" version="1.0.1" provider-name="libdev + jojo + asciidisco">
-        <extension point="xbmc.addon.repository" name="Netflix Addon Repository">
-                <info compressed="false">https://johtru.com/repo/repo.php</info>
-                <checksum>https://johtru.com/repo/repo.php?md5=true</checksum>
-                <datadir zip="true">https://johtru.com/repo/repo_files</datadir>
-        </extension>
-        <extension point="xbmc.addon.metadata">
-                <summary>The Repository for the Kodi Netflix Addon</summary>
-                <summary lang="de">Das Repository für das Kodi Netflix Addon</summary>
-                <description>Provides the Netflix Addons fpr kodi.</description>
-                <description lang="de">Stellt das Kodi Netflix Addon bereit</description>
-                <disclaimer>Some parts of this Repository may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
-                <platform>all</platform>
-        </extension>
-</addon>
-
 
 <addon id="plugin.video.servustv_com" name="ServusTV.com" version="1.0.18" provider-name="L0RE">
     <requires>
@@ -1420,20 +1388,6 @@ NOTE: Due to updates by rytec, this addon might completely break in a couple of 
 	</extension>
 </addon>
 
-<addon id="repository.sandmann79.plugins" name="Sandmann79s Repository" version="1.0.2" provider-name="Sandmann79">
-	<extension point="xbmc.addon.repository" name="Sandmann79s Repository">
-		<info compressed="false">https://raw.githubusercontent.com/Sandmann79/xbmc/master/packages/addons.xml</info>
-		<checksum>https://raw.githubusercontent.com/Sandmann79/xbmc/master/packages/addons.xml.md5</checksum>
-		<datadir zip="true">https://raw.githubusercontent.com/Sandmann79/xbmc/master/packages/</datadir>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary>Test Repo</summary>
-		<description></description>
-		<disclaimer></disclaimer>
-		<platform>all</platform>
-	</extension>
-</addon>
-
 <addon id="plugin.video.spiegel_tv" name="Spiegel.tv" version="1.1.5" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
@@ -1562,22 +1516,6 @@ Orginal Code was from AddonScriptorDE</disclaimer>
         <email>AddonScriptorDE at yahoo dot de</email>
         <website>http://www.einslive.de</website>
     </extension>
-</addon>
-
-<addon id="repository.kodinerds_RPi2" name="kodinerds.net Binary Addons for Rasperry 2+3" version="1.0.3" provider-name="L0RE">
-	<extension point="xbmc.addon.repository" name="L0RE">
-		<info compressed="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/RPi2/addons.xml</info>
-		<checksum>https://raw.githubusercontent.com/kodinerds/binary-repo/master/RPi2/addons.xml.md5</checksum>
-		<datadir zip="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/RPi2/</datadir>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="en">Official Repository of Kodinerds</summary>
-		<summary lang="de">Offizielles Repository der Kodinerds</summary>
-		<description lang="en">This is the official Repository of the german Community 'Kodinerds' which you'll find at www.kodinerds.net. Most of the hosted Addons are supported by the members of the Community. Enjoy!</description>
-		<description lang="de">Das ist das offizielle Repository der deutschen Community 'Kodinerds', welche Du unter www.kodinerds.net findest. Die meisten der hier gehosteten Addons werden von den Mitgliedern der Community aktiv supported. Viel Spaß!</description>
-		<disclaimer></disclaimer>
-		<platform>linux</platform>
-	</extension>
 </addon>
 
 <addon id="plugin.video.disneychannel_de" name="DisneyChannel.de" version="1.1.10" provider-name="L0RE">
@@ -1717,23 +1655,6 @@ Orginal Code was from AddonScriptorDE</disclaimer>
     </extension>
 </addon>
 
-<addon id="repository.kodinerds_S905" name="kodinerds.net Binary Addons for AML S905 based devices" version="1.0.3" provider-name="L0RE">
-	<extension point="xbmc.addon.repository" name="L0RE">
-		<info compressed="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/S905/addons.xml</info>
-		<checksum>https://raw.githubusercontent.com/kodinerds/binary-repo/master/S905/addons.xml.md5</checksum>
-		<datadir zip="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/S905/</datadir>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary>A Kodi 17 binary addon repository for AML S905 based devices</summary>
-		<description>None of the addons are checkted against other projects then Odroid_C2.
-			Use them, on other AML S905 based devices, at your own risk! 
-			We are not responsible for any damage or data loss!</description>
-		<disclaimer>Some parts of this addons may not be legal in your country of residence - please check with
-			your local laws before installing.</disclaimer>
-		<platform>linux</platform>
-	</extension>
-</addon>
-
 <addon id="plugin.video.nasa" name="Nasa" version="2.0.4" provider-name="L0RE">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
@@ -1822,22 +1743,6 @@ Orginal Code was from AddonScriptorDE</disclaimer>
     <description lang="sv">Detta tillägg ger access till mer än 1800 videor, 8 vodcasts och 4 direktsända nasa-tv-kanaler[CR]Allt innehåll är dynamiskt och borde alltid vara uppdaterat.</description>
     <description lang="zh">此视频插件提供访问1800多个视频, 8个播客以及4个美国国家航空和航天管理局电视直播流[CR]全部内容都动态的并保持最新。</description>
   </extension>
-</addon>
-
-<addon id="repository.kodinerds_OSX_64" name="kodinerds.net Binary Addons for OSX 64" version="1.0.3" provider-name="L0RE">
-	<extension point="xbmc.addon.repository" name="L0RE">
-		<info compressed="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/OSX_64/addons.xml</info>
-		<checksum>https://raw.githubusercontent.com/kodinerds/binary-repo/master/OSX_64/addons.xml.md5</checksum>
-		<datadir zip="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/OSX_64/</datadir>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="en">Official Repository of Kodinerds</summary>
-		<summary lang="de">Offizielles Repository der Kodinerds</summary>
-		<description lang="en">This is the official Repository of the german Community 'Kodinerds' which you'll find at www.kodinerds.net. Most of the hosted Addons are supported by the members of the Community. Enjoy!</description>
-		<description lang="de">Das ist das offizielle Repository der deutschen Community 'Kodinerds', welche Du unter www.kodinerds.net findest. Die meisten der hier gehosteten Addons werden von den Mitgliedern der Community aktiv supported. Viel Spaß!</description>
-		<disclaimer></disclaimer>
-		<platform>osx</platform>
-	</extension>
 </addon>
 
 <addon id="plugin.video.eurosportplayer" version="2.0.3" name="Eurosport Player" provider-name="Jin">
@@ -2122,27 +2027,6 @@ Orginal Code was from AddonScriptorDE</disclaimer>
   </extension>
 </addon>
 
-<addon id="repository.lost-and-found" name="kodinerds.net Add-ons (old)" version="1.1.12" provider-name="L0RE">
-
-   <requires>
-        <import addon="repository.kodinerds" version="1.1.9"/>
-   </requires>
-	<extension point="xbmc.addon.repository" name="L0RE">
-		<info compressed="true">https://raw.githubusercontent.com/kodinerds/repo/master/addons.xml</info>
-		<checksum>https://raw.githubusercontent.com/kodinerds/repo/master/addons.xml.md5</checksum>
-		<datadir zip="true">https://raw.githubusercontent.com/kodinerds/repo/master/</datadir>
-                <broken>deprecated</broken>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary>Most of the addon have been abandoned, and Patched by someone new. Or have been Found without someone loosing them</summary>
-		<description>Most of the addon have been abandoned, and Patched by someone new. Or have been Found without someone loosing them</description>
-		<disclaimer></disclaimer>
-		<platform>all</platform>
-                <broken>deprecated</broken>
-	</extension>
-        <broken>Kodinerds Repo ersetzt Lost und Found</broken>
-</addon>
-
 <addon id="plugin.video.4playersweb" name="4players (Webbased)" version="0.2.1" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.20.0" />
@@ -2315,22 +2199,6 @@ Orginal Code was from AddonScriptorDE</disclaimer>
 		<disclaimer lang="en_NZ">Confluence is based on the work of Jezz_X and Team XBMC</disclaimer>
 		<disclaimer lang="en_US">Confluence is based on the work of Jezz_X and Team XBMC</disclaimer>
 		<platform>all</platform>
-	</extension>
-</addon>
-
-<addon id="repository.kodinerds_WIN_32" name="kodinerds.net Binary Addons for Windows" version="1.0.3" provider-name="L0RE">
-	<extension point="xbmc.addon.repository" name="L0RE">
-		<info compressed="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/WIN_32/addons.xml</info>
-		<checksum>https://raw.githubusercontent.com/kodinerds/binary-repo/master/WIN_32/addons.xml.md5</checksum>
-		<datadir zip="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/WIN_32/</datadir>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="en">Official Repository of Kodinerds</summary>
-		<summary lang="de">Offizielles Repository der Kodinerds</summary>
-		<description lang="en">This is the official Repository of the german Community 'Kodinerds' which you'll find at www.kodinerds.net. Most of the hosted Addons are supported by the members of the Community. Enjoy!</description>
-		<description lang="de">Das ist das offizielle Repository der deutschen Community 'Kodinerds', welche Du unter www.kodinerds.net findest. Die meisten der hier gehosteten Addons werden von den Mitgliedern der Community aktiv supported. Viel Spaß!</description>
-		<disclaimer></disclaimer>
-		<platform>windx</platform>
 	</extension>
 </addon>
 
@@ -2965,22 +2833,6 @@ oder online unter https://goo.gl/GtK41L nachlesen.
 
 </addon>
 
-<addon id="repository.kodinerds_Generic_x68_64" name="kodinerds.net Binary Addons for Generic Linux" version="1.0.3" provider-name="L0RE">
-	<extension point="xbmc.addon.repository" name="L0RE">
-		<info compressed="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/Generic_x68_64/addons.xml</info>
-		<checksum>https://raw.githubusercontent.com/kodinerds/binary-repo/master/Generic_x68_64/addons.xml.md5</checksum>
-		<datadir zip="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/Generic_x68_64/</datadir>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="en">Official Repository of Kodinerds</summary>
-		<summary lang="de">Offizielles Repository der Kodinerds</summary>
-		<description lang="en">This is the official Repository of the german Community 'Kodinerds' which you'll find at www.kodinerds.net. Most of the hosted Addons are supported by the members of the Community. Enjoy!</description>
-		<description lang="de">Das ist das offizielle Repository der deutschen Community 'Kodinerds', welche Du unter www.kodinerds.net findest. Die meisten der hier gehosteten Addons werden von den Mitgliedern der Community aktiv supported. Viel Spaß!</description>
-		<disclaimer></disclaimer>
-		<platform>linux</platform>
-	</extension>
-</addon>
-
 <addon id="context.kodinerds.thumpup" name="Empfehlungen für Kodinerds" version="0.3.1" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.20.0" />
@@ -3023,22 +2875,6 @@ oder online unter https://goo.gl/GtK41L nachlesen.
     <email>4lb3rtO@gmx.de</email>
     <source></source>
   </extension>
-</addon>
-
-<addon id="repository.kodinerds" name="kodinerds.net Add-ons" version="6.0.0" provider-name="L0RE">
-	<extension point="xbmc.addon.repository" name="L0RE">
-		<info compressed="true">https://raw.githubusercontent.com/kodinerds/repo/master/addons.xml</info>
-		<checksum>https://raw.githubusercontent.com/kodinerds/repo/master/addons.xml.md5</checksum>
-		<datadir zip="true">https://raw.githubusercontent.com/kodinerds/repo/master/</datadir>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="en">Official Repository of Kodinerds</summary>
-		<summary lang="de">Offizielles Repository der Kodinerds</summary>
-		<description lang="en">This is the official Repository of the german Community 'Kodinerds' which you'll find at www.kodinerds.net. Most of the hosted Addons are supported by the members of the Community. Enjoy!</description>
-		<description lang="de">Das ist das offizielle Repository der deutschen Community 'Kodinerds', welche Du unter www.kodinerds.net findest. Die meisten der hier gehosteten Addons werden von den Mitgliedern der Community aktiv supported. Viel Spaß!</description>
-		<disclaimer></disclaimer>
-		<platform>all</platform>
-	</extension>
 </addon>
 
 <addon id="plugin.video.maxdome" name="maxdome" version="1.0.3.2" provider-name="frankr612">
@@ -3109,22 +2945,6 @@ oder online unter https://goo.gl/GtK41L nachlesen.
             <screenshot>resources\screenshot-03.jpg</screenshot>
         </assets>
     </extension>
-</addon>
-
-<addon id="repository.saxbmc" name="SaXBMC Addon Repo" version="1.0.1" provider-name="Birger Jesch">
-	<extension point="xbmc.addon.repository" name="SaXBMC Addon Repo">
-		<info compressed="true">https://raw.githubusercontent.com/b-jesch/SaXBMC/master/addons.xml</info>
-		<checksum>https://raw.githubusercontent.com/b-jesch/SaXBMC/master/addons.xml.md5</checksum>
-		<datadir zip="true">https://raw.githubusercontent.com/b-jesch/SaXBMC/master/zip/</datadir>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="en">Some useful services and scripts for use within Kodi</summary>
-		<description lang="en">Get some useful services and scripts that makes life with kodi easier.</description>
-		<summary lang="de">Nützliche Dienste und Programme für Kodi</summary>
-		<description lang="de">Installiere nützliche Dienste oder Programme, die Dir das Leben mit Kodi einfacher machen.</description>
-		<disclaimer></disclaimer>
-		<platform>all</platform>
-	</extension>
 </addon>
 
 <addon id="plugin.video.spotitube" name="Youtube Music" version="2.0.7" provider-name="LORE/realvito">
@@ -3259,22 +3079,6 @@ oder online unter https://goo.gl/GtK41L nachlesen.
     <email>andreas at vogler dot name</email>
     <platform>all</platform>
   </extension>
-</addon>
-
-<addon id="repository.kodinerds_Odroid_C2" name="kodinerds.net Binary Addons for Odroid_C2" version="1.0.3" provider-name="L0RE">
-	<extension point="xbmc.addon.repository" name="L0RE">
-		<info compressed="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/Odroid_C2/addons.xml</info>
-		<checksum>https://raw.githubusercontent.com/kodinerds/binary-repo/master/Odroid_C2/addons.xml.md5</checksum>
-		<datadir zip="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/Odroid_C2/</datadir>
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<summary lang="en">Official Repository of Kodinerds</summary>
-		<summary lang="de">Offizielles Repository der Kodinerds</summary>
-		<description lang="en">This is the official Repository of the german Community 'Kodinerds' which you'll find at www.kodinerds.net. Most of the hosted Addons are supported by the members of the Community. Enjoy!</description>
-		<description lang="de">Das ist das offizielle Repository der deutschen Community 'Kodinerds', welche Du unter www.kodinerds.net findest. Die meisten der hier gehosteten Addons werden von den Mitgliedern der Community aktiv supported. Viel Spaß!</description>
-		<disclaimer></disclaimer>
-		<platform>linux</platform>
-	</extension>
 </addon>
 
 <addon id="plugin.video.zattoo_com" name="Zattoo Live TV" version="1.1.1" provider-name="PUR3">
