@@ -1660,7 +1660,7 @@ Orginal Code was from AddonScriptorDE</disclaimer>
 	</extension>
 </addon>
 
-<addon id="plugin.video.wdr" name="WDR" version="0.8.7" provider-name="L0RE">
+<addon id="plugin.video.wdr" name="WDR" version="0.8.8" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
     </requires>
@@ -1676,6 +1676,7 @@ Orginal Code was from AddonScriptorDE</disclaimer>
     <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.wdr</source>
     <forum>http://www.kodinerds.net/index.php/Thread/46939-Repo-Lost-Found/</forum>
     <email>andreas at vogler dot name</email>
+    <broken>Membrane hat ein Funtkionierendes Addon es macht kein sinn fuer 2 Addons </broken>
     <platform>all</platform>
   </extension>
 </addon>
@@ -2732,7 +2733,7 @@ NOTE: Streams are available in SD only
 	</extension>
 </addon>
 
-<addon id="plugin.video.tivi_de" name="ZDF tivi" version="1.0.3" provider-name="L0RE">
+<addon id="plugin.video.tivi_de" name="ZDF tivi" version="1.0.5" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
     </requires>
@@ -2752,6 +2753,7 @@ NOTE: Streams are available in SD only
         <forum>http://forum.xbmc.org/showthread.php?tid=132563</forum>
         <email>andreas at vogler dot name</email>
         <website>http://www.tivi.de</website>
+        <broken>Membrane will do a new Addon so this one will not be osbolated </broken>
     </extension>
 </addon>
 
