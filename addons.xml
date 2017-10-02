@@ -184,7 +184,7 @@ Zattoo Live TV, Aufnahmen und EPG
   </extension>
 </addon>
 
-<addon id="plugin.video.sporttotal" name="Sport total" version="0.2.2" provider-name="L0RE">
+<addon id="plugin.video.sporttotal" name="Sport total (dev)" version="0.3.0" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
         <import addon="script.module.beautifulsoup4" version="4.3.2"/>
@@ -910,6 +910,7 @@ Vous pouvez regarder le sport que vous aimez, vivez et sur demande à un moment 
         <website>http://kikaplus.net/clients/kika/kikaplus/</website>
     </extension>
 </addon>
+
 
 <addon id="plugin.video.netzkino_de" name="Netzkino" version="2.2.4" provider-name="L0RE">
 	<requires>
