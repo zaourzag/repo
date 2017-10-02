@@ -2,7 +2,7 @@
 # Module: Utils
 # Author: asciidisco
 # Created on: 24.07.2017
-# License: MIT https://goo.gl/xF5sC4
+# License: MIT https://goo.gl/WA1kby
 
 """ADD ME"""
 
@@ -17,8 +17,9 @@ import xbmcaddon
 class Utils(object):
     """ADD ME"""
 
-    def __init__(self, kodi_base_url):
+    def __init__(self, kodi_base_url, constants):
         """ADD ME"""
+        self.constants = constants
         self.kodi_base_url = kodi_base_url
 
     def get_addon_data(self):
@@ -30,8 +31,7 @@ class Utils(object):
             version=addon.getAddonInfo('version'),
             fanart=addon.getAddonInfo('fanart'),
             base_data_path=base_data_path,
-            cookie_path=base_data_path + 'COOKIE'
-        )
+            cookie_path=base_data_path + 'COOKIE')
 
     def log(self, msg, level=xbmc.LOGNOTICE):
         """ADD ME"""
@@ -65,10 +65,9 @@ class Utils(object):
             use_inputstream = True
         return use_inputstream
 
-    @classmethod
-    def get_addon(cls):
+    def get_addon(self):
         """ADD ME"""
-        return xbmcaddon.Addon()
+        return xbmcaddon.Addon(self.constants.get_addon_id())
 
     @classmethod
     def generate_hash(cls, text):
@@ -80,9 +79,12 @@ class Utils(object):
         """ADD ME"""
         cap = ''
         words = sentence.decode('utf-8').split(' ')
+        i = 0
         for word in words:
+            if i > 0:
+                cap += ' '
             cap += word[:1].upper() + word[1:].lower()
-            cap += ' '
+            i += 1
         return cap.encode('utf-8')
 
     @classmethod
@@ -147,8 +149,5 @@ class Utils(object):
         # Windows
         if system == 'Windows':
             return base.replace('%PL%', '(Windows NT 6.1; WOW64)')
-        # ARM based Linux
-        if platform.machine().startswith('arm'):
-            return base.replace('%PL%', '(X11; CrOS armv7l 7647.78.0)')
         # x86 Linux
         return base.replace('%PL%', '(X11; Linux x86_64)')
