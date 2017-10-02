@@ -2,7 +2,7 @@
 # Module: Utils
 # Author: asciidisco
 # Created on: 24.07.2017
-# License: MIT https://goo.gl/xF5sC4
+# License: MIT https://goo.gl/WA1kby
 
 """ADD ME"""
 
@@ -32,14 +32,14 @@ class Settings(object):
             error_msg = '[%s] error: failed to get device id (%s)'
             self.utils.log(error_msg % (self.addon_id, str(mac_addr)))
             self.dialogs.show_storing_credentials_failed()
-            return False
+            return 'UnsafeStaticSecret'
 
     def encode(self, data):
         """ADD ME"""
         key_handle = pyDes.triple_des(
-            key=self.uniq_id(delay=2),
-            mode=pyDes.CBC,
-            pad='\0\0\0\0\0\0\0\0',
+            self.uniq_id(delay=2),
+            pyDes.CBC,
+            "\0\0\0\0\0\0\0\0",
             padmode=pyDes.PAD_PKCS5)
         encrypted = key_handle.encrypt(
             data=data)
@@ -48,9 +48,9 @@ class Settings(object):
     def decode(self, data):
         """ADD ME"""
         key_handle = pyDes.triple_des(
-            key=self.uniq_id(delay=2),
-            mode=pyDes.CBC,
-            pad='\0\0\0\0\0\0\0\0',
+            self.uniq_id(delay=2),
+            pyDes.CBC,
+            "\0\0\0\0\0\0\0\0",
             padmode=pyDes.PAD_PKCS5)
         decrypted = key_handle.decrypt(
             data=base64.b64decode(s=data))
@@ -68,8 +68,15 @@ class Settings(object):
         addon = self.utils.get_addon()
         user = self.dialogs.show_email_dialog()
         password = self.dialogs.show_password_dialog()
-        addon.setSetting('email', self.encode(user))
-        addon.setSetting('password', self.encode(password))
+        do_encrypt = addon.getSetting('encrypt_credentials')
+        if do_encrypt == 'True':
+            _mail = self.encode(user)
+            _password = self.encode(password)
+        else:
+            _mail = user
+            _password = password
+        addon.setSetting('email', _mail)
+        addon.setSetting('password', _password)
         return (user, password)
 
     def get_credentials(self):
@@ -77,6 +84,8 @@ class Settings(object):
         addon = self.utils.get_addon()
         user = addon.getSetting('email')
         password = addon.getSetting('password')
+        if '@' in user:
+            return (user, password)
         return (self.decode(user), self.decode(password))
 
     @classmethod

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+	<category label="30000">
+		<setting label="30111" type="lsep"/>
+		<setting label="30101" type="bool" id="forceView" default="false"/>
+		<setting label="30102" type="number" id="viewID" default="51" enable="eq(-1,true)"/>
+		<setting type="sep"/>
+		<setting label="30112" type="lsep"/>
+		<setting label="30103" type="bool" id="enableChannelID" default="true"/>
+		<setting label="30104" type="bool" id="enableTVnow" default="false"/>
+		<setting type="sep"/>
+		<setting label="30113" type="lsep"/>
+		<setting label="30105" type="bool" id="useThumbAsFanart" default="true"/>
+		<setting type="sep"/>
+		<setting label="30114" type="lsep"/>
+		<setting label="30106" type="bool" id="enableDebug" default="false"/>
+	</category>
+	<category label="30001">
+		<setting label="30115" type="lsep"/>
+		<setting label="30107" type="enum" id="streamSelection" values="auto|mp4" default="0"/>
+		<setting label="30116" type="lsep"/>
+		<setting label="30150" type="text" option="readable"/>
+		<setting label="30151" type="text" option="readable"/>
+		<setting label="30152" type="text" option="readable"/>
+	</category>
+</settings>

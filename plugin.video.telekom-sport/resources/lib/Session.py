@@ -2,7 +2,7 @@
 # Module: Session
 # Author: asciidisco
 # Created on: 24.07.2017
-# License: MIT https://goo.gl/xF5sC4
+# License: MIT https://goo.gl/WA1kby
 
 """ADD ME"""
 
@@ -89,11 +89,10 @@ class Session(object):
             data=payload)
         soup = BeautifulSoup(login_res.text, 'html.parser')
         success = 'Sport' in soup.find('title').get_text()
-        if success:
+        if success is True:
             self.save_session()
             return True
-        else:
-            return False
+        return False
 
     def logout(self):
         """ADD ME"""

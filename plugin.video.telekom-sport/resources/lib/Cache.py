@@ -2,7 +2,7 @@
 # Module: Cache
 # Author: asciidisco
 # Created on: 24.07.2017
-# License: MIT https://goo.gl/xF5sC4
+# License: MIT https://goo.gl/WA1kby
 
 """Caching facade for KODIs window API"""
 
@@ -69,5 +69,9 @@ class Cache(object):
 
     @classmethod
     def __get_window_instance(cls):
-        """Returns the current window instance from KODI"""
+        """
+        Returns the current window instance from KODI
+
+        :returns: xmbcguiWindow -- Window instance
+        """
         return xbmcgui.Window(xbmcgui.getCurrentWindowId())

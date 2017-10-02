@@ -2,7 +2,7 @@
 # Module: default
 # Author: asciidisco
 # Created on: 24.07.2017
-# License: MIT https://goo.gl/xF5sC4
+# License: MIT https://goo.gl/WA1kby
 
 """Kodi plugin for Telekom Sport (https://telekomsport.de)"""
 
@@ -25,7 +25,7 @@ KODI_BASE_URL = argv[0]
 # init plugin object structure
 CONSTANTS = Constants()
 CACHE = Cache()
-UTILS = Utils(kodi_base_url=KODI_BASE_URL)
+UTILS = Utils(constants=CONSTANTS, kodi_base_url=KODI_BASE_URL)
 DIALOGS = Dialogs(utils=UTILS)
 ITEM_HELPER = ItemHelper(constants=CONSTANTS, utils=UTILS)
 SETTINGS = Settings(utils=UTILS, dialogs=DIALOGS, constants=CONSTANTS)
@@ -53,20 +53,21 @@ def router(paramstring, user, password):
     # settings action routes
     processed = __settings_action(params=params)
     # check login
-    processed = __login_failed_action(user=user, password=password)
+    if __login_failed_action(user=user, password=password) is False:
+        return False
     # plugin list & video routes
-    # show main menue, selection of sport categories
-    processed = __sport_selection_action(keys=keys, processed=processed)
     # play a video
     processed = __play_action(params=params, processed=processed)
     # show details of the match found (gamereport, relive, interviews...)
     processed = __match_details_action(params=params, processed=processed)
-    # show list of found matches/videos
-    processed = __match_details_action(params=params, processed=processed)
-    # show contents scraped from the api (with website scraped id)
-    processed = __matches_list_action(params=params, processed=processed)
+    # show main menue, selection of sport categories
+    processed = __sport_selection_action(keys=keys, processed=processed)
     # show contents (lanes) scraped from the website
     processed = __event_lane_action(params=params, processed=processed)
+    # show list of found matches/videos
+    processed = __categories_action(params=params, processed=processed)
+    # show contents scraped from the api (with website scraped id)
+    processed = __matches_list_action(params=params, processed=processed)
     return processed
 
 
@@ -86,8 +87,8 @@ def __login_failed_action(user, password):
     if SESSION.login(user, password) is False:
         # show login failed dialog if login didn't succeed
         DIALOGS.show_login_failed_notification()
-        return True
-    return False
+        return False
+    return True
 
 
 def __sport_selection_action(keys, processed):
@@ -131,9 +132,10 @@ def __event_lane_action(params, processed):
 
 def __categories_action(params, processed):
     """ADD ME"""
-    if params.get('for') is not None and processed is False:
+    _for = params.get('for')
+    if _for is not None and processed is False:
         CONTENT_LOADER.show_sport_categories(
-            sport=params.get('for'))
+            sport=_for)
         return True
     return False
 
