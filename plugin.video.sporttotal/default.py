@@ -30,7 +30,6 @@ profile    = xbmc.translatePath( addon.getAddonInfo('profile') ).decode("utf-8")
 temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
 
 
-mainurl="http://www.myspass.de"
 #Directory für Token Anlegen
 if not xbmcvfs.exists(temp):       
        xbmcvfs.mkdirs(temp)
@@ -63,18 +62,15 @@ def parameters_string_to_dict(parameters):
   return paramDict
   
     
-def addDir(name, url, mode, iconimage, desc="",live=1):
-  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&live="+str(live)
-  liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=iconimage)
-  liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc})
-  if useThumbAsFanart:
-    if not iconimage or iconimage==icon or iconimage==defaultThumb:
-      iconimage = defaultBackground    
-    liz.setArt({ 'fanart': iconimage })
-  else:
-    liz.setArt({ 'fanart': defaultBackground })    
-  ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
-  return ok
+def addDir(name, url, mode, iconimage, desc="",text="",page="",ffilter="",ttype=""):
+    debug("FFILTER :"+ ffilter)
+    u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&text="+str(text)+"&page="+str(page)+"&name"+str(name)+"&ffilter="+urllib.quote_plus(ffilter)
+    u=u+"&ttype="+urllib.quote_plus(ttype)
+    ok = True
+    liz = xbmcgui.ListItem(name, iconImage="DefaultFolder.png", thumbnailImage=iconimage)
+    liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc})
+    ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
+    return ok
   
 def addLink(name, url, mode, iconimage, duration="", desc="",artist_id="",genre="",shortname="",production_year=0,zeit=0,liedid=0):  
   cd=addon.getSetting("password")  
@@ -123,105 +119,127 @@ def getUrl(url,data="x"):
 params = parameters_string_to_dict(sys.argv[2])
 mode = urllib.unquote_plus(params.get('mode', ''))
 url = urllib.unquote_plus(params.get('url', ''))
-live = urllib.unquote_plus(params.get('live', ''))
+ffilter = urllib.unquote_plus(params.get('ffilter', ''))
+ttype = urllib.unquote_plus(params.get('ttype', ''))
+debug(params)
 
-
-def top20(url,live=0)      :
-        content=getUrl(url)        
-        htmlPage = BeautifulSoup(content, 'html.parser')        
-        liste = htmlPage.find("div",{"class" :"place2"})        
-        elemente=liste.findAll("div",{"class" :"template"})
-        for element in elemente:  
-          debug(element)
-          try:          
-            tBegegnungLabel3=element.find("span",{"class" :"tBegegnungLabel3"}).string.encode("utf-8")
-          except:
-            tBegegnungLabel3=""
-          try:        
-            BegegnungLabel=element.find("span",{"class" :"BegegnungLabel"}).string.encode("utf-8")
-          except:
-            try:
-                BegegnungLabel=element.find("span",{"class" :"tBegegnungLabel"}).string.encode("utf-8")         
-            except:
-                continue
-          try:
-            BegegnungLabel2=element.find("span",{"class" :"BegegnungLabel2"}).string.encode("utf-8")
-          except:
-            BegegnungLabel2=element.find("span",{"class" :"tBegegnungLabel2"}).string.encode("utf-8")
-          try:
-            staffelnameLabel=element.find("span",{"class" :"staffelnameLabel"}).string.encode("utf-8")
-          except:
-            staffelnameLabel=element.find("span",{"class" :"tstaffelnameLabel"}).string.encode("utf-8")
-          
-          dates=element.findAll("span",{"class" :"Spieldatum"})
-          if len(dates)==0:
-            dates=element.findAll("span",{"class" :"tSpieldatum"})
-          datum=dates[0].string.encode("utf-8")
-          try:
-              zeit=dates[1].string.encode("utf-8")
-          except:
-               zeit=""
-          try:
-             urln_sub=element.find("a",{"class" :"LiveLink"})['href']        
-          except:
-             urln_sub=element.find("a",{"class" :"tLiveLink"})['href']        
-          urllink="https://www.sporttotal.tv/"+urln_sub
-          if live=="1":
-            if tBegegnungLabel3=="":
-              subject=datum+" "+zeit +" - "+ BegegnungLabel +" - "+BegegnungLabel2 
-            else:
-              subject=datum+" "+zeit +" - "+ tBegegnungLabel3+" ( "+BegegnungLabel +" - "+BegegnungLabel2+" )"
-          else:             
-            if tBegegnungLabel3=="":
-              subject=BegegnungLabel +" - "+BegegnungLabel2 +"( "+ datum+" "+zeit +" )"
-            else:
-              subject=tBegegnungLabel3+" ( "+BegegnungLabel +" - "+BegegnungLabel2 +" "+ datum+" "+zeit +" )"
-            xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
-          addLink(subject, urllink, 'playvideo', "")    
-        xbmcplugin.endOfDirectory(addon_handle)
 def playvideo(url):
+  debug("URL PLAY : "+url)
   content=getUrl(url) 
   file=re.compile('file: "(.+?)"', re.DOTALL).findall(content)[0]
   listitem = xbmcgui.ListItem(path=file)
   xbmcplugin.setResolvedUrl(addon_handle, True, listitem)
 
   
-def liegen():  
-  addDir("Regionalliega Nord", "https://www.sporttotal.tv/ligen.aspx?CM=agi1", 'Top20',"https://www.sporttotal.tv/cpics/block1-4.png")   
-  addDir("BayernLiga Süd", "https://www.sporttotal.tv/ligen.aspx?CM=agi2", 'Top20',"https://www.sporttotal.tv/cpics/block2-4.png")   
-  addDir("BayernLiga Nord", "https://www.sporttotal.tv/ligen.aspx?CM=agi3", 'Top20',"https://www.sporttotal.tv/cpics/block2-4.png")   
-  addDir("Oberliega Niedersachsen", "https://www.sporttotal.tv/ligen.aspx?CM=agi4", 'Top20',"https://www.sporttotal.tv/cpics/block4-4.png")   
+  
+def live(url):
+  xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
+  content=getUrl(url)
+  htmlPage = BeautifulSoup(content, 'html.parser')   
+  videoliste = htmlPage.findAll("div",{"class" :"col-sm-3 related-videos"})        
+  liste = videoliste.findAll("li")        
+  for element in liste:   
+          name=element.findAll("h4")[0].text
+          datum=element.find("h4",{"class" :"date"}).text
+          url="https://www.sporttotal.tv"+ element.find("a")["href"]    
+          addDir(name, url, 'playvideo',"")   
+  xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)           
+
+def highlite_filter(url,ffilter=""):
+    debug("------------------------")
+    debug("highlite_filter filter :"+ffilter)
+    params = parameters_string_to_dict(ffilter)
+    liga = urllib.unquote_plus(params.get('liga', ''))    
+    saison = urllib.unquote_plus(params.get('saison', '')) 
+    verein = urllib.unquote_plus(params.get('verein', ''))
+    debug("LIGA :"+liga+"#")
+    debug("saison :"+saison)
+    debug("verein :"+verein)
+    ligafilter=""
+    saisonfilter=""
+    vereinfilter=""
+    if not liga=='' and not liga=="Alle Ligen":  
+       ligafilter="&liga="+liga.replace(" ","+")
+    if not saison=="" and not saison=="-- Saison --":        
+       saisonfilter="&saison="+saison.replace(" ","+")         
+    if not verein=="" and not verein=="-- Verein --":      
+       vereinfilter="&verein="+verein.replace(" ","+")               
+    if ligafilter=="":
+      addDir("Liega", url, 'highlite',"",ffilter=ligafilter+saisonfilter+vereinfilter,ttype="liga")   
+    if saisonfilter=="":    
+        addDir("Saison", url, 'highlite',"",ffilter=ligafilter+saisonfilter+vereinfilter,ttype="saison")   
+    if vereinfilter=="":    
+        addDir("Verein", url, 'highlite',"",ffilter=ligafilter+saisonfilter+vereinfilter,ttype="verein")       
+    addDir("Alle", url, 'subliste',"",ffilter=ligafilter+saisonfilter+vereinfilter)  
+    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)           
+
+def highlite(url,ffilter="",ttype=""):
+    debug("--------------------")
+    debug("highlite ffilter :"+ffilter)
+    content=getUrl(url)
+    htmlPage = BeautifulSoup(content, 'html.parser')       
+    #<select name="liga" class="form-control">
+    listelement = htmlPage.find("select",{"name" :ttype})  
+    debug(listelement)
+    liste = listelement.findAll("option")     
+    for element in liste:   
+       name=element.text.encode("utf-8").strip()       
+       debug("--- >"+ name +" : "+       "&liga="+name)
+       addDir(name, url, 'highlite_filter',"",ffilter=ffilter+"&"+ttype+"="+name)   
+    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)  
+
+def subliste(url,ffilter=""):
+  print("URL Subliste :"+url+ffilter)
+  content=getUrl(url+ffilter)
+  htmlPage = BeautifulSoup(content, 'html.parser')    
+  liste = htmlPage.findAll("section",{"class" :"container home-tile"})     
+  for element in liste:     
+     rubrik = element.find("h2",{"class" :"section-title"}).text
+     addDir(rubrik, url+ffilter, 'listvideo',"",ffilter=rubrik)   
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
   
-def Vereine(url):
-  xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
-  xurl="https://www.sporttotal.tv/Vereine.aspx"
-  content=getUrl(xurl)
-  htmlPage = BeautifulSoup(content, 'html.parser')        
-  liste = htmlPage.findAll("div",{"class" :"place4a"})        
-  for element in liste:   
-          name=element.find("div",{"class" :"vdhb1"}).string.encode("utf-8")
-          url="https://www.sporttotal.tv/"+ element.find("a")["href"]
-          bild = "https://www.sporttotal.tv/"+element.find("img")["src"]
-          addDir(name, url, 'Top20',bild)   
-  xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)           
+def  listvideo( url,rubrik_suche):
+  debug("listvideo  url:"+url)
+  debug("listvideo  rubrik_suche:"+rubrik_suche)
+  content=getUrl(url)
+  htmlPage = BeautifulSoup(content, 'html.parser')    
+  liste = htmlPage.findAll("section",{"class" :"container home-tile"})     
+  for element in liste:     
+     rubrik = element.find("h2",{"class" :"section-title"}).text
+     if rubrik==rubrik_suche:
+       liste2 = element.findAll("a",{"class" :"teaser-tile-clip"}) 
+       for element2 in liste2:        
+        urll=element2["href"]
+        img=element2.find("img")["src"]
+        datum=element2.find("h4",{"class" :"date"}).text        
+        beschreibung1=element2.findAll("h4",{"class" :"caption"})[0].text.encode("utf-8").strip()     
+        beschreibung2=element2.findAll("h4",{"class" :"caption"})[1].text.encode("utf-8").strip()      
+        debug("URLL :"+urll)
+        debug("img :"+img)
+        debug("beschreibung1 :"+beschreibung1)
+        debug("beschreibung2 :"+beschreibung2)
+        addLink(beschreibung1+" - "+beschreibung2,"https://www.sporttotal.tv"+urll, 'playvideo',img)   
+  xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)  
+
+  
   
 if mode is '':
-    addDir("TOPSPIEL DER WOCHE", "https://www.sporttotal.tv/default.aspx", 'Top20',"")   
-    addDir("Top Clips", "https://www.sporttotal.tv/topclips.aspx", 'Top20',"")   
-    addDir("Vereine", "", 'Vereine',"")   
-    addDir("Liegen", "", 'liegen',"")   
-    addDir("Live", "https://www.sporttotal.tv/livegames.aspx", 'Top20',"",live=1)   
+    #addDir("Live", "https://www.sporttotal.tv/live/", 'Live',"",live=1)   
+    addDir("Highlights", "https://www.sporttotal.tv/highlights?x=1", 'highlite_filter',"",ffilter="")   
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
 else:
   # Wenn Settings ausgewählt wurde
   if mode == 'Settings':
           addon.openSettings()
-  if mode == 'Top20':
-          top20(url,live)
+  if mode == 'Live':
+          live(url)
   if mode == 'playvideo':
-          playvideo(url) 
-  if mode == 'liegen':
-          liegen()                        
-  if mode == 'Vereine':
-          Vereine(url)            
+          playvideo(url)
+  if mode == 'highlite':
+          highlite(url,ffilter=ffilter,ttype=ttype)   
+  if mode == 'highlite_filter':
+          highlite_filter(url,ffilter=ffilter)             
+  if mode == 'subliste':
+          subliste(url,ffilter=ffilter)   
+  if mode == 'listvideo':
+          listvideo(url,ffilter)             
