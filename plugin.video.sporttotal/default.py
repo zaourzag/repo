@@ -136,13 +136,24 @@ def live(url):
   xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
   content=getUrl(url)
   htmlPage = BeautifulSoup(content, 'html.parser')   
-  videoliste = htmlPage.findAll("div",{"class" :"col-sm-3 related-videos"})        
+  videoliste = htmlPage.find("div",{"class" :"col-sm-3 related-videos"})        
   liste = videoliste.findAll("li")        
-  for element in liste:   
+  for element in liste: 
+          debug(element)
           name=element.findAll("h4")[0].text
-          datum=element.find("h4",{"class" :"date"}).text
+          datum=element.find("h4",{"class" :"date"}).text.encode("utf-8").strip()
+          if "LIVE" in name:
+            live=1
+          else :
+             live=0
+          name=name.replace("LIVE","").encode("utf-8").strip()
+          if live==1:
+             name =" ( LIVE ) "+name 
+          else:
+              name = datum +" - "+name
+          debug("NAME :"+name)          
           url="https://www.sporttotal.tv"+ element.find("a")["href"]    
-          addDir(name, url, 'playvideo',"")   
+          addLink(name, url, 'playvideo',"")   
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)           
 
 def highlite_filter(url,ffilter=""):
@@ -221,17 +232,31 @@ def  listvideo( url,rubrik_suche):
         addLink(beschreibung1+" - "+beschreibung2,"https://www.sporttotal.tv"+urll, 'playvideo',img)   
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)  
 
-  
+def oberliegen(url):
+    debug("--------------------")
+    debug("highlite ffilter :"+ffilter)
+    content=getUrl(url)
+    htmlPage = BeautifulSoup(content, 'html.parser')       
+    #<select name="liga" class="form-control">
+    listelement = htmlPage.find("select",{"name" :ttype})  
+    debug(listelement)
+    liste = listelement.findAll("option")     
+    for element in liste:   
+       name=element.text.encode("utf-8").strip()       
+       debug("--- >"+ name +" : "+       "&liga="+name)
+       addDir(name, url, 'highlite_filter',"",ffilter=ffilter+"&"+ttype+"="+name)   
+    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)  
+    
   
 if mode is '':
-    #addDir("Live", "https://www.sporttotal.tv/live/", 'Live',"",live=1)   
+    addDir("Live", "https://www.sporttotal.tv/live/", 'live',"")   
     addDir("Highlights", "https://www.sporttotal.tv/highlights?x=1", 'highlite_filter',"",ffilter="")   
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
 else:
   # Wenn Settings ausgewählt wurde
   if mode == 'Settings':
           addon.openSettings()
-  if mode == 'Live':
+  if mode == 'live':
           live(url)
   if mode == 'playvideo':
           playvideo(url)
