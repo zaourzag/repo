@@ -1,3 +1,3 @@
 <settings>
-
+    <setting label="Cache Zeitraum" type="slider" id="cachetime" default="24" range="0,1,100" option="int" />    
 </settings>

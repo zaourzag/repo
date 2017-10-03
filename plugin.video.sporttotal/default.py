@@ -28,7 +28,7 @@ cliplist=[]
 filelist=[]
 profile    = xbmc.translatePath( addon.getAddonInfo('profile') ).decode("utf-8")
 temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
-
+mainurl="https://www.sporttotal.tv"
 
 #Directory für Token Anlegen
 if not xbmcvfs.exists(temp):       
@@ -38,7 +38,13 @@ xbmcplugin.setContent(int(sys.argv[1]), 'musicvideos')
 icon = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')+'/icon.png').decode('utf-8')
 useThumbAsFanart=addon.getSetting("useThumbAsFanart") == "true"
 
+try:
+   import StorageServer
+except:
+   import storageserverdummy as StorageServer
 
+cachezeit=addon.getSetting("cachetime")   
+cache = StorageServer.StorageServer("plugin.video.rtlnow", cachezeit) # (Your plugin name, Cache time in hours
 
 def debug(content):
     log(content, xbmc.LOGDEBUG)
@@ -124,9 +130,17 @@ ttype = urllib.unquote_plus(params.get('ttype', ''))
 debug(params)
 
 def playvideo(url):
-  debug("URL PLAY : "+url)
-  content=getUrl(url) 
-  file=re.compile('file: "(.+?)"', re.DOTALL).findall(content)[0]
+  debug("URL PLAY : "+url)  
+  content = cache.cacheFunction(getUrl,url)
+  file=re.compile('file: "([^"]+?)"', re.DOTALL).findall(content)[0].replace("\n","")
+  suchstring=re.compile('/(.+?)\.mp4', re.DOTALL).findall(file)[0]
+  replacestring=urllib2.quote(suchstring)  
+  debug("suchstring :"+suchstring)
+  debug("replacestring :"+replacestring)
+  file=file.replace(suchstring,replacestring)
+  #file=urllib2.quote(file.encode("utf-8")).replace("%3A",":")  
+  debug("-------------")
+  debug(file)
   listitem = xbmcgui.ListItem(path=file)
   xbmcplugin.setResolvedUrl(addon_handle, True, listitem)
 
@@ -134,7 +148,7 @@ def playvideo(url):
   
 def live(url):
   xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
-  content=getUrl(url)
+  content = cache.cacheFunction(getUrl,url)  
   htmlPage = BeautifulSoup(content, 'html.parser')   
   videoliste = htmlPage.find("div",{"class" :"col-sm-3 related-videos"})        
   liste = videoliste.findAll("li")        
@@ -152,7 +166,7 @@ def live(url):
           else:
               name = datum +" - "+name
           debug("NAME :"+name)          
-          url="https://www.sporttotal.tv"+ element.find("a")["href"]    
+          url=mainurl+ element.find("a")["href"]    
           addLink(name, url, 'playvideo',"")   
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)           
 
@@ -186,8 +200,8 @@ def highlite_filter(url,ffilter=""):
 
 def highlite(url,ffilter="",ttype=""):
     debug("--------------------")
-    debug("highlite ffilter :"+ffilter)
-    content=getUrl(url)
+    debug("highlite ffilter :"+ffilter)    
+    content = cache.cacheFunction(getUrl,url)  
     htmlPage = BeautifulSoup(content, 'html.parser')       
     #<select name="liga" class="form-control">
     listelement = htmlPage.find("select",{"name" :ttype})  
@@ -201,7 +215,7 @@ def highlite(url,ffilter="",ttype=""):
 
 def subliste(url,ffilter=""):
   print("URL Subliste :"+url+ffilter)
-  content=getUrl(url+ffilter)
+  content = cache.cacheFunction(getUrl,url+ffilter)  
   htmlPage = BeautifulSoup(content, 'html.parser')    
   liste = htmlPage.findAll("section",{"class" :"container home-tile"})     
   for element in liste:     
@@ -212,7 +226,7 @@ def subliste(url,ffilter=""):
 def  listvideo( url,rubrik_suche):
   debug("listvideo  url:"+url)
   debug("listvideo  rubrik_suche:"+rubrik_suche)
-  content=getUrl(url)
+  content = cache.cacheFunction(getUrl,url)
   htmlPage = BeautifulSoup(content, 'html.parser')    
   liste = htmlPage.findAll("section",{"class" :"container home-tile"})     
   for element in liste:     
@@ -229,13 +243,13 @@ def  listvideo( url,rubrik_suche):
         debug("img :"+img)
         debug("beschreibung1 :"+beschreibung1)
         debug("beschreibung2 :"+beschreibung2)
-        addLink(beschreibung1+" - "+beschreibung2,"https://www.sporttotal.tv"+urll, 'playvideo',img)   
+        addLink(beschreibung1+" - "+beschreibung2,mainurl+urll, 'playvideo',img)   
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)  
 
 def oberliegen(url):
     debug("--------------------")
-    debug("highlite ffilter :"+ffilter)
-    content=getUrl(url)
+    debug("highlite ffilter :"+ffilter)   
+    content = cache.cacheFunction(getUrl,url)
     htmlPage = BeautifulSoup(content, 'html.parser')       
     #<select name="liga" class="form-control">
     listelement = htmlPage.find("select",{"name" :ttype})  
@@ -246,11 +260,74 @@ def oberliegen(url):
        debug("--- >"+ name +" : "+       "&liga="+name)
        addDir(name, url, 'highlite_filter',"",ffilter=ffilter+"&"+ttype+"="+name)   
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)  
-    
-  
+
+def topclips(url):    
+    content = cache.cacheFunction(getUrl,url)
+    htmlPage = BeautifulSoup(content, 'html.parser')     
+    listelement = htmlPage.find_all("a",{"class" :"dropdown-item"})  
+    for element in listelement:
+       debug("-----")
+       debug(element)
+       name=element.text.encode("utf-8").strip()   
+       wert=element["data-target"]
+       addDir(name, url, 'list_top_a',"",ffilter=wert)   
+    listelement = htmlPage.findAll("h2",{"class" :"section-title"})  
+    for element in listelement:
+        name=element.text.encode("utf-8").strip()   
+        addDir(name, url, 'list_top_b',"",ffilter=name)   
+    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
+
+def   list_top_a(url,rubrik)  :
+   debug("URL : "+url)
+   debug("Rubrik : "+rubrik)
+   if rubrik==".related-content.clips":
+       rubrik="related-content show clips"
+   if rubrik==".related-content.vod":
+       rubrik="related-content vod"      
+   content = cache.cacheFunction(getUrl,url)
+   htmlPage = BeautifulSoup(content, 'html.parser') 
+   komplett = htmlPage.find("ul",{"class" :rubrik})  
+   listelement = komplett.findAll("li")
+   for element in listelement:    
+     link = element.find("a")["href"]
+     link =mainurl+link
+     string = element.find("div",{"class" :"item-thumb"})["style"]     
+     img=re.compile('url\((.+)', re.DOTALL).findall(string)[0]
+     img=mainurl+img
+     text = element.findAll("h4")[0].text.encode("utf-8").strip()
+     datum = element.find("h4",{"class" :"date"}).text.encode("utf-8").strip()
+     debug(link)
+     debug("-------")
+     addLink(text+" ( "+datum +" )",link,"playvideo",img)
+   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
+
+def   list_top_b(url,rubrik)   :
+    rubrik=urllib.unquote_plus(rubrik)  
+    content = cache.cacheFunction(getUrl,url)
+    htmlPage = BeautifulSoup(content, 'html.parser') 
+    komplett = htmlPage.findAll("section",{"class" :"container home-tile"})
+    for liste in komplett:
+       rubrikname = liste.find("h2",{"class" :"section-title"}).text.encode("utf-8").strip()
+       debug( rubrik +"<--->"+rubrikname)
+       if not rubrik in rubrikname:
+          continue
+       #
+       videos = liste.findAll("a",{"class" :"teaser-tile-clip"})
+       for video in videos:
+           debug("----------------------")
+           debug(video)
+           link=mainurl+video["href"]
+           img=video.find("img")["src"]
+           title=video.findAll("h4",{"class" :"caption"})[1].text.encode("utf-8").strip()
+           datum=video.find("h4",{"class" :"date"}).text.encode("utf-8").strip()
+           addLink(title+" ( "+datum +" )",link,"playvideo",img)
+    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
+
+   
 if mode is '':
     addDir("Live", "https://www.sporttotal.tv/live/", 'live',"")   
     addDir("Highlights", "https://www.sporttotal.tv/highlights?x=1", 'highlite_filter',"",ffilter="")   
+    addDir("Top Clips", "https://www.sporttotal.tv/topclips/", 'topclips',"")   
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
 else:
   # Wenn Settings ausgewählt wurde
@@ -267,4 +344,10 @@ else:
   if mode == 'subliste':
           subliste(url,ffilter=ffilter)   
   if mode == 'listvideo':
-          listvideo(url,ffilter)             
+          listvideo(url,ffilter)        
+  if mode == 'topclips':
+          topclips(url)
+  if mode == 'list_top_a':
+            list_top_a(url,ffilter)
+  if mode == 'list_top_b':
+            list_top_b(url,ffilter)            
