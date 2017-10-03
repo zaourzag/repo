@@ -184,7 +184,7 @@ Zattoo Live TV, Aufnahmen und EPG
   </extension>
 </addon>
 
-<addon id="plugin.video.sporttotal" name="Sport total (dev)" version="0.3.0" provider-name="L0RE">
+<addon id="plugin.video.sporttotal" name="Sport total (dev)" version="0.3.1" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
         <import addon="script.module.beautifulsoup4" version="4.3.2"/>
@@ -1841,7 +1841,7 @@ Orginal Code was from AddonScriptorDE</disclaimer>
 	</extension>
 </addon>
 
-<addon id="plugin.video.eurosportplayer" version="2.0.3" name="Eurosport Player" provider-name="Jin">
+<addon id="plugin.video.eurosportplayer" version="2.0.4" name="Eurosport Player" provider-name="Jin">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
         <import addon="inputstream.adaptive" version="2.0.10"/>
@@ -1852,8 +1852,7 @@ Orginal Code was from AddonScriptorDE</disclaimer>
     </extension>
     <extension point="xbmc.addon.metadata">
         <news>
-- refresh token for inputstream adaptive (requires v2.1.0)
-- minor updates
+- added all sports (on demand) and events category
         </news>
         
         <summary lang="de_DE">Eurosport live, jederzeit und überall</summary>
