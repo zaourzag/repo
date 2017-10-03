@@ -18,7 +18,7 @@ class Items:
         if force_view:
             xbmc.executebuiltin('Container.SetViewMode({0})'.format(view_id))
 
-    def add(self, item):    
+    def add(self, item):
         data = {
             'mode': item['mode'],
             'title': item['title'],
@@ -34,7 +34,7 @@ class Items:
                 
         labels = {
             'title': item['title'],
-            'plot': item.get('plot', ''),
+            'plot': item.get('plot', item['title']),
             'premiered': item.get('date', ''),
             'episode': item.get('episode', 0)
         }

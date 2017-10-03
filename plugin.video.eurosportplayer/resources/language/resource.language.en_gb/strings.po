@@ -56,6 +56,14 @@ msgctxt "#30103"
 msgid "Schedule"
 msgstr ""
 
+msgctxt "#30104"
+msgid "Events"
+msgstr ""
+
+msgctxt "#30105"
+msgid "All Sports"
+msgstr ""
+
 msgctxt "#30221"
 msgid "Today"
 msgstr ""

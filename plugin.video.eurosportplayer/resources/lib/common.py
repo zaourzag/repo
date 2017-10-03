@@ -48,8 +48,11 @@ def utfenc(str):
 def time_stamp(str_date):
     return datetime.datetime.fromtimestamp(time.mktime(time.strptime(str_date,time_format)))
 
-def plot_time(date_string):
-    return datetime.datetime(*(time.strptime(date_string, time_format)[0:6])).strftime('%H:%M')
+def plot_time(date_string, event):
+    if event:
+        return datetime.datetime(*(time.strptime(date_string, time_format)[0:6])).strftime('%a, %d %b, %H:%M')
+    else:
+        return datetime.datetime(*(time.strptime(date_string, time_format)[0:6])).strftime('%H:%M')
 
 def add_zero(s):
     s = s.strip()

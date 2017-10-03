@@ -11,6 +11,12 @@ def run():
         esp.channel(client.channels())
     elif mode == 'sports':
         esp.sport(client.categories())
+    elif mode == 'all_sports':
+        esp.all_sports(client.category_all())
+    elif mode == 'events':
+        esp.events(client.events())
+    elif mode == 'event':
+        esp.event(client.event(id))
     elif mode == 'videos':
         esp.video(client.videos(id), id)
     elif 'epg' in mode:

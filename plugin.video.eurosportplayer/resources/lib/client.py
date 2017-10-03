@@ -26,42 +26,54 @@ class Client:
             'content-type': 'application/json',
             'authorization': self.ACCESS_TOKEN
         }
-        if query or variables:
-            post_data = {
-                'query': query,
-                'operationName': '',
-                'variables': variables
-            }
-            return requests.post(url, headers=headers, json=post_data).json()
-        else:
-            return requests.get(url, headers=headers).json()
+        variables.update({
+            'language': language,
+            'mediaRights': ['GeoMediaRight'],
+            'preferredLanguages': [language, 'en']
+        })
+        post_data = {
+            'query': query,
+            'operationName': '',
+            'variables': variables
+        }
+        return requests.post(url, headers=headers, json=post_data).json()
         
     def channels(self):
-        url = self.GRAPHQL_URL + '/persisted/query/eurosport/web/Airings/onAir'
-        variables = {
-            'uiLang': language,
-            'mediaRights': ['GeoMediaRight'],
-            'preferredLanguages': [language, 'en']
-        }
-        return self.graphql_request(url, variables=variables)
+        return self.graphql_request(self.GRAPHQL_URL + '/persisted/query/eurosport/web/Airings/onAir')
     
     def categories(self):
-        url = self.GRAPHQL_URL + '/persisted/query/eurosport/ListByTitle/sports_filter'
-        return self.graphql_request(url)
-        
+        return self.graphql_request(self.GRAPHQL_URL + '/persisted/query/eurosport/ListByTitle/sports_filter')
+    
+    def category_all(self):
+        return self.graphql_request(self.GRAPHQL_URL + '/persisted/query/eurosport/CategoryAll')
+    
+    def events(self):
+        return self.graphql_request(self.GRAPHQL_URL + '/persisted/query/eurosport/EventPageByLanguage')
+    
+    def event(self, id):
+        return self.graphql_request(
+            url = self.GRAPHQL_URL + '/persisted/query/eurosport/web/EventPageByContentId',
+            variables = {
+                'contentId': id,
+                'include_media': True,
+                'include_images': True
+            }
+        )
+
     def videos(self, id):
-        return self.graphql_request(url=self.GRAPHQL_URL, query='{ sport_%s:query (index: "eurosport_global",sort: new,page: 1,page_size: 100,type: ["Video","Airing"],must: {termsFilters: [{attributeName: "category", values: ["%s"]}]},must_not: {termsFilters: [{attributeName: "mediaConfigState", values: ["OFF"]}]},should: {termsFilters: [{attributeName: "mediaConfigProductType", values: ["VOD"]},{attributeName: "type", values: ["Video"]}]}) @context(uiLang: "%s") { ... on QueryResponse { ...queryResponse }} }fragment queryResponse on QueryResponse {meta { hits }hits {hit { ... on Airing { ... airingData } ... on Video { ... videoData } }}}fragment airingData on Airing {type contentId mediaId liveBroadcast linear partnerProgramId programId runTime startDate endDate expires genres playbackUrls { href rel templated } channel { id parent callsign partnerId } photos { id uri width height } mediaConfig { state productType type } titles { language title descriptionLong descriptionShort episodeName } }fragment videoData on Video {type contentId epgPartnerProgramId programId appears releaseDate expires runTime genres media { playbackUrls { href rel templated } } titles { title titleBrief episodeName summaryLong summaryShort tags { type value displayName } } photos { rawImage width height photos { imageLocation width height } } }' % (id, id, language))
+        return self.graphql_request(
+            url = self.GRAPHQL_URL,
+            query = '{ sport_%s:query (index: "eurosport_global",sort: new,page: 1,page_size: 1000,type: ["Video","Airing"],must: {termsFilters: [{attributeName: "category", values: ["%s"]}]},must_not: {termsFilters: [{attributeName: "mediaConfigState", values: ["OFF"]}]},should: {termsFilters: [{attributeName: "mediaConfigProductType", values: ["VOD"]},{attributeName: "type", values: ["Video"]}]}) @context(uiLang: "%s") { ... on QueryResponse { ...queryResponse }} }fragment queryResponse on QueryResponse {meta { hits }hits {hit { ... on Airing { ... airingData } ... on Video { ... videoData } }}}fragment airingData on Airing {type contentId mediaId liveBroadcast linear partnerProgramId programId runTime startDate endDate expires genres playbackUrls { href rel templated } channel { id parent callsign partnerId } photos { id uri width height } mediaConfig { state productType type } titles { language title descriptionLong descriptionShort episodeName } }fragment videoData on Video {type contentId epgPartnerProgramId programId appears releaseDate expires runTime genres media { playbackUrls { href rel templated } } titles { title titleBrief episodeName summaryLong summaryShort tags { type value displayName } } photos { rawImage width height photos { imageLocation width height } } }' % (id, id, language)
+        )
     
     def epg(self, prev_date, date):
-        url = self.GRAPHQL_URL + '/persisted/query/eurosport/web/Airings/DateRange'
-        variables = {
-            'startDate': prev_date+'T22:00:00.000Z',
-            'endDate': date+'T21:59:59.999Z',
-            'uiLang': language,
-            'mediaRights': ['GeoMediaRight'],
-            'preferredLanguages': [language, 'en']
-        }
-        return self.graphql_request(url, variables=variables)
+        return self.graphql_request(
+            url = self.GRAPHQL_URL + '/persisted/query/eurosport/web/Airings/DateRange',
+            variables = {
+                'startDate': prev_date+'T22:00:00.000Z',
+                'endDate': date+'T21:59:59.999Z'
+            }
+        )
     
     def license_key(self):
         return '|authorization='+self.ACCESS_TOKEN+'|||plugin://'+addon_id+'/?mode=license_renewal'

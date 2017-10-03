@@ -8,5 +8,9 @@ class Sports:
         self.item = {}
         self.item['mode'] = 'videos'
         self.item['title'] = utfenc(i['tags'][0]['displayName'])
-        self.item['id'] = i['sport']
-        self.item['thumb'] = i['logoImage'][0]['rawImage']
+        sport = i['sport']
+        logo = i['logoImage']
+        if logo and sport:
+            if sport.isdigit():
+                self.item['id'] = sport
+            self.item['thumb'] = logo[0]['rawImage']
