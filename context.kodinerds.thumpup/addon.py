@@ -13,6 +13,7 @@ import requests,cookielib
 from cookielib import LWPCookieJar
 cj = cookielib.CookieJar()
 addon = xbmcaddon.Addon()
+from thetvdb import TheTvDb
 
 profile    = xbmc.translatePath( addon.getAddonInfo('profile') ).decode("utf-8")
 temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
@@ -77,19 +78,19 @@ def gettitle()  :
     title=info.getTVShowTitle()
   except:
     pass
+  try:
+      title=xbmc.getInfoLabel('ListItem.TVShowTitle')
+  except:
+       pass
   if title=="":
-    try:
-        title=xbmc.getInfoLabel('ListItem.TVShowTitle')
-    except:
-        pass
+     title = xbmc.getInfoLabel("ListItem.Title").decode('UTF-8')      
   if title=="":
-   try:
-      title=xbmc.getInfoLabel('ListItem.Title')
-   except:
-      pass
+     title=sys.listitem.getLabel()
+  debug("TITLE :::: "+title)     
   return title
 
-
+def similar(a, b):
+    return SequenceMatcher(None, a, b).ratio()
 
 addon = xbmcaddon.Addon()    
 debug("Hole Parameter")
@@ -111,6 +112,36 @@ if mode=="":
       ok = dialog.ok('Username oder Password fehlt', 'Username oder Password fehlt')
       exit    
     title=gettitle()
+    tvdb = TheTvDb()
+    wert=tvdb.search_series(title,prefer_localized=True)
+    count=0
+    gefunden=0
+    wertnr=0
+    for serie in wert:
+      serienname=serie["seriesName"]
+      nummer=similar(title,serienname)
+      if nummer >wertnr:
+        wertnr=nummer
+        gefunden=count
+      count+=1
+    idd=wert[gefunden]["id"]
+    seriesName=wert[gefunden]["seriesName"]
+    serienstart=wert[gefunden]["firstAired"]
+    inhalt=wert[gefunden]["overview"]
+    serie=tvdb.get_series(idd)
+    Bild=serie["art"]["banner"]
+    summ=tvdb.get_series_episodes_summary(idd)
+    anzahLstaffeln = int(sorted(summ["airedSeasons"],key=int)[-1])
+    if count>0:
+      dialog=xbmcgui.Dialog()
+      ret=dialog.yesno("Serienname richtig?", "Ist der Serienname "+seriesName +" richtig?")
+      if ret==False:
+         count=0         
+         seriesName=title
+      debug("Gefunden :"+seriesName)
+    ret=dialog.yesno("Serie Emfehlen?", "Serienname "+seriesName +" emfehlen?")           
+    if ret==False:
+       exit
     if title=="":
        dialog = xbmcgui.Dialog()
        ok = dialog.ok('Fehler', 'Selectiertes File Hat kein Serie Hinterlegt')
@@ -127,13 +158,19 @@ if mode=="":
 
     sec_token=re.compile("SECURITY_TOKEN = '(.+?)'", re.DOTALL).findall(content)[0]
     hash=re.compile('name="tmpHash" value="(.+?)"', re.DOTALL).findall(content)[0]
-    timestamp=re.compile('data-timestamp="(.+?)"', re.DOTALL).findall(content)[0]   
+    timestamp=re.compile('data-timestamp="(.+?)"', re.DOTALL).findall(content)[0]
+    text="[url='https://www.kodinerds.net/index.php/Thread/58030-Doofe-ideen/\']Aus Kodi Emfolen :[/url] '"+ seriesName+'"'    
+    if count>0:    
+      text=text+"\n"+"[img]"+Bild+"[/img]\n"
+      text=text+"Gestartet am : "+serienstart+"\n"
+      text=text+"Anazhl von Staffeln :"+anzahLstaffeln+"\n"
+      text=text+inhalt+"\n"
     values = {
       'actionName' : 'quickReply',
       'className' : 'wbb\data\post\PostAction',
       'interfaceName': 'wcf\data\IMessageQuickReplyAction',
       'parameters[objectID]': '58034',
-      'parameters[data][message]' : 'Aus Kodi Empfolen : "'+ title.encode("utf-8")+'"',
+      'parameters[data][message]' : text,
       'parameters[data][tmpHash]' : hash,
       'parameters[lastPostTime]':timestamp,
       'parameters[pageNo]':'1'
