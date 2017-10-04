@@ -139,13 +139,16 @@ if mode=="":
       if ret==False:
          count=0         
          seriesName=title
-      debug("Gefunden :"+seriesName)
-    ret=dialog.yesno("Serie Emfehlen?", "Serienname "+seriesName +" emfehlen?")           
+    else:
+      seriesName=title 
+    debug("Gefunden :"+seriesName)
+    dialog=xbmcgui.Dialog()      
+    ret=dialog.yesno("Serie empfehlen?", "Serienname "+seriesName +" emfehlen?")           
     if ret==False:
        exit
     if title=="":
        dialog = xbmcgui.Dialog()
-       ok = dialog.ok('Fehler', 'Selectiertes File Hat kein Serie Hinterlegt')
+       ok = dialog.ok('Fehler', 'Selektiertes File Hat kein Serie hinterlegt')
        exit
     content=geturl("https://www.kodinerds.net/")    
     newurl=re.compile('method="post" action="(.+?)"', re.DOTALL).findall(content)[0]
@@ -153,18 +156,19 @@ if mode=="":
     content=geturl("https://www.kodinerds.net/index.php/Login/",data="username="+username+"&action=login&password="+password+"&useCookies=1&submitButton=Anmelden&url="+newurl+"&t="+sec_token)
     if "Angaben sind ung" in content or "Anmelden oder registrieren"in content:
       dialog = xbmcgui.Dialog()
-      ok = dialog.ok('Username oder Password ungueltig', 'Username oder Password ungueltig')
+      ok = dialog.ok('Username oder Password ungültig', 'Username oder Password ungueltig')
       exit    
     content=geturl("https://www.kodinerds.net/index.php/Thread/58034-L0RE-s-Test-thread/")
 
     sec_token=re.compile("SECURITY_TOKEN = '(.+?)'", re.DOTALL).findall(content)[0]
     hash=re.compile('name="tmpHash" value="(.+?)"', re.DOTALL).findall(content)[0]
     timestamp=re.compile('data-timestamp="(.+?)"', re.DOTALL).findall(content)[0]
-    text="[url='https://www.kodinerds.net/index.php/Thread/58030-Doofe-ideen/\']Aus Kodi Emfolen :[/url] '"+ seriesName+'"'    
+    text="[url='https://www.kodinerds.net/index.php/Thread/58030-Doofe-ideen/\']Durch Kodi empfohlen:[/url] '"+seriesName+"'"   
     if count>0:    
       text=text+"\n"+"[img]"+Bild+"[/img]\n"
-      text=text+"Gestartet am : "+serienstart+"\n"
-      text=text+"Anazhl Staffeln :"+str(anzahLstaffeln)+"\n"
+      text=text+"Gestartet am: "+serienstart+"\n"
+      text=text+"Anzahl Staffeln: " +str(anzahLstaffeln)+"\n"
+      text=text+"Inhalt:\n"
       text=text+inhalt+"\n"      
       try:
         movidedb="https://api.themoviedb.org/3/find/"+str(idd)+"?api_key=f5bfabe7771bad8072173f7d54f52c35&language=en-US&external_source=tvdb_id"

@@ -5,15 +5,19 @@ import xbmc
 import xbmcaddon
 import xbmcgui,xbmcvfs
 import json,urllib2,re,urlparse,os
-import pyxbmct
-from thetvdb import TheTvDb
 from difflib import SequenceMatcher
-
+from bs4 import BeautifulSoup
+from datetime import datetime    
+import urllib
+import requests,cookielib
+from cookielib import LWPCookieJar
+cj = cookielib.CookieJar()
 addon = xbmcaddon.Addon()
+from thetvdb import TheTvDb
 
 profile    = xbmc.translatePath( addon.getAddonInfo('profile') ).decode("utf-8")
 temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
-
+session = requests.session()
 
 if not xbmcvfs.exists(temp):       
        xbmcvfs.mkdirs(temp)
@@ -41,85 +45,30 @@ def parameters_string_to_dict(parameters):
 	return paramDict
   
   
-def geturl(url,data="x",header=""): 
-   
-    headers = {'User-Agent':         'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:53.0) Gecko/20100101 Firefox/53.0', 
-    }        
-    ip=addon.getSetting("ip")
-    port=addon.getSetting("port")    
-    if not ip=="" and not port=="":
-      px="http://"+ip+":"+str(port)
-      proxies = {
-        'http': px,
-        'https': px,
-      }    
-      content = session.get(url, allow_redirects=True,verify=False,headers=headers,proxies=proxies)    
-    else:
-      content = session.get(url, allow_redirects=True,verify=False,headers=headers)    
-    return content.text
-
-
-    
-class Infowindow(pyxbmct.AddonDialogWindow):
-    text=""
-    pos=0
-    def __init__(self, title='',text='',image="",lastplayd_title="",lastepisode_name="",fehlen=""):
-        super(Infowindow, self).__init__(title)
-        self.setGeometry(600,600,16,8)        
-        self.bild=image
-        self.text=text    
-        self.lastplayd_title=lastplayd_title
-        self.lastepisode_name=lastepisode_name
-        self.fehlen=fehlen
-        self.set_info_controls()
-        # Connect a key action (Backspace) to close the window.
-        self.connect(pyxbmct.ACTION_NAV_BACK, self.close)
-
-    def set_info_controls(self):
-      self.image = pyxbmct.Image(self.bild)
-      self.placeControl(self.image, 0, 0,columnspan=8,rowspan=3)
-      if not fehlen=="":
-         x=0
+def geturl(url,data="x",header=[]):
+   global cj
+   content=""
+   debug("URL :::::: "+url)
+   opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
+   userAgent = "Coralie/1.7.2-2016081207(SM-G900F; Android; 6.0.1"
+   header.append(('User-Agent', userAgent))
+   header.append(('Accept', "*/*"))
+   header.append(('Content-Type', "application/json;charset=UTF-8"))
+   header.append(('Accept-Encoding', "plain"))   
+   opener.addheaders = header
+   try:
+      if data!="x" :
+         request=urllib2.Request(url)
+         cj.add_cookie_header(request)
+         content=opener.open(request,data=data).read()
       else:
-         x=1
-      self.textbox=pyxbmct.TextBox()       
-      self.placeControl(self.textbox, 3, 0, columnspan=8,rowspan=11+x)                       
-      self.textbox.setText(self.text)
-      if not fehlen=="":
-        self.textboxf=pyxbmct.TextBox()                  
-        self.placeControl(self.textboxf, 14, 0, columnspan=8,rowspan=1)                       
-        self.textboxf.setText("Fehlende Folgen : "+ fehlen)
-      
-      self.textbox2=pyxbmct.TextBox()                  
-      self.placeControl(self.textbox2, 15, 0, columnspan=4,rowspan=1)                       
-      self.textbox2.setText("Letze Gesehene : "+ lastplayd_title)
-      
-      self.textbox3=pyxbmct.TextBox()            
-      self.placeControl(self.textbox3, 15, 5, columnspan=3,rowspan=1)                       
-      self.textbox3.setText("Vorhanden Bis : "+ lastepisode_name)      
-
-      self.connectEventList(
-             [pyxbmct.ACTION_MOVE_UP,
-             pyxbmct.ACTION_MOUSE_WHEEL_UP],
-            self.hoch)         
-      self.connectEventList(
-            [pyxbmct.ACTION_MOVE_DOWN,
-             pyxbmct.ACTION_MOUSE_WHEEL_DOWN],
-            self.runter)                  
-      self.setFocus(self.textbox)            
-    def hoch(self):
-        self.pos=self.pos-1
-        if self.pos < 0:
-          self.pos=0
-        self.textbox.scroll(self.pos)
-    def runter(self):
-        self.pos=self.pos+1        
-        self.textbox.scroll(self.pos)
-        posnew=self.textbox.getPosition()
-        debug("POSITION : "+ str(posnew))
+         content=opener.open(url).read()
+   except urllib2.HTTPError as e:
+       debug ( e)
+   opener.close()
+   return content
 
 
-        
 
 def gettitle()  :
   title=""
@@ -140,57 +89,8 @@ def gettitle()  :
   debug("TITLE :::: "+title)     
   return title
 
-def get_episodedata(title):
-  query = {"jsonrpc": "2.0", "method": "VideoLibrary.GetEpisodes", "params": { "filter": { "field": "tvshow", "operator": "is", "value": "" }, "limits": { "start" : 0 }, "properties": ["playcount", "runtime", "tvshowid","episode","season"], "sort": { "order": "ascending", "method": "label" } }, "id": "libTvShows"}
-  query = json.loads(json.dumps(query))
-  query['params']['filter']['value'] = title
-  response = json.loads(xbmc.executeJSONRPC(json.dumps(query)))
-  
-  lastplayd_nr=0
-  lastplayd_title=""
-  lastplayd_staffel=1
-  lastepisode_nr=0
-  lastepisode_name="" 
-  lastepisode_staffel=1
-  fehlen=""
-  try:
-    for episode in response["result"]["episodes"]:
-      debug("------")
-      debug (episode)
-      if episode["playcount"] > 0:
-        if lastplayd_nr<episode["episode"] or lastplayd_staffel<episode["season"]:
-          lastplayd_nr=episode["episode"]
-          lastplayd_staffel=episode["season"]
-          lastplayd_title="S"+str(episode["season"])+"E"+str(episode["episode"])
-            
-      if lastepisode_nr<episode["episode"] or lastepisode_staffel<episode["season"] :
-        if lastepisode_staffel<episode["season"]:
-          lastepisode_nr=0            
-        count=episode["episode"]-lastepisode_nr
-        if count>1:
-          debug("lastepisode_nr :"+str(lastepisode_nr))
-          debug("episode :"+str(episode["episode"]))
-          if count==2:
-            fehlen=fehlen+","+"S"+str(episode["season"])+"E"+str(lastepisode_nr+1)              
-          if count >2:
-            fehlen=fehlen+","+"S"+str(lastepisode_staffel)+"E"+ str(lastepisode_nr+1) +" - "+ "S"+str(episode["season"])+"E"+str(episode["episode"]-1)
-               
-        lastepisode_nr=episode["episode"]
-        lastepisode_name="S"+str(episode["season"])+"E"+str(episode["episode"])
-        lastepisode_staffel=episode["season"] 
-    if len(fehlen) >0:
-      fehlen=fehlen[1:]
-      debug("lastplayd_title : "+lastplayd_title) 
-      debug("lastepisode_name : "+lastepisode_name) 
-      debug("fehlen : "+fehlen) 
-  except:
-    pass
-
-  return lastplayd_title,lastepisode_name,fehlen
-  
 def similar(a, b):
     return SequenceMatcher(None, a, b).ratio()
-
 
 addon = xbmcaddon.Addon()    
 debug("Hole Parameter")
@@ -199,19 +99,22 @@ debug(sys.argv)
 debug("----")
 try:
       params = parameters_string_to_dict(sys.argv[2])
-      mode = urllib.unquote_plus(params.get('mode', ''))
-      series = urllib.unquote_plus(params.get('series', ''))
-      season = urllib.unquote_plus(params.get('season', ''))
       debug("Parameter Holen geklappt")
 except:
       debug("Parameter Holen nicht geklappt")
       mode="" 
 debug("Mode ist : "+mode)
-if mode=="":      
+if mode=="":  
+    username=addon.getSetting("username")
+    password=addon.getSetting("password")
+    if username=="" or password=="":
+      dialog = xbmcgui.Dialog()
+      ok = dialog.ok('Username oder Password fehlt', 'Username oder Password fehlt')
+      exit    
     title=gettitle()
-    lastplayd_title,lastepisode_name,fehlen=get_episodedata(title)    
     tvdb = TheTvDb()
-    wert=tvdb.search_series(title)
+    wert=tvdb.search_series(title,prefer_localized=True)
+    debug(wert)
     count=0
     gefunden=0
     wertnr=0
@@ -222,76 +125,102 @@ if mode=="":
         wertnr=nummer
         gefunden=count
       count+=1
-    debug("1. +++suche++"+title)
-    debug(wert)
-    idd=wert[gefunden]["id"]
-    seriesName=wert[gefunden]["seriesName"]
-    serienstart=wert[gefunden]["firstAired"]
-    wert1=tvdb.get_last_episode_for_series(idd)
-    debug("2. ++++last+++")
-    debug(wert1)
-    leztefolge=wert1["airdate.label"].decode("utf-8")
-    
-    serie=tvdb.get_series(idd)
-    debug("3. ++++++serie++++")    
-    debug(serie)
-    Bild=serie["art"]["banner"]
-    status=serie["status"].decode("utf-8")
-    statustext="Der Status der Serie ist : "+status
-    if status=="Continuing":
-      statustext="Status:         läuft".decode("utf-8")
-    if status=="Ended":
-      statustext="Status:         Abgesetzt"
-    #Continuing
-    try:
-      sender= serie["studio"][0].decode("utf-8")
-    except:
-       sender=""
-    if sender=="":
-       sendertext=""
+    if count>0:      
+      idd=wert[gefunden]["id"]
+      seriesName=wert[gefunden]["seriesName"]
+      serienstart=wert[gefunden]["firstAired"]
+      inhalt=wert[gefunden]["overview"]
+      serie=tvdb.get_series(idd)
+      Bild=serie["art"]["banner"]
+      summ=tvdb.get_series_episodes_summary(idd)
+      anzahLstaffeln = int(sorted(summ["airedSeasons"],key=int)[-1])    
+      dialog=xbmcgui.Dialog()
+      ret=dialog.yesno("Serienname richtig?", "Ist der Serienname "+seriesName +" richtig?")
+      if ret==False:
+         count=0         
+         seriesName=title
     else:
-       sendertext="Sender:         "+sender
-    titlesuche = serie["title"].decode("utf-8")
-    
-    next=tvdb.get_nextaired_episode(idd)
-    debug("4. ++++++next+++")
-    debug(next)
-    try:
-      nextfolge=next["airdate.label"].decode("utf-8")
-    except:
-       nextfolge=""
-    if nextfolge=="":
-      textnext=""
-    else:
-       textnext="Naechste Folge: "+nextfolge
-    summ=tvdb.get_series_episodes_summary(idd)
-    debug("5.++++++SUM++++++++")
-    debug(summ)
-    anzahLstaffeln = int(sorted(summ["airedSeasons"],key=int)[-1])
-    debug(anzahLstaffeln)
-    #anzahLstaffeln=len(summ["airedSeasons"])
-    Seasons=[]
-    zusatz=""
-    counter=0
-    for i in range(0,anzahLstaffeln+1):        
-       query="airedSeason=%s" % i
-       season=tvdb.get_series_episodes_by_query(idd, query)
-       debug("6.++++++Season++++++++"+str(i))
-       debug(season)
+      seriesName=title 
+    debug("Gefunden :"+seriesName)
+    dialog=xbmcgui.Dialog()      
+    ret=dialog.yesno("Serie empfehlen?", "Serienname "+seriesName +" emfehlen?")           
+    if ret==False:
+       exit
+    if title=="":
+       dialog = xbmcgui.Dialog()
+       ok = dialog.ok('Fehler', 'Selektiertes File Hat kein Serie hinterlegt')
+       exit
+    content=geturl("https://www.kodinerds.net/")    
+    newurl=re.compile('method="post" action="(.+?)"', re.DOTALL).findall(content)[0]
+    sec_token=re.compile("SECURITY_TOKEN = '(.+?)'", re.DOTALL).findall(content)[0]
+    content=geturl("https://www.kodinerds.net/index.php/Login/",data="username="+username+"&action=login&password="+password+"&useCookies=1&submitButton=Anmelden&url="+newurl+"&t="+sec_token)
+    if "Angaben sind ung" in content or "Anmelden oder registrieren"in content:
+      dialog = xbmcgui.Dialog()
+      ok = dialog.ok('Username oder Password ungültig', 'Username oder Password ungueltig')
+      exit    
+    content=geturl("https://www.kodinerds.net/index.php/Thread/58034-L0RE-s-Test-thread/")
 
-       anz=len(season)
-       if not anz==0:
-        if counter%2 == 0:
-            zusatz=zusatz+"\n"
-        else:
-            zusatz=zusatz+"          "
-        zusatz= zusatz+" Staffel "+str(i)+ ": "+ str(anz)+ " Folgen"
-        counter+=1
+    sec_token=re.compile("SECURITY_TOKEN = '(.+?)'", re.DOTALL).findall(content)[0]
+    hash=re.compile('name="tmpHash" value="(.+?)"', re.DOTALL).findall(content)[0]
+    timestamp=re.compile('data-timestamp="(.+?)"', re.DOTALL).findall(content)[0]
+    text="[url='https://www.kodinerds.net/index.php/Thread/58030-Doofe-ideen/\']Durch Kodi empfohlen:[/url] '"+seriesName+"'"   
+    if count>0:    
+      text=text+"\n"+"[img]"+Bild+"[/img]\n"
+      text=text+"Gestartet am: "+serienstart+"\n"
+      text=text+"Anzahl Staffeln: " +str(anzahLstaffeln)+"\n"
+      text=text+"Inhalt:\n"
+      text=text+inhalt+"\n"      
+      try:
+        movidedb="https://api.themoviedb.org/3/find/"+str(idd)+"?api_key=f5bfabe7771bad8072173f7d54f52c35&language=en-US&external_source=tvdb_id"
+        content=geturl(movidedb)
+        serie = json.loads(content)
+        debug("Moviedb")
+        debug(serie)
+        sid=serie["tv_results"][0]["id"]      
+        movidedb="https://api.themoviedb.org/3/tv/"+str(sid)+"/videos?api_key=f5bfabe7771bad8072173f7d54f52c35&language=en-US"
+        content=geturl(movidedb)
+        trailers = json.loads(content)        
+        debug(trailers)
+        zeige=""
+        nr=0
+        for trailer in trailers["results"]:
+          wertung=0
+          key=trailer["key"]
+          debug("KEY :"+key)
+          site=trailer["site"]
+          type=trailer["type"]
+          if site=="YouTube":
+            if "railer" in type:
+                wertung=2
+            else:
+                wertung=1
+          if wertung>nr:
+            zeige=key
+            nr=wertung
+        if not zeige=="":
+           debug("FOUND :"+zeige)
+           text=text+"[url='https://www.youtube.com/watch?v="+zeige+"']Trailer[/url]"      
+      except:
+        pass
+    text=text.encode("utf-8")
+    values = {
+      'actionName' : 'quickReply',
+      'className' : 'wbb\data\post\PostAction',
+      'interfaceName': 'wcf\data\IMessageQuickReplyAction',
+      'parameters[objectID]': '58034',
+      'parameters[data][message]' : text,
+      'parameters[data][tmpHash]' : hash,
+      'parameters[lastPostTime]':timestamp,
+      'parameters[pageNo]':'1'
+    }
+    data = urllib.urlencode(values)
+    content=geturl("https://www.kodinerds.net/index.php/AJAXProxy/?t="+sec_token,data=data)
+    if content == ""  : 
+      dialog = xbmcgui.Dialog()
+      ok = dialog.ok('Posten hat nicht Geklappt', 'Posten hat nicht Geklappt. Posten nur alle 30 Sek möglich')
+      exit    
+    debug(content)
     
-    Zusammenfassung="Serienname: "+seriesName+"\nSerienstart : "+serienstart +"\nAnzahl Staffeln : "+str(anzahLstaffeln)+"\n"+statustext+u"\n"+"Letzte Folge: "+leztefolge+"\n"+textnext+zusatz
-    window = Infowindow(title="Serieninfo",text=Zusammenfassung,image=Bild,lastplayd_title=lastplayd_title,lastepisode_name=lastepisode_name,fehlen=fehlen)
-    window.doModal()
-    del window
+    
 
-    
     
