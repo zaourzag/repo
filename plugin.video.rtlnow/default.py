@@ -151,10 +151,19 @@ mode = urllib.unquote_plus(params.get('mode', ''))
 url = urllib.unquote_plus(params.get('url', ''))
 nummer = urllib.unquote_plus(params.get('nummer', ''))
 name = urllib.unquote_plus(params.get('name', ''))
+
 showName = urllib.unquote_plus(params.get('showName', ''))
 hideShowName = urllib.unquote_plus(params.get('hideshowname', '')) == 'True'
 nextPage = urllib.unquote_plus(params.get('nextpage', '')) == 'True'
 einsLike = urllib.unquote_plus(params.get('einslike', '')) == 'True'    
+
+xstream = urllib.unquote_plus(params.get('xstream', ''))
+xlink = urllib.unquote_plus(params.get('xlink', ''))
+xtitle = urllib.unquote_plus(params.get('xtitle', ''))
+xdrm = urllib.unquote_plus(params.get('xdrm', ''))
+
+
+
 def serien(url):
   xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
   xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_LABEL)
@@ -259,7 +268,31 @@ def get_sec(time_str):
 def get_min(time_str):
     h, m, s = time_str.split(':')
     return int(h) * 3600 + int(m) * 60 + int(s) /60
-        
+def playdash(xstream,xlink,xtitle,xdrm):
+    ret,token=login()    
+    headerfelder="user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36&Referer="+link
+    if kodi18=="true" :                
+        listitem = xbmcgui.ListItem(path=stream+"|"+headerfelder,label=title,iconImage="",thumbnailImage="")
+    else:
+        listitem = xbmcgui.ListItem(path=stream,label=title,iconImage="",thumbnailImage="")
+    listitem.setProperty('IsPlayable', 'true')                          
+    listitem.setProperty('inputstreamaddon', 'inputstream.adaptive')
+    listitem.setProperty('inputstream.adaptive.manifest_type', 'mpd')
+    if kodi18=="true" and drm=="1" :
+        if token=="0":
+            dialog = xbmcgui.Dialog()
+            dialog.notification("Login Notwendig", 'Es ist min. Ein Freier Watchbox account Notwendig', xbmcgui.NOTIFICATION_ERROR)
+        else:               
+            licstring='https://widevine.rtl.de/index/proxy|x-auth-token='+token+"&"+headerfelder+"&Content-Type=|R{SSM}|"            
+            listitem.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')                
+            listitem.setProperty('inputstream.adaptive.license_key', licstring)                                  
+        xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=stream+"|"+headerfelder, listitem=listitem)
+    else: 
+        if drm=="1":
+            dialog = xbmcgui.Dialog()
+            dialog.notification("Kodi18 Notwendig", 'Kodi18 ist Notwendig für dieses Video', xbmcgui.NOTIFICATION_ERROR)
+        xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=stream, listitem=listitem)
+    xbmcplugin.setResolvedUrl(addon_handle,True, listitem)        
 def staffel(idd,url) :    
   xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
   menu=[]
@@ -637,3 +670,5 @@ else:
           inputsettings()                       
   if mode == 'livetv':
           livetv()
+  if mode == 'playdash':       
+          playdash(xstream,xlink,xtitle,xdrm)
