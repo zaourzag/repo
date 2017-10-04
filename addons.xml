@@ -912,7 +912,6 @@ Vous pouvez regarder le sport que vous aimez, vivez et sur demande à un moment 
     </extension>
 </addon>
 
-
 <addon id="plugin.video.netzkino_de" name="Netzkino" version="2.2.4" provider-name="L0RE">
 	<requires>
 		<import addon="xbmc.python" version="2.24.0"/>
