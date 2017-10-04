@@ -165,8 +165,40 @@ if mode=="":
       text=text+"\n"+"[img]"+Bild+"[/img]\n"
       text=text+"Gestartet am : "+serienstart+"\n"
       text=text+"Anazhl Staffeln :"+str(anzahLstaffeln)+"\n"
-      text=text+inhalt+"\n"
-      text=text.encode("utf-8")
+      text=text+inhalt+"\n"      
+      try:
+        movidedb="https://api.themoviedb.org/3/find/"+str(idd)+"?api_key=f5bfabe7771bad8072173f7d54f52c35&language=en-US&external_source=tvdb_id"
+        content=geturl(movidedb)
+        serie = json.loads(content)
+        debug("Moviedb")
+        debug(serie)
+        sid=serie["tv_results"][0]["id"]      
+        movidedb="https://api.themoviedb.org/3/tv/"+str(sid)+"/videos?api_key=f5bfabe7771bad8072173f7d54f52c35&language=en-US"
+        content=geturl(movidedb)
+        trailers = json.loads(content)        
+        debug(trailers)
+        zeige=""
+        nr=0
+        for trailer in trailers["results"]:
+          wertung=0
+          key=trailer["key"]
+          debug("KEY :"+key)
+          site=trailer["site"]
+          type=trailer["type"]
+          if site=="YouTube":
+            if "railer" in type:
+                wertung=2
+            else:
+                wertung=1
+          if wertung>nr:
+            zeige=key
+            nr=wertung
+        if not zeige=="":
+           debug("FOUND :"+zeige)
+           text=text+"[url='https://www.youtube.com/watch?v="+zeige+"']Trailer[/url]"      
+      except:
+        pass
+    text=text.encode("utf-8")
     values = {
       'actionName' : 'quickReply',
       'className' : 'wbb\data\post\PostAction',
