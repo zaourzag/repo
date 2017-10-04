@@ -114,6 +114,7 @@ if mode=="":
     title=gettitle()
     tvdb = TheTvDb()
     wert=tvdb.search_series(title,prefer_localized=True)
+    debug(wert)
     count=0
     gefunden=0
     wertnr=0
@@ -124,15 +125,15 @@ if mode=="":
         wertnr=nummer
         gefunden=count
       count+=1
-    idd=wert[gefunden]["id"]
-    seriesName=wert[gefunden]["seriesName"]
-    serienstart=wert[gefunden]["firstAired"]
-    inhalt=wert[gefunden]["overview"]
-    serie=tvdb.get_series(idd)
-    Bild=serie["art"]["banner"]
-    summ=tvdb.get_series_episodes_summary(idd)
-    anzahLstaffeln = int(sorted(summ["airedSeasons"],key=int)[-1])
-    if count>0:
+    if count>0:      
+      idd=wert[gefunden]["id"]
+      seriesName=wert[gefunden]["seriesName"]
+      serienstart=wert[gefunden]["firstAired"]
+      inhalt=wert[gefunden]["overview"]
+      serie=tvdb.get_series(idd)
+      Bild=serie["art"]["banner"]
+      summ=tvdb.get_series_episodes_summary(idd)
+      anzahLstaffeln = int(sorted(summ["airedSeasons"],key=int)[-1])    
       dialog=xbmcgui.Dialog()
       ret=dialog.yesno("Serienname richtig?", "Ist der Serienname "+seriesName +" richtig?")
       if ret==False:
@@ -163,7 +164,7 @@ if mode=="":
     if count>0:    
       text=text+"\n"+"[img]"+Bild+"[/img]\n"
       text=text+"Gestartet am : "+serienstart+"\n"
-      text=text+"Anazhl von Staffeln :"+anzahLstaffeln+"\n"
+      text=text+"Anazhl Staffeln :"+str(anzahLstaffeln)+"\n"
       text=text+inhalt+"\n"
     values = {
       'actionName' : 'quickReply',
