@@ -166,6 +166,7 @@ if mode=="":
       text=text+"Gestartet am : "+serienstart+"\n"
       text=text+"Anazhl Staffeln :"+str(anzahLstaffeln)+"\n"
       text=text+inhalt+"\n"
+      text=text.encode("utf-8")
     values = {
       'actionName' : 'quickReply',
       'className' : 'wbb\data\post\PostAction',
