@@ -13,12 +13,12 @@ import requests,cookielib
 from cookielib import LWPCookieJar
 cj = cookielib.CookieJar()
 addon = xbmcaddon.Addon()
-from thetvdb import TheTvDb
 
 profile    = xbmc.translatePath( addon.getAddonInfo('profile') ).decode("utf-8")
 temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
 session = requests.session()
 
+thread="https://www.kodinerds.net/index.php/Thread/58034-L0RE-s-Test-thread/"
 if not xbmcvfs.exists(temp):       
        xbmcvfs.mkdirs(temp)
        
@@ -92,6 +92,67 @@ def gettitle()  :
 def similar(a, b):
     return SequenceMatcher(None, a, b).ratio()
 
+def find_in_thread(title):
+  debug("-------- findinthread")
+  content=geturl(thread)
+  htmlPage = BeautifulSoup(content, 'html.parser')    
+  liste = htmlPage.find("div",{"class" :"contentNavigation"})     
+  debug(liste)
+  Seiten=liste.findAll("a")
+  seitennr=0
+  for Seite in Seiten:
+     debug("-->"+Seite.text)
+     try:
+        number=int(Seite.text)
+        if number > seitennr:
+            seitennr=number
+     except:
+      pass
+  dialoga = xbmcgui.DialogProgress()
+  dialoga.create("Suche Post für "+title.encode("utf-8").strip(),"")
+  for i in range (1,seitennr+1,1):
+    dialoga.update(seitennr/100*i,"Suche in Seite "+str(i))
+    content2=geturl(thread+"?pageNo="+str(i))
+    htmlPage2 = BeautifulSoup(content2, 'html.parser') 
+    sec_token=re.compile("SECURITY_TOKEN = '(.+?)'", re.DOTALL).findall(content2)[0]
+    liste = htmlPage2.findAll("li",{"class" :"marginTop messageGroupStarter"})     
+    for post in liste:        
+        Text = post.find("div",{"class" :"messageText"}).text.encode("utf-8").strip()     
+        textid = post.find("article")["data-object-id"]  
+        try:
+            empfehler = post.find("article")["data-like-user"]       
+        except:
+             empfehler=""
+        debug(Text)
+        debug("------")
+        if title.encode("utf-8").strip() in Text:
+            dialoga.close()
+            dialog = xbmcgui.Dialog()
+            username=addon.getSetting("username")
+            if username in empfehler:
+               ok = dialog.ok('Schon Empfohlen', 'Du hast es schon Geliked')
+               return 1               
+            ret=dialog.yesno(u"Wurde schon empfohlen Liken?", Text+u"\n Liken?")
+            if ret==True:
+                values = {
+                    'actionName': 'like',
+                    'className': 'wcf\data\like\LikeAction',
+                    'parameters[data][containerID]' : 'wcf24',
+                    'parameters[data][objectID]' : textid,
+                    'parameters[data][objectType]' : 'com.woltlab.wbb.likeablePost',
+      
+                }                
+                data = urllib.urlencode(values)
+                content=geturl("https://www.kodinerds.net/index.php/AJAXProxy/?t="+sec_token,data=data)
+                print(content)
+                return 1
+            else:
+                 dialoga = xbmcgui.DialogProgress()
+                 dialoga.create("Suche Post für "+title.encode("utf-8").strip(),"")
+                 dialoga.update(seitennr/100*i,"Suche in Seite "+str(i))
+  dialoga.close()
+  return 0
+    
 addon = xbmcaddon.Addon()    
 debug("Hole Parameter")
 debug("Argv")
@@ -112,31 +173,41 @@ if mode=="":
       ok = dialog.ok('Username oder Password fehlt', 'Username oder Password fehlt')
       exit    
     title=gettitle()
-    tvdb = TheTvDb()
-    wert=tvdb.search_series(title,prefer_localized=True)
+    url="https://api.themoviedb.org/3/search/tv?api_key=f5bfabe7771bad8072173f7d54f52c35&language=de-DE&query=" + title.replace(" ","+")
+    content=geturl(url)
+    wert = json.loads(content)  
+    wert=wert["results"]    
     debug(wert)
     count=0
     gefunden=0
     wertnr=0
     for serie in wert:
-      serienname=serie["seriesName"]
+      serienname=serie["name"]
+      debug(serienname)
       nummer=similar(title,serienname)
       if nummer >wertnr:
         wertnr=nummer
         gefunden=count
       count+=1
     if count>0:      
-      idd=wert[gefunden]["id"]
-      seriesName=wert[gefunden]["seriesName"]
-      serienstart=wert[gefunden]["firstAired"]
+      idd=str(wert[gefunden]["id"])
+      seriesName=wert[gefunden]["name"]
+      serienstart=wert[gefunden]["first_air_date"]
       inhalt=wert[gefunden]["overview"]
-      serie=tvdb.get_series(idd)
-      Bild=serie["art"]["banner"]
-      summ=tvdb.get_series_episodes_summary(idd)
-      anzahLstaffeln = int(sorted(summ["airedSeasons"],key=int)[-1])    
+      if inhalt=="":
+        urlx="https://api.themoviedb.org/3/search/tv?api_key=f5bfabe7771bad8072173f7d54f52c35&language=en-US&query=" + title.replace(" ","+")
+        content=geturl(urlx)
+        wert = json.loads(content)  
+        wert=wert["results"] 
+        inhalt=wert[gefunden]["overview"]
+      Bild="http://image.tmdb.org/t/p/w300/"+wert[gefunden]["poster_path"]
+      newurl="https://api.themoviedb.org/3/tv/"+idd+"?api_key=f5bfabe7771bad8072173f7d54f52c35&language=de-DE"
+      content2=geturl(newurl)
+      wert2 = json.loads(content2)
+      anzahLstaffeln=wert2["number_of_seasons"]      
       dialog=xbmcgui.Dialog()
       ret=dialog.yesno("Serienname richtig?", "Ist der Serienname "+seriesName +" richtig?")
-      if ret==False:
+      if ret=="False":
          count=0         
          seriesName=title
     else:
@@ -144,12 +215,12 @@ if mode=="":
     debug("Gefunden :"+seriesName)
     dialog=xbmcgui.Dialog()      
     ret=dialog.yesno("Serie empfehlen?", "Serienname "+seriesName +" emfehlen?")           
-    if ret==False:
-       exit
+    if ret=="False":
+       quit()
     if title=="":
        dialog = xbmcgui.Dialog()
        ok = dialog.ok('Fehler', 'Selektiertes File Hat kein Serie hinterlegt')
-       exit
+       quit()
     content=geturl("https://www.kodinerds.net/")    
     newurl=re.compile('method="post" action="(.+?)"', re.DOTALL).findall(content)[0]
     sec_token=re.compile("SECURITY_TOKEN = '(.+?)'", re.DOTALL).findall(content)[0]
@@ -157,8 +228,11 @@ if mode=="":
     if "Angaben sind ung" in content or "Anmelden oder registrieren"in content:
       dialog = xbmcgui.Dialog()
       ok = dialog.ok('Username oder Password ungültig', 'Username oder Password ungueltig')
-      exit    
-    content=geturl("https://www.kodinerds.net/index.php/Thread/58034-L0RE-s-Test-thread/")
+      quit()   
+    ret=find_in_thread(seriesName)      
+    if ret==1:
+       exit
+    content=geturl(thread)
 
     sec_token=re.compile("SECURITY_TOKEN = '(.+?)'", re.DOTALL).findall(content)[0]
     hash=re.compile('name="tmpHash" value="(.+?)"', re.DOTALL).findall(content)[0]
@@ -171,13 +245,7 @@ if mode=="":
       text=text+"Inhalt:\n"
       text=text+inhalt+"\n"      
       try:
-        movidedb="https://api.themoviedb.org/3/find/"+str(idd)+"?api_key=f5bfabe7771bad8072173f7d54f52c35&language=en-US&external_source=tvdb_id"
-        content=geturl(movidedb)
-        serie = json.loads(content)
-        debug("Moviedb")
-        debug(serie)
-        sid=serie["tv_results"][0]["id"]      
-        movidedb="https://api.themoviedb.org/3/tv/"+str(sid)+"/videos?api_key=f5bfabe7771bad8072173f7d54f52c35&language=en-US"
+        movidedb="https://api.themoviedb.org/3/tv/"+str(idd)+"/videos?api_key=f5bfabe7771bad8072173f7d54f52c35&language=de-DE"
         content=geturl(movidedb)
         trailers = json.loads(content)        
         debug(trailers)
