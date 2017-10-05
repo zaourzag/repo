@@ -1,4 +1,4 @@
-.PHONY: all test clean docs clean-pyc clean-report clean-docs clean-coverage tag tag-release kodi-release
+.PHONY: all test clean docs clean-pyc clean-report clean-docs clean-coverage tag commit
 .DEFAULT_GOAL := all
 
 SPHINXBUILD = sphinx-build
@@ -15,8 +15,9 @@ RADON_FILES = resources/lib/*.py ./addon.py ./setup.py
 LINT_REPORT_FILE = ./report/lint.html
 TEST_OPTIONS = -s --cover-package=resources.lib.Cache --cover-package=resources.lib.Constants --cover-package=resources.lib.ContentLoader --cover-package=resources.lib.Dialogs --cover-package=resources.lib.ItemHelper --cover-package=resources.lib.Session --cover-package=resources.lib.Settings --cover-package=resources.lib.Utils --cover-erase --with-coverage --cover-branches
 I18N_FILES = resources/language/**/*.po
+JSON_FILES = package.json .kodi-release
 
-all: clean lint test docs
+all: clean lint test
 
 clean: clean-pyc clean-report clean-docs clean-coverage
 
@@ -41,41 +42,42 @@ lint:
 		pylint addon setup resources --ignore=test --output-format=html > $(LINT_REPORT_FILE)
 		radon cc $(RADON_FILES)
 		dennis-cmd lint $(I18N_FILES)
+		jsonlint $(JSON_FILES)
 
 test:
 		nosetests $(TEST_DIR) $(TEST_OPTIONS) --cover-html --cover-html-dir=$(COVERAGE_DIR)
 
-tag:
-		if [ "$TRAVIS_TAG" != "" ]; then make tag-release; else make kodi-release; fi
+docs:
+		@$(SPHINXBUILD) $(DOCS_DIR) $(BUILDDIR) -T -c ./docs
 
-tag-release:
+commit:
+		npm run gcz
+
+tag:
+		echo "Current version: ${CURRENT_VERSION}"
+		echo "Next version: ${NEXT_VERSION}"
+		echo "Latest changes:"
+		kodi-release -l
+		kodi-release -l -o .changes
+		make docs
+		touch ./_build/.nojekyll
+		git config user.name "travis-ci"
+		git config user.email "public@asciidisco.com"
 		kodi-release -a -o ./Authors.md
-		kodi-release -c -o ./Changelog.md
-		NEXT_VERSION=`kodi-release -n`
-		CURRENT_VERSION=`kodi-release -p`
-		LAST_CHANGES=`kodi-release -l`
-		echo "$NEXT_VERSION"
-		echo "$CURRENT_VERSION"		
-		echo "$LAST_CHANGES"
-		kodi-release -u
-		git remote add origin remote=https://${GITHUB_TOKEN}@github.com/${TRAVIS_REPO_SLUG}
+		kodi-release -c -o ./Changelog.md		
+		git remote rm origin
+		git remote add origin https://asciidisco:${GITHUB_TOKEN}@github.com/asciidisco/plugin.video.telekom-sport.git
+		git checkout master
+		kodi-release -u	
 		git add -f ./Changelog.md
 		git add -f ./Authors.md
 		git add package.json
 		git add addon.xml
-		git status
-		git commit -m "chore(version): Version bump"
+		git commit -m "chore(version): Version bump [ci skip]"
 		git tag ${NEXT_VERSION}
-		git status
-
-kodi-release:
-	CURRENT_VERSION=`kodi-release -p`
-	LAST_CHANGES=`kodi-release -l`
-	echo "$CURRENT_VERSION"		
-	echo "$LAST_CHANGES"
-
-docs:
-	@$(SPHINXBUILD) $(DOCS_DIR) $(BUILDDIR) -T -c ./docs
+		git push origin master
+		git push --tags
+		git fetch --all --tags --prune --progress
 
 help:
 		@echo "    clean-pyc"
@@ -86,9 +88,15 @@ help:
 		@echo "        Remove sphinx artifacts."
 		@echo "    clean-coverage"
 		@echo "        Remove code coverage artifacts."
+		@echo "    clean"
+		@echo "        Calls all clean tasks."		
 		@echo "    lint"
 		@echo "        Check style with flake8, pylint & radon"
 		@echo "    test"
 		@echo "        Run unit tests"
 		@echo "    docs"
 		@echo "        Generate sphinx docs"
+		@echo "    commit"
+		@echo "        Commit stage changes using commitizen (needs Node)"
+		@echo "    tag"
+		@echo "        Builds an publishes a new release (Travis only)"				
