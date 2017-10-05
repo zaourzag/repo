@@ -1186,7 +1186,7 @@ See changelog.txt for more details.</news>
 	</extension>
 </addon>
 
-<addon id="plugin.video.skygo.de" name="Sky Go" version="1.10.6" provider-name="jojo, frankr612, Maven, Linkinsoldier">
+<addon id="plugin.video.skygo.de" name="Sky Go" version="1.10.6.1" provider-name="jojo, frankr612, Maven, Linkinsoldier">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
     <import addon="script.module.requests" version="2.9.1"/>
