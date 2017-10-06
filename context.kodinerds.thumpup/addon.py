@@ -149,7 +149,7 @@ def find_in_thread(title):
             else:
                  dialoga = xbmcgui.DialogProgress()
                  dialoga.create("Suche Post für "+title.encode("utf-8").strip(),"")
-                 dialoga.update(seitennr/100*i,"Suche in Seite "+str(i))
+                 dialoga.update(i*100/seitennr,"Suche in Seite "+str(i))
   dialoga.close()
   return 0
     
@@ -182,7 +182,7 @@ if mode=="":
     gefunden=0
     wertnr=0
     for serie in wert:
-      serienname=serie["name"]
+      serienname=serie["name"].encode("utf-8")
       debug(serienname)
       nummer=similar(title,serienname)
       if nummer >wertnr:
