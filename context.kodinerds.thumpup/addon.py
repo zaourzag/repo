@@ -117,7 +117,7 @@ def find_in_thread(title):
     sec_token=re.compile("SECURITY_TOKEN = '(.+?)'", re.DOTALL).findall(content2)[0]
     liste = htmlPage2.findAll("li",{"class" :"marginTop messageGroupStarter"})     
     for post in liste:        
-        Text = post.find("div",{"class" :"messageText"}).text.encode("utf-8").strip()     
+        Text = post.find("div",{"class" :"messageText"}).text.encode("utf-8",).strip()     
         textid = post.find("article")["data-object-id"]  
         try:
             empfehler = post.find("article")["data-like-user"]       
@@ -132,7 +132,7 @@ def find_in_thread(title):
             if username in empfehler:
                ok = dialog.ok('Schon Empfohlen', 'Du hast es schon Geliked')
                return 1               
-            ret=dialog.yesno(u"Wurde schon empfohlen Liken?", Text+u"\n Liken?")
+            ret=dialog.yesno(u"Wurde schon empfohlen Liken?", unicode(Text,errors='ignore')+u"\n Liken?")
             if ret==True:
                 values = {
                     'actionName': 'like',
@@ -248,6 +248,10 @@ if mode=="":
         movidedb="https://api.themoviedb.org/3/tv/"+str(idd)+"/videos?api_key=f5bfabe7771bad8072173f7d54f52c35&language=de-DE"
         content=geturl(movidedb)
         trailers = json.loads(content)        
+        if len(trailers["results"])==0:
+            movidedb="https://api.themoviedb.org/3/tv/"+str(idd)+"/videos?api_key=f5bfabe7771bad8072173f7d54f52c35&language=en-US"
+            content=geturl(movidedb)
+            trailers = json.loads(content)        
         debug(trailers)
         zeige=""
         nr=0
