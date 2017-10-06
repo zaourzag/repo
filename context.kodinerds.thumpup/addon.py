@@ -109,7 +109,7 @@ def find_in_thread(title):
      except:
       pass
   dialoga = xbmcgui.DialogProgress()
-  dialoga.create("Suche Post für "+title.encode("utf-8").strip(),"")
+  dialoga.create("Suche Post für "+title,"")
   for i in range (1,seitennr+1,1):
     dialoga.update(seitennr/100*i,"Suche in Seite "+str(i))
     content2=geturl(thread+"?pageNo="+str(i))
@@ -125,14 +125,14 @@ def find_in_thread(title):
              empfehler=""
         debug(Text)
         debug("------")
-        if title.encode("utf-8").strip() in Text:
+        if title in Text:
             dialoga.close()
             dialog = xbmcgui.Dialog()
             username=addon.getSetting("username")
             if username in empfehler:
                ok = dialog.ok('Schon Empfohlen', 'Du hast es schon Geliked')
                return 1               
-            ret=dialog.yesno(u"Wurde schon empfohlen Liken?", unicode(Text,errors='ignore')+u"\n Liken?")
+            ret=dialog.yesno("Wurde schon empfohlen Liken?", Text+"\n Liken?")
             if ret==True:
                 values = {
                     'actionName': 'like',
@@ -191,16 +191,16 @@ if mode=="":
       count+=1
     if count>0:      
       idd=str(wert[gefunden]["id"])
-      seriesName=wert[gefunden]["name"]
-      serienstart=wert[gefunden]["first_air_date"]
-      inhalt=wert[gefunden]["overview"]
+      seriesName=wert[gefunden]["name"].encode("utf-8")
+      serienstart=wert[gefunden]["first_air_date"].encode("utf-8")
+      inhalt=wert[gefunden]["overview"].encode("utf-8")
       if inhalt=="":
         urlx="https://api.themoviedb.org/3/search/tv?api_key=f5bfabe7771bad8072173f7d54f52c35&language=en-US&query=" + title.replace(" ","+")
         content=geturl(urlx)
         wert = json.loads(content)  
         wert=wert["results"] 
         inhalt=wert[gefunden]["overview"]
-      Bild="http://image.tmdb.org/t/p/w300/"+wert[gefunden]["poster_path"]
+      Bild="http://image.tmdb.org/t/p/w300/"+wert[gefunden]["poster_path"].encode("utf-8")
       newurl="https://api.themoviedb.org/3/tv/"+idd+"?api_key=f5bfabe7771bad8072173f7d54f52c35&language=de-DE"
       content2=geturl(newurl)
       wert2 = json.loads(content2)
@@ -214,7 +214,7 @@ if mode=="":
       seriesName=title 
     debug("Gefunden :"+seriesName)
     dialog=xbmcgui.Dialog()      
-    ret=dialog.yesno("Serie empfehlen?", "Serienname "+seriesName +" emfehlen?")           
+    ret=dialog.yesno("Serie empfehlen?", "Serienname "+seriesName +" empfehlen?")           
     if ret=="False":
        quit()
     if title=="":
@@ -274,7 +274,6 @@ if mode=="":
            text=text+"[url='https://www.youtube.com/watch?v="+zeige+"']Trailer[/url]"      
       except:
         pass
-    text=text.encode("utf-8")
     values = {
       'actionName' : 'quickReply',
       'className' : 'wbb\data\post\PostAction',
