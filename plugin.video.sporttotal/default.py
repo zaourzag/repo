@@ -131,7 +131,7 @@ debug(params)
 
 def playvideo(url):
   debug("URL PLAY : "+url)  
-  content = cache.cacheFunction(getUrl,url)
+  content = getUrl(url)
   file=re.compile('file: "([^"]+?)"', re.DOTALL).findall(content)[0].replace("\n","")
   suchstring=re.compile('/(.+?)\.mp4', re.DOTALL).findall(file)[0]
   replacestring=urllib2.quote(suchstring)  
@@ -148,7 +148,7 @@ def playvideo(url):
   
 def live(url):
   xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
-  content = cache.cacheFunction(getUrl,url)  
+  content = getUrl(url)  
   htmlPage = BeautifulSoup(content, 'html.parser')   
   videoliste = htmlPage.find("div",{"class" :"col-sm-3 related-videos"})        
   liste = videoliste.findAll("li")        
