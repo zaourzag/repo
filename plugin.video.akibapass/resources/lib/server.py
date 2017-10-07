@@ -23,7 +23,7 @@ import xbmc
 
 header = "HTTP/1.1 200 OK\nContent-Type: application/vnd.apple.mpegurl; charset=utf-8\n\n"
 
-def streamprovider(file):
+def streamprovider(m3u8):
     """Server returning manifest to kodi
     """
     try:
@@ -50,14 +50,14 @@ def streamprovider(file):
                 data = connection.recv(4096).rstrip()
 
                 # send m3u8
-                connection.sendall(header + file + "\n")
+                connection.sendall(header + m3u8 + "\n")
                 counter = counter + 1
             finally:
                 # close connection
                 connection.close()
         except socket.error:
             # continue if no connection
-            continue
+            pass
 
     # close socket
     sock.close()
