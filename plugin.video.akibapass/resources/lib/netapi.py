@@ -262,32 +262,8 @@ def startplayback(args):
             xbmcgui.Dialog().ok(args._addonname, args._addon.getLocalizedString(30042))
             return
 
-    # prefer using download able videos
-    if "episode_download_buttons" in html:
-        div = soup.find("div", {"class": "episode_download_buttons"})
-        if div:
-            for file in reversed(div.find_all("a")):
-                try:
-                    url = "https://www.akibapass.de" + file["href"] + login.getCookie(args)
-                    item = xbmcgui.ListItem(args.name, path=url)
-                    item.setInfo(type="Video", infoLabels={"Title":       args.name,
-                                                           "TVShowTitle": args.name,
-                                                           "episode":     args.episode,
-                                                           "rating":      args.rating,
-                                                           "plot":        args.plot,
-                                                           "year":        args.year,
-                                                           "studio":      args.studio})
-                    item.setThumbnailImage(args.icon)
-                    xbmc.Player().play(url, item)
-                    return
-                except:
-                    pass
-        else:
-            xbmc.log("[PLUGIN] %s: Failed to play video" % args._addonname, xbmc.LOGERROR)
-            xbmcgui.Dialog().ok(args._addonname, args._addon.getLocalizedString(30044))
-
-    # using stream with hls
-    elif "Klicke hier, um den Flash-Player zu benutzen" in html:
+    # using stream with hls+aes
+    if "Klicke hier, um den Flash-Player zu benutzen" in html:
         # get stream file
         regex = r"file: \"(.*?)\","
         matches = re.search(regex, html).group(1)

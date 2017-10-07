@@ -2,6 +2,4 @@
 <settings>
     <setting id="akiba_username" type="text" label="30001" default=""/>
     <setting id="akiba_password" type="text" label="30002" option="hidden" default=""/>
-    <setting type="sep" />
-    <setting id="video_quality" type="select" lvalues="30009|30008" label="30003" default="0"/>
 </settings>
