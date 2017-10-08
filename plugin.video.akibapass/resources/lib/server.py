@@ -39,8 +39,8 @@ def streamprovider(m3u8):
 
     timer   = time.time() + 10
     counter = 0
-    while (time.time() < timer) and (counter < 4):
-        time.sleep(0.03)
+    while (time.time() < timer) and (counter < 3):
+        xbmc.sleep(30)
         try:
             # wait for connection
             connection, client_address = sock.accept()

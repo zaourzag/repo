@@ -288,7 +288,12 @@ def startplayback(args):
                                                    "plot":        args.plot,
                                                    "year":        args.year,
                                                    "studio":      args.studio})
-            item.setThumbnailImage(args.icon)
+            item.setArt({"thumb":  args.icon,
+                         "poster": args.icon,
+                         "banner": args.icon,
+                         "fanart": args.fanart,
+                         "icon":   args.icon})
+            item.setMimeType("application/vnd.apple.mpegurl")
             xbmc.Player().play("http://localhost:10147/stream.m3u8" + login.getCookie(args), item)
 
             # wait until stream provider stops

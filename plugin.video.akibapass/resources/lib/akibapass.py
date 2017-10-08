@@ -63,7 +63,7 @@ def check_mode(args):
         # call from other plugin
         mode = "videoplay"
         args.name = "Video"
-        args.episode, args.rating, args.plot, args.year, args.studio, args.icon = ("None",) * 6
+        args.episode, args.rating, args.plot, args.year, args.studio, args.icon, args.fanart = ("None",) * 7
 
         if hasattr(args, "id"):
             args.url = "/de/v2/catalogue/episode/" + args.id
