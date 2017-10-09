@@ -320,10 +320,13 @@ def build_recordingsList(addon_uri, addon_handle):
   xbmcplugin.addSortMethod(addon_handle, 2)
   xbmcplugin.addSortMethod(addon_handle, 9)
 
-def watch_recording(addon_uri, addon_handle, recording_id):
+def watch_recording(addon_uri, addon_handle, recording_id, start=0):
   #if xbmc.Player().isPlaying(): return
-  startTime=int(xbmc.getInfoLabel('ListItem.Property(zStartTime)'))
- 
+  if start == 0:
+    startTime=int(xbmc.getInfoLabel('ListItem.Property(zStartTime)'))
+  else:
+    startTime=int(start)
+  if DEBUG: print "Starttime " +str(startTime)
   max_bandwidth = __addon__.getSetting('max_bandwidth')
   if DASH: stream_type='dash'
   else: stream_type='hls'
@@ -943,7 +946,8 @@ def main():
     xbmc.executebuiltin('Container.Refresh')
   elif action == 'watch_r':
     recording_id = args.get('id')[0]
-    watch_recording(addon_uri, addon_handle, recording_id)
+    start = args.get('start', '0')[0]
+    watch_recording(addon_uri, addon_handle, recording_id, start)
   elif action == 'record_p':
     program_id = args.get('program_id')[0]
     setup_recording(program_id)

@@ -69,7 +69,7 @@
 	</extension>
 </addon>
 
-<addon id="plugin.video.zattooHiQ" version="1.3.3" name="Zattoo HiQ" provider-name="Steffen Rolapp">
+<addon id="plugin.video.zattooHiQ" version="1.3.4" name="Zattoo HiQ" provider-name="Steffen Rolapp">
   <requires>
     <import addon="xbmc.python" version="2.14.0"/>
     <import addon="xbmc.addon" version="13.0.0" />
@@ -2825,7 +2825,7 @@ NOTE: Streams are available in SD only
 	</extension>
 </addon>
 
-<addon id="plugin.video.telekom-sport" version="1.2.6" name="Telekom Sport" provider-name="asciidisco">
+<addon id="plugin.video.telekom-sport" version="1.2.7" name="Telekom Sport" provider-name="asciidisco">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
         <import addon="script.module.pydes" version="2.0.1"/>
@@ -2856,11 +2856,13 @@ NOTE: Streams are available in SD only
         <email>public at asciidisco dot com</email>
         <source>https://github.com/asciidisco/plugin.video.telekom-sport</source>
         <forum>https://www.kodinerds.net/index.php/Thread/57586-PreRelease-Telekom-Sport/</forum>
-        <news>v1.2.6 (2017-10-06):
+        <news>v1.2.7 (2017-10-09):
 - asciidisco/plugin.video.telekomsport.
-- Version bump
-- Adds fanart image for sports.
-- Fixes release script.</news>
+- Fixes issue with old doc versions being uploaded.
+- Fixing build script.
+- Fixes problems with parsing cookie files.
+- Adds ability to enable processing of invalid SSL certs.
+- Version bump</news>
     </extension>
 </addon>
 
@@ -3119,6 +3121,39 @@ oder online unter https://goo.gl/GtK41L nachlesen.
     <email>andreas at vogler dot name</email>
     <platform>all</platform>
   </extension>
+</addon>
+
+<addon id="plugin.video.wakanim" name="Wakanim" version="0.3.2" provider-name="MrKrabat">
+    <requires>
+        <import addon="xbmc.python" version="2.25.0"/>
+        <import addon="script.module.beautifulsoup4" version="4.3.2"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <language>en de fr</language>
+        <summary lang="en_GB">Wakanim.tv - Anime streaming live from japan</summary>
+        <summary lang="de_DE">Wakanim.tv - Anime Streaming live aus Japan</summary>
+        <summary lang="fr_FR">Wakanim.tv - Streaming d'animes VOSTFR en direct du Japon</summary>
+        <description lang="en_GB">A constantly growing selection of subtitled animes, which can be discovered - new and popular titles.</description>
+        <description lang="de_DE">Eine stetig wachsende Auswahl deutsch untertitelter Animes, die es zu entdecken gilt - neue und beliebte Titel.</description>
+        <description lang="fr_FR">Des dizaines d'animes VOSTFR en streaming à découvrir - nouveautés et séries les plus prisées.</description>
+        <disclaimer lang="en_GB">WARNING: You MUST be a PREMIUM member or BUY videos to use this plugin</disclaimer>
+        <disclaimer lang="de_DE">HINWEIS: Du MUSST PREMIUM Mitglied sein oder Videos KAUFEN um dieses Plugin zu benutzen</disclaimer>
+        <disclaimer lang="fr_FR">AVERTISSEMENT: VOUS DEVEZ être un membre PREMIUM ou ACHETER des vidéos pour utiliser ce plugin</disclaimer>
+        <news>v0.3.2 (2017.10.08)[CR]- Fix playback not possible due security changes[CR]- Fix playback bought videos</news>
+        <license>GNU Affero General Public License, v3</license>
+        <forum>https://www.kodinerds.net/index.php/Thread/58348-Release-Wakanim-tv/</forum>
+        <website>https://www.wakanim.tv/</website>
+        <source>https://github.com/MrKrabat/plugin.video.wakanim</source>
+        <email></email>
+        <assets>
+            <icon>icon.png</icon>
+            <fanart>fanart.jpg</fanart>
+        </assets>
+    </extension>
 </addon>
 
 <addon id="plugin.video.doku5.com" name="Doku5" version="1.0.3" provider-name="itouch5000">

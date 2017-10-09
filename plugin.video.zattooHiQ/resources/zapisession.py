@@ -11,6 +11,9 @@ import os, re, base64
 import urllib, urllib2
 import json
 
+import ssl
+ssl._create_default_https_context = ssl._create_unverified_context
+
 __addon__ = xbmcaddon.Addon()
 __addonId__=__addon__.getAddonInfo('id')
 __addonname__ = __addon__.getAddonInfo('name')
