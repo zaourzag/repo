@@ -44,7 +44,7 @@ class ZapiSession:
 		self.Password = password
 		self.ZAPIAuthUrl = api_auth_url
 		self.ZAPIUrl = api_url
-		if DEBUG: print "ZAPIURL " + str (api_url)
+		
 		return self.restore_session() or self.renew_session()
 
 	def restore_session(self):

@@ -45,7 +45,8 @@
     </category>
     <category label="31030">
         <setting label="31032" type="action" action="RunPlugin(plugin://plugin.video.zattooHiQ/?mode=editKeyMap)"/>
-        <setting label="31033" type="enum" id="keymap" lvalues="31035|31034"/>
+        <setting label="31037" type="lsep"/>
+        <setting label="31033" type="enum" id="keymap" lvalues="31035|31034|31036"/>
 <!--
         <setting label="31036" type="action" action="RunPlugin(plugin://plugin.video.zattooHiQ/?mode=showKeyMap)"/>
 -->

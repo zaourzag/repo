@@ -484,9 +484,12 @@ msgid "Default KeyMap"
 msgstr ""
 
 msgctxt "#31036"
-msgid "show Default KeyMap"
+msgid "Manual Keymap"
 msgstr ""
 
+msgctxt "#31037"
+msgid "For manual keymap, the file myKeymap.xml \nmust exist in the Userdata directory"
+msgstr ""
 
 ### Hauptmenu ###
 msgctxt "#31099"

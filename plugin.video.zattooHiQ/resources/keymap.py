@@ -246,7 +246,13 @@ class KeyMap:
       builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=showInfo")')
       builder.end(key)
       builder.end("mouse")
-     
+    # Touch Tap
+      builder.start("touch", {})
+      key = 'leftclick'
+      builder.start(key, {})
+      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=showInfo")')
+      builder.end(key)
+      builder.end("touch")
       builder.end('fullscreenvideo')
       builder.end("keymap")
       element = builder.close()
@@ -276,6 +282,11 @@ class KeyMap:
     KEYMAP = __addon__.getSetting('keymap')
     if KEYMAP == "1":
       source = __addondir__ + '/userKeymap.xml'
+    elif KEYMAP == "2":
+      path = __addondir__ + '/myKeymap.xml'
+      if os.path.isfile(path): source = path
+      else:
+        source =__addon__.getAddonInfo('path') + '/resources/keymap/defaultKeymap.xml'
     else:
       source =__addon__.getAddonInfo('path') + '/resources/keymap/defaultKeymap.xml'
     dest = __addondir__ + '/zattooKeymap.xml'

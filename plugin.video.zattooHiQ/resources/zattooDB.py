@@ -58,7 +58,7 @@ class ZattooDB(object):
 
   def zapiSession(self):
     zapiSession   = ZapiSession(xbmc.translatePath(__addon__.getAddonInfo('profile')).decode('utf-8'))
-    if DEBUG: print "APIURL " + str( __addon__.getSetting('api_url'))
+
     if zapiSession.init_session(__addon__.getSetting('username'), __addon__.getSetting('password'),
                                 __addon__.getSetting('zapi_url'), __addon__.getSetting('zapi_auth_url')):
       return zapiSession
@@ -453,12 +453,16 @@ class ZattooDB(object):
     c.close()
 
   def reloadDB(self):
-    '''
+
     c = self.conn.cursor()
     c.execute('DELETE FROM updates')
+    c.execute('DELETE FROM channels')
+    c.execute('DELETE FROM programs')
+    c.execute('DELETE FROM playing')
+    
     self.conn.commit()
     c.close()
-    '''
+
 
     #delete zapi files to force new login    
     profilePath = xbmc.translatePath(__addon__.getAddonInfo('profile'))

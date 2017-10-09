@@ -21,7 +21,7 @@ from operator import itemgetter
 from StringIO import StringIO
 import gzip
 
-token = '23a1db22b51b13162bd0b86b24e556c8c6b6272d reraeB'
+token = '8003a413bd117a6018e7729a2b28fc0ebdde4c96 reraeB'
 getheader = {'Api-Auth': token[::-1]}
 
 main_url = sys.argv[0]
@@ -121,17 +121,14 @@ def listVideos_Day_Channel(url=""):
 				name = title+channelID
 			else:
 				name = title
-			if showNOW == 'true':
-				pass
-			else:
+			if showNOW == 'false':
 				if ("RTL" in channelID or "VOX" in channelID or "SUPER" in channelID):
 					continue
 			debug("(listVideos_Day_Channel) Name : %s" %name)
 			debug("(listVideos_Day_Channel) Link : %s" %url)
 			debug("(listVideos_Day_Channel) Icon : %s" %thumb)
 			addLink(name, url, 'playVideo', thumb, studio, plot)
-		except:
-			pass
+		except: pass
 	xbmcplugin.endOfDirectory(pluginhandle)
 	if forceViewMode == 'true':
 		xbmc.executebuiltin('Container.SetViewMode('+viewMode+')')
@@ -152,9 +149,7 @@ def listChannel():
 		channelID = cleanTitle(logo.strip())
 		channelID = cleanStation(channelID.strip())
 		name = channelID.replace('(', '').replace(')', '').replace(' ', '')
-		if showNOW == 'true':
-			pass
-		else:
+		if showNOW == 'false':
 			if ("RTL" in channelID or "VOX" in channelID or "SUPER" in channelID):
 				continue
 		debug("(listChannel) Link : %s%s" %(url, channelID))
@@ -201,17 +196,14 @@ def listVideosNew():
 				name = title+channelID
 			else:
 				name = title
-			if showNOW == 'true':
-				pass
-			else:
+			if showNOW == 'false':
 				if ("RTL" in channelID or "VOX" in channelID or "SUPER" in channelID):
 					continue
 			debug("(listVideosNew) Name : %s" %name)
 			debug("(listVideosNew) Link : %s" %url)
 			debug("(listVideosNew) Icon : %s" %thumb)
 			addLink(name, url, 'playVideo', thumb, studio)
-		except:
-			pass
+		except: pass
 	xbmcplugin.endOfDirectory(pluginhandle)
 	if forceViewMode == 'true':
 		xbmc.executebuiltin('Container.SetViewMode('+viewMode+')')
@@ -256,17 +248,14 @@ def listVideosGenre(type):
 				name = title+channelID
 			else:
 				name = title
-			if showNOW == 'true':
-				pass
-			else:
+			if showNOW == 'false':
 				if ("RTL" in channelID or "VOX" in channelID or "SUPER" in channelID):
 					continue
 			debug("(listVideosGenre) Name : %s" %name)
 			debug("(listVideosGenre) Link : %s" %url)
 			debug("(listVideosGenre) Icon : %s" %thumb)
 			addLink(name, url, 'playVideo', thumb, studio)
-		except:
-			pass
+		except: pass
 	xbmcplugin.endOfDirectory(pluginhandle)
 	if forceViewMode == 'true':
 		xbmc.executebuiltin('Container.SetViewMode('+viewMode+')')
@@ -284,8 +273,8 @@ def playVideo(url):
 		xbmc.executebuiltin('Notification(TvSpielfilm : [COLOR red]!!! MediathekURL - ERROR !!![/COLOR], ERROR = [COLOR red]*MediathekLink* der Sendung NICHT gefunden ![/COLOR],6000,'+icon+')')
 		pass
 	xbmc.log("[TvSpielfilm](playVideo) frei", xbmc.LOGNOTICE)
-	if url.startswith("http://www.arte.tv"):
-		videoID = re.compile("http://www.arte.tv/de/videos/([^/]+?)/", re.DOTALL).findall(url)[0]
+	if url.startswith("https://www.arte.tv"):
+		videoID = re.compile("https://www.arte.tv/de/videos/([^/]+?)/", re.DOTALL).findall(url)[0]
 		xbmc.sleep(1000)
 		try:
 			pluginID_1 = 'plugin.video.arte_tv'
@@ -400,16 +389,14 @@ def ndrPodcastHack(url):
 			YYYY = YYYYMMDD[:4]
 			MMDD = YYYYMMDD[4:]
 			return 'http://hls.ndr.de/i/ndr/'+ YYYY +'/'+ MMDD +'/'+ uri
-	except:
-		pass
+	except: pass
 	return url
 
 def dwHack(url):
 	try:
 		if url.startswith('http://tv-download.dw.de'):
 			return url.replace('_sd.mp4','_hd_dwdownload.mp4')
-	except:
-		pass
+	except: pass
 	return url
 
 def ZdfGetVideo(url):
@@ -550,8 +537,7 @@ def cleanStation(channelID):
 				channelID = '  (SRTL)'
 			else:
 				channelID = '  ('+channelID+')'
-		except:
-			pass
+		except: pass
 	elif not channelID in ChannelCode and channelID != "":
 		channelID = '  ('+channelID+')'
 	else:

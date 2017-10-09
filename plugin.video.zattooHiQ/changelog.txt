@@ -1,4 +1,12 @@
 ﻿==================================================
+[B]ZattooHiQ v1.3.3 [/B]28.09.2017 Steffen Rolapp
+==================================================
+- Keymap überarbeitet defaultKeymap unterstützt jetzt Numpad, Kore und Yatze
+- eigene Keymap kann in Einstellungen ausgewählt werden
+- 5 min Skip bei recall geht wieder
+- Touch OSD geht wieder
+
+==================================================
 [B]ZattooHiQ v1.3 [/B]04.09.2017 Steffen Rolapp
 ==================================================
 - Einstellungen aus dem Haupmenu entfernt
