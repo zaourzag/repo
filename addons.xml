@@ -214,7 +214,7 @@ Zattoo Live TV, Aufnahmen und EPG
     </extension>
 </addon>
 
-<addon id="plugin.video.sporttotal" name="Sport total (dev)" version="0.3.4" provider-name="L0RE">
+<addon id="plugin.video.sporttotal" name="Sport total (dev)" version="0.3.5" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
         <import addon="script.module.beautifulsoup4" version="4.3.2"/>
