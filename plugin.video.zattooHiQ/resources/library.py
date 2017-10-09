@@ -28,6 +28,8 @@ __addonId__=__addon__.getAddonInfo('id')
 __addonname__ = __addon__.getAddonInfo('name')
 _zattooDB_ = ZattooDB()
 
+_timezone_ = int(__addon__.getSetting('time_offset'))*60*-60 #-time.altzone
+
 class library:
   
   def make_library(self):
@@ -41,7 +43,7 @@ class library:
     if resultData is None: return
     for record in resultData['recordings']:
       showInfo=_zattooDB_.getShowInfo(record['program_id'])
-      
+      start = int(time.mktime(time.strptime(record['start'], "%Y-%m-%dT%H:%M:%SZ"))) + _timezone_  # local timestamp
       if showInfo == "NONE": continue
       
       if showInfo['episode_title']: name=showInfo['title']+'-'+showInfo['episode_title']
@@ -53,7 +55,7 @@ class library:
       
       os.makedirs(os.path.dirname(strmFile))
       f = open(strmFile,"w")
-      f.write('plugin://'+__addonId__+'/?mode=watch_r&id='+str(record['id']))
+      f.write('plugin://'+__addonId__+'/?mode=watch_r&id='+str(record['id'])+'&start='+str(start))
       f.close()
       
       out='<?xml version="1.0" encoding="UTF-8" standalone="yes" ?><movie>'
