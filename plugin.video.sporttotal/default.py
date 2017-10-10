@@ -132,13 +132,14 @@ debug(params)
 def playvideo(url):
   debug("URL PLAY : "+url)  
   content = getUrl(url)
-  try:
-    file=re.compile('file: "([^"]+?)"', re.DOTALL).findall(content)[0].replace("\n","")
+  file=re.compile('file: "([^"]+?)"', re.DOTALL).findall(content)[0].replace("\n","")
+  try:    
     suchstring=re.compile('/(.+?)\.mp4', re.DOTALL).findall(file)[0]
   except:
-     debug("------------------------------------------------------------>")
-     debug(content)
-     debug("------------------------------------------------------------>")
+    suchstring=re.compile('/(.+?)\.m3u8', re.DOTALL).findall(file)[0]
+  debug("------------------------------------------------------------>")
+  debug(content)
+  debug("------------------------------------------------------------>")
   replacestring=urllib2.quote(suchstring)  
   debug("suchstring :"+suchstring)
   debug("replacestring :"+replacestring)
