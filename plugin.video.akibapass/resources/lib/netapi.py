@@ -50,15 +50,15 @@ def showCatalog(args):
             thumb = "https:" + thumb
 
         view.add_item(args,
-                      {"url":          li.a["href"],
-                       "title":        li.find("div", {"class": "slider_item_description"}).span.strong.string.strip().encode("utf-8"),
-                       "tvshowtitle":  li.find("div", {"class": "slider_item_description"}).span.strong.string.strip().encode("utf-8"),
-                       "mode":         "list_season",
-                       "thumb":        thumb,
-                       "fanart":       thumb,
-                       "rating":       str(10 - len(star) * 2),
-                       "plot":         plot.contents[3].string.strip().encode("utf-8"),
-                       "year":         li.time.string.strip().encode("utf-8")},
+                      {"url":         li.a["href"],
+                       "title":       li.find("div", {"class": "slider_item_description"}).span.strong.string.strip().encode("utf-8"),
+                       "tvshowtitle": li.find("div", {"class": "slider_item_description"}).span.strong.string.strip().encode("utf-8"),
+                       "mode":        "list_season",
+                       "thumb":       thumb,
+                       "fanart":      thumb,
+                       "rating":      str(10 - len(star) * 2),
+                       "plot":        plot.contents[3].string.strip().encode("utf-8"),
+                       "year":        li.time.string.strip().encode("utf-8")},
                       isFolder=True, mediatype="video")
 
     view.endofdirectory()
@@ -90,14 +90,14 @@ def searchAnime(args):
             thumb = "https:" + thumb
 
         view.add_item(args,
-                      {"url":          li.a["href"],
-                       "title":        li.find("div", {"class": "slider_item_description"}).span.strong.string.strip().encode("utf-8"),
-                       "mode":         "list_season",
-                       "thumb":        thumb,
-                       "fanart":       thumb,
-                       "rating":       str(10 - len(star) * 2),
-                       "plot":         plot.contents[3].string.strip().encode("utf-8"),
-                       "year":         li.time.string.strip().encode("utf-8")},
+                      {"url":    li.a["href"],
+                       "title":  li.find("div", {"class": "slider_item_description"}).span.strong.string.strip().encode("utf-8"),
+                       "mode":   "list_season",
+                       "thumb":  thumb,
+                       "fanart": thumb,
+                       "rating": str(10 - len(star) * 2),
+                       "plot":   plot.contents[3].string.strip().encode("utf-8"),
+                       "year":   li.time.string.strip().encode("utf-8")},
                       isFolder=True, mediatype="video")
 
     view.endofdirectory()
@@ -122,11 +122,11 @@ def myDownloads(args):
             thumb = "https:" + thumb
 
         view.add_item(args,
-                      {"url":          div.a["href"].replace("mydownloads/detail", "catalogue/show"),
-                       "title":        div.find("h3", {"class": "big-item_title"}).string.strip().encode("utf-8"),
-                       "mode":         "list_season",
-                       "thumb":        thumb,
-                       "fanart":       thumb},
+                      {"url":    div.a["href"].replace("mydownloads/detail", "catalogue/show"),
+                       "title":  div.find("h3", {"class": "big-item_title"}).string.strip().encode("utf-8"),
+                       "mode":   "list_season",
+                       "thumb":  thumb,
+                       "fanart": thumb},
                       isFolder=True, mediatype="video")
 
     view.endofdirectory()
@@ -150,11 +150,11 @@ def myCollection(args):
             thumb = "https:" + thumb
 
         view.add_item(args,
-                      {"url":          div.a["href"].replace("collection/detail", "catalogue/show"),
-                       "title":        div.find("h3", {"class": "big-item_title"}).string.strip().encode("utf-8"),
-                       "mode":         "list_season",
-                       "thumb":        thumb,
-                       "fanart":       thumb},
+                      {"url":    div.a["href"].replace("collection/detail", "catalogue/show"),
+                       "title":  div.find("h3", {"class": "big-item_title"}).string.strip().encode("utf-8"),
+                       "mode":   "list_season",
+                       "thumb":  thumb,
+                       "fanart": thumb},
                       isFolder=True, mediatype="video")
 
     view.endofdirectory()
@@ -215,11 +215,11 @@ def listEpisodes(args):
             thumb = "https:" + thumb
 
         view.add_item(args,
-                      {"url":          parent.a["href"],
-                       "title":        parent.img["alt"].encode("utf-8"),
-                       "mode":         "videoplay",
-                       "thumb":        args.thumb.replace(" ", "%20"),
-                       "fanart":       args.fanart.replace(" ", "%20")},
+                      {"url":    parent.a["href"],
+                       "title":  parent.img["alt"].encode("utf-8"),
+                       "mode":   "videoplay",
+                       "thumb":  args.thumb.replace(" ", "%20"),
+                       "fanart": args.fanart.replace(" ", "%20")},
                       isFolder=False, mediatype="video")
 
     view.endofdirectory()

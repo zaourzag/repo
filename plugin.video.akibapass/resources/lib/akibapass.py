@@ -62,17 +62,15 @@ def check_mode(args):
     elif hasattr(args, "id"):
         # call from other plugin
         mode = "videoplay"
-        args.name = "Video"
         args.url = "/de/v2/catalogue/episode/" + args.id
     elif hasattr(args, "url"):
         # call from other plugin
         mode = "videoplay"
-        args.name = "Video"
         args.url = args.url[24:]
     else:
         mode = None
 
-    if mode is None:
+    if not mode:
         showMainMenue(args)
     elif mode == "catalog":
         netapi.showCatalog(args)
