@@ -16,6 +16,8 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import re
+import sys
+import random
 import urllib
 import urllib2
 import threading
@@ -23,6 +25,7 @@ from bs4 import BeautifulSoup
 
 import xbmc
 import xbmcgui
+import xbmcplugin
 
 import login
 import view
@@ -275,12 +278,13 @@ def startplayback(args):
             m3u8 = m3u8.read()
 
             # start stream provider
-            t = threading.Thread(target=server.streamprovider, args=(str(m3u8),))
+            port = random.randint(10000, 49151)
+            t = threading.Thread(target=server.streamprovider, args=(str(m3u8), port))
             t.start()
             xbmc.sleep(50)
 
             # play stream
-            item = xbmcgui.ListItem(args.name, path="http://localhost:10147/stream.m3u8" + login.getCookie(args))
+            item = xbmcgui.ListItem(args.name, path="http://localhost:" + str(port) + "/stream.m3u8" + login.getCookie(args))
             item.setInfo(type="Video", infoLabels={"Title":       args.name,
                                                    "TVShowTitle": args.name,
                                                    "episode":     args.episode,
@@ -294,7 +298,7 @@ def startplayback(args):
                          "fanart": args.fanart,
                          "icon":   args.icon})
             item.setMimeType("application/vnd.apple.mpegurl")
-            xbmc.Player().play("http://localhost:10147/stream.m3u8" + login.getCookie(args), item)
+            xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, item)
 
             # wait until stream provider stops
             t.join()

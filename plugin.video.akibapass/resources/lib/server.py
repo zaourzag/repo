@@ -21,22 +21,21 @@ import socket
 import xbmc
 
 
-header = "HTTP/1.1 200 OK\nContent-Type: application/vnd.apple.mpegurl; charset=utf-8\n\n"
-
-def streamprovider(m3u8):
+def streamprovider(m3u8, port):
     """Server returning manifest to kodi
     """
     try:
         # create listening socket
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.bind(("127.0.0.1", 10147))
+        sock.bind(("127.0.0.1", port))
         sock.listen(1)
         sock.setblocking(0)
     except socket.error:
         # unable to listen on port
-        xbmc.log("[SERVICE] Akibapass: Failed listening on port 10147", xbmc.LOGFATAL)
+        xbmc.log("[SERVICE] Akibapass: Failed listening on port " + str(port), xbmc.LOGFATAL)
         return
 
+    header  = "HTTP/1.1 200 OK\nConnection: close\nContent-Type: application/vnd.apple.mpegurl; charset=utf-8\nContent-Length: " + str(len(m3u8)) + "\n\n"
     timer   = time.time() + 10
     counter = 0
     while (time.time() < timer) and (counter < 3):
