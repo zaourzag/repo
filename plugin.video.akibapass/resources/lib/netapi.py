@@ -29,7 +29,6 @@ import xbmcplugin
 
 import login
 import view
-import server
 
 
 def showCatalog(args):
@@ -264,24 +263,14 @@ def startplayback(args):
         matches = re.search(regex, html).group(1)
 
         if matches:
-            # save manifest
-            url  = "https://www.akibapass.de" + matches
-            m3u8 = urllib2.urlopen(url)
-            m3u8 = m3u8.read()
-
-            # start stream provider
-            port = random.randint(10000, 49151)
-            t = threading.Thread(target=server.streamprovider, args=(str(m3u8), port))
-            t.start()
-            xbmc.sleep(50)
+            # manifest url
+            url = "https://www.akibapass.de" + matches
 
             # play stream
-            item = xbmcgui.ListItem(getattr(args, "title", "Title not provided"), path="http://localhost:" + str(port) + "/stream.m3u8" + login.getCookie(args))
+            item = xbmcgui.ListItem(getattr(args, "title", "Title not provided"), path=url + login.getCookie(args))
             item.setMimeType("application/vnd.apple.mpegurl")
+            item.setContentLookup(False)
             xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, item)
-
-            # wait until stream provider stops
-            t.join()
         else:
             xbmc.log("[PLUGIN] %s: Failed to play stream" % args._addonname, xbmc.LOGERROR)
             xbmcgui.Dialog().ok(args._addonname, args._addon.getLocalizedString(30044))

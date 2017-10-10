@@ -201,7 +201,7 @@ Zattoo Live TV, Aufnahmen und EPG
         <description lang="de_DE">Alle deine Lieblingsserien direkt aus Japan bei Akibapass.de. Zugang zu aktuellen Simulcasts und jeder Menge Klassikern.</description>
         <disclaimer lang="en_GB">WARNING: You MUST be a PREMIUM member or BUY videos to use this plugin</disclaimer>
         <disclaimer lang="de_DE">HINWEIS: Du MUSST PREMIUM Mitglied sein oder Videos KAUFEN um dieses Plugin zu benutzen</disclaimer>
-        <news>v0.3.0 (2017.10.10)[CR]- Internal rewrites</news>
+        <news>v0.3.0 (2017.10.10)[CR]- Added screenshots[CR]- Small optimations[CR]- Internal rewrites[CR]- Fixed possible encoding problem[CR]- Removed internal server redirect</news>
         <license>GNU Affero General Public License, v3</license>
         <forum>https://www.kodinerds.net/index.php/Thread/58346-Release-Akibapass-de/</forum>
         <website>https://www.akibapass.de/</website>
