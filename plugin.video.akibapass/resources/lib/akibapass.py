@@ -30,7 +30,7 @@ import view
 def main():
     """Main function for the addon
     """
-    args = cmdargs.parse_args()
+    args = cmdargs.parse()
 
     # check if account is set
     username = args._addon.getSetting("akiba_username")
@@ -59,18 +59,18 @@ def check_mode(args):
     """
     if hasattr(args, "mode"):
         mode = args.mode
-    else:
+    elif hasattr(args, "id"):
         # call from other plugin
         mode = "videoplay"
         args.name = "Video"
-        args.episode, args.rating, args.plot, args.year, args.studio, args.icon, args.fanart = ("None",) * 7
-
-        if hasattr(args, "id"):
-            args.url = "/de/v2/catalogue/episode/" + args.id
-        elif hasattr(args, "url"):
-            args.url = args.url[24:]
-        else:
-            mode = None
+        args.url = "/de/v2/catalogue/episode/" + args.id
+    elif hasattr(args, "url"):
+        # call from other plugin
+        mode = "videoplay"
+        args.name = "Video"
+        args.url = args.url[24:]
+    else:
+        mode = None
 
     if mode is None:
         showMainMenue(args)
