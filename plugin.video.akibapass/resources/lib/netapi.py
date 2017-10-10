@@ -276,7 +276,7 @@ def startplayback(args):
             xbmc.sleep(50)
 
             # play stream
-            item = xbmcgui.ListItem(args.title, path="http://localhost:" + str(port) + "/stream.m3u8" + login.getCookie(args))
+            item = xbmcgui.ListItem(getattr(args, "title", "Title not provided"), path="http://localhost:" + str(port) + "/stream.m3u8" + login.getCookie(args))
             item.setMimeType("application/vnd.apple.mpegurl")
             xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, item)
 
