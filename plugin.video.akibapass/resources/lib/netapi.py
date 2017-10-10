@@ -51,15 +51,15 @@ def showCatalog(args):
 
         view.add_item(args,
                       {"url":          li.a["href"],
-                       "title":        li.find("div", {"class": "slider_item_description"}).span.strong.string.encode("utf-8"),
+                       "title":        li.find("div", {"class": "slider_item_description"}).span.strong.string.strip().encode("utf-8"),
                        "mode":         "list_season",
                        "thumb":        thumb,
                        "fanart_image": thumb,
-                       "episode":      li.find("p", {"class": "tooltip_text"}).strong.string.split(" ")[0],
-                       "season":       li.find("span", {"class": "tooltip_season"}).string.split(" ")[0],
+                       "episode":      li.find("p", {"class": "tooltip_text"}).strong.string.strip().encode("utf-8").split(" ")[0],
+                       "season":       li.find("span", {"class": "tooltip_season"}).string.strip().encode("utf-8").split(" ")[0],
                        "rating":       str(10 - len(star) * 2),
                        "plot":         plot.contents[3].string.strip().encode("utf-8"),
-                       "year":         li.time.string},
+                       "year":         li.time.string.strip().encode("utf-8")},
                       isFolder=True, mediatype="video")
 
 
@@ -93,15 +93,15 @@ def searchAnime(args):
 
         view.add_item(args,
                       {"url":          li.a["href"],
-                       "title":        li.find("div", {"class": "slider_item_description"}).span.strong.string.encode("utf-8"),
+                       "title":        li.find("div", {"class": "slider_item_description"}).span.strong.string.strip().encode("utf-8"),
                        "mode":         "list_season",
                        "thumb":        thumb,
                        "fanart_image": thumb,
-                       "episode":      li.find("p", {"class": "tooltip_text"}).strong.string.split(" ")[0],
-                       "season":       li.find("span", {"class": "tooltip_season"}).string.split(" ")[0],
+                       "episode":      li.find("p", {"class": "tooltip_text"}).strong.string.strip().encode("utf-8").split(" ")[0],
+                       "season":       li.find("span", {"class": "tooltip_season"}).string.strip().encode("utf-8").split(" ")[0],
                        "rating":       str(10 - len(star)*2),
                        "plot":         plot.contents[3].string.strip().encode("utf-8"),
-                       "year":         li.time.string},
+                       "year":         li.time.string.strip().encode("utf-8")},
                       isFolder=True, mediatype="video")
 
 
@@ -174,7 +174,7 @@ def listSeason(args):
     html = response.read()
 
     soup = BeautifulSoup(html, "html.parser")
-    studio = soup.find_all("span", {"class": "border-list_text"})[2].string
+    studio = soup.find_all("span", {"class": "border-list_text"})[2].string.strip().encode("utf-8")
 
     for section in soup.find_all("h2", {"class": "slider-section_title"}):
         if not section.span:

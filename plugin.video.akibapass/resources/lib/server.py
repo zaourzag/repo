@@ -35,7 +35,7 @@ def streamprovider(m3u8, port):
         xbmc.log("[SERVICE] Akibapass: Failed listening on port " + str(port), xbmc.LOGFATAL)
         return
 
-    header  = "HTTP/1.1 200 OK\nConnection: close\nContent-Type: application/vnd.apple.mpegurl; charset=utf-8\nContent-Length: " + str(len(m3u8)) + "\n\n"
+    header  = "HTTP/1.1 200 OK\r\nConnection: close\r\nContent-Type: application/vnd.apple.mpegurl; charset=utf-8\r\nContent-Length: " + str(len(m3u8)) + "\r\n\r\n"
     timer   = time.time() + 10
     counter = 0
     while (time.time() < timer) and (counter < 3):
@@ -49,7 +49,7 @@ def streamprovider(m3u8, port):
                 data = connection.recv(4096).rstrip()
 
                 # send m3u8
-                connection.sendall(header + m3u8 + "\n")
+                connection.sendall(header + m3u8)
                 counter = counter + 1
             finally:
                 # close connection
