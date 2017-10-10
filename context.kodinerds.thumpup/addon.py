@@ -101,7 +101,7 @@ def find_in_thread(title):
   Seiten=liste.findAll("a")
   seitennr=0
   for Seite in Seiten:
-     debug("-->"+Seite.text)
+#     debug("-->"+Seite.text)
      try:
         number=int(Seite.text)
         if number > seitennr:
@@ -245,10 +245,12 @@ if mode=="":
       text=text+"Inhalt:\n"
       text=text+inhalt+"\n"      
       try:
+        debug("Try German Trailer")
         movidedb="https://api.themoviedb.org/3/tv/"+str(idd)+"/videos?api_key=f5bfabe7771bad8072173f7d54f52c35&language=de-DE"
         content=geturl(movidedb)
         trailers = json.loads(content)        
         if len(trailers["results"])==0:
+            debug("Try English Trailer")
             movidedb="https://api.themoviedb.org/3/tv/"+str(idd)+"/videos?api_key=f5bfabe7771bad8072173f7d54f52c35&language=en-US"
             content=geturl(movidedb)
             trailers = json.loads(content)        
@@ -270,10 +272,15 @@ if mode=="":
             zeige=key
             nr=wertung
         if not zeige=="":
+           debug("----")
+           debug(text)
            debug("FOUND :"+zeige)
-           text=text+"[url='https://www.youtube.com/watch?v="+zeige+"']Trailer[/url]"      
-      except:
-        pass
+           text=text+'[url=\'https://www.youtube.com/watch?v='+zeige.encode('ascii')+'\']Trailer[/url]'
+           debug("-----")
+           debug(text)
+      except  Exception as e: 
+           print str(e)
+                
     values = {
       'actionName' : 'quickReply',
       'className' : 'wbb\data\post\PostAction',
