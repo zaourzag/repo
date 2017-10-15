@@ -35,3 +35,7 @@
 [B]Version 1.0.8  (08.10.2017)[/B]
  - fixed: Neuer API-Schlüssel für Abfrage von ZDF-VideoLink erforderlich
  - fixed: nochmals ARTE-VideoLink zur Weiterleitung an ARTE-plugin (jetzt https)
+
+[B]Version 1.0.9  (15.10.2017)[/B]
+ - fixed: Das ZDF verlangt schon wieder neuen API-Schlüssel für den VideoLink
+ - Kommentar: Ich hoffe diese Lösung funktioniert jetzt länger als 5 Tage :-(  ... Danke ZDF - Dein Gebührenzahler

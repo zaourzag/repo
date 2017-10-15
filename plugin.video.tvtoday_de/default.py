@@ -21,8 +21,9 @@ from operator import itemgetter
 from StringIO import StringIO
 import gzip
 
-token = '8003a413bd117a6018e7729a2b28fc0ebdde4c96 reraeB'
-getheader = {'Api-Auth': token[::-1]}
+#token = 'ffc9a283b511b7e11b326fdc3d76c5559b50544e reraeB'
+#getheader = {'Api-Auth': 'reraeB '+token[::-1]} = Gespiegelt
+#getheader = {'Api-Auth': 'Bearer '+token} = Original
 
 main_url = sys.argv[0]
 pluginhandle = int(sys.argv[1])
@@ -45,7 +46,7 @@ forceViewMode = addon.getSetting("forceView")
 viewMode = str(addon.getSetting("viewID"))
 baseUrl = "http://www.tvtoday.de"
 dateUrl = "/mediathek/nach-datum/"
-
+ZDFapiUrl = "https://api.zdf.de"
 
 if not os.path.isdir(dataPath):
 	os.makedirs(dataPath)
@@ -228,9 +229,9 @@ def playVideo(url):
 			videoID = videoID.split('&')[0]
 		return ArdGetVideo(videoID)
 	elif url.startswith("https://www.zdf.de"):
-		url = url[:url.find(".html")]
-		videoID = urllib.unquote_plus(url)+".html"
-		return ZdfGetVideo(videoID)
+		cleanURL = url[:url.find('.html')]
+		videoURL = urllib.unquote_plus(cleanURL)+".html"
+		return ZdfGetVideo(videoURL)
 	elif url.startswith("http://www.nowtv.de"):
 		try:
 			match3 = re.compile("/(.+?)/(.+?)/(.+?)/", re.DOTALL).findall(url)
@@ -265,7 +266,7 @@ def ArdGetVideo(id):
 			for muvidLink in muvidLinks:
 				stream = muvidLink["_stream"]
 				if not stream.startswith('http'):
-					stream =  "http:"+stream
+					stream = "http:"+stream
 				if muvidLink["_quality"] == 'auto' and 'mil/master.m3u8' in stream:
 					mp4URL = stream
 					xbmc.log("[TvToday](ArdGetVideo) m3u8-Stream (ARD+3) : %s" %(mp4URL), xbmc.LOGNOTICE)
@@ -292,7 +293,7 @@ def ArdGetVideo(id):
 					ARD_Url = stream
 					xbmc.log("[TvToday](ArdGetVideo) Wir haben 1 Stream (ARD+3) - wähle Diesen : %s" %(ARD_Url), xbmc.LOGNOTICE)
 				if not ARD_Url.startswith('http'):
-					ARD_Url =  "http:"+ARD_Url
+					ARD_Url = "http:"+ARD_Url
 				mp4URL = VideoBEST(ARD_Url) # *mp4URL* Qualität nachbessern, überprüfen, danach abspielen
 		finalURL = mp4URL
 		if not finalURL:
@@ -328,15 +329,33 @@ def dwHack(url):
 	return url
 
 def ZdfGetVideo(url):
-	try:
+	try: 
 		content = getUrl(url)
-		link = re.compile('"content": "(https://api.zdf.de/content/.*?)",', re.DOTALL).findall(content)[0]
-		response = getUrl(link,getheader)
-		ID = re.compile('"uurl":"(.*?)",', re.DOTALL).findall(response)[0]
-		LinkDirekt = getUrl("https://api.zdf.de/tmd/2/portal/vod/ptmd/mediathek/"+ID,getheader)
-		#LinkDirekt2 = getUrl("https://api.zdf.de/tmd/2/ngplayer_2_3/vod/ptmd/mediathek/"+ID)
-		jsonObject = json.loads(LinkDirekt)
-		return ZdfExtractQuality(jsonObject)
+		firstURL = json.loads(re.compile("data-zdfplayer-jsb='(\{.*?\})'", re.DOTALL).findall(content)[0])
+		if firstURL:
+			teaser = firstURL['content']
+			secret = firstURL['apiToken']
+			getheader = {'Api-Auth': 'Bearer '+secret}
+			xbmc.log("[TvToday](ZdfGetVideo) SECRET gefunden (ZDF+3) : xxxxx %s xxxxx" %str(secret), xbmc.LOGNOTICE)
+			if not teaser.startswith('http'):
+				teaser = ZDFapiUrl+teaser
+			secondURL = getUrl(teaser,getheader)
+			element = json.loads(secondURL)
+			if element['contentType'] == "episode":
+				if not element['hasVideo']:
+					return False
+				if "mainVideoContent" in element:
+					component = element['mainVideoContent']['http://zdf.de/rels/target']
+				elif "mainContent" in element:
+					component = element['mainContent'][0]['videoContent'][0]['http://zdf.de/rels/target']
+				videoFOUND = ZDFapiUrl+component['http://zdf.de/rels/streams/ptmd']
+			elif element['contentType'] == "clip":
+				videoFOUND = ZDFapiUrl+element['mainVideoContent']['http://zdf.de/rels/target']['http://zdf.de/rels/streams/ptmd']
+				#videoFOUND2 = ZDFapiUrl+element['mainVideoContent']['http://zdf.de/rels/target']['http://zdf.de/rels/streams/ptmd-template'].replace('{playerId}', 'ngplayer_2_3')
+			if videoFOUND:
+				thirdURL = getUrl(videoFOUND,getheader)
+				jsonObject = json.loads(thirdURL)
+				return ZdfExtractQuality(jsonObject)
 	except:
 		xbmc.log("[TvToday](ZdfGetVideo) AbspielLink-00 (ZDF+3) : *ZDF-Plugin* Der angeforderte -VideoLink- existiert NICHT !!!", xbmc.LOGERROR)
 		xbmc.log("[TvToday](playVideo) --- ENDE WIEDERGABE ANFORDERUNG ---", xbmc.LOGNOTICE)
