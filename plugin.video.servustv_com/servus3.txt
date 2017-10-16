@@ -1,0 +1,5 @@
+request.headers.put("Accept-Encoding", "gzip");
+        request.headers.put("Authorization", "DeviceId " + BaseApplication.getInstance().getAndroidId());
+        request.headers.put("Accept-Language", ServusTVApp.getInstance().getLanguage());
+        request.headers.put("User-Agent", "ServusTVApp/2.2.1 (Android/" + VERSION.RELEASE + ")");
+    }

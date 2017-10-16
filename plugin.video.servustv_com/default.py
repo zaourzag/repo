@@ -11,8 +11,7 @@ import random
 import xbmcplugin
 import xbmcgui
 import xbmcaddon
-import xbmc
-import subprocess
+import xbmc,json
 
 #addon = xbmcaddon.Addon()
 #addonID = addon.getAddonInfo('id')
@@ -25,10 +24,7 @@ useThumbAsFanart = addon.getSetting("useThumbAsFanart") == "true"
 addonDir = xbmc.translatePath(addon.getAddonInfo('path'))
 defaultFanart = os.path.join(addonDir ,'fanart.png')
 siteVersion = addon.getSetting("siteVersion")
-siteVersion = ["de", "at"][int(siteVersion)]
-quality = addon.getSetting("quality")
-quality = [240, 480, 720][int(quality)]
-qualityLive = addon.getSetting("qualityLive")
+siteVersion = ["de-de", "de-at"][int(siteVersion)]
 viewMode = str(addon.getSetting("viewID"))
 translation = addon.getLocalizedString
 icon = xbmc.translatePath('special://home/addons/'+addonID+'/icon.png')
@@ -45,233 +41,16 @@ def log(msg, level=xbmc.LOGNOTICE):
     addon = xbmcaddon.Addon()
     addonID = addon.getAddonInfo('id')
     xbmc.log('%s: %s' % (addonID, msg), level) 
-
-def index():
-	addDir(translation(30001), urlMain+"/"+siteVersion, 'liste', defaultFanart)
-	addDir(translation(30002), urlMain+"/"+siteVersion+"/Videos", 'listGenres', defaultFanart)
-	addDir(translation(30008), urlMain+"/"+siteVersion+"/Themen", 'liste', defaultFanart)
-	addDir("Sendungen", urlMain+"/"+siteVersion+"/Sendungen", 'listabisz', defaultFanart)	
-	addDir(translation(30010), "", 'search', defaultFanart)
-	addLink(translation(30011), "", 'playLiveStream', defaultFanart)
-	addDir(translation(30107), translation(30107), 'Settings', "")     
-	xbmcplugin.endOfDirectory(pluginhandle)
     
-    
-def listabisz(url):
-    content = opener.open(url).read()
-    content = content[content.find('<div class="mol teaser columns large-3 medium-6 small-14 medium-large-4 u-margin-bottom ">'):]
-    spl = content.split('<div class="mol teaser columns')                         
-    for i in range(1, len(spl), 1):
-      entry = spl[i]              
-      debug(entry)
-      debug("----")
-      match = re.compile('<a href="(.+?)" >', re.DOTALL).findall(entry)
-      url=match[0]
-      match = re.compile('src="(.+?)"', re.DOTALL).findall(entry)
-      img=match[0]           
-      match = re.compile('ato headline  teaser-s">([^<]+)<', re.DOTALL).findall(entry)
-      title=match[0].strip()
-      debug("title : "+title)
-      debug("url : "+url)
-      debug("img : "+urlMain+img)
-      addDir(cleanTitle(title), urlMain+url+"/Videos", 'listVideos', urlMain+img)
-    
-    xbmcplugin.endOfDirectory(pluginhandle)      
-def liste(url):
-    debug("listGenres url "+url)
-    xbmcplugin.addSortMethod(pluginhandle, xbmcplugin.SORT_METHOD_LABEL)
-    content = opener.open(url).read()
-    spl = content.split('<div class="mol teaser columns large-3 ">')
-    for i in range(1, len(spl), 1):
-      entry = spl[i]              
-      #debug("---------")
-      #debug(entry)
-      #debug("---------")
-      match = re.compile('<a href="(.+?)" >', re.DOTALL).findall(entry)
-      url=match[0]
-      match = re.compile('src="(.+?)"', re.DOTALL).findall(entry)
-      img=match[0]
-      match = re.compile('teaser-s">([^<]+)<', re.DOTALL).findall(entry)           
-      title=match[0].strip()
-      debug("title : "+title)
-      debug("url : "+url)
-      debug("img : "+urlMain+img)
-      addDir(cleanTitle(title), urlMain+url, 'listGenres', urlMain+img)
-    
-    xbmcplugin.endOfDirectory(pluginhandle)
-
-def listGenres(url):
-    debug("listGenres url "+url)
-    xbmcplugin.addSortMethod(pluginhandle, xbmcplugin.SORT_METHOD_LABEL)
-    content = opener.open(url).read()
-    debug("------------------")
-    debug(content)
-    titleall=[]
-    match = re.compile('h1 class="ato headline[^<]+<a href="(.+?)" >([^<]+?)<', re.DOTALL).findall(content)
-    found=0    
-    for url2, title in match:        
-        debug("URL : "+url)
-        title = cleanTitle(title)
-        if not title in titleall:
-          titleall.append(title)
-          if title:
-            found=1
-            addDir(cleanTitle(title), urlMain+url2, 'listGenres', defaultFanart)    
-         
-    match = re.compile('<div class="teaser-thema short">[^<]+<a href="(.+?)" >([^<]+?)<', re.DOTALL).findall(content)    
-    for url3, title in match:        
-        debug("THEMEN URL : "+url3)
-        debug("THEMEN Thema : "+title)
-        title = cleanTitle(title)
-        if not title in titleall:
-          titleall.append(title)
-          if title:
-            found=1
-            addDir(cleanTitle(title), urlMain+url3, 'listGenres', defaultFanart)    
-            
-    match = re.compile('h2 class="ato headline[^<]+<a href="(.+?)" >([^<]+?)<', re.DOTALL).findall(content)         
-    for url4, title in match:        
-        debug("URL : "+url)
-        title = cleanTitle(title)
-        if not title in titleall:
-          titleall.append(title)
-          if title:
-            found=1
-            addDir(cleanTitle(title), urlMain+url4, 'listGenres', defaultFanart)            
-
-    if found==0:
-      listVideos(url)
-    else:
-      xbmcplugin.endOfDirectory(pluginhandle)
-
-
-def listVideos(url):
-    xbmc.log("XXX listVideos url :"+ url)
-    debug("listVideos url : "+url)
-    try:
-        content1 = opener.open(url).read()    
-    except:
-        dialog = xbmcgui.Dialog()
-        dialog.notification("Keine Videos", 'Keine Videos', xbmcgui.NOTIFICATION_ERROR)
-        exit
-    content = content1[content1.find('<div class="Flow-block">'):]
-    spl = content.split('<div class="mol teaser')
-    for i in range(1, len(spl), 1):
-        entry = spl[i]
-        if 'class="ato btn playbutton"' in entry:
-            match = re.compile('href="(.+?)"', re.DOTALL).findall(entry)
-            url = urlMain+match[0]
-            match = re.compile('class="ato headline.*?">(.+?)<', re.DOTALL).findall(entry)
-            if match:
-                title = match[0].strip()
-                match = re.compile('class="ato text  teaser-sendungsdetail-subtitel">(.+?)<', re.DOTALL).findall(entry)
-                if match:
-                    title = title+" - "+match[0].strip()
-                title = cleanTitle(title)
-                match = re.compile('class="ato videoleange">(.+?)<', re.DOTALL).findall(entry)
-                duration = ""
-                if match:
-                    duration = match[0]
-                match = re.compile('src="(.+?)"', re.DOTALL).findall(entry)
-                thumb = urlMain+match[0].replace("_stvd_teaser_small.jpg",".jpg").replace("_stvd_teaser_large.jpg",".jpg")
-                debug("listVideos title : "+title)
-                addLink(title, url, 'playVideo', thumb, "", duration)
-    try:                
-        spl = content1.split('<div class="playlist-info">')            
-        for i in range(1, len(spl), 1):
-            entry = spl[i]    
-            match = re.compile('<a class="ato link arrow-link-small js-playlist-detail-link" target="_self" href="(.+?)">', re.DOTALL).findall(entry)    
-            url=match[0]
-            match = re.compile('detail-title">(.+?)</h4>', re.DOTALL).findall(entry)    
-            title=match[0]                
-            addLink(title, url, 'playVideo', "", "",0)
-    except:
-       pass
-    match = re.compile('class="next-site">.+?href="(.+?)"', re.DOTALL).findall(content)
-    if match:        
-        addDir(translation(30003), urlMain+cleanTitle(match[0]), 'listVideos', "")
-    xbmcplugin.endOfDirectory(pluginhandle)
-    if forceViewMode:
-        xbmc.executebuiltin('Container.SetViewMode('+viewMode+')')
-
-
-def playVideo(url,name):
-    content = opener.open(url).read()
-    match = re.compile('data-videoid="(.+?)"', re.DOTALL).findall(content)
-    content = opener.open("http://c.brightcove.com/services/mobile/streaming/index/master.m3u8?videoId="+match[0]).read()
-    match = re.compile('RESOLUTION=(.+?)x(.+?)\n(.+?)\n', re.DOTALL).findall(content)
-    for resX, resY, url in match:
-        if int(resY)<=quality:
-            finalURL=url
-    
-    listitem = xbmcgui.ListItem(path=finalURL)
-    xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
-
-
-def download (url,name):    
-    xbmc.log("star download url"+ url)
-    probe_args = [ffmpg, "-i", url, folder+name+".mp4" ]
-    proc = runCommand(probe_args)
-    temp_output = proc.communicate()[0]
-
-def runCommand(args):
-        try:
-            startupinfo = subprocess.STARTUPINFO()
-            startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-            proc = subprocess.Popen(args,startupinfo=startupinfo)
-        except:
-            xbmc.log("Couldn't run command")
-            return False
-        else:
-            xbmc.log("Returning process", 5)
-            return proc
-    
-def playLiveStream():
-    if siteVersion=="de":    
-                streamUrl=" http://hdiosstv-f.akamaihd.net/i/servustvhdde_1@75540/master.m3u8?b=0-1500"    
-    else: 
-                streamUrl="http://hdiosstv-f.akamaihd.net/i/servustvhd_1@51229/master.m3u8"
-    content = opener.open(streamUrl).read()
-    match = re.compile('RESOLUTION=(.+?)x([0-9]+?).+?\n(.+?)\n', re.DOTALL).findall(content)
-    for resX, resY, url in match:
-        debug("resX"+resX)
-        if int(resY)<=quality:
-            finalURL=url      
-    listitem = xbmcgui.ListItem(path=url)
-    xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
-
-
-def queueVideo(url, name, thumb):
-    playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
-    listitem = xbmcgui.ListItem(name, thumbnailImage=thumb)
-    playlist.add(url, listitem)
-
-
-def search():
-    keyboard = xbmc.Keyboard('', translation(30002))
-    keyboard.doModal()
-    if keyboard.isConfirmed() and keyboard.getText():
-        search_string = keyboard.getText().replace(" ", "+")
-        listVideos(urlMain+"/"+siteVersion+"/search?stvd_form_search[name]="+search_string)
-
-
-def cleanTitle(title):
-    title = title.replace("&lt;", "<").replace("&gt;", ">").replace("&amp;", "&").replace("&#039;", "'").replace("&quot;", "\"").replace("&szlig;", "ß").replace("&ndash;", "-")
-    title = title.replace("&Auml;", "Ä").replace("&Uuml;", "Ü").replace("&Ouml;", "Ö").replace("&auml;", "ä").replace("&uuml;", "ü").replace("&ouml;", "ö")
-    title = title.strip()
-    return title
-
-
 def parameters_string_to_dict(parameters):
-    paramDict = {}
-    if parameters:
-        paramPairs = parameters[1:].split("&")
-        for paramsPair in paramPairs:
-            paramSplits = paramsPair.split('=')
-            if (len(paramSplits)) == 2:
-                paramDict[paramSplits[0]] = paramSplits[1]
-    return paramDict
-
+  paramDict = {}
+  if parameters:
+    paramPairs = parameters[1:].split("&")
+    for paramsPair in paramPairs:
+      paramSplits = paramsPair.split('=')
+      if (len(paramSplits)) == 2:
+        paramDict[paramSplits[0]] = paramSplits[1]
+  return paramDict
 
 def addLink(name, url, mode, iconimage, desc="", duration=""):
     u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+str(name)
@@ -286,8 +65,8 @@ def addLink(name, url, mode, iconimage, desc="", duration=""):
     return ok
 
 
-def addDir(name, url, mode, iconimage):
-    u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
+def addDir(name, url, mode, iconimage,ttype=""):
+    u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&ttype="+str(ttype)
     ok = True
     liz = xbmcgui.ListItem(name, iconImage="DefaultFolder.png", thumbnailImage=iconimage)
     liz.setInfo(type="Video", infoLabels={"Title": name})
@@ -299,27 +78,174 @@ def addDir(name, url, mode, iconimage):
 params = parameters_string_to_dict(sys.argv[2])
 mode = urllib.unquote_plus(params.get('mode', ''))
 url = urllib.unquote_plus(params.get('url', ''))
-name = urllib.unquote_plus(params.get('name', ''))
+ttype = urllib.unquote_plus(params.get('ttype', ''))
 thumb = urllib.unquote_plus(params.get('thumb', ''))
+  
 
-if mode == 'listVideos':
-    listVideos(url)
-elif mode == 'listGenres':
-    listGenres(url)
-elif mode == 'Sendungen':
-    Sendungen(url)
-elif mode == 'playVideo':
-    playVideo(url,name)
+def getUrl(url,data="x"):        
+        debug("Get Url: " +url)
+        opener = urllib2.build_opener(urllib2.HTTPCookieProcessor())
+        userAgent = "Dalvik/2.1.0 (Linux; U; Android 5.0;)"
+        opener.addheaders = [('User-Agent', userAgent),
+        ('Accept-Language',siteVersion),
+         ('Authorization',"DeviceId 427502496159111")        
+        ]
+        try:
+          if data!="x" :
+             content=opener.open(url,data=data).read()
+          else:
+             content=opener.open(url).read()
+        except urllib2.HTTPError as e:
+             #print e.code   
+             cc=e.read()  
+             struktur = json.loads(cc)  
+             error=struktur["errors"][0] 
+             error=unicode(error).encode("utf-8")
+             debug("ERROR : " + error)
+             dialog = xbmcgui.Dialog()
+             nr=dialog.ok("Error", error)
+             return ""
+             
+        opener.close()
+        return content
+
+        
+def index():
+  addDir(translation(30001), "https://api.servustv.com/videolists?start&broadcast_limit=5", 'startseite', defaultFanart)
+  addDir(translation(30008), "https://api.servustv.com/topics", 'topics', defaultFanart)
+  addDir("Serien", "https://api.servustv.com/series", 'series', defaultFanart)
+  addLink(translation(30011), "", 'playLiveStream', defaultFanart)
+  xbmcplugin.endOfDirectory(pluginhandle)
+  
+def topics(url):
+  content=getUrl(url)
+  struktur = json.loads(content) 
+  for element in struktur["topics"]:
+      title=element["title"]
+      idd=str(element["id"])
+      addDir(title, idd, 'subtopic', "")            
+  xbmcplugin.endOfDirectory(pluginhandle)              
+def subtopic(idd):
+  url="https://api.servustv.com/topics/"+idd+"/series?vod_only&broadcast_limit=50&limit=500"  
+  content=getUrl(url)
+  struktur = json.loads(content) 
+  for element in struktur["series"]:
+      ids=str(element["id"])
+      title=element["title"].encode("utf-8")
+      try:
+        image=element["images"][0]["url"].encode("utf-8")
+      except:
+        image=""
+      addDir(title, ids, 'serie', image) 
+  url="https://api.servustv.com/topics/"+idd+"/broadcasts?vod_only&no_series=&broadcast_limit=5"
+  content=getUrl(url)
+  struktur = json.loads(content)  
+  debug(struktur)
+  for element in struktur["broadcasts"]:
+      ids=str(element["id"])
+      title=element["title"].encode("utf-8")
+      subtitle=element["subtitle"].encode("utf-8")
+      try:
+        image=element["images"][0]["url"].encode("utf-8")
+      except:
+        image=""
+      addLink(title+" - "+subtitle, ids, 'Play', image)       
+  xbmcplugin.endOfDirectory(pluginhandle)  
+
+def series():
+  url="https://api.servustv.com/series"
+  content=getUrl(url)
+  struktur = json.loads(content) 
+  for element in struktur["series"]:
+      ids=str(element["id"])
+      title=element["title"].encode("utf-8")
+      try:
+        image=element["images"][0]["url"].encode("utf-8")
+      except:
+        image=""
+      addDir(title, ids, 'serie', image) 
+  xbmcplugin.endOfDirectory(pluginhandle)  
+
+def serie(idd):    
+    url="https://api.servustv.com/series/"+idd+"?vod_only&broadcast_limit=100"
+    content=getUrl(url)
+    struktur = json.loads(content) 
+    for element in  struktur["series"]["broadcasts"]:
+        name=element["title"].encode("utf-8")
+        subtitle=element["subtitle"].encode("utf-8")
+        dauer=str(element["vod_duration"])
+        ids=str(element["id"])
+        image=element["images"][0]["url"].encode("utf-8")
+        addLink(name +" - "+subtitle, ids, "Play", image, desc="", duration=dauer)                
+    xbmcplugin.endOfDirectory(pluginhandle) 
+  
+def startseite(url,ttype=""):
+       content=getUrl(url)
+       struktur = json.loads(content) 
+       for element in  struktur["videolists"]:
+          debug(element)
+          title=element["title"]
+          debug("title :"+title) 
+          debug("Type :"+ttype)
+          if ttype=="":
+            addDir(title, url, 'startseite', "",ttype=title)            
+          else:
+            if ttype=="Alle" or title==ttype:
+                for element2 in element["broadcasts"]:
+                   name=element2["title"].encode("utf-8")
+                   subtitle=element2["subtitle"].encode("utf-8")
+                   dauer=str(element2["vod_duration"])
+                   idd=str(element2["id"])
+                   #desc=element2["description"]
+                   image=element2["images"][0]["url"].encode("utf-8")
+                   addLink(name +" - "+subtitle, idd, "Play", image, desc="", duration=dauer)                
+       if ttype=="":
+        addDir("Alle", url, 'startseite', "",ttype="Alle")          
+       xbmcplugin.endOfDirectory(pluginhandle)        
+
+
+
+
+
+def Play(idd):
+    url="https://api.servustv.com/broadcasts/"+idd
+    content=getUrl(url)
+    struktur = json.loads(content)
+    playurl=struktur["broadcast"]["vod_hls_link"]
+    listitem = xbmcgui.ListItem(path=playurl)
+    xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
+
+
+    
+def playLiveStream():
+    debug( "siteVersion :"+siteVersion)
+    if siteVersion=="de-de":    
+                streamUrl="http://hdiosstv-f.akamaihd.net/i/servustvhdde_1@75540/index_2592_av-p.m3u8"    
+    else: 
+                streamUrl="http://hdiosstv-f.akamaihd.net/i/servustvhd_1@51229/index_2592_av-p.m3u8"    
+    listitem = xbmcgui.ListItem(path=streamUrl)
+    xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
+
+
+
+
+
+
+
+if mode == 'startseite':
+    startseite(url,ttype)       
+elif mode == 'Play':
+    Play(url)    
+elif mode == 'topics':
+    topics(url)    
+elif mode == 'subtopic':
+    subtopic(url)    
+elif mode == 'serie':
+    serie(url)        
+elif mode == 'series':
+    series()       
 elif mode == 'playLiveStream':
-    playLiveStream()
-elif mode == 'queueVideo':    
-    queueVideo(url, name, thumb)
-elif mode == 'search':
-    search()
-elif mode == 'liste':
-    liste(url)       
-elif mode == 'listabisz':
-    listabisz(url)    
+    playLiveStream()           
 elif mode == 'Settings':
           addon.openSettings()
 else:
