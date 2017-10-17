@@ -243,13 +243,12 @@ def rubrik(name) :
     serienanzahl=1
    
   if (serienanzahl==1):
-    try:
-      idd=kapitelliste["formatTabs"]["items"][0]["id"]   
-    except:
-      idd=kapitelliste["id"]
+    idd=kapitelliste["id"]
+    debug(":: ::"+str(idd))
     uurl="http://api.tvnow.de/v3/formatlists/"+str(idd)+"?maxPerPage=500&fields=*,formatTabPages.*,formatTabPages.container.*,formatTabPages.container.movies.*,formatTabPages.container.movies.format.*,formatTabPages.container.movies.paymentPaytypes.*,formatTabPages.container.movies.pictures"
     staffel(str(idd),uurl)
   else:
+    anz=0
     for kapitel in kapitelliste["formatTabs"]["items"]:
       debug(kapitel)       
       idd=kapitel["id"]
@@ -260,6 +259,12 @@ def rubrik(name) :
       #      debug(staffelinfo)
           uurl="http://api.tvnow.de/v3/formatlists/"+str(idd)+"?maxPerPage=500&fields=*,formatTabPages.*,formatTabPages.container.*,formatTabPages.container.movies.*,formatTabPages.container.movies.format.*,formatTabPages.container.movies.paymentPaytypes.*,formatTabPages.container.movies.pictures"
           menu.append(addDir(name , url=uurl,nummer=str(idd), mode="staffel", iconimage="",duration="",desc=""))        
+          anz+=1
+    if anz==0:
+      urlx2="https://api.tvnow.de/v3/movies?fields=%5B%22id%22%2C%22episode%22%2C%22season%22%2C%22title%22%2C%22articleShort%22%2C%22broadcastPreviewStartDate%22%2C%22broadcastStartDate%22%2C%22availableDate%22%2C%22duration%22%2C%22aspectRatio%22%2C%22dontCall%22%2C%22cornerLogo%22%2C%22productPlacementType%22%2C%22timeType%22%2C%22videoPlazaTags%22%2C%22alternateBroadcastDateText%22%2C%22blockadeText%22%2C%22fsk%22%2C%22pictures%22%2C%5B%22default%22%2C%22portrait%22%5D%2C%22manifest%22%2C%5B%22hls%22%2C%22dash%22%5D%2C%22format%22%2C%5B%22id%22%2C%22title%22%2C%22titleGroup%22%2C%22station%22%2C%22tabSpecialTeaserPosition%22%2C%22tabSeason%22%2C%22annualNavigation%22%2C%22formatTabs%22%2C%5B%22id%22%2C%22headline%22%2C%22seoheadline%22%2C%22emptyListText%22%5D%2C%22genres%22%2C%22szm%22%2C%22emptyListText%22%2C%22videoPlazaAdTag%22%5D%5D&filter=%7B%22BroadcastStartDate%22:%7B%22between%22:%7B%22start%22:%222017-10-01+00:00:00%22,%22end%22:%222017-10-31+23:59:59%22%7D%7D,%22FormatId%22:"+str(idd)+"%7D&maxPerPage=100&order=BroadcastStartDate+desc"
+      staffel(str(idd),uurl)
+      
+           
   xbmcplugin.addDirectoryItems(addon_handle,menu)
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 def get_sec(time_str):
@@ -293,8 +298,9 @@ def playdash(xstream,xlink,xtitle,xdrm):
             dialog.notification("Kodi18 Notwendig", 'Kodi18 ist Notwendig für dieses Video', xbmcgui.NOTIFICATION_ERROR)
         xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=stream, listitem=listitem)
     xbmcplugin.setResolvedUrl(addon_handle,True, listitem)        
-def staffel(idd,url) :    
+def staffel(idd,url) :   
   xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
+  debug("Staffel idd:"+idd)
   menu=[]
   xy=[]  
   global cache
@@ -305,9 +311,12 @@ def staffel(idd,url) :
   try:
      content = cache.cacheFunction(getUrl,url)
      folgen = json.loads(content, object_pairs_hook=OrderedDict)
-     li=folgen["formatTabPages"]     
-  except:  
-    url='http://api.tvnow.de/v3/movies?filter={%22FormatId%22:'+idd+'}&fields=*,format,paymentPaytypes,pictures,trailers&maxPerPage=500&order=BroadcastStartDate%20desc2B'+idd+'}%26fields%3D*%2Cformat%2CpaymentPaytypes%2Cpictures%2Ctrailers%26maxPerPage%3D50%26order%3DBroadcastStartDate%2Bdesc'
+     try:
+        li=folgen["formatTabPages"]     
+     except:
+        li=folgen
+  except:         
+    url='http://api.tvnow.de/v3/movies?filter={%22FormatId%22:'+idd+'}&fields=*,format,paymentPaytypes,pictures,trailers&maxPerPage=500&order=BroadcastStartDate%20desc2B'+str(idd)+'}%26fields%3D*%2Cformat%2CpaymentPaytypes%2Cpictures%2Ctrailers%26maxPerPage%3D50%26order%3DBroadcastStartDate%2Bdesc'       
     debug("NEWURL :"+url)
     content = cache.cacheFunction(getUrl,url) 
     li = json.loads(content, object_pairs_hook=OrderedDict)
@@ -316,6 +325,7 @@ def staffel(idd,url) :
   debug(liste)
   menu=[]
   menulist=""
+  anz=0
   for element in liste:      
       debug("###")
       debug(element)      
@@ -380,10 +390,15 @@ def staffel(idd,url) :
           xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url="plugin://plugin.video.rtlnow/?nummer="+haswert+"&mode=hashplay", listitem=listitem)
           #addLink(name, stream, "playvideo", bild)          
           xbmcplugin.addDirectoryItems(addon_handle,menu) 
+          anz+=1
   f = open( os.path.join(temp,"menu.txt"), 'w')  
   f.write(menulist)
-  f.close()          
-  xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
+  f.close()     
+  if anz==0:
+       uurl='https://api.tvnow.de/v3/movies?fields=*,formatTabPages.*,formatTabPages.container.*,formatTabPages.container.movies.*,formatTabPages.container.movies.format.*,formatTabPages.container.movies.paymentPaytypes.*,formatTabPages.container.movies.pictures&filter%3D%7B%22FormatId%22%3A'+str(idd)+'%7D'
+       staffel(str(idd),uurl)
+  else:       
+        xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 
  
 def hashplay(idd):
