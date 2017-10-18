@@ -247,7 +247,8 @@ def rubrik(name) :
     idd=kapitelliste["id"]
     debug(":: ::"+str(idd))
     #uurl="http://api.tvnow.de/v3/formatlists/"+str(idd)+"?maxPerPage=500&fields=*,formatTabPages.*,formatTabPages.container.*,formatTabPages.container.movies.*,formatTabPages.container.movies.format.*,formatTabPages.container.movies.paymentPaytypes.*,formatTabPages.container.movies.pictures"
-    uurl="https://api.tvnow.de/v3/movies?fields=[%22broadcastStartDate%22,%22articleShort%22,%22articleLong%22,%22id%22,%22episode%22,%22season%22,%22title%22,%22articleShort%22,%22isDrm%22,%22free%22,%22teaserText%22,%22deeplinkUrl%22,%22duration%22,%22manifest%22,[%22dash%22,%22dashclear%22],%22format%22,[%22categoryId%22]]&filter={%22FormatId%22:"+str(idd)+"}&maxPerPage=100&order=BroadcastStartDate%20desc"   
+    uurl="https://api.tvnow.de/v3/movies?fields=format.categoryId,broadcastStartDate,articleShort,articleLong,id,episode,season,title,isDrm,free,teaserText,deeplinkUrl,duration,manifest.dash,manifest.dashclear&filter%3D%7B%22FormatId%22%3A"+str(idd)+"%7D"
+    #uurl="https://api.tvnow.de/v3/movies?fields=[%22broadcastStartDate%22,%22articleShort%22,%22articleLong%22,%22id%22,%22episode%22,%22season%22,%22title%22,%22articleShort%22,%22isDrm%22,%22free%22,%22teaserText%22,%22deeplinkUrl%22,%22duration%22,%22manifest%22,[%22dash%22,%22dashclear%22],%22format%22,[%22categoryId%22]]&filter={%22FormatId%22:"+str(idd)+"}&maxPerPage=100&order=BroadcastStartDate%20desc"   
     staffel(str(idd),uurl)
   else:    
     for kapitel in kapitelliste["formatTabs"]["items"]:
