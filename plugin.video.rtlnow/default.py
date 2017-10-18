@@ -236,19 +236,20 @@ def rubrik(name) :
   debug(url)
   content = cache.cacheFunction(getUrl,url)      
   kapitelliste = json.loads(content, object_pairs_hook=OrderedDict)   
+  xidd=kapitelliste["id"]
   try:
     serienanzahl=kapitelliste["formatTabs"]["total"]  
     debug("serienanzahl gefunden :"+ str(serienanzahl))
   except:
     serienanzahl=1
-   
+  debug("serienanzahl gefunden :"+ str(serienanzahl))   
   if (serienanzahl==1):
     idd=kapitelliste["id"]
     debug(":: ::"+str(idd))
-    uurl="http://api.tvnow.de/v3/formatlists/"+str(idd)+"?maxPerPage=500&fields=*,formatTabPages.*,formatTabPages.container.*,formatTabPages.container.movies.*,formatTabPages.container.movies.format.*,formatTabPages.container.movies.paymentPaytypes.*,formatTabPages.container.movies.pictures"
+    #uurl="http://api.tvnow.de/v3/formatlists/"+str(idd)+"?maxPerPage=500&fields=*,formatTabPages.*,formatTabPages.container.*,formatTabPages.container.movies.*,formatTabPages.container.movies.format.*,formatTabPages.container.movies.paymentPaytypes.*,formatTabPages.container.movies.pictures"
+    uurl="https://api.tvnow.de/v3/movies?fields=[%22broadcastStartDate%22,%22articleShort%22,%22articleLong%22,%22id%22,%22episode%22,%22season%22,%22title%22,%22articleShort%22,%22isDrm%22,%22free%22,%22teaserText%22,%22deeplinkUrl%22,%22duration%22,%22manifest%22,[%22dash%22,%22dashclear%22],%22format%22,[%22categoryId%22]]&filter={%22FormatId%22:"+str(idd)+"}&maxPerPage=100&order=BroadcastStartDate%20desc"   
     staffel(str(idd),uurl)
-  else:
-    anz=0
+  else:    
     for kapitel in kapitelliste["formatTabs"]["items"]:
       debug(kapitel)       
       idd=kapitel["id"]
@@ -258,13 +259,8 @@ def rubrik(name) :
       if ('"free":true' in content2 or freeonly=="false") and ('"isDrm":false' in content2  or kodi18 == "true"):
       #      debug(staffelinfo)
           uurl="http://api.tvnow.de/v3/formatlists/"+str(idd)+"?maxPerPage=500&fields=*,formatTabPages.*,formatTabPages.container.*,formatTabPages.container.movies.*,formatTabPages.container.movies.format.*,formatTabPages.container.movies.paymentPaytypes.*,formatTabPages.container.movies.pictures"
-          menu.append(addDir(name , url=uurl,nummer=str(idd), mode="staffel", iconimage="",duration="",desc=""))        
-          anz+=1
-    if anz==0:
-      urlx2="https://api.tvnow.de/v3/movies?fields=%5B%22id%22%2C%22episode%22%2C%22season%22%2C%22title%22%2C%22articleShort%22%2C%22broadcastPreviewStartDate%22%2C%22broadcastStartDate%22%2C%22availableDate%22%2C%22duration%22%2C%22aspectRatio%22%2C%22dontCall%22%2C%22cornerLogo%22%2C%22productPlacementType%22%2C%22timeType%22%2C%22videoPlazaTags%22%2C%22alternateBroadcastDateText%22%2C%22blockadeText%22%2C%22fsk%22%2C%22pictures%22%2C%5B%22default%22%2C%22portrait%22%5D%2C%22manifest%22%2C%5B%22hls%22%2C%22dash%22%5D%2C%22format%22%2C%5B%22id%22%2C%22title%22%2C%22titleGroup%22%2C%22station%22%2C%22tabSpecialTeaserPosition%22%2C%22tabSeason%22%2C%22annualNavigation%22%2C%22formatTabs%22%2C%5B%22id%22%2C%22headline%22%2C%22seoheadline%22%2C%22emptyListText%22%5D%2C%22genres%22%2C%22szm%22%2C%22emptyListText%22%2C%22videoPlazaAdTag%22%5D%5D&filter=%7B%22BroadcastStartDate%22:%7B%22between%22:%7B%22start%22:%222017-10-01+00:00:00%22,%22end%22:%222017-10-31+23:59:59%22%7D%7D,%22FormatId%22:"+str(idd)+"%7D&maxPerPage=100&order=BroadcastStartDate+desc"
-      staffel(str(idd),uurl)
-      
-           
+          menu.append(addDir(name , url=uurl,nummer=str(idd), mode="staffel", iconimage="",duration="",desc=""))                
+                
   xbmcplugin.addDirectoryItems(addon_handle,menu)
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 def get_sec(time_str):
@@ -300,56 +296,55 @@ def playdash(xstream,xlink,xtitle,xdrm):
     xbmcplugin.setResolvedUrl(addon_handle,True, listitem)        
 def staffel(idd,url) :   
   xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
-  debug("Staffel idd:"+idd)
+  debug("staffel Staffel idd:"+idd)
   menu=[]
   xy=[]  
+  menulist=""
   global cache
   ret,token=login()
-  debug("Lade staffel neu")
+  debug("staffel Lade staffel neu")
   #http://api.tvnow.de/v3/formatlists/41018?maxPerPage=5000&fields=*,formatTabPages.*,formatTabPages.container.*,formatTabPages.container.movies.*,formatTabPages.container.movies.format.*,formatTabPages.container.movies.paymentPaytypes.*,formatTabPages.container.movies.pictures&page=1http://api.tvnow.de/v3/formatlists/41016?maxPerPage=9&fields=*,formatTabPages.*,formatTabPages.container.*,formatTabPages.container.movies.*,formatTabPages.container.movies.format.*,formatTabPages.container.movies.paymentPaytypes.*,formatTabPages.container.movies.pictures&page=1  
-  debug("staffel :"+url)
-  try:
-     content = cache.cacheFunction(getUrl,url)
-     folgen = json.loads(content, object_pairs_hook=OrderedDict)
+  debug("staffel url :"+url)
+  content = cache.cacheFunction(getUrl,url)
+  folgen = json.loads(content, object_pairs_hook=OrderedDict)    
+  dummy=[]
+  try:  
+   folgex=folgen["formatTabPages"]["items"][0]["container"]["movies"]
+   debug("container found")
+   for ele in folgen["formatTabPages"]["items"]:
+     debug("ELE")
+     debug(ele)
      try:
-        li=folgen["formatTabPages"]     
+        dummy=dummy+ele["container"]["movies"]["items"]
      except:
-        li=folgen
-  except:         
-    url='http://api.tvnow.de/v3/movies?filter={%22FormatId%22:'+idd+'}&fields=*,format,paymentPaytypes,pictures,trailers&maxPerPage=500&order=BroadcastStartDate%20desc2B'+str(idd)+'}%26fields%3D*%2Cformat%2CpaymentPaytypes%2Cpictures%2Ctrailers%26maxPerPage%3D50%26order%3DBroadcastStartDate%2Bdesc'       
-    debug("NEWURL :"+url)
-    content = cache.cacheFunction(getUrl,url) 
-    li = json.loads(content, object_pairs_hook=OrderedDict)
-  
-  liste=li["items"]
-  debug(liste)
-  menu=[]
-  menulist=""
-  anz=0
-  for element in liste:      
-      debug("###")
-      debug(element)      
-      try:
-        if element["container"]["movies"]==None:
-          continue
-        elemente2=element["container"]["movies"]["items"]
-        debug("ELEMENT2")
-      except:        
-        elemente2=[element]
-      for folge in elemente2:         
-        debug("++")
-        debug(folge)        
-        freeonly=addon.getSetting("freeonly")        
-        kodi18=addon.getSetting("kodi18")
+         pass
+     
+   folgen=dummy     
+  except:
+   try:
+     folgen=folgen["movies"]["items"]
+   except:
+        folgen=folgen["items"]
+  debug("staffel Liste:")
+  debug(folgen)
+  freeonly=addon.getSetting("freeonly")        
+  kodi18=addon.getSetting("kodi18")
+  debug("Staffel freeonly  : "+str(freeonly))
+  debug("Staffel kodi18 : "+str(kodi18))
+  for element in folgen: 
+        folge=element
+        debug("staffel Element:")  
+        debug(element)
         try:
           debug(folge["isDrm"])
           debug(folge["free"])
         except:
            continue
-        if ( not folge["isDrm"]==True or kodi18=="true") and ( folge["free"]==True or freeonly=="false"):
+        if ( folge["isDrm"]==False or kodi18=="true") and ( folge["free"]==True or freeonly=="false"):
           debug("--")
           name=folge["title"]         
           idd=folge["id"]
+          debug("staffel a")
           bild="https://ais.tvnow.de/tvnow/movie/"+str(idd)+"/600x600/title.jpg"
           stream=folge["manifest"]["dashclear"].strip()
           if folge["isDrm"]==True:
@@ -359,15 +354,19 @@ def staffel(idd,url) :
                   streamcode="0"
           else:
               streamcode="0"
+          debug("staffel b")              
           laenge=get_sec(folge["duration"])          
           laengemin=get_min(folge["duration"])          
           sstaffel=str(folge["season"])
+          debug("staffel c")
           folgenr=str(folge["episode"]) 
           plot=folge["articleLong"] 
           plotshort=folge["articleShort"]
+          debug("staffel d")
           startdate=folge["broadcastStartDate"]    
           tagline=folge["teaserText"]           
           deeplink=folge["deeplinkUrl"] 
+          debug("staffel e")
           try:          
             type=folge["format"]["categoryId"]
           except:
@@ -390,16 +389,10 @@ def staffel(idd,url) :
           xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url="plugin://plugin.video.rtlnow/?nummer="+haswert+"&mode=hashplay", listitem=listitem)
           #addLink(name, stream, "playvideo", bild)          
           xbmcplugin.addDirectoryItems(addon_handle,menu) 
-          anz+=1
   f = open( os.path.join(temp,"menu.txt"), 'w')  
   f.write(menulist)
   f.close()     
-  if anz==0:
-       uurl='https://api.tvnow.de/v3/movies?fields=*,formatTabPages.*,formatTabPages.container.*,formatTabPages.container.movies.*,formatTabPages.container.movies.format.*,formatTabPages.container.movies.paymentPaytypes.*,formatTabPages.container.movies.pictures&filter%3D%7B%22FormatId%22%3A'+str(idd)+'%7D'
-       staffel(str(idd),uurl)
-  else:       
-        xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
-
+  xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
  
 def hashplay(idd):
   debug("hashplay url :"+idd)
@@ -497,7 +490,7 @@ def  login():
   except:
       debug("Wrong Login")
       addon.setSetting("freeonly", "true")
-      return 0,"0"
+      return 0,"0"      
   debug(content)
   
      
@@ -649,8 +642,8 @@ if mode is '':
     index()    
 else:  
   if mode == 'listgenre':
-          urln="https://api.tvnow.de/v3/channels/"+nummer+"?fields=[%22*%22,%22movies%22,[%22id%22,%22title%22,%22episode%22,%22broadcastStartDate%22,%22blockadeText%22,%22free%22,%22replaceMovieInformation%22,%22seoUrl%22,%22pictures%22,[%22*%22],%22packages%22,[%22*%22],%22format%22,[%22*%22]]]"
-          serien(urln)   
+          urln="https://api.tvnow.de/v3/channels/"+nummer+"?fields=[%22id%22,%22movies%22,[%22broadcastStartDate%22,%22articleShort%22,%22articleLong%22,%22id%22,%22episode%22,%22season%22,%22title%22,%22articleShort%22,%22isDrm%22,%22free%22,%22teaserText%22,%22deeplinkUrl%22,%22duration%22,%22manifest%22,[%22dash%22,%22dashclear%22],%22format%22,[%22categoryId%22]]]"          
+          staffel("0",urln)   
   if mode == 'serien':
           starturl='http://api.tvnow.de/v3/formats?filter='
           filter=urllib.quote_plus('{"Disabled": "0", "Station":"' + url +'"}')
