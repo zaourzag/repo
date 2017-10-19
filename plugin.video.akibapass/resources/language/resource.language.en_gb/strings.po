@@ -43,6 +43,10 @@ msgctxt "#30023"
 msgid "My collection"
 msgstr ""
 
+msgctxt "#30024"
+msgid "Watch trailer"
+msgstr ""
+
 
 # Akibapass Messages
 
