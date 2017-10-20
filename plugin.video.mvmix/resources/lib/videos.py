@@ -9,7 +9,6 @@ from filter_list import *
 
 def get_videos(artist):
     start_time = time.time()
-    pxy = False
     videos = []
     result = []
     threads = []
