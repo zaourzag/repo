@@ -691,16 +691,22 @@ class myPlayer(xbmc.Player):
         self.seekTime(self.skip)
         self.startTime=self.startTime-datetime.timedelta(seconds=self.skip)
     def onPlayBackSeek(self, time, seekOffset):
-      if self.startTime+datetime.timedelta(milliseconds=time) > datetime.datetime.now():
+      if DEBUG: print "starttime is"+str(self.startTime+datetime.timedelta(milliseconds=time)) + "   Time now"+str(datetime.datetime.now().replace(microsecond=0))
+      if self.startTime+datetime.timedelta(milliseconds=time) > datetime.datetime.now().replace(microsecond=0):
         channel=_zattooDB_.get_playing()['channel']
-        _zattooDB_.set_playing() #clear setplaying to start channel in watch_channel
-        xbmc.executebuiltin('RunPlugin("plugin://'+__addonId__+'/?mode=watch_c&id='+channel+'&showOSD=1")')
+        #_zattooDB_.set_playing() #clear setplaying to start channel in watch_channel
         self.playing=False
-    def onPlayBackStopped(self):
-        self.playing=False;
+        if DEBUG: print "Stop Seek"
+        xbmc.executebuiltin('RunPlugin("plugin://'+__addonId__+'/?mode=watch_c&id='+channel+'&showOSD=1")')
         
-    def onPlayBackEnded(self):        
-        self.playing=False;
+    def onPlayBackStopped(self):
+        self.playing=False
+        
+    def onPlayBackEnded(self):
+        channel=_zattooDB_.get_playing()['channel']
+        self.playing=False 
+        if DEBUG: print "Stop Playing"       
+        xbmc.executebuiltin('RunPlugin("plugin://'+__addonId__+'/?mode=watch_c&id='+channel+'&showOSD=1")')
 
 class zattooGUI(xbmcgui.WindowXMLDialog):
 
