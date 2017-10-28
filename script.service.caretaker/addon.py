@@ -1,21 +1,7 @@
-import os
-import urllib2
-
 from xml.dom import minidom
 from datetime import datetime
 from resources.lib.tools import *
 
-__addonid__ = xbmcaddon.Addon().getAddonInfo('id')
-__addonname__ = xbmcaddon.Addon().getAddonInfo('name')
-__addonversion__ = xbmcaddon.Addon().getAddonInfo('version')
-__addonpath__ = xbmcaddon.Addon().getAddonInfo('path')
-__profile__ = xbmcaddon.Addon().getAddonInfo('profile')
-__LS__ = xbmcaddon.Addon().getLocalizedString
-
-BLACKLIST = os.path.join(xbmc.translatePath(__addonpath__), 'resources', 'data', 'blacklist')
-BLACKLIST_CACHE = os.path.join(xbmc.translatePath(__profile__), 'blacklist')
-BLACKLIST_REMOTE = 'https://gist.githubusercontent.com/CvH/42ec8eac33640a712a1be2d05754f075/raw/56d65809a9e25eeabe4e8d71f885d4003492de5c/banned_repos'
-CT_LOG = os.path.join(xbmc.translatePath('special://temp'), 'caretaker.log')
 
 def get_addon_list(repo_path, exclude_id):
     addon_list = []
@@ -57,7 +43,7 @@ def run_script():
 
     if os.path.exists(CT_LOG): os.remove(CT_LOG)
     writeLog('*** Starting %s V.%s at %s ***' %
-             (__addonname__, __addonversion__, datetime.now().strftime('%Y-%m-%d %H:%M')), extra=CT_LOG)
+             (ADDON_NAME, ADDON_VERSION, datetime.now().strftime('%Y-%m-%d %H:%M')), extra=CT_LOG)
     updateBlacklist(BLACKLIST_CACHE, BLACKLIST_REMOTE, BLACKLIST)
     try:
         with open(BLACKLIST_CACHE, 'r') as filehandle:
@@ -134,12 +120,22 @@ def run_script():
                         writeLog('Could not execute JSON query', xbmc.LOGFATAL)
 
 
-            dialogOk(__LS__(30010), __LS__(30013))
+            dialogOk(LS(30010), LS(30013))
         else:
             writeLog('No potentially harmful repositories found', xbmc.LOGNOTICE, extra=CT_LOG)
-            notify(__LS__(30010), __LS__(30014))
+            notify(LS(30010), LS(30014))
     else:
         writeLog('Could not execute JSON query', xbmc.LOGFATAL)
 
 if __name__ == '__main__':
-    run_script()
+    try:
+        par = sys.argv[1]
+        if par == 'actualize_blacklist':
+            rv = updateBlacklist(BLACKLIST_CACHE, BLACKLIST_REMOTE, BLACKLIST, force=True)
+            if rv == 'online':
+                notify(LS(30010), LS(30022))
+            else:
+                notify(LS(30010), LS(30023))
+    except IndexError:
+        # Start without arguments (i.e. login|startup|restart)
+        run_script()

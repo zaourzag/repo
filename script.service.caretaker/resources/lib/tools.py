@@ -7,10 +7,19 @@ import os
 import time
 import urllib2
 
-__LS__ = xbmcaddon.Addon().getLocalizedString
-__profile__ = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('profile'))
-
 # Constants
+
+ADDON_ID = xbmcaddon.Addon().getAddonInfo('id')
+ADDON_NAME = xbmcaddon.Addon().getAddonInfo('name')
+ADDON_VERSION = xbmcaddon.Addon().getAddonInfo('version')
+ADDON_PATH = xbmcaddon.Addon().getAddonInfo('path')
+ADDON_PROFILE = xbmcaddon.Addon().getAddonInfo('profile')
+LS = xbmcaddon.Addon().getLocalizedString
+
+BLACKLIST = os.path.join(xbmc.translatePath(ADDON_PATH), 'resources', 'data', 'blacklist')
+BLACKLIST_CACHE = os.path.join(xbmc.translatePath(ADDON_PROFILE), 'blacklist')
+BLACKLIST_REMOTE = 'https://gist.githubusercontent.com/CvH/42ec8eac33640a712a1be2d05754f075/raw/56d65809a9e25eeabe4e8d71f885d4003492de5c/banned_repos'
+CT_LOG = os.path.join(xbmc.translatePath('special://temp'), 'caretaker.log')
 
 STRING = 0
 BOOL = 1
@@ -50,21 +59,25 @@ def getAddonSetting(setting, sType=STRING, multiplicator=1):
     else:
         return xbmcaddon.Addon().getSetting(setting)
 
-def updateBlacklist(cache, remote_source, fallback):
+def updateBlacklist(cache, remote_source, fallback, force=False):
     limit_definition = [86400, 604800, 2419200] # update daily, weekly or monthly (secs)
     limit = limit_definition[getAddonSetting('update', NUM)]
+    bl = 'cache'
 
-    if not os.path.isfile(cache) or (int(time.time()) - os.path.getmtime(cache) > limit):
+    if force or not os.path.isfile(cache) or (int(time.time()) - os.path.getmtime(cache) > limit):
         try:
             writeLog('Getting blacklist from gist provider')
             _src = urllib2.urlopen(remote_source, timeout=5).read()
+            bl = 'online'
         except urllib2.URLError, e:
             writeLog('Could not read from gist provider', xbmc.LOGFATAL)
             writeLog('%s' % (e.reason), xbmc.LOGFATAL)
             writeLog('Use blacklist provided with addon source instead')
             with open(fallback, 'r') as src: _src = src.read()
-        if not os.path.exists(__profile__):
-            os.makedirs(__profile__)
+            bl = 'fallback'
+        if not os.path.exists(ADDON_PROFILE):
+            os.makedirs(ADDON_PROFILE)
         with open(cache, 'w') as _dst: _dst.write(_src)
     else:
         writeLog('Blacklist is up to date')
+    return bl

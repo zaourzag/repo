@@ -37,6 +37,22 @@ msgctxt "#30014"
 msgid "No unauthorized repositories found"
 msgstr "Keine unautorisierten Repositories gefunden"
 
+msgctxt "#30020"
+msgid "Actions"
+msgstr "Aktionen"
+
+msgctxt "#30021"
+msgid "actualize blacklist now"
+msgstr "Blacklist jetzt aktualisieren"
+
+msgctxt "#30022"
+msgid "Blacklist successful updated"
+msgstr "Blacklist erfolgreich aktualisiert"
+
+msgctxt "#30023"
+msgid "Blacklist update failed"
+msgstr "Aktualisierung der Blacklist fehlgeschlagen"
+
 msgctxt "#30030"
 msgid "Blacklist update check"
 msgstr "Aktualisierungsintervall Blacklist"

@@ -1,15 +1,4 @@
-import xbmcgui
 from resources.lib.tools import *
-
-__addonid__ = xbmcaddon.Addon().getAddonInfo('id')
-__addonversion__ = xbmcaddon.Addon().getAddonInfo('version')
-__addonpath__ = xbmcaddon.Addon().getAddonInfo('path')
-__profile__ = xbmcaddon.Addon().getAddonInfo('profile')
-__LS__ = xbmcaddon.Addon().getLocalizedString
-
-BLACKLIST = os.path.join(xbmc.translatePath(__addonpath__), 'resources', 'data', 'blacklist')
-BLACKLIST_CACHE = os.path.join(xbmc.translatePath(__profile__), 'blacklist')
-BLACKLIST_REMOTE = 'https://gist.githubusercontent.com/CvH/42ec8eac33640a712a1be2d05754f075/raw/56d65809a9e25eeabe4e8d71f885d4003492de5c/banned_repos'
 
 bl_installed = []
 
@@ -41,7 +30,7 @@ def run_service():
             for bl_repo in bl_installed:
                 writeLog('Repository \'%s\' found' %
                          (bl_repo.get('addonid', '')), xbmc.LOGNOTICE)
-            notify(__LS__(30011), __LS__(30012), icon=xbmcgui.NOTIFICATION_WARNING)
+            notify(LS(30011), LS(30012), icon=xbmcgui.NOTIFICATION_WARNING)
             xbmcgui.Window(10000).setProperty('script.service.caretaker.found.blacklisted', 'true')
         else:
             writeLog('No potentially harmful repositories found', xbmc.LOGNOTICE)
