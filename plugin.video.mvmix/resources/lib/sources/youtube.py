@@ -9,12 +9,11 @@ site = 'youtube'
 
 def get_videos(artist):
     videos = []
-    trusted_channel = None
     url = 'https://www.googleapis.com/youtube/v3/search'
     headers = {'Host': 'www.googleapis.com',
                 'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.36 Safari/537.36',
                 'Accept-Encoding': 'gzip, deflate'}
-    params = {'part':'snippet','type':'video','maxResults':'50',#'videoDefinition':'high',
+    params = {'part':'snippet','type':'video','maxResults':'50',
                 'q':'%s video' % artist,'key':'AIzaSyCky6iU_p2VjvpXwTSOpPVLsGFIdR51lQE',
                 }
     try:
@@ -23,37 +22,56 @@ def get_videos(artist):
         return False
     try:
         items = json_data['items']
-        first = True
-        for item in items:
-            try:
-                id = item['id']['videoId']
-                snippet = item['snippet']
-                t = snippet['title'].encode('utf-8')
-                spl = split_title(t)
-                name = spl[0].strip().decode('utf-8')
-                title = spl[1].strip().decode('utf-8')
-                if len(spl) > 2:
-                    title = '%s - %s' % (title, spl[2].strip().decode('utf-8'))
-                description = snippet['description'].lower().encode('utf-8')
-                channel = snippet['channelTitle'].lower().replace(' ','').encode('utf-8')
-                name = check_name(artist,name)
-                name_2 = check_name(artist,title)
-                if artist.lower() == name.encode('utf-8').lower() or artist.lower() == name_2.encode('utf-8').lower():
-                    if artist.lower() == name_2.encode('utf-8').lower():
-                        title = name
-                    if status(trusted_channel,channel,artist,title,description) == True:
-                        image = snippet.get('thumbnails', {}).get('medium', {}).get('url', '')
-                        duration = ''
-                        title = clean_title(title)
-                        videos.append({'site':site, 'artist':[name], 'title':title, 'duration':duration, 'id':id, 'image':image})
-                        if first == True:
-                            trusted_channel = channel
-            except:
-                pass
-            first = False
+        videos = add_videos(videos, items, artist)
+        if len(videos) > 10:
+            json_data,items = get_more_items(json_data, url, params, headers)
+            videos = add_videos(videos, items, artist)
+        if len(videos) > 20:
+            json_data,items = get_more_items(json_data, url, params, headers)
+            videos = add_videos(videos, items, artist)
     except:
         pass
     return videos
+
+def add_videos(videos, items, artist):
+    for item in items:
+        try:
+            id = item['id']['videoId']
+            snippet = item['snippet']
+            t = snippet['title'].encode('utf-8')
+            spl = split_title(t)
+            name = spl[0].strip().decode('utf-8')
+            title = spl[1].strip().decode('utf-8')
+            if len(spl) > 2:
+                title = '%s - %s' % (title, spl[2].strip().decode('utf-8'))
+            description = snippet['description'].lower().encode('utf-8')
+            channel = snippet['channelTitle'].lower().replace(' ','').encode('utf-8')
+            name = check_name(artist,name)
+            name_2 = check_name(artist,title)
+            if artist.lower() == name.encode('utf-8').lower() or artist.lower() == name_2.encode('utf-8').lower():
+                if artist.lower() == name_2.encode('utf-8').lower():
+                    title = name
+                if status(channel,artist,title,description) == True:
+                    image = snippet.get('thumbnails', {}).get('medium', {}).get('url', '')
+                    duration = ''
+                    title = clean_title(title)
+                    videos.append({'site':site, 'artist':[name], 'title':title, 'duration':duration, 'id':id, 'image':image})
+        except:
+            pass
+    return videos
+    
+def get_more_items(json_data, url, params, headers):
+    items = []
+    json_data2 = {}
+    try:
+        npt = json_data['nextPageToken']
+        if npt:
+            params['pageToken'] = npt
+            json_data2 = requests.get(url, params=params, headers=headers).json()
+            items = json_data2['items']
+    except:
+        pass
+    return json_data2, items
     
 def get_video_url(id):
     video_url = None
@@ -107,7 +125,7 @@ def get_video_url(id):
                     break
     return video_url
     
-def status(trusted_channel,channel,artist,title,description):
+def status(channel,artist,title,description):
     title = title.lower()
     artist = artist.lower().replace(' ','')
     a = ['lyric', 'no official', 'not official', 'unofficial', 'un-official', 'non-official', 'vevo']
@@ -116,14 +134,13 @@ def status(trusted_channel,channel,artist,title,description):
             return True
         else:
             return False
-    b = ['parody', 'parodie', 'fan made', 'fanmade', 'vocal cover',
+    b = ['parody', 'parodie', 'fan made', 'fanmade', 'fan mv', 'vocal cover',
         'custom video', 'music video cover', 'music video montage', 'video preview',
         'guitar cover', 'drum through', 'guitar walk', 'drum walk',
-        'guitar demo', '(drums)', 'drum cam',
-        'drumcam', '(guitar)',
+        'guitar demo', '(drums)', 'drum cam', 'drumcam', '(guitar)',
         'our cover of', 'in this episode of', 'official comment', 'short video about',
-        'full set', 'full album stream',
-        '"reaction"', 'reaction!', 'video reaction', '(review)',
+        'short ver.', 'full set', 'full album stream',
+        '"reaction"', 'reaction!', 'video reaction', '(review)', '(preview)',
         'splash news', 'not an official']
     if any(x in title for x in b) or any(x in description for x in b):
         return False
@@ -144,8 +161,6 @@ def status(trusted_channel,channel,artist,title,description):
         return True
     h = ['vevo']
     if any(channel.endswith(x) for x in h):
-        return True
-    if trusted_channel == channel:
         return True
 
 def split_title(t):

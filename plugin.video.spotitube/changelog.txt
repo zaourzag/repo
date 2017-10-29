@@ -91,3 +91,10 @@
 - fixed: Billboard - Categories are not opened and error is displayed
 - removed: Billboard Entry -  "Top 140 Trending", "New in the last 24 hours", "TOP on Twitter" since no more available
 - added: Billboard Entry - "Billboard 200" and "TOP on Youtube"
+
+[B]Version 2.0.8  (27.10.2017)[/B] by realvito
+- fixed: Billboard - a few Links were changed
+- fixed: Billboard - text errors and some folders are empty in "Billboard-Archive-Videos"
+- fixed: Hypem - all clicked folders are empty
+- * Hypem - NO Video-Images at the time/because they were removed completely *
+- changed: Deezer-Search - apiURL and increase Searchlimit to "100" in settings

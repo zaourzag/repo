@@ -1,4 +1,11 @@
 ﻿==================================================
+[B]ZattooHiQ v1.3.5 [/B]21.10.2017 Steffen Rolapp
+==================================================
+- Absturz der service.py beim zu schnellen starten des Addons behoben
+- Fehler mit Replay behoben
+- Create Hebrew translation (pullrequest form A. Dambledore) 
+
+==================================================
 [B]ZattooHiQ v1.3.4 [/B]28.09.2017 Steffen Rolapp
 ==================================================
  - Fehler beim Abspielen der Aufnahmen aus der library behoben

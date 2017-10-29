@@ -31,7 +31,7 @@ class mvmixPlayer(xbmc.Player):
 
     def onPlayBackStarted(self):
         common.log('[mvmixPlayer] playback started')
-        self.sleep(200)
+        self.sleep(2000)
         if (xbmc.Player().isPlayingVideo()):
             title = 'Now playing:'
             name = xbmc.getInfoLabel('VideoPlayer.Title')
@@ -86,7 +86,7 @@ class mvmixPlayer(xbmc.Player):
                             'genre_list': self.genre_list, 'video_list': self.video_list,
                             'ignore_list': self.ignore_list}
             resume.save_resume_point(resume_point)
-            self.sleep(200)
+            self.sleep(500)
             if loops == 10:
                 self.is_active = False
                 break

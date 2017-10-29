@@ -24,6 +24,7 @@
         <setting label="31009" type="action" action="RunPlugin(plugin://plugin.video.zattooHiQ/?mode=selectStartChannel)" enable="eq(-1,true)"/>
 	<setting type="sep"/>
         <setting label="310096" type="bool" id="debug" default="false"/>
+ 
         </category>
         
     <category label="31010">
@@ -44,9 +45,9 @@
         <setting label="31913" type="action" action="RunPlugin(plugin://plugin.video.zattooHiQ/?mode=cleanProg)"/>
     </category>
     <category label="31030">
-        <setting label="31032" type="action" action="RunPlugin(plugin://plugin.video.zattooHiQ/?mode=editKeyMap)"/>
-        <setting label="31037" type="lsep"/>
+        <setting label="31032" type="action" action="RunPlugin(plugin://plugin.video.zattooHiQ/?mode=editKeyMap)"/>       
         <setting label="31033" type="enum" id="keymap" lvalues="31035|31034|31036"/>
+        <setting label="31037" type="lsep"/>
 <!--
         <setting label="31036" type="action" action="RunPlugin(plugin://plugin.video.zattooHiQ/?mode=showKeyMap)"/>
 -->
