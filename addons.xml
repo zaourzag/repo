@@ -646,7 +646,7 @@ Vous pouvez regarder le sport que vous aimez, vivez et sur demande à un moment 
     </extension>
 </addon>
 
-<addon id="plugin.video.br3" name="Bayerisches Fernsehen" version="0.8.0" provider-name="L0RE">
+<addon id="plugin.video.br3" name="Bayerisches Fernsehen" version="0.8.1" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
     </requires>
