@@ -149,6 +149,45 @@ def epg(url):
        if jetzt >d:
                addDir(name, link["href"], 'channels', "")
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)         
+
+def live(url):
+   content=getUrl(url)
+   liste = json.loads(content,object_pairs_hook=OrderedDict)  
+   url=liste["_links"]["home"]["href"]
+   content=getUrl(url)
+   liste = json.loads(content,object_pairs_hook=OrderedDict)     
+   endurl=""
+   for link in liste["_embedded"]["teasers"]:
+      links=link["_links"]["boxIndexPage"]["href"]
+      debug(links)
+      if "livestreams" in links:
+         endurl=links
+         break 
+   content=getUrl(endurl)
+   liste = json.loads(content,object_pairs_hook=OrderedDict)              
+   for link in liste["_embedded"]["teasers"]:
+      debug(link)     
+      links=link["_links"]["self"]["href"]
+      try:
+        title=link["regionTitle"]
+      except:
+         tittle=""
+      subtitle=link["headline"]
+      image=link["teaserImage"]["_links"]["original"]["href"]
+      endate=link["broadcastEndDate"]
+      startdate=link["broadcastStartDate"]
+      date_format = '%Y-%m-%dT%H:%M:%S'  
+      xy=startdate.split("+")
+      startdate=xy[0]
+      xy=endate.split("+")
+      endate=xy[0]
+      startstamp=date2timeStamp(startdate, date_format)
+      endstamp=date2timeStamp(endate, date_format)
+      jetzt=datetime.datetime.now()
+      if jetzt > startstamp and jetzt < endstamp:
+         addLink(title +" - "+subtitle,links,"playlive",image)     
+   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)         
+   
    
 def search(url):
    content=getUrl(url)
@@ -279,6 +318,23 @@ def play(url):
         streaml=streamliste[nr]                   
     listitem = xbmcgui.ListItem(path=streaml)
     xbmcplugin.setResolvedUrl(addon_handle,True, listitem)
+def playlive(url):
+    content=getUrl(url)
+    liste = json.loads(content) 
+    stream=""
+    for element in liste["assets"]:
+      if element["type"]=="HLS" and element["geozone"]=="DEUTSCHLAND":
+          stream=element["_links"]["stream"]["href"]
+          break
+    debug(stream)
+    content=getUrl(stream)
+    urlv=re.compile('(https:[^:]+=on)', re.DOTALL).findall(content)
+    streaml=urlv[-3]
+    all=streaml.split("?")
+    streaml=all[0]
+    listitem = xbmcgui.ListItem(path=streaml)
+    xbmcplugin.setResolvedUrl(addon_handle,True, listitem)   
+    
     
 params = parameters_string_to_dict(sys.argv[2])
 mode = urllib.unquote_plus(params.get('mode', ''))
@@ -299,6 +355,7 @@ if mode is '':
     addDir(translation(30001), rubriken, 'A-Z', "")
     addDir(translation(30005), rubriken, 'EPG', "")
     addDir(translation(30011), rubriken, 'Search', "")
+    addDir(translation(30007), rubriken, 'live', "")
     addDir(translation(30002), translation(30002), 'Settings', "")       
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 else:
@@ -326,3 +383,7 @@ else:
             channelfile(url)                          
   if mode == 'Search':
           search(url)            
+  if mode == "live":
+            live(url)   
+  if mode == "playlive":
+            playlive(url)  
