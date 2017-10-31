@@ -974,7 +974,7 @@ Vous pouvez regarder le sport que vous aimez, vivez et sur demande à un moment 
 	</extension>
 </addon>
 
-<addon id="script.service.caretaker" name="KN Addon Caretaker" version="0.0.7" provider-name="Birger Jesch">
+<addon id="script.service.caretaker" name="KN Addon Caretaker" version="0.0.8" provider-name="Birger Jesch">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
         <import addon="xbmc.json" version="7.0.0"/>
