@@ -521,6 +521,11 @@ def index():
     menu.append(addDir("Themen" , url="rtl", mode="genre", iconimage="",duration="",desc=""))
     menu.append(addDir("Rubriken" , url="", mode="katalog", iconimage="",duration="",desc=""))
     menu.append(addDir("Genres" , url="", mode="genreliste", iconimage="",duration="",desc=""))
+    if kodi18 == "true":
+        lasturl="https://api.tvnow.de/v3/movies?fields=[%22broadcastStartDate%22,%22articleShort%22,%22articleLong%22,%22id%22,%22episode%22,%22season%22,%22title%22,%22articleShort%22,%22isDrm%22,%22free%22,%22teaserText%22,%22deeplinkUrl%22,%22duration%22,%22manifest%22,[%22dash%22,%22dashclear%22],%22format%22,[%22categoryId%22]]&order=id%20desc&maxPerPage=100"
+    else:
+        lasturl="https://api.tvnow.de/v3/movies?fields=[%22broadcastStartDate%22,%22articleShort%22,%22articleLong%22,%22id%22,%22episode%22,%22season%22,%22title%22,%22articleShort%22,%22isDrm%22,%22free%22,%22teaserText%22,%22deeplinkUrl%22,%22duration%22,%22manifest%22,[%22dash%22,%22dashclear%22],%22format%22,[%22categoryId%22]]&order=id%20desc&maxPerPage=100&filter={%22isDrm%22:false}"
+    menu.append(addDir("Neuste" , url=lasturl, mode="last", iconimage="",duration="",desc=""))
     if ret==1 and kodi18 == "true":
         menu.append(addDir("LiveTV",url="", mode="livetv", iconimage="",duration="",desc=""))    
     menu.append(addDir("Cache Loeschen", "", 'clearcache', ""))    
@@ -656,7 +661,9 @@ else:
   if mode == 'lsserie':
            serien(url)
   if mode == 'rubrik':
-          rubrik(url)             
+          rubrik(url)    
+  if mode == 'last':
+          staffel("0",url)
   if mode == 'staffel':
           url="http://api.tvnow.de/v3/formatlists/"+nummer+"?maxPerPage=500&fields=[%22formatTabPages%22,[%22container%22,[%22movies%22,[%22free%22,%22isDrm%22,%22title%22,%22id%22,%22deeplinkUrl%22,%22manifest%22,[%22dashclear%22,%22dash%22],%22duration%22,%22season%22,%22episode%22,%22articleLong%22,%22articleShort%22,%22broadcastStartDate%22,%22teaserText%22,%22format%22,[%22categoryId%22]]]]]"
           staffel(nummer,url)             
