@@ -75,8 +75,8 @@ def updateBlacklist(cache, remote_source, fallback, force=False):
             writeLog('Use blacklist provided with addon source instead')
             with open(fallback, 'r') as src: _src = src.read()
             bl = 'fallback'
-        if not os.path.exists(ADDON_PROFILE):
-            os.makedirs(ADDON_PROFILE)
+        if not os.path.exists(xbmc.translatePath(ADDON_PROFILE)):
+            os.makedirs(xbmc.translatePath(ADDON_PROFILE))
         with open(cache, 'w') as _dst: _dst.write(_src)
     else:
         writeLog('Blacklist is up to date')
