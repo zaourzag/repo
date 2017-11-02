@@ -586,12 +586,15 @@ def katalogliste(idd)   :
    for serie in liste:
      debug("---")
      debug(serie)
-     id=serie["format"]["id"]
-     seoUrl=serie["format"]["seoUrl"]
-     title=serie["format"]["title"]
-     logo=serie["format"]["defaultDvdImage"]
-     desc=serie["format"]["infoText"]
-     menu.append(addDir(title , url=str(seoUrl), mode="rubrik", iconimage=logo,duration="",desc=desc))
+     try:
+        id=serie["format"]["id"]
+        seoUrl=serie["format"]["seoUrl"]
+        title=serie["format"]["title"]
+        logo=serie["format"]["defaultDvdImage"]
+        desc=serie["format"]["infoText"]
+        menu.append(addDir(title , url=str(seoUrl), mode="rubrik", iconimage=logo,duration="",desc=desc))
+     except:
+         pass
    xbmcplugin.addDirectoryItems(addon_handle,menu)
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)   
        
