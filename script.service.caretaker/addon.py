@@ -1,5 +1,6 @@
 from xml.dom import minidom
 from datetime import datetime
+import sys
 from resources.lib.tools import *
 
 
@@ -102,7 +103,7 @@ def run_script():
                             for bl_addon in bl_addons:
                                 if addon['addonid'] == bl_addon['id'] and addon not in bl_addons_installed:
                                     bl_addons_installed.append(addon)
-                                    writeLog('installed from repo: \'%s\' (%s)' %
+                                    writeLog('installed from repo as dependency: \'%s\' (%s)' %
                                              (addon['addonid'], addon['datetime']), xbmc.LOGNOTICE, extra=CT_LOG)
 
                         # fuzzy logic, compare and match timestamps

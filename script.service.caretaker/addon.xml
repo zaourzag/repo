@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="script.service.caretaker" name="KN Addon Caretaker" version="0.0.8" provider-name="Birger Jesch">
+<addon id="script.service.caretaker" name="KN Addon Caretaker" version="0.0.9" provider-name="Birger Jesch">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
         <import addon="xbmc.json" version="7.0.0"/>
@@ -9,10 +9,10 @@
     <extension point="xbmc.addon.metadata">
         <summary lang="en_gb">Take care with unauthorized Repositories</summary>
         <description lang="en_gb">This service checks your addon folder for possibly unauthorized, potentially harmful repositories and informs the user about these. Detailed informations are logged into the caretaker.log at the same folder as your kodi.log. Repository providers: If you think your repository is mistakenly blacklisted, please inform the vendor of this addon.</description>
-        <disclaimer lang="en_gb">Use at your own risk.</disclaimer>
+        <disclaimer lang="en_gb">Use at your own risk. The author can not guarantee an error-free working of the addon, nor complete protection against abuse by or from foreign addons can be guaranteed.</disclaimer>
         <summary lang="de_de">Vorsicht vor nicht autorisierten Repositories</summary>
         <description lang="de_de">Dieser Dienst überprüft den Addon-Ordner auf möglicherweise nicht autorisierte, potentiell schädliche Repositories und informiert den Nutzer darüber. Detaillierte Informationen werden im caretaker.log protokolliert, welche sich im Log-Verzeichnis von Kodi befindet. Repository Provider: Sollte Euer Repository fälschlicherweise auf der Blacklist erscheinen, informiert bitte den Anbieter dieses Addons.</description>
-        <disclaimer lang="de_de">Benutzung auf eigene Gefahr.</disclaimer>
+        <disclaimer lang="de_de">Benutzung auf eigene Gefahr. Der Autor kann ein fehlerfreies Arbeiten des Addons nicht garantieren, ebenso kann kein vollständiger Schutz gegen Missbrauch durch oder von fremden Addons gewährleistet werden.</disclaimer>
         <platform>all</platform>
         <license>GNU GENERAL PUBLIC LICENSE. Version 3, June 2007</license>
         <forum>https://www.kodinerds.net/index.php/Thread/57888-Release-script-service-caretaker/</forum>

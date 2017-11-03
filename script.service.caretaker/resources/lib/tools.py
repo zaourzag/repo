@@ -18,7 +18,7 @@ LS = xbmcaddon.Addon().getLocalizedString
 
 BLACKLIST = os.path.join(xbmc.translatePath(ADDON_PATH), 'resources', 'data', 'blacklist')
 BLACKLIST_CACHE = os.path.join(xbmc.translatePath(ADDON_PROFILE), 'blacklist')
-BLACKLIST_REMOTE = 'https://gist.githubusercontent.com/CvH/42ec8eac33640a712a1be2d05754f075/raw/56d65809a9e25eeabe4e8d71f885d4003492de5c/banned_repos'
+BLACKLIST_REMOTE = 'https://gist.github.com/CvH/42ec8eac33640a712a1be2d05754f075/raw/banned_repos'
 CT_LOG = os.path.join(xbmc.translatePath('special://temp'), 'caretaker.log')
 
 STRING = 0
