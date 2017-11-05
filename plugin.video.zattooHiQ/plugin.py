@@ -96,10 +96,10 @@ try:
   _timezone_=int(offset)
 except:pass
 
-try:
-  offset = time.altzone
-  _timezone_ = -int(offset)
-except:pass
+#try:
+  #offset = time.altzone
+  #_timezone_ = -int(offset)
+#except:pass
 
 
 def build_directoryContent(content, addon_handle, cache=True, root=False, con='movies'):
