@@ -549,23 +549,23 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
   </extension>
 </addon>
 
-<addon id="plugin.video.dazn" version="1.0.2" name="DAZN" provider-name="Jin">
+<addon id="plugin.video.dazn" version="1.0.3" name="DAZN" provider-name="Jin">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
-        <import addon="inputstream.adaptive" version="2.0.10"/>
+        <import addon="inputstream.adaptive" version="2.0.18"/>
         <import addon="script.module.pydes" version="2.0.1"/>
+        <import addon="script.module.inputstreamhelper" version="0.2.1"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="addon.py">
         <provides>video</provides>
     </extension>
     <extension point="xbmc.addon.metadata">
         <news>
-- drop support for libressl
+- add missing utf encode
+- add inputstreamhelper dependency (available in the kodi.tv repo*)
 - inputstream adaptive version bump
-- minor updates
 
-- list highlights only in schedule and catch up via context menu
-- fix possible error 'mktime argument out of range'
+* http://mirrors.kodi.tv/addons/krypton/script.module.inputstreamhelper/
         </news>
         
         <summary lang="de_DE">ERLEBE DEINEN SPORT. LIVE UND ON-DEMAND.</summary>
