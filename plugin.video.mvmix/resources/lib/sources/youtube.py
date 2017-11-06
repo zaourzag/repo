@@ -2,7 +2,7 @@
 
 from resources.lib import simple_requests as requests
 from resources.lib import common
-import json, urlparse, re, urllib
+import urlparse, re, urllib
 from .signature.cipher import Cipher
 
 site = 'youtube'
@@ -36,7 +36,7 @@ def get_videos(artist):
 def add_videos(videos, items, artist):
     for item in items:
         try:
-            id = item['id']['videoId']
+            _id = item['id']['videoId']
             snippet = item['snippet']
             t = snippet['title'].encode('utf-8')
             spl = split_title(t)
@@ -55,7 +55,7 @@ def add_videos(videos, items, artist):
                     image = snippet.get('thumbnails', {}).get('medium', {}).get('url', '')
                     duration = ''
                     title = clean_title(title)
-                    videos.append({'site':site, 'artist':[name], 'title':title, 'duration':duration, 'id':id, 'image':image})
+                    videos.append({'site':site, 'artist':[name], 'title':title, 'duration':duration, 'id':_id, 'image':image})
         except:
             pass
     return videos
@@ -73,12 +73,12 @@ def get_more_items(json_data, url, params, headers):
         pass
     return json_data2, items
     
-def get_video_url(id):
+def get_video_url(_id):
     video_url = None
     headers = {'Host': 'www.youtube.com',
                 'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.36 Safari/537.36',
                 'Referer': 'https://www.youtube.com',}
-    params = {'v': id}
+    params = {'v': _id}
     url = 'https://youtube.com/watch'
     html = ''
     cookie = ''
@@ -134,26 +134,30 @@ def status(channel,artist,title,description):
             return True
         else:
             return False
-    b = ['parody', 'parodie', 'fan made', 'fanmade', 'fan mv', 'vocal cover',
+    b = ['parody', 'parodie', 'fan made', 'fanmade', 'fan mv', 'fan edit', 'vocal cover',
         'custom video', 'music video cover', 'music video montage', 'video preview',
         'guitar cover', 'drum through', 'guitar walk', 'drum walk',
         'guitar demo', '(drums)', 'drum cam', 'drumcam', '(guitar)',
         'our cover of', 'in this episode of', 'official comment', 'short video about',
         'short ver.', 'full set', 'full album stream',
         '"reaction"', 'reaction!', 'video reaction', '(review)', '(preview)',
-        'splash news', 'not an official']
+        'splash news', 'not an official', 'music video awards']
     if any(x in title for x in b) or any(x in description for x in b):
         return False
-    c = [' animated ']
+    c = [' animated ', 'i don\'t own', 'i do not own', 'preview of',
+         'no official', 'not official', 'unofficial', 'un-official', 'non-official']
     if any(x in description for x in c):
         return False
-    d = [u"\u2665", u"\u2661", 'cover by']
+    d = [u"\u2665", u"\u2661", 'cover by', 'hq remake', 'remake by']
     if any(x in title for x in d):
         return False
-    e = ['official video', 'music video', 'taken from', 'itunes.apple.com', 'smarturl.it', 'j.mp']
+    j = ['tmz']
+    if any(channel == x for x in j):
+        return False
+    e = ['official video', 'taken from', 'itunes.apple.com', 'smarturl.it', 'j.mp']
     if any(x in description for x in e):
         return True
-    f = ['official video', 'offizielles video', 'music video', 'us version']
+    f = ['official video', 'official music video', 'offizielles video', 'us version']
     if any(x in title for x in f) and description:
         return True
     g = ['records', 'official']
@@ -183,8 +187,9 @@ def split_title(t):
 def clean_title(title):
     try: title = title.split('|')[0]
     except: pass
-    try: title = title.split(' - ')[0]
-    except: pass
+    if not re.findall('\(.+?-.+?\)', title):
+        try: title = title.split(' - ')[0]
+        except: pass
     return title
     
 def check_name(artist,name):

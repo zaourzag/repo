@@ -6,7 +6,7 @@ import random,sys
 import lastfm
 import common
 import resume
-import videos as __videos__
+import videos as _videos_
 
 class mvmixPlayer(xbmc.Player):
     def __init__( self, *args, **kwargs ):
@@ -63,7 +63,7 @@ class mvmixPlayer(xbmc.Player):
             self.artist = common.utf_enc(self.artist)
             common.log('[mvmixPlayer] loop: %s' % str(loops))
             common.log('[mvmixPlayer] artist: %s' % str(self.artist))
-            videos = __videos__.get_videos(self.artist)
+            videos = _videos_.get_videos(self.artist)
             videos = self.remove_added_videos(videos)
             common.log('[mvmixPlayer] videos found: %s' % str(len(videos)))
             if videos:
