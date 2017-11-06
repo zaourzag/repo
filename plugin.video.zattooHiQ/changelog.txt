@@ -1,4 +1,8 @@
-﻿==================================================
+﻿[B]ZattooHiQ v1.3.7 [/B]06.11.2017 Steffen Rolapp
+==================================================
+- Fehler beim Übermitteln det Pos an Zattoo behoben
+
+==================================================
 [B]ZattooHiQ v1.3.6 [/B]05.11.2017 Steffen Rolapp
 ==================================================
 - Zeitzonenproblem ist glöst

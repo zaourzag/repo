@@ -311,7 +311,7 @@ def build_recordingsList(addon_uri, addon_handle):
 
     xbmcplugin.addDirectoryItem(
       handle=addon_handle,
-      url=addon_uri + '?' + urllib.urlencode({'mode': 'watch_r', 'id': record['id']}),
+      url=addon_uri + '?' + urllib.urlencode({'mode': 'watch_r', 'id': record['id'], 'start': start}),
       listitem=li,
       isFolder=False
     )
@@ -322,11 +322,14 @@ def build_recordingsList(addon_uri, addon_handle):
 
 def watch_recording(addon_uri, addon_handle, recording_id, start=0):
   #if xbmc.Player().isPlaying(): return
+  
   if start == 0:
     startTime=int(xbmc.getInfoLabel('ListItem.Property(zStartTime)'))
+    
   else:
     startTime=int(start)
-  if DEBUG: print "Starttime " +str(startTime)
+  if DEBUG: print "Startzeit " +str(startTime)
+ 
   max_bandwidth = __addon__.getSetting('max_bandwidth')
   if DASH: stream_type='dash'
   else: stream_type='hls'
@@ -356,10 +359,12 @@ def watch_recording(addon_uri, addon_handle, recording_id, start=0):
         xbmc.sleep(100) 
 
     #send watched position to zattoo
+    #zStoptime=datetime.datetime.fromtimestamp(startTime+round(pos)-300).strftime("%Y-%m-%dT%H:%M:%SZ")
+    
     zStoptime=datetime.datetime.fromtimestamp(startTime+round(pos)-300 - _timezone_ ).strftime("%Y-%m-%dT%H:%M:%SZ")
     resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/playlist/recording', {'recording_id': recording_id, 'position': zStoptime})
-
-
+    if DEBUG: print "result "+ str (resultData)
+    if DEBUG: print "stopTime " + str(startTime)
 def setup_recording(program_id):
   #print('RECORDING: '+program_id)
   params = {'program_id': program_id}
