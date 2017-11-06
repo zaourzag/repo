@@ -43,8 +43,8 @@ if __name__ == '__main__':
 
     monitor = xbmc.Monitor()
     loop = 0
-    while not monitor.abortRequested() and (getAddonSetting('permanent', BOOL) or loop == 0):
+    writeLog('Monitor setting: %s' % (getAddonSetting('permanent', NUM)))
+    while not monitor.abortRequested() and getAddonSetting('permanent', NUM) > 0:
         run_service()
         loop += 1
-        if monitor.waitForAbort(1800): break
-
+        if getAddonSetting('permanent', NUM) < 2 or monitor.waitForAbort(1800): break
