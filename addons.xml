@@ -1001,7 +1001,7 @@ Vous pouvez regarder le sport que vous aimez, vivez et sur demande à un moment 
 	</extension>
 </addon>
 
-<addon id="script.service.caretaker" name="KN Addon Caretaker" version="0.0.9" provider-name="Birger Jesch">
+<addon id="script.service.caretaker" name="KN Addon Caretaker" version="0.0.10" provider-name="Birger Jesch">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
         <import addon="xbmc.json" version="7.0.0"/>
@@ -1030,7 +1030,7 @@ Vous pouvez regarder le sport que vous aimez, vivez et sur demande à un moment 
     </extension>
 </addon>
 
-<addon id="service.calendar" name="KN Calendar Reminder" version="0.0.8" provider-name="Birger Jesch">
+<addon id="service.calendar" name="KN Calendar Reminder" version="0.0.9" provider-name="Birger Jesch">
   <requires>
     <import addon="xbmc.python" version="2.25.0"/>
     <import addon="script.module.oauth2client" version="1.4.7"/>
