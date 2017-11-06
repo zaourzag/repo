@@ -11,4 +11,8 @@
         <setting label="password" type="text" id="password" default="" visible="false"/>
         <setting label="token" type="text" id="token" default="" visible="false"/>
     </category>
+    <category label="30020">
+        <setting label="30021" type="action" id="is_settings" action="RunPlugin(plugin://plugin.video.dazn/?mode=is_settings)" option="close"/>
+        <setting label="30022" type="action" id="is_helper" action="RunPlugin(plugin://plugin.video.dazn/?mode=is_helper)" option="close"/>
+    </category>
 </settings>

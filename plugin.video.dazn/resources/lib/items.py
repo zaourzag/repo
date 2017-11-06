@@ -40,7 +40,7 @@ class Items:
                 
         labels = {
             'title': item['title'],
-            'plot': item.get('plot', ''),
+            'plot': item.get('plot', item['title']),
             'premiered': item.get('date', ''),
             'episode': item.get('episode', 0)
         }

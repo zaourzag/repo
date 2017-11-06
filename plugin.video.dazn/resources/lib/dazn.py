@@ -6,9 +6,9 @@ from context import Context
 
 items = Items()
 
-def rails_items(data, id):
+def rails_items(data, _id):
     from rails import Rails
-    if id == 'home':
+    if _id == 'home':
         epg = {
             'mode': 'epg',
             'title': utfenc(getString(30212)),

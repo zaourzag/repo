@@ -80,6 +80,15 @@ def uniq_id(t=1):
         log("[{0}] error: failed to get device id ({1})".format(addon_id, str(mac_addr)))
         dialog.ok(addon_name, getString(30051))
         return False
+    
+def is_settings():
+    xbmcaddon.Addon('inputstream.adaptive').openSettings()
+
+def is_helper():
+    from inputstreamhelper import Helper
+    helper = Helper(protocol='mpd', drm='widevine')
+    if helper.check_inputstream():
+        dialog.ok(addon_name, getString(30023))
 
 def days(title, now, start):
     today = datetime.date.today()

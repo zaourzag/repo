@@ -1,49 +1,49 @@
 # -*- coding: utf-8 -*-
 
 from common import *
-            
-def resources(str):
-    if str == 'CatchUp':
+
+def resources(string):
+    if string == 'CatchUp':
         return getString(30201)
-    elif str == 'ComingUp':
+    elif string == 'ComingUp':
         return getString(30202)
-    elif str == 'UpComing':
+    elif string == 'UpComing':
         return getString(30202)
-    elif str == 'Editorial':
+    elif string == 'Editorial':
         return getString(30203)
-    elif str == 'Feature':
+    elif string == 'Feature':
         return getString(30204)
-    elif str == 'Live':
+    elif string == 'Live':
         return getString(30205)
-    elif str == 'MostPopular':
+    elif string == 'MostPopular':
         return getString(30206)
-    elif str == 'Personal':
+    elif string == 'Personal':
         return getString(30207)
-    elif str == 'Scheduled':
+    elif string == 'Scheduled':
         return getString(30208)
-    elif str == 'Sport':
+    elif string == 'Sport':
         return getString(30209)
-    elif str == 'Competition':
+    elif string == 'Competition':
         return getString(30210)
-    elif str == 'Competitor':
+    elif string == 'Competitor':
         return getString(30211)
-    elif str == 'Today':
+    elif string == 'Today':
         return getString(30221)
-    elif str == 'Tomorrow':
+    elif string == 'Tomorrow':
         return getString(30222)
-    elif str == 'Monday':
+    elif string == 'Monday':
         return getString(30223)
-    elif str == 'Tuesday':
+    elif string == 'Tuesday':
         return getString(30224)
-    elif str == 'Wednesday':
+    elif string == 'Wednesday':
         return getString(30225)
-    elif str == 'Thursday':
+    elif string == 'Thursday':
         return getString(30226)
-    elif str == 'Friday':
+    elif string == 'Friday':
         return getString(30227)
-    elif str == 'Saturday':
+    elif string == 'Saturday':
         return getString(30228)
-    elif str == 'Sunday':
+    elif string == 'Sunday':
         return getString(30229)
     else:
-        return str
+        return string

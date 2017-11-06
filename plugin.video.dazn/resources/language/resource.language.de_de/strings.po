@@ -44,6 +44,22 @@ msgctxt "#30013"
 msgid "View: ID"
 msgstr "Ansicht: ID"
 
+msgctxt "#30020"
+msgid "Videoplayer"
+msgstr "Videoplayer"
+
+msgctxt "#30021"
+msgid "Open Videoplayer Settings"
+msgstr "Öffne Videoplayer Einstellungen"
+
+msgctxt "#30022"
+msgid "Install Widevine CDM"
+msgstr "Widevine CDM installieren"
+
+msgctxt "#30023"
+msgid "Widevine CDM already installed."
+msgstr "Widevine CDM bereits installiert."
+
 msgctxt "#30051"
 msgid "Failed to get Device ID. Please Retry."
 msgstr "Fehler beim Abrufen der Geräte-ID. Bitte versuche es in Kürze erneut."

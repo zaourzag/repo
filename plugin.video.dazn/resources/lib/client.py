@@ -24,7 +24,7 @@ class Client:
 
         self.STARTUP = api_base + 'v2/Startup'
         self.RAIL = api_base + 'v2/Rail'
-        self.RAILS = api_base + 'v2/Rails'
+        self.RAILS = api_base + 'v3/Rails'
         self.EPG = api_base + 'v1/Epg'
         self.EVENT = api_base + 'v2/Event'
         self.PLAYBACK = api_base + 'v1/Playback'
@@ -41,13 +41,13 @@ class Client:
             self.errorHandler(data)
         return data
 
-    def rails(self, id, params=''):
-        self.PARAMS['groupId'] = id
+    def rails(self, _id, params=''):
+        self.PARAMS['groupId'] = _id
         self.PARAMS['params'] = params
         return self.content_data(self.RAILS)
         
-    def rail(self, id, params=''):
-        self.PARAMS['id'] = id
+    def rail(self, _id, params=''):
+        self.PARAMS['id'] = _id
         self.PARAMS['params'] = params
         return self.content_data(self.RAIL)
     
@@ -55,14 +55,14 @@ class Client:
         self.PARAMS['date'] = params
         return self.content_data(self.EPG)
     
-    def event(self, id):
-        self.PARAMS['Id'] = id
+    def event(self, _id):
+        self.PARAMS['Id'] = _id
         return self.content_data(self.EVENT)
         
-    def playback_data(self, id):
+    def playback_data(self, _id):
         self.HEADERS['Authorization'] = 'Bearer ' + self.TOKEN
         self.POST_DATA = {
-            'AssetId': id,
+            'AssetId': _id,
             'Format': 'MPEG-DASH',
             'PlayerId': 'DAZN-' + addon.getSetting('device_id'),
             'Secure': 'true',
@@ -72,8 +72,8 @@ class Client:
         }
         return self.request(self.PLAYBACK)
         
-    def playback(self, id):
-        data = self.playback_data(id)
+    def playback(self, _id):
+        data = self.playback_data(_id)
         if data.get('odata.error', None):
             self.errorHandler(data)
             if self.TOKEN:
