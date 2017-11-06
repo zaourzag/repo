@@ -549,7 +549,7 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
   </extension>
 </addon>
 
-<addon id="plugin.video.dazn" version="1.0.3" name="DAZN" provider-name="Jin">
+<addon id="plugin.video.dazn" version="1.0.4" name="DAZN" provider-name="Jin">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
         <import addon="inputstream.adaptive" version="2.0.18"/>
@@ -561,6 +561,7 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
     </extension>
     <extension point="xbmc.addon.metadata">
         <news>
+- fix typeerror
 - add missing utf encode
 - add inputstreamhelper dependency (available in the kodi.tv repo*)
 - inputstream adaptive version bump
