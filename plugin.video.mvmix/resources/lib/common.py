@@ -1,9 +1,9 @@
 import xbmc,xbmcaddon,xbmcgui
 import os,re
 
-id = 'plugin.video.mvmix'
-addon = xbmcaddon.Addon(id=id)
-datapath = xbmc.translatePath('special://profile/addon_data/%s' % id).encode('utf-8')
+addon = xbmcaddon.Addon()
+addon_id = addon.getAddonInfo('id')
+datapath = xbmc.translatePath('special://profile/addon_data/%s' % addon_id).encode('utf-8')
 
 def log(msg):
     xbmc.log(str(msg)) #, xbmc.LOGNOTICE)
@@ -31,10 +31,11 @@ def import_site(site):
         return youtube
     
 def clean_title(title):
-    title = re.sub('(?:\(|\[)\s*official.*?(?:\)|\])|video\s*-\s*dvd|\(video\)|official\s*video|offizielles\s*video|official\s*dvd|official\s*video\s*hd|music\s*video|official\s*music\s*video|full\s*song|download\s*link', '', title, flags=re.I)
-    title = re.sub('"|\'|hd|hq|1080p|720p|\d+\s*fps|\s*new\!\s*$|track\s*\d+$|widescreen|(?:\s*|\.).flv', '', title, flags=re.I)
-    title = re.sub('  quality\s*$|\s*\+\s*download', '', title, flags=re.I)
+    title = re.sub('(?:\(|\[)\s*\w*\s*official.*?(?:\)|\])|video\s*-\s*dvd|\(video\)|official\s*video|offizielles\s*video|official\s*dvd|official\s*video\s*hd|music\s*video|official\s*music\s*video|download\s*link', '', title, flags=re.I)
+    title = re.sub('"|\'|hd|hq|1080p|720p|4k|\d+\s*fps|\s*new\!\s*$|widescreen|(?:\s*|\.).flv', '', title, flags=re.I)
+    title = re.sub('high quality|  quality\s*$|\s*\+\s*download|\s*\d{4}\s*$', '', title, flags=re.I)
     title = re.sub('\[\s*\]|\(\s*\)|\(\s*$|\[\s*$|\+\s*$', '', title, flags=re.I)
+    title = re.sub('\s{2}', ' ', title, flags=re.I)
     return title.strip()
     
 def enter_artist():

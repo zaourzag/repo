@@ -1,4 +1,13 @@
-﻿==================================================
+﻿[B]ZattooHiQ v1.3.7 [/B]06.11.2017 Steffen Rolapp
+==================================================
+- Fehler beim Übermitteln det Pos an Zattoo behoben
+
+==================================================
+[B]ZattooHiQ v1.3.6 [/B]05.11.2017 Steffen Rolapp
+==================================================
+- Zeitzonenproblem ist glöst
+
+==================================================
 [B]ZattooHiQ v1.3.5 [/B]21.10.2017 Steffen Rolapp
 ==================================================
 - Absturz der service.py beim zu schnellen starten des Addons behoben

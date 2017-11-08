@@ -228,8 +228,6 @@ repository.maverickrepo
 repository.mdiptv
 repository.mdrepo
 repository.merlin
-repository.meta
-repository.metalchris
 repository.metalkettle
 repository.metalkettle2
 repository.mikaelec
@@ -277,7 +275,6 @@ repository.pipcan
 repository.plexus-streams
 repository.podgod
 repository.powlo
-repository.primaeval
 repository.projectmrnetwork
 repository.provider.quasar
 repository.providers.quasar
@@ -296,13 +293,11 @@ repository.ramicspa
 repository.rasjanisrepo.xbmc
 repository.rato.tv
 repository.rawmaintenance
-repository.rayw1986
 repository.redcouch.xbmc
 repository.regss
 repository.renegades
 repository.rivy.xbmc
 repository.rka
-repository.romanvm
 repository.ronniehd
 repository.ru
 repository.ruxton
@@ -342,12 +337,12 @@ repository.stacked.xbmc.addons
 repository.stemaj
 repository.streamhub
 repository.superrepo
+repository.superrepo.kodi.jarvis.audio
+repository.superrepo.kodi.jarvis.repositories
+repository.superrepo.kodi.jarvis.video
 repository.superrepo.org.frodo.all
 repository.superrepo.org.gotham.all
 repository.superrepo.org.helix.all
-superrepo.kodi.jarvis.audio
-superrepo.kodi.jarvis.repositories
-superrepo.kodi.jarvis.video
 repository.syborg
 repository.szmokkencs
 repository.t0mus
@@ -426,6 +421,4 @@ repository.xxtrep
 repository.xycl.addons
 repository.yllar
 repository.yocoldrain
-repository.ytplugin
-repository.zachmorris
 repository.zeus

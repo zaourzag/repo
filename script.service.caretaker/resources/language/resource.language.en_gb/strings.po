@@ -74,7 +74,7 @@ msgid "Check for addons installed with same timestamp"
 msgstr ""
 
 msgctxt "#30036"
-msgid "permanent monitoring"
+msgid "show notification if detecting positives"
 msgstr ""
 
 msgctxt "#30037"
@@ -91,4 +91,16 @@ msgstr ""
 
 msgctxt "#30040"
 msgid "3 min"
+msgstr ""
+
+msgctxt "#30041"
+msgid "off"
+msgstr ""
+
+msgctxt "#30042"
+msgid "on start only"
+msgstr ""
+
+msgctxt "#30043"
+msgid "every 30 minutes"
 msgstr ""

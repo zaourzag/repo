@@ -71,7 +71,7 @@ class Tiles:
         elif (self.type == 'UpComing' or 'Scheduled' in i.get('Id', '')) or (self.type == 'Highlights'):
             if self.type == 'UpComing':
                 day = resources(days(self.type, self.now, self.start))
-                sub_title = '{0} {1}'.format(day, self.start[11:][:5])
+                sub_title = '{0} {1}'.format(utfenc(day), self.start[11:][:5])
             else:
                 sub_title = resources(self.type)
             self.item['title'] = '{0} ({1})'.format(self.title, utfenc(sub_title))
