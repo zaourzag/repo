@@ -109,7 +109,7 @@ def find_in_thread(title):
      except:
       pass
   dialoga = xbmcgui.DialogProgress()
-  dialoga.create("Suche Post für "+title,"")
+  dialoga.create("Suche Post für "+title.encode("utf-8").strip(),"")
   for i in range (1,seitennr+1,1):
     dialoga.update(seitennr/100*i,"Suche in Seite "+str(i))
     content2=geturl(thread+"?pageNo="+str(i))
@@ -133,7 +133,7 @@ def find_in_thread(title):
                ok = dialog.ok('Schon Empfohlen', 'Du hast es schon Geliked')
                return 1               
             ret=dialog.yesno("Wurde schon empfohlen Liken?", Text+"\n Liken?")
-            if ret==True:
+            if ret==1:
                 values = {
                     'actionName': 'like',
                     'className': 'wcf\data\like\LikeAction',
@@ -207,7 +207,7 @@ if mode=="":
       anzahLstaffeln=wert2["number_of_seasons"]      
       dialog=xbmcgui.Dialog()
       ret=dialog.yesno("Serienname richtig?", "Ist der Serienname "+seriesName +" richtig?")
-      if ret=="False":
+      if ret==0:
          count=0         
          seriesName=title
     else:
@@ -215,12 +215,14 @@ if mode=="":
     debug("Gefunden :"+seriesName)
     dialog=xbmcgui.Dialog()      
     ret=dialog.yesno("Serie empfehlen?", "Serienname "+seriesName +" empfehlen?")           
-    if ret=="False":
+    if ret==0:
        quit()
+       exit
     if title=="":
        dialog = xbmcgui.Dialog()
        ok = dialog.ok('Fehler', 'Selektiertes File Hat kein Serie hinterlegt')
        quit()
+       exit
     content=geturl("https://www.kodinerds.net/")    
     newurl=re.compile('method="post" action="(.+?)"', re.DOTALL).findall(content)[0]
     sec_token=re.compile("SECURITY_TOKEN = '(.+?)'", re.DOTALL).findall(content)[0]
@@ -228,7 +230,8 @@ if mode=="":
     if "Angaben sind ung" in content or "Anmelden oder registrieren"in content:
       dialog = xbmcgui.Dialog()
       ok = dialog.ok('Username oder Password ungültig', 'Username oder Password ungueltig')
-      quit()   
+      quit()  
+      exit      
     ret=find_in_thread(seriesName)      
     if ret==1:
        exit
