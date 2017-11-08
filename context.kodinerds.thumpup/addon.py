@@ -18,7 +18,7 @@ profile    = xbmc.translatePath( addon.getAddonInfo('profile') ).decode("utf-8")
 temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
 session = requests.session()
 
-thread="https://www.kodinerds.net/index.php/Thread/58034-L0RE-s-Test-thread/"
+thread="https://www.kodinerds.net/index.php/Thread/11148-Was-ist-eure-Lieblingsserie-Serientalk-Empfehlungen/"
 if not xbmcvfs.exists(temp):       
        xbmcvfs.mkdirs(temp)
        
@@ -288,7 +288,7 @@ if mode=="":
       'actionName' : 'quickReply',
       'className' : 'wbb\data\post\PostAction',
       'interfaceName': 'wcf\data\IMessageQuickReplyAction',
-      'parameters[objectID]': '58034',
+      'parameters[objectID]': '11148',
       'parameters[data][message]' : text,
       'parameters[data][tmpHash]' : hash,
       'parameters[lastPostTime]':timestamp,
