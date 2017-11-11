@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 
 import simple_requests as requests
-from .common import *
+from common import *
 
 class Resolver:
 
     def __init__(self, url):
         
-        self.resolved_url = None
-        self.startpercent = False
+        self.resolved_url = ''
+        self.seektime = False
         
         if 'twitch' in url:
             self.twitch(url)
@@ -40,16 +40,17 @@ class Resolver:
                 seconds += int(s.group(1))
             return seconds
         
+        headers={'Client-ID': 'jzkbprff40iqj646a697cyrvl0zt2m6'}
+        
         if 'channel=' in url:
-            _id_ = url.split('channel=')[1]
+            _id_ = url.split('channel=')[1].lower()
             access = 'https://api.twitch.tv/api/channels/%s/access_token' % _id_
-            hls = 'http://usher.twitch.tv/api/channel/hls/%s.m3u8?%s'
+            hls = 'http://usher.ttvnw.net/api/channel/hls/%s.m3u8?%s'
         elif 'video=' in url:
             _id_ = re.sub('http.*?video=v|&.*?$', '', url)
             start_point = time_to_sec(re.sub('http.*?&t=', '', url))
-            info = requests.get('https://api.twitch.tv/api/videos/v%s' % _id_, headers={'Client-ID': 'jzkbprff40iqj646a697cyrvl0zt2m6'}).json()
-            duration = info.get('duration', 0)
-            self.startpercent = str((100*start_point)/duration)
+            info = requests.get('https://api.twitch.tv/api/videos/v%s' % _id_, headers=headers).json()
+            self.seektime = start_point
             access = 'https://api.twitch.tv/api/vods/%s/access_token' % _id_
             hls = 'https://usher.ttvnw.net/vod/%s.m3u8?%s'
         elif 'clips' in url:
@@ -57,7 +58,7 @@ class Resolver:
             quality_options = re.search('quality_options\s*:\s*\[(.*?)\]', data, re.DOTALL).group(1)
             self.resolved_url = re.search('"source"\s*:\s*"(.+?)"', quality_options).group(1)
             return
-        data = requests.get(access, headers={'Client-ID': 'jzkbprff40iqj646a697cyrvl0zt2m6'}).json()
+        data = requests.get(access, headers=headers).json()
         params  = {'allow_source':'true'}
         params['sig']   = data['sig']
         params['token'] = data['token']
@@ -85,62 +86,12 @@ class Resolver:
         
     def youtube(self, url):
         
-        from .signature.cipher import Cipher
-        
-        def time_to_seconds(t):
-            seconds = 0
-            seconds += int(duration.group('minutes'))*60
-            seconds += int(duration.group('seconds'))
-            return seconds
-        
         start_point = re.search('start=(\d+)', url)
+        if start_point:
+            self.seektime = int(start_point.group(1))
         _id_ = re.search('http.*?/embed/(.+?)(\?|$)', url)
         if _id_:
             _id_ = _id_.group(1)
-            url = 'https://www.youtube.com/watch?v=%s' % (_id_)
-        html = requests.get(url).text
-        if start_point:
-            duration = re.search('<meta itemprop="duration" content="PT(?P<minutes>\d+)M(?P<seconds>\d+)S">', html)
-            if duration:
-                self.startpercent = str((100*int(start_point.group(1)))/time_to_seconds(duration))
-        pos = html.find('<script>var ytplayer')
-        if pos >= 0:
-            html2 = html[pos:]
-            pos = html2.find('</script>')
-            if pos:
-                html = html2[:pos]
-                
-        re_match_js = re.search(r'\"js\"[^:]*:[^"]*\"(?P<js>.+?)\"', html)
-        js = ''
-        cipher = None
-        if re_match_js:
-            js = re_match_js.group('js').replace('\\', '').strip('//')
-            cipher = Cipher(java_script_url=js)
-
-        re_match = re.search(r'\"url_encoded_fmt_stream_map\"\s*:\s*\"(?P<url_encoded_fmt_stream_map>[^"]*)\"', html)
-        if re_match:
-            url_encoded_fmt_stream_map = re_match.group('url_encoded_fmt_stream_map')
-            url_encoded_fmt_stream_map = url_encoded_fmt_stream_map.split(',')
-            for value in url_encoded_fmt_stream_map:
-                value = value.replace('\\u0026', '&')
-                attr = dict(urlparse.parse_qsl(value))
-                url = attr.get('url', None)
-                if url:
-                    url = urllib.unquote(attr['url'])
-                    if 'signature' in url:
-                        self.resolved_url = url
-                        break
-                    signature = ''
-                    if attr.get('s', ''):
-                        signature = cipher.get_signature(attr['s'])
-                    elif attr.get('sig', ''):
-                        signature = attr.get('sig', '')
-                    if signature:
-                        url += '&signature=%s' % signature
-                        self.resolved_url = url
-                        break
-                        
-        if not self.resolved_url and _id_:
             params = {
                 'video_id': _id_,
                 'eurl': 'https://youtube.googleapis.com/v/' + _id_,
@@ -151,7 +102,50 @@ class Resolver:
             url = 'https://www.youtube.com/get_video_info'
             data = requests.get(url, params=params).text
             params = dict(urlparse.parse_qsl(data))
+            dash = params.get('dashmpd', '')
             hls = params.get('hlsvp', '')
-            if hls:
-                text = requests.get(hls).text
-                self.resolved_url =  text.splitlines()[-1]
+            if dash:
+                self.resolved_url = dash
+            if hls and not self.resolved_url:
+                self.resolved_url =  hls
+                
+        if not self.resolved_url and _id_:
+            from .signature.cipher import Cipher
+            url = 'https://www.youtube.com/watch?v=%s' % (_id_)
+            html = requests.get(url).text
+            pos = html.find('<script>var ytplayer')
+            if pos >= 0:
+                html2 = html[pos:]
+                pos = html2.find('</script>')
+                if pos:
+                    html = html2[:pos]
+
+            re_match_js = re.search(r'\"js\"[^:]*:[^"]*\"(?P<js>.+?)\"', html)
+            js = ''
+            cipher = None
+            if re_match_js:
+                js = re_match_js.group('js').replace('\\', '').strip('//')
+                cipher = Cipher(java_script_url=js)
+
+            re_match = re.search(r'\"url_encoded_fmt_stream_map\"\s*:\s*\"(?P<url_encoded_fmt_stream_map>[^"]*)\"', html)
+            if re_match:
+                url_encoded_fmt_stream_map = re_match.group('url_encoded_fmt_stream_map')
+                url_encoded_fmt_stream_map = url_encoded_fmt_stream_map.split(',')
+                for value in url_encoded_fmt_stream_map:
+                    value = value.replace('\\u0026', '&')
+                    attr = dict(urlparse.parse_qsl(value))
+                    url = attr.get('url', None)
+                    if url:
+                        url = urllib.unquote(attr['url'])
+                        if 'signature' in url:
+                            self.resolved_url = url
+                            break
+                        signature = ''
+                        if attr.get('s', ''):
+                            signature = cipher.get_signature(attr['s'])
+                        elif attr.get('sig', ''):
+                            signature = attr.get('sig', '')
+                        if signature:
+                            url += '&signature=%s' % signature
+                            self.resolved_url = url
+                            break

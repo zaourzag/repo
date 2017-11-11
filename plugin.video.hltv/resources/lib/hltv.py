@@ -29,7 +29,7 @@ def home_items(data):
     
 def archive_items(data):
     from archive import Archive
-    results = re.findall('<div class="results">(.*?)<div class="results">', data, re.DOTALL)
+    results = re.findall('<div class="results-all"(.*?)<div class="results">', data, re.DOTALL)
     if results:
         for r in re.findall('<div class="result-con"(.*?)</table>', results[0], re.DOTALL):
             items.add_item(Archive(html_unescape(r)).item)
@@ -41,9 +41,11 @@ def details_items(data):
         items.add_item(Details(html_unescape(each_stream)).item)
     for each_highlight in re.findall('<div class="highlight\s*(.*?)</div>', data, re.DOTALL):
         items.add_item(Details(html_unescape(each_highlight)).item)
-    items.list_items()    
+    items.list_items()
 
 def play(url):
     from resolver import Resolver
     r = Resolver(url)
-    items.play_item(r.resolved_url, r.startpercent)
+    items.play_item(r.resolved_url)
+    if r.seektime:
+        items.seek_item(r.seektime)

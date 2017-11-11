@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import simple_requests as requests
-from .common import *
+from common import *
 
 class Client:
 

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import json,os,sys,urllib,urlparse
+import os,sys,urllib,urlparse
 import time,datetime,random,re
 import xbmc,xbmcaddon,xbmcgui,xbmcplugin
 import HTMLParser
@@ -23,18 +23,18 @@ base_hltv = 'http://hltv.org'
 def log(msg):
     xbmc.log(str(msg), xbmc.LOGNOTICE)
     
-def getString(id):
-    return addon.getLocalizedString(id)
+def getString(_id):
+    return addon.getLocalizedString(_id)
 
 def build_url(query):
     return sys.argv[0] + '?' + urllib.urlencode(query)
     
-def utfenc(str):
+def utfenc(string):
     try:
-        str = str.encode('utf-8')
+        string = string.encode('utf-8')
     except:
         pass
-    return str
+    return string
 
 def html_unescape(html):
     try:
