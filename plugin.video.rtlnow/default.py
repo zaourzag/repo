@@ -194,6 +194,7 @@ def serien(url):
         title=serieelement["title"].encode('utf-8')
         debug(title)
         seoUrl=serieelement["seoUrl"]
+        idd=serieelement["id"]
         try:
         #Genre
             serieelement=serieelement["format"]
@@ -208,7 +209,7 @@ def serien(url):
             desc=""
             freeep="true"
         if (freeep==True or freeonly=="false") :
-            menu.append(addDir(title , url=str(seoUrl), mode="rubrik", iconimage=logo,duration="",desc=desc))
+            menu.append(addDir(title , url=str(idd), mode="rubrik", iconimage=logo,duration="",desc=desc))
         counter+=1
     debug("Counter :"+str(counter))
     try:
@@ -229,10 +230,9 @@ def rubrik(name) :
   #xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)   
   xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_NONE)
   #http://api.tvnow.de/v3/formats/seo?fields=*,.*,formatTabs.*,formatTabs.headline&name=chicago-fire
-  basurl="http://api.tvnow.de/v3/formats/seo?fields="
+  basurl="http://api.tvnow.de/v3/formats/"+str(name)+"?fields="
   div=urllib.quote_plus("*,.*,formatTabs.*,formatTabs.headline")
-  endeurl="&name="+name
-  url=basurl+div+endeurl
+  url=basurl+div
   debug(url)
   content = cache.cacheFunction(getUrl,url)      
   kapitelliste = json.loads(content, object_pairs_hook=OrderedDict)   
@@ -247,10 +247,10 @@ def rubrik(name) :
     idd=kapitelliste["id"]
     debug(":: ::"+str(idd))
     #uurl="http://api.tvnow.de/v3/formatlists/"+str(idd)+"?maxPerPage=500&fields=*,formatTabPages.*,formatTabPages.container.*,formatTabPages.container.movies.*,formatTabPages.container.movies.format.*,formatTabPages.container.movies.paymentPaytypes.*,formatTabPages.container.movies.pictures"    
-    uurl="https://api.tvnow.de/v3/movies?fields=[%22broadcastStartDate%22,%22articleShort%22,%22articleLong%22,%22id%22,%22episode%22,%22season%22,%22title%22,%22articleShort%22,%22isDrm%22,%22free%22,%22teaserText%22,%22deeplinkUrl%22,%22duration%22,%22manifest%22,[%22dash%22,%22dashclear%22],%22format%22,[%22categoryId%22]]&filter={%22FormatId%22:"+str(idd)+"}&maxPerPage=100&order=BroadcastStartDate%20desc"   
+    uurl="https://api.tvnow.de/v3/movies?fields=[%22broadcastStartDate%22,%22articleShort%22,%22articleLong%22,%22id%22,%22episode%22,%22season%22,%22title%22,%22articleShort%22,%22isDrm%22,%22free%22,%22teaserText%22,%22deeplinkUrl%22,%22duration%22,%22manifest%22,[%22dash%22,%22dashclear%22],%22format%22,[%22categoryId%22]]&order=id%20desc&filter={%22FormatId%22:"+str(idd)+"}&maxPerPage=100"   
     #content = cache.cacheFunction(getUrl,uurl)      
     #if "movies.error.not.found" in content:       
-    uurl="https://api.tvnow.de/v3/movies?fields=[%22broadcastStartDate%22,%22articleShort%22,%22articleLong%22,%22id%22,%22episode%22,%22season%22,%22title%22,%22articleShort%22,%22isDrm%22,%22free%22,%22teaserText%22,%22deeplinkUrl%22,%22duration%22,%22manifest%22,[%22dash%22,%22dashclear%22],%22format%22,[%22categoryId%22]]&filter={%22FormatId%22:"+str(idd)+"}&maxPerPage=100&order=BroadcastStartDate%20desc"   
+    uurl="https://api.tvnow.de/v3/movies?fields=[%22broadcastStartDate%22,%22articleShort%22,%22articleLong%22,%22id%22,%22episode%22,%22season%22,%22title%22,%22articleShort%22,%22isDrm%22,%22free%22,%22teaserText%22,%22deeplinkUrl%22,%22duration%22,%22manifest%22,[%22dash%22,%22dashclear%22],%22format%22,[%22categoryId%22]]&order=id%20desc&filter={%22FormatId%22:"+str(idd)+"}&maxPerPage=100"   
     
     staffel(str(idd),uurl)
   else:    
