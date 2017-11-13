@@ -1588,7 +1588,7 @@ Orginal Code was from AddonScriptorDE</disclaimer>
   </extension>
 </addon>
 
-<addon id="skin.destiny" name="Destiny" version="3.0.0" provider-name="Jugger">
+<addon id="skin.destiny" name="Destiny" version="3.1.0" provider-name="Jugger">
   <requires>
     <import addon="xbmc.gui" version="5.12.0"/>
   </requires>
