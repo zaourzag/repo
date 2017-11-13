@@ -587,12 +587,12 @@ def katalogliste(idd)   :
      debug("---")
      debug(serie)
      try:
-        id=serie["format"]["id"]
+        iid=serie["format"]["id"]
         seoUrl=serie["format"]["seoUrl"]
         title=serie["format"]["title"]
         logo=serie["format"]["defaultDvdImage"]
         desc=serie["format"]["infoText"]
-        menu.append(addDir(title , url=str(seoUrl), mode="rubrik", iconimage=logo,duration="",desc=desc))
+        menu.append(addDir(title , url=str(iid), mode="rubrik", iconimage=logo,duration="",desc=desc))
      except:
          pass
    xbmcplugin.addDirectoryItems(addon_handle,menu)
