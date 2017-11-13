@@ -1,284 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <includes>
-	  <!-- ===================================================================================== -->
-	  <!-- ============================ POSTER MOVIES VIEW ID 601 ============================== -->
-	  <!-- ===================================================================================== -->
-	  <include name="View_601_Poster_Movies">
-		<control type="group">
-		<control type="list" id="601">
-		  <include>Animation.ZoomIn</include>
-		  <animation effect="zoom" end="83" center="2100,100" time="300" tween="cubic" easing="inout" condition="ControlGroup(9020).HasFocus | ControlGroup(9021).HasFocus | ControlGroup(9030).HasFocus">Conditional</animation>
-		  <left>176</left>
-		  <top>686</top>
-		  <width>1692</width>
-		  <height>800</height>
-		  <onright>601</onright>
-		  <onleft>601</onleft>
-		  <onup>62593</onup>
-		  <ondown>1601</ondown>
-		  <pagecontrol>1601</pagecontrol>
-		  <viewtype label="Poster/Big Fanart">list</viewtype>
-		  <scrolltime tween="Quadratic" easing="out">500</scrolltime>
-		  <focusposition>0</focusposition>
-		  <orientation>horizontal</orientation>
-		  <movement>1</movement>
-		  <itemlayout height="291" width="212">	
-		  <control type="image">
-			<left>-7</left>
-			<top>-7</top>
-			<width>216</width>
-			<height>311</height>
-			<texture background="true">skin/button_klein.png</texture>
-			<bordertexture border="10">ThumbShadow.png</bordertexture>
-		    <bordersize>6</bordersize>
-			<colordiffuse>$VAR[ColorButtonDialogeBack]</colordiffuse>
-		  </control>
-		  <control type="image">
-			<left>-1</left>
-			<top>0</top>
-			<width>204</width>
-			<height>298</height>
-			<texture background="true">$VAR[PosterThumb]</texture>
-			<bordertexture border="10">ThumbShadow.png</bordertexture>
-		    <bordersize>6</bordersize>
-			<aspectratio align="center" aligny="top">stretch</aspectratio>
-			<visible>!Stringcompare(ListItem.label,..)</visible>
-		  </control>	
-		  <control type="image">
-			<left>65</left>
-			<top>60</top>
-			<width>70</width>
-			<height>70</height>
-			<texture background="true">home/homeicons/back.png</texture>
-			<aspectratio align="left" aligny="top">keep</aspectratio>
-			<visible>Stringcompare(ListItem.label,..)</visible>
-		  </control>
-		  <control type="image">
-			<left>-1</left>
-			<top>-1</top>
-			<width>40</width>
-			<height>44</height>
-			<aspectratio>keep</aspectratio>
-			<texture>Overlayicons/$INFO[ListItem.Overlay]</texture>
-			<colordiffuse>$VAR[BackColorButton]</colordiffuse>
-		  </control>
-		</itemlayout>
-		<focusedlayout height="291" width="212">
-		  <control type="group">
-		  <animation type="Focus">
-			  <effect type="zoom" time="150" start="95" end="100" center="245,260" />
-		  </animation>
-		  <control type="image">
-			<left>-7</left>
-			<top>-7</top>
-			<width>216</width>
-			<height>311</height>
-			<texture background="true">skin/button_klein.png</texture>
-			<bordertexture border="10">ThumbShadow.png</bordertexture>
-		    <bordersize>6</bordersize>
-			<colordiffuse>$VAR[BackColorButton]</colordiffuse>
-		  </control>
-		  <control type="image">
-			<left>-1</left>
-			<top>0</top>
-			<width>204</width>
-			<height>298</height>
-			<texture background="true">$VAR[PosterThumb]</texture>
-			<bordertexture border="10">ThumbShadow.png</bordertexture>
-		    <bordersize>6</bordersize>
-			<aspectratio align="center" aligny="top">stretch</aspectratio>
-		    <visible>!Stringcompare(ListItem.label,..)</visible>
-		  </control>	
-		  <control type="image">
-			<left>65</left>
-			<top>60</top>
-			<width>70</width>
-			<height>70</height>
-			<texture background="true">home/homeicons/back.png</texture>
-			<aspectratio align="left" aligny="top">keep</aspectratio>
-			<visible>Stringcompare(ListItem.label,..)</visible>
-		  </control>
-		  <control type="image">
-			<left>-1</left>
-			<top>-1</top>
-			<width>40</width>
-			<height>44</height>
-			<aspectratio>keep</aspectratio>
-			<texture>Overlayicons/$INFO[ListItem.Overlay]</texture>
-			<colordiffuse>$VAR[BackColorButton]</colordiffuse>
-		  </control>
-		 </control>
-		</focusedlayout>
-		</control>
-		 <control type="scrollbar" id="1601">
-		   <animation effect="zoom" end="83" center="2100,100" time="300" tween="cubic" easing="inout" condition="ControlGroup(9020).HasFocus | ControlGroup(9021).HasFocus | ControlGroup(9030).HasFocus">Conditional</animation>
-		   <left>185</left>
-		   <top>995</top>
-		   <width>1670</width>
-		   <height>5</height>
-		   <texturesliderbackground>progress/bg.png</texturesliderbackground>
-		   <texturesliderbar colordiffuse="$VAR[BackColorFront]">progress/blank.png</texturesliderbar>
-		   <texturesliderbarfocus colordiffuse="$VAR[BackColorButton]">progress/blank.png</texturesliderbarfocus>
-		   <textureslidernib>button/ScrollBarNib.png</textureslidernib>
-		   <textureslidernibfocus>button/ScrollBarNib.png</textureslidernibfocus>
-		   <onup>601</onup>
-		   <ondown>9020</ondown>
-		   <showonepage>false</showonepage>
-		   <orientation>horizontal</orientation>
-		   <visible>Control.IsVisible(601) + !Skin.HasSetting(viewnoscrollbar)</visible>
-		</control>
-	   </control>
-	   <control type="group">
-	   <include>Animation.ZoomIn</include>
-	   <visible>Control.IsVisible(601)</visible>
-	   <animation effect="zoom" end="83" center="2100,100" time="300" tween="cubic" easing="inout" condition="ControlGroup(9020).HasFocus | ControlGroup(9021).HasFocus | ControlGroup(9030).HasFocus">Conditional</animation>
-	   <control type="image">
-		  <left>170</left>
-		  <top>150</top>
-		  <width>1700</width>
-		  <height>530</height>
-		  <texture background="true">skin/button_klein.png</texture>
-		  <bordertexture border="10">ThumbShadow.png</bordertexture>
-		  <bordersize>7</bordersize>
-		  <aspectratio>stretch</aspectratio>
-		  <colordiffuse>$VAR[ColorButtonDialogeBack]</colordiffuse>
-	    </control>
-	    <control type="image">
-		  <left>175</left>
-		  <top>155</top>
-		  <width>1690</width>
-		  <height>520</height>
-		  <texture background="true" fallback="special://skin/backgrounds/FALLBACK.jpg">$INFO[Container(601).ListItem.Art(fanart)]</texture>
-		  <bordertexture border="10">-</bordertexture>
-		  <bordersize>6</bordersize>
-		  <aspectratio align="center" aligny="top">scale</aspectratio>
-	    </control>
-		<control type="image">
-		  <left>1680</left>
-		  <top>140</top>
-		  <width>160</width>
-		  <height>160</height>
-		  <texture>$VAR[VarStudioIcon]</texture>
-		  <colordiffuse>$VAR[ColorIcons]</colordiffuse>
-		  <aspectratio>keep</aspectratio>
-	    </control>
-		<control type="image">
-		  <left>180</left>
-		  <top>160</top>
-		  <width>560</width>
-		  <height>510</height>
-		  <texture background="true">skin/button_klein_tranz70.png</texture>
-		  <aspectratio>stretch</aspectratio>
-		  <colordiffuse>$VAR[ColorButtonDialogeBack]</colordiffuse>
-		  <visible>!Stringcompare(ListItem.label,..)</visible> 
-		  <visible>!ListItem.IsCollection</visible>
-	    </control>
-		<control type="image">
-		  <left>180</left>
-		  <top>460</top>
-		  <width>1680</width>
-		  <height>210</height>
-		  <texture background="true">skin/button_klein_tranz70.png</texture>
-		  <aspectratio>stretch</aspectratio>
-		  <colordiffuse>$VAR[ColorButtonDialogeBack]</colordiffuse>
-		  <visible>!Stringcompare(ListItem.label,..)</visible> 
-		  <visible>ListItem.IsCollection</visible>
-	    </control>
-		<!--<control type="image">
-		  <left>901</left>
-		  <top>157</top>
-		  <width>448</width>
-		  <height>670</height>
-		  <texture background="true" fallback="special://skin/backgrounds/FALLBACK.jpg">$INFO[ListItem.Art(tvshow.poster)]</texture>
-		  <bordertexture border="10">-</bordertexture>
-		  <bordersize>7</bordersize>
-		  <aspectratio align="center" aligny="top">scale</aspectratio>
-		  <visible>Container.Content(Episodes)</visible>
-	    </control>-->
-		<control type="label">
-		  <left>200</left>
-		  <top>180</top>
-		  <width>520</width>
-		  <height>36</height>
-		  <font>primal_20_Bold</font>
-		  <textcolor>$VAR[ColorFontNormal]</textcolor>
-		  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
-		  <selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
-		  <align>justify</align>
-		  <aligny>center</aligny>
-		  <label>$INFO[ListItem.Label]</label>
-		  <visible>!Stringcompare(ListItem.label,..)</visible>
-		  <visible>!ListItem.IsCollection</visible>
-	    </control>
-	    <control type="label">
-		  <left>200</left>
-		  <top>220</top>
-		  <width>520</width>
-		  <height>36</height>
-		  <font>primal_16</font>
-		  <textcolor>$VAR[ColorFontNormal]</textcolor>
-		  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
-		  <selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
-		  <align>justify</align>
-		  <aligny>center</aligny>
-		  <label>$VAR[ExtendedInfoYear]$VAR[ExtendedInfoRuntime, • ]$VAR[ExtendedInfoTimeEnd, • ]</label>
-		  <visible>!Stringcompare(ListItem.label,..)</visible>
-		  <visible>!ListItem.IsCollection</visible>
-	    </control>
-		<control type="label">
-		  <left>200</left>
-		  <top>250</top>
-		  <width>520</width>
-		  <height>36</height>
-		  <font>primal_16</font>
-		  <textcolor>$VAR[ColorFontNormal]</textcolor>
-		  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
-		  <selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
-		  <align>justify</align>
-		  <aligny>center</aligny>
-		  <label>$VAR[ExtendedInfoRatingAndVotes]</label>
-		  <visible>!Stringcompare(ListItem.label,..)</visible>
-		  <visible>!ListItem.IsCollection</visible>
-	    </control>
-		<control type="grouplist">
-		  <left>200</left>
-		  <top>290</top>
-		  <itemgap>10</itemgap>
-		  <orientation>horizontal</orientation>
-		  <include>AudioLanguageFlaggingConditions</include>
-		</control>
-		<control type="textbox">
-		  <description>Movie Plot</description>
-		  <left>200</left>
-		  <top>330</top>
-		  <width>520</width>
-		  <height>275</height>
-		  <include condition="!Skin.HasSetting(PlotFontBig)">PlotFontLowVar</include>
-		  <include condition="Skin.HasSetting(PlotFontBig)">PlotFontBigVar</include>
-		  <align>justify</align>
-		  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
-		  <label>[COLOR $VAR[ColorFontNormal]]$INFO[ListItem.Plot][/COLOR]</label>
-		  <autoscroll time="2000" delay="15000" repeat="5000">!Skin.HasSetting(NoPlotScroll)</autoscroll>
-		  <visible>!Stringcompare(ListItem.label,..)</visible> 
-		  <visible>!ListItem.IsCollection</visible>
-		</control>
-		<control type="group">
-		  <left>130</left>
-		  <top>470</top>
-		  <include>MovieSetPoster</include>
-		  <visible>ListItem.IsCollection</visible>
-	    </control>
-	    <control type="grouplist">
-		  <left>200</left>
-		  <top>600</top>
-		  <itemgap>10</itemgap>
-		  <orientation>horizontal</orientation>
-		  <include>VideoCodecFlaggingConditions</include>
-		  <include>AudioCodecFlaggingConditions</include>
-		  <include>VideoMPAAFlaggingConditions</include>
-	    </control>	 
-	   </control>
-	  </include>
 	
 	  <!-- ===================================================================================== -->
 	  <!-- ============================== POSTERLIST VIEW ID 603 =============================== -->
@@ -287,307 +8,404 @@
 		  <control type="group">
 		  <include>Animation.ZoomIn</include>
 		  <visible>Control.IsVisible(603)</visible>
-		  <animation effect="zoom" end="83" center="2100,100" time="300" tween="cubic" easing="inout" condition="ControlGroup(9020).HasFocus | ControlGroup(9021).HasFocus | ControlGroup(9030).HasFocus">Conditional</animation>
 		  <left>0</left>
 		  <top>0</top>
+		  <control type="image">
+			  <left>0</left>
+			  <top>0</top>
+			  <width>1920</width>
+			  <height>1080</height>
+			  <texture>skin/HMShadow2.png</texture>
+			  <aspectratio>stretch</aspectratio>
+			  <colordiffuse>$VAR[BackColorBackground]</colordiffuse>
+		  </control>
+		  <control type="image">
+			  <left>553</left>
+			  <top>160</top>
+			  <width>26</width>
+			  <height>835</height>
+			  <texture background="true">default/panel_schatten_links.png</texture>
+		      <colordiffuse>$VAR[ColorFontShadow]</colordiffuse>
+		  </control>
+		  <control type="image">
+			  <left>1520</left>
+			  <top>435</top>
+			  <width>350</width>
+			  <height>600</height>
+			  <texture background="true" fallback="default/noposter.jpg">$INFO[ListItem.Art(poster)]</texture>
+			  <bordertexture border="10">ThumbShadow.png</bordertexture>
+			  <bordersize>6</bordersize>
+			  <aspectratio align="left" aligny="top">stretch</aspectratio>
+		  </control>
+		  <control type="image">
+			  <left>1350</left>
+			  <top>970</top>
+			  <width>150</width>
+			  <height>50</height>
+			  <texture background="true" fallback="default/noposter.jpg">$INFO[ListItem.Art(clearlogo)]</texture>
+			  <aspectratio align="left" aligny="top">keep</aspectratio>
+			  <visible>!ListItem.IsCollection</visible>
+		  </control>
+		  <control type="image">
+			  <left>1513</left>
+			  <top>455</top>
+			  <width>85</width>
+			  <height>63</height>
+			  <texture background="true">OverlayIcons/rippon.png</texture>
+		      <colordiffuse>$VAR[ColorButtonDialogeBack]</colordiffuse>	
+		  </control>
+			  <control type="image">
+			  <description>MPAA</description>
+			  <left>1520</left>
+			  <top>450</top>
+			  <width>65</width>
+			  <height>65</height>
+			  <aspectratio>keep</aspectratio>
+			  <texture>$VAR[mpaa]</texture>
+		  </control>
+		  <control type="image">
+			  <left>1527</left>
+			  <top>465</top>
+			  <width>47</width>
+			  <height>33</height>
+			  <texture>flagging/list/set.png</texture>
+			  <visible>ListItem.IsCollection</visible>
+			  <visible>!Stringcompare(ListItem.label,..)</visible> 
+		  </control>
 		  <control type="list" id="603">
-			  <left>180</left>
-			  <top>150</top>
-			  <width>1900</width>
-			  <height>840</height>
-			  <onleft>603</onleft>
-			  <ondown condition="!SubString(ListItem.Path,videodb://movies/sets/,left)">162591</ondown>
-			  <ondown condition="SubString(ListItem.Path,videodb://movies/sets/,left)">162592</ondown>
-			  <onup>290000</onup>
-			  <onright>603</onright>
-			  <viewtype label="Posterlist">list</viewtype>
+			  <include>Animation.ZoomIn</include>
+		      <left>0</left>
+		      <top>165</top>
+		      <width>700</width>
+		      <height>800</height>
+			  <ondown>603</ondown>
+			  <onright condition="!SubString(ListItem.Path,videodb://movies/sets/,left)">290000</onright>
+			  <onright condition="SubString(ListItem.Path,videodb://movies/sets/,left)">62593</onright>
+			  <onup>603</onup>
+			  <onleft>9020</onleft>
+			  <viewtype label="Fanartlist">list</viewtype>
 			  <pagecontrol>1603</pagecontrol>
 			  <scrolltime>300</scrolltime>
 			  <focusposition>0</focusposition>
-			  <orientation>horizontal</orientation>
+			  <orientation>vertical</orientation>
 			  <preloaditems>2</preloaditems>
-		      <itemlayout height="300" width="410">
+		      <itemlayout condition="!Skin.HasSetting(banner603)" height="81" width="250">
 			  <control type="group">
-		        <control type="image">
-				  <left>0</left>
-				  <top>0</top>
-				  <width>400</width>
-				  <height>840</height>
-				  <texture background="true">skin/button_klein.png</texture>
-				  <bordertexture border="10">ThumbShadow.png</bordertexture>
-				  <bordersize>6</bordersize>
-		          <colordiffuse>$VAR[ColorButtonDialogeBack]</colordiffuse>
-			   </control>
-			   <control type="image">
-				  <left>12</left>
-				  <top>497</top>
-				  <width>375</width>
-				  <height>330</height>
-				  <texture background="true">skin/button_klein_tranz70.png</texture>
-				  <aspectratio>stretch</aspectratio>
-				  <colordiffuse>$VAR[BackColorBackground]</colordiffuse>
-				  <visible>!Stringcompare(ListItem.label,..)</visible> 
-				</control>
-			   <control type="image">
-				  <left>6</left>
-				  <top>7</top>
-				  <width>387</width>
-				  <height>589</height>
-				  <aspectratio align="left" aligny="top">stretch</aspectratio>
-				  <texture background="true" fallback="default/noposter.jpg">$VAR[PosterThumb]</texture>
-				  <bordertexture border="10">ThumbShadow.png</bordertexture>
-		          <bordersize>6</bordersize>
-				  <colordiffuse>ff5f5f61</colordiffuse>
-				  <visible>!Stringcompare(ListItem.label,..)</visible> 
-			   </control>
-			   <control type="image">
-				  <left>120</left>
-				  <top>100</top>
-				  <width>120</width>
-				  <height>120</height>
-				  <aspectratio align="left" aligny="top">stretch</aspectratio>
-			      <texture background="true">home/homeicons/back.png</texture>
-				  <visible>Stringcompare(ListItem.label,..)</visible> 
-			   </control>
-			   <control type="image">
-				  <left>6</left>
-				  <top>4</top>
+			  <control type="image">
+			      <left>0</left>
+			      <top>0</top>
+			      <width>553</width>
+			      <height>1</height>
+			      <texture background="true">default/separator.png</texture>
+		      </control>		
+		      <control type="label">
+			      <left>70</left>
+			      <top>20</top>
+			      <width>430</width>
+			      <height>36</height>
+			      <font>primal_20</font>
+			      <label>$INFO[ListItem.Label]</label>
+			      <textcolor>$VAR[ColorFontNormal]</textcolor>
+			      <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			      <selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
+			      <align>left</align>
+			      <aligny>center</aligny>	 
+			      <visible>!Stringcompare(ListItem.label,..)</visible> 
+		        </control>
+		        <control type="label">
+			      <left>70</left>
+			      <top>20</top>
+			      <width>430</width>
+			      <height>36</height>
+			      <font>primal_20</font>
+			      <label>210</label>
+			      <textcolor>$VAR[ColorFontNormal]</textcolor>
+			      <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			      <selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
+			      <align>left</align>
+			      <aligny>center</aligny>	 
+			      <visible>Stringcompare(ListItem.label,..)</visible> 
+		        </control>
+			    <control type="image">
+				  <left>15</left>
+				  <top>16</top>
 				  <width>40</width>
 				  <height>44</height>
 				  <aspectratio>keep</aspectratio>
-				  <texture>Overlayicons/$INFO[ListItem.Overlay]</texture>
-				  <colordiffuse>$VAR[BackColorButton]</colordiffuse>
-				</control>
-			    <control type="label">
-				  <left>20</left>
-				  <top>595</top>
-				  <width>360</width>
-				  <height>60</height>
-				  <font>primal_18</font>
-				  <textcolor>$VAR[ColorFontNormal]</textcolor>
-	              <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
-				  <selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
-				  <align>center</align>
-				  <aligny>center</aligny>
-				  <label>$INFO[ListItem.Label]</label>
-				  <visible>!Stringcompare(ListItem.label,..)</visible> 
-				</control>	
-				<control type="label">
-				  <left>20</left>
-				  <top>595</top>
-				  <width>360</width>
-				  <height>60</height>
-				  <font>primal_18</font>
-				  <textcolor>$VAR[ColorFontNormal]</textcolor>
-	              <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
-				  <selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
-				  <align>center</align>
-				  <aligny>center</aligny>
-				  <label>$LOCALIZE[210]</label>
-				  <visible>Stringcompare(ListItem.label,..)</visible> 
-				</control>
-				<control type="label">
-				  <left>20</left>
-				  <top>645</top>
-				  <width>360</width>
-				  <height>45</height>
-				  <font>primal_15</font>
-				  <textcolor>$VAR[ColorFontNormal]</textcolor>
-				  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
-				  <selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
-				  <scroll>true</scroll>
-				  <align>center</align>
-				  <aligny>center</aligny>
-				  <label>$VAR[ExtendedInfoRuntime]</label>
-				  <visible>!Stringcompare(ListItem.label,..)</visible> 
-				</control>
-				<control type="label">
-				  <left>20</left>
-				  <top>675</top>
-				  <width>360</width>
-				  <height>45</height>
-				  <font>primal_15</font>
-				  <textcolor>$VAR[ColorFontNormal]</textcolor>
-				  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
-				  <selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
-				  <scroll>true</scroll>
-				  <align>center</align>
-				  <aligny>center</aligny>
-				  <label>$VAR[ExtendedInfoTimeEnd]</label>
-				  <visible>!Stringcompare(ListItem.label,..)</visible> 
-				</control>
-				<control type="image">
-				  <description>Rating value</description>
-				  <left>123</left>
-				  <top>720</top>
-				  <align>right</align>
-				  <width>150</width>
-				  <height>30</height>
-				  <texture>$INFO[Listitem.StarRating]</texture>
-				  <visible>!ListItem.IsFolder</visible>
-				</control>
-				<control type="group">
-				  <left>25</left>
-				  <top>770</top>
-				  <orientation>horizontal</orientation>
-				  <include>FlaggingConditionsLittle</include>
-				</control>
+				  <texture>Overlayicons/views/$INFO[ListItem.Overlay]</texture>
+				  <colordiffuse>$VAR[ColorFontSelected]</colordiffuse>
+				</control>		    
 			</control>
 		  </itemlayout>
-		  <focusedlayout height="300" width="410">
-		      <control type="group">
-			  <animation type="Focus">
-				  <effect type="zoom" time="150" start="95" end="100" center="245,260" />
-				  <effect type="zoom" time="150" start="105" end="102" delay="150" center="245,260" />
-			  </animation>
+		  <itemlayout condition="Skin.HasSetting(banner603)" height="100" width="250">
+			<control type="group">
+			<control type="image">
+			  <left>15</left>
+			  <top>5</top>
+			  <width>523</width>
+			  <height>90</height>
+			  <texture background="true" fallback="default/banner_fallback.jpg">$INFO[ListItem.Art(banner)]</texture>
+			  <bordertexture border="10">ThumbShadow.png</bordertexture>
+			  <bordersize>6</bordersize>
+			  <aspectratio align="center" aligny="top">stretch</aspectratio>
+			</control>
+			<control type="image">
+			  <left>20</left>
+			  <top>11</top>
+			  <width>40</width>
+			  <height>44</height>
+			  <aspectratio>keep</aspectratio>
+			  <texture>Overlayicons/$INFO[ListItem.Overlay]</texture>
+			</control>		
+		   </control>
+		  </itemlayout>
+		  <focusedlayout condition="!Skin.HasSetting(banner603)" height="81" width="250">
+		   <control type="group">
+			  <control type="image">
+			      <left>0</left>
+			      <top>0</top>
+			      <width>558</width>
+			      <height>1</height>
+			      <texture background="true">default/separator.png</texture>
+		      </control>
+              <control type="image">
+			     <left>0</left>
+			     <top>1</top>
+			     <width>553</width>
+			     <height>80</height>
+			     <texture background="true">skin/button_klein_tranz20.png</texture>
+			     <colordiffuse>$VAR[BackColorButton]</colordiffuse>
+			     <visible>Control.Hasfocus(603)</visible>
+		      </control>			  
+		      <control type="label">
+			      <left>70</left>
+			      <top>20</top>
+			      <width>460</width>
+			      <height>36</height>
+			      <font>primal_20</font>
+			      <label>$INFO[ListItem.Label]</label>
+			      <textcolor>$VAR[ColorFontNormal]</textcolor>
+			      <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			      <selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
+			      <align>left</align>
+			      <aligny>center</aligny>	 
+			      <visible>!Stringcompare(ListItem.label,..)</visible> 
+		        </control>
+		        <control type="label">
+			      <left>70</left>
+			      <top>20</top>
+			      <width>430</width>
+			      <height>36</height>
+			      <font>primal_20</font>
+			      <label>210</label>
+			      <textcolor>$VAR[ColorFontNormal]</textcolor>
+			      <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			      <selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
+			      <align>left</align>
+			      <aligny>center</aligny>	 
+			      <visible>Stringcompare(ListItem.label,..)</visible> 
+		        </control>
 				<control type="image">
-				  <left>0</left>
-				  <top>0</top>
-				  <width>400</width>
-				  <height>840</height>
-				  <texture background="true">skin/button_klein.png</texture>
-				  <bordertexture border="10">ThumbShadow.png</bordertexture>
-				  <bordersize>6</bordersize>
-		          <colordiffuse>$VAR[BackColorButton]</colordiffuse>
-			   </control>
-			   <control type="image">
-				  <left>12</left>
-				  <top>497</top>
-				  <width>375</width>
-				  <height>330</height>
-				  <texture background="true">skin/button_klein.png</texture>
-				  <aspectratio>stretch</aspectratio>
-				  <colordiffuse>$VAR[BackColorBackground]</colordiffuse>
-				  <visible>!Stringcompare(ListItem.label,..)</visible> 
-				</control>
-			   <control type="image">
-				  <left>6</left>
-				  <top>7</top>
-				  <width>387</width>
-				  <height>589</height>
-				  <aspectratio align="left" aligny="top">stretch</aspectratio>
-				  <texture background="true" fallback="default/noposter.jpg">$VAR[PosterThumb]</texture>
-				  <bordertexture border="10">ThumbShadow.png</bordertexture>
-		          <bordersize>6</bordersize>
-				  <visible>!Stringcompare(ListItem.label,..)</visible> 
-			   </control>
-			   <control type="image">
-				  <left>120</left>
-				  <top>100</top>
-				  <width>120</width>
-				  <height>120</height>
-				  <aspectratio align="left" aligny="top">stretch</aspectratio>
-			      <texture background="true">home/homeicons/back.png</texture>
-				  <visible>Stringcompare(ListItem.label,..)</visible> 
-			   </control>
-				<control type="image">
-				  <left>6</left>
-				  <top>4</top>
+				  <left>15</left>
+				  <top>16</top>
 				  <width>40</width>
 				  <height>44</height>
 				  <aspectratio>keep</aspectratio>
-				  <texture>Overlayicons/$INFO[ListItem.Overlay]</texture>
+				  <texture>Overlayicons/views/$INFO[ListItem.Overlay]</texture>
 				  <colordiffuse>$VAR[BackColorButton]</colordiffuse>
-				</control>
-				<control type="label">
-				  <left>20</left>
-				  <top>595</top>
-				  <width>360</width>
-				  <height>60</height>
-				  <font>primal_18</font>
-				  <textcolor>$VAR[ColorFontNormal]</textcolor>
-	              <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
-				  <selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
-				  <align>center</align>
-				  <aligny>center</aligny>
-				  <label>$INFO[ListItem.Label]</label>
-				  <visible>!Stringcompare(ListItem.label,..)</visible> 
-				</control>	
-				<control type="label">
-				  <left>20</left>
-				  <top>595</top>
-				  <width>360</width>
-				  <height>60</height>
-				  <font>primal_18</font>
-				  <textcolor>$VAR[ColorFontNormal]</textcolor>
-	              <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
-				  <selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
-				  <align>center</align>
-				  <aligny>center</aligny>
-				  <label>$LOCALIZE[210]</label>
-				  <visible>Stringcompare(ListItem.label,..)</visible> 
-				</control>
-				<control type="fadelabel">
-				  <left>20</left>
-				  <top>645</top>
-				  <width>360</width>
-				  <height>45</height>
-				  <font>primal_15</font>
-				  <textcolor>$VAR[ColorFontNormal]</textcolor>
-				  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
-				  <scroll>true</scroll>
-				  <scrollspeed>25</scrollspeed>
-				  <align>center</align>
-				  <aligny>center</aligny>
-				  <label>$VAR[ExtendedInfoRuntime]</label>
-				  <scrollout>false</scrollout>
-				  <pauseatend>2000</pauseatend>
-				  <visible>!Stringcompare(ListItem.label,..)</visible> 
-				</control>
-				<control type="fadelabel">
-				  <left>20</left>
-				  <top>675</top>
-				  <width>360</width>
-				  <height>45</height>
-				  <font>primal_15</font>
-				  <textcolor>$VAR[ColorFontNormal]</textcolor>
-				  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
-				  <scroll>true</scroll>
-				  <scrollspeed>25</scrollspeed>
-				  <align>center</align>
-				  <aligny>center</aligny>
-				  <label>$VAR[ExtendedInfoTimeEnd]</label>
-				  <scrollout>false</scrollout>
-				  <pauseatend>2000</pauseatend>
-				  <visible>!Stringcompare(ListItem.label,..)</visible> 
-				</control>
-				<control type="image">
-				  <description>Rating value</description>
-				  <left>123</left>
-				  <top>720</top>
-				  <align>right</align>
-				  <width>150</width>
-				  <height>30</height>
-				  <texture>$INFO[Listitem.StarRating]</texture>
-				  <visible>!ListItem.IsFolder</visible>
-				</control>
-				<control type="group">
-				  <left>25</left>
-				  <top>770</top>
-				  <orientation>horizontal</orientation>
-				  <include>FlaggingConditionsLittle</include>
 				</control>
 			   </control>
 			  </focusedlayout>
+			  <focusedlayout condition="Skin.HasSetting(banner603)" height="100" width="250">
+			  <control type="image">
+				<left>10</left>
+				<top>0</top>
+				<width>533</width>
+				<height>100</height>
+				<texture background="true">skin/button_klein.png</texture>
+				<bordertexture border="10">ThumbShadow.png</bordertexture>
+				<bordersize>6</bordersize>
+				<colordiffuse>$VAR[BackColorButton]</colordiffuse>
+			  </control>
+			  <control type="image">
+				<left>15</left>
+				<top>5</top>
+				<width>523</width>
+				<height>90</height>
+				<texture background="true" fallback="default/banner_fallback.jpg">$INFO[ListItem.Art(banner)]</texture>
+				<bordertexture border="10">ThumbShadow.png</bordertexture>
+				<bordersize>6</bordersize>
+				<aspectratio align="center" aligny="top">stretch</aspectratio>
+			  </control>
+			  <control type="image">
+				<left>20</left>
+				<top>11</top>
+				<width>40</width>
+				<height>44</height>
+				<aspectratio>keep</aspectratio>
+				<texture>Overlayicons/$INFO[ListItem.Overlay]</texture>
+			  </control>
+			  <include>SetPoster</include>
+			</focusedlayout>
 			</control>	
-			<control type="scrollbar" id="1603">
-			   <left>100</left>
-			   <top>1005</top>
-			   <width>1800</width>
-			   <height>5</height>
-			   <texturesliderbackground>progress/bg.png</texturesliderbackground>
-			   <texturesliderbar colordiffuse="$VAR[BackColorFront]">progress/blank.png</texturesliderbar>
-			   <texturesliderbarfocus colordiffuse="$VAR[BackColorButton]">progress/blank.png</texturesliderbarfocus>
-			   <textureslidernib>button/ScrollBarNib.png</textureslidernib>
-			   <textureslidernibfocus>button/ScrollBarNib.png</textureslidernibfocus>
-			   <onup>603</onup>
-			   <ondown>162592</ondown>
-			   <showonepage>false</showonepage>
-			   <orientation>horizontal</orientation>
-			   <visible>Control.IsVisible(603) + !Skin.HasSetting(viewnoscrollbar)</visible>
-			</control>	
-			<include>ViewInfoWindow</include>
-		  </control>
+			<control type="group"><!-- Normale Filme -->
+			<left>630</left>
+			<top>150</top>
+			<visible>!ListItem.IsCollection</visible>
+               <control type="label">
+				  <left>0</left>
+				  <top>30</top>
+				  <width>680</width>
+				  <height>60</height>
+				  <font>primal_30_Bold</font>
+				  <textcolor>$VAR[ColorFontNormal]</textcolor>
+	              <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+				  <selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
+				  <align>left</align>
+				  <aligny>center</aligny>
+				  <label>$INFO[ListItem.Label]</label>
+				  <visible>!Stringcompare(ListItem.label,..)</visible> 
+				</control>	
+				<control type="label">
+				  <left>0</left>
+				  <top>30</top>
+				  <width>680</width>
+				  <height>60</height>
+				  <font>primal_30_Bold</font>
+				  <textcolor>$VAR[ColorFontNormal]</textcolor>
+	              <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+				  <selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
+				  <align>left</align>
+				  <aligny>center</aligny>
+				  <label>$LOCALIZE[210]</label>
+				  <visible>Stringcompare(ListItem.label,..)</visible> 
+				</control>
+				<control type="label">
+				  <left>0</left>
+				  <top>90</top>
+				  <width>680</width>
+				  <height>45</height>
+				  <font>primal_15</font>
+				  <textcolor>$VAR[ColorFontSelected]</textcolor>
+				  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+				  <selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
+				  <scroll>true</scroll>
+				  <align>left</align>
+				  <aligny>center</aligny>
+				  <label>$VAR[ExtendedInfoYear]$VAR[ExtendedInfoRuntime, / ]$VAR[ExtendedInfoTimeEnd, / ]</label>
+				  <visible>!Stringcompare(ListItem.label,..)</visible> 
+				</control>
+				<control type="label">
+				  <left>0</left>
+				  <top>125</top>
+				  <width>680</width>
+				  <height>45</height>
+				  <font>primal_15</font>
+				  <textcolor>$VAR[ColorFontSelected]</textcolor>
+				  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+				  <selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
+				  <scroll>true</scroll>
+				  <align>left</align>
+				  <aligny>center</aligny>
+				  <label>$VAR[ExtendedInfoGenre]</label>
+				  <visible>!Stringcompare(ListItem.label,..)</visible> 
+				</control>
+				<control type="label">
+				  <left>0</left>
+				  <top>160</top>
+				  <width>680</width>
+				  <height>45</height>
+				  <font>primal_15</font>
+				  <textcolor>$VAR[ColorFontSelected]</textcolor>
+				  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+				  <selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
+				  <scroll>true</scroll>
+				  <align>left</align>
+				  <aligny>center</aligny>
+				  <label>$VAR[ExtendedInfoWriter]$VAR[ExtendedInfoDirector, / ]</label>
+				  <visible>!Stringcompare(ListItem.label,..)</visible> 
+				</control>
+				<control type="label">
+				  <left>0</left>
+				  <top>195</top>
+				  <width>680</width>
+				  <height>45</height>
+				  <font>primal_15</font>
+				  <textcolor>$VAR[ColorFontSelected]</textcolor>
+				  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+				  <selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
+				  <scroll>true</scroll>
+				  <align>left</align>
+				  <aligny>center</aligny>
+				  <label>$VAR[ExtendedInfoRatingAndVotes]</label>
+				  <visible>!Stringcompare(ListItem.label,..)</visible> 
+				</control>
+				<control type="textbox">
+		          <description>Movie Plot</description>
+		          <left>0</left>
+		          <top>290</top>
+		          <width>820</width>
+		          <height>490</height>
+		          <align>justify</align>
+		          <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+		          <label>[COLOR $VAR[ColorFontNormal]]$VAR[ExtendedInfoPlot][/COLOR]</label>
+		          <autoscroll time="2000" delay="15000" repeat="5000">!Skin.HasSetting(NoPlotScroll)</autoscroll>
+		          <visible>!Stringcompare(ListItem.label,..)</visible> 
+		        </control>
+				<control type="group">
+				  <left>0</left>
+				  <top>820</top>
+				  <orientation>horizontal</orientation>
+				  <include>FlaggingConditionsLittle</include>
+				</control>	
+				<control type="grouplist">
+				  <left>580</left>
+				  <top>823</top>
+				  <itemgap>10</itemgap>
+				  <orientation>horizontal</orientation>
+				  <include>AudioLanguageFlaggingConditions</include>
+				</control>			
+            </control>
+			<control type="group"><!-- Film Sets -->
+			<left>630</left>
+			<top>150</top>
+			<visible>ListItem.IsCollection</visible>
+               <control type="label">
+				  <left>0</left>
+				  <top>220</top>
+				  <width>830</width>
+				  <height>60</height>
+				  <font>primal_24_Bold</font>
+				  <textcolor>$VAR[ColorFontNormal]</textcolor>
+	              <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+				  <selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
+				  <align>left</align>
+				  <aligny>center</aligny>
+				  <label>$INFO[ListItem.Label]</label>
+				  <visible>!Stringcompare(ListItem.label,..)</visible> 
+				</control>	
+				<control type="label">
+				  <left>0</left>
+				  <top>220</top>
+				  <width>830</width>
+				  <height>60</height>
+				  <font>primal_24_Bold</font>
+				  <textcolor>$VAR[ColorFontNormal]</textcolor>
+	              <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+				  <selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
+				  <align>left</align>
+				  <aligny>center</aligny>
+				  <label>$LOCALIZE[210]</label>
+				  <visible>Stringcompare(ListItem.label,..)</visible> 
+				</control>
+                <control type="group">
+		          <left>-90</left>
+		          <top>0</top>
+		          <include>MovieSetPoster</include>
+		          <visible>ListItem.IsCollection</visible>
+	            </control>			   
+            </control>					
+          </control>
 		</include>
 		
 	<!-- ===================================================================================== -->
@@ -603,7 +421,7 @@
 		  <top>150</top>
 		  <width>515</width>
 		  <height>840</height>
-		  <texture background="true">skin/button_klein.png</texture>
+		  <texture background="true">skin/button_klein_tranz50.png</texture>
 		  <bordertexture border="10">ThumbShadow.png</bordertexture>
 		  <bordersize>7</bordersize>
 		  <colordiffuse>$VAR[ColorButtonDialogeBack]</colordiffuse>		
@@ -707,7 +525,7 @@
 			<top>1</top>
 			<width>501</width>
 			<height>80</height>
-			<texture background="true">skin/button_klein.png</texture>
+			<texture background="true">skin/button_klein_tranz50.png</texture>
 			<colordiffuse>$VAR[BackColorButton]</colordiffuse>
 			<visible>Control.Hasfocus(598)</visible>
 		  </control>
@@ -716,7 +534,7 @@
 			<top>0</top>
 			<width>5</width>
 			<height>80</height>
-			<texture background="true">skin/button_klein.png</texture>
+			<texture background="true">skin/button_klein_tranz50.png</texture>
 			<colordiffuse>$VAR[BackColorButton]</colordiffuse>
 			<visible>!Control.Hasfocus(598)</visible>
 		  </control>		
@@ -763,7 +581,7 @@
 			<top>0</top>
 			<width>501</width>
 			<height>100</height>
-			<texture background="true">skin/button_klein.png</texture>
+			<texture background="true">skin/button_klein_tranz50.png</texture>
 			<bordertexture border="10">ThumbShadow.png</bordertexture>
 			<bordersize>6</bordersize>
 			<colordiffuse>$VAR[BackColorButton]</colordiffuse>
@@ -816,7 +634,7 @@
 		  <top>150</top>
 		  <width>725</width>
 		  <height>415</height>
-		  <texture background="true">skin/button_klein.png</texture>
+		  <texture background="true">skin/button_klein_tranz50.png</texture>
 		  <bordertexture border="10">ThumbShadow.png</bordertexture>
 		  <bordersize>7</bordersize>
 		  <aspectratio>stretch</aspectratio>
@@ -839,7 +657,7 @@
 		  <top>150</top>
 		  <width>460</width>
 		  <height>685</height>
-		  <texture background="true">skin/button_klein.png</texture>
+		  <texture background="true">skin/button_klein_tranz50.png</texture>
 		  <bordertexture border="10">ThumbShadow.png</bordertexture>
 		  <bordersize>7</bordersize>
 		  <aspectratio>stretch</aspectratio>
@@ -871,7 +689,7 @@
 		  <top>565</top>
 		  <width>725</width>
 		  <height>425</height>
-		  <texture background="true">skin/button_klein.png</texture>
+		  <texture background="true">skin/button_klein_tranz50.png</texture>
 		  <bordertexture border="10">ThumbShadow.png</bordertexture>
 		  <bordersize>7</bordersize>
 		  <aspectratio>stretch</aspectratio>
@@ -883,7 +701,7 @@
 		  <top>580</top>
 		  <width>696</width>
 		  <height>396</height>
-		  <texture background="true">skin/button_klein_tranz90.png</texture>
+		  <texture background="true">skin/button_klein_tranz20.png</texture>
 		  <aspectratio>stretch</aspectratio>
 		  <colordiffuse>$VAR[BackColorFront]</colordiffuse>
 		  <visible>!Stringcompare(ListItem.label,..)</visible> 
@@ -960,7 +778,7 @@
 		  <top>835</top>
 		  <width>460</width>
 		  <height>155</height>
-		  <texture background="true">skin/button_klein.png</texture>
+		  <texture background="true">skin/button_klein_tranz50.png</texture>
 		  <bordertexture border="10">ThumbShadow.png</bordertexture>
 		  <bordersize>7</bordersize>
 		  <aspectratio>stretch</aspectratio>
@@ -1044,7 +862,7 @@
 		  <top>845</top>
 		  <width>60</width>
 		  <height>135</height>
-		  <texture background="true">skin/button_klein_tranz70.png</texture>
+		  <texture background="true">skin/button_klein_tranz20.png</texture>
 		  <aspectratio>stretch</aspectratio>
 		  <colordiffuse>$VAR[BackColorFront]</colordiffuse>
 		</control>
@@ -1102,7 +920,7 @@
 		  <top>150</top>
 		  <width>725</width>
 		  <height>840</height>
-		  <texture background="true">skin/button_klein.png</texture>
+		  <texture background="true">skin/button_klein_tranz50.png</texture>
 		  <bordertexture border="10">ThumbShadow.png</bordertexture>
 		  <bordersize>7</bordersize>
 		  <aspectratio>stretch</aspectratio>
@@ -1114,7 +932,7 @@
 		  <top>163</top>
 		  <width>699</width>
 		  <height>814</height>
-		  <texture background="true">skin/button_klein_tranz70.png</texture>
+		  <texture background="true">skin/button_klein_tranz20.png</texture>
 		  <aspectratio>stretch</aspectratio>
 		  <colordiffuse>$VAR[BackColorFront]</colordiffuse>
 		  <visible>ListItem.IsCollection</visible>
@@ -2080,7 +1898,7 @@
 			<top>0</top>
 			<width>189</width>
 			<height>280</height>
-			<texture background="true">skin/button_klein.png</texture>
+			<texture background="true">skin/button_klein_tranz50.png</texture>
 			<bordertexture border="10">ThumbShadow.png</bordertexture>
 			<bordersize>6</bordersize>
 			<aspectratio>stretch</aspectratio>
@@ -2124,7 +1942,7 @@
 			<top>0</top>
 			<width>189</width>
 			<height>280</height>
-			<texture background="true">skin/button_klein.png</texture>
+			<texture background="true">skin/button_klein_tranz50.png</texture>
 			<bordertexture border="10">ThumbShadow.png</bordertexture>
 			<bordersize>6</bordersize>
 			<aspectratio>stretch</aspectratio>
@@ -2196,9 +2014,9 @@
 			<top>0</top>
 			<width>560</width>
 			<height>840</height>
-			<texture background="true">skin/button_klein.png</texture>
+			<texture background="true">skin/button_klein_tranz50.png</texture>
 			<bordertexture border="10">ThumbShadow.png</bordertexture>
-			<bordersize>6</bordersize>
+			<bordersize>7</bordersize>
 			<aspectratio>stretch</aspectratio>
 			<colordiffuse>$VAR[ColorButtonDialogeBack]</colordiffuse>
 		  </control>
@@ -2207,9 +2025,9 @@
 			<top>60</top>
 			<width>548</width>
 			<height>515</height>
-			<texture background="true">skin/button_klein.png</texture>
+			<texture background="true">skin/button_klein_tranz20.png</texture>
 			<bordertexture border="10">ThumbShadow.png</bordertexture>
-			<bordersize>6</bordersize>
+			<bordersize>7</bordersize>
 			<aspectratio>stretch</aspectratio>
 			<colordiffuse>$VAR[BackColorFront]</colordiffuse>
 		  </control>
@@ -2221,14 +2039,14 @@
 			<aspectratio align="center" aligny="top">scale</aspectratio>
 			<texture background="true">$INFO[Container(611).ListItem.Art(fanart)]</texture>
 			<bordertexture border="10">ThumbShadow.png</bordertexture>
-			<bordersize>6</bordersize>
+			<bordersize>7</bordersize>
 		  </control>
 		  <control type="image">
 			<left>580</left>
 			<top>780</top>
 			<width>539</width>
 			<height>49</height>
-			<texture background="true">skin/button_klein_tranz70.png</texture>
+			<texture background="true">skin/button_klein_tranz50.png</texture>
 			<aspectratio>stretch</aspectratio>
 			<colordiffuse>$VAR[ColorButtonDialogeBack]</colordiffuse>
 			<visible>!ListItem.IsCollection</visible>

@@ -157,20 +157,20 @@ msgid "Search"
 msgstr "Suche"
 
 msgctxt "#50000"
-msgid "Latest Movies"
-msgstr "Letzte Filme"
+msgid "New Movies"
+msgstr "Neue Filme"
 
 msgctxt "#50001"
 msgid "Latest Concerts"
 msgstr "Letzte Konzerte"
 
 msgctxt "#50002"
-msgid "Latest Serien"
-msgstr "Letzte Serien"
+msgid "New Serien"
+msgstr "Neue Serien"
 
 msgctxt "#50003"
-msgid "Latest Albums"
-msgstr "Letzte Alben"
+msgid "New Albums"
+msgstr "Neue Alben"
 
 msgctxt "#50004"
 msgid "Compilations"

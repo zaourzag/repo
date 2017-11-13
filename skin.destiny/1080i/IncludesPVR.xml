@@ -84,7 +84,7 @@
 				<width>280</width>
 				<height>850</height>
 				<onleft>9000</onleft>
-				<onright>50</onright>
+				<onright>51</onright>
 				<onup>9021</onup>
 				<ondown>9021</ondown>
 				<itemgap>3</itemgap>
@@ -244,85 +244,5 @@
 			</control>
 		</control>
 	</include>
-	
-	<include name="PVRSideBladeFront">
-		<control type="group" id="9032">
-			<left>1362</left>
-			<top>495</top>
-			<visible>Control.IsVisible(50)</visible>
-			<include>SlideInAndOutAnimationRNL</include>
-			<control type="grouplist" id="9033">
-				<left>0</left>
-				<top>60</top>
-				<width>501</width>
-				<height>850</height>
-				<onleft>50</onleft>
-				<onright>1860</onright>
-				<onup>9033</onup>
-				<ondown>9033</ondown>
-				<itemgap>3</itemgap>
-				<control type="button" id="301">
-					<description>TV Guide</description>
-					<left>0</left>
-					<top>80</top>
-					<height>80</height>
-					<textwidth>235</textwidth>
-					<textoffsetx>30</textoffsetx>
-					<font>primal_20</font>
-					<label>$LOCALIZE[22020]</label>
-					<onclick condition="Window.IsActive(TVGuide) | Window.IsActive(RadioGuide)">NextChannelGroup</onclick>
-					<onclick condition="String.IsEmpty(Window.Property(IsRadio))">ActivateWindow(TVGuide)</onclick>
-					<onclick condition="!String.IsEmpty(Window.Property(IsRadio))">ActivateWindow(RadioGuide)</onclick>
-				</control>
-				<control type="button" id="302">
-					<description>Recordings</description>
-					<left>0</left>
-					<top>120</top>
-					<height>80</height>
-					<textwidth>235</textwidth>
-					<textoffsetx>30</textoffsetx>
-					<font>primal_20</font>
-					<label>$LOCALIZE[19163]</label>
-					<onclick condition="String.IsEmpty(Window.Property(IsRadio))">ActivateWindow(TVRecordings)</onclick>
-					<onclick condition="!String.IsEmpty(Window.Property(IsRadio))">ActivateWindow(RadioRecordings)</onclick>
-				</control>
-				<control type="button" id="303">
-					<description>Timers</description>
-					<left>0</left>
-					<top>160</top>
-					<height>80</height>
-					<textwidth>235</textwidth>
-					<textoffsetx>30</textoffsetx>
-					<font>primal_20</font>
-					<label>$LOCALIZE[19040]</label>
-					<onclick condition="String.IsEmpty(Window.Property(IsRadio))">ActivateWindow(TVTimers)</onclick>
-					<onclick condition="!String.IsEmpty(Window.Property(IsRadio))">ActivateWindow(RadioTimers)</onclick>
-				</control>
-				<control type="button" id="304">
-					<description>Search</description>
-					<left>0</left>
-					<top>200</top>
-					<height>80</height>
-					<textwidth>235</textwidth>
-					<textoffsetx>30</textoffsetx>
-					<font>primal_20</font>
-					<label>$LOCALIZE[137]</label>
-					<onclick condition="String.IsEmpty(Window.Property(IsRadio))">ActivateWindow(TVSearch)</onclick>
-					<onclick condition="!String.IsEmpty(Window.Property(IsRadio))">ActivateWindow(RadioSearch)</onclick>
-				</control>
-				<control type="button" id="305">
-					<description>Switchtimer</description>
-					<left>0</left>
-					<top>200</top>
-					<height>80</height>
-					<textwidth>235</textwidth>
-					<textoffsetx>30</textoffsetx>
-					<font>primal_20</font>
-					<label>$LOCALIZE[50038]</label>
-					<onclick>ActivateWindow(4111)</onclick>
-					<visible>System.HasAddon(service.kn.switchtimer)</visible>
-				</control>
-			</control>
-		</control>
-	</include>
+
 </includes>

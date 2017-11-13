@@ -7,7 +7,6 @@
       <left>0</left>
       <top>0</top>
       <include>CommonHomeBack</include>	
-	  <include>CommonAllFront2</include>
 	  <include>SideBladeForViews</include>
 	  <include>BigInfosTime</include>
 	  <include>BigInfosDatabaseCount</include>
@@ -16,8 +15,8 @@
 	  <include>HomePlaying</include> 
       <control type="panel" id="10000">
 	    <include>Animation.ZoomIn</include>
-        <left>178</left>
-        <top>159</top>
+        <left>168</left>
+        <top>150</top>
         <width>1720</width>
         <height>820</height>
         <onleft>9020</onleft>
@@ -29,15 +28,15 @@
         <scrolltime>300</scrolltime>
         <orientation>vertical</orientation>
         <preloaditems>2</preloaditems>
-        <itemlayout height="192" width="559">
+        <itemlayout height="194" width="565">
 		  <control type="image">
 			<left>0</left>
 			<top>0</top>
-			<width>566</width>
+			<width>571</width>
 			<height>200</height>
-			<texture background="true">skin/button_klein.png</texture>
-			<bordertexture border="10">-</bordertexture>
-			<bordersize>6</bordersize>
+			<texture background="true">skin/button_klein_tranz50.png</texture>
+			<bordertexture border="10">ThumbShadow.png</bordertexture>
+		    <bordersize>7</bordersize>
 		    <colordiffuse>$VAR[BackColorFront]</colordiffuse>
 		  </control>
 		  <control type="label">
@@ -72,15 +71,15 @@
 			<autoscroll time="2000" delay="10000" repeat="5000">false</autoscroll>
 		  </control>
         </itemlayout>
-        <focusedlayout height="192" width="559">
+        <focusedlayout height="194" width="565">
 		  <control type="image">
 			<left>0</left>
 			<top>0</top>
-			<width>566</width>
+			<width>571</width>
 			<height>200</height>
-			<texture background="true">skin/button_klein.png</texture>
-			<bordertexture border="10">-</bordertexture>
-			<bordersize>6</bordersize>
+			<texture background="true">skin/button_klein_tranz50.png</texture>
+			<bordertexture border="10">ThumbShadow.png</bordertexture>
+		    <bordersize>7</bordersize>
 		    <colordiffuse>$VAR[BackColorButton]</colordiffuse>
 		  </control>
 		  <control type="label">

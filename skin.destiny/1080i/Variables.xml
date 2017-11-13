@@ -2,6 +2,8 @@
 <includes>
 
 	<variable name="VarWidgetsFanart">
+	  <value condition="Control.HasFocus(603)">$INFO[Container(603).ListItem.Art(fanart)]</value>
+	  <value condition="Control.HasFocus(62593)">$INFO[Container(62593).ListItem.Art(fanart)]</value>
 	  <value condition="Control.HasFocus(8304)">$INFO[Container(8304).ListItem.Art(fanart)]</value>
 	  <value condition="Control.HasFocus(8305)">$INFO[Container(8305).ListItem.Art(fanart)]</value>
 	  <value condition="Control.HasFocus(8306)">$INFO[Container(8306).ListItem.Art(fanart)]</value>
@@ -28,6 +30,9 @@
 	  <value condition="Control.HasFocus(18310)">$INFO[Container(18310).ListItem.Art(fanart)]</value>
 	  <value condition="Control.HasFocus(18311)">$INFO[Container(18311).ListItem.Art(fanart)]</value>
 	  <value condition="Control.HasFocus(18312)">$INFO[Container(18312).ListItem.Art(fanart)]</value>
+	  <value condition="Control.HasFocus(18401)">$INFO[Container(18401).ListItem.Art(fanart)]</value>
+	  <value condition="Control.HasFocus(18402)">$INFO[Container(18402).ListItem.Art(fanart)]</value>
+	  <value condition="Control.HasFocus(18403)">$INFO[Container(18403).ListItem.Art(fanart)]</value>
 	</variable>
 	
 	<variable name="VarWidgetsLabelVertical">
@@ -41,6 +46,9 @@
 	  <value condition="Control.HasFocus(18311)">$INFO[Container(18311).ListItem.Label]</value>
 	  <value condition="Control.HasFocus(18312)">$INFO[Container(18312).ListItem.Label]</value>
 	  <value condition="Control.HasFocus(18313)">$INFO[Container(18313).ListItem.Label]</value>
+	  <value condition="Control.HasFocus(18401)">$INFO[Container(18401).ListItem.Label]</value>
+	  <value condition="Control.HasFocus(18402)">$INFO[Container(18402).ListItem.Label]</value>
+	  <value condition="Control.HasFocus(18403)">$INFO[Container(18403).ListItem.Label]</value>
 	  <value>Home</value>
    </variable>
    <variable name="VarWidgetsPlotVertical">
@@ -124,6 +132,11 @@
 	<variable name="VarFanart2">
 	  <value condition="!String.IsEmpty(ListItem.Art(fanart))">$INFO[ListItem.Art(fanart)]</value>
 	</variable>
+	
+	<variable name="VarLandsape">
+	  <value condition="!String.IsEmpty(ListItem.Art(landscape))">$INFO[ListItem.Art(landscape)]</value>
+	  <value condition="!String.IsEmpty(ListItem.Art(fanart))">$INFO[ListItem.Art(fanart)]</value>
+	</variable>	
 	
 	<variable name="VarClearart">
 	  <value condition="Container.Content(episodes) + !String.IsEmpty(ListItem.Art(tvshow.clearart))">$INFO[ListItem.Art(tvshow.clearart)]</value>
@@ -254,15 +267,15 @@
 	  <value condition="Container(9010).Hasfocus(260024)">$INFO[Skin.String(movieplaylistButtonPathScript_2)]</value>
 	  <value condition="Container(9010).Hasfocus(260025)">$INFO[Skin.String(movieplaylistButtonPathScript_3)]</value>
 	  <value condition="Container(9010).Hasfocus(260026)">$INFO[Skin.String(movieplaylistButtonPathScript_4)]</value>
-	  <value condition="Container(9010).Hasfocus(260027)">special://skin/playlists/Imdb Top 250.xsp</value>
+	  <value condition="Container(9010).Hasfocus(260027)">special://skin/playlists/Top Rated Movies.xsp</value>
 	  <value condition="Container(9010).Hasfocus(260028)">videodb://movies/sets/</value>	  
 	  <value condition="Container(9010).Hasfocus(260029)">special://skin/playlists/Movies Recent.xsp</value>
 	  <value condition="Container(9010).Hasfocus(260030)">special://skin/playlists/Movies Recent.xsp</value>
-	  <value condition="Container(9010).Hasfocus(260031)">videodb://movies/genres/</value>
-	  <value condition="Container(9010).Hasfocus(260032)">videodb://movies/years/</value>
-	  <value condition="Container(9010).Hasfocus(260033)">videodb://movies/actors/</value>
-	  <value condition="Container(9010).Hasfocus(260034)">videodb://movies/directors/</value>
-	  <value condition="Container(9010).Hasfocus(260035)">videodb://movies/studios/</value>
+	  <value condition="Container(9010).Hasfocus(260031)">special://skin/playlists/Movies Recent.xsp</value>
+	  <value condition="Container(9010).Hasfocus(260032)">special://skin/playlists/Movies Recent.xsp</value>
+	  <value condition="Container(9010).Hasfocus(260033)">special://skin/playlists/Movies Recent.xsp</value>
+	  <value condition="Container(9010).Hasfocus(260034)">special://skin/playlists/Movies Recent.xsp</value>
+	  <value condition="Container(9010).Hasfocus(260035)">special://skin/playlists/Movies Recent.xsp</value>
 	  <value condition="Container(9010).Hasfocus(260036)">special://skin/playlists/Movies Recent.xsp</value>
 	  <value condition="Container(9010).Hasfocus(260037)">special://skin/playlists/Movies Recent.xsp</value>
 	  <!-- Alle Serien Submenu -->
@@ -270,10 +283,10 @@
 	  <value condition="Container(9010).Hasfocus(260041)">videodb://recentlyaddedepisodes/</value>
 	  <value condition="Container(9010).Hasfocus(260042)">videodb://inprogresstvshows</value>
 	  <value condition="Container(9010).Hasfocus(260043)">videodb://tvshows/titles/</value>
-	  <value condition="Container(9010).Hasfocus(260044)">videodb://tvshows/genres/</value>
-	  <value condition="Container(9010).Hasfocus(260045)">videodb://tvshows/years/</value>
-	  <value condition="Container(9010).Hasfocus(260046)">videodb://tvshows/actors/</value>
-	  <value condition="Container(9010).Hasfocus(260047)">videodb://tvshows/studios/</value>
+	  <value condition="Container(9010).Hasfocus(260044)">videodb://recentlyaddedepisodes/</value>
+	  <value condition="Container(9010).Hasfocus(260045)">videodb://recentlyaddedepisodes/</value>
+	  <value condition="Container(9010).Hasfocus(260046)">videodb://recentlyaddedepisodes/</value>
+	  <value condition="Container(9010).Hasfocus(260047)">videodb://recentlyaddedepisodes/</value>
 	  <value condition="Container(9010).Hasfocus(260048)">$INFO[Skin.String(tvplaylistButtonPathScript_1)]</value>	  
 	  <value condition="Container(9010).Hasfocus(260049)">$INFO[Skin.String(tvplaylistButtonPathScript_2)]</value>
 	  <value condition="Container(9010).Hasfocus(260050)">$INFO[Skin.String(tvplaylistButtonPathScript_3)]</value>
@@ -371,23 +384,21 @@
 	  <value>$LOCALIZE[50003]</value>
 	</variable>
 	<variable name="HomeWidgetsMusic">
-	  <value condition="!Skin.HasSetting(recentmusic) + !Skin.HasSetting(randommusic) + !Skin.HasSetting(albumsrecentlyplayedmusic)">special://skin/playlists/Music Recentlyadded.xsp</value>
-	  <value condition="Skin.HasSetting(albumsrecentlyplayedmusic)">special://skin/playlists/Albums_Recently_Played.xsp</value>
+	  <value condition="!Skin.HasSetting(recentmusic) + !Skin.HasSetting(randommusic) + !Skin.HasSetting(albumsrecentlyplayedmusic)">musicdb://recentlyaddedalbums/</value>
+	  <value condition="Skin.HasSetting(albumsrecentlyplayedmusic)">musicdb://recentlyplayedalbums/</value>
 	  <value condition="Skin.HasSetting(randommusic)">special://skin/playlists/Random Album.xsp</value>
 	</variable>
 	<variable name="LiveTVWidgetsSettingVar">
-	  <value condition="Skin.HasSetting(livetvrec)">Live TV Aufnahmen</value>
-	  <value condition="Skin.HasSetting(serienplaner)">Serienplaner</value>
 	  <value>LiveTV Vorschau</value>
 	</variable>
 	<variable name="HomeWidgetsLiveTV">
-	  <value condition="Container(9000).Hasfocus(1)">pvr://channels/tv/*?view</value>
+	  <value condition="Container(9000).Hasfocus(1) | Container(9000).Hasfocus(2)">pvr://channels/tv/*?view</value>
 	</variable>
 	<variable name="HomeWidgetsLiveTVRec">
-	  <value condition="Container(9000).Hasfocus(1)">pvr://recordings/tv/active?view=flat</value>
+	  <value condition="Container(9000).Hasfocus(1) | Container(9000).Hasfocus(2)">pvr://recordings/tv/active?view=flat</value>
 	</variable>
 	<variable name="HomeWidgetsRadio">
-	  <value condition="Container(9000).Hasfocus(2)">pvr://channels/radio/*?view</value>
+	  <value condition="Container(9000).Hasfocus(1) | Container(9000).Hasfocus(2)">pvr://channels/radio/*?view</value>
 	</variable>
 	<variable name="HomeWidgetsPlaylisten">
 	  <!--<value condition="String.IsEmpty(Container(9000).ListItem.Property(Widget))">videodb://recentlyaddedmovies/</value>-->	
