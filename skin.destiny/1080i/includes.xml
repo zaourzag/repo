@@ -1833,6 +1833,9 @@
   </include>
   <!-- ANSICHTEN INFO FENSTER CLOSE -->
   
+<!-- ================================================================================================================================ --> 
+<!-- ======================================= SET POSTER ANSICHT BIG FANART ========================================================== --> 
+<!-- ================================================================================================================================ --> 
 	<include name="MovieSetPoster">
       <control type="list" id="62593">
 		<left>0</left>
@@ -2110,6 +2113,130 @@
 	    <content target="video" sortby="year">$INFO[ListItem.FolderPath]</content>
 	</control>
   </include>
+<!-- ================================================================================================================================ --> 
+<!-- ======================================= SET POSTER ANSICHT BIG FANART ENDE ===================================================== --> 
+<!-- ================================================================================================================================ --> 
+
+<!-- ================================================================================================================================ --> 
+<!-- ======================================= SET POSTER ANSICHT POSTERFANART ======================================================== --> 
+<!-- ================================================================================================================================ --> 
+     <include name="MovieSetPoster2">
+      <control type="list" id="62594">
+		<left>60</left>
+		<top>0</top>
+		<width>1640</width>
+		<height>500</height>
+		<onup condition="Control.IsVisible(601)">1860</onup>
+		<ondown condition="Control.IsVisible(601)">601</ondown>
+		<onleft>330000</onleft>
+		<onright>62594</onright>
+		<onright>62594</onright>
+		<orientation>horizontal</orientation>
+		<pagecontrol>60</pagecontrol>
+		<focusposition>0</focusposition>
+		<scrolltime tween="cubic" easing="inout">400</scrolltime>
+		<!--<autoscroll time="10000" delay="25000" repeat="5000">true</autoscroll>-->
+		<preloaditems>2</preloaditems>
+		<itemlayout height="163" width="540">
+		    <control type="image">
+			  <left>15</left>
+			  <top>0</top>
+			  <width>120</width>
+			  <height>200</height>
+			  <aspectratio align="left" aligny="top">keep</aspectratio>
+			  <texture background="true" fallback="cdartdefault.png">$INFO[ListItem.Art(poster)]</texture>
+			  <bordertexture border="10">ThumbShadow.png</bordertexture>
+		      <bordersize>7</bordersize>
+			</control>
+			<control type="label">
+			  <left>150</left>
+			  <top>10</top>
+			  <width>330</width>
+			  <height>36</height>
+			  <font>primal_15_Bold</font>
+			  <textcolor>$VAR[ColorFontNormal]</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			  <selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
+			  <align>left</align>
+			  <aligny>center</aligny>
+			  <label>$INFO[ListItem.Label]</label>
+			</control>
+			<control type="textbox">
+			  <description>Movie Plot</description>
+			  <left>150</left>
+			  <top>55</top>
+			  <width>380</width>
+			  <height>88</height>
+			  <font>primal_15</font>
+			  <align>left</align>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			  <label>[COLOR $VAR[ColorFontNormal]]$INFO[ListItem.Plot][/COLOR]</label>
+			  <autoscroll time="2000" delay="10000" repeat="5000">false</autoscroll>
+			  <visible>!Stringcompare(ListItem.label,..)</visible> 
+			  <visible>!ListItem.IsCollection</visible>
+			</control>
+		</itemlayout>
+		<focusedlayout height="163" width="540">
+		    <control type="image">
+			  <left>15</left>
+			  <top>0</top>
+			  <width>120</width>
+			  <height>200</height>
+			  <aspectratio align="left" aligny="top">keep</aspectratio>
+			  <texture background="true" fallback="cdartdefault.png">$INFO[ListItem.Art(poster)]</texture>
+			  <bordertexture border="10">ThumbShadow.png</bordertexture>
+		      <bordersize>7</bordersize>
+			</control>
+			<control type="label">
+			  <left>150</left>
+			  <top>10</top>
+			  <width>330</width>
+			  <height>36</height>
+			  <font>primal_15_Bold</font>
+			  <textcolor>$VAR[ColorFontNormal]</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			  <selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
+			  <align>left</align>
+			  <aligny>center</aligny>
+			  <label>$INFO[ListItem.Label]</label>
+			  <autoscroll time="2000" delay="10000" repeat="5000">true</autoscroll>
+			  <visible>!Control.HasFocus(62594)</visible>
+			</control>
+			<control type="label">
+			  <left>150</left>
+			  <top>10</top>
+			  <width>330</width>
+			  <height>36</height>
+			  <font>primal_15_Bold</font>
+			  <textcolor>$VAR[ColorFontSelected]</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			  <align>left</align>
+			  <aligny>center</aligny>
+			  <label>$INFO[ListItem.Label]</label>
+			  <autoscroll time="2000" delay="10000" repeat="5000">true</autoscroll>
+			  <visible>Control.HasFocus(62594)</visible>
+			</control>
+			<control type="textbox">
+			  <description>Movie Plot</description>
+			  <left>150</left>
+			  <top>55</top>
+			  <width>380</width>
+			  <height>88</height>
+			  <font>primal_15</font>
+			  <align>left</align>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			  <label>[COLOR $VAR[ColorFontNormal]]$INFO[ListItem.Plot][/COLOR]</label>
+			  <autoscroll time="2000" delay="10000" repeat="5000">false</autoscroll>
+			  <visible>!Stringcompare(ListItem.label,..)</visible> 
+			  <visible>!ListItem.IsCollection</visible>
+			</control>
+		</focusedlayout>
+	    <content target="video" sortby="year">$INFO[ListItem.FolderPath]</content>
+	</control>
+  </include>
+<!-- ================================================================================================================================ --> 
+<!-- ======================================= SET POSTER ANSICHT POSTERFANART ENDE =================================================== --> 
+<!-- ================================================================================================================================ --> 
   
   <include name="ArtistCoverList">
       <control type="list" id="180001">

@@ -17,7 +17,7 @@
     </include>
 	
     <include name="ViewidVideo">
-		<views>55,598,600,602,603,604,605,606,607,608,609,610,611,612,901,902</views>
+		<views>55,598,600,601,602,603,604,605,606,607,608,609,610,611,612,901,902</views>
     </include>
     <include name="ViewsVideo">
 		<control type="group" id="777">
@@ -25,6 +25,7 @@
 			<include>View_55_FileMode</include>  
 			<include>View_598_Fanartlist</include> <!-- MOVIES -->
 			<include>View_600_PosterlistTVShows</include> <!-- TVSHOWS, SEASONS -->
+			<include>View_601_Poster_Movies</include>
 			<include>View_602_LandscapeView_TVShows</include> <!-- TVSHOWS -->
 			<include>View_603_Posterlist</include> <!-- MOVIES -->
 			<include>View_604_Fanartlist_TVShows</include> <!-- TVSHOWS -->
@@ -187,7 +188,15 @@
 					<!--<onclick>Action(down)</onclick>-->
 					<visible>Container.Content(TVShows) | Container.Content(Seasons)</visible>
 				</control>
-
+                <control type="button" id="822">
+					<description>View</description>
+					<height>60</height>
+		            <width>398</width>
+					<label>Poster/Big Fanart</label>
+					<onclick>Container.SetViewMode(601)</onclick>
+					<onclick>Action(down)</onclick>
+					<visible>Container.Content(Movies) | Container.Content(Sets) | Container.Content(Musicvideos)</visible>
+				</control>
 				<control type="button" id="823">
 					<description>View</description>
 					<height>60</height>
