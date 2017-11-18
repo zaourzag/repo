@@ -190,10 +190,10 @@ def geturl(url,data="x",header="",referer=""):
         return content
 
 def trailer():
-    addDir(translation(30008), "http://www.filmstarts.de/trailer/beliebteste.html", 'trailerpage', "")
+    addDir(translation(30008), "http://www.filmstarts.de/trailer/beliebteste.html", 'trailerpage2', "")
     addDir(translation(30009), "http://www.filmstarts.de/trailer/imkino/", 'trailerpage', "")
-    addDir(translation(30010), "http://www.filmstarts.de/trailer/bald/", 'trailerpage', "")
-    addDir(translation(30011), "http://www.filmstarts.de/trailer/neu/", 'trailerpage', "")
+    addDir(translation(30010), "http://www.filmstarts.de/trailer/bald/", 'trailerpage2', "")
+    addDir(translation(30011), "http://www.filmstarts.de/trailer/neu/", 'trailerpage2', "")
     addDir(translation(30012), baseurl+"/trailer/archiv/", 'filterart', "")
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 def kino():
@@ -454,6 +454,8 @@ def archivevideos(url,page=1):
         element=element.replace('<strong>',"")
         element=element.replace('</strong>',"")
         debug("-##-")
+        debug(element)
+        debug("-##-")
         image = re.compile('src="(.+?)"', re.DOTALL).findall(element)[0]
         match = re.compile('<a href="(.+?)">([^<]+)</a>', re.DOTALL).findall(element)
         name=match[0][1]
@@ -697,6 +699,38 @@ xtype = urllib.unquote_plus(params.get('xtype', ''))
 datum = urllib.unquote_plus(params.get('datum', ''))
 referer = urllib.unquote_plus(params.get('referer', ''))
 
+def trailerpage2(url,page=1) :
+   page=int(page)
+   debug("archivevideos URL :"+url)
+   if page >1:
+    getu=url+"?page="+str(page)
+   else:
+    getu=url     
+   content=geturl(getu)  
+   kurz_inhalt = content[content.find('<section class="section-wrap section-trailer-wall">')+1:] 
+   debug("--------------------------------------------")
+   debug(kurz_inhalt)
+   elemente=kurz_inhalt.split('<div class="card card-video-traile')
+   for i in range(1,len(elemente),1):
+     try:
+        element=elemente[i]
+        debug("....START")
+        debug(element)
+        image = re.compile('src="(.+?)"', re.DOTALL).findall(element)[0]        
+        urlx = re.compile('href="(.+?)"', re.DOTALL).findall(element)[0]        
+        name = re.compile('alt="(.+?)"', re.DOTALL).findall(element)[0]        
+        debug("image : "+image)
+        debug("url : "+urlx)
+        debug("name :"+name)
+        addLink(name, baseurl+urlx, 'playVideo', image)
+     except:
+        debug("....NOK")
+        debug(element)
+   if '<span class="txt">Nächste</span>' in content:
+     addDir(translation(30006), url, 'trailerpage', "",page=page+1)
+   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)     
+        
+        
 
 def trailerpage(url,page=1) :
    page=int(page)
@@ -725,7 +759,7 @@ def trailerpage(url,page=1) :
         addLink(name, baseurl+urlx, 'playVideo', image)
      except:
         debug("....NOK")
-        debug(element)
+        debug(element)   
    if 'fr">Nächste<i class="icon-arrow-right">' in content:
      addDir(translation(30006), url, 'trailerpage', "",page=page+1)
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)     
@@ -759,6 +793,8 @@ else:
           sprache(url)
   if mode == 'trailerpage':
           trailerpage(url,page)    
+  if mode == 'trailerpage2':
+          trailerpage2(url,page)              
   if mode == 'series':
           series()                
   if mode == 'filterserien':
