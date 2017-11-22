@@ -1229,7 +1229,7 @@ See changelog.txt for more details.</news>
 	</extension>
 </addon>
 
-<addon id="plugin.video.skygo.de" name="Sky Go" version="1.10.7" provider-name="jojo, frankr612, Maven, Linkinsoldier">
+<addon id="plugin.video.skygo.de" name="Sky Go" version="1.10.8" provider-name="jojo, frankr612, Maven, Linkinsoldier">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
     <import addon="script.module.requests" version="2.9.1"/>
@@ -1238,7 +1238,7 @@ See changelog.txt for more details.</news>
     <import addon="script.common.plugin.cache" version="2.5.8"/>
     <import addon="script.module.pydes" version="2.0.1"/>
     <import addon="inputstream.adaptive" version="1.0.8"/>
-    <import addon="script.module.inputstreamhelper" version="0.2.1"/>
+    <import addon="script.module.inputstreamhelper" version="0.2.2"/>
   </requires>
   <extension point="xbmc.python.pluginsource" library="default.py">
     <provides>video</provides>
@@ -2150,7 +2150,7 @@ Orginal Code was from AddonScriptorDE</disclaimer>
   </extension>
 </addon>
 
-<addon id="plugin.video.skyticket.de" name="Sky Ticket" version="1.0.5" provider-name="jojo, frankr612, Maven, Linkinsoldier">
+<addon id="plugin.video.skyticket.de" name="Sky Ticket" version="1.0.6" provider-name="jojo, frankr612, Maven, Linkinsoldier">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
     <import addon="script.module.requests" version="2.9.1"/>
@@ -2158,6 +2158,8 @@ Orginal Code was from AddonScriptorDE</disclaimer>
     <import addon="script.module.cryptopy" version="1.2.6"/>
     <import addon="script.common.plugin.cache" version="2.5.8"/>
     <import addon="script.module.pydes" version="2.0.1"/>
+    <import addon="inputstream.adaptive" version="1.0.8"/>
+    <import addon="script.module.inputstreamhelper" version="0.2.2"/>
   </requires>
   <extension point="xbmc.python.pluginsource" library="default.py">
     <provides>video</provides>
