@@ -2801,10 +2801,7 @@ NOTE: Streams are available in SD only
   </extension>
 </addon>
 
-<addon id="service.smartdns"
-       name="SmartDNS Updater"
-       version="1.0.2"
-       provider-name="Steffen Rolapp">
+<addon id="service.smartdns" name="SmartDNS Updater" version="1.0.2" provider-name="Steffen Rolapp">
   <requires>
     <import addon="xbmc.python" version="2.14.0"/>
     <import addon="xbmc.addon" version="13.0.0" />
