@@ -1916,10 +1916,10 @@ Orginal Code was from AddonScriptorDE</disclaimer>
 	</extension>
 </addon>
 
-<addon id="plugin.video.eurosportplayer" version="2.0.4" name="Eurosport Player" provider-name="Jin">
+<addon id="plugin.video.eurosportplayer" version="2.0.5" name="Eurosport Player" provider-name="Jin">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
-        <import addon="inputstream.adaptive" version="2.0.10"/>
+        <import addon="inputstream.adaptive" version="2.0.18"/>
         <import addon="script.module.pydes" version="2.0.1"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="addon.py">
@@ -1927,7 +1927,7 @@ Orginal Code was from AddonScriptorDE</disclaimer>
     </extension>
     <extension point="xbmc.addon.metadata">
         <news>
-- added all sports (on demand) and events category
+- fix video parser
         </news>
         
         <summary lang="de_DE">Eurosport live, jederzeit und überall</summary>
