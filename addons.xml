@@ -2239,7 +2239,6 @@ Orginal Code was from AddonScriptorDE</disclaimer>
     </extension>
 </addon>
 
-
 <addon id="plugin.video.myspass_de" name="Myspass.de" version="3.0.3" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
