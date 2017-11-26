@@ -2,24 +2,24 @@
 
 from common import *
             
-def resources(str):
-    if str == 'Today':
+def resources(string):
+    if string == 'Today':
         return getString(30221)
-    elif str == 'Tomorrow':
+    elif string == 'Tomorrow':
         return getString(30222)
-    elif str == 'Monday':
+    elif string == 'Monday':
         return getString(30223)
-    elif str == 'Tuesday':
+    elif string == 'Tuesday':
         return getString(30224)
-    elif str == 'Wednesday':
+    elif string == 'Wednesday':
         return getString(30225)
-    elif str == 'Thursday':
+    elif string == 'Thursday':
         return getString(30226)
-    elif str == 'Friday':
+    elif string == 'Friday':
         return getString(30227)
-    elif str == 'Saturday':
+    elif string == 'Saturday':
         return getString(30228)
-    elif str == 'Sunday':
+    elif string == 'Sunday':
         return getString(30229)
     else:
-        return str
+        return string

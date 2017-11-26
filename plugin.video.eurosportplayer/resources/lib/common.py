@@ -32,18 +32,18 @@ date_format = '%Y-%m-%d'
 def log(msg):
     xbmc.log(str(msg), xbmc.LOGNOTICE)
     
-def getString(id):
-    return utfenc(addon.getLocalizedString(id))
+def getString(_id):
+    return utfenc(addon.getLocalizedString(_id))
 
 def build_url(query):
     return sys.argv[0] + '?' + urllib.urlencode(query)
     
-def utfenc(str):
+def utfenc(string):
     try:
-        str = str.encode('utf-8')
+        string = string.encode('utf-8')
     except:
         pass
-    return str
+    return string
 
 def time_stamp(str_date):
     return datetime.datetime.fromtimestamp(time.mktime(time.strptime(str_date,time_format)))

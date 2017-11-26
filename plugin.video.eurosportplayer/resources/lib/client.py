@@ -20,7 +20,9 @@ class Client:
         
         self.refresh_token()
         
-    def graphql_request(self, url, query='', variables={}):
+    def graphql_request(self, url, query='', variables=None):
+        if variables is None:
+            variables = {}
         headers = {
             'accept': 'application/json',
             'content-type': 'application/json',
@@ -50,20 +52,20 @@ class Client:
     def events(self):
         return self.graphql_request(self.GRAPHQL_URL + '/persisted/query/eurosport/EventPageByLanguage')
     
-    def event(self, id):
+    def event(self, _id):
         return self.graphql_request(
             url = self.GRAPHQL_URL + '/persisted/query/eurosport/web/EventPageByContentId',
             variables = {
-                'contentId': id,
+                'contentId': _id,
                 'include_media': True,
                 'include_images': True
             }
         )
 
-    def videos(self, id):
+    def videos(self, _id):
         return self.graphql_request(
             url = self.GRAPHQL_URL,
-            query = '{ sport_%s:query (index: "eurosport_global",sort: new,page: 1,page_size: 1000,type: ["Video","Airing"],must: {termsFilters: [{attributeName: "category", values: ["%s"]}]},must_not: {termsFilters: [{attributeName: "mediaConfigState", values: ["OFF"]}]},should: {termsFilters: [{attributeName: "mediaConfigProductType", values: ["VOD"]},{attributeName: "type", values: ["Video"]}]}) @context(uiLang: "%s") { ... on QueryResponse { ...queryResponse }} }fragment queryResponse on QueryResponse {meta { hits }hits {hit { ... on Airing { ... airingData } ... on Video { ... videoData } }}}fragment airingData on Airing {type contentId mediaId liveBroadcast linear partnerProgramId programId runTime startDate endDate expires genres playbackUrls { href rel templated } channel { id parent callsign partnerId } photos { id uri width height } mediaConfig { state productType type } titles { language title descriptionLong descriptionShort episodeName } }fragment videoData on Video {type contentId epgPartnerProgramId programId appears releaseDate expires runTime genres media { playbackUrls { href rel templated } } titles { title titleBrief episodeName summaryLong summaryShort tags { type value displayName } } photos { rawImage width height photos { imageLocation width height } } }' % (id, id, language)
+            query = '{ sport_%s:query (index: "eurosport_global",sort: new,page: 1,page_size: 1000,type: ["Video","Airing"],must: {termsFilters: [{attributeName: "category", values: ["%s"]}]},must_not: {termsFilters: [{attributeName: "mediaConfigState", values: ["OFF"]}]},should: {termsFilters: [{attributeName: "mediaConfigProductType", values: ["VOD"]},{attributeName: "type", values: ["Video"]}]}) @context(uiLang: "%s") { ... on QueryResponse { ...queryResponse }} }fragment queryResponse on QueryResponse {meta { hits }hits {hit { ... on Airing { ... airingData } ... on Video { ... videoData } }}}fragment airingData on Airing {type contentId mediaId liveBroadcast linear partnerProgramId programId runTime startDate endDate expires genres playbackUrls { href rel templated } channel { id parent callsign partnerId } photos { id uri width height } mediaConfig { state productType type } titles { language title descriptionLong descriptionShort episodeName } }fragment videoData on Video {type contentId epgPartnerProgramId programId appears releaseDate expires runTime genres media { playbackUrls { href rel templated } } titles { title titleBrief episodeName summaryLong summaryShort tags { type value displayName } } photos { rawImage width height photos { imageLocation width height } } }' % (_id, _id, language)
         )
     
     def epg(self, prev_date, date):

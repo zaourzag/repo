@@ -53,9 +53,9 @@ def event(data):
             items.add(Hits(i, event=True).item)
     items.list()
 
-def video(data, id):
+def video(data, _id):
     from hits import Hits
-    sport_id = 'sport_{0}'.format(id)
+    sport_id = 'sport_{0}'.format(_id)
     hits = data['data'][sport_id]['hits']
     for i in hits:
         hit = i['hit']
@@ -68,19 +68,19 @@ def epg(data, prev_date, date):
     from resources import resources
     from hits import Hits
 
-    def date_item(params, id):
+    def date_item(params, _id):
         return {
             'mode': 'epg',
-            'title': '{0} {1}'.format(resources(id.strftime('%A')), id.strftime(date_format)),
+            'title': '{0} {1}'.format(resources(_id.strftime('%A')), _id.strftime(date_format)),
             'plot': '{0} {1}'.format(resources(epg_date(date).strftime('%A')), epg_date(date).strftime(date_format)),
-            'id': id.strftime(date_format),
+            'id': _id.strftime(date_format),
             'params': params.strftime(date_format),
             'cm': cm
         }
 
     update = False if date == epg_date().strftime(date_format) else True
     cm = Context().epg_date()
-    
+
     items.add(date_item(get_prev_day(epg_date(prev_date)), epg_date(prev_date)))
     hits = data['data']['Airings']
     hits = sorted(hits, key=lambda k: k.get('startDate'))

@@ -103,17 +103,18 @@ class Hits:
         self.title = utfenc(self.title)
         self.plot = utfenc(self.plot)
         self.create_item()
-        self.video_images()
+        if self.photos:
+            self.video_images()
     
     def playback_id(self):
-        id = ''
+        _id = ''
         for i in self.playback:
-            id = i['href']
+            _id = i['href']
             if self.linear and not self.epg and i['rel'] == 'linear':
                 break
             elif self.epg and i['rel'] == 'video':
                 break
-        return id
+        return _id
         
     def create_item(self):
         self.item['mode'] = 'play'
