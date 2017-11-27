@@ -2318,7 +2318,7 @@ Orginal Code was from AddonScriptorDE</disclaimer>
 </addon>
 
 
-<addon id="plugin.audio.prime_music" name="Amazon Prime Music" version="0.5.3" provider-name="piet">
+<addon id="plugin.audio.prime_music" name="Amazon Prime Music" version="0.6.0" provider-name="piet">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="script.module.mechanize" version="0.2.6"/>
