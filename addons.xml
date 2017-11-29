@@ -605,7 +605,7 @@ Vous pouvez regarder le sport que vous aimez, vivez et sur demande à un moment 
     </extension>
 </addon>
 
-<addon id="service.twitterfeed" name="Twitter Feed" version="0.8.21" provider-name="L0RE">
+<addon id="service.twitterfeed" name="Twitter Feed" version="0.9.0" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
         <import addon="script.module.requests" version="2.9.1"/>	
