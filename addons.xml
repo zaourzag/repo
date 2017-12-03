@@ -3542,7 +3542,7 @@ oder online unter https://goo.gl/GtK41L nachlesen.
   </extension>
 </addon>
 
-<addon id="plugin.video.rtlnow" name="TV Now" version="0.4.22" provider-name="L0RE">
+<addon id="plugin.video.rtlnow" name="TV Now" version="0.4.23" provider-name="L0RE">
  <requires>
         <import addon="xbmc.python" version="2.1.0"/>   
         <import addon="script.common.plugin.cache" version="2.5.5"/> # Add this    
@@ -3555,9 +3555,14 @@ oder online unter https://goo.gl/GtK41L nachlesen.
     <summary lang="de">Test Plugin von L0RE</summary>
     <description lang="en">Test Plugin von L0RE</description>
     <description lang="de">Test Plugin von L0RE</description>
-    <website></website>
+    <website>https://www.tvnow.de/</website>
     <email>andreas at vogler dot name</email>
     <platform>all</platform>
+    <news>Update von frong73 um anbindung in PVR zu ermöglichen</news>
+    <assets>
+        <screenshot>resources/rtlnow1.png</screenshot>
+        <screenshot>resources/rtlnow2.png</screenshot>
+    </assets>
   </extension>
 </addon>
 
