@@ -148,6 +148,7 @@ def addDir(name, url, mode, iconimage, desc="", duration="",nummer=0):
        
 params = parameters_string_to_dict(sys.argv[2])
 mode = urllib.unquote_plus(params.get('mode', ''))
+channel = urllib.unquote_plus(params.get('channel', ''))
 url = urllib.unquote_plus(params.get('url', ''))
 nummer = urllib.unquote_plus(params.get('nummer', ''))
 name = urllib.unquote_plus(params.get('name', ''))
@@ -617,6 +618,38 @@ def genreliste():
 def inputsettings()    :
   xbmcaddon.Addon(is_addon).openSettings()
   
+def playchannel_dash(url,name,image):
+    ret,token=login()
+    referer="https://www.tvnow.de/"+name+"/live-tv"
+    headerfelder="user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36&Referer="+referer
+    listitem = xbmcgui.ListItem(path=url+"||"+headerfelder,label=name,iconImage=image,thumbnailImage=image)
+    listitem.setProperty('IsPlayable', 'true')          
+    listitem.setInfo(type="Video", infoLabels={"Title": name })                 
+    listitem.setProperty('inputstreamaddon', 'inputstream.adaptive')
+    listitem.setProperty('inputstream.adaptive.manifest_type', 'mpd')                        
+    licstring='https://widevine.rtl.de/index/proxy|x-auth-token='+token+"&"+headerfelder+"&Content-Type=|R{SSM}|"
+    listitem.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')                
+    listitem.setProperty('inputstream.adaptive.license_key', licstring)
+    return listitem
+       
+	
+def playchannel(channel):
+    ret,token=login()
+    url="https://api.tvnow.de/v3/epgs/movies/nownext?fields=*,nowNextEpgTeasers.*,nowNextEpgMovies.*"
+    content = getUrl(url) 
+    objekte = json.loads(content, object_pairs_hook=OrderedDict)
+    for element in objekte["items"]:
+       if element["name"]==channel:
+          playlist = xbmc.PlayList(1)
+          playlist.clear()
+          dash_file=element["nowNextEpgMovies"]["items"][0]["manifest"]["dash"]
+          image=element["nowNextEpgMovies"]["items"][0]["image"]
+          item = playchannel_dash(dash_file,channel,image)
+          #xbmcgui.Dialog().ok("11",dash_file,"gefunden","gefunden")
+          playlist.add(dash_file, item)
+          xbmc.Player().play(playlist)
+    
+  
 def livetv():
     ret,token=login()    
     if token=="0":
@@ -627,7 +660,13 @@ def livetv():
     content = getUrl(url) 
     objekte = json.loads(content, object_pairs_hook=OrderedDict)
     for element in objekte["items"]:
-       try:
+       titel = element["name"]
+       listitem = xbmcgui.ListItem(label=titel)
+       url = base_url+"?mode=playchannel&channel="+titel
+       is_folder = True
+       xbmcplugin.addDirectoryItem(addon_handle, url, listitem, is_folder)
+       """
+	   try:
         name = element["name"]       
         url  = element["nowNextEpgMovies"]["items"][0]["manifest"]["dash"]
         image=element["nowNextEpgMovies"]["items"][0]["image"]
@@ -645,7 +684,9 @@ def livetv():
        listitem.setProperty('inputstream.adaptive.license_key', licstring)                
        debug("LICENSE: " + licstring)                              
        xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=url+"||"+headerfelder, listitem=listitem)
-    xbmcplugin.setResolvedUrl(addon_handle,True, listitem)    
+    xbmcplugin.setResolvedUrl(addon_handle,True, listitem)
+	"""
+    xbmcplugin.endOfDirectory(addon_handle)	
 
 #OPTIONS https://api.tvnow.de/v3/formats/genre/Crime?fields=*&filter=%7B%22station%22:%22none%22%7D&maxPerPage=50&order=NameLong+asc&page=1
     
@@ -691,6 +732,9 @@ else:
   if mode == 'inputsettings':
           inputsettings()                       
   if mode == 'livetv':
+          #xbmcgui.Dialog().ok("l1","l2","l3","l4")
           livetv()
   if mode == 'playdash':       
           playdash(xstream,xlink,xtitle,xdrm)
+  if mode == 'playchannel':
+          playchannel(channel)
