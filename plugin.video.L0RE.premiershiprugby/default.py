@@ -129,16 +129,27 @@ def geturl(url,data="x",header="",referer=""):
 
 
   
-def liste():
-    content=geturl("https://www.premiershiprugby.com/full-match-video/")
+def seite(url):
+    content=geturl(url)
     htmlPage = BeautifulSoup(content, 'html.parser')
     elemente = htmlPage.find_all("div",attrs={"class":"video"})   
-    for element in elemente:       
-       title=element.find("span",attrs={"itemprop":"name"})["content"]
-       duration=element.find("span",attrs={"itemprop":"duration"})["content"]
-       thumbnail=element.find("span",attrs={"itemprop":"thumbnail"})["content"]
-       link=element.find("a")["href"]           
-       addLink(title, link, "playvideo",thumbnail,duration=int(duration))      
+    try:
+        for element in elemente:       
+            title=element.find("span",attrs={"itemprop":"name"})["content"]
+            duration=element.find("span",attrs={"itemprop":"duration"})["content"]
+            thumbnail=element.find("span",attrs={"itemprop":"thumbnail"})["content"]
+            link=element.find("a")["href"]           
+            addLink(title, link, "playvideo",thumbnail,duration=int(duration))      
+    except:
+      pass
+    try:
+        for element in elemente:       
+            title=element.find("video")["data-video-title"]          
+            thumbnail=element.find("video")["poster"]
+            link=element.find("a")["href"]           
+            addLink(title, link, "playvideo",thumbnail)      
+    except:
+      pass      
     elemente = htmlPage.find_all("div",attrs={"class":"col-sm-12"})       
     for element in elemente:   
       try:
@@ -149,39 +160,46 @@ def liste():
       except:
         pass
     xbmcplugin.endOfDirectory(addon_handle) 
-
-  
+def liste():
+  addDir("Full match Video","https://www.premiershiprugby.com/full-match-video/","seite","")
+  addDir("Highlights","https://www.premiershiprugby.com/match-highlights/","seite","")  
+  addDir("Interviws","https://www.premiershiprugby.com/video-interviews/","seite","")  
+  xbmcplugin.endOfDirectory(addon_handle) 
 def playvideo(url): 
     debug("playvideo URL :"+url)        
     content=geturl(url)    
-    
-    scripturl=re.compile('script src="(https://open.+?)"', re.DOTALL).findall(content)[0]   
-    debug("scripturl :"+scripturl)
-    content2=geturl(scripturl)
-    content2=content2.replace("\\","")
-    debug("---------------------------")
-    debug(content2)
-    debug("---------------------------")
-    
-    teile=re.compile('"id":"([^"]+)"', re.DOTALL).findall(content2)
-    debug(teile)
-    ergebnis=""
-    for teil in teile:
-        ergebnis=ergebnis+teil+","
-    ergebnis=ergebnis[0:-2]
-    debug("ergebnis :"+ergebnis)
-    htmlPage = BeautifulSoup(content, 'html.parser')
-    thumbnail=htmlPage.find("span",attrs={"itemprop":"thumbnail"})["content"]
-    debug("thumbnail :"+thumbnail)
-    videourl=thumbnail.replace("thumbnail","playManifest")    
-    debug("videourl1 :"+videourl)
-    weg=re.compile('(/version/.+$)', re.DOTALL).findall(videourl)[0]   
-    debug("weg :"+weg)
-    videourl=videourl.replace("entry_id","entryId")
-    videourl=videourl.replace(weg,"/flavorIds/"+ergebnis+"/format/applehttp/protocol/https/a.m3u8").replace("http://","https://")
-    debug("videourl2 :"+videourl) 
-    listitem = xbmcgui.ListItem(path=videourl)
-    xbmcplugin.setResolvedUrl(addon_handle, True, listitem)
+    try:    
+        scripturl=re.compile('script src="(https://open.+?)"', re.DOTALL).findall(content)[0]   
+        debug("scripturl :"+scripturl)
+        content2=geturl(scripturl)
+        content2=content2.replace("\\","")
+        debug("---------------------------")
+        debug(content2)
+        debug("---------------------------")
+        
+        teile=re.compile('"id":"([^"]+)"', re.DOTALL).findall(content2)
+        debug(teile)
+        ergebnis=""
+        for teil in teile:
+            ergebnis=ergebnis+teil+","
+        ergebnis=ergebnis[0:-2]
+        debug("ergebnis :"+ergebnis)
+        htmlPage = BeautifulSoup(content, 'html.parser')
+        thumbnail=htmlPage.find("span",attrs={"itemprop":"thumbnail"})["content"]
+        debug("thumbnail :"+thumbnail)
+        videourl=thumbnail.replace("thumbnail","playManifest")    
+        debug("videourl1 :"+videourl)
+        weg=re.compile('(/version/.+$)', re.DOTALL).findall(videourl)[0]   
+        debug("weg :"+weg)
+        videourl=videourl.replace("entry_id","entryId")
+        videourl=videourl.replace(weg,"/flavorIds/"+ergebnis+"/format/applehttp/protocol/https/a.m3u8").replace("http://","https://")
+        debug("videourl2 :"+videourl) 
+        listitem = xbmcgui.ListItem(path=videourl)
+        xbmcplugin.setResolvedUrl(addon_handle, True, listitem)
+    except:
+        vurl=re.compile('source src="(.+?)"', re.DOTALL).findall(content)[0]
+        listitem = xbmcgui.ListItem(path=vurl)
+        xbmcplugin.setResolvedUrl(addon_handle, True, listitem)
     
 params = parameters_string_to_dict(sys.argv[2])
 mode = urllib.unquote_plus(params.get('mode', ''))
@@ -200,7 +218,7 @@ else:
   # Wenn Kategory ausgewählt wurde
   if mode == 'playvideo':
           playvideo(url)
-  if mode == 'subrubrik':
-          subrubrik(url)
+  if mode == 'seite':
+          seite(url)
   if mode == 'videoliste':
           videoliste(url,page,nosub)
