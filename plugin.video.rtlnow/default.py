@@ -620,6 +620,10 @@ def inputsettings()    :
   
 def playchannel_dash(url,name,image):
     ret,token=login()
+    if token=="0":
+        dialog = xbmcgui.Dialog()
+        dialog.notification("Fuer Plus", 'Nur fuer Plusmitglieder', xbmcgui.NOTIFICATION_ERROR)
+        return    
     referer="https://www.tvnow.de/"+name+"/live-tv"
     headerfelder="user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36&Referer="+referer
     listitem = xbmcgui.ListItem(path=url+"||"+headerfelder,label=name,iconImage=image,thumbnailImage=image)
@@ -635,6 +639,11 @@ def playchannel_dash(url,name,image):
 	
 def playchannel(channel):
     ret,token=login()
+    freeonly=addon.getSetting("freeonly")
+    if freeonly=="true":
+        dialog = xbmcgui.Dialog()
+        dialog.notification("Fuer Plus", 'Nur fuer Plusmitglieder', xbmcgui.NOTIFICATION_ERROR)
+        return    
     url="https://api.tvnow.de/v3/epgs/movies/nownext?fields=*,nowNextEpgTeasers.*,nowNextEpgMovies.*"
     content = getUrl(url) 
     objekte = json.loads(content, object_pairs_hook=OrderedDict)
@@ -651,8 +660,9 @@ def playchannel(channel):
     
   
 def livetv():
-    ret,token=login()    
-    if token=="0":
+    ret,token=login() 
+    freeonly=addon.getSetting("freeonly")    
+    if freeonly=="true":
         dialog = xbmcgui.Dialog()
         dialog.notification("Fuer Plus", 'Nur fuer Plusmitglieder', xbmcgui.NOTIFICATION_ERROR)
         return    
