@@ -158,15 +158,11 @@ def login():
     return -1
   
 def liste():
-  ret=login()    
-  if ret==-1:
-     dialog = xbmcgui.Dialog()
-     dialog.notification("Error", 'Error keine Lgoin Daten', xbmcgui.NOTIFICATION_ERROR)
-     addon.openSettings()
-  else:
     #quality=addon.getSetting("quality")
 #    auswahl_qual="source_"+quality
     addDir("Settings","Settings","Settings","")
+    liz=xbmcgui.ListItem("Youtube Channel")        
+    ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url="plugin://plugin.video.youtube/channel/UCK8rTVgp3-MebXkmeJcQb1Q/",listitem=liz,isFolder=True)
     content=geturl(baseurl)
     htmlPage = BeautifulSoup(content, 'html.parser')
     elemente = htmlPage.find_all("a",attrs={"class":"teaser"})
@@ -223,6 +219,7 @@ page = urllib.unquote_plus(params.get('page', ''))
 nosub= urllib.unquote_plus(params.get('nosub', ''))
 
 def videoliste(url,page=1,nosub=0):  
+  ret=login()      
   if page>1:
     if int(nosub)==1:
       nexturl=url+"/0/"+str(page)
@@ -234,14 +231,15 @@ def videoliste(url,page=1,nosub=0):
   htmlPage = BeautifulSoup(content, 'html.parser')
   subliste = htmlPage.find("ul",attrs={"id":"teaser_items"})
   elemente  = subliste.find_all("li",attrs={"class":"tooltip_item"})
-  for element in elemente:
-       link = element.find("a",attrs={"class":"playlist"})["href"]
-       link=baseurl+link
-       bild = element.find("img")["src"]
-       bild=baseurl+bild
-       title = element.find("span",attrs={"class":"teams"}).text
-       datum = element.find("span",attrs={"class":"date"}).text       
-       addDir(title+" ( "+datum +" )",link,"playvideo",bild)
+  for element in elemente:      
+       if ret==0 or "kostenlos" in str(element):          
+          link = element.find("a",attrs={"class":"playlist"})["href"]
+          link=baseurl+link
+          bild = element.find("img")["src"]
+          bild=baseurl+bild
+          title = element.find("span",attrs={"class":"teams"}).text
+          datum = element.find("span",attrs={"class":"date"}).text       
+          addDir(title+" ( "+datum +" )",link,"playvideo",bild)
   addDir("Next",url,"videoliste","",page=int(page)+1,nosub=nosub)
   xbmcplugin.endOfDirectory(addon_handle)
 # Haupt Menu Anzeigen      
@@ -257,4 +255,4 @@ else:
   if mode == 'subrubrik':
           subrubrik(url)
   if mode == 'videoliste':
-          videoliste(url,page,nosub)
+          videoliste(url,page,nosub)  
