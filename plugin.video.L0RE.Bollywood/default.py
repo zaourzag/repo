@@ -74,14 +74,14 @@ page = urllib.unquote_plus(params.get('page', ''))
 
 def index():  
   #ListRubriken("http://"+language2+".euronews.com","",x=1)
-  addDir("Drama","http://www.zeeone.de/Handlers/GenreLazyLoadHandler.ashx?genre=Drama&pageType=BollyThek","newlist","",page=1)
-  addDir("Action","http://www.zeeone.de/Handlers/GenreLazyLoadHandler.ashx?genre=Action&pageType=BollyThek","newlist","",page=1)
-  addDir("Liebe","http://www.zeeone.de/Handlers/GenreLazyLoadHandler.ashx?genre=Liebe&pageType=BollyThek","newlist","",page=1)
-  addDir("Komödie","http://www.zeeone.de/Handlers/GenreLazyLoadHandler.ashx?genre=Komödie&pageType=BollyThek","newlist","",page=1)
-  addDir("Familie","http://www.zeeone.de/Handlers/GenreLazyLoadHandler.ashx?genre=Familie&pageType=BollyThek","newlist","",page=1)
-  addDir("Kino","http://www.zeeone.de/Handlers/GenreLazyLoadHandler.ashx?genre=Kino&pageType=BollyThek","newlist","",page=1)
-  addDir("Serie","http://www.zeeone.de/Handlers/GenreLazyLoadHandler.ashx?genre=Serie&pageType=BollyThek","newlist","",page=1)
-  addDir("Musik","http://www.zeeone.de/Handlers/GenreLazyLoadHandler.ashx?genre=Musik&pageType=BollyThek","newlist","",page=1)
+  addDir("Drama","http://www.zeeone.de/Handlers/GenreLazyLoadHandler.ashx?ProgramUrlName=undefined&genre=Drama","newlist","",page=1)
+  addDir("Action","http://www.zeeone.de/Handlers/GenreLazyLoadHandler.ashx?ProgramUrlName=undefined&genre=Action","newlist","",page=1)
+  addDir("Liebe","http://www.zeeone.de/Handlers/GenreLazyLoadHandler.ashx?ProgramUrlName=undefined&genre=Liebe","newlist","",page=1)
+  addDir("Komödie","http://www.zeeone.de/Handlers/GenreLazyLoadHandler.ashx?ProgramUrlName=undefined&genre=Komödie","newlist","",page=1)
+  addDir("Familie","http://www.zeeone.de/Handlers/GenreLazyLoadHandler.ashx?ProgramUrlName=undefined&genre=Familie","newlist","",page=1)
+  addDir("Kino","http://www.zeeone.de/Handlers/GenreLazyLoadHandler.ashx?ProgramUrlName=undefined&genre=Kino","newlist","",page=1)
+  addDir("Serie","http://www.zeeone.de/Handlers/GenreLazyLoadHandler.ashx?ProgramUrlName=undefined&genre=Serie","newlist","",page=1)
+  addDir("Musik","http://www.zeeone.de/Handlers/GenreLazyLoadHandler.ashx?ProgramUrlName=undefined&genre=Musik","newlist","",page=1)
   xbmcplugin.endOfDirectory(pluginhandle)  
   
 
@@ -95,7 +95,7 @@ def Play(url):
 
     
 def newlist(url,page=1):
-   nurl=url +"&page="+str(page)
+   nurl=url +"&Page="+str(page)
    debug("newlist url :"+nurl)   
    content = requests.get(nurl,allow_redirects=False,verify=False,cookies=cj).text.encode('utf-8')
    debug("##")
