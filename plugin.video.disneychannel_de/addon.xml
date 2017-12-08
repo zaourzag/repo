@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<addon id="plugin.video.disneychannel_de" name="DisneyChannel.de" version="1.1.10" provider-name="L0RE">
+<addon id="plugin.video.disneychannel_de" name="DisneyChannel.de" version="1.1.11" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="script.module.requests" version="2.12.4"/>
@@ -19,5 +19,6 @@
         <forum>http://www.kodinerds.net/index.php/Thread/11527-AddonScriptorDE-s-Addon-Sammlung/</forum>
         <email>andreas at vogler dot name</email>
         <website>http://www.disneychannel.de</website>
+        <broken>Neues Disney Addon im Repo</broken>
     </extension>
 </addon>
