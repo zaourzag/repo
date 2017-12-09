@@ -1380,7 +1380,7 @@ NOTE: Due to updates by rytec, this addon might completely break in a couple of 
   </extension>
 </addon>
 
-<addon id="plugin.video.dailymotion" name="DailyMotion" version="0.2.4" provider-name="L0RE">
+<addon id="plugin.video.dailymotion" name="DailyMotion" version="0.2.5" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
         <import addon="script.module.requests" version="2.9.1"/>
