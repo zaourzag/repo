@@ -172,15 +172,42 @@ def channel(url,page="1"):
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)     
   
 def video(id)  :
-  Quality=addon.getSetting("Quality") 
+  Quality=addon.getSetting("Quality")
+  qstring="1280x720"
+  if Quality=="0":
+    qstring="848x480"
+  if Quality=="1":
+    qstring="1280x720"
+  if Quality=="2":
+    qstring="1920x1080"  
+  if Quality=="3":
+    qstring="##########"
   debug("Quality :"+Quality)
   d = dailymotion.Dailymotion()
   video=d.get('/video/'+id+'?fields=url')
   url=video["url"]
   vid = YDStreamExtractor.getVideoInfo(url,quality=Quality) #quality is 0=SD, 1=720p, 2=1080p and is a maximum
+  videos=vid.streams()[0]["ytdl_format"]["formats"]
+  erg=""
+  videos_arr=[]
+  namen_arr=[]  
+  for video in videos:
+        name=video["format"]                
+        namen_arr.append(name)
+        videos_arr.append(video["url"])
+        if qstring in video["format"] and "hls" in video["format"]:
+            erg=video["url"]
+            break        
+  if Quality=="3":
+     dialog = xbmcgui.Dialog()
+     nr=dialog.select("Qualität", namen_arr) 
+     erg=videos_arr[nr]
   try:
-      stream_url = vid.streamURL() #This is what Kodi (XBMC) will play
-      stream_url=stream_url.split("|")[0]
+      if erg=="":
+        stream_url = vid.streamURL() #This is what Kodi (XBMC) will play
+        stream_url=stream_url.split("|")[0]
+      else:
+        stream_url=erg
       debug("stream_url :"+stream_url)
       listitem = xbmcgui.ListItem(path=stream_url)  
       xbmcplugin.setResolvedUrl(addon_handle,True, listitem) 
