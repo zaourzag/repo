@@ -158,14 +158,6 @@ def login():
     return -1
   
 def liste():
-  ret=login()
-  if ret==-1:
-     dialog = xbmcgui.Dialog()
-     dialog.notification("Error", 'Error keine Lgoin Daten', xbmcgui.NOTIFICATION_ERROR)
-     addon.openSettings()
-  else:
-    #quality=addon.getSetting("quality")
-#    auswahl_qual="source_"+quality
     addDir("Settings","Settings","Settings","")
     content=geturl("https://www.fohlen.tv")
     htmlPage = BeautifulSoup(content, 'html.parser')
@@ -225,6 +217,7 @@ page = urllib.unquote_plus(params.get('page', ''))
 nosub= urllib.unquote_plus(params.get('nosub', ''))
 
 def videoliste(url,page=1,nosub=0):  
+  ret=login()  
   if page>1:
     if int(nosub)==1:
       nexturl=url+"/0/"+str(page)
@@ -237,6 +230,7 @@ def videoliste(url,page=1,nosub=0):
   subliste = htmlPage.find("ul",attrs={"id":"teaser_items"})
   elemente  = subliste.find_all("li",attrs={"class":"tooltip_item"})
   for element in elemente:
+    if ret==0 or "kostenlos" in str(element): 
        link = element.find("a",attrs={"class":"playlist"})["href"]
        link="https://www.fohlen.tv"+link
        bild = element.find("img")["src"]
