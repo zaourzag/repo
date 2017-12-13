@@ -170,7 +170,7 @@ def liste():
    url="http://www.ustream.tv/explore/all"
    content=getUrl(url)
    htmlPage = BeautifulSoup(content, 'html.parser')   
-   themen=htmlPage.find("div",{"class" :"submenu"})   
+   themen=htmlPage.find("div",{"class" :"submenu-column half-width-links"})   
    elemente=themen.findAll("a")
    for element in elemente:
       link=element["href"]
