@@ -7,7 +7,7 @@
     Read LICENSE.txt for license information.
 """
 import sha
-from crypto.hash.hash import Hash
+from Crypto.hash.hash import Hash
 
 class SHA1(Hash):
 

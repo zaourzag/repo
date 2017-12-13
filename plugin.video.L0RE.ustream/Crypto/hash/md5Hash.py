@@ -3,7 +3,7 @@
       Wrapper for python md5 module to support crypo module standard interface
 """
 import md5
-from crypto.hash.hash import Hash
+from Crypto.hash.hash import Hash
 
 class MD5(Hash):
 

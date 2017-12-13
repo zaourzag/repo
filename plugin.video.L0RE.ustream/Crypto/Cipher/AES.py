@@ -12,9 +12,9 @@
     2002-06-01
 """
 
-from crypto.cipher.rijndael import Rijndael
-from crypto.cipher.base     import BlockCipher, padWithPadLen, noPadding
-from crypto.errors          import BadKeySizeError
+from Crypto.Cipher.rijndael import Rijndael
+from Crypto.Cipher.base     import BlockCipher, padWithPadLen, noPadding
+from Crypto.errors          import BadKeySizeError
 
 class AES(Rijndael):
     """ The AES algorithm is the Rijndael block cipher restricted to block

@@ -12,8 +12,8 @@
 
     2002-04-25   changed block input
 """
-from crypto.errors import DecryptNotBlockAlignedError
-from crypto.keyedHash.pbkdf2 import pbkdf2
+from Crypto.errors import DecryptNotBlockAlignedError
+from Crypto.keyedHash.pbkdf2 import pbkdf2
 
 class BlockCipher:
     """ Block ciphers """

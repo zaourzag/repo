@@ -10,8 +10,8 @@
 	Copyright © (c) 2002 by Paul A. Lambert
 	Read LICENSE.txt for license information.
 """
-from crypto.keyedHash.hmacHash import HMAC_SHA1
-from crypto.common import xor
+from Crypto.keyedHash.hmacHash import HMAC_SHA1
+from Crypto.common import xor
 from math import ceil
 from struct import pack
 

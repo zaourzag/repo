@@ -13,7 +13,7 @@
     2002-06-01
 """
 
-from crypto.cipher.base import BlockCipher, padWithPadLen, noPadding
+from Crypto.Cipher.base import BlockCipher, padWithPadLen, noPadding
 
 class Rijndael(BlockCipher):
     """ Rijndael encryption algorithm """

@@ -20,7 +20,7 @@
     >>>keyedHashAlg = HMAC(SHA1, key)
     >>>result = keyedHashAlg(data)
 """
-from crypto.hash.hash     import Hash
+from Crypto.hash.hash     import Hash
 
 class HMAC(Hash):
     """    To compute HMAC over the data `text' we perform
@@ -69,14 +69,14 @@ class HMAC(Hash):
             raise 'no key defined'
         return self.H_outer(self.k_xor_opad+self.H.digest())
 
-from crypto.hash.sha1Hash import SHA1
+from Crypto.hash.sha1Hash import SHA1
 class HMAC_SHA1(HMAC):
     """ Predefined HMAC built on SHA1 """
     def __init__(self, key = None):
         """ optionally initialize with key """
         HMAC.__init__(self,SHA1,key)
 
-from crypto.hash.md5Hash  import MD5
+from Crypto.hash.md5Hash  import MD5
 class HMAC_MD5(HMAC):
     """ Predefined HMAC built on SHA1 """
     def __init__(self, key = None):
