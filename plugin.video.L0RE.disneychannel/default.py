@@ -132,6 +132,7 @@ def geturl(url,data="x",header="",referer=""):
 
   
 def liste():
+    addLink("Live Stream", "", 'playLive', icon)
     content=geturl(baseurl+"/disney-channel")
     jsondata=re.compile('<script type="text/javascript">this.Grill\?Grill.burger=(.+?):\(function\(\)', re.DOTALL).findall(content)[0]   
     jsondata=smart_str(jsondata)
@@ -171,6 +172,14 @@ def playvideo(url):
     listitem = xbmcgui.ListItem(path=video)
     xbmcplugin.setResolvedUrl(addon_handle, True, listitem)
     
+def playLive():
+    url="http://cdnapi.kaltura.com/p/1068292/sp/106829200/playManifest/entryId/1_woce098v/format/applehttp/protocol/http/uiConfId/27176231/a.m3u8?responseFormat=json"
+    content = geturl(url)
+    jsonstring = json.loads(content)
+    urln=jsonstring["flavors"][0]["url"]
+    listitem = xbmcgui.ListItem(path=urln)
+    xbmcplugin.setResolvedUrl(addon_handle, True, listitem)
+    
 params = parameters_string_to_dict(sys.argv[2])
 mode = urllib.unquote_plus(params.get('mode', ''))
 url = urllib.unquote_plus(params.get('url', ''))
@@ -192,3 +201,5 @@ else:
           subrubrik(url)
   if mode == 'videoliste':
           videoliste(url,page,nosub)
+  if mode == 'playLive':
+    playLive()          
