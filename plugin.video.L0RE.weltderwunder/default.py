@@ -132,6 +132,7 @@ def geturl(url,data="x",header="",referer=""):
 def liste():   
     addDir("Alle Sendungen" , "http://www.weltderwunder.de/sendungen", "videoliste","")   
     addDir("Themen" , "http://www.weltderwunder.de/videos", "themen","")   
+    addLink("Live", "", 'playlive', "")
     addDir("Settings", "", 'Settings', "")
     xbmcplugin.endOfDirectory(addon_handle) 
 
@@ -234,6 +235,20 @@ def staffelliste(url):
     title=folge.find("h4").text
     addLink(title,link,"playvideo",img)  
   xbmcplugin.endOfDirectory(addon_handle)
+def playlive():
+ url="http://www.weltderwunder.de/videos/live"
+ content=geturl(url)
+ htmlPage = BeautifulSoup(content, 'html.parser')
+ videoinfo = htmlPage.find("iframe")["src"]
+ content=geturl(videoinfo)
+ debug(content)
+ videoliste=re.compile('"applehttp","url":"(.+?)"', re.DOTALL).findall(content)[0]
+ videoliste=videoliste.replace("\\/","/")
+ listitem = xbmcgui.ListItem(path=videoliste)   
+ addon_handle = int(sys.argv[1])  
+ xbmcplugin.setResolvedUrl(addon_handle, True, listitem)
+ 
+ 
 # Haupt Menu Anzeigen      
 if mode is '':
      liste()   
@@ -256,3 +271,5 @@ else:
           themen(url)
   if mode == 'themenseite':
           themenseite(url,page)  
+  if mode == 'playlive':
+          playlive()
