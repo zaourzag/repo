@@ -1799,6 +1799,29 @@ Orginal Code was from AddonScriptorDE</disclaimer>
 	</extension>
 </addon>
 
+<addon id="plugin.video.L0RE.weltderwunder" name="Welt der Wunder" version="0.1.1" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.24.0"/>
+        <import addon="script.module.requests" version="2.12.4"/>
+        <import addon="script.module.beautifulsoup4" version="4.3.2"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="de">Videoportal von Welt der Wunder</summary>
+    <summary lang="en">Videoportal von Welt der Wunder<</summary>
+    <description lang="en">Videoportal von Welt der Wunder<</description>
+    <description lang="de">Videoportal von Welt der Wunder<</description>
+    <website></website>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.L0RE.weltderwunder</source>
+    <forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
+    <email>andreas at vogler dot name</email>
+    <platform>all</platform>
+  </extension>
+</addon>
+
 <addon id="plugin.video.wdr" name="WDR" version="0.8.8" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
