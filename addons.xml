@@ -3414,7 +3414,7 @@ oder online unter https://goo.gl/GtK41L nachlesen.
   </extension>
 </addon>
 
-<addon id="plugin.video.maxdome" name="maxdome" version="1.0.3.2" provider-name="frankr612">
+<addon id="plugin.video.maxdome" name="maxdome" version="1.0.4.0" provider-name="frankr612">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
 	<import addon="script.module.beautifulsoup" version="3.2.1"/>
