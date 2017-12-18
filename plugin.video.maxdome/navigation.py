@@ -284,7 +284,7 @@ class Navigation:
             info['plot'] = '[COLOR red]'+ info['mpaa'] +'[/COLOR]  \n\n' + info['plot']
         if 'userrating' in asset:
             info['rating'] = asset['userrating']['averageRating']
-            info['plot'] = '[COLOR blue]User Rating: '+ str(info['rating']) +' / 5 [/COLOR] - ' + info['plot']
+            info['plot'] = '[COLOR blue]User Rating: '+ str(info['rating']) +' / 5[/COLOR] - ' + info['plot']
         if 'productionYear' in asset:
             info['year'] = asset['productionYear']
         asset_class = maxdome.getAssetClass(asset['@class'])
