@@ -1,3 +1,6 @@
+1.0.4.0
+- Introduce User Rating and Parental Rating (FSK) into Description/Details
+
 1.0.3.2
 - force inputstream.adaptive
 
