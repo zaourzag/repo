@@ -279,6 +279,12 @@ class Navigation:
         info['userrating'] = asset['userrating']['averageRating']
         if 'duration' in asset:
             info['duration'] = int(asset['duration'])*60
+        if 'fskLevelList' in asset:
+            info['mpaa'] = str(asset['fskLevelList'][0])
+            info['plot'] = '[COLOR red]'+ info['mpaa'] +'[/COLOR]  \n\n' + info['plot']
+        if 'userrating' in asset:
+            info['rating'] = asset['userrating']['averageRating']
+            info['plot'] = '[COLOR blue]User Rating: '+ str(info['rating']) +' / 5 [/COLOR] - ' + info['plot']
         if 'productionYear' in asset:
             info['year'] = asset['productionYear']
         asset_class = maxdome.getAssetClass(asset['@class'])
