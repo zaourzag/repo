@@ -1205,48 +1205,6 @@ Vous pouvez regarder le sport que vous aimez, vivez et sur demande à un moment 
     </extension>
 </addon>
 
-<addon id="skin.fTVfred-krypton" version="3.7.4" name="fTV Fred Edition (Krypton)" provider-name="Sualfred">
-	<requires>
-		<import addon="xbmc.gui" version="5.12.0"/>
-		<import addon="script.toolbox" version="1.1.1"/>
-		<import addon="script.extendedinfo" version="5.6.0"/>
-		<import addon="script.globalsearch" version="7.4.4"/>
-		<import addon="script.skinshortcuts" version="1.0.13"/>
-		<import addon="script.artwork.downloader" version="13.1.0"/>
-		<import addon="script.skin.helper.service" version="1.1.1"/>
-		<import addon="script.skin.helper.widgets" version="1.0.20"/>
-		<import addon="script.skin.helper.skinbackup" version="1.0.12"/>
-		<import addon="script.module.autocompletion" version="1.1.2"/>
-	</requires>
-	<extension point="xbmc.gui.skin" effectslowdown="1.00" debugging="false">
-		<res width="1920" height="1080" aspect="16:9" default="true" folder="16x9" />
-	</extension>
-	<extension point="xbmc.addon.metadata">
-		<platform>all</platform>
-		<summary lang="en">Skin based on the Fire TV UI</summary>
-		<disclaimer lang="en">No mouse or touch support</disclaimer>
-		<description lang="en">Fork of Hitcher's fTV skin with nearly full PVR functionality, plus changed a lot of behaviours and added dozens of other features[CR][CR]Skin description: Provides the look and feel of the Fire TV user interface.[CR]For the complete experience enable 'TV Show wide icons' and either use Artwork Downloader to grab logos or create your own artwork and add it to the database (see forum for more details).</description>
-		<source>https://github.com/sualfred/skin.fTVfred</source>
-		<forum>http://forum.kodi.tv/showthread.php?tid=253058</forum>
-		<license>CC BY-NC-SA 3.0</license>
-		<assets>
-            <icon>resources/icon.png</icon>
-            <fanart>resources/fanart.jpg</fanart>
-            <screenshot>resources/screen1.jpg</screenshot>
-            <screenshot>resources/screen2.jpg</screenshot>
-            <screenshot>resources/screen3.jpg</screenshot>
-            <screenshot>resources/screen4.jpg</screenshot>
-            <screenshot>resources/screen5.jpg</screenshot>
-        </assets>
-		<news>Changelog:
-
-[B]3.7.4[/B]
-- Hide vote counter if integer is 0
-
-See changelog.txt for more details.</news>
-	</extension>
-</addon>
-
 <addon id="plugin.video.skygo.de" name="Sky Go" version="1.10.9" provider-name="jojo, frankr612, Maven, Linkinsoldier">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
@@ -2965,7 +2923,7 @@ NOTE: Streams are available in SD only
   </extension>
 </addon>
 
-<addon id="plugin.video.L0RE.spiegeltv" name="Spiegel TV" version="0.1.0" provider-name="L0RE">
+<addon id="plugin.video.L0RE.spiegeltv" name="Spiegel TV" version="0.1.1" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
         <import addon="script.module.requests" version="2.12.4"/>
