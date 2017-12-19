@@ -1,0 +1,4 @@
+0.3.0 add settings for maxbandwidth/maxresolution/playmethod
+0.2.0 add "Beach Volleyball", "Formel 1", "Golf", "Handball", "Tennis"; use dash streams
+0.1.1 use inputstream.adaptive if possible
+0.1.0 initial commit

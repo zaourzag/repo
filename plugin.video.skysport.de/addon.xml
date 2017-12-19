@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="plugin.video.skysport.de" name="Sky Sport Mediathek" version="0.3.0" provider-name="Maven">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.beautifulsoup4" version="4.5.3" />
+    <import addon="script.module.requests" version="2.18.4" />
+	<import addon="script.common.plugin.cache" version="2.5.8"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="addon.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <platform>all</platform>
+    <language>de</language>
+    <summary>Videos aus der ganzen Welt des Sports.</summary>
+    <description>Dieses Plugin stellt Videos von https://sport.sky.de bereit.</description>
+    <website>https://sport.sky.de</website>
+    <source>https://github.com/Maven85/plugin.video.skysport.de.git</source>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 3, 29 June 2007</license>
+  </extension>
+</addon>
