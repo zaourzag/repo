@@ -84,7 +84,6 @@ except:
 cachezeit=addon.getSetting("cachetime")   
 cache = StorageServer.StorageServer("plugin.video.rtlnow", cachezeit) # (Your plugin name, Cache time in hours
 
-     
 def addLink(name, url, mode, iconimage, duration="", desc="", genre=''):
   u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
   ok = True
@@ -143,9 +142,6 @@ def addDir(name, url, mode, iconimage, desc="", duration="",nummer=0):
     #ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
     return u,liz,True
 
-
-
-       
 params = parameters_string_to_dict(sys.argv[2])
 mode = urllib.unquote_plus(params.get('mode', ''))
 channel = urllib.unquote_plus(params.get('channel', ''))
@@ -160,9 +156,7 @@ einsLike = urllib.unquote_plus(params.get('einslike', '')) == 'True'
 
 xstream = urllib.unquote_plus(params.get('xstream', ''))
 xlink = urllib.unquote_plus(params.get('xlink', ''))
-xtitle = urllib.unquote_plus(params.get('xtitle', ''))
 xdrm = urllib.unquote_plus(params.get('xdrm', ''))
-
 
 
 def serien(url):
@@ -268,37 +262,46 @@ def rubrik(name) :
                 
   xbmcplugin.addDirectoryItems(addon_handle,menu)
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
+
 def get_sec(time_str):
     h, m, s = time_str.split(':')
     return int(h) * 3600 + int(m) * 60 + int(s)
+
 def get_min(time_str):
     h, m, s = time_str.split(':')
     return int(h) * 3600 + int(m) * 60 + int(s) /60
-def playdash(xstream,xlink,xtitle,xdrm):
-    ret,token=login()    
-    headerfelder="user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36&Referer="+link
-    if kodi18=="true" :                
-        listitem = xbmcgui.ListItem(path=stream+"|"+headerfelder,label=title,iconImage="",thumbnailImage="")
+
+def playdash(xstream,xlink,xdrm):
+    kodi18 = addon.getSetting("kodi18")
+    pos = 0
+    xbmc.log("[plugin.video.rtlnow](playdash) xSTREAM : %s" %(xstream), xbmc.LOGNOTICE)
+    headerfelder = "User-Agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36&Referer="+xlink
+    if xstream != "":
+        pos += 1
+        if kodi18 == "true":
+            listitem = xbmcgui.ListItem(path=xstream+"|"+headerfelder)
+        else:
+            listitem = xbmcgui.ListItem(path=xstream)
+        listitem.setProperty('IsPlayable', 'true')
+        listitem.setProperty('inputstreamaddon', 'inputstream.adaptive')
+        listitem.setProperty('inputstream.adaptive.manifest_type', 'mpd')
+        if kodi18 == "true" and xdrm == "1" :
+            ret,token=login()
+            if token == "0":
+                xbmcgui.Dialog().ok("TV-NOW Login Fehler", "[COLOR orangered]ACHTUNG : ... Für diese Sendung ist ein Login mit *Benutzername* und *Passwort* erforderlich !!![/COLOR]", "Es ist mindestens „WATCHBOX-Free-Account“ Vorraussetzung !!!", "Bitte einen Account unter: „https://www.watchbox.de/registrieren“ oder: „https://www.tvnow.de/?registration“ erstellen !!!")
+            else:
+                pos += 1
+                licstring = "https://widevine.rtl.de/index/proxy|x-auth-token="+token+"&"+headerfelder+"&Content-Type=|R{SSM}|"
+                listitem.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')
+                listitem.setProperty('inputstream.adaptive.license_key', licstring)
+        else: 
+            if xdrm == "1":
+                xbmcgui.Dialog().ok("TV-NOW / KODI-Version-Fehler", "[COLOR orangered]ACHTUNG : ... Für diese Sendung ist mindestens *KODI 18* erforderlich !!![/COLOR]", "Bitte die vorhandene KODI-Installation mindestens auf KODI-Version 18 updaten !!!")
+        if (pos == 1 and xdrm == "0") or (pos == 2 and xdrm == "1"):
+            xbmcplugin.setResolvedUrl(addon_handle, True, listitem)
     else:
-        listitem = xbmcgui.ListItem(path=stream,label=title,iconImage="",thumbnailImage="")
-    listitem.setProperty('IsPlayable', 'true')                          
-    listitem.setProperty('inputstreamaddon', 'inputstream.adaptive')
-    listitem.setProperty('inputstream.adaptive.manifest_type', 'mpd')
-    if kodi18=="true" and drm=="1" :
-        if token=="0":
-            dialog = xbmcgui.Dialog()
-            dialog.notification("Login Notwendig", 'Es ist min. Ein Freier Watchbox account Notwendig', xbmcgui.NOTIFICATION_ERROR)
-        else:               
-            licstring='https://widevine.rtl.de/index/proxy|x-auth-token='+token+"&"+headerfelder+"&Content-Type=|R{SSM}|"            
-            listitem.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')                
-            listitem.setProperty('inputstream.adaptive.license_key', licstring)                                  
-        xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=stream+"|"+headerfelder, listitem=listitem)
-    else: 
-        if drm=="1":
-            dialog = xbmcgui.Dialog()
-            dialog.notification("Kodi18 Notwendig", 'Kodi18 ist Notwendig für dieses Video', xbmcgui.NOTIFICATION_ERROR)
-        xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=stream, listitem=listitem)
-    xbmcplugin.setResolvedUrl(addon_handle,True, listitem)        
+        xbmcgui.Dialog().notification("TV-NOW : [COLOR red]!!! DASH - URL - ERROR !!![/COLOR]", "ERROR = [COLOR red]Der übertragene *Dash-Abspiel-Link* ist FEHLERHAFT ![/COLOR]", xbmcgui.NOTIFICATION_ERROR, time=6000)
+
 def staffel(idd,url) :   
   xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
   debug("staffel Staffel idd:"+idd)
@@ -398,7 +401,7 @@ def staffel(idd,url) :
   f.write(menulist)
   f.close()     
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
- 
+
 def hashplay(idd):
   debug("hashplay url :"+idd)
   f=xbmcvfs.File( os.path.join(temp,"menu.txt"),"r")   
@@ -456,10 +459,7 @@ def hashplay(idd):
                 xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=stream, listitem=listitem)
           xbmcplugin.setResolvedUrl(addon_handle,True, listitem)    
           #addLink(name, stream, "playvideo", bild)          
-          
-          
-          
-       
+
 def  login():
   debug("Start login")
   username=addon.getSetting("user")
@@ -497,8 +497,7 @@ def  login():
       addon.setSetting("freeonly", "true")
       return 0,"0"      
   debug(content)
-  
-     
+
 def genre(url):
     menu=[]
     #https://api.tvnow.de/v3/channels/station/rtl?fields=*&filter=%7B%22Active%22:true%7D&maxPerPage=500&page=1     
@@ -535,7 +534,6 @@ def index():
     xbmcplugin.addDirectoryItems(addon_handle,menu)
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)        
 
-    
 def sendermenu():
     debug("START")    
     menu=[]
@@ -561,8 +559,6 @@ def genremenu(url):
        xbmcplugin.addDirectoryItems(addon_handle,menu)
        xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)    
 
-
-       
 def katalog():
   menu=[]
   url="https://api.tvnow.de/v3/pages/nowtv/tvnow?fields=teaserSets.headline,teaserSets.id"
@@ -575,7 +571,8 @@ def katalog():
      if not idd=="2255" and not idd=="7619":
        menu.append(addDir(name , url=str(idd), mode="katalogliste", iconimage="",duration="",desc=""))
   xbmcplugin.addDirectoryItems(addon_handle,menu)
-  xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)        
+  xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
+
 def katalogliste(idd)   :    
    menu=[]
    url="https://api.tvnow.de/v3/teasersets/"+idd+"?fields=[%22teaserSetInformations%22,[%22format%22,[%22id%22,%22title%22,%22seoUrl%22,%22defaultDvdImage%22,%22infoText%22]]]"
@@ -635,8 +632,7 @@ def playchannel_dash(url,name,image):
     listitem.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')                
     listitem.setProperty('inputstream.adaptive.license_key', licstring)
     return listitem
-       
-	
+
 def playchannel(channel):
     ret,token=login()
     freeonly=addon.getSetting("freeonly")
@@ -657,8 +653,7 @@ def playchannel(channel):
           #xbmcgui.Dialog().ok("11",dash_file,"gefunden","gefunden")
           playlist.add(dash_file, item)
           xbmc.Player().play(playlist)
-    
-  
+
 def livetv():
     ret,token=login() 
     freeonly=addon.getSetting("freeonly")    
@@ -745,6 +740,6 @@ else:
           #xbmcgui.Dialog().ok("l1","l2","l3","l4")
           livetv()
   if mode == 'playdash':       
-          playdash(xstream,xlink,xtitle,xdrm)
+          playdash(xstream,xlink,xdrm)
   if mode == 'playchannel':
           playchannel(channel)
