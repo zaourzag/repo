@@ -25,9 +25,8 @@ addon = xbmcaddon.Addon()
 translation = addon.getLocalizedString
 
 
-xbmcplugin.setContent(addon_handle, 'movies')
 
-baseurl="https://bvbtotal.de/"
+
 xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_UNSORTED)
 xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
 
@@ -60,8 +59,8 @@ def log(msg, level=xbmc.LOGNOTICE):
     
 
   
-def addDir(name, url, mode, thump, desc="",page=1,nosub=0):   
-  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&page="+str(page)+"&nosub="+str(nosub)
+def addDir(name, url, mode, thump, desc="",page=1,serie=""):   
+  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&page="+str(page)+"&serie="+str(serie)
   ok = True
   liz = xbmcgui.ListItem(name)  
   liz.setArt({ 'fanart' : thump })
@@ -73,14 +72,14 @@ def addDir(name, url, mode, thump, desc="",page=1,nosub=0):
   ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
   return ok
   
-def addLink(name, url, mode, thump, duration="", desc="", genre='',director="",bewertung=""):
+def addLink(name, url, mode, thump, duration="", desc="", genre='',director="",bewertung="",serie=""):
   debug("URL ADDLINK :"+url)
   debug( icon  )
-  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
+  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&serie="+str(serie)
   ok = True
   liz = xbmcgui.ListItem(name,thumbnailImage=thump)
   liz.setArt({ 'fanart' : icon })
-  liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Genre": genre, "Director":director,"Rating":bewertung})
+  liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Genre": genre, "Director":director,"Rating":bewertung,"TVShowTitle":serie})
   liz.setProperty('IsPlayable', 'true')
   liz.addStreamInfo('video', { 'duration' : duration })
 	#xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
@@ -133,6 +132,7 @@ def liste():
     addDir("Alle Sendungen" , "http://www.weltderwunder.de/sendungen", "videoliste","")   
     addDir("Themen" , "http://www.weltderwunder.de/videos", "themen","")   
     addLink("Live", "", 'playlive', "")
+    addDir("Search", "", 'search', "")
     addDir("Settings", "", 'Settings', "")
     xbmcplugin.endOfDirectory(addon_handle) 
 
@@ -166,7 +166,8 @@ def playvideo(url):
     addon_handle = int(sys.argv[1])  
     xbmcplugin.setResolvedUrl(addon_handle, True, listitem)
 def themen(url):
-    content=geturl(url)
+    content=geturl(url)    
+    xbmcplugin.setContent(addon_handle, 'tvshows')
     htmlPage = BeautifulSoup(content, 'html.parser')
     themen = htmlPage.find_all("h2",attrs={"class":"h2-videos h2-index-videos"})  
     for thema in themen:
@@ -179,6 +180,7 @@ def themen(url):
     xbmcplugin.endOfDirectory(addon_handle)
 
 def  themenseite(url,page=1):
+     xbmcplugin.setContent(addon_handle, 'episodes')
      newurl=url+"_load?page="+str(page)
      content=geturl(newurl)
      htmlPage = BeautifulSoup(content, 'html.parser') 
@@ -189,10 +191,13 @@ def  themenseite(url,page=1):
        name = video.find("h4").text.encode("utf-8")
        link = "http://weltderwunder.de"+video.find("a")["href"]
        bild = video.find("img")["src"]
+       desc=video.find("p").text.encode("utf-8")
+       durationstring=video.find("div",attrs={"class":"item-video-duration-global"}).text.encode("utf-8")
+       duration=re.compile('([0-9]+:[0-9]+)', re.DOTALL).findall(durationstring)[0]    
        debug(name)
        debug(bild)
        debug(link)
-       addLink(name,link,"playvideo",bild)
+       addLink(name,link,"playvideo",bild,duration=duration,desc=desc)
      addDir("Next",url,"themenseite","",page=int(page)+1)
      xbmcplugin.endOfDirectory(addon_handle)
     
@@ -201,39 +206,51 @@ mode = urllib.unquote_plus(params.get('mode', ''))
 url = urllib.unquote_plus(params.get('url', ''))
 referer = urllib.unquote_plus(params.get('referer', ''))
 page= urllib.unquote_plus(params.get('page', ''))
+serie= urllib.unquote_plus(params.get('serie', ''))
 
 def videoliste(url):  
   content=geturl(url)
+  xbmcplugin.setContent(addon_handle, 'tvshows')
   htmlPage = BeautifulSoup(content, 'html.parser')
   serien = htmlPage.find_all("div",attrs={"class":"col-md-3 col-sm-3 col-xs-6 program-thumbnail"})  
-  for serie in serien:      
-    img=serie.find("img")["src"]
-    link=serie.find("a")["href"]
+  for sserie in serien:   
+    
+    debug("-->")
+    debug(serien)     
+    img=sserie.find("img")["src"]
+    link=sserie.find("a")["href"]
     link="http://weltderwunder.de"+link
     title=re.compile('.+/([^/]+)$', re.DOTALL).findall(link)[0]
-    addDir(title,link,"listserie",img)  
+    addDir(title,link,"listserie",img,serie=title)  
   xbmcplugin.endOfDirectory(addon_handle)
-def   listserie(url):
+def   listserie(url,serie=""):
    content=geturl(url)
+   xbmcplugin.setContent(addon_handle, 'tvshows')
    htmlPage = BeautifulSoup(content, 'html.parser')
    staffeln_liste = htmlPage.find("select",attrs={"class":"form-control"})  
    staffeln = staffeln_liste.find_all("option") 
    for staffel in staffeln:
      debug("listserie Staffe : ")
      debug(staffel)
-     addDir(staffel.text,url+"?staffel="+str(staffel["value"]),"staffelliste","")  
+     addDir(staffel.text,url+"?staffel="+str(staffel["value"]),"staffelliste","",serie=serie)  
    xbmcplugin.endOfDirectory(addon_handle)
   
-def staffelliste(url):
+def staffelliste(url,serie=""):
+  xbmcplugin.setContent(addon_handle, 'episodes')
   content=geturl(url)
   htmlPage = BeautifulSoup(content, 'html.parser')
   folgen = htmlPage.find_all("div",attrs={"class":"col-md-3 col-sm-6 item-video item-video-global"})  
   for folge in folgen:
+    debug("-->")
+    debug(folge)
     img=folge.find("img")["src"]
     link=folge.find("a")["href"]
+    desc=folge.find("p").text.encode("utf-8")
+    durationstring=folge.find("div",attrs={"class":"item-video-duration-global"}).text.encode("utf-8")
+    duration=re.compile('([0-9]+:[0-9]+)', re.DOTALL).findall(durationstring)[0]    
     link="http://weltderwunder.de"+link
     title=folge.find("h4").text
-    addLink(title,link,"playvideo",img)  
+    addLink(title,link,"playvideo",img,desc=desc,duration=duration,serie=serie)  
   xbmcplugin.endOfDirectory(addon_handle)
 def playlive():
  url="http://www.weltderwunder.de/videos/live"
@@ -242,12 +259,51 @@ def playlive():
  videoinfo = htmlPage.find("iframe")["src"]
  content=geturl(videoinfo)
  debug(content)
- videoliste=re.compile('"applehttp","url":"(.+?)"', re.DOTALL).findall(content)[0]
+ videoliste=re.compile('"applehttp",url":"(.+?)"', re.DOTALL).findall(content)[0]
  videoliste=videoliste.replace("\\/","/")
  listitem = xbmcgui.ListItem(path=videoliste)   
  addon_handle = int(sys.argv[1])  
  xbmcplugin.setResolvedUrl(addon_handle, True, listitem)
  
+
+def search():   
+   dialog = xbmcgui.Dialog()
+   d = dialog.input(translation(30010), type=xbmcgui.INPUT_ALPHANUM)
+   newurl="http://www.weltderwunder.de/ "
+   content=geturl(newurl)
+   token=re.compile('name="csrf-token" content="(.+?)"', re.DOTALL).findall(content)[0]   
+   url="http://www.weltderwunder.de/search/find"   
+   userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36"       
+   header = [('User-Agent', userAgent),
+             ('X-CSRF-Token' , token),
+             ('X-Requested-With', 'XMLHttpRequest'),
+             ('Accept', '*/*;q=0.5, text/javascript, application/javascript, application/ecmascript, application/x-ecmascript')]           
+   values ={'query' : d,
+            'utf8':"✓"}
+   data = urllib.urlencode(values)
+   content=geturl(url,data=data,header=header)
+   htmlcode=re.compile(".html\('(.+)'\);", re.DOTALL).findall(content)[0]   
+   htmlcode=htmlcode.replace("\/","/").replace('\\"','"')
+   debug(htmlcode)
+   htmlPage = BeautifulSoup(htmlcode, 'html.parser')
+   debug(htmlPage)
+   videos = htmlPage.find_all("li",attrs={"class":"row"})  
+   for video in videos:
+      debug("---->")
+      debug(video)
+      try:
+        img=video.find("img")["src"]
+        link="http://weltderwunder.de"+video.find("a")["href"]
+        name=video.find("div",attrs={"class":"results-info-global"}).text.encode("utf-8").replace("\\n","").replace("\t","").strip()
+        debug("+ "+name)
+        debug("+ "+link)
+        debug("+ "+img)
+        if "VIDEO" in name:
+          name=name.replace("VIDEO","")
+          addLink(name,link,"playvideo",img)  
+      except:
+        debug("---->ERROR")
+   xbmcplugin.endOfDirectory(addon_handle)
  
 # Haupt Menu Anzeigen      
 if mode is '':
@@ -264,12 +320,14 @@ else:
   if mode == 'videoliste':
           videoliste(url)  
   if mode == 'listserie':
-          listserie(url)
+          listserie(url,serie)
   if mode == 'staffelliste':
-          staffelliste(url)  
+          staffelliste(url,serie)  
   if mode == 'themen':
           themen(url)
   if mode == 'themenseite':
           themenseite(url,page)  
   if mode == 'playlive':
           playlive()
+  if mode == 'search':
+          search()           

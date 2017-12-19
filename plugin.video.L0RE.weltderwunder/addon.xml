@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.L0RE.weltderwunder" name="Welt der Wunder" version="0.1.2" provider-name="L0RE">
+<addon id="plugin.video.L0RE.weltderwunder" name="Welt der Wunder" version="0.2.0" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
         <import addon="script.module.requests" version="2.12.4"/>
@@ -10,9 +10,9 @@
     </extension>
   <extension point="xbmc.addon.metadata">
     <summary lang="de">Videoportal von Welt der Wunder</summary>
-    <summary lang="en">Videoportal von Welt der Wunder<</summary>
-    <description lang="en">Videoportal von Welt der Wunder<</description>
-    <description lang="de">Videoportal von Welt der Wunder<</description>
+    <summary lang="en">Videoportal von Welt der Wunder</summary>
+    <description lang="en">Videoportal von Welt der Wunder</description>
+    <description lang="de">Videoportal von Welt der Wunder</description>
     <website></website>
     <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
     <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.L0RE.weltderwunder</source>
