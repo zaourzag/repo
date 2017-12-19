@@ -530,7 +530,6 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
     </extension>
 </addon>
 
-
 <addon id="plugin.program.fast_com" version="1.0.0" name="FAST.com" provider-name="Jin">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
