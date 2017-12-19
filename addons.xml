@@ -2332,7 +2332,6 @@ NOTE: Due to updates by rytec, this addon might completely break in a couple of 
   	</extension>
 </addon>
 
-
 <addon id="plugin.video.skysport.de" name="Sky Sport Mediathek" version="0.3.0" provider-name="Maven">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
@@ -3226,7 +3225,7 @@ oder online unter https://goo.gl/GtK41L nachlesen.
     </extension>
 </addon>
 
-<addon id="plugin.video.L0RE.3plus" name="3plus" version="0.1.1" provider-name="L0RE">
+<addon id="plugin.video.L0RE.3plus" name="3plus" version="0.1.2" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
         <import addon="script.module.requests" version="2.12.4"/>
