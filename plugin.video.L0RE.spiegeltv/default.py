@@ -26,7 +26,7 @@ addon = xbmcaddon.Addon()
 translation = addon.getLocalizedString
 
 
-xbmcplugin.setContent(addon_handle, 'movies')
+xbmcplugin.setContent(addon_handle, 'Movies')
 
 xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_UNSORTED)
 xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
@@ -60,8 +60,8 @@ def log(msg, level=xbmc.LOGNOTICE):
     
 
   
-def addDir(name, url, mode, thump, desc="",page=1,sub=""):   
-  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&page="+str(page)+"&sub="+str(sub)
+def addDir(name, url, mode, thump, desc="",page=1,sub="",serie=""):   
+  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&page="+str(page)+"&sub="+str(sub)+"&serie="+str(serie)
   ok = True
   liz = xbmcgui.ListItem(name)  
   liz.setArt({ 'fanart' : thump })
@@ -73,14 +73,14 @@ def addDir(name, url, mode, thump, desc="",page=1,sub=""):
   ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
   return ok
   
-def addLink(name, url, mode, thump, duration="", desc="", genre='',director="",bewertung=""):
+def addLink(name, url, mode, thump, duration="", desc="", genre='',director="",bewertung="",serie=""):
   debug("URL ADDLINK :"+url)
   debug( icon  )
   u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
   ok = True
   liz = xbmcgui.ListItem(name,thumbnailImage=thump)
   liz.setArt({ 'fanart' : icon })
-  liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Genre": genre, "Director":director,"Rating":bewertung})
+  liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Genre": genre, "Director":director,"Rating":bewertung,"TVShowTitle":serie})
   liz.setProperty('IsPlayable', 'true')
   liz.addStreamInfo('video', { 'duration' : duration })
 	#xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
@@ -138,7 +138,9 @@ def liste():
     xbmcplugin.endOfDirectory(addon_handle) 
 
 def playvideo(url):    
+   debug(url)
    vid = YDStreamExtractor.getVideoInfo(url,quality=2) #quality is 0=SD, 1=720p, 2=1080p and is a maximum
+   debug(vid)
    stream_url = vid.streamURL()
    stream_url=stream_url.split("|")[0]
    listitem = xbmcgui.ListItem(path=stream_url)   
@@ -153,6 +155,7 @@ url = urllib.unquote_plus(params.get('url', ''))
 referer = urllib.unquote_plus(params.get('referer', ''))
 page= urllib.unquote_plus(params.get('page', ''))
 sub= urllib.unquote_plus(params.get('sub', ''))
+serie= urllib.unquote_plus(params.get('serie', ''))
 
 def themenliste(url):
   starturl="http://www.spiegel.tv/start"  
@@ -177,21 +180,28 @@ def startrubrik(url,sub):
     image = video.find("img")["src"]
     title = video.find("img")["alt"]
     if sub=="studios":
-      addDir(title,link,"videoliste",image)
+      addDir(title,link,"videoliste",image,serie=title)
     else:
      addLink(title,link,"playvideo",image)
   xbmcplugin.endOfDirectory(addon_handle)  
   
-def videoliste(url):
+def videoliste(url,serie):
+  xbmcplugin.setContent(addon_handle, 'episodes')
   content=geturl(url)
   htmlPage = BeautifulSoup(content, 'html.parser')  
   Videos_block = htmlPage.find("div",attrs={"id":"rcblock"}) 
   Videos = Videos_block.find_all("a",attrs={"class":"focusable tholder material"}) 
   for video in Videos:
+    debug("---")
+    debug(video)
     link="http://www.spiegel.tv"+video["href"]
     image = video.find("img")["src"]
-    title = video.find("div",attrs={"class":"autocut bold cardsubtitle"}).text
-    addLink(title,link,"playvideo",image)
+    title = video.find("div",attrs={"class":"autocut bold cardtitle"}).text
+    desc = video.find("div",attrs={"class":"tdesc"}).text    
+    durationstring = video.find("div",attrs={"class":"tholderbottom"}).text
+    duration=re.compile('([0-9]+)', re.DOTALL).findall(durationstring)[0]    
+    duration=int(duration)*60
+    addLink(title,link,"playvideo",image,desc=desc,serie=serie,duration=duration)
   xbmcplugin.endOfDirectory(addon_handle)  
   
   
@@ -224,6 +234,6 @@ else:
   if mode == 'playlive':
           playlive()
   if mode == 'videoliste':
-          videoliste(url)  
+          videoliste(url,serie)  
   if mode == 'startrubrik':
           startrubrik(url,sub)  
