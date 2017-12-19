@@ -1,0 +1,38 @@
+[
+	{
+		"label": "Beach Volleyball",
+		"path": "beach-volleyball/videos"
+	},
+	{
+		"label": "Formel 1",
+		"path": "formel1/videos"
+	},
+	{
+		"label": "Fußball",
+		"path": "fussball/ligen-wettbewerbe",
+		"action": "listSubnavi"
+	},
+	{
+		"label": "Golf",
+		"path": "golf/videos"
+	},
+	{
+		"label": "Handball",
+		"path": "handball",
+		"action": "listSubnavi",
+		"children": [
+			{
+				"label": "Bundesliga",
+				"path": "handball/dkb-bundesliga/videos"
+			},
+			{
+				"label": "Champions League",
+				"path": "handball/velux-ehf-champions-league/videos"
+			}
+		]
+	},
+	{
+		"label": "Tennis",
+		"path": "tennis/videos"
+	}
+]
