@@ -141,18 +141,31 @@ def liste():
     addDir("Sendungen" , "http://3plus.tv/videos", "Serien","")   
     xbmcplugin.endOfDirectory(addon_handle) 
 
-def playvideo(url):  
-   newurl="https://playout.3qsdn.com/"+url+"?timestamp=0&key=0&js=true&container=sdnPlayer&width=100%&height=100%&protocol=http&wmode=direct&preload=true&amp=false"
+def playvideo(url):    
+   newurl="http://playout.3qsdn.com/"+url+"?timestamp=0&autoplay=false&key=0&js=true&container=sdnPlayer&width=100%&height=100%&protocol=http&vastid=0&playlistbar=falsee"
+   ref="http://playout.3qsdn.com/"+url   
    debug(newurl)
    content=geturl(newurl)   
-   liste=re.compile("{src:'(.+?)', type: '(.+?)', quality: '(.+?)' }", re.DOTALL).findall(content)
+   content=content.replace("\\x2D","-")
+   liste=re.compile("{src:'(.+?)', type: '(.+?)', quality: '(.+?)'", re.DOTALL).findall(content)
    quality_setting=addon.getSetting("quality")   
    stream=""
    for url,type,quality in liste:     
      stream=url
      if quality==quality_setting:
        break     
-    
+   if stream=="":
+      token2=re.compile("sdnPlayoutId:'(.+?)'", re.DOTALL).findall(content)[0]
+      url2="http://playout.3qsdn.com/"+token2+"?timestamp=0&key=0&js=true&autoplay=false&container=sdnPlayer_player&width=100%25&height=100%25&protocol=http&token=0&vastid=0&jscallback=sdnPlaylistBridge"
+      content=geturl(url2)   
+      debug("url2 :"+url2)
+      liste=re.compile("{src:'(.+?)', type: '(.+?)', quality: '(.+?)'", re.DOTALL).findall(content)   
+      for url,type,quality in liste:     
+        debug(quality)
+        debug(url)
+        stream=url
+        if quality==quality_setting:
+            break     
    listitem = xbmcgui.ListItem(path=stream)   
    addon_handle = int(sys.argv[1])  
    xbmcplugin.setResolvedUrl(addon_handle, True, listitem)
@@ -173,7 +186,7 @@ def episoden(url):
 #views-field-field-video-embed
   debug("Start episodes")
   debug(url)
-  content = cache.cacheFunction(geturl,url)  
+  content = geturl(url)  
   htmlPage = BeautifulSoup(content, 'html.parser')    
   subhtml = htmlPage.find("div",attrs={"class":"pane-content"})   
   Videos = subhtml.find_all("li",attrs={"class":re.compile("views-row")}) 
