@@ -255,8 +255,8 @@ def Seite(url,offset=1):
         bild=artikel["images"][0]["url"].replace("{{w}}x{{h}}","800x800")
         videourlhd=""
         videourlmd=""
-        if  str(artikel["video"]) =="1":
-            for video in artikel["videos"] :
+        x=0
+        for video in artikel["videos"] :
                 debug(video)
                 if video["quality"]=="hd":
                     try:
@@ -265,10 +265,12 @@ def Seite(url,offset=1):
                         pass
                 if  video["quality"]=="md":#
                     videourlmd=video["url"]
-            debug("Title :"+title)            
-            addLink(title,videourlhd,"Play",bild)
-        else:
-            addLink("TXT: "+title.decode('ascii', 'ignore'),"","infofenster",bild,text=smart_str(artikel["plainText"]))
+                debug("Title :"+title)            
+                x=x+1
+        if x>0:
+            addLink(title,videourlhd,"Play",bild)        
+        #else:
+         #   addLink("TXT: "+title.decode('ascii', 'ignore'),"","infofenster",bild,text=smart_str(artikel["plainText"]))
         # pass
   debug(struktur["extra"]["offset"])
   debug(struktur["extra"]["total"])
@@ -285,7 +287,7 @@ def Rubrik(url):
 def index():  
   #ListRubriken("http://"+language2+".euronews.com","",x=1)
   addLink("Live","","playlive","")
-  Rubriken("http://"+language2+".euronews.com")  
+  Rubriken("http://"+language2+".euronews.com/")  
   xbmcplugin.endOfDirectory(pluginhandle)   
 
 def  Play(url):  
