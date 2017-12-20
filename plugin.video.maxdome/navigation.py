@@ -157,6 +157,8 @@ class Navigation:
             r = 'Staffel %02d' % (int(asset['number']))
             if not 'de' in asset['languageList']:
                 r += ' (OV)'
+            if self.mxd.Assets.isBuyonly(asset):
+                r = r + '[COLOR orange] - not included in package[/COLOR]'
             return r
         elif asset_class == 'tvepisode':
             return 'S%02dE%02d - %s' % (int(asset['seasonNumber']), int(asset['episodeNumber']), asset['episodeTitle'])
@@ -272,7 +274,8 @@ class Navigation:
         return listitems
 
     def getInfoItem(self, asset):
-        info = {}
+        # xbmc.log('%s' % (asset)) # For Debugging
+        info = {}      
         info['plot'] = asset['descriptionShort']
         if 'descriptionLong' in asset:
             info['plot'] = asset['descriptionLong']
@@ -284,7 +287,7 @@ class Navigation:
             info['plot'] = '[COLOR red]'+ info['mpaa'] +'[/COLOR]  \n\n' + info['plot']
         if 'userrating' in asset:
             info['rating'] = asset['userrating']['averageRating']
-            info['plot'] = '[COLOR blue]User Rating: '+ str(info['rating']) +' / 5[/COLOR] - ' + info['plot']
+            info['plot'] = '[COLOR blue]' + str(asset['userrating']['countTotal']) +' Users rated: '+ str(info['rating']) +' / 5[/COLOR]  -  ' + info['plot']
         if 'productionYear' in asset:
             info['year'] = asset['productionYear']
         asset_class = maxdome.getAssetClass(asset['@class'])
@@ -311,8 +314,8 @@ class Navigation:
 
         if not asset['green'] and not self.mxd.Assets.isPackageContent(asset):
             if 'title' in info:
-                info['title'] += ' (p)'
-
+                #info['title'] += ' (p)' # old way to separate payed and unpayed content
+                info['title'] = info['title'] + '[COLOR orange] - Buy only[/COLOR]'
         return info
 
     def getPoster(self, data):

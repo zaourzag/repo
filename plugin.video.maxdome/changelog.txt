@@ -1,3 +1,9 @@
+1.0.4.1
+- Improved Display of "free" (white) and "pay only" content, which will get a "- Buy only" Title addition in Orange (in accordance with Amazon Addon)
+- Introduced Display of users voted for the user rating
+- Added Inputstream and Inputstreamhelper as dependency to improve Inputstream usability
+- Improved Addon Description
+
 1.0.4.0
 - Introduce User Rating and Parental Rating (FSK) into Description/Details
 
