@@ -2327,25 +2327,30 @@ NOTE: Due to updates by rytec, this addon might completely break in a couple of 
   	</extension>
 </addon>
 
-<addon id="plugin.video.skysport.de" name="Sky Sport Mediathek" version="0.3.0" provider-name="Maven">
-  <requires>
-    <import addon="xbmc.python" version="2.1.0"/>
-    <import addon="script.module.beautifulsoup4" version="4.5.3" />
-    <import addon="script.module.requests" version="2.18.4" />
-    <import addon="script.common.plugin.cache" version="2.5.8"/>
-  </requires>
-  <extension point="xbmc.python.pluginsource" library="addon.py">
-    <provides>video</provides>
-  </extension>
-  <extension point="xbmc.addon.metadata">
-    <platform>all</platform>
-    <language>de</language>
-    <summary>Videos aus der ganzen Welt des Sports.</summary>
-    <description>Dieses Plugin stellt Videos von https://sport.sky.de bereit.</description>
-    <website>https://sport.sky.de</website>
-    <source>https://github.com/Maven85/plugin.video.skysport.de.git</source>
-    <license>GNU GENERAL PUBLIC LICENSE. Version 3, 29 June 2007</license>
-  </extension>
+<addon id="plugin.video.skysport.de" name="Sky Sport Mediathek" version="0.4.0" provider-name="Maven">
+	<requires>
+		<import addon="xbmc.python" version="2.1.0"/>
+		<import addon="script.module.beautifulsoup4" version="4.5.3" />
+		<import addon="script.module.requests" version="2.18.4" />
+		<import addon="script.common.plugin.cache" version="2.5.8"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="addon.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<news>
+			- Livestream von Sky Sport News hinzugefügt
+		</news>
+
+		<summary lang="de_DE">Videos aus der ganzen Welt des Sports.</summary>
+		<description lang="de_DE">Dieses Plugin stellt Videos von https://sport.sky.de bereit.</description>
+		<disclaimer lang="de_DE">Inoffizielles Addon - Benutzung auf eigene Gefahr</disclaimer>
+		
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 3, 29 June 2007</license>
+		<website>https://sport.sky.de</website>
+		<source>https://github.com/Maven85/plugin.video.skysport.de.git</source>		
+    </extension>
 </addon>
 
 <addon id="plugin.audio.prime_music" name="Amazon Prime Music" version="0.7.1" provider-name="piet">
