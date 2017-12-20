@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.L0RE.3plus" name="3plus" version="0.1.2" provider-name="L0RE">
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<addon id="plugin.video.L0RE.3plus" name="3plus TV" version="0.1.3" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
         <import addon="script.module.requests" version="2.12.4"/>
@@ -9,16 +9,25 @@
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
     </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="de">Videoportal von 3plus</summary>
-    <summary lang="en">Videoportal von 3plus</summary>
-    <description lang="en">Videoportal von 3plus</description>
-    <description lang="de">Videoportal von 3plus</description>
-    <website></website>
-    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-    <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.L0RE.3plus</source>
-    <forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
-    <email>andreas at vogler dot name</email>
-    <platform>all</platform>
-  </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="de">Videoportal von 3plus.tv</summary>
+        <summary lang="en">video portal from 3plus.tv</summary>
+        <description lang="de">Schweizer TV-Privatsender 3plus, Mediathekauswahl zusammengestellt von der Seite (http://3plus.tv/).[CR][CR]@L0RE</description>
+        <description lang="en">Swiss private TV channel 3plus, media library selection compiled by the site (http://3plus.tv/).[CR][CR]@L0RE</description>
+        <disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+        <disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+        <language></language>
+        <platform>all</platform>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
+        <website>http://3plus.tv/</website>
+        <email>andreas at vogler dot name</email>
+        <source>https://github.com/kodinerds/repo/tree/master/plugin.video.L0RE.3plus</source>
+        <assets>
+            <icon>icon.png</icon>
+            <fanart>fanart.jpg</fanart>
+        </assets>
+        <news>[B][COLOR orangered]Version 0.1.3[/COLOR][/B][CR]
+        </news>
+    </extension>
 </addon>
