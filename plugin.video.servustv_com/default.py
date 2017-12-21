@@ -220,9 +220,9 @@ def Play(idd):
 def playLiveStream():
     debug( "siteVersion :"+siteVersion)
     if siteVersion=="de-de":    
-                streamUrl="http://hdiosstv-f.akamaihd.net/i/servustvhdde_1@75540/index_2592_av-p.m3u8"    
+                streamUrl="https://liveservustv-i.akamaihd.net/hls/live/271000/ServusTV_DE/master_fbr2192.m3u8"    
     else: 
-                streamUrl="http://hdiosstv-f.akamaihd.net/i/servustvhd_1@51229/index_2592_av-p.m3u8"    
+                streamUrl="https://liveservustv-i.akamaihd.net/hls/live/270998/ServusTV_AT/master_fb1112.m3u8"    
     listitem = xbmcgui.ListItem(path=streamUrl)
     xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
 
