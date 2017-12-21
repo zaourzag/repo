@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window>
+	<!-- busydialog -->
+	<controls>
+		<control type="group">
+			<include content="DiffuseMask"/>			
+			<include>FullscreenBusySpinner</include>
+		</control>
+	</controls>
+</window>

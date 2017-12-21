@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<window>
+	<defaultcontrol always="true">52</defaultcontrol>
+	<backgroundcolor>background</backgroundcolor>
+	<controls>
+		<include>Background</include>
+		<control type="group">
+			<animation condition="Integer.IsEqual(Container(52).NumItems,6)" effect="slide" start="0,0" end="12,0">Conditional</animation>
+			<animation condition="Integer.IsEqual(Container(52).NumItems,5)" effect="slide" start="0,0" end="160,0">Conditional</animation>
+			<animation condition="Integer.IsEqual(Container(52).NumItems,4)" effect="slide" start="0,0" end="308,0">Conditional</animation>
+			<animation condition="Integer.IsEqual(Container(52).NumItems,3)" effect="slide" start="0,0" end="456,0">Conditional</animation>
+			<animation condition="Integer.IsEqual(Container(52).NumItems,2)" effect="slide" start="0,0" end="604,0">Conditional</animation>
+			<animation condition="Integer.IsEqual(Container(52).NumItems,1)" effect="slide" start="0,0" end="752,0">Conditional</animation>
+			<top>70</top>
+			<include content="ProfileWidget">
+				<param name="id" value="52"/>
+				<param name="onup" value="noop"/>
+				<param name="ondown" value="noop"/>
+				<param name="headline" value="$LOCALIZE[13200]"/>
+				<param name="mainlabel" value="$INFO[ListItem.Label]"/>
+				<param name="use_custom_content" value="false"/>
+			</include>
+		</control>
+		<!-- header bar -->
+		<include content="HeaderBar">		
+			<param name="id">52</param>
+			<param name="enabled">false</param>
+		</include>
+	</controls>
+</window>

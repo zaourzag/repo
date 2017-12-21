@@ -1,0 +1,1592 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<includes>
+	<variable name="HeaderCustomDeviceName">
+		<value condition="Skin.HasSetting(CustomDeviceName) + !String.IsEmpty(Skin.String(CustomDeviceName_label))">$INFO[Skin.String(CustomDeviceName_label)]</value>
+		<value>embuary</value>
+	</variable>
+	<variable name="ContainerContent">
+		<value condition="String.StartsWith(Container.FolderPath,videodb://movies/genres/)">$INFO[Container.Foldername]</value>
+		<value condition="String.StartsWith(Container.FolderPath,videodb://tvshows/genres/)">$INFO[Container.Foldername]</value>
+		<value condition="String.StartsWith(Container.FolderPath,plugin://script.skin.helper.widgets/?action=browsegenres)">$LOCALIZE[135]</value>
+		<value condition="Window.IsVisible(script-NextAired-TVGuide2.xml)">$LOCALIZE[31154]</value>
+		<value condition="Window.IsVisible(script-NextAired-TVGuide.xml)">$LOCALIZE[31154]</value>
+		<value condition="Window.IsVisible(subtitlesearch)">$LOCALIZE[287]</value>
+		<value condition="Window.IsVisible(pictures)">$LOCALIZE[1213]</value>
+		<value condition="Window.IsVisible(EventLog.xml)">$LOCALIZE[31108]</value>
+		<value condition="Window.IsVisible(script-nextup-notification-PostPlayInfo.xml)">$LOCALIZE[31079]</value>
+		<value condition="Window.IsVisible(musicplaylisteditor)">$LOCALIZE[10503]</value>
+		<value condition="Window.IsVisible(weather)">$LOCALIZE[8]</value>
+		<value condition="Window.IsVisible(favourites)">$LOCALIZE[1036]</value>
+		<value condition="Window.IsVisible(smartplaylisteditor)">$LOCALIZE[10136]</value>
+		<value condition="Window.IsVisible(DialogPVRChannelManager.xml)">$LOCALIZE[19199]</value>
+		<value condition="Window.IsVisible(pvrgroupmanager)">$LOCALIZE[19048]</value>
+		<value condition="Window.IsVisible(skinsettings)">$LOCALIZE[31058]</value>
+		<value condition="Window.IsVisible(filemanager)">$LOCALIZE[7]</value>
+		<value condition="Window.IsVisible(musicplaylist)">$LOCALIZE[10500]</value>
+		<value condition="Window.IsVisible(videoplaylist)">$LOCALIZE[10028]</value>
+		<value condition="Window.IsVisible(videobookmarks)">$LOCALIZE[298]</value>
+		<value condition="Window.IsVisible(systeminfo)">$LOCALIZE[138]</value>
+		<value condition="Window.IsVisible(profiles)">$LOCALIZE[10130]</value>
+		<value condition="Window.IsVisible(script-globalsearch-main.xml)">$LOCALIZE[283]</value>
+		<value condition="Window.IsVisible(DialogFullScreenInfo.xml) + VideoPlayer.Content(livetv)">$LOCALIZE[19166]</value>
+		<value condition="Window.IsVisible(DialogFullScreenInfo.xml) + VideoPlayer.Content(movies)">$LOCALIZE[10524]</value>
+		<value condition="Window.IsVisible(DialogFullScreenInfo.xml) + VideoPlayer.Content(episodes)">$LOCALIZE[20352]</value>
+		<value condition="Window.IsVisible(DialogAddonSettings.xml)">$INFO[Control.GetLabel(20)]</value>
+		<value condition="Window.IsVisible(SettingsCategory.xml)">$LOCALIZE[5]: $INFO[Control.GetLabel(2)]</value>
+		<value condition="Window.IsVisible(Settings.xml)">$LOCALIZE[5]</value>
+		<value condition="Window.IsVisible(1120)">$LOCALIZE[342]</value>
+		<value condition="Window.IsVisible(1121)">$LOCALIZE[20343]</value>
+		<value condition="Window.IsVisible(1122)">$LOCALIZE[2]</value>
+		<value condition="Window.IsVisible(1123)">$LOCALIZE[24001]</value>
+		<value condition="Window.IsVisible(1124)">$VAR[PVRLabel]</value>
+		<value condition="Window.IsVisible(1125)">$LOCALIZE[135]</value>
+		<value condition="Window.IsVisible(1126)">$LOCALIZE[135]</value>
+		<value condition="Window.IsVisible(musicinformation) + String.IsEqual(ListItem.DBType,album)">$LOCALIZE[10523]</value>
+		<value condition="Window.IsVisible(musicinformation) + String.IsEqual(ListItem.DBType,artist)">$LOCALIZE[21891]</value>
+		<value condition="Window.IsVisible(movieinformation) + String.IsEqual(ListItem.DBType,tvshow)">$LOCALIZE[20351]</value>
+		<value condition="Window.IsVisible(movieinformation) + String.IsEqual(ListItem.DBType,movie)">$LOCALIZE[10524]</value>
+		<value condition="Window.IsVisible(movieinformation) + String.IsEqual(ListItem.DBType,episode)">$LOCALIZE[20352]</value>
+		<value condition="!String.IsEmpty(Container.ShowTitle)">$INFO[Container.ShowTitle]</value>
+		<value condition="Window.IsVisible(MyPVRGuide.xml)">$LOCALIZE[19069]</value>
+		<value condition="Window.IsVisible(MyPVRRecordings.xml)">$LOCALIZE[19017]</value>
+		<value condition="Container.Content(sets)">$LOCALIZE[31169]</value>
+		<value condition="Container.Content(movies)">$LOCALIZE[342]</value>
+		<value condition="Container.Content(tvshows)">$LOCALIZE[20343]</value>
+		<value condition="Container.Content(seasons)">$LOCALIZE[33054]</value>
+		<value condition="Container.Content(artists)">$LOCALIZE[133]</value>
+		<value condition="Container.Content(songs)">$LOCALIZE[134]</value>
+		<value condition="Container.Content(albums)">$LOCALIZE[132]</value>
+		<value condition="String.StartsWith(Container.FolderPath,videodb://movies)">$LOCALIZE[342]</value>
+		<value condition="String.StartsWith(Container.FolderPath,videodb://tvshows)">$LOCALIZE[20343]</value>
+		<value condition="String.StartsWith(Container.FolderPath,musicdb://)">$LOCALIZE[2]</value>
+		<value condition="Window.IsVisible(mymusicnav.xml)">$LOCALIZE[2]</value>
+		<value condition="Window.IsVisible(myvideonav.xml)">$LOCALIZE[3]</value>
+		<value>$INFO[Container.Foldername]</value>
+	</variable>
+	<variable name="ContainerCountLabel">
+		<value condition="Container.Content(sets) + !Window.IsVisible(movieinformation)">$INFO[Container.NumItems]</value>
+		<value condition="Container.Content(movies) + !Window.IsVisible(movieinformation)">$INFO[Container.NumItems]</value>
+		<value condition="Container.Content(tvshows) + !Window.IsVisible(movieinformation)">$INFO[Container.NumItems]</value>
+		<value condition="Container.Content(albums) + !Window.IsVisible(musicinformation)">$INFO[Container.NumItems]</value>
+		<value condition="Container.Content(songs) + !Window.IsVisible(musicinformation)">$INFO[Container.NumItems]</value>
+		<value condition="Container.Content(artists) + !Window.IsVisible(musicinformation)">$INFO[Container.NumItems]</value>
+	</variable>
+	<!-- Custom widgets -->
+	<variable name="UserWidget1_content">
+		<value condition="Skin.HasSetting(UserWidget1)">$INFO[Skin.String(UserWidget1_path)]</value>
+	</variable>
+	<variable name="UserWidget2_content">
+		<value condition="Skin.HasSetting(UserWidget2)">$INFO[Skin.String(UserWidget2_path)]</value>
+	</variable>
+	<variable name="UserWidget3_content">
+		<value condition="Skin.HasSetting(UserWidget3)">$INFO[Skin.String(UserWidget3_path)]</value>
+	</variable>
+	<variable name="UserWidget4_content">
+		<value condition="Skin.HasSetting(UserWidget4)">$INFO[Skin.String(UserWidget4_path)]</value>
+	</variable>
+	<variable name="UserWidget5_content">
+		<value condition="Skin.HasSetting(UserWidget5)">$INFO[Skin.String(UserWidget5_path)]</value>
+	</variable>
+	<variable name="UserWidget6_content">
+		<value condition="Skin.HasSetting(UserWidget6)">$INFO[Skin.String(UserWidget6_path)]</value>
+	</variable>
+	<variable name="UserMovieWidget1_content">
+		<value condition="Skin.HasSetting(UserMovieWidget1)">$INFO[Skin.String(UserMovieWidget1_path)]</value>
+	</variable>
+	<variable name="UserMovieWidget2_content">
+		<value condition="Skin.HasSetting(UserMovieWidget2)">$INFO[Skin.String(UserMovieWidget2_path)]</value>
+	</variable>
+	<variable name="UserMovieWidget3_content">
+		<value condition="Skin.HasSetting(UserMovieWidget3)">$INFO[Skin.String(UserMovieWidget3_path)]</value>
+	</variable>
+	<variable name="UserMovieWidget4_content">
+		<value condition="Skin.HasSetting(UserMovieWidget4)">$INFO[Skin.String(UserMovieWidget4_path)]</value>
+	</variable>
+	<variable name="UserMovieWidget5_content">
+		<value condition="Skin.HasSetting(UserMovieWidget5)">$INFO[Skin.String(UserMovieWidget5_path)]</value>
+	</variable>
+	<variable name="UserMovieWidget6_content">
+		<value condition="Skin.HasSetting(UserMovieWidget6)">$INFO[Skin.String(UserMovieWidget6_path)]</value>
+	</variable>
+	<variable name="UserTVShowWidget1_content">
+		<value condition="Skin.HasSetting(UserTVShowWidget1)">$INFO[Skin.String(UserTVShowWidget1_path)]</value>
+	</variable>
+	<variable name="UserTVShowWidget2_content">
+		<value condition="Skin.HasSetting(UserTVShowWidget2)">$INFO[Skin.String(UserTVShowWidget2_path)]</value>
+	</variable>
+	<variable name="UserTVShowWidget3_content">
+		<value condition="Skin.HasSetting(UserTVShowWidget3)">$INFO[Skin.String(UserTVShowWidget3_path)]</value>
+	</variable>
+	<variable name="UserTVShowWidget4_content">
+		<value condition="Skin.HasSetting(UserTVShowWidget4)">$INFO[Skin.String(UserTVShowWidget4_path)]</value>
+	</variable>
+	<variable name="UserTVShowWidget5_content">
+		<value condition="Skin.HasSetting(UserTVShowWidget5)">$INFO[Skin.String(UserTVShowWidget5_path)]</value>
+	</variable>
+	<variable name="UserTVShowWidget6_content">
+		<value condition="Skin.HasSetting(UserTVShowWidget6)">$INFO[Skin.String(UserTVShowWidget6_path)]</value>
+	</variable>
+	<variable name="UserMusicWidget1_content">
+		<value condition="Skin.HasSetting(UserMusicWidget1)">$INFO[Skin.String(UserMusicWidget1_path)]</value>
+	</variable>
+	<variable name="UserMusicWidget2_content">
+		<value condition="Skin.HasSetting(UserMusicWidget2)">$INFO[Skin.String(UserMusicWidget2_path)]</value>
+	</variable>
+	<variable name="UserMusicWidget3_content">
+		<value condition="Skin.HasSetting(UserMusicWidget3)">$INFO[Skin.String(UserMusicWidget3_path)]</value>
+	</variable>
+	<variable name="UserMusicWidget4_content">
+		<value condition="Skin.HasSetting(UserMusicWidget4)">$INFO[Skin.String(UserMusicWidget4_path)]</value>
+	</variable>
+	<variable name="UserMusicWidget5_content">
+		<value condition="Skin.HasSetting(UserMusicWidget5)">$INFO[Skin.String(UserMusicWidget5_path)]</value>
+	</variable>
+	<variable name="UserMusicWidget6_content">
+		<value condition="Skin.HasSetting(UserMusicWidget6)">$INFO[Skin.String(UserMusicWidget6_path)]</value>
+	</variable>
+	<!-- Embcon widget vars -->
+	<variable name="EmbyCon_InProgressMedia">
+		<value condition="[System.HasAddon(plugin.video.embycon) + Skin.HasSetting(EnableEmbyConWidgets)]">plugin://plugin.video.embycon?mode=WIDGET_CONTENT_URL&amp;url=Users%2F%7Buserid%7D%2FItems%3FSortBy%3DDatePlayed%26SortOrder%3DDescending%26Filters%3DIsResumable%26Limit%3D12%26Recursive%3Dtrue%26Fields%3DPrimaryImageAspectRatio%252CBasicSyncInfo%26CollapseBoxSetItems%3Dfalse%26ExcludeLocationTypes%3DVirtual%26ImageTypeLimit%3D1%26EnableImageTypes%3DPrimary%252CBackdrop%252CThumb%26EnableTotalRecordCount%3Dfalse%26MediaTypes%3DVideo</value>
+	</variable>
+	<variable name="EmbyCon_InProgressMovies">
+		<value condition="[System.HasAddon(plugin.video.embycon) + Skin.HasSetting(EnableEmbyConWidgets)]">plugin://plugin.video.embycon/?mode=WIDGET_CONTENT&amp;type=inprogress_movies</value>
+	</variable>
+	<variable name="EmbyCon_InProgressShows">
+		<value condition="[System.HasAddon(plugin.video.embycon) + Skin.HasSetting(EnableEmbyConWidgets)]">plugin://plugin.video.embycon/?mode=WIDGET_CONTENT&amp;type=inprogress_episodes</value>
+	</variable>
+	<variable name="EmbyCon_NextUpEpisodes">
+		<value condition="[System.HasAddon(plugin.video.embycon) + Skin.HasSetting(EnableEmbyConWidgets)]">plugin://plugin.video.embycon?mode=WIDGET_CONTENT_URL&amp;url=Shows%2FNextUp%3FLimit%3D24%26Fields%3DPrimaryImageAspectRatio%252CSeriesInfo%252CDateCreated%252CBasicSyncInfo%26UserId%3D%7Buserid%7D%26ImageTypeLimit%3D1%26EnableImageTypes%3DPrimary%252CBackdrop%252CBanner%252CThumb%26EnableTotalRecordCount%3Dfalse</value>
+	</variable>
+	<variable name="EmbyCon_RecentMovies">
+		<value condition="[System.HasAddon(plugin.video.embycon) + Skin.HasSetting(EnableEmbyConWidgets)]">plugin://plugin.video.embycon/?mode=WIDGET_CONTENT&amp;type=recent_movies</value>
+	</variable>
+	<variable name="EmbyCon_RecentEpisodes">
+		<value condition="[System.HasAddon(plugin.video.embycon) + Skin.HasSetting(EnableEmbyConWidgets)]">plugin://plugin.video.embycon/?mode=WIDGET_CONTENT&amp;type=recent_episodes</value>
+	</variable>
+	<variable name="EmbyCon_MovieGenres">
+		<value condition="[System.HasAddon(plugin.video.embycon) + Skin.HasSetting(EnableEmbyConWidgets)]">plugin://plugin.video.embycon/?mode=MOVIE_GENRE</value>
+	</variable>
+	<variable name="EmbyCon_TVShowGenres">
+		<value condition="[System.HasAddon(plugin.video.embycon) + Skin.HasSetting(EnableEmbyConWidgets)]">plugin://plugin.video.embycon/?mode=SERIES_GENRE</value>
+	</variable>
+	<variable name="EmbyCon_Movies">
+		<value condition="[System.HasAddon(plugin.video.embycon) + Skin.HasSetting(EnableEmbyConWidgets)]">plugin://plugin.video.embycon/?item_type=Movie&amp;media_type=Movies&amp;mode=SHOW_CONTENT</value>
+	</variable>
+	<variable name="EmbyCon_TVShows">
+		<value condition="[System.HasAddon(plugin.video.embycon) + Skin.HasSetting(EnableEmbyConWidgets)]">plugin://plugin.video.embycon/?item_type=tvshows&amp;media_type=Movies&amp;mode=SHOW_CONTENT</value>
+	</variable>
+	<variable name="EmbyCon_SimilarMovies">
+		<value condition="[System.HasAddon(plugin.video.embycon) + Skin.HasSetting(EnableEmbyConWidgets)]">plugin://plugin.video.embycon?mode=WIDGET_CONTENT_SUGGESTIONS</value>
+	</variable>
+	<variable name="EmbyCon_SimilarTVShows">
+		<value condition="[System.HasAddon(plugin.video.embycon) + Skin.HasSetting(EnableEmbyConWidgets)]">plugin://plugin.video.embycon?mode=WIDGET_CONTENT_SUGGESTIONS</value>
+	</variable>
+	<!-- Favourits vars -->
+	<variable name="FavMovies_Content">
+		<value condition="System.HasAddon(plugin.video.embycon) + Skin.HasSetting(EnableEmbyConWidgets)]">plugin://plugin.video.embycon?mode=WIDGET_CONTENT_URL&amp;url=Users%2F%7Buserid%7D%2FItems%3FSortBy%3DSortName%26SortOrder%3DAscending%26Filters%3DIsFavorite%26Recursive%3Dtrue%26Fields%3DPrimaryImageAspectRatio%252CBasicSyncInfo%26CollapseBoxSetItems%3Dfalse%26ExcludeLocationTypes%3DVirtual%26EnableTotalRecordCount%3Dfalse%26Limit%3D30%26IncludeItemTypes%3DMovie</value>
+		<value condition="System.HasAddon(plugin.video.emby)">library://video/emby_Favorite movies.xml</value>
+	</variable>
+	<variable name="FavShows_Content">
+		<value condition="System.HasAddon(plugin.video.embycon) + Skin.HasSetting(EnableEmbyConWidgets)]">plugin://plugin.video.embycon/?media_type=tvshows&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems%3fFields%3dEpisodeCount%2cSeasonCount%2cPath%2cGenres%2cStudios%2cCumulativeRunTimeTicks%2cEtag%2cMediaStreams%2cOverview%26Recursive%3dtrue%26Filters%3dIsFavorite%26IncludeItemTypes%3dSeries%26ImageTypeLimit%3d1%26format%3djson</value>
+		<value condition="System.HasAddon(plugin.video.emby)">library://video/emby_Favorite tvshows.xml</value>
+	</variable>
+	<variable name="FavEpisodes_Content">
+		<value condition="System.HasAddon(plugin.video.embycon) + Skin.HasSetting(EnableEmbyConWidgets)]">plugin://plugin.video.embycon?mode=WIDGET_CONTENT_URL&amp;url=Users%2F%7Buserid%7D%2FItems%3FSortBy%3DSortName%26SortOrder%3DAscending%26Filters%3DIsFavorite%26Recursive%3Dtrue%26Fields%3DPrimaryImageAspectRatio%252CBasicSyncInfo%26CollapseBoxSetItems%3Dfalse%26ExcludeLocationTypes%3DVirtual%26EnableTotalRecordCount%3Dfalse%26Limit%3D10%26IncludeItemTypes%3DEpisode</value>
+		<value condition="System.HasAddon(plugin.video.emby)">library://video/emby_Favorite episodes.xml</value>
+	</variable>
+	<!-- Embcon/Native DB vars -->
+	<variable name="View_Cast_Content">
+		<value condition="String.StartsWith(ListItem.Path,plugin://plugin.video.embycon) + !String.IsEmpty(ListItem.Property(id))">plugin://plugin.video.embycon?mode=WIDGET_CONTENT_CAST&amp;id=$INFO[ListItem.Property(id)]</value>
+		<value condition="String.StartsWith(ListItem.Path,plugin://plugin.video.embycon)">plugin://plugin.video.embycon?mode=WIDGET_CONTENT_CAST&amp;id=$INFO[Window(home).Property(EmbyID)]</value>
+		<value condition="String.IsEqual(ListItem.DBType,movie)">plugin://script.skin.helper.service/?action=getcast&amp;movie=$INFO[ListItem.Title]&amp;downloadthumbs=true&amp;castaction=extendedinfo</value>
+		<value>plugin://script.skin.helper.service/?action=getcast&amp;tvshow=$INFO[ListItem.TvShowTitle]&amp;downloadthumbs=true&amp;castaction=extendedinfo</value>
+	</variable>
+	<variable name="View54_NextUp_Content">
+		<value condition="String.StartsWith(ListItem.Path,plugin://plugin.video.embycon)">plugin://plugin.video.embycon?mode=WIDGET_CONTENT_NEXTUP&amp;id=$INFO[Window(home).Property(EmbyID)]</value>
+		<value>videodb://inprogresstvshows/$INFO[Window(home).Property(TVShowDBID)]/-2/?tvshowid=$INFO[Window(home).Property(TVShowDBID)]</value>
+	</variable>
+	<variable name="InfoDialog_NextUp_Content">
+		<value condition="String.StartsWith(ListItem.Path,plugin://plugin.video.embycon)">plugin://plugin.video.embycon?mode=WIDGET_CONTENT_NEXTUP&amp;id=$INFO[ListItem.Property(id)]</value>
+		<value>videodb://inprogresstvshows/$INFO[ListItem.DBID]/-2/?tvshowid=$INFO[ListItem.DBID]</value>
+	</variable>
+	<variable name="View55_MoreLikeThis_Content">
+		<value condition="String.StartsWith(ListItem.Path,plugin://plugin.video.embycon)">plugin://plugin.video.embycon?mode=WIDGET_CONTENT_SIMILAR&amp;id=$INFO[Window(home).Property(EmbyID)]</value>
+		<value>plugin://script.skin.helper.widgets/?action=similarshows&amp;imdbid=$INFO[Window(home).Property(TVShowIMDB)]</value>
+	</variable>
+	<variable name="View54_MoreLikeThis_Content">
+		<value condition="String.StartsWith(ListItem.Path,plugin://plugin.video.embycon)">plugin://plugin.video.embycon?mode=WIDGET_CONTENT_SIMILAR&amp;id=$INFO[Window(home).Property(EmbyID)]</value>
+		<value>plugin://script.skin.helper.widgets/?action=similarshows&amp;imdbid=$INFO[Window(home).Property(TVShowIMDB)]</value>
+	</variable>
+	<variable name="InfoDialog_MoreLikeThis_Content">
+		<value condition="String.StartsWith(ListItem.Path,plugin://plugin.video.embycon)">plugin://plugin.video.embycon?mode=WIDGET_CONTENT_SIMILAR&amp;id=$INFO[ListItem.Property(id)]</value>
+		<value condition="String.IsEqual(ListItem.DBType,movie)">plugin://script.skin.helper.widgets/?action=similar&amp;mediatype=movies&amp;imdbid=$INFO[ListItem.IMDBNumber]</value>
+		<value>plugin://script.skin.helper.widgets/?action=similarshows&amp;imdbid=$INFO[ListItem.IMDBNumber]</value>
+	</variable>
+	<variable name="InfoDialog_ArtistAlbums">
+		<value condition="!String.IsEmpty(Window(home).Property(ArtistDBID)) + Window.IsVisible(music)">musicdb://artists/$INFO[Window(home).Property(ArtistDBID)]</value>
+	</variable>
+	<variable name="InfoDialog_ArtistTracks">
+		<value condition="!String.IsEmpty(Window(home).Property(ArtistDBID)) + Window.IsVisible(music)">musicdb://songs/?artistid=$INFO[Window(home).Property(ArtistDBID)]</value>
+	</variable>
+	<variable name="BackgroundSource">
+		<value condition="Window.IsVisible(weather) + !String.IsEmpty(Weather.Temperature)">weather/background/$INFO[Weather.fanartcode].jpg</value>
+		<value condition="Skin.HasSetting(ShowStaticBackgroundImage) + !String.IsEmpty(Skin.String(StaticBackgroundImage))">$INFO[Skin.String(StaticBackgroundImage)]</value>
+		<value condition="[Window.IsVisible(script-NextAired-TVGuide2.xml) | Window.IsVisible(script-NextAired-TVGuide.xml)] + !String.IsEmpty(Window(home).Property(TVGuide.BackgroundFanart)) + Control.HasFocus(200)">$INFO[Container(200).ListItem.Property(Fanart)]</value>
+		<value condition="[Window.IsVisible(script-NextAired-TVGuide2.xml) | Window.IsVisible(script-NextAired-TVGuide.xml)] + !String.IsEmpty(Window(home).Property(TVGuide.BackgroundFanart)) + Control.HasFocus(201)">$INFO[Container(201).ListItem.Property(Fanart)]</value>
+		<value condition="[Window.IsVisible(script-NextAired-TVGuide2.xml) | Window.IsVisible(script-NextAired-TVGuide.xml)] + !String.IsEmpty(Window(home).Property(TVGuide.BackgroundFanart)) + Control.HasFocus(202)">$INFO[Container(202).ListItem.Property(Fanart)]</value>
+		<value condition="[Window.IsVisible(script-NextAired-TVGuide2.xml) | Window.IsVisible(script-NextAired-TVGuide.xml)] + !String.IsEmpty(Window(home).Property(TVGuide.BackgroundFanart)) + Control.HasFocus(203)">$INFO[Container(203).ListItem.Property(Fanart)]</value>
+		<value condition="[Window.IsVisible(script-NextAired-TVGuide2.xml) | Window.IsVisible(script-NextAired-TVGuide.xml)] + !String.IsEmpty(Window(home).Property(TVGuide.BackgroundFanart)) + Control.HasFocus(204)">$INFO[Container(204).ListItem.Property(Fanart)]</value>
+		<value condition="[Window.IsVisible(script-NextAired-TVGuide2.xml) | Window.IsVisible(script-NextAired-TVGuide.xml)] + !String.IsEmpty(Window(home).Property(TVGuide.BackgroundFanart)) + Control.HasFocus(205)">$INFO[Container(205).ListItem.Property(Fanart)]</value>
+		<value condition="[Window.IsVisible(script-NextAired-TVGuide2.xml) | Window.IsVisible(script-NextAired-TVGuide.xml)] + !String.IsEmpty(Window(home).Property(TVGuide.BackgroundFanart)) + Control.HasFocus(206)">$INFO[Container(206).ListItem.Property(Fanart)]</value>
+		<value condition="[Window.IsVisible(script-NextAired-TVGuide2.xml) | Window.IsVisible(script-NextAired-TVGuide.xml)] + !String.IsEmpty(Window(home).Property(TVGuide.BackgroundFanart)) + Control.HasFocus(207)">$INFO[Container(207).ListItem.Property(Fanart)]</value>
+		<value condition="[Window.IsVisible(script-NextAired-TVGuide2.xml) | Window.IsVisible(script-NextAired-TVGuide.xml)] + !String.IsEmpty(Window(home).Property(TVGuide.BackgroundFanart)) + Control.HasFocus(208)">$INFO[Container(208).ListItem.Property(Fanart)]</value>
+		<value condition="[Window.IsVisible(script-NextAired-TVGuide2.xml) | Window.IsVisible(script-NextAired-TVGuide.xml)] + !String.IsEmpty(Window(home).Property(TVGuide.BackgroundFanart)) + Control.HasFocus(209)">$INFO[Container(209).ListItem.Property(Fanart)]</value>
+		<value condition="[Window.IsVisible(script-NextAired-TVGuide2.xml) | Window.IsVisible(script-NextAired-TVGuide.xml)] + !String.IsEmpty(Window(home).Property(TVGuide.BackgroundFanart)) + Control.HasFocus(210)">$INFO[Container(210).ListItem.Property(Fanart)]</value>
+		<value condition="[Window.IsVisible(script-NextAired-TVGuide2.xml) | Window.IsVisible(script-NextAired-TVGuide.xml)] + !String.IsEmpty(Window(home).Property(TVGuide.BackgroundFanart)) + Control.HasFocus(211)">$INFO[Container(211).ListItem.Property(Fanart)]</value>
+		<value condition="[Window.IsVisible(script-NextAired-TVGuide2.xml) | Window.IsVisible(script-NextAired-TVGuide.xml)] + !String.IsEmpty(Window(home).Property(TVGuide.BackgroundFanart)) + Control.HasFocus(212)">$INFO[Container(212).ListItem.Property(Fanart)]</value>
+		<value condition="[Window.IsVisible(script-NextAired-TVGuide2.xml) | Window.IsVisible(script-NextAired-TVGuide.xml)] + !String.IsEmpty(Window(home).Property(TVGuide.BackgroundFanart)) + Control.HasFocus(213)">$INFO[Container(213).ListItem.Property(Fanart)]</value>
+		<value condition="[Window.IsVisible(script-NextAired-TVGuide2.xml) | Window.IsVisible(script-NextAired-TVGuide.xml)] + !String.IsEmpty(Window(home).Property(TVGuide.BackgroundFanart)) + Control.HasFocus(214)">$INFO[Container(214).ListItem.Property(Fanart)]</value>
+		<value condition="[Window.IsVisible(script-NextAired-TVGuide2.xml) | Window.IsVisible(script-NextAired-TVGuide.xml)] + !String.IsEmpty(Window(home).Property(TVGuide.BackgroundFanart)) + Control.HasFocus(215)">$INFO[Container(215).ListItem.Property(Fanart)]</value>
+		<value condition="!String.IsEmpty(Window.Property(background))">$INFO[Window.Property(background)]</value>
+		<value condition="!String.IsEmpty(ListItem.Art(fanart))">$INFO[ListItem.Art(fanart)]</value>
+		<value condition="[Window.IsVisible(1122) | Container.Content(musicvideos) | Window.IsVisible(mymusicnav.xml)] + !String.IsEmpty(Window(home).Property(SkinHelper.AllMusicBackground))">$INFO[Window(home).Property(SkinHelper.AllMusicBackground)]</value>
+		<value condition="[Window.IsVisible(1121) | String.StartsWith(Container.FolderPath,videodb://tvshows)] + !String.IsEmpty(Window(home).Property(SkinHelper.AllTvShowsBackground))">$INFO[Window(home).Property(SkinHelper.AllTvShowsBackground)]</value>
+		<value condition="[Window.IsVisible(1120) | String.StartsWith(Container.FolderPath,videodb://movies)]  + !String.IsEmpty(Window(home).Property(SkinHelper.AllMoviesBackground))">$INFO[Window(home).Property(SkinHelper.AllMoviesBackground)]</value>
+		<value condition="!String.IsEmpty(Window(home).Property(SkinHelper.AllVideosBackground))">$INFO[Window(home).Property(SkinHelper.AllVideosBackground)]</value>
+		<value condition="String.IsEmpty(Window(home).Property(SkinHelper.AllVideosBackground))">$INFO[Window(home).Property(SkinHelper.AllMoviesBackground)]</value>
+	</variable>
+	<variable name="FakeButtonAddonInfo13">
+		<value condition="String.EndsWith(Control.GetLabel(13),(*))">$LOCALIZE[19074]</value>
+		<value>$LOCALIZE[351]</value>
+	</variable>
+	<variable name="ListItemClearlogo">
+		<value condition="!String.IsEmpty(ListItem.Art(tvshow.clearlogo))">$INFO[ListItem.Art(tvshow.clearlogo)]</value>
+		<value condition="!String.IsEmpty(ListItem.Art(clearlogo))">$INFO[ListItem.Art(clearlogo)]</value>
+		<value condition="!String.IsEmpty(Window(home).Property(EmbyTVShowClearlogo))">$INFO[Window(home).Property(EmbyTVShowClearlogo)]</value>
+	</variable>
+	<variable name="SeasonViewPlot">
+		<value condition="!String.IsEmpty(Window(home).Property(EmbyTVShowPlot)) + String.StartsWith(ListItem.Path,plugin://plugin.video.embycon)">$INFO[Window(home).Property(EmbyTVShowPlot)]</value>
+		<value condition="!String.IsEmpty(ListItem.Plot)">$INFO[ListItem.Plot]</value>
+	</variable>
+	<variable name="GlobalSearchIconTVShows">
+		<value condition="!String.IsEmpty(ListItem.Property(art(clearart)))">$INFO[ListItem.Property(art(landscape))]</value>
+		<value>ListItem.Art(fanart)</value>
+	</variable>
+	<variable name="IconLandscape">
+		<value condition="!String.IsEmpty(ListItem.Property(banner))">$INFO[ListItem.Property(banner)]</value>
+		<value condition="Window.IsVisible(videobookmarks) + !String.StartsWith(ListItem.Icon,Default)">$INFO[ListItem.Icon]</value>
+		<value condition="[[Control.IsVisible(54) + Container.Content(seasons)] | Window.IsVisible(movieinformation) | [Window.IsVisible(videoplaylist) + String.IsEqual(ListItem.DBType,episode)]] + !String.IsEmpty(ListItem.Art(thumb)) + !String.StartsWith(ListItem.Art(thumb),Default)">$INFO[ListItem.Art(thumb)]</value>
+		<value condition="[[Control.IsVisible(54) + Container.Content(seasons)] | Window.IsVisible(movieinformation) | Window.IsVisible(videoplaylist)] + !String.IsEmpty(ListItem.Art(tvshow.landscape))">$INFO[ListItem.Art(tvshow.landscape)]</value>
+		<value condition="[[Control.IsVisible(54) + Container.Content(seasons)] | Window.IsVisible(movieinformation) | Window.IsVisible(videoplaylist)] + !String.IsEmpty(ListItem.Art(landscape))">$INFO[ListItem.Art(landscape)]</value>
+		<value condition="[[Control.IsVisible(54) + Container.Content(seasons)] | Window.IsVisible(movieinformation) | Window.IsVisible(videoplaylist)] + !String.IsEmpty(ListItem.Art(fanart))">$INFO[ListItem.Art(fanart)]</value>
+		<value condition="String.StartsWith(ListItem.Path,pvr://) + !String.StartsWith(ListItem.Icon,Default)">$INFO[ListItem.Icon]</value>
+		<value condition="!String.IsEmpty(ListItem.Art(thumb)) + !String.StartsWith(ListItem.Art(thumb),Default) + Container.Content(episodes)">$INFO[ListItem.Art(thumb)]</value>
+		<value condition="!String.IsEmpty(ListItem.Art(tvshow.landscape))">$INFO[ListItem.Art(tvshow.landscape)]</value>
+		<value condition="!String.IsEmpty(ListItem.Art(landscape))">$INFO[ListItem.Art(landscape)]</value>
+		<value condition="!String.IsEmpty(ListItem.Art(tvshow.fanart))">$INFO[ListItem.Art(tvshow.fanart)]</value>
+		<value condition="!String.IsEmpty(ListItem.Art(fanart)) + [!String.IsEmpty(ListItem.DBType) | String.StartsWith(ListItem.Path,plugin://plugin.video.embycon) | Window.IsVisible(addonbrowser) | Window.IsVisible(programs)]">$INFO[ListItem.Art(fanart)]</value>
+		<value condition="!String.IsEmpty(ListItem.Property(fanart))">$INFO[ListItem.Property(fanart)]</value>
+		<value condition="!String.StartsWith(ListItem.Icon,default)">$INFO[ListItem.Icon]</value>
+	</variable>
+	<variable name="IconPoster">
+		<value condition="!String.IsEmpty(ListItem.Art(poster))">$INFO[ListItem.Art(poster)]</value>
+		<value condition="!String.IsEmpty(ListItem.Art(tvshow.poster))">$INFO[ListItem.Art(tvshow.poster)]</value>
+		<value condition="!String.StartsWith(ListItem.Icon,default)">$INFO[ListItem.Icon]</value>
+	</variable>
+	<variable name="IconSquare">
+		<value condition="!String.IsEmpty(ListItem.Art(thumb)) + !String.StartsWith(ListItem.Art(thumb),Default)">$INFO[ListItem.Art(thumb)]</value>
+		<value condition="!String.StartsWith(ListItem.Icon,Default)">$INFO[ListItem.Icon]</value>
+	</variable>
+	<variable name="PVRWidgetMainListLabel">
+		<value condition="!String.IsEmpty(ListItem.Title)">$INFO[ListItem.Title]</value>
+		<value>$INFO[ListItem.Channelname]</value>
+	</variable>
+	<variable name="MainListLabel">
+		<value condition="Window.IsVisible(script-NextAired-TVGuide.xml)">$INFO[ListItem.Property(NextDate),, - ]$INFO[ListItem.Label]$INFO[ListItem.Property(ShortTime), (,)]</value>
+		<value condition=" Window.IsVisible(script-NextAired-TVGuide2.xml)">$INFO[ListItem.Label]$INFO[ListItem.Property(ShortTime), (,)]</value>
+		<value condition="String.StartsWith(ListItem.Path,pvr://) + !String.IsEmpty(ListItem.Title)">$INFO[ListItem.Title]</value>
+		<value condition="String.StartsWith(ListItem.Path,pvr://)">$INFO[ListItem.Label]</value>
+		<value condition="String.IsEqual(ListItem.DBType,episode)">$INFO[ListItem.Season,S,:]$INFO[ListItem.Episode,E, - ]$INFO[ListItem.Title]</value>
+		<value condition="String.IsEqual(ListItem.DBType,season) + !String.IsEmpty(ListItem.Season)">$INFO[ListItem.Season,$LOCALIZE[20373] ]</value>
+		<value condition="String.IsEqual(ListItem.DBType,song)">$INFO[ListItem.Tracknumber,,. ]$INFO[ListItem.Title]</value>
+		<value>$INFO[ListItem.Label]</value>
+	</variable>
+	<variable name="SubListLabel">
+		<value condition="Window.IsVisible(script-NextAired-TVGuide.xml)">$INFO[ListItem.Property(NextSeasonNumber),S,]$INFO[ListItem.Property(NextEpisodeNumber),:E]$INFO[ListItem.Property(NextTitle), - ]</value>
+		<value condition="Window.IsVisible(script-NextAired-TVGuide2.xml)">$INFO[ListItem.Property(NextSeasonNumber),S,]$INFO[ListItem.Property(NextEpisodeNumber),:E]$INFO[ListItem.Property(NextTitle), - ]</value>
+		<value condition="String.IsEmpty(ListItem.TvShowTitle) + String.IsEmpty(ListItem.year) + String.IsEmpty(ListItem.artist) + String.IsEmpty(ListItem.albumartist) + String.IsEmpty(ListItem.addontype) + ListItem.IsFolder + !ListItem.IsParentFolder">$LOCALIZE[19076]</value>
+		<value condition="ListItem.IsParentFolder">$LOCALIZE[31044]</value>
+		<value condition="String.StartsWith(ListItem.Path,pvr://)">$INFO[ListItem.Label]</value>
+		<value condition="String.IsEqual(ListItem.DBType,episode)">$INFO[ListItem.TvShowTitle]</value>
+		<value condition="String.IsEqual(ListItem.DBType,season)">$INFO[ListItem.TvShowTitle]</value>
+		<value condition="String.IsEqual(ListItem.DBType,movie)">$INFO[ListItem.Year]</value>
+		<value condition="String.IsEqual(ListItem.DBType,tvshow)">$INFO[ListItem.Year]</value>
+		<value condition="String.IsEqual(ListItem.DBType,album) + !String.IsEmpty(ListItem.AlbumArtist)">$INFO[ListItem.AlbumArtist]</value>
+		<value condition="String.IsEqual(ListItem.DBType,album)">$INFO[ListItem.Artist]</value>
+		<value condition="String.IsEqual(ListItem.DBType,song)">$INFO[ListItem.Artist]</value>
+		<value condition="String.IsEqual(ListItem.DBType,artist)">$LOCALIZE[557]</value>
+		<value condition="Window.IsVisible(addonbrowser)">$INFO[ListItem.AddonType]</value>
+		<value condition="Container.Content(images)">$INFO[ListItem.size]</value>
+		<value condition="Container.Content(songs)">$INFO[ListItem.Artist]</value>
+		<value condition="Container.Content(albums) + !String.IsEmpty(ListItem.AlbumArtist)">$INFO[ListItem.AlbumArtist]</value>
+		<value condition="Container.Content(albums)">$INFO[ListItem.Artist]</value>
+		<value condition="Container.Content(tvshow)">$INFO[ListItem.Year]</value>
+		<value condition="Container.Content(movie)">$INFO[ListItem.Year]</value>
+		<value condition="Container.Content(season)">$INFO[ListItem.TvShowTitle]</value>
+		<value condition="Container.Content(episode)">$INFO[ListItem.TvShowTitle]</value>
+		<value condition="String.StartsWith(ListItem.Path,plugin://plugin.audio.prime_music) + String.Contains(ListItem.Filenameandpath,playTrack)">$INFO[ListItem.Artist]</value>
+	</variable>
+	<variable name="RightListLabel">
+		<value condition="Window.IsVisible(addonbrowser)">$INFO[ListItem.Label2]</value>
+		<value condition="!String.IsEmpty(ListItem.Duration)">$VAR[DurationMinutes]</value>
+		<value condition="Container.Content(tvshows) + !String.IsEmpty(ListItem.Property(TotalEpisodes))">$INFO[ListItem.Property(TotalEpisodes),, $LOCALIZE[20453]]</value>
+	</variable>
+	<variable name="RightListLabel2">
+		<value condition="Container.Content(tvshows) + !String.IsEmpty(ListItem.Property(TotalSeasons))">$INFO[ListItem.Property(TotalSeasons),, $LOCALIZE[36905]]</value>
+	</variable>
+		<variable name="VisibleContainer">
+		<value condition="Control.IsVisible(50)">50</value>
+		<value condition="Control.IsVisible(51)">51</value>
+		<value condition="Control.IsVisible(52)">52</value>
+		<value condition="Control.IsVisible(53)">53</value>
+		<value condition="Control.IsVisible(54)">54</value>
+		<value condition="Control.IsVisible(55)">55</value>
+	</variable>
+	<variable name="ListItemResolution">
+		<value condition="String.IsEqual(ListItem.VideoResolution,4K)">4K</value>
+		<value condition="String.IsEqual(ListItem.VideoResolution,1080)">1080p</value>
+		<value condition="String.IsEqual(ListItem.VideoResolution,720)">720p</value>
+		<value>SD</value>
+	</variable>
+	<variable name="PlayerDiscArt">
+		<value condition="!String.IsEmpty(Window(Home).Property(SkinHelper.Player.Art.DiscArt))">$INFO[Window(Home).Property(SkinHelper.Player.Art.DiscArt)]</value>
+		<value>common/white.jpg</value>
+	</variable>
+	<variable name="PlayerResolution">
+		<value condition="String.IsEqual(VideoPlayer.VideoResolution,4K)">4K</value>
+		<value condition="String.IsEqual(VideoPlayer.VideoResolution,1080)">1080p</value>
+		<value condition="String.IsEqual(VideoPlayer.VideoResolution,720)">720p</value>
+		<value>SD</value>
+	</variable>
+	<variable name="PlayerTimeRemaining">
+		<value condition="Integer.IsGreater(Player.TimeRemaining,60)">$INFO[Player.TimeRemaining]</value>
+		<value>$INFO[Player.TimeRemaining(ss)] $LOCALIZE[31077]</value>
+	</variable>
+	<variable name="PlayerTime">
+		<value condition="Integer.IsGreater(Player.Duration(h),0)">$INFO[Player.Time(h:mm:ss)]</value>
+		<value>$INFO[Player.Time(mm:ss)]</value>
+	</variable>
+	<variable name="PlayerDuration">
+		<value condition="Integer.IsGreater(Player.Duration(h),0)">$INFO[Player.Duration(h:mm:ss)]</value>
+		<value>$INFO[Player.Duration(mm:ss)]</value>
+	</variable>
+	<variable name="PlayerPlayPauseLabel">
+		<value condition="Player.Paused">$LOCALIZE[31096]</value>
+		<value>$LOCALIZE[31095]</value>
+	</variable>
+	<variable name="PlayerRecordingLabel">
+		<value condition="Player.Recording">$LOCALIZE[19059]</value>
+		<value>$LOCALIZE[264]</value>
+	</variable>
+	<variable name="DurationMinutes">
+		<value condition="String.IsEmpty(ListItem.Duration)"/>
+		<value condition="String.IsEqual(ListItem.DBtype,song)">$INFO[ListItem.Duration]</value>
+		<value condition="!String.Contains(ListItem.Duration,:) + !String.IsEqual(ListItem.Duration,1)">$INFO[ListItem.Duration] $LOCALIZE[31089]</value>
+		<value condition="!String.Contains(ListItem.Duration,:)">$INFO[ListItem.Duration] $LOCALIZE[31090]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:00:)">60 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:01:)">61 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:02:)">62 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:03:)">63 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:04:)">64 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:05:)">65 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:06:)">66 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:07:)">67 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:08:)">68 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:09:)">69 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:10:)">70 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:11:)">71 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:12:)">72 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:13:)">73 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:14:)">74 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:15:)">75 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:16:)">76 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:17:)">77 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:18:)">78 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:19:)">79 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:20:)">80 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:21:)">81 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:22:)">82 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:23:)">83 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:24:)">84 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:25:)">85 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:26:)">86 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:27:)">87 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:28:)">88 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:29:)">89 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:30:)">90 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:31:)">91 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:32:)">92 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:33:)">93 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:34:)">94 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:35:)">95 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:36:)">96 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:37:)">97 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:38:)">98 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:39:)">99 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:40:)">100 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:41:)">101 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:42:)">102 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:43:)">103 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:44:)">104 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:45:)">105 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:46:)">106 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:47:)">107 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:48:)">108 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:49:)">109 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:50:)">110 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:51:)">111 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:52:)">112 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:53:)">113 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:54:)">114 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:55:)">115 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:56:)">116 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:57:)">117 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:58:)">118 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:59:)">119 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:00:)">120 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:01:)">121 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:02:)">122 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:03:)">123 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:04:)">124 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:05:)">125 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:06:)">126 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:07:)">127 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:08:)">128 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:09:)">129 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:10:)">130 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:11:)">131 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:12:)">132 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:13:)">133 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:14:)">134 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:15:)">135 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:16:)">136 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:17:)">137 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:18:)">138 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:19:)">139 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:20:)">140 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:21:)">141 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:22:)">142 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:23:)">143 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:24:)">144 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:25:)">145 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:26:)">146 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:27:)">147 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:28:)">148 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:29:)">149 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:30:)">150 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:31:)">151 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:32:)">152 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:33:)">153 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:34:)">154 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:35:)">155 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:36:)">156 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:37:)">157 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:38:)">158 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:39:)">159 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:40:)">160 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:41:)">161 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:42:)">162 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:43:)">163 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:44:)">164 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:45:)">165 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:46:)">166 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:47:)">167 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:48:)">168 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:49:)">169 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:50:)">170 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:51:)">171 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:52:)">172 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:53:)">173 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:54:)">174 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:55:)">175 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:56:)">176 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:57:)">177 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:58:)">178 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:59:)">179 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:00:)">180 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:01:)">181 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:02:)">182 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:03:)">183 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:04:)">184 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:05:)">185 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:06:)">186 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:07:)">187 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:08:)">188 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:09:)">189 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:10:)">190 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:11:)">191 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:12:)">192 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:13:)">193 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:14:)">194 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:15:)">195 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:16:)">196 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:17:)">197 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:18:)">198 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:19:)">199 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:20:)">200 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:21:)">201 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:22:)">202 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:23:)">203 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:24:)">204 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:25:)">205 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:26:)">206 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:27:)">207 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:28:)">208 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:29:)">209 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:30:)">210 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:31:)">211 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:32:)">212 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:33:)">213 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:34:)">214 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:35:)">215 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:36:)">216 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:37:)">217 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:38:)">218 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:39:)">219 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:40:)">220 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:41:)">221 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:42:)">222 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:43:)">223 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:44:)">224 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:45:)">225 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:46:)">226 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:47:)">227 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:48:)">228 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:49:)">229 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:50:)">230 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:51:)">231 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:52:)">232 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:53:)">233 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:54:)">234 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:55:)">235 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:56:)">236 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:57:)">237 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:58:)">238 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:59:)">239 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:00:)">240 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:01:)">241 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:02:)">242 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:03:)">243 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:04:)">244 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:05:)">245 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:06:)">246 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:07:)">247 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:08:)">248 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:09:)">249 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:10:)">250 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:11:)">251 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:12:)">252 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:13:)">253 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:14:)">254 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:15:)">255 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:16:)">256 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:17:)">257 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:18:)">258 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:19:)">259 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:20:)">260 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:21:)">261 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:22:)">262 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:23:)">263 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:24:)">264 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:25:)">265 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:26:)">266 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:27:)">267 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:28:)">268 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:29:)">269 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:30:)">270 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:31:)">271 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:32:)">272 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:33:)">273 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:34:)">274 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:35:)">275 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:36:)">276 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:37:)">277 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:38:)">278 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:39:)">279 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:40:)">280 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:41:)">281 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:42:)">282 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:43:)">283 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:44:)">284 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:45:)">285 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:46:)">286 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:47:)">287 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:48:)">288 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:49:)">289 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:50:)">290 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:51:)">291 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:52:)">292 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:53:)">293 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:54:)">294 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:55:)">295 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:56:)">296 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:57:)">297 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:58:)">298 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:59:)">299 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:00:)">300 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:01:)">301 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:02:)">302 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:03:)">303 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:04:)">304 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:05:)">305 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:06:)">306 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:07:)">307 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:08:)">308 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:09:)">309 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:10:)">310 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:11:)">311 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:12:)">312 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:13:)">313 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:14:)">314 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:15:)">315 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:16:)">316 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:17:)">317 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:18:)">318 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:19:)">319 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:20:)">320 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:21:)">321 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:22:)">322 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:23:)">323 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:24:)">324 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:25:)">325 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:26:)">326 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:27:)">327 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:28:)">328 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:29:)">329 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:30:)">330 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:31:)">331 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:32:)">332 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:33:)">333 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:34:)">334 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:35:)">335 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:36:)">336 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:37:)">337 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:38:)">338 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:39:)">339 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:40:)">340 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:41:)">341 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:42:)">342 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:43:)">343 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:44:)">344 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:45:)">345 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:46:)">346 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:47:)">347 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:48:)">348 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:49:)">349 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:50:)">350 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:51:)">351 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:52:)">352 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:53:)">353 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:54:)">354 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:55:)">355 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:56:)">356 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:57:)">357 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:58:)">358 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:59:)">359 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,00:)">1 $LOCALIZE[31090]</value>
+		<value condition="String.StartsWith(ListItem.Duration,01:)">1 $LOCALIZE[31090]</value>
+		<value condition="String.StartsWith(ListItem.Duration,02:)">2 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,03:)">3 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,04:)">4 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,05:)">5 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,06:)">6 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,07:)">7 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,08:)">8 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,09:)">9 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,10:)">10 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,11:)">11 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,12:)">12 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,13:)">13 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,14:)">14 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,15:)">15 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,16:)">16 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,17:)">17 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,18:)">18 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,19:)">19 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,20:)">20 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,21:)">21 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,22:)">22 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,23:)">23 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,24:)">24 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,25:)">25 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,26:)">26 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,27:)">27 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,28:)">28 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,29:)">29 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,30:)">30 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,31:)">31 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,32:)">32 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,33:)">33 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,34:)">34 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,35:)">35 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,36:)">36 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,37:)">37 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,38:)">38 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,39:)">39 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,40:)">40 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,41:)">41 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,42:)">42 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,43:)">43 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,44:)">44 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,45:)">45 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,46:)">46 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,47:)">47 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,48:)">48 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,49:)">49 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,50:)">50 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,51:)">51 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,52:)">52 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,53:)">53 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,54:)">54 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,55:)">55 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,56:)">56 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,57:)">57 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,58:)">58 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(ListItem.Duration,59:)">59 $LOCALIZE[31089]</value>
+	</variable>
+	<variable name="PlayerDurationMinutes">
+		<value condition="String.IsEmpty(Player.Duration)"/>
+		<value condition="Player.HasAudio">$INFO[ListItem.Duration]</value>
+		<value condition="!String.Contains(Player.Duration,:) + !String.IsEqual(Player.Duration,1)">$INFO[Player.Duration] $LOCALIZE[31089]</value>
+		<value condition="!String.Contains(Player.Duration,:)">$INFO[Player.Duration] $LOCALIZE[31090]</value>
+		<value condition="String.StartsWith(Player.Duration,01:00:)">60 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:01:)">61 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:02:)">62 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:03:)">63 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:04:)">64 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:05:)">65 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:06:)">66 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:07:)">67 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:08:)">68 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:09:)">69 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:10:)">70 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:11:)">71 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:12:)">72 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:13:)">73 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:14:)">74 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:15:)">75 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:16:)">76 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:17:)">77 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:18:)">78 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:19:)">79 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:20:)">80 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:21:)">81 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:22:)">82 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:23:)">83 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:24:)">84 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:25:)">85 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:26:)">86 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:27:)">87 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:28:)">88 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:29:)">89 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:30:)">90 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:31:)">91 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:32:)">92 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:33:)">93 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:34:)">94 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:35:)">95 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:36:)">96 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:37:)">97 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:38:)">98 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:39:)">99 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:40:)">100 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:41:)">101 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:42:)">102 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:43:)">103 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:44:)">104 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:45:)">105 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:46:)">106 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:47:)">107 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:48:)">108 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:49:)">109 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:50:)">110 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:51:)">111 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:52:)">112 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:53:)">113 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:54:)">114 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:55:)">115 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:56:)">116 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:57:)">117 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:58:)">118 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,01:59:)">119 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:00:)">120 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:01:)">121 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:02:)">122 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:03:)">123 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:04:)">124 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:05:)">125 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:06:)">126 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:07:)">127 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:08:)">128 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:09:)">129 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:10:)">130 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:11:)">131 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:12:)">132 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:13:)">133 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:14:)">134 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:15:)">135 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:16:)">136 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:17:)">137 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:18:)">138 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:19:)">139 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:20:)">140 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:21:)">141 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:22:)">142 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:23:)">143 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:24:)">144 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:25:)">145 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:26:)">146 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:27:)">147 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:28:)">148 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:29:)">149 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:30:)">150 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:31:)">151 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:32:)">152 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:33:)">153 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:34:)">154 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:35:)">155 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:36:)">156 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:37:)">157 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:38:)">158 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:39:)">159 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:40:)">160 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:41:)">161 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:42:)">162 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:43:)">163 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:44:)">164 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:45:)">165 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:46:)">166 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:47:)">167 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:48:)">168 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:49:)">169 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:50:)">170 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:51:)">171 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:52:)">172 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:53:)">173 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:54:)">174 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:55:)">175 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:56:)">176 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:57:)">177 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:58:)">178 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,02:59:)">179 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:00:)">180 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:01:)">181 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:02:)">182 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:03:)">183 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:04:)">184 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:05:)">185 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:06:)">186 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:07:)">187 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:08:)">188 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:09:)">189 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:10:)">190 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:11:)">191 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:12:)">192 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:13:)">193 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:14:)">194 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:15:)">195 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:16:)">196 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:17:)">197 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:18:)">198 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:19:)">199 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:20:)">200 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:21:)">201 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:22:)">202 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:23:)">203 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:24:)">204 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:25:)">205 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:26:)">206 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:27:)">207 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:28:)">208 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:29:)">209 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:30:)">210 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:31:)">211 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:32:)">212 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:33:)">213 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:34:)">214 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:35:)">215 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:36:)">216 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:37:)">217 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:38:)">218 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:39:)">219 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:40:)">220 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:41:)">221 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:42:)">222 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:43:)">223 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:44:)">224 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:45:)">225 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:46:)">226 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:47:)">227 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:48:)">228 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:49:)">229 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:50:)">230 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:51:)">231 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:52:)">232 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:53:)">233 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:54:)">234 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:55:)">235 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:56:)">236 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:57:)">237 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:58:)">238 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:59:)">239 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:00:)">240 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:01:)">241 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:02:)">242 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:03:)">243 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:04:)">244 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:05:)">245 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:06:)">246 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:07:)">247 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:08:)">248 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:09:)">249 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:10:)">250 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:11:)">251 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:12:)">252 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:13:)">253 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:14:)">254 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:15:)">255 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:16:)">256 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:17:)">257 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:18:)">258 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:19:)">259 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:20:)">260 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:21:)">261 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:22:)">262 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:23:)">263 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:24:)">264 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:25:)">265 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:26:)">266 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:27:)">267 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:28:)">268 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:29:)">269 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:30:)">270 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:31:)">271 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:32:)">272 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:33:)">273 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:34:)">274 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:35:)">275 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:36:)">276 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:37:)">277 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:38:)">278 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:39:)">279 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:40:)">280 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:41:)">281 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:42:)">282 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:43:)">283 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:44:)">284 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:45:)">285 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:46:)">286 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:47:)">287 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:48:)">288 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:49:)">289 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:50:)">290 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:51:)">291 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:52:)">292 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:53:)">293 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:54:)">294 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:55:)">295 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:56:)">296 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:57:)">297 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:58:)">298 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:59:)">299 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:00:)">300 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:01:)">301 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:02:)">302 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:03:)">303 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:04:)">304 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:05:)">305 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:06:)">306 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:07:)">307 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:08:)">308 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:09:)">309 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:10:)">310 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:11:)">311 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:12:)">312 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:13:)">313 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:14:)">314 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:15:)">315 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:16:)">316 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:17:)">317 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:18:)">318 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:19:)">319 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:20:)">320 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:21:)">321 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:22:)">322 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:23:)">323 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:24:)">324 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:25:)">325 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:26:)">326 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:27:)">327 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:28:)">328 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:29:)">329 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:30:)">330 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:31:)">331 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:32:)">332 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:33:)">333 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:34:)">334 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:35:)">335 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:36:)">336 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:37:)">337 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:38:)">338 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:39:)">339 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:40:)">340 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:41:)">341 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:42:)">342 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:43:)">343 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:44:)">344 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:45:)">345 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:46:)">346 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:47:)">347 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:48:)">348 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:49:)">349 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:50:)">350 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:51:)">351 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:52:)">352 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:53:)">353 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:54:)">354 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:55:)">355 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:56:)">356 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:57:)">357 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:58:)">358 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:59:)">359 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,00:)">1 $LOCALIZE[31090]</value>
+		<value condition="String.StartsWith(Player.Duration,01:)">1 $LOCALIZE[31090]</value>
+		<value condition="String.StartsWith(Player.Duration,02:)">2 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,03:)">3 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,04:)">4 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,05:)">5 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,06:)">6 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,07:)">7 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,08:)">8 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,09:)">9 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,10:)">10 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,11:)">11 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,12:)">12 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,13:)">13 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,14:)">14 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,15:)">15 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,16:)">16 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,17:)">17 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,18:)">18 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,19:)">19 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,20:)">20 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,21:)">21 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,22:)">22 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,23:)">23 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,24:)">24 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,25:)">25 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,26:)">26 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,27:)">27 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,28:)">28 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,29:)">29 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,30:)">30 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,31:)">31 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,32:)">32 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,33:)">33 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,34:)">34 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,35:)">35 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,36:)">36 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,37:)">37 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,38:)">38 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,39:)">39 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,40:)">40 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,41:)">41 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,42:)">42 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,43:)">43 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,44:)">44 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,45:)">45 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,46:)">46 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,47:)">47 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,48:)">48 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,49:)">49 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,50:)">50 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,51:)">51 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,52:)">52 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,53:)">53 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,54:)">54 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,55:)">55 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,56:)">56 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,57:)">57 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,58:)">58 $LOCALIZE[31089]</value>
+		<value condition="String.StartsWith(Player.Duration,59:)">59 $LOCALIZE[31089]</value>
+	</variable>
+	<variable name="ListItemAudioChannels">
+		<value condition="Integer.IsEqual(ListItem.AudioChannels,1)">Mono</value>
+		<value condition="Integer.IsEqual(ListItem.AudioChannels,2)">2.0</value>
+		<value condition="Integer.IsEqual(ListItem.AudioChannels,4)">4.0</value>
+		<value condition="Integer.IsEqual(ListItem.AudioChannels,6)">5.1</value>
+		<value condition="Integer.IsEqual(ListItem.AudioChannels,7)">6.1</value>
+		<value condition="Integer.IsEqual(ListItem.AudioChannels,8)">7.1</value>
+		<value condition="Integer.IsEqual(ListItem.AudioChannels,10)">9.1</value>
+	</variable>
+	<variable name="ListItemAudio">
+		<value condition="String.Contains(ListItem.AudioCodec,dtshd)">DTS-HD</value>
+		<value condition="String.Contains(ListItem.AudioCodec,dca) | String.Contains(ListItem.AudioCodec,dts)">DTS</value>
+		<value condition="String.Contains(ListItem.AudioCodec,truehd)">TrueHD</value>
+		<value condition="String.Contains(ListItem.AudioCodec,eac3)">Dolby+</value>
+		<value condition="String.Contains(ListItem.AudioCodec,ac3)">AC3</value>
+		<value condition="String.Contains(ListItem.AudioCodec,mp3)">MP3</value>
+		<value condition="String.Contains(ListItem.AudioCodec,mp2)">MP2</value>
+		<value condition="String.Contains(ListItem.AudioCodec,mp1)">MP1</value>
+		<value condition="String.Contains(ListItem.AudioCodec,vorbis)">Vorbis</value>
+		<value condition="String.Contains(ListItem.AudioCodec,aac)">AAC</value>
+		<value condition="String.Contains(ListItem.AudioCodec,wmav2)">WMA</value>
+		<value condition="String.Contains(ListItem.AudioCodec,wmapro)">WMA Pro</value>
+		<value condition="String.Contains(ListItem.AudioCodec,pcm)">PCM</value>
+		<value condition="String.Contains(ListItem.AudioCodec,cook)">Cook</value>
+	</variable>
+	<variable name="PlayerAudioChannels">
+		<value condition="Integer.IsEqual(VideoPlayer.AudioChannels,1)">Mono</value>
+		<value condition="Integer.IsEqual(VideoPlayer.AudioChannels,2)">2.0</value>
+		<value condition="Integer.IsEqual(VideoPlayer.AudioChannels,4)">4.0</value>
+		<value condition="Integer.IsEqual(VideoPlayer.AudioChannels,6)">5.1</value>
+		<value condition="Integer.IsEqual(VideoPlayer.AudioChannels,7)">6.1</value>
+		<value condition="Integer.IsEqual(VideoPlayer.AudioChannels,8)">7.1</value>
+		<value condition="Integer.IsEqual(VideoPlayer.AudioChannels,10)">9.1</value>
+	</variable>
+	<variable name="PlayerAudio">
+		<value condition="String.Contains(VideoPlayer.AudioCodec,dtshd)">DTS-HD</value>
+		<value condition="String.Contains(VideoPlayer.AudioCodec,dca) | String.Contains(VideoPlayer.AudioCodec,dts)">DTS</value>
+		<value condition="String.Contains(VideoPlayer.AudioCodec,truehd)">TrueHD</value>
+		<value condition="String.Contains(VideoPlayer.AudioCodec,eac3)">Dolby+</value>
+		<value condition="String.Contains(VideoPlayer.AudioCodec,ac3)">AC3</value>
+		<value condition="String.Contains(VideoPlayer.AudioCodec,mp3)">MP3</value>
+		<value condition="String.Contains(VideoPlayer.AudioCodec,mp2)">MP2</value>
+		<value condition="String.Contains(VideoPlayer.AudioCodec,mp1)">MP1</value>
+		<value condition="String.Contains(VideoPlayer.AudioCodec,vorbis)">Vorbis</value>
+		<value condition="String.Contains(VideoPlayer.AudioCodec,aac)">AAC</value>
+		<value condition="String.Contains(VideoPlayer.AudioCodec,wmav2)">WMA</value>
+		<value condition="String.Contains(VideoPlayer.AudioCodec,wmapro)">WMA Pro</value>
+		<value condition="String.Contains(VideoPlayer.AudioCodec,pcm)">PCM</value>
+		<value condition="String.Contains(VideoPlayer.AudioCodec,cook)">Cook</value>
+	</variable>
+	<variable name="VideoInfoButton8">
+		<value condition="!String.IsEqual(ListItem.DBType,tvshow) + !String.IsEqual(ListItem.DBType,season) + ListItem.IsResumable">$LOCALIZE[13404]</value>
+		<value condition="!String.IsEqual(ListItem.DBType,tvshow) + !String.IsEqual(ListItem.DBType,season) + Integer.IsGreater(ListItem.PlayCount,0)">$LOCALIZE[31009]</value>
+		<value condition="!String.IsEqual(ListItem.DBType,tvshow) + !String.IsEqual(ListItem.DBType,season)">$LOCALIZE[31010]</value>
+		<value condition="String.IsEqual(ListItem.DBType,season)">$LOCALIZE[31013]</value>
+		<value>$LOCALIZE[31011]</value>
+	</variable>
+	<variable name="TinyInfoDialogHeadline">
+		<value condition="Window.IsVisible(DialogFullScreenInfo.xml) + !String.IsEmpty(VideoPlayer.TvShowTitle)">$INFO[VideoPlayer.TvShowTitle]</value>
+		<value condition="Window.IsVisible(DialogFullScreenInfo.xml)">$INFO[VideoPlayer.Title]</value>
+		<value condition="!String.IsEmpty(ListItem.TvShowTitle)">$INFO[ListItem.TvShowTitle]</value>
+		<value>$INFO[ListItem.Title]</value>
+	</variable>
+	<variable name="TinyInfoDialogPlot">
+		<value condition="Window.IsVisible(DialogFullScreenInfo.xml)">$INFO[VideoPlayer.Season,S,:]$INFO[VideoPlayer.Episode,E, [CR][CR]]$VAR[PlayerDurationMinutes,$LOCALIZE[180]: ,[CR][CR]]$INFO[VideoPlayer.Plot]</value>
+		<value condition="String.IsEqual(ListItem.DBType,Episode)">$INFO[ListItem.Season,S,:]$INFO[ListItem.Episode,E, - ]$INFO[ListItem.Title,,[CR][CR]]$VAR[DurationMinutes,$LOCALIZE[180]: ,[CR][CR]]$INFO[ListItem.Plot]</value>
+		<value condition="String.IsEqual(ListItem.DBType,song)">$VAR[DurationMinutes,$LOCALIZE[180]: ,[CR][CR]]$INFO[ListItem.Artist]$INFO[ListItem.Album, - ,[CR][CR]]$INFO[ListItem.Property(Album_Description)]</value>
+		<value condition="String.IsEqual(ListItem.DBType,musicvideo)">$VAR[DurationMinutes,$LOCALIZE[180]: ]</value>
+		<value>$INFO[ListItem.Plot]</value>
+	</variable>
+	<variable name="TinyGlobalSearchPlot">
+		<value condition="!String.IsEmpty(Container(100).ListItem.Property(Plot))">$INFO[Container(100).ListItem.Property(Plot)]</value>
+		<value condition="!String.IsEmpty(Container(100).ListItem.Property(Artist_Description))">$INFO[Container(100).ListItem.Property(Artist_Description)]</value>
+		<value condition="!String.IsEmpty(Container(100).ListItem.Property(Album_Description))">$INFO[Container(100).ListItem.Property(Album_Description)]</value>
+		<value condition="!String.IsEmpty(Container(100).ListItem.Property(Comment))">$INFO[Container(100).ListItem.Property(Comment)]</value>
+	</variable>
+	<variable name="ListViewPlot">
+		<value condition="Window.IsVisible(tvrecordings)">$INFO[ListItem.Plot]</value>
+		<value condition="!String.IsEmpty(ListItem.Property(Album_Description))">$INFO[ListItem.Property(Album_Description)]</value>
+		<value condition="!String.IsEmpty(ListItem.Property(Artist_Description))">$INFO[ListItem.Property(Artist_Description)]</value>
+		<value condition="!String.IsEmpty(ListItem.AddonDescription)">$INFO[ListItem.AddonDescription]</value>
+		<value>$INFO[ListItem.Tagline,[B],[/B][CR][CR]]$INFO[ListItem.Plot]</value>
+	</variable>
+	<variable name="PVRTimerIcon">
+		<value condition="ListItem.IsRecording + ListItem.HasTimerSchedule">icons/pvr/icon_timer.png</value>
+		<value condition="ListItem.IsRecording">icons/pvr/icon_recording.png</value>
+		<value condition="ListItem.HasTimerSchedule + ListItem.TimerHasError">icons/pvr/icon_timer_error.png</value>
+		<value condition="ListItem.HasTimer + ListItem.TimerHasError">icons/pvr/icon_record_error.png</value>
+		<value condition="ListItem.HasTimerSchedule + ListItem.TimerHasConflict">icons/pvr/icon_timer_conflict.png</value>
+		<value condition="ListItem.HasTimer + ListItem.TimerHasConflict">icons/pvr/PVR-HasTimerConflict.png</value>
+		<value condition="ListItem.HasRecording">icons/pvr/icon_recording.png</value>
+		<value condition="ListItem.HasTimerSchedule">icons/pvr/icon_timer.png</value>
+		<value condition="ListItem.HasTimer">icons/pvr/icon_recording.png</value>
+	</variable>
+	<variable name="PVRTimerStatus">
+		<value condition="!ListItem.TimerIsActive">deaktiviert</value>
+		<value>aktiv</value>
+	</variable>
+	<variable name="VolumeIconCircle">
+		<value condition="Player.Muted">0</value>
+		<value condition="Integer.IsGreaterOrEqual(player.volume,10)">$INFO[Control.GetLabel(404)]</value>
+		<value condition="Integer.IsGreaterOrEqual(player.volume,9)">9</value>
+		<value condition="Integer.IsGreaterOrEqual(player.volume,8)">8</value>
+		<value condition="Integer.IsGreaterOrEqual(player.volume,7)">7</value>
+		<value condition="Integer.IsGreaterOrEqual(player.volume,6)">6</value>
+		<value condition="Integer.IsGreaterOrEqual(player.volume,5)">5</value>
+		<value condition="Integer.IsGreaterOrEqual(player.volume,4)">4</value>
+		<value condition="Integer.IsGreaterOrEqual(player.volume,3)">3</value>
+		<value condition="Integer.IsGreaterOrEqual(player.volume,2)">2</value>
+		<value condition="Integer.IsGreaterOrEqual(player.volume,1)">1</value>
+		<value condition="Integer.IsGreaterOrEqual(player.volume,0)">0</value>
+	</variable>
+	<variable name="VolumeIcon">
+		<value condition="Player.Muted"></value>
+		<value condition="Integer.IsGreater(player.volume,75)"></value>
+		<value condition="Integer.IsGreater(player.volume,25)"></value>
+		<value condition="!Integer.IsGreater(player.volume,25)"></value>
+	</variable>
+	<variable name="VolumeDetails">
+		<value condition="!Player.Muted + Integer.IsGreaterOrEqual(player.volume,10)">$INFO[Control.GetLabel(404),,%]</value>
+		<value condition="Integer.IsGreaterOrEqual(player.volume,9)">9%</value>
+		<value condition="Integer.IsGreaterOrEqual(player.volume,8)">8%</value>
+		<value condition="Integer.IsGreaterOrEqual(player.volume,7)">7%</value>
+		<value condition="Integer.IsGreaterOrEqual(player.volume,6)">6%</value>
+		<value condition="Integer.IsGreaterOrEqual(player.volume,5)">5%</value>
+		<value condition="Integer.IsGreaterOrEqual(player.volume,4)">4%</value>
+		<value condition="Integer.IsGreaterOrEqual(player.volume,3)">3%</value>
+		<value condition="Integer.IsGreaterOrEqual(player.volume,2)">2%</value>
+		<value condition="Integer.IsGreaterOrEqual(player.volume,1)">1%</value>
+		<value>$LOCALIZE[31043]</value>
+	</variable>
+	<variable name="ExtendedProgressCircle">
+		<value condition="String.IsEqual(Control.GetLabel(32),100)">100</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),99)">99</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),98)">98</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),97)">97</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),96)">96</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),95)">95</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),94)">94</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),93)">93</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),92)">92</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),91)">91</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),90)">90</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),89)">89</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),88)">88</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),87)">87</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),86)">86</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),85)">85</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),84)">84</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),83)">83</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),82)">82</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),81)">81</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),80)">80</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),79)">79</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),78)">78</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),77)">77</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),76)">76</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),75)">75</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),74)">74</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),73)">73</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),72)">72</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),71)">71</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),70)">70</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),69)">69</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),68)">68</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),67)">67</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),66)">66</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),65)">65</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),64)">64</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),63)">63</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),62)">62</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),61)">61</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),60)">60</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),59)">59</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),58)">58</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),57)">57</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),56)">56</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),55)">55</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),54)">54</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),53)">53</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),52)">52</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),51)">51</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),50)">50</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),49)">49</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),48)">48</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),47)">47</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),46)">46</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),45)">45</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),44)">44</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),43)">43</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),42)">42</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),41)">41</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),40)">40</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),39)">39</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),38)">38</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),37)">37</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),36)">36</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),35)">35</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),34)">34</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),33)">33</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),32)">32</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),31)">31</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),30)">30</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),29)">29</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),28)">28</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),27)">27</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),26)">26</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),25)">25</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),24)">24</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),23)">23</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),22)">22</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),21)">21</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),20)">20</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),19)">19</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),18)">18</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),17)">17</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),16)">16</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),15)">15</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),14)">14</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),13)">13</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),12)">12</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),11)">11</value>
+		<value condition="String.IsEqual(Control.GetLabel(32),10)">10</value>
+		<value condition="String.EndsWith(Control.GetLabel(32),9)">9</value>
+		<value condition="String.EndsWith(Control.GetLabel(32),8)">8</value>
+		<value condition="String.EndsWith(Control.GetLabel(32),7)">7</value>
+		<value condition="String.EndsWith(Control.GetLabel(32),6)">6</value>
+		<value condition="String.EndsWith(Control.GetLabel(32),5)">5</value>
+		<value condition="String.EndsWith(Control.GetLabel(32),4)">4</value>
+		<value condition="String.EndsWith(Control.GetLabel(32),3)">3</value>
+		<value condition="String.EndsWith(Control.GetLabel(32),2)">2</value>
+		<value condition="String.EndsWith(Control.GetLabel(32),1)">1</value>
+		<value condition="String.EndsWith(Control.GetLabel(32),1)">1</value>
+	</variable>
+	<variable name="ListItemDuration">
+		<value condition="String.Contains(ListItem.Duration,:)">$INFO[ListItem.Duration]</value>
+		<value>$INFO[ListItem.Duration,, $LOCALIZE[31089]]</value>
+	</variable>
+	<variable name="ListItemTitleLabel">
+		<value condition="!String.IsEmpty(ListItem.TVShowTitle)">$INFO[ListItem.TVShowTitle]</value>
+		<value condition="!String.IsEmpty(ListItem.Title)">$INFO[ListItem.Title]</value>
+		<value>$INFO[ListItem.Label]</value>
+	</variable>
+	<variable name="PlayerFullLabel">
+		<value condition="!String.IsEmpty(MusicPlayer.Title) + !String.Contains(MusicPlayer.Title,pvr.hts_)">$INFO[MusicPlayer.Artist,, - ]$INFO[MusicPlayer.Tracknumber,,. ]$INFO[MusicPlayer.Title]</value>
+		<value condition="!String.IsEmpty(MusicPlayer.Title)">$INFO[MusicPlayer.Artist]</value>
+		<value condition="VideoPlayer.Content(livetv)">$INFO[VideoPlayer.Title]</value>
+		<value condition="!String.IsEmpty(VideoPlayer.TVShowTitle) + !VideoPlayer.IsFullscreen">$INFO[VideoPlayer.TVShowTitle,, - ]$INFO[VideoPlayer.Season,S,:]$INFO[VideoPlayer.Episode,E, - ]$INFO[VideoPlayer.Title]</value>
+		<value condition="!String.IsEmpty(VideoPlayer.TVShowTitle)">$INFO[VideoPlayer.Season,S,:]$INFO[VideoPlayer.Episode,E, - ]$INFO[VideoPlayer.Title]</value>
+		<value>$INFO[VideoPlayer.Title]</value>
+	</variable>
+	<variable name="PlayerTitleLabel">
+		<value condition="!String.IsEmpty(MusicPlayer.Title)">$INFO[MusicPlayer.Title]</value>
+		<value condition="!String.IsEmpty(VideoPlayer.TVShowTitle)">$INFO[VideoPlayer.TVShowTitle]</value>
+		<value condition="VideoPlayer.Content(livetv) | String.StartsWith(Player.Filenameandpath,pvr://)">$INFO[VideoPlayer.Channelname]</value>
+		<value>$INFO[VideoPlayer.Title]</value>
+	</variable>
+	<variable name="PlayerClearlogo">
+		<value condition="!String.IsEmpty(Player.Art(tvshow.clearlogo))">$INFO[Player.Art(tvshow.clearlogo)]</value>
+		<value condition="!String.IsEmpty(Player.Art(clearlogo))">$INFO[Player.Art(clearlogo)]</value>
+	</variable>
+	<variable name="PlayerTimeLabels">
+		<value condition="!Pvr.IsTimeShift + Player.HasVideo">$VAR[PlayerTime]$VAR[PlayerDuration, / ]$INFO[Player.FinishTime,  -  $LOCALIZE[31037] ]</value>
+		<value>$VAR[PlayerTime]$VAR[PlayerDuration, / ]</value>
+	</variable>
+	<variable name="PlayerIcon">
+		<value condition="!String.IsEmpty(Player.Art(tvshow.poster))">$INFO[Player.Art(tvshow.poster)]</value>
+		<value condition="!String.IsEmpty(Player.Art(poster))">$INFO[Player.Art(poster)]</value>
+		<value condition="!String.IsEmpty(VideoPlayer.Cover) + !String.StartsWith(VideoPlayer.Cover,default)">$INFO[VideoPlayer.Cover]</value>
+		<value condition="!String.IsEmpty(MusicPlayer.Cover) + !String.StartsWith(MusicPlayer.Cover,default)">$INFO[MusicPlayer.Cover]</value>
+	</variable>
+	<variable name="PlayerCastContent">
+		<value condition="VideoPlayer.Content(episodes)">plugin://script.skin.helper.service/?action=getcast&amp;tvshow=$INFO[VideoPlayer.TvShowTitle]&amp;downloadthumbs=true&amp;castaction=extendedinfo</value>
+		<value>plugin://script.skin.helper.service/?action=getcast&amp;movie=$INFO[VideoPlayer.DBID]&amp;downloadthumbs=true&amp;castaction=extendedinfo</value>
+	</variable>
+	<variable name="PlayerSimilarContent">
+		<value condition="VideoPlayer.Content(episodes)">plugin://script.skin.helper.widgets/?action=similarshows&amp;imdbid=$INFO[VideoPlayer.IMDBNumber]</value>
+		<value>plugin://script.skin.helper.widgets/?action=similar&amp;mediatype=movies&amp;imdbid=$INFO[VideoPlayer.IMDBNumber]</value>
+	</variable>
+	<variable name="PlayerForwardRewind">
+		<value condition="Player.Forwarding4x">4x</value>
+		<value condition="Player.Forwarding8x">8x</value>
+		<value condition="Player.Forwarding16x">16x</value>
+		<value condition="Player.Forwarding32x">32x</value>
+		<value condition="Player.Rewinding4x">4x</value>
+		<value condition="Player.Rewinding8x">8x</value>
+		<value condition="Player.Rewinding16x">16x</value>
+		<value condition="Player.Rewinding32x">32x</value>
+	</variable>
+	<variable name="PlayerSeekStepIcon">
+		<value condition="[!String.IsEmpty(Player.SeekOffset) + !String.Contains(Player.SeekOffset,-)] | [!String.IsEmpty(Player.SeekStepSize) + !String.Contains(Player.SeekStepSize,-)]"></value>
+		<value condition="[!String.IsEmpty(Player.SeekOffset) + String.Contains(Player.SeekOffset,-)] | [!String.IsEmpty(Player.SeekStepSize) + String.Contains(Player.SeekStepSize,-)]"></value>
+	</variable>
+	<variable name="PlayerSeekStepLabel">
+		<value condition="!String.IsEmpty(Player.SeekStepSize)">$INFO[Player.SeekStepSize]</value>
+		<value condition="!String.IsEmpty(Player.SeekOffset)">$INFO[Player.SeekOffset]</value>
+	</variable>
+	<variable name="PlaylistRepeatButtonLabel">
+		<value condition="Playlist.IsRepeatOne">$LOCALIZE[31053]</value>
+		<value condition="Playlist.IsRepeat">$LOCALIZE[593]</value>
+		<value>$LOCALIZE[351]</value>
+	</variable>
+	<variable name="PlayerFanartEnabledButton">
+		<value condition="!Skin.HasSetting(VisFanartDisabled)">$LOCALIZE[16041]</value>
+		<value>$LOCALIZE[351]</value>
+	</variable>
+	<variable name="PlayerRandomFanartEnabledButton">
+		<value condition="Skin.HasSetting(VisRandomFanart)">$LOCALIZE[16041]</value>
+		<value>$LOCALIZE[351]</value>
+	</variable>
+	<variable name="PlaylistRepeatLabel">
+		<value condition="Playlist.IsRepeatOne"></value>
+		<value condition="Playlist.IsRepeat"></value>
+	</variable>
+	<variable name="PlaylistRepeatButtonColor">
+		<value condition="Playlist.IsRepeatOne | Playlist.IsRepeat | Control.HasFocus(613)">emby</value>
+	</variable>
+	<variable name="VideoHWDecoder">
+		<value condition="Player.Process(videohwdecoder)">HW</value>
+		<value>SW</value>
+	</variable>
+	<variable name="PVRChannelMgrHeader">
+		<value condition="!String.IsEmpty(Window.Property(IsRadio))">$LOCALIZE[19199] - $LOCALIZE[19024]</value>
+		<value>$LOCALIZE[19199] - $LOCALIZE[19023]</value>
+	</variable>
+	<variable name="UserAvatar">
+		<value condition="!String.IsEmpty(Window(Home).Property(EmbyUserImage))">$INFO[Window(Home).Property(EmbyUserImage)]</value>
+		<value condition="!String.IsEmpty(Window(Home).Property(PlexUserImage))">$INFO[Window(Home).Property(PlexUserImage)]</value>
+		<value condition="!String.IsEmpty(System.ProfileThumb)">$INFO[System.ProfileThumb]</value>
+		<value>defaultuser.png</value>
+	</variable>
+	<variable name="PVRLabel">
+		<value condition="!Pvr.HasRadioChannels + Pvr.HasTVChannels">$LOCALIZE[31042]</value>
+		<value condition="Pvr.HasRadioChannels + !Pvr.HasTVChannels">$LOCALIZE[19021]</value>
+		<value>$LOCALIZE[31042] &amp; $LOCALIZE[19021]</value>
+	</variable>
+	<variable name="SettingHelpText">
+		<value condition="ControlGroup(100).HasFocus(101)">$LOCALIZE[31105]</value>
+		<value condition="ControlGroup(100).HasFocus(102)">$LOCALIZE[31106]</value>
+		<value condition="ControlGroup(100).HasFocus(103)">$LOCALIZE[31147]</value>
+		<value condition="ControlGroup(100).HasFocus(104)">$LOCALIZE[31153]</value>
+		<value condition="ControlGroup(100).HasFocus(105)">$LOCALIZE[31153]</value>
+		<value condition="ControlGroup(100).HasFocus(106)">$LOCALIZE[31153]</value>
+	</variable>
+	<variable name="SkinSettingsHeadline">
+		<value condition="ControlGroup(100).HasFocus(101)">$LOCALIZE[480]</value>
+		<value condition="ControlGroup(100).HasFocus(102)">$LOCALIZE[31083]</value>
+		<value condition="ControlGroup(100).HasFocus(103)">$LOCALIZE[31134]</value>
+		<value condition="ControlGroup(100).HasFocus(104)">$LOCALIZE[31173]</value>
+		<value condition="ControlGroup(100).HasFocus(105)">$LOCALIZE[31172]</value>
+		<value condition="ControlGroup(100).HasFocus(106)">$LOCALIZE[31174]</value>
+	</variable>
+	<variable name="NextUpThumb">
+		<value condition="!String.IsEmpty(Control.GetLabel(4002))">$INFO[Control.GetLabel(4002)]</value>
+		<value condition="!String.IsEmpty(Control.GetLabel(4007))">$INFO[Control.GetLabel(4007)]</value>
+		<value condition="!String.IsEmpty(Control.GetLabel(3008))">$INFO[Control.GetLabel(3008)]</value>
+		<value condition="!String.IsEmpty(Control.GetLabel(3005))">$INFO[Control.GetLabel(3005)]</value>
+	</variable>
+	<variable name="PVREpisodeName">
+		<value condition="!String.IsEmpty(ListItem.EpisodeName)">$INFO[ListItem.EpisodeName]</value>
+		<value condition="!String.IsEmpty(VideoPlayer.EpisodeName)">$INFO[VideoPlayer.EpisodeName]</value>
+		<value>[COLOR softgrey]$LOCALIZE[31156][/COLOR]</value>
+	</variable>
+	<variable name="BackgroundAlphaLabel">
+		<value condition="!String.IsEmpty(Skin.String(BackgroundAlpha.label))">$INFO[Skin.String(BackgroundAlpha.label)]</value>
+		<value>$LOCALIZE[31157]</value>
+	</variable>
+	<variable name="MusicPlayerFanart">
+		<value condition="!String.IsEmpty(Window(Home).Property(SkinHelper.Player.Art.Fanart))">$INFO[Window(Home).Property(SkinHelper.Player.Art.Fanart)]</value>
+		<value condition="!String.IsEmpty(Player.Art(fanart))">$INFO[Player.Art(fanart)]</value>
+		<value>views/player/music_back.jpg</value>
+	</variable>
+	<!-- workaroun for skin shortcuts bug -->
+	<variable name="UserWidget1_target">
+		<value condition="String.IsEqual(Skin.String(UserWidget1_target),video)">videos</value>
+		<value>$INFO[Skin.String(UserWidget1_target)]</value>
+	</variable>
+	<variable name="UserWidget2_target">
+		<value condition="String.IsEqual(Skin.String(UserWidget2_target),video)">videos</value>
+		<value>$INFO[Skin.String(UserWidget2_target)]</value>
+	</variable>
+	<variable name="UserWidget3_target">
+		<value condition="String.IsEqual(Skin.String(UserWidget3_target),video)">videos</value>
+		<value>$INFO[Skin.String(UserWidget3_target)]</value>
+	</variable>
+	<variable name="UserWidget4_target">
+		<value condition="String.IsEqual(Skin.String(UserWidget4_target),video)">videos</value>
+		<value>$INFO[Skin.String(UserWidget4_target)]</value>
+	</variable>
+	<variable name="UserWidget5_target">
+		<value condition="String.IsEqual(Skin.String(UserWidget5_target),video)">videos</value>
+		<value>$INFO[Skin.String(UserWidget5_target)]</value>
+	</variable>
+	<variable name="UserWidget6_target">
+		<value condition="String.IsEqual(Skin.String(UserWidget6_target),video)">videos</value>
+		<value>$INFO[Skin.String(UserWidget6_target)]</value>
+	</variable>
+	<variable name="UserMovieWidget1_target">
+		<value condition="String.IsEqual(Skin.String(UserMovieWidget1_target),video)">videos</value>
+		<value>$INFO[Skin.String(UserMovieWidget1_target)]</value>
+	</variable>
+	<variable name="UserMovieWidget2_target">
+		<value condition="String.IsEqual(Skin.String(UserMovieWidget2_target),video)">videos</value>
+		<value>$INFO[Skin.String(UserMovieWidget2_target)]</value>
+	</variable>
+	<variable name="UserMovieWidget3_target">
+		<value condition="String.IsEqual(Skin.String(UserMovieWidget3_target),video)">videos</value>
+		<value>$INFO[Skin.String(UserMovieWidget3_target)]</value>
+	</variable>
+	<variable name="UserMovieWidget4_target">
+		<value condition="String.IsEqual(Skin.String(UserMovieWidget4_target),video)">videos</value>
+		<value>$INFO[Skin.String(UserMovieWidget4_target)]</value>
+	</variable>
+	<variable name="UserMovieWidget5_target">
+		<value condition="String.IsEqual(Skin.String(UserMovieWidget5_target),video)">videos</value>
+		<value>$INFO[Skin.String(UserMovieWidget5_target)]</value>
+	</variable>
+	<variable name="UserMovieWidget6_target">
+		<value condition="String.IsEqual(Skin.String(UserMovieWidget6_target),video)">videos</value>
+		<value>$INFO[Skin.String(UserMovieWidget6_target)]</value>
+	</variable>
+	<variable name="UserTVShowWidget1_target">
+		<value condition="String.IsEqual(Skin.String(UserTVShowWidget1_target),video)">videos</value>
+		<value>$INFO[Skin.String(UserTVShowWidget1_target)]</value>
+	</variable>
+	<variable name="UserTVShowWidget2_target">
+		<value condition="String.IsEqual(Skin.String(UserTVShowWidget2_target),video)">videos</value>
+		<value>$INFO[Skin.String(UserTVShowWidget2_target)]</value>
+	</variable>
+	<variable name="UserTVShowWidget3_target">
+		<value condition="String.IsEqual(Skin.String(UserTVShowWidget3_target),video)">videos</value>
+		<value>$INFO[Skin.String(UserTVShowWidget3_target)]</value>
+	</variable>
+	<variable name="UserTVShowWidget4_target">
+		<value condition="String.IsEqual(Skin.String(UserTVShowWidget4_target),video)">videos</value>
+		<value>$INFO[Skin.String(UserTVShowWidget4_target)]</value>
+	</variable>
+	<variable name="UserTVShowWidget5_target">
+		<value condition="String.IsEqual(Skin.String(UserTVShowWidget5_target),video)">videos</value>
+		<value>$INFO[Skin.String(UserTVShowWidget5_target)]</value>
+	</variable>
+	<variable name="UserTVShowWidget6_target">
+		<value condition="String.IsEqual(Skin.String(UserTVShowWidget6_target),video)">videos</value>
+		<value>$INFO[Skin.String(UserTVShowWidget6_target)]</value>
+	</variable>
+	<variable name="UserMusicWidget1_target">
+		<value condition="String.IsEqual(Skin.String(UserMusicWidget1_target),video)">videos</value>
+		<value>$INFO[Skin.String(UserMusicWidget1_target)]</value>
+	</variable>
+	<variable name="UserMusicWidget2_target">
+		<value condition="String.IsEqual(Skin.String(UserMusicWidget2_target),video)">videos</value>
+		<value>$INFO[Skin.String(UserMusicWidget2_target)]</value>
+	</variable>
+	<variable name="UserMusicWidget3_target">
+		<value condition="String.IsEqual(Skin.String(UserMusicWidget3_target),video)">videos</value>
+		<value>$INFO[Skin.String(UserMusicWidget3_target)]</value>
+	</variable>
+	<variable name="UserMusicWidget4_target">
+		<value condition="String.IsEqual(Skin.String(UserMusicWidget4_target),video)">videos</value>
+		<value>$INFO[Skin.String(UserMusicWidget4_target)]</value>
+	</variable>
+	<variable name="UserMusicWidget5_target">
+		<value condition="String.IsEqual(Skin.String(UserMusicWidget5_target),video)">videos</value>
+		<value>$INFO[Skin.String(UserMusicWidget5_target)]</value>
+	</variable>
+	<variable name="UserMusicWidget6_target">
+		<value condition="String.IsEqual(Skin.String(UserMusicWidget6_target),video)">videos</value>
+		<value>$INFO[Skin.String(UserMusicWidget6_target)]</value>
+	</variable>
+</includes>
