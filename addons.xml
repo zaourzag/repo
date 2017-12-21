@@ -1361,7 +1361,7 @@ NOTE: Due to updates by rytec, this addon might completely break in a couple of 
 </addon>
 
 
-<addon id="plugin.video.servustv_com" name="ServusTV.com" version="2.0" provider-name="L0RE">
+<addon id="plugin.video.servustv_com" name="ServusTV.com" version="2.1" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="script.module.pyamf" version="0.6.1"/>
