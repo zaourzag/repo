@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<includes>
+	<include name="Poster_View_51">
+		<control type="group">
+			<include>Visible_OpenClose</include>
+			<visible>Control.IsVisible(51)</visible>
+			<control id="51" type="panel">
+				<visible>[!Container.Content(musicvideos) + !Container.Content(seasons) + !Container.Content(episodes) + !String.Contains(Container.Folderpath,setid) + !String.StartsWith(Container.FolderPath,plugin://script.skin.helper.widgets/?action=browsegenres)] | [Container.Content(episodes) + String.StartsWith(Container.FolderPath,plugin://) + !String.StartsWith(Container.FolderPath,plugin://plugin.video.embycon)]</visible>
+				<width>auto</width>
+				<height>1080</height>
+				<onright condition="Control.IsVisible(7000)">SetFocus(7000)</onright>
+				<onright>noop</onright>
+				<onup>SetFocus(6666)</onup>
+				<include>Bounce_Up_Down</include>
+				<ondown>SetProperty(BounceDown,1,home)</ondown>
+				<onleft>9999</onleft>
+				<scrolltime tween="sine" easing="out">400</scrolltime>
+				<orientation>vertical</orientation>
+				<preloaditems>4</preloaditems>
+				<defaultcontrol always="true">0</defaultcontrol>
+				<viewtype label="$LOCALIZE[20021]">panel</viewtype>
+				<pagecontrol>17</pagecontrol>
+				<itemlayout width="257" height="445">
+					<control type="group">
+						<left>70.5</left>
+						<top>122</top>
+						<include content="PosterLayout_Size2">
+							<param name="mainlabel" value="$VAR[MainListLabel]" />
+							<param name="sublabel" value="$VAR[SubListLabel]" />
+							<param name="focused" value="false" />
+							<param name="id" value="51" />
+						</include>
+					</control>
+				</itemlayout>
+				<focusedlayout width="257" height="445">
+					<include>SetPropertyOnFocus</include>
+					<control type="group">							
+						<left>70.5</left>
+						<top>122</top>
+						<include content="PosterLayout_Size2">
+							<param name="mainlabel" value="$VAR[MainListLabel]" />
+							<param name="sublabel" value="$VAR[SubListLabel]" />
+							<param name="focused" value="true" />
+							<param name="id" value="51" />
+							<param name="visible_forced" value="true"/>
+						</include>
+					</control>
+				</focusedlayout>
+			</control>
+			<include content="list_mask_vertical_top">
+				<param name="height" value="70"/>
+				<param name="left" value="0"/>
+				<param name="right" value="0"/>
+				<param name="id" value="51"/>
+				<param name="visible_forced" value="true"/>
+			</include>
+			<include content="list_mask_vertical">
+				<param name="height" value="70"/>
+				<param name="left" value="0"/>
+				<param name="right" value="0"/>
+				<param name="id" value="51"/>
+				<param name="visible_forced" value="true"/>
+			</include>
+			<include content="JumpToLetter_vertical"/>
+		</control>
+	</include>
+</includes>

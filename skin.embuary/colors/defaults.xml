@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<colors>
+	<!-- background -->
+	<color name="background">ff121314</color>
+	<color name="background_diffuse">f2121314</color>
+
+	<!-- widgets and views-->
+	<color name="diffuse_widget">66222326</color>
+	<color name="focus_widget">FF388e3c</color>
+	<color name="list_hover">cc222326</color>
+	<color name="list_hover_divider">cc222326</color>
+	<color name="list_hover2">ff303034</color>
+	<color name="thumb_background">ff222326</color>
+	<color name="thumb_background_fallback">ff388e3c</color>
+	<color name="thumb_background_fallback_secondary">ff0288d1</color>
+
+	<!-- common colors -->
+	<color name="black">FF000000</color>
+	<color name="white">FFFFFFFFF</color>
+	<color name="grey">FF404040</color>
+	<color name="lightgrey">FF888888</color>
+	<color name="softgrey">ffaaaaaa</color>
+	<color name="blue">ff0288d1</color>
+	<color name="green">ff388e3c</color>
+	<color name="red">ffd32f2f</color>
+	<color name="turquoise">ff009688</color>
+	<color name="orange">fff57f17</color>
+	
+	<!-- text -->	
+	<color name="text_white">ffe1e1e1</color>
+	<color name="text_shadow">66000000</color>	
+	<color name="disabled">40FFFFFF</color>
+	<color name="selected">ff0288d1</color>
+	<color name="invalid">FFFF0000</color>
+
+	<!-- buttons -->
+	<color name="dark_button">ff232327</color>
+	<color name="light_button">ff464646</color>
+	<color name="grey_button">ff222326</color>
+	<color name="button_focus">ff52b54b</color>
+	
+	<!-- main focused colors -->
+	<color name="emby">FF52b54b</color>
+	<color name="emby_secondary">FF52b54b</color>
+	<color name="emby_diffuse">5552b54b</color>
+
+	<!-- sidepanel -->
+	<color name="panel">ff222326</color>
+	<color name="panel_text">FFcccccc</color>
+	<color name="panel_hover">ff303034</color>
+
+	<!-- EPG -->
+	<color name="grid_title">ff222326</color>
+	<color name="grid_label">ff1c1d1f</color>
+	<color name="grid_label_inprogress">ff222326</color>
+	<color name="grid_hover">ff555555</color>
+
+	<!-- header bar -->
+	<color name="headerbar">ff060606</color>
+	<color name="text_header">ff999999</color>
+	<color name="footerbar">ff060606</color>
+
+</colors>

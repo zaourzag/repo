@@ -740,6 +740,42 @@ Vous pouvez regarder le sport que vous aimez, vivez et sur demande à un moment 
   </extension>
 </addon>
 
+<addon id="skin.embuary" version="0.1.4" name="Embuary" provider-name="sualfred">
+	<requires>
+		<import addon="xbmc.gui" version="5.12.0"/>
+		<import addon="script.globalsearch" version="7.0.0"/>
+		<import addon="script.toolbox" version="1.1.1"/>
+		<import addon="script.skin.helper.service" version="1.1.23"/>
+		<import addon="script.skin.helper.widgets" version="1.0.35"/>
+		<import addon="script.skin.helper.backgrounds" version="1.0.32"/>
+		<import addon="plugin.program.autocompletion" version="1.0.1"/>
+		<import addon="script.skinshortcuts" version="1.0.18"/>
+		<import addon="script.extendedinfo" version="5.6.0"/>
+		<import addon="resource.images.weathericons.outline-hd" version="0.0.3"/>
+	</requires>
+	<extension point="xbmc.gui.skin" debugging="false">
+		<res width="1920" height="1080" aspect="16:9" default="true" folder="xml" />
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de_DE">Embuary Skin von Sualfred</summary>
+		<summary lang="en_US">Embuary skin by sualfred</summary>
+		<summary lang="nl_NL">Embuary skin door sualfred</summary>
+		<description lang="de_DE">Embuary ist dem Web UI von Emby nachempfunden und für Emby-For-Kodi Nutzer entwickelt worden.</description>
+		<description lang="en_US">Embuary is based on the web UI of Emby and has been developed for Emby-For-kodi User.</description>
+		<description lang="nl_NL">Embuary is gebaseerd op Emby's Web UI en ontwikkeld voor Emby-For-Kodi gebruikers.</description>
+		<disclaimer lang="de_DE">Keine Maus Unterstützung. Mit der Instalaltion des Skins erklärst du dich damit einverstanden keine verbotenen und illegalen Addons von Kodi damit zu benutzen. Ich stehe in keinerlei Verbindung zu verfübaren Builds und gebe keinen Support für diese oder andere illegalen Drittanbieter-Addons.</disclaimer>
+		<disclaimer lang="en_US">No mouse support. With the installation of the skin you agree that you don't use it in combination with blacklisted and illegal Kodi add-ons. I'm not associated with any available build and I won't give any support to blacklisted, banned or illegal third party addons.</disclaimer>
+		<platform>all</platform>
+		<license>CC by-nc-nd 4.0, GNU GENERAL PUBLIC LICENSE Version 2.0</license>
+		<forum></forum>
+		<source>https://github.com/sualfred/skin.embuary</source>
+		<assets>
+			<icon>resources/icon.png</icon>
+			<fanart>resources/fanart.jpg</fanart>
+		</assets>
+	</extension>
+</addon>
+
 <addon id="script.loungeripper" name="Lounge Ripper" version="0.1.26" provider-name="Birger Jesch">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
