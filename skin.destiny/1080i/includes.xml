@@ -301,8 +301,6 @@
 	  <width>1920</width>
 	  <height>1080</height>
 	  <align>left</align>
-	  <visible>Container(9000).Hasfocus(30)</visible>
-	  <visible>Window.IsVisible(home)</visible>
 	  <visible>Player.HasVideo</visible>
 	</control>
 	<control type="image">

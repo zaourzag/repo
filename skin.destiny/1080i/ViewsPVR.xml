@@ -62,7 +62,6 @@
 			  <bordertexture border="10">ThumbShadow.png</bordertexture>
 		      <bordersize>7</bordersize>
 			  <texture>$INFO[ListItem.Icon]</texture>
-			  <visible>!Player.HasMedia</visible>
 		    </control>
 			<control type="label">
 			  <include>Animation.ZoomIn</include>
@@ -77,12 +76,6 @@
 			  <scroll>false</scroll>
 			  <aligny>center</aligny>
 			  <label>($INFO[Container(51).NumItems]) $LOCALIZE[19019] - $LOCALIZE[31024] ($INFO[Container(51).CurrentPage]/$INFO[Container(51).NumPages])</label>
-			</control>
-			<control type="videowindow">
-			  <left>52</left>
-			  <top>0</top>
-			  <width>545</width>
-			  <height>385</height>
 			</control>
 		</control>
 		<control type="group">
@@ -375,7 +368,6 @@
 			  <bordertexture border="10">ThumbShadow.png</bordertexture>
 		      <bordersize>7</bordersize>
 			  <texture>$INFO[ListItem.Icon]</texture>
-			  <visible>!Player.HasMedia</visible>
 		    </control>
 			<control type="label">
 			  <include>Animation.ZoomIn</include>
@@ -390,12 +382,6 @@
 			  <scroll>false</scroll>
 			  <aligny>center</aligny>
 			  <label>($INFO[Container(820).NumItems]) $LOCALIZE[19019] - $LOCALIZE[31024] ($INFO[Container(820).CurrentPage]/$INFO[Container(820).NumPages])</label>
-			</control>
-			<control type="videowindow">
-			  <left>52</left>
-			  <top>0</top>
-			  <width>545</width>
-			  <height>385</height>
 			</control>
 		</control>
 		<control type="group">
