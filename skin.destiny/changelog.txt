@@ -1,6 +1,6 @@
 Changelog:
 
-3.2.0
+3.2.1
 - Ansicht Liste im LiveTV wieder verfuegbar
 - Kleinere Designanpassungen an sen Home-Widgets
 

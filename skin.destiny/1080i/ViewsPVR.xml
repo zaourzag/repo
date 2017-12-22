@@ -1,6 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <includes>
      <include name="View_51_LiveTVPanel">
+	    <control type="group">
+			<left>1270</left>
+			<top>163</top>
+			<control type="image">
+			  <left>0</left>
+			  <top>5</top>
+			  <width>26</width>
+			  <height>820</height>
+			  <texture background="true">default/panel_schatten_rechts.png</texture>
+			  <aspectratio>stretch</aspectratio>
+			  <colordiffuse>$VAR[ColorFontShadow]</colordiffuse>
+			</control>
+			<control type="label">
+			  <left>50</left>
+			  <top>390</top>
+			  <width>1550</width>
+			  <height>35</height>
+			  <font>primal_20_Title</font>
+			  <align>left</align>
+			  <aligny>center</aligny>
+			  <textcolor>$VAR[ColorFontNormal]</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			  <selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
+			  <label>$INFO[ListItem.Label]</label>
+			</control>
+			<control type="label">
+			  <left>50</left>
+			  <top>420</top>
+			  <width>1550</width>
+			  <height>35</height>
+			  <font>primal_13</font>
+			  <align>left</align>
+			  <aligny>center</aligny>
+			  <textcolor>$VAR[ColorFontNormal]</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			  <selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
+			  <label>$INFO[ListItem.Genre]</label>
+			</control>
+			<control type="textbox">
+			  <description>Plot Value for TVShow</description>
+			  <left>50</left>
+			  <top>480</top>
+			  <width>550</width>
+			  <height>300</height>
+			  <font>primal_16</font>
+			  <align>justify</align>
+			  <textcolor>white</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			  <pagecontrol>-</pagecontrol>
+			  <label>[COLOR $VAR[ColorFontNormal]]$INFO[ListItem.Plot][/COLOR]</label>
+			  <autoscroll time="2000" delay="15000" repeat="5000">!Skin.HasSetting(NoPlotScroll)</autoscroll>
+		    </control>
+			<control type="image">
+			  <left>42</left>
+			  <top>0</top>
+			  <width>560</width>
+			  <height>385</height>
+			  <aspectratio align="left" aligny="top">keep</aspectratio>
+			  <bordertexture border="10">ThumbShadow.png</bordertexture>
+		      <bordersize>7</bordersize>
+			  <texture>$INFO[ListItem.Icon]</texture>
+			  <visible>!Player.HasMedia</visible>
+		    </control>
+			<control type="label">
+			  <include>Animation.ZoomIn</include>
+			  <description>Page Count Label</description>
+			  <left>80</left>
+			  <top>1020</top>
+			  <width>500</width>
+			  <height>20</height>
+			  <font>primal_20</font>
+			  <textcolor>$VAR[ColorFontNormal]</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			  <scroll>false</scroll>
+			  <aligny>center</aligny>
+			  <label>($INFO[Container(51).NumItems]) $LOCALIZE[19019] - $LOCALIZE[31024] ($INFO[Container(51).CurrentPage]/$INFO[Container(51).NumPages])</label>
+			</control>
+			<control type="videowindow">
+			  <left>52</left>
+			  <top>0</top>
+			  <width>545</width>
+			  <height>385</height>
+			</control>
+		</control>
 		<control type="group">
 		    <include>Animation.ZoomIn</include>
 			<description>TV Channels group</description>
@@ -226,7 +310,11 @@
 			  <orientation>vertical</orientation>
 			  <visible>Control.IsVisible(51)</visible>
 			</control>-->
-			<control type="group">
+		</control>
+	</include>
+	
+	<include name="View_820_LiveTVList">
+	    <control type="group">
 			<left>1270</left>
 			<top>163</top>
 			<control type="image">
@@ -238,17 +326,6 @@
 			  <aspectratio>stretch</aspectratio>
 			  <colordiffuse>$VAR[ColorFontShadow]</colordiffuse>
 			</control>
-			<!--<control type="image">
-			  <left>0</left>
-			  <top>0</top>
-			  <width>590</width>
-			  <height>830</height>
-			  <texture background="true">skin/button_klein_tranz20.png</texture>
-			  <bordertexture border="10">ThumbShadow.png</bordertexture>
-		      <bordersize>6</bordersize>
-			  <aspectratio align="center" aligny="center">scale</aspectratio>
-			  <colordiffuse>$VAR[BackColorFront]</colordiffuse>
-			</control>-->
 			<control type="label">
 			  <left>50</left>
 			  <top>390</top>
@@ -298,8 +375,8 @@
 			  <bordertexture border="10">ThumbShadow.png</bordertexture>
 		      <bordersize>7</bordersize>
 			  <texture>$INFO[ListItem.Icon]</texture>
+			  <visible>!Player.HasMedia</visible>
 		    </control>
-			</control>
 			<control type="label">
 			  <include>Animation.ZoomIn</include>
 			  <description>Page Count Label</description>
@@ -312,103 +389,15 @@
 			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 			  <scroll>false</scroll>
 			  <aligny>center</aligny>
-			  <label>($INFO[Container(51).NumItems]) $LOCALIZE[19019] - $LOCALIZE[31024] ($INFO[Container(51).CurrentPage]/$INFO[Container(51).NumPages])</label>
+			  <label>($INFO[Container(820).NumItems]) $LOCALIZE[19019] - $LOCALIZE[31024] ($INFO[Container(820).CurrentPage]/$INFO[Container(820).NumPages])</label>
 			</control>
-			<!--<control type="videowindow">
-			  <left>1490</left>
-			  <top>785</top>
-			  <width>390</width>
-			  <height>190</height>
-			</control>-->
-			<!--<control type="group">
-			<left>530</left>
-			<top>490</top>
-			<visible>RDS.HasRDS</visible>
-			<control type="image">
-				<left>580</left>
-				<top>-3</top>
-				<width>104</width>
-				<height>40</height>
-				<visible>!RDS.HasRadioText</visible>
-				<texture>flagging/rds/rds-logo.png</texture>
+			<control type="videowindow">
+			  <left>52</left>
+			  <top>0</top>
+			  <width>545</width>
+			  <height>385</height>
 			</control>
-			<control type="image">
-				<left>580</left>
-				<top>-3</top>
-				<width>104</width>
-				<height>34</height>
-				<visible>RDS.HasRadioText + !RDS.HasRadioTextPlus</visible>
-				<texture>flagging/rds/rds-radiotext-logo.png</texture>
-			</control>
-			<control type="image">
-				<left>580</left>
-				<top>-3</top>
-				<width>104</width>
-				<height>40</height>
-				<visible>RDS.HasRadioTextPlus</visible>
-				<texture>flagging/rds/rds-radiotext-plus-logo.png</texture>
-			</control>
-			<control type="label">
-				<left>0</left>
-				<top>40</top>
-				<width>690</width>
-				<height>20</height>
-				<font>font13</font>
-				<textcolor>white</textcolor>
-				<shadowcolor>black</shadowcolor>
-				<align>left</align>
-				<aligny>center</aligny>
-				<scroll>true</scroll>
-				<visible>RDS.HasRDS</visible>
-				<label>$INFO[RDS.Getline(3)]</label>
-			</control>
-			<control type="label">
-				<left>0</left>
-				<top>65</top>
-				<width>690</width>
-				<height>20</height>
-				<font>font13</font>
-				<textcolor>white</textcolor>
-				<shadowcolor>black</shadowcolor>
-				<align>left</align>
-				<aligny>center</aligny>
-				<scroll>true</scroll>
-				<visible>RDS.HasRDS</visible>
-				<label>$INFO[RDS.Getline(2)]</label>
-			</control>
-			<control type="label">
-				<left>0</left>
-				<top>90</top>
-				<width>690</width>
-				<height>20</height>
-				<font>font13</font>
-				<textcolor>white</textcolor>
-				<shadowcolor>black</shadowcolor>
-				<align>left</align>
-				<aligny>center</aligny>
-				<scroll>true</scroll>
-				<visible>RDS.HasRDS</visible>
-				<label>$INFO[RDS.Getline(1)]</label>
-			</control>
-			<control type="label">
-				<left>0</left>
-				<top>115</top>
-				<width>690</width>
-				<height>20</height>
-				<font>font13</font>
-				<textcolor>white</textcolor>
-				<shadowcolor>black</shadowcolor>
-				<align>left</align>
-				<aligny>center</aligny>
-				<scroll>true</scroll>
-				<visible>RDS.HasRDS</visible>
-				<label>$INFO[RDS.Getline(0)]</label>
-			</control>
-          </control>-->
 		</control>
-	</include>
-	
-	<include name="View_820_LiveTVList">
 		<control type="group">
 		    <include>Animation.ZoomIn</include>
 			<description>TV Channels group</description>
@@ -616,6 +605,7 @@
 				  </control>
 				</focusedlayout>
 			</control>
+			</control>
 			<!--<control type="scrollbar" id="60">
 			  <include>Animation.ZoomIn</include>
 	          <include>Animation.ZoomOut</include>
@@ -634,91 +624,6 @@
 			  <orientation>vertical</orientation>
 			  <visible>Control.IsVisible(51)</visible>
 			</control>-->
-			<control type="group">
-			<left>1270</left>
-			<top>163</top>
-			<control type="image">
-			  <left>0</left>
-			  <top>5</top>
-			  <width>26</width>
-			  <height>820</height>
-			  <texture background="true">default/panel_schatten_rechts.png</texture>
-			  <aspectratio>stretch</aspectratio>
-			  <colordiffuse>$VAR[ColorFontShadow]</colordiffuse>
-			</control>
-			<control type="label">
-			  <left>50</left>
-			  <top>390</top>
-			  <width>1550</width>
-			  <height>35</height>
-			  <font>primal_20_Title</font>
-			  <align>left</align>
-			  <aligny>center</aligny>
-			  <textcolor>$VAR[ColorFontNormal]</textcolor>
-			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
-			  <selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
-			  <label>$INFO[ListItem.Label]</label>
-			</control>
-			<control type="label">
-			  <left>50</left>
-			  <top>420</top>
-			  <width>1550</width>
-			  <height>35</height>
-			  <font>primal_13</font>
-			  <align>left</align>
-			  <aligny>center</aligny>
-			  <textcolor>$VAR[ColorFontNormal]</textcolor>
-			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
-			  <selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
-			  <label>$INFO[ListItem.Genre]</label>
-			</control>
-			<control type="textbox">
-			  <description>Plot Value for TVShow</description>
-			  <left>50</left>
-			  <top>480</top>
-			  <width>550</width>
-			  <height>300</height>
-			  <font>primal_16</font>
-			  <align>justify</align>
-			  <textcolor>white</textcolor>
-			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
-			  <pagecontrol>-</pagecontrol>
-			  <label>[COLOR $VAR[ColorFontNormal]]$INFO[ListItem.Plot][/COLOR]</label>
-			  <autoscroll time="2000" delay="15000" repeat="5000">!Skin.HasSetting(NoPlotScroll)</autoscroll>
-		    </control>
-			<control type="image">
-			  <left>42</left>
-			  <top>0</top>
-			  <width>560</width>
-			  <height>385</height>
-			  <aspectratio align="left" aligny="top">keep</aspectratio>
-			  <bordertexture border="10">ThumbShadow.png</bordertexture>
-		      <bordersize>7</bordersize>
-			  <texture>$INFO[ListItem.Icon]</texture>
-			  <visible>!Player.HasMedia</visible>
-		    </control>
-			</control>
-			<control type="label">
-			  <include>Animation.ZoomIn</include>
-			  <description>Page Count Label</description>
-			  <left>80</left>
-			  <top>1020</top>
-			  <width>500</width>
-			  <height>20</height>
-			  <font>primal_20</font>
-			  <textcolor>$VAR[ColorFontNormal]</textcolor>
-			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
-			  <scroll>false</scroll>
-			  <aligny>center</aligny>
-			  <label>($INFO[Container(820).NumItems]) $LOCALIZE[19019] - $LOCALIZE[31024] ($INFO[Container(820).CurrentPage]/$INFO[Container(820).NumPages])</label>
-			</control>
-			<control type="videowindow">
-			  <left>1319</left>
-			  <top>143</top>
-			  <width>545</width>
-			  <height>385</height>
-			</control>
-		</control>
 	</include>
 	
 </includes>
