@@ -1593,7 +1593,7 @@ NOTE: Due to updates by rytec, this addon might completely break in a couple of 
   </extension>
 </addon>
 
-<addon id="skin.destiny" name="Destiny" version="3.2.2" provider-name="Jugger">
+<addon id="skin.destiny" name="Destiny" version="3.2.3" provider-name="Jugger">
   <requires>
     <import addon="xbmc.gui" version="5.12.0"/>
   </requires>
