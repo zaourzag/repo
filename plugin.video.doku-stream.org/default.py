@@ -168,7 +168,7 @@ def list_tags(url):
     json_data = requests.get(url).json()
     listing = []
     for i in json_data:
-        name = i.get('name')
+        name = HTMLParser().unescape(i.get('name'))
         tag_id = i.get('id')
         listing.append({
             'label': name,
@@ -189,7 +189,7 @@ def list_categories(url):
     json_data = requests.get(url).json()
     listing = []
     for i in json_data:
-        name = i.get('name')
+        name = HTMLParser().unescape(i.get('name'))
         category_id = i.get('id')
         listing.append({
             'label': name,
@@ -201,7 +201,7 @@ def list_categories(url):
         next_url = edit_url(url, {'page': next_page})
         listing.append({
             'label': '[COLOR blue]{0}[/COLOR]'.format(_("Next page")),
-            'url': plugin.get_url(action='tags_by_url', url=next_url),
+            'url': plugin.get_url(action='categories_by_url', url=next_url),
         })
     return listing
 
