@@ -1,0 +1,17 @@
+Changelog:
+
+3.2.2
+- Ansicht Liste im LiveTV wieder verfuegbar
+- Kleinere Designanpassungen an sen Home-Widgets
+- Videofenster jetzt im Hintergrund und Vollbild
+
+3.1.1
+- Ansichten Fehler behoben
+
+3.1.0
+- Design verändert bei alternativen Ansicht
+- Fehlerbehebung
+
+3.0.0
+- for Kodi 17
+- Fehlerbehebung
