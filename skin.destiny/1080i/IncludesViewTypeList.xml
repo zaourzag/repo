@@ -66,11 +66,12 @@
     </include>
 	
     <include name="ViewsidPVR">
-		<views>50,51,52</views>
+		<views>51,820</views>
     </include>
     <include name="ViewsPVR">
 		<control type="group" id="777">
 		    <include>View_51_LiveTVPanel</include>
+		    <include>View_820_LiveTVList</include>
 		</control>
     </include>
 	

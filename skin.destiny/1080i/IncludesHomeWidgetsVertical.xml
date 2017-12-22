@@ -258,7 +258,7 @@
               <top>5</top>
               <width>330</width>
               <height>210</height>
-              <texture background="true" fallback="default/noposter.jpg">$INFO[ListItem.Icon]</texture>
+              <texture background="true" fallback="special://skin/backgrounds/fallback_addons.jpg">$INFO[ListItem.Icon]</texture>
 			  <bordertexture border="10">ThumbShadow.png</bordertexture>
 		      <bordersize>6</bordersize>
               <aspectratio align="left" aligny="top">stretch</aspectratio>
@@ -616,7 +616,7 @@
               <top>5</top>
               <width>330</width>
               <height>210</height>
-              <texture background="true" fallback="default/noposter.jpg">$INFO[ListItem.Icon]</texture>
+              <texture background="true" fallback="special://skin/backgrounds/fallback_addons.jpg">$INFO[ListItem.Icon]</texture>
 			  <bordertexture border="10">ThumbShadow.png</bordertexture>
 		      <bordersize>6</bordersize>
               <aspectratio align="left" aligny="top">stretch</aspectratio>
@@ -836,7 +836,7 @@
 	 <control type="panel" id="18306">
 		<left>430</left>
 		<top>210</top>
-		<width>1380</width>
+		<width>1370</width>
 		<height>240</height>
 		<onleft>300001</onleft>
 		<onright>9000</onright>
@@ -846,133 +846,23 @@
 		<orientation>horizontal</orientation>
 		<focusposition>0</focusposition>
 		<pagecontrol>-</pagecontrol>
-		  <itemlayout condition="!Skin.HasSetting(movieactor)" width="345" height="230">
-            <control type="image">
-              <left>5</left>
-              <top>5</top>
-              <width>330</width>
-              <height>210</height>
-              <texture background="true">$VAR[VarLandsape]</texture>
-			  <bordertexture border="10">ThumbShadow.png</bordertexture>
-		      <bordersize>6</bordersize>
-              <aspectratio align="left" aligny="top">stretch</aspectratio>
-            </control>
-		    <control type="group">
-		    <visible>!Skin.HasSetting(moviewidgetstime)</visible>
-			<control type="image">
-              <left>299</left>
-              <top>126</top>
-              <width>30</width>
-              <height>83</height>
-              <texture background="true">skin/button_klein_tranz90.png</texture>
-              <aspectratio>stretch</aspectratio>
-			  <colordiffuse>FF847308</colordiffuse>
-            </control>
-			<control type="image">
-              <left>303</left>
-              <top>185</top>
-              <width>20</width>
-              <height>20</height>
-              <texture background="true">home/homeicons/time2.png</texture>
-              <aspectratio>stretch</aspectratio>
-			  <colordiffuse>$VAR[ColorFontNormal]</colordiffuse>
-			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
-            </control>
-			<control type="label">
-			  <description>Title label</description>
-			  <left>302</left>
-			  <top>175</top>
-			  <height>200</height>
-			  <width>200</width>
-			  <label>$INFO[ListItem.EndTime]</label>
-			  <align>left</align>
-			  <aligny>left</aligny>
-			  <font>primal_12_Bold</font>
-			  <textcolor>$VAR[ColorFontNormal]</textcolor>
-			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
-			  <angle>90</angle>
-			</control>
-		   </control>
-          </itemlayout>
-		  <itemlayout condition="Skin.HasSetting(movieactor)" width="152" height="230">
+		  <itemlayout width="152" height="230">
 			<control type="image">
               <left>5</left>
               <top>5</top>
-              <width>150</width>
+              <width>145</width>
               <height>210</height>
-              <texture background="true" fallback="default/noposter.jpg">$INFO[ListItem.Icon]</texture>
+              <texture background="true">$INFO[ListItem.Icon]</texture>
 			  <bordertexture border="10">ThumbShadow.png</bordertexture>
 		      <bordersize>6</bordersize>
-              <aspectratio align="center" aligny="top">scale</aspectratio>
-			  <visible>Skin.HasSetting(movieactor)</visible>
+              <aspectratio align="center" aligny="top">stretch</aspectratio>
             </control>
           </itemlayout>
-          <focusedlayout condition="!Skin.HasSetting(movieactor)" width="345" height="230">
-			<control type="image">
-              <left>0</left>
-              <top>0</top>
-              <width>340</width>
-              <height>220</height>
-              <texture background="true">skin/button_klein.png</texture>
-			  <bordertexture border="10">ThumbShadow.png</bordertexture>
-		      <bordersize>6</bordersize>
-              <aspectratio>stretch</aspectratio>
-			  <colordiffuse>$VAR[BackColorButton]</colordiffuse>
-			  <visible>Control.HasFocus(18306)</visible>
-            </control>
-            <control type="image">
-              <left>5</left>
-              <top>5</top>
-              <width>330</width>
-              <height>210</height>
-              <texture background="true">$VAR[VarLandsape]</texture>
-			  <bordertexture border="10">ThumbShadow.png</bordertexture>
-		      <bordersize>6</bordersize>
-              <aspectratio align="left" aligny="top">stretch</aspectratio>
-              <visible>!Skin.HasSetting(movieactor)</visible>
-            </control>			
-			<control type="group">
-		    <visible>!Skin.HasSetting(moviewidgetstime)</visible>
-			<control type="image">
-              <left>299</left>
-              <top>126</top>
-              <width>30</width>
-              <height>83</height>
-              <texture background="true">skin/button_klein_tranz90.png</texture>
-              <aspectratio>stretch</aspectratio>
-			  <colordiffuse>FF847308</colordiffuse>
-            </control>
-			<control type="image">
-              <left>303</left>
-              <top>185</top>
-              <width>20</width>
-              <height>20</height>
-              <texture background="true">home/homeicons/time2.png</texture>
-              <aspectratio>stretch</aspectratio>
-			  <colordiffuse>$VAR[ColorFontNormal]</colordiffuse>
-			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
-            </control>
-			<control type="label">
-			  <description>Title label</description>
-			  <left>302</left>
-			  <top>175</top>
-			  <height>200</height>
-			  <width>200</width>
-			  <label>$INFO[ListItem.EndTime]</label>
-			  <align>left</align>
-			  <aligny>left</aligny>
-			  <font>primal_12_Bold</font>
-			  <textcolor>$VAR[ColorFontNormal]</textcolor>
-			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
-			  <angle>90</angle>
-			</control>
-		   </control>
-          </focusedlayout>
-		  <focusedlayout condition="Skin.HasSetting(movieactor)" width="152" height="230">
+		  <focusedlayout width="152" height="230">
 		    <control type="image">
               <left>0</left>
               <top>0</top>
-              <width>160</width>
+              <width>155</width>
               <height>220</height>
               <texture background="true">skin/button_klein.png</texture>
 			  <bordertexture border="10">ThumbShadow.png</bordertexture>
@@ -984,13 +874,12 @@
 			<control type="image">
               <left>5</left>
               <top>5</top>
-              <width>150</width>
+              <width>145</width>
               <height>210</height>
-              <texture background="true" fallback="default/noposter.jpg">$INFO[ListItem.Icon]</texture>
+              <texture background="true">$INFO[ListItem.Icon]</texture>
 			  <bordertexture border="10">ThumbShadow.png</bordertexture>
 		      <bordersize>6</bordersize>
-              <aspectratio align="center" aligny="top">scale</aspectratio>
-			  <visible>Skin.HasSetting(movieactor)</visible>
+              <aspectratio align="center" aligny="top">stretch</aspectratio>
             </control>
           </focusedlayout>
 		  <content target="video" limit="12">$VAR[HomeWidgetsMovies]</content>
@@ -1377,7 +1266,7 @@
 		<orientation>horizontal</orientation>
 		<focusposition>0</focusposition>
 		<pagecontrol>-</pagecontrol>
-		  <itemlayout condition="!Skin.HasSetting(movieactor)" width="345" height="230">
+		  <itemlayout width="345" height="230">
             <control type="image">
               <left>5</left>
               <top>5</top>
@@ -1460,20 +1349,7 @@
 			</control>
 		   </control>
           </itemlayout>
-		  <itemlayout condition="Skin.HasSetting(movieactor)" width="152" height="230">
-			<control type="image">
-              <left>5</left>
-              <top>5</top>
-              <width>150</width>
-              <height>210</height>
-              <texture background="true" fallback="default/noposter.jpg">$INFO[ListItem.Icon]</texture>
-			  <bordertexture border="10">ThumbShadow.png</bordertexture>
-		      <bordersize>6</bordersize>
-              <aspectratio align="center" aligny="top">scale</aspectratio>
-			  <visible>Skin.HasSetting(movieactor)</visible>
-            </control>
-          </itemlayout>
-          <focusedlayout condition="!Skin.HasSetting(movieactor)" width="345" height="230">
+          <focusedlayout width="345" height="230">
 			<control type="image">
               <left>0</left>
               <top>0</top>
@@ -1568,31 +1444,6 @@
 			  <angle>90</angle>
 			</control>
 		   </control>
-          </focusedlayout>
-		  <focusedlayout condition="Skin.HasSetting(movieactor)" width="152" height="230">
-		    <control type="image">
-              <left>0</left>
-              <top>0</top>
-              <width>160</width>
-              <height>220</height>
-              <texture background="true">skin/button_klein.png</texture>
-			  <bordertexture border="10">ThumbShadow.png</bordertexture>
-		      <bordersize>6</bordersize>
-              <aspectratio>stretch</aspectratio>
-			  <colordiffuse>$VAR[BackColorButton]</colordiffuse>
-			  <visible>Control.HasFocus(18306)</visible>
-            </control>
-			<control type="image">
-              <left>5</left>
-              <top>5</top>
-              <width>150</width>
-              <height>210</height>
-              <texture background="true" fallback="default/noposter.jpg">$INFO[ListItem.Icon]</texture>
-			  <bordertexture border="10">ThumbShadow.png</bordertexture>
-		      <bordersize>6</bordersize>
-              <aspectratio align="center" aligny="top">scale</aspectratio>
-			  <visible>Skin.HasSetting(movieactor)</visible>
-            </control>
           </focusedlayout>
 		  <content target="video" limit="12">$VAR[HomeWidgetsSeries]</content>
 	  </control>
@@ -2170,7 +2021,7 @@
               <top>5</top>
               <width>330</width>
               <height>210</height>
-              <texture background="true">$INFO[ListItem.Art(landscape)]</texture>
+              <texture background="true">$VAR[VarLandsape]</texture>
 			  <bordertexture border="10">ThumbShadow.png</bordertexture>
 		      <bordersize>6</bordersize>
               <aspectratio align="left" aligny="top">stretch</aspectratio>
@@ -2228,7 +2079,7 @@
               <top>5</top>
               <width>330</width>
               <height>210</height>
-              <texture background="true">$INFO[ListItem.Art(landscape)]</texture>
+              <texture background="true">$VAR[VarLandsape]</texture>
 			  <bordertexture border="10">ThumbShadow.png</bordertexture>
 		      <bordersize>6</bordersize>
               <aspectratio align="left" aligny="top">stretch</aspectratio>

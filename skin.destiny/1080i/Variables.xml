@@ -136,6 +136,7 @@
 	<variable name="VarLandsape">
 	  <value condition="!String.IsEmpty(ListItem.Art(landscape))">$INFO[ListItem.Art(landscape)]</value>
 	  <value condition="!String.IsEmpty(ListItem.Art(fanart))">$INFO[ListItem.Art(fanart)]</value>
+	  <value>special://skin/backgrounds/fallback_addons.jpg</value>
 	</variable>	
 	
 	<variable name="VarClearart">
