@@ -2266,7 +2266,7 @@ NOTE: Due to updates by rytec, this addon might completely break in a couple of 
         <broken>Kodinerds Repo ersetzt Lost und Found</broken>
 </addon>
 
-<addon id="plugin.video.4playersweb" name="4players (Webbased)" version="0.2.1" provider-name="L0RE">
+<addon id="plugin.video.4playersweb" name="4players (Webbased)" version="0.2.3" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.20.0" />
         <import addon="script.module.beautifulsoup4" version="4.3.2"/>
