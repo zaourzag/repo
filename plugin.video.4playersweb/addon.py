@@ -144,11 +144,11 @@ def index():
   htmlPage = BeautifulSoup(content, 'html.parser')
   element = htmlPage.find("select",attrs={'name':'FILTER'})
   spalten = element.find_all('option')
-  addDir("Settings", "", 'Settings', "")
+  addDir("Settings", "", 'Settings', "")  
   if not newtype=="-1":
-    addDir("Neueste Videos", "http://www.4players.de/4players.php/browsevideostv###/Trailer_Videos_TV.html#pagetop", 'listrubrik', "",ffilter=newtype)   
+    addDir("Neueste Videos", "http://www.4players.de/4players.php/index4playerstv/4PlayersTV/Trailer_Videos_TV.html#pagetop", 'listrubrik', "",ffilter=newtype)   
   else:     
-    addDir("Neueste Videos", "http://www.4players.de/4players.php/browsevideostv###/Trailer_Videos_TV.html#pagetop", 'newvideos', "",ffilter=newtype)     
+    addDir("Neueste Videos", "http://www.4players.de/4players.php/index4playerstv/4PlayersTV/Trailer_Videos_TV.html#pagetop", 'newvideos', "",ffilter=newtype)     
   debug("TYPE :"+type)
   for spalte in spalten: 
    if type=="-1":       
