@@ -1,6 +1,6 @@
 Changelog:
 
-3.2.2
+3.3.0
 - Ansicht Liste im LiveTV wieder verfuegbar
 - Kleinere Designanpassungen an sen Home-Widgets
 - Videofenster jetzt im Hintergrund und Vollbild
