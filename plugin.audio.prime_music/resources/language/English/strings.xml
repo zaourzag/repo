@@ -7,6 +7,7 @@
   <string id="30005">New albums</string>
   <string id="30006">Back to Main Menu</string>
   <string id="30010">My Playlists</string>
+  <string id="30011">My Albums</string>
   <string id="30015">Search</string>
   <string id="30016">Search albums</string>
   <string id="30017">Search songs</string>
@@ -50,4 +51,11 @@
   <string id="30121">Forced views</string>
   <string id="30201">General</string>
   <string id="30203">Advanced</string>
+  <string id="30210">Credentials</string>
+  <string id="30211">E-Mail</string>
+  <string id="30212">Store password</string>
+  <string id="30213">Delete password</string>
+  <string id="30220">Warning: Credentials are stored on the devices storage.</string>
+  <string id="30221">Anybody who gain access to that device might read this data.</string>
+  <string id="30222">Therefore it is strongly recommended not to store the credentials!</string>
 </strings>
