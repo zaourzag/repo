@@ -3644,7 +3644,7 @@ Parental warning: The Maxdome Plattform consists of differnt types of content - 
 	</extension>
 </addon>
 
-<addon id="plugin.video.filmstarts" name="Filmstarts" version="0.6.11" provider-name="L0RE">
+<addon id="plugin.video.filmstarts" name="Filmstarts" version="0.6.12" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
     </requires>
