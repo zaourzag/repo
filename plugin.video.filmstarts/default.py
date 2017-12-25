@@ -76,6 +76,9 @@ def ersetze(inhalt):
    inhalt=inhalt.replace('&Uuml;','Ü') 
    inhalt=inhalt.replace('&ouml;','ö') 
    inhalt=inhalt.replace('&ouml;','Ö') 
+   inhalt=inhalt.replace('&#305;','ı')    	
+   inhalt=inhalt.replace('&#233;','é')    	
+   inhalt=inhalt.replace('&#351;','ş')    	
    return inhalt
 
 def imagereplace(icon):   
@@ -109,12 +112,7 @@ def addDir(name, url, mode, thump, desc="",page=1,xtype="",datum=""):
   
 def addLink(name, url, mode, thump, duration="", desc="", genre='',director="",bewertung="",referer=""):
   debug("URL ADDLINK :"+url)
-  thump=imagereplace(thump) 
-  try:
-     id  = re.compile('serien/(.+?)/videos/', re.DOTALL).findall(url) [0]
-     icon="http://de.web.img1.acsta.net/r_1200_1600/seriesposter/"+id+"/poster_large.jpg"
-  except:
-     icon=thump  
+  thump=imagereplace(thump)   
   debug( icon  )
   u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&referer="+str(referer)
   ok = True
@@ -123,7 +121,6 @@ def addLink(name, url, mode, thump, duration="", desc="", genre='',director="",b
   liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Genre": genre, "Director":director,"Rating":bewertung})
   liz.setProperty('IsPlayable', 'true')
   liz.addStreamInfo('video', { 'duration' : duration })
-	#xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
   ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
   return ok
   
@@ -538,8 +535,11 @@ def kinovideos(url,page=1,datum=""):
             urlg=decodeurl(urlg)
           debug("URLG ::"+urlg)
           name= re.compile("title='(.+?)'", re.DOTALL).findall(element)[0] 
-          
-          desc=re.compile("<p[^>]+>([^<]+)<", re.DOTALL).findall(element)[0]
+          debug("Name :"+name)
+          try:
+            desc=re.compile("<p[^>]*>([^<]+)<", re.DOTALL).findall(element)[0]
+          except:          
+            desc=""
           
           match=re.compile('<span itemprop="genre">(.+?)</span>', re.DOTALL).findall(element)          
           genres=[]
