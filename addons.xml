@@ -740,7 +740,7 @@ Vous pouvez regarder le sport que vous aimez, vivez et sur demande à un moment 
   </extension>
 </addon>
 
-<addon id="skin.embuary" version="0.1.7" name="Embuary" provider-name="sualfred">
+<addon id="skin.embuary" version="0.1.8" name="Embuary" provider-name="sualfred">
 	<requires>
 		<import addon="xbmc.gui" version="5.12.0"/>
 		<import addon="script.globalsearch" version="7.0.0"/>
