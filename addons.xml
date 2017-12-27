@@ -2493,6 +2493,29 @@ NOTE: Due to updates by rytec, this addon might completely break in a couple of 
 	</extension>
 </addon>
 
+<addon id="plugin.video.L0RE.tlc" name="TLC Mediathek" version="0.1" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.24.0"/>
+        <import addon="script.module.requests" version="2.12.4"/>
+        <import addon="script.module.beautifulsoup4" version="4.3.2"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="de">TLC Mediathek</summary>
+    <summary lang="en">TLC Mediathek</summary>
+    <description lang="en">TLC Mediathek</description>
+    <description lang="de">TLC Mediathek</description>
+    <website></website>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.L0RE.tlc</source>
+    <forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
+    <email>andreas at vogler dot name</email>
+    <platform>all</platform>
+  </extension>
+</addon>
+
 <addon id="repository.kodinerds_WIN_32" name="kodinerds.net Binary Addons for Windows" version="1.0.3" provider-name="L0RE">
 	<extension point="xbmc.addon.repository" name="L0RE">
 		<info compressed="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/WIN_32/addons.xml</info>
