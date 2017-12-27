@@ -1,3 +1,6 @@
+v0.5.2 (2017.12.27)
+- Fix Wakanim website change
+
 v0.5.1 (2017.11.27)
 - Added trailer videos
 - Added hebrew translation (thanks Eng2Heb)
