@@ -1,5 +1,9 @@
 v0.5.2 (2017.12.27)
 - Fix Wakanim website change
+<<<<<<< HEAD
+=======
+- Updated language
+>>>>>>> 440031e2044b58fe741767da032a3f68d9d397f6
 
 v0.5.1 (2017.11.27)
 - Added trailer videos
