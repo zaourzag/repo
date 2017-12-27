@@ -1,8 +1,13 @@
 Changelog:
 
+3.3.1
+- Neue Ansicht Liste/Fanart
+- Kleinere Designanpassungen an den Home-Widgets
+- Kleinere Fehler behoben
+
 3.3.0
 - Ansicht Liste im LiveTV wieder verfuegbar
-- Kleinere Designanpassungen an sen Home-Widgets
+- Kleinere Designanpassungen an den Home-Widgets
 - Videofenster jetzt im Hintergrund und Vollbild
 
 3.1.1

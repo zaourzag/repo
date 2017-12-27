@@ -1837,9 +1837,9 @@
 	<include name="MovieSetPoster">
       <control type="list" id="62593">
 		<left>0</left>
-		<top>290</top>
+		<top>92</top>
 		<width>1600</width>
-		<height>570</height>
+		<height>750</height>
 		<onup>62593</onup>
 		<ondown>62593</ondown>
 		<onleft>603</onleft>
@@ -1864,7 +1864,7 @@
 			<control type="label">
 			  <left>220</left>
 			  <top>30</top>
-			  <width>680</width>
+			  <width>600</width>
 			  <height>36</height>
 			  <font>primal_15_Bold</font>
 			  <textcolor>$VAR[ColorFontNormal]</textcolor>
@@ -1878,7 +1878,7 @@
 			  <description>Movie Plot</description>
 			  <left>220</left>
 			  <top>90</top>
-			  <width>680</width>
+			  <width>600</width>
 			  <height>95</height>
 			  <include condition="!Skin.HasSetting(PlotFontBig)">PlotFontLowVar</include>
 			  <include condition="Skin.HasSetting(PlotFontBig)">PlotFontBigVar</include>
@@ -1904,7 +1904,7 @@
 			<control type="label">
 			  <left>220</left>
 			  <top>30</top>
-			  <width>680</width>
+			  <width>600</width>
 			  <height>36</height>
 			  <font>primal_15_Bold</font>
 			  <textcolor>$VAR[ColorFontNormal]</textcolor>
@@ -1919,7 +1919,7 @@
 			<control type="label">
 			  <left>220</left>
 			  <top>30</top>
-			  <width>680</width>
+			  <width>600</width>
 			  <height>36</height>
 			  <font>primal_15_Bold</font>
 			  <textcolor>$VAR[BackColorButton]</textcolor>
@@ -1934,7 +1934,7 @@
 			  <description>Movie Plot</description>
 			  <left>220</left>
 			  <top>90</top>
-			  <width>680</width>
+			  <width>600</width>
 			  <height>95</height>
 			  <include condition="!Skin.HasSetting(PlotFontBig)">PlotFontLowVar</include>
 			  <include condition="Skin.HasSetting(PlotFontBig)">PlotFontBigVar</include>

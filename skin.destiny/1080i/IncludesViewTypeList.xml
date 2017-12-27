@@ -7,7 +7,7 @@
     <include name="ViewsAudio">
 		<control type="group" id="777">
 			<visible>!Window.IsVisible(selectdialog)</visible>
-			<include>View_55_FileMode</include>   
+			<include>View_55_FileMode</include> 
 			<include>View_702_Fanartlist</include>
 			<include>View_704_Poster_Fanart</include>
 			<include>View_705_Poster_Wall</include>
@@ -211,10 +211,10 @@
 					<description>View</description>
 					<height>60</height>
 		            <width>398</width>
-					<label>Big Fanart</label>
+					<label>Liste/Fanart</label>
 					<onclick>Container.SetViewMode(603)</onclick>
 					<!--<onclick>Action(down)</onclick>-->
-					<visible>Container.Content(Movies) | Container.Content(Sets) | Container.Content(Musicvideos) | Container.Content(Genres) | Container.Content(Actors)</visible>
+					<visible>Container.Content(Movies) | Container.Content(Sets) | Container.Content(Musicvideos) | Container.Content(Genres) | Container.Content(Actors) | Container.Content(TVShows) | Container.Content(Seasons) | Container.Content(Episodes)</visible>
 				</control>
 				<control type="button" id="825">
 					<description>View</description>
