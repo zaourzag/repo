@@ -183,8 +183,8 @@ msgstr "Filter nach Format"
 
 msgctxt "#30040"
 msgid "Next Week"
-msgstr "Nächste woche"
+msgstr "Nächste Woche"
 
 msgctxt "#30041"
 msgid "Last Week"
-msgstr "Vorhärige WOche"
+msgstr "Vorherige Woche"
