@@ -19,11 +19,7 @@
         <disclaimer lang="en_GB">WARNING: You MUST be a PREMIUM member or BUY videos to use this plugin</disclaimer>
         <disclaimer lang="de_DE">HINWEIS: Du MUSST PREMIUM Mitglied sein oder Videos KAUFEN um dieses Plugin zu benutzen</disclaimer>
         <disclaimer lang="fr_FR">AVERTISSEMENT: VOUS DEVEZ être un membre PREMIUM ou ACHETER des vidéos pour utiliser ce plugin</disclaimer>
-<<<<<<< HEAD
-        <news>v0.5.2 (2017.12.27)[CR]- Fix Wakanim website change</news>
-=======
         <news>v0.5.2 (2017.12.27)[CR]- Fix Wakanim website change[CR]- Updated language</news>
->>>>>>> 440031e2044b58fe741767da032a3f68d9d397f6
         <license>GNU Affero General Public License, v3</license>
         <forum>https://www.kodinerds.net/index.php/Thread/58348-Release-Wakanim-tv/</forum>
         <website>https://www.wakanim.tv/</website>
