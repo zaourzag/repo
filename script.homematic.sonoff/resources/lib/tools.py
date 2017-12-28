@@ -18,7 +18,7 @@ import xbmcgui
 import xbmcaddon
 
 ADDON_NAME = xbmcaddon.Addon().getAddonInfo('name')
-PATH = xbmcaddon.Addon().getAddonInfo('path')
+PATH = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path'))
 PROFILE = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('profile'))
 LS = xbmcaddon.Addon().getLocalizedString
 

@@ -92,6 +92,10 @@ msgctxt "#30015"
 msgid "No switchable or enabled devices found"
 msgstr ""
 
+msgctxt "#30016"
+msgid "Number of channels"
+msgstr ""
+
 msgctxt "#30020"
 msgid "switch on"
 msgstr ""

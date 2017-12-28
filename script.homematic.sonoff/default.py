@@ -4,22 +4,28 @@
 from resources.lib.tools import *
 from resources.lib.sonoff import Sonoff_Switch
 
-iconpath = os.path.join(xbmc.translatePath(PATH), 'resources', 'media')
+iconpath = os.path.join(PATH, 'resources', 'media')
 writeLog('Addon started')
 
 devices = []
 for i in xrange(1, 9):
-    device_properties = {}
     if getAddonSetting('%s_enabled' % (i), sType=BOOL):
-        device_properties.update({'switchable': getAddonSetting('%s_switchable' % (i), sType=BOOL),
-                                  'ip': getAddonSetting('%s_ip' % (i)),
-                                  'name': getAddonSetting('%s_name' % (i))})
-        devices.append(device_properties)
+        for j in xrange(0, getAddonSetting('%s_channels' % (i), sType=NUM) + 1):
+            device_properties = {'switchable': getAddonSetting('%s_switchable' % (i), sType=BOOL),
+                                      'ip': getAddonSetting('%s_ip' % (i)),
+                                      'channel': j,
+                                      'multichannel': True if getAddonSetting('%s_channels' % (i), sType=NUM) > 0 else False,
+                                      'name': getAddonSetting('%s_name_%s' % (i, j))}
+            devices.append(device_properties)
 
+print devices
 _devlist = []
 for device in devices:
     sd = Sonoff_Switch()
-    device.update({'status': sd.send_command(device['ip'], sd.STATUS)})
+    if device['multichannel']:
+        device.update({'status': sd.send_command(device['ip'], sd.STATUS[device['channel']], channel=device['channel'] + 1)})
+    else:
+        device.update({'status': sd.send_command(device['ip'], sd.STATUS[device['channel']])})
 
     if device['status'] == 'ON':
         L2 = LS(30021) if device['switchable'] else LS(30024)
@@ -39,6 +45,7 @@ for device in devices:
     liz = xbmcgui.ListItem(label=device['name'], label2=L2, iconImage=icon)
     liz.setProperty('name', device['name'])
     liz.setProperty('ip', device['ip'])
+    liz.setProperty('channel', str(device['channel']))
     liz.setProperty('switchable', str(device['switchable']))
     _devlist.append(liz)
 
@@ -47,7 +54,7 @@ if len(_devlist) > 0:
     _idx = dialog.select(LS(30000), _devlist, useDetails=True)
     if _idx > -1:
         if strToBool(_devlist[_idx].getProperty('switchable')):
-            res = sd.send_command(_devlist[_idx].getProperty('ip'), sd.TOGGLE)
+            res = sd.send_command(_devlist[_idx].getProperty('ip'), sd.TOGGLE[int(_devlist[_idx].getProperty('channel'))])
             writeLog('%s (%s) switched to %s' % (_devlist[_idx].getProperty('name'), _devlist[_idx].getProperty('ip'), res))
         else:
             writeLog('%s (%s) is not switchable' % (_devlist[_idx].getProperty('name'), _devlist[_idx].getProperty('ip')))
