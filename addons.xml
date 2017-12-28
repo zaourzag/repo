@@ -167,7 +167,7 @@ Zattoo Live TV, Aufnahmen und EPG
     </extension>
 </addon>
 
-<addon id="script.homematic.sonoff" name="Sonoff WLAN Switcher" version="0.0.1" provider-name="Birger Jesch">
+<addon id="script.homematic.sonoff" name="Sonoff WLAN Switcher" version="0.0.3" provider-name="Birger Jesch">
   <requires>
     <import addon="xbmc.python" version="2.25.0" />
     <import addon="xbmc.json" version="7.0.0" />
