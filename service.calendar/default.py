@@ -75,8 +75,9 @@ def set_localsetting(setting):
         __addon__.setSetting(setting, ', '.join(_list[i] for i in _idx))
 
 def controller(mode=None, handle=None, content=None, eventId=None):
-    now = datetime.utcnow().isoformat() + 'Z'
-    timemax = (datetime.utcnow() + relativedelta.relativedelta(months=tools.getAddonSetting('timemax', sType=tools.NUM))).isoformat() + 'Z'
+    now = datetime.utcnow().replace(hour=0, minute=0, second=0, microsecond=0).isoformat() + 'Z'
+    timemax = (datetime.utcnow().replace(hour=0, minute=0, second=0, microsecond=0) +
+               relativedelta.relativedelta(months=tools.getAddonSetting('timemax', sType=tools.NUM))).isoformat() + 'Z'
 
     if mode == 'require_oauth_key':
         Calendar().require_credentials(Calendar().CLIENT_CREDENTIALS, require_from_setup=True)
@@ -92,6 +93,13 @@ def controller(mode=None, handle=None, content=None, eventId=None):
         Calendar().require_credentials(Calendar().CLIENT_CREDENTIALS, require_from_setup=True, reenter='file')
         tools.writeLog('new credentials successfull received and stored', xbmc.LOGDEBUG)
         tools.Notify().notify(__LS__(30010), __LS__(30073))
+
+    elif mode == 'load_glotz_key':
+        glotz_apikey = tools.dialogFile(__LS__(30089))
+        if glotz_apikey != '':
+            tools.setAddonSetting('glotz_apikey', glotz_apikey)
+            tools.writeLog('API key for glotz.info successfull stored')
+            tools.Notify().notify(__LS__(30010), __LS__(30073))
 
     elif mode == 'check_mailsettings':
         mail = SMTPMail()
@@ -124,10 +132,10 @@ def controller(mode=None, handle=None, content=None, eventId=None):
         _msg = ''
         for event in events:
             _ev = googlecal.get_event(event, TEMP_STORAGE_EVENTS)
-            _mev = googlecal.prepare_events(_ev, optTimeStamps=True)
-            _msg += '[B]%s[/B]: %s[CR]%s[CR][CR]' % (_mev.get('range', ''), _mev.get('summary', ''),
-                                                     _mev.get('description', False)
-                                                     or _mev.get('location', False) or __LS__(30093))
+            _mev = googlecal.prepareForAddon(_ev, optTimeStamps=True)
+            _time = '' if _mev.get('range', '') == '' else '[B]%s[/B]: ' % (_mev.get('range'))
+            _msg += '%s%s[CR]%s[CR][CR]' % (_time, _mev.get('summary', ''),
+                                            _mev.get('description', False) or _mev.get('location', False) or __LS__(30093))
         tools.dialogOK('%s %s %s' % (__LS__(30109), __LS__(30145), _mev.get('shortdate', '')), _msg)
 
     elif mode == 'prev':

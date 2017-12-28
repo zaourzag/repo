@@ -94,7 +94,9 @@ msgctxt "#30028"
 msgid "6 months"
 msgstr ""
 
-#empty string with id 30029
+msgctxt "#30029"
+msgid "additional Calendars"
+msgstr ""
 
 msgctxt "#30030"
 msgid "1 min"
@@ -168,13 +170,31 @@ msgctxt "#30049"
 msgid "Encryption"
 msgstr ""
 
-#empty strings from id 30050 to 30053
+msgctxt "#30050"
+msgid "glotz.info"
+msgstr ""
+
+msgctxt "#30051"
+msgid "Show in Calendar"
+msgstr ""
+
+msgctxt "#30052"
+msgid "API Key"
+msgstr ""
+
+msgctxt "#30053"
+msgid "Calendar Marker Color"
+msgstr ""
 
 msgctxt "#30054"
+msgid "Show Events in Notifications"
+msgstr ""
+
+msgctxt "#30055"
 msgid "Check Email Settings"
 msgstr ""
 
-#empty strings from id 30055 to 30069
+#empty strings from id 30056 to 30069
 
 msgctxt "#30070"
 msgid "Keyfile missing, Reinstallation required"
@@ -248,7 +268,13 @@ msgctxt "#30087"
 msgid "Would You enter the authentification code now?"
 msgstr ""
 
-#empty strings from id 30088 to 30089
+msgctxt "#30088"
+msgid "Load API key from file"
+msgstr ""
+
+msgctxt "#30089"
+msgid "File with API key"
+msgstr ""
 
 msgctxt "#30090"
 msgid "My calendars"

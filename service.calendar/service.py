@@ -34,12 +34,13 @@ try:
     while xbmcgui.Window(10000).getProperty('reminders') == '1':
         now = datetime.utcnow().isoformat() + 'Z'
         timemax = (datetime.utcnow() + relativedelta.relativedelta(months=t.getAddonSetting('timemax', sType=t.NUM))).isoformat() + 'Z'
-        events = googlecal.get_events(TEMP_STORAGE_NOTIFICATIONS, now, timemax, maxResult=30, calendars=googlecal.get_calendarIdFromSetup('notifications'))
+        events = googlecal.get_events(TEMP_STORAGE_NOTIFICATIONS, now, timemax, maxResult=30,
+                                      calendars=googlecal.get_calendarIdFromSetup('notifications'), evtype='notification')
 
         _ev_count = 1
         for event in events:
-            _ev = googlecal.prepare_events(event)
-            t.Notify().notify('%s %s %s' % (_ev['timestamps'], __LS__(30145), _ev['shortdate']), _ev['summary'], icon=__icon__)
+            event = googlecal.prepareForAddon(event)
+            t.Notify().notify('%s %s %s' % (event['timestamps'], __LS__(30145), event['shortdate']), event['description'] or event['summary'], icon=__icon__)
             _ev_count += 1
             xbmc.Monitor().waitForAbort(7)
             if _ev_count > t.getAddonSetting('numreminders', sType=t.NUM) or xbmcgui.Window(10000).getProperty('reminders') != '1': break
