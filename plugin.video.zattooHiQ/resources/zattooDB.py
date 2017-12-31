@@ -200,7 +200,7 @@ class ZattooDB(object):
         c.close()
         return
 
-    xbmcgui.Dialog().notification(__addon__.getLocalizedString(31917), self.formatDate(date), __addon__.getAddonInfo('path') + '/icon.png', 5000, False)
+    #xbmcgui.Dialog().notification(__addon__.getLocalizedString(31917), self.formatDate(date), __addon__.getAddonInfo('path') + '/icon.png', 5000, False)
     #xbmc.executebuiltin("ActivateWindow(busydialog)")
     api = '/zapi/v2/cached/program/power_guide/' + self.zapi.AccountData['account']['power_guide_hash'] + '?end=' + str(toTime) + '&start=' + str(fromTime)
 
