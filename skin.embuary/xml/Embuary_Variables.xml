@@ -5,6 +5,7 @@
 		<value>embuary</value>
 	</variable>
 	<variable name="ContainerContent">
+		<value condition="String.StartsWith(Container.FolderPath,plugin://plugin.video.emby/) + String.Contains(Container.FolderPath,type=homevideos)">$LOCALIZE[31187]</value>
 		<value condition="Window.IsVisible(1130)">$INFO[Window(home).Property(emby.nodes.0.title)]</value>
 		<value condition="Window.IsVisible(1131)">$INFO[Window(home).Property(emby.nodes.1.title)]</value>
 		<value condition="Window.IsVisible(1132)">$INFO[Window(home).Property(emby.nodes.2.title)]</value>
@@ -1384,6 +1385,7 @@
 		<value>$INFO[ListItem.Label]</value>
 	</variable>
 	<variable name="PlayerFullLabel">
+		<value condition="String.IsEqual(VideoPlayer.Title,stream) + String.Contains(Player.Filenameandpath,/emby/videos/)">$LOCALIZE[31186]</value>
 		<value condition="!String.IsEmpty(MusicPlayer.Title) + !String.Contains(MusicPlayer.Title,pvr.hts_)">$INFO[MusicPlayer.Artist,, - ]$INFO[MusicPlayer.Tracknumber,,. ]$INFO[MusicPlayer.Title]</value>
 		<value condition="!String.IsEmpty(MusicPlayer.Title)">$INFO[MusicPlayer.Artist]</value>
 		<value condition="VideoPlayer.Content(livetv)">$INFO[VideoPlayer.Title]</value>
