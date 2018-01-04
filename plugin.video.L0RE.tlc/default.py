@@ -211,7 +211,7 @@ def list_buchstabe(url,iddpost,idd,page=1):
        title=element.find("h3").text.encode("utf-8")
        debug(title)
        image=element.find("img")["src"]
-       debug(image)
+       #debug(image)
        if "pagetype-video" in element["class"]:
           addLink(title,link,"list_staffeln",image)          
        else:
