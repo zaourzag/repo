@@ -320,7 +320,8 @@
 		<value condition="String.IsEqual(ListItem.DBType,episode)">$INFO[ListItem.Season,S,:]$INFO[ListItem.Episode,E, - ]$INFO[ListItem.Title]</value>
 		<value condition="String.IsEqual(ListItem.DBType,season) + !String.IsEmpty(ListItem.Season)">$INFO[ListItem.Season,$LOCALIZE[20373] ]</value>
 		<value condition="String.IsEqual(ListItem.DBType,song)">$INFO[ListItem.Tracknumber,,. ]$INFO[ListItem.Title]</value>
-		<value>$INFO[ListItem.Label]</value>
+		<value condition="!String.IsEmpty(ListItem.Label)">$INFO[ListItem.Label]</value>
+		<value condition="String.IsEqual(ListItem.Filename,stream) + String.Contains(ListItem.Filenameandpath,/emby/videos/)">$LOCALIZE[31186]</value>
 	</variable>
 	<variable name="SubListLabel">
 		<value condition="Window.IsVisible(script-NextAired-TVGuide.xml)">$INFO[ListItem.Property(NextSeasonNumber),S,]$INFO[ListItem.Property(NextEpisodeNumber),:E]$INFO[ListItem.Property(NextTitle), - ]</value>
@@ -355,7 +356,7 @@
 	<variable name="RightListLabel2">
 		<value condition="Container.Content(tvshows) + !String.IsEmpty(ListItem.Property(TotalSeasons))">$INFO[ListItem.Property(TotalSeasons),, $LOCALIZE[36905]]</value>
 	</variable>
-		<variable name="VisibleContainer">
+	<variable name="VisibleContainer">
 		<value condition="Control.IsVisible(50)">50</value>
 		<value condition="Control.IsVisible(51)">51</value>
 		<value condition="Control.IsVisible(52)">52</value>
@@ -1382,7 +1383,8 @@
 	<variable name="ListItemTitleLabel">
 		<value condition="!String.IsEmpty(ListItem.TVShowTitle)">$INFO[ListItem.TVShowTitle]</value>
 		<value condition="!String.IsEmpty(ListItem.Title)">$INFO[ListItem.Title]</value>
-		<value>$INFO[ListItem.Label]</value>
+		<value condition="!String.IsEmpty(ListItem.Label)">$INFO[ListItem.Label]</value>
+		<value>n/a</value>
 	</variable>
 	<variable name="PlayerFullLabel">
 		<value condition="String.IsEqual(VideoPlayer.Title,stream) + String.Contains(Player.Filenameandpath,/emby/videos/)">$LOCALIZE[31186]</value>
@@ -1508,6 +1510,19 @@
 		<value condition="!String.IsEmpty(Window(Home).Property(SkinHelper.Player.Art.Fanart))">$INFO[Window(Home).Property(SkinHelper.Player.Art.Fanart)]</value>
 		<value condition="!String.IsEmpty(Player.Art(fanart))">$INFO[Player.Art(fanart)]</value>
 		<value>views/player/music_back.jpg</value>
+	</variable>
+	<variable name="ExtendedInfoFilmographyMovies">
+		<value condition="Integer.IsGreater(Container(150).NumItems,1)">$INFO[Container(150).NumItems,, $LOCALIZE[342]]</value>
+		<value condition="Integer.IsEqual(Container(150).NumItems,1)">$INFO[Container(150).NumItems,, $LOCALIZE[20338]]</value>
+	</variable>
+	<variable name="ExtendedInfoFilmographyTVShows">
+		<value condition="Integer.IsGreater(Container(250).NumItems,1)">$INFO[Container(250).NumItems,, $LOCALIZE[20343]]</value>
+		<value condition="Integer.IsEqual(Container(250).NumItems,1)">$INFO[Container(250).NumItems,, $LOCALIZE[20364]]</value>
+	</variable>
+	<variable name="ExtendedInfoFilmographyCount">
+		<value condition="Integer.IsGreater(Container(150).NumItems,0) + Integer.IsGreater(Container(250).NumItems,0)">$VAR[ExtendedInfoFilmographyMovies] &amp; $VAR[ExtendedInfoFilmographyTVShows]</value>
+		<value condition="Integer.IsGreater(Container(150).NumItems,0) + !Integer.IsGreater(Container(250).NumItems,0)">$VAR[ExtendedInfoFilmographyMovies]</value>
+		<value condition="!Integer.IsGreater(Container(150).NumItems,0) + Integer.IsGreater(Container(250).NumItems,0)">$VAR[ExtendedInfoFilmographyTVShows]</value>
 	</variable>
 	<!-- workaroun for skin shortcuts bug -->
 	<variable name="UserWidget1_target">
