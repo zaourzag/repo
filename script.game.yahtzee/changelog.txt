@@ -1,0 +1,6 @@
+[B]Version 0.2.0 - 2018-01-06[/B]
+fixed bug in small straight
+warning if game exit
+[B]Version 0.1.0 - 2018-01-05[/B]
+initial version
+
