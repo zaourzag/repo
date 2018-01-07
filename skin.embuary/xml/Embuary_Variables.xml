@@ -156,6 +156,9 @@
 		<value condition="Skin.HasSetting(UserMusicWidget6)">$INFO[Skin.String(UserMusicWidget6_path)]</value>
 	</variable>
 	<!-- Embcon widget vars -->
+	<variable name="EmbyConLabel">
+		<value condition="!Skin.HasSetting(HideLibraryWidgets) | [!Libary.HasContent(movies) + !Library.HasContent(tvshows)]"> [COLOR FF505050](EmbyCon)[/COLOR]</value>
+	</variable>
 	<variable name="EmbyCon_InProgressMedia">
 		<value condition="[System.HasAddon(plugin.video.embycon) + Skin.HasSetting(EnableEmbyConWidgets)]">plugin://plugin.video.embycon?mode=WIDGET_CONTENT_URL&amp;url=Users%2F%7Buserid%7D%2FItems%3FSortBy%3DDatePlayed%26SortOrder%3DDescending%26Filters%3DIsResumable%26Limit%3D12%26Recursive%3Dtrue%26Fields%3DPrimaryImageAspectRatio%252CBasicSyncInfo%26CollapseBoxSetItems%3Dfalse%26ExcludeLocationTypes%3DVirtual%26ImageTypeLimit%3D1%26EnableImageTypes%3DPrimary%252CBackdrop%252CThumb%26EnableTotalRecordCount%3Dfalse%26MediaTypes%3DVideo</value>
 	</variable>
@@ -184,7 +187,7 @@
 		<value condition="[System.HasAddon(plugin.video.embycon) + Skin.HasSetting(EnableEmbyConWidgets)]">plugin://plugin.video.embycon/?item_type=Movie&amp;media_type=Movies&amp;mode=SHOW_CONTENT</value>
 	</variable>
 	<variable name="EmbyCon_TVShows">
-		<value condition="[System.HasAddon(plugin.video.embycon) + Skin.HasSetting(EnableEmbyConWidgets)]">plugin://plugin.video.embycon/?item_type=tvshows&amp;media_type=Movies&amp;mode=SHOW_CONTENT</value>
+		<value condition="[System.HasAddon(plugin.video.embycon) + Skin.HasSetting(EnableEmbyConWidgets)]">plugin://plugin.video.embycon/?item_type=Series&amp;media_type=tvshows&amp;mode=SHOW_CONTENT</value>
 	</variable>
 	<variable name="EmbyCon_SimilarMovies">
 		<value condition="[System.HasAddon(plugin.video.embycon) + Skin.HasSetting(EnableEmbyConWidgets)]">plugin://plugin.video.embycon?mode=WIDGET_CONTENT_SUGGESTIONS</value>
@@ -332,6 +335,7 @@
 		<value condition="String.IsEqual(ListItem.DBType,episode)">$INFO[ListItem.TvShowTitle]</value>
 		<value condition="String.IsEqual(ListItem.DBType,season)">$INFO[ListItem.TvShowTitle]</value>
 		<value condition="String.IsEqual(ListItem.DBType,movie)">$INFO[ListItem.Year]</value>
+		<value condition="String.IsEqual(ListItem.DBType,set)">[CAPITALIZE]$LOCALIZE[31189][/CAPITALIZE]</value>
 		<value condition="String.IsEqual(ListItem.DBType,tvshow)">$INFO[ListItem.Year]</value>
 		<value condition="String.IsEqual(ListItem.DBType,album) + !String.IsEmpty(ListItem.AlbumArtist)">$INFO[ListItem.AlbumArtist]</value>
 		<value condition="String.IsEqual(ListItem.DBType,album)">$INFO[ListItem.Artist]</value>
@@ -1219,6 +1223,7 @@
 		<value condition="!String.IsEmpty(Container(100).ListItem.Property(Comment))">$INFO[Container(100).ListItem.Property(Comment)]</value>
 	</variable>
 	<variable name="ListViewPlot">
+		<value condition="String.IsEqual(ListItem.DBtype,set)">$INFO[Window(home).Property(SkinHelper.ListItem.Count),[B]$LOCALIZE[342]: ,[/B][CR]]$INFO[Window(home).Property(SkinHelper.ListItem.ExtendedPlot)]</value>
 		<value condition="Window.IsVisible(tvrecordings)">$INFO[ListItem.Plot]</value>
 		<value condition="!String.IsEmpty(ListItem.Property(Album_Description))">$INFO[ListItem.Property(Album_Description)]</value>
 		<value condition="!String.IsEmpty(ListItem.Property(Artist_Description))">$INFO[ListItem.Property(Artist_Description)]</value>
@@ -1396,6 +1401,7 @@
 		<value>$INFO[VideoPlayer.Title]</value>
 	</variable>
 	<variable name="PlayerTitleLabel">
+		<value condition="String.IsEqual(ListItem.Filename,stream) + String.Contains(ListItem.Filenameandpath,/emby/videos/)">$LOCALIZE[31186]</value>
 		<value condition="!String.IsEmpty(MusicPlayer.Title)">$INFO[MusicPlayer.Title]</value>
 		<value condition="!String.IsEmpty(VideoPlayer.TVShowTitle)">$INFO[VideoPlayer.TVShowTitle]</value>
 		<value condition="VideoPlayer.Content(livetv) | String.StartsWith(Player.Filenameandpath,pvr://)">$INFO[VideoPlayer.Channelname]</value>
@@ -1473,6 +1479,7 @@
 		<value condition="!String.IsEmpty(Window(Home).Property(EmbyUserImage))">$INFO[Window(Home).Property(EmbyUserImage)]</value>
 		<value condition="!String.IsEmpty(Window(Home).Property(PlexUserImage))">$INFO[Window(Home).Property(PlexUserImage)]</value>
 		<value condition="!String.IsEmpty(System.ProfileThumb)">$INFO[System.ProfileThumb]</value>
+		<value condition="!String.IsEmpty(Window(Home).Property(plugin.video.embycon-userimage))">$INFO[Window(Home).Property(plugin.video.embycon-userimage)]</value>
 		<value>defaultuser.png</value>
 	</variable>
 	<variable name="PVRLabel">
@@ -1486,7 +1493,7 @@
 		<value condition="ControlGroup(100).HasFocus(103)">$LOCALIZE[31147]</value>
 		<value condition="ControlGroup(100).HasFocus(104)">$LOCALIZE[31153]</value>
 		<value condition="ControlGroup(100).HasFocus(105)">$LOCALIZE[31153]</value>
-		<value condition="ControlGroup(100).HasFocus(106)">$LOCALIZE[31153]</value>
+		<value condition="ControlGroup(100).HasFocus(106) | ControlGroup(100).HasFocus(107)">$LOCALIZE[31153]</value>
 	</variable>
 	<variable name="SkinSettingsHeadline">
 		<value condition="ControlGroup(100).HasFocus(101)">$LOCALIZE[480]</value>
@@ -1494,7 +1501,7 @@
 		<value condition="ControlGroup(100).HasFocus(103)">$LOCALIZE[31134]</value>
 		<value condition="ControlGroup(100).HasFocus(104)">$LOCALIZE[31173]</value>
 		<value condition="ControlGroup(100).HasFocus(105)">$LOCALIZE[31172]</value>
-		<value condition="ControlGroup(100).HasFocus(106)">$LOCALIZE[31174]</value>
+		<value condition="ControlGroup(100).HasFocus(106) | ControlGroup(100).HasFocus(107)">$LOCALIZE[31174]</value>
 	</variable>
 	<variable name="NextUpThumb">
 		<value condition="!String.IsEmpty(Control.GetLabel(4002))">$INFO[Control.GetLabel(4002)]</value>
