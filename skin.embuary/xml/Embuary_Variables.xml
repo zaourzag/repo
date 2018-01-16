@@ -210,7 +210,7 @@
 	</variable>
 	<!-- Embcon/Native DB vars -->
 	<variable name="View_Cast_Content">
-		<value condition="Container.Content(sets)"></value>
+		<value condition="Container.Content(sets) | String.IsEqual(ListItem.DBType,set)"></value>
 		<value condition="String.StartsWith(ListItem.Path,plugin://plugin.video.embycon) + !String.IsEmpty(ListItem.Property(id))">plugin://plugin.video.embycon?mode=WIDGET_CONTENT_CAST&amp;id=$INFO[ListItem.Property(id)]</value>
 		<value condition="String.StartsWith(ListItem.Path,plugin://plugin.video.embycon)">plugin://plugin.video.embycon?mode=WIDGET_CONTENT_CAST&amp;id=$INFO[Window(home).Property(EmbyID)]</value>
 		<value condition="String.IsEqual(ListItem.DBType,movie)">plugin://script.skin.helper.service/?action=getcast&amp;movie=$INFO[ListItem.Title]&amp;downloadthumbs=true&amp;castaction=extendedinfo</value>
@@ -244,6 +244,7 @@
 		<value condition="!String.IsEmpty(Window(home).Property(ArtistDBID)) + Window.IsVisible(music)">musicdb://songs/?artistid=$INFO[Window(home).Property(ArtistDBID)]</value>
 	</variable>
 	<variable name="BackgroundSource">
+		<value condition="Window.IsVisible(script-script.extendedinfo-DialogInfo.xml)">$INFO[Container(750).ListItemAbsolute(0).Icon]</value>
 		<value condition="Window.IsVisible(weather) + !String.IsEmpty(Weather.Temperature)">weather/background/$INFO[Weather.fanartcode].jpg</value>
 		<value condition="Skin.HasSetting(ShowStaticBackgroundImage) + !String.IsEmpty(Skin.String(StaticBackgroundImage))">$INFO[Skin.String(StaticBackgroundImage)]</value>
 		<value condition="[Window.IsVisible(script-NextAired-TVGuide2.xml) | Window.IsVisible(script-NextAired-TVGuide.xml)] + !String.IsEmpty(Window(home).Property(TVGuide.BackgroundFanart)) + Control.HasFocus(200)">$INFO[Container(200).ListItem.Property(Fanart)]</value>
@@ -1535,102 +1536,5 @@
 		<value condition="Integer.IsGreater(Container(150).NumItems,0) + Integer.IsGreater(Container(250).NumItems,0)">$VAR[ExtendedInfoFilmographyMovies] &amp; $VAR[ExtendedInfoFilmographyTVShows]</value>
 		<value condition="Integer.IsGreater(Container(150).NumItems,0) + !Integer.IsGreater(Container(250).NumItems,0)">$VAR[ExtendedInfoFilmographyMovies]</value>
 		<value condition="!Integer.IsGreater(Container(150).NumItems,0) + Integer.IsGreater(Container(250).NumItems,0)">$VAR[ExtendedInfoFilmographyTVShows]</value>
-	</variable>
-	<!-- workaroun for skin shortcuts bug -->
-	<variable name="UserWidget1_target">
-		<value condition="String.IsEqual(Skin.String(UserWidget1_target),video)">videos</value>
-		<value>$INFO[Skin.String(UserWidget1_target)]</value>
-	</variable>
-	<variable name="UserWidget2_target">
-		<value condition="String.IsEqual(Skin.String(UserWidget2_target),video)">videos</value>
-		<value>$INFO[Skin.String(UserWidget2_target)]</value>
-	</variable>
-	<variable name="UserWidget3_target">
-		<value condition="String.IsEqual(Skin.String(UserWidget3_target),video)">videos</value>
-		<value>$INFO[Skin.String(UserWidget3_target)]</value>
-	</variable>
-	<variable name="UserWidget4_target">
-		<value condition="String.IsEqual(Skin.String(UserWidget4_target),video)">videos</value>
-		<value>$INFO[Skin.String(UserWidget4_target)]</value>
-	</variable>
-	<variable name="UserWidget5_target">
-		<value condition="String.IsEqual(Skin.String(UserWidget5_target),video)">videos</value>
-		<value>$INFO[Skin.String(UserWidget5_target)]</value>
-	</variable>
-	<variable name="UserWidget6_target">
-		<value condition="String.IsEqual(Skin.String(UserWidget6_target),video)">videos</value>
-		<value>$INFO[Skin.String(UserWidget6_target)]</value>
-	</variable>
-	<variable name="UserMovieWidget1_target">
-		<value condition="String.IsEqual(Skin.String(UserMovieWidget1_target),video)">videos</value>
-		<value>$INFO[Skin.String(UserMovieWidget1_target)]</value>
-	</variable>
-	<variable name="UserMovieWidget2_target">
-		<value condition="String.IsEqual(Skin.String(UserMovieWidget2_target),video)">videos</value>
-		<value>$INFO[Skin.String(UserMovieWidget2_target)]</value>
-	</variable>
-	<variable name="UserMovieWidget3_target">
-		<value condition="String.IsEqual(Skin.String(UserMovieWidget3_target),video)">videos</value>
-		<value>$INFO[Skin.String(UserMovieWidget3_target)]</value>
-	</variable>
-	<variable name="UserMovieWidget4_target">
-		<value condition="String.IsEqual(Skin.String(UserMovieWidget4_target),video)">videos</value>
-		<value>$INFO[Skin.String(UserMovieWidget4_target)]</value>
-	</variable>
-	<variable name="UserMovieWidget5_target">
-		<value condition="String.IsEqual(Skin.String(UserMovieWidget5_target),video)">videos</value>
-		<value>$INFO[Skin.String(UserMovieWidget5_target)]</value>
-	</variable>
-	<variable name="UserMovieWidget6_target">
-		<value condition="String.IsEqual(Skin.String(UserMovieWidget6_target),video)">videos</value>
-		<value>$INFO[Skin.String(UserMovieWidget6_target)]</value>
-	</variable>
-	<variable name="UserTVShowWidget1_target">
-		<value condition="String.IsEqual(Skin.String(UserTVShowWidget1_target),video)">videos</value>
-		<value>$INFO[Skin.String(UserTVShowWidget1_target)]</value>
-	</variable>
-	<variable name="UserTVShowWidget2_target">
-		<value condition="String.IsEqual(Skin.String(UserTVShowWidget2_target),video)">videos</value>
-		<value>$INFO[Skin.String(UserTVShowWidget2_target)]</value>
-	</variable>
-	<variable name="UserTVShowWidget3_target">
-		<value condition="String.IsEqual(Skin.String(UserTVShowWidget3_target),video)">videos</value>
-		<value>$INFO[Skin.String(UserTVShowWidget3_target)]</value>
-	</variable>
-	<variable name="UserTVShowWidget4_target">
-		<value condition="String.IsEqual(Skin.String(UserTVShowWidget4_target),video)">videos</value>
-		<value>$INFO[Skin.String(UserTVShowWidget4_target)]</value>
-	</variable>
-	<variable name="UserTVShowWidget5_target">
-		<value condition="String.IsEqual(Skin.String(UserTVShowWidget5_target),video)">videos</value>
-		<value>$INFO[Skin.String(UserTVShowWidget5_target)]</value>
-	</variable>
-	<variable name="UserTVShowWidget6_target">
-		<value condition="String.IsEqual(Skin.String(UserTVShowWidget6_target),video)">videos</value>
-		<value>$INFO[Skin.String(UserTVShowWidget6_target)]</value>
-	</variable>
-	<variable name="UserMusicWidget1_target">
-		<value condition="String.IsEqual(Skin.String(UserMusicWidget1_target),video)">videos</value>
-		<value>$INFO[Skin.String(UserMusicWidget1_target)]</value>
-	</variable>
-	<variable name="UserMusicWidget2_target">
-		<value condition="String.IsEqual(Skin.String(UserMusicWidget2_target),video)">videos</value>
-		<value>$INFO[Skin.String(UserMusicWidget2_target)]</value>
-	</variable>
-	<variable name="UserMusicWidget3_target">
-		<value condition="String.IsEqual(Skin.String(UserMusicWidget3_target),video)">videos</value>
-		<value>$INFO[Skin.String(UserMusicWidget3_target)]</value>
-	</variable>
-	<variable name="UserMusicWidget4_target">
-		<value condition="String.IsEqual(Skin.String(UserMusicWidget4_target),video)">videos</value>
-		<value>$INFO[Skin.String(UserMusicWidget4_target)]</value>
-	</variable>
-	<variable name="UserMusicWidget5_target">
-		<value condition="String.IsEqual(Skin.String(UserMusicWidget5_target),video)">videos</value>
-		<value>$INFO[Skin.String(UserMusicWidget5_target)]</value>
-	</variable>
-	<variable name="UserMusicWidget6_target">
-		<value condition="String.IsEqual(Skin.String(UserMusicWidget6_target),video)">videos</value>
-		<value>$INFO[Skin.String(UserMusicWidget6_target)]</value>
 	</variable>
 </includes>
