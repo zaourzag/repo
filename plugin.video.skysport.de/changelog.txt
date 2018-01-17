@@ -1,5 +1,8 @@
-0.4.0 add livestream of sky sport news
-0.3.0 add settings for maxbandwidth/maxresolution/playmethod
-0.2.0 add "Beach Volleyball", "Formel 1", "Golf", "Handball", "Tennis"; use dash streams
+1.0.0 added section "Home"
+0.5.1 removed inputstream.adaptive
+0.5.0 added videos for the categories "Football" and "Handball"
+0.4.0 added livestream of sky sport news
+0.3.0 added settings for maxbandwidth/maxresolution/playmethod
+0.2.0 added "Beach Volleyball", "Formel 1", "Golf", "Handball", "Tennis"; use dash streams
 0.1.1 use inputstream.adaptive if possible
 0.1.0 initial commit
