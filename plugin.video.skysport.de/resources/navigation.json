@@ -9,8 +9,21 @@
 	},
 	{
 		"label": "Fußball",
-		"path": "fussball/ligen-wettbewerbe",
-		"action": "listSubnavi"
+		"path": "fussball",
+		"action": "listSubnavi",
+		"children": [
+			{
+				"label": "Videos",
+				"path": "fussball/videos",
+				"action": "showVideos",
+				"show_videos": "false"
+			},
+			{
+				"label": "Ligen und Wettbewerbe",
+				"path": "fussball/ligen-wettbewerbe",
+				"action": "listSubnavi"
+			}
+		]
 	},
 	{
 		"label": "Golf",
@@ -21,6 +34,12 @@
 		"path": "handball",
 		"action": "listSubnavi",
 		"children": [
+			{
+				"label": "Videos",
+				"path": "handball/videos",
+				"action": "showVideos",
+				"show_videos": "false"
+			},
 			{
 				"label": "Bundesliga",
 				"path": "handball/dkb-bundesliga/videos"

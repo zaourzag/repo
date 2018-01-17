@@ -23,15 +23,12 @@ addon_handle = int(sys.argv[1])
 cache = StorageServer.StorageServer(addon.getAddonInfo('name') + '.videoid', 24 * 30)
 sky_sport_news_icon = xbmc.translatePath(addon.getAddonInfo('path') + '/resources/skysport_news.jpg').decode('utf-8')
 
-vod_playmethod = addon.getSetting('playmethod')
-
 HOST = 'http://sport.sky.de'
 NAVIGATION_JSON_FILE = xbmc.translatePath(addon.getAddonInfo('path') + '/resources/navigation.json')
 
 ADDON_BASE_URL = 'plugin://' + addon.getAddonInfo('id')
 
 VIDEO_URL_HSL = 'https://player.ooyala.com/player/all/{video_id}.m3u8'
-VIDEO_URL_DASH = 'https://videossportskyde.akamaized.net/{video_id}/1/dash/1.mpd'
 LIVE_URL_HSL = 'https://eventhlshttps-i.akamaihd.net/hls/live/263645/ssn-hd-https/index.m3u8'
 
 USER_AGENT = 'User-Agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36'
@@ -40,6 +37,9 @@ USER_AGENT = 'User-Agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/5
 def rootDir():
     url = build_url({'action': 'playLive'})
     addVideo("Sky Sport News HD", url, sky_sport_news_icon)
+
+    url = build_url({'action': 'listHome'})
+    addDir('Home', url)
 
     nav = json.load(open(NAVIGATION_JSON_FILE))
     for item in nav:
@@ -59,7 +59,8 @@ def addDir(label, url, icon=None):
 
 
 def addVideo(label, url, icon, isFolder=False):
-    li = xbmcgui.ListItem(label, iconImage=icon, thumbnailImage=icon)
+    li = xbmcgui.ListItem(label)
+    li.setArt({'icon': icon, 'thumb': icon})
     li.setInfo('video', {})
     li.setProperty('IsPlayable', str(isFolder))
 
@@ -68,6 +69,22 @@ def addVideo(label, url, icon, isFolder=False):
 
 def build_url(query):
     return ADDON_BASE_URL + '?' + urllib.urlencode(query)
+
+
+def listHome():
+    html = requests.get(HOST).text
+    soup = BeautifulSoup(html, 'html.parser')
+
+    for item in soup('div', 'sdc-site-tile--has-link'):
+        videoitem = item.find('span', {'class': 'sdc-site-tile__badge'})
+        if videoitem is not None and videoitem.find('path') is not None:
+            headline = item.find('h3', {'class': 'sdc-site-tile__headline'})
+            label = headline.span.string
+            url = build_url({'action': 'playVoD', 'path': headline.a.get('href')})
+            icon = item.img.get('src')
+            addVideo(label, url, icon)
+
+    xbmcplugin.endOfDirectory(addon_handle, cacheToDisc=True)
 
 
 def listSubnavi(path, hasitems):
@@ -89,7 +106,11 @@ def listSubnavi(path, hasitems):
 
         if items is not None:
             for item in items:
-                url = build_url({'action': 'showVideos', 'path': item.get('path'), 'show_videos': 'true'})
+                action = item.get('action') if item.get('action', None) is not None else 'showVideos'
+                if action == 'listSubnavi':
+                    url = build_url({'action': action, 'path': item.get('path'), 'hasitems': 'true' if item.get('children', None) is not None else 'false'})
+                else:
+                    url = build_url({'action': action, 'path': item.get('path'), 'show_videos': 'true' if item.get('show_videos', None) is None or item.get('show_videos') == 'true' else 'false'})
                 addDir(item.get('label'), url)
 
     xbmcplugin.endOfDirectory(addon_handle, cacheToDisc=True)
@@ -163,26 +184,13 @@ def getVideoListItem(video_id):
     adaptive_addon = xbmc.executeJSONRPC('{"jsonrpc": "2.0", "id": 1, "method": "Addons.GetAddonDetails", "params": {"addonid": "inputstream.adaptive", "properties": ["enabled", "version"]}}')
     adaptive_addon = json.loads(adaptive_addon)
 
-    if vod_playmethod == '0' and 'error' not in adaptive_addon.keys() and adaptive_addon['result']['addon']['enabled'] == True:
-        li.setProperty('inputstreamaddon', 'inputstream.adaptive')
+    maxbandwith = int(addon.getSetting('maxbandwith'))
+    maxresolution = int(addon.getSetting('maxresolution').replace('p', ''))
 
-        if video_id is not None:
-            url = VIDEO_URL_DASH.format(video_id=video_id)
-            li.setMimeType('application/dash+xml')
-            li.setProperty("inputstream.adaptive.", "mpd")
-        else:
-            url = LIVE_URL_HSL
-            li.setMimeType('application/x-mpegURL')
-            li.setProperty("inputstream.adaptive.manifest_type", "hls")
+    if video_id is None:
+        url = getHLSUrl(LIVE_URL_HSL, maxbandwith, maxresolution)
     else:
-        maxbandwith = int(addon.getSetting('maxbandwith'))
-        maxresolution = int(addon.getSetting('maxresolution').replace('p', ''))
-
-        if video_id is None:
-            url = getHLSUrl(LIVE_URL_HSL, maxbandwith, maxresolution)
-            xbmc.log("liveurl = " + url)
-        else:
-            url = getHLSUrl(VIDEO_URL_HSL.format(video_id=video_id), maxbandwith, maxresolution)
+        url = getHLSUrl(VIDEO_URL_HSL.format(video_id=video_id), maxbandwith, maxresolution)
 
     li.setPath(url + "|" + USER_AGENT)
 
@@ -213,6 +221,8 @@ if __name__ == '__main__':
 
         if params.get('action') == 'playLive':
             playLive()
+        elif params.get('action') == 'listHome':
+            listHome()
         elif params.get('action') == 'listSubnavi':
             listSubnavi(params.get('path'), params.get('hasitems'))
         elif params.get('action') == 'showVideos':
