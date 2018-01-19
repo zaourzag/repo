@@ -1259,6 +1259,29 @@ Vous pouvez regarder le sport que vous aimez, vivez et sur demande à un moment 
     </extension>
 </addon>
 
+<addon id="plugin.video.L0RE.dmax" name="DMAX Mediathek (work)" version="0.1" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.24.0"/>
+        <import addon="script.module.requests" version="2.12.4"/>
+        <import addon="script.module.beautifulsoup4" version="4.3.2"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="de">DMAX Mediathek</summary>
+    <summary lang="en">DMAX Mediathek</summary>
+    <description lang="en">DMAX Mediathek</description>
+    <description lang="de">DMAX Mediathek</description>
+    <website></website>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.L0RE.hsv</source>
+    <forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
+    <email>andreas at vogler dot name</email>
+    <platform>all</platform>
+  </extension>
+</addon>
+
 <addon id="plugin.video.L0RE.comedycentral" name="Comedycentral" version="0.1.0" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
@@ -4016,27 +4039,6 @@ Parental warning: The Maxdome Plattform consists of differnt types of content - 
     <platform>all</platform>
     <broken>Website Closed</broken>
   </extension>
-</addon>
-
-<addon id="plugin.video.dmax_de" name="DMAX.de" version="1.1.24" provider-name="L0RE">
-    <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
-        <import addon="script.module.pyamf" version="0.6.1"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <summary lang="en">DMAX-Videotheke</summary>
-        <language></language>
-        <description lang="en">DMAX-Videotheke</description>
-        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-        <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.dmax_de</source>
-        <forum>http://forum.xbmc.org/showthread.php?tid=132563</forum>
-        <email>andreas at vogler dot name</email>
-        <website>http://www.dmax.de/videos</website>
-    </extension>
 </addon>
 
 <addon id="script.module.oauthlib" name="oauthlib" version="2.0.1" provider-name="Idan Gazit">
