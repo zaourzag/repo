@@ -27,7 +27,7 @@ translation = addon.getLocalizedString
 
 xbmcplugin.setContent(addon_handle, 'movies')
 
-baseurl="http://www.tlc.de"
+baseurl="https://www.tlc.de"
 xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_UNSORTED)
 xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
 
@@ -60,8 +60,8 @@ def log(msg, level=xbmc.LOGNOTICE):
     
 
   
-def addDir(name, url, mode, thump, desc="",page=1,nosub=0,iddpost="",idd=""):   
-  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&page="+str(page)+"&nosub="+str(nosub)+"&iddpost="+str(iddpost)+"&idd="+str(idd)
+def addDir(name, url, mode, thump, desc="",page=1,nosub=0):   
+  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&page="+str(page)+"&nosub="+str(nosub)
   ok = True
   liz = xbmcgui.ListItem(name)  
   liz.setArt({ 'fanart' : thump })
@@ -132,40 +132,42 @@ def geturl(url,data="x",header="",referer=""):
 
    
    
-
   
-def liste():  
+def liste():      
+    addDir("Featured" , baseurl+"/api/shows/featured?limit=100&page=1", "videoliste","",nosub="featured") 
+    addDir("Belibteste" , baseurl+"/api/shows/most-popular?limit=100&page=1", "videoliste","",nosub="most-popular")    
+    addDir("Neueste" , baseurl+"/api/shows/recently-added?limit=100&page=1", "videoliste","",nosub="recently-added")        
+    addDir("Letzt Chance" , baseurl+"/api/shows/leaving-soon?limit=100&page=1", "videoliste","",nosub="leaving-soon")    
     addDir("Settings","Settings","Settings","")
-    addDir("Alle Serien","http://www.tlc.de/videos/","list_buchstaben","")
-    
-    xbmcplugin.endOfDirectory(addon_handle) 
+    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
 
   
-def playvideo(url):          
-    content=geturl(url)
-    htmlPage = BeautifulSoup(content, 'html.parser')      
-    element = htmlPage.find("object",attrs={"class":"BrightcoveExperience"})  
-    debug(element)
-    params = element.find_all("param")
-    searchstring=""
-    urls="https://c.brightcove.com/services/viewer/htmlFederated?"
-    for param in params:
-       name=param["name"]
-       value=param["value"]       
-       searchstring=searchstring+"&"+urllib.quote_plus(name)+"="+urllib.quote_plus(value)
-    urls=urls+searchstring
-    content=geturl(urls)
-    quellen  = re.compile('"defaultURL":"(.+?)","encodingRate":(.+?),', re.DOTALL).findall(content)
-    br=0
-    video=""
-    for quelle,bitrate in quellen:
-       if br < bitrate:
-          br=bitrate
-          video=quelle.replace("\\/","/")       
-    listitem = xbmcgui.ListItem(path=video)
+def playvideo(idd):      
+    content=geturl(baseurl)    
+    for cookief in cj:
+          debug( cookief)
+          if "sonicToken" in str(cookief) :         
+                key=re.compile('sonicToken=(.+?) ', re.DOTALL).findall(str(cookief))[0]
+                break
+
+    playurl="https://sonic-eu1-prod.disco-api.com/playback/videoPlaybackInfo/"+str(idd)
+    header = [('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36'),
+                    ("Authorization", "Bearer "+key)]
+
+    content=geturl(playurl,header=header)
+    debug(content)
+    struktur = json.loads(content)    
+    videofile=struktur["data"]["attributes"]["streaming"]["hls"]["url"]
+    #licfile=struktur["data"]["attributes"]["protection"]["schemes"]["widevine"]["licenseUrl"]
+    debug(videofile)
+    #debug(licfile)
+    listitem = xbmcgui.ListItem(path=videofile)    
+    listitem.setProperty('IsPlayable', 'true')
+    #listitem.setProperty('inputstreamaddon', 'inputstream.adaptive')
+    #listitem.setProperty('inputstream.adaptive.manifest_type', 'mpd')
+    #listitem.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')
+    #listitem.setProperty('inputstream.adaptive.license_key', licfile)
     xbmcplugin.setResolvedUrl(addon_handle, True, listitem)
-       
-    
     
 params = parameters_string_to_dict(sys.argv[2])
 mode = urllib.unquote_plus(params.get('mode', ''))
@@ -173,154 +175,37 @@ url = urllib.unquote_plus(params.get('url', ''))
 referer = urllib.unquote_plus(params.get('referer', ''))
 page = urllib.unquote_plus(params.get('page', ''))
 nosub= urllib.unquote_plus(params.get('nosub', ''))
-iddpost=urllib.unquote_plus(params.get('iddpost', ''))
-idd=urllib.unquote_plus(params.get('idd', ''))
+def listserie(idd):
+  url=baseurl+"/api/show-detail/"+str(idd)
+  debug("listserie :"+url)
+  content=geturl(url)
+  struktur = json.loads(content)
+  subelement=struktur["videos"]["episode"]
+  for number,videos in subelement.iteritems(): 
+    for video in videos:
+        idd=video["id"]
+        title=video["title"]
+        title=title.replace("{S}","S").replace(".{E}","E")
+        desc=video["description"]
+        duration=video["videoDuration"]
+        duration=duration/1000
+        image=video["image"]["src"]
+        airdate=video["airDate"]
+        addLink(title,idd,"playvideo",image,desc=desc,duration=duration)
+  xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
 
-  
-def  list_buchstaben(url):
-    content=geturl(url)
-    htmlPage = BeautifulSoup(content, 'html.parser')  
-    subrubrikl = htmlPage.find("ul",attrs={"class":"slides"})    
-    elemente = subrubrikl.find_all("a")    
-    iddpost = htmlPage.find("input",attrs={"id":re.compile("^dni_listing_post_id")})["value"]    
-    idd = htmlPage.find_all("div",attrs={"id":re.compile("^dni-listing-module-")})[-1]["data-id"]    
-    for element in elemente:
-       debug(element)
-       linkurl = url+element["href"]
-       title = element.text
-       addDir(title,title,"list_buchstabe","",iddpost=iddpost,idd=idd,page=1)      
-    xbmcplugin.endOfDirectory(addon_handle)      
-    
-def list_buchstabe(url,iddpost,idd,page=1):
-   if url=="All Pages":
-     zusatz=""
-   else:
-      zusatz="letter="+url+"&"   
-   newurl="http://www.tlc.de/wp-content/plugins/dni_plugin_core/ajax.php?action=dni_listing_items_filter&"+zusatz+"page="+str(page)+"&id="+str(idd)+"&post_id="+iddpost+"&view_type=grid"
-   debug(newurl)
-   content=geturl(newurl)
-   struktur = json.loads(content)        
-   total=struktur["total_pages"]
-   curr=struktur["current_page"]
-   codee=struktur["html"]
-   htmlPage = BeautifulSoup(codee, 'html.parser')      
-   elemente = htmlPage.find_all("a")    
-   for element in elemente:
-       link=element["href"]       
-       debug(link)
-       title=element.find("h3").text.encode("utf-8")
-       debug(title)
-       image=element.find("img")["src"]
-       #debug(image)
-       if "pagetype-video" in element["class"]:
-          addLink(title,link,"list_staffeln",image)          
-       else:
-          addDir(title,link,"list_staffeln",image)              
-   if int(curr)<int(total):
-      addDir("Next",url,"list_buchstabe","",iddpost=iddpost,idd=idd,page=int(page)+1)      
-   xbmcplugin.endOfDirectory(addon_handle)       
-
-def list_staffeln(url):
-    wegtitle=["online sehen","ALLE STAFFELN","Rezepte"]
-    content=geturl(url)
-    htmlPage = BeautifulSoup(content, 'html.parser')      
-    elemente = htmlPage.find_all("div",attrs={"class":re.compile("^cfct-module dni")})        
-    for i in range(1,len(elemente)):
-        element=elemente[i]
-        debug(element)
-        try:
-            title=element.find("div",attrs={"class":re.compile("^tab-module-header")}).text.encode("utf-8")
-        except:
-            try:
-                    title=element.find("h2").text.encode("utf-8")
-            except:
-                 title=""
-        if not title=="":   
-            debug("###"+title+"###")            
-            weg=0
-            for wegstring in wegtitle:             
-              if wegstring in title: 
-                weg=1
-                break
-            if weg==0:
-                addDir(title,url,"list_rubrik","",nosub=title)     
-    subrubrik = htmlPage.find("div",attrs={"class":re.compile("^normal no-desc")})        
-    debug(subrubrik)
-    try:
-        elemente = subrubrik.find_all("a")        
-        for i in range(0,len(elemente)):
-            element=elemente[i]
-            debug("#####")
-            debug(element)
-            link=element["href"]
-            image = element.find("img")["src"]
-            title = element.find("h3").text.encode("utf-8")
-            if not title=="":               
-                weg=0
-                for wegstring in wegtitle:             
-                    if wegstring in title: 
-                        weg=1
-                        break
-                if weg==0:                
-                    addDir(title,link,"list_rubrik",image,nosub=title)
-    except:
-        pass
-    xbmcplugin.endOfDirectory(addon_handle)        
-
-def  list_rubrik(url,nosub):
-    debug("---> "+url)
-    content=geturl(url)
-    htmlPage = BeautifulSoup(content, 'html.parser')     
-    #                                                 <div class="cfct-module dni-content-slider-theme">
-    #<input id="dni_listing_post_id_31446b" type="hidden" value="64499"/>    
-    elemente = htmlPage.find_all("div",attrs={"class":re.compile("^cfct-module dni")})  
-    idd=""
-    debug("Nosub :"+nosub)
-    for i in range(0,len(elemente)):  
-        element=elemente[i] 
-        debug(element)
-        if nosub in element.text.encode("utf-8"):
-            elemente2 = element.find_all("li",attrs={"class":re.compile("^pagetype-video")})   
-            xx=1
-            if len(elemente2)<=0:
-              elemente2 = element.find_all("a")   
-              xx=0
-            for element2 in elemente2:              
-              debug(element2)
-              try:
-                    type=element2["class"]
-              except:
-                     type=""
-              try:
-                if xx==1:
-                   element2=element2.find("a")
-                link=element2["href"]
-                image = element2.find("img")["src"]
-                title = element2.find("h3").text.encode("utf-8")
-                if "pagetype-video" in type:
-                    addLink(title,link,"playvideo",image)
-                else:
-                    addDir(title,link,"list_staffeln",image,nosub=title)
-                debug(element)
-              except:
-                 pass
-            #break
-    try:
-      element = htmlPage.find("a",attrs={"class":re.compile("^button-next")})
-      blub= element["href"]     
-      iddpost = htmlPage.find("input",attrs={"id":re.compile("^dni_listing_post_id")})["value"]    
-      idd = htmlPage.find_all("div",attrs={"id":re.compile("^dni-listing-module-")})[-1]["data-id"]  
-      addDir("Next",url,"list_buchstabe","",iddpost=iddpost,idd=idd,page=2)      
-    except: 
-       pass    
-    xbmcplugin.endOfDirectory(addon_handle)        
-        
-
-
-
-
-
-# Haupt Menu Anzeigen     
+def videoliste(url,page=1,nosub=""):    
+  content=geturl(url)
+  struktur = json.loads(content) 
+  elemente=struktur["sections"][nosub]
+  for element in elemente:
+    title=element["title"]
+    idd=element["id"]
+    desc=element["description"]
+    image=element["image"]["src"]
+    addDir(title,idd,"listserie",image,desc=desc)
+  xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
+# Haupt Menu Anzeigen      
 if mode is '':
      liste()   
 else:
@@ -329,12 +214,10 @@ else:
           addon.openSettings()
   # Wenn Kategory ausgewählt wurde
   if mode == 'playvideo':
-          playvideo(url) 
-  if mode == 'list_buchstabe':
-          list_buchstabe(url,iddpost,idd,page)
-if mode == 'list_buchstaben':
-          list_buchstaben(url)
-if mode == 'list_staffeln':
-          list_staffeln(url)          
-if mode == 'list_rubrik':
-          list_rubrik(url,nosub)            
+          playvideo(url)
+  if mode == 'subrubrik':
+          subrubrik(url)
+  if mode == 'videoliste':
+          videoliste(url,page,nosub)
+  if mode == 'listserie':
+           listserie(url)
