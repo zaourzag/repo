@@ -244,6 +244,7 @@
 								<include>SettingsButton</include>
 								<onclick>Skin.ToggleSetting(ShowStaticBackgroundImage)</onclick>
 								<selected>Skin.HasSetting(ShowStaticBackgroundImage)</selected>
+								<onclick condition="Skin.HasSetting(ShowRandomBackgroundImage)">Skin.ToggleSetting(ShowRandomBackgroundImage)</onclick>
 								<label>$LOCALIZE[31104]</label>
 							</control>
 							<control type="button" id="212">
@@ -256,6 +257,23 @@
 								<enable>Skin.HasSetting(ShowStaticBackgroundImage)</enable>
 								<visible>Skin.HasSetting(ShowStaticBackgroundImage)</visible>
 							</control>
+							<control type="radiobutton" id="213">
+								<include>SettingsButton</include>
+								<onclick>Skin.ToggleSetting(ShowRandomBackgroundImage)</onclick>
+								<onclick condition="Skin.HasSetting(ShowStaticBackgroundImage)">Skin.ToggleSetting(ShowStaticBackgroundImage)</onclick>
+								<selected>Skin.HasSetting(ShowRandomBackgroundImage)</selected>
+								<label>$LOCALIZE[31195]</label>
+							</control>
+							<control type="button" id="214">
+								<textcolor>emby</textcolor>
+								<texturenofocus colordiffuse="33000000">common/white.jpg</texturenofocus>
+								<include>SettingsButton</include>
+								<onclick>Skin.SetPath(RandomBackgroundImage)</onclick>
+								<label>• $LOCALIZE[573]</label>
+								<label2>$INFO[Skin.String(RandomBackgroundImage)]</label2>
+								<enable>Skin.HasSetting(ShowRandomBackgroundImage)</enable>
+								<visible>Skin.HasSetting(ShowRandomBackgroundImage)</visible>
+							</control>
 							<control type="label" id="220">
 								<height>50</height>
 								<font>med22</font>
@@ -266,6 +284,21 @@
 								<label>$LOCALIZE[31109]</label>
 							</control>
 							<control type="radiobutton" id="221">
+								<include>SettingsButton</include>
+								<onclick>Skin.ToggleSetting(CustomDeviceName)</onclick>
+								<selected>Skin.HasSetting(CustomDeviceName)</selected>
+								<label>$LOCALIZE[31117]</label>
+							</control>
+							<control type="button" id="222">
+								<textcolor>emby</textcolor>
+								<texturenofocus colordiffuse="33000000">common/white.jpg</texturenofocus>
+								<include>SettingsButton</include>
+								<onclick>Skin.SetString(CustomDeviceName_label)</onclick>
+								<label>• $LOCALIZE[21899]</label>
+								<label2>$VAR[HeaderCustomDeviceName]</label2>
+								<visible>Skin.HasSetting(CustomDeviceName)</visible>
+							</control>
+							<control type="radiobutton" id="223">
 								<include>SettingsButton</include>
 								<onclick>Skin.ToggleSetting(HideHeaderWeather)</onclick>
 								<selected>!Skin.HasSetting(HideHeaderWeather)</selected>
@@ -309,21 +342,6 @@
 								<shadowcolor>text_shadow</shadowcolor>
 								<aligny>center</aligny>
 								<label>$LOCALIZE[31001]</label>
-							</control>
-							<control type="radiobutton" id="231">
-								<include>SettingsButton</include>
-								<onclick>Skin.ToggleSetting(CustomDeviceName)</onclick>
-								<selected>Skin.HasSetting(CustomDeviceName)</selected>
-								<label>$LOCALIZE[31117]</label>
-							</control>
-							<control type="button" id="232">
-								<textcolor>emby</textcolor>
-								<texturenofocus colordiffuse="33000000">common/white.jpg</texturenofocus>
-								<include>SettingsButton</include>
-								<onclick>Skin.SetString(CustomDeviceName_label)</onclick>
-								<label>• $LOCALIZE[21899]</label>
-								<label2>$VAR[HeaderCustomDeviceName]</label2>
-								<visible>Skin.HasSetting(CustomDeviceName)</visible>
 							</control>
 							<control type="radiobutton" id="233">
 								<include>SettingsButton</include>
@@ -1176,6 +1194,19 @@
 								<onclick>Skin.ToggleSetting(HideMusicHubMusicvideoButton)</onclick>
 								<selected>!Skin.HasSetting(HideMusicHubMusicvideoButton)</selected>
 								<label>$LOCALIZE[20389]</label>
+							</control>
+							<control type="radiobutton" id="717">
+								<include>SettingsButton</include>
+								<onclick>Skin.ToggleSetting(HideMusicHubEmbyConButton)</onclick>
+								<selected>!Skin.HasSetting(HideMusicHubEmbyConButton)</selected>
+								<label>$LOCALIZE[31118]</label>
+								<enable>System.HasAddon(plugin.video.embycon) + !Skin.HasSetting(HideEmbyConHubButtons)</enable>
+							</control>
+							<control type="radiobutton" id="718">
+								<include>SettingsButton</include>
+								<onclick>Skin.ToggleSetting(HideMusicHubSearchButton)</onclick>
+								<selected>!Skin.HasSetting(HideMusicHubSearchButton)</selected>
+								<label>$LOCALIZE[137]</label>
 							</control>
 							<control type="label" id="720">
 								<height>50</height>
