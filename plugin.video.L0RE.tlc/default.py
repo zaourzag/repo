@@ -190,7 +190,7 @@ def listserie(idd):
         duration=video["videoDuration"]
         duration=duration/1000
         image=video["image"]["src"]
-        airdate=video["airDate"]
+        #airdate=video["airDate"]
         addLink(title,idd,"playvideo",image,desc=desc,duration=duration)
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
 
