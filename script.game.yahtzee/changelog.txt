@@ -1,3 +1,7 @@
+[B]Version 0.4.0 - 2018-01-21[/B]
+add yathzee logic
+add give me a hint
+fixed bug after one game
 [B]Version 0.3.0 - 2018-01-07[/B]
 add bonus rule (upper area, +50)
 add libs
