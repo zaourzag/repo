@@ -1,3 +1,5 @@
+[B]Version 0.4.1 - 2018-01-21[/B]
+fix for the path
 [B]Version 0.4.0 - 2018-01-21[/B]
 add yathzee logic
 add give me a hint

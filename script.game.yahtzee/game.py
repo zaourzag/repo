@@ -246,7 +246,7 @@ class Game(xbmcgui.WindowXML):
 
         # give me a tip
         if(control_id == 5009):
-            if(self.gameOn):
+            if(self.gameOn and not self.diceOn and (self.actualTry > 0)):
 
                 testTry = self.actualTry        
                 value = self.GetYahzeeMove(testTry)

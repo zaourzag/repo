@@ -27,8 +27,13 @@ import xbmc
 import xbmcaddon
 import xbmcgui
 
+import os
+
 addon = xbmcaddon.Addon()
 ADDON_PATH = addon.getAddonInfo('path').decode('utf-8')
+DATAFILE = os.path.join(
+    ADDON_PATH,
+    'Yahtzee.dat')
 
 feldnamen = (
     "Aces",
@@ -991,7 +996,7 @@ def ReadRestgewinn():
     pDialog = xbmcgui.DialogProgress()
     pDialog.create('Yahtzee', 'Loading values, please wait!')
  
-    fobj = open(ADDON_PATH + '\\Yahtzee.dat', "r")
+    fobj = open(DATAFILE, "r")
     data = fobj.read()
     fobj.close()
      
