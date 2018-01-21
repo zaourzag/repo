@@ -3721,7 +3721,7 @@ Parental warning: The Maxdome Plattform consists of differnt types of content - 
   </extension>
 </addon>
 
-<addon id="plugin.video.wakanim" name="Wakanim" version="0.6.0" provider-name="MrKrabat">
+<addon id="plugin.video.wakanim" name="Wakanim" version="0.6.1" provider-name="MrKrabat">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
         <import addon="script.module.beautifulsoup4" version="4.3.2"/>
@@ -3744,7 +3744,7 @@ Parental warning: The Maxdome Plattform consists of differnt types of content - 
         <disclaimer lang="de_DE">HINWEIS: Du MUSST PREMIUM Mitglied sein oder Videos KAUFEN um dieses Plugin zu benutzen</disclaimer>
         <disclaimer lang="fr_FR">AVERTISSEMENT: VOUS DEVEZ être un membre PREMIUM ou ACHETER des vidéos pour utiliser ce plugin</disclaimer>
         <disclaimer lang="ru_RU">ВНИМАНИЕ: Для использования этого плагина Вы должны оформить подписку или купить аниме</disclaimer>
-        <news>v0.6.0 (2018.01.14)[CR]- Added Wakanim Russia (thanks AkariDN)</news>
+        <news>v0.6.1 (2018.01.21)[CR]- Fix episode thumbnails</news>
         <license>GNU Affero General Public License, v3</license>
         <forum>https://forum.kodi.tv/showthread.php?tid=322763</forum>
         <website>https://www.wakanim.tv/</website>
