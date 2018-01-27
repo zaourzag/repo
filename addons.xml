@@ -238,7 +238,7 @@ Zattoo Live TV, Aufnahmen und EPG
   </extension>
 </addon>
 
-<addon id="plugin.video.akibapass" name="Akibapass" version="0.5.1" provider-name="MrKrabat">
+<addon id="plugin.video.akibapass" name="Akibapass" version="0.5.2" provider-name="MrKrabat">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
         <import addon="script.module.beautifulsoup4" version="4.3.2"/>
@@ -255,7 +255,7 @@ Zattoo Live TV, Aufnahmen und EPG
         <description lang="de_DE">Alle deine Lieblingsserien direkt aus Japan bei Akibapass.de. Zugang zu aktuellen Simulcasts und jeder Menge Klassikern.</description>
         <disclaimer lang="en_GB">WARNING: You MUST be a PREMIUM member or BUY videos to use this plugin</disclaimer>
         <disclaimer lang="de_DE">HINWEIS: Du MUSST PREMIUM Mitglied sein oder Videos KAUFEN um dieses Plugin zu benutzen</disclaimer>
-        <news>v0.5.1 (2017.11.27)[CR]- Added trailer videos</news>
+        <news>v0.5.2 (2018.01.21)[CR]- Fix episode thumbnails</news>
         <license>GNU Affero General Public License, v3</license>
         <forum>https://www.kodinerds.net/index.php/Thread/58346-Release-Akibapass-de/</forum>
         <website>https://www.akibapass.de/</website>
@@ -736,26 +736,6 @@ Vous pouvez regarder le sport que vous aimez, vivez et sur demande à un moment 
   </extension>
 </addon>
 
-<addon id="plugin.video.mtv_de" name="MTV.de" version="3.3.15" provider-name="L0RE">
-
-    <requires>
-        <import addon="xbmc.python" version="2.19.0"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <summary lang="de">TV-Shows, Deutsche Charts, Videosuche, Playlisten, Favoriten</summary>
-        <summary lang="en">TV-Shows, german charts, clip search, playlists, favorites</summary>
-        <language>de</language>
-        <description lang="de">TV-Shows, Deutsche Charts, Videosuche, Playlisten, Favoriten</description>
-        <description lang="en">TV-Shows, German charts, clip search, playlists, favorites</description>
-        <disclaimer lang="en">Some parts of this addon may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
-    <platform>all</platform>
-    </extension>
-</addon>
-
 <addon id="plugin.video.br3" name="Bayerisches Fernsehen" version="0.8.1" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
@@ -820,7 +800,7 @@ Vous pouvez regarder le sport que vous aimez, vivez et sur demande à un moment 
   </extension>
 </addon>
 
-<addon id="skin.embuary" version="0.2.8" name="Embuary" provider-name="sualfred">
+<addon id="skin.embuary" version="0.3.0" name="Embuary" provider-name="sualfred">
 	<requires>
 		<import addon="xbmc.gui" version="5.12.0"/>
 		<import addon="script.globalsearch" version="7.0.0"/>
@@ -1343,6 +1323,35 @@ Vous pouvez regarder le sport que vous aimez, vivez et sur demande à un moment 
         <forum>http://forum.xbmc.org/showthread.php?tid=132563</forum>
         <email>andreas at vogler dot name</email>
         <website>http://www.sesamstrasse.de</website>
+    </extension>
+</addon>
+
+<addon id="script.screensaver.bing" name="Bing Pictures Screensaver" version="0.4.1" provider-name="Mark König">
+    <requires>
+        <import addon="xbmc.python" version="2.14.0"/>
+    </requires>
+    <extension point="xbmc.ui.screensaver" library="screensaver.py" />
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <language/>
+        <website></website>
+        <source>https://github.com/mking2203/script.screensaver.bing</source>
+        <forum>https://github.com/mking2203/script.screensaver.bing</forum>
+        <email>mark.koenig@kleiner-schelm.de</email>
+        
+        <summary lang="de">Bing Bildschirmschoner</summary>
+        <summary lang="en">Bing Screensaver</summary>
+     
+        <description lang="de">Bing Wallpaper Galerie - Die Wallpaper Gallery liefert tägliche Bilder für verschiedene Länder.</description>
+        <description lang="en">Bing Wallpaper Galerie - Provides Bing daily wallpaper images gallery for several countries.</description>
+      
+        <assets>
+            <icon>icon.png</icon>
+            <fanart>fanart.jpg</fanart>
+            <screenshot>resources/screenshot000.jpg</screenshot>
+            <screenshot>resources/screenshot001.jpg</screenshot>
+            <screenshot>resources/screenshot002.jpg</screenshot>
+        </assets>
     </extension>
 </addon>
 
@@ -2683,7 +2692,7 @@ LiveTV:
     </extension>
 </addon>
 
-<addon id="script.game.yahtzee" name="Yahtzee Game" version="0.2.0" provider-name="Mark Koenig">
+<addon id="script.game.yahtzee" name="Yahtzee Game" version="0.4.1" provider-name="Mark Koenig">
     <requires>
         <import addon="xbmc.python" version="2.10.0"/>
     </requires>
@@ -3687,6 +3696,68 @@ Parental warning: The Maxdome Plattform consists of differnt types of content - 
     <email>andreas at vogler dot name</email>
     <platform>all</platform>
   </extension>
+</addon>
+
+<addon id="plugin.video.L0RE.mtv" name="MTV Deutschland (dev)" version="0.1.0" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.24.0"/>
+        <import addon="script.module.requests" version="2.12.4"/>
+        <import addon="script.module.beautifulsoup4" version="4.3.2"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="de">MTV Deutschland</summary>
+    <summary lang="en">MTV Deutschland</summary>
+    <description lang="en">MTV Deutschland</description>
+    <description lang="de">MTV Deutschland</description>
+    <website></website>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.L0RE.hsv</source>
+    <forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
+    <email>andreas at vogler dot name</email>
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="plugin.video.wakanim" name="Wakanim" version="0.6.1" provider-name="MrKrabat">
+    <requires>
+        <import addon="xbmc.python" version="2.25.0"/>
+        <import addon="script.module.beautifulsoup4" version="4.3.2"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <language>en de fr ru</language>
+        <summary lang="en_GB">Wakanim.tv - Anime streaming live from japan</summary>
+        <summary lang="de_DE">Wakanim.tv - Anime Streaming live aus Japan</summary>
+        <summary lang="fr_FR">Wakanim.tv - Streaming d'animes VOSTFR en direct du Japon</summary>
+        <summary lang="ru_RU">Wakanim.tv - Прямая трансляция аниме из Японии</summary>
+        <description lang="en_GB">A constantly growing selection of subtitled animes, which can be discovered - new and popular titles.</description>
+        <description lang="de_DE">Eine stetig wachsende Auswahl deutsch untertitelter Animes, die es zu entdecken gilt - neue und beliebte Titel.</description>
+        <description lang="fr_FR">Des dizaines d'animes VOSTFR en streaming à découvrir - nouveautés et séries les plus prisées.</description>
+        <description lang="ru_RU">Ваши любимые аниме онгоинги прямо из Японии. Смотрите любимые и новые аниме онлайн в высоком качестве и без рекламы столько, сколько хотите.</description>
+        <disclaimer lang="en_GB">WARNING: You MUST be a PREMIUM member or BUY videos to use this plugin</disclaimer>
+        <disclaimer lang="de_DE">HINWEIS: Du MUSST PREMIUM Mitglied sein oder Videos KAUFEN um dieses Plugin zu benutzen</disclaimer>
+        <disclaimer lang="fr_FR">AVERTISSEMENT: VOUS DEVEZ être un membre PREMIUM ou ACHETER des vidéos pour utiliser ce plugin</disclaimer>
+        <disclaimer lang="ru_RU">ВНИМАНИЕ: Для использования этого плагина Вы должны оформить подписку или купить аниме</disclaimer>
+        <news>v0.6.1 (2018.01.21)[CR]- Fix episode thumbnails</news>
+        <license>GNU Affero General Public License, v3</license>
+        <forum>https://forum.kodi.tv/showthread.php?tid=322763</forum>
+        <website>https://www.wakanim.tv/</website>
+        <source>https://github.com/MrKrabat/plugin.video.wakanim</source>
+        <email></email>
+        <assets>
+            <icon>icon.png</icon>
+            <fanart>fanart.jpg</fanart>
+            <screenshot>resources/media/screenshot-01.jpg</screenshot>
+            <screenshot>resources/media/screenshot-02.jpg</screenshot>
+            <screenshot>resources/media/screenshot-03.jpg</screenshot>
+        </assets>
+    </extension>
 </addon>
 
 <addon id="plugin.video.doku5.com" name="Doku5" version="1.0.3" provider-name="itouch5000">

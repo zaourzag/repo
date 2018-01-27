@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 #
-#     Copyright (C) 2018 Mark König (mark.koenig@kleiner-schelm.de)
+#     Copyright (C) 2018 Mark KÃ¶nig (mark.koenig@kleiner-schelm.de)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -24,7 +24,6 @@ import time
 import thread
 import string
 import sys
-from decimal import Decimal
 
 import xbmc
 import xbmcaddon
@@ -84,6 +83,7 @@ class Game(xbmcgui.WindowXML):
 
     def onInit(self):
         # init vars
+        yahtzee_logic.ReadRestgewinn()
 
         # init points
         for i in range(15):
@@ -215,7 +215,7 @@ class Game(xbmcgui.WindowXML):
                 
                 self.gameOn = True
                 self.actualPlayer = 1
-                actualTry = 1
+                self.actualTry = 1
 
                 self.diceOn = True
                 
@@ -238,13 +238,53 @@ class Game(xbmcgui.WindowXML):
                     self.diceFinished = False
 
                     self.updateToggleButtons(control_id);
+                else:
+                    dialog = xbmcgui.Dialog()
+                    confirmed = dialog.ok(addon.getLocalizedString(3025),
+                                  addon.getLocalizedString(3029)
+                                  )
 
         # give me a tip
         if(control_id == 5009):
-            dialog = xbmcgui.Dialog()
-            confirmed = dialog.ok(addon.getLocalizedString(3025),
-                                  '..... sooon'
-                                  )
+            if(self.gameOn and not self.diceOn and (self.actualTry > 0)):
+
+                testTry = self.actualTry        
+                value = self.GetYahzeeMove(testTry)
+
+                # we can already sign a value
+                if(value > 9999):
+                    testTry = 3
+                    value = self.GetYahzeeMove(testTry)
+    
+                txt = '...'
+
+                if(testTry == 1):
+                    if(value != 0):
+                        txt = addon.getLocalizedString(3012) + ' : ' + str(value)
+                    else:
+                        txt = addon.getLocalizedString(3009)
+                        
+                if(testTry == 2):
+                    if(value != 0):
+                        txt = addon.getLocalizedString(3012) + ' : ' + str(value)
+                    else:
+                        txt = addon.getLocalizedString(3009)
+                        
+                if(testTry == 3):
+
+                    x = value
+                    if(x > 5):
+                        x = x + 1
+
+                    points = yahtzee_points.GetCalc(x + 1 , self.dice)
+                    if(points > 0):
+                        txt = addon.getLocalizedString(3040) + ' : ' + addon.getLocalizedString(3013 + x)
+                    else:
+                        txt = addon.getLocalizedString(3042) + ' : ' + addon.getLocalizedString(3013 + x)
+                
+                dialog = xbmcgui.Dialog()        
+                confirmed = dialog.ok(addon.getLocalizedString(3010),
+                                      txt)
 
         # whats this
         if(control_id == 5010):
@@ -275,12 +315,16 @@ class Game(xbmcgui.WindowXML):
             if(self.diceOn):
                 self.diceCnt = self.diceCnt +1
                 if(self.diceCnt < 10):
-                    for i in range(5):
-                        if (self.hold[i] == False):
-                            x =randint(1, 6)
-                            self.p0x = self.getControl(5100 + i)
-                            self.p0x.setImage('w%s.png' % x)
-                            self.dice[i] = x
+                    for w in range(5):
+                        if (self.hold[w] == False):
+                            try:
+                                x =randint(1, 6)
+                                self.dice[w] = x
+                                
+                                self.wx = self.getControl(5100 + w)
+                                self.wx.setImage('w%s.png' % x)
+                            except:
+                                pass
                 else:
                     self.diceOn = False
                     self.diceFinished = True   
@@ -428,6 +472,21 @@ class Game(xbmcgui.WindowXML):
                 self.p0x.setLabel(str(self.pointsP4[i]))
             else:
                 self.p0x.setLabel('..')
+                
+    def GetYahzeeMove(self, actTry):
+        data = []
+        for i in range(15):
+            data.append(0)
+            
+        for i in range (6):
+            data[i] = self.GetValuePlayer(self.actualPlayer)[i]
+        for i in range (6,13):
+            data[i] = self.GetValuePlayer(self.actualPlayer)[i + 1]
+
+        data[13] = actTry
+        data[14] = (self.dice[0] * 10000) + (self.dice[1] * 1000) + (self.dice[2] * 100) + (self.dice[3] * 10) + (self.dice[4] * 1)
+
+        return yahtzee_logic.EinzelAbfrage(data)
 
     def log(self, msg):
         xbmc.log('[ADDON][%s] %s' % ('TEST', msg.encode('utf-8')),
