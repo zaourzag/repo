@@ -3688,7 +3688,7 @@ Parental warning: The Maxdome Plattform consists of differnt types of content - 
   </extension>
 </addon>
 
-<addon id="plugin.video.L0RE.mtv" name="MTV Mediathek" version="0.1.1" provider-name="L0RE">
+<addon id="plugin.video.L0RE.mtv" name="MTV Mediathek" version="0.1.2" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
         <import addon="script.module.requests" version="2.12.4"/>
