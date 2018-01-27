@@ -272,17 +272,24 @@ def chartteil(url):
       debug("---")
       debug(item)
       try:
-       lied=item["title"]
-       debug(lied)
-       kuenster=item["shortTitle"]
-       debug(kuenster)
+       lied=item["title"].encode("utf-8")
+       debug("A)"+lied)
+       kk=item["artists"][0]["schema"]
+       struktur2 = json.loads(kk)       
+       kuenster=struktur2["name"].encode("utf-8")      
+       debug("B)"+str(kuenster))
        chartpos=item["chartPosition"]["current"]
        debug(chartpos)
        image=item["images"][0]["url"]   
-       debug(image)
-       videourl=item["videoUrl"]
-       debug(videourl)
+       debug("C)"+image)
+       try:
+            videourl=item["videoUrl"]
+       except:
+             debug(str(item))
+             videourl=re.compile("'videoUrl'[^']+'(.+?)'", re.DOTALL).findall(str(item))[0]                              
+       debug("D)"+videourl)
        title=str(chartpos) +". "+ lied + " ( "+kuenster+" )"
+       debug("E)"+title)
        addLink(title,videourl,"playvideo",image)
       except:
        pass       
@@ -320,12 +327,14 @@ def playplaylist(url):
     debug(title_ar[i])
     item = xbmcgui.ListItem(path=videourl_arr[i],label=title_ar[i],iconImage=image_arr[i])         
     playlist.add(videourl_arr[i], item)
-    if i==0:
-        xbmc.Player().play(playlist)
-#    if i==0:
-#       break
-
+    #if i==0:
+        #xbmc.Player().play(playlist)
+  #  if i==0:
+  #     break
+  #sleep(60)
   #xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)   
+  xbmc.Player().play(playlist)
+  sleep(60)
 
 
 def playlists(url):
