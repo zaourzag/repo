@@ -131,32 +131,30 @@ def geturl(url,data="x",header="",referer=""):
     
 
    
-   
-  
-def liste():      
-    addDir("TVshows" , baseurl+"/shows", "tvshow","")     
-    addDir("Charts" , baseurl+"/charts", "charts","")     
-    addDir("Settings","Settings","Settings","")
-    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
-
-  
-def playvideo(url):      
-    #debug(url)        
+def getvideourl(url)  : 
     content=geturl(url)
     idd=re.compile('"itemId":"(.+?)"', re.DOTALL).findall(content)[0]                  
     mediaurl="http://media.mtvnservices.com/pmt/e1/access/index.html?uri=mgid:arc:episode:mtv.de:"+idd+"&configtype=edge"              
     content=geturl(mediaurl,referer=url)
+    debug("++")
     struktur = json.loads(content)
+    debug(struktur)
     ende=struktur["feed"]["items"][0]["group"]["content"]
     ende=ende.replace("&device={device}","")
     ende=ende+"&format=json&acceptMethods=hls"
     debug("ENDE :"+ende)
     content=geturl(ende)
     struktur = json.loads(content)
-    videourl=struktur["package"]["video"]["item"][0]["rendition"][0]["src"]
+    try:
+        videourl=struktur["package"]["video"]["item"][0]["rendition"][0]["src"]
+    except:
+        videourl=""
     debug("+++++++++++++++++++")
     debug(videourl)
-    #debug(licfile)
+    return(videourl)
+  
+def playvideo(url):      
+    videourl=getvideourl(url)
     listitem = xbmcgui.ListItem(path=videourl)    
     #listitem.setProperty('IsPlayable', 'true')
     #listitem.setProperty('inputstreamaddon', 'inputstream.adaptive')
@@ -260,7 +258,7 @@ def charts(url):
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)      
 
 def chart(url):
-    urlx="http://www.mtv.de/feeds/triforce/manifest/v8?url="+urllib.quote_plus(url)
+    urlx="http://www.mtv.de/feeds/triforce/manifest/v8?url="+url
     content=geturl(urlx)
     struktur = json.loads(content) 
     newurl=struktur["manifest"]["zones"]["t4_lc_promo1"]["feed"] 
@@ -293,7 +291,84 @@ def chartteil(url):
         chartteil(nexturl)
     except:
         pass
+    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)   
+
+
+def playplaylist(url):
+  content=geturl(url)
+  htmlPage = BeautifulSoup(content, 'html.parser')
+  element = htmlPage.find("div",attrs={"id":"t1_lc_promo1"})
+  playlisteurl=element["data-tffeed"]
+  content=geturl(playlisteurl)
+  struktur = json.loads(content) 
+  playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
+  playlist.clear()
+  x=0
+  title_ar=[]
+  videourl_arr=[]
+  image_arr=[]
+  for item in struktur["result"]["data"]["items"]:
+    debug("=====================")
+    vurl=item["canonicalURL"]         
+    videourl=getvideourl(vurl)
+    videourl_arr.append(videourl)
+    title=item["title"].encode("utf-8")
+    title_ar.append(title)
+    image=item["images"]["url"]
+    image_arr.append(image)
+  for i in range(0, len(videourl_arr), 1):
+    debug(title_ar[i])
+    item = xbmcgui.ListItem(path=videourl_arr[i],label=title_ar[i],iconImage=image_arr[i])         
+    playlist.add(videourl_arr[i], item)
+    if i==0:
+        xbmc.Player().play(playlist)
+#    if i==0:
+#       break
+
+  #xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)   
+
+
+def playlists(url):
+    urlx="http://www.mtv.de/feeds/triforce/manifest/v8?url="+url
+    content=geturl(urlx)
+    struktur = json.loads(content) 
+    newurl=struktur["manifest"]["zones"]["t4_lc_promo1"]["feed"] 
+    playlistspart(newurl) 
+    
+def playlistspart(url):
+    content=geturl(url)  
+    struktur = json.loads(content)   
+    substrukt=struktur["result"]
+    for item in substrukt["data"]["items"]:
+       debug("---")
+       debug(item)
+      
+       title=item["title"].encode("utf-8")     
+       debug(title)
+       image=item["images"]["url"]   
+       debug(image)
+       videourl=item["canonicalURL"]
+       debug(videourl)     
+       addLink(title,videourl,"playplaylist",image)
+      
+    try:   
+        nexturl=substrukt["nextPageURL"]
+        playlistspart(nexturl)
+    except:
+        pass
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)      
+    
+def music():
+    addDir("Playlists" , "http://www.mtv.de/playlists", "playlists","")    
+    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)      
+    
+def liste():      
+    addDir("TVshows" , baseurl+"/shows", "tvshow","")     
+    addDir("Charts" , baseurl+"/charts", "charts","")     
+    addDir("Music" , "", "music","")     
+    addDir("Settings","Settings","Settings","")
+    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
+    
 # Haupt Menu Anzeigen      
 if mode is '':
      liste()   
@@ -316,9 +391,17 @@ else:
            listserie(url)
   if mode == 'folgenteil':
             folgenteil(url,anz,seite,serienname,stattfolgen)
+  if mode == 'music':
+            music()
   if mode == 'charts':
             charts(url)
   if mode == 'chart':
             chart(url)
   if mode == 'chartteil':
             chartteil(url)
+  if mode =="playlists":
+            playlists(url)
+  if mode =="playlistspart":
+            playlistspart(url)
+  if mode =="playplaylist":
+            playplaylist(url)  
