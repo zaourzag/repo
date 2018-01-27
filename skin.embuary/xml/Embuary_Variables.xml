@@ -217,8 +217,8 @@
 		<value>plugin://script.skin.helper.service/?action=getcast&amp;tvshow=$INFO[ListItem.TvShowTitle]&amp;downloadthumbs=true&amp;castaction=extendedinfo</value>
 	</variable>
 	<variable name="View54_NextUp_Content">
-		<value condition="Integer.IsGreater(Window(home).Property(UnwatchedEpisodes),0) + String.StartsWith(ListItem.Path,plugin://plugin.video.embycon)">plugin://plugin.video.embycon?mode=WIDGET_CONTENT_NEXTUP&amp;id=$INFO[Window(home).Property(EmbyID)]</value>
-		<value condition="Integer.IsGreater(Window(home).Property(UnwatchedEpisodes),0)">videodb://inprogresstvshows/$INFO[Window(home).Property(TVShowDBID)]/-2/?tvshowid=$INFO[Window(home).Property(TVShowDBID)]</value>
+		<value condition="Container.Content(seasons) + Integer.IsGreater(Window(home).Property(UnwatchedEpisodes),0) + String.StartsWith(ListItem.Path,plugin://plugin.video.embycon)">plugin://plugin.video.embycon?mode=WIDGET_CONTENT_NEXTUP&amp;id=$INFO[Window(home).Property(EmbyID)]</value>
+		<value condition="Container.Content(seasons) + Integer.IsGreater(Window(home).Property(UnwatchedEpisodes),0)">videodb://inprogresstvshows/$INFO[Window(home).Property(TVShowDBID)]/-2/?tvshowid=$INFO[Window(home).Property(TVShowDBID)]</value>
 	</variable>
 	<variable name="InfoDialog_NextUp_Content">
 		<value condition="Integer.IsGreater(Window(home).Property(UnwatchedEpisodes),0) + String.StartsWith(ListItem.Path,plugin://plugin.video.embycon)">plugin://plugin.video.embycon?mode=WIDGET_CONTENT_NEXTUP&amp;id=$INFO[ListItem.Property(id)]</value>
@@ -1540,5 +1540,9 @@
 		<value condition="Integer.IsGreater(Container(150).NumItems,0) + Integer.IsGreater(Container(250).NumItems,0)">$VAR[ExtendedInfoFilmographyMovies] &amp; $VAR[ExtendedInfoFilmographyTVShows]</value>
 		<value condition="Integer.IsGreater(Container(150).NumItems,0) + !Integer.IsGreater(Container(250).NumItems,0)">$VAR[ExtendedInfoFilmographyMovies]</value>
 		<value condition="!Integer.IsGreater(Container(150).NumItems,0) + Integer.IsGreater(Container(250).NumItems,0)">$VAR[ExtendedInfoFilmographyTVShows]</value>
+	</variable>
+	<variable name="ListItemStatus">
+		<value condition="String.IsEqual(Window(home).Property(SkinHelper.ListItem.Status),Ended)">$LOCALIZE[31196]</value>
+		<value condition="String.IsEqual(Window(home).Property(SkinHelper.ListItem.Status),continuing)">$LOCALIZE[31197]</value>
 	</variable>
 </includes>
