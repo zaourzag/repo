@@ -59,7 +59,7 @@ profile    = xbmc.translatePath( addon.getAddonInfo('profile') ).decode("utf-8")
 temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
 if not xbmcvfs.exists(temp):  
   xbmcvfs.mkdirs(temp)
-
+favdatei   = xbmc.translatePath( os.path.join(temp,"favorit.txt") ).decode("utf-8")
 
 cert=addon.getSetting("cert")
 debug("##")
@@ -132,8 +132,8 @@ def parameters_string_to_dict(parameters):
 				paramDict[paramSplits[0]] = paramSplits[1]
 	return paramDict
   
-def addDir(name, url, mode, iconimage, desc="", duration="",nummer=0):
-    u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&nummer="+str(nummer)
+def addDir(name, url, mode, iconimage, desc="", duration="",nummer=0,bild="",title=""):
+    u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&nummer="+str(nummer)+"&bild="+str(bild)+"&title="+str(title)
     ok = True
     liz = xbmcgui.ListItem(name)
     liz.setArt({ 'fanart': iconimage })
@@ -148,6 +148,8 @@ channel = urllib.unquote_plus(params.get('channel', ''))
 url = urllib.unquote_plus(params.get('url', ''))
 nummer = urllib.unquote_plus(params.get('nummer', ''))
 name = urllib.unquote_plus(params.get('name', ''))
+title = urllib.unquote_plus(params.get('title', ''))
+bild = urllib.unquote_plus(params.get('bild', ''))
 
 showName = urllib.unquote_plus(params.get('showName', ''))
 hideShowName = urllib.unquote_plus(params.get('hideshowname', '')) == 'True'
@@ -157,6 +159,7 @@ einsLike = urllib.unquote_plus(params.get('einslike', '')) == 'True'
 xstream = urllib.unquote_plus(params.get('xstream', ''))
 xlink = urllib.unquote_plus(params.get('xlink', ''))
 xdrm = urllib.unquote_plus(params.get('xdrm', ''))
+
 
 
 def serien(url):
@@ -172,6 +175,9 @@ def serien(url):
    seitennr=0  
   counter=1
   anzahl=1
+  
+  found=0
+  
   while (anzahl>0):  
     if seitennr>0:
         newurl=url+"&page="+str(seitennr)
@@ -204,7 +210,7 @@ def serien(url):
             desc=""
             freeep="true"
         if (freeep==True or freeonly=="false") :
-            menu.append(addDir(title , url=str(idd), mode="rubrik", iconimage=logo,duration="",desc=desc))
+            menu.append(addDir(title , url=str(idd), mode="rubrik", iconimage=logo,duration="",desc=desc,title=title,bild=logo))
         counter+=1
     debug("Counter :"+str(counter))
     try:
@@ -213,11 +219,10 @@ def serien(url):
             anzahl=0
     debug("Anzahl :### "+str(anzahl))
     seitennr=seitennr+1
-     
   xbmcplugin.addDirectoryItems(addon_handle,menu)
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)    
 
-def rubrik(name) :
+def rubrik(name,titlex="",bild="") :
   menu=[]
   freeonly=addon.getSetting("freeonly")
   kodi18=addon.getSetting("kodi18")
@@ -232,6 +237,18 @@ def rubrik(name) :
   content = cache.cacheFunction(getUrl,url)      
   kapitelliste = json.loads(content, object_pairs_hook=OrderedDict)   
   xidd=kapitelliste["id"]
+  menux=[]
+  found=0
+  if xbmcvfs.exists(favdatei):
+   f=open(favdatei,'r')     
+   for line in f:
+     if str(titlex) in line:
+         found=1
+  if found==0:           
+        menux.append(addDir("Hinzufügen zu Favoriten", str(name), mode="favadd", iconimage="", bild=bild,title=titlex))
+  else:
+        menux.append(addDir("Lösche Favoriten", str(name), mode="favdel", iconimage=""))
+  xbmcplugin.addDirectoryItems(addon_handle,menux)
   try:
     serienanzahl=kapitelliste["formatTabs"]["total"]  
     debug("serienanzahl gefunden :"+ str(serienanzahl))
@@ -258,7 +275,7 @@ def rubrik(name) :
       if ('"free":true' in content2 or freeonly=="false") and ('"isDrm":false' in content2  or kodi18 == "true"):
       #      debug(staffelinfo)
           uurl="http://api.tvnow.de/v3/formatlists/"+str(idd)+"?maxPerPage=500&fields=*,formatTabPages.*,formatTabPages.container.*,formatTabPages.container.movies.*,formatTabPages.container.movies.format.*,formatTabPages.container.movies.paymentPaytypes.*,formatTabPages.container.movies.pictures"
-          menu.append(addDir(name , url=uurl,nummer=str(idd), mode="staffel", iconimage="",duration="",desc=""))                
+          menu.append(addDir(name , url=uurl,nummer=str(idd), mode="staffel", iconimage="",duration="",desc="",title=titlex))                
                 
   xbmcplugin.addDirectoryItems(addon_handle,menu)
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
@@ -395,8 +412,9 @@ def staffel(idd,url) :
           listitem.setInfo(type="Video", infoLabels={'duration': laenge,"Title": title, "Plot": plot,'plotoutline': plotshort,'tagline':tagline,'mediatype':ftype ,"episode": folgenr, "season":sstaffel,"sorttitle":"S"+sstaffel+"E"+folgenr+" "+title})                    
           #listitem.setInfo(type='video')          
           xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url="plugin://plugin.video.rtlnow/?nummer="+haswert+"&mode=hashplay", listitem=listitem)
-          #addLink(name, stream, "playvideo", bild)          
-          xbmcplugin.addDirectoryItems(addon_handle,menu) 
+          #addLink(name, stream, "playvideo", bild) 
+ 
+  xbmcplugin.addDirectoryItems(addon_handle,menu)  
   f = open( os.path.join(temp,"menu.txt"), 'w')  
   f.write(menulist)
   f.close()     
@@ -517,6 +535,7 @@ def index():
     ret,token=login()
     freeonly=addon.getSetting("freeonly")
     kodi18=addon.getSetting("kodi18")
+    menu.append(addDir("Favoriten", "", 'listfav', ""))    
     menu.append(addDir("Nach Sendern", "", 'sendermenu', ""))      
     menu.append(addDir("Themen" , url="rtl", mode="genre", iconimage="",duration="",desc=""))
     menu.append(addDir("Rubriken" , url="", mode="katalog", iconimage="",duration="",desc=""))
@@ -528,7 +547,8 @@ def index():
     menu.append(addDir("Neuste" , url=lasturl, mode="last", iconimage="",duration="",desc=""))
     if ret==1 and kodi18 == "true":
         menu.append(addDir("LiveTV",url="", mode="livetv", iconimage="",duration="",desc=""))    
-    menu.append(addDir("Cache Loeschen", "", 'clearcache', ""))    
+    menu.append(addDir("Suche", "", 'searchit', ""))        
+    menu.append(addDir("Cache Loeschen", "", 'clearcache', ""))        
     menu.append(addDir("Settings", "", 'Settings', ""))    
     menu.append(addDir("Inputstream Einstellungen", "", 'inputsettings', ""))        
     xbmcplugin.addDirectoryItems(addon_handle,menu)
@@ -543,7 +563,7 @@ def sendermenu():
     settings = json.loads(content, object_pairs_hook=OrderedDict)    
     aliases=settings["settings"]["nowtv"]["local"]["stations"]["aliases"]  
     for name,value in aliases.items():
-      if not name=="toggoplus" :
+      if not name=="ztoggoplus" :
           newimg=os.path.join(xbmcaddon.Addon().getAddonInfo('path'),"logos",name +".png")
           menu.append(addDir(value , url=name, mode="serien", iconimage=newimg,duration="",desc=""))   
     xbmcplugin.addDirectoryItems(addon_handle,menu)
@@ -590,7 +610,7 @@ def katalogliste(idd)   :
         title=serie["format"]["title"]
         logo=serie["format"]["defaultDvdImage"]
         desc=serie["format"]["infoText"]
-        menu.append(addDir(title , url=str(iid), mode="rubrik", iconimage=logo,duration="",desc=desc))
+        menu.append(addDir(title , url=str(iid), mode="rubrik", iconimage=logo,duration="",desc=desc,title=title))
      except:
          pass
    xbmcplugin.addDirectoryItems(addon_handle,menu)
@@ -693,8 +713,65 @@ def livetv():
 	"""
     xbmcplugin.endOfDirectory(addon_handle)	
 
+def searchit():
+     dialog = xbmcgui.Dialog()
+     d = dialog.input(translation(30010), type=xbmcgui.INPUT_ALPHANUM)
+     url="https://api.tvnow.de/v3/formats?fields=id,title,metaTags,seoUrl,defaultDvdImage,defaultDvdCoverImage&maxPerPage=5000"
+     content = cache.cacheFunction(getUrl,url) 
+     objekte = json.loads(content, object_pairs_hook=OrderedDict)
+     menu=[]
+     for objekt in objekte["items"]:
+         if d in objekt["metaTags"]:
+            title=objekt["title"]
+            idd=objekt["id"]
+            logo=objekt["defaultDvdImage"]
+            menu.append(addDir(title , url=str(idd), mode="rubrik", iconimage=logo,duration="",desc="",title=title))
+     xbmcplugin.addDirectoryItems(addon_handle,menu)
+     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)                
 #OPTIONS https://api.tvnow.de/v3/formats/genre/Crime?fields=*&filter=%7B%22station%22:%22none%22%7D&maxPerPage=50&order=NameLong+asc&page=1
+def favadd(url,titel,bild):
+  debug(" favadd url :"+url)
+  textfile=url+"###"+titel+"###"+bild+"\n"
+  try:
+    f=open(favdatei,'r')
+    for line in f:
+      textfile=textfile+line
+    f.close()
+  except:
+    pass
+  f=open(favdatei,'w')
+  f.write(textfile)
+  f.close()
+  xbmc.executebuiltin('Notification("Hinzugefügt","Hinzugefügt")')
+  xbmc.executebuiltin("Container.Refresh")
     
+
+def favdel(url):
+  debug(" FAVDEL url :"+url)
+  textfile=""
+  f=open(favdatei,'r')
+  for line in f:
+     if not url in line and not line=="\n":
+      textfile=textfile+line
+  f.close()
+  f=open(favdatei,'w')
+  f.write(textfile)
+  f.close()
+  xbmc.executebuiltin('Notification("Gelöscht","Gelöscht")')
+  xbmc.executebuiltin("Container.Refresh")  
+
+
+def listfav()  :    
+    menu=[]
+    if xbmcvfs.exists(favdatei):
+        f=open(favdatei,'r')
+        for line in f:
+          debug(line)
+          spl=line.split('###')               
+          menu.append(addDir(name=spl[1], url=spl[0], mode="rubrik", iconimage=spl[2].strip(), desc="",title=spl[1],bild=spl[2].strip()))
+        f.close()
+    xbmcplugin.addDirectoryItems(addon_handle,menu)
+    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)  
 # Haupt Menu Anzeigen      
 if mode is '':     
     index()    
@@ -710,7 +787,7 @@ else:
   if mode == 'lsserie':
            serien(url)
   if mode == 'rubrik':
-          rubrik(url)    
+          rubrik(url,title,bild)    
   if mode == 'last':
           staffel("0",url)
   if mode == 'staffel':
@@ -743,3 +820,11 @@ else:
           playdash(xstream,xlink,xdrm)
   if mode == 'playchannel':
           playchannel(channel)
+  if mode == 'searchit':
+          searchit()
+  if mode == 'favadd':          
+          favadd(url,title,bild)          
+  if mode == 'favdel':          
+          favdel(url)                             
+  if mode == 'listfav':          
+          listfav()               
