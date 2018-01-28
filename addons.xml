@@ -2519,7 +2519,7 @@ This product uses the TMDb API (themoviedb.org) but is not endorsed or certified
     </extension>
 </addon>
 
-<addon id="plugin.audio.prime_music" name="Amazon Prime Music" version="0.9.0" provider-name="piet">
+<addon id="plugin.audio.prime_music" name="Amazon Prime Music" version="0.10.0" provider-name="piet">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="script.module.mechanize" version="0.2.6"/>
