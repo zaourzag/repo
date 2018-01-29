@@ -52,7 +52,7 @@ msgid "Last aired episodes"
 msgstr "Letzte ausgestrahlte Folgen"
 
 msgctxt "#30026"
-msgid "Last series in simulcast"
+msgid "Latest simulcast shows"
 msgstr "Letzte Serien im Simulcast"
 
 
