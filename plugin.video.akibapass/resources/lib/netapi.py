@@ -61,6 +61,70 @@ def showCatalog(args):
     view.endofdirectory()
 
 
+def listLastEpisodes(args):
+    """Show last aired episodes
+    """
+    response = urllib2.urlopen("https://www.akibapass.de/de/v2")
+    html = response.read()
+
+    soup = BeautifulSoup(html, "html.parser")
+    ul = soup.find_all("ul", {"class": "js-slider-list"})
+    if not ul:
+        view.endofdirectory()
+        return
+
+    for li in ul[1].find_all("li"):
+        thumb = li.img["src"].replace(" ", "%20")
+        if thumb[:4] != "http":
+            thumb = "https:" + thumb
+
+        view.add_item(args,
+                      {"url":    li.a["href"],
+                       "title":  li.img["alt"].encode("utf-8"),
+                       "mode":   "videoplay",
+                       "thumb":  thumb,
+                       "fanart": thumb,
+                       "plot":   li.find("a", {"class": "slider_item_season"}).string.strip().encode("utf-8")},
+                      isFolder=False, mediatype="video")
+
+    view.endofdirectory()
+
+
+def listLastSimulcasts(args):
+    """Show last simulcasts
+    """
+    response = urllib2.urlopen("https://www.akibapass.de/de/v2")
+    html = response.read()
+
+    soup = BeautifulSoup(html, "html.parser")
+    ul = soup.find_all("ul", {"class": "js-slider-list"})
+    if not ul:
+        view.endofdirectory()
+        return
+
+    for li in ul[2].find_all("li"):
+        plot  = li.find("p", {"class": "tooltip_text"})
+        stars = li.find("div", {"class": "stars"})
+        star  = stars.find_all("span", {"class": "-no"})
+        thumb = li.img["src"].replace(" ", "%20")
+        if thumb[:4] != "http":
+            thumb = "https:" + thumb
+
+        view.add_item(args,
+                      {"url":         li.a["href"],
+                       "title":       li.find("div", {"class": "slider_item_description"}).span.strong.string.strip().encode("utf-8"),
+                       "tvshowtitle": li.find("div", {"class": "slider_item_description"}).span.strong.string.strip().encode("utf-8"),
+                       "mode":        "list_season",
+                       "thumb":       thumb,
+                       "fanart":      thumb,
+                       "rating":      str(10 - len(star) * 2),
+                       "plot":        plot.contents[3].string.strip().encode("utf-8"),
+                       "year":        li.time.string.strip().encode("utf-8")},
+                      isFolder=True, mediatype="video")
+
+    view.endofdirectory()
+
+
 def searchAnime(args):
     """Search for animes
     """
