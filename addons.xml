@@ -2729,7 +2729,7 @@ This product uses the TMDb API (themoviedb.org) but is not endorsed or certified
     </extension>
 </addon>
 
-<addon id="plugin.video.euronews_com" name="euronews.com" version="2.0.24" provider-name="L0RE">
+<addon id="plugin.video.euronews_com" name="euronews.com" version="2.0.25" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="script.module.beautifulsoup4" version="4.3.2"/>        
