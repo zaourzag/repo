@@ -234,8 +234,9 @@ def listSeason(args):
     date = year + "-" + date[1].string.strip().encode("utf-8") + "-" + date[0].string.strip().encode("utf-8")
     originaltitle = soup.find_all("span", {"class": "border-list_text"})[1].string.strip().encode("utf-8")
     studio = soup.find_all("span", {"class": "border-list_text"})[2].string.strip().encode("utf-8")
-    plot = soup.find("div", {"class": "serie_description"}).string.strip().encode("utf-8")
-    credits = soup.find("div", {"class": "serie_description_more"}).p.string.strip().encode("utf-8")
+    plot = soup.find("div", {"class": "serie_description"}).get_text().strip().encode("utf-8")
+    credits = soup.find("div", {"class": "serie_description_more"})
+    credits = credits.p.get_text().strip().encode("utf-8") if credits else ""
     try:
         trailer = soup.find("span", {"class": "js-video-open"})["data-video"]
         trailer = "plugin://plugin.video.youtube/play/?video_id=" + trailer
