@@ -135,10 +135,13 @@ def geturl(url,data="x",header="",referer=""):
   
 def liste():      
     addDir("Featured" , "https://www.dmax.de/api/shows/featured?limit=100&page=1", "videoliste","",nosub="featured") 
-    addDir("Belibteste" , "https://www.dmax.de/api/shows/most-popular?limit=100&page=1", "videoliste","",nosub="most-popular")    
+    addDir("Beliebteste" , "https://www.dmax.de/api/shows/most-popular?limit=100&page=1", "videoliste","",nosub="most-popular")    
     addDir("Neueste" , "https://www.dmax.de/api/shows/recently-added?limit=100&page=1", "videoliste","",nosub="recently-added")        
     addDir("Letzt Chance" , "https://www.dmax.de/api/shows/leaving-soon?limit=100&page=1", "videoliste","",nosub="leaving-soon")    
     addDir("Settings","Settings","Settings","")
+    inputstream=addon.getSetting("inputstream")
+    if inputstream=="true":
+        addDir("Inputstream Einstellungen", "", 'inputsettings', "")
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
 
   
@@ -158,15 +161,20 @@ def playvideo(idd):
     debug(content)
     struktur = json.loads(content)    
     videofile=struktur["data"]["attributes"]["streaming"]["hls"]["url"]
-    #licfile=struktur["data"]["attributes"]["protection"]["schemes"]["widevine"]["licenseUrl"]
+    
     debug(videofile)
-    #debug(licfile)
+    #debug(licfile)    
     listitem = xbmcgui.ListItem(path=videofile)    
     listitem.setProperty('IsPlayable', 'true')
-    #listitem.setProperty('inputstreamaddon', 'inputstream.adaptive')
-    #listitem.setProperty('inputstream.adaptive.manifest_type', 'mpd')
-    #listitem.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')
-    #listitem.setProperty('inputstream.adaptive.license_key', licfile)
+    
+    inputstream=addon.getSetting("inputstream")
+    if inputstream=="true":     
+        licfile=struktur["data"]["attributes"]["protection"]["schemes"]["clearkey"]["licenseUrl"]
+        lickey=re.compile('\?(.+)', re.DOTALL).findall(licfile)[0]        
+        listitem.setProperty('inputstreamaddon', 'inputstream.adaptive')
+        listitem.setProperty('inputstream.adaptive.manifest_type', 'hls')
+        #listitem.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')
+        listitem.setProperty('inputstream.adaptive.license_key', lickey)
     xbmcplugin.setResolvedUrl(addon_handle, True, listitem)
     
 params = parameters_string_to_dict(sys.argv[2])
@@ -205,6 +213,10 @@ def videoliste(url,page=1,nosub=""):
     image=element["image"]["src"]
     addDir(title,idd,"listserie",image,desc=desc)
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
+  
+def inputsettings()    :
+  xbmcaddon.Addon("inputstream.adaptive").openSettings()  
+  
 # Haupt Menu Anzeigen      
 if mode is '':
      liste()   
@@ -221,3 +233,5 @@ else:
           videoliste(url,page,nosub)
   if mode == 'listserie':
            listserie(url)
+  if mode == 'inputsettings':
+          inputsettings()                                  
