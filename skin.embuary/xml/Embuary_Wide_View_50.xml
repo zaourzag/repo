@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<includes>
+	<include name="Wide_View_50">
+		<param name="mainlabel">$VAR[MainListLabel]</param>
+		<param name="sublabel">$VAR[SubListLabel]</param>
+		<param name="layout">LandscapeLayout</param>
+		<param name="use_custom_content">false</param>
+		<definition>
+			<control type="group">
+				<include>Visible_OpenClose</include>
+				<animation effect="slide" condition="Skin.HasSetting(HideWideLabels) + ![Integer.IsGreaterOrEqual(Container(50).CurrentItem,13) | Container(50).HasPrevious] + !Window.IsVisible(1126) + !Window.IsVisible(1125) + !$EXP[IsGenre]" time="200" end="0,90">Conditional</animation>
+				<visible>Control.IsVisible(50)</visible>
+				<control id="50" type="panel">
+					<visible>[!Container.Content(seasons) + !Container.Content(episodes) + !String.Contains(Container.Folderpath,setid)] | [Container.Content(episodes) + String.StartsWith(Container.FolderPath,plugin://) + !String.StartsWith(Container.FolderPath,plugin://plugin.video.embycon)]</visible>
+					<width>1920</width>
+					<height>1080</height>
+					<onright condition="Control.IsVisible(7000)">SetFocus(7000)</onright>
+					<onright>noop</onright>
+					<onup>SetFocus(6666)</onup>
+					<include>Bounce_Up_Down</include>
+					<ondown>SetProperty(BounceDown,1,home)</ondown>
+					<onleft>900</onleft>
+					<orientation>vertical</orientation>
+					<preloaditems>4</preloaditems>
+					<defaultcontrol always="true">0</defaultcontrol>
+					<viewtype label="$LOCALIZE[31004]">panel</viewtype>
+					<pagecontrol>17</pagecontrol>
+					<scrolltime tween="sine" easing="out">400</scrolltime>
+					<oninfo condition="String.IsEqual(ListItem.DBType,set) + !String.StartsWith(ListItem.Path,plugin://plugin.video)">RunScript(script.skin.helper.service,action=textviewer,header='$ESCINFO[ListItem.Title]',message='$ESCINFO[Window(home).Property(SkinHelper.ListItem.ExtendedPlot)]')</oninfo>
+					<itemlayout condition="!Skin.HasSetting(HideWideLabels) | Window.IsVisible(1126) | Window.IsVisible(1125) | $EXP[IsGenre]" width="444" height="305">
+						<control type="group">
+							<left>82</left>
+							<top>122</top>
+							<control type="group">
+								<visible>!$EXP[IsGenre]</visible>
+								<include content="$PARAM[layout]">
+									<param name="mainlabel" value="$PARAM[mainlabel]" />
+									<param name="sublabel" value="" />
+									<param name="thumblabel" value="$PARAM[thumblabel]" />
+									<param name="focused" value="false" />
+									<param name="id" value="50" />
+								</include>
+							</control>
+							<control type="group">
+								<visible>$EXP[IsGenre]</visible>
+								<include content="GenreLayout">
+									<param name="mainlabel" value="$PARAM[mainlabel]" />
+									<param name="sublabel" value="" />
+									<param name="thumblabel" value="$PARAM[thumblabel]" />
+									<param name="focused" value="false" />
+									<param name="id" value="50" />
+								</include>
+							</control>
+						</control>
+					</itemlayout>
+					<focusedlayout condition="!Skin.HasSetting(HideWideLabels) | Window.IsVisible(1126) | Window.IsVisible(1125) | $EXP[IsGenre]" width="444" height="305">
+						<include>SetPropertyOnFocus</include>
+						<control type="group">						
+							<left>82</left>
+							<top>122</top>
+							<control type="group">
+								<visible>!$EXP[IsGenre]</visible>
+								<include content="$PARAM[layout]">
+									<param name="mainlabel" value="$PARAM[mainlabel]" />
+									<param name="sublabel" value="" />
+									<param name="thumblabel" value="$PARAM[thumblabel]" />
+									<param name="focused" value="true" />
+									<param name="id" value="50" />
+								</include>
+							</control>
+							<control type="group">
+								<visible>$EXP[IsGenre]</visible>
+								<include content="GenreLayout">
+									<param name="mainlabel" value="$PARAM[mainlabel]" />
+									<param name="sublabel" value="" />
+									<param name="thumblabel" value="$PARAM[thumblabel]" />
+									<param name="focused" value="true" />
+									<param name="id" value="50" />
+								</include>
+							</control>
+						</control>
+					</focusedlayout>
+					<itemlayout condition="Skin.HasSetting(HideWideLabels) + !Window.IsVisible(1126) + !Window.IsVisible(1125) + !$EXP[IsGenre]" width="444" height="259">
+						<control type="group">
+							<left>82</left>
+							<top>32</top>
+							<include content="$PARAM[layout]">
+								<param name="mainlabel" value="" />
+								<param name="sublabel" value="" />
+								<param name="thumblabel" value="$PARAM[thumblabel]" />
+								<param name="focused" value="false" />
+								<param name="id" value="50" />
+							</include>
+						</control>
+					</itemlayout>
+					<focusedlayout condition="Skin.HasSetting(HideWideLabels) + !Window.IsVisible(1126) + !Window.IsVisible(1125) + !$EXP[IsGenre]" width="444" height="259">
+						<include>SetPropertyOnFocus</include>
+						<control type="group">						
+							<left>82</left>
+							<top>32</top>
+							<include content="$PARAM[layout]">
+								<param name="mainlabel" value="" />
+								<param name="sublabel" value="" />
+								<param name="thumblabel" value="$PARAM[thumblabel]" />
+								<param name="focused" value="true" />
+								<param name="id" value="50" />
+							</include>
+						</control>
+					</focusedlayout>
+					<include condition="$PARAM[use_custom_content]" content="ContainerContentPath">
+						<param name="widget_target">$PARAM[widget_target]</param>
+						<param name="sortby">$PARAM[sortby]</param>
+						<param name="sortorder">$PARAM[sortorder]</param>
+						<param name="limit">$PARAM[limit]</param>
+						<param name="content">$PARAM[content]</param>
+					</include>
+				</control>
+			</control>
+		</definition>
+	</include>
+</includes>

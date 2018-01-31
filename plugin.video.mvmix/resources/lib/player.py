@@ -6,7 +6,7 @@ import random,sys
 import lastfm
 import common
 import resume
-import videos as __videos__
+import videos as _videos_
 
 class mvmixPlayer(xbmc.Player):
     def __init__( self, *args, **kwargs ):
@@ -31,7 +31,7 @@ class mvmixPlayer(xbmc.Player):
 
     def onPlayBackStarted(self):
         common.log('[mvmixPlayer] playback started')
-        self.sleep(200)
+        self.sleep(2000)
         if (xbmc.Player().isPlayingVideo()):
             title = 'Now playing:'
             name = xbmc.getInfoLabel('VideoPlayer.Title')
@@ -63,7 +63,7 @@ class mvmixPlayer(xbmc.Player):
             self.artist = common.utf_enc(self.artist)
             common.log('[mvmixPlayer] loop: %s' % str(loops))
             common.log('[mvmixPlayer] artist: %s' % str(self.artist))
-            videos = __videos__.get_videos(self.artist)
+            videos = _videos_.get_videos(self.artist)
             videos = self.remove_added_videos(videos)
             common.log('[mvmixPlayer] videos found: %s' % str(len(videos)))
             if videos:
@@ -86,7 +86,7 @@ class mvmixPlayer(xbmc.Player):
                             'genre_list': self.genre_list, 'video_list': self.video_list,
                             'ignore_list': self.ignore_list}
             resume.save_resume_point(resume_point)
-            self.sleep(200)
+            self.sleep(500)
             if loops == 10:
                 self.is_active = False
                 break

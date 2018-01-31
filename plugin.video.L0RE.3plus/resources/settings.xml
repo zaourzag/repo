@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <setting label="Cache Zeitraum (Stunden)" type="slider" id="cachetime" default="24" range="0,1,100" option="int" />
+    <setting id="quality" type="select" label="Wiedergabe Qualität" default="hd720" values="small|medium|mediumlarge|hd720" />
+</settings>

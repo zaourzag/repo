@@ -6,6 +6,7 @@ import xbmcaddon
 import xbmcgui, xbmcplugin
 import xbmcvfs
 import re, os, shutil, requests, cgi
+import xbmcvfs
 
 # Globals
 addon = xbmcaddon.Addon()
@@ -577,14 +578,38 @@ def setSubtitle(subUrl):
     filelist = []
     debug("Subtitle URL: " + subUrl)
     filename = download_url(subUrl, subdownload)
-    fileLocation = subdownload + filename
+    debug("Sub : "+ filename)
+    fileLocation = xbmc.translatePath(os.path.join(subdownload, filename)).decode("utf-8")
+    fileLocation=urllib.quote_plus(fileLocation)
+    #fileLocation = subdownload + filename
     xbmcgui.Dialog().notification("Tv4user.de", filename, xbmcgui.NOTIFICATION_INFO,
                                   5000);
-    xbmc.executebuiltin("XBMC.Extract(" + fileLocation + ", " + subdir + ")", True)
+    #debug("XBMC.Extract(" + fileLocation + ", " + subdir + ")")   
+    try:
+        liste=xbmcvfs.listdir("rar://"+fileLocation)
+        type="rar://"
+    except:    
+        liste=xbmcvfs.listdir("zip://"+fileLocation)
+        type="zip://"
+    debug(fileLocation)
+    debug(type)
+    debug(liste)
+    for element in liste:
+        debug(element)
+        if not element==[]:
+           ziel=xbmc.translatePath(os.path.join(subdir, element[0])).decode("utf-8")
+           quelle=xbmc.translatePath(os.path.join(type, fileLocation)).decode("utf-8")
+           quelle=quelle+"/"+element[0]
+           debug(ziel)
+           debug(quelle)
+           xbmcvfs.copy(quelle, ziel)
+    #xbmc.executebuiltin("XBMC.Extract(" + fileLocation + ", " + subdir + ")", True)
+    
     for file in xbmcvfs.listdir(subdir)[1]:
         filelist.append(file)
         file = os.path.join(subdir, file)
         subtitle_list.append(file)
+    debug(subtitle_list)
     if len(subtitle_list) > 1:
         dialog = xbmcgui.Dialog()
         nr = dialog.select("TV4User.de", filelist)

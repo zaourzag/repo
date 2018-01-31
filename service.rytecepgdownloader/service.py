@@ -77,11 +77,9 @@ class DOWNLOADER:
                 
         self.progress('update', 70, 'Merging XML Data', ' ', 'Please Wait...This May Take Awhile')
                 
-        if self.len_desc > 1:
-            common.merge_epg()
-            self.progress('update', 90, 'Merging XML Data', ' ', 'Please Wait...This May Take Awhile')
-            common.copy_temp_merged()
-            common.delete_temp_merged()
+        common.merge_epg()
+        common.copy_temp_merged()
+        common.delete_temp_merged()
         
         self.progress('close', '', '', '', '')
         

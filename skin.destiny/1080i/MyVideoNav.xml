@@ -18,10 +18,10 @@
 	</control> 
 	
 	<include>CommonHomeBack</include>
-	<include>SideBladeForViews</include>
-	<include>CommonPageCount</include>
-	<include>CommonPageCountView</include>	
+	<include>SideBladeForViews</include>			
 	<include>ViewsVideo</include>	
+	<include>CommonPageCount</include>
+	<include>CommonPageCountView</include>
 	<include>BigInfosTime</include>
 	<include>BigInfosDatabaseCount</include>
 	<include>BigInfosWeather</include>
@@ -92,7 +92,7 @@
 		  <width>400</width>
 		  <label>14018</label>
 		  <onclick>Control.SetFocus(9031)</onclick>
-		  <visible>Control.IsVisible(598) | Control.IsVisible(604) | Control.IsVisible(611)</visible>
+		  <visible>Control.IsVisible(598) | Control.IsVisible(603) | Control.IsVisible(604) | Control.IsVisible(611)</visible>
 		</control>
         <!--<control type="button" id="2">
           <description>View As button</description>

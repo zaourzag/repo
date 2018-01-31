@@ -1,0 +1,3 @@
+<settings>     
+      <setting label="Inputstream" type="bool" id="inputstream" default="false"/>
+</settings>

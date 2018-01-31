@@ -93,6 +93,10 @@ msgctxt "#30028"
 msgid "6 months"
 msgstr "6 Monate"
 
+msgctxt "#30029"
+msgid "additional Calendars"
+msgstr "weitere Kalender"
+
 msgctxt "#30030"
 msgid "1 min"
 msgstr "1 Min"
@@ -161,7 +165,27 @@ msgctxt "#30049"
 msgid "Encryption"
 msgstr "Verschlüsselung"
 
+msgctxt "#30050"
+msgid "glotz.info"
+msgstr "glotz.info"
+
+msgctxt "#30051"
+msgid "Show in Calendar"
+msgstr "Im Kalender anzeigen"
+
+msgctxt "#30052"
+msgid "API Key"
+msgstr "API Schlüssel"
+
+msgctxt "#30053"
+msgid "Calendar Marker Color"
+msgstr "Kalender Farbmarkierung"
+
 msgctxt "#30054"
+msgid "Show Events in Notifications"
+msgstr "Termine in den Erinnerungen anzeigen"
+
+msgctxt "#30055"
 msgid "Check Email Settings"
 msgstr "Einstellungen für Mail-Konto testen"
 
@@ -236,6 +260,14 @@ msgstr "Datei mit Authentifizierungschlüssel"
 msgctxt "#30087"
 msgid "Would You enter the authentification code now?"
 msgstr "Möchten Sie den Authentifizierungsschlüssel jetzt eingeben?"
+
+msgctxt "#30088"
+msgid "Load API key from file"
+msgstr "API-Schlüssel aus Datei laden"
+
+msgctxt "#30089"
+msgid "File with API key"
+msgstr "Datei mit API-Schlüssel"
 
 msgctxt "#30090"
 msgid "My calendars"

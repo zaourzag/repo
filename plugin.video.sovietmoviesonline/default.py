@@ -10,6 +10,7 @@ import xbmc
 import xbmcvfs
 import urllib, urllib2, socket, cookielib, re, os, shutil,json
 import time
+import ssl
 from datetime import datetime
 
 # Setting Variablen Des Plugins
@@ -32,7 +33,7 @@ substitle=addon.getSetting("substitle")
 global text
 text=addon.getSetting("text")
 global mainurl
-mainurl="http://sovietmoviesonline.com"
+mainurl="https://sovietmoviesonline.com"
 
 profile    = xbmc.translatePath( addon.getAddonInfo('profile') ).decode("utf-8")
 temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
@@ -104,17 +105,18 @@ def cleanTitle(title):
 
 def geturl(url):
    debug("geturl url :"+url)
-   cj = cookielib.CookieJar()
+   cj = cookielib.CookieJar()   
    opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
    req = urllib2.Request(url)
-   inhalt = urllib2.urlopen(req).read()   
+   context = ssl._create_unverified_context()       
+   inhalt = urllib2.urlopen(req, context=context).read()
    return inhalt
   
     
 def menu():
     global text
     if text=="EN":
-      url=mainurl+"/en/"
+      url=mainurl
     else:
        url=mainurl
     inhalt = geturl(url)        
@@ -126,7 +128,7 @@ def menu():
 
 def Filme(url):  
   content = geturl(mainurl+url)   
-  spl = content.split('<!--smallMovie-->')
+  spl = content.split('<!--small movie-->')
   for i in range(1, len(spl), 1):
     entry = spl[i]
     match=re.compile('<div class="year".+?>(.+?)</div>', re.DOTALL).findall(entry)
@@ -136,9 +138,9 @@ def Filme(url):
     match=re.compile('src="(.+?)"', re.DOTALL).findall(entry)
     bild=match[0]
     debug("Bild : "+ mainurl+bild)
-    match=re.compile('<div class="smallTitle">(.+?)</div>', re.DOTALL).findall(entry)
+    match=re.compile('<div class="small-title">(.+?)</div>', re.DOTALL).findall(entry)
     title1=match[0]
-    match=re.compile('</div>([^<]+)</div>', re.DOTALL).findall(entry)
+    match=re.compile('<div class="title">(.+?)</div>', re.DOTALL).findall(entry)
     title2=match[0]
     title=cleanTitle(title2) +" ( "+ title1 +" )"
     addLink(title, url, "Playvideo", mainurl+bild, desc="",year=year)

@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from resources.lib import simple_requests as requests
-import json
 
 site = 'vevo'
 headers = {'User-Agent':'iPad','X-Requested-With': 'XMLHttpRequest'}
@@ -21,7 +20,7 @@ def get_videos(artist):
         try:
             for v in json_data['videos']:
                 try:
-                    id = v['isrc']
+                    _id = v['isrc']
                     title = v['title']
                     image = v['thumbnailUrl']
                     duration = ''
@@ -30,7 +29,7 @@ def get_videos(artist):
                     except:
                         pass
                     if v['categories'][0] == 'Music Video':
-                        videos.append({'site':site, 'artist':[artist], 'title':title, 'duration':duration, 'id':id, 'image':image})
+                        videos.append({'site':site, 'artist':[artist], 'title':title, 'duration':duration, 'id':_id, 'image':image})
                 except:
                     pass
         except:
@@ -39,15 +38,15 @@ def get_videos(artist):
         return False
     return videos
     
-def get_video_url(id):
+def get_video_url(_id):
     video_url = None
     try:
         token = get_token()
-        url = 'https://apiv2.vevo.com/video/%s/streams/mp4' % str(id)
+        url = 'https://apiv2.vevo.com/video/%s/streams/mp4' % str(_id)
         headers['Authorization'] = 'Bearer '+token
         json_data = requests.get(url, headers=headers).json()
         for q in json_data:
-            if q['quality'] == 'High':
+            if q['quality'].lower() == 'high':
                 video_url = q['url']
                 break
     except:

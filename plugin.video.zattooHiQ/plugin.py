@@ -96,11 +96,10 @@ try:
   _timezone_=int(offset)
 except:pass
 
-try:
-  offset = time.altzone
-  _timezone_ = -int(offset)
-except:pass
-
+#try:
+  #offset = time.altzone
+  #_timezone_ = -int(offset)
+#except:pass
 
 
 def build_directoryContent(content, addon_handle, cache=True, root=False, con='movies'):
@@ -312,7 +311,7 @@ def build_recordingsList(addon_uri, addon_handle):
 
     xbmcplugin.addDirectoryItem(
       handle=addon_handle,
-      url=addon_uri + '?' + urllib.urlencode({'mode': 'watch_r', 'id': record['id']}),
+      url=addon_uri + '?' + urllib.urlencode({'mode': 'watch_r', 'id': record['id'], 'start': start}),
       listitem=li,
       isFolder=False
     )
@@ -321,9 +320,15 @@ def build_recordingsList(addon_uri, addon_handle):
   xbmcplugin.addSortMethod(addon_handle, 2)
   xbmcplugin.addSortMethod(addon_handle, 9)
 
-def watch_recording(addon_uri, addon_handle, recording_id):
+def watch_recording(addon_uri, addon_handle, recording_id, start=0):
   #if xbmc.Player().isPlaying(): return
-  startTime=int(xbmc.getInfoLabel('ListItem.Property(zStartTime)'))
+  
+  if start == 0:
+    startTime=int(xbmc.getInfoLabel('ListItem.Property(zStartTime)'))
+    
+  else:
+    startTime=int(start)
+  if DEBUG: print "Startzeit " +str(startTime)
  
   max_bandwidth = __addon__.getSetting('max_bandwidth')
   if DASH: stream_type='dash'
@@ -354,10 +359,12 @@ def watch_recording(addon_uri, addon_handle, recording_id):
         xbmc.sleep(100) 
 
     #send watched position to zattoo
+    #zStoptime=datetime.datetime.fromtimestamp(startTime+round(pos)-300).strftime("%Y-%m-%dT%H:%M:%SZ")
+    
     zStoptime=datetime.datetime.fromtimestamp(startTime+round(pos)-300 - _timezone_ ).strftime("%Y-%m-%dT%H:%M:%SZ")
     resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/playlist/recording', {'recording_id': recording_id, 'position': zStoptime})
-
-
+    if DEBUG: print "result "+ str (resultData)
+    if DEBUG: print "stopTime " + str(startTime)
 def setup_recording(program_id):
   #print('RECORDING: '+program_id)
   params = {'program_id': program_id}
@@ -487,8 +494,7 @@ def watch_channel(channel_id, start, end, showID="", restart=False, showOSD=Fals
     #while (player.playing):xbmc.sleep(100)
     show_channelNr(nr+1)
   else:
-    #player= myPlayer(290)
-    player=xbmc.Player()
+    player= myPlayer(290)
     player.startTime=startTime
     player.play(streams[streamNr]['url'], listitem)
     while (player.playing):xbmc.sleep(100)
@@ -513,8 +519,8 @@ def  toggle_channel():
   _zattooDB_=ZattooDB()
   toggleChannel=xbmcgui.Window(10000).getProperty('toggleChannel')
   playing=_zattooDB_.get_playing()
-  xbmcgui.Window(10000).setProperty('toggleChannel', playing['channel'])
-      
+  xbmcgui.Window(10000).setProperty('toggleChannel', playing['channel']) 
+   
   if toggleChannel=="": xbmc.executebuiltin("Action(Back)") #go back to channel selector
   else:
     watch_channel(toggleChannel, '0', '0')
@@ -680,9 +686,33 @@ def makeOsdInfo():
   else: xbmc.executebuiltin( "Skin.Reset(%s)" %'favourite')
 #  win.setProberty('category', '[COLOR blue]' + local(21866) + ':  ' + '[/COLOR]' + program['category'])
 
+class myPlayer(xbmc.Player):
+    def __init__(self, skip=0):
+      self.skip=skip
+      self.startTime=0
+      self.playing=True
+    def onPlayBackStarted(self):
+      if (self.skip>0):
+        self.seekTime(self.skip)
+        self.startTime=self.startTime-datetime.timedelta(seconds=self.skip)
+    def onPlayBackSeek(self, time, seekOffset):
+      if DEBUG: print "starttime is"+str(self.startTime+datetime.timedelta(milliseconds=time)) + "   Time now"+str(datetime.datetime.now().replace(microsecond=0))
+      if self.startTime+datetime.timedelta(milliseconds=time) > datetime.datetime.now().replace(microsecond=0):
+        channel=_zattooDB_.get_playing()['channel']
+        #_zattooDB_.set_playing() #clear setplaying to start channel in watch_channel
+        self.playing=False
+        if DEBUG: print "Stop Seek"
+        xbmc.executebuiltin('RunPlugin("plugin://'+__addonId__+'/?mode=watch_c&id='+channel+'&showOSD=1")')
+        
+    def onPlayBackStopped(self):
+        self.playing=False
+        
+    def onPlayBackEnded(self):
+        channel=_zattooDB_.get_playing()['channel']
+        self.playing=False 
+        if DEBUG: print "Stop Playing"       
+        xbmc.executebuiltin('RunPlugin("plugin://'+__addonId__+'/?mode=watch_c&id='+channel+'&showOSD=1")')
 
-  dialog.textviewer(header, text)
-  
 class zattooGUI(xbmcgui.WindowXMLDialog):
 
   def __init__(self, xmlFile, scriptPath):
@@ -692,6 +722,14 @@ class zattooGUI(xbmcgui.WindowXMLDialog):
     self.channelID = self.playing['channel']
     channels = _zattooDB_.getChannelList(_listMode_ == 'favourites')
     self.showChannelNr(channels[self.channelID]['nr']+1)
+    
+    self.toggleImgBG =xbmcgui.ControlImage(1280, 574, 260, 148, __addon__.getAddonInfo('path') + '/resources/teletextBG.png', aspectRatio=1)
+    self.addControl(self.toggleImgBG)
+    self.toggleImg =xbmcgui.ControlImage(1280, 576, 256, 144, '', aspectRatio=1)
+    self.addControl(self.toggleImg)
+    
+    self.toggleChannelID=xbmcgui.Window(10000).getProperty('toggleChannel')
+    
 
   def onAction(self, action):
     key=str(action.getButtonCode())
@@ -744,7 +782,27 @@ class zattooGUI(xbmcgui.WindowXMLDialog):
     if hasattr(self, 'hideNrTimer'): self.hideNrTimer.cancel()
     xbmcgui.Window(10000).setProperty('zattooGUI', 'False')
     super(zattooGUI, self).close()
-        
+    
+  def showToggleImg(self):
+    self.toggleImgBG.setPosition(1022, 574)
+    self.toggleImg.setPosition(1024, 576)
+    self.refreshToggleImg()
+
+  def hideToggleImg(self):
+    if self.toggleChannelID!="":  
+      self.toggleChannelID=""
+      xbmcgui.Window(10000).setProperty('toggleChannel','')
+      
+      self.toggleImgBG.setPosition(1280, 574)
+      self.toggleImg.setPosition(1280, 576)
+      if hasattr(self, 'refreshToggleImgTimer'): self.refreshToggleImgTimer.cancel()
+      xbmcgui.Dialog().notification('Toggle', 'toggle end', __addon__.getAddonInfo('path') + '/icon.png', 5000, False)
+
+  def refreshToggleImg(self):
+    self.toggleImg.setImage('http://thumb.zattic.com/'+self.toggleChannelID+'/256x144.jpg?r='+str(int(time.time())), False)
+    if hasattr(self, 'refreshToggleImgTimer'): self.refreshToggleImgTimer.cancel()
+    self.refreshToggleImgTimer=  threading.Timer(16, self.refreshToggleImg)
+    self.refreshToggleImgTimer.start()
 
 class zattooOSD(xbmcgui.WindowXMLDialog):
   def onInit(self):
@@ -853,7 +911,9 @@ def main():
   channel=_zattooDB_.get_playing()['channel']
   channeltitle=_zattooDB_.get_channeltitle(channel)
   program = _zattooDB_.getPrograms({'index':[channel]}, True, datetime.datetime.now(), datetime.datetime.now())
-  program=program[0]
+  try:
+    program=program[0]
+  except:pass
   
   xbmcgui.Window(10000).setProperty('ZBElastAction', action)
 
@@ -897,7 +957,8 @@ def main():
     xbmc.executebuiltin('Container.Refresh')
   elif action == 'watch_r':
     recording_id = args.get('id')[0]
-    watch_recording(addon_uri, addon_handle, recording_id)
+    start = args.get('start', '0')[0]
+    watch_recording(addon_uri, addon_handle, recording_id, start)
   elif action == 'record_p':
     program_id = args.get('program_id')[0]
     setup_recording(program_id)
@@ -945,6 +1006,7 @@ def main():
     _zattooDB_.cleanProg()
   elif action == 'popular': showPreview('popular')
   elif action == 'showInfo': 
+
     makeOsdInfo()
     osd = zattooOSD("zattooOSD.xml",__addon__.getAddonInfo('path'))
     osd.doModal()

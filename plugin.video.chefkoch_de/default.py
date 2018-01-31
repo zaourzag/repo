@@ -20,15 +20,12 @@ baseUrl = "http://www.chefkoch.de"
 
 def index():
     content = getUrl(baseUrl+"/video/")
-    spl = content.split('teaser-box teaser-box--default"')
+    spl = content.split('navigation__item')
     for i in range(1, len(spl), 1):
         entry = spl[i]
-        match = re.compile('<a href="(.+?)" hreflang="de">(.+?)</a>', re.DOTALL).findall(entry)
-        url = match[0][0]        
-        title = cleanTitle(match[0][1])
-        match = re.compile('src="(.+?)"', re.DOTALL).findall(entry)
-        thumb = match[0]
-        addDir(title, baseUrl+url, 'listVideos', thumb)
+        match = re.compile('<a href="(.+?)" class="link.+?>([^<]+?)</a> ', re.DOTALL).findall(entry)
+        for url,name in match:        
+            addDir(cleanTitle(name), url, 'listVideos', "")
     xbmcplugin.endOfDirectory(pluginhandle)
     if forceViewMode:
         xbmc.executebuiltin('Container.SetViewMode('+viewMode+')')
@@ -36,19 +33,19 @@ def index():
 
 def listVideos(url):
     content = getUrl(url)
-    spl = content.split('<article class="teaser-box teaser-box--default">')
+    spl = content.split('article class')
     for i in range(1, len(spl), 1):
         entry = spl[i]
         match = re.compile('href="(.+?)"', re.DOTALL).findall(entry)
         url = match[0]
-        match = re.compile('>([^<]+)</a>', re.DOTALL).findall(entry)
-        title = cleanTitle(match[1])
+        match = re.compile('<p>([^<]+?)</p>', re.DOTALL).findall(entry)
+        title = cleanTitle(match[0])
         match = re.compile('src="(.+?)"', re.DOTALL).findall(entry)
         thumb = match[0]
         match = re.compile('<p>(.+?)</p>', re.DOTALL).findall(entry)
         desc = cleanTitle(match[0])
         addLink(title, baseUrl+url, 'playVideo', thumb, desc)
-    matchPage = re.compile('<span class="magazin-pagination-next">.+?<a href="(.+?)">(.+?)</a>', re.DOTALL).findall(content)
+    matchPage = re.compile('class="button--standard js-category-pagination" href="(.+?)" title="(.+?)" rel="next">', re.DOTALL).findall(content)
     if matchPage:
         for url, title in matchPage:
             if title.find("chste") >= 0:

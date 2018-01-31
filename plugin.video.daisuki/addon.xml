@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.daisuki" name="Daisuki" version="0.3.5" provider-name="L0RE">
+<addon id="plugin.video.daisuki" name="Daisuki" version="0.3.6" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
     </requires>
@@ -15,6 +15,7 @@
     <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.daisuki</source>
     <forum>http://www.kodinerds.net/</forum>
     <email>andreas at vogler dot name</email>
+    <broken>deprecated</broken>
     <platform>all</platform>
   </extension>
 </addon>

@@ -45,16 +45,16 @@ STRM_LOC = xbmc.translatePath(addon.getSetting('STRM_LOC'))
 #***************************************************************************************
 # Python Header 
 # Name:
-#		replacer
+#        replacer
 # Purpose:
-#		Replace multiple string elements.
+#        Replace multiple string elements.
 # Call it like this:
 # def multiple_replace(string, *key_values):
 #    return replacer(*key_values)(string)
 # Author:
-#		stereodruid(J.G.)
+#        stereodruid(J.G.)
 # History:
-#		0 - init 
+#        0 - init 
 def replacer(*key_values):
     replace_dict = stringUtils.uni(dict(key_values))
     replacement_function = lambda match: replace_dict[match.group(0)]
@@ -62,13 +62,13 @@ def replacer(*key_values):
     return lambda string: pattern.sub(replacement_function, string)
 #***************************************************************************************
 # Python Header 
-#		multiple_replace
+#        multiple_replace
 # Purpose:
-#		caller for replacer
+#        caller for replacer
 # Author:
-#		stereodruid(J.G.)
+#        stereodruid(J.G.)
 # History:
-#		0 - init 
+#        0 - init 
 def multiple_replace(string, *key_values):
     return replacer(*key_values)(string.decode('utf-8').rstrip())
 

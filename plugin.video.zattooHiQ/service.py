@@ -37,8 +37,8 @@ def refreshProg():
     monitor = xbmc.Monitor()
     while not monitor.abortRequested():
         if monitor.waitForAbort(600): break
-        #from resources.zattooDB import ZattooDB
-        #_zattooDB_ = ZattooDB()
+        from resources.zattooDB import ZattooDB
+        _zattooDB_ = ZattooDB()
         #update programInfo
         startTime=datetime.datetime.now()
         endTime=datetime.datetime.now()+datetime.timedelta(minutes = 120)
@@ -136,12 +136,13 @@ class myPlayer(xbmc.Player):
       else: #start recall while playing -> unload keymap
         self.unloadKeymap()
         
-    def onPlayBackSeek(self, time, seekOffset):
-      if self.startTime+datetime.timedelta(milliseconds=time) > datetime.datetime.now():
-        channel=_zattooDB_.get_playing()['channel']
-        _zattooDB_.set_playing() #clear setplaying to start channel in watch_channel
-        xbmc.executebuiltin('RunPlugin("plugin://'+__addonId__+'/?mode=watch_c&id='+channel+'&showOSD=1")')
-        self.playing=False
+    #def onPlayBackSeek(self, time, seekOffset):
+    #  if self.startTime+datetime.timedelta(milliseconds=time) > datetime.datetime.now():
+    #    channel=_zattooDB_.get_playing()['channel']
+        #_zattooDB_.set_playing() #clear setplaying to start channel in watch_channel
+     #   self.playing=False
+     #   xbmc.executebuiltin('RunPlugin("plugin://'+__addonId__+'/?mode=watch_c&id='+channel+'&showOSD=1")')
+        
         
     def onPlayBackStopped(self):
       self.unloadKeymap()        
@@ -153,8 +154,7 @@ class myPlayer(xbmc.Player):
      
         
     def loadKeymap(self):
-      #xbmcgui.Dialog().notification('zattooBoxExt', 'loadKeymap')
-      
+            
       source = __addondir__ + '/zattooKeymap.xml'
       dest = xbmc.translatePath('special://profile/keymaps/zattooKeymap.xml')
       if os.path.isfile(dest): return
@@ -164,7 +164,7 @@ class myPlayer(xbmc.Player):
       xbmc.executebuiltin('XBMC.Action(reloadkeymaps)')
 
     def unloadKeymap(self):
-      #xbmcgui.Dialog().notification('zattooBoxExt', 'unloadKeymap')
+      
       path=xbmc.translatePath('special://profile/keymaps/zattooKeymap.xml')
       if os.path.isfile(path):
         try:

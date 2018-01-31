@@ -2,7 +2,7 @@
 <includes>
 	<include name="MenuPlay">
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemPlay),1)">HomeMenuPlay</include>
-		<include condition="String.IsEqual(Skin.String(HomeMenuItemNews),1)">HomeMenuNews</include>
+		<include condition="String.IsEqual(Skin.String(HomeMenuItemSmartHome),1)">HomeMenuSmartHome</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemLiveTV),1)">HomeMenuLiveTV</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemRadio),1)">HomeMenuRadio</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemMovies),1)">HomeMenuMovies</include>
@@ -32,9 +32,9 @@
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemPower),1)">HomeMenuPower</include>
 		<include condition="String.IsEmpty(Skin.String(HomeMenuItemPlay))">HomeMenuPlay</include>
 	</include>
-	<include name="MenuNews">
+	<include name="MenuSmartHome">
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemPlay),2)">HomeMenuPlay</include>
-		<include condition="String.IsEqual(Skin.String(HomeMenuItemNews),2)">HomeMenuNews</include>
+		<include condition="String.IsEqual(Skin.String(HomeMenuItemSmartHome),2)">HomeMenuSmartHome</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemLiveTV),2)">HomeMenuLiveTV</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemRadio),2)">HomeMenuRadio</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemMovies),2)">HomeMenuMovies</include>
@@ -62,11 +62,11 @@
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemSimplePlaylists),2)">HomeMenuSimplePlaylists</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemSearch),2)">HomeMenuSearch</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemPower),2)">HomeMenuPower</include>
-		<include condition="String.IsEmpty(Skin.String(HomeMenuItemNews))">HomeMenuNews</include>
+		<include condition="String.IsEmpty(Skin.String(HomeMenuSmartHome))">HomeMenuSmartHome</include>
 	</include>
 	<include name="MenuLiveTV">
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemPlay),3)">HomeMenuPlay</include>
-		<include condition="String.IsEqual(Skin.String(HomeMenuItemNews),3)">HomeMenuNews</include>
+		<include condition="String.IsEqual(Skin.String(HomeMenuItemSmartHome),3)">HomeMenuSmartHome</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemLiveTV),3)">HomeMenuLiveTV</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemRadio),3)">HomeMenuRadio</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemMovies),3)">HomeMenuMovies</include>
@@ -98,7 +98,7 @@
 	</include>
 	<include name="MenuRadio">
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemPlay),4)">HomeMenuPlay</include>
-		<include condition="String.IsEqual(Skin.String(HomeMenuItemNews),4)">HomeMenuNews</include>
+		<include condition="String.IsEqual(Skin.String(HomeMenuItemSmartHome),4)">HomeMenuSmartHome</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemLiveTV),4)">HomeMenuLiveTV</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemRadio),4)">HomeMenuRadio</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemMovies),4)">HomeMenuMovies</include>
@@ -130,7 +130,7 @@
 	</include>
 	<include name="MenuMovies">
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemPlay),5)">HomeMenuPlay</include>
-		<include condition="String.IsEqual(Skin.String(HomeMenuItemNews),5)">HomeMenuNews</include>
+		<include condition="String.IsEqual(Skin.String(HomeMenuItemSmartHome),5)">HomeMenuSmartHome</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemLiveTV),5)">HomeMenuLiveTV</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemRadio),5)">HomeMenuRadio</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemMovies),5)">HomeMenuMovies</include>
@@ -162,7 +162,7 @@
 	</include>
 	<include name="MenuTVShows">
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemPlay),6)">HomeMenuPlay</include>
-		<include condition="String.IsEqual(Skin.String(HomeMenuItemNews),6)">HomeMenuNews</include>
+		<include condition="String.IsEqual(Skin.String(HomeMenuItemSmartHome),6)">HomeMenuSmartHome</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemLiveTV),6)">HomeMenuLiveTV</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemRadio),6)">HomeMenuRadio</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemMovies),6)">HomeMenuMovies</include>
@@ -194,7 +194,7 @@
 	</include>
 	<include name="MenuVideos">
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemPlay),7)">HomeMenuPlay</include>
-		<include condition="String.IsEqual(Skin.String(HomeMenuItemNews),7)">HomeMenuNews</include>
+		<include condition="String.IsEqual(Skin.String(HomeMenuItemSmartHome),7)">HomeMenuSmartHome</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemLiveTV),7)">HomeMenuLiveTV</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemRadio),7)">HomeMenuRadio</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemMovies),7)">HomeMenuMovies</include>
@@ -226,7 +226,7 @@
 	</include>
 	<include name="MenuPlaylist1">
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemPlay),8)">HomeMenuPlay</include>
-		<include condition="String.IsEqual(Skin.String(HomeMenuItemNews),8)">HomeMenuNews</include>
+		<include condition="String.IsEqual(Skin.String(HomeMenuItemSmartHome),8)">HomeMenuSmartHome</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemLiveTV),8)">HomeMenuLiveTV</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemRadio),8)">HomeMenuRadio</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemMovies),8)">HomeMenuMovies</include>
@@ -258,7 +258,7 @@
 	</include>
 	<include name="MenuPlaylist2">
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemPlay),9)">HomeMenuPlay</include>
-		<include condition="String.IsEqual(Skin.String(HomeMenuItemNews),9)">HomeMenuNews</include>
+		<include condition="String.IsEqual(Skin.String(HomeMenuItemSmartHome),9)">HomeMenuSmartHome</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemLiveTV),9)">HomeMenuLiveTV</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemRadio),9)">HomeMenuRadio</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemMovies),9)">HomeMenuMovies</include>
@@ -290,7 +290,7 @@
 	</include>
 	<include name="MenuPlaylist3">
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemPlay),10)">HomeMenuPlay</include>
-		<include condition="String.IsEqual(Skin.String(HomeMenuItemNews),10)">HomeMenuNews</include>
+		<include condition="String.IsEqual(Skin.String(HomeMenuItemSmartHome),10)">HomeMenuSmartHome</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemLiveTV),10)">HomeMenuLiveTV</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemRadio),10)">HomeMenuRadio</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemMovies),10)">HomeMenuMovies</include>
@@ -322,7 +322,7 @@
 	</include>
 	<include name="MenuPlaylist4">
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemPlay),11)">HomeMenuPlay</include>
-		<include condition="String.IsEqual(Skin.String(HomeMenuItemNews),11)">HomeMenuNews</include>
+		<include condition="String.IsEqual(Skin.String(HomeMenuItemSmartHome),11)">HomeMenuSmartHome</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemLiveTV),11)">HomeMenuLiveTV</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemRadio),11)">HomeMenuRadio</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemMovies),11)">HomeMenuMovies</include>
@@ -354,7 +354,7 @@
 	</include>
 	<include name="MenuPlaylist5">
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemPlay),12)">HomeMenuPlay</include>
-		<include condition="String.IsEqual(Skin.String(HomeMenuItemNews),12)">HomeMenuNews</include>
+		<include condition="String.IsEqual(Skin.String(HomeMenuItemSmartHome),12)">HomeMenuSmartHome</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemLiveTV),12)">HomeMenuLiveTV</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemRadio),12)">HomeMenuRadio</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemMovies),12)">HomeMenuMovies</include>
@@ -386,7 +386,7 @@
 	</include>
 	<include name="MenuPlaylist6">
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemPlay),12)">HomeMenuPlay</include>
-		<include condition="String.IsEqual(Skin.String(HomeMenuItemNews),12)">HomeMenuNews</include>
+		<include condition="String.IsEqual(Skin.String(HomeMenuItemSmartHome),12)">HomeMenuSmartHome</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemLiveTV),12)">HomeMenuLiveTV</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemRadio),12)">HomeMenuRadio</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemMovies),12)">HomeMenuMovies</include>
@@ -418,7 +418,7 @@
 	</include>
 	<include name="MenuPlaylist7">
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemPlay),12)">HomeMenuPlay</include>
-		<include condition="String.IsEqual(Skin.String(HomeMenuItemNews),12)">HomeMenuNews</include>
+		<include condition="String.IsEqual(Skin.String(HomeMenuItemSmartHome),12)">HomeMenuSmartHome</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemLiveTV),12)">HomeMenuLiveTV</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemRadio),12)">HomeMenuRadio</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemMovies),12)">HomeMenuMovies</include>
@@ -450,7 +450,7 @@
 	</include>
 	<include name="MenuPlaylist8">
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemPlay),12)">HomeMenuPlay</include>
-		<include condition="String.IsEqual(Skin.String(HomeMenuItemNews),12)">HomeMenuNews</include>
+		<include condition="String.IsEqual(Skin.String(HomeMenuItemSmartHome),12)">HomeMenuSmartHome</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemLiveTV),12)">HomeMenuLiveTV</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemRadio),12)">HomeMenuRadio</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemMovies),12)">HomeMenuMovies</include>
@@ -482,7 +482,7 @@
 	</include>
 	<include name="MenuPlaylist9">
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemPlay),12)">HomeMenuPlay</include>
-		<include condition="String.IsEqual(Skin.String(HomeMenuItemNews),12)">HomeMenuNews</include>
+		<include condition="String.IsEqual(Skin.String(HomeMenuItemSmartHome),12)">HomeMenuSmartHome</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemLiveTV),12)">HomeMenuLiveTV</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemRadio),12)">HomeMenuRadio</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemMovies),12)">HomeMenuMovies</include>
@@ -514,7 +514,7 @@
 	</include>
 	<include name="MenuPlaylist10">
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemPlay),12)">HomeMenuPlay</include>
-		<include condition="String.IsEqual(Skin.String(HomeMenuItemNews),12)">HomeMenuNews</include>
+		<include condition="String.IsEqual(Skin.String(HomeMenuItemSmartHome),12)">HomeMenuSmartHome</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemLiveTV),12)">HomeMenuLiveTV</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemRadio),12)">HomeMenuRadio</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemMovies),12)">HomeMenuMovies</include>
@@ -546,7 +546,7 @@
 	</include>
 	<include name="MenuMusic">
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemPlay),13)">HomeMenuPlay</include>
-		<include condition="String.IsEqual(Skin.String(HomeMenuItemNews),13)">HomeMenuNews</include>
+		<include condition="String.IsEqual(Skin.String(HomeMenuItemSmartHome),13)">HomeMenuSmartHome</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemLiveTV),13)">HomeMenuLiveTV</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemRadio),13)">HomeMenuRadio</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemMovies),13)">HomeMenuMovies</include>
@@ -578,7 +578,7 @@
 	</include>
 	<include name="MenuAddons">
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemPlay),14)">HomeMenuPlay</include>
-		<include condition="String.IsEqual(Skin.String(HomeMenuItemNews),14)">HomeMenuNews</include>
+		<include condition="String.IsEqual(Skin.String(HomeMenuItemSmartHome),14)">HomeMenuSmartHome</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemLiveTV),14)">HomeMenuLiveTV</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemRadio),14)">HomeMenuRadio</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemMovies),14)">HomeMenuMovies</include>
@@ -610,7 +610,7 @@
 	</include>
 	<include name="MenuConcerts">
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemPlay),15)">HomeMenuPlay</include>
-		<include condition="String.IsEqual(Skin.String(HomeMenuItemNews),15)">HomeMenuNews</include>
+		<include condition="String.IsEqual(Skin.String(HomeMenuItemSmartHome),15)">HomeMenuSmartHome</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemLiveTV),15)">HomeMenuLiveTV</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemRadio),15)">HomeMenuRadio</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemMovies),15)">HomeMenuMovies</include>
@@ -642,7 +642,7 @@
 	</include>
 	<include name="MenuPictures">
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemPlay),16)">HomeMenuPlay</include>
-		<include condition="String.IsEqual(Skin.String(HomeMenuItemNews),16)">HomeMenuNews</include>
+		<include condition="String.IsEqual(Skin.String(HomeMenuItemSmartHome),16)">HomeMenuSmartHome</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemLiveTV),16)">HomeMenuLiveTV</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemRadio),16)">HomeMenuRadio</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemMovies),16)">HomeMenuMovies</include>
@@ -674,7 +674,7 @@
 	</include>
 	<include name="MenuWeather">
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemPlay),17)">HomeMenuPlay</include>
-		<include condition="String.IsEqual(Skin.String(HomeMenuItemNews),17)">HomeMenuNews</include>
+		<include condition="String.IsEqual(Skin.String(HomeMenuItemSmartHome),17)">HomeMenuSmartHome</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemLiveTV),17)">HomeMenuLiveTV</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemRadio),17)">HomeMenuRadio</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemMovies),17)">HomeMenuMovies</include>
@@ -706,7 +706,7 @@
 	</include>
 	<include name="MenuSettings">
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemPlay),18)">HomeMenuPlay</include>
-		<include condition="String.IsEqual(Skin.String(HomeMenuItemNews),18)">HomeMenuNews</include>
+		<include condition="String.IsEqual(Skin.String(HomeMenuItemSmartHome),18)">HomeMenuSmartHome</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemLiveTV),18)">HomeMenuLiveTV</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemRadio),18)">HomeMenuRadio</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemMovies),18)">HomeMenuMovies</include>
@@ -738,7 +738,7 @@
 	</include>
 	<include name="MenuPlayDisc">
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemPlay),19)">HomeMenuPlay</include>
-		<include condition="String.IsEqual(Skin.String(HomeMenuItemNews),19)">HomeMenuNews</include>
+		<include condition="String.IsEqual(Skin.String(HomeMenuItemSmartHome),19)">HomeMenuSmartHome</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemLiveTV),19)">HomeMenuLiveTV</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemRadio),19)">HomeMenuRadio</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemMovies),19)">HomeMenuMovies</include>
@@ -770,7 +770,7 @@
 	</include>
 	<include name="MenuYouTube">
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemPlay),20)">HomeMenuPlay</include>
-		<include condition="String.IsEqual(Skin.String(HomeMenuItemNews),20)">HomeMenuNews</include>
+		<include condition="String.IsEqual(Skin.String(HomeMenuItemSmartHome),20)">HomeMenuSmartHome</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemLiveTV),20)">HomeMenuLiveTV</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemRadio),20)">HomeMenuRadio</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemMovies),20)">HomeMenuMovies</include>
@@ -802,7 +802,7 @@
 	</include>
 	<include name="MenuWatchlist">
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemPlay),21)">HomeMenuPlay</include>
-		<include condition="String.IsEqual(Skin.String(HomeMenuItemNews),21)">HomeMenuNews</include>
+		<include condition="String.IsEqual(Skin.String(HomeMenuItemSmartHome),21)">HomeMenuSmartHome</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemLiveTV),21)">HomeMenuLiveTV</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemRadio),21)">HomeMenuRadio</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemMovies),21)">HomeMenuMovies</include>
@@ -834,7 +834,7 @@
 	</include>
 	<include name="MenuSimplePlaylists">
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemPlay),22)">HomeMenuPlay</include>
-		<include condition="String.IsEqual(Skin.String(HomeMenuItemNews),22)">HomeMenuNews</include>
+		<include condition="String.IsEqual(Skin.String(HomeMenuItemSmartHome),22)">HomeMenuSmartHome</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemLiveTV),22)">HomeMenuLiveTV</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemRadio),22)">HomeMenuRadio</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemMovies),22)">HomeMenuMovies</include>
@@ -866,7 +866,7 @@
 	</include>
 	<include name="MenuSearch">
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemPlay),23)">HomeMenuPlay</include>
-		<include condition="String.IsEqual(Skin.String(HomeMenuItemNews),23)">HomeMenuNews</include>
+		<include condition="String.IsEqual(Skin.String(HomeMenuItemSmartHome),23)">HomeMenuSmartHome</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemLiveTV),23)">HomeMenuLiveTV</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemRadio),23)">HomeMenuRadio</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemMovies),23)">HomeMenuMovies</include>
@@ -898,7 +898,7 @@
 	</include>
 	<include name="MenuPower">
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemPlay),24)">HomeMenuPlay</include>
-		<include condition="String.IsEqual(Skin.String(HomeMenuItemNews),24)">HomeMenuNews</include>
+		<include condition="String.IsEqual(Skin.String(HomeMenuItemSmartHome),24)">HomeMenuSmartHome</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemLiveTV),24)">HomeMenuLiveTV</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemRadio),24)">HomeMenuRadio</include>
 		<include condition="String.IsEqual(Skin.String(HomeMenuItemMovies),24)">HomeMenuMovies</include>
@@ -930,7 +930,7 @@
 	</include>
 	<include name="HomeMenuContent">
 		<include>MenuPlay</include>
-		<include>MenuNews</include>
+		<include>MenuSmartHome</include>
 		<include>MenuLiveTV</include>
 		<include>MenuRadio</include>
 		<include>MenuMovies</include>
@@ -972,18 +972,18 @@
 		  <visible>Player.HasMedia</visible>	
 		</item>
 	</include>
-	<include name="HomeMenuNews">
+	<include name="HomeMenuSmartHome">
 	   <item id="31">
-		  <description>News</description>
-		  <label>News</label>
-		  <onclick>ActivateWindow(4117)</onclick>
+		  <description>Smart Home</description>
+		  <label>Smart Home</label>
+		  <onclick>ActivateWindow(4116)</onclick>
 		  <icon></icon>
 		  <thumb fallback="special://skin/backgrounds/FALLBACK.jpg">$INFO[Skin.String(Home_Custom_Back_TV_Folder)]</thumb>
-		  <property name="MenuIcon" fallback="home/homeicons/kodi.png">$INFO[Skin.String(IconNews_Icon)]</property>
+		  <property name="MenuIcon" fallback="home/homeicons/kodi.png">$INFO[Skin.String(IconSmartHome_Icon)]</property>
 		  <property name="BackWebOS1">home/button/webos_button.png</property>
 		  <property name="BackTizen1">home/button/submenubutton.png</property>	
-		  <visible>System.HasAddon(plugin.program.newscenter)</visible>
-		  <visible>!Skin.HasSetting(HomeMenuNoNewsButton)</visible>
+		  <visible>System.HasAddon(plugin.program.fritzact)</visible>
+		  <visible>Skin.HasSetting(HomeMenuNoSmartHomeButton)</visible>
 		</item>
 	</include>
 	<include name="HomeMenuLiveTV">
@@ -1058,7 +1058,7 @@
 		  <property name="BackWebOS6">home/button/webos_button.png</property>
 		  <property name="BackTizen6">home/button/submenubutton.png</property>	
 		  <property name="submenuVisibility" fallback="x4">$INFO[Skin.String(VideosHomeItem.SubMenu)]</property>
-		  <visible>!Skin.HasSetting(HomeMenuNoVideosButton)</visible>
+		  <visible>Skin.HasSetting(HomeMenuNoVideosButton)</visible>
 		</item>
 	</include>
 	<include name="HomeMenuPlaylist1">

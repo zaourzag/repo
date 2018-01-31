@@ -12,10 +12,10 @@
 	    <provides>executable</provides>
     </extension>
     <extension point="xbmc.addon.metadata">
-    <description lang="en">Shows RSS Feed in Overlay Message, Now you can Watch your Favorite TV show, and get a Message when something is Posted in your favorit Forum(when rss is avaible), or somthing happens in the world (You favorite RSS Newsfeed) </description>
-    <description lang="de">Zeigt Rss Updates in Pupup Nachrichten an. Entlich kann man Fenssehen und bleibt auf dem Laufenden was im lieblings Forum oder in den Nachrichten Passiert (Solange sie ein RSS Feed Haben)</description>
+    <description lang="en">Shows RSS-Feed in overlay messages, now you can watch your favorite TV show, and get a message when something is posted in your favorite forum (when RSS is avaible), or something happens in the world (on your favorite RSS newsfeed) </description>
+    <description lang="de">Zeigt Rss Updates in Popup Nachrichten an. Endlich kann man Fernsehen und bleibt auf dem Laufenden was im Lieblingsforum oder in den Nachrichten passiert (Solange Sie einen RSS-Feed benutzen)</description>
     <summary lang="en">Shows RSS Feed in Overlay Message</summary>
-    <summary lang="de">Zeigt Rss Updates in Pupup Nachricht</summary>
+    <summary lang="de">Zeigt RSS-Feeds in einer Einblendung</summary>
     <website></website>
     <source>https://github.com/kodinerds/repo/tree/master/service.rsspopup/</source>
     <forum>http://www.kodinerds.net/</forum>

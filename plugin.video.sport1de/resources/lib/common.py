@@ -14,10 +14,10 @@ icon = addon.getAddonInfo('icon')
 fanart = addon.getAddonInfo('fanart')
 cookie = addon.getSetting('cookie')
 
-www_base = 'http://www.sport1.de'
-video_base = 'http://video.sport1.de'
-tv_base = 'http://tv.sport1.de'
-api_base = 'http://api.sport1.de'
+www_base = 'https://www.sport1.de'
+video_base = 'https://video.sport1.de'
+tv_base = 'https://tv.sport1.de'
+api_base = 'https://api.sport1.de'
 
 def log(msg):
     xbmc.log(str(msg), xbmc.LOGNOTICE)
@@ -31,6 +31,9 @@ def utfenc(str):
     except:
         pass
     return str
+
+def get_cookie(cookie):
+    return re.sub('(?:PHP|DSFTV)SESSID=.+?; path=/, ', '', cookie)
 
 def uniq_id(t=1):
     mac_addr = xbmc.getInfoLabel('Network.MacAddress')

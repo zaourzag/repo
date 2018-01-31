@@ -19,11 +19,11 @@ def add_to_tag_list(file,tag):
         save(file,entries)
     else:
         save(file,[new_entry])
- 
+
 def save(file,entry):
     with open(file, 'w') as f:
         json.dump(entry, f)
-        
+
 def remove_from_tag_list(file,tag):
     json_data = get_tag_list(file)
     for i in xrange(len(json_data)):

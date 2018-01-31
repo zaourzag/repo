@@ -21,7 +21,7 @@ class mvmixArtistPlayer(xbmc.Player):
 
     def onPlayBackStarted(self):
         common.log('[mvmixArtistPlayer] playback started')
-        self.sleep(200)
+        self.sleep(2000)
         if (xbmc.Player().isPlayingVideo()):
             title = 'Now playing:'
             name = xbmc.getInfoLabel('VideoPlayer.Title')
@@ -65,7 +65,7 @@ class mvmixArtistPlayer(xbmc.Player):
                     xbmcplugin.setResolvedUrl(int(sys.argv[1]), False, listitem)
             else:
                 self.remove_artist_from_list()
-            self.sleep(200)
+            self.sleep(500)
             loops += 1
             if loops == 20:
                 self.video_list = []

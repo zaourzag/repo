@@ -1,4 +1,19 @@
-+1.10.5
+1.0.8.1
+- Fix Unicode Error
+1.0.8
+- LiveTV
+  - Item zum Aktualisieren der Liste
+  - Liste wird nicht mehr gecachet
+  - Überarbeitung der Titelanzeige
+  - Bugfix für die Anzeige von TMDb-Inhalten
+  - Anzeige von Start- und Endezeiten
+1.0.7
+- Fix Encoding
+- Option zum Leeren des Caches
+1.0.6
+- Abhängigkeit zu "inputstream adaptive" und "inputstreamhelper"
+- Anzeige vom Verfügbarkeitsdatum
+1.0.5
 - Anzeige von Streaminfos
 - Hinzufügen von Episoden einer Staffel zur Merkliste
 - Unterstützung für "Staffelstarts"

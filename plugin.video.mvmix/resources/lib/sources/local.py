@@ -16,8 +16,8 @@ def get_videos(name):
             videos = get_videos_from_folder(name)
     return videos
     
-def get_video_url(id):
-    return id
+def get_video_url(_id):
+    return _id
 
 def get_videos_from_library(name):
     videos = []
@@ -29,11 +29,11 @@ def get_videos_from_library(name):
             try:
                 artists = mv['artist']
                 title = mv['title']
-                id = mv['file'].encode('utf-8')
+                _id = mv['file'].encode('utf-8')
                 duration = mv['runtime']
                 image = mv['thumbnail']
                 if artists[0].encode('utf-8').lower() == name.lower():
-                    videos.append({'site':site, 'artist':artists, 'title':title, 'duration':duration, 'id':id, 'image':image})
+                    videos.append({'site':site, 'artist':artists, 'title':title, 'duration':duration, 'id':_id, 'image':image})
             except:
                 pass
     return videos
@@ -48,8 +48,8 @@ def get_videos_from_folder(name):
         for f in files:
             if f.endswith(('.strm','.webm','.mkv','.flv','.vob','.ogg','.avi','.mov','.qt','.wmv','.rm','.asf','.mp4','.m4v','.mpg','.mpeg','.3gp')):
                 try:
-                    id = os.path.join(path, f)
-                    filename = os.path.splitext(os.path.basename(id))[0]
+                    _id = os.path.join(path, f)
+                    filename = os.path.splitext(os.path.basename(_id))[0]
                     filename = re.sub('\_|\.', ' ', filename)
                     match = filename.split(' - ')
                     if len(match) == 1:
@@ -57,7 +57,7 @@ def get_videos_from_folder(name):
                     artist = match[0].strip()
                     title = match[1].strip()
                     if artist.lower() == name.lower():
-                        videos.append({'site':site, 'artist':[artist], 'title':title, 'duration':'', 'id':id, 'image':''})
+                        videos.append({'site':site, 'artist':[artist], 'title':title, 'duration':'', 'id':_id, 'image':''})
                 except:
                     pass
         return videos

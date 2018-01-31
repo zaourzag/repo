@@ -28,12 +28,14 @@ class Credentials:
             self.credentials = True
         else:
             self.email = dialog.input('Sport1 Login: E-Mail', type=xbmcgui.INPUT_ALPHANUM)
-            self.password = dialog.input('Sport1 Login: Passwort', type=xbmcgui.INPUT_ALPHANUM, option=xbmcgui.ALPHANUM_HIDE_INPUT)
+            if self.email:
+                self.password = dialog.input('Sport1 Login: Passwort', type=xbmcgui.INPUT_ALPHANUM, option=xbmcgui.ALPHANUM_HIDE_INPUT)
 
     def save(self):
         if not self.credentials:
-            addon.setSetting('email', self.encode(self.email))
-            addon.setSetting('password', self.encode(self.password))
+            if dialog.yesno('Sport1', 'Anmeldung erfolgreich: Anmeldeinformationen speichern?') == True:
+                addon.setSetting('email', self.encode(self.email))
+                addon.setSetting('password', self.encode(self.password))
             
     def reset(self):
         addon.setSetting('email', '')

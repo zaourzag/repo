@@ -185,7 +185,7 @@ offset = urllib.unquote_plus(params.get('offset', ''))
 
  
 def playLive():    
-    url="http://fr-par-iphone-1.cdn.hexaglobe.net/streaming/euronews_ewns/iphone_"+language+".m3u8"
+    url="http://"+language+"-par-iphone-1.cdn.hexaglobe.net/streaming/euronews_ewns/iphone_"+language+".m3u8"
     listitem = xbmcgui.ListItem(path=url)
     xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
 
@@ -201,7 +201,7 @@ def Rubriken(urls):
       if not element.text.strip() in liste:
         if not element.text.strip()=="Video" and not element.text.strip()=="Living It":
             debug(element["href"])
-            addDir(element.text.strip(), element["href"], 'Rubrik', "", "",text=str(anz))           
+            addDir(element.text.strip().encode("utf-8"), element["href"], 'Rubrik', "", "",text=str(anz))           
             liste.append(element.text.strip())
       anz+=1   
 
@@ -255,8 +255,8 @@ def Seite(url,offset=1):
         bild=artikel["images"][0]["url"].replace("{{w}}x{{h}}","800x800")
         videourlhd=""
         videourlmd=""
-        if  str(artikel["video"]) =="1":
-            for video in artikel["videos"] :
+        x=0
+        for video in artikel["videos"] :
                 debug(video)
                 if video["quality"]=="hd":
                     try:
@@ -265,10 +265,12 @@ def Seite(url,offset=1):
                         pass
                 if  video["quality"]=="md":#
                     videourlmd=video["url"]
-            debug("Title :"+title)            
-            addLink(title,videourlhd,"Play",bild)
-        else:
-            addLink("TXT: "+title.decode('ascii', 'ignore'),"","infofenster",bild,text=smart_str(artikel["plainText"]))
+                debug("Title :"+title)            
+                x=x+1
+        if x>0:
+            addLink(title,videourlhd,"Play",bild)        
+        #else:
+         #   addLink("TXT: "+title.decode('ascii', 'ignore'),"","infofenster",bild,text=smart_str(artikel["plainText"]))
         # pass
   debug(struktur["extra"]["offset"])
   debug(struktur["extra"]["total"])
@@ -285,7 +287,7 @@ def Rubrik(url):
 def index():  
   #ListRubriken("http://"+language2+".euronews.com","",x=1)
   addLink("Live","","playlive","")
-  Rubriken("http://"+language2+".euronews.com")  
+  Rubriken("http://"+language2+".euronews.com/")  
   xbmcplugin.endOfDirectory(pluginhandle)   
 
 def  Play(url):  
@@ -298,7 +300,7 @@ def infofenster(title_artikel,text,bild):
     del window
 
 def playlive():
-  url="http://www.euronews.com/api/watchlive.json"
+  url="http://"+language2+".euronews.com/api/watchlive.json"
   content = getUrl(url)   
   urln=re.compile('"url":"(.+?)"', re.DOTALL).findall(content)[0]
   urln=urln.replace("\/","/")  

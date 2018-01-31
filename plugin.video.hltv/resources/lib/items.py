@@ -5,7 +5,7 @@ from common import *
 class Items:
 
     def __init__(self):
-        self.cache = True
+        self.cache = False
         self.video = False
     
     def list_items(self):
@@ -56,8 +56,28 @@ class Items:
         else:
             pass
             
-    def play_item(self, path, startpercent):
+    def play_item(self, path):
+        manifest_type = ''
         listitem = xbmcgui.ListItem(path=path)
-        if startpercent:
-            listitem.setProperty('StartPercent', startpercent)
+        listitem.setContentLookup(False)
+        if 'dash' in path or '.mpd' in path:
+            manifest_type = 'mpd'
+            mime_type = 'application/dash+xml'
+            if 'googlevideo' in path:
+                listitem.setProperty('inputstream.adaptive.manifest_update_parameter', '&start_seq=$START_NUMBER$')
+        elif 'hls' in path or '.m3u8' in path:
+            manifest_type = 'hls'
+            mime_type = 'application/x-mpegURL'
+        if manifest_type:
+            listitem.setMimeType(mime_type)
+            listitem.setProperty('inputstreamaddon', 'inputstream.adaptive')
+            listitem.setProperty('inputstream.adaptive.manifest_type', manifest_type)
         xbmcplugin.setResolvedUrl(addon_handle, True, listitem)
+            
+    def seek_item(self, seektime):
+        for i in range(1,10):
+            xbmc.sleep(250)
+            if xbmc.Player().isPlayingVideo():
+                xbmc.sleep(250)
+                xbmc.Player().seekTime(seektime)
+                break

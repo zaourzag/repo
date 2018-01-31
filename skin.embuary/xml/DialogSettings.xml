@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<window>
+	<defaultcontrol always="true">5</defaultcontrol>
+	<controls>
+		<control type="image">
+			<include>Visible_Fade</include>
+			<include>FullscreenDimensions</include>
+			<texture colordiffuse="background_diffuse">common/white.jpg</texture>
+			<visible>[VideoPlayer.IsFullscreen | Window.IsVisible(visualisation)] + !Window.IsVisible(DialogSlider.xml)</visible>
+		</control>
+		<control type="image">
+			<include>Visible_Fade</include>
+			<include>FullscreenDimensions</include>
+			<texture colordiffuse="background">common/white.jpg</texture>
+			<visible>!VideoPlayer.IsFullscreen + !Window.IsVisible(visualisation) + !Window.IsVisible(DialogSlider.xml)</visible>
+		</control>
+		<control type="grouplist">
+			<visible>!Window.IsVisible(DialogSlider.xml) + !Window.IsVisible(selectdialog)</visible>
+			<include>Visible_PopupOpenClose</include>
+			<include>Dialog_PopupOpenClose</include>
+			<centerleft>50%</centerleft>
+			<centertop>50%</centertop>
+			<width>800</width>
+			<height max="940">auto</height>
+			<orientation>vertical</orientation>
+			<itemgap>20</itemgap>
+			<align>center</align>
+			<!-- edit -->
+			<control type="group">
+				<height>50</height>
+				<control type="label" id="2">
+					<width>100%</width>
+					<height>48</height>
+					<font>Reg24</font>
+					<aligny>center</aligny>
+					<textoffsetx>5</textoffsetx>
+				</control>
+				<control type="image">
+					<width>100%</width>
+					<top>45</top>
+					<height>2</height>
+					<texture colordiffuse="lightgrey">common/white.jpg</texture>
+					<aspectratio>stretch</aspectratio>
+				</control>
+				<control type="image">
+					<width>100%</width>
+					<top>45</top>
+					<height>2</height>
+					<texture colordiffuse="emby">common/white.jpg</texture>
+					<aspectratio>stretch</aspectratio>
+					<include>WindowOpen_GreenBar</include>
+				</control>
+			</control>
+			<!-- list -->
+			<control type="group">
+				<height>470</height>
+				<control type="image">
+					<height>470</height>
+					<texture colordiffuse="thumb_background">common/white.jpg</texture>
+					<aspectratio>stretch</aspectratio>
+				</control>
+				<control type="grouplist" id="5">
+					<centerleft>50%</centerleft>
+					<top>10</top>
+					<height>450</height>
+					<onup>12</onup>
+					<onleft>noop</onleft>
+					<onright>noop</onright>
+					<ondown>100</ondown>
+					<pagecontrol>60</pagecontrol>
+				</control>
+				<control type="scrollbar" id="60">
+					<right>0</right>
+					<top>0</top>
+					<bottom>0</bottom>
+					<width>4</width>
+					<orientation>vertical</orientation>
+					<showonepage>false</showonepage>
+					<texturesliderbackground colordiffuse="00ffffff">common/white.jpg</texturesliderbackground>
+					<texturesliderbar colordiffuse="softgrey">common/white.jpg</texturesliderbar>
+				</control>
+			</control>
+			<!-- Button -->
+			<control type="grouplist" id="100">
+				<height>50</height>
+				<width>100%</width>
+				<orientation>horizontal</orientation>
+				<itemgap>5</itemgap>
+				<align>center</align>
+				<onright>noop</onright>
+				<onleft>noop</onleft>
+				<control type="button" id="28">
+					<label>$LOCALIZE[186]</label>
+					<onup>5</onup>
+				</control>
+				<control type="button" id="29">
+					<label>$LOCALIZE[222]</label>
+					<onup>5</onup>
+				</control>
+				<control type="button" id="30">
+					<label>$LOCALIZE[409]</label>
+					<onup>5</onup>
+				</control>
+			</control>
+		</control>
+		<!-- Button defaults -->
+		<control type="button" id="7">
+			<include content="SettingsButton">
+				<param name="textoffsetx" value="20"/>
+			</include>
+		</control>
+		<control type="radiobutton" id="8">
+			<include content="SettingsButton">
+				<param name="textoffsetx" value="20"/>
+			</include>
+			<textwidth>900</textwidth>
+		</control>
+		<control type="spincontrolex" id="9">
+			<include content="SettingsButton">
+				<param name="textoffsetx" value="20"/>
+			</include>
+			<textwidth>900</textwidth>
+		</control>
+		<control type="label" id="2">
+			<visible>false</visible>
+		</control>
+		<control type="label" id="14">
+			<height>50</height>
+			<font>Reg24</font>
+			<textoffsetx>10</textoffsetx>
+			<textcolor>panel_text</textcolor>
+			<aligny>center</aligny>
+		</control>
+		<control type="image" id="11">
+			<description>separator image</description>
+			<texture/>
+			<visible>false</visible>
+		</control>
+		<control type="sliderex" id="13">
+			<include content="SettingsButton">
+				<param name="textoffsetx" value="20"/>
+			</include>
+		</control>
+	</controls>
+</window>

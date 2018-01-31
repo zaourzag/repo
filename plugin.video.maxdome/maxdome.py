@@ -9,7 +9,7 @@ import pickle
 import re
 import HTMLParser
 from BeautifulSoup import BeautifulSoup
-import xbmcaddon, xbmcgui
+import xbmc, xbmcaddon, xbmcgui
 import library as lib
 
 addon = xbmcaddon.Addon()
@@ -120,9 +120,16 @@ class MaxdomeAssets:
             for item in asset_info['packageList']:
                 if 'premium_basic' in item:
                     return True
-
         return False
 
+    def isBuyonly(self, asset_info):
+        # xbmc.log('%s' % (asset_info)) # For Debugging
+        if 'fullMarkingList' in asset_info:
+            for item in asset_info['fullMarkingList']:
+                if 'buyOnly' in item:
+                    return True
+        return False
+        
     def getSalesLabel(self, text):
         if not '<strike>' in text or not '</strike>' in text:
             return text

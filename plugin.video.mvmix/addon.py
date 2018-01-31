@@ -25,7 +25,7 @@ def root():
         cm.append( ('Remove Artist', 'Container.Update(%s)' % u) )
         addDir(artist,'play',image,cm)
     xbmcplugin.endOfDirectory(pluginhandle)
-    
+
 def list_tags():
     addDir('Play Genre','play_tag',iconImage,'')
     tag_list = common.tag_list()
@@ -95,7 +95,7 @@ def play():
         artist = args['name'][0]
         image = args['image'][0]
         add = args['add'][0]
-        if add == 'True': 
+        if add == 'True':
             common.artist_list('add',artist,image)
     except:
         pass
@@ -157,10 +157,10 @@ def queue_video():
     playlist.add(url=u, listitem=listitem)
     
 def play_video():
-    id = args['id'][0]
+    _id = args['id'][0]
     site = args['site'][0]
     name = args.get('name', [''])[0]
-    video_url = common.import_site(site).get_video_url(id)
+    video_url = common.import_site(site).get_video_url(_id)
     if video_url:
         listitem = xbmcgui.ListItem(name, path=video_url)
         xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
@@ -183,9 +183,9 @@ def addDir(name,mode,image,cm,add=True):
     xbmcplugin.addDirectoryItem(pluginhandle,url=url,listitem=item,isFolder=True)
 
 def ignore_video():
-    id = args['id'][0]
+    _id = args['id'][0]
     site = args['site'][0]
-    data = {'site':site, 'id':id}
+    data = {'site':site, 'id':_id}
     common.ignore_list('add',data)
 
 def remove_artist():

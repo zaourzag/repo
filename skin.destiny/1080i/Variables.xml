@@ -2,6 +2,8 @@
 <includes>
 
 	<variable name="VarWidgetsFanart">
+	  <value condition="Control.HasFocus(603)">$INFO[Container(603).ListItem.Art(fanart)]</value>
+	  <value condition="Control.HasFocus(62593)">$INFO[Container(62593).ListItem.Art(fanart)]</value>
 	  <value condition="Control.HasFocus(8304)">$INFO[Container(8304).ListItem.Art(fanart)]</value>
 	  <value condition="Control.HasFocus(8305)">$INFO[Container(8305).ListItem.Art(fanart)]</value>
 	  <value condition="Control.HasFocus(8306)">$INFO[Container(8306).ListItem.Art(fanart)]</value>
@@ -28,26 +30,32 @@
 	  <value condition="Control.HasFocus(18310)">$INFO[Container(18310).ListItem.Art(fanart)]</value>
 	  <value condition="Control.HasFocus(18311)">$INFO[Container(18311).ListItem.Art(fanart)]</value>
 	  <value condition="Control.HasFocus(18312)">$INFO[Container(18312).ListItem.Art(fanart)]</value>
+	  <value condition="Control.HasFocus(18401)">$INFO[Container(18401).ListItem.Art(fanart)]</value>
+	  <value condition="Control.HasFocus(18402)">$INFO[Container(18402).ListItem.Art(fanart)]</value>
+	  <value condition="Control.HasFocus(18403)">$INFO[Container(18403).ListItem.Art(fanart)]</value>
 	</variable>
 	
 	<variable name="VarWidgetsLabelVertical">
 	  <value condition="Control.HasFocus(18304)">$INFO[Container(18304).ListItem.Label]</value>
 	  <value condition="Control.HasFocus(18305)">$INFO[Container(18305).ListItem.Label]</value>
 	  <value condition="Control.HasFocus(18306)">$INFO[Container(18306).ListItem.Label]</value>
-	  <value condition="Control.HasFocus(18307)">$INFO[Container(18307).ListItem.TVShowTitle]</value>
+	  <value condition="Control.HasFocus(18307)">$INFO[Container(18307).ListItem.Label]</value>
 	  <value condition="Control.HasFocus(18308)">$INFO[Container(18308).ListItem.Label]</value>	  
 	  <value condition="Control.HasFocus(18309)">$INFO[Container(18309).ListItem.Label]</value>
 	  <value condition="Control.HasFocus(18310)">$INFO[Container(18310).ListItem.Label]</value>
 	  <value condition="Control.HasFocus(18311)">$INFO[Container(18311).ListItem.Label]</value>
 	  <value condition="Control.HasFocus(18312)">$INFO[Container(18312).ListItem.Label]</value>
 	  <value condition="Control.HasFocus(18313)">$INFO[Container(18313).ListItem.Label]</value>
+	  <value condition="Control.HasFocus(18401)">$INFO[Container(18401).ListItem.Label]</value>
+	  <value condition="Control.HasFocus(18402)">$INFO[Container(18402).ListItem.Label]</value>
+	  <value condition="Control.HasFocus(18403)">$INFO[Container(18403).ListItem.Label]</value>
 	  <value>Home</value>
    </variable>
    <variable name="VarWidgetsPlotVertical">
 	  <value condition="Control.HasFocus(18304)">$INFO[Container(18304).ListItem.Plot]</value>
 	  <value condition="Control.HasFocus(18305)">$INFO[Container(18305).ListItem.PlotOutline]</value>
 	  <value condition="Control.HasFocus(18306)">$INFO[Container(18306).ListItem.PlotOutline]</value>
-	  <value condition="Control.HasFocus(18307)">$INFO[Container(18307).ListItem.Label]</value>
+	  <value condition="Control.HasFocus(18307)">$INFO[Container(18307).ListItem.PlotOutline]</value>
 	  <value condition="Control.HasFocus(18308)">$INFO[Container(18308).ListItem.PlotOutline]</value>	  
 	  <value condition="Control.HasFocus(18309)">$INFO[Container(18309).ListItem.PlotOutline]</value>
 	  <value condition="Control.HasFocus(18310)">$INFO[Container(18310).ListItem.Plot]</value>
@@ -105,6 +113,16 @@
 	  <value condition="Container.Content(Albums) | Container.Content(Songs)">DefaultArtist.png</value>
     </variable>
 	
+	<variable name="Poster">
+	  <value condition="Container.Content(Episodes)">$INFO[ListItem.Icon]</value>
+	  <value condition="Container.Content(Actors)">$INFO[ListItem.Icon]</value>
+	  <value condition="Container.Content(Genres)">$VAR[VarMovieGenreIcon]</value>	  
+	  <value condition="Container.Content(Addons)">$INFO[ListItem.Icon]</value>
+	  <value condition="Container.Content(Years)">$INFO[ListItem.Icon]</value>
+	  <value condition="Container.Content(studios)">$VAR[VarStudioIcon]</value>
+	  <value>$INFO[ListItem.Icon]</value>
+	</variable>
+	
 	<variable name="PosterThumb">
 	  <value condition="Container.Content(Episodes)">$INFO[ListItem.Art(season.poster)]</value>
 	  <value condition="Container.Content(Actors)">$INFO[ListItem.Icon]</value>
@@ -124,6 +142,12 @@
 	<variable name="VarFanart2">
 	  <value condition="!String.IsEmpty(ListItem.Art(fanart))">$INFO[ListItem.Art(fanart)]</value>
 	</variable>
+	
+	<variable name="VarLandsape">
+	  <value condition="!String.IsEmpty(ListItem.Art(landscape))">$INFO[ListItem.Art(landscape)]</value>
+	  <value condition="!String.IsEmpty(ListItem.Art(fanart))">$INFO[ListItem.Art(fanart)]</value>
+	  <value>special://skin/backgrounds/fallback_addons.jpg</value>
+	</variable>	
 	
 	<variable name="VarClearart">
 	  <value condition="Container.Content(episodes) + !String.IsEmpty(ListItem.Art(tvshow.clearart))">$INFO[ListItem.Art(tvshow.clearart)]</value>
@@ -254,15 +278,15 @@
 	  <value condition="Container(9010).Hasfocus(260024)">$INFO[Skin.String(movieplaylistButtonPathScript_2)]</value>
 	  <value condition="Container(9010).Hasfocus(260025)">$INFO[Skin.String(movieplaylistButtonPathScript_3)]</value>
 	  <value condition="Container(9010).Hasfocus(260026)">$INFO[Skin.String(movieplaylistButtonPathScript_4)]</value>
-	  <value condition="Container(9010).Hasfocus(260027)">special://skin/playlists/Imdb Top 250.xsp</value>
+	  <value condition="Container(9010).Hasfocus(260027)">special://skin/playlists/Top Rated Movies.xsp</value>
 	  <value condition="Container(9010).Hasfocus(260028)">videodb://movies/sets/</value>	  
 	  <value condition="Container(9010).Hasfocus(260029)">special://skin/playlists/Movies Recent.xsp</value>
 	  <value condition="Container(9010).Hasfocus(260030)">special://skin/playlists/Movies Recent.xsp</value>
-	  <value condition="Container(9010).Hasfocus(260031)">videodb://movies/genres/</value>
-	  <value condition="Container(9010).Hasfocus(260032)">videodb://movies/years/</value>
-	  <value condition="Container(9010).Hasfocus(260033)">videodb://movies/actors/</value>
-	  <value condition="Container(9010).Hasfocus(260034)">videodb://movies/directors/</value>
-	  <value condition="Container(9010).Hasfocus(260035)">videodb://movies/studios/</value>
+	  <value condition="Container(9010).Hasfocus(260031)">special://skin/playlists/Movies Recent.xsp</value>
+	  <value condition="Container(9010).Hasfocus(260032)">special://skin/playlists/Movies Recent.xsp</value>
+	  <value condition="Container(9010).Hasfocus(260033)">special://skin/playlists/Movies Recent.xsp</value>
+	  <value condition="Container(9010).Hasfocus(260034)">special://skin/playlists/Movies Recent.xsp</value>
+	  <value condition="Container(9010).Hasfocus(260035)">special://skin/playlists/Movies Recent.xsp</value>
 	  <value condition="Container(9010).Hasfocus(260036)">special://skin/playlists/Movies Recent.xsp</value>
 	  <value condition="Container(9010).Hasfocus(260037)">special://skin/playlists/Movies Recent.xsp</value>
 	  <!-- Alle Serien Submenu -->
@@ -270,10 +294,10 @@
 	  <value condition="Container(9010).Hasfocus(260041)">videodb://recentlyaddedepisodes/</value>
 	  <value condition="Container(9010).Hasfocus(260042)">videodb://inprogresstvshows</value>
 	  <value condition="Container(9010).Hasfocus(260043)">videodb://tvshows/titles/</value>
-	  <value condition="Container(9010).Hasfocus(260044)">videodb://tvshows/genres/</value>
-	  <value condition="Container(9010).Hasfocus(260045)">videodb://tvshows/years/</value>
-	  <value condition="Container(9010).Hasfocus(260046)">videodb://tvshows/actors/</value>
-	  <value condition="Container(9010).Hasfocus(260047)">videodb://tvshows/studios/</value>
+	  <value condition="Container(9010).Hasfocus(260044)">videodb://recentlyaddedepisodes/</value>
+	  <value condition="Container(9010).Hasfocus(260045)">videodb://recentlyaddedepisodes/</value>
+	  <value condition="Container(9010).Hasfocus(260046)">videodb://recentlyaddedepisodes/</value>
+	  <value condition="Container(9010).Hasfocus(260047)">videodb://recentlyaddedepisodes/</value>
 	  <value condition="Container(9010).Hasfocus(260048)">$INFO[Skin.String(tvplaylistButtonPathScript_1)]</value>	  
 	  <value condition="Container(9010).Hasfocus(260049)">$INFO[Skin.String(tvplaylistButtonPathScript_2)]</value>
 	  <value condition="Container(9010).Hasfocus(260050)">$INFO[Skin.String(tvplaylistButtonPathScript_3)]</value>
@@ -371,23 +395,21 @@
 	  <value>$LOCALIZE[50003]</value>
 	</variable>
 	<variable name="HomeWidgetsMusic">
-	  <value condition="!Skin.HasSetting(recentmusic) + !Skin.HasSetting(randommusic) + !Skin.HasSetting(albumsrecentlyplayedmusic)">special://skin/playlists/Music Recentlyadded.xsp</value>
-	  <value condition="Skin.HasSetting(albumsrecentlyplayedmusic)">special://skin/playlists/Albums_Recently_Played.xsp</value>
+	  <value condition="!Skin.HasSetting(recentmusic) + !Skin.HasSetting(randommusic) + !Skin.HasSetting(albumsrecentlyplayedmusic)">musicdb://recentlyaddedalbums/</value>
+	  <value condition="Skin.HasSetting(albumsrecentlyplayedmusic)">musicdb://recentlyplayedalbums/</value>
 	  <value condition="Skin.HasSetting(randommusic)">special://skin/playlists/Random Album.xsp</value>
 	</variable>
 	<variable name="LiveTVWidgetsSettingVar">
-	  <value condition="Skin.HasSetting(livetvrec)">Live TV Aufnahmen</value>
-	  <value condition="Skin.HasSetting(serienplaner)">Serienplaner</value>
 	  <value>LiveTV Vorschau</value>
 	</variable>
 	<variable name="HomeWidgetsLiveTV">
-	  <value condition="Container(9000).Hasfocus(1)">pvr://channels/tv/*?view</value>
+	  <value condition="Container(9000).Hasfocus(1) | Container(9000).Hasfocus(2)">pvr://channels/tv/*?view</value>
 	</variable>
 	<variable name="HomeWidgetsLiveTVRec">
-	  <value condition="Container(9000).Hasfocus(1)">pvr://recordings/tv/active?view=flat</value>
+	  <value condition="Container(9000).Hasfocus(1) | Container(9000).Hasfocus(2)">pvr://recordings/tv/active?view=flat</value>
 	</variable>
 	<variable name="HomeWidgetsRadio">
-	  <value condition="Container(9000).Hasfocus(2)">pvr://channels/radio/*?view</value>
+	  <value condition="Container(9000).Hasfocus(1) | Container(9000).Hasfocus(2)">pvr://channels/radio/*?view</value>
 	</variable>
 	<variable name="HomeWidgetsPlaylisten">
 	  <!--<value condition="String.IsEmpty(Container(9000).ListItem.Property(Widget))">videodb://recentlyaddedmovies/</value>-->	
@@ -466,12 +488,12 @@
 	
 	
 	<variable name="ExtendedInfoYear">
-	  <value condition="String.Contains(ListItem.Path,videodb://movies/sets/,left)">$LOCALIZE[50146]: $INFO[Window(home).Property(SkinHelper.MovieSet.Years)]</value>
+	  <value condition="String.Contains(ListItem.Path,videodb://movies/sets/,left)">$LOCALIZE[50146]: $INFO[Window(home).Property(SkinHelper.ListItem.Years)]</value>
 	  <value condition="Container.Content(Movies) | Container.Content(TVShows) | Container.Content(Episodes) | Container.Content(Seasons)">$LOCALIZE[50146]: $INFO[ListItem.Year]</value>
 	  <value condition="Container.Content(MusicVideos)">$LOCALIZE[50146]: $INFO[listitem.Year]</value>
     </variable>
 	<variable name="ExtendedInfoRuntime">
-	  <value condition="ListItem.IsCollection">$LOCALIZE[50147]: $INFO[Window(Home).Property(SkinHelper.MovieSet.Duration.Minutes)] min</value>
+	  <value condition="ListItem.IsCollection">$LOCALIZE[50147]: $INFO[Window(Home).Property(SkinHelper.ListItem.Duration.Minutes)] min</value>
 	  <value condition="Container.Content(Movies)">$LOCALIZE[50147]: $INFO[ListItem.Duration] min</value>
 	  <value condition="Container.Content(TVShows)">$LOCALIZE[50152]: $INFO[ListItem.Property(TotalSeasons)] • $LOCALIZE[20360]: $INFO[listitem.episode]</value>
 	  <value condition="Container.Content(Seasons)">$LOCALIZE[20360]: $INFO[listitem.episode]</value>
@@ -479,12 +501,12 @@
 	  <value condition="Container.Content(Episodes)">$LOCALIZE[50147]: $INFO[ListItem.Duration] min</value>
     </variable>
 	<variable name="ExtendedInfoStudio">
-	  <value condition="ListItem.IsCollection">$LOCALIZE[50149]: $INFO[Window(Home).Property(SkinHelper.MovieSet.Studio)]</value>
+	  <value condition="ListItem.IsCollection">$LOCALIZE[50149]: $INFO[Window(Home).Property(SkinHelper.ListItem.Studio)]</value>
 	  <value condition="Container.Content(Movies) | Container.Content(TVShows) | Container.Content(Seasons)">$LOCALIZE[50149]: $INFO[ListItem.Studio]</value>
 	  <value condition="Container.Content(MusicVideos)">$LOCALIZE[50150]: $INFO[ListItem.Title]</value>
     </variable>
 	<variable name="ExtendedInfoDirector">
-	  <value condition="ListItem.IsCollection">$LOCALIZE[50151]: $INFO[Window(home).Property(SkinHelper.MovieSet.Director)]</value>
+	  <value condition="ListItem.IsCollection">$LOCALIZE[50151]: $INFO[Window(home).Property(SkinHelper.ListItem.Director)]</value>
 	  <value condition="Container.Content(Movies)">$LOCALIZE[50151]: $INFO[ListItem.Director]</value>
 	  <value condition="Container.Content(TVShows) | Container.Content(Seasons)">$LOCALIZE[50152]: $INFO[ListItem.Property(TotalSeasons)] - $LOCALIZE[20360]: $INFO[listitem.episode]</value>
 	  <value condition="Container.Content(MusicVideos)">$LOCALIZE[50153]: $INFO[ListItem.Duration] min</value>
@@ -492,7 +514,7 @@
 	  <value condition="Container.Content(Addons)">$LOCALIZE[144]: $INFO[ListItem.AddonVersion]</value>
     </variable>
 	<variable name="ExtendedInfoWriter">
-	  <value condition="ListItem.IsCollection">$LOCALIZE[50154]: $INFO[Window(home).Property(SkinHelper.MovieSet.Writer)]</value>
+	  <value condition="ListItem.IsCollection">$LOCALIZE[50154]: $INFO[Window(home).Property(SkinHelper.ListItem.Writer)]</value>
 	  <value condition="Container.Content(Movies)">$LOCALIZE[50154]: $INFO[ListItem.Writer]</value>
 	  <value condition="Container.Content(TVShows) | Container.Content(Seasons)">$LOCALIZE[20360]: $INFO[listitem.episode]  ($INFO[ListItem.Property(WatchedEpisodes),, $LOCALIZE[16102]] - $INFO[ListItem.Property(UnWatchedEpisodes), , $LOCALIZE[16101]])</value>
 	  <value condition="Container.Content(MusicVideos)">$LOCALIZE[50155]: $INFO[ListItem.Album]</value>
@@ -501,7 +523,7 @@
 	  <value condition="Container.Content(Addons)">$INFO[ListItem.AddonCreator]</value>
     </variable>
 	<variable name="ExtendedInfoGenre">
-	  <value condition="ListItem.IsCollection">$LOCALIZE[135]: $INFO[Window(home).Property(SkinHelper.MovieSet.Genre)]</value>
+	  <value condition="ListItem.IsCollection">$LOCALIZE[135]: $INFO[Window(home).Property(SkinHelper.ListItem.Genre)]</value>
 	  <value condition="Container.Content(Movies) | Container.Content(TVShows) | Container.Content(Episodes) | Container.Content(Seasons)">$LOCALIZE[50156]: $INFO[ListItem.Genre]</value>
 	  <value condition="Container.Content(MusicVideos)">$LOCALIZE[135]: $INFO[listitem.Genre]</value>
 	  <value condition="Container.Content(Albums)">$LOCALIZE[135]: $INFO[ListItem.Property(Album_Style)]</value>
@@ -509,7 +531,7 @@
 	  <value condition="Container.Content(Addons)">$LOCALIZE[146]: $INFO[ListItem.AddonType]</value>
     </variable>
 	<variable name="ExtendedInfoRatingAndVotes">
-	  <value condition="ListItem.IsCollection">$INFO[Window(home).Property(SkinHelper.MovieSet.Count] $LOCALIZE[50190]</value>
+	  <value condition="ListItem.IsCollection">$INFO[Window(home).Property(SkinHelper.ListItem.Count] $LOCALIZE[50190]</value>
 	  <value condition="Container.Content(Movies)">$LOCALIZE[50157]: $INFO[ListItem.RatingAndVotes]</value>
 	  <value condition="Container.Content(TVShows) | Container.Content(Seasons)">$LOCALIZE[20416]: $INFO[ListItem.Premiered]</value>
 	  <value condition="Container.Content(Episodes)">$LOCALIZE[183]: $INFO[ListItem.RatingAndVotes]</value>
@@ -518,7 +540,7 @@
 	  <value condition="Container.Content(Movies)">$LOCALIZE[50158]: $INFO[ListItem.Top250]</value>
     </variable>
 	<variable name="ExtendedInfoPlot">
-	  <value condition="ListItem.IsCollection">$INFO[Window(Home).Property(SkinHelper.MovieSet.ExtendedPlot)]</value>
+	  <value condition="ListItem.IsCollection">$INFO[Window(Home).Property(SkinHelper.ListItem.ExtendedPlot)]</value>
 	  <value condition="Container.Content(seasons)">$INFO[Container.ShowPlot]</value>
       <value condition="Container.Content(addons)">$INFO[ListItem.AddonDescription]</value>
 	  <value condition="Container.Content(Albums)">$INFO[Window(home).Property(SkinHelper.Music.Info)]</value>
@@ -531,10 +553,10 @@
 	  <value condition="ListItem.IsCollection">$LOCALIZE[345]: $INFO[Window(home).Property(SkinHelper.MovieSet.Years)]</value>
     </variable>	
 	<variable name="ExtendedInfoMoreForSets">
-	  <value condition="ListItem.IsCollection">$LOCALIZE[16101]: $INFO[Window(home).Property(SkinHelper.MovieSet.UnWatchedCount)]</value>
+	  <value condition="ListItem.IsCollection">$LOCALIZE[16101]: $INFO[Window(home).Property(SkinHelper.ListItem.UnWatchedCount)]</value>
     </variable>	
 	<variable name="ExtendedInfoTimeEnd">
-	  <value condition="ListItem.IsCollection">$INFO[Window(home).Property(SkinHelper.MovieSet.Count] $LOCALIZE[50190]</value>
+	  <value condition="ListItem.IsCollection">$INFO[Window(home).Property(SkinHelper.ListItem.Count] $LOCALIZE[50190]</value>
 	  <value condition="Container.Content(Movies)">$LOCALIZE[49972]: $INFO[ListItem.EndTime]</value>
 	  <value condition="Container.Content(TVShows) | Container.Content(Seasons)">$LOCALIZE[50191]: $INFO[ListItem.Property(WatchedEpisodes)] • $LOCALIZE[50192]: $INFO[ListItem.Property(UnWatchedEpisodes)]</value>
 	  <value condition="Container.Content(Episodes)">$LOCALIZE[49972]: $INFO[ListItem.EndTime]</value>

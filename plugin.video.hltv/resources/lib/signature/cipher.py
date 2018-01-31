@@ -1,9 +1,6 @@
 __author__ = 'bromix'
 
-import json
-import os
 import re
-import xbmc
 
 from resources.lib import simple_requests as requests
 from .json_script_engine import JsonScriptEngine

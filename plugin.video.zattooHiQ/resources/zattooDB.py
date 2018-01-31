@@ -58,7 +58,7 @@ class ZattooDB(object):
 
   def zapiSession(self):
     zapiSession   = ZapiSession(xbmc.translatePath(__addon__.getAddonInfo('profile')).decode('utf-8'))
-    if DEBUG: print "APIURL " + str( __addon__.getSetting('api_url'))
+
     if zapiSession.init_session(__addon__.getSetting('username'), __addon__.getSetting('password'),
                                 __addon__.getSetting('zapi_url'), __addon__.getSetting('zapi_auth_url')):
       return zapiSession
@@ -428,8 +428,7 @@ class ZattooDB(object):
     c = self.conn.cursor()
     c.execute('DELETE FROM playing')
     #c.execute('INSERT INTO playing(channel, start_date, action_time, current_stream,  streams) VALUES(?, ?, ?, ?, ?)', [channel, start, datetime.datetime.now(), streamNr, streams])
-    c.execute('INSERT INTO playing(channel, current_stream,  streams) VALUES(?, ?, ?)', [channel, streamNr, streams])
-
+    c.execute('INSERT INTO playing(channel, current_stream,  streams) VALUES(?, ?, ?)', [channel, streamNr, streams])    
     self.conn.commit()
     c.close()
 
@@ -444,6 +443,7 @@ class ZattooDB(object):
       row = c.fetchone()
       playing = {'channel':row['id'], 'start':datetime.datetime.now(), 'action_time':datetime.datetime.now()}
     c.close()
+    if DEBUG: print "naow playing" +str(playing)
     return playing
 
   def set_currentStream(self, nr):
@@ -453,12 +453,16 @@ class ZattooDB(object):
     c.close()
 
   def reloadDB(self):
-    '''
+
     c = self.conn.cursor()
     c.execute('DELETE FROM updates')
+    c.execute('DELETE FROM channels')
+    c.execute('DELETE FROM programs')
+    c.execute('DELETE FROM playing')
+    
     self.conn.commit()
     c.close()
-    '''
+
 
     #delete zapi files to force new login    
     profilePath = xbmc.translatePath(__addon__.getAddonInfo('profile'))
@@ -531,9 +535,13 @@ class ZattooDB(object):
             PopUp.update(bar)
 
         for chan in channels['index']:
-            #print str(chan) + ' - ' + str(startTime)
-
-            c.execute('SELECT * FROM programs WHERE channel = ? AND start_date < ? AND end_date > ?', [chan, endTime, startTime])
+            if DEBUG: print str(chan) + ' - ' + str(startTime) + str(endTime)
+            try:
+                c.execute('SELECT * FROM programs WHERE channel = ? AND start_date < ? AND end_date > ?', [chan, endTime, startTime])
+            except Exception:
+                if DEBUG: print "InterfaceError on zattooHiQ"
+                return
+            
             r=c.fetchall()
 
             for row in r:

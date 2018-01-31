@@ -3,7 +3,6 @@
   
   <include name="HomeMainMenuHorizontal">
 	<control type="group">
-	
 	<control type="list" id="9000">	
 	  <include condition="!Skin.HasSetting(HomeMainMenu2)">HomemenuLeftWebOS</include>
       <include condition="Skin.HasSetting(HomeMainMenu2)">HomemenuLeftTizen</include>
@@ -16,20 +15,21 @@
 	  <ondown condition="!Skin.HasSetting(HomeMainMenu2)">9001</ondown>	
 	  <ondown condition="Skin.HasSetting(HomeMainMenu2)">9000</ondown>	
 	  <onright condition="!Skin.HasSetting(HomeMainMenu2)">9000</onright> 
-	  <onright condition="Skin.HasSetting(HomeMainMenu2)">9001</onright> 
+	  <onleft condition="Skin.HasSetting(HomeMainMenu2)">9001</onleft> 
 	  <onleft condition="!Skin.HasSetting(HomeMainMenu2)">9000</onleft> 		  
-	  <onleft condition="Container(9000).Hasfocus(1) + Skin.HasSetting(HomeMainMenu2)">18304</onleft><!-- LiveTV -->
-	  <onleft condition="Container(9000).Hasfocus(2) + Skin.HasSetting(HomeMainMenu2)">18305</onleft><!-- Radio -->
-	  <onleft condition="Container(9000).Hasfocus(3) + Skin.HasSetting(HomeMainMenu2)">18306</onleft><!-- Filme -->
-	  <onleft condition="Container(9000).Hasfocus(4) + Skin.HasSetting(HomeMainMenu2)">18308</onleft><!-- Videos -->
-	  <onleft condition="[Container(9000).Hasfocus(5) | Container(9000).Hasfocus(6) | Container(9000).Hasfocus(7) | Container(9000).Hasfocus(19) | Container(9000).Hasfocus(20) | Container(9000).Hasfocus(41) | Container(9000).Hasfocus(42) | Container(9000).Hasfocus(43) | Container(9000).Hasfocus(44) | Container(9000).Hasfocus(45)] + Skin.HasSetting(HomeMainMenu2)">18309</onleft><!-- Playlisten -->
-	  <onleft condition="Container(9000).Hasfocus(8) + Skin.HasSetting(HomeMainMenu2)">18307</onleft><!-- Serien -->
-	  <onleft condition="Container(9000).Hasfocus(9)">1860</onleft><!-- SimplePlaylists -->
-	  <onleft condition="Container(9000).Hasfocus(10) + Skin.HasSetting(HomeMainMenu2)">18311</onleft><!-- Music -->  
-	  <onleft condition="Container(9000).Hasfocus(11) + Skin.HasSetting(HomeMainMenu2)">18312</onleft><!-- Apps -->
-	  <onleft condition="Container(9000).Hasfocus(12) + Skin.HasSetting(HomeMainMenu2)">18310</onleft><!-- Musicvideos -->
-	  <onleft condition="Container(9000).Hasfocus(13) + Skin.HasSetting(HomeMainMenu2)">18313</onleft><!-- Pictures -->
-	  <onleft condition="Container(9000).Hasfocus(31) + Skin.HasSetting(HomeMainMenu2)">18313</onleft><!-- News Addon -->
+	  <onright condition="Container(9000).Hasfocus(1) + Skin.HasSetting(HomeMainMenu2)">18304</onright><!-- LiveTV -->
+	  <onright condition="Container(9000).Hasfocus(2) + Skin.HasSetting(HomeMainMenu2)">18305</onright><!-- Radio -->
+	  <onright condition="Container(9000).Hasfocus(3) + Skin.HasSetting(HomeMainMenu2)">300001</onright><!-- Filme -->
+	  <onright condition="Container(9000).Hasfocus(4) + Skin.HasSetting(HomeMainMenu2)">18308</onright><!-- Videos -->
+	  <onright condition="[Container(9000).Hasfocus(5) | Container(9000).Hasfocus(6) | Container(9000).Hasfocus(7) | Container(9000).Hasfocus(19) | Container(9000).Hasfocus(20) | Container(9000).Hasfocus(41) | Container(9000).Hasfocus(42) | Container(9000).Hasfocus(43) | Container(9000).Hasfocus(44) | Container(9000).Hasfocus(45)] + Skin.HasSetting(HomeMainMenu2)">18309</onright><!-- Playlisten -->
+	  <onright condition="Container(9000).Hasfocus(8) + Skin.HasSetting(HomeMainMenu2)">300002</onright><!-- Serien -->
+	  <onright condition="Container(9000).Hasfocus(9)">1860</onright><!-- SimplePlaylists -->
+	  <onright condition="Container(9000).Hasfocus(10) + Skin.HasSetting(HomeMainMenu2)">18311</onright><!-- Music -->  
+	  <onright condition="Container(9000).Hasfocus(11) + Skin.HasSetting(HomeMainMenu2)">18501</onright><!-- Apps -->
+	  <onright condition="Container(9000).Hasfocus(12) + Skin.HasSetting(HomeMainMenu2)">18310</onright><!-- Musicvideos -->
+	  <onright condition="Container(9000).Hasfocus(13) + Skin.HasSetting(HomeMainMenu2)">18313</onright><!-- Pictures -->
+	  <onright condition="Container(9000).Hasfocus(32) + Skin.HasSetting(HomeMainMenu2)">300001</onright><!-- Search Addon -->
+	  <onright condition="Container(9000).Hasfocus(31) + Skin.HasSetting(HomeMainMenu2)">709030</onright><!-- AVM Addon -->
 	  <onup condition="Skin.HasSetting(HomeMainMenu2)">9000</onup>	    
 	  <onup condition="Container(9000).Hasfocus(1) + !Skin.HasSetting(HomeMainMenu2)">8304</onup><!-- LiveTV -->
 	  <onup condition="Container(9000).Hasfocus(2) + !Skin.HasSetting(HomeMainMenu2)">8305</onup><!-- Radio -->
@@ -100,16 +100,16 @@
       </itemlayout>
 	  <itemlayout condition="Skin.HasSetting(HomeMainMenu2)" height="120" width="158">
 	    <control type="group">
-	    <animation effect="slide" end="600,0" time="1000" tween="back" easing="inout" condition="ControlGroup(9001).HasFocus | Control.HasFocus(43444) | Control.HasFocus(43445) | Control.HasFocus(43644) | Control.HasFocus(43944)">Conditional</animation>
+	    <animation effect="slide" end="-600,0" time="1000" tween="back" easing="inout" condition="ControlGroup(9001).HasFocus | Control.HasFocus(43444) | Control.HasFocus(43445) | Control.HasFocus(43644) | Control.HasFocus(43944)">Conditional</animation>
 		<control type="group">
-		  <left>370</left>
+		  <left>170</left>
 		  <top>0</top>
 		  <width>100</width>
 		  <height>100</height>
 		  <include>TizenNoFocusButton</include>
 		</control>
 		<control type="image">
-          <left>399</left>
+          <left>199</left>
           <top>29</top>
           <width>40</width>
           <height>40</height>
@@ -119,7 +119,7 @@
 		<control type="label">
           <left>0</left>
           <top>30</top>
-          <width>350</width>
+          <width>150</width>
           <height>36</height>
           <font>primal_15</font>
           <label>$INFO[ListItem.Label]</label>
@@ -189,9 +189,9 @@
       </focusedlayout>
 	  <focusedlayout condition="Skin.HasSetting(HomeMainMenu2)" height="120" width="158">
 	    <control type="group">
-	    <animation effect="slide" end="600,0" time="1000" tween="back" easing="inout" condition="ControlGroup(9001).HasFocus | Control.HasFocus(43444) | Control.HasFocus(43445) | Control.HasFocus(43644) | Control.HasFocus(43944)">Conditional</animation>
+	    <animation effect="slide" end="-600,0" time="1000" tween="back" easing="inout" condition="ControlGroup(9001).HasFocus | Control.HasFocus(43444) | Control.HasFocus(43445) | Control.HasFocus(43644) | Control.HasFocus(43944)">Conditional</animation>
 		<control type="image">
-		  <left>370</left>
+		  <left>170</left>
 		  <top>0</top>
 		  <width>100</width>
 		  <height>100</height>
@@ -200,7 +200,7 @@
 		  <visible>Control.HasFocus(9000)</visible> 
 		</control>	
 		<control type="image">
-		  <left>370</left>
+		  <left>170</left>
 		  <top>0</top>
 		  <width>100</width>
 		  <height>100</height>
@@ -209,7 +209,7 @@
 		  <visible>!Control.HasFocus(9000)</visible> 
 		</control>		
 		<control type="image">
-          <left>399</left>
+          <left>199</left>
           <top>29</top>
           <width>40</width>
           <height>40</height>
@@ -219,9 +219,9 @@
 		<control type="label">
           <left>0</left>
           <top>30</top>
-          <width>350</width>
+          <width>150</width>
           <height>36</height>
-          <font>primal_15</font>
+          <font>primal_13_Bold</font>
           <label>$INFO[ListItem.Label]</label>
 		  <textcolor>$VAR[ColorFontNormal]</textcolor>
 	      <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
@@ -284,17 +284,17 @@
       <left>0</left>
       <top>0</top>
 	  <animation effect="fade" start="0" time="100" condition="ControlGroup(9001).HasFocus | Control.HasFocus(43444) | Control.HasFocus(43445) | Control.HasFocus(43644) | Control.HasFocus(43944)">Conditional</animation>
-	  <animation effect="slide" end="-500,0" time="1000" tween="Back" easing="inout" condition="ControlGroup(9001).HasFocus | Control.HasFocus(43444) | Control.HasFocus(43445) | Control.HasFocus(43644) | Control.HasFocus(43944)">Conditional</animation>
+	  <animation effect="slide" end="450,0" time="1000" tween="Back" easing="inout" condition="ControlGroup(9001).HasFocus | Control.HasFocus(43444) | Control.HasFocus(43445) | Control.HasFocus(43644) | Control.HasFocus(43944)">Conditional</animation>
       <control type="list" id="9010">
-	    <left>1900</left>
+	    <left>-600</left>
 	    <top>190</top>
 		<width>500</width>
 		<height>720</height>
-		<onright>9000</onright>
-        <onleft condition="!Container(9000).Hasfocus(1) + !Container(9000).Hasfocus(2) + !Container(9000).Hasfocus(3) + !Container(9000).Hasfocus(5) + !Container(9000).Hasfocus(6) + !Container(9000).Hasfocus(7) + !Container(9000).Hasfocus(8) + !Container(9000).Hasfocus(10) + !Container(9000).Hasfocus(12) + !Container(9010).HasFocus(260090) + !Container(9010).HasFocus(260091) + !Container(9010).HasFocus(260092) + !Container(9010).HasFocus(260093)">43444</onleft>
-		<onleft condition="Container(9010).HasFocus(260094)">43444</onleft>
-		<onleft condition="Container(9000).Hasfocus(1) | Container(9000).Hasfocus(2)">43445</onleft>
-		<onleft condition="Container(9000).Hasfocus(3) | Container(9000).Hasfocus(5) | Container(9000).Hasfocus(6) | Container(9000).Hasfocus(7) | Container(9000).Hasfocus(8) | Container(9000).Hasfocus(10) | Container(9000).Hasfocus(12) | Container(9010).HasFocus(260090) | Container(9010).HasFocus(260091) | Container(9010).HasFocus(260092) | Container(9010).HasFocus(260093)">43944</onleft>
+		<onleft>9000</onleft>
+        <onright condition="!Container(9000).Hasfocus(1) + !Container(9000).Hasfocus(2) + !Container(9000).Hasfocus(3) + !Container(9000).Hasfocus(5) + !Container(9000).Hasfocus(6) + !Container(9000).Hasfocus(7) + !Container(9000).Hasfocus(8) + !Container(9000).Hasfocus(10) + !Container(9000).Hasfocus(12) + !Container(9010).HasFocus(260090) + !Container(9010).HasFocus(260091) + !Container(9010).HasFocus(260092) + !Container(9010).HasFocus(260093)">43444</onright>
+		<onright condition="Container(9010).HasFocus(260094)">43444</onright>
+		<onright condition="Container(9000).Hasfocus(1) | Container(9000).Hasfocus(2)">43445</onright>
+		<onright condition="Container(9000).Hasfocus(3) | Container(9000).Hasfocus(5) | Container(9000).Hasfocus(6) | Container(9000).Hasfocus(7) | Container(9000).Hasfocus(8) | Container(9000).Hasfocus(10) | Container(9000).Hasfocus(12) | Container(9010).HasFocus(260090) | Container(9010).HasFocus(260091) | Container(9010).HasFocus(260092) | Container(9010).HasFocus(260093)">43944</onright>
         <onup>9010</onup>
         <ondown>9010</ondown>
         <scrolltime tween="Quadratic" easing="out">500</scrolltime>
@@ -376,7 +376,16 @@
       </control>	 
    </control>  
    <control type="group">
-   <visible>Skin.HasSetting(HomeMainMenu2)</visible>	
+   <visible>Skin.HasSetting(HomeMainMenu2)</visible>
+        <control type="image">
+		  <left>350</left>
+		  <top>160</top>
+		  <width>26</width>
+		  <height>760</height>
+		  <texture background="true">default/panel_schatten_links.png</texture>
+		  <aspectratio>stretch</aspectratio>
+		  <colordiffuse>$VAR[ColorFontShadow]</colordiffuse>
+		</control>	
 		<control type="label">
 		  <include>widget_inzoom_submenu</include>
           <left>860</left>
@@ -398,7 +407,7 @@
           <width>1000</width>
           <height>36</height>
           <font>primal_15</font>
-          <label>« Widget - Hauptmenu »</label>
+          <label>« Hauptmenu - Widget »</label>
 		  <textcolor>$VAR[ColorFontNormal]</textcolor>
 	      <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 		  <align>right</align>
@@ -412,7 +421,7 @@
           <width>1000</width>
           <height>36</height>
           <font>primal_15</font>
-          <label>« Widget - Submenu »</label>
+          <label>« Submenu - Widget »</label>
 		  <textcolor>$VAR[ColorFontNormal]</textcolor>
 	      <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 		  <align>right</align>

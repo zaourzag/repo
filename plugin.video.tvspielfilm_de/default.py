@@ -21,8 +21,9 @@ from operator import itemgetter
 from StringIO import StringIO
 import gzip
 
-token = '23a1db22b51b13162bd0b86b24e556c8c6b6272d reraeB'
-getheader = {'Api-Auth': token[::-1]}
+#token = 'ffc9a283b511b7e11b326fdc3d76c5559b50544e reraeB'
+#getheader = {'Api-Auth': 'reraeB '+token[::-1]} = Gespiegelt
+#getheader = {'Api-Auth': 'Bearer '+token} = Original
 
 main_url = sys.argv[0]
 pluginhandle = int(sys.argv[1])
@@ -30,7 +31,7 @@ args = urlparse.parse_qs(sys.argv[2][1:])
 
 addonID = 'plugin.video.tvspielfilm_de'
 addon = xbmcaddon.Addon(id=addonID)
-socket.setdefaulttimeout(40)
+socket.setdefaulttimeout(30)
 translation = addon.getLocalizedString
 addonPath = xbmc.translatePath(addon.getAddonInfo('path')).decode('utf-8')
 dataPath = xbmc.translatePath(addon.getAddonInfo('profile')).decode('utf-8')
@@ -46,11 +47,10 @@ forceViewMode = addon.getSetting("forceView")
 viewMode = str(addon.getSetting("viewID"))
 baseUrl = "http://www.tvspielfilm.de"
 dateUrl = "/mediathek/nach-datum/"
-
+ZDFapiUrl = "https://api.zdf.de"
 
 if not os.path.isdir(dataPath):
 	os.makedirs(dataPath)
-
 
 def debug(msg, level=xbmc.LOGNOTICE):
 	if enableDebug == 'true':
@@ -72,7 +72,6 @@ def index():
 	d = m3.split('.'); w3 = ("Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag")[date(int(d[2]), int(d[1]), int(d[0])).weekday()]
 	d = m4.split('.'); w4 = ("Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag")[date(int(d[2]), int(d[1]), int(d[0])).weekday()]
 	d = m5.split('.'); w5 = ("Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag", "Sonntag")[date(int(d[2]), int(d[1]), int(d[0])).weekday()]
-
 	addDir("Auswahl vom "+w1+", den "+m1, baseUrl+dateUrl+"?date="+s1, 'listVideos_Day_Channel', icon)
 	addDir("Auswahl vom "+w2+", den "+m2, baseUrl+dateUrl+"?date="+s2, 'listVideos_Day_Channel', icon)
 	addDir("Auswahl vom "+w3+", den "+m3, baseUrl+dateUrl+"?date="+s3, 'listVideos_Day_Channel', icon)
@@ -116,6 +115,7 @@ def listVideos_Day_Channel(url=""):
 			match3 = re.compile('<span class="logotype chl_bg_m.+?">(.*?)</span>', re.DOTALL).findall(entry)
 			channelID = cleanTitle(match3[0].strip())
 			channelID = cleanStation(channelID.strip())
+			studio = channelID.replace('(', '').replace(')', '').replace('  ', '')
 			url = re.compile('<div class="teaser">\s+<a href="(http://www.tvspielfilm.de/mediathek/.*?)"', re.DOTALL).findall(entry)[0]
 			match4 = re.compile('<p class="teaser">(.*?)</p>', re.DOTALL).findall(entry)
 			plot = cleanTitle(match4[0].strip())
@@ -123,17 +123,14 @@ def listVideos_Day_Channel(url=""):
 				name = title+channelID
 			else:
 				name = title
-			if showNOW == 'true':
-				pass
-			else:
+			if showNOW == 'false':
 				if ("RTL" in channelID or "VOX" in channelID or "SUPER" in channelID):
 					continue
 			debug("(listVideos_Day_Channel) Name : %s" %name)
 			debug("(listVideos_Day_Channel) Link : %s" %url)
 			debug("(listVideos_Day_Channel) Icon : %s" %thumb)
-			addLink(name, url, 'playVideo', thumb, plot)
-		except:
-			pass
+			addLink(name, url, 'playVideo', thumb, studio, plot)
+		except: pass
 	xbmcplugin.endOfDirectory(pluginhandle)
 	if forceViewMode == 'true':
 		xbmc.executebuiltin('Container.SetViewMode('+viewMode+')')
@@ -154,9 +151,7 @@ def listChannel():
 		channelID = cleanTitle(logo.strip())
 		channelID = cleanStation(channelID.strip())
 		name = channelID.replace('(', '').replace(')', '').replace(' ', '')
-		if showNOW == 'true':
-			pass
-		else:
+		if showNOW == 'false':
 			if ("RTL" in channelID or "VOX" in channelID or "SUPER" in channelID):
 				continue
 		debug("(listChannel) Link : %s%s" %(url, channelID))
@@ -198,21 +193,19 @@ def listVideosNew():
 			match3 = re.compile('<span class="logotype chl_bg_m.+?">(.*?)</span>', re.DOTALL).findall(entry)
 			channelID = cleanTitle(match3[0].strip())
 			channelID = cleanStation(channelID.strip())
+			studio = channelID.replace('(', '').replace(')', '').replace('  ', '')
 			if showTVchannel == 'true':
 				name = title+channelID
 			else:
 				name = title
-			if showNOW == 'true':
-				pass
-			else:
+			if showNOW == 'false':
 				if ("RTL" in channelID or "VOX" in channelID or "SUPER" in channelID):
 					continue
 			debug("(listVideosNew) Name : %s" %name)
 			debug("(listVideosNew) Link : %s" %url)
 			debug("(listVideosNew) Icon : %s" %thumb)
-			addLink(name, url, 'playVideo', thumb)
-		except:
-			pass
+			addLink(name, url, 'playVideo', thumb, studio)
+		except: pass
 	xbmcplugin.endOfDirectory(pluginhandle)
 	if forceViewMode == 'true':
 		xbmc.executebuiltin('Container.SetViewMode('+viewMode+')')
@@ -246,6 +239,7 @@ def listVideosGenre(type):
 			match3 = re.compile('<a href="http://www.tvspielfilm.de/tv-programm/.+?" target="_self" title=".+?">(.*?)</a>', re.DOTALL).findall(entry)
 			channelID = cleanTitle(match3[0].strip())
 			channelID = cleanStation(channelID.strip())
+			studio = channelID.replace('(', '').replace(')', '').replace('  ', '')
 			url = re.compile('<a href="(http://www.tvspielfilm.de/mediathek/.*?)"', re.DOTALL).findall(entry)[0]
 			img = re.compile('<img src="(http.*?.jpg)"', re.DOTALL).findall(entry)[0]
 			if ',' in img:
@@ -256,17 +250,14 @@ def listVideosGenre(type):
 				name = title+channelID
 			else:
 				name = title
-			if showNOW == 'true':
-				pass
-			else:
+			if showNOW == 'false':
 				if ("RTL" in channelID or "VOX" in channelID or "SUPER" in channelID):
 					continue
 			debug("(listVideosGenre) Name : %s" %name)
 			debug("(listVideosGenre) Link : %s" %url)
 			debug("(listVideosGenre) Icon : %s" %thumb)
-			addLink(name, url, 'playVideo', thumb)
-		except:
-			pass
+			addLink(name, url, 'playVideo', thumb, studio)
+		except: pass
 	xbmcplugin.endOfDirectory(pluginhandle)
 	if forceViewMode == 'true':
 		xbmc.executebuiltin('Container.SetViewMode('+viewMode+')')
@@ -284,8 +275,8 @@ def playVideo(url):
 		xbmc.executebuiltin('Notification(TvSpielfilm : [COLOR red]!!! MediathekURL - ERROR !!![/COLOR], ERROR = [COLOR red]*MediathekLink* der Sendung NICHT gefunden ![/COLOR],6000,'+icon+')')
 		pass
 	xbmc.log("[TvSpielfilm](playVideo) frei", xbmc.LOGNOTICE)
-	if url.startswith("http://www.arte.tv"):
-		videoID = re.compile("http://www.arte.tv/de/videos/([^/]+?)/", re.DOTALL).findall(url)[0]
+	if url.startswith("https://www.arte.tv"):
+		videoID = re.compile("https://www.arte.tv/de/videos/([^/]+?)/", re.DOTALL).findall(url)[0]
 		xbmc.sleep(1000)
 		try:
 			pluginID_1 = 'plugin.video.arte_tv'
@@ -311,9 +302,9 @@ def playVideo(url):
 			videoID = videoID.split('&')[0]
 		return ArdGetVideo(videoID)
 	elif url.startswith("https://www.zdf.de"):
-		url = url[:url.find(".html")]
-		videoID = urllib.unquote_plus(url)+".html"
-		return ZdfGetVideo(videoID)
+		cleanURL = url[:url.find('.html')]
+		videoURL = urllib.unquote_plus(cleanURL)+".html"
+		return ZdfGetVideo(videoURL)
 	elif url.startswith("http://www.nowtv.de"):
 		try:
 			match3 = re.compile("/(.+?)/(.+?)/(.+?)/", re.DOTALL).findall(url)
@@ -347,6 +338,8 @@ def ArdGetVideo(id):
 		if preferredStreamType == "0" and muvidLinks:
 			for muvidLink in muvidLinks:
 				stream = muvidLink["_stream"]
+				if not stream.startswith('http'):
+					stream = "http:"+stream
 				if muvidLink["_quality"] == 'auto' and 'mil/master.m3u8' in stream:
 					mp4URL = stream
 					xbmc.log("[TvSpielfilm](ArdGetVideo) m3u8-Stream (ARD+3) : %s" %(mp4URL), xbmc.LOGNOTICE)
@@ -372,6 +365,8 @@ def ArdGetVideo(id):
 				else:
 					ARD_Url = stream
 					xbmc.log("[TvSpielfilm](ArdGetVideo) Wir haben 1 Stream (ARD+3) - wähle Diesen : %s" %(ARD_Url), xbmc.LOGNOTICE)
+				if not ARD_Url.startswith('http'):
+					ARD_Url = "http:"+ARD_Url
 				mp4URL = VideoBEST(ARD_Url) # *mp4URL* Qualität nachbessern, überprüfen, danach abspielen
 		finalURL = mp4URL
 		if not finalURL:
@@ -396,28 +391,44 @@ def ndrPodcastHack(url):
 			YYYY = YYYYMMDD[:4]
 			MMDD = YYYYMMDD[4:]
 			return 'http://hls.ndr.de/i/ndr/'+ YYYY +'/'+ MMDD +'/'+ uri
-	except:
-		pass
+	except: pass
 	return url
 
 def dwHack(url):
 	try:
 		if url.startswith('http://tv-download.dw.de'):
 			return url.replace('_sd.mp4','_hd_dwdownload.mp4')
-	except:
-		pass
+	except: pass
 	return url
 
 def ZdfGetVideo(url):
-	try:
+	try: 
 		content = getUrl(url)
-		link = re.compile('"content": "(https://api.zdf.de/content/.*?)",', re.DOTALL).findall(content)[0]
-		response = getUrl(link,getheader)
-		ID = re.compile('"uurl":"(.*?)",', re.DOTALL).findall(response)[0]
-		LinkDirekt = getUrl("https://api.zdf.de/tmd/2/portal/vod/ptmd/mediathek/"+ID,getheader)
-		#LinkDirekt2 = getUrl("https://api.zdf.de/tmd/2/ngplayer_2_3/vod/ptmd/mediathek/"+ID)
-		jsonObject = json.loads(LinkDirekt)
-		return ZdfExtractQuality(jsonObject)
+		firstURL = json.loads(re.compile("data-zdfplayer-jsb='(\{.*?\})'", re.DOTALL).findall(content)[0])
+		if firstURL:
+			teaser = firstURL['content']
+			secret = firstURL['apiToken']
+			getheader = {'Api-Auth': 'Bearer '+secret}
+			xbmc.log("[TvSpielfilm](ZdfGetVideo) SECRET gefunden (ZDF+3) : xxxxx %s xxxxx" %str(secret), xbmc.LOGNOTICE)
+			if not teaser.startswith('http'):
+				teaser = ZDFapiUrl+teaser
+			secondURL = getUrl(teaser,getheader)
+			element = json.loads(secondURL)
+			if element['contentType'] == "episode":
+				if not element['hasVideo']:
+					return False
+				if "mainVideoContent" in element:
+					component = element['mainVideoContent']['http://zdf.de/rels/target']
+				elif "mainContent" in element:
+					component = element['mainContent'][0]['videoContent'][0]['http://zdf.de/rels/target']
+				videoFOUND = ZDFapiUrl+component['http://zdf.de/rels/streams/ptmd']
+			elif element['contentType'] == "clip":
+				videoFOUND = ZDFapiUrl+element['mainVideoContent']['http://zdf.de/rels/target']['http://zdf.de/rels/streams/ptmd']
+				#videoFOUND2 = ZDFapiUrl+element['mainVideoContent']['http://zdf.de/rels/target']['http://zdf.de/rels/streams/ptmd-template'].replace('{playerId}', 'ngplayer_2_3')
+			if videoFOUND:
+				thirdURL = getUrl(videoFOUND,getheader)
+				jsonObject = json.loads(thirdURL)
+				return ZdfExtractQuality(jsonObject)
 	except:
 		xbmc.log("[TvSpielfilm](ZdfGetVideo) AbspielLink-00 (ZDF+3) : *ZDF-Plugin* Der angeforderte -VideoLink- existiert NICHT !!!", xbmc.LOGERROR)
 		xbmc.log("[TvSpielfilm](playVideo) --- ENDE WIEDERGABE ANFORDERUNG ---", xbmc.LOGNOTICE)
@@ -479,7 +490,7 @@ def queueVideo(url,name,thumb):
 def VideoBEST(best_url):
 	# *mp4URL* Qualität nachbessern, überprüfen, danach abspielen
 	standards = [best_url,"",""]
-	if ('pd-videos.daserste.de' in standards[0]):
+	if ('pd-videos.daserste.de' in standards[0] or 'pdvideosdaserste-' in standards[0]):
 		standards[1] = standards[0].replace('/960-1', '/1280-1')
 	else:
 		standards[1] = standards[0].replace('1456k_p13v11', '2328k_p35v11').replace('1456k_p13v12', '2328k_p35v12').replace('1496k_p13v13', '2328k_p35v13').replace('2256k_p14v11', '2328k_p35v11').replace('2256k_p14v12', '2328k_p35v12').replace('2296k_p14v13', '2328k_p35v13').replace('.hq.mp4', '.hd.mp4').replace('.l.mp4', '.xl.mp4').replace('_C.mp4', '_X.mp4')
@@ -497,17 +508,16 @@ def getUrl(url,headers=False):
 		for key in headers:
 			req.add_header(key, headers[key])
 	else:
-		req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:49.0) Gecko/20100101 Firefox/32.0')
-		req.add_header('Accept-Encoding','gzip,deflate')
-	response = urllib2.urlopen(req)
+		req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:49.0) Gecko/20100101 Firefox/49.0')
+		req.add_header('Accept-Encoding','gzip, deflate')
+	response = urllib2.urlopen(req, timeout=30)
 	if response.info().get('Content-Encoding') == 'gzip':
 		buf = StringIO(response.read())
 		f = gzip.GzipFile(fileobj=buf)
 		link = f.read()
-		f.close()
 	else:
 		link = response.read()
-		response.close()
+	response.close()
 	return link
 
 def cleanTitle(title):
@@ -547,8 +557,7 @@ def cleanStation(channelID):
 				channelID = '  (SRTL)'
 			else:
 				channelID = '  ('+channelID+')'
-		except:
-			pass
+		except: pass
 	elif not channelID in ChannelCode and channelID != "":
 		channelID = '  ('+channelID+')'
 	else:
@@ -566,7 +575,7 @@ def parameters_string_to_dict(parameters):
 	return paramDict
 
 def addDir(name, url, mode, iconimage):
-	u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)+"&thumb="+urllib.quote_plus(iconimage)
+	u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)+"&iconimage="+urllib.quote_plus(iconimage)
 	ok = True
 	liz = xbmcgui.ListItem(name, iconImage="DefaultFolder.png", thumbnailImage=iconimage)
 	liz.setInfo(type="Video", infoLabels={"Title": name})
@@ -579,12 +588,12 @@ def addDir(name, url, mode, iconimage):
 	ok = xbmcplugin.addDirectoryItem(pluginhandle, url=u, listitem=liz, isFolder=True)
 	return ok
 
-def addLink(name, url, mode, iconimage, plot="", duration="", date=""):
+def addLink(name, url, mode, iconimage, studio="", plot="", duration="", date=""):
 	u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
 	ok = True
 	plot = plot.decode("UTF-8")
 	liz = xbmcgui.ListItem(name, iconImage="DefaultVideo.png", thumbnailImage=iconimage)
-	liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": plot, "Duration": duration})
+	liz.setInfo(type="Video", infoLabels={"Title": name, "Studio": studio, "Plot": plot, "Duration": duration})
 	liz.setProperty("IsPlayable", "true")
 	if useThumbAsFanart and iconimage:
 		liz.setProperty("fanart_image", iconimage)
@@ -601,7 +610,7 @@ params = parameters_string_to_dict(sys.argv[2])
 name = urllib.unquote_plus(params.get('name', ''))
 url = urllib.unquote_plus(params.get('url', ''))
 mode = urllib.unquote_plus(params.get('mode', ''))
-thumb = urllib.unquote_plus(params.get('thumb', ''))
+iconimage = urllib.unquote_plus(params.get('iconimage', ''))
 plot = urllib.unquote_plus(params.get('plot', ''))
 
 if mode == 'listVideos_Day_Channel':

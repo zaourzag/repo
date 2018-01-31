@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <includes>
         <include name="SmartHome">
-                <control type="group" id="5777">
+                <control type="group" id="4150">
                         <left>40</left>
                         <top>80</top>
                         <control type="button">
@@ -12,20 +12,20 @@
                                 <height>40</height>
                                 <texturefocus>arrow-big-left.png</texturefocus>
                                 <texturenofocus>arrow-big-left.png</texturenofocus>
-                                <onclick>Control.Move(58501,-1)</onclick>
-                                <visible>Control.HasFocus(58501) + Container(58501).HasPrevious</visible>
+                                <onclick>Control.Move(4151,-1)</onclick>
+                                <visible>Control.HasFocus(4151) + Container(4151).HasPrevious</visible>
                                 <include>VisibleFadeEffect</include>
                         </control>
                         <control type="group">
                                 <visible>Container(9000).Hasfocus(1) + System.HasAddon(plugin.program.fritzact)</visible>
                                 <include>VisibleFadeEffect</include>
-                                <control type="list" id="58501">
+                                <control type="list" id="4151">
                                         <left>0</left>
                                         <top>0</top>
                                         <width>870</width>
                                         <height>220</height>
-                                        <onleft>58501</onleft>
-                                        <onright>58501</onright>
+                                        <onleft>4151</onleft>
+                                        <onright>4151</onright>
                                         <onup>20</onup>
                                         <ondown condition="System.HasAddon(script.globalsearch)">608</ondown>
                                         <ondown condition="!System.HasAddon(script.globalsearch)">603</ondown>
@@ -231,7 +231,7 @@
                                                         <align>center</align>
                                                         <aligny>center</aligny>
                                                         <label>$INFO[ListItem.Label]</label>
-                                                        <visible>!Control.HasFocus(58501)</visible>
+                                                        <visible>!Control.HasFocus(4151)</visible>
                                                 </control>
                                                 <control type="label">
                                                         <description>Actor Name</description>
@@ -246,7 +246,7 @@
                                                         <align>center</align>
                                                         <aligny>center</aligny>
                                                         <label>$INFO[ListItem.Label]</label>
-                                                        <visible>Control.HasFocus(58501)</visible>
+                                                        <visible>Control.HasFocus(4151)</visible>
                                                 </control>
                                                  <control type="label">
                                                         <description>Actor Presence</description>
@@ -367,9 +367,9 @@
                                                         <label>$INFO[ListItem.Label2]</label>
                                                 </control>
                                         </focusedlayout>
-                                        <onclick condition="String.IsEqual(Container(58501).ListItem.Property(type),switch)">RunScript(plugin.program.fritzact,action=toggle&amp;ain=$INFO[ListItem.Label2])</onclick>
-                                        <onclick condition="String.IsEqual(Container(58501).ListItem.Property(type),group)">RunScript(plugin.program.fritzact,action=toggle&amp;ain=$INFO[ListItem.Label2])</onclick>
-                                        <onclick condition="String.IsEqual(Container(58501).ListItem.Property(type),thermostat)">RunScript(plugin.program.fritzact,action=temp&amp;ain=$INFO[ListItem.Label2])</onclick>
+                                        <onclick condition="String.IsEqual(Container(4151).ListItem.Property(type),switch)">RunScript(plugin.program.fritzact,action=toggle&amp;ain=$INFO[ListItem.Label2])</onclick>
+                                        <onclick condition="String.IsEqual(Container(4151).ListItem.Property(type),group)">RunScript(plugin.program.fritzact,action=toggle&amp;ain=$INFO[ListItem.Label2])</onclick>
+                                        <onclick condition="String.IsEqual(Container(4151).ListItem.Property(type),thermostat)">RunScript(plugin.program.fritzact,action=temp&amp;ain=$INFO[ListItem.Label2])</onclick>
                                         <content target="programs">plugin://plugin.program.fritzact?ts=$INFO[Window(Home).Property(fritzact.timestamp)]</content>
                                 </control>
                                 <control type="button">
@@ -380,8 +380,8 @@
                                         <height>40</height>
                                         <texturefocus>arrow-big-right.png</texturefocus>
                                         <texturenofocus>arrow-big-right.png</texturenofocus>
-                                        <onclick>Control.Move(58501,1)</onclick>
-                                        <visible>Control.HasFocus(58501) + Container(58501).HasNext</visible>
+                                        <onclick>Control.Move(4151,1)</onclick>
+                                        <visible>Control.HasFocus(4151) + Container(4151).HasNext</visible>
                                         <include>VisibleFadeEffect</include>
                                 </control>
                          </control>
