@@ -227,16 +227,17 @@ def rubrik(name,titlex="",bild="") :
   freeonly=addon.getSetting("freeonly")
   kodi18=addon.getSetting("kodi18")
   debug("Rubrik New Menu")
-  #xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)   
-  xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_NONE)
-  #http://api.tvnow.de/v3/formats/seo?fields=*,.*,formatTabs.*,formatTabs.headline&name=chicago-fire
+  xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)   
+  #xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_NONE)
+  #http://api.tvnow.de/v3/formats/seo?fields=*,.*,formatTabs.*,formatTabs.headline,&name=chicago-fire
   basurl="http://api.tvnow.de/v3/formats/"+str(name)+"?fields="
-  div=urllib.quote_plus("*,.*,formatTabs.*,formatTabs.headline")
+  div=urllib.quote_plus("*,.*,formatTabs.*,formatTabs.headline,annualNavigation.*")
   url=basurl+div
   debug(url)
   content = cache.cacheFunction(getUrl,url)      
   kapitelliste = json.loads(content, object_pairs_hook=OrderedDict)   
   xidd=kapitelliste["id"]
+  
   menux=[]
   found=0
   if xbmcvfs.exists(favdatei):
@@ -249,36 +250,19 @@ def rubrik(name,titlex="",bild="") :
   else:
         menux.append(addDir("Lösche Favoriten", str(name), mode="favdel", iconimage=""))
   xbmcplugin.addDirectoryItems(addon_handle,menux)
-  try:
-    serienanzahl=kapitelliste["formatTabs"]["total"]  
-    debug("serienanzahl gefunden :"+ str(serienanzahl))
-  except:
-    serienanzahl=1
-  debug("serienanzahl gefunden :"+ str(serienanzahl))   
-  if (serienanzahl==1):
-    idd=kapitelliste["id"]
-    debug(":: ::"+str(idd))
-    #uurl="http://api.tvnow.de/v3/formatlists/"+str(idd)+"?maxPerPage=500&fields=*,formatTabPages.*,formatTabPages.container.*,formatTabPages.container.movies.*,formatTabPages.container.movies.format.*,formatTabPages.container.movies.paymentPaytypes.*,formatTabPages.container.movies.pictures"    
-    uurl="https://api.tvnow.de/v3/movies?fields=[%22broadcastStartDate%22,%22articleShort%22,%22articleLong%22,%22id%22,%22episode%22,%22season%22,%22title%22,%22articleShort%22,%22isDrm%22,%22free%22,%22teaserText%22,%22deeplinkUrl%22,%22duration%22,%22manifest%22,[%22dash%22,%22dashclear%22],%22format%22,[%22categoryId%22]]&order=id%20desc&filter={%22FormatId%22:"+str(idd)+"}&maxPerPage=100"   
-    #content = cache.cacheFunction(getUrl,uurl)      
-    #if "movies.error.not.found" in content:       
-    uurl="https://api.tvnow.de/v3/movies?fields=[%22broadcastStartDate%22,%22articleShort%22,%22articleLong%22,%22id%22,%22episode%22,%22season%22,%22title%22,%22articleShort%22,%22isDrm%22,%22free%22,%22teaserText%22,%22deeplinkUrl%22,%22duration%22,%22manifest%22,[%22dash%22,%22dashclear%22],%22format%22,[%22categoryId%22]]&order=id%20desc&filter={%22FormatId%22:"+str(idd)+"}&maxPerPage=100"   
-    
-    staffel(str(idd),uurl)
-  else:    
-    for kapitel in kapitelliste["formatTabs"]["items"]:
+  if kapitelliste["annualNavigation"]["total"]==1:
+      urlx='https://api.tvnow.de/v3/movies?fields=*,format,paymentPaytypes,pictures,trailers,packages&filter={%20%22FormatId%22%20:%20'+str(xidd)+'}&maxPerPage=3000&order=BroadcastStartDate%20asc'
+      staffel("0",urlx)   
+  else:
+    for kapitel in kapitelliste["annualNavigation"]["items"]:
       debug(kapitel)       
-      idd=kapitel["id"]
-      name=kapitel["headline"]      
-      urlx="http://api.tvnow.de/v3/formatlists/"+str(idd)+"?maxPerPage=500&fields=formatTabPages.container.movies.free,formatTabPages.container.movies.isDrm"      
-      content2 = cache.cacheFunction(getUrl,urlx)    
-      if ('"free":true' in content2 or freeonly=="false") and ('"isDrm":false' in content2  or kodi18 == "true"):
-      #      debug(staffelinfo)
-          uurl="http://api.tvnow.de/v3/formatlists/"+str(idd)+"?maxPerPage=500&fields=*,formatTabPages.*,formatTabPages.container.*,formatTabPages.container.movies.*,formatTabPages.container.movies.format.*,formatTabPages.container.movies.paymentPaytypes.*,formatTabPages.container.movies.pictures"
-          menu.append(addDir(name , url=uurl,nummer=str(idd), mode="staffel", iconimage="",duration="",desc="",title=titlex))                
+      year=str(kapitel["year"] )
+      urlx='https://api.tvnow.de/v3/movies?fields=*,format,paymentPaytypes,pictures,trailers,packages&filter={%22BroadcastStartDate%22:{%22between%22:{%22start%22:%22'+year+'-01-01%2000:00:00%22,%22end%22:%20%22'+year+'-12-31%2023:59:59%22}},%20%22FormatId%22%20:%20'+str(xidd)+'}&maxPerPage=3000&order=BroadcastStartDate%20asc'
+      #content2 = cache.cacheFunction(getUrl,urlx)         
+      menu.append(addDir(year , url=urlx,nummer="", mode="staffel", iconimage="",duration="",desc="",title=titlex))                
                 
-  xbmcplugin.addDirectoryItems(addon_handle,menu)
-  xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
+    xbmcplugin.addDirectoryItems(addon_handle,menu)
+    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 
 def get_sec(time_str):
     h, m, s = time_str.split(':')
@@ -791,7 +775,7 @@ else:
   if mode == 'last':
           staffel("0",url)
   if mode == 'staffel':
-          url="http://api.tvnow.de/v3/formatlists/"+nummer+"?maxPerPage=500&fields=[%22formatTabPages%22,[%22container%22,[%22movies%22,[%22free%22,%22isDrm%22,%22title%22,%22id%22,%22deeplinkUrl%22,%22manifest%22,[%22dashclear%22,%22dash%22],%22duration%22,%22season%22,%22episode%22,%22articleLong%22,%22articleShort%22,%22broadcastStartDate%22,%22teaserText%22,%22format%22,[%22categoryId%22]]]]]"
+          #url="http://api.tvnow.de/v3/formatlists/"+nummer+"?maxPerPage=500&fields=[%22formatTabPages%22,[%22container%22,[%22movies%22,[%22free%22,%22isDrm%22,%22title%22,%22id%22,%22deeplinkUrl%22,%22manifest%22,[%22dashclear%22,%22dash%22],%22duration%22,%22season%22,%22episode%22,%22articleLong%22,%22articleShort%22,%22broadcastStartDate%22,%22teaserText%22,%22format%22,[%22categoryId%22]]]]]"
           staffel(nummer,url)             
   if mode == 'playvideo':
           playvideo(url) 
