@@ -210,7 +210,7 @@ def serien(url):
             desc=""
             freeep="true"
         if (freeep==True or freeonly=="false") :
-            menu.append(addDir(title , url=str(idd), mode="rubrik", iconimage=logo,duration="",desc=desc,title=title,bild=logo))
+            menu.append(addDir(title , url=str(idd), mode="rubrik", iconimage=logo.encode("utf-8"),duration="",desc=desc,title=title,bild=logo.encode("utf-8")))
         counter+=1
     debug("Counter :"+str(counter))
     try:
