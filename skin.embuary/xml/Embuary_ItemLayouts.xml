@@ -240,7 +240,7 @@
 	<!-- Play icon -->
 	<include name="bubble_play">
 		<control type="group">
-			<visible>[!String.IsEmpty(ListItem.DBtype) + !String.IsEmpty(ListItem.DBID)] | [!String.IsEmpty(ListItem.FileNameAndPath) + [String.StartsWith(ListItem.Path,plugin://plugin.video) | String.StartsWith(ListItem.Path,plugin://plugin.audio) | String.Contains(ListItem.AddonType,$LOCALIZE[20094])]] | String.StartsWith(ListItem.Path,pvr://)</visible>
+			<visible>[!String.IsEmpty(ListItem.DBtype) + !String.IsEmpty(ListItem.DBID)] | [!String.IsEmpty(ListItem.FileNameAndPath) + [String.StartsWith(ListItem.Path,plugin://plugin.video) | String.StartsWith(ListItem.Path,plugin://plugin.audio) | String.Contains(ListItem.AddonType,$LOCALIZE[20094])]] | String.StartsWith(ListItem.Path,pvr://) | ListItem.IsFolder</visible>
 			<right>10</right>
 			<bottom>10</bottom>
 			<width>38</width>
@@ -262,6 +262,18 @@
 				<selectedcolor>white</selectedcolor>
 				<align>center</align>
 				<aligny>top</aligny>
+				<visible>![[String.IsEqual(ListItem.DBType,set) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,artist) | ListItem.IsFolder] + !String.IsEqual(ListItem.DBType,album)]</visible>
+			</control>
+			<control type="label">
+				<width>38</width>
+				<height>38</height>
+				<label></label>
+				<font>Material30</font>
+				<textcolor>white</textcolor>
+				<selectedcolor>white</selectedcolor>
+				<align>center</align>
+				<aligny>center</aligny>
+				<visible>[String.IsEqual(ListItem.DBType,set) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,artist) | ListItem.IsFolder] + !String.IsEqual(ListItem.DBType,album)</visible>
 			</control>
 		</control>
 	</include>
@@ -809,6 +821,14 @@
 					<texture diffuse="items/mask_wide.png" background="true">$PARAM[thumb]</texture>
 					<aspectratio scalediffuse="false">scale</aspectratio>
 					<visible>!String.StartsWith(ListItem.Path,pvr://) + !String.StartsWith(ListItem.Icon,Default)</visible>
+				</control>
+				<control type="image">
+					<left>10</left>
+					<bottom>0</bottom>
+					<height>50</height>
+					<texture background="true">$VAR[ListItemClearlogo]</texture>
+					<aspectratio align="left" aligny="bottom">keep</aspectratio>
+					<visible>[!String.IsEmpty(ListItem.Art(fanart)) | !String.IsEmpty(ListItem.Art(tvshow.fanart)) | [!String.IsEmpty(ListItem.Icon) + !String.StartsWith(ListItem.Icon,Default)]] + String.IsEmpty(ListItem.Art(landscape)) + String.IsEmpty(ListItem.Art(tvshow.landscape)) + [Container.Content(movies) | Container.Content(tvshows) | Container.Content(sets) | String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,set)]</visible>
 				</control>
 				<control type="group">
 					<width>424</width>
@@ -1705,7 +1725,7 @@
 			<control type="group">
 				<visible>!String.IsEqual(ListItem.DBType,musicvideo)</visible>
 				<control type="label">
-					<top>26</top>
+					<top>23</top>
 					<left>100</left>
 					<right>250</right>
 					<height>31</height>
@@ -1724,7 +1744,7 @@
 					<label>$PARAM[sublabel]</label>
 				</control>
 				<control type="label">
-					<top>26</top>
+					<top>23</top>
 					<right>0</right>
 					<width>300</width>
 					<height>31</height>
