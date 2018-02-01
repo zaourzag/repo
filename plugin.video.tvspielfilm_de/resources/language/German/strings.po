@@ -1,13 +1,13 @@
 # Kodi Media Center language file
 # Addon Name: TV Spielfilm - Das Beste aus den Mediatheken
 # Addon id: plugin.video.tvspielfilm_de
-# Addon version: 1.0.5
+# Addon version: 1.1.0
 # Addon Provider: realvito
 msgid ""
 msgstr ""
 "Project-Id-Version: KODI-Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
-"POT-Creation-Date: 2017-06-08 23:08+0000\n"
+"POT-Creation-Date: 2018-01-31 13:08+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE\n"
@@ -33,78 +33,94 @@ msgctxt "#30001"
 msgid "Playback"
 msgstr "Wiedergabe"
 
-#empty strings from id 30002 to 30100
+msgctxt "#30002"
+msgid "View"
+msgstr "Ansicht"
 
-msgctxt "#30101"
-msgid "     Force View-Mode"
-msgstr "     Ansicht-ViewID erzwingen"
+#empty strings from id 30003 to 30109
 
-msgctxt "#30102"
-msgid "     ViewID"
-msgstr "     ViewID"
+msgctxt "#30110"
+msgid "     Date of Broadcast in the Title"
+msgstr "     Austrahlungsdatum im Titel"
 
-msgctxt "#30103"
+msgctxt "#30111"
+msgid "     Hide duplicate entries (titles)"
+msgstr "     Doppelte Einträge (Titel) ausblenden"
+
+msgctxt "#30112"
 msgid "     Show Channel-Identification"
 msgstr "     Sender-Kennungen anzeigen"
 
-msgctxt "#30104"
-msgid "     [COLOR orangered]Show NowTV-Shows[/COLOR] (works in all areas)"
-msgstr "     [COLOR orangered]NowTV-Sendungen anzeigen[/COLOR] (funktioniert in allen Bereichen)"
+msgctxt "#30113"
+msgid "     [COLOR orangered]Show TV-NOW Shows[/COLOR] (works in all areas)"
+msgstr "     [COLOR orangered]TV-NOW Sendungen anzeigen[/COLOR] (funktioniert in allen Bereichen)"
 
-msgctxt "#30105"
+msgctxt "#30114"
 msgid "     Use Thumb as Fanart"
 msgstr "     Thumb als Hintergrund-Fanart nutzen"
 
-msgctxt "#30106"
+msgctxt "#30115"
 msgid "     Detailed Program-Debug (otherwise only Minimal-Log)"
 msgstr "     Programm-Debug mit Details (sonst nur Minimal-Log)"
 
-msgctxt "#30107"
-msgid "     Preferred PlaybackLinks at ARD+ZDF[CR]          [COLOR yellow][auto=m3u8 • • mp4=mp4][/COLOR]"
-msgstr "     Bevorzugte AbspielLinks bei ARD+ZDF[CR]          [COLOR yellow][auto=m3u8 • • mp4=mp4][/COLOR]"
+msgctxt "#30116"
+msgid "     Preferred Video-file format at ARD+ZDF  [COLOR yellow](m3u8|mp4)[/COLOR]"
+msgstr "     Bevorzugtes Video-Dateiformat bei ARD+ZDF  [COLOR yellow](m3u8|mp4)[/COLOR]"
 
-#empty strings from id 30108 to 30110
+msgctxt "#30117"
+msgid "     Force View"
+msgstr "     Darstellungsansicht forcieren"
 
-msgctxt "#30111"
-msgid "[B][COLOR ff0099ff]VIEW[/COLOR][/B]"
-msgstr "[B][COLOR ff0099ff]ANSICHT[/COLOR][/B]"
+msgctxt "#30118"
+msgid "     ViewID"
+msgstr "     DarstellungsID"
 
-msgctxt "#30112"
+#empty strings from id 30119 to 30229
+
+msgctxt "#30230"
+msgid "[B][COLOR ff0099ff]TITLE/DISPLAY[/COLOR][/B]"
+msgstr "[B][COLOR ff0099ff]TITEL/ANZEIGE[/COLOR][/B]"
+
+msgctxt "#30231"
 msgid "[B][COLOR ff0099ff]CHANNEL[/COLOR][/B]"
 msgstr "[B][COLOR ff0099ff]SENDER[/COLOR][/B]"
 
-msgctxt "#30113"
+msgctxt "#30232"
 msgid "[B][COLOR ff0099ff]FANART[/COLOR][/B]"
 msgstr "[B][COLOR ff0099ff]FANART[/COLOR][/B]"
 
-msgctxt "#30114"
+msgctxt "#30233"
 msgid "[B][COLOR ff0099ff]LOG[/COLOR][/B]"
 msgstr "[B][COLOR ff0099ff]LOG[/COLOR][/B]"
 
-msgctxt "#30115"
+msgctxt "#30234"
 msgid "[B][COLOR ff0099ff]PLAY[/COLOR][/B]"
 msgstr "[B][COLOR ff0099ff]ABSPIELEN[/COLOR][/B]"
 
-msgctxt "#30116"
+msgctxt "#30235"
 msgid "[B][COLOR ff0099ff]INFO[/COLOR][/B]"
 msgstr "[B][COLOR ff0099ff]INFO[/COLOR][/B]"
 
-#empty strings from id 30117 to 30149
+msgctxt "#30236"
+msgid "[B][COLOR ff0099ff]VIEW[/COLOR][/B]"
+msgstr "[B][COLOR ff0099ff]ANSICHT[/COLOR][/B]"
 
-msgctxt "#30150"
+#empty strings from id 30237 to 30370
+
+msgctxt "#30371"
 msgid "     [COLOR orangered]During playback problems with ARD- or ZDF-Links...[/COLOR]"
 msgstr "     [COLOR orangered]Bei Wiedergabeproblemen mit ARD- oder ZDF-Links...[/COLOR]"
 
-msgctxt "#30151"
-msgid "     [COLOR chartreuse]Or if you want to save ARD, ARTE or ZDF-Links with a Download-ADDON...[/COLOR]"
-msgstr "     [COLOR chartreuse]Oder wenn Sie ARD-, ARTE- oder ZDF-Links mit einem Download-ADDON speichern wollen...[/COLOR]"
+msgctxt "#30372"
+msgid "     [COLOR chartreuse]Or if you want to save ARD- or ZDF-Links with a Download-ADDON...[/COLOR]"
+msgstr "     [COLOR chartreuse]Oder wenn Sie ARD- oder ZDF-Links mit einem Download-ADDON speichern wollen...[/COLOR]"
 
-msgctxt "#30152"
-msgid "     • [COLOR chartreuse]Setting choose »[/COLOR]mp4[COLOR chartreuse]« [/COLOR]•"
+msgctxt "#30373"
+msgid "     • [COLOR chartreuse]Setting choose »[/COLOR]mp4[COLOR chartreuse]«[/COLOR] •"
 msgstr "     • [COLOR chartreuse]Einstellung »[/COLOR]mp4[COLOR chartreuse]« auswählen[/COLOR] •"
 
-#empty strings from id 30153 to 30200
+#empty strings from id 30374 to 40200
 
-msgctxt "#30201"
-msgid "[B][COLOR chartreuse]Add to Playlist[/COLOR][/B]"
-msgstr "[B][COLOR chartreuse]In Abspielliste einreihen[/COLOR][/B]"
+msgctxt "#40201"
+msgid "[B][COLOR chartreuse]Add to TvSpielfilm-Playlist[/COLOR][/B]"
+msgstr "[B][COLOR chartreuse]In TvSpielfilm-Abspielliste einreihen[/COLOR][/B]"

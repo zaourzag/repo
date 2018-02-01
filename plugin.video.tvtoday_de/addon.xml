@@ -1,9 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<addon id="plugin.video.tvtoday_de" name="TV Today - Best of Mediatheken" version="1.3.9" provider-name="realvito">
+<addon id="plugin.video.tvtoday_de" name="TV Today - Best of Mediatheken" version="1.4.0" provider-name="realvito">
 	<requires>
-		<import addon="xbmc.python" version="2.14.0"/>
+		<import addon="xbmc.python" version="2.20.0"/>
 		<import addon="plugin.video.arte_tv" optional="true"/>
 		<import addon="plugin.video.arteplussept" optional="true"/>
+		<import addon="plugin.video.rtlnow" optional="true"/>
 	</requires>
 	<extension point="xbmc.python.pluginsource" library="default.py">
 		<provides>video</provides>
@@ -26,9 +27,12 @@
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 1.3.9  (15.10.2017)[/COLOR][/B][CR]
-- fixed: Das ZDF verlangt schon wieder neuen API-Schlüssel für den VideoLink
-- Kommentar: Ich hoffe diese Lösung funktioniert jetzt länger als 5 Tage :-(  ... Danke ZDF - Dein Gebührenzahler
+		<news>[B][COLOR orangered]Version 1.4.0  (01.02.2018)[/COLOR][/B][CR]
+- fixed: ARD-Links (m3u8) werden NICHT mehr abgespielt, sondern es werden gleich die ARD-Links (mp4) aufgerufen
+- *Webseitenänderung der ARD - dadurch tauchen die "m3u8-Links" jetzt teilweise zweimal auf oder Sie verstecken sich im nächsten Absatz
+- optimized: Wiedergabequalität von ARD-Links (mp4), wegen "mp4-Link" Veränderungen angepasst
+- added: TVNOW-Links funktionieren wieder und werden jetzt über das "plugin.video.rtlnow" von *L0RE* abgespielt
+- added: Rubrik - SENDER sortiert (Auflistung der abspielbaren Titel nach Sender)
 		</news>
 	</extension>
 </addon>

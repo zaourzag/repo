@@ -39,3 +39,10 @@
 [B]Version 1.0.9  (15.10.2017)[/B]
  - fixed: Das ZDF verlangt schon wieder neuen API-Schlüssel für den VideoLink
  - Kommentar: Ich hoffe diese Lösung funktioniert jetzt länger als 5 Tage :-(  ... Danke ZDF - Dein Gebührenzahler
+ 
+[B]Version 1.1.0  (01.02.2018)[/B]
+ - fixed: ADDON an die Webseiten-Veränderungen von "http://www.tvspielfilm.de/mediathek/" angepasst (30.01.2018)
+ - fixed: ARD-Links (m3u8) werden NICHT mehr abgespielt, sondern es werden gleich die ARD-Links (mp4) aufgerufen
+ - *Webseitenänderung der ARD - dadurch tauchen die "m3u8-Links" jetzt teilweise zweimal auf oder Sie verstecken sich im nächsten Absatz
+ - optimized: Wiedergabequalität von ARD-Links (mp4), wegen "mp4-Link" Veränderungen angepasst
+ - added: TVNOW-Links funktionieren wieder und werden jetzt über das "plugin.video.rtlnow" von *L0RE* abgespielt
