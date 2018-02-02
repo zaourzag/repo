@@ -225,12 +225,15 @@ def folgenteil(url,anz=0,seite=1,serienname=0,stattfolgen=0):
          desc=""
     bild=folge["images"]["url"]
     title=folge["contentLabel"]
+    duration=folge["duration"]
+    teile=duration.split(":")
+    duration=int(teile[0])*60+int(teile[1])
     if int(serienname)==1:
       if title=="Show":
         title=""
       title=folge["title"]+" "+title
     if int(stattfolgen)==0:
-        addLink(title,url,"playvideo",bild,desc=desc)
+        addLink(title,url,"playvideo",bild,desc=desc,duration=duration)
     else:
         addDir(title,url,"serie",bild,desc=desc)
     anz=int(anz)+1
@@ -250,6 +253,7 @@ def tvshow(url):
   addDir("Neueste",element["data-tffeed"],"folgenteil","",serienname=1)
   element = htmlPage.find("div",attrs={"id":"t5_lc_promo1"})
   addDir("Highlights",element["data-tffeed"],"folgenteil","",stattfolgen=1,serienname=1)
+  addDir("MTV Buzz","http://www.mtv.de/buzz","kuenstler","")
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
   
 def charts(url):
@@ -413,6 +417,8 @@ def kuenstler(url):
      idd=lied["id"]
      url=smart_str(lied["canonicalURL"])
      duration=lied["duration"]
+     teile=duration.split(":")
+     duration=int(teile[0])*60+int(teile[0])
      title=smart_str(lied["title"])
      image=lied["images"]["url"]
      addLink(title,url,"playvideo",image,duration=duration)
