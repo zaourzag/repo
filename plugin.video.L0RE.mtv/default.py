@@ -14,6 +14,7 @@ import base64
 import requests
 from bs4 import BeautifulSoup
 from HTMLParser import HTMLParser
+from django.utils.encoding import smart_str
 
 # Setting Variablen Des Plugins
 global debuging
@@ -148,13 +149,19 @@ def getvideourl(url)  :
     try:
         videourl=struktur["package"]["video"]["item"][0]["rendition"][0]["src"]
     except:
-        videourl=""
+        text=struktur["package"]["video"]["item"][0]["text"]
+        code=struktur["package"]["video"]["item"][0]["code"]
+        dialog = xbmcgui.Dialog()
+        dialog.notification(code, text, xbmcgui.NOTIFICATION_ERROR)
+        videourl=""        
     debug("+++++++++++++++++++")
     debug(videourl)
     return(videourl)
   
 def playvideo(url):      
     videourl=getvideourl(url)
+    if videourl=="":
+       return
     listitem = xbmcgui.ListItem(path=videourl)    
     #listitem.setProperty('IsPlayable', 'true')
     #listitem.setProperty('inputstreamaddon', 'inputstream.adaptive')
@@ -367,8 +374,53 @@ def playlistspart(url):
         pass
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)      
     
+def abisz():
+      content=geturl("http://www.mtv.de/kuenstler/a/1")  
+      htmlPage = BeautifulSoup(content, 'html.parser')
+      elements = htmlPage.find_all("a",attrs={"class":"letters"})  
+      for element in elements:
+          addDir(element.text,element["href"],"kuenstlerliste","")
+          
+      xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)      
+def  kuenstlerliste(url):
+      content=geturl(url)
+      htmlPage = BeautifulSoup(content, 'html.parser')
+      kuenstlerliste = htmlPage.find("div",attrs={"class":"artists"})  
+      debug(kuenstlerliste)
+      kuensterall=kuenstlerliste.find_all("li") 
+      for kuenstler in kuensterall:
+        kuenstlerstring=str(kuenstler)
+        debug(kuenstlerstring)
+        link=re.compile('"@id":"(.+?)"', re.DOTALL).findall(kuenstlerstring)[0]                  
+        name=re.compile('"name":"(.+?)"', re.DOTALL).findall(kuenstlerstring)[0].decode('unicode-escape')        
+        image=re.compile('"image":"(.+?)"', re.DOTALL).findall(kuenstlerstring)[0]                  
+        addDir(name,link,"kuenstler",image)
+      try:
+        kuenstlerliste = htmlPage.find("a",attrs={"class":"page next link"})
+        addDir("Next",kuenstlerliste["href"],"kuenstlerliste","")
+      except:
+         pass
+      xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)      
+      
+def kuenstler(url):
+    urlx="http://www.mtv.de/feeds/triforce/manifest/v8?url="+url
+    content=geturl(urlx)
+    struktur = json.loads(content)     
+    newurl=struktur["manifest"]["zones"]["t4_lc_promo1"]["feed"]
+    content=geturl(newurl)
+    struktur = json.loads(content)  
+    for lied in struktur["result"]["data"]["items"]:
+     idd=lied["id"]
+     url=smart_str(lied["canonicalURL"])
+     duration=lied["duration"]
+     title=smart_str(lied["title"])
+     image=lied["images"]["url"]
+     addLink(title,url,"playvideo",image,duration=duration)
+    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
+    
 def music():
     addDir("Playlists" , "http://www.mtv.de/playlists", "playlists","")    
+    addDir("Künstler A-Z" , "", "abisz","")    
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)      
     
 def liste():      
@@ -413,4 +465,10 @@ else:
   if mode =="playlistspart":
             playlistspart(url)
   if mode =="playplaylist":
-            playplaylist(url)  
+            playplaylist(url) 
+  if mode =="abisz":
+            abisz()
+  if mode =="kuenstlerliste":
+            kuenstlerliste(url)
+  if mode =="kuenstler":
+            kuenstler(url)
