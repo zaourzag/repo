@@ -420,13 +420,14 @@ def kuenstler(url):
     
 def music():
     addDir("Playlists" , "http://www.mtv.de/playlists", "playlists","")    
-    addDir("Künstler A-Z" , "", "abisz","")    
+    addDir("Künstler A-Z" , "", "abisz","")      
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)      
     
 def liste():      
     addDir("TVshows" , baseurl+"/shows", "tvshow","")     
     addDir("Charts" , baseurl+"/charts", "charts","")     
     addDir("Music" , "", "music","")     
+    addLink("Live" , "http://www.mtv.de/live/0h9eak/mtv-germany-live", "playvideo","")   
     addDir("Settings","Settings","Settings","")
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
     
