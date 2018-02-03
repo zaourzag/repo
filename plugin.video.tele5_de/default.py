@@ -11,7 +11,6 @@ import xbmcvfs
 import urllib, urllib2, socket, cookielib, re, os, shutil,json
 import time
 import base64
-import requests
 from bs4 import BeautifulSoup
 from HTMLParser import HTMLParser
 
