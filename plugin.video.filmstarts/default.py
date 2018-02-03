@@ -188,7 +188,7 @@ def geturl(url,data="x",header="",referer=""):
 
 def trailer():
     addDir(translation(30008), "http://www.filmstarts.de/trailer/beliebteste.html", 'trailerpage2', "")
-    addDir(translation(30009), "http://www.filmstarts.de/trailer/imkino/", 'trailerpage', "")
+    addDir(translation(30009), "http://www.filmstarts.de/trailer/imkino/", 'trailerpage2', "")
     addDir(translation(30010), "http://www.filmstarts.de/trailer/bald/", 'trailerpage2', "")
     addDir(translation(30011), "http://www.filmstarts.de/trailer/neu/", 'trailerpage2', "")
     addDir(translation(30012), baseurl+"/trailer/archiv/", 'filterart', "")
@@ -727,43 +727,11 @@ def trailerpage2(url,page=1) :
         debug("....NOK")
         debug(element)
    if '<span class="txt">Nächste</span>' in content:
-     addDir(translation(30006), url, 'trailerpage', "",page=page+1)
+     addDir(translation(30006), url, 'trailerpage2', "",page=int(page)+1)
    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)     
         
         
-
-def trailerpage(url,page=1) :
-   page=int(page)
-   debug("archivevideos URL :"+url)
-   if page >1:
-    getu=url+"?page="+str(page)
-   else:
-    getu=url     
-   content=geturl(getu)  
-   kurz_inhalt = content[content.find('<!-- /titlebar_01 -->')+1:]
-   #kurz_inhalt = kurz_inhalt[:kurz_inhalt.find('</section>')]   
-   debug("--------------------------------------------")
-   debug(kurz_inhalt)
-   elemente=kurz_inhalt.split('article data-block')
-   for i in range(1,len(elemente),1):
-     try:
-        element=elemente[i]
-        debug("....START")
-        debug(element)
-        try:
-            image = re.compile("src='(.+?)'", re.DOTALL).findall(element)[0]
-        except:
-           image = re.compile('"src":"(.+?)"', re.DOTALL).findall(element)[0]        
-        urlx = re.compile('href="(.+?)"', re.DOTALL).findall(element)[0]        
-        name = re.compile('<strong>(.+?)</strong>', re.DOTALL).findall(element)[0]        
-        addLink(name, baseurl+urlx, 'playVideo', image)
-     except:
-        debug("....NOK")
-        debug(element)   
-   if 'fr">Nächste<i class="icon-arrow-right">' in content:
-     addDir(translation(30006), url, 'trailerpage', "",page=page+1)
-   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)     
-        
+   
 # Haupt Menu Anzeigen      
 if mode is '':
     addDir(translation(30002), "", 'trailer', "")
@@ -791,8 +759,6 @@ else:
           types(url)                               
   if mode == 'sprache':
           sprache(url)
-  if mode == 'trailerpage':
-          trailerpage(url,page)    
   if mode == 'trailerpage2':
           trailerpage2(url,page)              
   if mode == 'series':
