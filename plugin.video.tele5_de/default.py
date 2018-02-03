@@ -1,50 +1,36 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
+import urllib
+import urllib2
+import socket
 import sys
-import urlparse
-import xbmcgui
+import re
+import os
 import xbmcplugin
+import xbmcgui
 import xbmcaddon
-import xbmc
-import xbmcvfs
-import urllib, urllib2, socket, cookielib, re, os, shutil,json
-import time
-import base64
+import HTMLParser
+import json
 from bs4 import BeautifulSoup
-from HTMLParser import HTMLParser
 
-# Setting Variablen Des Plugins
-global debuging
-base_url = sys.argv[0]
-addon_handle = int(sys.argv[1])
-args = urlparse.parse_qs(sys.argv[2][1:])
+reload(sys)
+sys.setdefaultencoding('utf-8')
+
+#addon = xbmcaddon.Addon()
+
+#addonID = 'plugin.video.tele5_de'
 addon = xbmcaddon.Addon()
-# Lade Sprach Variablen
+addonID = addon.getAddonInfo('id')
+socket.setdefaulttimeout(30)
+pluginhandle = int(sys.argv[1])
+xbmcplugin.setContent(pluginhandle, 'movies')
 translation = addon.getLocalizedString
-
-
-xbmcplugin.setContent(addon_handle, 'movies')
-
-baseurl="https://www.dmax.de"
-xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_UNSORTED)
+icon = xbmc.translatePath('special://home/addons/'+addonID+'/icon.png')
+baseUrl = "http://www.tele5.de"
+opener = urllib2.build_opener()
 xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
-
-
-icon = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')+'/icon.png').decode('utf-8')
-
-
-profile    = xbmc.translatePath( addon.getAddonInfo('profile') ).decode("utf-8")
-temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
-
-if xbmcvfs.exists(temp):
-  shutil.rmtree(temp)
-xbmcvfs.mkdirs(temp)
-cookie=os.path.join( temp, 'cookie.jar')
-cj = cookielib.LWPCookieJar();
-
-if xbmcvfs.exists(cookie):
-    cj.load(cookie,ignore_discard=True, ignore_expires=True)                  
+xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_LABEL)
+opener.addheaders = [('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; rv:25.0) Gecko/20100101 Firefox/25.0')]
 
 def debug(content):
     log(content, xbmc.LOGDEBUG)
@@ -56,181 +42,232 @@ def log(msg, level=xbmc.LOGNOTICE):
     addon = xbmcaddon.Addon()
     addonID = addon.getAddonInfo('id')
     xbmc.log('%s: %s' % (addonID, msg), level) 
-    
-
-  
-def addDir(name, url, mode, thump, desc="",page=1,nosub=0):   
-  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&page="+str(page)+"&nosub="+str(nosub)
-  ok = True
-  liz = xbmcgui.ListItem(name)  
-  liz.setArt({ 'fanart' : thump })
-  liz.setArt({ 'thumb' : thump })
-  liz.setArt({ 'banner' : icon })
-  liz.setArt({ 'fanart' : icon })
-  liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc})
-	
-  ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
-  return ok
-  
-def addLink(name, url, mode, thump, duration="", desc="", genre='',director="",bewertung=""):
-  debug("URL ADDLINK :"+url)
-  debug( icon  )
-  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
-  ok = True
-  liz = xbmcgui.ListItem(name,thumbnailImage=thump)
-  liz.setArt({ 'fanart' : icon })
-  liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Genre": genre, "Director":director,"Rating":bewertung})
-  liz.setProperty('IsPlayable', 'true')
-  liz.addStreamInfo('video', { 'duration' : duration })
-	#xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
-  ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
-  return ok
-  
-def parameters_string_to_dict(parameters):
-	paramDict = {}
-	if parameters:
-		paramPairs = parameters[1:].split("&")
-		for paramsPair in paramPairs:
-			paramSplits = paramsPair.split('=')
-			if (len(paramSplits)) == 2:
-				paramDict[paramSplits[0]] = paramSplits[1]
-	return paramDict
-
-
-def geturl(url,data="x",header="",referer=""):
-        global cj
+def getUrl(url,data="x"):
+        https=addon.getSetting("https")
+        if https=="true":
+           url=url.replace("https","http")
         debug("Get Url: " +url)
-        for cook in cj:
-          debug(" Cookie :"+ str(cook))
-        opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))        
-        userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36"
-        if header=="":
-          opener.addheaders = [('User-Agent', userAgent)]        
-        else:
-          opener.addheaders = header        
-        if not referer=="":
-           opener.addheaders = [('Referer', referer)]
-
+        opener = urllib2.build_opener(urllib2.HTTPCookieProcessor())
+        userAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:49.0) Gecko/20100101 Firefox/49.0"
+        opener.addheaders = [('User-Agent', userAgent)]
         try:
           if data!="x" :
              content=opener.open(url,data=data).read()
           else:
              content=opener.open(url).read()
         except urllib2.HTTPError as e:
-             #debug( e.code )  
+             #debug( e.code)
              cc=e.read()  
-             debug("Error : " +cc)
-             content=""
-       
+             struktur = json.loads(cc)  
+             error=struktur["errors"][0] 
+             error=unicode(error).encode("utf-8")
+             debug("ERROR : " + error)
+             dialog = xbmcgui.Dialog()
+             nr=dialog.ok("Error", error)
+             return ""
+             
         opener.close()
-        cj.save(cookie,ignore_discard=True, ignore_expires=True)               
         return content
 
+def index():
+  addDir("Uebersicht", baseUrl+"/re-play/uebersicht", "listcat","")
+  addDir("Eigenprodutionen", baseUrl+"/re-play/eigenproduktionen", "listcat","")
+  addDir("Serien", baseUrl+"/re-play/Serien", "listcat","")
+  addDir("Spielfilme", baseUrl+"/re-play/spielfilme", "listcat","")
+  addDir("Lucha Undergroud", baseUrl+"/re-play/lucha-underground", "listcat","")
+# listcat(baseUrl+"/re-play/uebersicht","listcat")
+  xbmcplugin.endOfDirectory(pluginhandle)
 
-    
 
-   
-   
-  
-def liste():      
-    addDir("Featured" , "https://www.dmax.de/api/shows/featured?limit=100&page=1", "videoliste","",nosub="featured") 
-    addDir("Beliebteste" , "https://www.dmax.de/api/shows/most-popular?limit=100&page=1", "videoliste","",nosub="most-popular")    
-    addDir("Neueste" , "https://www.dmax.de/api/shows/recently-added?limit=100&page=1", "videoliste","",nosub="recently-added")        
-    addDir("Letzt Chance" , "https://www.dmax.de/api/shows/leaving-soon?limit=100&page=1", "videoliste","",nosub="leaving-soon")    
-    addDir("Settings","Settings","Settings","")
-    inputstream=addon.getSetting("inputstream")
-    if inputstream=="true":
-        addDir("Inputstream Einstellungen", "", 'inputsettings', "")
-    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
+def listcat(url,type="listcat"):
+      debug("listcat :"+url)
+      starturl=url
+      content = getUrl(url)
+      spl = content.split('ce_teaserelemen')  
+      anz=0
+      for i in range(1, len(spl), 1):
+        element=spl[i]
+        try:
+          url=re.compile('href="(.+?)"', re.DOTALL).findall(element)[0]
+          if not "http" in url:
+              url=baseUrl+"/"+url
+          try:
+            title=re.compile('<h2>(.+?)</h2>', re.DOTALL).findall(element)[0]
+          except:
+            title=re.compile('<span class="shortdesc">(.+?)</span>', re.DOTALL).findall(element)[0]
+          thumb=re.compile('srcset="(.+?)"', re.DOTALL).findall(element)[0]    
+          debug("listcat URL :"+url)   
+          debug("listcat type :"+type)                        
+          addDir(title, url, type, baseUrl+"/"+thumb)
+          anz=anz+1
+        except:
+           pass
+      listVideos(starturl)
+      xbmcplugin.endOfDirectory(pluginhandle)
 
-  
-def playvideo(idd):      
-    content=geturl("https://www.dmax.de/")    
-    for cookief in cj:
-          debug( cookief)
-          if "sonicToken" in str(cookief) :         
-                key=re.compile('sonicToken=(.+?) ', re.DOTALL).findall(str(cookief))[0]
-                break
 
-    playurl="https://sonic-eu1-prod.disco-api.com/playback/videoPlaybackInfo/"+str(idd)
-    header = [('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36'),
-                    ("Authorization", "Bearer "+key)]
+def listVideos(url):
+          debug("listVideos URL :"+ url)
+          content=getUrl(url)          
+          
+          #http://tele5.flowcenter.de/gg/play/l/17:pid=vplayer_1560&tt=1&se=1&rpl=1&ssd=1&ssp=1&sst=1&lbt=1&
+          #<div class="fwlist" lid="14" pid="vplayer_3780" tt="1" ssp="1" sst="1" lbt="1" ></div>		</div>
+          y=0
+          try:    
+              debug("1.")          
+              divtag=re.compile('(<div class="fwlist".+?>)', re.DOTALL).findall(content)[0]
+              debug("DIVTAG :"+divtag)              
+              lid=re.compile('lid="(.+?)"', re.DOTALL).findall(divtag)[0]
+              debug("LID :"+lid)
+              all=re.compile('([^ =]+?)="(.+?)"', re.DOTALL).findall(divtag)
+              url="http://tele5.flowcenter.de/gg/play/l/"+lid+":"
+              for type,inhalt in all:
+               if not type=="lid":
+                  url=url+type+"="+inhalt                                    
+              #url="http://tele5.flowcenter.de/gg/play/l/"+lid+":pid="+ pid +"&tt="+ tt +"&se="+ se +"&rpl="+ rpl +"&ssd="+ ssd +"&ssp="+ ssp +"&sst="+ sst +"&lbt="+lbt +"&"
+              debug("URL: "+url)
+          
+          except:
+            #try:
+              y=1
+              debug("2.")          
+              htmlPage = BeautifulSoup(content, 'html.parser')
+              debug("2a")              
+              searchitems = htmlPage.findAll("div",{"class" :"ce_area"})              
+              debug("2b")
+              #print(searchitems)
+              for searchitem in searchitems: 
+                debug("2c")    
+                try:                
+                  cid=searchitem.find("div",{"class":"fwplayer"})["cid"]                                  
+                  print(":::XX:::"+cid)
+                  title=searchitem.h3.string
+                  try:
+                    utitle=searchitem.p.string
+                  except:
+                     utitle=""
+                  if not utitle=="":
+                   title=title +" - "+ utitle
+                  debug(title)
+                  img=searchitem.find('img')['src']
+                  if not "http" in img:
+                    img="http://www.tele5.de/"+img
+                  debug(img)
+                  addLink(title, str(cid), 'playVideo', img)    
+                except:
+                   pass
+              #playVideo(cid)
+            #except:
+            #   pass
+          if y==0:    
+            debug("3.")                    
+            debug("NEWURL: "+url)
+            content=getUrl(url)
+            debug("##########")
+            debug(content)
 
-    content=geturl(playurl,header=header)
-    debug(content)
-    struktur = json.loads(content)    
-    videofile=struktur["data"]["attributes"]["streaming"]["hls"]["url"]
-    
-    debug(videofile)
-    #debug(licfile)    
-    listitem = xbmcgui.ListItem(path=videofile)    
-    listitem.setProperty('IsPlayable', 'true')
-    
-    inputstream=addon.getSetting("inputstream")
-    if inputstream=="true":     
-        licfile=struktur["data"]["attributes"]["protection"]["schemes"]["clearkey"]["licenseUrl"]
-        lickey=re.compile('\?(.+)', re.DOTALL).findall(licfile)[0]        
-        listitem.setProperty('inputstreamaddon', 'inputstream.adaptive')
-        listitem.setProperty('inputstream.adaptive.manifest_type', 'hls')
-        #listitem.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')
-        listitem.setProperty('inputstream.adaptive.license_key', lickey)
-    xbmcplugin.setResolvedUrl(addon_handle, True, listitem)
-    
+            content=re.compile('\{"id"(.+)\},', re.DOTALL).findall(content)[0]
+            content='{"id"'+content+"}"
+            debug("CONTENT:")
+            debug(content)
+            struktur = json.loads(content) 
+            Entries=struktur["entries"]
+            for element in Entries:
+              staffel=element["staffel"]
+              folge=element["folge"]
+              utitle= element["utitel"].strip()
+              title= element["title"].strip()
+              id=element["id"]
+              data=element["vodate"]
+              genre=element["welt"]
+              image=element["image"].replace("\/","/")
+              if folge=="0":
+                name=title
+              else:
+                 name="Folge "+ folge 
+              if not utitle=="" :
+                 name=name+" - "+utitle
+              addLink(name, str(id), 'playVideo', image,dadd=data,genre=genre,episode=folge,season=staffel)          
+              #addLink("Folge :"+ folge , str(id), 'playVideo', image)          
+          
+              #   addLink(h.unescape(title[i]), url, 'playVideo', thumb[i])          
+          xbmcplugin.endOfDirectory(pluginhandle)
+
+
+def playVideo(url):
+    debug("PlayVideo Url :"+url)
+    addon_handle = int(sys.argv[1])
+    urlneu="http://tele5.flowcenter.de/gg/play/p/"+url+":mobile=0&nsrc="+url+"&" 
+    content = getUrl(urlneu)
+    file=re.compile('"file":"(.+?)"', re.DOTALL).findall(content)[0]
+    file=file.replace("\/","/")
+    content = getUrl(file)
+    mpg=re.compile(' <BaseURL>(.+?)</BaseURL>', re.DOTALL).findall(content)[-1]    
+    videofile=file.replace("manifest.mpd",mpg)
+    debug("MPG: "+videofile)
+    listitem = xbmcgui.ListItem(path=videofile)
+    xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
+
+
+def queueVideo(url, name, thumb):
+    playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
+    listitem = xbmcgui.ListItem(name, thumbnailImage=thumb)
+    playlist.add(url, listitem)
+
+
+def cleanTitle(title):
+    title = title.replace("&lt;", "<").replace("&gt;", ">").replace("&amp;", "&").replace("&#039;", "\\").replace("&quot;", "\"").replace("&szlig;", "ß").replace("&ndash;", "-")
+    title = title.replace("&Auml;", "Ä").replace("&Uuml;", "Ü").replace("&Ouml;", "Ö").replace("&auml;", "ä").replace("&uuml;", "ü").replace("&ouml;", "ö")
+    title = title.strip()
+    return title
+
+
+def parameters_string_to_dict(parameters):
+    paramDict = {}
+    if parameters:
+        paramPairs = parameters[1:].split("&")
+        for paramsPair in paramPairs:
+            paramSplits = paramsPair.split('=')
+            if (len(paramSplits)) == 2:
+                paramDict[paramSplits[0]] = paramSplits[1]
+    return paramDict
+
+
+def addLink(name, url, mode, iconimage, desc="", duration="",count=0,dadd=0,genre="",episode=0,season=0):
+    u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&count="+str(count)
+    ok = True
+    liz = xbmcgui.ListItem(name)
+    liz.setArt({ 'fanart': iconimage })
+    liz.setArt({ 'thumb': iconimage })
+    liz.setInfo(type="Video", infoLabels={"title": name, "plot": desc, "duration": duration ,"lastplayed": dadd,"genre":genre,"episode":episode,"season":season })
+    liz.setProperty('IsPlayable', 'true')
+    liz.addContextMenuItems([(translation(30004), 'RunPlugin(plugin://'+addonID+'/?mode=queueVideo&url='+urllib.quote_plus(u)+'&name='+str(name)+'&thumb='+urllib.quote_plus(iconimage)+')',)])
+    ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
+    return ok
+
+
+def addDir(name, url, mode, iconimage, desc="", duration=""):
+    u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
+    ok = True
+    liz = xbmcgui.ListItem(name)
+    liz.setArt({ 'fanart': iconimage })
+    liz.setArt({ 'thumb': iconimage })
+    liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Duration": duration})
+    ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
+    return ok
+
 params = parameters_string_to_dict(sys.argv[2])
 mode = urllib.unquote_plus(params.get('mode', ''))
 url = urllib.unquote_plus(params.get('url', ''))
-referer = urllib.unquote_plus(params.get('referer', ''))
-page = urllib.unquote_plus(params.get('page', ''))
-nosub= urllib.unquote_plus(params.get('nosub', ''))
-def listserie(idd):
-  url="https://www.dmax.de/api/show-detail/"+str(idd)
-  debug("listserie :"+url)
-  content=geturl(url)
-  struktur = json.loads(content)
-  subelement=struktur["videos"]["episode"]
-  for number,videos in subelement.iteritems(): 
-    for video in videos:
-        idd=video["id"]
-        title=video["title"]
-        title=title.replace("{S}","S").replace(".{E}","E")
-        desc=video["description"]
-        duration=video["videoDuration"]
-        duration=duration/1000
-        image=video["image"]["src"]
-        airdate=video["airDate"]
-        addLink(title,idd,"playvideo",image,desc=desc,duration=duration)
-  xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
+name = urllib.unquote_plus(params.get('name', ''))
+thumb = urllib.unquote_plus(params.get('thumb', ''))
+count  = urllib.unquote_plus(params.get('count', ''))
 
-def videoliste(url,page=1,nosub=""):    
-  content=geturl(url)
-  struktur = json.loads(content) 
-  elemente=struktur["sections"][nosub]
-  for element in elemente:
-    title=element["title"]
-    idd=element["id"]
-    desc=element["description"]
-    image=element["image"]["src"]
-    addDir(title,idd,"listserie",image,desc=desc)
-  xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
-  
-def inputsettings()    :
-  xbmcaddon.Addon("inputstream.adaptive").openSettings()  
-  
-# Haupt Menu Anzeigen      
-if mode is '':
-     liste()   
+if mode == 'listVideos':
+    listVideos(url)
+elif mode == 'listcat':
+    listcat(url)
+elif mode == 'playVideo':
+    playVideo(url)
 else:
-  # Wenn Settings ausgewählt wurde
-  if mode == 'Settings':
-          addon.openSettings()
-  # Wenn Kategory ausgewählt wurde
-  if mode == 'playvideo':
-          playvideo(url)
-  if mode == 'subrubrik':
-          subrubrik(url)
-  if mode == 'videoliste':
-          videoliste(url,page,nosub)
-  if mode == 'listserie':
-           listserie(url)
-  if mode == 'inputsettings':
-          inputsettings()                                  
+    index()
