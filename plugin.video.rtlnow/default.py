@@ -485,7 +485,7 @@ def  login():
     except:
      return 0,"0"
     debug(userdata)
-    debug("### Subscriptioon ### "+ str(userdata["subscriptionState"]))
+    log("### Subscriptioon ### "+ str(userdata["subscriptionState"]))
     if userdata["subscriptionState"]==5:      
       debug("Login ok")
       addon.setSetting("freeonly", "false")
