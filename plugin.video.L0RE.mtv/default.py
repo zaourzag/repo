@@ -225,9 +225,12 @@ def folgenteil(url,anz=0,seite=1,serienname=0,stattfolgen=0):
          desc=""
     bild=folge["images"]["url"]
     title=folge["contentLabel"]
-    duration=folge["duration"]
-    teile=duration.split(":")
-    duration=int(teile[0])*60+int(teile[1])
+    try:
+        duration=folge["duration"]
+        teile=duration.split(":")
+        duration=int(teile[0])*60+int(teile[1])
+    except:
+        duration=""
     if int(serienname)==1:
       if title=="Show":
         title=""
