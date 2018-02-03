@@ -3612,6 +3612,7 @@ Parental warning: The Maxdome Plattform consists of differnt types of content - 
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
         <import addon="script.module.beautifulsoup4" version="4.3.2"/>
+        <import addon="script.module.inputstreamhelper" version="0.3.2"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
