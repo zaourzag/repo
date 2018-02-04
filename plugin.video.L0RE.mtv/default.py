@@ -399,7 +399,11 @@ def  kuenstlerliste(url):
         kuenstlerstring=str(kuenstler)
         debug(kuenstlerstring)
         link=re.compile('"@id":"(.+?)"', re.DOTALL).findall(kuenstlerstring)[0]                  
-        name=re.compile('"name":"(.+?)"', re.DOTALL).findall(kuenstlerstring)[0].decode('unicode-escape')        
+        name=re.compile('"name":"(.+?)"', re.DOTALL).findall(kuenstlerstring)[0]
+        try:
+          name=name.decode('unicode-escape')        
+        except:
+           pass
         image=re.compile('"image":"(.+?)"', re.DOTALL).findall(kuenstlerstring)[0]                  
         addDir(name,link,"kuenstler",image)
       try:
@@ -419,9 +423,12 @@ def kuenstler(url):
     for lied in struktur["result"]["data"]["items"]:
      idd=lied["id"]
      url=smart_str(lied["canonicalURL"])
-     duration=lied["duration"]
-     teile=duration.split(":")
-     duration=int(teile[0])*60+int(teile[0])
+     try:
+        duration=lied["duration"]
+        teile=duration.split(":")
+        duration=int(teile[0])*60+int(teile[0])
+     except:
+        duration=0
      title=smart_str(lied["title"])
      image=lied["images"]["url"]
      addLink(title,url,"playvideo",image,duration=duration)
