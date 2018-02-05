@@ -145,7 +145,7 @@ def get_onetime():
         debug("Start Get Onetime")
         url="https://srv01.kividoo.de/SRTL_ServiceInterface/v4/login.ashx?m_type=xml&swipe_type=receiver"
         data="<cmt><device_type_info><manufacturer>"+name+"</manufacturer><model>"+modell+"</model><release_version>"+androidversion+"</release_version><build_version>"+build+"</build_version><product>"+produkt+"</product><id>"+idd+"</id><device_HW>"+hardware+"</device_HW></device_type_info><app_version>"+appversion+"</app_version><login_info><u_id>"+username+"</u_id><pw>"+password+"</pw><d_id>"+deviceid_ucoded+"</d_id><d_type>"+htype+"</d_type></login_info></cmt>"
-        debug("DATA: "+data)
+        #debug("DATA: "+data)
         content=geturl(url,data=data,header=header)
         debug(content)
         token=""
@@ -292,7 +292,7 @@ def serie(idd):
     for element in root.findall('.//season_item'):  
        idd=element.get('id')
        name=element.find("short-name").text.encode("utf-8")
-       addLink(name,idd,"playvideo","")
+       addDir(name,idd,"staffel","")
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)             
 
 def staffel(idd):
