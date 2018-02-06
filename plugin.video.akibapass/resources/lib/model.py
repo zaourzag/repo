@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # Akibapass - Watch videos from the german anime platform Akibapass.de on Kodi.
-# Copyright (C) 2016 - 2017 MrKrabat
+# Copyright (C) 2016 MrKrabat
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -42,6 +42,7 @@ class Args(object):
         """Initialize arguments object
         Hold also references to the addon which can't be kept at module level.
         """
+        self.PY2        = sys.version_info[0] == 2 #: True for Python 2
         self._addon     = sys.modules["__main__"]._addon
         self._addonname = sys.modules["__main__"]._plugin
         self._addonid   = sys.modules["__main__"]._plugId

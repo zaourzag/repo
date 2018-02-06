@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # Akibapass - Watch videos from the german anime platform Akibapass.de on Kodi.
-# Copyright (C) 2016 - 2017 MrKrabat
+# Copyright (C) 2016 MrKrabat
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -18,34 +18,32 @@
 import re
 import sys
 from bs4 import BeautifulSoup
-try:
-    from urllib import urlencode
-except ImportError:
-    from urllib.parse import urlencode
-try:
-    from urllib2 import urlopen
-except ImportError:
-    from urllib.request import urlopen
 
 import xbmc
 import xbmcgui
 import xbmcplugin
 
-from . import login
+from . import api
 from . import view
 
 
 def showCatalog(args):
     """Show all animes
     """
-    xbmc.log("DEBUG POINT #2", xbmc.LOGERROR)
-    response = urlopen("https://www.akibapass.de/de/v2/catalogue")
-    html = response.read().decode("utf-8")
+    # get website
+    html = api.getPage(args, "https://www.akibapass.de/de/v2/catalogue")
+    if not html:
+        view.add_item(args, {"title": args._addon.getLocalizedString(30041)})
+        view.endofdirectory()
+        return
 
+    # parse html
     soup = BeautifulSoup(html, "html.parser")
     ul = soup.find("ul", {"class": "catalog_list"})
 
+    # for every list entry
     for li in ul.find_all("li"):
+        # get values
         plot  = li.find("p", {"class": "tooltip_text"})
         stars = li.find("div", {"class": "stars"})
         star  = stars.find_all("span", {"class": "-no"})
@@ -53,6 +51,7 @@ def showCatalog(args):
         if thumb[:4] != "http":
             thumb = "https:" + thumb
 
+        # add to view
         view.add_item(args,
                       {"url":         li.a["href"],
                        "title":       li.find("div", {"class": "slider_item_description"}).span.strong.string.strip(),
@@ -71,20 +70,29 @@ def showCatalog(args):
 def listLastEpisodes(args):
     """Show last aired episodes
     """
-    response = urlopen("https://www.akibapass.de/de/v2")
-    html = response.read().decode("utf-8")
-
-    soup = BeautifulSoup(html, "html.parser")
-    ul = soup.find_all("ul", {"class": "js-slider-list"})
-    if not ul:
+    # get website
+    html = api.getPage(args, "https://www.akibapass.de/de/v2")
+    if not html:
+        view.add_item(args, {"title": args._addon.getLocalizedString(30041)})
         view.endofdirectory()
         return
 
+    # parse html
+    soup = BeautifulSoup(html, "html.parser")
+    ul = soup.find_all("ul", {"class": "js-slider-list"})
+    if not ul:
+        view.add_item(args, {"title": args._addon.getLocalizedString(30041)})
+        view.endofdirectory()
+        return
+
+    # for every list entry
     for li in ul[1].find_all("li"):
+        # get values
         thumb = li.img["src"].replace(" ", "%20")
         if thumb[:4] != "http":
             thumb = "https:" + thumb
 
+        # add to view
         view.add_item(args,
                       {"url":    li.a["href"],
                        "title":  li.img["alt"],
@@ -100,16 +108,24 @@ def listLastEpisodes(args):
 def listLastSimulcasts(args):
     """Show last simulcasts
     """
-    response = urlopen("https://www.akibapass.de/de/v2")
-    html = response.read().decode("utf-8")
-
-    soup = BeautifulSoup(html, "html.parser")
-    ul = soup.find_all("ul", {"class": "js-slider-list"})
-    if not ul:
+    # get website
+    html = api.getPage(args, "https://www.akibapass.de/de/v2")
+    if not html:
+        view.add_item(args, {"title": args._addon.getLocalizedString(30041)})
         view.endofdirectory()
         return
 
+    # parse html
+    soup = BeautifulSoup(html, "html.parser")
+    ul = soup.find_all("ul", {"class": "js-slider-list"})
+    if not ul:
+        view.add_item(args, {"title": args._addon.getLocalizedString(30041)})
+        view.endofdirectory()
+        return
+
+    # for every list entry
     for li in ul[2].find_all("li"):
+        # get values
         plot  = li.find("p", {"class": "tooltip_text"})
         stars = li.find("div", {"class": "stars"})
         star  = stars.find_all("span", {"class": "-no"})
@@ -117,6 +133,7 @@ def listLastSimulcasts(args):
         if thumb[:4] != "http":
             thumb = "https:" + thumb
 
+        # add to view
         view.add_item(args,
                       {"url":         li.a["href"],
                        "title":       li.find("div", {"class": "slider_item_description"}).span.strong.string.strip(),
@@ -135,21 +152,25 @@ def listLastSimulcasts(args):
 def searchAnime(args):
     """Search for animes
     """
+    # ask for search string
     d = xbmcgui.Dialog().input(args._addon.getLocalizedString(30021), type=xbmcgui.INPUT_ALPHANUM)
     if not d:
         return
 
-    post_data = urlencode({"search": d})
-    response = urlopen("https://www.akibapass.de/de/v2/catalogue/search", post_data.encode("utf-8"))
-    html = response.read().decode("utf-8")
+    # get website
+    html = api.getPage(args, "https://www.akibapass.de/de/v2/catalogue/search", {"search": d})
 
+    # parse html
     soup = BeautifulSoup(html, "html.parser")
     ul = soup.find("ul", {"class": "catalog_list"})
     if not ul:
+        view.add_item(args, {"title": args._addon.getLocalizedString(30041)})
         view.endofdirectory()
         return
 
+    # for every list entry
     for li in ul.find_all("li"):
+        # get values
         plot  = li.find("p", {"class": "tooltip_text"})
         stars = li.find("div", {"class": "stars"})
         star  = stars.find_all("span", {"class": "-no"})
@@ -157,6 +178,7 @@ def searchAnime(args):
         if thumb[:4] != "http":
             thumb = "https:" + thumb
 
+        # add to view
         view.add_item(args,
                       {"url":    li.a["href"],
                        "title":  li.find("div", {"class": "slider_item_description"}).span.strong.string.strip(),
@@ -175,20 +197,29 @@ def myDownloads(args):
     """View download able animes
     May not every episode is download able.
     """
-    response = urlopen("https://www.akibapass.de/de/v2/mydownloads")
-    html = response.read().decode("utf-8")
-
-    soup = BeautifulSoup(html, "html.parser")
-    container = soup.find("div", {"class": "big-item-list"})
-    if not container:
+    # get website
+    html = api.getPage(args, "https://www.akibapass.de/de/v2/mydownloads")
+    if not html:
+        view.add_item(args, {"title": args._addon.getLocalizedString(30041)})
         view.endofdirectory()
         return
 
+    # parse html
+    soup = BeautifulSoup(html, "html.parser")
+    container = soup.find("div", {"class": "big-item-list"})
+    if not container:
+        view.add_item(args, {"title": args._addon.getLocalizedString(30041)})
+        view.endofdirectory()
+        return
+
+    # for every list entry
     for div in container.find_all("div", {"class": "big-item-list_item"}):
+        # get values
         thumb = div.img["src"].replace(" ", "%20")
         if thumb[:4] != "http":
             thumb = "https:" + thumb
 
+        # add to view
         view.add_item(args,
                       {"url":    div.a["href"].replace("mydownloads/detail", "catalogue/show"),
                        "title":  div.find("h3", {"class": "big-item_title"}).string.strip(),
@@ -203,20 +234,29 @@ def myDownloads(args):
 def myCollection(args):
     """View collection
     """
-    response = urlopen("https://www.akibapass.de/de/v2/collection")
-    html = response.read().decode("utf-8")
-
-    soup = BeautifulSoup(html, "html.parser")
-    container = soup.find("div", {"class": "big-item-list"})
-    if not container:
+    # get website
+    html = api.getPage(args, "https://www.akibapass.de/de/v2/collection")
+    if not html:
+        view.add_item(args, {"title": args._addon.getLocalizedString(30041)})
         view.endofdirectory()
         return
 
+    # parse html
+    soup = BeautifulSoup(html, "html.parser")
+    container = soup.find("div", {"class": "big-item-list"})
+    if not container:
+        view.add_item(args, {"title": args._addon.getLocalizedString(30041)})
+        view.endofdirectory()
+        return
+
+    # for every list entry
     for div in container.find_all("div", {"class": "big-item-list_item"}):
+        # get values
         thumb = div.img["src"].replace(" ", "%20")
         if thumb[:4] != "http":
             thumb = "https:" + thumb
 
+        # add to view
         view.add_item(args,
                       {"url":    div.a["href"].replace("collection/detail", "catalogue/show"),
                        "title":  div.find("h3", {"class": "big-item_title"}).string.strip(),
@@ -231,11 +271,17 @@ def myCollection(args):
 def listSeason(args):
     """Show all seasons/arcs of an anime
     """
-    response = urlopen("https://www.akibapass.de" + args.url)
-    html = response.read().decode("utf-8")
+    # get website
+    html = api.getPage(args, "https://www.akibapass.de" + args.url)
+    if not html:
+        view.add_item(args, {"title": args._addon.getLocalizedString(30041)})
+        view.endofdirectory()
+        return
 
+    # parse html
     soup = BeautifulSoup(html, "html.parser")
 
+    # get values
     date = soup.find_all("span", {"class": "border-list_text"})[0].find_all("span")
     year = date[2].string.strip()
     date = year + "-" + date[1].string.strip() + "-" + date[0].string.strip()
@@ -245,6 +291,7 @@ def listSeason(args):
     credit = soup.find("div", {"class": "serie_description_more"})
     credit = credit.p.get_text().strip() if credit else ""
     try:
+        # get YouTube trailer
         trailer = soup.find("span", {"class": "js-video-open"})["data-video"]
         trailer = "plugin://plugin.video.youtube/play/?video_id=" + trailer
         view.add_item(args,
@@ -257,11 +304,14 @@ def listSeason(args):
     except TypeError:
         trailer = ""
 
+    # for every list entry
     for section in soup.find_all("h2", {"class": "slider-section_title"}):
+        # get values
         if not section.span:
             continue
         title = section.get_text()[6:].strip()
 
+        # add to view
         view.add_item(args,
                       {"url":           args.url,
                        "title":         title,
@@ -285,12 +335,19 @@ def listSeason(args):
 def listEpisodes(args):
     """Show all episodes of an season/arc
     """
-    response = urlopen("https://www.akibapass.de" + args.url)
-    html = response.read().decode("utf-8")
+    # get website
+    html = api.getPage(args, "https://www.akibapass.de" + args.url)
+    if not html:
+        view.add_item(args, {"title": args._addon.getLocalizedString(30041)})
+        view.endofdirectory()
+        return
 
+    # parse html
     soup = BeautifulSoup(html, "html.parser")
 
+    # for every list entry
     for season in soup.findAll(text=args.title):
+        # get values
         parent = season.find_parent("li")
         if not parent:
             continue
@@ -299,6 +356,7 @@ def listEpisodes(args):
         if thumb[:4] != "http":
             thumb = "https:" + thumb
 
+        # add to view
         view.add_item(args,
                       {"url":    parent.a["href"],
                        "title":  parent.img["alt"],
@@ -313,9 +371,14 @@ def listEpisodes(args):
 def startplayback(args):
     """Plays a video
     """
-    response = urlopen("https://www.akibapass.de" + args.url)
-    html = response.read().decode("utf-8")
+    # get website
+    html = api.getPage(args, "https://www.akibapass.de" + args.url)
+    if not html:
+        item = xbmcgui.ListItem(getattr(args, "title", "Title not provided"))
+        xbmcplugin.setResolvedUrl(int(sys.argv[1]), False, item)
+        return
 
+    # parse html
     soup = BeautifulSoup(html, "html.parser")
 
     # check if not premium
@@ -328,22 +391,30 @@ def startplayback(args):
     if u"reactivate" in html:
         # reactivate video
         a = soup.find("div", {"id": "jwplayer-container"}).a["href"]
-        response = urlopen("https://www.akibapass.de" + a)
-        html = response.read().decode("utf-8")
+        html = api.getPage(args, "https://www.akibapass.de" + a)
+        if not html:
+            item = xbmcgui.ListItem(getattr(args, "title", "Title not provided"))
+            xbmcplugin.setResolvedUrl(int(sys.argv[1]), False, item)
+            return
 
         # reload page
-        response = urlopen("https://www.akibapass.de" + args.url)
-        html = response.read().decode("utf-8")
+        html = api.getPage(args, "https://www.akibapass.de" + args.url)
+        if not html:
+            item = xbmcgui.ListItem(getattr(args, "title", "Title not provided"))
+            xbmcplugin.setResolvedUrl(int(sys.argv[1]), False, item)
+            return
+
+        # parse html
         soup = BeautifulSoup(html, "html.parser")
 
-        # check if successfull
+        # check if successful
         if u"reactivate" in html:
             xbmc.log("[PLUGIN] %s: Reactivation failed '%s'" % (args._addonname, args.url), xbmc.LOGERROR)
             xbmcgui.Dialog().ok(args._addonname, args._addon.getLocalizedString(30042))
             return
 
     # using stream with hls+aes
-    if u"Klicke hier, um den Flash-Player zu benutzen" in html:
+    if u"jwplayer-container" in html:
         # get stream file
         regex = r"file: \"(.*?)\","
         matches = re.search(regex, html).group(1)
@@ -353,7 +424,7 @@ def startplayback(args):
             url = "https://www.akibapass.de" + matches
 
             # play stream
-            item = xbmcgui.ListItem(getattr(args, "title", "Title not provided"), path=url + login.getCookie(args))
+            item = xbmcgui.ListItem(getattr(args, "title", "Title not provided"), path=url + api.getCookies(args))
             item.setMimeType("application/vnd.apple.mpegurl")
             item.setContentLookup(False)
             xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, item)
