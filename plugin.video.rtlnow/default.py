@@ -711,8 +711,11 @@ def searchit():
            listestring=objekt["metaTags"].encode("utf-8").lower()
          except:
             listestring=objekt["title"].encode("utf-8").lower()        
-         for elementx in listestring.split(","):
-           for element in elementx .split(" "):
+         if d in listestring:
+           found=1
+         else:
+          for elementx in listestring.split(","):
+            for element in elementx .split(" "):
               ds=kph.encode(d)
               es=kph.encode(element)
               if ds==es:
@@ -723,7 +726,7 @@ def searchit():
               else:
                  found=0
                  brk=0
-           if brk==1:
+            if brk==1:
               brk=0
               break
          if found==1:
