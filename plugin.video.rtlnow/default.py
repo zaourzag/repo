@@ -698,17 +698,39 @@ def livetv():
     xbmcplugin.endOfDirectory(addon_handle)	
 
 def searchit():
+     import kph
      dialog = xbmcgui.Dialog()
      d = dialog.input(translation(30010), type=xbmcgui.INPUT_ALPHANUM)
+     d=d.lower()
      url="https://api.tvnow.de/v3/formats?fields=id,title,metaTags,seoUrl,defaultDvdImage,defaultDvdCoverImage&maxPerPage=5000"
      content = cache.cacheFunction(getUrl,url) 
      objekte = json.loads(content, object_pairs_hook=OrderedDict)
      menu=[]
      for objekt in objekte["items"]:
-         if d in objekt["metaTags"]:
+         try:
+           listestring=objekt["metaTags"].encode("utf-8").lower()
+         except:
+            listestring=objekt["title"].encode("utf-8").lower()        
+         for elementx in listestring.split(","):
+           for element in elementx .split(" "):
+              ds=kph.encode(d)
+              es=kph.encode(element)
+              if ds==es:
+                found=1
+                brk=1
+                debug("-------- "+listestring+ "---------")
+                break
+              else:
+                 found=0
+                 brk=0
+           if brk==1:
+              brk=0
+              break
+         if found==1:
             title=objekt["title"]
             idd=objekt["id"]
             logo=objekt["defaultDvdImage"]
+            found=0            
             menu.append(addDir(title , url=str(idd), mode="rubrik", iconimage=logo,duration="",desc="",title=title))
      xbmcplugin.addDirectoryItems(addon_handle,menu)
      xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)                
