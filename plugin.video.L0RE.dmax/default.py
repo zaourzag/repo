@@ -134,10 +134,10 @@ def geturl(url,data="x",header="",referer=""):
    
   
 def liste():      
-    addDir("Featured" , "https://www.dmax.de/api/shows/featured?limit=100&page=1", "videoliste","",nosub="featured") 
-    addDir("Beliebteste" , "https://www.dmax.de/api/shows/most-popular?limit=100&page=1", "videoliste","",nosub="most-popular")    
-    addDir("Neueste" , "https://www.dmax.de/api/shows/recently-added?limit=100&page=1", "videoliste","",nosub="recently-added")        
-    addDir("Letzt Chance" , "https://www.dmax.de/api/shows/leaving-soon?limit=100&page=1", "videoliste","",nosub="leaving-soon")    
+    addDir("Featured" , "https://www.dmax.de/api/shows/highlights?limit=100&page=1", "videoliste","",nosub="featured") 
+    addDir("Beliebteste" , "https://www.dmax.de/api/shows/beliebt?limit=100&page=1", "videoliste","",nosub="most-popular")    
+    addDir("Neueste" , "https://www.dmax.de/sendungen/neu?limit=100&page=1", "videoliste","",nosub="recently-added")        
+    #addDir("Letzt Chance" , "https://www.dmax.de/api/shows/leaving-soon?limit=100&page=1", "videoliste","",nosub="leaving-soon")    
     addDir("Settings","Settings","Settings","")
     inputstream=addon.getSetting("inputstream")
     if inputstream=="true":
@@ -187,7 +187,12 @@ def listserie(idd):
   url="https://www.dmax.de/api/show-detail/"+str(idd)
   debug("listserie :"+url)
   content=geturl(url)
-  struktur = json.loads(content)
+  try:
+    struktur = json.loads(content)
+  except:
+    dialog = xbmcgui.Dialog()
+    dialog.notification("Fehler", 'Keine Video zu dieser Serie', xbmcgui.NOTIFICATION_ERROR)
+    return
   subelement=struktur["videos"]["episode"]
   for number,videos in subelement.iteritems(): 
     for video in videos:
@@ -203,9 +208,12 @@ def listserie(idd):
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
 
 def videoliste(url,page=1,nosub=""):    
+  if not "http" in url:
+     url="http://www.demax.de/"+url
   content=geturl(url)
+  debug("videoliste : "+content)
   struktur = json.loads(content) 
-  elemente=struktur["sections"][nosub]
+  elemente=struktur["items"]
   for element in elemente:
     title=element["title"]
     idd=element["id"]
