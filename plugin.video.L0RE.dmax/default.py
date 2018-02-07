@@ -136,7 +136,7 @@ def geturl(url,data="x",header="",referer=""):
 def liste():      
     addDir("Featured" , "https://www.dmax.de/api/shows/highlights?limit=100&page=1", "videoliste","",nosub="featured") 
     addDir("Beliebteste" , "https://www.dmax.de/api/shows/beliebt?limit=100&page=1", "videoliste","",nosub="most-popular")    
-    addDir("Neueste" , "https://www.dmax.de/sendungen/neu?limit=100&page=1", "videoliste","",nosub="recently-added")        
+    addDir("Neueste" , "https://www.dmax.de/api/shows/neu?limit=100&page=1", "videoliste","",nosub="recently-added")        
     #addDir("Letzt Chance" , "https://www.dmax.de/api/shows/leaving-soon?limit=100&page=1", "videoliste","",nosub="leaving-soon")    
     addDir("Settings","Settings","Settings","")
     inputstream=addon.getSetting("inputstream")
