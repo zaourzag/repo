@@ -1,4 +1,9 @@
-﻿v 0.9.0.65
+﻿v 0.9.0.70
+- Code aufgeräumt
+- Clear Cases überarbeitet, 4K hinzugefügt
+- Flagging Icons für die Ansichten "Banner" und "Media Info" überarbeitet, 4K hinzugefügt
+
+v 0.9.0.65
 - Bugfix Fritz Smart Home Addon (onclick)
 
 v 0.9.0.64

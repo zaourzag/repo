@@ -65,7 +65,7 @@
 				</control>
 				<include>FritzDect_layout</include>
 			</focusedlayout>
-			<content>plugin://plugin.program.fritzact?ts=$INFO[Window(Home).Property(fritzact.timestamp)]</content>
+			<content target="programs">plugin://plugin.program.fritzact?ts=$INFO[Window(Home).Property(fritzact.timestamp)]</content>
 		</control>
 	</include>
 	<include name="FritzDect_layout">

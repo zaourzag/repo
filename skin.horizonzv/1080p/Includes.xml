@@ -141,7 +141,7 @@
         <align>right</align>
     </include>
     <include name="focuseffect">
-        <animation effect="zoom" start="92" end="100" center="auto" time="80" condition="Skin.HasSetting(animation)">Focus</animation>
+        <animation effect="zoom" start="98" end="100" center="auto" time="200" condition="Skin.HasSetting(animation)">Focus</animation>
     </include>
     <include name="openclose">
         <animation effect="fade" time="500" condition="!Skin.HasSetting(animation)">WindowOpen</animation>

@@ -238,23 +238,6 @@
                     <height>8</height>
                     <label>-</label>
                 </control>
-                <!-- <control type="radiobutton" id="1774">
-                    <description>HideFilenameflagging</description>
-                    <label>31107</label>
-                    <onup>1732</onup>
-                    <include>custom_setting_button_property</include>
-                    <onclick>Skin.ToggleSetting(HideFilenameflagging)</onclick>
-                    <selected>Skin.HasSetting(HideFilenameflagging)</selected>
-                    <visible>Window.IsVisible(videos)</visible>
-                </control> -->
-                <!-- <control type="button" id="1776">
-                    <description>FSK</description>
-                    <include>custom_setting_button_property</include>
-                    <label>51190</label>
-                    <label2>$VAR[fsk_logo]</label2>
-					<onclick>Skin.SelectBool(51190, 51505|fsk_dual, 51507|fsk_original, 51509|fsk)</onclick>
-                    <visible>Window.IsVisible(videos)</visible>
-                </control> -->
                 <control type="button" id="1778">
                     <description>FSK</description>
                     <include>custom_setting_button_property</include>
