@@ -94,8 +94,9 @@
 						<control type="label">
 							<width>auto</width>
 							<height>40</height>
-							<label>$INFO[Window(home).Property(EmbyGenre)]</label>
+							<label>$INFO[Window(home).Property(EmbyGenre),$LOCALIZE[515]: ,   ]</label>
 							<font>reg22</font> 
+							<aligny>top</aligny>
 							<textcolor>emby</textcolor>
 							<shadowcolor>text_shadow</shadowcolor>
 							<visible>String.IsEmpty(ListItem.Genre) + !String.IsEmpty(Window(home).Property(EmbyGenre)) + String.StartsWith(ListItem.Path,plugin://plugin.video.embycon)</visible>
@@ -125,7 +126,7 @@
 						<param name="sublabel" value=""/>
 						<param name="use_custom_content" value="false"/>
 						<param name="height" value="553"/>
-						<param name="content_visible" value="Container.Content(seasons)"/>
+						<param name="content_visible" value="$EXP[SeasonViewVisible]"/>
 						<param name="list_name" value="$LOCALIZE[20373]"/>
 					</include>
 				</control>
