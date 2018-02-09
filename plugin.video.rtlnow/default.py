@@ -697,8 +697,7 @@ def livetv():
 	"""
     xbmcplugin.endOfDirectory(addon_handle)	
 
-def searchit():
-     import kph
+def searchit():     
      dialog = xbmcgui.Dialog()
      d = dialog.input(translation(30010), type=xbmcgui.INPUT_ALPHANUM)
      d=d.lower()
@@ -710,27 +709,11 @@ def searchit():
          try:
            listestring=objekt["metaTags"].encode("utf-8").lower()
          except:
-            listestring=objekt["title"].encode("utf-8").lower()        
-         if d in listestring:
-           found=1
-         else:
-          for elementx in listestring.split(","):
-            for element in elementx .split(" "):
-              ds=kph.encode(d)
-              es=kph.encode(element)
-              if ds==es:
-                found=1
-                brk=1
-                debug("-------- "+listestring+ "---------")
-                break
-              else:
-                 found=0
-                 brk=0
-            if brk==1:
-              brk=0
-              break
-         if found==1:
-            title=objekt["title"]
+            listestring=objekt["title"].encode("utf-8").lower() 
+         d=d.replace(",","").replace(" ","")
+         listestring=listestring.replace(",","").replace(" ","")
+         if d in listestring:         
+            title=objekt["title"].encode("utf-8")
             idd=objekt["id"]
             logo=objekt["defaultDvdImage"]
             found=0            
