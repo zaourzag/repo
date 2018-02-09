@@ -132,12 +132,11 @@ def geturl(url,data="x",header="",referer=""):
 
    
    
-  
+
 def liste():      
-    addDir("Featured" , baseurl+"/api/shows/featured?limit=100&page=1", "videoliste","",nosub="featured") 
-    addDir("Belibteste" , baseurl+"/api/shows/most-popular?limit=100&page=1", "videoliste","",nosub="most-popular")    
-    addDir("Neueste" , baseurl+"/api/shows/recently-added?limit=100&page=1", "videoliste","",nosub="recently-added")        
-    addDir("Letzt Chance" , baseurl+"/api/shows/leaving-soon?limit=100&page=1", "videoliste","",nosub="leaving-soon")    
+    addDir("Featured" , baseurl+"/api/shows/highlights?limit=100&page=1", "videoliste","",nosub="featured") 
+    addDir("Belibteste" , baseurl+"/api/shows/beliebt", "videoliste","",nosub="most-popular")    
+    addDir("Neueste" , baseurl+"/api/shows/neu?limit=100&page=1", "videoliste","",nosub="recently-added")            
     addDir("Settings","Settings","Settings","")
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
 
@@ -197,7 +196,7 @@ def listserie(idd):
 def videoliste(url,page=1,nosub=""):    
   content=geturl(url)
   struktur = json.loads(content) 
-  elemente=struktur["sections"][nosub]
+  elemente=struktur["items"]
   for element in elemente:
     title=element["title"]
     idd=element["id"]
