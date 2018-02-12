@@ -120,16 +120,19 @@ class ZattooDB(object):
     try:
       c.execute('CREATE TABLE channels(id TEXT, title TEXT, logo TEXT, weight INTEGER, favourite BOOLEAN, PRIMARY KEY (id) )')
       c.execute('CREATE TABLE programs(showID TEXT, title TEXT, channel TEXT, start_date TIMESTAMP, end_date TIMESTAMP, restart BOOLEAN, series BOOLEAN, description TEXT, description_long TEXT, year TEXT, country TEXT, genre TEXT, category TEXT, image_small TEXT, image_large TEXT, updates_id INTEGER, FOREIGN KEY(channel) REFERENCES channels(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED, FOREIGN KEY(updates_id) REFERENCES updates(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED)')
+
+      c.execute('CREATE INDEX program_list_idx ON programs(channel, start_date, end_date)')
+      c.execute('CREATE INDEX start_date_idx ON programs(start_date)')
+      c.execute('CREATE INDEX end_date_idx ON programs(end_date)')
+
       c.execute('CREATE TABLE updates(id INTEGER, date TIMESTAMP, type TEXT, PRIMARY KEY (id) )')
       #c.execute('CREATE TABLE playing(channel TEXT, start_date TIMESTAMP, action_time TIMESTAMP, current_stream INTEGER, streams TEXT, PRIMARY KEY (channel))')
       c.execute('CREATE TABLE showinfos(showID INTEGER, info TEXT, PRIMARY KEY (showID))')
       c.execute('CREATE TABLE playing(channel TEXT, current_stream INTEGER, streams TEXT, PRIMARY KEY (channel))')
       c.execute('CREATE TABLE version(version TEXT, PRIMARY KEY (version))')
-      
-      c.execute('CREATE INDEX program_list_idx ON programs(channel, start_date, end_date)')
-      c.execute('CREATE INDEX start_date_idx ON programs(start_date)')
-      c.execute('CREATE INDEX end_date_idx ON programs(end_date)')
 
+
+      
       self.conn.commit()
       c.close()
 
@@ -190,47 +193,57 @@ class ZattooDB(object):
 
     # get whole day
     fromTime = int(time.mktime(date.timetuple()))  # UTC time for zattoo
-    toTime = fromTime + 86400  # is 24h maximum zattoo is sending?
 
     #get program from DB and return if it's not empty
 #     if self._isDBupToDate(date, 'programs'):return
+    
     c.execute('SELECT * FROM programs WHERE start_date > ? AND end_date < ?', (fromTime+18000, fromTime+25200,)) #get shows between 05:00 and 07:00
     count=c.fetchall()
     if len(count)>0:
         c.close()
         return
+    
 
     #xbmcgui.Dialog().notification(__addon__.getLocalizedString(31917), self.formatDate(date), __addon__.getAddonInfo('path') + '/icon.png', 5000, False)
     #xbmc.executebuiltin("ActivateWindow(busydialog)")
-    api = '/zapi/v2/cached/program/power_guide/' + self.zapi.AccountData['account']['power_guide_hash'] + '?end=' + str(toTime) + '&start=' + str(fromTime)
 
-    #print "apiData   "+api
-    programData = self.zapi.exec_zapiCall(api, None)
-    #print str(programData)
-    count=0
-    for channel in programData['channels']:
-       cid = channel['cid']
-       if cid =="chtv":
-          continue
-       c.execute('SELECT * FROM channels WHERE id==?', [cid])
-       countt=c.fetchall()
-       if len(countt)==0:
-         if DEBUG: print "Sender NICHT : "+cid
-       for program in channel['programs']:
-        count+=1
-        if program['i'] != None:
-          image = "http://images.zattic.com/" + program['i']
-          #http://images.zattic.com/system/images/6dcc/8817/50d1/dfab/f21c/format_480x360.jpg
-        else: image = ""
-        try:
-            if DEBUG: print 'INSERT OR IGNORE INTO programs(channel, title, start_date, end_date, description, genre, image_small, showID) VALUES(%, %, %, %, %, %, %)',cid, program['t'], program['s'], program['e'], program['et'], ', '.join(program['g']), image, program['id']
-        except:
-            pass
-        c.execute('INSERT OR IGNORE INTO programs(channel, title, start_date, end_date, description, genre, image_small, showID) VALUES(?, ?, ?, ?, ?, ?, ?, ?)',
-            [cid, program['t'], program['s'], program['e'], program['et'], ', '.join(program['g']), image, program['id'] ])
-        if not c.rowcount:
-            c.execute('UPDATE programs SET channel=?, title=?, start_date=?, end_date=?, description=?, genre=?, image_small=? WHERE showID=?',
-              [cid, program['t'], program['s'], program['e'], program['et'], ', '.join(program['g']), image, program['id'] ])
+    #update 09.02.2018: zattoo only sends max 5h (6h?) of programdata -> load 6*4h
+    for nr in range(0, 6):
+        api = '/zapi/v2/cached/program/power_guide/' + self.zapi.AccountData['account']['power_guide_hash'] + '?end=' + str(fromTime+14400) + '&start=' + str(fromTime)
+        fromTime+=14400
+
+        #print "apiData   "+api
+        programData = self.zapi.exec_zapiCall(api, None)
+        #print str(programData)
+        count=0
+        for channel in programData['channels']:
+           cid = channel['cid']
+           if cid =="chtv":
+              continue
+           c.execute('SELECT * FROM channels WHERE id==?', [cid])
+           countt=c.fetchall()
+           if len(countt)==0:
+             if DEBUG: print "Sender NICHT : "+cid
+           for program in channel['programs']:
+            count+=1
+            if program['i'] != None:
+              image = "http://images.zattic.com/" + program['i']
+              #http://images.zattic.com/system/images/6dcc/8817/50d1/dfab/f21c/format_480x360.jpg
+            else: image = ""
+            try:
+                if DEBUG: print 'INSERT OR IGNORE INTO programs(channel, title, start_date, end_date, description, genre, image_small, showID) VALUES(%, %, %, %, %, %, %)',cid, program['t'], program['s'], program['e'], program['et'], ', '.join(program['g']), image, program['id']
+            except:
+                pass
+
+            c.execute('INSERT INTO programs(channel, title, start_date, end_date, description, genre, image_small, showID) VALUES(?, ?, ?, ?, ?, ?, ?, ?)',
+                [cid, program['t'], program['s'], program['e'], program['et'], ', '.join(program['g']), image, program['id'] ])
+            '''
+            c.execute('INSERT OR IGNORE INTO programs(channel, title, start_date, end_date, description, genre, image_small, showID) VALUES(?, ?, ?, ?, ?, ?, ?, ?)',
+                [cid, program['t'], program['s'], program['e'], program['et'], ', '.join(program['g']), image, program['id'] ])
+            if not c.rowcount:
+                c.execute('UPDATE programs SET channel=?, title=?, start_date=?, end_date=?, description=?, genre=?, image_small=? WHERE showID=?',
+                  [cid, program['t'], program['s'], program['e'], program['et'], ', '.join(program['g']), image, program['id'] ])
+            '''
 
     if count>0:
       c.execute('INSERT into updates(date, type) VALUES(?, ?)', [date, 'program'])

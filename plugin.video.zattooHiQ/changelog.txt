@@ -1,11 +1,17 @@
-﻿[B]ZattooHiQ v1.3.7 [/B]06.11.2017 Steffen Rolapp
+﻿==================================================
+[B]ZattooHiQ v1.4.0 [/B]10.02.2018 GreenAir
 ==================================================
-- Fehler beim Übermitteln det Pos an Zattoo behoben
+- fix EPG Problem
+
+==================================================
+[B]ZattooHiQ v1.3.7 [/B]06.11.2017 Steffen Rolapp
+==================================================
+- Fehler beim Übermitteln der Pos an Zattoo behoben
 
 ==================================================
 [B]ZattooHiQ v1.3.6 [/B]05.11.2017 Steffen Rolapp
 ==================================================
-- Zeitzonenproblem ist glöst
+- Zeitzonenproblem ist gelöst
 
 ==================================================
 [B]ZattooHiQ v1.3.5 [/B]21.10.2017 Steffen Rolapp
