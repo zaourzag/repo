@@ -545,12 +545,12 @@ msgstr ""
 
 #: /xml/Embuary_Variables.xml
 msgctxt "#31105"
-msgid "Change the background image behaviour of Embuary"
+msgid "Change background, header and other misc. settings of Embuary."
 msgstr ""
 
 #: /xml/Embuary_Variables.xml
 msgctxt "#31106"
-msgid "Change the visiblity of available widgets in the home screen"
+msgid "Configure library nodes and widgets of the home window."
 msgstr ""
 
 #: /xml/SkinSettings.xml
@@ -755,7 +755,7 @@ msgstr ""
 
 #: /xml/Embuary_Variables.xml
 msgctxt "#31147"
-msgid "Enable and disable buttons of the side panel"
+msgid "Enable and disable buttons of the side panel."
 msgstr ""
 
 #: /xml/DialogSubtitles.xml
@@ -1016,4 +1016,39 @@ msgstr ""
 #: /xml/Embuary_Includes.xml
 msgctxt "#31199"
 msgid "Slide"
+msgstr ""
+
+#: /extras/skinsettings.xml
+msgctxt "#31200"
+msgid "Custom"
+msgstr ""
+
+#: /xml/SkinSettings.xml
+msgctxt "#31201"
+msgid "Edit home library menu"
+msgstr ""
+
+#: /xml/SkinSettings.xml
+msgctxt "#31202"
+msgid "Menu positions"
+msgstr ""
+
+#: /xml/SkinSettings.xml
+msgctxt "#31203"
+msgid "Default menu entries"
+msgstr ""
+
+#: /xml/SkinSettings.xml
+msgctxt "#31204"
+msgid "Reset menu to default"
+msgstr ""
+
+#: /xml/SkinSettings.xml
+msgctxt "#31205"
+msgid "Change menu thumbnails"
+msgstr ""
+
+#: /xml/Embuary_Includes.xml
+msgctxt "#31206"
+msgid "Use Emby thumb"
 msgstr ""
