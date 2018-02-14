@@ -23,10 +23,10 @@ def get_videos(artist):
     try:
         items = json_data['items']
         videos = add_videos(videos, items, artist)
-        if len(videos) > 10:
+        if len(videos) > 1:
             json_data,items = get_more_items(json_data, url, params, headers)
             videos = add_videos(videos, items, artist)
-        if len(videos) > 20:
+        if len(videos) > 3:
             json_data,items = get_more_items(json_data, url, params, headers)
             videos = add_videos(videos, items, artist)
     except:
@@ -128,20 +128,25 @@ def get_video_url(_id):
 def status(channel,artist,title,description):
     title = title.lower()
     artist = artist.lower().replace(' ','')
+    channel = channel.lower()
     a = ['lyric', 'no official', 'not official', 'unofficial', 'un-official', 'non-official', 'vevo']
     if any(x in title for x in a):
         if 'official lyric video' in title:
             return True
         else:
             return False
-    b = ['parody', 'parodie', 'fan made', 'fanmade', 'fan mv', 'fan edit', 'vocal cover',
+    b = [
+        'parody', 'parodie', 'fan made', 'fan-made', 'fanmade', 'fan mv', 'fan edit', 'vocal cover',
+        'dance cover', 'dance practice',
         'custom video', 'music video cover', 'music video montage', 'video preview',
         'guitar cover', 'drum through', 'guitar walk', 'drum walk',
         'guitar demo', '(drums)', 'drum cam', 'drumcam', '(guitar)',
         'our cover of', 'in this episode of', 'official comment', 'short video about',
-        'short ver.', 'full set', 'full album stream',
-        '"reaction"', 'reaction!', 'video reaction', '(review)', '(preview)',
-        'splash news', 'not an official', 'music video awards']
+        'short ver', 'full set', 'full album stream', 'hour version',
+        '"reaction"', 'reaction!', 'video reaction', 'reaction video',
+        'v reaction', '[reaction]', '| reaction', '(review)', '(preview)',
+        'splash news', 'not an official', 'music video awards'
+    ]
     if any(x in title for x in b) or any(x in description for x in b):
         return False
     c = [' animated ', 'i don\'t own', 'i do not own', 'preview of',
@@ -154,7 +159,7 @@ def status(channel,artist,title,description):
     j = ['tmz']
     if any(channel == x for x in j):
         return False
-    e = ['official video', 'taken from', 'itunes.apple.com', 'smarturl.it', 'j.mp']
+    e = ['official video', 'taken from', 'itunes.apple.com', 'itunes.com', 'smarturl.it', 'j.mp']
     if any(x in description for x in e):
         return True
     f = ['official video', 'official music video', 'offizielles video', 'us version']
@@ -166,15 +171,19 @@ def status(channel,artist,title,description):
     h = ['vevo']
     if any(channel.endswith(x) for x in h):
         return True
+    return False
 
 def split_title(t):
-    try:
-        t = re.sub('「',' - ', t)
-    except:
-        pass
+    if (t.startswith('[') and '「' in t):
+        t = re.sub('\[\w{2}\]', '', t) + ' official music video'
+    elif (t.startswith('【') and ' - ' in t):
+        t = re.sub('\【\w{2}\】', '', t) + ' official music video'
+    t = t.replace('「',' - ').replace('」','')
     t = t.replace('–', '-')
     if not '-' in t and '"' in t:
         t = re.sub(' "', ' - ', t)
+    if not '-' in t and ' / ' in t:
+        t = re.sub(' / ', ' - ', t)
     if re.search(' - ', t):
         return t.split(' - ')
     elif re.search('- ', t):

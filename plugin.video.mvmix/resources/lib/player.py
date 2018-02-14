@@ -87,7 +87,7 @@ class mvmixPlayer(xbmc.Player):
                             'ignore_list': self.ignore_list}
             resume.save_resume_point(resume_point)
             self.sleep(500)
-            if loops == 10:
+            if loops == 20:
                 self.is_active = False
                 break
 

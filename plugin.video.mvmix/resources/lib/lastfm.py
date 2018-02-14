@@ -74,12 +74,14 @@ def get_artists_by_tag(tag):
 
 def compare_genres(genre_list,genres):
     if genre_list and genres:
+        x = 0
         for a in genres:
             for b in genre_list:
                 if a == b:
+                    x += 1
+                if x == 2:
                     return True
-    else:
-        return True
+    return False
 
 def get_artist_genre(artist):
     genre_list = cache.get_value(artist,'genre',lastfm='tag')
@@ -89,10 +91,7 @@ def get_artist_genre(artist):
             params = {'method':'artist.gettoptags', 'artist':artist, 'api_key':api_key, 'format':'json'}
             json_data = requests.get(api_url, params=params).json()
             for tag in json_data['toptags']['tag']:
-                genre = tag['name']
-                list = ['german','deutsch','seen live','made in germany','japanese','anime','vocalists','songwriter']
-                if not any(x in genre.lower() for x in list):
-                    genre_list.append(genre)
+                genre_list.append(tag['name'])
                 if len(genre_list) == 5:
                     break
             cache.save_value(artist,'genre',genre_list,lastfm='tag')
