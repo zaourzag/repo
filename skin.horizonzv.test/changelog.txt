@@ -1,4 +1,7 @@
-﻿v 1.18.0.03
+﻿v 1.18.0.04
+- Addon Id an Verzeichnis angepasst (.test)
+
+v 1.18.0.03
 - Widgets überarbeitet, "inProgress" auf Platz1 im Widget wieder eingebaut
 
 v 1.18.0.02
