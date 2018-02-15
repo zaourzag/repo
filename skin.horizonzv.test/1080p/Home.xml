@@ -310,7 +310,7 @@
                                 <label2>masks/Default_sharp.png</label2>
                                 <icon>center/Center_Search.png</icon>
                                 <onclick>RunScript(script.globalsearch)</onclick>
-                                <onclick>Dialog.Close(favourites,force)</onclick>
+                                <onclick>Dialog.Close(favourites,true)</onclick>
                                 <visible>System.HasAddon(script.globalsearch)</visible>
                             </item>
                             <item id="8">
@@ -319,7 +319,7 @@
                                 <label2>masks/Default_sharp.png</label2>
                                 <icon>center/Center_Switchtimer.png</icon>
                                 <onclick>ActivateWindow(4111)</onclick>
-                                <onclick>Dialog.Close(favourites,force)</onclick>
+                                <onclick>Dialog.Close(favourites,true)</onclick>
                                 <visible>Integer.IsGreater(Window(Home).Property(SwitchTimerActiveItems),0)</visible>
                             </item>
                             <item id="9">
@@ -328,7 +328,7 @@
                                 <label2>masks/Default_sharp.png</label2>
                                 <icon>center/Center_PVRHasTimer.png</icon>
                                 <onclick>ActivateWindow(4112)</onclick>
-                                <onclick>Dialog.Close(favourites,force)</onclick>
+                                <onclick>Dialog.Close(favourites,true)</onclick>
                                 <visible>PVR.HasTimer</visible>
                             </item>
                             <item id="9">

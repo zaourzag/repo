@@ -41,10 +41,10 @@
                     <top>645</top>
                     <width>1800</width>
                     <height>570</height>
-                    <onup>Dialog.Close(Favourites)</onup>
+                    <onup>Dialog.Close(favourites,true)</onup>
                     <onleft>450</onleft>
                     <onright>450</onright>
-                    <ondown>Dialog.Close(Favourites)</ondown>
+                    <ondown>Dialog.Close(all,true)</ondown>
                     <ondown>SetFocus(199)</ondown>
                     <pagecontrol/>
                     <scrolltime>200</scrolltime>
@@ -124,7 +124,7 @@
                         <width>160</width>
                         <height>160</height>
                         <label/>
-                        <onup>Dialog.Close(Favourites)</onup>
+                        <onup>Dialog.Close(favourites)</onup>
                         <onup>SetFocus(9000)</onup>
                         <ondown>Dialog.Close(all,true)</ondown>
                         <ondown>SetFocus(199)</ondown>

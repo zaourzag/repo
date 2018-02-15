@@ -63,7 +63,7 @@
                         <alttexturefocus>buttons/ButtonFO.png</alttexturefocus>
                         <alttexturenofocus>Black.png</alttexturenofocus>
                         <onclick>Close</onclick>
-                        <onclick>Dialog.Close(VideoOSD)</onclick>
+                        <onclick>Dialog.Close(videoosd)</onclick>
                         <onclick>ActivateWindow(SubtitleSearch)</onclick>
                     </control>
                     <control type="button" id="402">
@@ -765,13 +765,13 @@
                                 <label>19019</label>
                                 <icon>osd/ChannelListFO.png</icon>
                                 <onclick>ActivateWindow(PVRosdChannels)</onclick>
-                                <onclick>Dialog.Close(Videoosd)</onclick>
+                                <onclick>Dialog.Close(videoosd)</onclick>
                             </item>
                             <item id="29">
                                 <label>$LOCALIZE[19029]$INFO[VideoPlayer.ChannelName, - ]</label>
                                 <icon>osd/EPG.png</icon>
                                 <onclick>ActivateWindow(PVRosdGuide)</onclick>
-                                <onclick>Dialog.Close(Videoosd)</onclick>
+                                <onclick>Dialog.Close(videoosd)</onclick>
                             </item>
                         </content>
                     </control>

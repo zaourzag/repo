@@ -815,7 +815,7 @@
                         <description>CinemaVision</description>
                         <include>dialogbutton</include>
                         <label>31002</label>
-						<onclick>Dialog.Close(MovieInformation)</onclick>
+						<onclick>Dialog.Close(movieinformation)</onclick>
 						<onclick>RunScript(script.cinemavision,experience)</onclick>
 						<visible>System.HasAddon(script.cinemavision) + [String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,episode)]</visible>
                     </control>

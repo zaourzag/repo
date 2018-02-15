@@ -1,4 +1,8 @@
-﻿v 1.18.0.04
+﻿v 1.18.0.05
+- Bugfix Close.Dialog
+- begonnen neue Sektion zu integrieren (Games)
+
+v 1.18.0.04
 - Addon Id an Verzeichnis angepasst (.test)
 
 v 1.18.0.03

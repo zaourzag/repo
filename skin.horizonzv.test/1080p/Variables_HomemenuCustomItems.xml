@@ -573,4 +573,31 @@
 		<value condition="Skin.HasSetting(HomeWidget_Custom9_Standard)">$INFO[Skin.String(Home_Custom9_Custom_Path)]</value>
         <value condition="Skin.HasSetting(HomeWidget_Custom9_User)">$INFO[Skin.String(HomeWidget_Custom9_Path)]</value>
     </variable>
+	<!-- Games -->
+    <variable name="Home_Games_Category">
+        <value condition="Skin.HasSetting(Home_Games_Custom_Category_Video)">$LOCALIZE[36912]</value>
+        <value condition="Skin.HasSetting(Home_Games_Custom_Category_Music)">$LOCALIZE[2]</value>
+        <value condition="Skin.HasSetting(Home_Games_Custom_Category_Pictures)">$LOCALIZE[1]</value>
+        <value condition="Skin.HasSetting(Home_Games_Custom_Category_File)">$LOCALIZE[559]</value>
+    </variable>
+    <variable name="Home_Games_SubCategory">
+        <value condition="[Skin.HasSetting(Home_Games_Custom_Category_File)+Skin.HasSetting(Home_Games_Custom_SubCategory_Video)]|Skin.HasSetting(Home_Games_Custom_Category_Video)">videos</value>
+        <value condition="[Skin.HasSetting(Home_Games_Custom_Category_File)+Skin.HasSetting(Home_Games_Custom_SubCategory_Music)]|Skin.HasSetting(Home_Games_Custom_Category_Music)">music</value>
+        <value condition="Skin.HasSetting(Home_Games_Custom_Category_Pictures)">pictures</value>
+    </variable>
+    <variable name="Home_Games_SubCategory_Label">
+        <value condition="Skin.HasSetting(Home_Games_Custom_SubCategory_Video)">$LOCALIZE[36912]</value>
+        <value condition="Skin.HasSetting(Home_Games_Custom_SubCategory_Music)">$LOCALIZE[2]</value>
+        <value condition="Skin.HasSetting(Home_Games_Custom_SubCategory_Pictures)">$LOCALIZE[1]</value>
+    </variable>
+    <variable name="Home_Games_Currentpath">
+        <value condition="Skin.HasSetting(Home_Games_Custom_Category_Video)">Skin.SetPath(Home_Games_Custom_Path,library://video/)</value>
+        <value condition="Skin.HasSetting(Home_Games_Custom_Category_Music)">Skin.SetPath(Home_Games_Custom_Path,library://music/)</value>
+        <value condition="Skin.HasSetting(Home_Games_Custom_Category_Pictures)">Skin.SetPath(Home_Games_Custom_Path,)</value>
+        <value condition="Skin.HasSetting(Home_Games_Custom_Category_File)">Skin.SetFile(Home_Games_Custom_Path,,special://profile/playlists/)</value>
+    </variable>
+    <variable name="Home_Games_Label">
+        <value condition="Skin.HasSetting(Home_Games_Button)">$INFO[Skin.String(Home_Games_Custom_Label)]</value>
+		<value>$LOCALIZE[10821]</value>
+    </variable>
 </includes>

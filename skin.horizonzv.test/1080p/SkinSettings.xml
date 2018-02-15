@@ -405,6 +405,18 @@
                             <onclick>Skin.ToggleSetting(HomeMenuNoProgramsButton)</onclick>
                             <selected>!Skin.HasSetting(HomeMenuNoProgramsButton)</selected>
                         </control> -->
+						<control type="radiobutton" id="305">
+                            <description>Game Button</description>
+                            <width>1260</width>
+                            <align>left</align>
+							<label>$LOCALIZE[15016]</label>
+                            <focusedcolor>black</focusedcolor>
+							<selected>!Skin.HasSetting(HomeMenuNoGamesButton)</selected>
+							<onclick>Skin.ToggleSetting(HomeMenuNoGamesButton)</onclick>
+                            <!-- <onclick>SetProperty(HomeButton,games,home)</onclick>
+                            <onclick>ActivateWindow(1501)</onclick> -->
+							<!-- <visible>System.GetBool(gamesgeneral.enable)</visible> -->
+						</control>
                         <control type="button" id="305">
                             <description>Dashboard Button</description>
                             <width>1260</width>

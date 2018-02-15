@@ -2,7 +2,7 @@
 <window>
     <defaultcontrol>1</defaultcontrol>
     <zorder>2</zorder>
-    <visible>[!Window.IsVisible(fullscreeninfo)+!Window.IsActive(videobookmarks)+!Window.IsVisible(osdvideosettings)+!Window.IsVisible(osdaudiosettings)]</visible>
+    <visible>[!Window.IsVisible(fullscreeninfo)+!Window.IsActive(VideoBookmarks)+!Window.IsVisible(osdvideosettings)+!Window.IsVisible(osdaudiosettings)]</visible>
     <visible>Player.Seeking|Player.DisplayAfterSeek|Player.Paused|Player.Forwarding|Player.Rewinding|Window.IsVisible(videoosd)</visible>
     <visible>!Window.IsActive(DialogSubtitles.xml)</visible>
     <visible>Window.IsVisible(fullscreenvideo)</visible>
