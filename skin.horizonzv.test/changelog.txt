@@ -1,0 +1,23 @@
+﻿v 1.18.0.03
+- Widgets überarbeitet, "inProgress" auf Platz1 im Widget wieder eingebaut
+
+v 1.18.0.02
+- Bugfix: Zentrale öffnete sich nicht (Dialog Close - Favouriten)
+
+v 1.18.0.01
+- Code aufgeräumt
+- Clear Cases überarbeitet, 4K hinzugefügt
+- Flagging Icons für die Ansichten "Banner" und "Media Info" überarbeitet, 4K hinzugefügt
+
+v 1.18.0.0
+- Bugfix Fritz Smart Home Addon (onclick)
+- leichte Design Änderung im Bereich News und Dashboard
+- Code aufgeräumt
+- Bugfix Serienplaner (Content wurde nicht angezeigt)
+- Code aufgeräumt
+- Bugfix Serienplaner (ohne Addon, wird man immer nach der Installation gefragt)
+- Hauptmenü: Widget für News, GTO überarbeitet. Widget konfiguration neu aufgebaut und verbessert
+- Hauptmenü: Widget für Dashboard erweitert. Video Addon Pfade können nun auch ausgewählt werden
+- einige Bugfixes umgesetzt
+- erste Anpassungen an Kodi 18
+- Kopie von Kodi 17 (Skin 0.9.0.56)
