@@ -334,13 +334,13 @@ if mode=="":
        sendertext=""
     else:
        sendertext="Sender:         "+sender
-    titlesuche = struct_serie["name"].decode("utf-8")        
+    titlesuche = struct_serie["name"]
     try:
       nextfolge=nextfolge
     except:
        nextfolge=""
     if nextfolge=="":
-      textnext=""
+      textnext="Naechste Folge: \n"
     else:
        textnext="Naechste Folge: \nUS :"+nextfolge+" ("+nextdatum+" )"       
     
@@ -367,7 +367,7 @@ if mode=="":
            desender="Amazon"
         dezeit=struktur["Data"]["Series"]["Airs_Time"]    
         now = time.time()
-        next=5000000000
+        next=5000000000        
         last=0
         next_EpisodeNumber=""
         next_SeasonNumber=""
@@ -400,7 +400,7 @@ if mode=="":
             de_next="  De : "+next_SeasonNumber+"X"+next_EpisodeNumber+". ( "+nextde+" "+ dezeit +" "+desender +" )\n"
         else:
             de_next="\n"   
-        if next >0:
+        if last >0:
             lastde=datetime.datetime.fromtimestamp(last).strftime("%d/%m/%Y")
             de_last="  De : "+last_SeasonNumber+"X"+last_EpisodeNumber+". ( "+lastde+" "+ dezeit +" "+desender +" )\n"
         else:
