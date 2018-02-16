@@ -104,7 +104,7 @@ def geturl(url,data="x",header="",referer=""):
         for cook in cj:
           debug(" Cookie :"+ str(cook))
         opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))        
-        userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36"
+        userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.167 Safari/537.36"
         if header=="":
           opener.addheaders = [('User-Agent', userAgent)]        
         else:
@@ -140,7 +140,7 @@ def liste():
     content=geturl(baseurl)
     htmlPage = BeautifulSoup(content, 'html.parser')
     elemente = htmlPage.find_all("a",attrs={"class":"teaser"})
-    addDir("Budnesliega", baseurl+"/video/bundesliga", "subrubrik","")
+    addDir("Bundesliega", baseurl+"/video/bundesliga", "subrubrik","")
     for element in elemente:
        title= element["title"]
        if not "bundesliga" in element["href"]:         
@@ -163,28 +163,51 @@ def subrubrik(url):
   except:
        videoliste(url,nosub=1)
   
-def playvideo(url):      
-    playlist=xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
-    playlist.clear()    
+def playvideo(url):    
+    debug("URL :"+url)
+    #playlist=xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
+    #playlist.clear()    
      #https://www.fohlen.tv/player/list/7363295/7363447/1
     #https://www.fohlen.tv/player/init/7363447/1
     quality=addon.getSetting("quality")    
     content=geturl(url)
     newurl=re.compile('<meta name="player.init" content="(.+?)" />', re.DOTALL).findall(content)[0]
-    newurl=baseurl+newurl
+    newurl=baseurl+newurl    
+    debug("newurl:"+newurl)
     content=geturl(newurl)
-    struktur = json.loads(content)     
+    struktur = json.loads(content)
+
+    debug("####################")
+    x=1
     for subelement in struktur["startVideo"]["segments"]:
-       for element in subelement["assets"]:
-            if element["profile"]==quality:                
-                playurl=element["html5"]
-                listitem = xbmcgui.ListItem(path=playurl)
-                playlist.add(playurl, listitem)  
-                debug("ADD: "+playurl)                     
-            else:
-                debug("Qualtity :"+element["profile"]  +" false")
-    debug(playlist)
-    xbmc.Player().play(playlist)
+        try:
+            debug("1")
+            playerid=subelement["moving_image_player_id"]
+            debug("2 "+playerid)
+            videoid=subelement["moving_image_video_id"]
+            debug("3 "+videoid)
+            token=subelement["moving_image_token"]
+            debug("4 "+token)
+            title=subelement["title"]
+            debug("5 "+title)
+            videofiles="https://d.video-cdn.net/play/player/"+playerid+"/video/"+videoid+"?token="+token
+            debug("videofiles :"+videofiles)
+            content=geturl(videofiles)
+            debug(content)
+            struktur = json.loads(content)
+            playurl=struktur["videoSources"]["html"][quality][0]["source"]
+            addLink(title+" Teil "+str(x),playurl,"playit","")
+            x=x+1
+            debug(content)
+            debug("6++++++++")
+        except:
+            pass
+    xbmcplugin.endOfDirectory(addon_handle)
+    
+def playit(url):
+    listitem = xbmcgui.ListItem(path=url)
+    xbmcplugin.setResolvedUrl(addon_handle, True, listitem)
+    
     
 params = parameters_string_to_dict(sys.argv[2])
 mode = urllib.unquote_plus(params.get('mode', ''))
@@ -194,6 +217,7 @@ page = urllib.unquote_plus(params.get('page', ''))
 nosub= urllib.unquote_plus(params.get('nosub', ''))
 
 def videoliste(url,page=1,nosub=0):  
+  ret=login()  
   if page>1:
     if int(nosub)==1:
       nexturl=url+"/0/"+str(page)
@@ -206,6 +230,7 @@ def videoliste(url,page=1,nosub=0):
   subliste = htmlPage.find("ul",attrs={"id":"teaser_items"})
   elemente  = subliste.find_all("li",attrs={"class":"tooltip_item"})
   for element in elemente:
+    if ret==0 or "kostenlos" in str(element): 
        link = element.find("a",attrs={"class":"playlist"})["href"]
        link=baseurl+link
        bild = element.find("img")["src"]
@@ -216,6 +241,34 @@ def videoliste(url,page=1,nosub=0):
   addDir("Next",url,"videoliste","",page=int(page)+1,nosub=nosub)
   xbmcplugin.endOfDirectory(addon_handle)
 # Haupt Menu Anzeigen      
+
+def login():
+  username=addon.getSetting("user")
+  password=addon.getSetting("pass")  
+  values = {'force_login' : '1',
+  'password' : password,
+        'username' : username, 
+        'login_user': 'Anmelden'        
+  }
+  headers = {'User-Agent':         'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36',
+   'X-Requested-With':              'XMLHttpRequest',
+   'Referer':                      baseurl,
+   'Content-Type':                  'application/x-www-form-urlencoded; charset=UTF-8',
+   'Origin':                        baseurl,
+   'Accept-Encoding':'gzip, deflate, br',
+   'Accept-Language': 'de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7'
+   }
+  data = urllib.urlencode(values)
+  debug("Data : "+data)
+  content = requests.post(baseurl+"/user/login",data=data, allow_redirects=False,verify=False,cookies=cj,headers=headers)
+  debug(content.text.encode("utf-8"))  
+  if "Sie sind jetzt eingeloggt" in content.text.encode("utf-8"):
+    return 0
+  else:
+    return -1
+  
+
+
 if mode is '':
      liste()   
 else:
@@ -229,3 +282,5 @@ else:
           subrubrik(url)
   if mode == 'videoliste':
           videoliste(url,page,nosub)
+  if mode == 'playit':
+          playit(url)          

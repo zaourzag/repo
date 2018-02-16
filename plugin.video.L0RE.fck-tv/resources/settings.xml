@@ -1,3 +1,5 @@
 <settings>
-     <setting id="quality" type="select" label="Qualität" default="high" values="high|standard|hd|low200|low400" />
+     <setting id="quality" type="select" label="Qualität" default="auto" values="auto|1080p|720p|480p|360p|288p" />
+     <setting id="user" type="text" label="Email" default=""/>
+     <setting id="pass" type="text" label="Password" default=""/>
 </settings>
