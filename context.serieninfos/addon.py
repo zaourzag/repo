@@ -7,9 +7,18 @@ import xbmcgui,xbmcvfs
 import json,urllib2,re,urlparse,os
 import pyxbmct
 import requests,cookielib
-from thetvdb import TheTvDb
 from difflib import SequenceMatcher
 import time,datetime
+
+
+try:
+   import StorageServer
+except:
+   import storageserverdummy as StorageServer
+
+   
+cachezeit=24  
+cache = StorageServer.StorageServer("context.serieninfos", cachezeit) # (Your plugin name, Cache time in hours
 
 addon = xbmcaddon.Addon()
 
@@ -189,10 +198,62 @@ def get_episodedata(title):
     pass
 
   return lastplayd_title,lastepisode_name,fehlen
-  
+def fixtime(date_string,format):
+    debug("date_string,format :" +str(date_string)+","+str(format))
+    try:
+        x=datetime.datetime.strptime(date_string, format)
+    except TypeError:
+        x=datetime.datetime(*(time.strptime(date_string, format)[0:6]))  
+    return x
+    
 def similar(a, b):
     return SequenceMatcher(None, a, b).ratio()
-
+def getallfolgen(idd):
+    url="https://api.themoviedb.org/3/tv/"+str(idd)+"?api_key=f5bfabe7771bad8072173f7d54f52c35&language=en_US"
+    debug("getallfolgen url : "+url)    
+    content = cache.cacheFunction(geturl,url) 
+    structure = json.loads(content)
+    debug(structure)
+    now = datetime.datetime.now()      
+    last = fixtime("1900-01-01", "%Y-%m-%d")
+    next = fixtime("2200-01-01", "%Y-%m-%d")
+    lastdatum=""
+    lastepisode=""
+    nextepisode=""
+    nextdatum=""
+    for season in structure["seasons"]:        
+       nr=season["season_number"]
+       if int(nr)==0:
+         continue
+       seasonurl="https://api.themoviedb.org/3/tv/"+str(idd)+"/season/"+str(nr)+"?api_key=f5bfabe7771bad8072173f7d54f52c35&language=en_US"
+       debug("seasonurl : "+seasonurl)       
+       content2 = cache.cacheFunction(geturl,seasonurl) 
+       structure= json.loads(content2) 
+       debug(structure)
+       for episode in structure["episodes"]:
+        debug(episode)
+        datum=episode["air_date"]
+        nummer=episode["episode_number"]
+        season=episode["season_number"]
+        try:
+            date1 = fixtime(datum, "%Y-%m-%d")      
+            if date1> now and date1<next:
+                nextdatum=datum
+                nextepisode="S"+str(season)+"E"+str(nummer)
+                next=date1
+            if date1< now and date1>last:
+                lastdatum=datum
+                lastepisode="S"+str(season)+"E"+str(nummer)
+                last=date1          
+            debug(datum +" : S"+str(season)+"E"+str(nummer))
+        except:
+            pass        
+    debug("LAST: "+ lastdatum+" "+lastepisode)
+    debug("Next: "+ nextdatum+" "+nextepisode)
+    return (nextdatum,nextepisode,lastdatum,lastepisode)
+        
+       
+       
 
 addon = xbmcaddon.Addon()    
 debug("Hole Parameter")
@@ -212,16 +273,20 @@ debug("Mode ist : "+mode)
 if mode=="":      
     title=gettitle()
     lastplayd_title,lastepisode_name,fehlen=get_episodedata(title)    
-    tvdb = TheTvDb("de-DE")
-    wert=tvdb.search_series(title.decode("utf-8"))
+    title=re.sub('\(.+?\)', '', title)
+    url="https://api.themoviedb.org/3/search/tv?api_key=f5bfabe7771bad8072173f7d54f52c35&language=de-DE&query=" + title.replace(" ","+")
+    debug("Searchurl "+url)    
+    content = cache.cacheFunction(geturl,url) 
+    wert = json.loads(content)  
+    
     count=0
     gefunden=0
     wertnr=0
     x=0
-    for serie in wert:
-      serienname=serie["seriesName"]
+    for serie in wert["results"]:
+      serienname=serie["original_name"]
       nummer=similar(title,serienname)      
-      if nummer >=wertnr:
+      if nummer >wertnr:
         wertnr=nummer
         gefunden=count
         x=1
@@ -232,119 +297,124 @@ if mode=="":
       dialog = xbmcgui.Dialog()
       ok = dialog.ok('Nicht gefunden', 'Serie Nicht gefunden')
       quit()
-    idd=wert[gefunden]["id"]
-    seriesName=wert[gefunden]["seriesName"]
-    serienstart=wert[gefunden]["firstAired"]
-    wert1=tvdb.get_last_episode_for_series(idd)
-    debug("2. ++++last+++")
-    debug(wert1)
-    leztefolge=wert1["airdate.label"].decode("utf-8")
-    
-    serie=tvdb.get_series(idd)
+    debug("_****_") 
+    debug(gefunden)
+    idd=wert["results"][gefunden]["id"]
+    debug("IDD: "+str(idd))
+    seriesName=wert["results"][gefunden]["name"]
+    serienstart=wert["results"][gefunden]["first_air_date"]
+    (nextdatum,nextfolge,lastdatum,lastfolge)=getallfolgen(idd)
+    #wert1=tvdb.get_last_episode_for_series(idd)
+    #debug("2. ++++last+++")
+    #debug(wert1)
+    leztefolge=lastfolge
+        
     debug("3. ++++++serie++++")    
-    debug(serie)
-    Bild=serie["art"]["banner"]
-    status=serie["status"].decode("utf-8")
+    debug(serie)    
+    Bild="http://image.tmdb.org/t/p/w300/"+wert["results"][gefunden]["backdrop_path"].encode("utf-8")
+    debug("Bild :"+Bild)
+    serienurl="https://api.themoviedb.org/3/tv/"+str(idd)+"?api_key=f5bfabe7771bad8072173f7d54f52c35&language=de-DE"
+    debug("serienurl : "+serienurl)    
+    content_serie = cache.cacheFunction(geturl,serienurl) 
+    struct_serie = json.loads(content_serie)      
+    status=struct_serie["status"].decode("utf-8")
     statustext="Der Status der Serie ist : "+status
-    if status=="Continuing":
+    if status=="Returning Series":
       statustext="Status:         läuft".decode("utf-8")
-    if status=="Ended":
+    if status=="Canceled":
       statustext="Status:         Abgesetzt"
+    if status=="Ended":
+        statustext="Status:         Beendet"            
     #Continuing
     try:
-      sender= serie["studio"][0].decode("utf-8")
+      sender= struct_serie["Networks"][0].decode("utf-8")
     except:
        sender=""
     if sender=="":
        sendertext=""
     else:
        sendertext="Sender:         "+sender
-    titlesuche = serie["title"].decode("utf-8")
-    
-    next=tvdb.get_nextaired_episode(idd)
-    debug("4. ++++++next+++")
-    debug(next)
+    titlesuche = struct_serie["name"].decode("utf-8")        
     try:
-      nextfolge=next["airdate.label"].decode("utf-8")
+      nextfolge=nextfolge
     except:
        nextfolge=""
     if nextfolge=="":
       textnext=""
     else:
-       textnext="Naechste Folge: \nUS :"+nextfolge+"\n"
-    getnextde="https://tvdb.cytec.us/api/8XYAYYQTIAHQSBJQ/series/"+str(idd)+"/all/de.json"    
-    debug(getnextde)
-    content=geturl(getnextde)
+       textnext="Naechste Folge: \nUS :"+nextfolge+" ("+nextdatum+" )"       
+    
+    eidurl="https://api.themoviedb.org/3/tv/"+str(idd)+"/external_ids?api_key=f5bfabe7771bad8072173f7d54f52c35&language=de-DE"
+    debug("eidurl : "+eidurl)    
+    content = cache.cacheFunction(geturl,eidurl) 
+    wwert = json.loads(content)  
+    tvdbid=wwert["tvdb_id"]
+    
+    getnextde="https://tvdb.cytec.us/api/8XYAYYQTIAHQSBJQ/series/"+str(tvdbid)+"/all/de.json"    
+    debug(getnextde)    
+    try:
+        content = cache.cacheFunction(geturl,getnextde) 
+        struktur = json.loads(content)
+    except:
+        content = geturl(getnextde) 
     debug("------>")
     debug(content)
-    struktur = json.loads(content)  
-    episoden=struktur["Data"]["Episode"]
-    desender=struktur["Data"]["Series"]["Network"]
-    dezeit=struktur["Data"]["Series"]["Airs_Time"]
-    now = time.time()
-    next=5000000000
-    last=0
-    next_EpisodeNumber=""
-    next_SeasonNumber=""
-    last_EpisodeNumber=""
-    last_SeasonNumber=""
-    for episode in episoden:
-      try:
-        start=episode["FirstAired"]  
-        debug(start)        
-        mit=time.strptime(start, "%Y-%m-%d")
-        debug(mit)              
-        starttime=time.mktime(mit)
-      except:
-        starttime=0
-      debug(starttime)
-      debug(now)
-      debug("##--##")
-      if starttime>now:
-        if starttime<next:
-          next=starttime
-          next_EpisodeNumber=episode["EpisodeNumber"] 
-          next_SeasonNumber=episode["SeasonNumber"] 
-      if starttime<now:
-        if starttime>last:
-          last=starttime
-          last_EpisodeNumber=episode["EpisodeNumber"] 
-          last_SeasonNumber=episode["SeasonNumber"]           
-    if next < 5000000000:
-       nextde=datetime.datetime.fromtimestamp(next).strftime("%d/%m/%Y")
-       de_next="De: "+next_SeasonNumber+"X"+next_EpisodeNumber+". ( "+nextde+" "+ dezeit +" "+desender +" )\n"
-    else:
-       de_next=""   
-    if next >0:
-       lastde=datetime.datetime.fromtimestamp(last).strftime("%d/%m/%Y")
-       de_last="De: "+last_SeasonNumber+"X"+last_EpisodeNumber+". ( "+lastde+" "+ dezeit +" "+desender +" )\n"
-    else:
-       de_last=""                  
-    summ=tvdb.get_series_episodes_summary(idd)
-    debug("5.++++++SUM++++++++")
-    debug(summ)
-    anzahLstaffeln = int(sorted(summ["airedSeasons"],key=int)[-1])
-    debug(anzahLstaffeln)
-    #anzahLstaffeln=len(summ["airedSeasons"])
-    Seasons=[]
-    zusatz=""
-    counter=0
-    for i in range(0,anzahLstaffeln+1):        
-       query="airedSeason=%s" % i
-       season=tvdb.get_series_episodes_by_query(idd, query)
-       debug("6.++++++Season++++++++"+str(i))
-       debug(season)
-
-       anz=len(season)
-       if not anz==0:
-        if counter%2 == 0:
-            zusatz=zusatz+"\n"
+    try:
+        struktur = json.loads(content)  
+        episoden=struktur["Data"]["Episode"]
+        desender=struktur["Data"]["Series"]["Network"]
+        if "Amazon" in desender:
+           desender="Amazon"
+        dezeit=struktur["Data"]["Series"]["Airs_Time"]    
+        now = time.time()
+        next=5000000000
+        last=0
+        next_EpisodeNumber=""
+        next_SeasonNumber=""
+        last_EpisodeNumber=""
+        last_SeasonNumber=""
+        for episode in episoden:
+            try:
+                start=episode["FirstAired"]  
+                debug(start)        
+                mit=time.strptime(start, "%Y-%m-%d")
+                debug(mit)              
+                starttime=time.mktime(mit)
+            except:
+                starttime=0
+            debug(starttime)
+            debug(now)
+            debug("##--##")
+            if starttime>now:
+                if starttime<next:
+                    next=starttime
+                    next_EpisodeNumber=episode["EpisodeNumber"] 
+                    next_SeasonNumber=episode["SeasonNumber"] 
+            if starttime<now:
+                if starttime>last:
+                    last=starttime
+                    last_EpisodeNumber=episode["EpisodeNumber"] 
+                    last_SeasonNumber=episode["SeasonNumber"]           
+        if next < 5000000000:
+            nextde=datetime.datetime.fromtimestamp(next).strftime("%d/%m/%Y")
+            de_next="  De : "+next_SeasonNumber+"X"+next_EpisodeNumber+". ( "+nextde+" "+ dezeit +" "+desender +" )\n"
         else:
-            zusatz=zusatz+"          "
-        zusatz= zusatz+" Staffel "+str(i)+ ": "+ str(anz)+ " Folgen"
-        counter+=1
+            de_next="\n"   
+        if next >0:
+            lastde=datetime.datetime.fromtimestamp(last).strftime("%d/%m/%Y")
+            de_last="  De : "+last_SeasonNumber+"X"+last_EpisodeNumber+". ( "+lastde+" "+ dezeit +" "+desender +" )\n"
+        else:
+            de_last="\n"                      
+    except:
+       de_last=""
+       de_next=""
+    debug("5.++++++SUM++++++++")
+    zusatz=""
+    anzahLstaffeln=int(struct_serie["number_of_seasons"])
+    for season in struct_serie["seasons"]:           
+        zusatz= zusatz+" Staffel "+str(season["season_number"])+ ": "+ str(season["episode_count"])+ " Folgen\n"
     
-    Zusammenfassung="Serienname: "+seriesName+"\nSerienstart : "+serienstart +"\nAnzahl Staffeln : "+str(anzahLstaffeln)+"\n"+statustext+u"\n"+"Letzte Folge: \nUS: "+leztefolge+"\n"+de_last+textnext+de_next+zusatz
+    Zusammenfassung="Serienname: "+seriesName+"\nSerienstart : "+serienstart +"\nAnzahl Staffeln : "+str(anzahLstaffeln)+"\n"+statustext+u"\n"+"Letzte Folge: \nUS : "+leztefolge+" ( "+lastdatum+" )"+de_last+textnext+de_next+zusatz
     window = Infowindow(title="Serieninfo",text=Zusammenfassung,image=Bild,lastplayd_title=lastplayd_title,lastepisode_name=lastepisode_name,fehlen=fehlen)
     window.doModal()
     del window
