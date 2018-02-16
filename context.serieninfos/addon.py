@@ -406,8 +406,8 @@ if mode=="":
         else:
             de_last="\n"                      
     except:
-       de_last=""
-       de_next=""
+       de_last="\n"
+       de_next="\n"
     debug("5.++++++SUM++++++++")
     zusatz=""
     anzahLstaffeln=int(struct_serie["number_of_seasons"])
