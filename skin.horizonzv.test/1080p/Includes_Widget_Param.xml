@@ -111,7 +111,7 @@
 				<param name="HomePageWidget_list_id" value="214"/>
 				<param name="HomePageWidget_list_width" value="729"/>
 				<param name="HomePageWidget_list_ondown" value="9000"/>
-				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,[UPPERCASE]$INFO[Skin.String(HomeWidget_Music_Label)][/UPPERCASE],home)"/>
+				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$INFO[Skin.String(HomeWidget_Music_Label)],home)"/>
 				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)"/>
 				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Home_Music_Button)"/>
 				<param name="HomePageWidget_list_visible2" value="Skin.HasSetting(HomeWidget_Music_Standard)|Skin.HasSetting(HomeWidget_Music_User)"/>
@@ -183,7 +183,7 @@
 				<param name="HomePageWidget_list_id" value="220"/>
 				<param name="HomePageWidget_list_width" value="729"/>
 				<param name="HomePageWidget_list_ondown" value="9000"/>
-				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,[UPPERCASE]$INFO[Skin.String(HomeWidget_Video_Label)][/UPPERCASE],home)"/>
+				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$INFO[Skin.String(HomeWidget_Video_Label)],home)"/>
 				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)"/>
 				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Home_Video_Button)"/>
 				<param name="HomePageWidget_list_visible2" value="Skin.HasSetting(HomeWidget_Video_Standard)|Skin.HasSetting(HomeWidget_Video_User)"/>
@@ -260,7 +260,7 @@
 				<param name="HomePageWidget_list_id" value="227"/>
 				<param name="HomePageWidget_list_width" value="720"/>
 				<param name="HomePageWidget_list_ondown" value="9000"/>
-				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,[UPPERCASE]$INFO[Skin.String(HomeWidget_Movie_Label)][/UPPERCASE],home)"/>
+				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$INFO[Skin.String(HomeWidget_Movie_Label)],home)"/>
 				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)"/>
 				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Home_Movie_Button)"/>
 				<param name="HomePageWidget_list_visible2" value="Skin.HasSetting(HomeWidget_Movie_Standard)|Skin.HasSetting(HomeWidget_Movie_User)"/>
@@ -372,7 +372,7 @@
 				<param name="HomePageWidget_list_id" value="236"/>
 				<param name="HomePageWidget_list_width" value="729"/>
 				<param name="HomePageWidget_list_ondown" value="9000"/>
-				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,[UPPERCASE]$INFO[Skin.String(HomeWidget_TVShow_Label)][/UPPERCASE],home)"/>
+				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$INFO[Skin.String(HomeWidget_TVShow_Label)],home)"/>
 				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)"/>
 				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Home_TVShow_Button)"/>
 				<param name="HomePageWidget_list_visible2" value="Skin.HasSetting(HomeWidget_TVShow_Standard)|Skin.HasSetting(HomeWidget_TVShow_User)"/>
@@ -465,7 +465,7 @@
 				<param name="HomePageWidget_list_id" value="243"/>
 				<param name="HomePageWidget_list_width" value="720"/>
 				<param name="HomePageWidget_list_ondown" value="9000"/>
-				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,[UPPERCASE]$INFO[Skin.String(HomeWidget_MusicVideo_Label)][/UPPERCASE],home)"/>
+				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$INFO[Skin.String(HomeWidget_MusicVideo_Label)],home)"/>
 				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)"/>
 				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Home_MusicVideo_Button)"/>
 				<param name="HomePageWidget_list_visible2" value="Skin.HasSetting(HomeWidget_MusicVideo_Standard)|Skin.HasSetting(HomeWidget_MusicVideo_User)"/>
@@ -526,7 +526,7 @@
 				<param name="HomePageWidget_list_id" value="248"/>
 				<param name="HomePageWidget_list_width" value="720"/>
 				<param name="HomePageWidget_list_ondown" value="9000"/>
-				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,[UPPERCASE]$INFO[Skin.String(HomeWidget_Picture_Label)][/UPPERCASE],home)"/>
+				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$INFO[Skin.String(HomeWidget_Picture_Label)],home)"/>
 				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)"/>
 				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Home_Picture_Button)"/>
 				<param name="HomePageWidget_list_visible2" value="Skin.HasSetting(HomeWidget_Picture_Standard)|Skin.HasSetting(HomeWidget_Picture_User)"/>
@@ -976,7 +976,7 @@
 				<param name="HomePageWidget_list_id" value="250"/>
 				<param name="HomePageWidget_list_width" value="720"/>
 				<param name="HomePageWidget_list_ondown" value="9000"/>
-				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,[UPPERCASE]$INFO[Skin.String(HomeWidget_Custom1_Label)][/UPPERCASE],home)"/>
+				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$INFO[Skin.String(HomeWidget_Custom1_Label)],home)"/>
 				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)"/>
 				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Home_Custom1_Button)"/>
 				<param name="HomePageWidget_list_visible2" value="Skin.HasSetting(HomeWidget_Custom1_Standard)|Skin.HasSetting(HomeWidget_Custom1_User)"/>
@@ -999,7 +999,7 @@
 				<param name="HomePageWidget_list_id" value="254"/>
 				<param name="HomePageWidget_list_width" value="720"/>
 				<param name="HomePageWidget_list_ondown" value="9000"/>
-				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,[UPPERCASE]$INFO[Skin.String(HomeWidget_Custom2_Label)][/UPPERCASE],home)"/>
+				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$INFO[Skin.String(HomeWidget_Custom2_Label)],home)"/>
 				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)"/>
 				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Home_Custom2_Button)"/>
 				<param name="HomePageWidget_list_visible2" value="Skin.HasSetting(HomeWidget_Custom2_Standard)|Skin.HasSetting(HomeWidget_Custom2_User)"/>
@@ -1022,7 +1022,7 @@
 				<param name="HomePageWidget_list_id" value="258"/>
 				<param name="HomePageWidget_list_width" value="720"/>
 				<param name="HomePageWidget_list_ondown" value="9000"/>
-				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,[UPPERCASE]$INFO[Skin.String(HomeWidget_Custom3_Label)][/UPPERCASE],home)"/>
+				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$INFO[Skin.String(HomeWidget_Custom3_Label)],home)"/>
 				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)"/>
 				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Home_Custom3_Button)"/>
 				<param name="HomePageWidget_list_visible2" value="Skin.HasSetting(HomeWidget_Custom3_Standard)|Skin.HasSetting(HomeWidget_Custom3_User)"/>
@@ -1045,7 +1045,7 @@
 				<param name="HomePageWidget_list_id" value="262"/>
 				<param name="HomePageWidget_list_width" value="720"/>
 				<param name="HomePageWidget_list_ondown" value="9000"/>
-				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,[UPPERCASE]$INFO[Skin.String(HomeWidget_Custom4_Label)][/UPPERCASE],home)"/>
+				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$INFO[Skin.String(HomeWidget_Custom4_Label)],home)"/>
 				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)"/>
 				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Home_Custom4_Button)"/>
 				<param name="HomePageWidget_list_visible2" value="Skin.HasSetting(HomeWidget_Custom4_Standard)|Skin.HasSetting(HomeWidget_Custom4_User)"/>
@@ -1068,7 +1068,7 @@
 				<param name="HomePageWidget_list_id" value="266"/>
 				<param name="HomePageWidget_list_width" value="720"/>
 				<param name="HomePageWidget_list_ondown" value="9000"/>
-				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,[UPPERCASE]$INFO[Skin.String(HomeWidget_Custom5_Label)][/UPPERCASE],home)"/>
+				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$INFO[Skin.String(HomeWidget_Custom5_Label)],home)"/>
 				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)"/>
 				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Home_Custom5_Button)"/>
 				<param name="HomePageWidget_list_visible2" value="Skin.HasSetting(HomeWidget_Custom5_Standard)|Skin.HasSetting(HomeWidget_Custom5_User)"/>
@@ -1091,7 +1091,7 @@
 				<param name="HomePageWidget_list_id" value="270"/>
 				<param name="HomePageWidget_list_width" value="720"/>
 				<param name="HomePageWidget_list_ondown" value="9000"/>
-				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,[UPPERCASE]$INFO[Skin.String(HomeWidget_Custom6_Label)][/UPPERCASE],home)"/>
+				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$INFO[Skin.String(HomeWidget_Custom6_Label)],home)"/>
 				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)"/>
 				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Home_Custom6_Button)"/>
 				<param name="HomePageWidget_list_visible2" value="Skin.HasSetting(HomeWidget_Custom6_Standard)|Skin.HasSetting(HomeWidget_Custom6_User)"/>
@@ -1114,7 +1114,7 @@
 				<param name="HomePageWidget_list_id" value="274"/>
 				<param name="HomePageWidget_list_width" value="720"/>
 				<param name="HomePageWidget_list_ondown" value="9000"/>
-				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,[UPPERCASE]$INFO[Skin.String(HomeWidget_Custom7_Label)][/UPPERCASE],home)"/>
+				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$INFO[Skin.String(HomeWidget_Custom7_Label)],home)"/>
 				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)"/>
 				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Home_Custom7_Button)"/>
 				<param name="HomePageWidget_list_visible2" value="Skin.HasSetting(HomeWidget_Custom7_Standard)|Skin.HasSetting(HomeWidget_Custom7_User)"/>
@@ -1137,7 +1137,7 @@
 				<param name="HomePageWidget_list_id" value="278"/>
 				<param name="HomePageWidget_list_width" value="720"/>
 				<param name="HomePageWidget_list_ondown" value="9000"/>
-				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,[UPPERCASE]$INFO[Skin.String(HomeWidget_Custom8_Label)][/UPPERCASE],home)"/>
+				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$INFO[Skin.String(HomeWidget_Custom8_Label)],home)"/>
 				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)"/>
 				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Home_Custom8_Button)"/>
 				<param name="HomePageWidget_list_visible2" value="Skin.HasSetting(HomeWidget_Custom8_Standard)|Skin.HasSetting(HomeWidget_Custom8_User)"/>
@@ -1160,7 +1160,7 @@
 				<param name="HomePageWidget_list_id" value="282"/>
 				<param name="HomePageWidget_list_width" value="720"/>
 				<param name="HomePageWidget_list_ondown" value="9000"/>
-				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,[UPPERCASE]$INFO[Skin.String(HomeWidget_Custom9_Label)][/UPPERCASE],home)"/>
+				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$INFO[Skin.String(HomeWidget_Custom9_Label)],home)"/>
 				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)"/>
 				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Home_Custom9_Button)"/>
 				<param name="HomePageWidget_list_visible2" value="Skin.HasSetting(HomeWidget_Custom9_Standard)|Skin.HasSetting(HomeWidget_Custom9_User)"/>
@@ -1478,7 +1478,7 @@
                 <textcolor>grey</textcolor>
                 <align>right</align>
                 <aligny>center</aligny>
-                <label>$VAR[WidgetInProgressRow1_Label] $INFO[Container($PARAM[HomePageWidget_id]).CurrentItem,(,/]$INFO[Container($PARAM[HomePageWidget_id]).NumItems,,)]</label>
+                <label>[UPPERCASE]$VAR[WidgetInProgressRow1_Label][/UPPERCASE] $INFO[Container($PARAM[HomePageWidget_id]).CurrentItem,(,/]$INFO[Container($PARAM[HomePageWidget_id]).NumItems,,)]</label>
             </control>
             <!-- zeile 2 (title) -->
             <control type="label">

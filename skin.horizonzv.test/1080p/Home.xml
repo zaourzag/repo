@@ -554,29 +554,7 @@
                 <align>left</align>
                 <textcolor>orange</textcolor>
                 <shadowcolor>black</shadowcolor>
-                <label>type: $INFO[Container.ListItem.Property(type)] | </label>
-            </control>
-            <!-- <control type="label">
-                <left>30</left>
-                <top>225</top>
-                <width>auto</width>
-                <height>18</height>
-                <font>font12</font>
-                <align>left</align>
-                <textcolor>orange</textcolor>
-                <shadowcolor>black</shadowcolor>
-                <label>homemenu_id: $INFO[Container(9000).ListItem.Property(homemenu_id)] | </label>
-            </control> -->
-            <control type="label">
-                <left>30</left>
-                <top>225</top>
-                <width>auto</width>
-                <height>18</height>
-                <font>font12</font>
-                <align>left</align>
-                <textcolor>orange</textcolor>
-                <shadowcolor>black</shadowcolor>
-                <label>dbid: $INFO[Container.ListItem.dbid] | Property dbid: $INFO[Container.ListItem.Property(dbid)] | </label>
+                <label>Property type: $INFO[Container.ListItem.Property(type)] | </label>
             </control>
             <control type="label">
                 <left>30</left>
@@ -587,7 +565,30 @@
                 <align>left</align>
                 <textcolor>orange</textcolor>
                 <shadowcolor>black</shadowcolor>
-                <label>dbtype: $INFO[Container.ListItem.DBTYPE] | </label>
+                <label>Property dbid: $INFO[Container.ListItem.Property(dbid)] | Property dbtype: $INFO[Container.ListItem.Property(type)] | </label>
+            </control>
+            <control type="label">
+                <left>30</left>
+                <top>225</top>
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>orange</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>dbtype: $INFO[Container.ListItem.DBTYPE] | dbid: $INFO[Container.ListItem.dbid] | </label>
+            </control>
+            <control type="label">
+                <left>30</left>
+                <top>225</top>
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>orange</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>WidgetLabel "empty" | </label>
+				<visible>String.IsEmpty(Window(home).Property(WidgetLabel))</visible>
             </control>
 			<!-- <control type="label">
                 <left>30</left>

@@ -3,6 +3,7 @@
     <variable name="WidgetTarget">
         <value condition="String.Contains(Container(9000).ListItem.Property(homemenu_path),music)">music</value>
         <value condition="String.Contains(Container(9000).ListItem.Property(homemenu_path),audio)">music</value>
+        <value condition="String.Contains(Container(9000).ListItem.Property(homemenu_path),games)">games</value>
         <value condition="String.Contains(Container(9000).ListItem.Property(homemenu_path),video)">videos</value>
         <value>videos</value>
     </variable>
@@ -31,17 +32,17 @@
         <value condition="String.IsEqual(Window(Home).Property(HomeButton),pvr)">$LOCALIZE[31502]</value>
         <value condition="String.IsEqual(Window(Home).Property(HomeButton),radio)">$LOCALIZE[31960]</value>
         <value condition="String.IsEqual(Window(Home).Property(HomeButton),news)">news</value>
+        <value condition="String.IsEqual(Window(Home).Property(HomeButton),games)">games</value>
     </variable>
     <variable name="WidgetInProgressPlace1">
-        <!-- <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),movies)+Skin.HasSetting(Widget_inProgress_movie_Place1)">special://skin/playlists/Videos_inprogress.xsp</value> -->
         <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),movies)+Skin.HasSetting(Widget_inProgress_movie_Place1)">plugin://service.library.data.provider?type=recommendedmovies&amp;reload=$INFO[Window.Property(recommendedmovies)]&amp;limit=20</value>
         <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),tvshow)+Skin.HasSetting(Widget_inProgress_tvshow_Place1)">plugin://service.library.data.provider?type=recommendedepisodes&amp;reload=$INFO[Window.Property(recommendedepisodes)]&amp;limit=20</value>
         <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),musicvideo)+Skin.HasSetting(Widget_inProgress_musicvideo_Place1)">videodb://musicvideos/titles</value>
         <value condition="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),music)+Skin.HasSetting(Widget_inProgress_music_Place1)">plugin://service.library.data.provider?type=recommendedalbums&amp;reload=$INFO[Window.Property(recommendedalbums)]&amp;limit=20</value>
     </variable>
     <variable name="WidgetInProgressRow1_Label">
-        <!-- <value condition="String.Contains(Container.ListItem.Property(type),recommended)">[UPPERCASE]$LOCALIZE[575][/UPPERCASE]</value> -->
-        <value condition="!String.IsEmpty(Container.ListItem.Property(type))">[UPPERCASE]$INFO[Container.ListItem.Property(type)][/UPPERCASE]</value>
-        <value>[UPPERCASE]$INFO[Window(home).Property(WidgetLabel)][/UPPERCASE]</value>
+        <value condition="!String.IsEmpty(Container.ListItem.Property(type))">$INFO[Container.ListItem.Property(type)]</value>
+        <value condition="String.IsEqual(Container.ListItem.DBTYPE,set)">$INFO[Container.ListItem.DBTYPE]</value>
+        <value>$INFO[Window(home).Property(WidgetLabel)]</value>
     </variable>
 </includes>

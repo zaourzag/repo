@@ -1,4 +1,8 @@
-﻿v 1.18.0.05
+﻿v 1.18.0.06
+- Bugfix Widgetlabel
+- Grafiken für Games hinzugefügt
+
+v 1.18.0.05
 - Bugfix Close.Dialog
 - begonnen neue Sektion zu integrieren (Games)
 
