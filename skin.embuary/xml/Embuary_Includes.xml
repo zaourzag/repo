@@ -538,7 +538,7 @@
 		<definition>
 			<control type="group">
 				<top>$PARAM[top]</top>
-				<animation effect="slide" time="0" end="0,58" condition="Control.IsVisible(53)">Conditional</animation>
+				<animation effect="slide" time="0" end="0,29" condition="Control.IsVisible(53)">Conditional</animation>
 				<control type="panel" id="$PARAM[id]">
 					<visible>$PARAM[visible]</visible>
 					<include>Visible_OpenClose</include>
@@ -547,17 +547,20 @@
 					<centertop>50%</centertop>
 					<height>950</height>
 					<onleft>SetFocus(50)</onleft>
+					<onright condition="!Control.IsVisible(53) + Control.IsVisible(17)">17</onright>
 					<scrolltime>0</scrolltime>
 					<orientation>vertical</orientation>
 					<defaultcontrol>0</defaultcontrol>
 					<itemlayout height="35" width="45">
-						<control type="image">
-							<top>6</top>
-							<left>6</left>
-							<width>29</width>
-							<height>29</height>
-							<texture colordiffuse="emby_secondary">items/mask_mini.png</texture>
-							<visible>StringCompare(ListItem.Label,Container.ListItem.SortLetter)</visible>
+						<control type="textbox">
+							<width>40</width>
+							<height>40</height>
+							<font>JumpToLetter</font>
+							<align>center</align>
+							<aligny>center</aligny>
+							<textcolor>ff888585</textcolor>
+							<label>$INFO[ListItem.Label]</label>
+							<visible>String.IsEmpty(ListItem.Property(NotAvailable)) + !String.IsEqual(ListItem.Label,Container.ListItem.SortLetter)</visible>
 						</control>
 						<control type="textbox">
 							<width>40</width>
@@ -565,9 +568,9 @@
 							<font>JumpToLetter</font>
 							<align>center</align>
 							<aligny>center</aligny>
-							<textcolor>softgrey</textcolor>
+							<textcolor>ff444444</textcolor>
 							<label>$INFO[ListItem.Label]</label>
-							<visible>String.IsEmpty(ListItem.Property(NotAvailable))</visible>
+							<visible>!String.IsEmpty(ListItem.Property(NotAvailable)) + !String.IsEqual(ListItem.Label,Container.ListItem.SortLetter)</visible>
 						</control>
 						<control type="textbox">
 							<width>40</width>
@@ -575,57 +578,48 @@
 							<font>JumpToLetter</font>
 							<align>center</align>
 							<aligny>center</aligny>
-							<textcolor>grey</textcolor>
+							<textcolor>white</textcolor>
 							<label>$INFO[ListItem.Label]</label>
-							<visible>!String.IsEmpty(ListItem.Property(NotAvailable))</visible>
-						</control>
-						<control type="textbox">
-							<width>40</width>
-							<height>40</height>
-							<font>JumpToLetter</font>
-							<align>center</align>
-							<aligny>center</aligny>
-							<label>$INFO[ListItem.Label]</label>
-							<visible>StringCompare(ListItem.Label,Container.ListItem.SortLetter)</visible>
+							<visible>String.IsEqual(ListItem.Label,Container.ListItem.SortLetter)</visible>
 						</control>
 					</itemlayout>
 					<focusedlayout height="35" width="45">
+						<control type="textbox">
+							<width>40</width>
+							<height>40</height>
+							<font>JumpToLetter</font>
+							<align>center</align>
+							<aligny>center</aligny>
+							<textcolor>white</textcolor>
+							<label>$INFO[ListItem.Label]</label>
+							<visible>String.IsEmpty(ListItem.Property(NotAvailable)) + !String.IsEqual(ListItem.Label,Container.ListItem.SortLetter)</visible>
+						</control>
+						<control type="textbox">
+							<width>40</width>
+							<height>40</height>
+							<font>JumpToLetter</font>
+							<align>center</align>
+							<aligny>center</aligny>
+							<textcolor>ff444444</textcolor>
+							<label>$INFO[ListItem.Label]</label>
+							<visible>!String.IsEmpty(ListItem.Property(NotAvailable)) + !String.IsEqual(ListItem.Label,Container.ListItem.SortLetter)</visible>
+						</control>
+						<control type="textbox">
+							<width>40</width>
+							<height>40</height>
+							<font>JumpToLetter</font>
+							<align>center</align>
+							<aligny>center</aligny>
+							<textcolor>white</textcolor>
+							<label>$INFO[ListItem.Label]</label>
+							<visible>String.IsEqual(ListItem.Label,Container.ListItem.SortLetter)</visible>
+						</control>
 						<control type="image">
-							<top>6</top>
-							<left>6</left>
-							<width>29</width>
-							<height>29</height>
-							<texture colordiffuse="emby_secondary">items/mask_mini.png</texture>
-							<visible>StringCompare(ListItem.Label,Container.ListItem.SortLetter)</visible>
-						</control>
-						<control type="group">
-							<visible>!Control.HasFocus($PARAM[id])</visible>
-							<control type="textbox">
-								<width>40</width>
-								<height>40</height>
-								<font>JumpToLetter</font>
-								<align>center</align>
-								<aligny>center</aligny>
-								<textcolor>softgrey</textcolor>
-								<label>$INFO[ListItem.Label]</label>
-							</control>
-						</control>
-						<control type="group">
+							<left>-5</left>
+							<width>51</width>
+							<height>51</height>
+							<texture colordiffuse="emby_secondary">items/focus_mini.png</texture>
 							<visible>Control.HasFocus($PARAM[id])</visible>
-							<control type="image">
-								<left>-5</left>
-								<width>51</width>
-								<height>51</height>
-								<texture colordiffuse="emby_secondary">items/focus_mini.png</texture>
-							</control>
-							<control type="textbox">
-								<width>40</width>
-								<height>40</height>
-								<font>JumpToLetter</font>
-								<align>center</align>
-								<aligny>center</aligny>
-								<label>$INFO[ListItem.Label]</label>
-							</control>
 						</control>
 					</focusedlayout>
 					<content>plugin://script.skin.helper.service/?action=alphabet&amp;reload=$INFO[Container.NumItems]</content>
@@ -693,39 +687,26 @@
 		<onunload condition="Window.Next(home)">ClearProperty(UnwatchedEpisodes,home)</onunload>
 	</include>
 	<!-- Scrollbars -->
-	<include name="ScrollbarHorizontal">
-		<param name="id">17</param>
-		<param name="width">1920</param>
-		<param name="bottom">0</param>
-		<param name="height">5</param>
-		<param name="visible">true</param>
-		<definition>
-			<control type="scrollbar" id="$PARAM[id]">
-				<left>0</left>
-				<bottom>$PARAM[bottom]</bottom>
-				<width>$PARAM[width]</width>
-				<height>$PARAM[height]</height>
-				<orientation>horizontal</orientation>
-				<showonepage>false</showonepage>
-				<visible>$PARAM[visible]</visible>
-			</control>
-		</definition>
-	</include>
-	<include name="ScrollbarVertical">
+	<include name="ViewScrollbar">
 		<param name="id">17</param>
 		<param name="width">8</param>
 		<param name="top">0</param>
-		<param name="height">100%</param>
-		<param name="visible">true</param>
+		<param name="bottom">0</param>
+		<param name="visible">!Control.IsVisible(53)</param>
 		<definition>
 			<control type="scrollbar" id="$PARAM[id]">
-				<right>0</right>
+				<visible>$PARAM[visible]</visible>
 				<top>$PARAM[top]</top>
+				<bottom>$PARAM[bottom]</bottom>
+				<right>0</right>
 				<width>$PARAM[width]</width>
-				<height>$PARAM[height]</height>
+				<onup>SetFocus(6666)</onup>
+				<onleft>50</onleft>
 				<orientation>vertical</orientation>
 				<showonepage>false</showonepage>
-				<visible>$PARAM[visible]</visible>
+				<texturesliderbackground colordiffuse="ff3b3b3b">common/white.jpg</texturesliderbackground>
+				<texturesliderbar colordiffuse="lightgrey">common/white.jpg</texturesliderbar>
+				<texturesliderbarfocus colordiffuse="emby">common/white.jpg</texturesliderbarfocus>
 			</control>
 		</definition>
 	</include>

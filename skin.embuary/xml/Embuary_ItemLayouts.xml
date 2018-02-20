@@ -240,7 +240,7 @@
 	<!-- Play icon -->
 	<include name="bubble_play">
 		<control type="group">
-			<visible>[!String.IsEmpty(ListItem.DBtype) + !String.IsEmpty(ListItem.DBID)] | [!String.IsEmpty(ListItem.FileNameAndPath) + [String.StartsWith(ListItem.Path,plugin://plugin.video) | String.StartsWith(ListItem.Path,plugin://plugin.audio) | String.Contains(ListItem.AddonType,$LOCALIZE[20094])]] | String.StartsWith(ListItem.Path,pvr://) | ListItem.IsFolder</visible>
+			<visible>[!String.IsEmpty(ListItem.DBtype) + !String.IsEmpty(ListItem.DBID)] | [!String.IsEmpty(ListItem.FileNameAndPath) + [String.StartsWith(ListItem.Path,plugin://plugin.video) | String.StartsWith(ListItem.Path,plugin://plugin.audio) | String.Contains(ListItem.AddonType,$LOCALIZE[20094])]] | String.StartsWith(ListItem.Path,pvr://channels) | String.StartsWith(ListItem.Path,pvr://recordings) | [ListItem.IsFolder + !String.StartsWith(ListItem.Path,pvr://)]</visible>
 			<right>10</right>
 			<bottom>10</bottom>
 			<width>38</width>
@@ -1670,7 +1670,7 @@
 				<visible>$PARAM[focused] + Control.HasFocus($PARAM[id])</visible>
 			</control>
 			<control type="group">
-				<visible>![Container.Content(tvshows) | Container.Content(movies)]</visible>
+				<visible>![[Container.Content(tvshows) | Container.Content(movies) | String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow)] + [!String.IsEmpty(ListItem.Art(poster)) | !String.IsEmpty(ListItem.Art(tvshow.poster))]]</visible>
 				<top>22</top>
 				<control type="image">
 					<width>67</width>
@@ -1678,10 +1678,19 @@
 					<texture diffuse="items/mask_square_mini.png" background="true">$INFO[ListItem.Icon]</texture>
 					<aspectratio scalediffuse="false">keep</aspectratio>
 					<bordersize>0</bordersize>
+					<visible>!String.IsEmpty(ListItem.Icon)</visible>
+				</control>
+				<control type="image">
+					<width>67</width>
+					<height>67</height>
+					<texture diffuse="items/mask_square_mini.png" background="true">DefaultIconError.png</texture>
+					<aspectratio scalediffuse="false">keep</aspectratio>
+					<bordersize>0</bordersize>
+					<visible>String.IsEmpty(ListItem.Icon)</visible>
 				</control>
 			</control>
 			<control type="group">
-				<visible>Container.Content(tvshows) | Container.Content(movies)</visible>
+				<visible>[Container.Content(tvshows) | Container.Content(movies) | String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow)] + [!String.IsEmpty(ListItem.Art(poster)) | !String.IsEmpty(ListItem.Art(tvshow.poster))]</visible>
 				<top>5</top>
 				<control type="image">
 					<top>-2</top>
@@ -1689,14 +1698,6 @@
 					<width>73</width>
 					<height>106</height>
 					<texture>items/shadow_poster_mini.png</texture>
-					<visible>String.IsEmpty(ListItem.Art(poster)) + String.IsEmpty(ListItem.Art(tvshow.poster))</visible>
-				</control>
-				<control type="image">
-					<width>67</width>
-					<height>100</height>
-					<texture colordiffuse="thumb_background_fallback" diffuse="items/mask_poster_mini.png" background="true">common/white.jpg</texture>
-					<aspectratio scalediffuse="false">scale</aspectratio>
-					<visible>String.IsEmpty(ListItem.Art(poster)) + String.IsEmpty(ListItem.Art(tvshow.poster))</visible>
 				</control>
 				<control type="image">
 					<width>67</width>
@@ -1710,8 +1711,8 @@
 				</include>
 			</control>
 			<control type="group">
-				<visible>String.IsEqual(ListItem.DBType,musicvideo)</visible>
-				<top>-5</top>
+				<visible>$EXP[CenterListItems]</visible>
+				<top>-6</top>
 				<control type="label">
 					<left>100</left>
 					<right>250</right>
@@ -1733,7 +1734,7 @@
 				</control>
 			</control>
 			<control type="group">
-				<visible>!String.IsEqual(ListItem.DBType,musicvideo)</visible>
+				<visible>!$EXP[CenterListItems]</visible>
 				<control type="label">
 					<top>23</top>
 					<left>100</left>
