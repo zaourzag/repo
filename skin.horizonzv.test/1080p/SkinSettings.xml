@@ -396,28 +396,17 @@
                             <onclick>ActivateWindow(1501)</onclick>
                             <!-- <enable>Library.HasContent(Movies)</enable> -->
                         </control>
-                        <!-- <control type="radiobutton" id="305">
-                            <description>Dashboard Button</description>
-                            <width>1260</width>
-                            <align>left</align>
-                            <label>Dashboard</label>
-                            <focusedcolor>black</focusedcolor>
-                            <onclick>Skin.ToggleSetting(HomeMenuNoProgramsButton)</onclick>
-                            <selected>!Skin.HasSetting(HomeMenuNoProgramsButton)</selected>
-                        </control> -->
-						<control type="radiobutton" id="305">
+						<control type="button" id="305">
                             <description>Game Button</description>
                             <width>1260</width>
                             <align>left</align>
 							<label>$LOCALIZE[15016]</label>
                             <focusedcolor>black</focusedcolor>
-							<selected>!Skin.HasSetting(HomeMenuNoGamesButton)</selected>
-							<onclick>Skin.ToggleSetting(HomeMenuNoGamesButton)</onclick>
-                            <!-- <onclick>SetProperty(HomeButton,games,home)</onclick>
-                            <onclick>ActivateWindow(1501)</onclick> -->
+                            <onclick>SetProperty(HomeButton,games,home)</onclick>
+                            <onclick>ActivateWindow(1501)</onclick>
 							<!-- <visible>System.GetBool(gamesgeneral.enable)</visible> -->
 						</control>
-                        <control type="button" id="305">
+                        <control type="button" id="306">
                             <description>Dashboard Button</description>
                             <width>1260</width>
                             <align>left</align>
@@ -425,7 +414,7 @@
                             <onclick>SetProperty(HomeButton,dashboard,home)</onclick>
                             <onclick>ActivateWindow(1501)</onclick>
                         </control>
-                        <control type="button" id="306">
+                        <control type="button" id="307">
                             <description>TVShow Button</description>
                             <width>1260</width>
                             <align>left</align>
@@ -433,7 +422,7 @@
                             <onclick>SetProperty(HomeButton,tvshow,home)</onclick>
                             <onclick>ActivateWindow(1501)</onclick>
                         </control>
-                        <control type="button" id="307">
+                        <control type="button" id="308">
                             <description>MusicVideo Button</description>
                             <width>1260</width>
                             <align>left</align>
@@ -441,7 +430,7 @@
                             <onclick>SetProperty(HomeButton,musicvideo,home)</onclick>
                             <onclick>ActivateWindow(1501)</onclick>
                         </control>
-                        <control type="button" id="308">
+                        <control type="button" id="309">
                             <description>Picture Button</description>
                             <width>1260</width>
                             <align>left</align>
@@ -449,7 +438,7 @@
                             <onclick>SetProperty(HomeButton,picture,home)</onclick>
                             <onclick>ActivateWindow(1501)</onclick>
                         </control>
-                        <control type="radiobutton" id="309">
+                        <control type="radiobutton" id="310">
                             <description>Weather Button</description>
                             <width>1260</width>
                             <align>left</align>
@@ -486,7 +475,6 @@
                             <label> - $LOCALIZE[51366]</label>
                             <focusedcolor>black</focusedcolor>
                             <onclick>Skin.ToggleSetting(WeatherFanartHome)</onclick>
-                            <onclick condition="String.IsEmpty(Skin.String(weatherfanart.path))+!Skin.HasSetting(WeatherFanartHome)">Skin.SetPath(WeatherFanartDir)</onclick>
                             <selected>Skin.HasSetting(WeatherFanartHome)</selected>
                             <visible>!Skin.HasSetting(HomeMenuNoWeatherButton)</visible>
                             <visible>System.HasAddon(script.image.resource.select)</visible>
@@ -496,15 +484,16 @@
                             <include>openclosevisible</include>
                             <width>1260</width>
                             <align>left</align>
-                            <label>    $LOCALIZE[51332]</label>
-                            <label2>$INFO[Skin.String(weatherfanart.path)]</label2>
                             <focusedcolor>black</focusedcolor>
+                            <label>    $LOCALIZE[51469]</label>
+                            <label2>$INFO[Skin.String(weatherfanart.path)]</label2>
+							<onclick>RunScript(script.image.resource.select,property=weatherfanart&amp;type=resource.images.weatherfanart)</onclick>
                             <onclick>RunScript(script.image.resource.select,property=weatherfanart&amp;type=resource.images.weatherfanart)</onclick>
                             <visible>Skin.HasSetting(WeatherFanartHome)</visible>
                             <visible>!Skin.HasSetting(HomeMenuNoWeatherButton)</visible>
                             <visible>System.HasAddon(script.image.resource.select)</visible>
                         </control>
-                        <control type="button" id="310">
+                        <control type="button" id="311">
                             <description>PlayDisc Button</description>
                             <width>1260</width>
                             <align>left</align>
@@ -512,21 +501,21 @@
                             <onclick>SetProperty(HomeButton,playdisc,home)</onclick>
                             <onclick>ActivateWindow(1501)</onclick>
                         </control>
-                        <control type="label" id="3012">
+                        <control type="label" id="312">
                             <!-- Extra Buttons -->
                             <width>1260</width>
                             <height>18</height>
                             <align>center</align>
                             <label/>
                         </control>
-                        <control type="image" id="3013">
+                        <control type="image" id="313">
                             <width>1260</width>
                             <height>1</height>
                             <align>center</align>
                             <texture>Separator2.png</texture>
                             <colordiffuse>description</colordiffuse>
                         </control>
-                        <control type="button" id="313">
+                        <control type="button" id="314">
                             <description>Custom1</description>
                             <width>1260</width>
                             <align>left</align>
@@ -535,7 +524,7 @@
                             <onclick>SetProperty(HomeButton,custom1,home)</onclick>
                             <onclick>ActivateWindow(1501)</onclick>
                         </control>
-                        <control type="button" id="314">
+                        <control type="button" id="315">
                             <description>Custom2</description>
                             <width>1260</width>
                             <align>left</align>
@@ -544,7 +533,7 @@
                             <onclick>SetProperty(HomeButton,custom2,home)</onclick>
                             <onclick>ActivateWindow(1501)</onclick>
                         </control>
-                        <control type="button" id="315">
+                        <control type="button" id="316">
                             <description>Custom3</description>
                             <width>1260</width>
                             <align>left</align>
@@ -553,7 +542,7 @@
                             <onclick>SetProperty(HomeButton,custom3,home)</onclick>
                             <onclick>ActivateWindow(1501)</onclick>
                         </control>
-                        <control type="button" id="316">
+                        <control type="button" id="317">
                             <description>Custom4</description>
                             <width>1260</width>
                             <align>left</align>
@@ -562,7 +551,7 @@
                             <onclick>SetProperty(HomeButton,custom4,home)</onclick>
                             <onclick>ActivateWindow(1501)</onclick>
                         </control>
-                        <control type="button" id="317">
+                        <control type="button" id="318">
                             <description>Custom5</description>
                             <width>1260</width>
                             <align>left</align>
@@ -571,7 +560,7 @@
                             <onclick>SetProperty(HomeButton,custom5,home)</onclick>
                             <onclick>ActivateWindow(1501)</onclick>
                         </control>
-                        <control type="button" id="318">
+                        <control type="button" id="319">
                             <description>Custom6</description>
                             <width>1260</width>
                             <align>left</align>
@@ -580,7 +569,7 @@
                             <onclick>SetProperty(HomeButton,custom6,home)</onclick>
                             <onclick>ActivateWindow(1501)</onclick>
                         </control>
-                        <control type="button" id="319">
+                        <control type="button" id="320">
                             <description>Custom7</description>
                             <width>1260</width>
                             <align>left</align>
@@ -607,7 +596,7 @@
                             <onclick>SetProperty(HomeButton,custom9,home)</onclick>
                             <onclick>ActivateWindow(1501)</onclick>
                         </control>
-                        <control type="label" id="3014">
+                        <control type="label" id="322">
                             <!-- Extra Buttons -->
                             <width>1260</width>
                             <height>8</height>
@@ -615,7 +604,7 @@
                             <label/>
                             <textcolor>description</textcolor>
                         </control>
-                        <control type="image" id="3015">
+                        <control type="image" id="323">
                             <width>1260</width>
                             <height>1</height>
                             <align>center</align>

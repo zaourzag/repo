@@ -283,7 +283,7 @@
                                     <!-- <item id="1">
 										<label>19222</label>
 										<icon>osd/EPG.png</icon>
-										<onclick>ActivateWindowAndFocus(pvrosdguide)</onclick>
+										<onclick>ActivateWindowAndFocus(pvrchannelguide)</onclick>
 									</item> -->
                                     <item id="2">
                                         <label>210</label>

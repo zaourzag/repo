@@ -100,7 +100,7 @@
         </control>
         <control type="group" id="1">
             <!-- LiveTV Seekbar -->
-            <visible>[Player.Seeking|Player.Paused|[Player.ShowInfo+!Window.IsVisible(fullscreeninfo)]|Window.IsActive(VideoOSD)] + ![Window.IsVisible(OSDVideoSettings)|Window.IsVisible(OSDAudioSettings)|Window.IsVisible(VideoBookmarks)|Window.IsVisible(PVROSDChannels)|Window.IsVisible(PVROSDGuide)|Window.IsVisible(SliderDialog)]</visible>
+            <visible>[Player.Seeking|Player.Paused|[Player.ShowInfo+!Window.IsVisible(fullscreeninfo)]|Window.IsActive(VideoOSD)] + ![Window.IsVisible(OSDVideoSettings)|Window.IsVisible(OSDAudioSettings)|Window.IsVisible(VideoBookmarks)|Window.IsVisible(PVROSDChannels)|Window.IsVisible(pvrchannelguide)|Window.IsVisible(SliderDialog)]</visible>
             <visible>Pvr.IsPlayingTv|VideoPlayer.Content(livetv)</visible>
             <visible>!Window.IsVisible(pvrosdteletext)</visible>
             <animation effect="fade" time="200">VisibleChange</animation>

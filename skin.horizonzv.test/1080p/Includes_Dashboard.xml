@@ -343,6 +343,8 @@
 		</control>
     </include>
     <include name="DashboardLayout">
+		<include>openclosemedium</include>
+		<visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),dashboard)</visible>
         <onleft>8009</onleft>
         <onright>8009</onright>
         <onup>8006</onup>

@@ -1088,6 +1088,18 @@
             </control>
         </control>
     </include>
+    <include name="HomeSubMenuGames">
+        <control type="grouplist" id="9010">
+            <include>HomeSubMenuCommonValues</include>
+            <onleft>9010</onleft>
+            <onright>9010</onright>
+            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),games)</visible>
+			<include content="HomeSubSettingsButton">
+				<param name="id1" value="80329" />
+				<param name="id2" value="80330" />
+			</include>
+        </control>
+    </include>
     <include name="submenu">
         <control type="group">
             <include>openclose</include>
@@ -1171,6 +1183,7 @@
                 <include>HomeSubMenuCustom9</include>
                 <include>HomeSubMenuCustom5</include>
                 <include>HomeSubMenuNews</include>
+                <include>HomeSubMenuGames</include>
             </control>
         </control>
     </include>

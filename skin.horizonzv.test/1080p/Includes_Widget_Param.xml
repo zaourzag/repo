@@ -25,6 +25,7 @@
         <include>HomepageWidget_PVR_TV</include>
         <include>HomepageWidget_PVR_RADIO</include>
         <include>HomepageWidget_System</include>
+        <include>HomepageWidget_Games</include>
     </include>
     <include name="HomepageWidget_Music">
         <control type="group">
@@ -36,7 +37,6 @@
 				<!-- random albums -->
 				<param name="HomePageWidget_content" value="plugin://service.library.data.provider?type=randomalbums&amp;reload=$INFO[Window.Property(randomalbums)]&amp;limit=10"/>
 				<param name="HomePageWidget_content2" value="$VAR[WidgetInProgressPlace1]"/>
-				<param name="HomePageWidget_target" value="music"/>
 				<param name="HomePageWidget_limit" value="10"/>
 				<param name="HomePageWidget_sortby" value=""/>
 				<param name="HomePageWidget_list_id" value="210"/>
@@ -53,7 +53,6 @@
 				<!-- random songs -->
 				<param name="HomePageWidget_content" value="plugin://service.library.data.provider?type=randomsongs&amp;reload=$INFO[Window.Property(randomsongs)]&amp;limit=10"/>
 				<param name="HomePageWidget_content2" value="$VAR[WidgetInProgressPlace1]"/>
-				<param name="HomePageWidget_target" value="music"/>
 				<param name="HomePageWidget_limit" value="10"/>
 				<param name="HomePageWidget_sortby" value="Random"/>
 				<param name="HomePageWidget_list_id" value="211"/>
@@ -70,7 +69,6 @@
 				<!-- recent albums -->
 				<param name="HomePageWidget_content" value="plugin://service.library.data.provider?type=recentalbums&amp;reload=$INFO[Window.Property(recentalbums)]&amp;limit=10"/>
 				<param name="HomePageWidget_content2" value="$VAR[WidgetInProgressPlace1]"/>
-				<param name="HomePageWidget_target" value="music"/>
 				<param name="HomePageWidget_limit" value="10"/>
 				<param name="HomePageWidget_sortby" value="dateadded"/>
 				<param name="HomePageWidget_sortorder" value="ascending"/>
@@ -87,7 +85,6 @@
 			<include content="HomePageWidget_list">
 				<!-- recommended albums -->
 				<param name="HomePageWidget_content" value="plugin://service.library.data.provider?type=recommendedalbums&amp;reload=$INFO[Window.Property(recommendedalbums)]&amp;limit=10"/>
-				<param name="HomePageWidget_target" value="music"/>
 				<param name="HomePageWidget_limit" value="10"/>
 				<param name="HomePageWidget_sortby" value="lastplayed"/>
 				<param name="HomePageWidget_sortorder" value="ascending"/>
@@ -104,7 +101,6 @@
 			<include content="HomePageWidget_list">
 				<!-- custom -->
 				<param name="HomePageWidget_content" value="$VAR[HomeWidget_Music_Path]"/>
-				<param name="HomePageWidget_target" value="$VAR[WidgetTarget]"/>
 				<param name="HomePageWidget_limit" value="20"/>
 				<param name="HomePageWidget_sortby" value=""/>
 				<param name="HomePageWidget_sortorder" value=""/>
@@ -120,7 +116,6 @@
 			<include content="HomePageWidget_list">
 				<!-- inprogress place1 -->
 				<param name="HomePageWidget_content" value="$VAR[WidgetInProgressPlace1]"/>
-				<param name="HomePageWidget_target" value="music"/>
 				<param name="HomePageWidget_limit" value="1"/>
 				<param name="HomePageWidget_sortby" value=""/>
 				<param name="HomePageWidget_sortorder" value=""/>
@@ -144,7 +139,6 @@
 			<include content="HomePageWidget_list">
 				<!-- sources -->
 				<param name="HomePageWidget_content" value="sources://video/"/>
-				<param name="HomePageWidget_target" value="videos"/>
 				<param name="HomePageWidget_limit" value="10"/>
 				<param name="HomePageWidget_sortby" value="title"/>
 				<param name="HomePageWidget_sortorder" value="descending"/>
@@ -160,7 +154,6 @@
 			<include content="HomePageWidget_list">
 				<!-- videoplaylists -->
 				<param name="HomePageWidget_content" value="special://videoplaylists/"/>
-				<param name="HomePageWidget_target" value="videos"/>
 				<param name="HomePageWidget_limit" value="10"/>
 				<param name="HomePageWidget_sortby" value="title"/>
 				<param name="HomePageWidget_sortorder" value="descending"/>
@@ -176,7 +169,6 @@
 			<include content="HomePageWidget_list">
 				<!-- custom -->
 				<param name="HomePageWidget_content" value="$VAR[HomeWidget_Video_Path]"/>
-				<param name="HomePageWidget_target" value="$VAR[WidgetTarget]"/>
 				<param name="HomePageWidget_limit" value="20"/>
 				<param name="HomePageWidget_sortby" value=""/>
 				<param name="HomePageWidget_sortorder" value=""/>
@@ -199,12 +191,10 @@
             <visible>!Window.IsVisible(favourites)</visible>
 			<include content="HomePageWidget_list">
 				<!-- inprogress -->
-				<!-- <param name="HomePageWidget_content" value="special://skin/playlists/Videos_inprogress.xsp"/> -->
-				<param name="HomePageWidget_content" value="plugin://service.library.data.provider?type=recommendedmovies&amp;reload=$INFO[Window.Property(recommendedmovies)]&amp;limit=20"/>
-				<param name="HomePageWidget_target" value="videos"/>
+				<param name="HomePageWidget_content" value="special://skin/playlists/Videos_inprogress.xsp"/>
 				<param name="HomePageWidget_limit" value="10"/>
 				<param name="HomePageWidget_sortby" value="lastplayed"/>
-				<param name="HomePageWidget_sortorder" value="ascending"/>
+				<param name="HomePageWidget_sortorder" value="descending"/>
 				<param name="HomePageWidget_list_id" value="224"/>
 				<param name="HomePageWidget_list_width" value="720"/>
 				<param name="HomePageWidget_list_ondown" value="9000"/>
@@ -218,7 +208,7 @@
 				<!-- random -->
 				<param name="HomePageWidget_content" value="videodb://movies/titles"/>
 				<param name="HomePageWidget_content2" value="$VAR[WidgetInProgressPlace1]"/>
-				<param name="HomePageWidget_target" value="videos"/>
+				<param name="HomePageWidget_list_ondown" value="9000"/>
 				<param name="HomePageWidget_limit" value="10"/>
 				<param name="HomePageWidget_sortby" value="random"/>
 				<param name="HomePageWidget_sortorder" value="descending"/>
@@ -235,8 +225,6 @@
 				<!-- recently -->
 				<param name="HomePageWidget_content" value="special://skin/playlists/Videos_recently.xsp"/>
 				<param name="HomePageWidget_content2" value="$VAR[WidgetInProgressPlace1]"/>
-				<param name="HomePageWidget_header" value="$LOCALIZE[20386]"/>
-				<param name="HomePageWidget_target" value="videos"/>
 				<param name="HomePageWidget_limit" value="10"/>
 				<param name="HomePageWidget_sortby" value="dateadded"/>
 				<param name="HomePageWidget_sortorder" value="descending"/>
@@ -252,8 +240,6 @@
 			<include content="HomePageWidget_list">
 				<!-- custom -->
 				<param name="HomePageWidget_content" value="$VAR[HomeWidget_Movie_Path]"/>
-				<param name="HomePageWidget_content2" value="$VAR[WidgetInProgressPlace1]"/>
-				<param name="HomePageWidget_target" value="$VAR[WidgetTarget]"/>
 				<param name="HomePageWidget_limit" value="20"/>
 				<param name="HomePageWidget_sortby" value=""/>
 				<param name="HomePageWidget_sortorder" value=""/>
@@ -269,10 +255,9 @@
 			<include content="HomePageWidget_list">
 				<!-- inprogress place1 -->
 				<param name="HomePageWidget_content" value="$VAR[WidgetInProgressPlace1]"/>
-				<param name="HomePageWidget_target" value="videos"/>
 				<param name="HomePageWidget_limit" value="1"/>
-				<param name="HomePageWidget_sortby" value=""/>
-				<param name="HomePageWidget_sortorder" value=""/>
+				<param name="HomePageWidget_sortby" value="lastplayed"/>
+				<param name="HomePageWidget_sortorder" value="descending"/>
 				<param name="HomePageWidget_list_id" value="228"/>
 				<param name="HomePageWidget_list_width" value="720"/>
 				<param name="HomePageWidget_list_ondown" value="9000"/>
@@ -293,7 +278,6 @@
 			<include content="HomePageWidget_list">
 				<!-- inprogress -->
 				<param name="HomePageWidget_content" value="plugin://service.library.data.provider?type=recommendedepisodes&amp;reload=$INFO[Window.Property(recommendedepisodes)]&amp;limit=10"/>
-				<param name="HomePageWidget_target" value="videos"/>
 				<param name="HomePageWidget_limit" value="10"/>
 				<param name="HomePageWidget_sortby" value="lastplayed"/>
 				<param name="HomePageWidget_sortorder" value="ascending"/>
@@ -311,7 +295,6 @@
 				<!-- recent episode -->
 				<param name="HomePageWidget_content" value="videodb://recentlyaddedepisodes/"/>
 				<param name="HomePageWidget_content2" value="$VAR[WidgetInProgressPlace1]"/>
-				<param name="HomePageWidget_target" value="videos"/>
 				<param name="HomePageWidget_limit" value="10"/>
 				<param name="HomePageWidget_sortby" value="EpisodeNumber"/>
 				<param name="HomePageWidget_sortorder" value="ascending"/>
@@ -329,7 +312,6 @@
 				<!-- recent season -->
 				<param name="HomePageWidget_content" value="special://skin/playlists/TVShows_recent_tvshows.xsp"/>
 				<param name="HomePageWidget_content2" value="$VAR[WidgetInProgressPlace1]"/>
-				<param name="HomePageWidget_target" value="videos"/>
 				<param name="HomePageWidget_limit" value="10"/>
 				<param name="HomePageWidget_sortby" value="dateadded"/>
 				<param name="HomePageWidget_sortorder" value="descending"/>
@@ -347,7 +329,6 @@
 				<!-- random -->
 				<param name="HomePageWidget_content" value="special://skin/playlists/TVShows_random_episodes.xsp"/>
 				<param name="HomePageWidget_content2" value="$VAR[WidgetInProgressPlace1]"/>
-				<param name="HomePageWidget_target" value="videos"/>
 				<param name="HomePageWidget_limit" value="10"/>
 				<param name="HomePageWidget_sortby" value="random"/>
 				<param name="HomePageWidget_sortorder" value="descending"/>
@@ -364,8 +345,6 @@
 			<include content="HomePageWidget_list">
 				<!-- custom -->
 				<param name="HomePageWidget_content" value="$VAR[HomeWidget_TVShow_Path]"/>
-				<param name="HomePageWidget_content2" value="$VAR[WidgetInProgressPlace1]"/>
-				<param name="HomePageWidget_target" value="$VAR[WidgetTarget]"/>
 				<param name="HomePageWidget_limit" value="20"/>
 				<param name="HomePageWidget_sortby" value=""/>
 				<param name="HomePageWidget_sortorder" value=""/>
@@ -381,7 +360,6 @@
 			<include content="HomePageWidget_list">
 				<!-- inprogress place1 -->
 				<param name="HomePageWidget_content" value="$VAR[WidgetInProgressPlace1]"/>
-				<param name="HomePageWidget_target" value="videos"/>
 				<param name="HomePageWidget_limit" value="1"/>
 				<param name="HomePageWidget_sortby" value=""/>
 				<param name="HomePageWidget_sortorder" value=""/>
@@ -405,8 +383,6 @@
 			<include content="HomePageWidget_list">
 				<!-- inprogress -->
 				<param name="HomePageWidget_content" value="videodb://musicvideos/titles"/>
-				<param name="HomePageWidget_header" value="$LOCALIZE[20386]"/>
-				<param name="HomePageWidget_target" value="videos"/>
 				<param name="HomePageWidget_limit" value="10"/>
 				<param name="HomePageWidget_sortby" value="lastplayed"/>
 				<param name="HomePageWidget_sortorder" value="descending"/>
@@ -423,8 +399,6 @@
 				<!-- random -->
 				<param name="HomePageWidget_content" value="videodb://musicvideos/titles"/>
 				<param name="HomePageWidget_content2" value="$VAR[WidgetInProgressPlace1]"/>
-				<param name="HomePageWidget_header" value="$LOCALIZE[31006]"/>
-				<param name="HomePageWidget_target" value="videos"/>
 				<param name="HomePageWidget_limit" value="10"/>
 				<param name="HomePageWidget_sortby" value="random"/>
 				<param name="HomePageWidget_sortorder" value="descending"/>
@@ -441,8 +415,6 @@
 				<!-- recently -->
 				<param name="HomePageWidget_content" value="videodb://recentlyaddedmusicvideos/"/>
 				<param name="HomePageWidget_content2" value="$VAR[WidgetInProgressPlace1]"/>
-				<param name="HomePageWidget_header" value="$LOCALIZE[20386]"/>
-				<param name="HomePageWidget_target" value="videos"/>
 				<param name="HomePageWidget_limit" value="10"/>
 				<param name="HomePageWidget_sortby" value="dateadded"/>
 				<param name="HomePageWidget_sortorder" value="descending"/>
@@ -458,7 +430,6 @@
 			<include content="HomePageWidget_list">
 				<!-- custom -->
 				<param name="HomePageWidget_content" value="$VAR[HomeWidget_MusicVideo_Path]"/>
-				<param name="HomePageWidget_target" value="$VAR[WidgetTarget]"/>
 				<param name="HomePageWidget_sortby" value=""/>
 				<param name="HomePageWidget_sortorder" value=""/>
 				<param name="HomePageWidget_limit" value="20"/>
@@ -474,7 +445,6 @@
 			<include content="HomePageWidget_list">
 				<!-- inprogress place1 -->
 				<param name="HomePageWidget_content" value="$VAR[WidgetInProgressPlace1]"/>
-				<param name="HomePageWidget_target" value="videos"/>
 				<param name="HomePageWidget_limit" value="1"/>
 				<param name="HomePageWidget_sortby" value="lastplayed"/>
 				<param name="HomePageWidget_sortorder" value="ascending"/>
@@ -519,7 +489,6 @@
 			<include content="HomePageWidget_list">
 				<!-- custom -->
 				<param name="HomePageWidget_content" value="$VAR[HomeWidget_Picture_Path]"/>
-				<param name="HomePageWidget_target" value="$VAR[WidgetTarget]"/>
 				<param name="HomePageWidget_sortby" value=""/>
 				<param name="HomePageWidget_sortorder" value=""/>
 				<param name="HomePageWidget_limit" value="20"/>
@@ -969,7 +938,6 @@
             <visible>!Window.IsVisible(favourites)</visible>
 			<include content="HomePageWidget_list">
 				<param name="HomePageWidget_content" value="$VAR[HomeWidget_Custom1_Path]"/>
-				<param name="HomePageWidget_target" value="$VAR[WidgetTarget]"/>
 				<param name="HomePageWidget_sortby" value=""/>
 				<param name="HomePageWidget_sortorder" value=""/>
 				<param name="HomePageWidget_limit" value="20"/>
@@ -992,7 +960,6 @@
             <visible>!Window.IsVisible(favourites)</visible>
 			<include content="HomePageWidget_list">
 				<param name="HomePageWidget_content" value="$VAR[HomeWidget_Custom2_Path]"/>
-				<param name="HomePageWidget_target" value="$VAR[WidgetTarget]"/>
 				<param name="HomePageWidget_sortby" value=""/>
 				<param name="HomePageWidget_sortorder" value=""/>
 				<param name="HomePageWidget_limit" value="20"/>
@@ -1015,7 +982,6 @@
             <visible>!Window.IsVisible(favourites)</visible>
 			<include content="HomePageWidget_list">
 				<param name="HomePageWidget_content" value="$VAR[HomeWidget_Custom3_Path]"/>
-				<param name="HomePageWidget_target" value="$VAR[WidgetTarget]"/>
 				<param name="HomePageWidget_sortby" value=""/>
 				<param name="HomePageWidget_sortorder" value=""/>
 				<param name="HomePageWidget_limit" value="20"/>
@@ -1038,7 +1004,6 @@
             <visible>!Window.IsVisible(favourites)</visible>
 			<include content="HomePageWidget_list">
 				<param name="HomePageWidget_content" value="$VAR[HomeWidget_Custom4_Path]"/>
-				<param name="HomePageWidget_target" value="$VAR[WidgetTarget]"/>
 				<param name="HomePageWidget_sortby" value=""/>
 				<param name="HomePageWidget_sortorder" value=""/>
 				<param name="HomePageWidget_limit" value="20"/>
@@ -1061,7 +1026,6 @@
             <visible>!Window.IsVisible(favourites)</visible>
 			<include content="HomePageWidget_list">
 				<param name="HomePageWidget_content" value="$VAR[HomeWidget_Custom5_Path]"/>
-				<param name="HomePageWidget_target" value="$VAR[WidgetTarget]"/>
 				<param name="HomePageWidget_sortby" value=""/>
 				<param name="HomePageWidget_sortorder" value=""/>
 				<param name="HomePageWidget_limit" value="20"/>
@@ -1084,7 +1048,6 @@
             <visible>!Window.IsVisible(favourites)</visible>
 			<include content="HomePageWidget_list">
 				<param name="HomePageWidget_content" value="$VAR[HomeWidget_Custom6_Path]"/>
-				<param name="HomePageWidget_target" value="$VAR[WidgetTarget]"/>
 				<param name="HomePageWidget_sortby" value=""/>
 				<param name="HomePageWidget_sortorder" value=""/>
 				<param name="HomePageWidget_limit" value="20"/>
@@ -1107,7 +1070,6 @@
             <visible>!Window.IsVisible(favourites)</visible>
 			<include content="HomePageWidget_list">
 				<param name="HomePageWidget_content" value="$VAR[HomeWidget_Custom7_Path]"/>
-				<param name="HomePageWidget_target" value="$VAR[WidgetTarget]"/>
 				<param name="HomePageWidget_sortby" value=""/>
 				<param name="HomePageWidget_sortorder" value=""/>
 				<param name="HomePageWidget_limit" value="20"/>
@@ -1130,7 +1092,6 @@
             <visible>!Window.IsVisible(favourites)</visible>
 			<include content="HomePageWidget_list">
 				<param name="HomePageWidget_content" value="$VAR[HomeWidget_Custom8_Path]"/>
-				<param name="HomePageWidget_target" value="$VAR[WidgetTarget]"/>
 				<param name="HomePageWidget_sortby" value=""/>
 				<param name="HomePageWidget_sortorder" value=""/>
 				<param name="HomePageWidget_limit" value="20"/>
@@ -1153,7 +1114,6 @@
             <visible>!Window.IsVisible(favourites)</visible>
 			<include content="HomePageWidget_list">
 				<param name="HomePageWidget_content" value="$VAR[HomeWidget_Custom9_Path]"/>
-				<param name="HomePageWidget_target" value="$VAR[WidgetTarget]"/>
 				<param name="HomePageWidget_sortby" value=""/>
 				<param name="HomePageWidget_sortorder" value=""/>
 				<param name="HomePageWidget_limit" value="20"/>
@@ -1178,7 +1138,6 @@
 			<include content="HomePageWidget_list">
 				<!-- pvr recordings -->
 				<param name="HomePageWidget_content" value="pvr://recordings/tv/active/"/>
-				<param name="HomePageWidget_target" value="videos"/>
 				<param name="HomePageWidget_sortby" value="date"/>
 				<param name="HomePageWidget_sortorder" value="descending"/>
 				<param name="HomePageWidget_limit" value="40"/>
@@ -1195,7 +1154,6 @@
 			<include content="HomePageWidget_list">
 				<!-- pvr timer -->
 				<param name="HomePageWidget_content" value="pvr://timers/tv/timers"/>
-				<param name="HomePageWidget_target" value="pvr"/>
 				<param name="HomePageWidget_sortby" value="date"/>
 				<param name="HomePageWidget_sortorder" value="ascending"/>
 				<param name="HomePageWidget_limit" value="10"/>
@@ -1212,7 +1170,6 @@
 			<include content="HomePageWidget_list">
 				<!-- pvr channels -->
 				<param name="HomePageWidget_content" value="$INFO[Skin.String(Widget_PVR_TV_WidgetChannels_Path)]"/>
-				<param name="HomePageWidget_target" value="pvr"/>
 				<param name="HomePageWidget_sortby" value="number"/>
 				<param name="HomePageWidget_sortorder" value="ascending"/>
 				<param name="HomePageWidget_limit" value="20"/>
@@ -1238,14 +1195,13 @@
 			<include content="HomePageWidget_list">
 				<!-- channels -->
 				<param name="HomePageWidget_content" value="$INFO[Skin.String(Widget_PVR_Radio_WidgetChannels_Path)]"/>
-				<param name="HomePageWidget_header" value="$INFO[Skin.String(Widget_PVR_Radio_WidgetChannels_Path)]"/>
-				<param name="HomePageWidget_target" value="pvr"/>
 				<param name="HomePageWidget_limit" value="10"/>
 				<param name="HomePageWidget_sortby" value=""/>
 				<param name="HomePageWidget_list_id" value="292"/>
 				<param name="HomePageWidget_list_width" value="729"/>
 				<param name="HomePageWidget_list_ondown" value="9000"/>
-				<param name="HomePageWidget_list_onfocus" value="Container.Refresh"/>
+				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$INFO[Skin.String(Widget_PVR_Radio_WidgetChannels_Path)],home)"/>
+				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)"/>
 				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Widget_PVR_Radio_WidgetChannels)"/>
 				<param name="HomePageWidget_list_visible2" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),radio)"/>
 				<param name="HomePageWidget_list_visible3" value="!String.IsEmpty(Skin.String(Widget_PVR_Radio_WidgetChannels_Path))"/>
@@ -1351,6 +1307,44 @@
                     </control>
                 </control>
             </control>
+        </control>
+    </include>
+    <include name="HomepageWidget_Games">
+        <control type="group">
+            <include>HomepageWidgetPosition</include>
+            <include>opencloseslideleft</include>
+            <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),games)</visible>
+            <visible>!Window.IsVisible(favourites)</visible>
+			<include content="HomePageWidget_list">
+				<!-- last used -->
+				<param name="HomePageWidget_content" value="addons://sources/game/"/>
+				<param name="HomePageWidget_limit" value="10"/>
+				<param name="HomePageWidget_sortby" value="lastused"/>
+				<param name="HomePageWidget_sortorder" value="ascending"/>
+				<param name="HomePageWidget_list_id" value="294"/>
+				<param name="HomePageWidget_list_width" value="720"/>
+				<param name="HomePageWidget_list_ondown" value="9000"/>
+				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$LOCALIZE[10821],home)"/>
+				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)"/>
+				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Widget_LastusedGames)"/>
+				<param name="HomePageWidget_list_visible2" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),games)"/>
+				<param name="HomePageWidget_list_visible3" value="!Skin.HasSetting(Home_Games_Button)"/>
+			</include>
+			<include content="HomePageWidget_list">
+				<!-- custom -->
+				<param name="HomePageWidget_content" value="$VAR[HomeWidget_Games_Path]"/>
+				<param name="HomePageWidget_limit" value="20"/>
+				<param name="HomePageWidget_sortby" value=""/>
+				<param name="HomePageWidget_sortorder" value=""/>
+				<param name="HomePageWidget_list_id" value="295"/>
+				<param name="HomePageWidget_list_width" value="720"/>
+				<param name="HomePageWidget_list_ondown" value="9000"/>
+				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$INFO[Skin.String(HomeWidget_Games_Label)],home)"/>
+				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)"/>
+				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Home_Games_Button)"/>
+				<param name="HomePageWidget_list_visible2" value="Skin.HasSetting(HomeWidget_Games_User)"/>
+				<param name="HomePageWidget_list_visible3" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),games)"/>
+			</include>
         </control>
     </include>
     <include name="HomepageWidgetInfoPanel_fanart">
@@ -1693,7 +1687,7 @@
 				<onup/>
 				<onfocus>$PARAM[HomePageWidget_list_onfocus]</onfocus>
 				<onunfocus>$PARAM[HomePageWidget_list_onunfocus]</onunfocus>
-				<viewtype label="$PARAM[HomePageWidget_header]">list</viewtype>
+				<viewtype label="Widget">list</viewtype>
 				<pagecontrol/>
 				<scrolltime>300</scrolltime>
 				<visible>$PARAM[HomePageWidget_list_visible]</visible>
@@ -1704,8 +1698,8 @@
 				<include content="Widget_Listlayout">
 					<param name="Widget_Listlayout_id" value="$PARAM[HomePageWidget_list_id]"/>
 				</include>
-				<content limit="1" target="$PARAM[HomePageWidget_target]" sortby="lastplayed" sortorder="descending">$PARAM[HomePageWidget_content2]</content>
-				<content limit="$PARAM[HomePageWidget_limit]" target="$PARAM[HomePageWidget_target]" sortby="$PARAM[HomePageWidget_sortby]" sortorder="$PARAM[HomePageWidget_sortorder]">$PARAM[HomePageWidget_content]</content>
+				<content limit="1" target="$VAR[WidgetTarget]" sortby="lastplayed" sortorder="descending">$PARAM[HomePageWidget_content2]</content>
+				<content limit="$PARAM[HomePageWidget_limit]" target="$VAR[WidgetTarget]" sortby="$PARAM[HomePageWidget_sortby]" sortorder="$PARAM[HomePageWidget_sortorder]">$PARAM[HomePageWidget_content]</content>
 			</control>
 		</control>
 		<include content="HomepageWidgetInfoPanel_BehindShadowImage">

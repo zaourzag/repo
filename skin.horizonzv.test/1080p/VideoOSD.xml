@@ -17,7 +17,7 @@
         </control>
         <control type="group">
             <include>opencloseslidedown</include>
-            <visible>![Window.IsVisible(pvrosdteletext)|Window.IsVisible(SliderDialog)|Window.IsVisible(OSDVideoSettings)|Window.IsVisible(OSDAudioSettings)|Window.IsVisible(VideoBookmarks)|Window.IsVisible(PVRosdChannels)|Window.IsVisible(PVRosdGuide)]</visible>
+            <visible>![Window.IsVisible(pvrosdteletext)|Window.IsVisible(SliderDialog)|Window.IsVisible(OSDVideoSettings)|Window.IsVisible(OSDAudioSettings)|Window.IsVisible(VideoBookmarks)|Window.IsVisible(PVRosdChannels)|Window.IsVisible(pvrchannelguide)]</visible>
             <visible>![Window.IsActive(script-XBMC-Subtitles-main.xml)|Window.IsActive(DialogSubtitles.xml)]</visible>
             <left>0</left>
             <top>0</top>
@@ -110,7 +110,7 @@
                 <left>0</left>
                 <top>12</top>
                 <control type="grouplist" id="550">
-                    <visible>videoplayer.isstereoscopic + ![Window.IsVisible(SliderDialog)|Window.IsVisible(OSDVideoSettings)|Window.IsVisible(OSDAudioSettings)|Window.IsVisible(VideoBookmarks)|Window.IsVisible(PVROSDChannels)|Window.IsVisible(PVROSDGuide)]</visible>
+                    <visible>videoplayer.isstereoscopic + ![Window.IsVisible(SliderDialog)|Window.IsVisible(OSDVideoSettings)|Window.IsVisible(OSDAudioSettings)|Window.IsVisible(VideoBookmarks)|Window.IsVisible(PVROSDChannels)|Window.IsVisible(pvrchannelguide)]</visible>
                     <visible>Control.HasFocus(1)|ControlGroup(550).HasFocus</visible>
                     <include>opencloseslidedown</include>
                     <left>60</left>
@@ -770,7 +770,7 @@
                             <item id="29">
                                 <label>$LOCALIZE[19029]$INFO[VideoPlayer.ChannelName, - ]</label>
                                 <icon>osd/EPG.png</icon>
-                                <onclick>ActivateWindow(PVRosdGuide)</onclick>
+                                <onclick>ActivateWindow(pvrchannelguide)</onclick>
                                 <onclick>Dialog.Close(videoosd)</onclick>
                             </item>
                         </content>

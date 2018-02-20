@@ -1393,6 +1393,58 @@
 					<param name="id3" value="227"/>
 				</include>
             </control>
+            <control type="grouplist" id="36100"> <!-- games -->
+                <left>45</left>
+                <top>188</top>
+                <width>1110</width>
+                <height>870</height>
+                <height>675</height>
+                <itemgap>3</itemgap>
+                <visible>String.IsEqual(Window(Home).Property(HomeButton),games)</visible>
+                <control type="radiobutton" id="230">
+                    <include>dialogbutton_popup</include>
+                    <label>10821</label>
+                    <onclick>Skin.ToggleSetting(Widget_LastusedGames)</onclick>
+                    <selected>Skin.HasSetting(Widget_LastusedGames)</selected>
+					<visible>!Skin.HasSetting(HomeMenuNoGamesButton)+!Skin.HasSetting(Home_Games_Button)</visible>
+                </control>
+                <control type="radiobutton" id="231">
+                    <include>dialogbutton_popup</include>
+                    <label>Widget - $LOCALIZE[409]</label>
+                    <onclick>Skin.Reset(HomeWidget_Games_User)</onclick>
+                    <onclick>Skin.ToggleSetting(HomeWidget_Games_Standard)</onclick>
+                    <selected>Skin.HasSetting(HomeWidget_Games_Standard)</selected>
+					<visible>!Skin.HasSetting(HomeMenuNoGamesButton)+Skin.HasSetting(Home_Games_Button)</visible>
+                </control>
+                <control type="radiobutton" id="232">
+                    <include>dialogbutton_popup</include>
+                    <label>Widget - $LOCALIZE[636]</label>
+                    <onclick>Skin.ToggleSetting(HomeWidget_Games_User)</onclick>
+                    <onclick>Skin.Reset(HomeWidget_Games_Standard)</onclick>
+                    <selected>Skin.HasSetting(HomeWidget_Games_User)</selected>
+					<visible>!Skin.HasSetting(HomeMenuNoGamesButton)+Skin.HasSetting(Home_Games_Button)</visible>
+                </control>
+                <control type="button" id="233">
+                    <include>dialogbutton_popup</include>
+					<label>- $LOCALIZE[21899]</label>
+					<label2>$INFO[Skin.String(HomeWidget_Games_Label)]</label2>
+					<onclick>Skin.SetString(HomeWidget_Games_Label)</onclick>
+					<visible>!Skin.HasSetting(HomeMenuNoGamesButton)+Skin.HasSetting(Home_Games_Button)</visible>
+				</control>
+                <control type="button" id="234">
+                    <include>dialogbutton_popup</include>
+					<label>- $LOCALIZE[573]</label>
+					<label2>$INFO[Skin.String(HomeWidget_Games_Path)]</label2>
+					<onclick>$VAR[HomeWidget_Games_Currentpath]</onclick>
+					<enable>Skin.HasSetting(HomeWidget_Games_User)</enable>
+					<visible>!Skin.HasSetting(HomeMenuNoGamesButton)+Skin.HasSetting(Home_Games_Button)</visible>
+				</control>
+				<include content="WidgetGeneralSettings">
+					<param name="id1" value="235"/>
+					<param name="id2" value="236"/>
+					<param name="id3" value="237"/>
+				</include>
+            </control>
         </control>
     </controls>
 </window>

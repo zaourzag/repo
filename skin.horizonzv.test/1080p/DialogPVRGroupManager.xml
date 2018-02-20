@@ -313,13 +313,6 @@
                         <orientation>vertical</orientation>
                     </control>
                 </control>
-                <control type="image">
-                    <left>1478</left>
-                    <top>225</top>
-                    <width>345</width>
-                    <height>308</height>
-                    <texture border="5">osd/ProgressBack.png</texture>
-                </control>
                 <control type="grouplist" id="9000">
                     <left>1492</left>
                     <top>210</top>
@@ -357,6 +350,14 @@
                         <texturenofocus/>
                         <label>31505</label>
                     </control>
+					<control type="togglebutton" id="34">
+	 					<description>TV/Radio toggle</description>
+	 					<width>315</width>
+                        <texturenofocus/>
+	 					<label>$LOCALIZE[19174]</label>
+	 					<altlabel>$LOCALIZE[19173]</altlabel>
+	 					<usealttexture>!String.IsEmpty(Window.Property(IsRadio))</usealttexture>
+	 				</control>
                     <control type="button" id="29">
                         <description>OK</description>
                         <width>315</width>

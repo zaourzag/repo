@@ -1730,8 +1730,8 @@ msgid "Event Blog Settings"
 msgstr "Event Blog Einstellungen"
 
 msgctxt "#51441"
-msgid "Set the position of each mein menu fixed points.[CR]Using position numbers from 1 - 22."
-msgstr "Lege hier die Position der einzelnen Hauptmenüpunkte fest.[CR]Verwende Positionsnummern von 1 - 22."
+msgid "Set the position of each mein menu fixed points.[CR]Using position numbers from 1 - 23."
+msgstr "Lege hier die Position der einzelnen Hauptmenüpunkte fest.[CR]Verwende Positionsnummern von 1 - 23."
 
 msgctxt "#51443"
 msgid "go directly to video files"

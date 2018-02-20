@@ -93,7 +93,7 @@
                     <left>15</left>
                     <top>52</top>
                     <width>630</width>
-                    <height>945</height>
+                    <height>880</height>
                     <onleft>Action(back)</onleft>
                     <onright>Skin.Reset(HomeMenuItemMusic)</onright>
                     <onright>Skin.Reset(HomeMenuItemVideo)</onright>
@@ -117,6 +117,7 @@
                     <onright>Skin.Reset(HomeMenuItemPVR)</onright>
                     <onright>Skin.Reset(HomeMenuItemRadio)</onright>
                     <onright>Skin.Reset(HomeMenuItemNews)</onright>
+                    <onright>Skin.Reset(HomeMenuItemGames)</onright>
                     <scrolltime tween="circle" easing="out">400</scrolltime>
                     <orientation>vertical</orientation>
                     <itemlayout height="40" width="630">
@@ -253,7 +254,7 @@
                             <visible></visible>
                         </item>
                         <item id="9">
-							<label>$VAR[Home_PlayDisc_Label]</label>
+							<label>427</label>
                             <label2 fallback="9.">$INFO[Skin.String(HomeMenuItemPlayDisc),,.]</label2>
                             <thumb>$VAR[backgroundfolder]home_disc$VAR[bkg_fileext]</thumb>
                             <icon>$INFO[Skin.String(user_bkg_dvd)]</icon>
@@ -376,6 +377,15 @@
                             <icon>$INFO[Skin.String(user_bkg_news)]</icon>
                             <onclick>Skin.Reset(HomeMenuItemNews)</onclick>
                             <onclick>Skin.SetNumeric(HomeMenuItemNews)</onclick>
+                            <visible></visible>
+                        </item>
+                        <item id="23">
+                            <label>GAMES</label>
+                            <label2 fallback="23.">$INFO[Skin.String(HomeMenuItemGames),,.]</label2>
+                            <thumb>$VAR[backgroundfolder]home_Games$VAR[bkg_fileext]</thumb>
+                            <icon>$INFO[Skin.String(user_bkg_Games)]</icon>
+                            <onclick>Skin.Reset(HomeMenuItemGames)</onclick>
+                            <onclick>Skin.SetNumeric(HomeMenuItemGames)</onclick>
                             <visible></visible>
                         </item>
                     </content>

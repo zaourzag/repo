@@ -145,8 +145,9 @@
         <!-- visualisation -->
     </variable>
     <variable name="background_mynavs">
-        <value condition="Window.IsVisible(1)+!Skin.HasSetting(onlyone)">special://skin/backgrounds/programs.jpg</value>
-        <value condition="Window.IsVisible(2)+!Skin.HasSetting(onlyone)">special://skin/backgrounds/pictures.jpg</value>
+        <value condition="Window.IsVisible(games)+!Skin.HasSetting(onlyone)">special://skin/backgrounds/games.jpg</value>
+        <value condition="Window.IsVisible(programs)+!Skin.HasSetting(onlyone)">special://skin/backgrounds/programs.jpg</value>
+        <value condition="Window.IsVisible(pictures)+!Skin.HasSetting(onlyone)">special://skin/backgrounds/pictures.jpg</value>
         <value condition="Window.IsVisible(videos)+!Container.Content(musicvideos)+!Skin.HasSetting(onlyone)">special://skin/backgrounds/mediaoverlaywhite.jpg</value>
         <value condition="Window.IsVisible(videos)+Container.Content(musicvideos)+!Skin.HasSetting(onlyone)">special://skin/backgrounds/musicvideos.jpg</value>
         <value condition="Window.IsVisible(addonbrowser)+!Skin.HasSetting(onlyone)">special://skin/backgrounds/addons.jpg</value>
