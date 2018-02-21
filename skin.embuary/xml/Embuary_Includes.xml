@@ -110,12 +110,9 @@
 			</control>
 			<control type="image">
 				<include>FullscreenDimensions</include>
-				<texture colordiffuse="background">common/diffuse_white.png</texture>
-				<animation effect="fade" start="100" end="100" condition="String.IsEqual(Skin.String(BackgroundAlpha),0) | String.IsEmpty(Skin.String(BackgroundAlpha))" time="0">Conditional</animation>
-				<animation effect="fade" start="100" end="97" condition="String.IsEqual(Skin.String(BackgroundAlpha),1)" time="0">Conditional</animation>
-				<animation effect="fade" start="100" end="94" condition="String.IsEqual(Skin.String(BackgroundAlpha),2)" time="0">Conditional</animation>
-				<animation effect="fade" start="100" end="91" condition="String.IsEqual(Skin.String(BackgroundAlpha),3)" time="0">Conditional</animation>
-				<visible>[Player.HasMedia + !Skin.HasSetting(HideBackgroundPlayback)] | $EXP[HideBackground]</visible>
+				<texture>common/diffuse_white.png</texture>
+				<colordiffuse>$VAR[BackgroundColordiffuse]</colordiffuse>
+				<visible>[Player.HasMedia + !Skin.HasSetting(HideBackgroundPlayback)] | [!Skin.HasSetting(HideBackground) + !Window.IsVisible(MyPVRguide.xml) + $EXP[HideBackground]]</visible>
 			</control>
 			<control type="image">
 				<include>FullscreenDimensions</include>
@@ -692,7 +689,7 @@
 		<param name="width">8</param>
 		<param name="top">0</param>
 		<param name="bottom">0</param>
-		<param name="visible">!Control.IsVisible(53)</param>
+		<param name="visible">Control.IsVisible(50) | Control.IsVisible(51) | Control.IsVisible(52)</param>
 		<definition>
 			<control type="scrollbar" id="$PARAM[id]">
 				<visible>$PARAM[visible]</visible>
@@ -1236,7 +1233,7 @@
 					</control>
 					<control type="radiobutton" id="4103">
 						<textcolor>emby</textcolor>
-						<texturenofocus border="10" colordiffuse="ff1b1c1e">common/menu_back.png</texturenofocus>
+						<texturenofocus border="10" colordiffuse="ff1b1b1b">common/menu_back.png</texturenofocus>
 						<include content="CommonButton"/>
 						<label>• $LOCALIZE[31198]</label>
 						<onclick>Skin.ToggleSetting(HidePosterLabels)</onclick>
@@ -1252,7 +1249,7 @@
 					</control>
 					<control type="radiobutton" id="4105">
 						<textcolor>emby</textcolor>
-						<texturenofocus border="10" colordiffuse="ff1b1c1e">common/menu_back.png</texturenofocus>
+						<texturenofocus border="10" colordiffuse="ff1b1b1b">common/menu_back.png</texturenofocus>
 						<include content="CommonButton"/>
 						<label>• $LOCALIZE[31198]</label>
 						<onclick>Skin.ToggleSetting(HideWideLabels)</onclick>
@@ -1275,7 +1272,7 @@
 					</control>
 					<control type="radiobutton" id="4108">
 						<textcolor>emby</textcolor>
-						<texturenofocus border="10" colordiffuse="ff1b1c1e">common/menu_back.png</texturenofocus>
+						<texturenofocus border="10" colordiffuse="ff1b1b1b">common/menu_back.png</texturenofocus>
 						<include content="CommonButton"/>
 						<label>• $LOCALIZE[31198]</label>
 						<onclick>Skin.ToggleSetting(HideBannerLabels)</onclick>
