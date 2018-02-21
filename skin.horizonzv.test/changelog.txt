@@ -1,4 +1,8 @@
-﻿v 1.18.0.07
+﻿v 1.18.0.08
+- Bugfix SteamFlag (Netflix, strm)
+- Bugfix Systeminfo - Skinversion
+
+v 1.18.0.07
 - Gamessection komplettiert, Hauptmenü, Widgets, Untermenü, Games Window
 - restliche Änderungen für Kodi 18 umgesetzt
 
