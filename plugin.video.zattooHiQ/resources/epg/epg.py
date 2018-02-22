@@ -54,11 +54,18 @@ ACTION_PAGE_UP = 5
 ACTION_PAGE_DOWN = 6
 ACTION_HOME = 159
 ACTION_END = 160
+
 ACTION_2 = 60
 ACTION_4 = 62
 ACTION_5 = 63
 ACTION_6 = 64
 ACTION_8 = 66
+
+ACTION_JUMP_SMS2 = 142
+ACTION_JUMP_SMS4 = 144
+ACTION_JUMP_SMS5 = 145
+ACTION_JUMP_SMS6 = 146
+ACTION_JUMP_SMS8 = 148
 
 ACTION_SELECT_ITEM = 7
 ACTION_PARENT_DIR = 9
@@ -248,13 +255,13 @@ class EPG(xbmcgui.WindowXML):
 			self._up(currentFocus)
 		elif actionId == ACTION_DOWN:
 			self._down(currentFocus)
-		elif actionId  in [ACTION_NEXT_ITEM, ACTION_6]:
+		elif actionId  in [ACTION_NEXT_ITEM, ACTION_6, ACTION_JUMP_SMS6]:
 			self._nextDay()
-		elif actionId in [ACTION_PREV_ITEM, ACTION_4]:
+		elif actionId in [ACTION_PREV_ITEM, ACTION_4, ACTION_JUMP_SMS4]:
 			self._previousDay()
-		elif actionId in [ACTION_PAGE_UP, ACTION_8]:
+		elif actionId in [ACTION_PAGE_UP, ACTION_8, ACTION_JUMP_SMS8]:
 			self._moveUp(CHANNELS_PER_PAGE)
-		elif actionId in [ACTION_PAGE_DOWN, ACTION_2]:
+		elif actionId in [ACTION_PAGE_DOWN, ACTION_2, ACTION_JUMP_SMS2]:
 			self._moveDown(CHANNELS_PER_PAGE)
 		elif actionId == ACTION_MOUSE_WHEEL_UP:
 			self._moveUp(scrollEvent=True)
@@ -265,7 +272,7 @@ class EPG(xbmcgui.WindowXML):
 			self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30,
 													 seconds=self.viewStartDate.second)
 			self.onRedrawEPG(self.channelIdx, self.viewStartDate)
-		elif actionId == ACTION_5:
+		elif actionId in [ACTION_5, ACTION_JUMP_SMS5]:
 			self.getDate()
 		
 			

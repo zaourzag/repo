@@ -190,51 +190,131 @@ class KeyMap:
       builder.start(key, {})
       builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=nr&amp;nr=58")')
       builder.end(key)
+      key = 'numpadzero'
+      builder.start(key, {})
+      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=nr&amp;nr=58")')
+      builder.end(key)
+      key = "207"
+      builder.start("key", {"id":key})
+      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=nr&amp;nr=58")')
+      builder.end("key")
       
       key = 'one'
       builder.start(key, {})
       builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=nr&amp;nr=59")')
       builder.end(key)
+      key = 'numpadone'
+      builder.start(key, {})
+      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=nr&amp;nr=59")')
+      builder.end(key)
+      key = "206"
+      builder.start("key", {"id":key})
+      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=nr&amp;nr=59")')
+      builder.end("key")
       
       key = 'two'
       builder.start(key, {})
       builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=nr&amp;nr=60")')
       builder.end(key)
+      key = 'numpadtwo'
+      builder.start(key, {})
+      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=nr&amp;nr=60")')
+      builder.end(key)
+      key = "205"
+      builder.start("key", {"id":key})
+      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=nr&amp;nr=60")')
+      builder.end("key")
       
       key = 'three'
       builder.start(key, {})
       builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=nr&amp;nr=61")')
       builder.end(key)
+      key = 'numpadthree'
+      builder.start(key, {})
+      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=nr&amp;nr=61")')
+      builder.end(key)
+      key = "204"
+      builder.start("key", {"id":key})
+      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=nr&amp;nr=61")')
+      builder.end("key")
       
       key = 'four'
       builder.start(key, {})
       builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=nr&amp;nr=62")')
       builder.end(key)
+      key = 'numpadfour'
+      builder.start(key, {})
+      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=nr&amp;nr=62")')
+      builder.end(key)
+      key = "203"
+      builder.start("key", {"id":key})
+      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=nr&amp;nr=62")')
+      builder.end("key")
       
       key = 'five'
       builder.start(key, {})
       builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=nr&amp;nr=63")')
       builder.end(key)
+      key = 'numpadfive'
+      builder.start(key, {})
+      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=nr&amp;nr=63")')
+      builder.end(key)
+      key = "202"
+      builder.start("key", {"id":key})
+      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=nr&amp;nr=63")')
+      builder.end("key")
       
       key = 'six'
       builder.start(key, {})
       builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=nr&amp;nr=64")')
       builder.end(key)
+      key = 'numpadsix'
+      builder.start(key, {})
+      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=nr&amp;nr=64")')
+      builder.end(key)
+      key = "201"
+      builder.start("key", {"id":key})
+      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=nr&amp;nr=64")')
+      builder.end("key")
       
       key = 'seven'
       builder.start(key, {})
       builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=nr&amp;nr=65")')
       builder.end(key)
+      key = 'numpadseven'
+      builder.start(key, {})
+      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=nr&amp;nr=65")')
+      builder.end(key)
+      key = "200"
+      builder.start("key", {"id":key})
+      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=nr&amp;nr=65")')
+      builder.end("key")
       
       key = 'eight'
       builder.start(key, {})
       builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=nr&amp;nr=66")')
       builder.end(key)
+      key = 'numpadeight'
+      builder.start(key, {})
+      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=nr&amp;nr=66")')
+      builder.end(key)
+      key = "199"
+      builder.start("key", {"id":key})
+      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=nr&amp;nr=66")')
+      builder.end("key")
       
       key = 'nine'
       builder.start(key, {})
       builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=nr&amp;nr=67")')
       builder.end(key)
+      key = 'numpadnine'
+      builder.start(key, {})
+      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=nr&amp;nr=67")')
+      builder.end(key)
+      key = "198"
+      builder.start("key", {"id":key})
+      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=nr&amp;nr=67")')
+      builder.end("key")
       
     # End keyboard
       builder.end("keyboard")
@@ -248,7 +328,7 @@ class KeyMap:
       builder.end("mouse")
     # Touch Tap
       builder.start("touch", {})
-      key = 'leftclick'
+      key = 'tap'
       builder.start(key, {})
       builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=showInfo")')
       builder.end(key)
