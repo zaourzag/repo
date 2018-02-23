@@ -736,9 +736,9 @@ class zattooGUI(xbmcgui.WindowXMLDialog):
     actionID = action.getId()
     if DEBUG: print "ActionID = " + str(actionID)
     if (actionID>57 and actionID<68):self.act_numbers(actionID)
-    #elif (actionID>142 and actionID<150):
-      #actionID = actionID - 85
-      #self.act_numbers(actionID)
+    elif (actionID>142 and actionID<150):
+      actionID = actionID - 82
+      self.act_numbers(actionID)
     elif actionID  == ACTION_STOP:
       self.close()
       xbmc.Player().stop()  
