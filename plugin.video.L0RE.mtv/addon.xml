@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.L0RE.mtv" name="MTV Mediathek" version="0.1.8" provider-name="L0RE">
+<addon id="plugin.video.L0RE.mtv" name="MTV Mediathek" version="0.1.9" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
         <import addon="script.module.requests" version="2.12.4"/>
@@ -18,6 +18,7 @@
     <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.L0RE.hsv</source>
     <forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
     <email>andreas at vogler dot name</email>
+    <news> v0.1.9 Patch der Playlisten (Dank an ClaudiaF)</news>
     <platform>all</platform>
   </extension>
 </addon>

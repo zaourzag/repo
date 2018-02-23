@@ -42,6 +42,7 @@ temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("ut
 if xbmcvfs.exists(temp):
   shutil.rmtree(temp)
 xbmcvfs.mkdirs(temp)
+
 cookie=os.path.join( temp, 'cookie.jar')
 cj = cookielib.LWPCookieJar();
 
@@ -61,7 +62,7 @@ def log(msg, level=xbmc.LOGNOTICE):
     
 
   
-def addDir(name, url, mode, thump, desc="",seite=1,anz=0,serienname=0,stattfolgen=0):   
+def addDir(name, url, mode, thump, desc="",seite=1,anz=0,serienname=0,stattfolgen=0,play=0):   
   u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&seite="+str(seite)+"&anz="+str(anz)+"&serienname="+str(serienname)+"&stattfolgen="+str(stattfolgen)
   ok = True
   liz = xbmcgui.ListItem(name)  
@@ -69,6 +70,8 @@ def addDir(name, url, mode, thump, desc="",seite=1,anz=0,serienname=0,stattfolge
   liz.setArt({ 'thumb' : thump })
   liz.setArt({ 'banner' : icon })
   liz.setArt({ 'fanart' : icon })
+  if play==1: 
+    liz.setProperty('IsPlayable', 'true')
   liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc})
 	
   ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
@@ -340,6 +343,7 @@ def playplaylist(url):
   for i in range(0, len(videourl_arr), 1):
     debug(title_ar[i])
     item = xbmcgui.ListItem(path=videourl_arr[i],label=title_ar[i],iconImage=image_arr[i])         
+    item.setProperty('IsPlayable', 'true')
     playlist.add(videourl_arr[i], item)
     #if i==0:
         #xbmc.Player().play(playlist)
@@ -348,7 +352,7 @@ def playplaylist(url):
   #sleep(60)
   #xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)   
   xbmc.Player().play(playlist)
-  sleep(60)
+  #sleep(60)
 
 
 def playlists(url):
@@ -372,7 +376,7 @@ def playlistspart(url):
        debug(image)
        videourl=item["canonicalURL"]
        debug(videourl)     
-       addLink(title,videourl,"playplaylist",image)
+       addDir(title,videourl,"playplaylist",image,play=1)
       
     try:   
         nexturl=substrukt["nextPageURL"]
