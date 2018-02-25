@@ -637,7 +637,7 @@ def selectStartChannel():
 
  
 def input_numbers(nr):
-  if (xbmcgui.Window(10000).getProperty('zattooGUI')!="True"):
+ # if (xbmcgui.Window(10000).getProperty('zattooGUI')!="True"):
     
     gui = zattooGUI("zattooGUI.xml", __addon__.getAddonInfo('path'))
     if nr: gui.act_numbers(int(nr))
@@ -645,7 +645,7 @@ def input_numbers(nr):
     del gui
 
 def show_channelNr(nr):
-  if (xbmcgui.Window(10000).getProperty('zattooGUI')!="True"):
+  #if (xbmcgui.Window(10000).getProperty('zattooGUI')!="True"):
     
     gui = zattooGUI("zattooGUI.xml", __addon__.getAddonInfo('path'))
     if nr: gui.showChannelNr(int(nr))
@@ -1017,6 +1017,7 @@ def main():
     
   elif action == 'nr':
     nr = args.get('nr')[0]
+    if DEBUG: print "call Nr: " + str(nr)
     input_numbers(nr)
    
 main()
