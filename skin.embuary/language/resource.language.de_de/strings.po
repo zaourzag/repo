@@ -392,18 +392,18 @@ msgstr "Lokale Suche"
 
 #: /xml/Embuary_Includes.xml
 msgctxt "#31073"
-msgid "Search for movies in Emby"
-msgstr "Suche nach Filmen in Emby"
+msgid "EmbyCon: Search for movies"
+msgstr "EmbyCon: Nach Filmen suchen"
 
 #: /xml/Embuary_Includes.xml
 msgctxt "#31074"
-msgid "Search for TV shows in Emby"
-msgstr "Suche nach Serien in Emby"
+msgid "EmbyCon: Search for TV shows"
+msgstr "EmbyCon: Nach Serien suchen"
 
 #: /xml/Embuary_Includes.xml
 msgctxt "#31075"
-msgid "Search for episodes in Emby"
-msgstr "Suche nach Episoden in Emby"
+msgid "EmbyCon: Search for episodes"
+msgstr "EmbyCon: Nach Episoden suchen"
 
 #: /xml/Custom_1110_testwindow.xml
 msgctxt "#31076"
@@ -447,13 +447,13 @@ msgstr "Widgets"
 
 #: /xml/SkinSettings.xml
 msgctxt "#31084"
-msgid "Show widgets based on the local Kodi library"
-msgstr "Zeige Widgets basierend auf der lokalen Kodi Datenbank"
+msgid "Visible widget types"
+msgstr "Sichtbare Widget Arten"
 
 #: /xml/SkinSettings.xml
 msgctxt "#31085"
-msgid "Show widgets based on the EmbyCon plugin"
-msgstr "Zeige Widgets basierend auf dem EmbyCon plugin"
+msgid "Show EmbyCon source label"
+msgstr "Zeige EmbyCon-Quellen Beschriftung"
 
 #: /xml/SkinSettings.xml
 msgctxt "#31086"
@@ -675,11 +675,6 @@ msgstr "Benutzerdefinierte Widgets"
 msgctxt "#31126"
 msgid "Randomise slideshow"
 msgstr "Zufällige Diashow"
-
-#: /xml/SkinSettings.xml
-msgctxt "#31127"
-msgid "Show EmbyCon buttons and options"
-msgstr "Zeige EmbyCon Buttons und Optionen"
 
 #: /xml/AddonBrowser.xml
 msgctxt "#31128"
@@ -1091,3 +1086,43 @@ msgstr "Nutze Emby Vorschaubild"
 msgctxt "#31207"
 msgid "Restored default main menu configuration"
 msgstr "Standard Menükonfiguration wiederhergestellt"
+
+#: /xml/Custom_1111_PositionItemSelector.xml
+msgctxt "#31208"
+msgid "EmbyCon node"
+msgstr "EmbyCon Datenbanki"
+
+#: /xml/Embuary_EmbyConHubIncludes.xml
+msgctxt "#31209"
+msgid "Unwatched movies"
+msgstr "Ungesehene Filme"
+
+#: /xml/Embuary_EmbyConHubIncludes.xml
+msgctxt "#31210"
+msgid "Unwatched TV shows"
+msgstr "Ungesehene Serien"
+
+#: /xml/Embuary_EmbyConHubIncludes.xml
+msgctxt "#31211"
+msgid "Recently played"
+msgstr "Zuletzt abgespielt"
+
+#: /xml/Embuary_EmbyConHubIncludes.xml
+msgctxt "#31212"
+msgid "Favourite artists"
+msgstr "Lieblingskünstler"
+
+#: /xml/Embuary_EmbyConHubIncludes.xml
+msgctxt "#31213"
+msgid "Favourite albums"
+msgstr "Lieblingsalben"
+
+#: /xml/Embuary_EmbyConHubIncludes.xml
+msgctxt "#31214"
+msgid "Favourite songs"
+msgstr "Lieblingslieder"
+
+#: /xml/Embuary_EmbyConHubIncludes.xml
+msgctxt "#31215"
+msgid "Often played"
+msgstr "Oft abgespielt"
