@@ -36,7 +36,6 @@
 							<textcolor>panel_text</textcolor>
 							<focusedcolor>panel_text</focusedcolor>
 							<selectedcolor>panel_text</selectedcolor>
-							<shadowcolor>text_shadow</shadowcolor>
 							<texturefocus colordiffuse="panel_hover">common/white.jpg</texturefocus>
 							<include>NoTextures</include>
 							<label>$LOCALIZE[480]</label>
@@ -52,7 +51,6 @@
 							<textcolor>panel_text</textcolor>
 							<focusedcolor>panel_text</focusedcolor>
 							<selectedcolor>panel_text</selectedcolor>
-							<shadowcolor>text_shadow</shadowcolor>
 							<texturefocus colordiffuse="panel_hover">common/white.jpg</texturefocus>
 							<include>NoTextures</include>
 							<label>$LOCALIZE[10000]</label>
@@ -68,7 +66,6 @@
 							<textcolor>panel_text</textcolor>
 							<focusedcolor>panel_text</focusedcolor>
 							<selectedcolor>panel_text</selectedcolor>
-							<shadowcolor>text_shadow</shadowcolor>
 							<texturefocus colordiffuse="panel_hover">common/white.jpg</texturefocus>
 							<include>NoTextures</include>
 							<label>$LOCALIZE[31134]</label>
@@ -84,7 +81,6 @@
 							<textcolor>panel_text</textcolor>
 							<focusedcolor>panel_text</focusedcolor>
 							<selectedcolor>panel_text</selectedcolor>
-							<shadowcolor>text_shadow</shadowcolor>
 							<texturefocus colordiffuse="panel_hover">common/white.jpg</texturefocus>
 							<include>NoTextures</include>
 							<label>$LOCALIZE[31173]</label>
@@ -100,7 +96,6 @@
 							<textcolor>panel_text</textcolor>
 							<focusedcolor>panel_text</focusedcolor>
 							<selectedcolor>panel_text</selectedcolor>
-							<shadowcolor>text_shadow</shadowcolor>
 							<texturefocus colordiffuse="panel_hover">common/white.jpg</texturefocus>
 							<include>NoTextures</include>
 							<label>$LOCALIZE[31172]</label>
@@ -116,7 +111,6 @@
 							<textcolor>panel_text</textcolor>
 							<focusedcolor>panel_text</focusedcolor>
 							<selectedcolor>panel_text</selectedcolor>
-							<shadowcolor>text_shadow</shadowcolor>
 							<texturefocus colordiffuse="panel_hover">common/white.jpg</texturefocus>
 							<include>NoTextures</include>
 							<label>$LOCALIZE[31174]</label>
@@ -132,7 +126,6 @@
 							<textcolor>panel_text</textcolor>
 							<focusedcolor>panel_text</focusedcolor>
 							<selectedcolor>panel_text</selectedcolor>
-							<shadowcolor>text_shadow</shadowcolor>
 							<texturefocus colordiffuse="panel_hover">common/white.jpg</texturefocus>
 							<include>NoTextures</include>
 							<label>$LOCALIZE[31190]</label>

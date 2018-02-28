@@ -76,14 +76,12 @@
 							<height>60</height>
 							<label>$INFO[Window.Property(next.tvshowtitle)]</label>
 							<font>Reg37</font>
-							<shadowcolor>text_shadow</shadowcolor>
 						</control>
 						<control type="label">
 							<width>1040</width>
 							<height>60</height>
 							<label>$INFO[Window.Property(next.season),S,:]$INFO[Window.Property(next.episode),E, - ]$INFO[Window.Property(next.title)]</label>
 							<font>Reg37</font>
-							<shadowcolor>text_shadow</shadowcolor>
 						</control>
 						<control type="grouplist">
 							<height>40</height>
@@ -105,7 +103,6 @@
 							<control type="label">
 								<include>MetaLabel</include>
 								<label>$INFO[Window.Property(next.rating)]   </label>
-								<shadowcolor>text_shadow</shadowcolor>
 								<visible>!String.IsEmpty(Window.Property(next.rating))</visible>
 							</control>
 						</control>
@@ -148,7 +145,6 @@
 							<aligny>top</aligny>
 							<label>$INFO[Window.Property(next.plot)]</label>
 							<font>Light24</font>
-							<shadowcolor>text_shadow</shadowcolor>
 							<autoscroll>false</autoscroll>
 						</control>
 						<control type="label">

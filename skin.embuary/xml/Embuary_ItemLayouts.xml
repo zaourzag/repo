@@ -19,7 +19,7 @@
 	</include>
 	<!-- Widget labels -->
 	<include name="widget_labels">
-		<param name="visible_labels">true</param>
+		<param name="labels_visible">true</param>
 		<param name="mainlabel">$VAR[MainListLabel]</param>
 		<param name="sublabel">$VAR[SubListLabel]</param>
 		<param name="textoffsetx">0</param>
@@ -27,11 +27,11 @@
 			<control type="group">
 				<top>$PARAM[top]</top>
 				<width>$PARAM[width]</width>
-				<visible>$PARAM[visible_labels]</visible>
+				<visible>$PARAM[labels_visible]</visible>
 				<control type="label">
 					<width>$PARAM[width]</width>
 					<height>30</height>
-					<label fallback="$PARAM[fallbacklabel]">$PARAM[mainlabel]</label>
+					<label>$PARAM[mainlabel]</label>
 					<font>Reg23</font>
 					<scroll>$PARAM[focused] + Control.HasFocus($PARAM[id])</scroll>
 					<align>center</align>
@@ -41,7 +41,7 @@
 				<control type="label">
 					<width>$PARAM[width]</width>
 					<height>30</height>
-					<label fallback="$PARAM[fallbacklabel]">$PARAM[mainlabel]</label>
+					<label>$PARAM[mainlabel]</label>
 					<font>Reg23</font>
 					<scroll>false</scroll>
 					<align>center</align>
@@ -77,7 +77,7 @@
 	</include>
 	<!-- Static labels -->
 	<include name="static_labels">
-		<param name="visible_labels">true</param>
+		<param name="labels_visible">true</param>
 		<param name="mainlabel">$VAR[MainListLabel]</param>
 		<param name="sublabel">$VAR[SubListLabel]</param>
 		<param name="textoffsetx">0</param>
@@ -85,13 +85,12 @@
 			<control type="group">
 				<top>$PARAM[top]</top>
 				<width>$PARAM[width]</width>
-				<visible>$PARAM[visible_labels]</visible>
+				<visible>$PARAM[labels_visible]</visible>
 				<control type="label">
 					<width>$PARAM[width]</width>
 					<height>30</height>
-					<label fallback="$PARAM[fallbacklabel]">$PARAM[mainlabel]</label>
+					<label>$PARAM[mainlabel]</label>
 					<font>Reg23</font>
-					<shadowcolor>text_shadow</shadowcolor>
 					<scroll>true</scroll>
 					<align>center</align>
 					<textoffsetx>$PARAM[textoffsetx]</textoffsetx>
@@ -103,7 +102,6 @@
 					<label>$PARAM[sublabel]</label>
 					<font>Reg23</font>
 					<textcolor>lightgrey</textcolor>
-					<shadowcolor>text_shadow</shadowcolor>
 					<scroll>true</scroll>
 					<align>center</align>
 					<textoffsetx>$PARAM[textoffsetx]</textoffsetx>
@@ -308,7 +306,6 @@
 					<label></label>
 					<font>Material60</font>
 					<textcolor>white</textcolor>
-					<shadowcolor>text_shadow</shadowcolor>
 					<align>center</align>
 					<aligny>center</aligny>
 				</control>
@@ -333,7 +330,6 @@
 					<label></label>
 					<font>Material60</font>
 					<textcolor>white</textcolor>
-					<shadowcolor>text_shadow</shadowcolor>
 					<align>center</align>
 					<aligny>center</aligny>
 				</control>
@@ -458,7 +454,6 @@
 					<height>394</height>
 					<font>Light24</font>
 					<textcolor>white</textcolor>
-					<shadowcolor>00ffffff</shadowcolor>
 					<align>center</align>
 					<aligny>center</aligny>
 					<label>$PARAM[thumblabel]</label>
@@ -504,7 +499,7 @@
 					<param name="mainlabel">$PARAM[mainlabel]</param>
 					<param name="sublabel">$PARAM[sublabel]</param>
 					<param name="focused">$PARAM[focused]</param>
-					<param name="visible_labels">$PARAM[visible_labels]</param>
+					<param name="labels_visible">$PARAM[labels_visible]</param>
 				</include>
 			</control>
 		</definition>
@@ -547,7 +542,6 @@
 					<height>335</height>
 					<font>Light24</font>
 					<textcolor>white</textcolor>
-					<shadowcolor>00ffffff</shadowcolor>
 					<align>center</align>
 					<aligny>center</aligny>
 					<label>$PARAM[thumblabel]</label>
@@ -593,7 +587,7 @@
 					<param name="mainlabel">$PARAM[mainlabel]</param>
 					<param name="sublabel">$PARAM[sublabel]</param>
 					<param name="focused">$PARAM[focused]</param>
-					<param name="visible_labels">$PARAM[visible_labels]</param>
+					<param name="labels_visible">$PARAM[labels_visible]</param>
 				</include>
 			</control>
 		</definition>
@@ -637,7 +631,6 @@
 					<height>143</height>
 					<font>Light24</font>
 					<textcolor>white</textcolor>
-					<shadowcolor>00ffffff</shadowcolor>
 					<align>center</align>
 					<aligny>center</aligny>
 					<label>$PARAM[thumblabel]</label>
@@ -691,7 +684,7 @@
 					<param name="mainlabel">$PARAM[mainlabel]</param>
 					<param name="sublabel">$PARAM[sublabel]</param>
 					<param name="focused">$PARAM[focused]</param>
-					<param name="visible_labels">$PARAM[visible_labels]</param>
+					<param name="labels_visible">$PARAM[labels_visible]</param>
 				</include>
 			</control>
 		</definition>
@@ -736,7 +729,6 @@
 					<height>219</height>
 					<font>Light24</font>
 					<textcolor>white</textcolor>
-					<shadowcolor>00ffffff</shadowcolor>
 					<align>center</align>
 					<aligny>center</aligny>
 					<label>$PARAM[thumblabel]</label>
@@ -799,7 +791,7 @@
 					<param name="mainlabel">$PARAM[mainlabel]</param>
 					<param name="sublabel">$PARAM[sublabel]</param>
 					<param name="focused">$PARAM[focused]</param>
-					<param name="visible_labels">$PARAM[visible_labels]</param>
+					<param name="labels_visible">$PARAM[labels_visible]</param>
 				</include>
 			</control>
 		</definition>
@@ -842,7 +834,6 @@
 					<height>222</height>
 					<font>Light24</font>
 					<textcolor>white</textcolor>
-					<shadowcolor>00ffffff</shadowcolor>
 					<align>center</align>
 					<aligny>center</aligny>
 					<label>$PARAM[thumblabel]</label>
@@ -896,7 +887,7 @@
 					<param name="mainlabel">$PARAM[mainlabel]</param>
 					<param name="sublabel">$PARAM[sublabel]</param>
 					<param name="focused">$PARAM[focused]</param>
-					<param name="visible_labels">$PARAM[visible_labels]</param>
+					<param name="labels_visible">$PARAM[labels_visible]</param>
 				</include>
 			</control>
 		</definition>
@@ -931,7 +922,6 @@
 					<height>219</height>
 					<font>Material70</font>
 					<textcolor>EEFFFFFF</textcolor>
-					<shadowcolor>00ffffff</shadowcolor>
 					<align>center</align>
 					<aligny>center</aligny>
 					<label>$PARAM[thumblabel]</label>
@@ -960,7 +950,7 @@
 					<param name="mainlabel">$PARAM[mainlabel]</param>
 					<param name="sublabel">$PARAM[sublabel]</param>
 					<param name="focused">$PARAM[focused]</param>
-					<param name="visible_labels">$PARAM[visible_labels]</param>
+					<param name="labels_visible">$PARAM[labels_visible]</param>
 				</include>
 			</control>
 		</definition>
@@ -1004,7 +994,6 @@
 					<height>256</height>
 					<font>Light24</font>
 					<textcolor>white</textcolor>
-					<shadowcolor>00ffffff</shadowcolor>
 					<align>center</align>
 					<aligny>center</aligny>
 					<label>$PARAM[thumblabel]</label>
@@ -1058,7 +1047,7 @@
 					<param name="mainlabel">$PARAM[mainlabel]</param>
 					<param name="sublabel">$PARAM[sublabel]</param>
 					<param name="focused">$PARAM[focused]</param>
-					<param name="visible_labels">$PARAM[visible_labels]</param>
+					<param name="labels_visible">$PARAM[labels_visible]</param>
 				</include>
 			</control>
 		</definition>
@@ -1101,7 +1090,6 @@
 					<height>320</height>
 					<font>Light24</font>
 					<textcolor>white</textcolor>
-					<shadowcolor>00ffffff</shadowcolor>
 					<align>center</align>
 					<aligny>center</aligny>
 					<label>$PARAM[thumblabel]</label>
@@ -1155,7 +1143,7 @@
 					<param name="mainlabel">$PARAM[mainlabel]</param>
 					<param name="sublabel">$PARAM[sublabel]</param>
 					<param name="focused">$PARAM[focused]</param>
-					<param name="visible_labels">$PARAM[visible_labels]</param>
+					<param name="labels_visible">$PARAM[labels_visible]</param>
 				</include>
 			</control>
 		</definition>
@@ -1219,7 +1207,7 @@
 					<include>Widget_Diffuse</include>
 					<width>276</width>
 					<height>276</height>
-					<texture diffuse="items/mask_wide.png" colordiffuse="diffuse_widget">common/white.jpg</texture>
+					<texture diffuse="items/mask_square.png" colordiffuse="diffuse_widget">common/white.jpg</texture>
 				</control>
 				<include content="widget_labels">
 					<param name="top">288</param>
@@ -1228,7 +1216,7 @@
 					<param name="mainlabel">$PARAM[mainlabel]</param>
 					<param name="sublabel">$PARAM[sublabel]</param>
 					<param name="focused">$PARAM[focused]</param>
-					<param name="visible_labels">$PARAM[visible_labels]</param>
+					<param name="labels_visible">$PARAM[labels_visible]</param>
 				</include>
 			</control>
 		</definition>
@@ -1272,13 +1260,11 @@
 					<height>219</height>
 					<font>Light24</font>
 					<textcolor>white</textcolor>
-					<shadowcolor>00ffffff</shadowcolor>
 					<align>center</align>
 					<aligny>center</aligny>
 					<label>$PARAM[thumblabel]</label>
 					<visible>String.IsEmpty(ListItem.Art(poster.0))</visible>
 				</control>
-
 				<control type="group">
 					<left>5</left>
 					<top>5</top>
@@ -1310,7 +1296,6 @@
 						<aspectratio>scale</aspectratio>
 					</control>
 				</control>
-
 				<control type="group">
 					<left>5</left>
 					<top>177</top>
@@ -1343,7 +1328,6 @@
 						<aspectratio scalediffuse="false">scale</aspectratio>
 					</control>
 				</control>
-
 				<control type="group">
 					<width>424</width>
 					<height>239</height>
@@ -1377,7 +1361,7 @@
 					<param name="mainlabel">$PARAM[mainlabel]</param>
 					<param name="sublabel">$PARAM[sublabel]</param>
 					<param name="focused">$PARAM[focused]</param>
-					<param name="visible_labels">$PARAM[visible_labels]</param>
+					<param name="labels_visible">$PARAM[labels_visible]</param>
 				</include>
 			</control>
 		</definition>
@@ -1393,26 +1377,6 @@
 				<width>283</width>
 				<height>162</height>
 				<texture>items/shadow_button.png</texture>
-			</control>
-			<control type="group">
-				<visible>![!String.IsEmpty(ListItem.Icon) | !String.IsEmpty(ListItem.Property(embyart))] + [String.IsEmpty(ListItem.Property(Art1)) | String.IsEmpty(ListItem.Property(Art2)) | String.IsEmpty(ListItem.Property(Art3)) | String.IsEmpty(ListItem.Property(Art4))]</visible>
-				<control type="image">
-					<width>277</width>
-					<height>156</height>
-					<texture colordiffuse="thumb_background_fallback_secondary">items/mask_button.png</texture>
-					<aspectratio>stretch</aspectratio>
-				</control>
-				<control type="label">
-					<width>277</width>
-					<height>156</height>
-					<font>Light24</font>
-					<textcolor>white</textcolor>
-					<shadowcolor>00ffffff</shadowcolor>
-					<textoffsetx>10</textoffsetx>
-					<align>center</align>
-					<aligny>center</aligny>
-					<label>$INFO[ListItem.Label]</label>
-				</control>
 			</control>
 			<control type="group">
 				<visible>!String.IsEmpty(ListItem.Icon) | !String.IsEmpty(ListItem.Property(embyart))</visible>
@@ -1432,7 +1396,26 @@
 				</control>
 			</control>
 			<control type="group">
-				<visible>![!String.IsEmpty(ListItem.Icon) | !String.IsEmpty(ListItem.Property(embyart))] + !String.IsEmpty(ListItem.Property(Art1)) + !String.IsEmpty(ListItem.Property(Art2)) + !String.IsEmpty(ListItem.Property(Art3)) + !String.IsEmpty(ListItem.Property(Art4))</visible>
+				<visible>String.IsEmpty(ListItem.Icon) + String.IsEmpty(ListItem.Property(embyart)) + [String.IsEmpty(ListItem.Property(Art1)) | String.IsEmpty(ListItem.Property(Art2)) | String.IsEmpty(ListItem.Property(Art3)) | String.IsEmpty(ListItem.Property(Art4))]</visible>
+				<control type="image">
+					<width>277</width>
+					<height>156</height>
+					<texture colordiffuse="thumb_background_fallback_secondary">items/mask_button.png</texture>
+					<aspectratio>stretch</aspectratio>
+				</control>
+				<control type="label">
+					<width>277</width>
+					<height>156</height>
+					<font>Light24</font>
+					<textcolor>white</textcolor>
+					<textoffsetx>10</textoffsetx>
+					<align>center</align>
+					<aligny>center</aligny>
+					<label>$INFO[ListItem.Label]</label>
+				</control>
+			</control>
+			<control type="group">
+				<visible>String.IsEmpty(ListItem.Icon) + String.IsEmpty(ListItem.Property(embyart)) + !String.IsEmpty(ListItem.Property(Art1)) + !String.IsEmpty(ListItem.Property(Art2)) + !String.IsEmpty(ListItem.Property(Art3)) + !String.IsEmpty(ListItem.Property(Art4))</visible>
 				<top>2</top>
 				<width>277</width>
 				<control type="image">
@@ -1574,7 +1557,7 @@
 				<param name="mainlabel">$PARAM[mainlabel]</param>
 				<param name="sublabel">$PARAM[sublabel]</param>
 				<param name="focused">$PARAM[focused]</param>
-				<param name="visible_labels">$PARAM[visible_labels]</param>
+				<param name="labels_visible">$PARAM[labels_visible]</param>
 			</include>
 		</definition>
 	</include>
@@ -1646,8 +1629,7 @@
 					<height>120</height>
 					<font>Reg24</font>
 					<aligny>center</aligny>
-					<shadowcolor>text_shadow</shadowcolor>
-					<label fallback="$PARAM[fallbacklabel]">$PARAM[mainlabel]</label>
+					<label>$PARAM[mainlabel]</label>
 				</control>
 				<control type="label">
 					<right>0</right>
@@ -1656,7 +1638,6 @@
 					<align>right</align>
 					<aligny>center</aligny>
 					<font>reg24</font>
-					<shadowcolor>text_shadow</shadowcolor>
 					<label>$PARAM[rightlabel]</label>
 				</control>
 			</control>
@@ -1668,8 +1649,7 @@
 					<right>250</right>
 					<height>31</height>
 					<font>Reg24</font>
-					<shadowcolor>text_shadow</shadowcolor>
-					<label fallback="$PARAM[fallbacklabel]">$PARAM[mainlabel]</label>
+					<label>$PARAM[mainlabel]</label>
 				</control>
 				<control type="label">
 					<left>100</left>
@@ -1678,7 +1658,6 @@
 					<height>31</height>
 					<font>reg24</font>
 					<textcolor>lightgrey</textcolor>
-					<shadowcolor>text_shadow</shadowcolor>
 					<label>$PARAM[sublabel]</label>
 				</control>
 				<control type="label">
@@ -1688,7 +1667,6 @@
 					<height>31</height>
 					<align>right</align>
 					<font>reg24</font>
-					<shadowcolor>text_shadow</shadowcolor>
 					<label>$PARAM[rightlabel]</label>
 				</control>
 				<control type="label">
@@ -1699,7 +1677,6 @@
 					<align>right</align>
 					<font>reg24</font>
 					<textcolor>lightgrey</textcolor>
-					<shadowcolor>text_shadow</shadowcolor>
 					<label>$PARAM[rightlabel2]</label>
 				</control>
 			</control>
@@ -1744,7 +1721,6 @@
 					<height>256</height>
 					<font>Light24</font>
 					<textcolor>white</textcolor>
-					<shadowcolor>00ffffff</shadowcolor>
 					<align>center</align>
 					<aligny>center</aligny>
 					<label>$PARAM[thumblabel]</label>
@@ -1781,7 +1757,7 @@
 					<param name="mainlabel">$PARAM[mainlabel]</param>
 					<param name="sublabel">$PARAM[sublabel]</param>
 					<param name="focused">$PARAM[focused]</param>
-					<param name="visible_labels">$PARAM[visible_labels]</param>
+					<param name="labels_visible">$PARAM[labels_visible]</param>
 				</include>
 			</control>
 		</definition>
@@ -1825,7 +1801,6 @@
 					<width>990</width>
 					<height>31</height>
 					<font>Reg24</font>
-					<shadowcolor>text_shadow</shadowcolor>
 					<label>$PARAM[mainlabel]</label>
 				</control>
 				<control type="label">
@@ -1835,7 +1810,6 @@
 					<height>31</height>
 					<font>reg24</font>
 					<textcolor>lightgrey</textcolor>
-					<shadowcolor>text_shadow</shadowcolor>
 					<label>$PARAM[sublabel]</label>
 				</control>
 				<control type="label">
@@ -1845,7 +1819,6 @@
 					<height>31</height>
 					<align>right</align>
 					<font>reg24</font>
-					<shadowcolor>text_shadow</shadowcolor>
 					<label>$PARAM[rightlabel]</label>
 				</control>
 				<control type="label">
@@ -1856,7 +1829,6 @@
 					<align>right</align>
 					<font>reg24</font>
 					<textcolor>lightgrey</textcolor>
-					<shadowcolor>text_shadow</shadowcolor>
 					<label>$PARAM[rightlabel2]</label>
 				</control>
 			</control>

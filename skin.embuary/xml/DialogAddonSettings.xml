@@ -38,7 +38,6 @@
 					<textcolor>panel_text</textcolor>
 					<focusedcolor>panel_text</focusedcolor>
 					<selectedcolor>panel_text</selectedcolor>
-					<shadowcolor>text_shadow</shadowcolor>
 					<texturefocus colordiffuse="panel_hover">common/white.jpg</texturefocus>
 					<include>NoTextures</include>
 				</control>
@@ -86,12 +85,15 @@
 				<onleft>9</onleft>
 				<onup>2</onup>
 				<control type="button" id="10">
+					<include>DarkGreyButton</include>
 					<onup>SetFocus(2)</onup>
 				</control>
 				<control type="button" id="11">
+					<include>DarkGreyButton</include>
 					<onup>SetFocus(2)</onup>
 				</control>
 				<control type="button" id="12">
+					<include>DarkGreyButton</include>
 					<onup>SetFocus(2)</onup>
 				</control>
 			</control>
@@ -134,7 +136,6 @@
 				<font>med22</font>
 				<textoffsetx>0</textoffsetx>
 				<textcolor>panel_text</textcolor>
-				<shadowcolor>text_shadow</shadowcolor>
 				<aligny>center</aligny>
 				<animation effect="slide" end="0,10" time="0" condition="true">Conditional</animation>
 			</control>

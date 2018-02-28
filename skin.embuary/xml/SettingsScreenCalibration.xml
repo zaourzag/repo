@@ -47,7 +47,6 @@
 			<align>center</align>
 			<label></label>
 			<font>Reg37</font>
-			<shadowcolor>text_shadow</shadowcolor>
 		</control>
 		<control type="label" id="3">
 			<description>help information</description>
@@ -57,7 +56,6 @@
 			<align>center</align>
 			<label></label>
 			<font>Reg37</font>
-			<shadowcolor>text_shadow</shadowcolor>
 		</control>
 	</controls>
 </window>
