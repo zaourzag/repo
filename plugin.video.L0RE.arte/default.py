@@ -15,6 +15,7 @@ import requests
 from bs4 import BeautifulSoup
 from HTMLParser import HTMLParser
 import YDStreamExtractor
+import datetime
 
 # Setting Variablen Des Plugins
 global debuging
@@ -28,7 +29,7 @@ translation = addon.getLocalizedString
 
 xbmcplugin.setContent(addon_handle, 'movies')
 
-baseurl="https://bvbtotal.de/"
+
 xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_UNSORTED)
 xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
 
@@ -176,7 +177,14 @@ def subrubrik(surl):
   xbmcplugin.endOfDirectory(addon_handle) 
   
   
-def playvideo(url):      
+def playvideo(url):     
+ qual=addon.getSetting("bitrate") 
+ if qual=="SD":
+  quality=0
+ elif qual=="720p":
+  quality=1
+ elif qual=="1080p":
+  quality=2
  vid = YDStreamExtractor.getVideoInfo(url,quality=2) #quality is 0=SD, 1=720p, 2=1080p and is a maximum
  stream_url = vid.streamURL()
  stream_url=stream_url.split("|")[0]
@@ -235,10 +243,73 @@ def videoliste(url,page="1"):
   except:
     pass
   xbmcplugin.endOfDirectory(addon_handle)
-# Haupt Menu Anzeigen      
+# Haupt Menu Anzeigen     
+def menu():
+    addDir("Themen", "", "liste","")
+    addDir("Programm", "", "datummenu","")
+    addDir("Live", "", "live","")
+    addDir("Einstellungen", "", "Settings","")
+    xbmcplugin.endOfDirectory(addon_handle)
+    
+def live():
+    addLink("Arte HD","https://artelive-lh.akamaihd.net/i/artelive_de@393591/index_1_av-p.m3u8","playlive","")
+    addLink("ARTE Event 1","https://arteevent01-lh.akamaihd.net/i/arte_event01@395110/index_1_av-p.m3u8","playlive","")
+    addLink("ARTE Event 2","https://arteevent02-lh.akamaihd.net/i/arte_event02@308866/index_1_av-p.m3u8","playlive","")
+    addLink("ARTE Event 3","https://arteevent03-lh.akamaihd.net/i/arte_event03@305298/index_1_av-p.m3u8","playlive","")
+    addLink("ARTE Event 4","https://arteevent04-lh.akamaihd.net/i/arte_event04@308879/index_1_av-p.m3u8","playlive","")
+    xbmcplugin.endOfDirectory(addon_handle)
+def playlive(url) :   
+    listitem = xbmcgui.ListItem(path=url)  
+    xbmcplugin.setResolvedUrl(addon_handle,True, listitem) 
+def datummenu():
+    addDir("Zukunft","-30","datumselect","")
+    addDir("Vergangenheut","30","datumselect","")
+    xbmcplugin.endOfDirectory(addon_handle)
+    
+def datumselect(wert):
+ if int(wert)<0:
+     start=0
+     end=int(wert)
+     sprung=-1
+ if int(wert)>0:
+     start=0
+     end=int(wert)
+     sprung=1
+ for i in range(start,end,sprung):
+  title=(datetime.date.today()-datetime.timedelta(days=i)).strftime("%d %m %Y")
+  suche=(datetime.date.today()-datetime.timedelta(days=i)).strftime("%d-%m-%Y")
+  addDir(title,suche,"showday","")
+ xbmcplugin.endOfDirectory(addon_handle)
+def showday(tag):
+  url="https://www.arte.tv/guide/api/api/pages/de/web/TV_GUIDE/?day="+tag
+  content=geturl(url)
+  struktur = json.loads(content)
+  for element in struktur["zones"][-1]["data"]:
+     title=element["title"].encode("utf-8")
+     videourl=element["url"]
+     try:
+        subtitle=element["subtitle"]        
+        title=title+ " - "+ subtitle
+     except:
+        pass
+     desc=element["fullDescription"]
+     bild=element["images"]["landscape"]["resolutions"][-1]["url"]
+     broadcastDates=element["broadcastDates"][0]
+     #"2018-02-28T04:00:00Z"
+     datetime_object = datetime.datetime.strptime(broadcastDates, '%Y-%m-%dT%H:%M:%SZ')
+     wann=datetime_object.strftime("%H:%M")
+     debug("-----------------------")
+     debug(wann)
+     duration=element["duration"]
+     stickers=str(element["stickers"])
+     if "PLAYABLE" in stickers:
+        addLink(wann+" "+title,videourl,"playvideo",bild,desc=desc,duration=duration)
+  xbmcplugin.endOfDirectory(addon_handle)   
 if mode is '':
-     liste()   
+     menu()   
 else:
+  if mode == 'liste':
+     liste()
   # Wenn Settings ausgewählt wurde
   if mode == 'Settings':
           addon.openSettings()
@@ -249,3 +320,15 @@ else:
           subrubrik(url)
   if mode == 'videoliste':
           videoliste(url,page)  
+  if mode == 'menu':
+          menu()  
+  if mode == 'live':
+          live()            
+  if mode == 'playlive':
+          playlive(url) 
+  if mode == 'datumselect':
+          datumselect(url)
+  if mode == 'showday':
+          showday(url)
+  if mode == 'datummenu':
+           datummenu()
