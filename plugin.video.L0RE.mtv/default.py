@@ -173,7 +173,7 @@ def playvideo(url):
     #listitem.setProperty('inputstream.adaptive.manifest_type', 'mpd')
     #listitem.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')
     #listitem.setProperty('inputstream.adaptive.license_key', licfile)
-    listitem = xbmcgui.ListItem(path=url)    
+    listitem = xbmcgui.ListItem(path=videourl)    
     xbmcplugin.setResolvedUrl(addon_handle, True, listitem)
     
 params = parameters_string_to_dict(sys.argv[2])
