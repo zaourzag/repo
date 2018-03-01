@@ -26,7 +26,7 @@ addon = xbmcaddon.Addon()
 translation = addon.getLocalizedString
 
 
-xbmcplugin.setContent(addon_handle, 'movies')
+xbmcplugin.setContent(addon_handle, 'tvshows')
 
 baseurl="https://www.mtv.de"
 xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_UNSORTED)
@@ -77,14 +77,14 @@ def addDir(name, url, mode, thump, desc="",seite=1,anz=0,serienname=0,stattfolge
   ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
   return ok
   
-def addLink(name, url, mode, thump, duration="", desc="", genre='',director="",bewertung=""):
+def addLink(name, url, mode, thump, duration="", desc="", genre='',director="",bewertung="",artist=[],tracknumber=""):
   debug("URL ADDLINK :"+url)
   debug( icon  )
   u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
   ok = True
   liz = xbmcgui.ListItem(name,thumbnailImage=thump)
   liz.setArt({ 'fanart' : icon })
-  liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Genre": genre, "Director":director,"Rating":bewertung})
+  liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Genre": genre, "Director":director,"Rating":bewertung,"tracknumber":tracknumber,"artist":[artist]})
   liz.setProperty('IsPlayable', 'true')
   liz.addStreamInfo('video', { 'duration' : duration })
 	#xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
@@ -139,6 +139,7 @@ def getvideourl(url)  :
     content=geturl(url)
     idd=re.compile('"itemId":"(.+?)"', re.DOTALL).findall(content)[0]                  
     mediaurl="http://media.mtvnservices.com/pmt/e1/access/index.html?uri=mgid:arc:episode:mtv.de:"+idd+"&configtype=edge"              
+    debug(" mediaurl : "+mediaurl)
     content=geturl(mediaurl,referer=url)
     debug("++")
     struktur = json.loads(content)
@@ -149,6 +150,8 @@ def getvideourl(url)  :
     debug("ENDE :"+ende)
     content=geturl(ende)
     struktur = json.loads(content)
+    debug("STRUCKT:")
+    debug(struktur)
     try:
         videourl=struktur["package"]["video"]["item"][0]["rendition"][0]["src"]
     except:
@@ -164,14 +167,13 @@ def getvideourl(url)  :
 def playvideo(url):      
     videourl=getvideourl(url)
     if videourl=="":
-       return
-    listitem = xbmcgui.ListItem(path=videourl)    
+       return    
     #listitem.setProperty('IsPlayable', 'true')
     #listitem.setProperty('inputstreamaddon', 'inputstream.adaptive')
     #listitem.setProperty('inputstream.adaptive.manifest_type', 'mpd')
     #listitem.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')
     #listitem.setProperty('inputstream.adaptive.license_key', licfile)
-    
+    listitem = xbmcgui.ListItem(path=url)    
     xbmcplugin.setResolvedUrl(addon_handle, True, listitem)
     
 params = parameters_string_to_dict(sys.argv[2])
@@ -282,6 +284,7 @@ def chart(url):
     chartteil(newurl) 
     
 def chartteil(url):
+    xbmcplugin.setContent(addon_handle, 'musicvideos')
     content=geturl(url)  
     struktur = json.loads(content)   
     substrukt=struktur["result"]
@@ -299,15 +302,50 @@ def chartteil(url):
        debug(chartpos)
        image=item["images"][0]["url"]   
        debug("C)"+image)
+       videourl=""
        try:
             videourl=item["videoUrl"]
        except:
              debug(str(item))
-             videourl=re.compile("'videoUrl'[^']+'(.+?)'", re.DOTALL).findall(str(item))[0]                              
+             try:
+                videourl=re.compile("'videoUrl'[^']+'(.+?)'", re.DOTALL).findall(str(item))[0]                              
+             except:
+                videourl=""
        debug("D)"+videourl)
-       title=str(chartpos) +". "+ lied + " ( "+kuenster+" )"
-       debug("E)"+title)
-       addLink(title,videourl,"playvideo",image)
+       oldpos=""
+       try:
+         down=item["chartPosition"]["moveDown"]
+         old=item["chartPosition"]["previous"]
+         oldpos="[COLOR red] ( - "+str(chartpos-old) + " )[/COLOR]"         
+         debug(oldpos)
+       except:
+         pass
+       try:
+         down=item["chartPosition"]["moveUp"]
+         old=item["chartPosition"]["previous"]
+         oldpos="[COLOR green] ( + "+str(old-chartpos) + " )[/COLOR]"
+         debug(oldpos)
+       except:
+         pass
+       try:
+         neu=item["chartPosition"]["variation"]   
+         if neu=="neu":         
+            oldpos="[COLOR blue] ( NEU )[/COLOR]"
+         if neu=="-":         
+            oldpos="( - )"
+         debug(oldpos)
+       except:
+         pass                               
+       if not videourl=="":
+          title=str(chartpos) +". "+ lied + " - "+kuenster+oldpos
+          debug("E)"+title)
+          addLink(title,videourl,"playvideo",image,artist=kuenster,tracknumber=chartpos)
+       else:          
+          title="[COLOR grey]"+str(chartpos) +". "+ lied + " - "+kuenster+"[/COLOR]"+oldpos
+          debug("E)"+title)   
+          novideo=addon.getSetting("novideo") 
+          if novideo=="true":          
+            addLink(title,videourl,"nix",image,artist=kuenster,tracknumber=chartpos)
       except:
        pass       
     try:   
@@ -319,6 +357,7 @@ def chartteil(url):
 
 
 def playplaylist(url):
+  xbmcplugin.setContent(addon_handle, 'musicvideos')
   content=geturl(url)
   htmlPage = BeautifulSoup(content, 'html.parser')
   element = htmlPage.find("div",attrs={"id":"t1_lc_promo1"})
@@ -363,6 +402,7 @@ def playlists(url):
     playlistspart(newurl) 
     
 def playlistspart(url):
+    xbmcplugin.setContent(addon_handle, 'musicvideos')
     content=geturl(url)  
     struktur = json.loads(content)   
     substrukt=struktur["result"]
@@ -393,7 +433,8 @@ def abisz():
           addDir(element.text,element["href"],"kuenstlerliste","")
           
       xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)      
-def  kuenstlerliste(url):
+def  kuenstlerliste(url):            
+      xbmcplugin.setContent(addon_handle, 'musicvideos')
       content=geturl(url)
       htmlPage = BeautifulSoup(content, 'html.parser')
       kuenstlerliste = htmlPage.find("div",attrs={"class":"artists"})  
@@ -418,6 +459,7 @@ def  kuenstlerliste(url):
       xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)      
       
 def kuenstler(url):
+    xbmcplugin.setContent(addon_handle, 'musicvideos')
     urlx="http://www.mtv.de/feeds/triforce/manifest/v8?url="+url
     content=geturl(urlx)
     struktur = json.loads(content)     
