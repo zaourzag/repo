@@ -25,6 +25,10 @@ import threading
 
 import xbmc, xbmcgui, xbmcaddon, xbmcplugin
 
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
+
 from resources.zattooDB import ZattooDB
 _zattooDB_ = ZattooDB()
 
@@ -647,7 +651,8 @@ class EPG(xbmcgui.WindowXML):
 
 		# date and time row
 		#Date = str(self.viewStartDate.strftime ('%A %d. %B %Y'))
-		self.setControlLabel(self.C_MAIN_DATE, self.formatDate(self.viewStartDate))		
+		self.setControlLabel(self.C_MAIN_DATE, self.formatDate(self.viewStartDate))
+		#self.setControlLabel(self.C_MAIN_DATE, Date)
 		time=startTime
 		for col in range(1, 5):
 			self.setControlLabel(4000 + col, self.formatTime(time))

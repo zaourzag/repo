@@ -1,4 +1,9 @@
 ﻿==================================================
+[B]ZattooHiQ v1.4.5 [/B]05.03.2018 Steffen Rolapp
+==================================================
+- Problem mit EPG in Kodi 18 Aplpha behoben
+
+==================================================
 [B]ZattooHiQ v1.4.3 [/B]25.02.2018 Steffen Rolapp
 ==================================================
 - Problem mit den Zifferntasten im Livebild behoben
