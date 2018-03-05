@@ -37,7 +37,6 @@
 						<label>$INFO[ListItem.Label]</label>
 						<font>Reg37</font>
 						<aligny>top</aligny>
-						<shadowcolor>text_shadow</shadowcolor>
 					</control>
 					<!-- meta -->
 					<include>MetaAddonInfos</include>
@@ -108,7 +107,6 @@
 						<aligny>top</aligny>
 						<label>$INFO[ListItem.AddonSummary,[B],[/B][CR][CR]]$INFO[ListItem.AddonDisclaimer,,[CR][CR]]$INFO[ListItem.AddonDescription]</label>
 						<font>Light24</font>
-						<shadowcolor>text_shadow</shadowcolor>
 						<autoscroll>false</autoscroll>
 					</control>
 				</control>

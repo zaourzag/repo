@@ -7,7 +7,7 @@ import sys
 import os
 import re
 import xbmcplugin
-import xbmcaddon,xbmc
+import xbmcaddon,xbmc,xbmcvfs,shutil
 import xbmcgui,json,cookielib
 import requests
 from bs4 import BeautifulSoup
@@ -20,7 +20,20 @@ pluginhandle = int(sys.argv[1])
 addonID = addon.getAddonInfo('id')
 translation = addon.getLocalizedString
 
+base_url="http://www.zeeone.de"
+
+profile    = xbmc.translatePath( addon.getAddonInfo('profile') ).decode("utf-8")
+temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
+
+if xbmcvfs.exists(temp):
+  shutil.rmtree(temp)
+xbmcvfs.mkdirs(temp)
+cookie=os.path.join( temp, 'cookie.jar')
 cj = cookielib.LWPCookieJar();
+
+if xbmcvfs.exists(cookie):
+    cj.load(cookie,ignore_discard=True, ignore_expires=True)                  
+
 
 def debug(content):
     log(content, xbmc.LOGDEBUG)
@@ -32,6 +45,35 @@ def log(msg, level=xbmc.LOGNOTICE):
     addon = xbmcaddon.Addon()
     addonID = addon.getAddonInfo('id')
     xbmc.log('%s: %s' % (addonID, msg), level) 
+
+def geturl(url,data="x",header="",referer=""):
+        global cj
+        debug("Get Url: " +url)
+        for cook in cj:
+          debug(" Cookie :"+ str(cook))
+        opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))        
+        userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36"
+        if header=="":
+          opener.addheaders = [('User-Agent', userAgent)]        
+        else:
+          opener.addheaders = header        
+        if not referer=="":
+           opener.addheaders = [('Referer', referer)]
+
+        try:
+          if data!="x" :
+             content=opener.open(url,data=data).read()
+          else:
+             content=opener.open(url).read()
+        except urllib2.HTTPError as e:
+             #debug( e.code )  
+             cc=e.read()  
+             debug("Error : " +cc)
+             content=""
+       
+        opener.close()
+        cj.save(cookie,ignore_discard=True, ignore_expires=True)               
+        return content
 
 
 
@@ -73,19 +115,60 @@ url = urllib.unquote_plus(params.get('url', ''))
 page = urllib.unquote_plus(params.get('page', ''))
 
 def index():  
-  #ListRubriken("http://"+language2+".euronews.com","",x=1)
-  addDir("Drama","http://www.zeeone.de/Handlers/GenreLazyLoadHandler.ashx?ProgramUrlName=undefined&genre=Drama","newlist","",page=1)
-  addDir("Action","http://www.zeeone.de/Handlers/GenreLazyLoadHandler.ashx?ProgramUrlName=undefined&genre=Action","newlist","",page=1)
-  addDir("Liebe","http://www.zeeone.de/Handlers/GenreLazyLoadHandler.ashx?ProgramUrlName=undefined&genre=Liebe","newlist","",page=1)
-  addDir("Komödie","http://www.zeeone.de/Handlers/GenreLazyLoadHandler.ashx?ProgramUrlName=undefined&genre=Komödie","newlist","",page=1)
-  addDir("Familie","http://www.zeeone.de/Handlers/GenreLazyLoadHandler.ashx?ProgramUrlName=undefined&genre=Familie","newlist","",page=1)
-  addDir("Kino","http://www.zeeone.de/Handlers/GenreLazyLoadHandler.ashx?ProgramUrlName=undefined&genre=Kino","newlist","",page=1)
-  addDir("Serie","http://www.zeeone.de/Handlers/GenreLazyLoadHandler.ashx?ProgramUrlName=undefined&genre=Serie","newlist","",page=1)
-  addDir("Musik","http://www.zeeone.de/Handlers/GenreLazyLoadHandler.ashx?ProgramUrlName=undefined&genre=Musik","newlist","",page=1)
-  xbmcplugin.endOfDirectory(pluginhandle)  
-  
+  url=base_url+"/BollyThek"
+  content=geturl(url)
+  htmlPage = BeautifulSoup(content, 'html.parser')
+  elemente = htmlPage.find_all("a",attrs={"class":" dropdown-toggle"})  
+  for element in elemente:
+      addDir(element.text.encode("utf-8"),element["href"].encode("utf-8"),"thema","")  
+  xbmcplugin.endOfDirectory(pluginhandle)
 
-def Play(url):
+def thema(urls):
+  url=base_url+urls
+  content=geturl(url)
+  htmlPage = BeautifulSoup(content, 'html.parser')
+  # <ul class="dropdown-menu mega-dropdown-menu row">
+  elemente = htmlPage.find_all("li",attrs={"class":"dropdown mega-dropdown"})    
+  for element in elemente:
+     if urls in str(element):
+        links=element.find_all("a")
+        for link in links:
+         try:
+          text_url=link.text.encode("utf-8")
+          link_url=link["href"].encode("utf-8")
+          lurl=re.compile('ProgramUrlName=(.+)', re.DOTALL).findall(link_url)[0]    
+          link_url=urls+"?ProgramUrlName="+lurl
+          debug("link_url :"+link_url)
+          addDir(text_url,link_url.encode("utf-8"),"serie","")
+         except:
+            debug("ERR")
+            debug(link)
+  addDir("Alle",urls,"serie","")
+  xbmcplugin.endOfDirectory(pluginhandle)          
+     
+
+def serie(url):
+   url=base_url+url
+   content=geturl(url)
+   htmlPage = BeautifulSoup(content, 'html.parser')
+   elemente = htmlPage.find_all("div",attrs={"class":"carouselbox"})  
+   for element in elemente:
+      debug("+++++")
+      link=element.find("a")["href"].encode("utf-8")
+      img=element.find("img")["data-lazy"].encode("utf-8")
+      title=element.find("h3").text.encode("utf-8")
+      folge=element.find("span").text.encode("utf-8").replace("Folge ","")        
+      datum=element.find("p",attrs={"class":"pg-date"}).text.encode("utf-8")
+      if int(folge)>0 :
+         title =title + " Folge: "+folge
+      title=title+ " ( "+datum + " )"
+      addLink(title,link,"Play",img)
+      debug(folge)
+   xbmcplugin.endOfDirectory(pluginhandle)
+   
+  
+def Play(surl):
+    url=base_url+surl
     debug("Play url: "+url)
     content = requests.get(url,allow_redirects=False,verify=False,cookies=cj).text.encode('utf-8')
     #debug(content)
@@ -94,32 +177,11 @@ def Play(url):
     xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
 
     
-def newlist(url,page=1):
-   nurl=url +"&Page="+str(page)
-   debug("newlist url :"+nurl)   
-   content = requests.get(nurl,allow_redirects=False,verify=False,cookies=cj).text.encode('utf-8')
-   debug("##")
-   debug(content)
-   htmlPage = BeautifulSoup(content, 'html.parser')
-   elemente = htmlPage.find_all("article")
-   for element in elemente:
-     debug("####")
-     link=smart_str(element.find("a")["href"])
-     img=element.find("img")["src"]
-     name=smart_str(element.find("h3",attrs={"class":"pg-name"}).text)
-     x=element.find("p")
-     folge=smart_str(x.find("span").text)     
-     if not folge=="Folge 0":
-        endn=name+ " "+folge
-     else:
-        endn=name
-     addLink(endn ,"http://www.zeeone.de"+link,"Play",img)
-   addDir("Next",url,"newlist","",page=str(int(page)+1))
-   xbmcplugin.endOfDirectory(pluginhandle) 
-   
 if mode == "":
     index()
-if mode == "newlist":
-     newlist(url,page)
+if mode == "thema":
+     thema(url)
+if mode == "serie":
+     serie(url)     
 if mode == "Play":
      Play(url)

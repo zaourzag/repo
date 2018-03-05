@@ -39,7 +39,7 @@
 	</extension>
 </addon>
 
-<addon id="plugin.video.tvspielfilm_de" name="TV Spielfilm - Das Beste aus den Mediatheken" version="1.1.0" provider-name="realvito">
+<addon id="plugin.video.tvspielfilm_de" name="TV Spielfilm - Das Beste aus den Mediatheken" version="1.1.1" provider-name="realvito">
 	<requires>
 		<import addon="xbmc.python" version="2.20.0"/>
 		<import addon="plugin.video.arte_tv" optional="true"/>
@@ -67,17 +67,13 @@
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 1.1.0  (01.02.2018)[/COLOR][/B][CR]
-- fixed: ADDON an die Webseiten-Veränderungen von "http://www.tvspielfilm.de/mediathek/" angepasst (30.01.2018)
-- fixed: ARD-Links (m3u8) werden NICHT mehr abgespielt, sondern es werden gleich die ARD-Links (mp4) aufgerufen
-- *Webseitenänderung der ARD - dadurch tauchen die "m3u8-Links" jetzt teilweise zweimal auf oder Sie verstecken sich im nächsten Absatz
-- optimized: Wiedergabequalität von ARD-Links (mp4), wegen "mp4-Link" Veränderungen angepasst
-- added: TVNOW-Links funktionieren wieder und werden jetzt über das "plugin.video.rtlnow" von *L0RE* abgespielt
+		<news>[B][COLOR orangered]Version 1.1.1  (28.02.2018)[/COLOR][/B][CR]
+- fixed: Rubrik "Sender sortiert" Sender werden NICHT aufgelistet (leer)
 		</news>
 	</extension>
 </addon>
 
-<addon id="plugin.video.zattooHiQ" version="1.4.2.2" name="Zattoo HiQ" provider-name="Steffen Rolapp">
+<addon id="plugin.video.zattooHiQ" version="1.4.4" name="Zattoo HiQ" provider-name="Steffen Rolapp">
   <requires>
     <import addon="xbmc.python" version="2.14.0"/>
     <import addon="xbmc.addon" version="13.0.0" />
@@ -143,6 +139,28 @@ Zattoo Live TV, Aufnahmen und EPG
     <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.L0RE.aftv</source>
     <forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
     <email>andreas at vogler dot name</email>
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="plugin.video.galileo" name="Galileo" version="0.2.2" provider-name="dh4rry">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="script.module.requests" version="2.12.4"/>
+        <import addon="script.module.beautifulsoup4" version="4.3.2"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>LiveTv
+  <extension point="xbmc.addon.metadata">
+		<summary lang="en">Galileo</summary>
+		<summary lang="de">Galileo</summary>
+		<description lang="en">Galileo</description>
+		<description lang="de">Galileo</description>
+		<disclaimer lang="en"></disclaimer>
+    <website></website>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    <forum></forum>
     <platform>all</platform>
   </extension>
 </addon>
@@ -772,7 +790,7 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
   </extension>
 </addon>
 
-<addon id="skin.embuary" version="0.4.8" name="Embuary" provider-name="sualfred">
+<addon id="skin.embuary" version="0.5.0" name="Embuary" provider-name="sualfred">
 	<requires>
 		<import addon="xbmc.gui" version="5.12.0"/>
 		<import addon="script.globalsearch" version="7.0.0"/>
@@ -1190,7 +1208,7 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
   </extension>
 </addon>
 
-<addon id="plugin.video.L0RE.Bollywood" name="Bollithek" version="0.1.4" provider-name="L0RE">
+<addon id="plugin.video.L0RE.Bollywood" name="Bollithek" version="0.2.0" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="script.module.requests" version="2.12.4"/>
@@ -1229,6 +1247,30 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
     <website></website>
     <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
     <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.L0RE.hsv</source>
+    <forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
+    <email>andreas at vogler dot name</email>
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="plugin.video.L0RE.arte" name="Arte.TV (dev)" version="0.2.0" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.24.0"/>
+        <import addon="script.module.requests" version="2.12.4"/>
+        <import addon="script.module.beautifulsoup4" version="4.3.2"/>
+        <import addon="script.module.youtube.dl" version="14.810.0"/>        
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="de">Videoportalvon ARTE</summary>
+    <summary lang="en">Videoportalvon ARTE</summary>
+    <description lang="en">Videoportalvon ARTE</description>
+    <description lang="de">Videoportalvon ARTE</description>
+    <website></website>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.L0RE.arte</source>
     <forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
     <email>andreas at vogler dot name</email>
     <platform>all</platform>
@@ -2077,6 +2119,27 @@ To support the backport the addon will now always create the merged_epg.xml.gz
 		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
 		<website>www.tv.dfb.de</website>
 	</extension>
+</addon>
+
+<addon id="plugin.video.7tv_live" name="7TV-Live" version="0.2.0" provider-name="dharry">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="script.module.requests" version="2.12.4"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+  <extension point="xbmc.addon.metadata">
+		<summary lang="en">ProSieben, Sat.1, Kabel 1 and Sixx live streams</summary>
+		<summary lang="de">LiveTV von ProSieben, Sat.1, Kabel 1 and Sixx</summary>
+		<description lang="en">LiveTV</description>
+		<description lang="de">LiveTv</description>
+		<disclaimer lang="en"></disclaimer>
+    <website></website>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    <forum></forum>
+    <platform>all</platform>
+  </extension>
 </addon>
 
 <addon id="script.module.lib2to3" name="future" version="3.7.0" provider-name="Python software foundation">
@@ -3647,11 +3710,11 @@ Parental warning: The Maxdome Plattform consists of differnt types of content - 
   </extension>
 </addon>
 
-<addon id="plugin.video.L0RE.mtv" name="MTV Mediathek" version="0.1.9" provider-name="L0RE">
+<addon id="plugin.video.L0RE.mtv" name="MTV Mediathek" version="0.2.1" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
         <import addon="script.module.requests" version="2.12.4"/>
-        <import addon="script.module.beautifulsoup4" version="4.3.2"/>
+        <import addon="script.module.beautifulsoup4" version="4.3.2"/>       
     </requires>
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
@@ -3776,11 +3839,10 @@ Parental warning: The Maxdome Plattform consists of differnt types of content - 
   </extension>
 </addon>
 
-<addon id="plugin.video.spotitube" name="Youtube Music" version="2.0.8" provider-name="LORE/realvito">
+<addon id="plugin.video.spotitube" name="Youtube Music" version="2.0.9" provider-name="realvito (inspired by L0RE)">
 	<requires>
-		<import addon="xbmc.python" version="2.14.0"/>
-		<import addon="script.module.simplejson" optional="true"/>
-		<import addon="plugin.video.youtube" version="5.2.1"/>
+		<import addon="xbmc.python" version="2.20.0"/>
+		<import addon="plugin.video.youtube" version="5.3.7"/>
 	</requires>
 	<extension point="xbmc.python.pluginsource" library="default.py">
 		<provides>video audio</provides>
@@ -3803,12 +3865,14 @@ Parental warning: The Maxdome Plattform consists of differnt types of content - 
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 2.0.8  (27.10.2017)[/COLOR][/B] by realvito[CR]
-- fixed: Billboard - a few Links were changed
-- fixed: Billboard - text errors and some folders are empty in "Billboard-Archive-Videos"
-- fixed: Hypem - all clicked folders are empty
-- * Hypem - NO Video-Images at the time/because they were removed completely *
-- changed: Deezer-Search - apiURL and increase Searchlimit to "100" in settings
+		<news>[B][COLOR orangered]Version 2.0.9  (25.02.2018)[/COLOR][/B] by realvito[CR]
+- fixed: Beatport - text errors in genres and Video-Images are not displayed
+- removed: Beatport - subgenres, since no more available
+- fixed: Billboard-Archive because of webpage changes
+- added: German-DJ-Playlist (on special request !)
+- fixed: Hypem - "Popular: Last Week" and "Time-Machine" listing (html > json)
+- added: "https://spotifycharts.com" under the rubric "SPOTIFY - International" with *VIRAL top 50* and *TOP Streams* of many countries
+- changed: new Addon-fanart.jpg
 		</news>
 	</extension>
 </addon>

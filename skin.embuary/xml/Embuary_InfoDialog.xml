@@ -39,7 +39,6 @@
 							<label>$INFO[ListItem.Title]</label>
 							<aligny>top</aligny>
 							<font>Reg37</font>
-							<shadowcolor>text_shadow</shadowcolor>
 						</control>
 						<!-- small meta -->
 						<include>MetaMovieInfos</include>
@@ -103,7 +102,6 @@
 							<aligny>top</aligny>
 							<label>$INFO[ListItem.Tagline,[B],[/B][CR]]$INFO[ListItem.Plot]</label>
 							<font>Light24</font>
-							<shadowcolor>text_shadow</shadowcolor>
 							<autoscroll>false</autoscroll>
 						</control>
 						<control type="label">
@@ -189,7 +187,6 @@
 							<label>$INFO[ListItem.Title]</label>
 							<aligny>top</aligny>
 							<font>Reg37</font>
-							<shadowcolor>text_shadow</shadowcolor>
 						</control>
 						<!-- meta -->
 						<include>MetaShowInfos</include>
@@ -247,7 +244,6 @@
 							<aligny>top</aligny>
 							<label>$INFO[ListItem.Plot]</label>
 							<font>Light24</font>
-							<shadowcolor>text_shadow</shadowcolor>
 							<autoscroll>false</autoscroll>
 						</control>
 						<control type="label">
@@ -331,7 +327,6 @@
 							<label>$INFO[ListItem.TvShowTitle]</label>
 							<font>Reg37</font>
 							<aligny>top</aligny>
-							<shadowcolor>text_shadow</shadowcolor>
 						</control>
 						<control type="label">
 							<width>886</width>
@@ -339,7 +334,6 @@
 							<label>$INFO[ListItem.Season,S,:]$INFO[ListItem.Episode,E, - ]$INFO[ListItem.Title]</label>
 							<font>Reg37</font>
 							<aligny>top</aligny>
-							<shadowcolor>text_shadow</shadowcolor>
 						</control>
 						<!-- meta -->
 						<include content="MetaEpisodeInfos">
@@ -402,7 +396,6 @@
 							<aligny>top</aligny>
 							<label>$INFO[ListItem.Plot]</label>
 							<font>Light24</font>
-							<shadowcolor>text_shadow</shadowcolor>
 							<autoscroll>false</autoscroll>
 						</control>
 						<control type="label">
@@ -495,6 +488,7 @@
 					<onright>noop</onright>
 					<onleft>noop</onleft>
 					<control type="button" id="101">
+						<include>DarkGreyButton</include>
 						<label>$LOCALIZE[15067]</label>
 						<onclick>close</onclick>
 						<onup>PageUp(3000)</onup>
@@ -538,7 +532,6 @@
 					<wrapmultiline>false</wrapmultiline>
 					<font>Reg20</font>
 					<aligny>bottom</aligny>
-					<shadowcolor>text_shadow</shadowcolor>
 					<label>[COLOR softgrey]$LOCALIZE[21800]:[/COLOR]  $INFO[ListItem.FileName]</label>
 					<visible>!String.IsEmpty(ListItem.FileName)</visible>
 				</control>
@@ -547,7 +540,6 @@
 					<wrapmultiline>false</wrapmultiline>
 					<font>Reg20</font>
 					<aligny>bottom</aligny>
-					<shadowcolor>text_shadow</shadowcolor>
 					<label>[COLOR softgrey]$LOCALIZE[573]:[/COLOR]  $INFO[ListItem.Path]</label>
 					<visible>!String.IsEmpty(ListItem.Path)</visible>
 				</control>
@@ -556,7 +548,6 @@
 					<wrapmultiline>false</wrapmultiline>
 					<font>Reg20</font>
 					<aligny>bottom</aligny>
-					<shadowcolor>text_shadow</shadowcolor>
 					<label>[COLOR softgrey]$LOCALIZE[291]:[/COLOR]  $INFO[ListItem.VideoResolution]$INFO[ListItem.VideoCodec, ,]$INFO[ListItem.VideoAspect, ,AR]$INFO[ListItem.StereoscopicMode, ]</label>
 					<visible>!String.IsEmpty(ListItem.VideoResolution)</visible>
 				</control>
@@ -565,7 +556,6 @@
 					<wrapmultiline>false</wrapmultiline>
 					<font>Reg20</font>
 					<aligny>bottom</aligny>
-					<shadowcolor>text_shadow</shadowcolor>
 					<label>[COLOR softgrey]$LOCALIZE[292]:[/COLOR]  $INFO[ListItem.Property(AudioLanguage.1),, ]$INFO[ListItem.Property(AudioChannels.1),,ch ]$INFO[ListItem.Property(AudioCodec.1),, ]$INFO[ListItem.Property(AudioLanguage.2),| , ]$INFO[ListItem.Property(AudioChannels.2),,ch ]$INFO[ListItem.Property(AudioCodec.2),, ]$INFO[ListItem.Property(AudioLanguage.3),| , ]$INFO[ListItem.Property(AudioChannels.3),,ch ]$INFO[ListItem.Property(AudioCodec.3),, ]$INFO[ListItem.Property(AudioLanguage.4),| , ]$INFO[ListItem.Property(AudioChannels.4),,ch ]$INFO[ListItem.Property(AudioCodec.4),, ]$INFO[ListItem.Property(AudioLanguage.5),| , ]$INFO[ListItem.Property(AudioChannels.5),,ch ]$INFO[ListItem.Property(AudioCodec.5),, ]</label>
 					<visible>!String.IsEmpty(ListItem.Property(AudioLanguage.1))</visible>
 				</control>
@@ -574,7 +564,6 @@
 					<wrapmultiline>false</wrapmultiline>
 					<font>Reg20</font>
 					<aligny>bottom</aligny>
-					<shadowcolor>text_shadow</shadowcolor>
 					<label>[COLOR softgrey]$LOCALIZE[459]:[/COLOR]  $INFO[ListItem.Property(SubtitleLanguage.1),, ]$INFO[ListItem.Property(SubtitleLanguage.2),| , ]$INFO[ListItem.Property(SubtitleLanguage.3),| , ]$INFO[ListItem.Property(SubtitleLanguage.4),| , ]$INFO[ListItem.Property(SubtitleLanguage.5),| , ]</label>
 					<visible>!String.IsEmpty(ListItem.Property(SubtitleLanguage.1))</visible>
 				</control>
@@ -616,7 +605,6 @@
 							<label>$INFO[ListItem.Label]</label>
 							<font>Reg37</font>
 							<aligny>top</aligny>
-							<shadowcolor>text_shadow</shadowcolor>
 						</control>
 						<!-- meta -->
 						<include>MetaArtistInfos</include>
@@ -673,7 +661,6 @@
 							<aligny>top</aligny>
 							<label>$INFO[ListItem.Property(Artist_Description)]</label>
 							<font>Light24</font>
-							<shadowcolor>text_shadow</shadowcolor>
 							<autoscroll>false</autoscroll>
 						</control>
 					</control>
@@ -754,7 +741,6 @@
 							<label>$INFO[ListItem.Album]</label>
 							<font>Reg37</font>
 							<aligny>top</aligny>
-							<shadowcolor>text_shadow</shadowcolor>
 						</control>
 						<!-- meta -->
 						<include>MetaAlbumInfos</include>
@@ -811,7 +797,6 @@
 							<aligny>top</aligny>
 							<label>$INFO[ListItem.Property(Album_Description)]</label>
 							<font>Light24</font>
-							<shadowcolor>text_shadow</shadowcolor>
 							<autoscroll>false</autoscroll>
 						</control>
 					</control>

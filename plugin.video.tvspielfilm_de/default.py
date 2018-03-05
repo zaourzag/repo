@@ -169,7 +169,7 @@ def listVideos_Day_Channel(url):
 				studio = channelID.replace('(', '').replace(')', '').replace('  ', '')
 			if showDATE and added != "":
 				title = added+"  "+title
-			url = re.compile('<a href="(http://www.tvspielfilm.de/mediathek/.*?)"', re.DOTALL).findall(entry)[0]
+			url = re.compile('<a href="('+baseURL+'/mediathek/.*?)"', re.DOTALL).findall(entry)[0]
 			image = re.compile('<img src="(http.*?.jpg)"', re.DOTALL).findall(entry)[0]
 			if ',' in image:
 				image = image.split(',')[0].rstrip()+'.jpg'
@@ -197,7 +197,7 @@ def listChannel():
 		debug("(listChannel) --- NowTV - Sender AUSGEBLENDET ---")
 	content = html[html.find('<section class="mediathek-channels">'):]
 	content = content[:content.find('</section>')]
-	result = re.compile('<a href="http://www.tvspielfilm.de/mediathek/nach-sender(.*?)">.+?span id="allchannelslogo', re.DOTALL).findall(content)
+	result = re.compile('href="'+baseURL+'/mediathek/nach-sender(.*?)">.+?span id="allchannelslogo', re.DOTALL).findall(content)
 	for link in result:
 		url = baseURL+'/mediathek/nach-sender'+link
 		channelID = cleanTitle(link.replace('/?channel=', '').strip())
@@ -240,7 +240,7 @@ def listVideosNew():
 				studio = channelID.replace('(', '').replace(')', '').replace('  ', '')
 			if showDATE and added != "":
 				title = added+"  "+title
-			url = re.compile('<a href="(http://www.tvspielfilm.de/mediathek/.*?)"', re.DOTALL).findall(entry)[0]
+			url = re.compile('<a href="('+baseURL+'/mediathek/.*?)"', re.DOTALL).findall(entry)[0]
 			image = re.compile('<img src="(http.*?.jpg)"', re.DOTALL).findall(entry)[0]
 			if ',' in image:
 				image = image.split(',')[0].rstrip()+'.jpg'
@@ -287,11 +287,11 @@ def listVideosGenre(type):
 			added = re.compile('<div class="col">(.*?)</div>', re.DOTALL).findall(entry)[0]
 			if showDATE and added != "":
 				title = added+"  "+title
-			match3 = re.compile('<a href="http://www.tvspielfilm.de/tv-programm/.+?" target="_self" title=".+?">(.*?)</a>', re.DOTALL).findall(entry)
+			match3 = re.compile('<a href="'+baseURL+'/tv-programm/.+?" target="_self" title=".+?">(.*?)</a>', re.DOTALL).findall(entry)
 			channelID = cleanTitle(match3[0].strip())
 			channelID = cleanStation(channelID.strip())
 			studio = channelID.replace('(', '').replace(')', '').replace('  ', '')
-			url = re.compile('<a href="(http://www.tvspielfilm.de/mediathek/.*?)"', re.DOTALL).findall(entry)[0]
+			url = re.compile('<a href="('+baseURL+'/mediathek/.*?)"', re.DOTALL).findall(entry)[0]
 			image = re.compile('<img src="(http.*?.jpg)"', re.DOTALL).findall(entry)[0]
 			if ',' in image:
 				image = image.split(',')[0].rstrip()+'.jpg'
