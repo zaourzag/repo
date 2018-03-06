@@ -14,7 +14,6 @@ import base64
 import requests
 from bs4 import BeautifulSoup
 from HTMLParser import HTMLParser
-import YDStreamExtractor
 import datetime
 
 # Setting Variablen Des Plugins
@@ -25,8 +24,8 @@ args = urlparse.parse_qs(sys.argv[2][1:])
 addon = xbmcaddon.Addon()
 # Lade Sprach Variablen
 translation = addon.getLocalizedString
-
-
+country=addon.getSetting("sprache") 
+qualitaet=addon.getSetting("quality") 
 xbmcplugin.setContent(addon_handle, 'movies')
 
 
@@ -138,7 +137,7 @@ def geturl(url,data="x",header="",referer=""):
   
 def liste():
     addDir("Settings","Settings","Settings","")
-    starturl="https://www.arte.tv/de/"
+    starturl="https://www.arte.tv/"+country+"/"
     content=geturl(starturl)
     htmlPage = BeautifulSoup(content, 'html.parser')
     elemente = htmlPage.find_all("li",attrs={"class":"next-menu-nav__item"})
@@ -147,6 +146,7 @@ def liste():
        name=link.text
        url=link["href"]
        if (not "Programm" in name) and (not "Home" in name) and (not "360" in name) and (not "Magazin" in name) and (not "Edition" in name) and (not "Digitale" in name) and (not "Live" in name):
+        if (not "Guide" in name) and (not "Accue" in name) and (not "VOD/DVD" in name) and (not "productions" in name) and (not "360" in name) and (not "Direct" in name) and (not "Live" in name):
             addDir(name, url, "subrubrik","")
     xbmcplugin.endOfDirectory(addon_handle) 
 def subrubrik(surl):
@@ -177,19 +177,43 @@ def subrubrik(surl):
   xbmcplugin.endOfDirectory(addon_handle) 
   
   
-def playvideo(url):     
- qual=addon.getSetting("bitrate") 
- if qual=="SD":
-  quality=0
- elif qual=="720p":
-  quality=1
- elif qual=="1080p":
-  quality=2
- vid = YDStreamExtractor.getVideoInfo(url,quality=2) #quality is 0=SD, 1=720p, 2=1080p and is a maximum
- stream_url = vid.streamURL()
- stream_url=stream_url.split("|")[0]
- listitem = xbmcgui.ListItem(path=stream_url)  
- xbmcplugin.setResolvedUrl(addon_handle,True, listitem) 
+def playvideo(url):
+ idd=re.compile('/videos/(.+?)/', re.DOTALL).findall(url)[0]    
+ url="https://api.arte.tv/api/player/v1/config/"+country+"/"+idd+"?autostart=0&lifeCycle=1&lang=de_DE"
+ if country=="de":
+   sub="DE"
+ if country=="fr":
+   sub="FR"
+ if country=="pl":
+   sub="DE-POL"
+ if country=="es":
+   sub="DE-ESP"   
+ mimeType="video/mp4"
+ content=geturl(url)
+ struktur = json.loads(content)
+ title=struktur["videoJsonPlayer"]["VTI"]
+ dauer=struktur["videoJsonPlayer"]["videoDurationSeconds"]
+ img=struktur["videoJsonPlayer"]["VTU"]["IUR"]
+ try:
+  desc=struktur["videoJsonPlayer"]["VDE"]
+ except:
+   desc=""
+ for stream in struktur["videoJsonPlayer"]["VSR"].keys():
+   streamx=struktur["videoJsonPlayer"]["VSR"][stream]
+   debug(mimeType)
+   debug(sub)
+   debug(qualitaet)
+   
+   if streamx["mimeType"] == mimeType and streamx["versionShortLibelle"]==sub and  streamx["height"]==int(qualitaet):
+      vurl=streamx["url"]
+   debug("----->")
+   debug(streamx)
+ liz = xbmcgui.ListItem(title,thumbnailImage=img,path=vurl)
+ liz.setArt({ 'fanart' : img })
+ liz.setInfo(type="Video", infoLabels={"Title": title, "Plot": desc})
+ liz.setProperty('IsPlayable', 'true')
+ liz.addStreamInfo('video', { 'duration' : dauer })
+ xbmcplugin.setResolvedUrl(addon_handle,True, liz) 
     
 params = parameters_string_to_dict(sys.argv[2])
 mode = urllib.unquote_plus(params.get('mode', ''))
@@ -224,7 +248,7 @@ def videoliste(url,page="1"):
           break
       except:
          pass
-    url="https://www.arte.tv/guide/api/api/zones/de/web/"+code
+    url="https://www.arte.tv/guide/api/api/zones/"+country+"/web/"+code
   jsonurl=url+"?page="+page+"&limit=100"    
   content=geturl(jsonurl)
   struktur = json.loads(content)
@@ -253,11 +277,12 @@ def videoliste(url,page="1"):
 def menu():
     addDir("Themen", "", "liste","")
     addDir("Programm", "", "datummenu","")
-    addDir("Sendungen A-Z","https://www.arte.tv/de/videos/sendungen/","abisz","")
+    addDir("Sendungen A-Z","https://www.arte.tv/"+country+"/videos/sendungen/","abisz","")
     addDir("Live", "", "live","")
     addDir("Einstellungen", "", "Settings","")
     xbmcplugin.endOfDirectory(addon_handle)
 def abisz(url,page="1"):
+    xbmcplugin.setContent(addon_handle, 'tvshows')
     content=geturl(url)
     content=re.compile(' window.__INITIAL_STATE__ = ({.+})', re.DOTALL).findall(content)[0]    
     strukturs = json.loads(content)
@@ -268,7 +293,7 @@ def abisz(url,page="1"):
     sub2=sub[key]["zones"]    
     code=sub2[0]["code"]
     debug("CODE : "+code)
-    url="https://www.arte.tv/guide/api/api/zones/de/web/"+code
+    url="https://www.arte.tv/guide/api/api/zones/"+country+"/web/"+code
     jsonurl=url+"?page="+page+"&limit=100"    
     content=geturl(jsonurl)
     struktur = json.loads(content)
@@ -320,7 +345,7 @@ def datumselect(wert):
   addDir(title,suche,"showday","")
  xbmcplugin.endOfDirectory(addon_handle)
 def showday(tag):
-  url="https://www.arte.tv/guide/api/api/pages/de/web/TV_GUIDE/?day="+tag
+  url="https://www.arte.tv/guide/api/api/pages/"+country+"/web/TV_GUIDE/?day="+tag
   content=geturl(url)
   struktur = json.loads(content)
   for element in struktur["zones"][-1]["data"]:
