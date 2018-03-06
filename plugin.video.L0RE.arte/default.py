@@ -215,9 +215,15 @@ def videoliste(url,page="1"):
     sub2=sub[key]["zones"]
     debug(sub2)
     for zone in sub2:
-      if "videos" in zone["code"]:
-         code=zone["code"]
-         break
+      debug("++++")
+      debug(zone)
+      try:
+        debug(zone["data"][0]["kind"]["label"])
+        if "Programm" in zone["data"][0]["kind"]["label"]:
+          code=zone["code"]
+          break
+      except:
+         pass
     url="https://www.arte.tv/guide/api/api/zones/de/web/"+code
   jsonurl=url+"?page="+page+"&limit=100"    
   content=geturl(jsonurl)
@@ -247,10 +253,43 @@ def videoliste(url,page="1"):
 def menu():
     addDir("Themen", "", "liste","")
     addDir("Programm", "", "datummenu","")
+    addDir("Sendungen A-Z","https://www.arte.tv/de/videos/sendungen/","abisz","")
     addDir("Live", "", "live","")
     addDir("Einstellungen", "", "Settings","")
     xbmcplugin.endOfDirectory(addon_handle)
+def abisz(url,page="1"):
+    content=geturl(url)
+    content=re.compile(' window.__INITIAL_STATE__ = ({.+})', re.DOTALL).findall(content)[0]    
+    strukturs = json.loads(content)
+    debug("###")
+    debug(strukturs)
+    sub=strukturs["pages"]["list"]
+    key=sub.keys()[0]
+    sub2=sub[key]["zones"]    
+    code=sub2[0]["code"]
+    debug("CODE : "+code)
+    url="https://www.arte.tv/guide/api/api/zones/de/web/"+code
+    jsonurl=url+"?page="+page+"&limit=100"    
+    content=geturl(jsonurl)
+    struktur = json.loads(content)
+    elemente=struktur["data"]
+    for element in elemente:
+      title=element["title"].encode("utf-8")
+      urls=element["url"].encode("utf-8")
+      desc=element["description"].encode("utf-8")
+      img=element["images"]["landscape"]["resolutions"][-1]["url"].encode("utf-8")
+      addDir(title,urls,"videoliste",img)         
     
+    try:
+        debug("Next try:")
+        nextpage=struktur["nextPage"]
+        debug(nextpage)
+        debug("Endnext")
+        if not nexpage == None:
+            addDir("Next",url,"videoliste","",page=int(page)+1)
+    except:
+        pass
+    xbmcplugin.endOfDirectory(addon_handle)    
 def live():
     addLink("Arte HD","https://artelive-lh.akamaihd.net/i/artelive_de@393591/index_1_av-p.m3u8","playlive","")
     addLink("ARTE Event 1","https://arteevent01-lh.akamaihd.net/i/arte_event01@395110/index_1_av-p.m3u8","playlive","")
@@ -332,3 +371,5 @@ else:
           showday(url)
   if mode == 'datummenu':
            datummenu()
+  if mode == 'abisz':
+           abisz(url)
