@@ -112,7 +112,7 @@
 	<!-- Upper overlay -->
 	<include name="bubble_overlay">
 		<control type="group">
-			<visible>!Window.IsVisible(1114)</visible>
+			<visible>!Window.IsVisible(1114) + [String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season) | String.IsEqual(ListItem.DBType,set) | String.IsEqual(ListItem.DBType,episode) | String.StartsWith(ListItem.FolderPath,pvr://recordings)]</visible>
 			<control type="image" id="2">
 				<right>10</right>
 				<top>10</top>
@@ -526,14 +526,14 @@
 					<height>355</height>
 					<texture colordiffuse="thumb_background_fallback" diffuse="items/mask_poster_db.png">common/white.jpg</texture>
 					<aspectratio scalediffuse="false">stretch</aspectratio>
-					<visible>String.IsEmpty(ListItem.Icon) | String.StartsWith(ListItem.Icon,Default)</visible>
+					<visible>[String.IsEmpty(ListItem.Icon) | String.StartsWith(ListItem.Icon,Default)] + String.IsEmpty(ListItem.Art(tvshow.poster))</visible>
 				</control>
 				<control type="image">
 					<width>237</width>
 					<height>355</height>
 					<texture colordiffuse="thumb_background" diffuse="items/mask_poster_db.png">common/white.jpg</texture>
 					<aspectratio scalediffuse="false">stretch</aspectratio>
-					<visible>!String.IsEmpty(ListItem.Icon) + !String.StartsWith(ListItem.Icon,Default)</visible>
+					<visible>[!String.IsEmpty(ListItem.Icon) + !String.StartsWith(ListItem.Icon,Default)] | !String.IsEmpty(ListItem.Art(tvshow.poster))</visible>
 				</control>
 				<control type="textbox">
 					<top>10</top>
@@ -545,14 +545,13 @@
 					<align>center</align>
 					<aligny>center</aligny>
 					<label>$PARAM[thumblabel]</label>
-					<visible>String.IsEmpty(ListItem.Icon) | String.StartsWith(ListItem.Icon,Default)</visible>
+					<visible>[String.IsEmpty(ListItem.Icon) | String.StartsWith(ListItem.Icon,Default)] + String.IsEmpty(ListItem.Art(tvshow.poster))</visible>
 				</control>
 				<control type="image">
 					<width>237</width>
 					<height>355</height>
 					<texture diffuse="items/mask_poster_db.png" background="true">$VAR[IconPoster]</texture>
 					<aspectratio scalediffuse="false">stretch</aspectratio>
-					<visible>!String.StartsWith(ListItem.Icon,Default)</visible>
 				</control>
 				<control type="group">
 					<width>237</width>
@@ -564,6 +563,83 @@
 					<param name="top" value="351"/>
 					<param name="width" value="237"/>
 				</include>
+				<control type="image">
+					<left>-12</left>
+					<top>-7</top>
+					<width>261</width>
+					<height>379</height>
+					<texture colordiffuse="focus_widget">items/focus_poster_db.png</texture>
+					<aspectratio>stretch</aspectratio>
+					<visible>$PARAM[focused] + Control.HasFocus($PARAM[id])</visible>
+					<include condition="$PARAM[focused]">Animation_FocusTextureFade</include>
+				</control>
+				<control type="image">
+					<include>Widget_Diffuse</include>
+					<width>237</width>
+					<height>355</height>
+					<texture diffuse="items/mask_wide.png" colordiffuse="diffuse_widget">common/white.jpg</texture>
+				</control>
+				<include content="widget_labels">
+					<param name="top">367</param>
+					<param name="width">237</param>
+					<param name="id">$PARAM[id]</param>
+					<param name="mainlabel">$PARAM[mainlabel]</param>
+					<param name="sublabel">$PARAM[sublabel]</param>
+					<param name="focused">$PARAM[focused]</param>
+					<param name="labels_visible">$PARAM[labels_visible]</param>
+				</include>
+			</control>
+		</definition>
+	</include>
+	<!-- Poster Cast -->
+	<include name="CastLayout">
+		<param name="mainlabel">$VAR[MainListLabel]</param>
+		<param name="sublabel">$VAR[SubListLabel]</param>
+		<param name="thumblabel">$VAR[MainListLabel]</param>
+		<param name="focused">false</param>
+		<param name="visible">true</param>
+		<definition>
+			<control type="group">
+				<visible>$PARAM[visible]</visible>
+				<control type="image">
+					<top>-2</top>
+					<left>-2</left>
+					<width>243</width>
+					<height>361</height>
+					<texture>items/shadow_poster_db.png</texture>
+				</control>
+				<control type="group">
+					<visible>String.IsEmpty(ListItem.Icon) | String.StartsWith(ListItem.Icon,Default)</visible>
+					<control type="image">
+						<width>237</width>
+						<height>355</height>
+						<texture colordiffuse="red" diffuse="items/mask_poster_db.png">common/white.jpg</texture>
+						<aspectratio scalediffuse="false">stretch</aspectratio>
+					</control>
+					<control type="image">
+						<width>237</width>
+						<height>355</height>
+						<texture>DefaultActor.png</texture>
+						<bordersize>20</bordersize>
+						<aspectratio scalediffuse="false">keep</aspectratio>
+					</control>
+				</control>
+				<control type="group">
+					<visible>!String.IsEmpty(ListItem.Icon) + !String.StartsWith(ListItem.Icon,Default)</visible>
+					<control type="image">
+						<width>237</width>
+						<height>355</height>
+						<texture colordiffuse="thumb_background" diffuse="items/mask_poster_db.png">common/white.jpg</texture>
+						<aspectratio scalediffuse="false">stretch</aspectratio>
+					</control>
+					<control type="image">
+						<width>237</width>
+						<height>355</height>
+						<texture diffuse="items/mask_poster_db.png" background="true">$VAR[IconPoster]</texture>
+						<aspectratio scalediffuse="false">stretch</aspectratio>
+						<visible>!String.StartsWith(ListItem.Icon,Default)</visible>
+					</control>
+				</control>
 				<control type="image">
 					<left>-12</left>
 					<top>-7</top>
@@ -1598,6 +1674,10 @@
 					<bordersize>0</bordersize>
 					<visible>String.IsEmpty(ListItem.Icon)</visible>
 				</control>
+				<include content="bubble_mini_overlay">
+					<param name="left" value="45"/>
+					<param name="top" value="5"/>
+				</include>
 			</control>
 			<control type="group">
 				<visible>[Container.Content(tvshows) | Container.Content(movies) | String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow)] + [!String.IsEmpty(ListItem.Art(poster)) | !String.IsEmpty(ListItem.Art(tvshow.poster))]</visible>

@@ -5,7 +5,6 @@
 		<control type="grouplist" id="540">
 			<include>Visible_OpenClose</include>
 			<visible>Control.IsVisible(54)</visible>
-			<include>Bounce_Up_Down</include>
 			<width>100%</width>
 			<height>100%</height>
 			<orientation>vertical</orientation>
@@ -38,14 +37,14 @@
 							<label>$INFO[ListItem.TVShowTitle]</label>
 							<aligny>top</aligny>
 							<font>Reg37</font>
-													</control>
+						</control>
 						<control type="label">
 							<width>1040</width>
 							<height>60</height>
 							<label>$INFO[ListItem.Title]</label>
 							<aligny>top</aligny>
 							<font>Reg37</font>
-													</control>
+						</control>
 						<!-- meta -->
 						<include>MetaSeasonInfos</include>
 						<!-- buttons -->
@@ -96,7 +95,7 @@
 							<font>reg22</font>
 							<aligny>top</aligny>
 							<textcolor>emby</textcolor>
-														<visible>String.IsEmpty(ListItem.Genre) + !String.IsEmpty(Window(home).Property(EmbyGenre)) + String.StartsWith(ListItem.Path,plugin://plugin.video.embycon)</visible>
+							<visible>String.IsEmpty(ListItem.Genre) + !String.IsEmpty(Window(home).Property(EmbyGenre)) + String.StartsWith(ListItem.Path,plugin://plugin.video.embycon)</visible>
 						</control>
 						<control type="textbox">
 							<width>100%</width>
@@ -105,7 +104,7 @@
 							<aligny>top</aligny>
 							<label>$VAR[SeasonViewPlot]</label>
 							<font>Light24</font>
-														<autoscroll>false</autoscroll>
+							<autoscroll>false</autoscroll>
 						</control>
 					</control>
 					<!-- logo -->
@@ -147,7 +146,7 @@
 				<param name="visible" value="Integer.IsGreater(Container(2000).NumItems,0)"/>
 				<param name="id" value="300"/>
 				<param name="onup" value="200"/>
-				<param name="ondown" value="SetProperty(BounceDown,1,home)"/>
+				<param name="ondown" value="noop"/>
 				<param name="onback" value="54"/>
 				<param name="content" value="$VAR[View_Cast_Content]"/>
 			</include>
