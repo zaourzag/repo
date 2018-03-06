@@ -278,7 +278,7 @@ def abisz(url,page="1"):
       urls=element["url"].encode("utf-8")
       desc=element["description"].encode("utf-8")
       img=element["images"]["landscape"]["resolutions"][-1]["url"].encode("utf-8")
-      addDir(title,urls,"videoliste",img)         
+      addDir(title,urls,"videoliste",img,desc=desc)         
     
     try:
         debug("Next try:")
