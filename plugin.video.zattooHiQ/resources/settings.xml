@@ -1,17 +1,26 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
+        <category label=310031>
+                <setting label="31001" id="username" type="text" default=""/>
+                <setting label="31002" id="password" type="text" option="hidden" enable="!eq(-1,)" default=""/>
+                <setting id="provider" type="enum" label="31004" default = "0" values="Zattoo|Netplus|Quickline|m-net|WALY.TV|meinewelt.cc|BBV-tv.net|VTXtv.ch|myvisiontv.ch|GLATTvision.ch|SAKtv.ch|NetCologne|EWE.de|quantum TV" />
+                <setting type="sep"/>
+                <setting label="310032" id="country" type="text" enable="false" visible="gt(0,)"/>
+                <setting label="310033" id="dateregistered" type="date" enable="false" visible="gt(0,)"/>
+                <setting type="sep"/>
+                <setting label="310034" id="product" type="text" enable="false" visible="gt(0,)"/>
+                <setting label="310035" id="price" type="text" enable="false" visible="gt(0,)"/>
+                <setting label="310036" id="expiration" type="text" enable="false" visible="gt(0,)"/>
+        </category>
+        
+        
     <category label="31000">
-        <setting label="31001" id="username" type="text" default=""/>
-        <setting label="31002" id="password" type="text" option="hidden" enable="!eq(-1,)" default=""/>
-        <setting type="sep"/>
+                
+<!--
         <setting label="31003" id="swiss" type="bool" default="false" />
 	<setting type="sep"/>
-	<setting label="310031" id="zapi_auth_url" type="text" default="https://zattoo.com" />
-	<setting label="310032" id="zapi_url" type="text" default="https://zattoo.com" />
-<!--
-        <setting label="31004" id="hiq" type="bool" default="false" enable="eq(-1,true)"/>
 -->
-		<setting label="310067" type="bool" id="show_favourites" default="false"/>
+        <setting label="310067" type="bool" id="show_favourites" default="false"/>
         <setting type="sep"/>
         <setting label="31005" id="max_bandwidth" type="labelenum" values="600|900|1500|3000|5000" default="5000"/>
         <setting label="31006" id="audio_stream" type="labelenum" values="A|B" default="A"/>

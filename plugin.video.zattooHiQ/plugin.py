@@ -60,16 +60,46 @@ _umlaut_ = {ord(u'ä'): u'ae', ord(u'ö'): u'oe', ord(u'ü'): u'ue', ord(u'ß'):
 
 localString = __addon__.getLocalizedString
 local = xbmc.getLocalizedString
+DEBUG = __addon__.getSetting('debug')
 
-SWISS = __addon__.getSetting('swiss')
+### Account Data ###
+#SWISS = __addon__.getSetting('swiss')
 accountData=_zattooDB_.zapi.get_accountData()
 premiumUser=accountData['account']['subscriptions']!=[]
+
+country=accountData['account']['service_region_country']
+__addon__.setSetting('country', country)
+dateregistered=accountData['account']['dateregistered']
+dateregistered = dateregistered.replace('T', ' ')
+dateregistered = dateregistered.replace('Z', '')
+__addon__.setSetting('dateregistered', dateregistered)
+
+if premiumUser:
+  product=accountData['account']['products'][0]['name']
+  __addon__.setSetting('product', product)
+  
+  cost=accountData['account']['products'][0]['cost']
+  currency=accountData['account']['products'][0]['currency']
+  price = str(float(cost)/100)
+  __addon__.setSetting('price', price+' '+currency)
+  
+  expiration=accountData['account']['subscriptions'][0]['expiration']
+  expiration=expiration.replace('T', ' ')
+  expiration=expiration.replace('Z', '')
+  __addon__.setSetting('expiration', expiration)
+else:
+  __addon__.setSetting('product', '')
+  __addon__.setSetting('price', '')
+  __addon__.setSetting('expiration', '')
+ 
+if __addon__.getSetting('country') == 'CH': SWISS = 'true'
+else: SWISS = 'false'
 
 DASH = __addon__.getSetting('dash')=='true'
 RECREADY = __addon__.getSetting('rec_ready')
 VERSION = __addon__.getAddonInfo('version')
 OLDVERSION = _zattooDB_.get_version(VERSION)
-DEBUG = __addon__.getSetting('debug')
+
 KEYMAP = __addon__.getSetting('keymap')
 
 #reload DB on Update
@@ -80,10 +110,10 @@ if OLDVERSION != VERSION:
    _zattooDB_.reloadDB()
  
 
-if SWISS=="true": xbmc.executebuiltin( "Skin.SetBool(%s)" %'swiss')
-else: xbmc.executebuiltin( "Skin.Reset(%s)" %'swiss')
+if SWISS=="true": xbmc.executebuiltin( "Skin.SetBool(%s)" %'hiq')
+#else: xbmc.executebuiltin( "Skin.Reset(%s)" %'hiq')
 
-if premiumUser: xbmc.executebuiltin( "Skin.SetBool(%s)" %'hiq')
+elif premiumUser: xbmc.executebuiltin( "Skin.SetBool(%s)" %'hiq')
 else: xbmc.executebuiltin( "Skin.Reset(%s)" %'hiq')
 
 
@@ -442,7 +472,7 @@ def watch_channel(channel_id, start, end, showID="", restart=False, showOSD=Fals
   if restart: resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/watch/selective_recall/'+channel_id+'/'+showID, params)
   else: resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/watch',params)
   #resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/watch',params)
-  #print 'ResultData ' +str(resultData)
+  print 'ResultData ' +str(resultData)
   if resultData is None:
     xbmcgui.Dialog().notification("ERROR", "NO ZAPI RESULT", channelInfo['logo'], 5000, False)
     return
@@ -659,6 +689,13 @@ def makeOsdInfo():
   
   try: program=program[0]
   except: xbmcgui.Dialog().ok('Error',' ','No Info')
+  
+  
+  
+  if premiumUser: xbmc.executebuiltin( "Skin.SetBool(%s)" %'restart')
+  elif _zattooDB_.getRestart(program['showID']): xbmc.executebuiltin( "Skin.SetBool(%s)" %'restart')
+  else: xbmc.executebuiltin( "Skin.Reset(%s)" %'restart')
+
   
   
  

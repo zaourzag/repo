@@ -411,7 +411,7 @@
 				<texturenofocus>osdreplaynf.png</texturenofocus>
 				<onleft>208</onleft>
 				<onright>210</onright>
-				<visible>Skin.HasSetting(hiq)</visible>visible>
+				<visible>Skin.HasSetting(restart)</visible>
 			</control>
 
 			<control type="button" id="210">
@@ -423,7 +423,7 @@
 				<texturenofocus>osdrecordnf1.png</texturenofocus>
 				<onleft>209</onleft>
 				<onright>211</onright>
-				<visible>Skin.HasSetting(swiss)</visible>
+				<visible>Skin.HasSetting(hiq)</visible>
 			</control>
 
 			<control type="button" id="211">

@@ -327,10 +327,11 @@ msgstr "Streaming mit diesem Addon ist jetzt deaktiviert."
 
 ####  Settings   ####
 
-### Zattoo Einstellungen ###
-msgctxt "#31000"
-msgid "Zattoo settings"
-msgstr "Zattoo Einstellungen"
+### Account ###
+
+msgctxt "#310031"
+msgid "Account"
+msgstr "Kontodaten"
 
 msgctxt "#31001"
 msgid "Username"
@@ -340,21 +341,42 @@ msgctxt "#31002"
 msgid "Password"
 msgstr "Passwort"
 
-msgctxt "#31003"
-msgid "Swiss IP address"
-msgstr "Schweizer IP Adresse"
-
-msgctxt "#310031"
-msgid "zapi_auth_url"
-msgstr "zapi_auth_url"
+msgctxt "#31004"
+msgid "Provider"
+msgstr "Provider"
 
 msgctxt "#310032"
-msgid "zapi_url"
-msgstr "zapi_url"
+msgid "Country"
+msgstr "Land"
 
-msgctxt "#31004"
-msgid "ZATTOO HIQ"
-msgstr "ZATTOO HIQ"
+msgctxt "#310033"
+msgid "Date registered"
+msgstr "registriert am"
+
+msgctxt "#310034"
+msgid "Product"
+msgstr "Produkt"
+
+msgctxt "#310035"
+msgid "Price"
+msgstr "Preis"
+
+msgctxt "#310036"
+msgid "expiration day"
+msgstr "Ablaufdatum"
+
+
+
+
+
+### Zattoo Einstellungen ###
+msgctxt "#31000"
+msgid "Zattoo settings"
+msgstr "Zattoo Einstellungen"
+
+msgctxt "#31003"
+msgid "Swiss account"
+msgstr "Schweizer Account"
 
 msgctxt "#31005"
 msgid "Maximum Bandwidth (kbps)"
@@ -365,8 +387,8 @@ msgid "Default Audio"
 msgstr "Standard Ton"
 
 msgctxt "#310065"
-msgid "[COLOR ff333333]use DASH stream (Kodi17, experimental)[/COLOR]"
-msgstr "[COLOR ff333333]DASH stream (Kodi17, experimentell)[/COLOR]"
+msgid "use DASH stream (Kodi17+18)"
+msgstr "DASH stream (Kodi17+18)"
 
 msgctxt "#310067"
 msgid "Only show favourite channels"
@@ -577,7 +599,7 @@ msgstr "Inhalt nicht verfügbar"
 
 msgctxt "#31902"
 msgid "Unable to start a session. Check your account settings!"
-msgstr "Verbindung fehlgeschlagen.\nZattoo Einstellungen überprüfen!"
+msgstr "Verbindung fehlgeschlagen. Zattoo Einstellungen überprüfen!"
 
 msgctxt "#31903"
 msgid "recording request transmitted to Zattoo.\nThe show now should be visible in Recordings!"

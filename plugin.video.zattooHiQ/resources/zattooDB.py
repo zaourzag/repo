@@ -47,6 +47,9 @@ if REMOTE_DBG:
     sys.stderr.write("Error: You must add org.python.pydev.debug.pysrc to your PYTHONPATH.")
     sys.exit(1)
 
+def debug(s):
+	if DEBUG: xbmc.log(str(s), xbmc.LOGDEBUG)
+
 class ZattooDB(object):
   def __init__(self):
     self.conn = None
@@ -58,9 +61,25 @@ class ZattooDB(object):
 
   def zapiSession(self):
     zapiSession   = ZapiSession(xbmc.translatePath(__addon__.getAddonInfo('profile')).decode('utf-8'))
-
-    if zapiSession.init_session(__addon__.getSetting('username'), __addon__.getSetting('password'),
-                                __addon__.getSetting('zapi_url'), __addon__.getSetting('zapi_auth_url')):
+    PROVIDER = __addon__.getSetting('provider')
+    
+    if PROVIDER == "0": ZAPIUrl = "https://zattoo.com"
+    elif PROVIDER == "1": ZAPIUrl = "https://www.netplus.tv"
+    elif PROVIDER == "2": ZAPIUrl = "https://mobiltv.quickline.com"
+    elif PROVIDER == "3": ZAPIUrl = "https://tvplus.m-net.de"
+    elif PROVIDER == "4": ZAPIUrl = "https://player.waly.tv"
+    elif PROVIDER == "5": ZAPIUrl = "https://www.meinewelt.cc"
+    elif PROVIDER == "6": ZAPIUrl = "https://www.bbv-tv.net"
+    elif PROVIDER == "7": ZAPIUrl = "https://www.vtxtv.ch"
+    elif PROVIDER == "8": ZAPIUrl = "https://www.myvisiontv.ch"
+    elif PROVIDER == "9": ZAPIUrl = "https://iptv.glattvision.ch"
+    elif PROVIDER == "10": ZAPIUrl = "https://www.saktv.ch"
+    elif PROVIDER == "11": ZAPIUrl = "https://nettv.netcologne.de"
+    elif PROVIDER == "12": ZAPIUrl = "https://tvonline.ewe.de"
+    elif PROVIDER == "13": ZapiUrl = "https://www.quantum-tv.com"
+    
+    if zapiSession.init_session(__addon__.getSetting('username'), __addon__.getSetting('password'), ZAPIUrl):
+                                
       return zapiSession
     else:
       # show home window, zattooHiQ settings and quit
@@ -119,7 +138,7 @@ class ZattooDB(object):
 
     try:
       c.execute('CREATE TABLE channels(id TEXT, title TEXT, logo TEXT, weight INTEGER, favourite BOOLEAN, PRIMARY KEY (id) )')
-      c.execute('CREATE TABLE programs(showID TEXT, title TEXT, channel TEXT, start_date TIMESTAMP, end_date TIMESTAMP, restart BOOLEAN, series BOOLEAN, description TEXT, description_long TEXT, year TEXT, country TEXT, genre TEXT, category TEXT, image_small TEXT, image_large TEXT, updates_id INTEGER, FOREIGN KEY(channel) REFERENCES channels(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED, FOREIGN KEY(updates_id) REFERENCES updates(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED)')
+      c.execute('CREATE TABLE programs(showID TEXT, title TEXT, channel TEXT, start_date TIMESTAMP, end_date TIMESTAMP, restart BOOLEAN, series BOOLEAN, record BOOLEAN, description TEXT, description_long TEXT, year TEXT, country TEXT, genre TEXT, category TEXT, image_small TEXT, image_large TEXT, updates_id INTEGER , info TEXT, FOREIGN KEY(channel) REFERENCES channels(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED, FOREIGN KEY(updates_id) REFERENCES updates(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED)')
 
       c.execute('CREATE INDEX program_list_idx ON programs(channel, start_date, end_date)')
       c.execute('CREATE INDEX start_date_idx ON programs(start_date)')
@@ -372,6 +391,10 @@ class ZattooDB(object):
         if longDesc is None:
             api = '/zapi/program/details?program_id=' + showID + '&complete=True'
             showInfo = self.zapiSession().exec_zapiCall(api, None)
+            #infoall = showInfo['program']
+            
+            #info.execute('UPDATE programs SET info=? WHERE showID=?',[json.dumps(infoall), showID ])
+            
             #print 'Showinfo  ' + str(showInfo)
             if showInfo is None:
                 longDesc=''
@@ -392,13 +415,20 @@ class ZattooDB(object):
             series = showInfo['program']['series_recording_eligible']
             info.execute('UPDATE programs SET series=? WHERE showID=?', [series, showID])
             
-            try:
-                restart = showInfo['program']['selective_recall_until']
-                info.execute('UPDATE programs SET restart=? WHERE showID=?', [True, showID])
-                #print 'Restart  ' +str(showID) + '  ' + str(restart)
-            except:
-                #print 'No Restart'
-                info.execute('UPDATE programs SET restart=? WHERE showID=?', [False, showID])
+            #try:
+                #restart = showInfo['program']['selective_recall_until']
+                #info.execute('UPDATE programs SET restart=? WHERE showID=?', [True, showID])
+                ##print 'Restart  ' +str(showID) + '  ' + str(restart)
+            #except:
+                ##print 'No Restart'
+                #info.execute('UPDATE programs SET restart=? WHERE showID=?', [False, showID])
+                
+           
+            record = showInfo['program']['recording_eligible']
+            info.execute('UPDATE programs SET record=? WHERE showID=?', [record, showID])
+            #print 'Restart  ' +str(showID) + '  ' + str(restart)
+           
+ 
         try:
             self.conn.commit()
         except:
@@ -648,6 +678,20 @@ class ZattooDB(object):
         return series['series']
   
   def getRestart(self, showID):
+        
+        c = self.conn.cursor()
+        api = '/zapi/program/details?program_id=' + showID + '&complete=True'
+        showInfo = self.zapiSession().exec_zapiCall(api, None)
+        debug("ShowInfo :" + str(showInfo))
+        try:
+            restart = showInfo['program']['selective_recall_until']
+            c.execute('UPDATE programs SET restart=? WHERE showID=?', [True, showID])
+            #print 'Restart  ' +str(showID) + '  ' + str(restart)
+        except:
+            debug('No Restart')
+            c.execute('UPDATE programs SET restart=? WHERE showID=?', [False, showID])
+        self.conn.commit()
+        c.close()
         c = self.conn.cursor()
         c.execute('SELECT restart FROM programs WHERE showID = ?', [showID])
         restart = c.fetchone()

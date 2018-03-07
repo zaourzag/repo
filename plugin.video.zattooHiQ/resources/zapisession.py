@@ -21,12 +21,13 @@ DEBUG = __addon__.getSetting('debug')
 
 
 class ZapiSession:
-	ZAPIAuthUrl = None
+	
 	ZAPIUrl = None
 	DATA_FOLDER = None
 	COOKIE_FILE = None
 	SESSION_FILE = None
 	ACCOUNT_FILE = None
+	ACCOUNT_JSON = None
 	HttpHandler = None
 	Username = None
 	Password = None
@@ -38,16 +39,16 @@ class ZapiSession:
 		self.COOKIE_FILE = os.path.join(dataFolder, 'cookie.cache')
 		self.SESSION_FILE = os.path.join(dataFolder, 'session.cache')
 		self.ACCOUNT_FILE = os.path.join(dataFolder, 'account.cache')
+		self.ACCOUNT_JSON = os.path.join(dataFolder, 'account.json' )
 		self.APICALL_FILE = os.path.join(dataFolder, 'apicall.cache')
 		self.HttpHandler = urllib2.build_opener()
 		self.HttpHandler.addheaders = [('Content-type', 'application/x-www-form-urlencoded'), ('Accept', 'application/json')]
 
-	def init_session(self, username, password, api_url="https://zattoo.com", api_auth_url="https://zattoo.com"):
+	def init_session(self, username, password, api_url="https://zattoo.com"):
 		self.Username = username
 		self.Password = password
-		self.ZAPIAuthUrl = api_auth_url
 		self.ZAPIUrl = api_url
-		
+		#if DEBUG: print "ZapiURL:  " + str(api_url)
 		return self.restore_session() or self.renew_session()
 
 	def restore_session(self):
@@ -78,11 +79,13 @@ class ZapiSession:
 	def persist_accountData(self, accountData):
 		with open(self.ACCOUNT_FILE, 'w') as f:
 			f.write(base64.b64encode(json.dumps(accountData)))
+		#with open(self.ACCOUNT_JSON, 'w') as f:
+			#f.write(json.dumps(accountData))
 
 	def persist_sessionId(self, sessionId):
 		with open(self.COOKIE_FILE, 'w') as f:
 			f.write(base64.b64encode(sessionId))
-
+			
 	def persist_sessionData(self, sessionData):
 		with open(self.SESSION_FILE, 'w') as f:
 			f.write(base64.b64encode(json.dumps(sessionData)))
@@ -108,7 +111,9 @@ class ZapiSession:
 	# zapiCall with params=None creates GET request otherwise POST
 
 	def exec_zapiCall(self, api, params, context='default'):
-		url = self.ZAPIAuthUrl + api if context == 'session' else self.ZAPIUrl + api
+		#url = self.ZAPIAuthUrl + api if context == 'session' else self.ZAPIUrl + api
+		url = self.ZAPIUrl + api
+		#if DEBUG: print "ZapiCall  " + str(url)
 		content = self.request_url(url, params)
 		if content is None and context != 'session' and self.renew_session():
 			content = self.request_url(url, params)
@@ -117,14 +122,7 @@ class ZapiSession:
 		try:
 			resultData = json.loads(content)
 			return resultData
-        
-			#if resultData['success']:
-			#	return resultData
-		#except Exception:
-			#pass
-		#try:
-			#if resultData['title'] == "On Demand":
-				#return resultData
+
         
 		except Exception:
 			pass

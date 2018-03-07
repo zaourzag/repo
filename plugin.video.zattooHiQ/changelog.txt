@@ -1,4 +1,11 @@
 ﻿==================================================
+[B]ZattooHiQ v1.5 [/B]07.03.2018 Steffen Rolapp
+==================================================
+- Reseller hintzgefügt
+- Einstellungen überarbeitet (Accountdaten werde angezeigt)
+- EPG überarbeitet (Recall und Aufnahmen für deutschen Account)
+
+==================================================
 [B]ZattooHiQ v1.4.5 [/B]05.03.2018 Steffen Rolapp
 ==================================================
 - Problem mit EPG in Kodi 18 Aplpha behoben

@@ -350,9 +350,10 @@ msgstr ""
 
 ####  Settings   ####
 
+#### Account ####
 
-msgctxt "#31000"
-msgid "Zattoo settings"
+msgctxt "#310031"
+msgid "Account"
 msgstr ""
 
 msgctxt "#31001"
@@ -363,20 +364,37 @@ msgctxt "#31002"
 msgid "Password"
 msgstr ""
 
-msgctxt "#31003"
-msgid "Swiss IP address"
-msgstr ""
-
-msgctxt "#310031"
-msgid "zapi_auth_url"
+msgctxt "#31004"
+msgid "Provider"
 msgstr ""
 
 msgctxt "#310032"
-msgid "zapi_url"
+msgid "Country"
 msgstr ""
 
-msgctxt "#31004"
-msgid "ZATTOO HIQ"
+msgctxt "#310033"
+msgid "Date registered"
+msgstr ""
+
+msgctxt "#310034"
+msgid "Product"
+msgstr ""
+
+msgctxt "#310035"
+msgid "Price"
+msgstr ""
+
+msgctxt "#310036"
+msgid "expiration day"
+msgstr ""
+
+## Settings ##
+msgctxt "#31000"
+msgid "Zattoo settings"
+msgstr ""
+
+msgctxt "#31003"
+msgid "Swiss account"
 msgstr ""
 
 msgctxt "#31005"
@@ -388,7 +406,7 @@ msgid "Default Audio"
 msgstr ""
 
 msgctxt "#310065"
-msgid "[COLOR ff333333]use DASH stream (Kodi17, experimental)[/COLOR]"
+msgid "use DASH stream (Kodi17+18)"
 msgstr ""
 
 msgctxt "#310067"

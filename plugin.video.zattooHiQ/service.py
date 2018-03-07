@@ -104,12 +104,12 @@ def getProgNextDay():
     from resources.zattooDB import ZattooDB
     _zattooDB_ = ZattooDB()
 
-    start = datetime.time(18, 0, 0)
+    start = datetime.time(14, 0, 0)
     now = datetime.datetime.now().time()
     tomorrow = datetime.datetime.today() + datetime.timedelta(days=1)
 
     if now > start:
-        #print 'NextDay ' + str(start) + ' - ' + str(now) + ' - ' + str(tomorrow)
+        if DEBUG: print 'NextDay ' + str(start) + ' - ' + str(now) + ' - ' + str(tomorrow)
         _zattooDB_.updateProgram(tomorrow)
 
 
@@ -189,7 +189,8 @@ player=myPlayer()
 
 if __addon__.getSetting('dbonstart') == 'true':
 	start()
-
+    
+getProgNextDay()
 refreshProg()
 
 
