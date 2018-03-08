@@ -522,7 +522,7 @@
                                 </content>
                             </control>
                             <control type="group">
-                                <visible>String.IsEmpty(Container(80).ListItem().Icon)</visible>
+                                <visible>String.IsEmpty(Container(80).ListItem.Icon)</visible>
                                 <left>15</left>
                                 <top>15</top>
                                 <control type="label">

@@ -295,8 +295,8 @@
 				<!-- recent episode -->
 				<param name="HomePageWidget_content" value="videodb://recentlyaddedepisodes/"/>
 				<param name="HomePageWidget_content2" value="$VAR[WidgetInProgressPlace1]"/>
-				<param name="HomePageWidget_limit" value="10"/>
-				<param name="HomePageWidget_sortby" value="EpisodeNumber"/>
+				<param name="HomePageWidget_limit" value="40"/>
+				<param name="HomePageWidget_sortby" value="episodenumber"/>
 				<param name="HomePageWidget_sortorder" value="ascending"/>
 				<param name="HomePageWidget_list_id" value="233"/>
 				<param name="HomePageWidget_list_width" value="720"/>
@@ -1342,7 +1342,7 @@
 				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$INFO[Skin.String(HomeWidget_Games_Label)],home)"/>
 				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)"/>
 				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Home_Games_Button)"/>
-				<param name="HomePageWidget_list_visible2" value="Skin.HasSetting(HomeWidget_Games_User)"/>
+				<param name="HomePageWidget_list_visible2" value="Skin.HasSetting(HomeWidget_Games_User)|Skin.HasSetting(HomeWidget_Games_Standard)"/>
 				<param name="HomePageWidget_list_visible3" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),games)"/>
 			</include>
         </control>
@@ -1359,7 +1359,7 @@
                 <width>600</width>
                 <height>237</height>
                 <aspectratio align="left" aligny="center">scale</aspectratio>
-                <texture background="true" diffuse="SideFadeWhiteHalf.png">$INFO[Container.ListItem().Art(fanart)]</texture>
+                <texture background="true" diffuse="SideFadeWhiteHalf.png">$INFO[Container.ListItem.Art(fanart)]</texture>
                 <visible>Skin.HasSetting(fanart)</visible>
             </control>
             <control type="image">
@@ -1380,7 +1380,7 @@
                 <width>1125</width>
                 <height>240</height>
                 <texture border="15" flipx="true">buttons\ButtonNFhalf.png</texture>
-                <visible>Skin.HasSetting(fanart)+!String.IsEmpty(Container.ListItem().Art(fanart))+!String.IsEmpty(Container.ListItem.Property(fanart_image))</visible>
+                <visible>Skin.HasSetting(fanart)+!String.IsEmpty(Container.ListItem.Art(fanart))+!String.IsEmpty(Container.ListItem.Property(fanart_image))</visible>
             </control>
             <control type="image">
                 <include>openclosemedium</include>
@@ -1389,7 +1389,7 @@
                 <width>302</width>
                 <height>160</height>
                 <aspectratio align="left" aligny="bottom">keep</aspectratio>
-                <texture background="true">$INFO[Container.ListItem().Art(clearlogo)]$INFO[Container.ListItem().Art(tvshow.clearlogo)]</texture>
+                <texture background="true">$INFO[Container.ListItem.Art(clearlogo)]$INFO[Container.ListItem.Art(tvshow.clearlogo)]</texture>
                 <visible>[String.IsEqual(Container(9000).ListItem.Property(homemenu_id),movies)+Skin.HasSetting(video_art)]|[String.IsEqual(Container(9000).ListItem.Property(homemenu_id),tvshow)+Skin.HasSetting(tvshow_art)]</visible>
             </control>
             <control type="image">
@@ -1399,7 +1399,7 @@
                 <width>302</width>
                 <height>160</height>
                 <aspectratio align="left" aligny="bottom">keep</aspectratio>
-                <texture background="true">$INFO[Container.ListItem().Art(clearlogo)]$INFO[Container.ListItem().Art(tvshow.clearlogo)]</texture>
+                <texture background="true">$INFO[Container.ListItem.Art(clearlogo)]$INFO[Container.ListItem.Art(tvshow.clearlogo)]</texture>
                 <visible>[String.IsEqual(Container(9000).ListItem.Property(homemenu_id),movies)+Skin.HasSetting(video_art)]|[String.IsEqual(Container(9000).ListItem.Property(homemenu_id),tvshow)+Skin.HasSetting(tvshow_art)]</visible>
                 <visible>!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),music)</visible>
             </control>
@@ -1421,7 +1421,7 @@
                 <width>302</width>
                 <height>160</height>
                 <aspectratio align="left" aligny="bottom">keep</aspectratio>
-                <texture background="true">$INFO[Container.ListItem().Art(clearlogo)]</texture>
+                <texture background="true">$INFO[Container.ListItem.Art(clearlogo)]</texture>
                 <visible>Skin.HasSetting(video_art)</visible>
                 <visible>Control.Hasfocus($PARAM[HomePageWidget_id])</visible>
             </control>
@@ -1500,8 +1500,8 @@
                 <font>font12</font>
                 <align>right</align>
                 <textcolor>grey</textcolor>
-                <label>$INFO[Container.ListItem().EpisodeName]</label>
-                <visible>!String.IsEmpty(Container.ListItem().EpisodeName)</visible>
+                <label>$INFO[Container.ListItem.EpisodeName]</label>
+                <visible>!String.IsEmpty(Container.ListItem.EpisodeName)</visible>
             </control>
             <control type="label">
                 <width>725</width>
@@ -1509,7 +1509,7 @@
                 <font>font12</font>
                 <align>right</align>
                 <textcolor>grey</textcolor>
-                <label>$INFO[Container.ListItem().Set]</label>
+                <label>$INFO[Container.ListItem.Set]</label>
                 <visible>!String.IsEmpty(Container.ListItem.Set)+String.Contains(Container.ListItem.DBType,set)</visible>
             </control>
             <control type="label">
@@ -1518,7 +1518,7 @@
                 <font>font12</font>
                 <align>right</align>
                 <textcolor>grey</textcolor>
-                <label>$INFO[Container.ListItem().ChannelName]</label>
+                <label>$INFO[Container.ListItem.ChannelName]</label>
                 <visible>!String.IsEmpty(Container.ListItem.ChannelName)+Container.ListItem.HasEpg</visible>
             </control>
             <control type="label">
@@ -1527,25 +1527,16 @@
                 <font>font12</font>
                 <align>right</align>
                 <textcolor>grey</textcolor>
-                <label>$INFO[Container.ListItem().Season, $LOCALIZE[20373] , ]$INFO[Container.ListItem().Episode,$LOCALIZE[20359] ,]</label>
-                <visible>![String.IsEmpty(Container.ListItem().Season)+String.IsEmpty(Container.ListItem().Episode)]</visible>
+                <label>$INFO[Container.ListItem.Season, $LOCALIZE[20373] , ]$INFO[Container.ListItem.Episode,$LOCALIZE[20359] ,]</label>
+                <visible>![String.IsEmpty(Container.ListItem.Season)+String.IsEmpty(Container.ListItem.Episode)]</visible>
             </control>
             <control type="label">
                 <width>725</width>
                 <height>24</height>
                 <font>font12</font>
                 <align>right</align>
-                <label>$INFO[Container.ListItem().Comment]</label>
-                <visible>!String.IsEmpty(Container.ListItem().Comment)</visible>
-            </control>
-            <control type="label">
-                <width>725</width>
-                <height>24</height>
-                <font>font12</font>
-                <align>right</align>
-                <textcolor>grey</textcolor>
-                <label>$INFO[Container.ListItem().Genre]</label>
-                <visible>!String.IsEmpty(Container.ListItem().Genre)</visible>
+                <label>$INFO[Container.ListItem.Comment]</label>
+                <visible>!String.IsEmpty(Container.ListItem.Comment)</visible>
             </control>
             <control type="label">
                 <width>725</width>
@@ -1553,9 +1544,18 @@
                 <font>font12</font>
                 <align>right</align>
                 <textcolor>grey</textcolor>
-                <label>$INFO[Container.ListItem().Year,, / ]$INFO[Container.ListItem().Property(Album_Label)]</label>
+                <label>$INFO[Container.ListItem.Genre]</label>
+                <visible>!String.IsEmpty(Container.ListItem.Genre)</visible>
+            </control>
+            <control type="label">
+                <width>725</width>
+                <height>24</height>
+                <font>font12</font>
+                <align>right</align>
+                <textcolor>grey</textcolor>
+                <label>$INFO[Container.ListItem.Year]$INFO[Container.ListItem.Property(Album_Label), / ,]</label>
                 <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),music)</visible>
-                <visible>!String.IsEmpty(Container.ListItem().Year)</visible>
+                <visible>!String.IsEmpty(Container.ListItem.Year)</visible>
             </control>
             <control type="label">
                 <width>725</width>
@@ -1563,8 +1563,8 @@
                 <font>font12</font>
                 <align>right</align>
                 <textcolor>grey</textcolor>
-                <label>$INFO[Container.ListItem().DateAdded,$LOCALIZE[570]: ,]</label>
-                <visible>!String.IsEmpty(Container.ListItem().DateAdded)+!String.IsEmpty(Container.ListItem().LastPlayed)</visible>
+                <label>$INFO[Container.ListItem.DateAdded,$LOCALIZE[570]: ,]</label>
+                <visible>!String.IsEmpty(Container.ListItem.DateAdded)+!String.IsEmpty(Container.ListItem.LastPlayed)</visible>
             </control>
             <control type="label">
                 <width>725</width>
@@ -1572,8 +1572,8 @@
                 <font>font12</font>
                 <align>right</align>
                 <textcolor>grey</textcolor>
-                <label>$INFO[Container.ListItem().AudioLanguage,, / ]$INFO[Container.ListItem().SubtitleLanguage,sub:  , / ]$INFO[Container.ListItem().VideoResolution,, / ]$INFO[Container.ListItem().VideoCodec,, / ]$INFO[Container.ListItem().VideoAspect,, / ]$INFO[Container.ListItem().AudioCodec,, / ]$INFO[Container.ListItem().AudioChannels,, $LOCALIZE[19019]]</label>
-                <visible>!String.IsEmpty(Container.ListItem().VideoResolution)</visible>
+                <label>$INFO[Container.ListItem.AudioLanguage,, / ]$INFO[Container.ListItem.SubtitleLanguage,sub:  , / ]$INFO[Container.ListItem.VideoResolution,, / ]$INFO[Container.ListItem.VideoCodec,, / ]$INFO[Container.ListItem.VideoAspect,, / ]$INFO[Container.ListItem.AudioCodec,, / ]$INFO[Container.ListItem.AudioChannels,, $LOCALIZE[19019]]</label>
+                <visible>!String.IsEmpty(Container.ListItem.VideoResolution)</visible>
             </control>
             <control type="label">
                 <width>725</width>
@@ -1582,8 +1582,8 @@
                 <align>right</align>
 				<aligny>bottom</aligny>
                 <textcolor>grey</textcolor>
-                <label>$INFO[Container.ListItem().Property(Album_Description)]</label>
-                <visible>!String.IsEmpty(Container.ListItem().Property(Album_Description))</visible>
+                <label>$INFO[Container.ListItem.Property(Album_Description)]</label>
+                <visible>!String.IsEmpty(Container.ListItem.Property(Album_Description))</visible>
                 <scroll>false</scroll>
             </control>
             <!-- TV Highlihgts Grabber -->
@@ -1593,9 +1593,9 @@
                 <font>font12</font>
                 <align>right</align>
                 <textcolor>grey</textcolor>
-                <label>$INFO[Container.ListItem().Property(channel)]$INFO[Container.ListItem.Label2]</label>
+                <label>$INFO[Container.ListItem.Property(channel)]$INFO[Container.ListItem.Label2]</label>
                 <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),pvr)+Skin.HasSetting(Widget_LiveTVHighlights)</visible>
-                <visible>!String.IsEmpty(Container.ListItem().Property(channel))|!String.IsEmpty(Container.ListItem.Label2)</visible>
+                <visible>!String.IsEmpty(Container.ListItem.Property(channel))|!String.IsEmpty(Container.ListItem.Label2)</visible>
             </control>
             <control type="label">
                 <width>725</width>
@@ -1603,9 +1603,9 @@
                 <font>font12</font>
                 <align>right</align>
                 <textcolor>grey</textcolor>
-                <label>$INFO[Container.ListItem().Property(extrainfos)]</label>
+                <label>$INFO[Container.ListItem.Property(extrainfos)]</label>
                 <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),pvr)+Skin.HasSetting(Widget_LiveTVHighlights)</visible>
-                <visible>!String.IsEmpty(Container.ListItem().Property(extrainfos))</visible>
+                <visible>!String.IsEmpty(Container.ListItem.Property(extrainfos))</visible>
             </control>
             <control type="label">
                 <width>725</width>
@@ -1615,7 +1615,7 @@
                 <textcolor>grey</textcolor>
                 <label>$INFO[Container.ListItem.Genre]$INFO[Container.ListItem.Property(StartTime), / ,]$INFO[Container.ListItem.Property(EndTime), - ,]</label>
                 <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),pvr)+Skin.HasSetting(Widget_LiveTVHighlights)</visible>
-                <visible>String.IsEmpty(Container.ListItem().Property(extrainfos))</visible>
+                <visible>String.IsEmpty(Container.ListItem.Property(extrainfos))</visible>
             </control>
             <control type="label">
                 <width>725</width>
@@ -1623,9 +1623,9 @@
                 <font>font12</font>
                 <align>right</align>
                 <textcolor>grey</textcolor>
-                <label>$INFO[Container.ListItem().Property(watchtype)]</label>
+                <label>$INFO[Container.ListItem.Property(watchtype)]</label>
                 <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),pvr)+Skin.HasSetting(Widget_LiveTVHighlights)</visible>
-                <visible>!String.IsEmpty(Container.ListItem().Property(watchtype))</visible>
+                <visible>!String.IsEmpty(Container.ListItem.Property(watchtype))</visible>
             </control>
             <control type="label">
                 <width>725</width>
@@ -1633,9 +1633,9 @@
                 <font>font12</font>
                 <align>right</align>
                 <textcolor>grey</textcolor>
-                <label>$INFO[Container.ListItem().Property(comment)]</label>
+                <label>$INFO[Container.ListItem.Property(comment)]</label>
                 <visible>String.IsEqual(Container(9000).ListItem.Property(homemenu_id),pvr)+Skin.HasSetting(Widget_LiveTVHighlights)</visible>
-                <visible>!String.IsEmpty(Container.ListItem().Property(comment))</visible>
+                <visible>!String.IsEmpty(Container.ListItem.Property(comment))</visible>
             </control>
             <!-- END TV Highlights -->
             <control type="label">
@@ -1644,7 +1644,7 @@
                 <font>font12</font>
                 <align>right</align>
                 <textcolor>grey</textcolor>
-                <label>$INFO[Container.ListItem().Year,, / ]$INFO[Container.ListItem().Rating,$LOCALIZE[563]: , / ]$INFO[Container.ListItem().Studio,, / ]$INFO[Container.ListItem().Runtime,, $LOCALIZE[12391]]$INFO[Container.ListItem().Duration,, $LOCALIZE[12391]]</label>
+                <label>$INFO[Container.ListItem.Year,, / ]$INFO[Container.ListItem.Rating,$LOCALIZE[563]: , / ]$INFO[Container.ListItem.Studio]$INFO[Container.ListItem.Runtime, / , $LOCALIZE[12391]]$INFO[Container.ListItem.Duration, / , $LOCALIZE[12391]]</label>
                 <visible>![String.IsEqual(Container(9000).ListItem.Property(homemenu_id),music)|String.IsEqual(Container(9000).ListItem.Property(homemenu_id),radio)|String.IsEqual(Container(9000).ListItem.Property(homemenu_id),custom8)]</visible>
             </control>
         </control>
@@ -1682,6 +1682,7 @@
 			<control type="list" id="$PARAM[HomePageWidget_list_id]">
 				<width>736</width>
 				<height>240</height>
+				<onclick condition="String.Contains(Container.ListItem.FolderPath,pvr://timers)">ActivateWindow(tvtimers)</onclick>
 				<ondown>Action(FirstPage)</ondown>
 				<ondown>$PARAM[HomePageWidget_list_ondown]</ondown>
 				<onup/>
@@ -1832,7 +1833,7 @@
                     <colordiffuse>$VAR[widgetdim]</colordiffuse>
                     <aspectratio>stretch</aspectratio>
                     <texture>$VAR[StreamFlag]</texture>
-                    <visible>String.Contains(ListItem.Path,video.amazon)|String.Contains(ListItem.FileExtension,strm)</visible>
+                    <!-- <visible>String.Contains(ListItem.Path,video.amazon)|String.Contains(ListItem.FileExtension,strm)|String.Contains(ListItem.FileExtension,disc)</visible> -->
                 </control>
             </control>
         </itemlayout>
@@ -1959,7 +1960,7 @@
                         <colordiffuse>$VAR[widgetdim]</colordiffuse>
                         <aspectratio>stretch</aspectratio>
                         <texture>$VAR[StreamFlag]</texture>
-                        <visible>String.Contains(ListItem.Path,video.amazon)|String.Contains(ListItem.FileExtension,strm)</visible>
+						<!-- <visible>String.Contains(ListItem.Path,video.amazon)|String.Contains(ListItem.FileExtension,strm)|String.Contains(ListItem.FileExtension,disc)</visible> -->
                         <visible>!Control.HasFocus($PARAM[Widget_Listlayout_id])</visible>
                     </control>
                     <control type="image">
@@ -1969,7 +1970,7 @@
                         <height>84</height>
                         <aspectratio>stretch</aspectratio>
                         <texture>$VAR[StreamFlag]</texture>
-                        <visible>String.Contains(ListItem.Path,video.amazon)|String.Contains(ListItem.FileExtension,strm)</visible>
+						<!-- <visible>String.Contains(ListItem.Path,video.amazon)|String.Contains(ListItem.FileExtension,strm)|String.Contains(ListItem.FileExtension,disc)</visible> -->
                         <visible>Control.HasFocus($PARAM[Widget_Listlayout_id])</visible>
                     </control>
                 </control>

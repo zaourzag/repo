@@ -481,44 +481,28 @@
         <control type="label">
             <left>0</left>
             <top>45</top>
-            <width>1890</width>
-            <height>21</height>
-            <textcolor>red</textcolor>
-            <shadowcolor/>
-            <align>right</align>
-            <label>Container FolderPath: $INFO[Container.FolderPath]</label>
+            <include>PathID</include>
+            <label>Container.FolderPath: $INFO[Container.FolderPath]</label>
             <visible>Skin.HasSetting(DebugInfo)</visible>
         </control>
         <control type="label">
             <left>0</left>
             <top>78</top>
-            <width>1890</width>
-            <height>21</height>
-            <textcolor>red</textcolor>
-            <shadowcolor/>
-            <align>right</align>
-            <label>ListItem FolderPath: $INFO[ListItem.FolderPath]</label>
+            <include>PathID</include>
+            <label>ListItem.FolderPath: $INFO[ListItem.FolderPath]</label>
             <visible>Skin.HasSetting(DebugInfo)</visible>
         </control>
         <control type="label">
             <left>0</left>
             <top>108</top>
-            <width>1890</width>
-            <height>21</height>
-            <textcolor>red</textcolor>
-            <shadowcolor/>
-            <align>right</align>
-            <label>ListItem DBID: $INFO[ListItem.DBID]</label>
+            <include>PathID</include>
+            <label>ListItem.DBID: $INFO[ListItem.DBID] | ListItem.DBTYPE: $INFO[ListItem.DBTYPE]</label>
             <visible>Skin.HasSetting(DebugInfo)</visible>
         </control>
         <control type="label">
             <left>0</left>
             <top>108</top>
-            <width>1890</width>
-            <height>21</height>
-            <textcolor>red</textcolor>
-            <shadowcolor/>
-            <align>right</align>
+            <include>PathID</include>
             <label>Artist Slide Show ON</label>
             <visible>Window(Visualisation).Property(ArtistSlideshowRunning)</visible>
             <visible>Skin.HasSetting(DebugInfo)</visible>
@@ -526,11 +510,7 @@
         <control type="label">
             <left>0</left>
             <top>138</top>
-            <width>1890</width>
-            <height>21</height>
-            <textcolor>red</textcolor>
-            <shadowcolor/>
-            <align>right</align>
+            <include>PathID</include>
             <label>$INFO[Skin.String(moviegenreicons.path)]$INFO[ListItem.Label]$INFO[Skin.String(moviegenreicons.ext)]</label>
             <visible>!String.IsEmpty(Skin.String(moviegenreicons.name))+Container.Content(genres)</visible>
             <visible>Skin.HasSetting(DebugInfo)</visible>
@@ -538,11 +518,7 @@
         <control type="label">
             <left>0</left>
             <top>168</top>
-            <width>1890</width>
-            <height>21</height>
-            <textcolor>red</textcolor>
-            <shadowcolor/>
-            <align>right</align>
+            <include>PathID</include>
             <label>$INFO[Skin.String(studiologos.path)]$INFO[ListItem.Label]$INFO[Skin.String(studiologos.ext)]</label>
             <visible>!String.IsEmpty(Skin.String(studiologos.name))+Container.Content(studios)</visible>
             <visible>Skin.HasSetting(DebugInfo)</visible>
@@ -550,12 +526,22 @@
         <control type="label">
             <left>0</left>
             <top>198</top>
-            <width>1890</width>
-            <height>21</height>
-            <textcolor>red</textcolor>
-            <shadowcolor/>
-            <align>right</align>
-            <label>$VAR[PosterThumb]</label>
+            <include>PathID</include>
+            <label>Posterthumb: $VAR[PosterThumb]</label>
+            <visible>Skin.HasSetting(DebugInfo)</visible>
+        </control>
+        <control type="label">
+            <left>0</left>
+            <top>230</top>
+            <include>PathID</include>
+            <label>Container.Content: $INFO[Container.Content]</label>
+            <visible>Skin.HasSetting(DebugInfo)</visible>
+        </control>
+        <control type="label">
+            <left>0</left>
+            <top>260</top>
+            <include>PathID</include>
+            <label>ListItem.FileExtension: $INFO[ListItem.FileExtension] VAR ListFlag: $VAR[ListFlag]</label>
             <visible>Skin.HasSetting(DebugInfo)</visible>
         </control>
     </controls>
