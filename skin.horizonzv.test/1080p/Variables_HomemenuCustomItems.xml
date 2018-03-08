@@ -570,7 +570,6 @@
 		<value condition="Skin.HasSetting(HomeWidget_Picture_Standard)">$INFO[Skin.String(Home_Picture_Custom_Path)]</value>
         <value condition="Skin.HasSetting(HomeWidget_Picture_User)">$INFO[Skin.String(HomeWidget_Picture_Path)]</value>
     </variable>
-	
 	<!-- Custom1 -->
     <variable name="HomeWidget_Custom1_Currentpath">
         <value condition="Skin.HasSetting(Home_Custom1_Custom_Category_Video)">Skin.SetPath(HomeWidget_Custom1_Path,library://video/)</value>

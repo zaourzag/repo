@@ -142,14 +142,14 @@
 				</include>
                 <control type="radiobutton" id="9">
                     <include>dialogbutton_popup</include>
-					<label>Multiimage $LOCALIZE[19190]</label>
+					<label>Multiimage $LOCALIZE[31102]</label>
 					<onclick>Skin.ToggleSetting(Home_Background_Music_Multiimage)</onclick>
 					<selected>Skin.HasSetting(Home_Background_Music_Multiimage)</selected>
 				</control>
                 <control type="button" id="10">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
-					<label>19190</label>
+					<label>31102</label>
 					<label2>$INFO[Skin.String(user_bkg_music)]</label2>
 					<onclick condition="!Skin.HasSetting(Home_Background_Music_Multiimage)">Skin.SetImage(user_bkg_music,smb://)</onclick>
 					<onclick condition="Skin.HasSetting(Home_Background_Music_Multiimage)">Skin.SetPath(user_bkg_music,smb://)</onclick>
@@ -157,7 +157,7 @@
                 <control type="button" id="11">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
-					<label>- Reset $LOCALIZE[19190]</label>
+					<label>- Reset $LOCALIZE[31102]</label>
 					<onclick>Skin.Reset(user_bkg_music)</onclick>
 				</control>
                 <control type="button" id="12">
@@ -246,14 +246,14 @@
 				</include>
                 <control type="radiobutton" id="34">
                     <include>dialogbutton_popup</include>
-					<label>Multiimage $LOCALIZE[19190]</label>
+					<label>Multiimage $LOCALIZE[31102]</label>
 					<onclick>Skin.ToggleSetting(Home_Background_Video_Multiimage)</onclick>
 					<selected>Skin.HasSetting(Home_Background_Video_Multiimage)</selected>
 				</control>
                 <control type="button" id="35">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
-					<label>19190</label>
+					<label>31102</label>
 					<label2>$INFO[Skin.String(user_bkg_video)]</label2>
 					<onclick condition="!Skin.HasSetting(Home_Background_Video_Multiimage)">Skin.SetImage(user_bkg_video,smb://)</onclick>
 					<onclick condition="Skin.HasSetting(Home_Background_Video_Multiimage)">Skin.SetPath(user_bkg_video,smb://)</onclick>
@@ -261,7 +261,7 @@
                 <control type="button" id="36">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
-					<label>- Reset $LOCALIZE[19190]</label>
+					<label>- Reset $LOCALIZE[31102]</label>
 					<onclick>Skin.Reset(user_bkg_video)</onclick>
 				</control>
                 <control type="button" id="37">
@@ -342,14 +342,14 @@
 				</include>
                 <control type="radiobutton" id="58">
                     <include>dialogbutton_popup</include>
-					<label>Multiimage $LOCALIZE[19190]</label>
+					<label>Multiimage $LOCALIZE[31102]</label>
 					<onclick>Skin.ToggleSetting(Home_Background_Movie_Multiimage)</onclick>
 					<selected>Skin.HasSetting(Home_Background_Movie_Multiimage)</selected>
 				</control>
                 <control type="button" id="59">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
-					<label>19190</label>
+					<label>31102</label>
 					<label2>$INFO[Skin.String(user_bkg_movie)]</label2>
 					<onclick condition="!Skin.HasSetting(Home_Background_Movie_Multiimage)">Skin.SetImage(user_bkg_movie,smb://)</onclick>
 					<onclick condition="Skin.HasSetting(Home_Background_Movie_Multiimage)">Skin.SetPath(user_bkg_movie,smb://)</onclick>
@@ -357,7 +357,7 @@
                 <control type="button" id="60">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
-					<label>- Reset $LOCALIZE[19190]</label>
+					<label>- Reset $LOCALIZE[31102]</label>
 					<onclick>Skin.Reset(user_bkg_movie)</onclick>
 				</control>
                 <control type="button" id="61">
@@ -438,14 +438,14 @@
 				</include>
                 <control type="radiobutton" id="78">
                     <include>dialogbutton_popup</include>
-					<label>Multiimage $LOCALIZE[19190]</label>
+					<label>Multiimage $LOCALIZE[31102]</label>
 					<onclick>Skin.ToggleSetting(Home_Background_TVShow_Multiimage)</onclick>
 					<selected>Skin.HasSetting(Home_Background_TVShow_Multiimage)</selected>
 				</control>
                 <control type="button" id="79">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
-					<label>19190</label>
+					<label>31102</label>
 					<label2>$INFO[Skin.String(user_bkg_tvshow)]</label2>
 					<onclick condition="!Skin.HasSetting(Home_Background_TVShow_Multiimage)">Skin.SetImage(user_bkg_tvshow,smb://)</onclick>
 					<onclick condition="Skin.HasSetting(Home_Background_TVShow_Multiimage)">Skin.SetPath(user_bkg_tvshow,smb://)</onclick>
@@ -453,7 +453,7 @@
                 <control type="button" id="80">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
-					<label>- Reset $LOCALIZE[19190]</label>
+					<label>- Reset $LOCALIZE[31102]</label>
 					<onclick>Skin.Reset(user_bkg_tvshow)</onclick>
 				</control>
                 <control type="button" id="81">
@@ -534,14 +534,14 @@
 				</include>
                 <control type="radiobutton" id="103">
                     <include>dialogbutton_popup</include>
-					<label>Multiimage $LOCALIZE[19190]</label>
+					<label>Multiimage $LOCALIZE[31102]</label>
 					<onclick>Skin.ToggleSetting(Home_Background_Musicvideo_Multiimage)</onclick>
 					<selected>Skin.HasSetting(Home_Background_Musicvideo_Multiimage)</selected>
 				</control>
                 <control type="button" id="104">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
-					<label>19190</label>
+					<label>31102</label>
 					<label2>$INFO[Skin.String(user_bkg_musicvideo)]</label2>
 					<onclick condition="!Skin.HasSetting(Home_Background_Musicvideo_Multiimage)">Skin.SetImage(user_bkg_musicvideo,smb://)</onclick>
 					<onclick condition="Skin.HasSetting(Home_Background_Musicvideo_Multiimage)">Skin.SetPath(user_bkg_musicvideo,smb://)</onclick>
@@ -549,7 +549,7 @@
                 <control type="button" id="105">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
-					<label>- Reset $LOCALIZE[19190]</label>
+					<label>- Reset $LOCALIZE[31102]</label>
 					<onclick>Skin.Reset(user_bkg_musicvideo)</onclick>
 				</control>
                 <control type="button" id="106">
@@ -630,14 +630,14 @@
 				</include>
                 <control type="radiobutton" id="121">
                     <include>dialogbutton_popup</include>
-					<label>Multiimage $LOCALIZE[19190]</label>
+					<label>Multiimage $LOCALIZE[31102]</label>
 					<onclick>Skin.ToggleSetting(Home_Background_Picture_Multiimage)</onclick>
 					<selected>Skin.HasSetting(Home_Background_Picture_Multiimage)</selected>
 				</control>
                 <control type="button" id="122">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
-					<label>19190</label>
+					<label>31102</label>
 					<label2>$INFO[Skin.String(user_bkg_pictures)]</label2>
 					<onclick condition="!Skin.HasSetting(Home_Background_Picture_Multiimage)">Skin.SetImage(user_bkg_pictures,smb://)</onclick>
 					<onclick condition="Skin.HasSetting(Home_Background_Picture_Multiimage)">Skin.SetPath(user_bkg_pictures,smb://)</onclick>
@@ -645,7 +645,7 @@
                 <control type="button" id="123">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
-					<label>- Reset $LOCALIZE[19190]</label>
+					<label>- Reset $LOCALIZE[31102]</label>
 					<onclick>Skin.Reset(user_bkg_pictures)</onclick>
 				</control>
                 <control type="button" id="124">
@@ -686,14 +686,14 @@
 				</include>
                 <control type="radiobutton" id="132">
                     <include>dialogbutton_popup</include>
-					<label>Multiimage $LOCALIZE[19190]</label>
+					<label>Multiimage $LOCALIZE[31102]</label>
 					<onclick>Skin.ToggleSetting(Home_Background_Picture_Multiimage)</onclick>
 					<selected>Skin.HasSetting(Home_Background_Picture_Multiimage)</selected>
 				</control>
                 <control type="button" id="133">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
-					<label>19190</label>
+					<label>31102</label>
 					<label2>$INFO[Skin.String(user_bkg_dvd)]</label2>
 					<onclick condition="!Skin.HasSetting(Home_Background_Picture_Multiimage)">Skin.SetImage(user_bkg_dvd,smb://)</onclick>
 					<onclick condition="Skin.HasSetting(Home_Background_Picture_Multiimage)">Skin.SetPath(user_bkg_dvd,smb://)</onclick>
@@ -701,7 +701,7 @@
                 <control type="button" id="134">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
-					<label>- Reset $LOCALIZE[19190]</label>
+					<label>- Reset $LOCALIZE[31102]</label>
 					<onclick>Skin.Reset(user_bkg_dvd)</onclick>
 				</control>
                 <control type="button" id="135">
@@ -774,14 +774,14 @@
 				</include>
                 <control type="radiobutton" id="148">
                     <include>dialogbutton_popup</include>
-					<label>Multiimage $LOCALIZE[19190]</label>
+					<label>Multiimage $LOCALIZE[31102]</label>
 					<onclick>Skin.ToggleSetting(Home_Background_Custom1_Multiimage)</onclick>
 					<selected>Skin.HasSetting(Home_Background_Custom1_Multiimage)</selected>
 				</control>
                 <control type="button" id="149">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
-					<label>19190</label>
+					<label>31102</label>
 					<label2>$VAR[backgroundfolder]home_custom1$VAR[bkg_fileext]</label2>
 					<onclick condition="!Skin.HasSetting(Home_Background_Custom1_Multiimage)">Skin.SetImage(user_bkg_custom1,smb://)</onclick>
 					<onclick condition="Skin.HasSetting(Home_Background_Custom1_Multiimage)">Skin.SetPath(user_bkg_custom1,smb://)</onclick>
@@ -789,7 +789,7 @@
                 <control type="button" id="150">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
-					<label>- Reset $LOCALIZE[19190]</label>
+					<label>- Reset $LOCALIZE[31102]</label>
 					<onclick>Skin.Reset(user_bkg_custom1)</onclick>
 				</control>
                 <control type="button" id="151">
@@ -863,14 +863,14 @@
 				</include>
                 <control type="radiobutton" id="148">
                     <include>dialogbutton_popup</include>
-					<label>Multiimage $LOCALIZE[19190]</label>
+					<label>Multiimage $LOCALIZE[31102]</label>
 					<onclick>Skin.ToggleSetting(Home_Background_Custom2_Multiimage)</onclick>
 					<selected>Skin.HasSetting(Home_Background_Custom2_Multiimage)</selected>
 				</control>
                 <control type="button" id="149">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
-					<label>19190</label>
+					<label>31102</label>
 					<label2>$VAR[backgroundfolder]home_custom2$VAR[bkg_fileext]</label2>
 					<onclick condition="!Skin.HasSetting(Home_Background_Custom2_Multiimage)">Skin.SetImage(user_bkg_custom2,smb://)</onclick>
 					<onclick condition="Skin.HasSetting(Home_Background_Custom2_Multiimage)">Skin.SetPath(user_bkg_custom2,smb://)</onclick>
@@ -878,7 +878,7 @@
                 <control type="button" id="150">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
-					<label>- Reset $LOCALIZE[19190]</label>
+					<label>- Reset $LOCALIZE[31102]</label>
 					<onclick>Skin.Reset(user_bkg_custom2)</onclick>
 				</control>
                 <control type="button" id="151">
@@ -952,14 +952,14 @@
 				</include>
                 <control type="radiobutton" id="148">
                     <include>dialogbutton_popup</include>
-					<label>Multiimage $LOCALIZE[19190]</label>
+					<label>Multiimage $LOCALIZE[31102]</label>
 					<onclick>Skin.ToggleSetting(Home_Background_Custom3_Multiimage)</onclick>
 					<selected>Skin.HasSetting(Home_Background_Custom3_Multiimage)</selected>
 				</control>
                 <control type="button" id="149">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
-					<label>19190</label>
+					<label>31102</label>
 					<label2>$VAR[backgroundfolder]home_custom3$VAR[bkg_fileext]</label2>
 					<onclick condition="!Skin.HasSetting(Home_Background_Custom3_Multiimage)">Skin.SetImage(user_bkg_custom3,smb://)</onclick>
 					<onclick condition="Skin.HasSetting(Home_Background_Custom3_Multiimage)">Skin.SetPath(user_bkg_custom3,smb://)</onclick>
@@ -967,7 +967,7 @@
                 <control type="button" id="150">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
-					<label>- Reset $LOCALIZE[19190]</label>
+					<label>- Reset $LOCALIZE[31102]</label>
 					<onclick>Skin.Reset(user_bkg_custom3)</onclick>
 				</control>
                 <control type="button" id="151">
@@ -1041,14 +1041,14 @@
 				</include>
                 <control type="radiobutton" id="148">
                     <include>dialogbutton_popup</include>
-					<label>Multiimage $LOCALIZE[19190]</label>
+					<label>Multiimage $LOCALIZE[31102]</label>
 					<onclick>Skin.ToggleSetting(Home_Background_Custom4_Multiimage)</onclick>
 					<selected>Skin.HasSetting(Home_Background_Custom4_Multiimage)</selected>
 				</control>
                 <control type="button" id="149">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
-					<label>19190</label>
+					<label>31102</label>
 					<label2>$VAR[backgroundfolder]home_custom4$VAR[bkg_fileext]</label2>
 					<onclick condition="!Skin.HasSetting(Home_Background_Custom4_Multiimage)">Skin.SetImage(user_bkg_custom4,smb://)</onclick>
 					<onclick condition="Skin.HasSetting(Home_Background_Custom4_Multiimage)">Skin.SetPath(user_bkg_custom4,smb://)</onclick>
@@ -1056,7 +1056,7 @@
                 <control type="button" id="150">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
-					<label>- Reset $LOCALIZE[19190]</label>
+					<label>- Reset $LOCALIZE[31102]</label>
 					<onclick>Skin.Reset(user_bkg_custom4)</onclick>
 				</control>
                 <control type="button" id="151">
@@ -1130,14 +1130,14 @@
 				</include>
                 <control type="radiobutton" id="148">
                     <include>dialogbutton_popup</include>
-					<label>Multiimage $LOCALIZE[19190]</label>
+					<label>Multiimage $LOCALIZE[31102]</label>
 					<onclick>Skin.ToggleSetting(Home_Background_Custom5_Multiimage)</onclick>
 					<selected>Skin.HasSetting(Home_Background_Custom5_Multiimage)</selected>
 				</control>
                 <control type="button" id="149">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
-					<label>19190</label>
+					<label>31102</label>
 					<label2>$VAR[backgroundfolder]home_custom5$VAR[bkg_fileext]</label2>
 					<onclick condition="!Skin.HasSetting(Home_Background_Custom5_Multiimage)">Skin.SetImage(user_bkg_custom5,smb://)</onclick>
 					<onclick condition="Skin.HasSetting(Home_Background_Custom5_Multiimage)">Skin.SetPath(user_bkg_custom5,smb://)</onclick>
@@ -1145,7 +1145,7 @@
                 <control type="button" id="150">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
-					<label>- Reset $LOCALIZE[19190]</label>
+					<label>- Reset $LOCALIZE[31102]</label>
 					<onclick>Skin.Reset(user_bkg_custom5)</onclick>
 				</control>
                 <control type="button" id="151">
@@ -1219,14 +1219,14 @@
 				</include>
                 <control type="radiobutton" id="148">
                     <include>dialogbutton_popup</include>
-					<label>Multiimage $LOCALIZE[19190]</label>
+					<label>Multiimage $LOCALIZE[31102]</label>
 					<onclick>Skin.ToggleSetting(Home_Background_Custom6_Multiimage)</onclick>
 					<selected>Skin.HasSetting(Home_Background_Custom6_Multiimage)</selected>
 				</control>
                 <control type="button" id="149">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
-					<label>19190</label>
+					<label>31102</label>
 					<label2>$VAR[backgroundfolder]home_custom6$VAR[bkg_fileext]</label2>
 					<onclick condition="!Skin.HasSetting(Home_Background_Custom6_Multiimage)">Skin.SetImage(user_bkg_custom6,smb://)</onclick>
 					<onclick condition="Skin.HasSetting(Home_Background_Custom6_Multiimage)">Skin.SetPath(user_bkg_custom6,smb://)</onclick>
@@ -1234,7 +1234,7 @@
                 <control type="button" id="150">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
-					<label>- Reset $LOCALIZE[19190]</label>
+					<label>- Reset $LOCALIZE[31102]</label>
 					<onclick>Skin.Reset(user_bkg_custom6)</onclick>
 				</control>
                 <control type="button" id="151">
@@ -1308,14 +1308,14 @@
 				</include>
                 <control type="radiobutton" id="148">
                     <include>dialogbutton_popup</include>
-					<label>Multiimage $LOCALIZE[19190]</label>
+					<label>Multiimage $LOCALIZE[31102]</label>
 					<onclick>Skin.ToggleSetting(Home_Background_Custom7_Multiimage)</onclick>
 					<selected>Skin.HasSetting(Home_Background_Custom7_Multiimage)</selected>
 				</control>
                 <control type="button" id="149">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
-					<label>19190</label>
+					<label>31102</label>
 					<label2>$VAR[backgroundfolder]home_custom7$VAR[bkg_fileext]</label2>
 					<onclick condition="!Skin.HasSetting(Home_Background_Custom7_Multiimage)">Skin.SetImage(user_bkg_custom7,smb://)</onclick>
 					<onclick condition="Skin.HasSetting(Home_Background_Custom7_Multiimage)">Skin.SetPath(user_bkg_custom7,smb://)</onclick>
@@ -1323,7 +1323,7 @@
                 <control type="button" id="150">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
-					<label>- Reset $LOCALIZE[19190]</label>
+					<label>- Reset $LOCALIZE[31102]</label>
 					<onclick>Skin.Reset(user_bkg_custom7)</onclick>
 				</control>
                 <control type="button" id="151">
@@ -1397,14 +1397,14 @@
 				</include>
                 <control type="radiobutton" id="148">
                     <include>dialogbutton_popup</include>
-					<label>Multiimage $LOCALIZE[19190]</label>
+					<label>Multiimage $LOCALIZE[31102]</label>
 					<onclick>Skin.ToggleSetting(Home_Background_Custom8_Multiimage)</onclick>
 					<selected>Skin.HasSetting(Home_Background_Custom8_Multiimage)</selected>
 				</control>
                 <control type="button" id="149">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
-					<label>19190</label>
+					<label>31102</label>
 					<label2>$VAR[backgroundfolder]home_custom8$VAR[bkg_fileext]</label2>
 					<onclick condition="!Skin.HasSetting(Home_Background_Custom8_Multiimage)">Skin.SetImage(user_bkg_custom8,smb://)</onclick>
 					<onclick condition="Skin.HasSetting(Home_Background_Custom8_Multiimage)">Skin.SetPath(user_bkg_custom8,smb://)</onclick>
@@ -1412,7 +1412,7 @@
                 <control type="button" id="150">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
-					<label>- Reset $LOCALIZE[19190]</label>
+					<label>- Reset $LOCALIZE[31102]</label>
 					<onclick>Skin.Reset(user_bkg_custom8)</onclick>
 				</control>
                 <control type="button" id="151">
@@ -1486,14 +1486,14 @@
 				</include>
                 <control type="radiobutton" id="148">
                     <include>dialogbutton_popup</include>
-					<label>Multiimage $LOCALIZE[19190]</label>
+					<label>Multiimage $LOCALIZE[31102]</label>
 					<onclick>Skin.ToggleSetting(Home_Background_Custom9_Multiimage)</onclick>
 					<selected>Skin.HasSetting(Home_Background_Custom9_Multiimage)</selected>
 				</control>
                 <control type="button" id="149">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
-					<label>19190</label>
+					<label>31102</label>
 					<label2>$VAR[backgroundfolder]home_custom9$VAR[bkg_fileext]</label2>
 					<onclick condition="!Skin.HasSetting(Home_Background_Custom9_Multiimage)">Skin.SetImage(user_bkg_custom9,smb://)</onclick>
 					<onclick condition="Skin.HasSetting(Home_Background_Custom9_Multiimage)">Skin.SetPath(user_bkg_custom9,smb://)</onclick>
@@ -1501,7 +1501,7 @@
                 <control type="button" id="150">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
-					<label>- Reset $LOCALIZE[19190]</label>
+					<label>- Reset $LOCALIZE[31102]</label>
 					<onclick>Skin.Reset(user_bkg_custom9)</onclick>
 				</control>
                 <control type="button" id="151">
@@ -1543,14 +1543,14 @@
 				</include>
                 <control type="radiobutton" id="162">
                     <include>dialogbutton_popup</include>
-					<label>Multiimage $LOCALIZE[19190]</label>
+					<label>Multiimage $LOCALIZE[31102]</label>
 					<onclick>Skin.ToggleSetting(Home_Background_Setting_Multiimage)</onclick>
 					<selected>Skin.HasSetting(Home_Background_Setting_Multiimage)</selected>
 				</control>
                 <control type="button" id="163">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
-					<label>19190</label>
+					<label>31102</label>
 					<label2>$INFO[Skin.String(user_bkg_settings)]</label2>
 					<onclick condition="!Skin.HasSetting(Home_Background_Setting_Multiimage)">Skin.SetImage(user_bkg_settings,smb://)</onclick>
 					<onclick condition="Skin.HasSetting(Home_Background_Setting_Multiimage)">Skin.SetPath(user_bkg_settings,smb://)</onclick>
@@ -1558,7 +1558,7 @@
                 <control type="button" id="164">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
-					<label>- Reset $LOCALIZE[19190]</label>
+					<label>- Reset $LOCALIZE[31102]</label>
 					<onclick>Skin.Reset(user_bkg_settings)</onclick>
 				</control>
                 <control type="button" id="165">
@@ -1599,14 +1599,14 @@
 				</include>
                 <control type="radiobutton" id="162">
                     <include>dialogbutton_popup</include>
-					<label>Multiimage $LOCALIZE[19190]</label>
+					<label>Multiimage $LOCALIZE[31102]</label>
 					<onclick>Skin.ToggleSetting(Home_Background_Dashboard_Multiimage)</onclick>
 					<selected>Skin.HasSetting(Home_Background_Dashboard_Multiimage)</selected>
 				</control>
                 <control type="button" id="170">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
-					<label>19190</label>
+					<label>31102</label>
 					<label2>$INFO[Skin.String(user_bkg_dashboard)]</label2>
 					<onclick condition="!Skin.HasSetting(Home_Background_Dashboard_Multiimage)">Skin.SetImage(user_bkg_dashboard,smb://)</onclick>
 					<onclick condition="Skin.HasSetting(Home_Background_Dashboard_Multiimage)">Skin.SetPath(user_bkg_dashboard,smb://)</onclick>
@@ -1614,7 +1614,7 @@
                 <control type="button" id="171">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
-					<label>- Reset $LOCALIZE[19190]</label>
+					<label>- Reset $LOCALIZE[31102]</label>
 					<onclick>Skin.Reset(user_bkg_dashboard)</onclick>
 				</control>
                 <control type="button" id="172">
@@ -1654,14 +1654,14 @@
 				</include>
                 <control type="radiobutton" id="180">
                     <include>dialogbutton_popup</include>
-					<label>Multiimage $LOCALIZE[19190]</label>
+					<label>Multiimage $LOCALIZE[31102]</label>
 					<onclick>Skin.ToggleSetting(Home_Background_PVR_Multiimage)</onclick>
 					<selected>Skin.HasSetting(Home_Background_PVR_Multiimage)</selected>
 				</control>
                 <control type="button" id="181">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
-					<label>19190</label>
+					<label>31102</label>
 					<label2>$INFO[Skin.String(user_bkg_pvr)]</label2>
 					<onclick condition="!Skin.HasSetting(Home_Background_PVR_Multiimage)">Skin.SetImage(user_bkg_pvr,smb://)</onclick>
 					<onclick condition="Skin.HasSetting(Home_Background_PVR_Multiimage)">Skin.SetPath(user_bkg_pvr,smb://)</onclick>
@@ -1669,7 +1669,7 @@
                 <control type="button" id="182">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
-					<label>- Reset $LOCALIZE[19190]</label>
+					<label>- Reset $LOCALIZE[31102]</label>
 					<onclick>Skin.Reset(user_bkg_pvr)</onclick>
 				</control>
                 <control type="button" id="183">
@@ -1709,14 +1709,14 @@
 				</include>
                 <control type="radiobutton" id="190">
                     <include>dialogbutton_popup</include>
-					<label>Multiimage $LOCALIZE[19190]</label>
+					<label>Multiimage $LOCALIZE[31102]</label>
 					<onclick>Skin.ToggleSetting(Home_Background_Radio_Multiimage)</onclick>
 					<selected>Skin.HasSetting(Home_Background_Radio_Multiimage)</selected>
 				</control>
                 <control type="button" id="191">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
-					<label>19190</label>
+					<label>31102</label>
 					<label2>$INFO[Skin.String(user_bkg_radio)]</label2>
 					<onclick condition="!Skin.HasSetting(Home_Background_Radio_Multiimage)">Skin.SetImage(user_bkg_radio,smb://)</onclick>
 					<onclick condition="Skin.HasSetting(Home_Background_Radio_Multiimage)">Skin.SetPath(user_bkg_radio,smb://)</onclick>
@@ -1724,7 +1724,7 @@
                 <control type="button" id="192">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
-					<label>- Reset $LOCALIZE[19190]</label>
+					<label>- Reset $LOCALIZE[31102]</label>
 					<onclick>Skin.Reset(user_bkg_radio)</onclick>
 				</control>
                 <control type="button" id="193">
@@ -1764,14 +1764,14 @@
 				</include>
                 <control type="radiobutton" id="200">
                     <include>dialogbutton_popup</include>
-					<label>Multiimage $LOCALIZE[19190]</label>
+					<label>Multiimage $LOCALIZE[31102]</label>
 					<onclick>Skin.ToggleSetting(Home_Background_News_Multiimage)</onclick>
 					<selected>Skin.HasSetting(Home_Background_News_Multiimage)</selected>
 				</control>
                 <control type="button" id="201">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
-					<label>19190</label>
+					<label>31102</label>
 					<label2>$INFO[Skin.String(user_bkg_news)]</label2>
 					<onclick condition="!Skin.HasSetting(Home_Background_News_Multiimage)">Skin.SetImage(user_bkg_news,smb://)</onclick>
 					<onclick condition="Skin.HasSetting(Home_Background_News_Multiimage)">Skin.SetPath(user_bkg_news,smb://)</onclick>
@@ -1779,7 +1779,7 @@
                 <control type="button" id="202">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
-					<label>- Reset $LOCALIZE[19190]</label>
+					<label>- Reset $LOCALIZE[31102]</label>
 					<onclick>Skin.Reset(user_bkg_news)</onclick>
 				</control>
                 <control type="button" id="203">
@@ -1860,14 +1860,14 @@
 				</include>
                 <control type="radiobutton" id="217">
                     <include>dialogbutton_popup</include>
-					<label>Multiimage $LOCALIZE[19190]</label>
+					<label>Multiimage $LOCALIZE[31102]</label>
 					<onclick>Skin.ToggleSetting(Home_Background_Games_Multiimage)</onclick>
 					<selected>Skin.HasSetting(Home_Background_Games_Multiimage)</selected>
 				</control>
                 <control type="button" id="218">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
-					<label>19190</label>
+					<label>31102</label>
 					<label2>$INFO[Skin.String(user_bkg_games)]</label2>
 					<onclick condition="!Skin.HasSetting(Home_Background_Games_Multiimage)">Skin.SetImage(user_bkg_games,smb://)</onclick>
 					<onclick condition="Skin.HasSetting(Home_Background_Games_Multiimage)">Skin.SetPath(user_bkg_games,smb://)</onclick>
@@ -1875,7 +1875,7 @@
                 <control type="button" id="219">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
-					<label>- Reset $LOCALIZE[19190]</label>
+					<label>- Reset $LOCALIZE[31102]</label>
 					<onclick>Skin.Reset(user_bkg_games)</onclick>
 				</control>
                 <control type="button" id="220">

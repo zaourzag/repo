@@ -1,67 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <includes>
     <variable name="Panel3Content">
-        <value condition="[String.StartsWith(ListItem.FolderPath,videodb://movies/genres)|String.StartsWith(ListItem.FolderPath,library://video/movies/genres)]+[String.IsEqual(Container.FolderPath,videodb://movies/)|String.IsEqual(Container.FolderPath,videodb://movies/genres/)]">videodb://movies/genres/$INFO[Container(303).ListItem().DBID]</value>
-        <value condition="String.StartsWith(ListItem.FolderPath,videodb://movies/years)|String.StartsWith(ListItem.FolderPath,library://video/movies/years)">videodb://movies/years/$INFO[Container(303).ListItem().Label]</value>
-        <value condition="String.StartsWith(ListItem.FolderPath,videodb://movies/actors)|String.StartsWith(ListItem.FolderPath,library://video/movies/actors)">videodb://movies/actors/$INFO[Container(303).ListItem().DBID]</value>
-        <value condition="String.StartsWith(ListItem.FolderPath,videodb://movies/directors)|String.StartsWith(ListItem.FolderPath,library://video/movies/directors)">videodb://movies/directors/$INFO[Container(303).ListItem().DBID]</value>
-        <value condition="String.StartsWith(ListItem.FolderPath,videodb://movies/studios)">$INFO[ListItem.FolderPath]$INFO[Container(303).ListItem().DBID]</value>
-        <value condition="String.StartsWith(ListItem.FolderPath,library://video/movies/studios)">videodb://movies/studios/$INFO[Container(303).ListItem().DBID]</value>
-        <value condition="[String.StartsWith(ListItem.FolderPath,videodb://movies/sets)|String.StartsWith(ListItem.FolderPath,library://video/movies/sets)]+[String.IsEqual(Container.FolderPath,videodb://movies/)|String.IsEqual(Container.FolderPath,videodb://movies/sets/)]">$INFO[ListItem.FolderPath]$INFO[Container(303).ListItem().DBID]</value>
-        <value condition="[String.StartsWith(ListItem.FolderPath,videodb://movies/countries)|String.StartsWith(ListItem.FolderPath,library://video/movies/country)]+!String.StartsWith(Container.FolderPath,videodb://movies/countries)">videodb://movies/countries/$INFO[Container(303).ListItem().DBID]</value>
-        <value condition="String.StartsWith(ListItem.FolderPath,videodb://movies/tags)|String.StartsWith(ListItem.FolderPath,library://video/movies/tags)">videodb://movies/tags/$INFO[Container(303).ListItem().DBID]</value>
-        <value condition="String.StartsWith(ListItem.FolderPath,library://video/movies/)+String.Contains(Container(303).ListItem().Label,$LOCALIZE[515])">videodb://movies/genres</value>
-        <value condition="String.StartsWith(ListItem.FolderPath,library://video/movies/)+String.Contains(Container(303).ListItem().Label,$LOCALIZE[556])">videodb://movies/titles</value>
-        <value condition="String.StartsWith(ListItem.FolderPath,library://video/movies/)+String.Contains(Container(303).ListItem().Label,$LOCALIZE[562])">videodb://movies/years</value>
-        <value condition="String.StartsWith(ListItem.FolderPath,library://video/movies/)+String.Contains(Container(303).ListItem().Label,$LOCALIZE[20337])">videodb://movies/actors</value>
-        <value condition="String.StartsWith(ListItem.FolderPath,library://video/movies/)+String.Contains(Container(303).ListItem().Label,$LOCALIZE[20348])">videodb://movies/directors</value>
-        <value condition="String.StartsWith(ListItem.FolderPath,library://video/movies/)+String.Contains(Container(303).ListItem().Label,$LOCALIZE[20388])">videodb://movies/studios</value>
-        <value condition="String.StartsWith(ListItem.FolderPath,library://video/movies/)+String.Contains(Container(303).ListItem().Label,$LOCALIZE[20434])">videodb://movies/sets</value>
-        <value condition="String.StartsWith(ListItem.FolderPath,library://video/movies/)+String.Contains(Container(303).ListItem().Label,$LOCALIZE[20451])">videodb://movies/countries</value>
-        <value condition="String.StartsWith(ListItem.FolderPath,library://video/movies/)+String.Contains(Container(303).ListItem().Label,$LOCALIZE[20459])">videodb://movies/tags</value>
-        <value condition="String.StartsWith(ListItem.FolderPath,library://video/files)">sources://video/$INFO[Container(303).ListItem().FolderPath]</value>
-        <value condition="String.StartsWith(ListItem.FolderPath,library://video/playlists)">special://profile/playlists/video/$INFO[Container(303).ListItem().FileName]</value>
+        <value condition="[String.StartsWith(ListItem.FolderPath,videodb://movies/genres)|String.StartsWith(ListItem.FolderPath,library://video/movies/genres)]+[String.IsEqual(Container.FolderPath,videodb://movies/)|String.IsEqual(Container.FolderPath,videodb://movies/genres/)]">videodb://movies/genres/$INFO[Container(303).ListItem.DBID]</value>
+        <value condition="String.StartsWith(ListItem.FolderPath,videodb://movies/years)|String.StartsWith(ListItem.FolderPath,library://video/movies/years)">videodb://movies/years/$INFO[Container(303).ListItem.Label]</value>
+        <value condition="String.StartsWith(ListItem.FolderPath,videodb://movies/actors)|String.StartsWith(ListItem.FolderPath,library://video/movies/actors)">videodb://movies/actors/$INFO[Container(303).ListItem.DBID]</value>
+        <value condition="String.StartsWith(ListItem.FolderPath,videodb://movies/directors)|String.StartsWith(ListItem.FolderPath,library://video/movies/directors)">videodb://movies/directors/$INFO[Container(303).ListItem.DBID]</value>
+        <value condition="String.StartsWith(ListItem.FolderPath,videodb://movies/studios)">$INFO[ListItem.FolderPath]$INFO[Container(303).ListItem.DBID]</value>
+        <value condition="String.StartsWith(ListItem.FolderPath,library://video/movies/studios)">videodb://movies/studios/$INFO[Container(303).ListItem.DBID]</value>
+        <value condition="[String.StartsWith(ListItem.FolderPath,videodb://movies/sets)|String.StartsWith(ListItem.FolderPath,library://video/movies/sets)]+[String.IsEqual(Container.FolderPath,videodb://movies/)|String.IsEqual(Container.FolderPath,videodb://movies/sets/)]">$INFO[ListItem.FolderPath]$INFO[Container(303).ListItem.DBID]</value>
+        <value condition="[String.StartsWith(ListItem.FolderPath,videodb://movies/countries)|String.StartsWith(ListItem.FolderPath,library://video/movies/country)]+!String.StartsWith(Container.FolderPath,videodb://movies/countries)">videodb://movies/countries/$INFO[Container(303).ListItem.DBID]</value>
+        <value condition="String.StartsWith(ListItem.FolderPath,videodb://movies/tags)|String.StartsWith(ListItem.FolderPath,library://video/movies/tags)">videodb://movies/tags/$INFO[Container(303).ListItem.DBID]</value>
+        <value condition="String.StartsWith(ListItem.FolderPath,library://video/movies/)+String.Contains(Container(303).ListItem.Label,$LOCALIZE[515])">videodb://movies/genres</value>
+        <value condition="String.StartsWith(ListItem.FolderPath,library://video/movies/)+String.Contains(Container(303).ListItem.Label,$LOCALIZE[556])">videodb://movies/titles</value>
+        <value condition="String.StartsWith(ListItem.FolderPath,library://video/movies/)+String.Contains(Container(303).ListItem.Label,$LOCALIZE[562])">videodb://movies/years</value>
+        <value condition="String.StartsWith(ListItem.FolderPath,library://video/movies/)+String.Contains(Container(303).ListItem.Label,$LOCALIZE[20337])">videodb://movies/actors</value>
+        <value condition="String.StartsWith(ListItem.FolderPath,library://video/movies/)+String.Contains(Container(303).ListItem.Label,$LOCALIZE[20348])">videodb://movies/directors</value>
+        <value condition="String.StartsWith(ListItem.FolderPath,library://video/movies/)+String.Contains(Container(303).ListItem.Label,$LOCALIZE[20388])">videodb://movies/studios</value>
+        <value condition="String.StartsWith(ListItem.FolderPath,library://video/movies/)+String.Contains(Container(303).ListItem.Label,$LOCALIZE[20434])">videodb://movies/sets</value>
+        <value condition="String.StartsWith(ListItem.FolderPath,library://video/movies/)+String.Contains(Container(303).ListItem.Label,$LOCALIZE[20451])">videodb://movies/countries</value>
+        <value condition="String.StartsWith(ListItem.FolderPath,library://video/movies/)+String.Contains(Container(303).ListItem.Label,$LOCALIZE[20459])">videodb://movies/tags</value>
+        <value condition="String.StartsWith(ListItem.FolderPath,library://video/files)">sources://video/$INFO[Container(303).ListItem.FolderPath]</value>
+        <value condition="String.StartsWith(ListItem.FolderPath,library://video/playlists)">special://profile/playlists/video/$INFO[Container(303).ListItem.FileName]</value>
         <!-- Musicvideos -->
-        <value condition="String.StartsWith(ListItem.FolderPath,videodb://musicvideos/genres)|String.StartsWith(ListItem.FolderPath,library://video/musicvideos/genres)">videodb://musicvideos/genres/$INFO[Container(303).ListItem().DBID]</value>
-        <value condition="String.StartsWith(ListItem.FolderPath,videodb://musicvideos/years)|String.StartsWith(ListItem.FolderPath,library://video/musicvideos/years)">videodb://musicvideos/years/$INFO[Container(303).ListItem().Label]</value>
-        <value condition="String.StartsWith(ListItem.FolderPath,videodb://musicvideos/artists)|String.StartsWith(ListItem.FolderPath,library://video/musicvideos/artists)">videodb://musicvideos/artists/$INFO[Container(303).ListItem().DBID]</value>
-        <value condition="String.StartsWith(ListItem.FolderPath,videodb://musicvideos/directors)|String.StartsWith(ListItem.FolderPath,library://video/musicvideos/directors)">videodb://musicvideos/directors/$INFO[Container(303).ListItem().DBID]</value>
-        <value condition="String.StartsWith(ListItem.FolderPath,videodb://musicvideos/studios)|String.StartsWith(ListItem.FolderPath,library://video/musicvideos/studios)">videodb://musicvideos/studios/$INFO[Container(303).ListItem().DBID]</value>
-        <value condition="[String.StartsWith(ListItem.FolderPath,videodb://musicvideos/sets)|String.StartsWith(ListItem.FolderPath,library://video/musicvideos/sets)]+!String.Contains(Container.FolderPath,videodb://musicvideos/countries)">videodb://musicvideos/sets/$INFO[Container(303).ListItem().DBID]</value>
-        <value condition="[String.StartsWith(ListItem.FolderPath,videodb://musicvideos/countries)|String.StartsWith(ListItem.FolderPath,library://video/musicvideos/country)]+!String.Contains(Container.FolderPath,videodb://musicvideos/countries)">videodb://musicvideos/countries/$INFO[Container(303).ListItem().DBID]</value>
-        <value condition="String.StartsWith(ListItem.FolderPath,videodb://musicvideos/tags)|String.StartsWith(ListItem.FolderPath,library://video/musicvideos/tags)">videodb://musicvideos/tags/$INFO[Container(303).ListItem().DBID]</value>
-        <value condition="String.StartsWith(ListItem.FolderPath,library://video/musicvideos/)+String.Contains(Container(303).ListItem().Label,$LOCALIZE[515])">videodb://musicvideos/genres</value>
-        <value condition="String.StartsWith(ListItem.FolderPath,library://video/musicvideos/)+String.Contains(Container(303).ListItem().Label,$LOCALIZE[556])">videodb://musicvideos/titles</value>
-        <value condition="String.StartsWith(ListItem.FolderPath,library://video/musicvideos/)+String.Contains(Container(303).ListItem().Label,$LOCALIZE[562])">videodb://musicvideos/years</value>
-        <value condition="String.StartsWith(ListItem.FolderPath,library://video/musicvideos/)+String.Contains(Container(303).ListItem().Label,$LOCALIZE[133])">videodb://musicvideos/artists</value>
-        <value condition="String.StartsWith(ListItem.FolderPath,library://video/musicvideos/)+String.Contains(Container(303).ListItem().Label,$LOCALIZE[132])">videodb://musicvideos/albums</value>
-        <value condition="String.StartsWith(ListItem.FolderPath,library://video/musicvideos/)+String.Contains(Container(303).ListItem().Label,$LOCALIZE[20348])">videodb://musicvideos/directors</value>
-        <value condition="String.StartsWith(ListItem.FolderPath,library://video/musicvideos/)+String.Contains(Container(303).ListItem().Label,$LOCALIZE[20388])">videodb://musicvideos/studios</value>
-        <value condition="String.StartsWith(ListItem.FolderPath,library://video/musicvideos/)+String.Contains(Container(303).ListItem().Label,$LOCALIZE[20451])">videodb://musicvideos/countries</value>
-        <value condition="String.StartsWith(ListItem.FolderPath,library://video/musicvideos/)+String.Contains(Container(303).ListItem().Label,$LOCALIZE[20459])">videodb://musicvideos/tags</value>
+        <value condition="String.StartsWith(ListItem.FolderPath,videodb://musicvideos/genres)|String.StartsWith(ListItem.FolderPath,library://video/musicvideos/genres)">videodb://musicvideos/genres/$INFO[Container(303).ListItem.DBID]</value>
+        <value condition="String.StartsWith(ListItem.FolderPath,videodb://musicvideos/years)|String.StartsWith(ListItem.FolderPath,library://video/musicvideos/years)">videodb://musicvideos/years/$INFO[Container(303).ListItem.Label]</value>
+        <value condition="String.StartsWith(ListItem.FolderPath,videodb://musicvideos/artists)|String.StartsWith(ListItem.FolderPath,library://video/musicvideos/artists)">videodb://musicvideos/artists/$INFO[Container(303).ListItem.DBID]</value>
+        <value condition="String.StartsWith(ListItem.FolderPath,videodb://musicvideos/directors)|String.StartsWith(ListItem.FolderPath,library://video/musicvideos/directors)">videodb://musicvideos/directors/$INFO[Container(303).ListItem.DBID]</value>
+        <value condition="String.StartsWith(ListItem.FolderPath,videodb://musicvideos/studios)|String.StartsWith(ListItem.FolderPath,library://video/musicvideos/studios)">videodb://musicvideos/studios/$INFO[Container(303).ListItem.DBID]</value>
+        <value condition="[String.StartsWith(ListItem.FolderPath,videodb://musicvideos/sets)|String.StartsWith(ListItem.FolderPath,library://video/musicvideos/sets)]+!String.Contains(Container.FolderPath,videodb://musicvideos/countries)">videodb://musicvideos/sets/$INFO[Container(303).ListItem.DBID]</value>
+        <value condition="[String.StartsWith(ListItem.FolderPath,videodb://musicvideos/countries)|String.StartsWith(ListItem.FolderPath,library://video/musicvideos/country)]+!String.Contains(Container.FolderPath,videodb://musicvideos/countries)">videodb://musicvideos/countries/$INFO[Container(303).ListItem.DBID]</value>
+        <value condition="String.StartsWith(ListItem.FolderPath,videodb://musicvideos/tags)|String.StartsWith(ListItem.FolderPath,library://video/musicvideos/tags)">videodb://musicvideos/tags/$INFO[Container(303).ListItem.DBID]</value>
+        <value condition="String.StartsWith(ListItem.FolderPath,library://video/musicvideos/)+String.Contains(Container(303).ListItem.Label,$LOCALIZE[515])">videodb://musicvideos/genres</value>
+        <value condition="String.StartsWith(ListItem.FolderPath,library://video/musicvideos/)+String.Contains(Container(303).ListItem.Label,$LOCALIZE[556])">videodb://musicvideos/titles</value>
+        <value condition="String.StartsWith(ListItem.FolderPath,library://video/musicvideos/)+String.Contains(Container(303).ListItem.Label,$LOCALIZE[562])">videodb://musicvideos/years</value>
+        <value condition="String.StartsWith(ListItem.FolderPath,library://video/musicvideos/)+String.Contains(Container(303).ListItem.Label,$LOCALIZE[133])">videodb://musicvideos/artists</value>
+        <value condition="String.StartsWith(ListItem.FolderPath,library://video/musicvideos/)+String.Contains(Container(303).ListItem.Label,$LOCALIZE[132])">videodb://musicvideos/albums</value>
+        <value condition="String.StartsWith(ListItem.FolderPath,library://video/musicvideos/)+String.Contains(Container(303).ListItem.Label,$LOCALIZE[20348])">videodb://musicvideos/directors</value>
+        <value condition="String.StartsWith(ListItem.FolderPath,library://video/musicvideos/)+String.Contains(Container(303).ListItem.Label,$LOCALIZE[20388])">videodb://musicvideos/studios</value>
+        <value condition="String.StartsWith(ListItem.FolderPath,library://video/musicvideos/)+String.Contains(Container(303).ListItem.Label,$LOCALIZE[20451])">videodb://musicvideos/countries</value>
+        <value condition="String.StartsWith(ListItem.FolderPath,library://video/musicvideos/)+String.Contains(Container(303).ListItem.Label,$LOCALIZE[20459])">videodb://musicvideos/tags</value>
         <!-- TVShows -->
-        <value condition="[String.StartsWith(ListItem.FolderPath,videodb://tvshows/genres)|String.StartsWith(ListItem.FolderPath,library://video/tvshows/genres)]">videodb://tvshows/genres/$INFO[Container(303).ListItem().DBID]</value>
-        <value condition="[String.StartsWith(ListItem.FolderPath,videodb://tvshows/title)|String.StartsWith(ListItem.FolderPath,library://video/tvshows/title)]+!Container.Content(tvshows)">videodb://tvshows/titles/$INFO[Container(303).ListItem().DBID]</value>
-        <value condition="[String.IsEqual(ListItem.FolderPath,videodb://tvshows/years/)|String.StartsWith(ListItem.FolderPath,library://video/tvshows/years)]">videodb://tvshows/years/$INFO[Container(303).ListItem().Label]/</value>
-        <value condition="[String.StartsWith(ListItem.FolderPath,videodb://tvshows/actors)|String.StartsWith(ListItem.FolderPath,library://video/tvshows/actors)]">videodb://tvshows/actors/$INFO[Container(303).ListItem().DBID]</value>
-        <value condition="[String.StartsWith(ListItem.FolderPath,videodb://tvshows/studios)|String.StartsWith(ListItem.FolderPath,library://video/tvshows/studios)]">videodb://tvshows/studios/$INFO[Container(303).ListItem().DBID]</value>
-        <value condition="[String.StartsWith(ListItem.FolderPath,videodb://tvshows/tags)|String.StartsWith(ListItem.FolderPath,library://video/tvshows/tags)]">videodb://tvshows/tags/$INFO[Container(303).ListItem().DBID]</value>
-        <value condition="String.StartsWith(ListItem.FolderPath,library://video/tvshows/)+String.Contains(Container(303).ListItem().Label,$LOCALIZE[515])">videodb://tvshows/genres</value>
-        <value condition="String.StartsWith(ListItem.FolderPath,library://video/tvshows/)+String.Contains(Container(303).ListItem().Label,$LOCALIZE[556])">videodb://tvshows/titles</value>
-        <value condition="String.StartsWith(ListItem.FolderPath,library://video/tvshows/)+String.Contains(Container(303).ListItem().Label,$LOCALIZE[562])">videodb://tvshows/years</value>
-        <value condition="String.StartsWith(ListItem.FolderPath,library://video/tvshows/)+String.Contains(Container(303).ListItem().Label,$LOCALIZE[20337])">videodb://tvshows/actors</value>
-        <value condition="String.StartsWith(ListItem.FolderPath,library://video/tvshows/)+String.Contains(Container(303).ListItem().Label,$LOCALIZE[20388])">videodb://tvshows/studios</value>
-        <value condition="String.StartsWith(ListItem.FolderPath,library://video/tvshows/)+String.Contains(Container(303).ListItem().Label,$LOCALIZE[20459])">videodb://tvshows/tags</value>
+        <value condition="[String.StartsWith(ListItem.FolderPath,videodb://tvshows/genres)|String.StartsWith(ListItem.FolderPath,library://video/tvshows/genres)]">videodb://tvshows/genres/$INFO[Container(303).ListItem.DBID]</value>
+        <value condition="[String.StartsWith(ListItem.FolderPath,videodb://tvshows/title)|String.StartsWith(ListItem.FolderPath,library://video/tvshows/title)]+!Container.Content(tvshows)">videodb://tvshows/titles/$INFO[Container(303).ListItem.DBID]</value>
+        <value condition="[String.IsEqual(ListItem.FolderPath,videodb://tvshows/years/)|String.StartsWith(ListItem.FolderPath,library://video/tvshows/years)]">videodb://tvshows/years/$INFO[Container(303).ListItem.Label]/</value>
+        <value condition="[String.StartsWith(ListItem.FolderPath,videodb://tvshows/actors)|String.StartsWith(ListItem.FolderPath,library://video/tvshows/actors)]">videodb://tvshows/actors/$INFO[Container(303).ListItem.DBID]</value>
+        <value condition="[String.StartsWith(ListItem.FolderPath,videodb://tvshows/studios)|String.StartsWith(ListItem.FolderPath,library://video/tvshows/studios)]">videodb://tvshows/studios/$INFO[Container(303).ListItem.DBID]</value>
+        <value condition="[String.StartsWith(ListItem.FolderPath,videodb://tvshows/tags)|String.StartsWith(ListItem.FolderPath,library://video/tvshows/tags)]">videodb://tvshows/tags/$INFO[Container(303).ListItem.DBID]</value>
+        <value condition="String.StartsWith(ListItem.FolderPath,library://video/tvshows/)+String.Contains(Container(303).ListItem.Label,$LOCALIZE[515])">videodb://tvshows/genres</value>
+        <value condition="String.StartsWith(ListItem.FolderPath,library://video/tvshows/)+String.Contains(Container(303).ListItem.Label,$LOCALIZE[556])">videodb://tvshows/titles</value>
+        <value condition="String.StartsWith(ListItem.FolderPath,library://video/tvshows/)+String.Contains(Container(303).ListItem.Label,$LOCALIZE[562])">videodb://tvshows/years</value>
+        <value condition="String.StartsWith(ListItem.FolderPath,library://video/tvshows/)+String.Contains(Container(303).ListItem.Label,$LOCALIZE[20337])">videodb://tvshows/actors</value>
+        <value condition="String.StartsWith(ListItem.FolderPath,library://video/tvshows/)+String.Contains(Container(303).ListItem.Label,$LOCALIZE[20388])">videodb://tvshows/studios</value>
+        <value condition="String.StartsWith(ListItem.FolderPath,library://video/tvshows/)+String.Contains(Container(303).ListItem.Label,$LOCALIZE[20459])">videodb://tvshows/tags</value>
     </variable>
     <variable name="Panel3Fanart">
-        <value condition="!String.IsEmpty(Container(303).ListItem().Art(fanart))+![Control.HasFocus(600)|Control.HasFocus(80)]">$INFO[Container(303).ListItem().Art(fanart)]</value>
-        <value condition="[!String.IsEmpty(Container(600).ListItem().Art(fanart))+[Control.HasFocus(600)|Control.HasFocus(80)]]|[String.IsEmpty(Container(303).ListItem().Art(fanart))+String.IsEmpty(Container(302).ListItem().Art(fanart))]">$INFO[Container(600).ListItem().Art(fanart)]</value>
+        <value condition="!String.IsEmpty(Container(303).ListItem.Art(fanart))+![Control.HasFocus(600)|Control.HasFocus(80)]">$INFO[Container(303).ListItem.Art(fanart)]</value>
+        <value condition="[!String.IsEmpty(Container(600).ListItem.Art(fanart))+[Control.HasFocus(600)|Control.HasFocus(80)]]|[String.IsEmpty(Container(303).ListItem.Art(fanart))+String.IsEmpty(Container(302).ListItem.Art(fanart))]">$INFO[Container(600).ListItem.Art(fanart)]</value>
         <value>$INFO[ListItem.Art(fanart)]</value>
     </variable>
     <variable name="Panel3Cover">
         <value condition="Control.HasFocus(302)+!String.IsEmpty(ListItem.Art(season.post))">$INFO[ListItem.Art(season.poster)]</value>
         <value condition="Control.HasFocus(302)+String.IsEmpty(ListItem.Art(season.post))">$INFO[ListItem.Art(poster)]</value>
-        <value condition="Control.HasFocus(303)">$INFO[Container(303).ListItem().Art(poster)]</value>
+        <value condition="Control.HasFocus(303)">$INFO[Container(303).ListItem.Art(poster)]</value>
         <value>$INFO[ListItem.Art(poster)]</value>
     </variable>
     <variable name="Panel1Color">
@@ -157,8 +157,8 @@
                     <width>300</width>
                     <height>600</height>
                     <aspectratio aligny="bottom">keep</aspectratio>
-                    <texture background="true" diffuse="Shine.png">$INFO[Container(303).ListItem().Icon]</texture>
-                    <visible>[Control.HasFocus(303)|Control.HasFocus(70)]+!String.IsEmpty(Container(303).ListItem().Icon)+!Control.IsVisible(600)</visible>
+                    <texture background="true" diffuse="Shine.png">$INFO[Container(303).ListItem.Icon]</texture>
+                    <visible>[Control.HasFocus(303)|Control.HasFocus(70)]+!String.IsEmpty(Container(303).ListItem.Icon)+!Control.IsVisible(600)</visible>
                     <include>openclosevisible</include>
                 </control>
                 <control type="image">
@@ -167,7 +167,7 @@
                     <width>300</width>
                     <height>600</height>
                     <aspectratio aligny="bottom">keep</aspectratio>
-                    <texture background="true" diffuse="Shine.png">$INFO[Container(302).ListItem().Icon]</texture>
+                    <texture background="true" diffuse="Shine.png">$INFO[Container(302).ListItem.Icon]</texture>
                     <visible>[[Control.HasFocus(302)|Control.HasFocus(60)]+String.IsEmpty(ListItem.Art(poster))+!Control.IsVisible(600)]|String.IsEqual(Container.FolderPath,videodb://tvshows/actors/)|String.IsEqual(Container.FolderPath,videodb://movies/actors/)</visible>
                     <include>openclosevisible</include>
                 </control>
@@ -180,8 +180,8 @@
                         <height>330</height>
                         <colordiffuse>menudiffuse</colordiffuse>
                         <aspectratio aligny="bottom">keep</aspectratio>
-                        <texture background="true" border="5">$INFO[Container(302).ListItem().Art(clearlogo)]</texture>
-                        <visible>!String.IsEmpty(Container(302).ListItem().Art(clearlogo))</visible>
+                        <texture background="true" border="5">$INFO[Container(302).ListItem.Art(clearlogo)]</texture>
+                        <visible>!String.IsEmpty(Container(302).ListItem.Art(clearlogo))</visible>
                         <visible>[!ListItem.IsCollection|!String.IsEmpty(ListItem.Plot)]|Control.HasFocus(302)</visible>
                         <visible>[Container.Content(tvshows)|Container.Content(seasons)|Container.Content(episodes)]+Skin.HasSetting(tvshow_art)
 						|![Container.Content(tvshows)|Container.Content(seasons)|Container.Content(episodes)]+Skin.HasSetting(video_art)</visible>
@@ -195,8 +195,8 @@
                         <height>330</height>
                         <colordiffuse>menudiffuse</colordiffuse>
                         <aspectratio aligny="bottom">keep</aspectratio>
-                        <texture background="true" border="5">$INFO[Container(303).ListItem().Art(clearlogo)]</texture>
-                        <visible>!String.IsEmpty(Container(303).ListItem().Art(clearlogo))</visible>
+                        <texture background="true" border="5">$INFO[Container(303).ListItem.Art(clearlogo)]</texture>
+                        <visible>!String.IsEmpty(Container(303).ListItem.Art(clearlogo))</visible>
                         <visible>[!ListItem.IsCollection|!String.IsEmpty(ListItem.Plot)]|Control.HasFocus(303)</visible>
                         <visible>[Container.Content(tvshows)|Container.Content(seasons)|Container.Content(episodes)]+Skin.HasSetting(tvshow_art)
 						|![Container.Content(tvshows)|Container.Content(seasons)|Container.Content(episodes)]+Skin.HasSetting(video_art)</visible>
@@ -210,8 +210,8 @@
                         <height>330</height>
                         <colordiffuse>menudiffuse</colordiffuse>
                         <aspectratio aligny="bottom">keep</aspectratio>
-                        <texture background="true" border="5">$INFO[Container(600).ListItem().Art(clearlogo)]</texture>
-                        <visible>!String.IsEmpty(Container(600).ListItem().Art(clearlogo))+String.IsEmpty(Container(600).ListItem().Label)</visible>
+                        <texture background="true" border="5">$INFO[Container(600).ListItem.Art(clearlogo)]</texture>
+                        <visible>!String.IsEmpty(Container(600).ListItem.Art(clearlogo))+String.IsEmpty(Container(600).ListItem.Label)</visible>
                         <visible>[!ListItem.IsCollection|!String.IsEmpty(ListItem.Plot)]|Control.HasFocus(600)</visible>
                         <visible>[Container.Content(tvshows)|Container.Content(seasons)|Container.Content(episodes)]+Skin.HasSetting(tvshow_art)
 						|![Container.Content(tvshows)|Container.Content(seasons)|Container.Content(episodes)]+Skin.HasSetting(video_art)</visible>
@@ -452,8 +452,8 @@
                         <height>750</height>
                         <onleft>302</onleft>
                         <onright condition="Control.IsVisible(70)">70</onright>
-                        <onright condition="!Control.IsVisible(70)+!String.IsEmpty(Container(600).ListItem().Label)">600</onright>
-                        <onright condition="!Control.IsVisible(70)+String.IsEmpty(Container(600).ListItem().Label)">732</onright>
+                        <onright condition="!Control.IsVisible(70)+!String.IsEmpty(Container(600).ListItem.Label)">600</onright>
+                        <onright condition="!Control.IsVisible(70)+String.IsEmpty(Container(600).ListItem.Label)">732</onright>
                         <onup>303</onup>
                         <ondown>303</ondown>
                         <viewtype label="3 Panel">panel</viewtype>
@@ -475,7 +475,7 @@
                                 <width>38</width>
                                 <height>30</height>
                                 <texture background="true">$INFO[ListItem.Overlay]</texture>
-                                <visible>!Container(302).ListItem().IsResumable</visible>
+                                <visible>!Container(302).ListItem.IsResumable</visible>
                             </control>
                             <control type="image">
                                 <left>502</left>
@@ -483,7 +483,7 @@
                                 <width>30</width>
                                 <height>30</height>
                                 <texture background="true">OverlayWatching.png</texture>
-                                <visible>Container(302).ListItem().IsResumable</visible>
+                                <visible>Container(302).ListItem.IsResumable</visible>
                             </control>
                         </itemlayout>
                         <focusedlayout width="540" height="52">
@@ -518,7 +518,7 @@
                                 <width>38</width>
                                 <height>30</height>
                                 <texture background="true">$INFO[ListItem.Overlay]</texture>
-                                <visible>!Container(302).ListItem().IsResumable</visible>
+                                <visible>!Container(302).ListItem.IsResumable</visible>
                             </control>
                             <control type="image">
                                 <left>502</left>
@@ -526,7 +526,7 @@
                                 <width>30</width>
                                 <height>30</height>
                                 <texture background="true">OverlayWatching.png</texture>
-                                <visible>Container(302).ListItem().IsResumable</visible>
+                                <visible>Container(302).ListItem.IsResumable</visible>
                             </control>
                         </focusedlayout>
                         <content target="videos">$INFO[ListItem.FolderPath]</content>
@@ -536,8 +536,8 @@
                         <top>105</top>
                         <height>720</height>
                         <onleft>302</onleft>
-                        <onright condition="!String.IsEmpty(Container(600).ListItem().Label)">600</onright>
-                        <onright condition="String.IsEmpty(Container(600).ListItem().Label)">732</onright>
+                        <onright condition="!String.IsEmpty(Container(600).ListItem.Label)">600</onright>
+                        <onright condition="String.IsEmpty(Container(600).ListItem.Label)">732</onright>
                         <showonepage>false</showonepage>
                         <orientation>vertical</orientation>
                     </control>

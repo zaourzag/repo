@@ -250,7 +250,7 @@
 					</control>
 				</control>
 			</focusedlayout>
-			<content target="videos" sortby="date" sortorder="descending" limit="20">$VAR[$PARAM[dashbaord_extended_content]]</content>
+			<content target="$VAR[WidgetTarget]" sortby="date" sortorder="descending" limit="20">$VAR[$PARAM[dashbaord_extended_content]]</content>
 		</control>
     </include>
     <include name="Dashboard">

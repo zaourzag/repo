@@ -82,7 +82,7 @@
                 <visible>String.IsEqual(Window(Home).Property(HomeButton),music)</visible>
                 <control type="radiobutton" id="6">
                     <include>dialogbutton_popup</include>
-                    <label>letztes gehörte Album auf Platz 1</label>
+                    <label>$LOCALIZE[51591]</label>
                     <onclick>Skin.ToggleSetting(Widget_inProgress_music_Place1)</onclick>
                     <selected>Skin.HasSetting(Widget_inProgress_music_Place1)</selected>
 					<visible>!Skin.HasSetting(HomeMenuNoMusicButton)+!Skin.HasSetting(Home_Music_Button)</visible>
@@ -237,7 +237,7 @@
                 <visible>String.IsEqual(Window(Home).Property(HomeButton),movies)</visible>
                 <control type="radiobutton" id="30">
                     <include>dialogbutton_popup</include>
-                    <label>letzten begonnenen Film auf Platz 1</label>
+                    <label>$LOCALIZE[51589]</label>
                     <onclick>Skin.ToggleSetting(Widget_inProgress_movie_Place1)</onclick>
                     <selected>Skin.HasSetting(Widget_inProgress_movie_Place1)</selected>
 					<visible>!Skin.HasSetting(HomeMenuNoMovieButton)+!Skin.HasSetting(Home_Movie_Button)</visible>
@@ -489,7 +489,7 @@
                 <visible>String.IsEqual(Window(Home).Property(HomeButton),tvshow)</visible>
                 <control type="radiobutton" id="60">
                     <include>dialogbutton_popup</include>
-                    <label>nächste Episode auf Platz 1</label>
+                    <label>$LOCALIZE[51593]</label>
                     <onclick>Skin.ToggleSetting(Widget_inProgress_tvshow_Place1)</onclick>
                     <selected>Skin.HasSetting(Widget_inProgress_tvshow_Place1)</selected>
 					<visible>!Skin.HasSetting(HomeMenuNoTVShowButton)+!Skin.HasSetting(Home_TVShow_Button)</visible>
@@ -598,7 +598,7 @@
                 <visible>String.IsEqual(Window(Home).Property(HomeButton),musicvideo)</visible>
                 <control type="radiobutton" id="75">
                     <include>dialogbutton_popup</include>
-                    <label>letztes begonnenes Video auf Platz 1</label>
+                    <label>$LOCALIZE[51595]</label>
                     <onclick>Skin.ToggleSetting(Widget_inProgress_musicvideo_Place1)</onclick>
                     <selected>Skin.HasSetting(Widget_inProgress_musicvideo_Place1)</selected>
 					<visible>!Skin.HasSetting(HomeMenuNoMusicVideos)+!Skin.HasSetting(Home_MusicVideo_Button)</visible>
@@ -947,7 +947,7 @@
                 <control type="button" id="126">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
-					<label>19190</label>
+					<label>31102</label>
 					<label2>$INFO[Skin.String(user_bkg_pvr)]</label2>
 					<onclick condition="!Skin.HasSetting(Home_Background_PVRLiveTV_Multiimage)">Skin.SetImage(user_bkg_pvr,smb://)</onclick>
 					<onclick condition="Skin.HasSetting(Home_Background_PVRLiveTV_Multiimage)">Skin.SetPath(user_bkg_pvr,smb://)</onclick>
@@ -955,7 +955,7 @@
                 <control type="button" id="127">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
-					<label>- Reset $LOCALIZE[19190]</label>
+					<label>- Reset $LOCALIZE[31102]</label>
 					<onclick>Skin.Reset(user_bkg_pvr)</onclick>
 				</control>
 				<include content="WidgetGeneralSettings">
@@ -998,7 +998,7 @@
                 <control type="button" id="135">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
-					<label>19190</label>
+					<label>31102</label>
 					<label2>$INFO[Skin.String(user_bkg_radio)]</label2>
 					<onclick condition="!Skin.HasSetting(Home_Background_PVRRadio_Multiimage)">Skin.SetImage(user_bkg_radio,smb://)</onclick>
 					<onclick condition="Skin.HasSetting(Home_Background_PVRRadio_Multiimage)">Skin.SetPath(user_bkg_radio,smb://)</onclick>
@@ -1006,7 +1006,7 @@
                 <control type="button" id="136">
 					<description>Background Settings</description>
                     <include>dialogbutton_popup</include>
-					<label>- Reset $LOCALIZE[19190]</label>
+					<label>- Reset $LOCALIZE[31102]</label>
 					<onclick>Skin.Reset(user_bkg_radio)</onclick>
 				</control>
 				<include content="WidgetGeneralSettings">
