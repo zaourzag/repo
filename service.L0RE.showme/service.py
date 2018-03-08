@@ -62,8 +62,9 @@ def geturl(url):
 
 def geturl(url,data="x",header=[]):
    global cj
+   debug("Geturl url:"+url)
+   debug("Geturl data:"+data)
    content=""
-   debug("URL :::::: "+url)
    opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
    userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36"
    header.append(('User-Agent', userAgent))
@@ -94,8 +95,15 @@ if __name__ == '__main__':
       password=addon.getSetting("password") 
       community=addon.getSetting("community") 
       communitypassword=addon.getSetting("communitypassword")       
+      debug("username :"+username)
+      debug("password :"+password)
+      debug("community :"+community)
+      debug("communitypassword :"+communitypassword)      
       if username=="" or password=="" or community=="" or communitypassword=="":
         sleep=60
+        if monitor.waitForAbort(sleep):       
+           break            
+        continue
       else:
         sleep=86400
     
@@ -140,8 +148,12 @@ if __name__ == '__main__':
       except:
         Alben="0"
       data='{"user":"'+username+'","password":"'+password+'","comunity":"'+community+'","communitypass":"'+communitypassword+'","songs":'+lieder+',"series":'+serien+',"episodes":'+episodes+',"movies":'+filme+',"alben":'+Alben+'}'
+      debug("DATA :")
+      debug(data)
       content=geturl("https://l0re.com/kodinerd/inventory.php",data=data)
+      debug("++++++")
       debug(content)
+      debug("++++++")
       struktur = json.loads(content) 
       if struktur["code"]=="1":
         dialog = xbmcgui.Dialog()
