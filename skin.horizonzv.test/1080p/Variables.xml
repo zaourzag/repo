@@ -320,18 +320,16 @@
     </variable>
     <variable name="StreamFlag">
         <value condition="String.Contains(ListItem.Path,video.amazon)">watched/OverlayAmazon.png</value>
-        <value condition="String.Contains(ListItem.Path,video.netflix)">watched/OverlayStream.png</value>
         <value condition="String.Contains(ListItem.FileExtension,strm)">watched/OverlayStream.png</value>
         <value condition="String.Contains(ListItem.FileExtension,disc)">watched/OverlayStub.png</value>
     </variable>
     <variable name="ListFlag">
-        <value condition="ListItem.IsStereoscopic">flagging/lists/3D.png</value>
+        <value condition="!String.Contains(ListItem.Path,video.amazon)+!String.Contains(ListItem.FileExtension,disc)+!ListItem.IsStereoscopic+!ListItem.IsCollection">$INFO[ListItem.VideoResolution,flagging/lists/,.png]</value>
+        <value condition="!String.Contains(ListItem.Path,video.amazon)+!String.Contains(ListItem.FileExtension,disc)+ListItem.IsStereoscopic+!ListItem.IsCollection">flagging/lists/3D.png</value>
+        <value condition="String.Contains(ListItem.Path,video.amazon)+!ListItem.IsCollection">flagging/lists/amazon.png</value>
+        <value condition="String.Contains(ListItem.FileExtension,strm)+!ListItem.IsCollection">flagging/lists/strm.png</value>
+        <value condition="String.Contains(ListItem.FileExtension,disc)+!ListItem.IsCollection">flagging/lists/stub.png</value>
         <value condition="ListItem.IsCollection">flagging/lists/set.png</value>
-        <value condition="String.Contains(ListItem.Path,video.amazon)">flagging/lists/amazon.png</value>
-        <value condition="String.Contains(ListItem.Path,video.netflix)">flagging/lists/strm.png</value>
-        <value condition="String.Contains(ListItem.FileExtension,strm)">flagging/lists/strm.png</value>
-        <value condition="String.Contains(ListItem.FileExtension,disc)">flagging/lists/stub.png</value>
-        <value>$INFO[ListItem.VideoResolution,flagging/lists/,.png]</value>
     </variable>
     <variable name="VARSwitchtimer">
         <value condition="String.IsEqual(ListItem.ChannelName,Window(Home).Property(t0:channel)) + String.IsEqual(ListItem.Date,Window(Home).Property(t0:date))">PVR-Switchtimer.png</value>
@@ -509,8 +507,8 @@
         <value condition="Container.Content(artists) + !String.IsEmpty(ListItem.Property(Artist_Description))">$INFO[ListItem.Property(Artist_Description)]</value>
         <value condition="Container.Content(artists)">$LOCALIZE[547]</value>
         <value condition="Window.IsActive(music)|Container.Content(files)|Container.Content(songs)|Window.IsActive(pictures)">$INFO[ListItem.Comment]</value>
-        <value condition="[Container.Content(tvshows)|Container.Content(episodes)]+Control.HasFocus(302)">$INFO[Container(302).ListItem.Plot]</value>
-        <value condition="Container(302).HasFocus()+Control.HasFocus(500)">$INFO[Container(500).ListItem.Plot]</value>
+        <value condition="[Container.Content(tvshows)|Container.Content(episodes)]+Control.HasFocus(302)">$INFO[Container(302).ListItem().Plot]</value>
+        <value condition="Container(302).HasFocus()+Control.HasFocus(500)">$INFO[Container(500).ListItem().Plot]</value>
         <value>$INFO[ListItem.Plot]</value>
     </variable>
     <!-- End NOX -->
@@ -958,17 +956,17 @@
 		<value condition="String.Contains(Window(Home).Property(contenttype),episode)">RunScript(script.extendedinfo,info=extendedepisodeinfo,tvshow=$INFO[ListItem.TvShowTitle],season=$INFO[ListItem.Season],episode=$INFO[ListItem.Episode],silent=True)</value>
 	</variable>
 	<variable name="SkinWidgetInfoDataVar"> <!-- video, movie, set, tvshow, season, episode, musicvideo, music, song, album, artist -->
-		<value condition="String.Contains(Container.ListItem.DBType,movie)">$INFO[Container.ListItem.Title]</value>
-		<value condition="String.Contains(Container.ListItem.DBType,set)">$INFO[Container.ListItem.Title]</value>
-		<value condition="String.Contains(Container.ListItem.DBType,tvshow)">$INFO[Container.ListItem.TVShowTitle]</value>
-		<value condition="String.Contains(Container.ListItem.DBType,season)">$INFO[Container.ListItem.TVShowTitle]$INFO[Container.ListItem.Season, - ,]</value>
-		<value condition="String.Contains(Container.ListItem.DBType,episode)">$INFO[Container.ListItem.TVShowTitle]$INFO[Container.ListItem.Title, - ,]</value>
-		<value condition="String.Contains(Container.ListItem.DBType,musicvideo)">$INFO[Container.ListItem.Title]</value>
-		<value condition="String.Contains(Container.ListItem.DBType,music)">$INFO[Container.ListItem.Label]</value>
-		<value condition="String.Contains(Container.ListItem.DBType,song)">$INFO[Container.ListItem.Artist]$INFO[Container.ListItem.Title, - ,]</value>
-		<value condition="String.Contains(Container.ListItem.DBType,album)">$INFO[Container.ListItem.Artist]$INFO[Container.ListItem.Title, - ,]</value>
-		<value condition="String.Contains(Container.ListItem.DBType,artist)">$INFO[Container.ListItem.Artist]</value>
-		<value condition="!String.IsEmpty(Container.ListItem.ChannelName)+!Container.ListItem.HasEpg">$INFO[Container.ListItem.ChannelName]</value>
-		<value>$INFO[Container.ListItem.Label]</value>
+		<value condition="String.Contains(Container.ListItem.DBType,movie)">$INFO[Container.ListItem().Title]</value>
+		<value condition="String.Contains(Container.ListItem.DBType,set)">$INFO[Container.ListItem().Title]</value>
+		<value condition="String.Contains(Container.ListItem.DBType,tvshow)">$INFO[Container.ListItem().TVShowTitle]</value>
+		<value condition="String.Contains(Container.ListItem.DBType,season)">$INFO[Container.ListItem().TVShowTitle]$INFO[Container.ListItem().Season, - ,]</value>
+		<value condition="String.Contains(Container.ListItem.DBType,episode)">$INFO[Container.ListItem().TVShowTitle]$INFO[Container.ListItem().Title, - ,]</value>
+		<value condition="String.Contains(Container.ListItem.DBType,musicvideo)">$INFO[Container.ListItem().Title]</value>
+		<value condition="String.Contains(Container.ListItem.DBType,music)">$INFO[Container.ListItem().Label]</value>
+		<value condition="String.Contains(Container.ListItem.DBType,song)">$INFO[Container.ListItem().Artist]$INFO[Container.ListItem().Title, - ,]</value>
+		<value condition="String.Contains(Container.ListItem.DBType,album)">$INFO[Container.ListItem().Artist]$INFO[Container.ListItem().Title, - ,]</value>
+		<value condition="String.Contains(Container.ListItem.DBType,artist)">$INFO[Container.ListItem().Artist]</value>
+		<value condition="!String.IsEmpty(Container.ListItem.ChannelName)+!Container.ListItem.HasEpg">$INFO[Container.ListItem().ChannelName]</value>
+		<value>$INFO[Container.ListItem().Label]</value>
 	</variable>
 </includes>

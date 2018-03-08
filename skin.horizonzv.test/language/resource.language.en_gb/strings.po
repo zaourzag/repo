@@ -2088,23 +2088,3 @@ msgstr "wird benötigt"
 msgctxt "#51585"
 msgid "Visible"
 msgstr "Sichtbar"
-
-msgctxt "#51587"
-msgid "no progressbar in the widget (green bar on the cover)"
-msgstr "keine Progressbar im Widget (grüner Balken auf dem Cover)"
-
-msgctxt "#51589"
-msgid "last film started in 1st place"
-msgstr "letzten begonnenen Film auf Platz 1"
-
-msgctxt "#51591"
-msgid "last album belonged to number 1"
-msgstr "letztes gehörte Album auf Platz 1"
-
-msgctxt "#51593"
-msgid "next episode in 1st place"
-msgstr "nächste Episode auf Platz 1"
-
-msgctxt "#51595"
-msgid "last started video at number 1"
-msgstr "letztes begonnenes Video auf Platz 1"

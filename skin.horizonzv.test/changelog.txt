@@ -1,10 +1,4 @@
-﻿v 1.18.0.09
-- Bugfix Hauptmenü Games onclick korrigiert
-- Bugfix Widget Games
-- Widget Label um "Emby" erweitert
-- Sprachdateien erweitert, Texte korrigiert
-
-v 1.18.0.08
+﻿v 1.18.0.08
 - Bugfix SteamFlag (Netflix, strm)
 - Bugfix Systeminfo - Skinversion
 

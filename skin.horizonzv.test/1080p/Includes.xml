@@ -110,7 +110,6 @@
     <include name="WindowID">
         <width>990</width>
         <height>21</height>
-		<font>font12</font>
         <textcolor>selected</textcolor>
         <shadowcolor/>
         <align>left</align>
@@ -119,7 +118,6 @@
         <left>990</left>
         <height>21</height>
         <width>900</width>
-		<font>font12</font>
         <textcolor>green</textcolor>
         <shadowcolor/>
         <align>left</align>
@@ -127,10 +125,9 @@
     <include name="PathID">
         <left>990</left>
         <top>15</top>
-        <width>1890</width>
+        <width>900</width>
         <height>21</height>
-		<font>font12</font>
-        <textcolor>orange</textcolor>
+        <textcolor>red</textcolor>
         <shadowcolor>black</shadowcolor>
         <align>right</align>
     </include>
@@ -3067,7 +3064,7 @@
             <align>left</align>
             <textcolor>grey3</textcolor>
             <texturenofocus/>
-			<label>51587</label>
+			<label>keine Progressbar im Widget (grüne Balken auf dem Cover)</label>
 			<onclick>Skin.ToggleSetting(WidgetNoPercentPlayedBar)</onclick>
 			<selected>Skin.HasSetting(WidgetNoPercentPlayedBar)</selected>
 		</control>
