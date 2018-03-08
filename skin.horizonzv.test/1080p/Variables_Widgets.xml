@@ -1,29 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <includes>
-	<variable name="WidgetTarget">
-		<value condition="String.Contains(Container.ListItem.DBTYPE,music)">music</value>
-		<value condition="String.Contains(Container.ListItem.DBTYPE,song)">music</value>
-		<value condition="String.Contains(Container.ListItem.DBTYPE,album)">music</value>
-		<value condition="String.Contains(Container.ListItem.DBTYPE,artist)">music</value>
-		<value condition="String.Contains(Container.ListItem.FolderPath,audio)">music</value>
-		<value condition="String.Contains(Container.ListItem.DBTYPE,video)">videos</value>
-		<value condition="String.Contains(Container.ListItem.DBTYPE,movie)">videos</value>
-		<value condition="String.Contains(Container.ListItem.DBTYPE,set)">videos</value>
-		<value condition="String.Contains(Container.ListItem.DBTYPE,tvshow)">videos</value>
-		<value condition="String.Contains(Container.ListItem.DBTYPE,season)">videos</value>
-		<value condition="String.Contains(Container.ListItem.DBTYPE,episode)">videos</value>
-		<value condition="String.Contains(Container.ListItem.DBTYPE,musicvideo)">videos</value>
-		<value condition="String.Contains(Container(9000).ListItem.Property(homemenu_id),games)">games</value>
-		<value condition="String.Contains(Container.ListItem.FolderPath,pvr://recordings)">tvrecordings</value>
-		<value condition="String.Contains(Container.ListItem.FolderPath,pvr://timers)">pvr</value>
-		<value condition="String.Contains(Container.ListItem.FolderPath,pvr://channels)">tvchannels</value>
-		<value condition="String.Contains(Window(home).Property(WidgetLabel),$LOCALIZE[20094])">videos</value>
-		<value condition="String.Contains(Container.ListItem.FolderPath,addons://)">addonbrowser</value>
-		<value condition="String.Contains(Container.ListItem.FolderPath,movies)">videos</value>
-		<value condition="String.Contains(Container.ListItem.FolderPath,episodes)">videos</value>
-		<value condition="String.Contains(Container.ListItem.FolderPath,video)">videos</value>
-		<!-- <value>videos</value> -->
-	</variable>
+    <variable name="WidgetTarget"> <!-- video, movie, set, tvshow, season, episode, musicvideo, music, song, album, artist -->
+        <value condition="String.Contains(Container.ListItem.DBTYPE,music)">music</value>
+        <value condition="String.Contains(Container.ListItem.DBTYPE,song)">music</value>
+        <value condition="String.Contains(Container.ListItem.DBTYPE,album)">music</value>
+        <value condition="String.Contains(Container.ListItem.DBTYPE,artist)">music</value>
+        <value condition="String.Contains(Container.ListItem.DBTYPE,video)">videos</value>
+        <value condition="String.Contains(Container.ListItem.DBTYPE,movie)">videos</value>
+        <value condition="String.Contains(Container.ListItem.DBTYPE,set)">videos</value>
+        <value condition="String.Contains(Container.ListItem.DBTYPE,tvshow)">videos</value>
+        <value condition="String.Contains(Container.ListItem.DBTYPE,season)">videos</value>
+        <value condition="String.Contains(Container.ListItem.DBTYPE,episode)">videos</value>
+        <value condition="String.Contains(Container.ListItem.DBTYPE,musicvideo)">videos</value>
+        <value condition="String.Contains(Container(9000).ListItem.Property(homemenu_path),games)">games</value>
+        <value condition="String.StartsWith(Window(home).Property(WidgetLabel),pvr://)">pvr</value>
+    </variable>
     <variable name="WidgetPropertyLabel">
         <value condition="String.IsEqual(Window(Home).Property(HomeButton),music)">$LOCALIZE[2]</value>
         <value condition="String.IsEqual(Window(Home).Property(HomeButton),videos)">$LOCALIZE[3]</value>
@@ -61,7 +52,6 @@
         <value condition="!String.IsEmpty(Container.ListItem.Property(type))">$INFO[Container.ListItem.Property(type)]</value>
         <value condition="String.IsEqual(Container.ListItem.DBTYPE,set)">$INFO[Container.ListItem.DBTYPE]</value>
         <value condition="String.Contains(Container.ListItem.FolderPath,inprogress)">$LOCALIZE[575]</value>
-        <value condition="String.Contains(Container.ListItem.FolderPath,emby)">EMBY</value>
         <value>$INFO[Window(home).Property(WidgetLabel)]</value>
     </variable>
 </includes>

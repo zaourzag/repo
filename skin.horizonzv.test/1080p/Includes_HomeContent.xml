@@ -969,8 +969,7 @@
             <property name="homemenu_id">games</property>
             <property name="homemenu_category">$VAR[Home_Games_Category]</property>
             <property name="homemenu_path">$INFO[Skin.String(Home_Games_Custom_Path)]</property>
-            <onclick condition="Window.IsVisible(Home)+!Skin.HasSetting(Home_Games_Button)">ActivateWindow(games)</onclick>
-            <onclick condition="Window.IsVisible(Home)+Skin.HasSetting(Home_Games_Button)">ActivateWindow($VAR[Home_Games_SubCategory],$INFO[Skin.String(Home_Games_Custom_Path)],return)</onclick>
+            <onclick>ActivateWindow(games)</onclick>
             <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_games,smb://)</onclick>
             <visible>!Skin.HasSetting(HomeMenuNoGamesButton)</visible>
         </item>
@@ -1155,7 +1154,7 @@
                         <top>758</top>
                         <width>468</width>
                         <height>75</height>
-                        <label>[UPPERCASE]$INFO[Container(9000).ListItem.Label][/UPPERCASE]</label>
+                        <label>[UPPERCASE]$INFO[Container(9000).ListItem().Label][/UPPERCASE]</label>
                         <font>impacted44</font>
                         <shadowcolor/>
                         <textcolor>grey2</textcolor>

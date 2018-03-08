@@ -149,7 +149,7 @@
                         <height>39</height>
                         <aspectratio>keep</aspectratio>
                         <texture background="true">$VAR[ListFlag]</texture>
-                        <visible>Container.Content(Movies)|Container.Content(Episodes)|Container.Content(MusicVideos)</visible>
+                        <visible>Window.IsVisible(Videos) + [Container.Content(Movies)|Container.Content(Episodes)|Container.Content(MusicVideos)]</visible>
                     </control>
                     <control type="group">
                         <left>15</left>
@@ -226,7 +226,7 @@
                             <height>39</height>
                             <aspectratio>keep</aspectratio>
                             <texture background="true">$VAR[ListFlag]</texture>
-							<visible>Container.Content(Movies)|Container.Content(Episodes)|Container.Content(MusicVideos)</visible>
+                            <visible>Window.IsVisible(Videos) + [Container.Content(Movies)|Container.Content(Episodes)|Container.Content(MusicVideos)]</visible>
                         </control>
                         <control type="group">
                             <left>15</left>
