@@ -1,4 +1,4 @@
 <settings>
-     <setting id="quality" type="select" label="Qualität" default="720" values="216|360|406|720" />
-     <setting id="sprache" type="select" label="Sprache" default="de" values="de|fr" />    
+    <setting id="quality" type="select" label="Video-Qualität" default="720" values="216|360|406|720" />
+    <setting id="sprache" type="select" label="Sprache" default="de" values="de|fr" />
 </settings>
