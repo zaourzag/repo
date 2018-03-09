@@ -110,11 +110,11 @@ if OLDVERSION != VERSION:
    _zattooDB_.reloadDB()
  
 
-if SWISS=="true": xbmc.executebuiltin( "Skin.SetBool(%s)" %'hiq')
-#else: xbmc.executebuiltin( "Skin.Reset(%s)" %'hiq')
+if SWISS=="true": xbmc.executebuiltin( "Skin.SetBool(%s)" %'record')
+else: xbmc.executebuiltin( "Skin.Reset(%s)" %'record')
 
-elif premiumUser: xbmc.executebuiltin( "Skin.SetBool(%s)" %'hiq')
-else: xbmc.executebuiltin( "Skin.Reset(%s)" %'hiq')
+if premiumUser: xbmc.executebuiltin( "Skin.SetBool(%s)" %'restart')
+else: xbmc.executebuiltin( "Skin.Reset(%s)" %'restart')
 
 
 # get Timezone Offset
@@ -551,7 +551,7 @@ def  toggle_channel():
   playing=_zattooDB_.get_playing()
   xbmcgui.Window(10000).setProperty('toggleChannel', playing['channel']) 
    
-  if toggleChannel=="": xbmc.executebuiltin("Action(Back)") #go back to channel selector
+  if toggleChannel=="": xbmc.executebuiltin(ActivateWindow(10025,"plugin://plugin.video.zattooHiQ/?mode=channellist")) #go back to channel selector
   else:
     watch_channel(toggleChannel, '0', '0')
     channelList = _zattooDB_.getChannelList(_listMode_ == 'favourites')
@@ -766,7 +766,7 @@ class zattooGUI(xbmcgui.WindowXMLDialog):
     self.addControl(self.toggleImg)
     
     self.toggleChannelID=xbmcgui.Window(10000).getProperty('toggleChannel')
-    
+    #if self.toggleChannelID!="": self.showToggleImg()
 
   def onAction(self, action):
     key=str(action.getButtonCode())
