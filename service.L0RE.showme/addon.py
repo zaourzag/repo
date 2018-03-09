@@ -13,6 +13,7 @@ import requests,cookielib
 from cookielib import LWPCookieJar
 import xbmcplugin
 import post
+import pyxbmct
 
 global debuging
 base_url = sys.argv[0]
@@ -108,6 +109,11 @@ def geturl(url,data="x",header=[]):
 
 def index():
     addDir("Transfer Data","","adddata","")
+    addDir("TopListe der Movies","movies","topliste","")
+    addDir("TopListe der Serien","series","topliste","")
+    addDir("TopListe der Folgen","episodes","topliste","")
+    addDir("TopListe der Alben","alben","topliste","")
+    addDir("TopListe der Songs","songs","topliste","")
     addDir("Settings","Settings","Settings","")        
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
 def adddata():
@@ -118,7 +124,110 @@ def adddata():
     else:
        dialog = xbmcgui.Dialog()
        nr=dialog.ok("OK", msg)
+class Infowindow(pyxbmct.AddonDialogWindow):
+    text=""
+    pos=0
+    def __init__(self, title='',text=''):
+        super(Infowindow, self).__init__(title)
+        self.setGeometry(600,600,1,6)        
+        self.text=text                 
+        self.set_info_controls()
+        # Connect a key action (Backspace) to close the window.
+        self.connect(pyxbmct.ACTION_NAV_BACK, self.close)
 
+    def set_info_controls(self):
+
+      self.textbox0=pyxbmct.TextBox()       
+      self.textbox1=pyxbmct.TextBox()
+      self.textbox2=pyxbmct.TextBox()       
+      self.textbox3=pyxbmct.TextBox()       
+      self.textbox4=pyxbmct.TextBox()       
+      self.textbox5=pyxbmct.TextBox()       
+      self.textbox6=pyxbmct.TextBox()
+      self.placeControl(self.textbox0, 0, 0) 
+      self.placeControl(self.textbox1, 0, 1)                       
+      self.placeControl(self.textbox2, 0, 2)                       
+      self.placeControl(self.textbox3, 0, 3)                       
+      self.placeControl(self.textbox4, 0, 4)                       
+      self.placeControl(self.textbox5, 0, 5)                       
+      self.placeControl(self.textbox6, 0, 6)                          
+      user=""
+      songs=""
+      series=""
+      folgen=""
+      movies=""
+      alben=""
+      ids=""
+      counter=0      
+      try:      
+       for zeile in self.text.split("\n"):
+         debug("ZEILE"+zeile)
+         elemente=zeile.split("##")
+         user=user+elemente[0]+"\n"
+         songs=songs+elemente[1]+"\n"
+         series=series+elemente[2]+"\n"
+         folgen=folgen+elemente[3]+"\n"
+         movies=movies+elemente[4]+"\n"
+         alben=alben+elemente[5]+"\n" 
+         if counter==0:
+           ids=ids+"Platz\n"
+         else:
+           ids=ids+str(counter)+"\n"
+         counter=counter+1         
+      except:
+        pass
+      self.textbox0.setText(ids) 
+      self.textbox1.setText(user)         
+      self.textbox2.setText(songs)         
+      self.textbox3.setText(series)         
+      self.textbox4.setText(folgen)         
+      self.textbox5.setText(movies)         
+      self.textbox6.setText(alben)               
+      self.connectEventList(
+             [pyxbmct.ACTION_MOVE_UP,
+             pyxbmct.ACTION_MOUSE_WHEEL_UP],
+            self.hoch)         
+      self.connectEventList(
+            [pyxbmct.ACTION_MOVE_DOWN,
+             pyxbmct.ACTION_MOUSE_WHEEL_DOWN],
+            self.runter)                  
+      self.setFocus(self.textbox1)            
+    def hoch(self):
+        self.pos=self.pos-1
+        if self.pos < 0:
+          self.pos=0
+        self.textbox.scroll(self.pos)
+    def runter(self):
+        self.pos=self.pos+1        
+        self.textbox.scroll(self.pos)
+        posnew=self.textbox.getPosition()
+        debug("POSITION : "+ str(posnew))
+
+
+        
+        
+def topliste(search):
+    community=addon.getSetting("community")
+    username=addon.getSetting("username")
+    data='{"comunity":"'+community+'","sorted":"'+search+'"}'
+    debug("DATA :")
+    debug(data)
+    content=geturl("https://l0re.com/kodinerd/listuser.php",data=data)
+    debug("++++++")
+    debug(content)
+    debug("++++++")
+    #{ "user":"L0RE","songs":"2047","series":"54","episodes":"530","movies":"290","alben":"149"}
+    TEXT="%s##%s##%s##%s##%s##%s\n"%("User","Songs","Series","Folgen","Movies","Alben")
+    debug("++++++++")
+    debug(content)
+    struktur = json.loads(content) 
+    for element in struktur["users"]:
+         if username==element["user"]:
+            TEXT=TEXT+"[COLOR green]%s[/COLOR]##[COLOR green]%d[/COLOR]##[COLOR green]%d[/COLOR]##[COLOR green]%d[/COLOR]##[COLOR green]%d[/COLOR]##[COLOR green]%d[/COLOR]\n"%(element["user"],int(element["songs"]),int(element["series"]),int(element["episodes"]),int(element["movies"]),int(element["alben"]))
+         else:
+            TEXT=TEXT+"%s##%d##%d##%d##%d##%d\n"%(element["user"],int(element["songs"]),int(element["series"]),int(element["episodes"]),int(element["movies"]),int(element["alben"]))
+    window=Infowindow("Liste",TEXT) 
+    window.doModal()
 params = parameters_string_to_dict(sys.argv[2])
 mode = urllib.unquote_plus(params.get('mode', ''))
 url = urllib.unquote_plus(params.get('url', ''))
@@ -129,5 +238,7 @@ if mode == 'Settings':
           addon.openSettings()    
 if mode == 'adddata':
            adddata() 
+if mode == 'topliste':
+            topliste(url)
 
     
