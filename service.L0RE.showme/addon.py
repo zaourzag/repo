@@ -129,7 +129,7 @@ class Infowindow(pyxbmct.AddonDialogWindow):
     pos=0
     def __init__(self, title='',text=''):
         super(Infowindow, self).__init__(title)
-        self.setGeometry(600,600,1,6)        
+        self.setGeometry(600,600,1,7)        
         self.text=text                 
         self.set_info_controls()
         # Connect a key action (Backspace) to close the window.
