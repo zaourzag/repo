@@ -29,7 +29,7 @@ __addondir__  = xbmc.translatePath( __addon__.getAddonInfo('profile') )
 
 _library_=library()
 localString = __addon__.getLocalizedString
-SWISS = __addon__.getSetting('swiss')
+
 DEBUG = __addon__.getSetting('debug')
 
 def refreshProg():
@@ -90,13 +90,13 @@ def start():
     #xbmcgui.Dialog().notification(localString(31916), localString(30110),  __addon__.getAddonInfo('path') + '/icon.png', 3000, False)
     _zattooDB_.getProgInfo(True, startTime, endTime)
 
-    if SWISS == 'true':
-        #xbmcgui.Dialog().notification(localString(31106), localString(31915),  __addon__.getAddonInfo('path') + '/icon.png', 3000, False)
-        #xbmc.executebuiltin("ActivateWindow(busydialog)")
-        recInfo()
-        _library_.delete_library() # add by samoth
-        _library_.make_library()
-        #xbmc.executebuiltin("Dialog.Close(busydialog)")
+  
+    #xbmcgui.Dialog().notification(localString(31106), localString(31915),  __addon__.getAddonInfo('path') + '/icon.png', 3000, False)
+    #xbmc.executebuiltin("ActivateWindow(busydialog)")
+    recInfo()
+    _library_.delete_library() # add by samoth
+    _library_.make_library()
+    #xbmc.executebuiltin("Dialog.Close(busydialog)")
 
 
 

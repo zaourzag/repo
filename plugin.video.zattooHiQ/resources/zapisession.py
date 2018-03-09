@@ -11,15 +11,20 @@ import os, re, base64
 import urllib, urllib2
 import json
 
-#import ssl
-#ssl._create_default_https_context = ssl._create_unverified_context
-
 __addon__ = xbmcaddon.Addon()
 __addonId__=__addon__.getAddonInfo('id')
 __addonname__ = __addon__.getAddonInfo('name')
 DEBUG = __addon__.getSetting('debug')
 
+def debug(s):
+	if DEBUG: xbmc.log(str(s), xbmc.LOGDEBUG)
 
+if __addon__.getSetting('kodi16') == "false":
+	debug ("not kodi 16")
+	import ssl
+	ssl._create_default_https_context = ssl._create_unverified_context
+else: debug ("kodi 16")
+	
 class ZapiSession:
 	
 	ZAPIUrl = None

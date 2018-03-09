@@ -215,8 +215,9 @@ class ZattooDB(object):
 
     #get program from DB and return if it's not empty
 #     if self._isDBupToDate(date, 'programs'):return
-    
-    c.execute('SELECT * FROM programs WHERE start_date > ? AND end_date < ?', (fromTime+18000, fromTime+25200,)) #get shows between 05:00 and 07:00
+    try:
+        c.execute('SELECT * FROM programs WHERE start_date > ? AND end_date < ?', (fromTime+18000, fromTime+25200,)) #get shows between 05:00 and 07:00
+    except:pass
     count=c.fetchall()
     if len(count)>0:
         c.close()

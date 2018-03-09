@@ -423,7 +423,7 @@
 				<texturenofocus>osdrecordnf1.png</texturenofocus>
 				<onleft>209</onleft>
 				<onright>211</onright>
-				<visible>Skin.HasSetting(hiq)</visible>
+				<visible>Skin.HasSetting(record)</visible>
 			</control>
 
 			<control type="button" id="211">

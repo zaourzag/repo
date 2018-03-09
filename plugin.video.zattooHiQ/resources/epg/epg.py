@@ -93,7 +93,9 @@ KEY_HOME = 159
 CHANNELS_PER_PAGE = 8
 
 HALF_HOUR = datetime.timedelta(minutes=30)
-SWISS = __addon__.getSetting('swiss')
+
+if __addon__.getSetting('country') == 'CH': SWISS = 'true'
+else: SWISS = 'false'
 
 def debug(s):
 	if DEBUG: xbmc.log(str(s), xbmc.LOGDEBUG)
