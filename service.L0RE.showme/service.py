@@ -7,6 +7,7 @@ import urllib2,urllib,json
 import re,md5,shutil
 import socket, cookielib
 from datetime import datetime
+import post
 
 
 __addon__ = xbmcaddon.Addon()
@@ -55,46 +56,21 @@ def log(msg, level=xbmc.LOGDEBUG):
     addonID = addon.getAddonInfo('id')
     xbmc.log('%s: %s' % (addonID, msg), level) 
     
-def geturl(url):
-   req = urllib2.Request(url)
-   inhalt = urllib2.urlopen(req).read()   
-   return inhalt   
-
-def geturl(url,data="x",header=[]):
-   global cj
-   debug("Geturl url:"+url)
-   debug("Geturl data:"+data)
-   content=""
-   opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
-   userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36"
-   header.append(('User-Agent', userAgent))
-   header.append(('Accept', "*/*"))
-   header.append(('Content-Type', "application/json;charset=UTF-8"))
-   header.append(('Accept-Encoding', "plain"))   
-   opener.addheaders = header
-   try:
-      if data!="x" :
-         request=urllib2.Request(url)
-         cj.add_cookie_header(request)
-         content=opener.open(request,data=data).read()
-      else:
-         content=opener.open(url).read()
-   except urllib2.HTTPError as e:
-       debug ( e)
-   opener.close()
-   return content
-   
 
         
 if __name__ == '__main__':
-    debug("START")
+    notice("START")
     temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
     monitor = xbmc.Monitor()         
-    while not monitor.abortRequested():    
+    while not monitor.abortRequested():  
+      notice("LOOP")    
       username=addon.getSetting("username") 
       password=addon.getSetting("password") 
       community=addon.getSetting("community") 
-      communitypassword=addon.getSetting("communitypassword")       
+      communitypassword=addon.getSetting("communitypassword")  
+      service=addon.getSetting("service")  
+      if service=="false":
+         break      
       debug("username :"+username)
       debug("password :"+password)
       debug("community :"+community)
@@ -107,59 +83,11 @@ if __name__ == '__main__':
       else:
         sleep=86400
     
-      try:
-        serien=xbmc.executeJSONRPC('{"jsonrpc":"2.0", "method":"VideoLibrary.GetTVShows", "params": {"properties": [ "genre" ]}, "id":"libMovies" }')       
-        struktur = json.loads(serien) 
-        debug(struktur)
-        serien=str(struktur["result"]["limits"]["total"])
-        debug("Serien :"+str(serien))
-      except:
-        serien="0"
-        
-      try:
-          filme=xbmc.executeJSONRPC('{"jsonrpc":"2.0", "method":"VideoLibrary.GetMovies", "params": {"properties": [ "file" ] }, "id":"libMovies" }')       
-          struktur = json.loads(filme) 
-          filme=str(struktur["result"]["limits"]["total"])
-          debug("filme :"+str(filme))
-      except:
-          filme="0"
-    
-      try:
-        episodes=xbmc.executeJSONRPC('{"jsonrpc":"2.0", "method":"VideoLibrary.GetEpisodes", "params": {"properties": [ "file" ] }, "id":"libMovies" }')       
-        struktur = json.loads(episodes) 
-        episodes=str(struktur["result"]["limits"]["total"])
-        debug("Episodes :"+str(episodes))
-      except:
-         episodes="0"
-    
-      try:
-        lieder=xbmc.executeJSONRPC('{"jsonrpc":"2.0", "method":"AudioLibrary.GetSongs", "params": {"properties": [ "file" ] }, "id":"libMovies" }')       
-        struktur = json.loads(lieder) 
-        lieder=str(struktur["result"]["limits"]["total"])
-        debug("Lieder :"+str(lieder))
-      except:
-         lieder="0"
-    
-      try:
-        Alben=xbmc.executeJSONRPC('{"jsonrpc":"2.0", "method":"AudioLibrary.GetAlbums", "params": {"properties": [ "artist" ] }, "id":"libMovies" }')       
-        struktur = json.loads(Alben) 
-        Alben=str(struktur["result"]["limits"]["total"])
-        debug("Alben :"+str(Alben))
-      except:
-        Alben="0"
-      data='{"user":"'+username+'","password":"'+password+'","comunity":"'+community+'","communitypass":"'+communitypassword+'","songs":'+lieder+',"series":'+serien+',"episodes":'+episodes+',"movies":'+filme+',"alben":'+Alben+'}'
-      debug("DATA :")
-      debug(data)
-      content=geturl("https://l0re.com/kodinerd/inventory.php",data=data)
-      debug("++++++")
-      debug(content)
-      debug("++++++")
-      struktur = json.loads(content) 
-      if struktur["code"]=="1":
+      reg,msg=post.postdb()
+      if reg=="1":
         dialog = xbmcgui.Dialog()
-        nr=dialog.ok("Fehler", struktur["msg"])
+        nr=dialog.ok("Fehler", msg)
         sleep=60
-      debug(data)
 
       if monitor.waitForAbort(sleep):       
         break            
