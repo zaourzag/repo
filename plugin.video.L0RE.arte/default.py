@@ -167,6 +167,7 @@ def subrubrik(surl):
     xbmcplugin.endOfDirectory(addon_handle) 
 
 def playvideo(url):
+    # Übergabe des Abspiellinks von anderem Video-ADDON: plugin://plugin.video.L0RE.arte/?mode=playvideo&url=048256-000-A oder: plugin://plugin.video.L0RE.arte/?mode=playvideo&url=https://www.arte.tv/de/videos/048256-000-A/wir-waren-koenige/
     try:
         if url.startswith('http'):
             idd = re.compile('/videos/(.+?)/', re.DOTALL).findall(url)[0]
@@ -184,27 +185,27 @@ def playvideo(url):
             #sub="DE-POL"
         #elif country=="es":
             #sub="DE-ESP"
-        mimeType="video/mp4"
         try: 
             content = geturl("https://api.arte.tv/api/player/v1/config/"+country+"/"+idd+"?autostart=0&lifeCycle=1")
         except: return -1 # no network
         finalURL = False
-        struktur = json.loads(content)
-        for stream in struktur["videoJsonPlayer"]["VSR"].keys():
-            streamx=struktur["videoJsonPlayer"]["VSR"][stream]
-            if streamx["mimeType"]==mimeType and streamx["versionShortLibelle"]==standards3 and streamx["height"]==prefQuality:
-                finalURL = streamx["url"]
-            if not finalURL and streamx["mimeType"]==mimeType and streamx["versionShortLibelle"]==standards2 and streamx["height"]==prefQuality:
-                finalURL = streamx["url"]
-            if not finalURL and streamx["mimeType"]==mimeType and streamx["versionShortLibelle"]==standards1 and streamx["height"]==prefQuality:
-                finalURL = streamx["url"]
-            if not finalURL and streamx["mimeType"]==mimeType and "VO" in streamx["versionCode"] and streamx["height"]==prefQuality:
-                finalURL = streamx["url"]
-        debug(mimeType)
+        stream = json.loads(content)['videoJsonPlayer']
+        stream_offer = stream['VSR']
+        debug("----->")
+        for element in stream_offer:
+            debug(stream['VSR'][element])
+            if int(stream['VSR'][element]["versionProg"]) == 1 and stream['VSR'][element]["mediaType"].lower() == "mp4":
+                if stream['VSR'][element]["versionShortLibelle"]==standards3 and stream['VSR'][element]["height"]==prefQuality:
+                    finalURL = stream['VSR'][element]["url"]
+                if not finalURL and stream['VSR'][element]["versionShortLibelle"]==standards2 and stream['VSR'][element]["height"]==prefQuality:
+                    finalURL = stream['VSR'][element]["url"]
+                if not finalURL and stream['VSR'][element]["versionShortLibelle"]==standards1 and stream['VSR'][element]["height"]==prefQuality:
+                    finalURL = stream['VSR'][element]["url"]
+                if not finalURL and "VO" in stream['VSR'][element]["versionCode"] and stream['VSR'][element]["height"]==prefQuality:
+                    finalURL = stream['VSR'][element]["url"]
         debug(prefQuality)
         debug("playvideo - finalUrl: "+finalURL)
-        debug("----->")
-        debug(streamx)
+        debug("<-----")
         if finalURL:
             listitem = xbmcgui.ListItem(path=finalURL)
             listitem.setProperty('IsPlayable', 'true')
