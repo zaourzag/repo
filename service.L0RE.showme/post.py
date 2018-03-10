@@ -87,7 +87,7 @@ def postdb():
       community=addon.getSetting("community") 
       communitypassword=addon.getSetting("communitypassword")       
       try:
-        serien=xbmc.executeJSONRPC('{"jsonrpc":"2.0", "method":"VideoLibrary.GetTVShows", "params": {"properties": [ "genre" ]}, "id":"libMovies" }')       
+        serien=xbmc.executeJSONRPC('{"jsonrpc":"2.0", "method":"VideoLibrary.GetTVShows", "params": {"properties": [ "genre" ],"limits": { "start":0,"end" : 1 }}, "id":"libMovies" }')       
         struktur = json.loads(serien) 
         debug(struktur)
         serien=str(struktur["result"]["limits"]["total"])
@@ -96,7 +96,7 @@ def postdb():
         serien="0"
         
       try:
-          filme=xbmc.executeJSONRPC('{"jsonrpc":"2.0", "method":"VideoLibrary.GetMovies", "params": {"properties": [ "file" ] }, "id":"libMovies" }')       
+          filme=xbmc.executeJSONRPC('{"jsonrpc":"2.0", "method":"VideoLibrary.GetMovies", "params": {"properties": [ "file" ] ,"limits": { "start":0,"end" : 1 }}, "id":"libMovies" }')       
           struktur = json.loads(filme) 
           filme=str(struktur["result"]["limits"]["total"])
           debug("filme :"+str(filme))
@@ -104,7 +104,7 @@ def postdb():
           filme="0"
     
       try:
-        episodes=xbmc.executeJSONRPC('{"jsonrpc":"2.0", "method":"VideoLibrary.GetEpisodes", "params": {"properties": [ "file" ] }, "id":"libMovies" }')       
+        episodes=xbmc.executeJSONRPC('{"jsonrpc":"2.0", "method":"VideoLibrary.GetEpisodes", "params": {"properties": [ "file" ] ,"limits": { "start":0,"end" : 1 }}, "id":"libMovies" }')       
         struktur = json.loads(episodes) 
         episodes=str(struktur["result"]["limits"]["total"])
         debug("Episodes :"+str(episodes))
@@ -112,7 +112,7 @@ def postdb():
          episodes="0"
     
       try:
-        lieder=xbmc.executeJSONRPC('{"jsonrpc":"2.0", "method":"AudioLibrary.GetSongs", "params": {"properties": [ "file" ] }, "id":"libMovies" }')       
+        lieder=xbmc.executeJSONRPC('{"jsonrpc":"2.0", "method":"AudioLibrary.GetSongs", "params": {"properties": [ "file" ],"limits": { "start":0,"end" : 1 } }, "id":"libMovies" }')       
         struktur = json.loads(lieder) 
         lieder=str(struktur["result"]["limits"]["total"])
         debug("Lieder :"+str(lieder))
@@ -120,7 +120,7 @@ def postdb():
          lieder="0"
     
       try:
-        Alben=xbmc.executeJSONRPC('{"jsonrpc":"2.0", "method":"AudioLibrary.GetAlbums", "params": {"properties": [ "artist" ] }, "id":"libMovies" }')       
+        Alben=xbmc.executeJSONRPC('{"jsonrpc":"2.0", "method":"AudioLibrary.GetAlbums", "params": {"properties": [ "artist" ],"limits": { "start":0,"end" : 1 } }, "id":"libMovies" }')       
         struktur = json.loads(Alben) 
         Alben=str(struktur["result"]["limits"]["total"])
         debug("Alben :"+str(Alben))
