@@ -901,6 +901,7 @@
 			<height>50</height>
 			<width>auto</width>
 			<align>center</align>
+			<align>top</align>
 			<font>Material34</font>
 			<textcolor>white</textcolor>
 			<label>$VAR[VolumeIcon]</label>
@@ -1319,10 +1320,14 @@
 	</include>
 	<!-- widget placeholder -->
 	<include name="WidgetDummy">
-		<control type="list" id="$PARAM[id]">
-			<onup>$PARAM[onup]</onup>
-			<ondown>$PARAM[ondown]</ondown>
+		<control type="group" id="$PARAM[id]1">
 			<visible>false</visible>
+			<control type="fixedlist" id="$PARAM[id]">
+				<ondown>$PARAM[ondown]</ondown>
+				<onup>$PARAM[onup]</onup>
+				<itemlayout/>
+				<focusedlayout/>
+			</control>
 		</control>
 	</include>
 </includes>
