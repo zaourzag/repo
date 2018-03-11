@@ -102,7 +102,15 @@ def postdb():
           debug("filme :"+str(filme))
       except:
           filme="0"
-    
+      try:
+          filmeplay=xbmc.executeJSONRPC('{"jsonrpc":"2.0", "method":"VideoLibrary.GetMovies", "params": {"filter": {"field": "playcount", "operator": "isnot", "value": "0"},"properties": [ "file" ] ,"limits": { "start":0,"end" : 1 }}, "id":"libMovies" }')       
+          struktur = json.loads(filmeplay) 
+          filmeplay=str(struktur["result"]["limits"]["total"])
+          debug("filmeplay :"+str(filmeplay))
+      except:
+          filmeplay="0"
+
+          
       try:
         episodes=xbmc.executeJSONRPC('{"jsonrpc":"2.0", "method":"VideoLibrary.GetEpisodes", "params": {"properties": [ "file" ] ,"limits": { "start":0,"end" : 1 }}, "id":"libMovies" }')       
         struktur = json.loads(episodes) 
@@ -110,6 +118,14 @@ def postdb():
         debug("Episodes :"+str(episodes))
       except:
          episodes="0"
+      try:
+        episodesplay=xbmc.executeJSONRPC('{"jsonrpc":"2.0", "method":"VideoLibrary.GetEpisodes", "params": {"filter": {"field": "playcount", "operator": "isnot", "value": "0"},"properties": [ "file" ] ,"limits": { "start":0,"end" : 1 }}, "id":"libMovies" }')       
+        struktur = json.loads(episodesplay) 
+        episodesplay=str(struktur["result"]["limits"]["total"])
+        debug("episodesplay :"+str(episodesplay))
+      except:
+         episodesplay="0"         
+         
     
       try:
         lieder=xbmc.executeJSONRPC('{"jsonrpc":"2.0", "method":"AudioLibrary.GetSongs", "params": {"properties": [ "file" ],"limits": { "start":0,"end" : 1 } }, "id":"libMovies" }')       
@@ -118,6 +134,13 @@ def postdb():
         debug("Lieder :"+str(lieder))
       except:
          lieder="0"
+      try:
+        liederplay=xbmc.executeJSONRPC('{"jsonrpc":"2.0", "method":"AudioLibrary.GetSongs", "params": {"filter": {"field": "playcount", "operator": "isnot", "value": "0"},"properties": [ "file" ],"limits": { "start":0,"end" : 1 } }, "id":"libMovies" }')       
+        struktur = json.loads(liederplay) 
+        liederplay=str(struktur["result"]["limits"]["total"])
+        debug("liederplay :"+str(liederplay))
+      except:
+         liederplay="0"         
     
       try:
         Alben=xbmc.executeJSONRPC('{"jsonrpc":"2.0", "method":"AudioLibrary.GetAlbums", "params": {"properties": [ "artist" ],"limits": { "start":0,"end" : 1 } }, "id":"libMovies" }')       
@@ -126,7 +149,12 @@ def postdb():
         debug("Alben :"+str(Alben))
       except:
         Alben="0"
-      data='{"user":"'+username+'","password":"'+password+'","comunity":"'+community+'","communitypass":"'+communitypassword+'","songs":'+lieder+',"series":'+serien+',"episodes":'+episodes+',"movies":'+filme+',"alben":'+Alben+'}'
+      data='{"user":"'+username+'","password":"'+password+'","comunity":"'+community+'","communitypass":"'+communitypassword
+      data=data+'","songs":'+lieder+',"series":'+serien+',"episodes":'+episodes+',"movies":'+filme+',"alben":'+Alben
+      data=data+',"songsplay":'+liederplay
+      data=data+',"episodesplay":'+episodesplay
+      data=data+',"moviesplay":'+filmeplay
+      data=data+'}'
       debug("DATA :")
       debug(data)
       content=geturl("https://l0re.com/kodinerd/inventory.php",data=data)
