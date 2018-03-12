@@ -60,8 +60,8 @@ def log(msg, level=xbmc.LOGNOTICE):
     
 
   
-def addDir(name, url, mode, thump, desc="",page=1,nosub=0):   
-  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&page="+str(page)+"&nosub="+str(nosub)
+def addDir(name, url, mode, thump, desc="",page=1,nosub=0,type="items"):   
+  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&page="+str(page)+"&nosub="+str(nosub)+"&type="+str(type)
   ok = True
   liz = xbmcgui.ListItem(name)  
   liz.setArt({ 'fanart' : thump })
@@ -134,6 +134,8 @@ def geturl(url,data="x",header="",referer=""):
    
   
 def liste():      
+    addDir("Alle Sendungen" , "https://www.dmax.de/api/search?query=*&limit=100&page=1", "videoliste","",nosub="recently-added",type="shows")
+    addDir("Themen" , "", "themenliste","")            
     addDir("Featured" , "https://www.dmax.de/api/shows/highlights?limit=100&page=1", "videoliste","",nosub="featured") 
     addDir("Beliebteste" , "https://www.dmax.de/api/shows/beliebt?limit=100&page=1", "videoliste","",nosub="most-popular")    
     addDir("Neueste" , "https://www.dmax.de/api/shows/neu?limit=100&page=1", "videoliste","",nosub="recently-added")        
@@ -144,7 +146,19 @@ def liste():
         addDir("Inputstream Einstellungen", "", 'inputsettings', "")
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
 
-  
+def themenliste():  
+  addDir("Abenteuer" , "https://www.dmax.de/api/genres/abenteuer", "videoliste","",nosub="recently-added")          
+  addDir("Auction" , "https://www.dmax.de/api/genres/auction", "videoliste","",nosub="recently-added")          
+  addDir("Aufdrehen" , "https://www.dmax.de/api/genres/aufdrehen", "videoliste","",nosub="recently-added")          
+  addDir("Tool Time" , "https://www.dmax.de/api/genres/tool-time", "videoliste","",nosub="recently-added")          
+  addDir("Entertainment" , "https://www.dmax.de/api/genres/entertainment", "videoliste","",nosub="recently-added")          
+  addDir("Lifestyle" , "https://www.dmax.de/api/genres/lifestyle", "videoliste","",nosub="recently-added")          
+  addDir("Motor" , "https://www.dmax.de/api/genres/motor", "videoliste","",nosub="recently-added")          
+  addDir("Survival" , "https://www.dmax.de/api/genres/survival", "videoliste","",nosub="recently-added")            
+  addDir("Schatzsucher" , "https://www.dmax.de/api/genres/schatzsucher", "videoliste","",nosub="recently-added")            
+  addDir("Traumautos" , "https://www.dmax.de/api/genres/traumautos", "videoliste","",nosub="recently-added")            
+  addDir("Wissen" , "https://www.dmax.de/api/genres/wissen", "videoliste","",nosub="recently-added")            
+  xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
 def playvideo(idd):      
     content=geturl("https://www.dmax.de/")    
     for cookief in cj:
@@ -183,6 +197,7 @@ url = urllib.unquote_plus(params.get('url', ''))
 referer = urllib.unquote_plus(params.get('referer', ''))
 page = urllib.unquote_plus(params.get('page', ''))
 nosub= urllib.unquote_plus(params.get('nosub', ''))
+type= urllib.unquote_plus(params.get('type', ''))
 def listserie(idd):
   url="https://www.dmax.de/api/show-detail/"+str(idd)
   debug("listserie :"+url)
@@ -207,13 +222,13 @@ def listserie(idd):
         addLink(title,idd,"playvideo",image,desc=desc,duration=duration)
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
 
-def videoliste(url,page=1,nosub=""):    
+def videoliste(url,page=1,nosub="",type="items"):    
   if not "http" in url:
      url="http://www.demax.de/"+url
   content=geturl(url)
   debug("videoliste : "+content)
   struktur = json.loads(content) 
-  elemente=struktur["items"]
+  elemente=struktur[type]
   for element in elemente:
     title=element["title"]
     idd=element["id"]
@@ -238,8 +253,10 @@ else:
   if mode == 'subrubrik':
           subrubrik(url)
   if mode == 'videoliste':
-          videoliste(url,page,nosub)
+          videoliste(url,page,nosub,type)
   if mode == 'listserie':
            listserie(url)
   if mode == 'inputsettings':
-          inputsettings()                                  
+          inputsettings()    
+  if mode == 'themenliste':
+          themenliste()  
