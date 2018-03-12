@@ -100,6 +100,7 @@ if mode=="":
  listitem = xbmcgui.ListItem(path=path)
  listitem.setInfo(type="Video", infoLabels={"Title": title})
  kodi_player.play(path,listitem)
+ time.sleep(10)
  videoda=0
  while videoda==0 :
   try:
@@ -113,7 +114,6 @@ if mode=="":
  debug("FILE :"+file)
  YDStreamExtractor.overrideParam('ffmpeg_location',ffmpg)
  YDStreamExtractor.overrideParam('preferedformat',"avi") 
- YDStreamExtractor.disableDASHVideo(False)
  #YDStreamExtractor.overrideParam('title',title) 
  vid = YDStreamExtractor.getVideoInfo(file,quality=int(quality)) 
  #kodi_player.stop()
