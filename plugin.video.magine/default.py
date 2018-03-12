@@ -15,6 +15,7 @@ import time,cookielib
 import base64
 import datetime
 from tzlocal import get_localzone
+import requests
 #import pytz
 
 try:
@@ -63,8 +64,9 @@ def getUrl(url,data="x",header=[]):
    global cj
    content=""
    debug("URL :::::: "+url)
+   debug("DATA :::::: "+data)
    opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
-   userAgent = "Coralie/1.7.2-2016081207(SM-G900F; Android; 6.0.1" 
+   userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36" 
    header.append(('User-Agent', userAgent))
    header.append(('Accept', "*/*"))
    header.append(('Content-Type', "application/json;charset=UTF-8"))
@@ -80,7 +82,6 @@ def getUrl(url,data="x",header=[]):
          content=opener.open(url).read()
    except urllib2.HTTPError as e:
        debug ( e)
-   opener.close()
    return content
    
    
@@ -114,11 +115,13 @@ def addLink(name, url, mode, iconimage, duration="", desc="", genre='',channelid
   ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
   return ok
   
-def addDir(name, url, mode, iconimage, desc="",year="",channelid="",times="",start="",ende="",id_such=""):
-  u = base_url+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&channelid="+str(channelid)+"&times="+str(times)+"&start="+str(start)+"&ende="+str(ende)+"&id_such="+str(id_such)  
+def addDir(name, url, mode, iconimage, desc="",year="",channelid="",times="",start="",ende="",id_such="",ids=0,playlist=0):
+  u = base_url+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&channelid="+str(channelid)+"&times="+str(times)+"&start="+str(start)+"&ende="+str(ende)+"&id_such="+str(id_such)+"&ids="+str(ids) 
   ok = True
   liz = xbmcgui.ListItem(name, iconImage=iconimage, thumbnailImage=iconimage)  
   liz.setProperty("fanart_image", iconimage)
+  if playlist==1:
+    liz.setProperty('IsPlayable', 'true')
   ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
   return ok
   
@@ -132,6 +135,8 @@ def login():
   data = json.dumps(values)  
   try:
     content=getUrl(baseurl+"/api/login/v1/auth/magine",data=data)
+    debug("--")
+    debug(content)
     struktur = json.loads(content)
     session=struktur['sessionId']
     userid=struktur['userId']
@@ -396,61 +401,87 @@ def live_channels(session,userid):
               titel=kanal_name
             if anzeige=="3":
               titel=senung_name
-            addLink(titel, "", "live_play", bild, channelid=str(kanal_id),ids="")
+            addDir(titel, "", "playmenu", bild, channelid=str(kanal_id),ids="")
   xbmcplugin.endOfDirectory(addon_handle)
 
-def get_ids(session,userid,channelid):                
+def playmenu(session,userid,channelid):
+  addLink("Livestream", "", "live_play", "", channelid=str(channelid),ids="")
+  addDir("Sendung von Anfangan", "", "playstart", "", channelid=str(channelid),ids="",playlist=1)
+  xbmcplugin.endOfDirectory(addon_handle)
+def live_play(session,userid,channelid):      
+  headers = {'User-Agent':         'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36',
+   }
+  result = requests.get("https://magine.com", allow_redirects=False,verify=False,cookies=cj,headers=headers)
+  code=result.headers["Magine-AccessToken"]
+  debug("CODE :" +code)
+  session,userid=login()
+  debug("SESSION :"+session)
+  headers = {'Connection':         'keep-alive',
+  'Magine-AccessToken':         code,
+  'Authorization':         "Bearer "+session,
+  'Magine-Play-DeviceId':  "f2e3c5f0-e51b-4d1f-b29b-bec607543454",
+  'User-Agent':  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36",
+  'Referer':  "https://magine.com/app/player",
+  'Content-Type': 'application/json;charset=UTF-8'
+  }
+  url="https://magine.com/new-api/entitlement/v2/asset/"+channelid
+  result = requests.post(url, allow_redirects=False,verify=False,cookies=cj,headers=headers,data="{}")
+  content=result.text
+  struktur = json.loads(content)
+  session=struktur["token"]  
+  headers = {'Connection':         'keep-alive',
+  'Magine-Play-DevicePlatform':         'Chrome',
+  'Magine-Play-DeviceModel':         'Windows 10 64-bit',
+  'Magine-Play-DeviceType':         'web',
+  'Magine-AccessToken':         code,
+  'Authorization':         "Bearer "+session,
+  'Magine-Play-DeviceId':  "f2e3c5f0-e51b-4d1f-b29b-bec607543454",
+  'User-Agent':  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36",
+  'Magine-Play-DRM':  "widevine",
+  'Magine-Play-EntitlementId':  session,
+  'Magine-Play-Protocol':  "dashs",
+  'Origin':  "https://magine.com",
+  'Referer':  "https://magine.com/",
+  }  
+  
+  url="https://client-api.magine.com/api/playback/v1/preflight/asset/"+ channelid
+  debug(headers)
+  debug(url)
+  result = requests.post(url, allow_redirects=False,verify=False,cookies=cj,headers=headers)
+  content=result.text 
+  struktur = json.loads(content)
+  file=struktur["playlist"]
+  licserver=struktur["license"]
+  listitem = xbmcgui.ListItem(path=file)        
+  pin=addon.getSetting("pin")
+  lic_header="|Authorization=Bearer%20"+session+"&UserId=" +userid+"&Magine-ChannelId=" +channelid+"&Magine-Md=PC-Awesomesauce"+"&Magine-ParentalControlPinCode="+pin+"&Magine-Mk=HTML5"+"&Magine-ClientId=c060c1bf-d805-4feb-74d4-d8241e27d836"+"&Magine-ProgramId="+ids+"|R{SSM}|" 
+  listitem.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')  
+  listitem.setProperty('inputstream.adaptive.license_key', "https://magine.com/api/drm/v4/license/widevine"+lic_header)
+  #listitem.setProperty('inputstream.adaptive.license_data', base64.b64encode(b'\x08\x01\x12\x10'+'{KID}'+b'\x1A\x05'+'tvoli"'+chr(len('channel.'+channelid+'.'+ids))+'channel.'+channelid+'.'+ids+'*'+b'\x02'+'SD2'+b'\x00'))
+  listitem.setProperty('inputstreamaddon', "inputstream.adaptive")  
+  listitem.setProperty("inputstream.adaptive.manifest_type", "mpd")  
+  xbmcplugin.setResolvedUrl(addon_handle, True, listitem)
+    
+def get_ids(session,userid,channelid):
   header=[]
   header.append (("Authorization","Bearer "+session))
   header.append (("UserId",userid))
   debug("Start :"+ids)
   #https://magine.com/api/content/v2/feeds/channel-11245
-  content=getUrl(baseurl+"/api/content/v2/feeds/channel-"+str(channelid),header=header)  
-  struktur = json.loads(content)   
-  debug("live_play Struktur Channel :")    
+  content=getUrl(baseurl+"/api/content/v2/feeds/channel-"+str(channelid),header=header)
+  struktur = json.loads(content)
+  debug("live_play Struktur Channel :")
   debug(struktur)
   now = datetime.datetime.now()- datetime.timedelta(seconds=_timezone_)
   id_arr=[]
   for element in struktur["items"]:
-     start=datetime.datetime.utcfromtimestamp(int(element["startUnixtime"]))  
-     stop=datetime.datetime.utcfromtimestamp(int(element["stopUnixtime"]))     
-     if now < stop:               
-          id_arr.append(element["id"])    
+     start=datetime.datetime.utcfromtimestamp(int(element["startUnixtime"]))
+     stop=datetime.datetime.utcfromtimestamp(int(element["stopUnixtime"]))
+     if now < stop:
+          id_arr.append(element["id"])
   return id_arr
+
   
-def live_play(session,userid,channelid):      
-  header=[]
-  header.append (("Authorization","Bearer "+session))
-  header.append (("UserId",userid))
-  debug("Start :"+ids)
-  #https://magine.com/api/content/v2/feeds/channel-11245
-  
-  id_arr=get_ids(session,userid,channelid)
-  debug("TIMES :"+str(times))
-  debug("live_play")
-  playlist = xbmc.PlayList(1)
-  playlist.clear() 
-  item,dashfile,dauer,id_arr=live_leseclips(session,userid,channelid,id_arr)
-  playlist.add(dashfile, item)  
-  debug("NEXT :"+ str(next))  
-  xbmc.Player().play(playlist)
-  time.sleep(3)
-  while xbmc.Player().isPlaying():  
-    dauer=dauer-300
-    if dauer<0:
-      dauer=1
-    time.sleep(dauer)    
-    dauer=0
-    try:
-        item,dashfile,dauer,id_arr=live_leseclips(session,userid,channelid,id_arr)  
-    except:
-         pass
-    playlist.add(dashfile, item) 
-    #xbmc.executebuiltin('Container.Refresh')
-  time.sleep(10000)
-  #xbmc.executebuiltin('Container.Refresh')
-  
-    
 def live_leseclips(session,userid,channelid,id_arr):  
   header=[]
   header.append (("Authorization","Bearer "+session))
@@ -475,6 +506,27 @@ def live_leseclips(session,userid,channelid,id_arr):
   listitem,dauer,title=playdash(dash_file,session,userid,channelid,times,is_type=is_type) 
   return listitem,dash_file,dauer,id_arr
 
+def playstart(session,userid,channelid):
+  header=[]
+  header.append (("Authorization","Bearer "+session))
+  header.append (("UserId",userid))
+  debug("Start :"+ids)
+  #https://magine.com/api/content/v2/feeds/channel-11245
+
+  id_arr=get_ids(session,userid,channelid)
+  debug("TIMES :"+str(times))
+  debug("live_play")
+  playlist = xbmc.PlayList(1)
+  playlist.clear()
+  item,dashfile,dauer,id_arr=live_leseclips(session,userid,channelid,id_arr)
+  playlist.add(dashfile, item)
+  debug("NEXT :"+ str(next))
+  xbmc.Player().play(playlist)
+ 
+
+
+
+  
   
 def parameters_string_to_dict(parameters):
 	paramDict = {}
@@ -528,5 +580,9 @@ if mode == 'mediathek_playvideo':
           mediathek_playvideo(session,userid,channelid,ids)    
 if mode == 'mediathek_filelist':
           mediathek_filelist(session,userid,id_such,start,ende)         
+if mode == 'playstart':
+          playstart(session,userid,channelid)                
 if mode == 'Settings':
           addon.openSettings()          
+if mode == 'playmenu':
+          playmenu(session,userid,channelid)
