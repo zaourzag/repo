@@ -72,7 +72,7 @@ def geturl(url,data="x",header="",referer=""):
              content=""
        
         opener.close()
-        cj.save(cookie,ignore_discard=True, ignore_expires=True)               
+        #cj.save(cookie,ignore_discard=True, ignore_expires=True)               
         return content
 
 
