@@ -75,7 +75,7 @@ class Items:
         xbmcplugin.setResolvedUrl(addon_handle, True, listitem)
             
     def seek_item(self, seektime):
-        for i in range(1,10):
+        for i in range(1,20):
             xbmc.sleep(250)
             if xbmc.Player().isPlayingVideo():
                 xbmc.sleep(250)
