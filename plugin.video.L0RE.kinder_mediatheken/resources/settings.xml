@@ -1,0 +1,8 @@
+<settings>
+    <setting id="plugin.video.L0RE.disneychannel" type="bool" label="Disney Channel" default="true" />    
+    <setting id="plugin.video.nick_de" type="bool" label="Nickolodion" default="true" />    
+    <setting id="plugin.video.L0RE.kividoo" type="bool" label="Kividoo" default="true" />    
+    <setting id="plugin.video.kikamediathek" type="bool" label="Kika Mediathek" default="true" />        
+    <setting id="plugin.video.funkmediathek" type="bool" label="Funk Mediathek" default="true" />        
+    <setting id="plugin.video.sesamstrasse_de  " type="bool" label="Sesamstrasse default="true" />           
+</settings>
