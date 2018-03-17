@@ -35,7 +35,7 @@
 							<left>-2</left>
 							<width>282</width>
 							<height>420</height>
-							<texture>items/shadow_poster.png</texture>
+					<texture border="20,20,20,20">items/shadow.png</texture>
 						</control>
 						<control type="image">
 							<width>276</width>
@@ -158,8 +158,8 @@
 							<textoffsetx>15</textoffsetx>
 							<align>center</align>
 							<disabledcolor>white</disabledcolor>
-							<texturefocus border="10" colordiffuse="blue">items/shadow_smallbutton.png</texturefocus>
-							<texturenofocus border="10" colordiffuse="blue">items/shadow_smallbutton.png</texturenofocus>
+							<texturefocus border="10" colordiffuse="blue">items/button.png</texturefocus>
+							<texturenofocus border="10" colordiffuse="blue">items/button.png</texturenofocus>
 							<enable>false</enable>
 						</control>
 					</control>
