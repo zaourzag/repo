@@ -290,7 +290,6 @@ def build_recordingsList(addon_uri, addon_handle):
   import urllib
   
   resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/playlist', None)
- # print 'resultData ' + str(resultData)
   if resultData is None: return
   
   for record in resultData['recordings']:

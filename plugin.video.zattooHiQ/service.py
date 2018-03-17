@@ -42,16 +42,12 @@ def refreshProg():
         #update programInfo
         startTime=datetime.datetime.now()
         endTime=datetime.datetime.now()+datetime.timedelta(minutes = 120)
-        #print 'StartRefresh  ' + str(datetime.datetime.now())
 
         try:
             getProgNextDay()
-            #print "Next Day"
             _zattooDB_.getProgInfo(False, startTime, endTime)
         except:
-            #print 'ERROR on REFRESH'
             pass
-        #print "REFRESH Prog  " + str(datetime.datetime.now())
 
 def recInfo():
     import urllib
@@ -175,17 +171,6 @@ class myPlayer(xbmc.Player):
 
 
 player=myPlayer()
-
-#xbmc.sleep(2000)
-#delete zapi files to force new login    
-#profilePath = xbmc.translatePath(__addon__.getAddonInfo('profile'))
-#try:
-    #os.remove(os.path.join(profilePath, 'cookie.cache'))
-    #os.remove(os.path.join(profilePath, 'session.cache'))
-    #os.remove(os.path.join(profilePath, 'account.cache'))
-#except:
-    #pass
-
 
 if __addon__.getSetting('dbonstart') == 'true':
 	start()

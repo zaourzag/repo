@@ -16,13 +16,14 @@ __addonId__=__addon__.getAddonInfo('id')
 __addonname__ = __addon__.getAddonInfo('name')
 DEBUG = __addon__.getSetting('debug')
 
-if not __addon__.getSetting('kodi16'):
+def debug(s):
+	if DEBUG: xbmc.log(str(s), xbmc.LOGDEBUG)
+
+if __addon__.getSetting('kodi16') != 'true':
 	import ssl
 	ssl._create_default_https_context = ssl._create_unverified_context
 
-def debug(s):
-	if DEBUG: xbmc.log(str(s), xbmc.LOGDEBUG)
-	
+
 class ZapiSession:
 	
 	ZAPIUrl = None
@@ -51,7 +52,6 @@ class ZapiSession:
 		self.Username = username
 		self.Password = password
 		self.ZAPIUrl = api_url
-		#if DEBUG: print "ZapiURL:  " + str(api_url)
 		return self.restore_session() or self.renew_session()
 
 	def restore_session(self):
@@ -116,7 +116,7 @@ class ZapiSession:
 	def exec_zapiCall(self, api, params, context='default'):
 		#url = self.ZAPIAuthUrl + api if context == 'session' else self.ZAPIUrl + api
 		url = self.ZAPIUrl + api
-		if DEBUG: print "ZapiCall  " + str(url)
+		debug( "ZapiCall  " + str(url))
 		content = self.request_url(url, params)
 		if content is None and context != 'session' and self.renew_session():
 			content = self.request_url(url, params)
@@ -135,7 +135,6 @@ class ZapiSession:
 
 		handle = urllib2.urlopen(self.ZAPIUrl + '/')
 		html = handle.read()
-		#print "App-Token:" + str(re.search("window\.appToken\s*=\s*'(.*)'", html).group(1))
 		return re.search("window\.appToken\s*=\s*'(.*)'", html).group(1)
 		
 

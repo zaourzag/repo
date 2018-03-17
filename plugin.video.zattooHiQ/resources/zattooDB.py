@@ -523,7 +523,7 @@ class ZattooDB(object):
 
     except:
         pass
-
+    
     self._createTables()
 
     self.updateChannels(True)
