@@ -25,6 +25,9 @@ class Resolver:
         elif 'youtube' in url:
             self.youtube(url)
             
+        elif 'p2l.tv' in url:
+            self.p2l(url)
+            
     def twitch(self, url):
         
         def time_to_sec(t):
@@ -83,6 +86,13 @@ class Resolver:
                 url = i['url']
                 bitrate = int(i['bitrate'])
         self.resolved_url = url
+        
+    def p2l(self, url):
+        _id_ = re.search('streams/(\d+)', url)
+        if _id_:
+            api = 'https://p2l.tv/api/betting/streams/%s/'
+            data = requests.get(api % _id_.group(1)).json()
+            self.resolved_url = data['url']
         
     def youtube(self, url):
         
@@ -149,3 +159,7 @@ class Resolver:
                             url += '&signature=%s' % signature
                             self.resolved_url = url
                             break
+
+            re_hlsvp = re.search(r'\"hlsvp\"\s*:\s*\"(?P<hlsvp>[^"]*)\"', html)
+            if re_hlsvp:
+                self.resolved_url = re_hlsvp.group('hlsvp').replace('\\', '').strip('//')

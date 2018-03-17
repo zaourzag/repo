@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.hltv" version="0.3.0" name="HLTV" provider-name="Jin">
+<addon id="plugin.video.hltv" version="0.4.0" name="HLTV" provider-name="Jin">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
         <import addon="inputstream.adaptive" version="2.0.18"/>
@@ -9,10 +9,8 @@
     </extension>
     <extension point="xbmc.addon.metadata">
         <news>
-- use inputstream adaptive for hls/dash playback
-- fix archive parser
-- dont treat matches as folder
-- fix twitch resolver for certain channels
+- fix youtube
+- add p2l.tv
         </news>
         <summary lang="de_DE">CS:GO Live und auf Abruf</summary>
         <description lang="de_DE">Video Addon für hltv.org</description>

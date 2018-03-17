@@ -726,7 +726,7 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
   </extension>
 </addon>
 
-<addon id="context.downloadit" name="Download IT" version="0.4.3" provider-name="L0RE">
+<addon id="context.downloadit" name="Download IT" version="0.5.0" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.20.0" />
         <import addon="script.module.pyxbmct" version="1.1.7"/>        
@@ -846,7 +846,7 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
   </extension>
 </addon>
 
-<addon id="skin.embuary" version="0.5.3a" name="Embuary" provider-name="sualfred">
+<addon id="skin.embuary" version="0.5.5" name="Embuary" provider-name="sualfred">
 	<requires>
 		<import addon="xbmc.gui" version="5.12.0"/>
 		<import addon="script.globalsearch" version="7.0.0"/>
@@ -3249,7 +3249,7 @@ NOTE: Streams are available in SD only
     </extension>
 </addon>
 
-<addon id="plugin.video.hltv" version="0.3.0" name="HLTV" provider-name="Jin">
+<addon id="plugin.video.hltv" version="0.4.0" name="HLTV" provider-name="Jin">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
         <import addon="inputstream.adaptive" version="2.0.18"/>
@@ -3259,10 +3259,8 @@ NOTE: Streams are available in SD only
     </extension>
     <extension point="xbmc.addon.metadata">
         <news>
-- use inputstream adaptive for hls/dash playback
-- fix archive parser
-- dont treat matches as folder
-- fix twitch resolver for certain channels
+- fix youtube
+- add p2l.tv
         </news>
         <summary lang="de_DE">CS:GO Live und auf Abruf</summary>
         <description lang="de_DE">Video Addon für hltv.org</description>

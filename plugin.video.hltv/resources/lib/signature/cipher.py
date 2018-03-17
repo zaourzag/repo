@@ -1,6 +1,9 @@
 __author__ = 'bromix'
 
+import json
+import os
 import re
+import xbmc
 
 from resources.lib import simple_requests as requests
 from .json_script_engine import JsonScriptEngine
@@ -128,8 +131,7 @@ class Cipher(object):
         return json_script
 
     def _find_signature_function_name(self, java_script):
-        #match = re.search('signature\s?=\s?(?P<name>[a-zA-Z]+)\([^)]+\)', self._java_script)
-        match = re.search('set..signature..(?P<name>[$a-zA-Z]+)\([^)]\)', java_script)
+        match = re.search('"signature",(?P<name>[$a-zA-Z]+)\(', java_script)
         if match:
             return match.group('name')
 

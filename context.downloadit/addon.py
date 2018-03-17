@@ -90,9 +90,55 @@ except:
       mode="" 
 debug("Mode ist : "+mode)
 folder=addon.getSetting("folder")
-ffmpg=addon.getSetting("ffmpg")
+ffmpgfile=addon.getSetting("ffmpgfile")
+ffmpgdir=addon.getSetting("ffmpgdir")
 quality=addon.getSetting("quality")
 debug("FOLDER :"+folder)
+
+def downloadyoutube(file):
+ YDStreamExtractor.overrideParam('ffmpeg_location',ffmpgdir)
+ YDStreamExtractor.overrideParam('preferedformat',"avi") 
+ #YDStreamExtractor.overrideParam('title',title) 
+ vid = YDStreamExtractor.getVideoInfo(file,quality=int(quality)) 
+ #kodi_player.stop()
+ with YDStreamUtils.DownloadProgress() as prog: #This gives a progress dialog interface ready to use
+    try:
+        YDStreamExtractor.setOutputCallback(prog)
+        result = YDStreamExtractor.downloadVideo(vid,folder)
+        if result:
+            #success
+            full_path_to_file = result.filepath
+        elif result.status != 'canceled':
+            #download failed
+            error_message = result.message
+    finally:
+        YDStreamExtractor.setOutputCallback(None)
+        
+def downloadffmpg(file,name):    
+    import ffmpy
+    import subprocess
+    name=name.replace(" ","_").replace(":","")
+    name=name[0:50]+".mp4"  
+    name=os.path.join(folder,name)
+    debug("ffmpgfile :"+ffmpgfile)
+    ff = ffmpy.FFmpeg(executable=ffmpgfile, inputs={file: None},outputs={name: '-codec copy'})
+    #ff = ffmpy.FFmpeg(executable=ffmpgfile, inputs={file: None},outputs={name: '-c:v h264 -c:a ac3'})
+    erg=ff.cmd
+    debug(erg)
+    try:
+        ret=ff.run(stdout=subprocess.PIPE)
+        #output = ff.stdout.read()        
+        #debug("+++++++RET")
+        #debug(output)
+        dialog = xbmcgui.Dialog()
+        nr=dialog.ok("Download", "Video Downloaded")
+    except:
+      dialog = xbmcgui.Dialog()
+      nr=dialog.ok("Fehler", "Output Failed, tryiing old Method")
+      kodi_player.play(path,listitem)
+      time.sleep(5)
+      downloadyoutube(file)  
+    
 if mode=="":   
  path = xbmc.getInfoLabel('ListItem.FileNameAndPath')
  title = xbmc.getInfoLabel('ListItem.Title')
@@ -112,20 +158,9 @@ if mode=="":
     pass 
  debug("Start Download")
  debug("FILE :"+file)
- YDStreamExtractor.overrideParam('ffmpeg_location',ffmpg)
- YDStreamExtractor.overrideParam('preferedformat',"avi") 
- #YDStreamExtractor.overrideParam('title',title) 
- vid = YDStreamExtractor.getVideoInfo(file,quality=int(quality)) 
- #kodi_player.stop()
- with YDStreamUtils.DownloadProgress() as prog: #This gives a progress dialog interface ready to use
-    try:
-        YDStreamExtractor.setOutputCallback(prog)
-        result = YDStreamExtractor.downloadVideo(vid,folder)
-        if result:
-            #success
-            full_path_to_file = result.filepath
-        elif result.status != 'canceled':
-            #download failed
-            error_message = result.message
-    finally:
-        YDStreamExtractor.setOutputCallback(None)
+ file=file.split("|")[0]
+ if not ffmpgfile=="":
+    kodi_player.stop()
+    downloadffmpg(file,title)  
+ else:
+   downloadyoutube(file)
