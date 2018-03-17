@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
 <setting label="Donwload Directory" type="folder" id="folder" source="auto" option="writeable"/>
-<setting label="Dirctory for ffmpg bianry" type="folder" id="ffmpg" source="auto" />
+<setting id="new" type="bool" label="New Method" default="false"/>
+<setting label="Ffmpg bianry" type="file" id="ffmpgfile" source="auto" enable="eq(-1,true) "/>
+<setting label="Ffmpg Directory" type="folder" id="ffmpgdir" source="auto" enable="eq(-2,false)" />
 <setting id="quality" type="enum" label="Quality" values="480p|720p|1080p" default="1"/>
 </settings>
