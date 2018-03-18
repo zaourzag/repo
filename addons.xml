@@ -4246,7 +4246,7 @@ Parental warning: The Maxdome Plattform consists of differnt types of content - 
 	</extension>
 </addon>
 
-<addon id="plugin.video.magine" name="Magine" version="0.3.9" provider-name="L0RE">
+<addon id="plugin.video.magine" name="Magine" version="0.3.10" provider-name="L0RE">
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
     </extension>
