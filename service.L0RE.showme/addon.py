@@ -114,6 +114,9 @@ def index():
     addDir("TopListe der Folgen","episodes","topliste","")
     addDir("TopListe der Alben","alben","topliste","")
     addDir("TopListe der Songs","songs","topliste","")
+    addDir("TopListe der bereits abgespielten Folgen","episodesplay","topliste2","")
+    addDir("TopListe der bereits abgespielten Filme","moviesplay","topliste2","")
+    addDir("TopListe der bereits abgespielten Songs","songsplay","topliste2","")
     addDir("Settings","Settings","Settings","")        
     xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
 def adddata():
@@ -167,8 +170,11 @@ class Infowindow(pyxbmct.AddonDialogWindow):
          songs=songs+elemente[1]+"\n"
          series=series+elemente[2]+"\n"
          folgen=folgen+elemente[3]+"\n"
-         movies=movies+elemente[4]+"\n"
-         alben=alben+elemente[5]+"\n" 
+         try:
+            movies=movies+elemente[4]+"\n"
+            alben=alben+elemente[5]+"\n" 
+         except:
+             pass
          if counter==0:
            ids=ids+"Platz\n"
          else:
@@ -228,6 +234,34 @@ def topliste(search):
             TEXT=TEXT+"%s##%d##%d##%d##%d##%d\n"%(element["user"],int(element["songs"]),int(element["series"]),int(element["episodes"]),int(element["movies"]),int(element["alben"]))
     window=Infowindow("Liste",TEXT) 
     window.doModal()
+    
+def topliste2(search):
+    community=addon.getSetting("community")
+    username=addon.getSetting("username")
+    data='{"comunity":"'+community+'","sorted":"'+search+'"}'
+    debug("DATA :")
+    debug(data)
+    content=geturl("https://l0re.com/kodinerd/listuser.php",data=data)
+    debug("++++++")
+    debug(content)
+    debug("++++++")
+    #{ "user":"L0RE","songs":"2047","series":"54","episodes":"530","movies":"290","alben":"149"}
+    TEXT="%s##%s##%s##%s\n"%("User","PlaydEpisodes","Playdsongs","PlayedMovies")
+    debug("++++++++")
+    debug(content)
+    struktur = json.loads(content) 
+    for element in struktur["users"]:
+         debug("++")
+         debug(element)
+         if username==element["user"]:
+            TEXT=TEXT+"[COLOR green]%s[/COLOR]##[COLOR green]%d[/COLOR]##[COLOR green]%d[/COLOR]##[COLOR green]%d[/COLOR]\n"%(element["user"],int(element["songsplay"]),int(element["episodesplay"]),int(element["moviesplay"]))
+         else:
+            TEXT=TEXT+"%s##%d##%d##%d## ##\n"%(element["user"],int(element["songsplay"]),int(element["episodesplay"]),int(element["moviesplay"]))            
+    debug(TEXT)
+    window=Infowindow("Liste",TEXT) 
+    window.doModal()
+
+    
 params = parameters_string_to_dict(sys.argv[2])
 mode = urllib.unquote_plus(params.get('mode', ''))
 url = urllib.unquote_plus(params.get('url', ''))
@@ -240,5 +274,6 @@ if mode == 'adddata':
            adddata() 
 if mode == 'topliste':
             topliste(url)
-
+if mode == 'topliste2':
+            topliste2(url)
     
