@@ -70,7 +70,7 @@ def start():
     #re-import ZattooDB to prevent "convert_timestamp" error
     from resources.zattooDB import ZattooDB
     _zattooDB_ = ZattooDB()
-    _zattooDB_.updateChannels()
+    _zattooDB_.updateChannels(True)
     
     #re-import ZattooDB to prevent "convert_timestamp" error
     from resources.zattooDB import ZattooDB

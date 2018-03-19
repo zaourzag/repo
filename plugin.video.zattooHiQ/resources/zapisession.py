@@ -116,7 +116,7 @@ class ZapiSession:
 	def exec_zapiCall(self, api, params, context='default'):
 		#url = self.ZAPIAuthUrl + api if context == 'session' else self.ZAPIUrl + api
 		url = self.ZAPIUrl + api
-		debug( "ZapiCall  " + str(url))
+		#debug( "ZapiCall  " + str(url))
 		content = self.request_url(url, params)
 		if content is None and context != 'session' and self.renew_session():
 			content = self.request_url(url, params)
@@ -132,7 +132,7 @@ class ZapiSession:
 		return None
 
 	def fetch_appToken(self):
-
+		#debug("ZapiUrL= "+str(self.ZAPIUrl))
 		handle = urllib2.urlopen(self.ZAPIUrl + '/')
 		html = handle.read()
 		return re.search("window\.appToken\s*=\s*'(.*)'", html).group(1)

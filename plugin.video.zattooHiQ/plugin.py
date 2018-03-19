@@ -700,9 +700,10 @@ def makeOsdInfo():
   except: xbmcgui.Dialog().ok('Error',' ','No Info')
   
   
-  
+  debug('Restart ShowID:'+ str(program['showID']))
   if premiumUser: xbmc.executebuiltin( "Skin.SetBool(%s)" %'restart')
-  elif _zattooDB_.getRestart(program['showID']): xbmc.executebuiltin( "Skin.SetBool(%s)" %'restart')
+   
+  #elif _zattooDB_.getRestart(program['showID']): xbmc.executebuiltin( "Skin.SetBool(%s)" %'restart')
   else: xbmc.executebuiltin( "Skin.Reset(%s)" %'restart')
 
   
@@ -916,7 +917,7 @@ class zattooOSD(xbmcgui.WindowXMLDialog):
       isFavourite=xbmcgui.Window(10000).getProperty('favourite')
       channelList=_zattooDB_.getChannelList()['index']
       update=False
-                                 
+                            
       if isFavourite=="0":
           if xbmcgui.Dialog().yesno(channeltitle, __addon__.getLocalizedString(31908)): 
             channelList.append(channel)
@@ -927,6 +928,7 @@ class zattooOSD(xbmcgui.WindowXMLDialog):
 
       if update:
         channelList=",".join(channelList)
+        
         result=_zattooDB_.zapi.exec_zapiCall('/zapi/channels/favorites/update', {'cids': channelList, 'ctype': 'tv'})
         _zattooDB_.updateChannels(True)
         _zattooDB_.updateProgram()

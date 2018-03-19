@@ -175,13 +175,22 @@ class ZattooDB(object):
     #print "account  "+ self.zapi.AccountData['account']['power_guide_hash']
     api = '/zapi/v2/cached/channels/' + self.zapi.AccountData['account']['power_guide_hash'] + '?details=False'
     channelsData = self.zapi.exec_zapiCall(api, None)
-
+    #debug("channels: " +str(channelsData))
     api = '/zapi/channels/favorites'
     favoritesData = self.zapi.exec_zapiCall(api, None)
-
+    #debug("channels: " +str(favoritesData))
     nr = 0
     for group in channelsData['channel_groups']:
       for channel in group['channels']:
+        if channel['qualities'][0]['availability'] == 'subscribable': 
+            try:
+                if channel['qualities'][1]['availability'] == 'subscribable': continue
+                else:
+                    debug(str(channel['title'].encode('utf-8')+"  "+channel['qualities'][1]['availability'].encode('utf-8')))
+            except: continue
+        else:
+            debug(str(channel['title'].encode('utf-8')+"  "+channel['qualities'][0]['availability'].encode('utf-8')))
+        
         logo = 'http://logos.zattic.com' + channel['qualities'][0]['logo_black_84'].replace('/images/channels', '')
         try:
           favouritePos = favoritesData['favorites'].index(channel['id'])
@@ -214,9 +223,7 @@ class ZattooDB(object):
 
     # get whole day
     fromTime = int(time.mktime(date.timetuple()))  # UTC time for zattoo
-    #fromTime = time.mktime(date.timetuple())
-    #get program from DB and return if it's not empty
-#     if self._isDBupToDate(date, 'programs'):return
+
     try:
         c.execute('SELECT * FROM programs WHERE start_date > ? AND end_date < ?', (fromTime+18000, fromTime+25200,)) #get shows between 05:00 and 07:00
     except:pass
@@ -236,36 +243,29 @@ class ZattooDB(object):
 
         #print "apiData   "+api
         programData = self.zapi.exec_zapiCall(api, None)
-        #print str(programData)
+        debug ('ProgrammData: '+str(programData))
         count=0
         for channel in programData['channels']:
            cid = channel['cid']
-           if cid =="chtv":
-              continue
            c.execute('SELECT * FROM channels WHERE id==?', [cid])
            countt=c.fetchall()
            if len(countt)==0:
-             if DEBUG: print "Sender NICHT : "+cid
+             #if DEBUG: print "Sender NICHT : "+cid
+             continue
            for program in channel['programs']:
             count+=1
             if program['i'] != None:
               image = "http://images.zattic.com/" + program['i']
               #http://images.zattic.com/system/images/6dcc/8817/50d1/dfab/f21c/format_480x360.jpg
             else: image = ""
-            try:
-                if DEBUG: print 'INSERT OR IGNORE INTO programs(channel, title, start_date, end_date, description, genre, image_small, showID) VALUES(%, %, %, %, %, %, %)',cid, program['t'], program['s'], program['e'], program['et'], ', '.join(program['g']), image, program['id']
-            except:
-                pass
+           # try:
+               # if DEBUG: print 'INSERT OR IGNORE INTO programs(channel, title, start_date, end_date, description, genre, image_small, showID) VALUES(%, %, %, %, %, %, %)',cid, program['t'], program['s'], program['e'], program['et'], ', '.join(program['g']), image, program['id']
+            #except:
+                #pass
 
             c.execute('INSERT INTO programs(channel, title, start_date, end_date, description, genre, image_small, showID) VALUES(?, ?, ?, ?, ?, ?, ?, ?)',
                 [cid, program['t'], program['s'], program['e'], program['et'], ', '.join(program['g']), image, program['id'] ])
-            '''
-            c.execute('INSERT OR IGNORE INTO programs(channel, title, start_date, end_date, description, genre, image_small, showID) VALUES(?, ?, ?, ?, ?, ?, ?, ?)',
-                [cid, program['t'], program['s'], program['e'], program['et'], ', '.join(program['g']), image, program['id'] ])
-            if not c.rowcount:
-                c.execute('UPDATE programs SET channel=?, title=?, start_date=?, end_date=?, description=?, genre=?, image_small=? WHERE showID=?',
-                  [cid, program['t'], program['s'], program['e'], program['et'], ', '.join(program['g']), image, program['id'] ])
-            '''
+           
 
     if count>0:
       c.execute('INSERT into updates(date, type) VALUES(?, ?)', [date, 'program'])

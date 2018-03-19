@@ -98,142 +98,142 @@ class KeyMap:
       key = __addon__.getSetting('key_nextChan')
       if key.isdigit():builder.start("key", {"id":key})
       else: builder.start('up', {})
-      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=skip_channel&amp;skipDir=1")')
+      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ-2/?mode=skip_channel&amp;skipDir=1")')
       builder.end("key")
       
     # Channel Down  
       key = __addon__.getSetting('key_prevChan')
       if key.isdigit():builder.start("key", {"id":key})
       else: builder.start('down', {})
-      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=skip_channel&amp;skipDir=-1")')
+      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ-2/?mode=skip_channel&amp;skipDir=-1")')
       builder.end("key")
       
     # Channel pageup
       key = __addon__.getSetting('key_nextChan')
       if key.isdigit():builder.start("key", {"id":key})
       else: builder.start('pageup', {})
-      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=skip_channel&amp;skipDir=1")')
+      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ-2/?mode=skip_channel&amp;skipDir=1")')
       builder.end("key")
       
     # Channel pageDown  
       key = __addon__.getSetting('key_prevChan')
       if key.isdigit():builder.start("key", {"id":key})
       else: builder.start('pagedown', {})
-      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=skip_channel&amp;skipDir=-1")')
+      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ-2/?mode=skip_channel&amp;skipDir=-1")')
       builder.end("key")
       
     # toggle channel
       key = __addon__.getSetting('key_toggleChan')
       if key.isdigit():builder.start("key", {"id":key})
       else: builder.start('left', {})
-      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=toggle_channel")')
+      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ-2/?mode=toggle_channel")')
       builder.end("key")
     
     # change stream
       key = __addon__.getSetting('key_audio')
       if key.isdigit():builder.start("key", {"id":key})
       else: builder.start('right', {})
-      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=changeStream")')
+      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ-2/?mode=changeStream")')
       builder.end("key")
     
     # Zattoo OSD
       key = __addon__.getSetting('key_OSD')
       if key.isdigit():builder.start("key", {"id":key})
       else: builder.start('return', {})
-      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=showInfo")')
+      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ-2/?mode=showInfo")')
       builder.end("key")
     
     # Teletext
       key = __addon__.getSetting('key_Teletext')
       if key.isdigit():builder.start("key", {"id":key})
       else: builder.start('v', {})
-      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=teletext")')
+      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ-2/?mode=teletext")')
       builder.end("key")
       
     # EPG
       key = __addon__.getSetting('key_EPG')
       if key.isdigit():builder.start("key", {"id":key})
       else: builder.start('e', {})
-      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=epg")')
+      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ-2/?mode=epg")')
       builder.end("key")
       
     # Preview
       key = __addon__.getSetting('key_Preview')
       if key.isdigit():builder.start("key", {"id":key})
       else: builder.start('c', {})
-      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=preview")')
+      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ-2/?mode=preview")')
       builder.end("key")
     
     # Channellist
       key = __addon__.getSetting('key_List')
       if key.isdigit():builder.start("key", {"id":key})
       else: builder.start('h', {})
-      builder.data('ActivateWindow(10025,"plugin://plugin.video.zattooHiQ/?mode=channellist")')
+      builder.data('ActivateWindow(10025,"plugin://plugin.video.zattooHiQ-2/?mode=channellist")')
       builder.end("key")
       
     # Record
       key = __addon__.getSetting('key_record')
       if key.isdigit():builder.start("key", {"id":key})
       else: builder.start('k', {})
-      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=record_p")')
+      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ-2/?mode=record_p")')
       builder.end("key")
       
     # Recordliste
       key = __addon__.getSetting('key_recordlist')
       if key.isdigit():builder.start("key", {"id":key})
       else: builder.start('b', {})
-      builder.data('ActivateWindow(10025,"plugin://plugin.video.zattooHiQ/?mode=recordings")')
+      builder.data('ActivateWindow(10025,"plugin://plugin.video.zattooHiQ-2/?mode=recordings")')
       builder.end(key)  
     
     # Numeric
       key = 'zero'
       builder.start(key, {})
-      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=nr&amp;nr=58")')
+      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ-2/?mode=nr&amp;nr=58")')
       builder.end(key)
       
       key = 'one'
       builder.start(key, {})
-      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=nr&amp;nr=59")')
+      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ-2/?mode=nr&amp;nr=59")')
       builder.end(key)
       
       key = 'two'
       builder.start(key, {})
-      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=nr&amp;nr=60")')
+      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ-2/?mode=nr&amp;nr=60")')
       builder.end(key)
       
       key = 'three'
       builder.start(key, {})
-      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=nr&amp;nr=61")')
+      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ-2/?mode=nr&amp;nr=61")')
       builder.end(key)
       
       key = 'four'
       builder.start(key, {})
-      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=nr&amp;nr=62")')
+      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ-2/?mode=nr&amp;nr=62")')
       builder.end(key)
       
       key = 'five'
       builder.start(key, {})
-      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=nr&amp;nr=63")')
+      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ-2/?mode=nr&amp;nr=63")')
       builder.end(key)
       
       key = 'six'
       builder.start(key, {})
-      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=nr&amp;nr=64")')
+      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ-2/?mode=nr&amp;nr=64")')
       builder.end(key)
       
       key = 'seven'
       builder.start(key, {})
-      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=nr&amp;nr=65")')
+      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ-2/?mode=nr&amp;nr=65")')
       builder.end(key)
       
       key = 'eight'
       builder.start(key, {})
-      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=nr&amp;nr=66")')
+      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ-2/?mode=nr&amp;nr=66")')
       builder.end(key)
       
       key = 'nine'
       builder.start(key, {})
-      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=nr&amp;nr=67")')
+      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ-2/?mode=nr&amp;nr=67")')
       builder.end(key)
       
     # End keyboard
@@ -243,14 +243,14 @@ class KeyMap:
       builder.start("mouse", {})
       key = 'leftclick'
       builder.start(key, {})
-      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=showInfo")')
+      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ-2/?mode=showInfo")')
       builder.end(key)
       builder.end("mouse")
     # Touch Tap
       builder.start("touch", {})
       key = 'leftclick'
       builder.start(key, {})
-      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=showInfo")')
+      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ-2/?mode=showInfo")')
       builder.end(key)
       builder.end("touch")
       builder.end('fullscreenvideo')
