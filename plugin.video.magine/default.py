@@ -401,13 +401,28 @@ def live_channels(session,userid):
               titel=kanal_name
             if anzeige=="3":
               titel=senung_name
-            addDir(titel, "", "playmenu", bild, channelid=str(kanal_id),ids="")
+            playlive=addon.getSetting("playlive")
+            debug("-----------------")
+            debug(playlive)
+            if playlive=="Select":
+                addDir(titel, "", "playmenu", bild, channelid=str(kanal_id),ids="")
+            else:
+                if playlive=="Live":
+                    addLink(titel, "", "live_play", bild, channelid=str(kanal_id),ids="")
+                else:
+                    addLink(titel, "", "playstart", bild, channelid=str(kanal_id),ids="")                
   xbmcplugin.endOfDirectory(addon_handle)
 
 def playmenu(session,userid,channelid):
-  addLink("Livestream", "", "live_play", "", channelid=str(channelid),ids="")
-  addDir("Sendung von Anfangan", "", "playstart", "", channelid=str(channelid),ids="",playlist=1)
-  xbmcplugin.endOfDirectory(addon_handle)
+  playlive=addon.getSetting("playlive")
+  if playlive=="Live":
+      live_play(session,userid,channelid)
+  if playlive=="Start":
+       playstart(session,userid,channelid)
+  if playlive=="Select":
+    addLink("Livestream", "", "live_play", "", channelid=str(channelid),ids="")
+    addDir("Sendung von Anfangan", "", "playstart", "", channelid=str(channelid),ids="",playlist=1)
+    xbmcplugin.endOfDirectory(addon_handle)
 def live_play(session,userid,channelid):      
   headers = {'User-Agent':         'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36',
    }
