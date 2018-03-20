@@ -1,4 +1,9 @@
 ﻿﻿﻿﻿==================================================
+[B]ZattooHiQ v1.5.6 [/B]15.03.2018 Steffen Rolapp
+==================================================
+- Fehler im Epg mit Sprung in die Sommerzeit behoben
+
+==================================================
 [B]ZattooHiQ v1.5.4.3 [/B]15.03.2018 Steffen Rolapp
 ==================================================
 - nur noch Sender laden die im Abo enthalten

@@ -164,7 +164,7 @@ class ZattooDB(object):
     if rebuild == False:
       #date = datetime.date.today().strftime('%Y-%m-%d')
       date = datetime.date.today()
-      debug ("date: "+str(date))
+      #debug ("date: "+str(date))
       c.execute('SELECT * FROM updates WHERE date=? AND type=? ', [date, 'channels'])
       if len(c.fetchall())>0:
         c.close()
@@ -185,11 +185,9 @@ class ZattooDB(object):
         if channel['qualities'][0]['availability'] == 'subscribable': 
             try:
                 if channel['qualities'][1]['availability'] == 'subscribable': continue
-                else:
-                    debug(str(channel['title'].encode('utf-8')+"  "+channel['qualities'][1]['availability'].encode('utf-8')))
+                #else: debug(str(channel['title'].encode('utf-8')+"  "+channel['qualities'][1]['availability'].encode('utf-8')))
             except: continue
-        else:
-            debug(str(channel['title'].encode('utf-8')+"  "+channel['qualities'][0]['availability'].encode('utf-8')))
+        #else: debug(str(channel['title'].encode('utf-8')+"  "+channel['qualities'][0]['availability'].encode('utf-8')))
         
         logo = 'http://logos.zattic.com' + channel['qualities'][0]['logo_black_84'].replace('/images/channels', '')
         try:
@@ -243,7 +241,7 @@ class ZattooDB(object):
 
         #print "apiData   "+api
         programData = self.zapi.exec_zapiCall(api, None)
-        debug ('ProgrammData: '+str(programData))
+        #debug ('ProgrammData: '+str(programData))
         count=0
         for channel in programData['channels']:
            cid = channel['cid']
@@ -482,7 +480,7 @@ class ZattooDB(object):
     c = self.conn.cursor()
     c.execute('SELECT * FROM playing')
     row = c.fetchone()
-    debug('print row:'+str(row))
+    #debug('print row:'+str(row))
     if row is not None:
       playing = {'channel':row['channel'], 'current_stream':row['current_stream'], 'streams':row['streams']}
     else:
@@ -490,7 +488,7 @@ class ZattooDB(object):
       row = c.fetchone()
       playing = {'channel':row['id'], 'start':datetime.datetime.now(), 'action_time':datetime.datetime.now()}
     c.close()
-    debug( "now playing" +str(playing))
+    #debug( "now playing" +str(playing))
     return playing
 
   def set_currentStream(self, nr):
@@ -580,7 +578,7 @@ class ZattooDB(object):
             #counter = len(channels)
             counter = 0
             for chan in channels['index']:
-                debug( str(chan) + ' - ' + str(startTime) + str(endTime))
+                #debug( str(chan) + ' - ' + str(startTime) + str(endTime))
                 c.execute('SELECT * FROM programs WHERE channel = ? AND start_date < ? AND end_date > ?', [chan, endTime, startTime])
                 r=c.fetchall()
                 for row in r:
@@ -590,7 +588,7 @@ class ZattooDB(object):
             PopUp.update(bar)
 
         for chan in channels['index']:
-            if DEBUG: print str(chan) + ' - ' + str(startTime) + str(endTime)
+            #if DEBUG: print str(chan) + ' - ' + str(startTime) + str(endTime)
             try:
                 c.execute('SELECT * FROM programs WHERE channel = ? AND start_date < ? AND end_date > ?', [chan, endTime, startTime])
             except Exception:
@@ -694,7 +692,7 @@ class ZattooDB(object):
         c = self.conn.cursor()
         api = '/zapi/program/details?program_id=' + showID + '&complete=True'
         showInfo = self.zapiSession().exec_zapiCall(api, None)
-        debug("ShowInfo :" + str(showInfo))
+        #debug("ShowInfo :" + str(showInfo))
         try:
             restart = showInfo['program']['selective_recall_until']
             c.execute('UPDATE programs SET restart=? WHERE showID=?', [True, showID])
@@ -718,7 +716,7 @@ class ZattooDB(object):
             row = c.fetchone()
             version = row['version']
             c.close
-            debug('Version:'+str(version))
+            #debug('Version:'+str(version))
             return version
         except:
             self._createTables()

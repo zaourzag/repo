@@ -541,10 +541,10 @@ class EPG(xbmcgui.WindowXML):
 			self.setControlLabel(self.C_MAIN_TIME, '')
 
 		self.setControlText(self.C_MAIN_DESCRIPTION, '')
-		if hasattr(self, 'descriptionTimer'):self.descriptionTimer.cancel() 
-		self.descriptionTimer= threading.Timer(0.2, self._showDescription, [program['showID']])
-		self.descriptionTimer.start()
-		#self._showDescription(program['showID'])
+		#if hasattr(self, 'descriptionTimer'):self.descriptionTimer.cancel() 
+		#self.descriptionTimer= threading.Timer(0.2, self._showDescription, [program['showID']])
+		#self.descriptionTimer.start()
+		self._showDescription(program['showID'])
 		#self.setControlImage(self.C_MAIN_LOGO, program['channel_logo'])
 
 		if program['image_small'] is not None:
@@ -1021,7 +1021,8 @@ class EPG(xbmcgui.WindowXML):
 		datelow = (datetime.date.today() - datetime.timedelta(days=7))
 		datehigh = (datetime.date.today() + datetime.timedelta(days=13))
 
-		print str(datelow)
+		debug('date EPG '+ str(date))
+		
 		if time.strptime(date, '%d.%m.%Y') < time.strptime(str(datelow), '%Y-%m-%d'):
 			xbmcgui.Dialog().notification(str(date), localString(31304), time=3000) 
 			return
@@ -1031,6 +1032,9 @@ class EPG(xbmcgui.WindowXML):
 		date = time.strptime(date, '%d.%m.%Y')
 		today = time.strptime(str(today), '%Y-%m-%d')
 		timedelta = datetime.timedelta(seconds=time.mktime(date) - time.mktime(today))
+		if timedelta.seconds == 82800: 
+			timedelta += datetime.timedelta(hours=1)
+		debug('Timedelta '+str(timedelta))
 		if date > today:
 			self.viewStartDate = datetime.datetime.today()
 			self.viewStartDate += datetime.timedelta(days=int(str(timedelta)[:2]))
