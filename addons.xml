@@ -952,7 +952,7 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
   	</extension>
 </addon>
 
-<addon id="metadata.musicvideos.themoviedb.org" name="The Movie Database Concert Mod" version="6.0.0" provider-name="Team Kodi mod by RudizonE">
+<addon id="metadata.themoviedbconcert.org" name="The Movie Database Concert Mod" version="6.0.0" provider-name="Team Kodi mod by RudizonE">
   <requires>
     <import addon="xbmc.metadata" version="2.1.0"/>
     <import addon="metadata.common.imdb.com" version="2.9.2"/>
