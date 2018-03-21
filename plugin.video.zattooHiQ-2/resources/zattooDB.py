@@ -116,7 +116,7 @@ class ZattooDB(object):
     c = self.conn.cursor()
     try: c.execute('SELECT * FROM showinfos')
     except: self._createTables()
-
+    c.close()
 
   def _createTables(self):
     import sqlite3
@@ -135,23 +135,23 @@ class ZattooDB(object):
     try: c.execute('DROP TABLE showinfos')
     except: pass
     self.conn.commit()
-
+    c.close()
     try:
+      c = self.conn.cursor()
       c.execute('CREATE TABLE channels(id TEXT, title TEXT, logo TEXT, weight INTEGER, favourite BOOLEAN, PRIMARY KEY (id) )')
       c.execute('CREATE TABLE programs(showID TEXT, title TEXT, channel TEXT, start_date TIMESTAMP, end_date TIMESTAMP, restart BOOLEAN, series BOOLEAN, record BOOLEAN, description TEXT, description_long TEXT, year TEXT, country TEXT, genre TEXT, category TEXT, image_small TEXT, updates_id INTEGER , FOREIGN KEY(channel) REFERENCES channels(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED, FOREIGN KEY(updates_id) REFERENCES updates(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED)')
 
       c.execute('CREATE INDEX program_list_idx ON programs(channel, start_date, end_date)')
       c.execute('CREATE INDEX start_date_idx ON programs(start_date)')
       c.execute('CREATE INDEX end_date_idx ON programs(end_date)')
-
+      
       c.execute('CREATE TABLE updates(id INTEGER, date TIMESTAMP, type TEXT, PRIMARY KEY (id) )')
       #c.execute('CREATE TABLE playing(channel TEXT, start_date TIMESTAMP, action_time TIMESTAMP, current_stream INTEGER, streams TEXT, PRIMARY KEY (channel))')
       c.execute('CREATE TABLE showinfos(showID INTEGER, info TEXT, PRIMARY KEY (showID))')
       c.execute('CREATE TABLE playing(channel TEXT, current_stream INTEGER, streams TEXT, PRIMARY KEY (channel))')
       c.execute('CREATE TABLE version(version TEXT, PRIMARY KEY (version))')
-
-
-      
+    
+   
       self.conn.commit()
       c.close()
 
@@ -175,10 +175,10 @@ class ZattooDB(object):
     #print "account  "+ self.zapi.AccountData['account']['power_guide_hash']
     api = '/zapi/v2/cached/channels/' + self.zapi.AccountData['account']['power_guide_hash'] + '?details=False'
     channelsData = self.zapi.exec_zapiCall(api, None)
-    #debug("channels: " +str(channelsData))
+    debug("channels: " +str(channelsData))
     api = '/zapi/channels/favorites'
     favoritesData = self.zapi.exec_zapiCall(api, None)
-    #debug("channels: " +str(favoritesData))
+    debug("channels: " +str(favoritesData))
     nr = 0
     for group in channelsData['channel_groups']:
       for channel in group['channels']:
@@ -475,6 +475,7 @@ class ZattooDB(object):
     c.execute('INSERT INTO playing(channel, current_stream,  streams) VALUES(?, ?, ?)', [channel, streamNr, streams])    
     self.conn.commit()
     c.close()
+    
 
   def get_playing(self):
     c = self.conn.cursor()
@@ -498,17 +499,6 @@ class ZattooDB(object):
     c.close()
 
   def reloadDB(self):
-
-    c = self.conn.cursor()
-    
-    c.execute('''DROP TABLE channels''')
-    c.execute('''DROP TABLE programs''')
-    c.execute('''DROP TABLE playing''')
-    c.execute('''DROP TABLE updates''')
-    
-    self.conn.commit()
-    c.close()
-
 
     #delete zapi files to force new login    
     profilePath = xbmc.translatePath(__addon__.getAddonInfo('profile'))

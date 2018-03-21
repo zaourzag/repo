@@ -116,9 +116,8 @@ KEYMAP = __addon__.getSetting('keymap')
 debug ("Old Version: " + str(OLDVERSION))
 debug ("Version: " + str(VERSION))
 if OLDVERSION != VERSION:
-   _zattooDB_.set_version(VERSION)
    _zattooDB_.reloadDB()
- 
+   _zattooDB_.set_version(VERSION)
 
 if SWISS=="true": xbmc.executebuiltin( "Skin.SetBool(%s)" %'record')
 else: xbmc.executebuiltin( "Skin.Reset(%s)" %'record')
@@ -227,7 +226,7 @@ def build_root(addon_uri, addon_handle):
 #    {'title': '[COLOR ff888888]' + localString(31107) + '[/COLOR]', 'image': iconPath, 'isFolder': False, 'url': addon_uri + '?' + urllib.urlencode({'mode': 'show_settings'})},
     ]
   build_directoryContent(content, addon_handle, True, False, 'files')
-
+  
   #update db
   _zattooDB_.updateChannels()
   _zattooDB_.updateProgram()
@@ -268,13 +267,12 @@ def build_channelsList(addon_uri, addon_handle):
       #if yy is None: yy=''
       content.append({
         'title': '[COLOR green]'+chnr+'[/COLOR]'+'  '+channels[chan]['title'] + ' - ' + prog.get('title', '')+ '  '+startend,
-        'image': channels[chan]['logo'],
+        #'image': channels[chan]['logo'],
         'thumbnail': prog.get('image_small', ''),
         'genre': prog.get('genre',''),
         'plot':  prog.get('description_long', ''),
         #'plot': prog.get('genre','')+"  "+str(prog.get('year','')),
         'year': yy,
-        'category': prog.get('category',''),
         'country': prog.get('country',''),
         'isFolder': False,
         'url': addon_uri + '?' + urllib.urlencode({'mode': 'watch_c', 'id': channels[chan]['id']}),
@@ -532,6 +530,9 @@ def watch_channel(channel_id, start, end, showID="", restart=False, showOSD=Fals
     player.play(streams[streamNr]['url'], listitem)
     #while (player.playing):xbmc.sleep(100)
     show_channelNr(nr+1)
+    toggleChannel=xbmcgui.Window(10000).getProperty('toggleChannel')
+    if toggleChannel !="": showToggleImg()
+    
   else:
     player= myPlayer(290)
     player.startTime=startTime
@@ -559,8 +560,9 @@ def  toggle_channel():
   toggleChannel=xbmcgui.Window(10000).getProperty('toggleChannel')
   playing=_zattooDB_.get_playing()
   xbmcgui.Window(10000).setProperty('toggleChannel', playing['channel']) 
-   
-  if toggleChannel=="": xbmc.executebuiltin(ActivateWindow(10025,"plugin://plugin.video.zattooHiQ/?mode=channellist")) #go back to channel selector
+  
+  debug('ToggleChannel '+str(toggleChannel))
+  if toggleChannel=="": xbmc.executebuiltin("Action(Back)") #go back to channel selector
   else:
     watch_channel(toggleChannel, '0', '0')
     channelList = _zattooDB_.getChannelList(_listMode_ == 'favourites')
@@ -691,6 +693,12 @@ def show_channelNr(nr):
     gui.doModal()
     del gui
 
+def showToggleImg():    
+    pip = zattooPiP("zattooGUI.xml", __addon__.getAddonInfo('path'))
+    pip.showToggleImg()
+    pip.doModal()
+    del pip
+    
 def makeOsdInfo():
   channel_id=_zattooDB_.get_playing()['channel'] 
   channelInfo = _zattooDB_.get_channelInfo(channel_id)
@@ -760,6 +768,66 @@ class myPlayer(xbmc.Player):
         if DEBUG: print "Stop Playing"       
         xbmc.executebuiltin('RunPlugin("plugin://'+__addonId__+'/?mode=watch_c&id='+channel+'&showOSD=1")')
 
+class zattooPiP(xbmcgui.WindowXMLDialog):
+
+  def __init__(self, xmlFile, scriptPath):
+    xbmcgui.Window(10000).setProperty('zattooPiP', 'True')
+    
+    #self.playing= _zattooDB_.get_playing()
+    #self.channelID = self.playing['channel']
+    #channels = _zattooDB_.getChannelList(_listMode_ == 'favourites')
+    
+    self.toggleImgBG =xbmcgui.ControlImage(1280, 574, 260, 148, __addon__.getAddonInfo('path') + '/resources/teletextBG.png', aspectRatio=1)
+    self.addControl(self.toggleImgBG)
+    self.toggleImg =xbmcgui.ControlImage(1280, 576, 256, 144, '', aspectRatio=1)
+    self.addControl(self.toggleImg)
+    
+    self.toggleChannelID=xbmcgui.Window(10000).getProperty('toggleChannel')
+    #if self.toggleChannelID!="": self.showToggleImg()
+
+  def showToggleImg(self):
+    xbmc.executebuiltin("Action(FullScreen)") 
+    #time.sleep(3)
+    self.toggleImgBG.setPosition(1022, 574)
+    self.toggleImg.setPosition(1024, 576)
+    self.refreshToggleImg()
+
+  def hideToggleImg(self):
+    
+    self.toggleChannelID=""
+    xbmcgui.Window(10000).setProperty('toggleChannel','')
+    if hasattr(self, 'refreshToggleImgTimer'): self.refreshToggleImgTimer.cancel()
+    #xbmcgui.Dialog().notification('Toggle', 'Toggle End', __addon__.getAddonInfo('path') + '/icon.png', 3000, False)
+    #self.close()
+    
+  def refreshToggleImg(self):
+    self.toggleImg.setImage('http://thumb.zattic.com/'+self.toggleChannelID+'/256x144.jpg?r='+str(int(time.time())), False)
+    if hasattr(self, 'refreshToggleImgTimer'): self.refreshToggleImgTimer.cancel()
+    self.refreshToggleImgTimer=  threading.Timer(10, self.refreshToggleImg)
+    self.refreshToggleImgTimer.start()
+    
+  def close(self):
+    if hasattr(self, 'refreshToggleImgTimer'): self.refreshToggleImgTimer.cancel()
+    xbmcgui.Window(10000).setProperty('zattooPiP', 'False')
+    super(zattooPiP, self).close()
+    
+  def onAction(self, action):
+    key=str(action.getButtonCode())
+    actionID = action.getId()
+    if DEBUG: print "ActionID = " + str(actionID)
+  
+    if actionID  == ACTION_STOP:
+      self.hideToggleImg()
+      self.close()
+      xbmc.Player().stop() 
+    elif actionID in [KEY_NAV_BACK, ACTION_SELECT_ITEM, ACTION_PARENT_DIR]:
+      self.hideToggleImg()
+      self.close()
+      
+    elif actionID == ACTION_MOVE_LEFT:
+      toggle_channel()
+      self.close()
+
 class zattooGUI(xbmcgui.WindowXMLDialog):
 
   def __init__(self, xmlFile, scriptPath):
@@ -769,13 +837,8 @@ class zattooGUI(xbmcgui.WindowXMLDialog):
     self.channelID = self.playing['channel']
     channels = _zattooDB_.getChannelList(_listMode_ == 'favourites')
     self.showChannelNr(channels[self.channelID]['nr']+1)
-    
-    self.toggleImgBG =xbmcgui.ControlImage(1280, 574, 260, 148, __addon__.getAddonInfo('path') + '/resources/teletextBG.png', aspectRatio=1)
-    self.addControl(self.toggleImgBG)
-    self.toggleImg =xbmcgui.ControlImage(1280, 576, 256, 144, '', aspectRatio=1)
-    self.addControl(self.toggleImg)
-    
-    self.toggleChannelID=xbmcgui.Window(10000).getProperty('toggleChannel')
+
+    #self.toggleChannelID=xbmcgui.Window(10000).getProperty('toggleChannel')
     #if self.toggleChannelID!="": self.showToggleImg()
 
   def onAction(self, action):
@@ -833,27 +896,6 @@ class zattooGUI(xbmcgui.WindowXMLDialog):
     xbmcgui.Window(10000).setProperty('zattooGUI', 'False')
     super(zattooGUI, self).close()
     
-  def showToggleImg(self):
-    self.toggleImgBG.setPosition(1022, 574)
-    self.toggleImg.setPosition(1024, 576)
-    self.refreshToggleImg()
-
-  def hideToggleImg(self):
-    if self.toggleChannelID!="":  
-      self.toggleChannelID=""
-      xbmcgui.Window(10000).setProperty('toggleChannel','')
-      
-      self.toggleImgBG.setPosition(1280, 574)
-      self.toggleImg.setPosition(1280, 576)
-      if hasattr(self, 'refreshToggleImgTimer'): self.refreshToggleImgTimer.cancel()
-      xbmcgui.Dialog().notification('Toggle', 'toggle end', __addon__.getAddonInfo('path') + '/icon.png', 5000, False)
-
-  def refreshToggleImg(self):
-    self.toggleImg.setImage('http://thumb.zattic.com/'+self.toggleChannelID+'/256x144.jpg?r='+str(int(time.time())), False)
-    if hasattr(self, 'refreshToggleImgTimer'): self.refreshToggleImgTimer.cancel()
-    self.refreshToggleImgTimer=  threading.Timer(16, self.refreshToggleImg)
-    self.refreshToggleImgTimer.start()
-
 class zattooOSD(xbmcgui.WindowXMLDialog):
   def onInit(self):
     self.getControl(350).setPercent(float(xbmcgui.Window(10000).getProperty('progress')))    
