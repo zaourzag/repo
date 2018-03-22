@@ -175,10 +175,13 @@ def playdash(file,session,userid,channelid,ids,desc="",title="",is_type="",media
   timestamp=int(struktur["nowUnixtime"])
   
   newurl=baseurl+"/api/airing/v2/"+str(ids)  
-  content=getUrl(newurl,header=header)  
-  struktur2 = json.loads(content)
+  content=getUrl(newurl,header=header)    
+  struktur2 = json.loads(content)  
   title=struktur2["title"]
-  desc=struktur2["description"]
+  try:    
+    desc=struktur2["description"]
+  except:   
+   desc=""
   try:
     stop=struktur["stopUnixtime"]
     dauer=stop-timestamp
