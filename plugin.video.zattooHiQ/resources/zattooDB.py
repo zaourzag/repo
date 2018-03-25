@@ -54,7 +54,7 @@ class reloadDB(xbmcgui.WindowXMLDialog):
 
   def __init__(self, xmlFile, scriptPath):
     xbmcgui.Window(10000).setProperty('reloadDB', 'True') 
-    self.wartungImg =xbmcgui.ControlImage(50, 50, 1180, 596,__addon__.getAddonInfo('path') + '/resources/wartung.png'  , aspectRatio=1)
+    self.wartungImg =xbmcgui.ControlImage(50, 50, 1180, 596,__addon__.getAddonInfo('path') + '/resources/wartung.png'  , aspectRatio=0)
     self.addControl(self.wartungImg)
     self.show()
     #self.reloadDB()
@@ -82,11 +82,12 @@ class reloadDB(xbmcgui.WindowXMLDialog):
     time.sleep(5)
     xbmcgui.Dialog().notification(localString(31916), localString(30110),  __addon__.getAddonInfo('path') + '/icon.png', 3000, False)
     DB.updateChannels(True)
+    time.sleep(2)
     DB.updateProgram(datetime.datetime.now(), True)
     
     startTime=datetime.datetime.now()#-datetime.timedelta(minutes = 60)
     endTime=datetime.datetime.now()+datetime.timedelta(minutes = 20)
-    
+    time.sleep(2)
     DB.getProgInfo(True, startTime, endTime)
     xbmcgui.Dialog().notification(localString(31106), localString(31915),  __addon__.getAddonInfo('path') + '/icon.png', 3000, False)
     _library_.make_library()
@@ -171,9 +172,13 @@ class ZattooDB(object):
     import sqlite3
     c = self.conn.cursor()
    
-    try: c.execute('DROP TABLE channels')
+    try: 
+        c.execute('DROP TABLE channels')
+        debug('Delete Channels')
     except: pass
-    try: c.execute('DROP TABLE programs')
+    try: 
+        c.execute('DROP TABLE programs')
+        debug('Delete program')
     except: pass
     try: c.execute('DROP TABLE updates')
     except: pass
@@ -224,9 +229,14 @@ class ZattooDB(object):
     api = '/zapi/v2/cached/channels/' + self.zapi.AccountData['account']['power_guide_hash'] + '?details=False'
     channelsData = self.zapi.exec_zapiCall(api, None)
     debug("channels: " +str(channelsData))
+    time.sleep(2)
     api = '/zapi/channels/favorites'
     favoritesData = self.zapi.exec_zapiCall(api, None)
     debug("favourites: " +str(favoritesData))
+    if favoritesData == None: 
+        time.sleep(2)
+        favoritesData = self.zapi.exec_zapiCall(api, None)
+    debug("favourites2: " +str(favoritesData))
     nr = 0
     for group in channelsData['channel_groups']:
       for channel in group['channels']:
@@ -438,13 +448,17 @@ class ZattooDB(object):
         series = show['series']
         restart = show['restart']
         if longDesc is None:
+            profilePath = xbmc.translatePath(__addon__.getAddonInfo('profile'))
+            while os.path.exists(profilePath+"/zattoo.db-journal"):
+                debug('Database is locked')
+                time.sleep(1)
             api = '/zapi/program/details?program_id=' + showID + '&complete=True'
             showInfo = self.zapiSession().exec_zapiCall(api, None)
             #infoall = showInfo['program']
             
             #info.execute('UPDATE programs SET info=? WHERE showID=?',[json.dumps(infoall), showID ])
             
-            #print 'Showinfo  ' + str(showInfo)
+            debug ('Showinfo  ' + str(showInfo))
             if showInfo is None:
                 longDesc=''
                 year=''
@@ -666,6 +680,19 @@ class ZattooDB(object):
 
                 if (not silent): PopUp.close()
 
+        self.conn.commit()
+        
+        date = datetime.date.today()
+        try:
+            c = self.conn.cursor()
+            c.execute('DELETE FROM updates WHERE date < ?', [date])
+            r=c.fetchall()
+        except:
+            return
+        #if len(r)>0:
+            #for row in r:
+                #c.execute('DELETE FROM updates WHERE showID = ?', (row['showID'],))
+            
         self.conn.commit()
         c.close()
         return
