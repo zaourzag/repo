@@ -394,7 +394,7 @@ msgid "Zattoo settings"
 msgstr ""
 
 msgctxt "#31003"
-msgid "Swiss account"
+msgid "PiP Resolution"
 msgstr ""
 
 msgctxt "#31005"
@@ -429,6 +429,13 @@ msgctxt "#310096"
 msgid "Debug"
 msgstr "Debug"
 
+msgctxt "#310097"
+msgid "Big"
+msgstr ""
+
+msgctxt "#310098"
+msgid "Small"
+msgstr ""
 
 
 ### EPG/Aufnahmen ###

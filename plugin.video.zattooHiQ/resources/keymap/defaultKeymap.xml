@@ -81,6 +81,7 @@
 		</mouse>
 		<touch>
 			<tap>RunPlugin("plugin://plugin.video.zattooHiQ/?mode=showInfo")</tap>
+			<swipe direction="left">RunPlugin("plugin://plugin.video.zattooHiQ/?mode=toggle_channel")</swipe>
 		</touch>
 	</fullscreenvideo>
 </keymap>

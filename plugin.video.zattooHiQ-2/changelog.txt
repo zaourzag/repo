@@ -1,5 +1,11 @@
+==================================================
+[B]ZattooHiQ v1.5.7 [/B]25.03.2018 Steffen Rolapp
+==================================================
+- PiP Überarbeitet
+- div Kleine Änderungen
+
 ﻿﻿﻿﻿==================================================
-[B]ZattooHiQ v1.5.6 [/B]15.03.2018 Steffen Rolapp
+[B]ZattooHiQ v1.5.7 [/B]21.03.2018 Steffen Rolapp
 ==================================================
 - Funktion PiP wieder hinzugefügt
 

@@ -49,7 +49,56 @@ if REMOTE_DBG:
 
 def debug(s):
 	if DEBUG: xbmc.log(str(s), xbmc.LOGDEBUG)
+    
+class reloadDB(xbmcgui.WindowXMLDialog):
 
+  def __init__(self, xmlFile, scriptPath):
+    xbmcgui.Window(10000).setProperty('reloadDB', 'True') 
+    self.wartungImg =xbmcgui.ControlImage(50, 50, 1180, 596,__addon__.getAddonInfo('path') + '/resources/wartung.png'  , aspectRatio=1)
+    self.addControl(self.wartungImg)
+    self.show()
+    #self.reloadDB()
+  def reloadDB(self):
+    #self.wartungImg.setVisible(True)
+    #self.wartungImg.setPosition(50, 50, 1230, 556)
+    from resources.library import library
+    _library_=library()
+    DB = ZattooDB()
+        
+    xbmc.executebuiltin("ActivateWindow(busydialog)")
+    #delete zapi files to force new login    
+    profilePath = xbmc.translatePath(__addon__.getAddonInfo('profile'))
+    try:
+        #os.remove(os.path.join(profilePath, 'zattoo.db'))
+        os.remove(os.path.join(profilePath, 'cookie.cache'))
+        os.remove(os.path.join(profilePath, 'session.cache'))
+        os.remove(os.path.join(profilePath, 'account.cache'))
+        os.remove(os.path.join(profilePath, 'apicall.cache'))
+       
+    except:
+        pass
+    
+    DB._createTables()
+    time.sleep(5)
+    xbmcgui.Dialog().notification(localString(31916), localString(30110),  __addon__.getAddonInfo('path') + '/icon.png', 3000, False)
+    DB.updateChannels(True)
+    DB.updateProgram(datetime.datetime.now(), True)
+    
+    startTime=datetime.datetime.now()#-datetime.timedelta(minutes = 60)
+    endTime=datetime.datetime.now()+datetime.timedelta(minutes = 20)
+    
+    DB.getProgInfo(True, startTime, endTime)
+    xbmcgui.Dialog().notification(localString(31106), localString(31915),  __addon__.getAddonInfo('path') + '/icon.png', 3000, False)
+    _library_.make_library()
+    xbmc.executebuiltin("Dialog.Close(busydialog)")
+    
+    self.close()
+    
+  def close(self):
+    #self.wartungImg.setVisible(False)    
+    xbmcgui.Window(10000).setProperty('reloadDB', 'False')
+    super(reloadDB, self).close()
+   
 class ZattooDB(object):
   def __init__(self):
     self.conn = None
@@ -121,12 +170,10 @@ class ZattooDB(object):
   def _createTables(self):
     import sqlite3
     c = self.conn.cursor()
-
+   
     try: c.execute('DROP TABLE channels')
     except: pass
-    try: 
-        c.execute('DROP TABLE programs')
-        #print "DROP PROGRAM TABlE"
+    try: c.execute('DROP TABLE programs')
     except: pass
     try: c.execute('DROP TABLE updates')
     except: pass
@@ -136,6 +183,7 @@ class ZattooDB(object):
     except: pass
     self.conn.commit()
     c.close()
+    
     try:
       c = self.conn.cursor()
       c.execute('CREATE TABLE channels(id TEXT, title TEXT, logo TEXT, weight INTEGER, favourite BOOLEAN, PRIMARY KEY (id) )')
@@ -178,16 +226,16 @@ class ZattooDB(object):
     debug("channels: " +str(channelsData))
     api = '/zapi/channels/favorites'
     favoritesData = self.zapi.exec_zapiCall(api, None)
-    debug("channels: " +str(favoritesData))
+    debug("favourites: " +str(favoritesData))
     nr = 0
     for group in channelsData['channel_groups']:
       for channel in group['channels']:
         if channel['qualities'][0]['availability'] == 'subscribable': 
             try:
                 if channel['qualities'][1]['availability'] == 'subscribable': continue
-                #else: debug(str(channel['title'].encode('utf-8')+"  "+channel['qualities'][1]['availability'].encode('utf-8')))
+                else: debug(str(channel['title'].encode('utf-8')+"  "+channel['qualities'][1]['availability'].encode('utf-8')))
             except: continue
-        #else: debug(str(channel['title'].encode('utf-8')+"  "+channel['qualities'][0]['availability'].encode('utf-8')))
+        else: debug(str(channel['title'].encode('utf-8')+"  "+channel['qualities'][0]['availability'].encode('utf-8')))
         
         logo = 'http://logos.zattic.com' + channel['qualities'][0]['logo_black_84'].replace('/images/channels', '')
         try:
@@ -241,7 +289,7 @@ class ZattooDB(object):
 
         #print "apiData   "+api
         programData = self.zapi.exec_zapiCall(api, None)
-        #debug ('ProgrammData: '+str(programData))
+        debug ('ProgrammData: '+str(programData))
         count=0
         for channel in programData['channels']:
            cid = channel['cid']
@@ -499,31 +547,11 @@ class ZattooDB(object):
     c.close()
 
   def reloadDB(self):
-
-    #delete zapi files to force new login    
-    profilePath = xbmc.translatePath(__addon__.getAddonInfo('profile'))
-    try:
-        
-        os.remove(os.path.join(profilePath, 'cookie.cache'))
-        os.remove(os.path.join(profilePath, 'session.cache'))
-        os.remove(os.path.join(profilePath, 'account.cache'))
-        os.remove(os.path.join(profilePath, 'apicall.cache'))
-
-    except:
-        pass
+    gui = reloadDB("wartung.xml", __addon__.getAddonInfo('path'))
+    gui.reloadDB()
+    gui.show()
+    del gui
     
-    self._createTables()
-
-    self.updateChannels(True)
-    self.updateProgram(datetime.datetime.now(), True)
-    
-    startTime=datetime.datetime.now()#-datetime.timedelta(minutes = 60)
-    endTime=datetime.datetime.now()+datetime.timedelta(minutes = 20)
-    
-    self.getProgInfo(True, startTime, endTime)
-
-
-
   def get_channeltitle(self, channelid):
     c = self.conn.cursor()
     c.execute('SELECT * FROM channels WHERE id= ? ', [channelid])

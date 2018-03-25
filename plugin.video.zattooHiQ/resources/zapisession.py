@@ -19,7 +19,8 @@ DEBUG = __addon__.getSetting('debug')
 def debug(s):
 	if DEBUG: xbmc.log(str(s), xbmc.LOGDEBUG)
 
-if __addon__.getSetting('kodi16') != 'true':
+VERSION=xbmc.getInfoLabel( "System.BuildVersion" )
+if '16' not in VERSION:
 	import ssl
 	ssl._create_default_https_context = ssl._create_unverified_context
 
@@ -133,7 +134,10 @@ class ZapiSession:
 
 	def fetch_appToken(self):
 		#debug("ZapiUrL= "+str(self.ZAPIUrl))
-		handle = urllib2.urlopen(self.ZAPIUrl + '/')
+		try:
+			handle = urllib2.urlopen(self.ZAPIUrl + '/')
+		except:
+			handle = urllib.urlopen(self.ZAPIUrl + '/')
 		html = handle.read()
 		return re.search("window\.appToken\s*=\s*'(.*)'", html).group(1)
 		

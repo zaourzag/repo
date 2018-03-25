@@ -145,14 +145,19 @@ def build_directoryContent(content, addon_handle, cache=True, root=False, con='m
   fanart=__addon__.getAddonInfo('path') + '/fanart.jpg'
   xbmcplugin.setContent(addon_handle, con)
   xbmcplugin.setPluginFanart(addon_handle, fanart)
+  
+  debug('Liste: '+str(content))
   for record in content:
     record['thumbnail'] = record.get('thumbnail', fanart)
     record['image'] = record.get('image', "")
-
+    record['selected'] = record.get('selected', False)
+    
     li = xbmcgui.ListItem(record['title'], iconImage=record['image'])
     li.setInfo(type='Video', infoLabels = record)
     li.setArt({'icon': record['image'], 'thumb': record['image'], 'poster': record['thumbnail'], 'banner': record['thumbnail']})
     li.setProperty('Fanart_Image', record['thumbnail'])
+    li.select(record['selected'])
+
     xbmcplugin.addDirectoryItem(handle=addon_handle, url=record['url'], listitem=li, isFolder=record['isFolder'])
 
   xbmcplugin.endOfDirectory(addon_handle, True, root, cache)
@@ -265,8 +270,15 @@ def build_channelsList(addon_uri, addon_handle):
       else: chnr = str(nr)
       yy = prog.get('year','')
       #if yy is None: yy=''
+      if channels[chan]['id'] == playing['channel']:
+          title = '[COLOR green]'+chnr+'[/COLOR]'+'  '+'[COLOR orange]'+channels[chan]['title']+'[/COLOR]' + ' - ' + prog.get('title', '')+ '  '+startend,
+      else:
+          title = '[COLOR green]'+chnr+'[/COLOR]'+'  '+channels[chan]['title'] + ' - ' + prog.get('title', '')+ '  '+startend,
+      
       content.append({
+        #'title': str(title),
         'title': '[COLOR green]'+chnr+'[/COLOR]'+'  '+channels[chan]['title'] + ' - ' + prog.get('title', '')+ '  '+startend,
+
         #'image': channels[chan]['logo'],
         'thumbnail': prog.get('image_small', ''),
         'genre': prog.get('genre',''),
@@ -527,7 +539,7 @@ def watch_channel(channel_id, start, end, showID="", restart=False, showOSD=Fals
     nr=channelList[currentChannel]['nr']
     player=xbmc.Player()
     #player.startTime=startTime
-    player.play(streams[streamNr]['url'], listitem)
+    player.play(streams[streamNr]['url'], listitem, False)
     #while (player.playing):xbmc.sleep(100)
     show_channelNr(nr+1)
     toggleChannel=xbmcgui.Window(10000).getProperty('toggleChannel')
@@ -771,25 +783,33 @@ class myPlayer(xbmc.Player):
 class zattooPiP(xbmcgui.WindowXMLDialog):
 
   def __init__(self, xmlFile, scriptPath):
-    xbmcgui.Window(10000).setProperty('zattooPiP', 'True')
+    xbmcgui.Window(10000).setProperty('zattooPiP', 'True') 
+    self.PiP =  __addon__.getSetting('pip')
     
-    #self.playing= _zattooDB_.get_playing()
-    #self.channelID = self.playing['channel']
-    #channels = _zattooDB_.getChannelList(_listMode_ == 'favourites')
+    if self.PiP == "0":
+      self.toggleImgBG =xbmcgui.ControlImage(1280, 574, 260, 148, __addon__.getAddonInfo('path') + '/resources/teletextBG.png', aspectRatio=1)
+      self.toggleImg =xbmcgui.ControlImage(1280, 576, 256, 144, '', aspectRatio=1)
+    else:
+      self.toggleImgBG =xbmcgui.ControlImage(1280, 500, 390, 222, __addon__.getAddonInfo('path') + '/resources/teletextBG.png', aspectRatio=1)
+      self.toggleImg =xbmcgui.ControlImage(1280, 502, 386, 218, '', aspectRatio=1)
     
-    self.toggleImgBG =xbmcgui.ControlImage(1280, 574, 260, 148, __addon__.getAddonInfo('path') + '/resources/teletextBG.png', aspectRatio=1)
     self.addControl(self.toggleImgBG)
-    self.toggleImg =xbmcgui.ControlImage(1280, 576, 256, 144, '', aspectRatio=1)
     self.addControl(self.toggleImg)
     
     self.toggleChannelID=xbmcgui.Window(10000).getProperty('toggleChannel')
     #if self.toggleChannelID!="": self.showToggleImg()
 
   def showToggleImg(self):
-    xbmc.executebuiltin("Action(FullScreen)") 
-    #time.sleep(3)
-    self.toggleImgBG.setPosition(1022, 574)
-    self.toggleImg.setPosition(1024, 576)
+    
+    VERSION=xbmc.getInfoLabel( "System.BuildVersion" )
+    if '18' in VERSION: xbmc.executebuiltin("Action(FullScreen)") 
+    
+    if self.PiP == "0":
+      self.toggleImgBG.setPosition(1022, 574)
+      self.toggleImg.setPosition(1024, 576)
+    else:      
+      self.toggleImgBG.setPosition(890, 500)
+      self.toggleImg.setPosition(892, 502)
     self.refreshToggleImg()
 
   def hideToggleImg(self):
@@ -820,13 +840,15 @@ class zattooPiP(xbmcgui.WindowXMLDialog):
       self.hideToggleImg()
       self.close()
       xbmc.Player().stop() 
-    elif actionID in [KEY_NAV_BACK, ACTION_SELECT_ITEM, ACTION_PARENT_DIR]:
+      
+    elif actionID in [KEY_NAV_BACK, ACTION_SELECT_ITEM, ACTION_PARENT_DIR, ACTION_MOUSE_LEFT_CLICK]:
       self.hideToggleImg()
       self.close()
       
-    elif actionID == ACTION_MOVE_LEFT:
+    elif actionID in [ACTION_MOVE_LEFT, ACTION_GESTURE_SWIPE_LEFT]:
       toggle_channel()
       self.close()
+
 
 class zattooGUI(xbmcgui.WindowXMLDialog):
 
@@ -1062,14 +1084,8 @@ def main():
     recording_id = args.get('recording_id')[0]
     series = args.get('series')[0]
     delete_series(recording_id, series)
-  elif action == 'reloadDB':
-    xbmc.executebuiltin("ActivateWindow(busydialog)")
-    _zattooDB_.reloadDB()
-    xbmcgui.Dialog().notification(localString(31916), localString(30110),  __addon__.getAddonInfo('path') + '/icon.png', 3000, False)
-    _zattooDB_.getProgInfo(True)
-    xbmcgui.Dialog().notification(localString(31106), localString(31915),  __addon__.getAddonInfo('path') + '/icon.png', 3000, False)
-    _library_.make_library()
-    xbmc.executebuiltin("Dialog.Close(busydialog)")
+  elif action == 'reloadDB':  
+    _zattooDB_.reloadDB()   
   elif action == 'changeStream':
     
     if not DASH: change_stream(1)

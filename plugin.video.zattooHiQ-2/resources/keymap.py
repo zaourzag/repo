@@ -108,20 +108,17 @@ class KeyMap:
       builder.data('RunPlugin("plugin://plugin.video.zattooHiQ-2/?mode=skip_channel&amp;skipDir=-1")')
       builder.end("key")
       
-    # Channel pageup
-      key = __addon__.getSetting('key_nextChan')
-      if key.isdigit():builder.start("key", {"id":key})
-      else: builder.start('pageup', {})
+     # Channel pageup
+      key = 'pageup'
+      builder.start(key, {})     
       builder.data('RunPlugin("plugin://plugin.video.zattooHiQ-2/?mode=skip_channel&amp;skipDir=1")')
-      builder.end("key")
+      builder.end(key)
       
     # Channel pageDown  
-      key = __addon__.getSetting('key_prevChan')
-      if key.isdigit():builder.start("key", {"id":key})
-      else: builder.start('pagedown', {})
+      key = 'pagedown'
+      builder.start(key, {})
       builder.data('RunPlugin("plugin://plugin.video.zattooHiQ-2/?mode=skip_channel&amp;skipDir=-1")')
-      builder.end("key")
-      
+      builder.end(key)
     # toggle channel
       key = __addon__.getSetting('key_toggleChan')
       if key.isdigit():builder.start("key", {"id":key})
@@ -246,12 +243,20 @@ class KeyMap:
       builder.data('RunPlugin("plugin://plugin.video.zattooHiQ-2/?mode=showInfo")')
       builder.end(key)
       builder.end("mouse")
+      
     # Touch Tap
       builder.start("touch", {})
-      key = 'leftclick'
+      
+      key = 'tap'
       builder.start(key, {})
       builder.data('RunPlugin("plugin://plugin.video.zattooHiQ-2/?mode=showInfo")')
       builder.end(key)
+      
+      key = 'swipe'
+      builder.start(key, {"direction":"left"})
+      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ-2/?mode=toggle_channel")')
+      builder.end(key)
+      
       builder.end("touch")
       builder.end('fullscreenvideo')
       builder.end("keymap")

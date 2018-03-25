@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: XBMC Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
 "POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2018-03-25 15:33+0200\n"
 "Last-Translator: XBMC Translation Team\n"
 "Language-Team: German (http://www.transifex.com/projects/p/xbmc-addons/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -15,10 +15,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.0.4\n"
 
 msgctxt "#30000"
 msgid "No description"
-msgstr "keine Beschreibung verfügbar"
+msgstr "Keine Beschreibung verfügbar"
 
 msgctxt "#30001"
 msgid "[B]Loading data from external source...[/B]"
@@ -26,11 +27,11 @@ msgstr "[B]Lade Daten aus externer Quelle...[/B]"
 
 msgctxt "#30002"
 msgid "Calculating remaning time..."
-msgstr "berechne verbleibende Zeit"
+msgstr "berechne verbleibende Zeit.."
 
 msgctxt "#30003"
 msgid "Approximately %d seconds left..."
-msgstr "voraussichtlich noch %d Sekunden ..."
+msgstr "Voraussichtlich noch %d Sekunden ..."
 
 msgctxt "#30004"
 msgid "Loading of data already in progress..."
@@ -66,7 +67,7 @@ msgstr "Quelle"
 
 msgctxt "#30102"
 msgid "Show channels from category"
-msgstr "Sender nach Sparten sortieren."
+msgstr "Sender nach Sparten sortieren"
 
 msgctxt "#30103"
 msgid "XMLTV file"
@@ -94,11 +95,11 @@ msgstr "Alle Benachrichtigungen löschen..."
 
 msgctxt "#30109"
 msgid "Remember to clear the cache when you change source"
-msgstr "Denken Sie daran den Cache zu löschen, wenn Sie Quellen verändert haben."
+msgstr "Denken Sie daran den Cache zu löschen, wenn Sie Quellen verändert haben"
 
 msgctxt "#30110"
 msgid "Update program information on XBMC startup"
-msgstr "Aktualisierung der Programminformationen beim Start von XBMC "
+msgstr "Aktualisierung der Programminformationen beim Start von XBMC"
 
 msgctxt "#30111"
 msgid "Play channels using the YouSee web-tv addon"
@@ -138,7 +139,7 @@ msgstr "Verwende alternative Streamingmethode (erforderlich für manche addons)"
 
 msgctxt "#30121"
 msgid "Alternative streaming is not compatible with OSD menu"
-msgstr "Alternatives Streaming ist nicht mit dem OSD-Menü kompatibel."
+msgstr "Alternatives Streaming ist nicht mit dem OSD-Menü kompatibel"
 
 msgctxt "#30122"
 msgid "XMLTV URL"
@@ -324,11 +325,8 @@ msgctxt "#30804"
 msgid "Streaming using that addon is now disabled."
 msgstr "Streaming mit diesem Addon ist jetzt deaktiviert."
 
-
-####  Settings   ####
-
-### Account ###
-
+# ###  Settings   ####
+# ## Account ###
 msgctxt "#310031"
 msgid "Account"
 msgstr "Kontodaten"
@@ -365,18 +363,14 @@ msgctxt "#310036"
 msgid "expiration day"
 msgstr "Ablaufdatum"
 
-
-
-
-
-### Zattoo Einstellungen ###
+# ## Zattoo Einstellungen ###
 msgctxt "#31000"
 msgid "Zattoo settings"
 msgstr "Zattoo Einstellungen"
 
 msgctxt "#31003"
-msgid "Swiss account"
-msgstr "Schweizer Account"
+msgid "PiP Resolution"
+msgstr "PiP Auflösung"
 
 msgctxt "#31005"
 msgid "Maximum Bandwidth (kbps)"
@@ -393,7 +387,6 @@ msgstr "DASH stream (Kodi17+18)"
 msgctxt "#310067"
 msgid "Only show favourite channels"
 msgstr "Nur Favoriten-Kanäle anzeigen"
-
 
 msgctxt "#31007"
 msgid "liveTV on first start"
@@ -415,8 +408,15 @@ msgctxt "#310096"
 msgid "Debug"
 msgstr "Debug"
 
+msgctxt "#310097"
+msgid "Big"
+msgstr "Groß"
 
-### EPG/Aufnahmen ###
+msgctxt "#310098"
+msgid "Small"
+msgstr "Klein"
+
+# ## EPG/Aufnahmen ###
 msgctxt "#31010"
 msgid "EPG/Recordings"
 msgstr "EPG/Aufnahmen"
@@ -445,7 +445,7 @@ msgctxt "#31016"
 msgid "Only finished recordings"
 msgstr "nur fertige Aufnahmen anzeigen"
 
-### Datenbank ###
+# ## Datenbank ###
 msgctxt "#31020"
 msgid "Database"
 msgstr "Datenbank"
@@ -462,9 +462,7 @@ msgctxt "#31022"
 msgid "load only favorites"
 msgstr "Nur Favoriten laden"
 
-
-
-### liveTV KeyMap ###
+# ## liveTV KeyMap ###
 msgctxt "#31030"
 msgid "liveTV KeyMap"
 msgstr ""
@@ -490,10 +488,14 @@ msgid "Manual Keymap"
 msgstr "Manuelle Keymap"
 
 msgctxt "#31037"
-msgid "For manual keymap, the file myKeymap.xml \nmust exist in the Userdata directory"
-msgstr "Für Manuelle Keymap muss die Datei myKeymap.xml \nim Userdata-Verzeichnis existieren"
+msgid ""
+"For manual keymap, the file myKeymap.xml \n"
+"must exist in the Userdata directory"
+msgstr ""
+"Für Manuelle Keymap muss die Datei myKeymap.xml \n"
+"im Userdata-Verzeichnis existieren"
 
-### Haupmenu ###
+# ## Haupmenu ###
 msgctxt "#31099"
 msgid "Most Popular"
 msgstr "Am meisten geschaut"
@@ -530,9 +532,7 @@ msgctxt "#31107"
 msgid "Settings"
 msgstr "Einstellungen"
 
-
-### Benachrichtigungen ##
-
+# ## Benachrichtigungen ##
 msgctxt "#31200"
 msgid "Search show:"
 msgstr "Suche Sendung:"
@@ -549,15 +549,13 @@ msgctxt "#31203"
 msgid "nothing found"
 msgstr "keine passende Sendung gefunden"
 
-
 msgctxt "#31250"
 msgid "Database was cleared and current data was loaded."
 msgstr "Die Datenbank wurde gelöscht und neue Daten wurden geladen."
 
 msgctxt "#31251"
-msgid  "Now set your folder-content to movies,only use local information and update the library...."
+msgid "Now set your folder-content to movies,only use local information and update the library...."
 msgstr "Ordner als Filme definieren, nur lokale Informationen verwenden und Bibliothek aktualisieren..."
-
 
 msgctxt "#31300"
 msgid "Record this show"
@@ -591,8 +589,6 @@ msgctxt "#31307"
 msgid "skip to this position?"
 msgstr "starte von dieser Position?"
 
-
-
 msgctxt "#31901"
 msgid "Content not accessible"
 msgstr "Inhalt nicht verfügbar"
@@ -602,8 +598,12 @@ msgid "Unable to start a session. Check your account settings!"
 msgstr "Verbindung fehlgeschlagen. Zattoo Einstellungen überprüfen!"
 
 msgctxt "#31903"
-msgid "recording request transmitted to Zattoo.\nThe show now should be visible in Recordings!"
-msgstr "Aufnahme-Anfrage wurde an Zattoo übermittelt.\nDie Sendung sollte nun in den Aufnahmen sein!"
+msgid ""
+"recording request transmitted to Zattoo.\n"
+"The show now should be visible in Recordings!"
+msgstr ""
+"Aufnahme-Anfrage wurde an Zattoo übermittelt.\n"
+"Die Sendung sollte nun in den Aufnahmen sein!"
 
 msgctxt "#31907"
 msgid "Set the channel as the start channel"
@@ -617,17 +617,17 @@ msgctxt "#31909"
 msgid "Remove channel from favourites?"
 msgstr "Den Kanal aus den Favoriten entfernen?"
 
-
-
 msgctxt "#31911"
-msgid "Delete the recording directory and the recorded movies?\nThe recordings are not deleted at Zattoo."
-msgstr "Das Aufnahme-Verzeichnis und die enthaltenen Filme löschen?\nDie Aufnahmen werden bei Zattoo nicht gelöscht."
+msgid ""
+"Delete the recording directory and the recorded movies?\n"
+"The recordings are not deleted at Zattoo."
+msgstr ""
+"Das Aufnahme-Verzeichnis und die enthaltenen Filme löschen?\n"
+"Die Aufnahmen werden bei Zattoo nicht gelöscht."
 
 msgctxt "#31912"
 msgid "Keypad"
 msgstr "Tastenfeld"
-
-
 
 msgctxt "#31913"
 msgid "Clean the program table"
@@ -658,8 +658,12 @@ msgid "Records are not required"
 msgstr "Datensätze werden nicht benötigt"
 
 msgctxt "#31920"
-msgid "Records are not required\nDelete records now?"
-msgstr "Datensätze werden nicht benötigt\nDatensätze jetzt löschen?"
+msgid ""
+"Records are not required\n"
+"Delete records now?"
+msgstr ""
+"Datensätze werden nicht benötigt\n"
+"Datensätze jetzt löschen?"
 
 msgctxt "#31921"
 msgid "delete recording"
@@ -685,13 +689,7 @@ msgctxt "#31926"
 msgid "Toggle wached"
 msgstr "'Gesehen' umschalten"
 
-
-
-
-
-
-
-### KeyMap ###
+# ## KeyMap ###
 msgctxt "#32000"
 msgid "select cmd to change key"
 msgstr "wähle Befehl um den Key zu ändern"
