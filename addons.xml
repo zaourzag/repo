@@ -287,7 +287,7 @@ Zattoo Live TV, Aufnahmen und EPG
 <addon id="plugin.video.akibapass" name="Akibapass" version="0.6.1" provider-name="MrKrabat">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
-        <import addon="script.module.beautifulsoup4" version="4.3.2"/>
+        <import addon="script.module.beautifulsoup4" version="4.5.3"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
