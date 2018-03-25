@@ -31,6 +31,7 @@ except ImportError:
     from http.cookiejar import LWPCookieJar
 
 import xbmc
+import xbmcgui
 
 
 def start(args):
