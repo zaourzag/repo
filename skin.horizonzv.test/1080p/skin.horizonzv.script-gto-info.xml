@@ -37,7 +37,7 @@
                     <width>1095</width>
                     <height>45</height>
                     <font>impacted21</font>
-                    <label>$ADDON[plugin.service.gto 30100]</label>
+                    <label>$ADDON[script.service.gto 30100]</label>
                     <align>center</align>
                     <aligny>center</aligny>
                     <textcolor>grey2</textcolor>
@@ -146,7 +146,7 @@
                         <width>465</width>
                         <height>22</height>
                         <textcolor>grey2</textcolor>
-                        <label>$ADDON[plugin.service.gto 30103]</label>
+                        <label>$ADDON[script.service.gto 30103]</label>
                         <align>left</align>
                     </control>
                     <control type="textbox">
@@ -173,7 +173,7 @@
                     <control type="button" id="20">
                         <description>Switchtimer button</description>
                         <width min="225" max="300">auto</width>
-                        <label>$ADDON[plugin.service.gto 30107]</label>
+                        <label>$ADDON[script.service.gto 30107]</label>
                         <texturenofocus/>
                         <textcolor>black</textcolor>
                         <align>center</align>
@@ -185,29 +185,29 @@
                     <control type="button" id="21">
                         <description>Switch button</description>
                         <width min="225" max="300">auto</width>
-                        <label>$ADDON[plugin.service.gto 30108]</label>
+                        <label>$ADDON[script.service.gto 30108]</label>
                         <texturenofocus/>
                         <textcolor>black</textcolor>
                         <align>center</align>
                         <enable>!IsEmpty(Window(Home).Property(GTO.Info.isRunning)) + System.HasAddon(service.kn.switchtimer)</enable>
-                        <onclick>RunScript(plugin.service.gto,action=switch_channel&amp;pvrid=$INFO[Window(Home).Property(GTO.Info.ChannelID)])</onclick>
+                        <onclick>RunScript(script.service.gto,action=switch_channel&amp;pvrid=$INFO[Window(Home).Property(GTO.Info.ChannelID)])</onclick>
                         <onclick>Dialog.Close(all)</onclick>
                     </control>
                     <control type="button" id="22">
                         <description>Record button</description>
                         <width min="225" max="300">auto</width>
-                        <label>$ADDON[plugin.service.gto 30112]</label>
+                        <label>$ADDON[script.service.gto 30112]</label>
                         <texturenofocus/>
                         <textcolor>black</textcolor>
                         <align>center</align>
                         <enable>!String.IsEmpty(Window(Home).Property(GTO.Info.BroadcastID)) + String.IsEqual(Window(Home).Property(GTO.Info.hasTimer),False)</enable>
-                        <onclick>RunScript(plugin.service.gto,action=record&amp;broadcastid=$INFO[Window(Home).Property(GTO.Info.BroadcastID)]&amp;blob=$INFO[Window(Home).Property(GTO.Info.BlobID)])</onclick>
+                        <onclick>RunScript(script.service.gto,action=record&amp;broadcastid=$INFO[Window(Home).Property(GTO.Info.BroadcastID)]&amp;blob=$INFO[Window(Home).Property(GTO.Info.BlobID)])</onclick>
                         <onclick>Dialog.Close(all)</onclick>
                     </control>
                     <control type="button" id="23">
                         <description>Cancel button</description>
                         <width min="225" max="300">auto</width>
-                        <label>$ADDON[plugin.service.gto 30119]</label>
+                        <label>$ADDON[script.service.gto 30119]</label>
                         <texturenofocus/>
                         <textcolor>black</textcolor>
                         <align>center</align>

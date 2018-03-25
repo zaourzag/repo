@@ -814,35 +814,35 @@
                     <label>TV Highlights (GTO)</label>
                     <onclick>Skin.ToggleSetting(Widget_NEWS_TVHighlights_gto)</onclick>
                     <selected>Skin.HasSetting(Widget_NEWS_TVHighlights_gto)</selected>
-                    <enable>System.HasAddon(plugin.service.gto)</enable>
+                    <enable>System.HasAddon(script.service.gto)</enable>
                 </control>
                 <control type="button" id="108">
                     <include>dialogbutton_popup</include>
                     <label>- Refresh</label>
-                    <onclick>RunScript(plugin.service.gto,action=refresh)</onclick>
+                    <onclick>RunScript(script.service.gto,action=refresh)</onclick>
                     <visible>Skin.HasSetting(Widget_NEWS_TVHighlights_gto)</visible>
-                    <visible>System.HasAddon(plugin.service.gto)</visible>
+                    <visible>System.HasAddon(script.service.gto)</visible>
                 </control>
                 <control type="button" id="109">
                     <include>dialogbutton_popup</include>
                     <label>- Scrape</label>
-                    <onclick>RunScript(plugin.service.gto,action=scrape)</onclick>
+                    <onclick>RunScript(script.service.gto,action=scrape)</onclick>
                     <visible>Skin.HasSetting(Widget_NEWS_TVHighlights_gto)</visible>
-                    <visible>System.HasAddon(plugin.service.gto)</visible>
+                    <visible>System.HasAddon(script.service.gto)</visible>
                 </control>
                 <control type="button" id="110">
                     <include>dialogbutton_popup</include>
                     <label>- $LOCALIZE[5]</label>
-                    <onclick>Addon.OpenSettings(plugin.service.gto)</onclick>
+                    <onclick>Addon.OpenSettings(script.service.gto)</onclick>
                     <visible>Skin.HasSetting(Widget_NEWS_TVHighlights_gto)</visible>
-                    <visible>System.HasAddon(plugin.service.gto)</visible>
+                    <visible>System.HasAddon(script.service.gto)</visible>
                 </control>
 				<control type="button" id="111">
 					<textcolor>red</textcolor>
 					<include>dialogbutton_popup</include>
 					<label>German Telecast Addon $LOCALIZE[51583]. $LOCALIZE[24038]?</label>
-					<onclick>InstallAddon(plugin.service.gto)</onclick>
-					<visible>!System.HasAddon(plugin.service.gto)</visible>
+					<onclick>InstallAddon(script.service.gto)</onclick>
+					<visible>!System.HasAddon(script.service.gto)</visible>
 				</control>
 				<include content="separatorlabel">
 					<param name="separatorlabel_id" value="112"/>
