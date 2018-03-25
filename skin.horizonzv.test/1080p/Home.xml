@@ -32,7 +32,7 @@
                 <visible>!Window.IsVisible(1140)+!Window.IsVisible(1141)+!Window.IsVisible(1142)+!Window.IsVisible(1155)+!Window.IsVisible(selectdialog)</visible>
                 <include>HomepageWidget</include>
                 <include>Dashboard</include>
-                <include condition="System.HasAddon(plugin.service.gto)|System.HasAddon(plugin.program.newscenter)|System.HasAddon(plugin.program.serienplaner)">HomeNewsCenter</include>
+                <include condition="System.HasAddon(script.service.gto)|System.HasAddon(plugin.program.newscenter)|System.HasAddon(plugin.program.serienplaner)">HomeNewsCenter</include>
             </control>
             <control type="group"> <!-- RSS / NavInfo / OSD -->
 				<control type="group">

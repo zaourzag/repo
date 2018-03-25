@@ -115,12 +115,16 @@ def find_in_thread(title):
     content2=geturl(thread+"?pageNo="+str(i))
     htmlPage2 = BeautifulSoup(content2, 'html.parser') 
     sec_token=re.compile("SECURITY_TOKEN = '(.+?)'", re.DOTALL).findall(content2)[0]
-    liste = htmlPage2.findAll("li",{"class" :"marginTop messageGroupStarter"})     
-    for post in liste:        
-        Text = post.find("div",{"class" :"messageText"}).text.encode("utf-8",).strip()     
-        textid = post.find("article")["data-object-id"]  
+    liste = htmlPage2.findAll("article")   
+    for post in liste:
+        try:    
+            Text = post.find("div",{"class" :"messageText"}).text.encode("utf-8").strip()     
+        except:
+            debug("ERR")
+            continue            
+        textid = post["data-object-id"]  
         try:
-            empfehler = post.find("article")["data-like-user"]       
+            empfehler = post["data-like-user"]       
         except:
              empfehler=""
         debug(Text)
@@ -234,6 +238,7 @@ if mode=="":
       exit      
     ret=find_in_thread(seriesName)      
     if ret==1:
+       quit()
        exit
     content=geturl(thread)
 

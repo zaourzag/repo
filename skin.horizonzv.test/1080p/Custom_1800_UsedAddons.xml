@@ -259,13 +259,13 @@
                         <label>German Telecast Offers</label>
                         <label2>$LOCALIZE[24038]</label2>
                         <onclick>InstallAddon(script.service.gto)</onclick>
-                        <visible>!System.HasAddon(plugin.service.gto)</visible>
+                        <visible>!System.HasAddon(script.service.gto)</visible>
                     </item>
                     <item>
-                        <label>German Telecast Offers $INFO[System.AddonVersion(plugin.service.gto),(,)]</label>
+                        <label>German Telecast Offers $INFO[System.AddonVersion(script.service.gto),(,)]</label>
                         <label2>$LOCALIZE[5]</label2>
-                        <onclick>Addon.OpenSettings(plugin.service.gto)</onclick>
-                        <visible>System.HasAddon(plugin.service.gto)</visible>
+                        <onclick>Addon.OpenSettings(script.service.gto)</onclick>
+                        <visible>System.HasAddon(script.service.gto)</visible>
                     </item>
                     <item>
                         <label>KN Switchtimer Service</label>

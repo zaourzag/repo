@@ -31,17 +31,17 @@ except ImportError:
     from http.cookiejar import LWPCookieJar
 
 import xbmc
+import xbmcgui
 
 
 def start(args):
     """Login and session handler
     """
     # create cookiejar
-    cj = LWPCookieJar()
-    args._cj = cj
+    args._cj = LWPCookieJar()
 
     # lets urllib handle cookies
-    opener = build_opener(HTTPCookieProcessor(cj))
+    opener = build_opener(HTTPCookieProcessor(args._cj))
     opener.addheaders = [("User-Agent",      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36"),
                          ("Accept-Encoding", "identity"),
                          ("Accept-Charset",  "utf-8")]
@@ -49,7 +49,7 @@ def start(args):
 
     # load cookies
     try:
-        cj.load(getCookiePath(args), ignore_discard=True)
+        args._cj.load(getCookiePath(args), ignore_discard=True)
     except IOError:
         # cookie file does not exist
         pass

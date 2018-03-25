@@ -101,20 +101,20 @@ def showMainMenue(args):
     """
     view.add_item(args,
                   {"title": args._addon.getLocalizedString(30020),
-                   "mode":   "catalog"})
+                   "mode":  "catalog"})
     view.add_item(args,
                   {"title": args._addon.getLocalizedString(30025),
-                   "mode":   "last_episodes"})
+                   "mode":  "last_episodes"})
     view.add_item(args,
                   {"title": args._addon.getLocalizedString(30026),
-                   "mode":   "last_simulcasts"})
+                   "mode":  "last_simulcasts"})
     view.add_item(args,
                   {"title": args._addon.getLocalizedString(30021),
-                   "mode":   "search"})
+                   "mode":  "search"})
     view.add_item(args,
                   {"title": args._addon.getLocalizedString(30022),
-                   "mode":   "downloads"})
+                   "mode":  "downloads"})
     view.add_item(args,
                   {"title": args._addon.getLocalizedString(30023),
-                   "mode":   "collection"})
+                   "mode":  "collection"})
     view.endofdirectory()

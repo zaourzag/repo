@@ -971,4 +971,7 @@
 		<value condition="!String.IsEmpty(Container.ListItem.ChannelName)+!Container.ListItem.HasEpg">$INFO[Container.ListItem.ChannelName]</value>
 		<value>$INFO[Container.ListItem.Label]</value>
 	</variable>
+	<variable name="NewsCenterGTO">
+		<value condition="System.HasAddon(script.service.gto)">plugin://script.service.gto?action=getcontent&amp;ts=$INFO[Window(Home).Property(GTO.timestamp)]</value>
+	</variable>
 </includes>

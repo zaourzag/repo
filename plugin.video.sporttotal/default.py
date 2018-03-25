@@ -239,9 +239,11 @@ def  listvideo( url,rubrik_suche):
      rubrik = element.find("h2",{"class" :"section-title"}).text
      if rubrik==rubrik_suche:
        liste2 = element.findAll("a",{"class" :"teaser-tile-clip"}) 
-       for element2 in liste2:        
+       for element2 in liste2:  
+        debug("ELEMENT2")
+        debug(    element2)   
         urll=element2["href"]
-        img=element2.find("img")["src"]
+        img=re.compile('url\((.+?)\)', re.DOTALL).findall(str(element2))[0]                
         datum=element2.find("h4",{"class" :"date"}).text        
         beschreibung1=element2.findAll("h4",{"class" :"caption"})[0].text.encode("utf-8").strip()     
         beschreibung2=element2.findAll("h4",{"class" :"caption"})[1].text.encode("utf-8").strip()      

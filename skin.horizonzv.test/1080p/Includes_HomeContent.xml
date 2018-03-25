@@ -957,7 +957,7 @@
             <onclick condition="Window.IsVisible(Home)+System.HasAddon(plugin.program.newscenter)">ActivateWindow(4117)</onclick>
             <onclick condition="!Window.IsVisible(Home)">Skin.SetImage(user_bkg_news,smb://)</onclick>
             <visible>!Skin.HasSetting(HomeMenuNoNewsButton)</visible>
-            <visible>System.HasAddon(plugin.service.gto)|System.HasAddon(plugin.program.newscenter)|System.HasAddon(plugin.program.serienplaner)</visible>
+            <visible>System.HasAddon(script.service.gto)|System.HasAddon(plugin.program.newscenter)|System.HasAddon(plugin.program.serienplaner)</visible>
         </item>
     </include>
     <include name="HomeMenuGames">

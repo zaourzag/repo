@@ -60,7 +60,7 @@ def log(msg, level=xbmc.LOGNOTICE):
     
 
   
-def addDir(name, url, mode, thump, desc="",page=1,nosub=0,type="items"):   
+def addDir(name, url, mode, thump, desc="",page=1,nosub=0,type="items",addtype=0):   
   u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&page="+str(page)+"&nosub="+str(nosub)+"&type="+str(type)
   ok = True
   liz = xbmcgui.ListItem(name)  
@@ -69,7 +69,11 @@ def addDir(name, url, mode, thump, desc="",page=1,nosub=0,type="items"):
   liz.setArt({ 'banner' : icon })
   liz.setArt({ 'fanart' : icon })
   liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc})
-	
+  if addtype==1:
+    commands = []  
+    link = "plugin://plugin.video.L0RE.dmax/?mode=tolibrary&url=%s&name=%s&stunden=%s"%(url,name,6)
+    commands.append(( "Add to library", 'XBMC.RunPlugin('+ link +')'))
+    liz.addContextMenuItems( commands )
   ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
   return ok
   
@@ -83,7 +87,7 @@ def addLink(name, url, mode, thump, duration="", desc="", genre='',director="",b
   liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Genre": genre, "Director":director,"Rating":bewertung})
   liz.setProperty('IsPlayable', 'true')
   liz.addStreamInfo('video', { 'duration' : duration })
-	#xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
+	#xbmcplugin.setContent(int(sys.argv[1]), 'tvshows') 
   ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
   return ok
   
@@ -159,7 +163,8 @@ def themenliste():
   addDir("Traumautos" , "https://www.dmax.de/api/genres/traumautos", "videoliste","",nosub="recently-added")            
   addDir("Wissen" , "https://www.dmax.de/api/genres/wissen", "videoliste","",nosub="recently-added")            
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
-def playvideo(idd):      
+def playvideo(idd): 
+    debug("PLAYVIDEO")     
     content=geturl("https://www.dmax.de/")    
     for cookief in cj:
           debug( cookief)
@@ -198,6 +203,20 @@ referer = urllib.unquote_plus(params.get('referer', ''))
 page = urllib.unquote_plus(params.get('page', ''))
 nosub= urllib.unquote_plus(params.get('nosub', ''))
 type= urllib.unquote_plus(params.get('type', ''))
+name= urllib.unquote_plus(params.get('name', ''))
+stunden= urllib.unquote_plus(params.get('stunden', ''))
+
+
+def tolibrary(url,name,stunden):
+    mediapath=addon.getSetting("mediapath")
+    if mediapath=="":
+      dialog = xbmcgui.Dialog()
+      dialog.notification("Error", "Pfad setzen in den Settings", xbmcgui.NOTIFICATION_ERROR)
+      return    
+    urln="plugin://plugin.video.L0RE.dmax?mode=generatefiles&url="+url+"&name="+name
+    urln=urllib.quote_plus(urln)
+    debug("tolibrary urln : "+urln)
+    xbmc.executebuiltin('XBMC.RunPlugin(plugin://service.L0RE.cron/?mode=adddata&name=%s&stunden=%s&url=%s)'%(name,stunden,urln))
 def listserie(idd):
   url="https://www.dmax.de/api/show-detail/"+str(idd)
   debug("listserie :"+url)
@@ -221,7 +240,42 @@ def listserie(idd):
         airdate=video["airDate"]
         addLink(title,idd,"playvideo",image,desc=desc,duration=duration)
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
-
+  
+def generatefiles(idd,name):
+  url="https://www.dmax.de/api/show-detail/"+str(idd)
+  debug("generatefiles :"+url)
+  content=geturl(url)
+  try:
+    struktur = json.loads(content)
+  except:   
+    return
+  mediapath=addon.getSetting("mediapath") 
+  ppath=mediapath+name.replace(" ","_")
+  debug(ppath)
+  if xbmcvfs.exists(ppath):
+    shutil.rmtree(ppath)
+  xbmcvfs.mkdirs(ppath)  
+  subelement=struktur["videos"]["episode"]
+  for number,videos in subelement.iteritems(): 
+    for video in videos:         
+        idd=video["id"]
+        debug("IDD VIDEO :"+str(idd))
+        title=video["title"]
+        title=title.replace("{S}","S").replace(".{E}","E")
+        desc=video["description"]
+        duration=video["videoDuration"]
+        duration=duration/1000
+        image=video["image"]["src"]
+        airdate=video["airDate"]
+        namef=title.replace(" ","_").replace(":","_")
+        #debug(namef)
+        filename=ppath+"/"+namef+".strm"
+        #debug(filename)
+        file = open(filename,"wt") 
+        file.write("plugin://plugin.video.L0RE.dmax/?mode=playvideo&url="+str(idd))
+        file.close()
+  xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
+  
 def videoliste(url,page=1,nosub="",type="items"):    
   if not "http" in url:
      url="http://www.demax.de/"+url
@@ -234,12 +288,13 @@ def videoliste(url,page=1,nosub="",type="items"):
     idd=element["id"]
     desc=element["description"]
     image=element["image"]["src"]
-    addDir(title,idd,"listserie",image,desc=desc)
+    addDir(title,idd,"listserie",image,desc=desc,addtype=1)
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
   
 def inputsettings()    :
   xbmcaddon.Addon("inputstream.adaptive").openSettings()  
-  
+
+debug("#######"+mode)  
 # Haupt Menu Anzeigen      
 if mode is '':
      liste()   
@@ -256,7 +311,11 @@ else:
           videoliste(url,page,nosub,type)
   if mode == 'listserie':
            listserie(url)
+  if mode == 'tolibrary':                      
+           tolibrary(url,name,stunden)
   if mode == 'inputsettings':
           inputsettings()    
   if mode == 'themenliste':
           themenliste()  
+  if mode == 'generatefiles':         
+          generatefiles(url,name)

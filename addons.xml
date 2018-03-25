@@ -73,7 +73,7 @@
 	</extension>
 </addon>
 
-<addon id="plugin.video.zattooHiQ" version="1.5.6" name="Zattoo HiQ" provider-name="Steffen Rolapp">
+<addon id="plugin.video.zattooHiQ" version="1.5.7" name="Zattoo HiQ" provider-name="Steffen Rolapp">
   <requires>
     <import addon="xbmc.python" version="2.14.0"/>
     <import addon="xbmc.addon" version="13.0.0" />
@@ -284,10 +284,10 @@ Zattoo Live TV, Aufnahmen und EPG
   </extension>
 </addon>
 
-<addon id="plugin.video.akibapass" name="Akibapass" version="0.6.0" provider-name="MrKrabat">
+<addon id="plugin.video.akibapass" name="Akibapass" version="0.6.1" provider-name="MrKrabat">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
-        <import addon="script.module.beautifulsoup4" version="4.3.2"/>
+        <import addon="script.module.beautifulsoup4" version="4.5.3"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
@@ -301,7 +301,7 @@ Zattoo Live TV, Aufnahmen und EPG
         <description lang="de_DE">Alle deine Lieblingsserien direkt aus Japan bei Akibapass.de. Zugang zu aktuellen Simulcasts und jeder Menge Klassikern.</description>
         <disclaimer lang="en_GB">WARNING: You MUST be a PREMIUM member or BUY videos to use this plugin</disclaimer>
         <disclaimer lang="de_DE">HINWEIS: Du MUSST PREMIUM Mitglied sein oder Videos KAUFEN um dieses Plugin zu benutzen</disclaimer>
-        <news>v0.6.0 (2018.01.30)[CR]- Added last aired episodes list[CR]- Added new simulcasts list[CR]- Some fixes</news>
+        <news>v0.6.1 (2018.03.24)[CR]- Added Python3 support[CR]- Refactoring</news>
         <license>GNU Affero General Public License, v3</license>
         <forum>https://www.kodinerds.net/index.php/Thread/58346-Release-Akibapass-de/</forum>
         <website>https://www.akibapass.de/</website>
@@ -317,7 +317,7 @@ Zattoo Live TV, Aufnahmen und EPG
     </extension>
 </addon>
 
-<addon id="plugin.video.sporttotal" name="Sport total (dev)" version="0.3.6" provider-name="L0RE">
+<addon id="plugin.video.sporttotal" name="Sport total" version="0.3.7" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
         <import addon="script.module.beautifulsoup4" version="4.3.2"/>
@@ -775,7 +775,7 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
   </extension>
 </addon>
 
-<addon id="plugin.video.zattooHiQ-2" version="1.5.6" name="Zattoo HiQ-2" provider-name="Steffen Rolapp">
+<addon id="plugin.video.zattooHiQ-2" version="1.5.7" name="Zattoo HiQ-2" provider-name="Steffen Rolapp">
   <requires>
     <import addon="xbmc.python" version="2.14.0"/>
     <import addon="xbmc.addon" version="13.0.0" />
@@ -1260,7 +1260,7 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
     </extension>
 </addon>
 
-<addon id="plugin.video.L0RE.dmax" name="DMAX Mediathek" version="0.2.0" provider-name="L0RE">
+<addon id="plugin.video.L0RE.dmax" name="DMAX Mediathek" version="0.3.0" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
         <import addon="script.module.requests" version="2.12.4"/>
@@ -1964,7 +1964,7 @@ To support the backport the addon will now always create the merged_epg.xml.gz
   </extension>
 </addon>
 
-<addon id="plugin.video.L0RE.kinder_mediatheken" name="Kinder Mediatheken" version="0.1.1" provider-name="L0RE">
+<addon id="plugin.video.L0RE.kinder_mediatheken" name="Kinder Mediatheken" version="0.2.0" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
     </requires>
@@ -2584,7 +2584,7 @@ This product uses the TMDb API (themoviedb.org) but is not endorsed or certified
   	</extension>
 </addon>
 
-<addon id="skin.horizonzv.test" name="Horizonz V (Kodi 18) BETA!" version="1.18.0.10" provider-name="blauesgruen">
+<addon id="skin.horizonzv.test" name="Horizonz V (Kodi 18) BETA!" version="1.18.0.11" provider-name="blauesgruen">
 	<requires>
 		<import addon="xbmc.gui" version="5.13.0"/>
 		<import addon="script.image.resource.select" version="2.0.1"/>
@@ -3651,17 +3651,21 @@ oder online unter https://goo.gl/GtK41L nachlesen.
 	</extension>
 </addon>
 
-<addon id="context.kodinerds.thumpup" name="Empfehlungen für Kodinerds" version="0.5.0" provider-name="L0RE">
+<addon id="context.kodinerds.thumpup" name="Empfehlungen für Kodinerds" version="0.6.0" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.20.0" />
         <import addon="script.module.beautifulsoup4" version="4.3.2"/>
         <import addon="script.module.requests" version="2.12.4"/>
+        <import addon="script.module.youtube.dl" version="14.810.0"/>
     </requires>
     <extension point="kodi.context.item" library="addon.py">
         <item>
             <label>Kodinerds Empfehlen</label>
             <visible>Window.IsActive(10025)+!Container.Content(Addons)+!Container.Content(images)+!Container.Content(movies)+!Container.Content(songs)</visible>            
         </item>
+    </extension>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
     </extension>
     <extension point="xbmc.addon.metadata">
         <summary lang="en">Emfielt eine Serie für https://www.kodinerds.net/index.php/Thread/58034-L0RE-s-Test-thread/</summary>
@@ -3788,6 +3792,24 @@ Parental warning: The Maxdome Plattform consists of differnt types of content - 
   </extension>
 </addon>
 
+<addon id="service.L0RE.cron" name="Crontab  for other Addons" version="0.1" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.20.0" />      
+    </requires>
+    <extension point="xbmc.service" library="service.py" start="login" />
+    <extension point="xbmc.python.pluginsource" library="addon.py" >
+            <provides>executable</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en">ein Addon um Regemäßig andere Plugins aufzurufen</summary>
+        <description lang="en">ein Addon um Regemäßig andere Plugins aufzurufen</description>
+        <platform>all</platform>
+        <language>en</language>
+        <license>GNU General Public License, v2</license>
+        <email></email>
+    </extension>
+</addon>
+
 <addon id="plugin.video.L0RE.mtv" name="MTV Mediathek" version="0.2.1" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
@@ -3812,11 +3834,11 @@ Parental warning: The Maxdome Plattform consists of differnt types of content - 
   </extension>
 </addon>
 
-<addon id="plugin.video.wakanim" name="Wakanim" version="0.7.1" provider-name="MrKrabat">
+<addon id="plugin.video.wakanim" name="Wakanim" version="0.7.2" provider-name="MrKrabat">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
-        <import addon="script.module.beautifulsoup4" version="4.3.2"/>
-        <import addon="script.module.inputstreamhelper" version="0.3.2"/>
+        <import addon="script.module.beautifulsoup4" version="4.5.3"/>
+        <import addon="script.module.inputstreamhelper" version="0.3.3"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
@@ -3836,7 +3858,7 @@ Parental warning: The Maxdome Plattform consists of differnt types of content - 
         <disclaimer lang="de_DE">HINWEIS: Du MUSST PREMIUM Mitglied sein oder Videos KAUFEN um dieses Plugin zu benutzen</disclaimer>
         <disclaimer lang="fr_FR">AVERTISSEMENT: VOUS DEVEZ être un membre PREMIUM ou ACHETER des vidéos pour utiliser ce plugin</disclaimer>
         <disclaimer lang="ru_RU">ВНИМАНИЕ: Для использования этого плагина Вы должны оформить подписку или купить аниме</disclaimer>
-        <news>v0.7.1 (2018.02.03)[CR]- Added Widevine DRM support[CR][CR]v0.7.0 (2018.01.30)[CR]- Added watchlist[CR]- Added last aired episodes list (thanks AkariDN)[CR]- Added new simulcasts list[CR]- Added synchronize of playback stats[CR]- Added dialog to resume playback[CR]- Multiple fixes (thanks AkariDN)</news>
+        <news>v0.7.2 (2018.03.25)[CR]- Added Python3 support[CR]- Fix Wakanim website changes[CR]- Improved stream parameters parsing[CR]- Refactoring</news>
         <license>GNU Affero General Public License, v3</license>
         <forum>https://forum.kodi.tv/showthread.php?tid=322763</forum>
         <website>https://www.wakanim.tv/</website>
@@ -4247,7 +4269,7 @@ Parental warning: The Maxdome Plattform consists of differnt types of content - 
 	</extension>
 </addon>
 
-<addon id="plugin.video.magine" name="Magine" version="0.3.10" provider-name="L0RE">
+<addon id="plugin.video.magine" name="Magine" version="0.3.11" provider-name="L0RE">
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
     </extension>
