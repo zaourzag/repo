@@ -173,7 +173,7 @@ class KeyMap:
       key = __addon__.getSetting('key_record')
       if key.isdigit():builder.start("key", {"id":key})
       else: builder.start('k', {})
-      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=record_p")')
+      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=record_l")')
       builder.end("key")
       
     # Recordliste
