@@ -218,11 +218,10 @@ def Play(idd):
 
     
 def playLiveStream():
-    debug( "siteVersion :"+siteVersion)
-    if siteVersion=="de-de":    
-                streamUrl="https://liveservustv-i.akamaihd.net/hls/live/271000/ServusTV_DE/master_fbr2192.m3u8"    
-    else: 
-                streamUrl="https://liveservustv-i.akamaihd.net/hls/live/270998/ServusTV_AT/master_fb1112.m3u8"    
+    url="https://www.servus.com/de/tv/jetzt-bei-servus-tv/"
+    content=getUrl(url)
+    streamUrl=re.compile('src="([^"]+)" type="application/x-mpegURL"', re.DOTALL).findall(content)[0]                  
+    debug("streamUrl :"+streamUrl)
     listitem = xbmcgui.ListItem(path=streamUrl)
     xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
 
