@@ -123,7 +123,8 @@ def liste(surl):
         c.execute(search)        
         r = list(c)
         for member in r:
-           addDir("Loesche: "+member[0],member[1],"delete","")
+           debug(member[0].encode("utf-8"))
+           addDir("Loesche: "+member[0].encode("utf-8"),member[1].encode("utf-8"),"delete","")
     except:
         var = traceback.format_exc()
         debug(var)
