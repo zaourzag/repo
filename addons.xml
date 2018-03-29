@@ -1760,7 +1760,7 @@ To support the backport the addon will now always create the merged_epg.xml.gz
   </extension>
 </addon>
 
-<addon id="plugin.video.helloworld" name="Helo World" version="0.0.7" provider-name="L0RE">
+<addon id="plugin.video.helloworld" name="Helo World" version="0.0.8" provider-name="L0RE">
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
     </extension>
