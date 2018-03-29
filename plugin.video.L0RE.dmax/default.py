@@ -60,7 +60,8 @@ def log(msg, level=xbmc.LOGNOTICE):
     
 
   
-def addDir(name, url, mode, thump, desc="",page=1,nosub=0,type="items",addtype=0):   
+def addDir(name, url, mode, thump, desc="",page=1,nosub=0,type="items",addtype=0): 
+  
   u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&page="+str(page)+"&nosub="+str(nosub)+"&type="+str(type)
   ok = True
   liz = xbmcgui.ListItem(name)  
@@ -71,7 +72,8 @@ def addDir(name, url, mode, thump, desc="",page=1,nosub=0,type="items",addtype=0
   liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc})
   if addtype==1:
     commands = []  
-    link = "plugin://plugin.video.L0RE.dmax/?mode=tolibrary&url=%s&name=%s&stunden=%s"%(url,name,6)
+    updatestd=addon.getSetting("updatestd")
+    link = "plugin://plugin.video.L0RE.dmax/?mode=tolibrary&url=%s&name=%s&stunden=%s"%(url,name,int(updatestd))
     commands.append(( "Add to library", 'XBMC.RunPlugin('+ link +')'))
     liz.addContextMenuItems( commands )
   ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
