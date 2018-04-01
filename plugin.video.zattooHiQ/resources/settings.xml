@@ -4,13 +4,14 @@
                 <setting label="31001" id="username" type="text" default=""/>
                 <setting label="31002" id="password" type="text" option="hidden" enable="!eq(-1,)" default=""/>
                 <setting id="provider" type="enum" label="31004" default = "0" values="Zattoo|Netplus|Quickline|m-net|WALY.TV|meinewelt.cc|BBV-tv.net|VTXtv.ch|myvisiontv.ch|GLATTvision.ch|SAKtv.ch|NetCologne|EWE.de|quantum TV" />
-                <setting type="sep"/>
-                <setting label="310032" id="country" type="text" enable="false" visible="gt(0,)"/>
+                <setting type="sep"/>                
                 <setting label="310033" id="dateregistered" type="date" enable="false" visible="gt(0,)"/>
-                <setting type="sep"/>
+                <setting label="310038" id="country" type="text" enable="false" visible="gt(0,)"/>
+                <setting label="310032" id="recall" type="text" enable="false" visible="gt(0,)"/>
                 <setting label="310034" id="product" type="text" enable="false" visible="gt(0,)"/>
                 <setting label="310035" id="price" type="text" enable="false" visible="gt(0,)"/>
                 <setting label="310036" id="expiration" type="text" enable="false" visible="gt(0,)"/>
+                <setting label="310037" id="renewal_date" type="text" enable="false" visible="gt(0,)"/>
         </category>
         
         

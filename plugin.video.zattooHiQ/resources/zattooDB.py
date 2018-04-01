@@ -24,6 +24,11 @@ import xbmc, xbmcgui, xbmcaddon, os, xbmcplugin, datetime, time
 import json
 from zapisession import ZapiSession
 
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
+
+
 __addon__ = xbmcaddon.Addon()
 _listMode_ = __addon__.getSetting('channellist')
 _channelList_=[]
@@ -72,8 +77,8 @@ class reloadDB(xbmcgui.WindowXMLDialog):
         #os.remove(os.path.join(profilePath, 'zattoo.db'))
         os.remove(os.path.join(profilePath, 'cookie.cache'))
         os.remove(os.path.join(profilePath, 'session.cache'))
-        os.remove(os.path.join(profilePath, 'account.cache'))
-        os.remove(os.path.join(profilePath, 'apicall.cache'))
+        #os.remove(os.path.join(profilePath, 'account.cache'))
+        #os.remove(os.path.join(profilePath, 'apicall.cache'))
        
     except:
         pass
@@ -192,7 +197,7 @@ class ZattooDB(object):
     try:
       c = self.conn.cursor()
       c.execute('CREATE TABLE channels(id TEXT, title TEXT, logo TEXT, weight INTEGER, favourite BOOLEAN, PRIMARY KEY (id) )')
-      c.execute('CREATE TABLE programs(showID TEXT, title TEXT, channel TEXT, start_date TIMESTAMP, end_date TIMESTAMP, restart BOOLEAN, series BOOLEAN, record BOOLEAN, description TEXT, description_long TEXT, year TEXT, country TEXT, genre TEXT, category TEXT, image_small TEXT, updates_id INTEGER , FOREIGN KEY(channel) REFERENCES channels(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED, FOREIGN KEY(updates_id) REFERENCES updates(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED)')
+      c.execute('CREATE TABLE programs(showID TEXT, title TEXT, channel TEXT, start_date TIMESTAMP, end_date TIMESTAMP, restart BOOLEAN, series BOOLEAN, record BOOLEAN, description TEXT, description_long TEXT, year TEXT, country TEXT, genre TEXT, category TEXT, image_small TEXT, credits TEXT, updates_id INTEGER , FOREIGN KEY(channel) REFERENCES channels(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED, FOREIGN KEY(updates_id) REFERENCES updates(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED)')
 
       c.execute('CREATE INDEX program_list_idx ON programs(channel, start_date, end_date)')
       c.execute('CREATE INDEX start_date_idx ON programs(start_date)')
@@ -396,7 +401,10 @@ class ZattooDB(object):
     programList = []
 
     for chan in channels['index']:
-      c.execute('SELECT * FROM programs WHERE channel = ? AND start_date < ? AND end_date > ?', [chan, endTime, startTime])
+      try:
+        c.execute('SELECT * FROM programs WHERE channel = ? AND start_date < ? AND end_date > ?', [chan, endTime, startTime])
+      except:pass
+      
       r = c.fetchall()
 
       for row in r:
@@ -425,11 +433,14 @@ class ZattooDB(object):
             'category': category, #row['category'],
             'start_date' : row['start_date'],
             'end_date' : row['end_date'],
-            'image_small' : row['image_small']
+            'image_small' : row['image_small'],
+            'credits' : row['credits'],
+            'restart': row['restart']
            
             })
 
     c.close()
+    
     return programList
 
   def getShowLongDescription(self, showID):
@@ -439,15 +450,29 @@ class ZattooDB(object):
         except:
             info.close()
             return None
-
+            
         show = info.fetchone()
+        if show is None:
+            info.close()
+            longDesc=''
+            year=''
+            category=''
+            country=''
+            genre =''
+            cred=''
+            info.close()
+            return {'description':longDesc, 'year':year, 'country':country, 'category':category, 'genre':genre, 'credits':cred}
         longDesc = show['description_long']
         year = show['year']
         country = show['country']
         category = show ['category']
         series = show['series']
         restart = show['restart']
+        genre = show['genre']
+        cred = show['credits']
         if longDesc is None:
+            import json
+            
             profilePath = xbmc.translatePath(__addon__.getAddonInfo('profile'))
             while os.path.exists(profilePath+"/zattoo.db-journal"):
                 debug('Database is locked')
@@ -458,11 +483,12 @@ class ZattooDB(object):
             
             #info.execute('UPDATE programs SET info=? WHERE showID=?',[json.dumps(infoall), showID ])
             
-            debug ('Showinfo  ' + str(showInfo))
+            #debug ('Showinfo  ' + str(showInfo))
             if showInfo is None:
                 longDesc=''
                 year=''
                 category=''
+                country=''
                 info.close()
                 return {'description':longDesc, 'year':year, 'country':country, 'category':category}
             longDesc = showInfo['program']['description']
@@ -477,28 +503,27 @@ class ZattooDB(object):
             info.execute('UPDATE programs SET country=? WHERE showID=?', [country, showID ])
             series = showInfo['program']['series_recording_eligible']
             info.execute('UPDATE programs SET series=? WHERE showID=?', [series, showID])
-            
-            #try:
-                #restart = showInfo['program']['selective_recall_until']
-                #info.execute('UPDATE programs SET restart=? WHERE showID=?', [True, showID])
-                ##print 'Restart  ' +str(showID) + '  ' + str(restart)
-            #except:
-                ##print 'No Restart'
-                #info.execute('UPDATE programs SET restart=? WHERE showID=?', [False, showID])
+            cred = showInfo['program']['credits']
+            #debug('cred: '+str(cred))
+            info.execute('UPDATE programs SET credits=? WHERE showID=?', [json.dumps(cred), showID])
+            try:
+                restart = showInfo['program']['selective_recall_until']
+                info.execute('UPDATE programs SET restart=? WHERE showID=?', [True, showID])
+            except:
+                info.execute('UPDATE programs SET restart=? WHERE showID=?', [False, showID])
                 
            
             record = showInfo['program']['recording_eligible']
             info.execute('UPDATE programs SET record=? WHERE showID=?', [record, showID])
             #print 'Restart  ' +str(showID) + '  ' + str(restart)
-           
- 
+
         try:
             self.conn.commit()
         except:
 			print 'IntegrityError: FOREIGN KEY constraint failed zattooDB 355'
         info.close()
-        return {'description':longDesc, 'year':year, 'country':country, 'category':category}
-
+        return {'description':longDesc, 'year':year, 'country':country, 'category':category, 'genre':genre, 'credits':cred}
+        
   def getShowInfo(self, showID, field='all'):
         if field!='all':
             #api = '/zapi/program/details?program_id=' + str(showID) + '&complete=True'
@@ -527,6 +552,32 @@ class ZattooDB(object):
         self.conn.commit()
         c.close()
         return showInfo
+        
+  def setProgram(self, showID):
+       
+    c = self.conn.cursor()
+    
+    api = '/zapi/program/details?program_id=' + str(showID) + '&complete=True'
+    showInfo = self.zapi.exec_zapiCall(api, None)
+    if showInfo is None:
+        c.close()
+        return "NONE"
+    
+    title = showInfo['program']['title']
+    channel = showInfo['program']['cid']
+    start = showInfo['program']['start']
+    end = showInfo['program']['end']
+    genre = showInfo['program']['genres']
+    year = showInfo['program']['year']
+    country = showInfo['program']['country']
+    description = showInfo['program']['description']
+    cred = showInfo['program']['credits']
+                
+    c.execute('INSERT INTO programs(showID, title, channel, start_date, end_date, genre, year, country, description_long, credits) VALUES(?,?,?,?,?,?,?,?,?,?)', [showID, title, channel, start, end, ', '.join(genre) ,year, country, description, json.dumps(cred)])
+    
+    self.conn.commit()
+    c.close()
+    return {'description':description, 'year':year, 'country':country, 'title':title, 'genre':genre, 'credits':cred}
 
 
 
@@ -777,3 +828,78 @@ class ZattooDB(object):
     self.conn.commit()
     c.close()
     
+
+  def set_category(self):
+    channels = self.getChannelList(_listMode_ == 'favourites')
+    chan = repr(channels['index']).replace('[','(').replace(']',')')
+    #debug ('Channels: '+str(chan))
+    time=datetime.datetime.now()
+    c = self.conn.cursor()
+    c.execute('DELETE FROM programs WHERE showID IN (SELECT showID FROM programs GROUP by showID HAVING (COUNT(*) > 1 ))')
+    self.conn.commit()
+    c.execute('SELECT category FROM programs WHERE channel  GROUP by category ORDER by category DESC' )
+    row = c.fetchall()
+    cat=[]
+    for category in row:
+        
+        gen = category["category"]
+        if gen == None: continue
+        c.execute('SELECT category FROM programs WHERE channel IN (SELECT id FROM channels WHERE favourite = 1) AND category = ? AND start_date < ? AND end_date > ?', [gen, time, time])
+        r = c.fetchall()
+        
+        for g in r:
+            count = len(r)
+        c.execute('SELECT category FROM programs WHERE channel IN (SELECT id FROM channels WHERE favourite = 1) AND category = ? AND start_date < ? AND end_date > ? GROUP by category', [gen, time, time])
+        rb = c.fetchall()
+        
+        for a in rb:
+            ge = a['category']
+            if ge =='':continue
+            #debug('Kategorien:'+str(count)+' '+str(ge))
+            cat.append({
+            'category': ge,
+            'len': count})
+        
+    c.close()
+    return cat
+    
+  def get_category(self, cat, get_long_description=False, startTime=datetime.datetime.now(), endTime=datetime.datetime.now()):
+         
+    c = self.conn.cursor()
+    c.execute('SELECT * FROM programs WHERE channel IN (SELECT id FROM channels WHERE favourite = 1) AND category = ? AND start_date < ? AND end_date > ?', [cat, startTime, endTime])
+    r = c.fetchall()
+    programList = {'index':[]}
+    
+    for row in r:
+        description_long = row['description_long']
+        year = row['year']
+        country = row['country']
+        category =row['category']
+        if get_long_description and description_long is None:
+            #description_long = self.getShowInfo(row["showID"],'description')
+            info = self.getShowLongDescription(row['showID'])
+            #print 'ProgINFO  ' + str(type(info)) + ' ' + str(row['showID'])+ '  ' + str(info)
+            if type(info) == dict:
+                description_long = info.get('description','')
+                year = info.get('year',' ')
+                country = info.get('country','')
+                category = info.get('category','')
+        programList[row['channel']]={
+            'channel': row['channel'],
+            'showID' : row['showID'],
+            'title' : row['title'],
+            'description' : row['description'],
+            'description_long' : description_long,
+            'year': year, #row['year'],
+            'genre': row['genre'],
+            'country': country, #row['country'],
+            'category': category, #row['category'],
+            'start_date' : row['start_date'],
+            'end_date' : row['end_date'],
+            'image_small' : row['image_small'],
+            'credits': row['credits']
+        }
+        programList['index'].append(str(row['channel']))
+    c.close()
+    debug ('Kategorien: '+str(programList))
+    return programList

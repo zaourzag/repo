@@ -102,18 +102,22 @@ CHANNELS_PER_PAGE = 8
 
 HALF_HOUR = datetime.timedelta(minutes=30)
 
-if __addon__.getSetting('country') == 'CH': SWISS = 'true'
-else: SWISS = 'false'
-
+#if __addon__.getSetting('country') == 'CH': SWISS = 'true'
+#else: SWISS = 'false'
+SWISS = 'true'
 def debug(s):
 	if DEBUG: xbmc.log(str(s), xbmc.LOGDEBUG)
 
 	
 def setup_recording(params):
-  #print('RECORDING: '+program_id)
-  resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/playlist/program', params)
-  xbmcgui.Dialog().ok(__addonname__, __addon__.getLocalizedString(31903))
-  _library_.make_library()  # NEW added - by Samoth	
+	
+	resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/playlist/program', params)
+	if resultData['success'] == True:
+		xbmcgui.Dialog().ok(__addonname__, __addon__.getLocalizedString(31903), __addon__.getLocalizedString(31904))
+	else:
+		xbmcgui.Dialog().ok(__addonname__, __addon__.getLocalizedString(31905))
+  
+	_library_.make_library()  # NEW added - by Samoth	
 
 
     
