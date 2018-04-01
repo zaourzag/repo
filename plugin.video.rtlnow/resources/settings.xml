@@ -1,4 +1,5 @@
 <settings>
+     <category label="Settings">
      <setting label="Certifikatsprüfung" type="bool" id="cert" default="true"/>
      <setting id="user" type="text" label="Email" default=""/>
      <setting id="pass" type="text" label="Password" default=""/>
@@ -6,4 +7,11 @@
      <setting id="freeonly" type="bool" label="Nur Freie Anzeigen" default="false" visible="false"/>
      <setting label="Cache Zeitraum" type="slider" id="cachetime" default="24" range="0,1,100" option="int" />     
      <setting id="inputstreamcomp" type="bool" label="Inputstream Kompatibles Kodi Version" default="false"/>
+     </category>
+     <category label="Media Library">
+        <setting label="Madia Path" type="folder" id="mediapath" default=""/>        
+        <setting label="Update der Libary in Stunden" type="slider" id="updatestd" default="24" range="1,100" option="int"/>
+        <setting label="Achtung!Update Zeit wirkt sich nur auf neu hinzugefügte Elemente aus," type="text" id="dummy1" default="" enable="false"/>
+        <setting label="um alte zu löschen muss in Cron der Eintrag gelöscht und neu hinzugefügt werden" type="text" id="dummy2" enable="false" default=""/>
+     </category>
 </settings>

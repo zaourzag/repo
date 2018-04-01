@@ -76,35 +76,35 @@ def fixtime(date_string,format):
 if __name__ == '__main__':
     notice("START")
     temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
-    conn = sqlite3.connect(temp+'/cron.db')
-    c = conn.cursor()    
     monitor = xbmc.Monitor()         
     while not monitor.abortRequested():  
       notice("LOOP")    
-      conn = sqlite3.connect(temp+'/cron.db')      
-      c = conn.cursor()    
-      c.execute('select * from cron')    
-      r = list(c)
-      conn.commit()
-      c.close()  
-      for member in r:
-        time=member[0]        
-        url=member[1]
-        #print("###### "+url)
-        name=member[2]
-        last=member[3]
-        debug("###### "+last)
-        now = datetime.datetime.now()
-        date1 = fixtime(last, "%Y-%m-%d %H:%M:%S")
-        if now>date1 + datetime.timedelta(hours=time):
-           debug("ZEIT ABGELAUFEN "+last)
-           conn = sqlite3.connect(temp+'/cron.db')      
-           c = conn.cursor()    
-           c.execute('update cron set last=datetime() where url="'+url+'"')
-           conn.commit()           
-           c.close()
-           xbmc.executebuiltin('XBMC.RunPlugin('+url+')')           
+      try:
+        conn = sqlite3.connect(temp+'/cron.db')      
+        c = conn.cursor()          
+        c.execute('select * from cron')    
+        r = list(c)
+        conn.commit()
+        c.close()  
+        for member in r:
+            time=member[0]        
+            url=member[1]
+            #print("###### "+url)
+            name=member[2]
+            last=member[3]
+            debug("###### "+last)
+            now = datetime.datetime.now()
+            date1 = fixtime(last, "%Y-%m-%d %H:%M:%S")
+            if now>date1 + datetime.timedelta(hours=time):
+                debug("ZEIT ABGELAUFEN "+last)
+                conn = sqlite3.connect(temp+'/cron.db')      
+                c = conn.cursor()    
+                c.execute('update cron set last=datetime() where url="'+url+'"')
+                conn.commit()           
+                c.close()
+            xbmc.executebuiltin('XBMC.RunPlugin('+url+')')           
+      except:
+         pass
       if monitor.waitForAbort(3600):                     
         break            
-           
-
+          

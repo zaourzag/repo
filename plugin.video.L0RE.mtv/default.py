@@ -246,7 +246,7 @@ def folgenteil(url,anz=0,seite=1,serienname=0,stattfolgen=0):
         addDir(title,url,"serie",bild,desc=desc)
     anz=int(anz)+1
  try:
-    if int(anz)<int(struktur["result"]["data"]["itemCount"]):
+    if int(struktur["result"]["totItems"])==int(struktur["result"]["resultLimit"]):
         newpage=int(seite)+1
         addDir("Seite "+str(newpage),newurl,"folgenteil","",anz=anz,seite=str(newpage))
  except:

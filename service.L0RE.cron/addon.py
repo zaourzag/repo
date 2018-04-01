@@ -53,7 +53,22 @@ def adddata():
     else:
        dialog = xbmcgui.Dialog()
        nr=dialog.ok("OK", msg)
-    
+       
+def addDir(name, url, mode, thump, desc="",seite=1,anz=0,serienname=0,stattfolgen=0,play=0):   
+  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&seite="+str(seite)+"&anz="+str(anz)+"&serienname="+str(serienname)+"&stattfolgen="+str(stattfolgen)
+  ok = True
+  liz = xbmcgui.ListItem(name)  
+  liz.setArt({ 'fanart' : thump })
+  liz.setArt({ 'thumb' : thump })
+  liz.setArt({ 'banner' : icon })
+  liz.setArt({ 'fanart' : icon })
+  if play==1: 
+    liz.setProperty('IsPlayable', 'true')
+  liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc})
+	
+  ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
+  return ok
+  
 params = parameters_string_to_dict(sys.argv[2])
 debug("--->")
 debug(params)
@@ -83,6 +98,46 @@ def insert(name,url,stunden,last):
         debug(var)
     conn.commit()
     c.close()
+def delete(url):
+    conn = sqlite3.connect(temp+'/cron.db')
+    c = conn.cursor()    
+    try:
+        c.execute('delete from cron where url="%s"'%(url))
+    except:
+        var = traceback.format_exc()
+        debug(var)
+    conn.commit()
+def liste(surl):
+    namelist=[]
+    urllist=[]
+    conn = sqlite3.connect(temp+'/cron.db')
+    c = conn.cursor()    
+    try:
+        if url=="":
+            search='select name,url from cron where url like "%"'
+        else:
+            search='select name,url from cron where url like "%'+surl+'%"'
+        
+        debug(search)
+        debug("#+#+#+#+")
+        c.execute(search)        
+        r = list(c)
+        for member in r:
+           debug(member[0].encode("utf-8"))
+           addDir("Loesche: "+member[0].encode("utf-8"),member[1].encode("utf-8"),"delete","")
+    except:
+        var = traceback.format_exc()
+        debug(var)
+    conn.commit()
+    c.close()  
+    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
+
+if mode == '':
+   liste("")
+if mode == 'delete':
+   delete(url)
+if mode == 'liste':
+   liste(url)
 if mode == 'adddata':
       debug("URL :"+url)
       createtable()
