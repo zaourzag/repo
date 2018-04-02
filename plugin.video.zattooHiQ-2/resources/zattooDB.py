@@ -197,7 +197,7 @@ class ZattooDB(object):
     try:
       c = self.conn.cursor()
       c.execute('CREATE TABLE channels(id TEXT, title TEXT, logo TEXT, weight INTEGER, favourite BOOLEAN, PRIMARY KEY (id) )')
-      c.execute('CREATE TABLE programs(showID TEXT, title TEXT, channel TEXT, start_date TIMESTAMP, end_date TIMESTAMP, restart BOOLEAN, series BOOLEAN, record BOOLEAN, description TEXT, description_long TEXT, year TEXT, country TEXT, genre TEXT, category TEXT, image_small TEXT, credits TEXT, updates_id INTEGER , FOREIGN KEY(channel) REFERENCES channels(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED, FOREIGN KEY(updates_id) REFERENCES updates(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED)')
+      c.execute('CREATE TABLE programs(showID TEXT, title TEXT, channel TEXT, start_date TIMESTAMP, end_date TIMESTAMP, restart BOOLEAN, series BOOLEAN, record BOOLEAN, description TEXT, description_long TEXT, year TEXT, country TEXT, genre TEXT, category TEXT, image_small TEXT, credits TEXT, updates_id INTEGER , PRIMARY KEY (showID), FOREIGN KEY(channel) REFERENCES channels(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED, FOREIGN KEY(updates_id) REFERENCES updates(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED)')
 
       c.execute('CREATE INDEX program_list_idx ON programs(channel, start_date, end_date)')
       c.execute('CREATE INDEX start_date_idx ON programs(start_date)')
@@ -233,24 +233,24 @@ class ZattooDB(object):
     #print "account  "+ self.zapi.AccountData['account']['power_guide_hash']
     api = '/zapi/v2/cached/channels/' + self.zapi.AccountData['account']['power_guide_hash'] + '?details=False'
     channelsData = self.zapi.exec_zapiCall(api, None)
-    debug("channels: " +str(channelsData))
+    #debug("channels: " +str(channelsData))
     time.sleep(2)
     api = '/zapi/channels/favorites'
     favoritesData = self.zapi.exec_zapiCall(api, None)
-    debug("favourites: " +str(favoritesData))
+    
     if favoritesData == None: 
         time.sleep(2)
         favoritesData = self.zapi.exec_zapiCall(api, None)
-    debug("favourites2: " +str(favoritesData))
+    
     nr = 0
     for group in channelsData['channel_groups']:
       for channel in group['channels']:
         if channel['qualities'][0]['availability'] == 'subscribable': 
             try:
                 if channel['qualities'][1]['availability'] == 'subscribable': continue
-                else: debug(str(channel['title'].encode('utf-8')+"  "+channel['qualities'][1]['availability'].encode('utf-8')))
+                #else: debug(str(channel['title'].encode('utf-8')+"  "+channel['qualities'][1]['availability'].encode('utf-8')))
             except: continue
-        else: debug(str(channel['title'].encode('utf-8')+"  "+channel['qualities'][0]['availability'].encode('utf-8')))
+        #else: debug(str(channel['title'].encode('utf-8')+"  "+channel['qualities'][0]['availability'].encode('utf-8')))
         
         logo = 'http://logos.zattic.com' + channel['qualities'][0]['logo_black_84'].replace('/images/channels', '')
         try:
@@ -324,8 +324,8 @@ class ZattooDB(object):
             #except:
                 #pass
 
-            c.execute('INSERT INTO programs(channel, title, start_date, end_date, description, genre, image_small, showID) VALUES(?, ?, ?, ?, ?, ?, ?, ?)',
-                [cid, program['t'], program['s'], program['e'], program['et'], ', '.join(program['g']), image, program['id'] ])
+            c.execute('INSERT OR IGNORE INTO programs(channel, title, start_date, end_date, description, genre, image_small, showID, category) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                [cid, program['t'], program['s'], program['e'], program['et'], ', '.join(program['g']), image, program['id'], ', '.join(program['c']) ])
            
 
     if count>0:
@@ -409,9 +409,8 @@ class ZattooDB(object):
 
       for row in r:
         description_long = row['description_long']
-        year = row['year']
-        country = row['country']
-        category =row['category']
+        #year = row['year']
+        #country = row['country']
         if get_long_description and description_long is None:
             #description_long = self.getShowInfo(row["showID"],'description')
             info = self.getShowLongDescription(row['showID'])
@@ -427,10 +426,10 @@ class ZattooDB(object):
             'title' : row['title'],
             'description' : row['description'],
             'description_long' : description_long,
-            'year': year, #row['year'],
+            'year': row['year'],
             'genre': row['genre'],
-            'country': country, #row['country'],
-            'category': category, #row['category'],
+            'country': row['country'],
+            'category': row['category'],
             'start_date' : row['start_date'],
             'end_date' : row['end_date'],
             'image_small' : row['image_small'],
@@ -496,8 +495,8 @@ class ZattooDB(object):
             year = showInfo['program']['year']
             if year is None: year=''
             info.execute('UPDATE programs SET year=? WHERE showID=?', [year, showID ])
-            category = ', '.join(showInfo['program']['categories'])
-            info.execute('UPDATE programs SET category=? WHERE showID=?', [category, showID ])
+            #category = ', '.join(showInfo['program']['categories'])
+            #info.execute('UPDATE programs SET category=? WHERE showID=?', [category, showID ])
             country = showInfo['program']['country']
             country = country.replace('|',', ')
             info.execute('UPDATE programs SET country=? WHERE showID=?', [country, showID ])
@@ -566,7 +565,9 @@ class ZattooDB(object):
     title = showInfo['program']['title']
     channel = showInfo['program']['cid']
     start = showInfo['program']['start']
+    start = int(time.mktime(time.strptime(start, "%Y-%m-%dT%H:%M:%SZ")))
     end = showInfo['program']['end']
+    end = int(time.mktime(time.strptime(end, "%Y-%m-%dT%H:%M:%SZ")))
     genre = showInfo['program']['genres']
     year = showInfo['program']['year']
     country = showInfo['program']['country']
@@ -740,10 +741,7 @@ class ZattooDB(object):
             r=c.fetchall()
         except:
             return
-        #if len(r)>0:
-            #for row in r:
-                #c.execute('DELETE FROM updates WHERE showID = ?', (row['showID'],))
-            
+        
         self.conn.commit()
         c.close()
         return
@@ -830,32 +828,33 @@ class ZattooDB(object):
     
 
   def set_category(self):
-    channels = self.getChannelList(_listMode_ == 'favourites')
-    chan = repr(channels['index']).replace('[','(').replace(']',')')
+    channels = self.getChannelList(False)
+    chan = repr(channels['index']).replace('[','(').replace(']',')') 
     #debug ('Channels: '+str(chan))
     time=datetime.datetime.now()
     c = self.conn.cursor()
-    c.execute('DELETE FROM programs WHERE showID IN (SELECT showID FROM programs GROUP by showID HAVING (COUNT(*) > 1 ))')
-    self.conn.commit()
-    c.execute('SELECT category FROM programs WHERE channel  GROUP by category ORDER by category DESC' )
+    #c.execute('DELETE FROM programs WHERE showID IN (SELECT showID FROM programs GROUP by showID HAVING (COUNT(*) > 1 ))')
+    #self.conn.commit()
+    c.execute('SELECT category FROM programs WHERE channel IN %s GROUP by category' % chan)
     row = c.fetchall()
     cat=[]
     for category in row:
         
-        gen = category["category"]
+        gen = category['category']
+        #debug ('Kat:' +str(gen))
         if gen == None: continue
-        c.execute('SELECT category FROM programs WHERE channel IN (SELECT id FROM channels WHERE favourite = 1) AND category = ? AND start_date < ? AND end_date > ?', [gen, time, time])
+        c.execute('SELECT category FROM programs WHERE channel IN (SELECT id FROM channels) AND category = ? AND start_date < ? AND end_date > ?', [gen, time, time])
         r = c.fetchall()
         
         for g in r:
             count = len(r)
-        c.execute('SELECT category FROM programs WHERE channel IN (SELECT id FROM channels WHERE favourite = 1) AND category = ? AND start_date < ? AND end_date > ? GROUP by category', [gen, time, time])
+        c.execute('SELECT category FROM programs WHERE channel IN (SELECT id FROM channels) AND category = ? AND start_date < ? AND end_date > ? GROUP by category', [gen, time, time])
         rb = c.fetchall()
         
         for a in rb:
             ge = a['category']
             if ge =='':continue
-            #debug('Kategorien:'+str(count)+' '+str(ge))
+            debug('Kategorien:'+str(count)+' '+str(ge))
             cat.append({
             'category': ge,
             'len': count})
@@ -866,7 +865,9 @@ class ZattooDB(object):
   def get_category(self, cat, get_long_description=False, startTime=datetime.datetime.now(), endTime=datetime.datetime.now()):
          
     c = self.conn.cursor()
-    c.execute('SELECT * FROM programs WHERE channel IN (SELECT id FROM channels WHERE favourite = 1) AND category = ? AND start_date < ? AND end_date > ?', [cat, startTime, endTime])
+
+    c.execute('SELECT * FROM programs INNER JOIN channels ON programs.channel = channels.id AND category = ? AND start_date < ? AND end_date > ? ORDER by channels.weight', [cat, startTime, endTime])
+    
     r = c.fetchall()
     programList = {'index':[]}
     
@@ -884,6 +885,7 @@ class ZattooDB(object):
                 year = info.get('year',' ')
                 country = info.get('country','')
                 category = info.get('category','')
+        
         programList[row['channel']]={
             'channel': row['channel'],
             'showID' : row['showID'],

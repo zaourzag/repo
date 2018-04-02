@@ -32,6 +32,9 @@ localString = __addon__.getLocalizedString
 
 DEBUG = __addon__.getSetting('debug')
 
+VERSION = __addon__.getAddonInfo('version')
+OLDVERSION = _zattooDB_.get_version(VERSION)
+
 def refreshProg():
     import urllib
     monitor = xbmc.Monitor()
@@ -168,11 +171,16 @@ class myPlayer(xbmc.Player):
           xbmc.sleep(200)
           xbmc.executebuiltin('XBMC.Action(reloadkeymaps)')
         except:pass
-
+        
+###########################################################################################
 
 player=myPlayer()
-
-if __addon__.getSetting('dbonstart') == 'true':
+   
+if OLDVERSION != VERSION:
+   _zattooDB_.reloadDB()
+   _zattooDB_.set_version(VERSION)
+   
+elif __addon__.getSetting('dbonstart') == 'true':
 	start()
     
 getProgNextDay()

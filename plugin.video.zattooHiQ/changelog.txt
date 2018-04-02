@@ -1,5 +1,12 @@
 ==================================================
-[B]ZattooHiQ v1.6 [/B]25.03.2018 Steffen Rolapp
+[B]ZattooHiQ v1.6.1 [/B]02.04.2018 Steffen Rolapp
+==================================================
+- Kategorien überarbeitet
+- Nächste Sendung in OSD eingefügt
+- Updateroutine verbessert
+
+==================================================
+[B]ZattooHiQ v1.6 [/B]01.04.2018 Steffen Rolapp
 ==================================================
 - Kategorien zum Hauptmenu hinzugefügt
 - Umschalten von Favouriten und Allen in der Kanalliste

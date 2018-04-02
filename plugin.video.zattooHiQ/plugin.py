@@ -144,16 +144,16 @@ else: SWISS = False
 
 DASH = __addon__.getSetting('dash')=='true'
 RECREADY = __addon__.getSetting('rec_ready')
-VERSION = __addon__.getAddonInfo('version')
-OLDVERSION = _zattooDB_.get_version(VERSION)
+#VERSION = __addon__.getAddonInfo('version')
+#OLDVERSION = _zattooDB_.get_version(VERSION)
 
 KEYMAP = __addon__.getSetting('keymap')
 
 #reload DB on Update
 
-if OLDVERSION != VERSION:
-   _zattooDB_.reloadDB()
-   _zattooDB_.set_version(VERSION)
+#if OLDVERSION != VERSION:
+   #_zattooDB_.reloadDB()
+   #_zattooDB_.set_version(VERSION)
    
 if premiumUser or SWISS: 
   xbmc.executebuiltin( "Skin.SetBool(%s)" %'record')
@@ -171,12 +171,22 @@ def build_directoryContent(content, addon_handle, cache=True, root=False, con='m
   xbmcplugin.setPluginFanart(addon_handle, fanart)
   debug('Liste: '+str(content))
   for record in content:
+    rec = dict(record)
     record['thumbnail'] = record.get('thumbnail', fanart)
     record['image'] = record.get('image', "")
     record['selected'] = record.get('selected', False)
-    
+    try:del rec['image']
+    except:pass
+    try:del rec['selected']
+    except:pass
+    try:del rec['thumbnail']
+    except:pass
+    try:del rec['url']
+    except:pass
+    try:del rec['isFolder']
+    except:pass
     li = xbmcgui.ListItem(record['title'], iconImage=record['image'])
-    li.setInfo(type='Video', infoLabels = record)
+    li.setInfo(type='Video', infoLabels = rec)
     li.setArt({'icon': record['image'], 'thumb': record['image'], 'poster': record['thumbnail'], 'banner': record['thumbnail']})
     li.setProperty('Fanart_Image', record['thumbnail'])
     li.select(record['selected'])
@@ -219,17 +229,14 @@ def build_root(addon_uri, addon_handle):
   else: listTitle = localString(31101)
 
   content = [
-    #{'title': '[B][COLOR blue]' + listTitle + '[/COLOR][/B]', 'image': iconPath, 'isFolder': False, 'url': addon_uri + '?' + urllib.urlencode({'mode': 'switchlist'})},
+    
     {'title': '[COLOR ff00ff00]'+localString(31099)+'[/COLOR]', 'image': iconPath, 'isFolder': False, 'url': addon_uri + '?' + urllib.urlencode({'mode': 'popular'})},
     {'title': localString(31103), 'image': iconPath, 'isFolder': False, 'url': addon_uri + '?' + urllib.urlencode({'mode': 'preview'})},
     {'title': localString(31104), 'image': iconPath, 'isFolder': False, 'url': addon_uri + '?' + urllib.urlencode({'mode': 'epg'})},
     {'title': localString(31102), 'image': iconPath, 'isFolder': True, 'url': addon_uri + '?' + urllib.urlencode({'mode': 'channellist'})},
     {'title': localString(31105), 'image': iconPath, 'isFolder': True, 'url': addon_uri + '?' + urllib.urlencode({'mode': 'search'})},
     {'title': localString(31106), 'image': iconPath, 'isFolder': True, 'url': addon_uri + '?' + urllib.urlencode({'mode': 'recordings'})},
-    {'title': 'Kategorien', 'image': iconPath, 'isFolder': True, 'url': addon_uri + '?' + urllib.urlencode({'mode': 'category'})},
-
-#    {'title': localString(31023), 'image': iconPath, 'isFolder': True, 'url': addon_uri + '?' + urllib.urlencode({'mode': 'reloadDB'})},
-#    {'title': '[COLOR ff888888]' + localString(31107) + '[/COLOR]', 'image': iconPath, 'isFolder': False, 'url': addon_uri + '?' + urllib.urlencode({'mode': 'show_settings'})},
+    {'title': localString(31108), 'image': iconPath, 'isFolder': True, 'url': addon_uri + '?' + urllib.urlencode({'mode': 'category'})},
     ]
   build_directoryContent(content, addon_handle, True, False, 'files')
   
@@ -316,7 +323,7 @@ def build_category(addon_uri, addon_handle, cat):
   program = _zattooDB_.get_category(cat)
   #debug('Progkategorien: '+str(program))
   if program is not None:
-    channels = _zattooDB_.getChannelList(_listMode_ == 'favourites')    
+    channels = _zattooDB_.getChannelList(False)    
     #debug('KatChannels: '+str(channels))
     content = []
     # time of chanellist creation
@@ -357,7 +364,8 @@ def build_category(addon_uri, addon_handle, cat):
         for person in cred:
           if person['role']=='director': director+=person['person']+', '
           else: cast.append(person['person'])
-      
+          
+      debug('Kanal '+str(prog))
       content.append({
         'title': '[COLOR green]'+chnr+'[/COLOR]'+'  '+channels[prog]['title'] + ' - ' + program[chan]['title']+ '  '+startend,
         'image': channels[prog]['logo'],
@@ -733,7 +741,7 @@ def search_show(addon_uri, addon_handle):
     if info['description'] =='':
       info = _zattooDB_.setProgram(str(showID))
       
-    debug('ShowID: '+str(showID)+'  '+str(info))
+    #debug('ShowID: '+str(showID)+'  '+str(info))
     cred=''
     director=''
     cast=[]      
@@ -893,9 +901,14 @@ def makeOsdInfo():
   channel_id=_zattooDB_.get_playing()['channel'] 
   channelInfo = _zattooDB_.get_channelInfo(channel_id)
   program = _zattooDB_.getPrograms({'index':[channel_id]}, True, datetime.datetime.now(), datetime.datetime.now())
-  debug ('Program: '+str(program))
+  
   try: program=program[0]
-  except: xbmcgui.Dialog().ok('Error',' ','No Info')
+  except: 
+    xbmcgui.Dialog().ok('Error',' ','No Info')
+    return
+    
+  nextprog = _zattooDB_.getPrograms({'index':[channel_id]}, True, program['end_date']+datetime.timedelta(seconds=60), program['end_date']+datetime.timedelta(seconds=60))
+  debug ('Program: '+str(nextprog))
   
   if RESTART:
     if program['restart']:
@@ -934,6 +947,7 @@ def makeOsdInfo():
   win.setProperty('country', '[COLOR blue]' + local(574) + ':  ' + '[/COLOR]' + program['country'])
   win.setProperty('director', '[COLOR blue]' + local(20339) + ':  ' + '[/COLOR]' + director)
   win.setProperty('actor', '[COLOR blue]' + local(20337) + ':  ' + '[/COLOR]' + actor)
+  win.setProperty('nextprog', '[COLOR blue]' + 'Next: ' +'[/COLOR]'+ '[COLOR aquamarine]' + nextprog[0]['title'] + '[/COLOR]' + '  ' + '[COLOR khaki]' + nextprog[0]['start_date'].strftime('%A %H:%M')+' - ' +nextprog[0]['end_date'].strftime('%H:%M')+'[/COLOR]')
   
   played = datetime.datetime.now()-program['start_date']
   total = program['end_date'] - program['start_date']
