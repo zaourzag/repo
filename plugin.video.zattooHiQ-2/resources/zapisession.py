@@ -7,7 +7,7 @@
 #
 
 import xbmc, xbmcgui, xbmcplugin, xbmcaddon
-import os, re, base64
+import os, re, base64,sys
 import urllib, urllib2
 import json
 
@@ -19,12 +19,10 @@ DEBUG = __addon__.getSetting('debug')
 def debug(s):
 	if DEBUG: xbmc.log(str(s), xbmc.LOGDEBUG)
 
-VERSION=xbmc.getInfoLabel( "System.BuildVersion" )
-if '16' not in VERSION:
+if sys.version_info > (2, 7, 9):
 	import ssl
 	ssl._create_default_https_context = ssl._create_unverified_context
-
-
+	
 class ZapiSession:
 	
 	ZAPIUrl = None
@@ -133,7 +131,7 @@ class ZapiSession:
 		return None
 
 	def fetch_appToken(self):
-		#debug("ZapiUrL= "+str(self.ZAPIUrl))
+		debug("ZapiUrL= "+str(self.ZAPIUrl))
 		try:
 			handle = urllib2.urlopen(self.ZAPIUrl + '/')
 		except:

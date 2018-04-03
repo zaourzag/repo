@@ -368,7 +368,7 @@ msgctxt "#31004"
 msgid "Provider"
 msgstr ""
 
-msgctxt "#310032"
+msgctxt "#310038"
 msgid "Country"
 msgstr ""
 
@@ -387,6 +387,15 @@ msgstr ""
 msgctxt "#310036"
 msgid "expiration day"
 msgstr ""
+
+msgctxt "#310037"
+msgid "renewal_date"
+msgstr ""
+
+msgctxt "#310032"
+msgid "Recall eligible"
+msgstr ""
+
 
 ## Settings ##
 msgctxt "#31000"
@@ -535,47 +544,50 @@ msgstr ""
 
 msgctxt "#31103"
 msgid "Preview"
-msgstr
+msgstr ""
 
 msgctxt "#31104"
 msgid "EPG"
-msgstr
+msgstr ""
 
 msgctxt "#31105"
 msgid "Search"
-msgstr
+msgstr ""
 
 msgctxt "#31106"
 msgid "Recordings"
-msgstr
+msgstr ""
 
 msgctxt "#31107"
 msgid "Settings"
-msgstr
+msgstr ""
 
-
-
+msgctxt "#31108"
+msgid "Categories"
+msgstr ""
 
 msgctxt "#31200"
 msgid "Search show:"
-msgstr
+msgstr ""
 
 msgctxt "#31201"
 msgid "play:"
-msgstr
+msgstr ""
 
 msgctxt "#31202"
 msgid "record:"
-msgstr
+msgstr ""
 
 msgctxt "#31203"
 msgid "nothing found"
-msgstr
+msgstr ""
 
+msgctxt "#31204"
+msgid "play or record:"
 
 msgctxt "#31250"
 msgid "Database was cleared and current data was loaded."
-msgstr
+msgstr ""
 
 msgctxt "#31251"
 msgid  "Now set your folder-content to movies,only use local information and update the library...."
@@ -618,8 +630,16 @@ msgid "Unable to start a session. Check your account settings!"
 msgstr ""
 
 msgctxt "#31903"
-msgid "recording request transmitted to Zattoo.\nThe show now should be visible in Recordings!"
-msgstr "Aufnahme-Anfrage wurde an Zattoo übermittelt.\nDie Sendung sollte nun in den Aufnahmen sein!"
+msgid "recording request transmitted to Zattoo."
+msgstr ""
+
+msgctxt "#31904"
+msgid "The show now should be visible in Recordings!"
+msgstr ""
+
+msgctxt "#31905"
+msgid "There was an error in the transfer!"
+msgstr ""
 
 msgctxt "#31907"
 msgid "Set the channel as the start channel"

@@ -344,8 +344,8 @@ msgid "Provider"
 msgstr "Provider"
 
 msgctxt "#310032"
-msgid "Country"
-msgstr "Land"
+msgid "Recall eligible"
+msgstr "Recall ist möglich"
 
 msgctxt "#310033"
 msgid "Date registered"
@@ -362,6 +362,15 @@ msgstr "Preis"
 msgctxt "#310036"
 msgid "expiration day"
 msgstr "Ablaufdatum"
+
+msgctxt "#310037"
+msgid "renewal_date"
+msgstr "Verlängerungsdatum"
+
+msgctxt "#310038"
+msgid "Country"
+msgstr "Land"
+
 
 # ## Zattoo Einstellungen ###
 msgctxt "#31000"
@@ -532,6 +541,10 @@ msgctxt "#31107"
 msgid "Settings"
 msgstr "Einstellungen"
 
+msgctxt "#31108"
+msgid "Categories"
+msgstr "Kategorien"
+
 # ## Benachrichtigungen ##
 msgctxt "#31200"
 msgid "Search show:"
@@ -548,6 +561,10 @@ msgstr "aufnehmen:"
 msgctxt "#31203"
 msgid "nothing found"
 msgstr "keine passende Sendung gefunden"
+
+msgctxt "#31204"
+msgid "play or record:"
+msgstr "abspielen oder aufnehemn:"
 
 msgctxt "#31250"
 msgid "Database was cleared and current data was loaded."
@@ -598,12 +615,16 @@ msgid "Unable to start a session. Check your account settings!"
 msgstr "Verbindung fehlgeschlagen. Zattoo Einstellungen überprüfen!"
 
 msgctxt "#31903"
-msgid ""
-"recording request transmitted to Zattoo.\n"
-"The show now should be visible in Recordings!"
-msgstr ""
-"Aufnahme-Anfrage wurde an Zattoo übermittelt.\n"
-"Die Sendung sollte nun in den Aufnahmen sein!"
+msgid "recording request transmitted to Zattoo."
+msgstr "Aufnahme-Anfrage wurde an Zattoo übermittelt."
+
+msgctxt "#31904"
+msgid "The show now should be visible in Recordings!"
+msgstr "Die Sendung sollte nun in den Aufnahmen sein!"
+
+msgctxt "#31905"
+msgid "There was an error in the transfer!"
+msgstr "Es hat einen Fehler in der Übertragung gegeben !"
 
 msgctxt "#31907"
 msgid "Set the channel as the start channel"

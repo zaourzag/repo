@@ -45,6 +45,14 @@ __language__ = __settings__.getLocalizedString
 localString = __addon__.getLocalizedString
 local = xbmc.getLocalizedString
 
+# get Timezone Offset
+from tzlocal import get_localzone
+import pytz
+try:
+  tz = get_localzone()
+  offset=tz.utcoffset(datetime.datetime.now()).total_seconds()
+  _timezone_=int(offset)
+except:pass
 
 _datename_ = {u'Monday': u'Montag', u'Tuesday': u'Dienstag', u'Wednesday':u'Mittwoch'}
 
@@ -94,20 +102,25 @@ CHANNELS_PER_PAGE = 8
 
 HALF_HOUR = datetime.timedelta(minutes=30)
 
-if __addon__.getSetting('country') == 'CH': SWISS = 'true'
-else: SWISS = 'false'
-
+#if __addon__.getSetting('country') == 'CH': SWISS = 'true'
+#else: SWISS = 'false'
+SWISS = 'true'
 def debug(s):
 	if DEBUG: xbmc.log(str(s), xbmc.LOGDEBUG)
 
 	
 def setup_recording(params):
-  #print('RECORDING: '+program_id)
-  resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/playlist/program', params)
-  xbmcgui.Dialog().ok(__addonname__, __addon__.getLocalizedString(31903))
-  _library_.make_library()  # NEW added - by Samoth	
-
 	
+	resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/playlist/program', params)
+	if resultData['success'] == True:
+		xbmcgui.Dialog().ok(__addonname__, __addon__.getLocalizedString(31903), __addon__.getLocalizedString(31904))
+	else:
+		xbmcgui.Dialog().ok(__addonname__, __addon__.getLocalizedString(31905))
+  
+	_library_.make_library()  # NEW added - by Samoth	
+
+
+    
 class Point(object):
 	def __init__(self):
 		self.x = self.y = 0
@@ -232,7 +245,7 @@ class EPG(xbmcgui.WindowXML):
 
 		elif actionId == ACTION_MOUSE_MOVE:
 			# GreenAir: don't show mouse-move infowindow
-			# self._showControl(self.C_MAIN_MOUSE_CONTROLS)
+			#self._showControl(self.C_MAIN_MOUSE_CONTROLS)
 			return
 
 		controlInFocus = None
@@ -245,6 +258,7 @@ class EPG(xbmcgui.WindowXML):
 				currentFocus.x = left + (controlInFocus.getWidth() / 2)
 				currentFocus.y = top + (controlInFocus.getHeight() / 2)
 		except Exception:
+			
 			control = self._findControlAt(self.focusPoint)
 			if control is None and len(self.controlAndProgramList) > 0:
 				control = self.controlAndProgramList[0].control
@@ -774,7 +788,7 @@ class EPG(xbmcgui.WindowXML):
 		
 						if cellWidth < 25: title = ''  # Text will overflow outside the button if it is too narrow
 						else: title = program['title']
-		
+					
 						control = xbmcgui.ControlButton(
 							cellStart,
 							self.epgView.top + self.epgView.cellHeight * idx,
