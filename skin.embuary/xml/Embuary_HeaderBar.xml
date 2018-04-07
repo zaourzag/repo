@@ -10,21 +10,33 @@
 		<definition>
 			<control type="group">
 				<animation effect="slide" start="0,0" end="0,-58"  time="200" condition="!ControlGroup(6666).HasFocus + [[Container($PARAM[id]).HasPrevious + $PARAM[enabled]] | [$PARAM[custom_animation]]]" tween="linear" easing="inout">Conditional</animation>
+				<control type="group">
+					<visible>!$EXP[InfoDialogActive]</visible>
+					<control type="image">
+						<top>0</top>
+						<left>0</left>
+						<right>0</right>
+						<height>58</height>
+						<texture colordiffuse="headerbar">common/white.jpg</texture>
+						<aspectratio>stretch</aspectratio>
+					</control>
+					<control type="image">
+						<top>58</top>
+						<left>0</left>
+						<right>0</right>
+						<height>4</height>
+						<texture>common/shadow.png</texture>
+						<aspectratio>stretch</aspectratio>
+					</control>
+				</control>
 				<control type="image">
 					<top>0</top>
 					<left>0</left>
 					<right>0</right>
-					<height>58</height>
-					<texture colordiffuse="headerbar">common/white.jpg</texture>
+					<height>70</height>
+					<texture colordiffuse="headerbar">common/gradient.png</texture>
 					<aspectratio>stretch</aspectratio>
-				</control>
-				<control type="image">
-					<top>58</top>
-					<left>0</left>
-					<right>0</right>
-					<height>4</height>
-					<texture>common/shadow.png</texture>
-					<aspectratio>stretch</aspectratio>
+					<visible>$EXP[InfoDialogActive]</visible>
 				</control>
 				<control type="grouplist">
 					<left>10</left>
@@ -64,7 +76,7 @@
 						<label>$VAR[HeaderCustomDeviceName]</label>
 						<font>med17</font>
 						<textcolor>text_white</textcolor>
-												<aligny>center</aligny>
+						<aligny>center</aligny>
 						<aspectratio>keep</aspectratio>
 						<visible>[Window.IsVisible(home) | Window.IsVisible(loginscreen)] + !Window.IsVisible(script-globalsearch-main.xml) + !Window.IsVisible(favourites) + !$EXP[InfoDialogActive]</visible>
 					</control>
@@ -74,7 +86,7 @@
 					</control>
 				</control>
 				<control type="grouplist" id="6666">
-					<visible>!Window.IsVisible(loginscreen)</visible>
+					<visible>!Window.IsVisible(loginscreen) + !$EXP[InfoDialogActive]</visible>
 					<centerleft>50%</centerleft>
 					<height>58</height>
 					<width>1300</width>
