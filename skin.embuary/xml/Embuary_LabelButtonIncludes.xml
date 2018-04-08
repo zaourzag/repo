@@ -176,6 +176,7 @@
 		<param name="align-left">true</param>
 		<definition>
 			<animation effect="slide" time="0" end="-2,0" condition="$PARAM[align-left]">Conditional</animation>
+			<include>FocusBounce</include>
 			<height>56</height>
 			<textcolor>text_white</textcolor>
 			<focusedcolor>white</focusedcolor>
@@ -188,13 +189,14 @@
 			<alttexturefocus border="10" colordiffuse="button_focus">items/button.png</alttexturefocus>
 			<alttexturenofocus border="10" colordiffuse="light_button">items/button.png</alttexturenofocus>
 			<pulseonselect>no</pulseonselect>
+			<onclick>ClearProperty(FocusBounce,home)</onclick>
 		</definition>
 	</include>
 	<!-- darkgrey button -->
 	<include name="DarkGreyButton">
 		<param name="align-left">true</param>
 		<definition>
-			<animation effect="slide" time="0" end="-2,0" condition="$PARAM[align-left]">Conditional</animation>
+			<include>FocusBounce</include>
 			<height>50</height>
 			<font>med22</font>
 			<textcolor>white</textcolor>
@@ -208,15 +210,19 @@
 			<texturenofocus border="10" colordiffuse="grey_button">items/button.png</texturenofocus>
 			<alttexturefocus border="10" colordiffuse="button_focus">items/button.png</alttexturefocus>
 			<alttexturenofocus border="10" colordiffuse="grey_button">items/button.png</alttexturenofocus>
+			<onclick>ClearProperty(FocusBounce,home)</onclick>
 		</definition>
 	</include>
 	<!-- Player Control Buttons -->
 	<include name="PlayerButtons">
-		<texturenofocus>icons/player/$PARAM[type]_nf.png</texturenofocus>
-		<texturefocus colordiffuse="emby">icons/player/$PARAM[type]_fo.png</texturefocus>
-		<alttexturenofocus colordiffuse="emby">icons/player/$PARAM[type]_nf.png</alttexturenofocus>
-		<alttexturefocus colordiffuse="emby">icons/player/$PARAM[type]_fo.png</alttexturefocus>
-		<width>50</width>
-		<height>50</height>
+		<param name="alt">$PARAM[type]</param>
+		<definition>
+			<texturenofocus>icons/player/$PARAM[type]_nf.png</texturenofocus>
+			<texturefocus colordiffuse="emby">icons/player/$PARAM[type]_fo.png</texturefocus>
+			<alttexturenofocus>icons/player/$PARAM[alt]_nf.png</alttexturenofocus>
+			<alttexturefocus colordiffuse="emby">icons/player/$PARAM[alt]_fo.png</alttexturefocus>
+			<width>50</width>
+			<height>50</height>
+		</definition>
 	</include>
 </includes>

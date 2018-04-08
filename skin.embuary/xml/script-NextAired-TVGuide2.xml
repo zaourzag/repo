@@ -14,7 +14,7 @@
 			<itemgap>-160</itemgap>
 			<orientation>vertical</orientation>
 			<usecontrolcoords>true</usecontrolcoords>
-			<scrolltime tween="sine" easing="out">400</scrolltime>
+			<include>ScrollTime</include>
 			<pagecontrol>17</pagecontrol>
 			<include content="WidgetSpacer">
 				<param name="id" value="101"/>
@@ -29,7 +29,7 @@
 					</include>
 					<control type="grouplist" id="100">
 						<top>90</top>
-						<left>69</left>
+						<left>70</left>
 						<height>50</height>
 						<orientation>horizontal</orientation>
 						<itemgap>5</itemgap>

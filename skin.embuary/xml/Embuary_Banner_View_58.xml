@@ -8,6 +8,7 @@
 			<visible>Control.IsVisible(58)</visible>
 			<control id="58" type="panel">
 				<visible>$EXP[BannerViewVisible]</visible>
+				<include>FocusBounce</include>
 				<width>auto</width>
 				<height>1080</height>
 				<onright condition="Control.IsVisible(7000)">SetFocus(7000)</onright>
@@ -16,7 +17,7 @@
 				<ondown>noop</ondown>
 				<onup>SetFocus(6666)</onup>
 				<onleft>900</onleft>
-				<scrolltime tween="sine" easing="out">400</scrolltime>
+				<include>ScrollTime</include>
 				<orientation>vertical</orientation>
 				<preloaditems>4</preloaditems>
 				<defaultcontrol always="true">0</defaultcontrol>

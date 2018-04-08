@@ -110,7 +110,7 @@ def find_in_thread(title):
       pass
   dialoga = xbmcgui.DialogProgress()
   dialoga.create("Suche Post für "+title.encode("utf-8").strip(),"")
-  for i in range (1,seitennr+1,1):
+  for i in range (60,seitennr+1,1):
     dialoga.update(seitennr/100*i,"Suche in Seite "+str(i))
     content2=geturl(thread+"?pageNo="+str(i))
     htmlPage2 = BeautifulSoup(content2, 'html.parser') 
@@ -129,7 +129,7 @@ def find_in_thread(title):
              empfehler=""
         debug(Text)
         debug("------")
-        if title in Text:
+        if title.encode("utf-8") in Text:
             dialoga.close()
             dialog = xbmcgui.Dialog()
             username=addon.getSetting("username")
@@ -283,12 +283,12 @@ if mode=="":
            debug("----")
            debug(text)
            debug("FOUND :"+zeige)
-           text=text+'[url=\'https://www.youtube.com/watch?v='+zeige.encode('ascii')+'\']Trailer[/url]'
+           text=text+'[url=\'https://www.youtube.com/watch?v='+zeige.encode('ascii')+'\']Trailer[/url]\n'
            debug("-----")
            debug(text)
       except  Exception as e: 
            print str(e)
-                
+      text=text+'[url=\'https://www.werstreamt.es/filme-serien?q='+seriesName.replace(" ","+")+'&action_results=suchen\']Wo läuft es[/url]'        
     values = {
       'actionName' : 'quickReply',
       'className' : 'wbb\data\post\PostAction',

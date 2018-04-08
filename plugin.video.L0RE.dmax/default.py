@@ -14,6 +14,7 @@ import base64
 import requests
 from bs4 import BeautifulSoup
 from HTMLParser import HTMLParser
+import goldfinch
 
 # Setting Variablen Des Plugins
 global debuging
@@ -255,8 +256,8 @@ def generatefiles(idd,name):
   mediapath=addon.getSetting("mediapath") 
   ppath=mediapath+name.replace(" ","_").replace(":","_")
   debug(ppath)
-  if xbmcvfs.exists(ppath):
-    os.rmtree(ppath)
+  if os.path.isdir(ppath):
+    shutil.rmtree(ppath)
   os.mkdir(ppath)  
   subelement=struktur["videos"]["episode"]
   for number,videos in subelement.iteritems(): 
@@ -270,9 +271,9 @@ def generatefiles(idd,name):
         duration=duration/1000
         image=video["image"]["src"]
         airdate=video["airDate"]
-        namef=title.replace(" ","_").replace(":","_")
+        namef=goldfinch.validFileName(title)
         #debug(namef)
-        filename=ppath+"/"+namef+".strm"
+        filename=os.path.join(ppath,namef+".strm")
         #debug(filename)
         file = open(filename,"wt") 
         file.write("plugin://plugin.video.L0RE.dmax/?mode=playvideo&url="+str(idd))
