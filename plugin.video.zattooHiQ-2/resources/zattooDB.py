@@ -58,8 +58,12 @@ def debug(s):
 class reloadDB(xbmcgui.WindowXMLDialog):
 
   def __init__(self, xmlFile, scriptPath):
-    xbmcgui.Window(10000).setProperty('reloadDB', 'True') 
-    self.wartungImg =xbmcgui.ControlImage(50, 50, 1180, 596,__addon__.getAddonInfo('path') + '/resources/wartung.png'  , aspectRatio=0)
+    xbmcgui.Window(10000).setProperty('reloadDB', 'True')
+    news = __addon__.getAddonInfo('path')+'/resources/media/news.png'
+    if os.path.isfile(news): 
+        self.wartungImg =xbmcgui.ControlImage(50, 50, 1180, 596,__addon__.getAddonInfo('path') + '/resources/media/news.png'  , aspectRatio=0)
+    else:
+        self.wartungImg =xbmcgui.ControlImage(50, 50, 1180, 596,__addon__.getAddonInfo('path') + '/resources/media/wartung.png'  , aspectRatio=0)
     self.addControl(self.wartungImg)
     self.show()
     #self.reloadDB()
@@ -73,8 +77,10 @@ class reloadDB(xbmcgui.WindowXMLDialog):
     xbmc.executebuiltin("ActivateWindow(busydialog)")
     #delete zapi files to force new login    
     profilePath = xbmc.translatePath(__addon__.getAddonInfo('profile'))
+    os.remove(os.path.join(xbmc.translatePath(__addon__.getAddonInfo('path') + '/resources/media/'), 'news.png'))
+
     try:
-        #os.remove(os.path.join(profilePath, 'zattoo.db'))
+        #os.remove(os.path.join(xbmc.translate_path(__addon__.getAddonInfo('path') + '/resources/media/'), news.png))
         os.remove(os.path.join(profilePath, 'cookie.cache'))
         os.remove(os.path.join(profilePath, 'session.cache'))
         #os.remove(os.path.join(profilePath, 'account.cache'))
@@ -574,7 +580,7 @@ class ZattooDB(object):
     description = showInfo['program']['description']
     cred = showInfo['program']['credits']
                 
-    c.execute('INSERT INTO programs(showID, title, channel, start_date, end_date, genre, year, country, description_long, credits) VALUES(?,?,?,?,?,?,?,?,?,?)', [showID, title, channel, start, end, ', '.join(genre) ,year, country, description, json.dumps(cred)])
+    c.execute('INSERT OR IGNORE INTO programs(showID, title, channel, start_date, end_date, genre, year, country, description_long, credits) VALUES(?,?,?,?,?,?,?,?,?,?)', [showID, title, channel, start, end, ', '.join(genre) ,year, country, description, json.dumps(cred)])
     
     self.conn.commit()
     c.close()

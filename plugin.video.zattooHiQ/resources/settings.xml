@@ -27,6 +27,7 @@
         <setting label="31007" type="bool" id="start_liveTV" default="false"/>
         <setting label="31009" type="action" action="RunPlugin(plugin://plugin.video.zattooHiQ/?mode=selectStartChannel)" enable="eq(-1,true)"/>
 	<setting type="sep"/>
+        <setting label="310099" type="bool" id="help" default="true"/>
         <setting label="310096" type="bool" id="debug" default="false"/>
  
         </category>
@@ -67,7 +68,10 @@
         <setting label="32018" id="key_EPG" type="text" default="" enable="false" visible="gt(0,)"/>
         <setting label="32019" id="key_List" type="text" default="" enable="false" visible="gt(0,)"/>
         <setting label="32020" id="key_recordlist" type="text" default="" enable="false" visible="gt(0,)"/>
-               
+        <setting label="32021" id="key_category" type="text" default="" enable="false" visible="gt(0,)"/>
+<!--
+        <setting label="32022" id="key_genre" type="text" default="" enable="false" visible="gt(0,)"/>
+-->
     </category>
 
 

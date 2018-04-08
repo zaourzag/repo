@@ -1,4 +1,15 @@
 ==================================================
+[B]ZattooHiQ v1.6.2 [/B]08.04.2018 Steffen Rolapp
+==================================================
+- In der Vorschau Anzeige nächste sendung
+- In Den Listen kontextmenür, wenn Verfügber Sendung von Anfang starten
+- Kategorien zur keymap hinzugefügt
+- Hilfe im Hauptmenu
+- Bedienung EPG überarbeitet
+- Pfeiltasten im OSD getauscht
+- EPG Fehlermeldung wenn Aufnahme fehlschlägt
+
+==================================================
 [B]ZattooHiQ v1.6.1 [/B]02.04.2018 Steffen Rolapp
 ==================================================
 - Kategorien überarbeitet

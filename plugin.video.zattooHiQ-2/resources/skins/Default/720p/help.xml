@@ -3,12 +3,11 @@
 
 	<controls>
 
-		<control type="label">
+		<control type="image">
 			<left>100</left>
 			<top>80</top>
 			<width>1230</width>
 			<height>974</height>
-			<font>font30</font>
 		</control>
 
 	</controls>

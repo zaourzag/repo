@@ -33,6 +33,13 @@
 			<c>RunPlugin("plugin://plugin.video.zattooHiQ/?mode=preview")</c>
 			<!-- Record -->
 			<k>RunPlugin("plugin://plugin.video.zattooHiQ/?mode=record_l")</k>
+			<!-- Category -->
+			<d>ActivateWindow(10025,"plugin://plugin.video.zattooHiQ/?mode=category")</d>
+			<!-- Genres -->
+<!--
+			<n>ActivateWindow(10025,"plugin://plugin.video.zattooHiQ/?mode=genre")</n>
+			
+-->
 			
 			<!-- Numbers -->
 			<zero>RunPlugin("plugin://plugin.video.zattooHiQ/?mode=nr&amp;nr=58")</zero>
@@ -82,6 +89,8 @@
 		<touch>
 			<tap>RunPlugin("plugin://plugin.video.zattooHiQ/?mode=showInfo")</tap>
 			<swipe direction="left">RunPlugin("plugin://plugin.video.zattooHiQ/?mode=toggle_channel")</swipe>
+			<swipe direction="up">RunPlugin("plugin://plugin.video.zattooHiQ/?mode=skip_channel&skipDir=1")</swipe>
+			<swipe direction="down">RunPlugin("plugin://plugin.video.zattooHiQ/?mode=skip_channel&skipDir=-1")</swipe>
 		</touch>
 	</fullscreenvideo>
 </keymap>

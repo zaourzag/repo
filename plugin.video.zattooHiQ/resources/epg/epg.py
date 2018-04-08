@@ -66,17 +66,25 @@ ACTION_PAGE_DOWN = 6
 ACTION_HOME = 159
 ACTION_END = 160
 
+ACTION_0 = 58
+ACTION_1 = 59
 ACTION_2 = 60
+ACTION_3 = 61
 ACTION_4 = 62
 ACTION_5 = 63
 ACTION_6 = 64
+ACTION_7 = 65
 ACTION_8 = 66
+ACTION_9 = 67
 
 ACTION_JUMP_SMS2 = 142
+ACTION_JUMP_SMS3 = 143
 ACTION_JUMP_SMS4 = 144
 ACTION_JUMP_SMS5 = 145
 ACTION_JUMP_SMS6 = 146
+ACTION_JUMP_SMS7 = 147
 ACTION_JUMP_SMS8 = 148
+ACTION_JUMP_SMS9 = 149
 
 ACTION_SELECT_ITEM = 7
 ACTION_PARENT_DIR = 9
@@ -112,11 +120,14 @@ def debug(s):
 def setup_recording(params):
 	
 	resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/playlist/program', params)
-	if resultData['success'] == True:
-		xbmcgui.Dialog().ok(__addonname__, __addon__.getLocalizedString(31903), __addon__.getLocalizedString(31904))
-	else:
+	if resultData is None:
 		xbmcgui.Dialog().ok(__addonname__, __addon__.getLocalizedString(31905))
-  
+	else:
+		if resultData['success'] == True:
+			xbmcgui.Dialog().ok(__addonname__, __addon__.getLocalizedString(31903), __addon__.getLocalizedString(31904))
+		else:
+			xbmcgui.Dialog().ok(__addonname__, __addon__.getLocalizedString(31905))
+	  
 	_library_.make_library()  # NEW added - by Samoth	
 
 
@@ -266,33 +277,39 @@ class EPG(xbmcgui.WindowXML):
 				self.setFocus(control)
 				return
 
-		if actionId == ACTION_LEFT:
+		if actionId in [ACTION_LEFT, ACTION_4, ACTION_JUMP_SMS4]:
 			self._left(currentFocus)
-		elif actionId == ACTION_RIGHT:
+		elif actionId in [ACTION_RIGHT, ACTION_6, ACTION_JUMP_SMS6]:
 			self._right(currentFocus)
-		elif actionId == ACTION_UP:
+		elif actionId in [ACTION_UP, ACTION_2, ACTION_JUMP_SMS2]:
 
 			self._up(currentFocus)
-		elif actionId == ACTION_DOWN:
+		elif actionId in [ACTION_DOWN, ACTION_8, ACTION_JUMP_SMS8]:
 			self._down(currentFocus)
-		elif actionId  in [ACTION_NEXT_ITEM, ACTION_6, ACTION_JUMP_SMS6]:
+		elif actionId in [ACTION_3, ACTION_JUMP_SMS3]:
+			self.viewStartDate -= datetime.timedelta(hours=2)
+			self.onRedrawEPG(self.channelIdx, self.viewStartDate)
+		elif actionId in [ACTION_9, ACTION_JUMP_SMS9]:
+			self.viewStartDate += datetime.timedelta(hours=2)
+			self.onRedrawEPG(self.channelIdx, self.viewStartDate)
+		elif actionId in [ACTION_NEXT_ITEM, ACTION_PAGE_UP]:
 			self._nextDay()
-		elif actionId in [ACTION_PREV_ITEM, ACTION_4, ACTION_JUMP_SMS4]:
+		elif actionId in [ACTION_PREV_ITEM, ACTION_PAGE_DOWN]:
 			self._previousDay()
-		elif actionId in [ACTION_PAGE_UP, ACTION_8, ACTION_JUMP_SMS8]:
+		elif actionId == ACTION_1:
 			self._moveUp(CHANNELS_PER_PAGE)
-		elif actionId in [ACTION_PAGE_DOWN, ACTION_2, ACTION_JUMP_SMS2]:
+		elif actionId in [ACTION_7, ACTION_JUMP_SMS7]:
 			self._moveDown(CHANNELS_PER_PAGE)
 		elif actionId == ACTION_MOUSE_WHEEL_UP:
 			self._moveUp(scrollEvent=True)
 		elif actionId == ACTION_MOUSE_WHEEL_DOWN:
 			self._moveDown(scrollEvent=True)
-		elif actionId == KEY_HOME:
+		elif actionId in [KEY_HOME, ACTION_5, ACTION_JUMP_SMS5]:
 			self.viewStartDate = datetime.datetime.today()
 			self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30,
 													 seconds=self.viewStartDate.second)
 			self.onRedrawEPG(self.channelIdx, self.viewStartDate)
-		elif actionId in [ACTION_5, ACTION_JUMP_SMS5]:
+		elif actionId == ACTION_0:
 			self.getDate()
 		
 			
@@ -337,6 +354,7 @@ class EPG(xbmcgui.WindowXML):
 		start = int(time.mktime(program['start_date'].timetuple()))
 		end = int(time.mktime(program['end_date'].timetuple()))
 		now = time.time()
+		url=''
 		if SWISS == 'true':
 			# Swiss Account
 			# if startime is in the future -> setup recording
@@ -354,9 +372,12 @@ class EPG(xbmcgui.WindowXML):
 							return
 						else: return
 					
-				elif xbmcgui.Dialog().yesno(program['title'], strings(RECORD_SHOW)):
+					elif xbmcgui.Dialog().ok(program['title'], strings(RECORD_SHOW) + "?"):
 						setup_recording({'program_id': program['showID']})
 						return
+				elif xbmcgui.Dialog().ok(program['title'], strings(RECORD_SHOW) + "?"):
+					setup_recording({'program_id': program['showID']})
+				
 				else: return
 			# else if endtime is in the past -> recall
 			elif end < now:
@@ -442,7 +463,7 @@ class EPG(xbmcgui.WindowXML):
 							return
 						else: return
 
-					elif xbmcgui.Dialog().yesno(program['title'], strings(RECORD_SHOW)):
+					elif xbmcgui.Dialog().ok(program['title'], strings(RECORD_SHOW) + "?"):
 						setup_recording({'program_id': program['showID']})
 						return
 				else: return 
@@ -704,7 +725,7 @@ class EPG(xbmcgui.WindowXML):
 	def onRedrawEPG(self, channelStart, startTime, focusFunction=None):
 		
 		import time, locale
-		print 'HeuteTIME  ' + str(time.strftime ('%B-%d/%A/%Y'))
+		#print 'HeuteTIME  ' + str(time.strftime ('%B-%d/%A/%Y'))
 		if self.redrawingEPG or self.isClosing:
 			debug('onRedrawEPG - already redrawing')
 			return  # ignore redraw request while redrawing

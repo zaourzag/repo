@@ -26,6 +26,7 @@ from resources.guiactions import *
 
 __addon__ = xbmcaddon.Addon()
 __addonId__=__addon__.getAddonInfo('id')
+localString = __addon__.getLocalizedString
 
 class ChannelsPreview(xbmcgui.WindowXML): #needs to be WindowXML or onInit won't fire
     #print('FAV:'+str(fav))
@@ -155,16 +156,17 @@ class ChannelsPreview(xbmcgui.WindowXML): #needs to be WindowXML or onInit won't
         #bg = xbmcgui.ControlImage(posX-10, -10, 530, 376, 'recentaddedback.png')
         #bg = xbmcgui.ControlImage(posX, 0, 512, 360, 'ContentPanel.png')
         #bg = xbmcgui.ControlImage(posX, 0, 512, 360, 'episodematte.png', colorDiffuse='0xFF333333')
-        bg = xbmcgui.ControlImage(posX, 0, 512, 360, addonPath + '/resources/previewInfo.png')
+        bg = xbmcgui.ControlImage(posX, 0, 512, 360, addonPath + '/resources/media/previewInfo.png')
 
-        self.infoLogo = xbmcgui.ControlImage(74+posX, 5, 140, 70, (xbmcaddon.Addon().getAddonInfo('path') + '/resources/channel-highlight.png'))
+        self.infoLogo = xbmcgui.ControlImage(74+posX, 5, 140, 70, (xbmcaddon.Addon().getAddonInfo('path') + '/resources/media/channel-highlight.png'))
         self.infoChannelTitle=xbmcgui.ControlLabel(0+posX, 85, 287, 30, 'TITLE', alignment=2)
-        self.infoImg = xbmcgui.ControlImage(284+posX, 3, 225, 146, (xbmcaddon.Addon().getAddonInfo('path') + '/resources/channel-highlight.png'))
+        self.infoImg = xbmcgui.ControlImage(284+posX, 3, 225, 146, (xbmcaddon.Addon().getAddonInfo('path') + '/resources/media/channel-highlight.png'))
 
         self.infoTitle=xbmcgui.ControlFadeLabel(5+posX, 150, 500, 20, 'font16','0xFFFFFFFF',2)
         self.infoDesc=xbmcgui.ControlFadeLabel(5+posX, 180, 500, 20, 'font13','0xFFFFFFFF',2)
-        self.infoPlot = xbmcgui.ControlTextBox(8+posX, 205, 500, 148, 'font13')
-
+        self.infoPlot = xbmcgui.ControlTextBox(8+posX, 205, 500, 128, 'font13')
+        self.infoNext = xbmcgui.ControlFadeLabel(8+posX, 333, 500, 128, 'font12','0xFFFFFFFF',2)
+        
         allControls.append(bg)
         allControls.append(self.infoLogo)
         allControls.append(self.infoChannelTitle)
@@ -172,9 +174,11 @@ class ChannelsPreview(xbmcgui.WindowXML): #needs to be WindowXML or onInit won't
         allControls.append(self.infoTitle)
         allControls.append(self.infoDesc)
         allControls.append(self.infoPlot)
+        allControls.append(self.infoNext)
+
 
         self.addControls(allControls)
-        self.highlightImage.setImage(addonPath + '/resources/channel-highlight.png')
+        self.highlightImage.setImage(addonPath + '/resources/media/channel-highlight.png')
         self.infoPlot.autoScroll(5000, 1800, 5000)
 
         self.db = ZattooDB()
@@ -324,7 +328,8 @@ class ChannelsPreview(xbmcgui.WindowXML): #needs to be WindowXML or onInit won't
 
         #program= self.controls[controlNr]['program']
         program=ZattooDB().getPrograms({'index':[self.controls[controlNr]['channel']]}, False, datetime.datetime.now(), datetime.datetime.now())[0]
-        
+        nextprog = ZattooDB().getPrograms({'index':[self.controls[controlNr]['channel']]}, False, program['end_date']+datetime.timedelta(seconds=60), program['end_date']+datetime.timedelta(seconds=60))
+
         self.controls[controlNr]['label'].setLabel('')
         self.highLabel=program['title']
         self.scrollLabel.reset()
@@ -337,6 +342,7 @@ class ChannelsPreview(xbmcgui.WindowXML): #needs to be WindowXML or onInit won't
 
         self.infoTitle.reset()
         self.infoDesc.reset()
+        self.infoNext.reset()
         
         if (not program):
             self.infoChannelTitle.setLabel('[B]'+channel ['title'] +'[/B]\n ')
@@ -344,11 +350,13 @@ class ChannelsPreview(xbmcgui.WindowXML): #needs to be WindowXML or onInit won't
             self.infoImg.setImage('')
             self.infoDesc.addLabel('[B] [/B]')
             self.infoPlot.setText('')
-
+            self.infoNext.addLabel('')
+            
         else:
             self.infoChannelTitle.setLabel('[B]'+channel ['title'] +'[/B]\n'+ program['start_date'].strftime('%H:%M') + ' - ' + program['end_date'].strftime('%H:%M'))
             self.infoTitle.addLabel('[B]'+program['title']+'[/B]')
             self.infoImg.setImage(program['image_small'], False)
+            self.infoNext.addLabel('[COLOR blue]' + localString(30010) +'[/COLOR]'+ '[COLOR aquamarine]' + nextprog[0]['title'] + '[/COLOR]' + '  ' + '[COLOR khaki]' + nextprog[0]['start_date'].strftime('%H:%M')+' - ' +nextprog[0]['end_date'].strftime('%H:%M')+'[/COLOR]')
     
             desc=program['description']
             if (not desc):desc=" "

@@ -57,6 +57,10 @@ msgctxt "#30009"
 msgid "No program available"
 msgstr "Kein Programm verfügbar"
 
+msgctxt "#30010"
+msgid "Next: "
+msgstr "Danach: "
+
 msgctxt "#30100"
 msgid "General"
 msgstr "Allgemein"
@@ -425,6 +429,10 @@ msgctxt "#310098"
 msgid "Small"
 msgstr "Klein"
 
+msgctxt "#310099"
+msgid "Show Help in Main Menu"
+msgstr "Zeige Hilfe im Hauptmenü"
+
 # ## EPG/Aufnahmen ###
 msgctxt "#31010"
 msgid "EPG/Recordings"
@@ -768,9 +776,19 @@ msgid "show Recordlist"
 msgstr "Aufnahmeliste"
 
 msgctxt "#32021"
+msgid "show Categorylist"
+msgstr "Kategorie Liste anzeigen"
+
+msgctxt "#32022"
+msgid "show Genrelist"
+msgstr "Genre Liste anzeigen"
+
+msgctxt "#32023"
 msgid "pause"
 msgstr "Pause"
 
-msgctxt "#32022"
+msgctxt "#32024"
 msgid "stop"
 msgstr "Stop"
+
+

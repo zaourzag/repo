@@ -23,6 +23,7 @@ import xbmc, xbmcgui, xbmcaddon, datetime, time
 import os, urlparse
 from resources.library import library
 from resources.zattooDB import ZattooDB
+
 _zattooDB_ = ZattooDB()
 __addon__ = xbmcaddon.Addon()
 __addondir__  = xbmc.translatePath( __addon__.getAddonInfo('profile') ) 

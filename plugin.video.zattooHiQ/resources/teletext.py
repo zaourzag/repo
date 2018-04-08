@@ -75,7 +75,7 @@ class Teletext(xbmcgui.WindowDialog):
 
 		self.bgImage = xbmcgui.ControlImage(0,0,1280,720,'')
 		self.addControl(self.bgImage)
-		self.bgImage.setImage(__addon__.getAddonInfo('path') + '/resources/teletextBG.png')
+		self.bgImage.setImage(__addon__.getAddonInfo('path') + '/resources/media/teletextBG.png')
 
 		self.pageInputCtrl = xbmcgui.ControlLabel(0, 0, 265, 100, '100', font='font30', alignment=2)
 		self.addControl(self.pageInputCtrl)

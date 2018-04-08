@@ -71,7 +71,7 @@ class KeyListener(xbmcgui.WindowXMLDialog):
 class KeyMap:
 
   def editKeyMap(self):
-      cmds=['OSD', 'prevChan', 'nextChan', 'toggleChan', 'audio', 'record', 'Teletext', 'Preview', 'EPG', 'List', 'recordlist']
+      cmds=['OSD', 'prevChan', 'nextChan', 'toggleChan', 'audio', 'record', 'Teletext', 'Preview', 'EPG', 'List', 'recordlist',  'category']
       cmdsText=[]
       nr=0
       for cmd in cmds:
@@ -182,6 +182,20 @@ class KeyMap:
       else: builder.start('b', {})
       builder.data('ActivateWindow(10025,"plugin://plugin.video.zattooHiQ/?mode=recordings")')
       builder.end(key)  
+      
+    # Categoryliste
+      key = __addon__.getSetting('key_category')
+      if key.isdigit():builder.start("key", {"id":key})
+      else: builder.start('b', {})
+      builder.data('ActivateWindow(10025,"plugin://plugin.video.zattooHiQ/?mode=category")')
+      builder.end(key)  
+      
+    # Genreliste
+      #key = __addon__.getSetting('key_genre')
+      #if key.isdigit():builder.start("key", {"id":key})
+      #else: builder.start('b', {})
+      #builder.data('ActivateWindow(10025,"plugin://plugin.video.zattooHiQ/?mode=genra")')
+      #builder.end(key)  
     
     # Numeric
       key = 'zero'
