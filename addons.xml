@@ -916,6 +916,24 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
   </extension>
 </addon>
 
+<addon id="plugin.video.mediathekviewweb" name="MediathekViewWeb" version="1.0.0" provider-name="itouch5000">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="script.module.requests" version="2.7.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="en">A MediathekView client</summary>
+        <description lang="en">MediathekViewWeb is a simple browser interface for accessing the movie list of the MediathekView project.</description>
+        <summary lang="de">Ein MediathekView Client</summary>
+		<description lang="de">MediathekViewWeb ist eine einfache Browser-Oberfläche für den Zugriff auf die Filmliste des MediathekView Projekts.</description>
+        <license>GPL 2.0</license>
+    </extension>
+</addon>
+
 <addon id="plugin.video.chefkoch_de" name="Chefkoch.de" version="2.0.9" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
