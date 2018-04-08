@@ -73,12 +73,15 @@ class reloadDB(xbmcgui.WindowXMLDialog):
     from resources.library import library
     _library_=library()
     DB = ZattooDB()
-        
+    news = __addon__.getAddonInfo('path')+'/resources/media/news.png'        
     xbmc.executebuiltin("ActivateWindow(busydialog)")
     #delete zapi files to force new login    
     profilePath = xbmc.translatePath(__addon__.getAddonInfo('profile'))
-    os.remove(os.path.join(xbmc.translatePath(__addon__.getAddonInfo('path') + '/resources/media/'), 'news.png'))
-
+    if os.path.isfile(news): 
+        try:
+            os.remove(os.path.join(xbmc.translatePath(__addon__.getAddonInfo('path') + '/resources/media/'), 'news.png'))
+        except:
+            pass
     try:
         #os.remove(os.path.join(xbmc.translate_path(__addon__.getAddonInfo('path') + '/resources/media/'), news.png))
         os.remove(os.path.join(profilePath, 'cookie.cache'))
