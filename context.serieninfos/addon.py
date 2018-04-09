@@ -311,7 +311,10 @@ if mode=="":
         
     debug("3. ++++++serie++++")    
     debug(serie)    
-    Bild="http://image.tmdb.org/t/p/w300/"+wert["results"][gefunden]["backdrop_path"].encode("utf-8")
+    try:
+        Bild="http://image.tmdb.org/t/p/w300/"+wert["results"][gefunden]["backdrop_path"].encode("utf-8")
+    except:
+        Bild=""
     debug("Bild :"+Bild)
     serienurl="https://api.themoviedb.org/3/tv/"+str(idd)+"?api_key=f5bfabe7771bad8072173f7d54f52c35&language=de-DE"
     debug("serienurl : "+serienurl)    
@@ -412,7 +415,7 @@ if mode=="":
     zusatz=""
     anzahLstaffeln=int(struct_serie["number_of_seasons"])
     for season in struct_serie["seasons"]:           
-        zusatz= zusatz+" Staffel "+str(season["season_number"])+ ": "+ str(season["episode_count"])+ " Folgen\n"
+        zusatz= zusatz+" "+str(season["name"])+ ": "+ str(season["episode_count"])+ " Folgen\n"
     
     Zusammenfassung="Serienname: "+seriesName+"\nSerienstart : "+serienstart +"\nAnzahl Staffeln : "+str(anzahLstaffeln)+"\n"+statustext+u"\n"+"Letzte Folge: \nUS : "+leztefolge+" ( "+lastdatum+" )"+de_last+textnext+de_next+zusatz
     window = Infowindow(title="Serieninfo",text=Zusammenfassung,image=Bild,lastplayd_title=lastplayd_title,lastepisode_name=lastepisode_name,fehlen=fehlen)
