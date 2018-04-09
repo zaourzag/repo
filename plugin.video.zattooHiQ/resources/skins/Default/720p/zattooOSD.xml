@@ -96,7 +96,8 @@
 				<textcolor>white</textcolor>
 				<font>font12</font>
 				<label>$INFO[Window(Home).Property(nextprog)]</label>
-				<autoscroll delay="5000" time="2200" repeat="10000">!Skin.HasSetting(StopAutoScroll)</autoscroll>
+				<scroll>true</scroll>
+				<scrollspeed>50</scrollspeed>
 			</control>
 			
 			<control type="label" id="1">

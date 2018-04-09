@@ -12,6 +12,7 @@
 				<visible>Control.IsVisible(50)</visible>
 				<control id="50" type="panel">
 					<visible>$EXP[WideViewVisible]</visible>
+					<include>FocusBounce</include>
 					<width>1920</width>
 					<height>1080</height>
 					<onright condition="Control.IsVisible(7000)">SetFocus(7000)</onright>
@@ -25,7 +26,7 @@
 					<defaultcontrol always="true">0</defaultcontrol>
 					<viewtype label="$LOCALIZE[31004]">panel</viewtype>
 					<pagecontrol>17</pagecontrol>
-					<scrolltime tween="sine" easing="out">400</scrolltime>
+					<include>ScrollTime</include>
 					<oninfo condition="String.IsEqual(ListItem.DBType,set) + !String.StartsWith(ListItem.Path,plugin://plugin.video)">RunScript(script.skin.helper.service,action=textviewer,header='$ESCINFO[ListItem.Title]',message='$ESCINFO[Window(home).Property(SkinHelper.ListItem.ExtendedPlot)]')</oninfo>
 					<itemlayout condition="!Skin.HasSetting(HideWideLabels) | $EXP[IsGenre] | !Window.IsVisible(myvideonav.xml)" width="444" height="305">
 						<control type="group">

@@ -73,7 +73,7 @@
 	</extension>
 </addon>
 
-<addon id="plugin.video.zattooHiQ" version="1.6.1" name="Zattoo HiQ" provider-name="Steffen Rolapp">
+<addon id="plugin.video.zattooHiQ" version="1.6.2.1" name="Zattoo HiQ" provider-name="Steffen Rolapp">
   <requires>
     <import addon="xbmc.python" version="2.14.0"/>
     <import addon="xbmc.addon" version="13.0.0" />
@@ -775,7 +775,7 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
   </extension>
 </addon>
 
-<addon id="plugin.video.zattooHiQ-2" version="1.6.1" name="Zattoo HiQ-2" provider-name="Steffen Rolapp">
+<addon id="plugin.video.zattooHiQ-2" version="1.6.2.1" name="Zattoo HiQ-2" provider-name="Steffen Rolapp">
   <requires>
     <import addon="xbmc.python" version="2.14.0"/>
     <import addon="xbmc.addon" version="13.0.0" />
@@ -819,7 +819,7 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
   </extension>
 </addon>
 
-<addon id="skin.embuary" version="0.5.6" name="Embuary" provider-name="sualfred">
+<addon id="skin.embuary" version="0.5.8" name="Embuary" provider-name="sualfred">
 	<requires>
 		<import addon="xbmc.gui" version="5.12.0"/>
 		<import addon="script.globalsearch" version="7.0.0"/>
@@ -914,6 +914,24 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
     <email>andreas at vogler dot name</email>
     <platform>all</platform>
   </extension>
+</addon>
+
+<addon id="plugin.video.mediathekviewweb" name="MediathekViewWeb" version="1.0.1" provider-name="itouch5000">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="script.module.requests" version="2.7.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="en">A MediathekView client</summary>
+        <description lang="en">MediathekViewWeb is a simple browser interface for accessing the movie list of the MediathekView project.</description>
+        <summary lang="de">Ein MediathekView Client</summary>
+		<description lang="de">MediathekViewWeb ist eine einfache Browser-Oberfläche für den Zugriff auf die Filmliste des MediathekView Projekts.</description>
+        <license>GPL 2.0</license>
+    </extension>
 </addon>
 
 <addon id="plugin.video.chefkoch_de" name="Chefkoch.de" version="2.0.9" provider-name="L0RE">
@@ -3651,7 +3669,7 @@ oder online unter https://goo.gl/GtK41L nachlesen.
 	</extension>
 </addon>
 
-<addon id="context.kodinerds.thumpup" name="Empfehlungen für Kodinerds" version="0.6.0" provider-name="L0RE">
+<addon id="context.kodinerds.thumpup" name="Empfehlungen für Kodinerds" version="0.6.1" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.20.0" />
         <import addon="script.module.beautifulsoup4" version="4.3.2"/>
@@ -4301,6 +4319,34 @@ Parental warning: The Maxdome Plattform consists of differnt types of content - 
         <description lang="de">Dieses Addon ermöglicht es euch, die neusten Videos und Livestreams von ran.de zu schauen.</description>
         <description lang="en">Watch livestreams and the latest videos from ran.de.</description>
     </extension>
+</addon>
+
+<addon id="skin.destiny-k18" name="Destiny K18" version="1.0.0" provider-name="Jugger">
+    <requires>
+		<import addon="xbmc.gui" version="5.13.0"/>
+	</requires>
+	<extension point="xbmc.gui.skin" debugging="false">
+		<res width="1920" height="1080" aspect="16:9" default="true" folder="xml" />
+	</extension>
+    <extension point="xbmc.addon.metadata">
+    <summary lang="en">skin created and design by Jugger</summary> 
+    <summary lang="de">Skin Destiny von Jugger</summary>
+    <description lang="en">The skin is kept simple but Destiny Modern skin but has a lot to offer.</description>
+    <description lang="de">Der Skin Destiny ist ein schlicht gehaltener aber Moderner Skin auf Basis der LG WebOS Oberfläche.[CR]Support gibt es unter http://www.kodinerds.net</description>
+    <disclaimer lang="en">no official skin use at your own risk.</disclaimer>
+    <platform>all</platform> 
+	<license>Creative Commons Attribution-ShareAlike 3.0.</license>
+	<forum>https://www.kodinerds.net/index.php/Board/129-Destiny/</forum>
+	<source>https://github.com/kodinerds/repo/tree/master/skin.destiny</source>
+    <assets>
+		<icon>resources/icon.png</icon>
+		<fanart>resources/fanart.jpg</fanart>
+		<screenshot>resources/screenshot-01.jpg</screenshot>
+		<screenshot>resources/screenshot-02.jpg</screenshot>
+		<screenshot>resources/screenshot-03.jpg</screenshot>
+		<screenshot>resources/screenshot-04.jpg</screenshot>
+	</assets>
+  </extension>
 </addon>
 
 </addons>
