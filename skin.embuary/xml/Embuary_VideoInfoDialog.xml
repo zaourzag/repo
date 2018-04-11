@@ -127,8 +127,8 @@
 		<!-- header bar -->
 		<include content="HeaderBar">
 			<param name="id">100</param>
-			<param name="enabled">false</param>
-			<param name="custom_animation">Container(500).HasPrevious</param>
+			<param name="auto_hide">false</param>
+			<param name="hide_header">Container(500).HasPrevious</param>
 		</include>
 	</include>
 	<!-- MediaInfo -->
@@ -181,7 +181,7 @@
 					<wrapmultiline>false</wrapmultiline>
 					<font>Reg20</font>
 					<aligny>bottom</aligny>
-					<label>[COLOR softgrey]$LOCALIZE[291]:[/COLOR]  $INFO[VideoPlayer.VideoResolution]$INFO[VideoPlayer.VideoCodec, ,]$INFO[VideoPlayer.VideoAspect, ,AR]$INFO[VideoPlayer.StereoscopicMode, ]</label>
+					<label>[COLOR softgrey]$LOCALIZE[291]:[/COLOR]  $INFO[VideoPlayer.VideoResolution]$INFO[VideoPlayer.VideoCodec, ,]$INFO[VideoPlayer.VideoAspect, ,AR]$INFO[VideoPlayer.StereoscopicMode, $LOCALIZE[36501]: ]</label>
 					<visible>!String.IsEmpty(VideoPlayer.VideoResolution)</visible>
 				</control>
 				<control type="label">
@@ -297,7 +297,7 @@
 		<!-- header bar -->
 		<include content="HeaderBar">
 			<param name="id">100</param>
-			<param name="enabled">false</param>
+			<param name="auto_hide">false</param>
 		</include>
 	</include>
 </includes>
