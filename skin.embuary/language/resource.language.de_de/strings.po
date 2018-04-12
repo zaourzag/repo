@@ -463,7 +463,7 @@ msgstr "Standard-Widgets"
 #: /xml/SkinSettings.xml
 msgctxt "#31087"
 msgid "Show background images"
-msgstr "Zeige Hintgergrundbilder"
+msgstr "Zeige Hintergrundbilder"
 
 #: /xml/SkinSettings.xml
 msgctxt "#31088"
@@ -765,7 +765,7 @@ msgstr "Zeige Addons Button"
 #: /xml/SkinSettings.xml
 msgctxt "#31142"
 msgid "Show favorites button"
-msgstr "Zeige Favouriten Button"
+msgstr "Zeige Favoriten Button"
 
 #: /xml/SkinSettings.xml
 msgctxt "#31143"
@@ -1166,3 +1166,13 @@ msgstr "Springe immer an den Anfang einer Liste innerhalb der Datenbank"
 msgctxt "#31222"
 msgid "Overwrite all other available artworks"
 msgstr "Ignoriere alle anderen verfügbaren Hintergrundbilder"
+
+#: /xml/Embuary_Variables.xml
+msgctxt "#31223"
+msgid "Configure shortcuts of the power menu."
+msgstr "Ändere Verknüpfungen im Ausschaltmenü."
+
+#: /xml/SkinSettings.xml
+msgctxt "#31224"
+msgid "Power menu"
+msgstr "Ausschaltmenü"
