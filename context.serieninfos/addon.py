@@ -280,17 +280,41 @@ if mode=="":
     wert = json.loads(content)  
     
     count=0
-    gefunden=0
-    wertnr=0
+    gefunden1=0
+    gefunden2=0
+    wertnr1=0
+    wertnr2=0
+    x1=0
+    x2=0
     x=0
     for serie in wert["results"]:
-      serienname=serie["original_name"]
-      nummer=similar(title,serienname)      
-      if nummer >wertnr:
-        wertnr=nummer
-        gefunden=count
-        x=1
+      serienname1=serie["original_name"].encode("utf-8")
+      serienname2=serie["name"].encode("utf-8")
+      debug("serienname2 :"+serienname2)
+      debug("serienname1 :"+serienname1)
+      nummer1=similar(title,serienname1)     
+      nummer2=similar(title,serienname2)  
+      if nummer1 >wertnr1:
+            wertnr1=nummer1
+            gefunden1=count
+            x1=1
+      if nummer2 >wertnr2:       
+            wertnr2=nummer2
+            gefunden2=count     
+            x2=1
       count+=1
+    debug("#######")
+    debug(wertnr2)
+    debug(wertnr1)
+    debug("#######")
+    if float(wertnr2) > float(wertnr1):
+        x=x2
+        gefunden=gefunden2
+    else:
+        x=x1
+        gefunden=gefunden1
+    debug("X :"+ str(x))
+    debug("gefunden :"+ str(gefunden))
     debug("1. +++suche++"+title)
     debug(wert)
     if x==0:
@@ -311,7 +335,10 @@ if mode=="":
         
     debug("3. ++++++serie++++")    
     debug(serie)    
-    Bild="http://image.tmdb.org/t/p/w300/"+wert["results"][gefunden]["backdrop_path"].encode("utf-8")
+    try:
+        Bild="http://image.tmdb.org/t/p/w300/"+wert["results"][gefunden]["backdrop_path"].encode("utf-8")
+    except:
+        Bild=""
     debug("Bild :"+Bild)
     serienurl="https://api.themoviedb.org/3/tv/"+str(idd)+"?api_key=f5bfabe7771bad8072173f7d54f52c35&language=de-DE"
     debug("serienurl : "+serienurl)    
@@ -412,7 +439,7 @@ if mode=="":
     zusatz=""
     anzahLstaffeln=int(struct_serie["number_of_seasons"])
     for season in struct_serie["seasons"]:           
-        zusatz= zusatz+" Staffel "+str(season["season_number"])+ ": "+ str(season["episode_count"])+ " Folgen\n"
+        zusatz= zusatz+" "+str(season["name"])+ ": "+ str(season["episode_count"])+ " Folgen\n"
     
     Zusammenfassung="Serienname: "+seriesName+"\nSerienstart : "+serienstart +"\nAnzahl Staffeln : "+str(anzahLstaffeln)+"\n"+statustext+u"\n"+"Letzte Folge: \nUS : "+leztefolge+" ( "+lastdatum+" )"+de_last+textnext+de_next+zusatz
     window = Infowindow(title="Serieninfo",text=Zusammenfassung,image=Bild,lastplayd_title=lastplayd_title,lastepisode_name=lastepisode_name,fehlen=fehlen)
