@@ -372,8 +372,8 @@ def build_category(addon_uri, addon_handle, cat):
         start = program[chan]['start_date'].strftime('%H:%M')
         end = program[chan]['end_date'].strftime('%H:%M') 
         startend = '[COLOR yellow]'+start+"-"+end+'[/COLOR]' 
-        zend = int(program[chan]['end_date'].strftime('%s'))
-        zstart = int(program[chan]['start_date'].strftime('%s'))
+        zend = int(program[chan]['end_date'].strftime('%S'))
+        zstart = int(program[chan]['start_date'].strftime('%S'))
         
       except AttributeError:
         startend = ''

@@ -110,9 +110,9 @@ CHANNELS_PER_PAGE = 8
 
 HALF_HOUR = datetime.timedelta(minutes=30)
 
-#if __addon__.getSetting('country') == 'CH': SWISS = 'true'
-#else: SWISS = 'false'
-SWISS = 'true'
+if __addon__.getSetting('country') == 'CH': SWISS = 'true'
+else: SWISS = 'false'
+#SWISS = 'true'
 def debug(s):
 	if DEBUG: xbmc.log(str(s), xbmc.LOGDEBUG)
 
@@ -450,6 +450,7 @@ class EPG(xbmcgui.WindowXML):
 					else: return
 		# German Account				
 		else:
+			#debug('German Account')
 			if start > now : 
 				if self.premiumUser:
 					#print 'SERIES:  ' + str(_zattooDB_.getSeries(program['showID']))

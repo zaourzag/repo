@@ -793,22 +793,21 @@ class ZattooDB(object):
   def getRestart(self, showID):
         
         c = self.conn.cursor()
-        api = '/zapi/program/details?program_id=' + showID + '&complete=True'
-        showInfo = self.zapiSession().exec_zapiCall(api, None)
-        #debug("ShowInfo :" + str(showInfo))
-        try:
-            restart = showInfo['program']['selective_recall_until']
-            c.execute('UPDATE programs SET restart=? WHERE showID=?', [True, showID])
-            #print 'Restart  ' +str(showID) + '  ' + str(restart)
-        except:
-            debug('No Restart')
-            c.execute('UPDATE programs SET restart=? WHERE showID=?', [False, showID])
-        self.conn.commit()
-        c.close()
-        c = self.conn.cursor()
         c.execute('SELECT restart FROM programs WHERE showID = ?', [showID])
         restart = c.fetchone()
-        #print str(showID)+'  '+str(restart['restart'])
+        if restart is None:
+            api = '/zapi/program/details?program_id=' + showID + '&complete=True'
+            showInfo = self.zapiSession().exec_zapiCall(api, None)
+            #debug("ShowInfo :" + str(showInfo))
+            try:
+                restart = showInfo['program']['selective_recall_until']
+                c.execute('UPDATE programs SET restart=? WHERE showID=?', [True, showID])
+                #print 'Restart  ' +str(showID) + '  ' + str(restart)
+            except:
+                debug('No Restart')
+                c.execute('UPDATE programs SET restart=? WHERE showID=?', [False, showID])
+            self.conn.commit()
+            
         c.close()
         return restart['restart']
 
