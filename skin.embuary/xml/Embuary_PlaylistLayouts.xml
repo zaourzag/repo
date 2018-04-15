@@ -87,7 +87,7 @@
 								<width>70</width>
 								<height>50</height>
 								<font>material24</font>
-								<label></label>
+								<label></label>
 								<onclick>RunScript(script.skin.helper.service,action=textviewer,header='$ESCVAR[TinyInfoDialogHeadline]',message='$ESCVAR[TinyInfoDialogPlot]')</onclick>
 								<onup>SetFocus(6666)</onup>
 								<ondown>SetFocus(50)</ondown>
@@ -141,8 +141,6 @@
 		<!-- header bar -->
 		<include content="HeaderBar">
 			<param name="id">500</param>
-			<param name="auto_hide">false</param>
-			<param name="hide_header">Container(500).HasPrevious</param>
 		</include>
 	</include>
 	<!-- music playlist -->
@@ -245,8 +243,6 @@
 		<!-- header bar -->
 		<include content="HeaderBar">
 			<param name="id">500</param>
-			<param name="auto_hide">false</param>
-			<param name="hide_header">Container(500).HasPrevious</param>
 		</include>
 	</include>
 </includes>

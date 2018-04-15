@@ -67,7 +67,7 @@
 							<width>70</width>
 							<height>50</height>
 							<font>material24</font>
-							<label></label>
+							<label></label>
 							<onclick>RunScript(script.skin.helper.service,action=textviewer,header='$ESCINFO[ListItem.Title]',message='$ESCINFO[ListItem.Plot]')</onclick>
 							<ondown>200</ondown>
 						</control>
@@ -129,8 +129,6 @@
 		<!-- header bar -->
 		<include content="HeaderBar">
 			<param name="id">500</param>
-			<param name="auto_hide">false</param>
-			<param name="hide_header">Container(500).HasPrevious</param>
 		</include>
 		<!-- side panel -->
 		<include content="SidePanel">
@@ -199,7 +197,7 @@
 							<width>70</width>
 							<height>50</height>
 							<font>material24</font>
-							<label></label>
+							<label></label>
 							<onclick>RunScript(script.skin.helper.service,action=textviewer,header='$ESCINFO[ListItem.TVShowTitle]',message='$ESCVAR[TinyInfoDialogPlot]')</onclick>
 							<ondown>200</ondown>
 						</control>
@@ -259,8 +257,6 @@
 		<!-- header bar -->
 		<include content="HeaderBar">
 			<param name="id">500</param>
-			<param name="auto_hide">false</param>
-			<param name="hide_header">Container(500).HasPrevious</param>
 		</include>
 		<!-- side panel -->
 		<include content="SidePanel">
@@ -344,7 +340,7 @@
 							<width>70</width>
 							<height>50</height>
 							<font>material24</font>
-							<label></label>
+							<label></label>
 							<onclick>RunScript(script.skin.helper.service,action=textviewer,header='$ESCINFO[ListItem.TVShowTitle]',message='$ESCVAR[TinyInfoDialogPlot]')</onclick>
 							<ondown>200</ondown>
 						</control>
@@ -396,8 +392,6 @@
 		<!-- header bar -->
 		<include content="HeaderBar">
 			<param name="id">500</param>
-			<param name="auto_hide">false</param>
-			<param name="hide_header">Container(500).HasPrevious</param>
 		</include>
 		<!-- side panel -->
 		<include content="SidePanel">
@@ -517,15 +511,23 @@
 					<wrapmultiline>false</wrapmultiline>
 					<font>Reg20</font>
 					<aligny>bottom</aligny>
-					<label>[COLOR softgrey]$LOCALIZE[291]:[/COLOR]  $INFO[ListItem.VideoResolution]$INFO[ListItem.VideoCodec, ,]$INFO[ListItem.VideoAspect, ,AR]$INFO[ListItem.StereoscopicMode, $LOCALIZE[36501]: ]</label>
-					<visible>!String.IsEmpty(ListItem.VideoResolution)</visible>
+					<label>[COLOR softgrey]$LOCALIZE[291]:[/COLOR][UPPERCASE]  $VAR[ListItemResolution]$INFO[ListItem.VideoCodec, ,]$INFO[ListItem.VideoAspect, ,AR][/UPPERCASE]</label>
+					<visible>!String.IsEmpty(ListItem.VideoResolution) + [String.IsEqual(ListItem.StereoscopicMode,mono) | String.IsEmpty(ListItem.StereoscopicMode)]</visible>
 				</control>
 				<control type="label">
 					<height>30</height>
 					<wrapmultiline>false</wrapmultiline>
 					<font>Reg20</font>
 					<aligny>bottom</aligny>
-					<label>[COLOR softgrey]$LOCALIZE[292]:[/COLOR]  $INFO[ListItem.Property(AudioLanguage.1),, ]$INFO[ListItem.Property(AudioChannels.1),,ch ]$INFO[ListItem.Property(AudioCodec.1),, ]$INFO[ListItem.Property(AudioLanguage.2),| , ]$INFO[ListItem.Property(AudioChannels.2),,ch ]$INFO[ListItem.Property(AudioCodec.2),, ]$INFO[ListItem.Property(AudioLanguage.3),| , ]$INFO[ListItem.Property(AudioChannels.3),,ch ]$INFO[ListItem.Property(AudioCodec.3),, ]$INFO[ListItem.Property(AudioLanguage.4),| , ]$INFO[ListItem.Property(AudioChannels.4),,ch ]$INFO[ListItem.Property(AudioCodec.4),, ]$INFO[ListItem.Property(AudioLanguage.5),| , ]$INFO[ListItem.Property(AudioChannels.5),,ch ]$INFO[ListItem.Property(AudioCodec.5),, ]</label>
+					<label>[COLOR softgrey]$LOCALIZE[291]:[/COLOR][UPPERCASE]  $VAR[ListItemResolution]$INFO[ListItem.VideoCodec, ,]$INFO[ListItem.VideoAspect, ,AR][/UPPERCASE]$INFO[ListItem.StereoscopicMode,  [UPPERCASE][COLOR softgrey]$LOCALIZE[36501]:[/COLOR][/UPPERCASE]  ]</label>
+					<visible>!String.IsEmpty(ListItem.VideoResolution) + !String.IsEqual(ListItem.StereoscopicMode,mono)</visible>
+				</control>
+				<control type="label">
+					<height>30</height>
+					<wrapmultiline>false</wrapmultiline>
+					<font>Reg20</font>
+					<aligny>bottom</aligny>
+					<label>[COLOR softgrey]$LOCALIZE[292]:[/COLOR][UPPERCASE]  $INFO[ListItem.Property(AudioLanguage.1),, ]$INFO[ListItem.Property(AudioChannels.1),,ch ]$INFO[ListItem.Property(AudioCodec.1),, ]$INFO[ListItem.Property(AudioLanguage.2),| , ]$INFO[ListItem.Property(AudioChannels.2),,ch ]$INFO[ListItem.Property(AudioCodec.2),, ]$INFO[ListItem.Property(AudioLanguage.3),| , ]$INFO[ListItem.Property(AudioChannels.3),,ch ]$INFO[ListItem.Property(AudioCodec.3),, ]$INFO[ListItem.Property(AudioLanguage.4),| , ]$INFO[ListItem.Property(AudioChannels.4),,ch ]$INFO[ListItem.Property(AudioCodec.4),, ]$INFO[ListItem.Property(AudioLanguage.5),| , ]$INFO[ListItem.Property(AudioChannels.5),,ch ]$INFO[ListItem.Property(AudioCodec.5),, ][/UPPERCASE]</label>
 					<visible>!String.IsEmpty(ListItem.Property(AudioLanguage.1))</visible>
 				</control>
 				<control type="label">
@@ -533,7 +535,7 @@
 					<wrapmultiline>false</wrapmultiline>
 					<font>Reg20</font>
 					<aligny>bottom</aligny>
-					<label>[COLOR softgrey]$LOCALIZE[459]:[/COLOR]  $INFO[ListItem.Property(SubtitleLanguage.1),, ]$INFO[ListItem.Property(SubtitleLanguage.2),| , ]$INFO[ListItem.Property(SubtitleLanguage.3),| , ]$INFO[ListItem.Property(SubtitleLanguage.4),| , ]$INFO[ListItem.Property(SubtitleLanguage.5),| , ]</label>
+					<label>[COLOR softgrey]$LOCALIZE[459]:[/COLOR][UPPERCASE]  $INFO[ListItem.Property(SubtitleLanguage.1),, ]$INFO[ListItem.Property(SubtitleLanguage.2),| , ]$INFO[ListItem.Property(SubtitleLanguage.3),| , ]$INFO[ListItem.Property(SubtitleLanguage.4),| , ]$INFO[ListItem.Property(SubtitleLanguage.5),| , ][/UPPERCASE]</label>
 					<visible>!String.IsEmpty(ListItem.Property(SubtitleLanguage.1))</visible>
 				</control>
 			</control>
@@ -541,6 +543,9 @@
 	</include>
 	<!-- Artist -->
 	<include name="ArtistInfoLayout">
+		<!-- Background -->
+		<include>Background</include>
+		<!-- Dialog -->
 		<control type="grouplist" id="500">
 			<include>Window_OpenClose</include>
 			<width>100%</width>
@@ -600,7 +605,7 @@
 								<width>70</width>
 								<height>50</height>
 								<font>material24</font>
-								<label></label>
+								<label></label>
 								<ondown>200</ondown>
 								<onclick>RunScript(script.skin.helper.service,action=textviewer,header='$ESCINFO[ListItem.Label]',message='$ESCINFO[ListItem.Property(Artist_Description)]')</onclick>
 								<visible>!String.IsEmpty(ListItem.Property(Artist_Description))</visible>
@@ -662,8 +667,6 @@
 		<!-- header bar -->
 		<include content="HeaderBar">
 			<param name="id">500</param>
-			<param name="auto_hide">false</param>
-			<param name="hide_header">Container(500).HasPrevious</param>
 		</include>
 		<!-- side panel -->
 		<include content="SidePanel">
@@ -672,6 +675,9 @@
 	</include>
 	<!-- Album -->
 	<include name="AlbumInfoLayout">
+		<!-- Background -->
+		<include>Background</include>
+		<!-- Dialog -->
 		<control type="grouplist" id="500">
 			<include>Window_OpenClose</include>
 			<width>100%</width>
@@ -732,7 +738,7 @@
 								<width>70</width>
 								<height>50</height>
 								<font>material24</font>
-								<label></label>
+								<label></label>
 								<onclick>RunScript(script.skin.helper.service,action=textviewer,header='$ESCINFO[ListItem.Album]',message='$ESCINFO[ListItem.Property(Album_Description)]')</onclick>
 								<visible>!String.IsEmpty(ListItem.Property(Album_Description))</visible>
 							</control>
@@ -803,8 +809,6 @@
 		<!-- header bar -->
 		<include content="HeaderBar">
 			<param name="id">500</param>
-			<param name="auto_hide">false</param>
-			<param name="hide_header">Container(500).HasPrevious</param>
 		</include>
 		<!-- side panel -->
 		<include content="SidePanel">
