@@ -232,7 +232,11 @@ def videoliste(url,page="1"):
     if int(page)==1:
         content=geturl(url)
         #"nextPage":"https:\u002F\u002Fapi-cdn.arte.tv\u002Fapi\u002Femac\u002Fv2\u002Fde\u002Fweb\u002Fzones\u002Fvideos_subcategory_OPE?page=2&limit=10"
-        content=re.compile(' window.__INITIAL_STATE__ = ({.+})', re.DOTALL).findall(content)[0]
+        content=re.compile(' window.__INITIAL_STATE__ = (.+?)</script>', re.DOTALL).findall(content)[0]
+        content=content.strip()[:-1]
+        debug("++++++++++++++#####")
+        debug(content)
+        debug("++++++++++++++#####")
         struktur1 = json.loads(content)
         debug("###")
         debug(struktur1)
@@ -306,7 +310,11 @@ def abiszetc(url,page="1",query=False):
     newUrl = url
     if int(page)==1:
         content=geturl(url)
-        content=re.compile(' window.__INITIAL_STATE__ = ({.+})', re.DOTALL).findall(content)[0]
+        content=re.compile(' window.__INITIAL_STATE__ = (.+?)</script>', re.DOTALL).findall(content)[0]
+        content=content.strip()[:-1]
+        debug("#########")
+        debug(content)
+        debug("#########")
         struktur1 = json.loads(content)
         debug("###")
         debug(struktur1)
