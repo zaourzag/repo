@@ -24,6 +24,7 @@
 					<include>MetaPoster</include>
 					<!-- meta -->
 					<control type="grouplist">
+						<visible>!ListItem.IsParentFolder</visible>
 						<left>370</left>
 						<orientation>vertical</orientation>
 						<height>500</height>
@@ -37,6 +38,15 @@
 							<label>$INFO[ListItem.TVShowTitle]</label>
 							<aligny>top</aligny>
 							<font>Reg37</font>
+							<visible>!String.IsEqual(ListItem.Label,$LOCALIZE[20366])</visible>
+						</control>
+						<control type="label">
+							<width>1040</width>
+							<height>60</height>
+							<label>$INFO[ListItem(1).TVShowTitle]</label>
+							<aligny>top</aligny>
+							<font>Reg37</font>
+							<visible>String.IsEqual(ListItem.Label,$LOCALIZE[20366])</visible>
 						</control>
 						<control type="label">
 							<width>1040</width>
@@ -122,7 +132,7 @@
 						<param name="use_custom_content" value="false"/>
 						<param name="height" value="553"/>
 						<param name="content_visible" value="$EXP[SeasonViewVisible]"/>
-						<param name="list_name" value="$LOCALIZE[20373]"/>
+						<param name="list_name" value="$LOCALIZE[31199]"/>
 					</include>
 				</control>
 			</control>

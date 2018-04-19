@@ -21,6 +21,7 @@
 					<include content="widget_headline">
 						<param name="headline">$PARAM[headline]</param>
 						<param name="left">65</param>
+						<param name="id">$PARAM[id]</param>
 					</include>
 					<control type="group">
 						<visible>Container($PARAM[id]).IsUpdating + !Integer.IsGreater(Container($PARAM[id]).NumItems,0)</visible>
@@ -142,6 +143,7 @@
 					<include content="widget_headline">
 						<param name="headline">$PARAM[headline]</param>
 						<param name="left">65</param>
+						<param name="id">$PARAM[id]</param>
 					</include>
 					<control type="group">
 						<visible>Container($PARAM[id]).IsUpdating + !Integer.IsGreater(Container($PARAM[id]).NumItems,0)</visible>
@@ -262,6 +264,7 @@
 					<include content="widget_headline">
 						<param name="headline">$PARAM[headline]</param>
 						<param name="left">65</param>
+						<param name="id">$PARAM[id]</param>
 					</include>
 					<control type="group">
 						<visible>Container($PARAM[id]).IsUpdating | !Integer.IsGreater(Container($PARAM[id]).NumItems,0)</visible>
@@ -291,7 +294,6 @@
 							<align>center</align>
 							<aligny>center</aligny>
 							<label></label>
-							<visible>!Container($PARAM[id]).IsUpdating + !Integer.IsGreater(Container($PARAM[id]).NumItems,0)</visible>
 						</control>
 						<control type="group">
 							<visible>Container($PARAM[id]).IsUpdating</visible>
@@ -559,13 +561,9 @@
 	<!-- ##### HOME ##### -->
 	<!-- Menu Buttons -->
 	<include name="HomeWidgetMenu">
-		<param name="visible">true</param>
 		<param name="headline">$LOCALIZE[416]</param>
-		<param name="onup">100</param>
 		<definition>
 			<control type="group" id="$PARAM[id]1">
-				<visible>$PARAM[visible]</visible>
-				<visible>Integer.IsGreater(Container($PARAM[id]).NumItems,0) | Container($PARAM[id]).IsUpdating</visible>
 				<width>100%</width>
 				<height>465</height>
 				<include content="widget_headline">
@@ -611,7 +609,9 @@
 							</include>
 						</control>
 					</focusedlayout>
-					<include>MainMenuContent</include>
+					<include content="MainMenuContent">
+						<param name="id" value="$PARAM[id]" />
+					</include>
 				</control>
 			</control>
 		</definition>
@@ -634,6 +634,7 @@
 				<height>556</height>
 				<include content="widget_headline">
 					<param name="headline">$PARAM[headline]</param>
+					<param name="id">$PARAM[id]</param>
 				</include>
 				<control type="group">
 					<visible>Container($PARAM[id]).IsUpdating + !Integer.IsGreater(Container($PARAM[id]).NumItems,0)</visible>
@@ -751,6 +752,7 @@
 				<height>$PARAM[height]</height>
 				<include content="widget_headline">
 					<param name="headline">$PARAM[headline]</param>
+					<param name="id">$PARAM[id]</param>
 				</include>
 				<control type="group">
 					<visible>Container($PARAM[id]).IsUpdating + !Integer.IsGreater(Container($PARAM[id]).NumItems,0)</visible>
@@ -866,6 +868,7 @@
 				<height>$PARAM[height]</height>
 				<include content="widget_headline">
 					<param name="headline">$PARAM[headline]</param>
+					<param name="id">$PARAM[id]</param>
 				</include>
 				<control type="group">
 					<visible>Container($PARAM[id]).IsUpdating + !Integer.IsGreater(Container($PARAM[id]).NumItems,0)</visible>
@@ -977,6 +980,7 @@
 				<height>$PARAM[height]</height>
 				<include content="widget_headline">
 					<param name="headline">$PARAM[headline]</param>
+					<param name="id">$PARAM[id]</param>
 				</include>
 				<control type="fixedlist" id="$PARAM[id]">
 					<include>FocusBounce</include>
@@ -1107,6 +1111,7 @@
 				<include content="widget_headline">
 					<param name="top">145</param>
 					<param name="headline">$PARAM[headline]</param>
+					<param name="id">$PARAM[id]</param>
 				</include>
 				<control type="group">
 					<visible>Container($PARAM[id]).IsUpdating + !Integer.IsGreater(Container($PARAM[id]).NumItems,0)</visible>

@@ -62,16 +62,19 @@
 	<!-- Embcon/Native DB vars -->
 	<variable name="View_Cast_Content">
 		<value condition="Container.Content(sets) | String.IsEqual(ListItem.DBType,set)"></value>
+		<value condition="!Container.Content(seasons) + ListItem.IsParentFolder"></value>
 		<value condition="String.StartsWith(ListItem.Path,plugin://plugin.video.embycon)">plugin://plugin.video.embycon?mode=WIDGET_CONTENT_CAST&amp;id=$INFO[Window(home).Property(EmbyID)]</value>
 		<value condition="String.IsEqual(ListItem.DBType,movie) + !String.IsEmpty(ListItem.DBID) + !String.IsEqual(ListItem.DBID,0)">plugin://plugin.get.cast?mode=dbid&amp;&amp;dbtype=movie&amp;&amp;dbinfo=$INFO[ListItem.DBID]</value>
 		<value condition="String.IsEqual(ListItem.DBType,movie) + String.IsEqual(ListItem.DBID,0)">plugin://plugin.get.cast?mode=title&amp;&amp;dbtype=movie&amp;&amp;dbinfo=$INFO[ListItem.Title]</value>
 		<value condition="String.IsEqual(ListItem.DBType,tvshow) + !String.IsEmpty(ListItem.DBID) + !String.IsEqual(ListItem.DBID,0)">plugin://plugin.get.cast?mode=dbid&amp;&amp;dbtype=tvshow&amp;&amp;dbinfo=$INFO[ListItem.DBID]</value>
 		<value condition="String.IsEqual(ListItem.DBType,tvshow) + String.IsEqual(ListItem.DBID,0)">plugin://plugin.get.cast?mode=title&amp;&amp;dbtype=tvshow&amp;&amp;dbinfo=$INFO[ListItem.TVShowTitle]</value>
 		<value condition="[String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,season)] + !String.IsEmpty(ListItem.DBID)">plugin://plugin.get.cast?mode=title&amp;&amp;dbtype=tvshow&amp;&amp;dbinfo=$INFO[ListItem.TVShowTitle]</value>
+		<value condition="Container.Content(seasons) + !String.IsEmpty(ListItem(1).DBID)">plugin://plugin.get.cast?mode=title&amp;&amp;dbtype=tvshow&amp;&amp;dbinfo=$INFO[ListItem(1).TVShowTitle]</value>
+		<value condition="Container.Content(seasons) + !String.IsEmpty(ListItem(2).DBID)">plugin://plugin.get.cast?mode=title&amp;&amp;dbtype=tvshow&amp;&amp;dbinfo=$INFO[ListItem(2).TVShowTitle]</value>
 	</variable>
 	<variable name="View54_NextUp_Content">
 		<value condition="Container.Content(seasons) + Integer.IsGreater(Window(home).Property(UnwatchedEpisodes),0) + String.StartsWith(ListItem.Path,plugin://plugin.video.embycon)">plugin://plugin.video.embycon/?mode=GET_CONTENT&amp;media_type=Episodes&amp;url=%7Bserver%7D%2Femby%2FShows%2FNextUp%3FuserId%3D%7Buserid%7D%26Limit%3D%7BItemLimit%7D%26Filters%3D%7Bfield_filters%7D%26format%3Djson%26ImageTypeLimit%3D1%26IsMissing%3DFalse%26SeriesId%3D$INFO[Window(home).Property(EmbyID)]</value>
-		<value condition="Container.Content(seasons) + Integer.IsGreater(Window(home).Property(UnwatchedEpisodes),0) + !String.IsEmpty(ListItem.DBID)">videodb://inprogresstvshows/$INFO[Window(home).Property(TVShowDBID)]/-2/?tvshowid=$INFO[Window(home).Property(TVShowDBID)]</value>
+		<value condition="Container.Content(seasons) + Integer.IsGreater(Window(home).Property(UnwatchedEpisodes),0) + !String.IsEmpty(Window(home).Property(TVShowDBID))">videodb://inprogresstvshows/$INFO[Window(home).Property(TVShowDBID)]/-2/?tvshowid=$INFO[Window(home).Property(TVShowDBID)]</value>
 	</variable>
 	<variable name="InfoDialog_NextUp_Content">
 		<value condition="Integer.IsGreater(Window(home).Property(UnwatchedEpisodes),0) + String.StartsWith(ListItem.Path,plugin://plugin.video.embycon)">plugin://plugin.video.embycon/?mode=GET_CONTENT&amp;media_type=Episodes&amp;url=%7Bserver%7D%2Femby%2FShows%2FNextUp%3FuserId%3D%7Buserid%7D%26Limit%3D%7BItemLimit%7D%26Filters%3D%7Bfield_filters%7D%26format%3Djson%26ImageTypeLimit%3D1%26IsMissing%3DFalse%26SeriesId%3D$INFO[ListItem.Property(id)]</value>
@@ -278,9 +281,9 @@
 	<!-- background -->
 	<variable name="BackgroundColordiffuse">
 		<value condition="String.IsEqual(Skin.String(BackgroundAlpha),0) | String.IsEmpty(Skin.String(BackgroundAlpha))">ff141414</value>
-		<value condition="String.IsEqual(Skin.String(BackgroundAlpha),1)">f8141414</value>
-		<value condition="String.IsEqual(Skin.String(BackgroundAlpha),2)">f0141414</value>
-		<value condition="String.IsEqual(Skin.String(BackgroundAlpha),3)">e8141414</value>
+		<value condition="String.IsEqual(Skin.String(BackgroundAlpha),1)">bf141414</value>
+		<value condition="String.IsEqual(Skin.String(BackgroundAlpha),2)">80141414</value>
+		<value condition="String.IsEqual(Skin.String(BackgroundAlpha),3)">40141414</value>
 	</variable>
 	<variable name="BackgroundSource">
 		<!-- global static -->
@@ -378,17 +381,16 @@
 		<value condition="String.StartsWith(ListItem.Path,pvr://) + !String.IsEmpty(ListItem.Title)">$INFO[ListItem.Title]</value>
 		<value condition="String.StartsWith(ListItem.Path,pvr://)">$INFO[ListItem.Label]</value>
 		<value condition="String.IsEqual(ListItem.DBType,episode)">$INFO[ListItem.Season,S,:]$INFO[ListItem.Episode,E, - ]$INFO[ListItem.Title]</value>
-		<value condition="String.IsEqual(ListItem.DBType,season) + String.Contains(ListItem.Label,All)">$LOCALIZE[20366]</value>
+		<value condition="String.IsEqual(ListItem.DBType,season) + String.Contains(ListItem.Label,$LOCALIZE[20366])">$LOCALIZE[20366]</value>
 		<value condition="String.IsEqual(ListItem.DBType,season) + !String.IsEmpty(ListItem.Season)">$INFO[ListItem.Season,$LOCALIZE[20373] ]</value>
-		<value condition="String.IsEqual(ListItem.DBType,song)">$INFO[ListItem.Tracknumber,,. ]$INFO[ListItem.Title]</value>
-		<value condition="Container.Content(songs) + Integer.IsGreater(ListItem.Tracknumber,0)">$INFO[ListItem.Tracknumber,,. ]$INFO[ListItem.Title]</value>
-		<value condition="Container.Content(songs)">$INFO[ListItem.Title]</value>
-		<value condition="!String.IsEmpty(ListItem.Label)">$INFO[ListItem.Label]</value>
+		<value condition="String.IsEqual(ListItem.DBType,song) + !String.IsEmpty(ListItem.title)">$INFO[ListItem.Tracknumber,,. ]$INFO[ListItem.Title]</value>
+		<value condition="Container.Content(songs) + Integer.IsGreater(ListItem.Tracknumber,0) + !String.IsEmpty(ListItem.title)">$INFO[ListItem.Tracknumber,,. ]$INFO[ListItem.Title]</value>
+		<value condition="Container.Content(songs) + !String.IsEmpty(ListItem.title)">$INFO[ListItem.Title]</value>
+		<value>$INFO[ListItem.Label]</value>
 	</variable>
 	<variable name="SubListLabel">
 		<value condition="Window.IsVisible(script-NextAired-TVGuide.xml)">$INFO[ListItem.Property(NextSeasonNumber),S,]$INFO[ListItem.Property(NextEpisodeNumber),:E]$INFO[ListItem.Property(NextTitle), - ]</value>
 		<value condition="Window.IsVisible(script-NextAired-TVGuide2.xml)">$INFO[ListItem.Property(NextSeasonNumber),S,]$INFO[ListItem.Property(NextEpisodeNumber),:E]$INFO[ListItem.Property(NextTitle), - ]</value>
-		<value condition="ListItem.IsParentFolder">$LOCALIZE[31044]</value>
 		<value condition="String.StartsWith(ListItem.Path,pvr://)">$INFO[ListItem.Label]</value>
 		<value condition="String.IsEqual(ListItem.DBType,episode)">$INFO[ListItem.TvShowTitle]</value>
 		<value condition="String.IsEqual(ListItem.DBType,season)">$INFO[ListItem.TvShowTitle]</value>
@@ -1264,6 +1266,7 @@
 		<value condition="String.Contains(VideoPlayer.AudioCodec,cook)">Cook</value>
 	</variable>
 	<variable name="VideoInfoButton8">
+		<value condition="String.IsEqual(ListItem.Label,$LOCALIZE[20366])">$LOCALIZE[31011]</value>
 		<value condition="!String.IsEqual(ListItem.DBType,tvshow) + !String.IsEqual(ListItem.DBType,season) + ListItem.IsResumable">$LOCALIZE[13404]</value>
 		<value condition="!String.IsEqual(ListItem.DBType,tvshow) + !String.IsEqual(ListItem.DBType,season) + Integer.IsGreater(ListItem.PlayCount,0)">$LOCALIZE[31009]</value>
 		<value condition="!String.IsEqual(ListItem.DBType,tvshow) + !String.IsEqual(ListItem.DBType,season)">$LOCALIZE[31010]</value>
@@ -1613,5 +1616,11 @@
 	<variable name="ListItemStatus">
 		<value condition="String.IsEqual(Window(home).Property(SkinHelper.ListItem.Status),Ended)">$LOCALIZE[31196]</value>
 		<value condition="String.IsEqual(Window(home).Property(SkinHelper.ListItem.Status),continuing)">$LOCALIZE[31197]</value>
+	</variable>
+	<variable name="SortLetterLabel">
+		<value condition="Container.Content(episodes)">$INFO[ListItem.Episode]</value>
+		<value condition="Container.Content(seasons)">$INFO[ListItem.Season]</value>
+		<value condition="Window.IsVisible(MyPVRChannels.xml)">$INFO[ListItem.Channelnumber]</value>
+		<value>$INFO[ListItem.SortLetter]</value>
 	</variable>
 </includes>
