@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <window>
 	<defaultcontrol always="true">20</defaultcontrol>
+	<include>PropertyIncludes</include>
 	<controls>
 		<include>Background</include>
 		<control type="group">
@@ -75,7 +76,7 @@
 								<height>50</height>
 								<aligny>center</aligny>
 								<font>Reg24</font>
-								<label>$INFO[ListItem.Channelnumber,,. ]$INFO[ListItem.Label]</label>
+								<label>$INFO[ListItem.ChannelNumberLabel,,. ]$INFO[ListItem.Label]</label>
 							</control>
 						</itemlayout>
 						<focusedlayout height="50" width="800">
@@ -99,7 +100,7 @@
 								<height>50</height>
 								<aligny>center</aligny>
 								<font>Reg24</font>
-								<label>$INFO[ListItem.Channelnumber,,. ]$INFO[ListItem.Label]</label>
+								<label>$INFO[ListItem.ChannelNumberLabel,,. ]$INFO[ListItem.Label]</label>
 								<visible>Control.HasFocus(20)</visible>
 							</control>
 							<control type="label">
@@ -109,7 +110,7 @@
 								<aligny>center</aligny>
 								<font>Reg24</font>
 								<textcolor>blue</textcolor>
-								<label>$INFO[ListItem.Channelnumber,,. ]$INFO[ListItem.Label]</label>
+								<label>$INFO[ListItem.ChannelNumberLabel,,. ]$INFO[ListItem.Label]</label>
 								<visible>!Control.HasFocus(20)</visible>
 							</control>
 						</focusedlayout>

@@ -5,6 +5,7 @@
 	<views>10</views>
 	<menucontrol>6666</menucontrol>
 	<onunload condition="Window.Previous(1124)">SetProperty(pvrhub,1,home)</onunload>
+	<include>PropertyIncludes</include>
 	<controls>
 		<control type="label" id="29">
 			<font></font>
@@ -266,9 +267,9 @@
 						<control type="label">
 							<width>auto</width>
 							<height>24</height>
-							<label>$INFO[ListItem.Channelnumber,$LOCALIZE[19029] ]   </label>
+							<label>$INFO[ListItem.ChannelNumberLabel,$LOCALIZE[19029] ]   </label>
 							<font>reg22</font>
-							<visible>!String.IsEmpty(ListItem.Channelnumber)</visible>
+							<visible>!String.IsEmpty(ListItem.ChannelNumberLabel)</visible>
 						</control>
 						<control type="label">
 							<width>auto</width>

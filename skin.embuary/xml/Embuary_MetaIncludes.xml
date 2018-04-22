@@ -15,9 +15,9 @@
 					<visible>!String.IsEmpty(Window(home).Property(SkinHelper.ListItem.Year))</visible>
 				</control>
 				<control type="label">
-					<label>$INFO[Container(201).NumItems,, $LOCALIZE[36901]]   </label>
+					<label>$INFO[Container(5601).NumItems,, $LOCALIZE[36901]]   </label>
 					<include>MetaLabel</include>
-					<visible>!String.IsEmpty(Container(201).NumItems) + !String.IsEqual(Container(201).NumItems,0)</visible>
+					<visible>!String.IsEmpty(Container(5601).NumItems) + !String.IsEqual(Container(5601).NumItems,0)</visible>
 				</control>
 				<control type="label">
 					<label>$INFO[Window(home).Property(SkinHelper.ListItem.Runtime),, $LOCALIZE[31089]]   </label>
@@ -183,6 +183,16 @@
 					<label>$INFO[ListItem.Property(Artist_Mood),$LOCALIZE[175]: ]   </label>
 					<visible>!String.IsEmpty(ListItem.Property(Artist_Mood))</visible>
 				</control>
+				<control type="label">
+					<include>MetaLabel</include>
+					<label>$INFO[Container(200).NumItems,$LOCALIZE[132]: ]   </label>
+					<visible>!Integer.IsEqual(Container(200).NumItems,0)</visible>
+				</control>
+				<control type="label">
+					<include>MetaLabel</include>
+					<label>$INFO[Container(300).NumItems,$LOCALIZE[132]: ]   </label>
+					<visible>Integer.IsEqual(Container(200).NumItems,0) + !Integer.IsEqual(Container(300).NumItems,0)</visible>
+				</control>
 			</control>
 		</definition>
 	</include>
@@ -249,8 +259,8 @@
 				</control>
 				<control type="label">
 					<include>MetaLabel</include>
-					<label>$INFO[ListItem.Channelnumber,$LOCALIZE[19029] ]   </label>
-					<visible>!String.IsEmpty(ListItem.Channelnumber)</visible>
+					<label>$INFO[ListItem.ChannelNumberLabel,$LOCALIZE[19029] ]   </label>
+					<visible>!String.IsEmpty(ListItem.ChannelNumberLabel)</visible>
 				</control>
 				<control type="label">
 					<include>MetaLabel</include>
@@ -322,7 +332,7 @@
 				</control>
 				<control type="label">
 					<include>MetaLabel</include>
-					<label>$INFO[VideoPlayer.Channelnumber,$LOCALIZE[19029] ]   </label>
+					<label>$INFO[VideoPlayer.ChannelNumberLabel,$LOCALIZE[19029] ]   </label>
 					<visible>VideoPlayer.Content(livetv)</visible>
 				</control>
 				<control type="label">

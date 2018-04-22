@@ -5,6 +5,7 @@
 	<views>50,52,53,57</views>
 	<menucontrol>6666</menucontrol>
 	<onunload condition="Window.Previous(1124)">SetProperty(pvrhub,1,home)</onunload>
+	<include>PropertyIncludes</include>
 	<controls>
 		<control type="button" id="2">
 			<include>HiddenObject</include>
@@ -24,7 +25,7 @@
 				<param name="thumblabel">$INFO[ListItem.Label]</param>
 			</include>
 			<include content="List_View_53">
-				<param name="mainlabel">$INFO[ListItem.Channelnumber,,. ]$INFO[ListItem.Channelname]</param>
+				<param name="mainlabel">$INFO[ListItem.ChannelNumberLabel,,. ]$INFO[ListItem.Channelname]</param>
 				<param name="sublabel">$INFO[ListItem.Title]</param>
 				<param name="fallbacklabel">19055</param>
 				<param name="thumblabel">$INFO[ListItem.Label]</param>
