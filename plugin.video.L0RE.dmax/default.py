@@ -40,7 +40,10 @@ profile    = xbmc.translatePath( addon.getAddonInfo('profile') ).decode("utf-8")
 temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
 
 if xbmcvfs.exists(temp):
-  shutil.rmtree(temp)
+  try:
+    shutil.rmtree(temp)
+  except:
+     pass
 xbmcvfs.mkdirs(temp)
 cookie=os.path.join( temp, 'cookie.jar')
 cj = cookielib.LWPCookieJar();
@@ -259,6 +262,7 @@ def generatefiles(idd,name):
   if os.path.isdir(ppath):
     shutil.rmtree(ppath)
   os.mkdir(ppath)  
+  serie=struktur["show"]["name"]
   subelement=struktur["videos"]["episode"]
   for number,videos in subelement.iteritems(): 
     for video in videos:         
@@ -271,6 +275,8 @@ def generatefiles(idd,name):
         duration=duration/1000
         image=video["image"]["src"]
         airdate=video["airDate"]
+        season=video["season"]
+        episode=video["episode"]
         namef=goldfinch.validFileName(title)
         #debug(namef)
         filename=os.path.join(ppath,namef+".strm")
@@ -278,6 +284,22 @@ def generatefiles(idd,name):
         file = open(filename,"wt") 
         file.write("plugin://plugin.video.L0RE.dmax/?mode=playvideo&url="+str(idd))
         file.close()
+        nfostring="""
+          <tvshow>
+            <title>%s</title>
+            <season>%s</season>
+            <episode>%s</episode>
+            <showtitle>%s</showtitle>
+            <plot>%s</plot>
+            <runtime>%s</runtime>
+            <thumb aspect="" type="" season="">%s</thumb>            
+            <aired>%s</aired>            
+          </tvshow>"""           
+        nfostring=nfostring%(title.encode("utf-8"),str(season).encode("utf-8"),str(episode),serie.encode("utf-8"),desc.encode("utf-8"),str(duration),image.encode("utf-8"),airdate.encode("utf-8"))          
+        nfofile=os.path.join(ppath,namef+".nfo")           
+        file = xbmcvfs.File(nfofile,"w")  
+        file.write(nfostring)
+        file.close()             
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
   
 def videoliste(url,page=1,nosub="",type="items"):    
@@ -288,6 +310,8 @@ def videoliste(url,page=1,nosub="",type="items"):
   struktur = json.loads(content) 
   elemente=struktur[type]
   for element in elemente:
+    debug("#####-#####")
+    debug(element)
     title=element["title"]
     idd=element["id"]
     desc=element["description"]
