@@ -492,6 +492,8 @@ def generatefiles(url) :
           tagline=folge["teaserText"]           
           deeplink=folge["deeplinkUrl"] 
           serienname=folge["format"]["title"]
+          folgenname=folge["title"].encode("utf-8")
+          airdate=folge["broadcastStartDate"].encode("utf-8")
           debug("staffel e")
           try:          
             type=folge["format"]["categoryId"]
@@ -513,7 +515,7 @@ def generatefiles(url) :
           debug("PPATH :"+ppath.encode("utf-8"))
           if xbmcvfs.exists(ppath):            
             if once==1:
-              os.rmtree(ppath)
+              shutil.rmtree(ppath)
               once=0
               os.mkdir(ppath)
           else:
@@ -521,6 +523,23 @@ def generatefiles(url) :
              debug("Angelegt ppath "+str(ret))
              once=0             
           filename=os.path.join(ppath,titlef+".strm")          
+          nfostring="""
+          <tvshow>
+            <title>%s</title>
+            <season>%s</season>
+            <episode>%s</episode>
+            <showtitle>%s</showtitle>
+            <plot>%s</plot>
+            <runtime>%s</runtime>
+            <thumb aspect="" type="" season="">%s</thumb>            
+            <aired>%s</aired>            
+          </tvshow>"""           
+          nfostring=nfostring%(folgenname,str(sstaffel).encode("utf-8"),folgenr,serienname.encode("utf-8"),plot.encode("utf-8"),str(laengemin),bild,airdate)          
+          nfofile=os.path.join(ppath,titlef+".nfo")           
+          file = xbmcvfs.File(nfofile,"w")  
+          file.write(nfostring)
+          file.close()             
+          debug("#####")
           debug(filename.encode("utf-8"))
           file = xbmcvfs.File(filename,"w")           
           file.write("plugin://plugin.video.rtlnow/?mode=playfolge&url="+urllib.quote_plus(str(url))+"&nummer="+str(idd))

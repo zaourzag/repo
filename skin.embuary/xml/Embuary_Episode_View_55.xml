@@ -24,6 +24,7 @@
 					<include>MetaThumbnail</include>
 					<!-- meta -->
 					<control type="grouplist">
+						<visible>!ListItem.IsParentFolder</visible>
 						<left>524</left>
 						<orientation>vertical</orientation>
 						<height>500</height>
@@ -70,7 +71,7 @@
 								<width>70</width>
 								<height>50</height>
 								<font>material24</font>
-								<label></label>
+								<label></label>
 								<onclick>RunScript(script.skin.helper.service,action=textviewer,header='$ESCINFO[ListItem.TVShowTitle]',message='$ESCVAR[TinyInfoDialogPlot]')</onclick>
 								<onup>SetFocus(6666)</onup>
 								<ondown>SetFocus(54)</ondown>
@@ -119,7 +120,7 @@
 						<param name="headline" value="$LOCALIZE[20360]"/>
 						<param name="use_custom_content" value="false"/>
 						<param name="content_visible" value="$EXP[EpisodeViewVisible]"/>
-						<param name="list_name" value="$LOCALIZE[20359]"/>
+						<param name="list_name" value="$LOCALIZE[31199]"/>
 						<param name="height" value="438"/>
 					</include>
 				</control>

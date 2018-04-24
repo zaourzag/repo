@@ -2,6 +2,7 @@
 <window>
 	<onload>Dialog.Close(fullscreeninfo)</onload>
 	<defaultcontrol always="true">603</defaultcontrol>
+	<include>PropertyIncludes</include>
 	<controls>
 		<!-- Menu -->
 		<control type="group">
@@ -184,6 +185,7 @@
 						<param name="type" value="previous"/>
 					</include>
 					<onclick>PlayerControl(Previous)</onclick>
+					<visible>!VideoPlayer.Content(livetv) + !String.StartsWith(Player.Filenameandpath,pvr://)</visible>
 				</control>
 				<control type="button" id="602">
 					<include content="PlayerButtons">
@@ -216,6 +218,7 @@
 						<param name="type" value="next"/>
 					</include>
 					<onclick>PlayerControl(Next)</onclick>
+					<visible>!VideoPlayer.Content(livetv) + !String.StartsWith(Player.Filenameandpath,pvr://)</visible>
 				</control>
 				<control type="button" id="607">
 					<colordiffuse>$VAR[PlayerRecordIconColor]</colordiffuse>

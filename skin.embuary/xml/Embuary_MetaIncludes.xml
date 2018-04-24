@@ -15,9 +15,9 @@
 					<visible>!String.IsEmpty(Window(home).Property(SkinHelper.ListItem.Year))</visible>
 				</control>
 				<control type="label">
-					<label>$INFO[Container(201).NumItems,, $LOCALIZE[36901]]   </label>
+					<label>$INFO[Container(5601).NumItems,, $LOCALIZE[36901]]   </label>
 					<include>MetaLabel</include>
-					<visible>!String.IsEmpty(Container(201).NumItems) + !String.IsEqual(Container(201).NumItems,0)</visible>
+					<visible>!String.IsEmpty(Container(5601).NumItems) + !String.IsEqual(Container(5601).NumItems,0)</visible>
 				</control>
 				<control type="label">
 					<label>$INFO[Window(home).Property(SkinHelper.ListItem.Runtime),, $LOCALIZE[31089]]   </label>
@@ -183,6 +183,16 @@
 					<label>$INFO[ListItem.Property(Artist_Mood),$LOCALIZE[175]: ]   </label>
 					<visible>!String.IsEmpty(ListItem.Property(Artist_Mood))</visible>
 				</control>
+				<control type="label">
+					<include>MetaLabel</include>
+					<label>$INFO[Container(200).NumItems,$LOCALIZE[132]: ]   </label>
+					<visible>!Integer.IsEqual(Container(200).NumItems,0)</visible>
+				</control>
+				<control type="label">
+					<include>MetaLabel</include>
+					<label>$INFO[Container(300).NumItems,$LOCALIZE[132]: ]   </label>
+					<visible>Integer.IsEqual(Container(200).NumItems,0) + !Integer.IsEqual(Container(300).NumItems,0)</visible>
+				</control>
 			</control>
 		</definition>
 	</include>
@@ -249,8 +259,8 @@
 				</control>
 				<control type="label">
 					<include>MetaLabel</include>
-					<label>$INFO[ListItem.Channelnumber,$LOCALIZE[19029] ]   </label>
-					<visible>!String.IsEmpty(ListItem.Channelnumber)</visible>
+					<label>$INFO[ListItem.ChannelNumberLabel,$LOCALIZE[19029] ]   </label>
+					<visible>!String.IsEmpty(ListItem.ChannelNumberLabel)</visible>
 				</control>
 				<control type="label">
 					<include>MetaLabel</include>
@@ -313,12 +323,16 @@
 				</control>
 				<control type="label">
 					<include>MetaLabel</include>
+					<label>$VAR[PlayerTimeLabels]   </label>
+				</control>
+				<control type="label">
+					<include>MetaLabel</include>
 					<label>$INFO[VideoPlayer.FinishTime,$LOCALIZE[31037] ]   </label>
 					<visible>!String.IsEmpty(VideoPlayer.FinishTime)</visible>
 				</control>
 				<control type="label">
 					<include>MetaLabel</include>
-					<label>$INFO[VideoPlayer.Channelnumber,$LOCALIZE[19029] ]   </label>
+					<label>$INFO[VideoPlayer.ChannelNumberLabel,$LOCALIZE[19029] ]   </label>
 					<visible>VideoPlayer.Content(livetv)</visible>
 				</control>
 				<control type="label">
@@ -493,6 +507,10 @@
 				<texture diffuse="items/mask_poster.png" background="true">$VAR[PlayerIcon]</texture>
 				<aspectratio scalediffuse="false">scale</aspectratio>
 			</control>
+			<include content="PlayerProgress">
+				<param name="top" value="410"/>
+				<param name="width" value="276"/>
+			</include>
 		</control>
 	</include>
 	<include name="MetaThumbnail">
@@ -522,7 +540,19 @@
 				<align>center</align>
 				<aligny>center</aligny>
 				<label>$INFO[ListItem.Season,S,:]$INFO[ListItem.Episode,E, - ]$INFO[ListItem.Title]</label>
-				<visible>String.IsEmpty(ListItem.Icon) | String.StartsWith(ListItem.Icon,Default)</visible>
+				<visible>!ListItem.IsParentFolder + [String.IsEmpty(ListItem.Icon) | String.StartsWith(ListItem.Icon,Default)]</visible>
+			</control>
+			<control type="textbox">
+				<top>10</top>
+				<left>10</left>
+				<width>410</width>
+				<height>222</height>
+				<font>Light24</font>
+				<textcolor>white</textcolor>
+				<align>center</align>
+				<aligny>center</aligny>
+				<label>$INFO[ListItem.Label]</label>
+				<visible>ListItem.IsParentFolder</visible>
 			</control>
 			<control type="image">
 				<width>430</width>
@@ -535,7 +565,7 @@
 				<width>430</width>
 				<height>242</height>
 				<texture diffuse="items/mask_wide_db.png" background="true">$VAR[IconLandscape]</texture>
-				<aspectratio scalediffuse="false">scale</aspectratio>
+				<aspectratio scalediffuse="false">keep</aspectratio>
 				<bordersize>20</bordersize>
 				<visible>!String.StartsWith(ListItem.Icon,Default) + String.StartsWith(ListItem.Path,pvr://)</visible>
 			</control>

@@ -14,6 +14,19 @@
 				<align>left</align>
 				<aligny>center</aligny>
 				<label>$PARAM[headline]</label>
+				<visible>!Control.HasFocus($PARAM[id]) | [Control.HasFocus($PARAM[id]) + ![Container($PARAM[id]).IsUpdating | !Integer.IsGreater(Container($PARAM[id]).NumItems,0)]]</visible>
+			</control>
+			<control type="label">
+				<top>$PARAM[top]</top>
+				<left>$PARAM[left]</left>
+				<width>1000</width>
+				<height>87</height>
+				<font>Med23</font>
+				<align>left</align>
+				<aligny>center</aligny>
+				<label>$PARAM[headline]</label>
+				<textcolor>emby</textcolor>
+				<visible>Control.HasFocus($PARAM[id]) + [Container($PARAM[id]).IsUpdating | !Integer.IsGreater(Container($PARAM[id]).NumItems,0)]</visible>
 			</control>
 		</definition>
 	</include>
@@ -402,6 +415,19 @@
 				<midtexture colordiffuse="emby_secondary"  border="2">common/white.jpg</midtexture>
 				<righttexture>-</righttexture>
 				<info>Player.Progress</info>
+				<visible>!String.StartsWith(VideoPlayer.Path,pvr://channels) + Integer.IsGreater(Player.Progress,0)</visible>
+			</control>
+			<control type="progress">
+				<top>$PARAM[top]</top>
+				<left>$PARAM[left]</left>
+				<width>$PARAM[width]</width>
+				<height>$PARAM[height]</height>
+				<texturebg colordiffuse="cc515151" border="2">common/white.jpg</texturebg>
+				<lefttexture>-</lefttexture>
+				<midtexture colordiffuse="emby_secondary"  border="2">common/white.jpg</midtexture>
+				<righttexture>-</righttexture>
+				<info>PVR.Progress</info>
+				<visible>String.StartsWith(VideoPlayer.Path,pvr://channels) + Integer.IsGreater(PVR.Progress,0)</visible>
 			</control>
 		</definition>
 	</include>
@@ -414,6 +440,50 @@
 			<width>150</width>
 			<texture colordiffuse="white">common/spinner-blue.gif</texture>
 			<aspectratio align="center" aligny="center">keep</aspectratio>
+		</control>
+	</include>
+	<!-- Sort letter -->
+	<include name="ScrollSortLetterLayout">
+		<control type="group">
+			<control type="image">
+				<top>-2</top>
+				<left>-2</left>
+				<width>86</width>
+				<height>86</height>
+				<texture diffuse="items/big_circle.png" colordiffuse="turquoise">common/white.jpg</texture>
+			</control>
+			<control type="textbox">
+				<top>-1</top>
+				<width>80</width>
+				<height>80</height>
+				<font>SortLetter</font>
+				<textcolor>EEFFFFFF</textcolor>
+				<align>center</align>
+				<aligny>center</aligny>
+				<label>$VAR[SortLetterLabel]</label>
+			</control>
+		</control>
+	</include>
+	<include name="ScrollSortLetter">
+		<control type="group">
+			<visible>Container.Scrolling + [String.IsEqual(Container.SortMethod,$LOCALIZE[551]) | String.IsEqual(Container.SortMethod,$LOCALIZE[561]) | String.IsEqual(Container.SortMethod,$LOCALIZE[558]) | String.IsEqual(Container.SortMethod,$LOCALIZE[557]) | String.IsEqual(Container.SortMethod,$LOCALIZE[556]) | String.IsEqual(Container.SortMethod,$LOCALIZE[563]) | String.IsEqual(Container.SortMethod,$LOCALIZE[549]) | String.IsEqual(Container.SortMethod,$LOCALIZE[20359])]</visible>
+			<animation effect="fade" start="0" end="100" time="120" reversible="true" delay="300">VisibleChange</animation>
+			<control type="group">
+				<visible>String.IsEqual(Container.Viewmode,$LOCALIZE[31199])</visible>
+				<right>23</right>
+				<bottom>23</bottom>
+				<width>80</width>
+				<height>80</height>
+				<include>ScrollSortLetterLayout</include>
+			</control>
+			<control type="group">
+				<visible>!String.IsEqual(Container.Viewmode,$LOCALIZE[31199])</visible>
+				<left>21</left>
+				<bottom>23</bottom>
+				<width>80</width>
+				<height>80</height>
+				<include>ScrollSortLetterLayout</include>
+			</control>
 		</control>
 	</include>
 	<!-- Poster -->
@@ -446,6 +516,16 @@
 						<width>282</width>
 						<height>420</height>
 						<texture border="20,20,20,20">items/shadow.png</texture>
+					</control>
+					<control type="image">
+						<left>-12</left>
+						<top>-7</top>
+						<width>300</width>
+						<height>438</height>
+						<texture border="20,20,20,20" colordiffuse="focus_widget">items/focus.png</texture>
+						<aspectratio>stretch</aspectratio>
+						<visible>$PARAM[focused] + Control.HasFocus($PARAM[id])</visible>
+						<include condition="$PARAM[focused]">Animation_FocusTextureFade</include>
 					</control>
 					<control type="image">
 						<width>276</width>
@@ -490,16 +570,6 @@
 						<param name="top" value="410"/>
 						<param name="width" value="276"/>
 					</include>
-					<control type="image">
-						<left>-12</left>
-						<top>-7</top>
-						<width>300</width>
-						<height>438</height>
-						<texture border="20,20,20,20" colordiffuse="focus_widget">items/focus.png</texture>
-						<aspectratio>stretch</aspectratio>
-						<visible>$PARAM[focused] + Control.HasFocus($PARAM[id])</visible>
-						<include condition="$PARAM[focused]">Animation_FocusTextureFade</include>
-					</control>
 				</control>
 			</control>
 		</definition>
@@ -534,6 +604,16 @@
 						<width>243</width>
 						<height>361</height>
 						<texture border="20,20,20,20">items/shadow.png</texture>
+					</control>
+					<control type="image">
+						<left>-12</left>
+						<top>-7</top>
+						<width>261</width>
+						<height>379</height>
+						<texture border="20,20,20,20" colordiffuse="focus_widget">items/focus.png</texture>
+						<aspectratio>stretch</aspectratio>
+						<visible>$PARAM[focused] + Control.HasFocus($PARAM[id])</visible>
+						<include condition="$PARAM[focused]">Animation_FocusTextureFade</include>
 					</control>
 					<control type="image">
 						<width>237</width>
@@ -577,16 +657,6 @@
 						<param name="top" value="351"/>
 						<param name="width" value="237"/>
 					</include>
-					<control type="image">
-						<left>-12</left>
-						<top>-7</top>
-						<width>261</width>
-						<height>379</height>
-						<texture border="20,20,20,20" colordiffuse="focus_widget">items/focus.png</texture>
-						<aspectratio>stretch</aspectratio>
-						<visible>$PARAM[focused] + Control.HasFocus($PARAM[id])</visible>
-						<include condition="$PARAM[focused]">Animation_FocusTextureFade</include>
-					</control>
 				</control>
 			</control>
 		</definition>
@@ -622,6 +692,16 @@
 						<height>361</height>
 						<texture border="20,20,20,20">items/shadow.png</texture>
 					</control>
+					<control type="image">
+						<left>-12</left>
+						<top>-7</top>
+						<width>261</width>
+						<height>379</height>
+						<texture border="20,20,20,20" colordiffuse="focus_widget">items/focus.png</texture>
+						<aspectratio>stretch</aspectratio>
+						<visible>$PARAM[focused] + Control.HasFocus($PARAM[id])</visible>
+						<include condition="$PARAM[focused]">Animation_FocusTextureFade</include>
+					</control>
 					<control type="group">
 						<visible>String.IsEmpty(ListItem.Icon) | String.StartsWith(ListItem.Icon,Default)</visible>
 						<control type="image">
@@ -653,16 +733,6 @@
 							<aspectratio scalediffuse="false">stretch</aspectratio>
 							<visible>!String.StartsWith(ListItem.Icon,Default)</visible>
 						</control>
-					</control>
-					<control type="image">
-						<left>-12</left>
-						<top>-7</top>
-						<width>261</width>
-						<height>379</height>
-						<texture border="20,20,20,20" colordiffuse="focus_widget">items/focus.png</texture>
-						<aspectratio>stretch</aspectratio>
-						<visible>$PARAM[focused] + Control.HasFocus($PARAM[id])</visible>
-						<include condition="$PARAM[focused]">Animation_FocusTextureFade</include>
 					</control>
 				</control>
 			</control>
@@ -699,6 +769,16 @@
 						<width>886</width>
 						<height>169</height>
 						<texture border="20,20,20,20">items/shadow.png</texture>
+					</control>
+					<control type="image">
+						<left>-12</left>
+						<top>-7</top>
+						<width>904</width>
+						<height>187</height>
+						<texture border="20,20,20,20" colordiffuse="focus_widget">items/focus.png</texture>
+						<aspectratio>stretch</aspectratio>
+						<visible>$PARAM[focused] + Control.HasFocus($PARAM[id])</visible>
+						<include condition="$PARAM[focused]">Animation_FocusTextureFade</include>
 					</control>
 					<control type="image">
 						<width>880</width>
@@ -751,16 +831,6 @@
 						<param name="top" value="159"/>
 						<param name="width" value="880"/>
 					</include>
-					<control type="image">
-						<left>-12</left>
-						<top>-7</top>
-						<width>904</width>
-						<height>187</height>
-						<texture border="20,20,20,20" colordiffuse="focus_widget">items/focus.png</texture>
-						<aspectratio>stretch</aspectratio>
-						<visible>$PARAM[focused] + Control.HasFocus($PARAM[id])</visible>
-						<include condition="$PARAM[focused]">Animation_FocusTextureFade</include>
-					</control>
 				</control>
 			</control>
 		</definition>
@@ -797,6 +867,16 @@
 						<width>430</width>
 						<height>245</height>
 						<texture border="20,20,20,20">items/shadow.png</texture>
+					</control>
+					<control type="image">
+						<left>-12</left>
+						<top>-7</top>
+						<width>448</width>
+						<height>263</height>
+						<texture border="20,20,20,20" colordiffuse="focus_widget">items/focus.png</texture>
+						<aspectratio>stretch</aspectratio>
+						<visible>$PARAM[focused] + Control.HasFocus($PARAM[id])</visible>
+						<include condition="$PARAM[focused]">Animation_FocusTextureFade</include>
 					</control>
 					<control type="image">
 						<width>424</width>
@@ -858,16 +938,6 @@
 						<param name="top" value="235"/>
 						<param name="width" value="424"/>
 					</include>
-					<control type="image">
-						<left>-12</left>
-						<top>-7</top>
-						<width>448</width>
-						<height>263</height>
-						<texture border="20,20,20,20" colordiffuse="focus_widget">items/focus.png</texture>
-						<aspectratio>stretch</aspectratio>
-						<visible>$PARAM[focused] + Control.HasFocus($PARAM[id])</visible>
-						<include condition="$PARAM[focused]">Animation_FocusTextureFade</include>
-					</control>
 				</control>
 			</control>
 		</definition>
@@ -902,6 +972,16 @@
 						<width>436</width>
 						<height>248</height>
 						<texture border="20,20,20,20">items/shadow.png</texture>
+					</control>
+					<control type="image">
+						<left>-12</left>
+						<top>-7</top>
+						<width>454</width>
+						<height>266</height>
+						<texture border="20,20,20,20" colordiffuse="focus_widget">items/focus.png</texture>
+						<aspectratio>stretch</aspectratio>
+						<visible>$PARAM[focused] + Control.HasFocus($PARAM[id])</visible>
+						<include condition="$PARAM[focused]">Animation_FocusTextureFade</include>
 					</control>
 					<control type="image">
 						<width>430</width>
@@ -954,33 +1034,23 @@
 						<param name="top" value="238"/>
 						<param name="width" value="430"/>
 					</include>
-					<control type="image">
-						<left>-12</left>
-						<top>-7</top>
-						<width>454</width>
-						<height>266</height>
-						<texture border="20,20,20,20" colordiffuse="focus_widget">items/focus.png</texture>
-						<aspectratio>stretch</aspectratio>
-						<visible>$PARAM[focused] + Control.HasFocus($PARAM[id])</visible>
-						<include condition="$PARAM[focused]">Animation_FocusTextureFade</include>
-					</control>
 				</control>
 			</control>
 		</definition>
 	</include>
-	<!-- Landscape Settings-->
-	<include name="LandscapeLayoutSettings">
+
+	<!-- Square Settings-->
+	<include name="SettingsLayout">
 		<param name="mainlabel">$VAR[MainListLabel]</param>
 		<param name="sublabel">$VAR[SubListLabel]</param>
-		<param name="thumblabel">$VAR[MainListLabel]</param>
 		<param name="focused">false</param>
 		<param name="visible">true</param>
 		<definition>
 			<control type="group">
 				<visible>$PARAM[visible]</visible>
 				<include content="widget_labels">
-					<param name="top">251</param>
-					<param name="width">424</param>
+					<param name="top">288</param>
+					<param name="width">276</param>
 					<param name="id">$PARAM[id]</param>
 					<param name="mainlabel">$PARAM[mainlabel]</param>
 					<param name="sublabel">$PARAM[sublabel]</param>
@@ -991,41 +1061,40 @@
 					<include content="Animation_FocusBounce">
 						<param name="id" value="$PARAM[id]"/>
 					</include>
-					<height>239</height>
+					<height>276</height>
 					<control type="image">
 						<top>-2</top>
 						<left>-2</left>
-						<width>430</width>
-						<height>245</height>
+						<width>282</width>
+						<height>282</height>
 						<texture border="20,20,20,20">items/shadow.png</texture>
-					</control>
-					<control type="image">
-						<width>424</width>
-						<height>239</height>
-						<texture colordiffuse="thumb_background_fallback_secondary" diffuse="items/mask_wide.png">common/white.jpg</texture>
-						<aspectratio scalediffuse="false">stretch</aspectratio>
-					</control>
-					<control type="textbox">
-						<top>10</top>
-						<left>10</left>
-						<width>404</width>
-						<height>219</height>
-						<font>Material70</font>
-						<textcolor>EEFFFFFF</textcolor>
-						<align>center</align>
-						<aligny>center</aligny>
-						<label>$PARAM[thumblabel]</label>
-						<visible>String.IsEmpty(ListItem.Icon) | String.StartsWith(ListItem.Icon,Default)</visible>
 					</control>
 					<control type="image">
 						<left>-12</left>
 						<top>-7</top>
-						<width>448</width>
-						<height>263</height>
+						<width>300</width>
+						<height>300</height>
 						<texture border="20,20,20,20" colordiffuse="focus_widget">items/focus.png</texture>
 						<aspectratio>stretch</aspectratio>
 						<visible>$PARAM[focused] + Control.HasFocus($PARAM[id])</visible>
 						<include condition="$PARAM[focused]">Animation_FocusTextureFade</include>
+					</control>
+					<control type="image">
+						<width>276</width>
+						<height>276</height>
+						<texture colordiffuse="$PARAM[color]" diffuse="items/mask_square.png">common/white.jpg</texture>
+						<aspectratio>stretch</aspectratio>
+					</control>
+					<control type="textbox">
+						<top>10</top>
+						<left>10</left>
+						<width>256</width>
+						<height>256</height>
+						<font>Material70</font>
+						<textcolor>EEFFFFFF</textcolor>
+						<align>center</align>
+						<aligny>center</aligny>
+						<label>$INFO[ListItem.Label2]</label>
 					</control>
 				</control>
 			</control>
@@ -1062,6 +1131,16 @@
 						<width>282</width>
 						<height>282</height>
 						<texture border="20,20,20,20">items/shadow.png</texture>
+					</control>
+					<control type="image">
+						<left>-12</left>
+						<top>-7</top>
+						<width>300</width>
+						<height>300</height>
+						<texture border="20,20,20,20" colordiffuse="focus_widget">items/focus.png</texture>
+						<aspectratio>stretch</aspectratio>
+						<visible>$PARAM[focused] + Control.HasFocus($PARAM[id])</visible>
+						<include condition="$PARAM[focused]">Animation_FocusTextureFade</include>
 					</control>
 					<control type="image">
 						<width>276</width>
@@ -1114,16 +1193,6 @@
 						<param name="top" value="273"/>
 						<param name="width" value="276"/>
 					</include>
-					<control type="image">
-						<left>-12</left>
-						<top>-7</top>
-						<width>300</width>
-						<height>300</height>
-						<texture border="20,20,20,20" colordiffuse="focus_widget">items/focus.png</texture>
-						<aspectratio>stretch</aspectratio>
-						<visible>$PARAM[focused] + Control.HasFocus($PARAM[id])</visible>
-						<include condition="$PARAM[focused]">Animation_FocusTextureFade</include>
-					</control>
 				</control>
 			</control>
 		</definition>
@@ -1158,6 +1227,16 @@
 						<width>346</width>
 						<height>346</height>
 						<texture border="20,20,20,20">items/shadow.png</texture>
+					</control>
+					<control type="image">
+						<left>-12</left>
+						<top>-7</top>
+						<width>364</width>
+						<height>364</height>
+						<texture border="20,20,20,20" colordiffuse="focus_widget">items/focus.png</texture>
+						<aspectratio>stretch</aspectratio>
+						<visible>$PARAM[focused] + Control.HasFocus($PARAM[id])</visible>
+						<include condition="$PARAM[focused]">Animation_FocusTextureFade</include>
 					</control>
 					<control type="image">
 						<width>340</width>
@@ -1210,16 +1289,6 @@
 						<param name="top" value="336"/>
 						<param name="width" value="340"/>
 					</include>
-					<control type="image">
-						<left>-12</left>
-						<top>-7</top>
-						<width>364</width>
-						<height>364</height>
-						<texture border="20,20,20,20" colordiffuse="focus_widget">items/focus.png</texture>
-						<aspectratio>stretch</aspectratio>
-						<visible>$PARAM[focused] + Control.HasFocus($PARAM[id])</visible>
-						<include condition="$PARAM[focused]">Animation_FocusTextureFade</include>
-					</control>
 				</control>
 			</control>
 		</definition>
@@ -1257,6 +1326,16 @@
 						<texture border="20,20,20,20">items/shadow.png</texture>
 					</control>
 					<control type="image">
+						<left>-12</left>
+						<top>-7</top>
+						<width>300</width>
+						<height>300</height>
+						<texture border="20,20,20,20" colordiffuse="focus_widget">items/focus.png</texture>
+						<aspectratio>stretch</aspectratio>
+						<visible>$PARAM[focused] + Control.HasFocus($PARAM[id])</visible>
+						<include condition="$PARAM[focused]">Animation_FocusTextureFade</include>
+					</control>
+					<control type="image">
 						<width>276</width>
 						<height>276</height>
 						<texture colordiffuse="thumb_background_fallback_secondary" diffuse="items/mask_square.png">common/white.jpg</texture>
@@ -1276,16 +1355,6 @@
 						<texture diffuse="items/mask_square.png" background="true">$INFO[ListItem.Icon]</texture>
 						<aspectratio scalediffuse="false">stretch</aspectratio>
 						<visible>!String.StartsWith(ListItem.Icon,Default)</visible>
-					</control>
-					<control type="image">
-						<left>-12</left>
-						<top>-7</top>
-						<width>300</width>
-						<height>300</height>
-						<texture border="20,20,20,20" colordiffuse="focus_widget">items/focus.png</texture>
-						<aspectratio>stretch</aspectratio>
-						<visible>$PARAM[focused] + Control.HasFocus($PARAM[id])</visible>
-						<include condition="$PARAM[focused]">Animation_FocusTextureFade</include>
 					</control>
 				</control>
 			</control>
@@ -1322,6 +1391,16 @@
 						<width>430</width>
 						<height>245</height>
 						<texture border="20,20,20,20">items/shadow.png</texture>
+					</control>
+					<control type="image">
+						<left>-12</left>
+						<top>-7</top>
+						<width>448</width>
+						<height>262</height>
+						<texture border="20,20,20,20" colordiffuse="focus_widget">items/focus.png</texture>
+						<aspectratio>stretch</aspectratio>
+						<visible>$PARAM[focused] + Control.HasFocus($PARAM[id])</visible>
+						<include condition="$PARAM[focused]">Animation_FocusTextureFade</include>
 					</control>
 					<control type="image">
 						<width>424</width>
@@ -1422,16 +1501,6 @@
 						<param name="top" value="235"/>
 						<param name="width" value="424"/>
 					</include>
-					<control type="image">
-						<left>-12</left>
-						<top>-7</top>
-						<width>448</width>
-						<height>262</height>
-						<texture border="20,20,20,20" colordiffuse="focus_widget">items/focus.png</texture>
-						<aspectratio>stretch</aspectratio>
-						<visible>$PARAM[focused] + Control.HasFocus($PARAM[id])</visible>
-						<include condition="$PARAM[focused]">Animation_FocusTextureFade</include>
-					</control>
 				</control>
 			</control>
 		</definition>
@@ -1462,6 +1531,16 @@
 					<height>162</height>
 					<texture border="20,20,20,20">items/shadow.png</texture>
 				</control>
+				<control type="image">
+					<left>-12</left>
+					<top>-7</top>
+					<width>301</width>
+					<height>180</height>
+					<texture border="20,20,20,20" colordiffuse="focus_widget">items/focus.png</texture>
+					<aspectratio>stretch</aspectratio>
+					<visible>$PARAM[focused] + Control.HasFocus($PARAM[id])</visible>
+					<include condition="$PARAM[focused]">Animation_FocusTextureFade</include>
+				</control>
 				<control type="group">
 					<visible>!String.IsEmpty(ListItem.Icon) | !String.IsEmpty(ListItem.Property(embyart))</visible>
 					<control type="image">
@@ -1486,13 +1565,19 @@
 						<height>156</height>
 						<texture colordiffuse="thumb_background_fallback_secondary">items/mask_button.png</texture>
 						<aspectratio>stretch</aspectratio>
-						<visible>String.StartsWith(ListItem.Property(action),ActivateWindow) | String.IsEmpty(ListItem.Property(action))</visible>
+						<visible>[String.StartsWith(ListItem.Property(action),ActivateWindow) | String.IsEmpty(ListItem.Property(action))] + String.IsEmpty(ListItem.Property(fallback))</visible>
 					</control>
 					<control type="image">
 						<width>277</width>
 						<height>156</height>
 						<texture colordiffuse="lila">items/mask_button.png</texture>
-						<visible>!String.StartsWith(ListItem.Property(action),ActivateWindow) + !String.IsEmpty(ListItem.Property(action))</visible>
+						<visible>!String.StartsWith(ListItem.Property(action),ActivateWindow) + !String.IsEmpty(ListItem.Property(action)) + String.IsEmpty(ListItem.Property(fallback))</visible>
+					</control>
+					<control type="image">
+						<width>277</width>
+						<height>156</height>
+						<texture colordiffuse="turquoise">items/mask_button.png</texture>
+						<visible>!String.IsEmpty(ListItem.Property(fallback))</visible>
 					</control>
 					<control type="label">
 						<width>277</width>
@@ -1503,6 +1588,18 @@
 						<align>center</align>
 						<aligny>center</aligny>
 						<label>$INFO[ListItem.Label]</label>
+						<visible>String.IsEmpty(ListItem.Property(fallback))</visible>
+					</control>
+					<control type="label">
+						<width>277</width>
+						<height>156</height>
+						<font>Material70</font>
+						<textcolor>EEFFFFFF</textcolor>
+						<textoffsetx>10</textoffsetx>
+						<align>center</align>
+						<aligny>center</aligny>
+						<label>$INFO[ListItem.Label2]</label>
+						<visible>!String.IsEmpty(ListItem.Property(fallback))</visible>
 					</control>
 				</control>
 				<control type="group">
@@ -1625,16 +1722,6 @@
 						</control>
 					</control>
 				</control>
-				<control type="image">
-					<left>-12</left>
-					<top>-7</top>
-					<width>301</width>
-					<height>180</height>
-					<texture border="20,20,20,20" colordiffuse="focus_widget">items/focus.png</texture>
-					<aspectratio>stretch</aspectratio>
-					<visible>$PARAM[focused] + Control.HasFocus($PARAM[id])</visible>
-					<include condition="$PARAM[focused]">Animation_FocusTextureFade</include>
-				</control>
 			</control>
 		</definition>
 	</include>
@@ -1647,13 +1734,23 @@
 		<param name="rightlabel">$VAR[RightListLabel]</param>
 		<param name="rightlabel2">$VAR[RightListLabel2]</param>
 		<definition>
-			<control type="image">
-				<left>-70</left>
-				<right>-70</right>
-				<height>120</height>
-				<texture colordiffuse="list_hover">common/white.jpg</texture>
-				<aspectratio>stretch</aspectratio>
+			<control type="group">
 				<visible>$PARAM[focused] + Control.HasFocus($PARAM[id])</visible>
+				<control type="image">
+					<top>-2</top>
+					<left>-70</left>
+					<right>-70</right>
+					<height>124</height>
+					<texture>items/list_shadow.png</texture>
+					<aspectratio>stretch</aspectratio>
+				</control>
+				<control type="image">
+					<left>-70</left>
+					<right>-70</right>
+					<height>120</height>
+					<texture colordiffuse="list_hover">common/white.jpg</texture>
+					<aspectratio>stretch</aspectratio>
+				</control>
 			</control>
 			<control type="group">
 				<visible>![[Container.Content(tvshows) | Container.Content(movies) | String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,tvshow)] + [!String.IsEmpty(ListItem.Art(poster)) | !String.IsEmpty(ListItem.Art(tvshow.poster))]]</visible>
@@ -1750,6 +1847,16 @@
 						<texture border="20,20,20,20">items/shadow.png</texture>
 					</control>
 					<control type="image">
+						<left>-12</left>
+						<top>-7</top>
+						<width>300</width>
+						<height>300</height>
+						<texture border="20,20,20,20" colordiffuse="focus_widget">items/focus.png</texture>
+						<aspectratio>stretch</aspectratio>
+						<visible>$PARAM[focused] + Control.HasFocus($PARAM[id])</visible>
+						<include condition="$PARAM[focused]">Animation_FocusTextureFade</include>
+					</control>
+					<control type="image">
 						<width>276</width>
 						<height>276</height>
 						<texture colordiffuse="thumb_background_fallback" diffuse="items/mask_square_db.png">common/white.jpg</texture>
@@ -1782,16 +1889,6 @@
 						<aspectratio scalediffuse="true">keep</aspectratio>
 						<bordersize>20</bordersize>
 						<visible>!String.StartsWith(ListItem.Icon,Default)</visible>
-					</control>
-					<control type="image">
-						<left>-12</left>
-						<top>-7</top>
-						<width>300</width>
-						<height>300</height>
-						<texture border="20,20,20,20" colordiffuse="focus_widget">items/focus.png</texture>
-						<aspectratio>stretch</aspectratio>
-						<visible>$PARAM[focused] + Control.HasFocus($PARAM[id])</visible>
-						<include condition="$PARAM[focused]">Animation_FocusTextureFade</include>
 					</control>
 				</control>
 			</control>

@@ -97,11 +97,13 @@ def log(msg, level=xbmc.LOGNOTICE):
     xbmc.log('%s: %s' % (addonID, msg), level) 
     
   
-def addLink(name, url, mode, iconimage, duration="", desc="", genre='',channelid="",times="",ids=0):
+def addLink(name, url, mode, iconimage, duration="", desc="", genre='',channelid="",times="",ids=0,sorttitle=""):
+  if sorttitle=="":
+    sorttitle=name
   u = base_url+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&channelid="+str(channelid)+"&times="+str(times)+"&ids="+str(ids)
   ok = True
-  liz = xbmcgui.ListItem(name, iconImage=defaultThumb, thumbnailImage=iconimage)  
-  liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Genre": genre})
+  liz = xbmcgui.ListItem(name, iconImage=defaultThumb, thumbnailImage=iconimage,)  
+  liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Genre": genre,"sorttitle":sorttitle})
   liz.setProperty('IsPlayable', 'true')
   liz.addStreamInfo('video', { 'duration' : duration })
   liz.setProperty("fanart_image", iconimage)
@@ -408,12 +410,12 @@ def live_channels(session,userid):
             debug("-----------------")
             debug(playlive)
             if playlive=="Select":
-                addDir(titel, "", "playmenu", bild, channelid=str(kanal_id),ids="")
+                addDir(titel, "", "playmenu", bild, channelid=str(kanal_id),ids="",sorttitle=i)
             else:
                 if playlive=="Live":
-                    addLink(titel, "", "live_play", bild, channelid=str(kanal_id),ids="")
+                    addLink(titel, "", "live_play", bild, channelid=str(kanal_id),ids="",sorttitle=i)
                 else:
-                    addLink(titel, "", "playstart", bild, channelid=str(kanal_id),ids="")                
+                    addLink(titel, "", "playstart", bild, channelid=str(kanal_id),ids="",sorttitle=i)                
   xbmcplugin.endOfDirectory(addon_handle)
 
 def playmenu(session,userid,channelid):

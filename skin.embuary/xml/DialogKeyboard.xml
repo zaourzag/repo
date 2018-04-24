@@ -4,6 +4,7 @@
 	<defaultcontrol always="true">300</defaultcontrol>
 	<onunload>ClearProperty(DisableSuggestions,home)</onunload>
 	<zorder>99</zorder>
+	<include>PropertyIncludes</include>
 	<controls>
 		<control type="image">
 			<include>Visible_Fade</include>
@@ -902,6 +903,7 @@
 		<!-- Layout -->
 		<control type="grouplist">
 			<animation condition="Window.IsVisible(numericinput)" easing="inout" effect="fade" end="0" start="100" time="120" tween="sine">Conditional</animation>
+			<include>Dialog_PopupOpenClose</include>
 			<bottom>50</bottom>
 			<left>60</left>
 			<height>40</height>

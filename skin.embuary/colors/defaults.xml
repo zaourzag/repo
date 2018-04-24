@@ -3,9 +3,9 @@
 	<!-- background -->
 	<color name="background">ff141414</color>
 	<color name="background_diffuse">f2141414</color>
+	<color name="background_diffuse2">aa141414</color>
 
 	<!-- widgets and views-->
-	<color name="diffuse_widget">66222326</color>
 	<color name="focus_widget">FF388e3c</color>
 	<color name="list_hover">ff3b3b3b</color>
 	<color name="thumb_background">ff222222</color>
@@ -58,6 +58,7 @@
 	<!-- header bar -->
 	<color name="headerbar">ff060606</color>
 	<color name="text_header">ff999999</color>
+	<color name="text_header2">FF4b4b4b</color>
 	<color name="footerbar">ff060606</color>
 
 </colors>

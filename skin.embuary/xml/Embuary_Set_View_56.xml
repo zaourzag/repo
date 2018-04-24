@@ -24,6 +24,7 @@
 					<include>MetaPoster</include>
 					<!-- meta -->
 					<control type="grouplist">
+						<visible>!ListItem.IsParentFolder</visible>
 						<left>370</left>
 						<orientation>vertical</orientation>
 						<height>500</height>
@@ -92,7 +93,7 @@
 								<width>70</width>
 								<height>50</height>
 								<font>material24</font>
-								<label></label>
+								<label></label>
 								<onclick condition="!String.IsEqual(ListItem.DBType,set)">RunScript(script.skin.helper.service,action=textviewer,header='$ESCINFO[ListItem.Title]',message='$ESCINFO[ListItem.Plot]')</onclick>
 								<onclick condition="String.IsEqual(ListItem.DBType,set)">RunScript(script.skin.helper.service,action=textviewer,header='$ESCINFO[ListItem.Title]',message='$ESCINFO[Window(home).Property(SkinHelper.ListItem.ExtendedPlot)]')</onclick>
 								<onup>SetFocus(6666)</onup>
@@ -144,7 +145,7 @@
 						<param name="use_custom_content" value="false"/>
 						<param name="height">553</param>
 						<param name="content_visible">$EXP[SetViewVisible]</param>
-						<param name="list_name">$LOCALIZE[20434]</param>
+						<param name="list_name">$LOCALIZE[31199]</param>
 					</include>
 				</control>
 			</control>
@@ -160,7 +161,7 @@
 			</include>
 			<!-- Set movies -->
 			<include content="PosterWidget">
-				<param name="visible" value="Container.Content(sets) | String.IsEqual(ListItem.DBType,set)"/>
+				<param name="visible" value="!ListItem.IsParentFolder + [Container.Content(sets) | String.IsEqual(ListItem.DBType,set)]"/>
 				<param name="force_visible" value="true"/>
 				<param name="id" value="5601"/>
 				<param name="onup" value="5600"/>

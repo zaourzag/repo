@@ -73,7 +73,7 @@
 	</extension>
 </addon>
 
-<addon id="plugin.video.zattooHiQ" version="1.6.2.1" name="Zattoo HiQ" provider-name="Steffen Rolapp">
+<addon id="plugin.video.zattooHiQ" version="1.6.2.2" name="Zattoo HiQ" provider-name="Steffen Rolapp">
   <requires>
     <import addon="xbmc.python" version="2.14.0"/>
     <import addon="xbmc.addon" version="13.0.0" />
@@ -775,7 +775,7 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
   </extension>
 </addon>
 
-<addon id="plugin.video.zattooHiQ-2" version="1.6.2.1" name="Zattoo HiQ-2" provider-name="Steffen Rolapp">
+<addon id="plugin.video.zattooHiQ-2" version="1.6.2.2" name="Zattoo HiQ-2" provider-name="Steffen Rolapp">
   <requires>
     <import addon="xbmc.python" version="2.14.0"/>
     <import addon="xbmc.addon" version="13.0.0" />
@@ -819,7 +819,7 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
   </extension>
 </addon>
 
-<addon id="skin.embuary" version="0.5.9b" name="Embuary" provider-name="sualfred">
+<addon id="skin.embuary" version="17.0.1" name="Embuary (Krypton)" provider-name="sualfred">
 	<requires>
 		<import addon="xbmc.gui" version="5.12.0"/>
 		<import addon="script.globalsearch" version="7.0.0"/>
@@ -1278,7 +1278,7 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
     </extension>
 </addon>
 
-<addon id="plugin.video.L0RE.dmax" name="DMAX Mediathek" version="0.3.3" provider-name="L0RE">
+<addon id="plugin.video.L0RE.dmax" name="DMAX Mediathek" version="0.3.4" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
         <import addon="script.module.requests" version="2.12.4"/>
@@ -1301,7 +1301,7 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
   </extension>
 </addon>
 
-<addon id="plugin.video.L0RE.arte" name="Arte.TV (dev)" version="0.4.2" provider-name="L0RE">
+<addon id="plugin.video.L0RE.arte" name="Arte.TV" version="0.4.3" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
         <import addon="script.module.requests" version="2.12.4"/>
@@ -3077,6 +3077,33 @@ This product uses the TMDb API (themoviedb.org) but is not endorsed or certified
     </extension>
 </addon>
 
+<addon id="context.L0RE.showseries" name="Zur Series" version="0.1" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.20.0" />
+        <import addon="script.module.pyxbmct" version="1.1.7"/>        
+        <import addon="script.common.plugin.cache" version="2.5.5"/> # Add this 
+        <import addon="script.module.requests" version="2.12.4"/>  
+        <import addon="script.module.youtube.dl" version="14.810.0"/>        
+    </requires>
+    <extension point="kodi.context.item" library="addon.py">
+        <item>
+            <label>Zur Serie</label>
+            <visible>Window.IsActive(10025)</visible>            
+        </item>
+    </extension>
+    <extension point="xbmc.python.pluginsource" library="addon.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en">Content Menu Show Series</summary>
+        <description lang="en">Content Menu Show Series</description>
+        <platform>all</platform>
+        <language>en</language>
+        <license>GNU General Public License, v2</license>
+        <email></email>
+    </extension>
+</addon>
+
 <addon id="service.lgtv.remote" name="LG Smart TV 3D Switch" version="0.1.20" provider-name="Birger Jesch">
   <requires>
     <import addon="xbmc.python" version="2.20.0"/>
@@ -4100,7 +4127,7 @@ Parental warning: The Maxdome Plattform consists of differnt types of content - 
   </extension>
 </addon>
 
-<addon id="plugin.video.rtlnow" name="TV Now" version="0.6.0" provider-name="L0RE">
+<addon id="plugin.video.rtlnow" name="TV Now" version="0.6.1" provider-name="L0RE">
  <requires>
         <import addon="xbmc.python" version="2.1.0"/>   
         <import addon="script.common.plugin.cache" version="2.5.5"/> # Add this    
@@ -4287,7 +4314,7 @@ Parental warning: The Maxdome Plattform consists of differnt types of content - 
 	</extension>
 </addon>
 
-<addon id="plugin.video.magine" name="Magine" version="0.3.11" provider-name="L0RE">
+<addon id="plugin.video.magine" name="Magine" version="0.3.12" provider-name="L0RE">
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>
     </extension>
