@@ -791,4 +791,13 @@ msgctxt "#32024"
 msgid "stop"
 msgstr "Stop"
 
+msgctxt "#32025"
+msgid "really delete"
+msgstr "wirklich löschen"
+
+msgctxt "#32026"
+msgid "Recording can not be restored"
+msgstr "Aufnahme kann nicht wieder hergestellt werden"
+
+
 

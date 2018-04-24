@@ -36,6 +36,9 @@ DEBUG = __addon__.getSetting('debug')
 VERSION = __addon__.getAddonInfo('version')
 OLDVERSION = _zattooDB_.get_version(VERSION)
 
+def debug(s):
+	if DEBUG: xbmc.log(str(s), xbmc.LOGDEBUG)
+	
 def refreshProg():
     import urllib
     monitor = xbmc.Monitor()
@@ -109,7 +112,7 @@ def getProgNextDay():
     tomorrow = datetime.datetime.today() + datetime.timedelta(days=1)
 
     if now > start:
-        if DEBUG: print 'NextDay ' + str(start) + ' - ' + str(now) + ' - ' + str(tomorrow)
+        debug('NextDay ' + str(start) + ' - ' + str(now) + ' - ' + str(tomorrow))
         _zattooDB_.updateProgram(tomorrow)
 
 
