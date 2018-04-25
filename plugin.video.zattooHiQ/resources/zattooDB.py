@@ -293,7 +293,12 @@ class ZattooDB(object):
 
     # get whole day
     fromTime = int(time.mktime(date.timetuple()))  # UTC time for zattoo
-
+    
+    # get the first channel
+    c.execute('SELECT * FROM channels ORDER BY weight ASC LIMIT 1')
+    row = c.fetchone()
+    firstchan = row['id']
+    
     try:
         c.execute('SELECT * FROM programs WHERE start_date > ? AND end_date < ?', (fromTime+18000, fromTime+25200,)) #get shows between 05:00 and 07:00
     except:pass
@@ -313,28 +318,31 @@ class ZattooDB(object):
 
         #print "apiData   "+api
         programData = self.zapi.exec_zapiCall(api, None)
-        debug ('ProgrammData: '+str(programData))
+        #debug ('ProgrammData: '+str(programData))
         count=0
         for channel in programData['channels']:
-           cid = channel['cid']
-           c.execute('SELECT * FROM channels WHERE id==?', [cid])
-           countt=c.fetchall()
-           if len(countt)==0:
-             #if DEBUG: print "Sender NICHT : "+cid
-             continue
-           for program in channel['programs']:
-            count+=1
-            if program['i'] != None:
-              image = "http://images.zattic.com/" + program['i']
-              #http://images.zattic.com/system/images/6dcc/8817/50d1/dfab/f21c/format_480x360.jpg
-            else: image = ""
-           # try:
-               # if DEBUG: print 'INSERT OR IGNORE INTO programs(channel, title, start_date, end_date, description, genre, image_small, showID) VALUES(%, %, %, %, %, %, %)',cid, program['t'], program['s'], program['e'], program['et'], ', '.join(program['g']), image, program['id']
-            #except:
-                #pass
-
-            c.execute('INSERT OR IGNORE INTO programs(channel, title, start_date, end_date, description, genre, image_small, showID, category) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                [cid, program['t'], program['s'], program['e'], program['et'], ', '.join(program['g']), image, program['id'], ', '.join(program['c']) ])
+            cid = channel['cid']
+            c.execute('SELECT * FROM channels WHERE id==?', [cid])
+            countt=c.fetchall()
+            if len(countt)==0:
+                 #debug('Sender nicht im Abo: '+str(cid))
+                continue
+            if cid == firstchan and not channel['programs']:
+                xbmcgui.Dialog().notification('Update Program', 'No Data',  __addon__.getAddonInfo('path') + '/icon.png', 3000, False)
+                c.close()
+                return 
+           
+            for program in channel['programs']:
+                count+=1
+                #debug ('Programm: '+str(cid)+' '+str(program))
+       
+                if program['i'] != None:
+                  image = "http://images.zattic.com/" + program['i']
+                  #http://images.zattic.com/system/images/6dcc/8817/50d1/dfab/f21c/format_480x360.jpg
+                else: image = ""
+    
+                c.execute('INSERT OR IGNORE INTO programs(channel, title, start_date, end_date, description, genre, image_small, showID, category) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                    [cid, program['t'], program['s'], program['e'], program['et'], ', '.join(program['g']), image, program['id'], ', '.join(program['c']) ])
            
 
     if count>0:

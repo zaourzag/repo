@@ -14,7 +14,11 @@ import json
 __addon__ = xbmcaddon.Addon()
 __addonId__=__addon__.getAddonInfo('id')
 __addonname__ = __addon__.getAddonInfo('name')
+__addonVersion__ = __addon__.getAddonInfo('version')
+KODIVERSION = xbmc.getInfoLabel( "System.BuildVersion" ).split()[0]
 DEBUG = __addon__.getSetting('debug')
+
+USERAGENT = 'Kodi-'+str(KODIVERSION)+' '+str(__addonname__)+'-'+str(__addonVersion__)+' (Kodi Video Addon)'
 
 def debug(s):
 	if DEBUG: xbmc.log(str(s), xbmc.LOGDEBUG)
@@ -45,7 +49,7 @@ class ZapiSession:
 		self.ACCOUNT_JSON = os.path.join(dataFolder, 'account.json' )
 		self.APICALL_FILE = os.path.join(dataFolder, 'apicall.cache')
 		self.HttpHandler = urllib2.build_opener()
-		self.HttpHandler.addheaders = [('Content-type', 'application/x-www-form-urlencoded'), ('Accept', 'application/json')]
+		self.HttpHandler.addheaders = [('User-Agent', USERAGENT), ('Content-type', 'application/x-www-form-urlencoded'), ('Accept', 'application/json')]
 
 	def init_session(self, username, password, api_url="https://zattoo.com"):
 		self.Username = username
@@ -147,6 +151,7 @@ class ZapiSession:
 				  "lang"	: "en",
 				  "format"	: "json"}
 		sessionData = self.exec_zapiCall(api, params, 'session')
+		debug('SessionData: '+str(sessionData))
 		if sessionData is not None:
 			self.SessionData = sessionData
 			self.persist_sessionData(sessionData)
@@ -157,6 +162,7 @@ class ZapiSession:
 		api = '/zapi/account/login'
 		params = {"login": self.Username, "password" : self.Password}
 		accountData = self.exec_zapiCall(api, params, 'session')
+		debug ('Login: '+str(accountData))
 		if accountData is not None:
 			self.AccountData = accountData
 			self.persist_accountData(accountData)

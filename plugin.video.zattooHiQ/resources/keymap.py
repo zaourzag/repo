@@ -99,14 +99,16 @@ class KeyMap:
       if key.isdigit():builder.start("key", {"id":key})
       else: builder.start('up', {})
       builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=skip_channel&amp;skipDir=1")')
-      builder.end("key")
+      if key.isdigit():builder.end('key')
+      else: builder.end('up')
       
     # Channel Down  
       key = __addon__.getSetting('key_prevChan')
       if key.isdigit():builder.start("key", {"id":key})
       else: builder.start('down', {})
       builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=skip_channel&amp;skipDir=-1")')
-      builder.end("key")
+      if key.isdigit():builder.end('key')
+      else: builder.end('down')
       
     # Channel pageup
       key = 'pageup'
@@ -125,70 +127,80 @@ class KeyMap:
       if key.isdigit():builder.start("key", {"id":key})
       else: builder.start('left', {})
       builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=toggle_channel")')
-      builder.end("key")
+      if key.isdigit():builder.end('key')
+      else: builder.end('left')
     
     # change stream
       key = __addon__.getSetting('key_audio')
       if key.isdigit():builder.start("key", {"id":key})
       else: builder.start('right', {})
       builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=changeStream")')
-      builder.end("key")
+      if key.isdigit():builder.end('key')
+      else: builder.end('right')
     
     # Zattoo OSD
       key = __addon__.getSetting('key_OSD')
       if key.isdigit():builder.start("key", {"id":key})
       else: builder.start('return', {})
       builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=showInfo")')
-      builder.end("key")
+      if key.isdigit():builder.end('key')
+      else: builder.end('return')
     
     # Teletext
       key = __addon__.getSetting('key_Teletext')
       if key.isdigit():builder.start("key", {"id":key})
       else: builder.start('v', {})
       builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=teletext")')
-      builder.end("key")
+      if key.isdigit():builder.end('key')
+      else: builder.end('v')
       
     # EPG
       key = __addon__.getSetting('key_EPG')
       if key.isdigit():builder.start("key", {"id":key})
       else: builder.start('e', {})
       builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=epg")')
-      builder.end("key")
+      if key.isdigit():builder.end('key')
+      else: builder.end('e')
       
     # Preview
       key = __addon__.getSetting('key_Preview')
       if key.isdigit():builder.start("key", {"id":key})
       else: builder.start('c', {})
       builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=preview")')
-      builder.end("key")
+      if key.isdigit():builder.end('key')
+      else: builder.end('c')
     
     # Channellist
       key = __addon__.getSetting('key_List')
       if key.isdigit():builder.start("key", {"id":key})
       else: builder.start('h', {})
       builder.data('ActivateWindow(10025,"plugin://plugin.video.zattooHiQ/?mode=channellist")')
-      builder.end("key")
+      if key.isdigit():builder.end('key')
+      else: builder.end('h')
       
     # Record
       key = __addon__.getSetting('key_record')
       if key.isdigit():builder.start("key", {"id":key})
       else: builder.start('k', {})
       builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=record_l")')
-      builder.end("key")
+      if key.isdigit():builder.end('key')
+      else: builder.end('k')
       
     # Recordliste
       key = __addon__.getSetting('key_recordlist')
       if key.isdigit():builder.start("key", {"id":key})
       else: builder.start('b', {})
       builder.data('ActivateWindow(10025,"plugin://plugin.video.zattooHiQ/?mode=recordings")')
-      builder.end(key)  
+      if key.isdigit():builder.end('key')
+      else: builder.end('b')
       
     # Categoryliste
       key = __addon__.getSetting('key_category')
       if key.isdigit():builder.start("key", {"id":key})
-      else: builder.start('b', {})
+      else: builder.start('d', {})
       builder.data('ActivateWindow(10025,"plugin://plugin.video.zattooHiQ/?mode=category")')
-      builder.end(key)  
+      if key.isdigit():builder.end('key')
+      else: builder.end('d')
       
     # Genreliste
       #key = __addon__.getSetting('key_genre')
@@ -269,6 +281,16 @@ class KeyMap:
       key = 'swipe'
       builder.start(key, {"direction":"left"})
       builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=toggle_channel")')
+      builder.end(key)
+      
+      key = 'swipe'
+      builder.start(key, {"direction":"up"})
+      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=skip_channel&skipDir=1")')
+      builder.end(key)
+      
+      key = 'swipe'
+      builder.start(key, {"direction":"down"})
+      builder.data('RunPlugin("plugin://plugin.video.zattooHiQ/?mode=skip_channel&skipDir=-1")')
       builder.end(key)
       
       builder.end("touch")

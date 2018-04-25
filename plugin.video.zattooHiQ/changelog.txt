@@ -1,4 +1,12 @@
 ==================================================
+[B]ZattooHiQ v1.6.3 [/B]24.04.2018 Steffen Rolapp
+==================================================
+- Ja/Nein Abfrage Aufnahme löschen
+- keymap.py überarbeitet
+- Serienaufnahme löschen wird nur noch angezeigt wenn verfügbar
+- User-Agent geändert
+
+==================================================
 [B]ZattooHiQ v1.6.2 [/B]08.04.2018 Steffen Rolapp
 ==================================================
 - In der Vorschau Anzeige nächste sendung

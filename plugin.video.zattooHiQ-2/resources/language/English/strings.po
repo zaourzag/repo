@@ -800,4 +800,30 @@ msgctxt "#32024"
 msgid "stop"
 msgstr ""
 
+msgctxt "#32100"
+msgid "Download is Running"
+msgstr ""
 
+msgctxt "#32101"
+msgid "Download"
+msgstr "Download"
+
+msgctxt "#32102"
+msgid "Video Successfully downloaded"
+msgstr "Video Successfully downloaded"
+
+msgctxt "#32103"
+msgid "Error"
+msgstr ""
+
+msgctxt "#32104"
+msgid "Download Failed"
+msgstr ""
+
+msgctxt "#32025"
+msgid "really delete"
+msgstr ""
+
+msgctxt "#32026"
+msgid "Recording can not be restored"
+msgstr ""

@@ -33,13 +33,14 @@ if REMOTE_DBG:
 
 import xbmc, xbmcgui, xbmcplugin, xbmcaddon
 import sys, urlparse,  os, json
-import  time, datetime, threading
-
+import time, datetime, threading
+    
 from resources.zattooDB import ZattooDB
 from resources.library import library
 from resources.guiactions import *
 from resources.keymap import KeyMap
 from resources.helpmy import helpmy
+from resources.download import ffmpg
 
 __addon__ = xbmcaddon.Addon()
 __addonId__=__addon__.getAddonInfo('id')
@@ -57,6 +58,8 @@ _zattooDB_=ZattooDB()
 _library_=library()
 _keymap_=KeyMap()
 _helpmy_=helpmy()
+_ffmpg_=ffmpg()
+
 
 _umlaut_ = {ord(u'ä'): u'ae', ord(u'ö'): u'oe', ord(u'ü'): u'ue', ord(u'ß'): u'ss'}
 
@@ -171,7 +174,7 @@ def build_directoryContent(content, addon_handle, cache=True, root=False, con='m
   fanart=__addon__.getAddonInfo('path') + '/fanart.jpg'
   xbmcplugin.setContent(addon_handle, con)
   xbmcplugin.setPluginFanart(addon_handle, fanart)
-  debug('Liste: '+str(content))
+  #debug('Liste: '+str(content))
   for record in content:
     rec = dict(record)
     record['thumbnail'] = record.get('thumbnail', fanart)
@@ -317,7 +320,7 @@ def build_channelsList(addon_uri, addon_handle):
           if person['role']=='director': director+=person['person']+', '
           else: cast.append(person['person'])
       
-      debug(str(prog))
+      #debug(str(prog))
       if RECALL: 
         url2 = "plugin://"+__addonId__+"/?mode=watch_c&id=" + prog.get('channel', '') + "&start=" + str(zstart+300) + "&end=" + str(zend)
       elif RESTART:
@@ -367,7 +370,7 @@ def build_category(addon_uri, addon_handle, cat):
         if search == chan:
           prog = search
           break
-      debug(str(program[chan]))
+      #debug(str(program[chan]))
       try:
         start = program[chan]['start_date'].strftime('%H:%M')
         end = program[chan]['end_date'].strftime('%H:%M') 
@@ -424,6 +427,7 @@ def build_recordingsList(addon_uri, addon_handle):
   import urllib
   
   resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/playlist', None)
+  debug('recordliste: '+str(resultData))
   if resultData is None: return
   
   for record in resultData['recordings']:
@@ -433,6 +437,7 @@ def build_recordingsList(addon_uri, addon_handle):
     end = int(time.mktime(time.strptime(record['end'], "%Y-%m-%dT%H:%M:%SZ"))) + _timezone_  # local timestamp
     position = int(time.mktime(time.strptime(record['position'], "%Y-%m-%dT%H:%M:%SZ"))) + _timezone_  # local timestamp
     now = time.time()
+    duration = end - start
     color='red'
     if (now>start): color='orange'
     if (now>end): color='green'
@@ -441,12 +446,15 @@ def build_recordingsList(addon_uri, addon_handle):
     label=datetime.datetime.fromtimestamp(start).strftime('%d.%m.%Y. %H:%M')+' ' # NEW changed - by Samoth
     if record['episode_title']:
       label+='[COLOR '+color+']'+record['title']+'[/COLOR]: '+record['episode_title']
+      title=record['title']+': '+record['episode_title']
       meta = {'title':record['episode_title'], 'season':1, 'episode':1, 'tvshowtitle':record['title']}
     else:
       label+='[COLOR '+color+']'+record['title']+'[/COLOR]'
+      title=record['title']
       meta = {'title':record['title']}
     if showInfo == "NONE": continue
     label+=' ('+showInfo['channel_name']+')'
+    
     director=''
     cast=[]
 
@@ -476,12 +484,26 @@ def build_recordingsList(addon_uri, addon_handle):
     try:
       series=record['tv_series_id']
     except:
-      series = 'None'
+      seriesrec = 'None'
+    
+    try:
+      if resultData['recorded_tv_series']:
+        for ser in resultData['recorded_tv_series']:
+          if series == ser['tv_series_id']:
+            seriesrec = 'true'
+            debug('SeriesID '+str(series))
+            break
+          else:
+            seriesrec = 'None'
+    except:
+      seriesrec = 'None'
+  
     contextMenuItems = []
     contextMenuItems.append((localString(31926), 'Action(ToggleWatched)'))
-    if series != 'None' and premiumUser:
+    if seriesrec == 'true':
       contextMenuItems.append((localString(31925),'RunPlugin("plugin://'+__addonId__+'/?mode=remove_series&recording_id='+str(record['id'])+'&series='+str(series)+'")',))
-    contextMenuItems.append((localString(31921), 'RunPlugin("plugin://'+__addonId__+'/?mode=remove_recording&recording_id='+str(record['id'])+'")'))
+    contextMenuItems.append((localString(31921), 'RunPlugin("plugin://'+__addonId__+'/?mode=remove_recording&recording_id='+str(record['id'])+'&title='+str(title)+'")'))
+    #contextMenuItems.append(('Download', 'RunPlugin("plugin://'+__addonId__+'/?mode=download&recording_id='+str(record['id'])+'&title='+str(title)+'&duration='+str(duration)+'")'))
     li.addContextMenuItems(contextMenuItems, replaceItems=True)
 
     xbmcplugin.addDirectoryItem(
@@ -507,8 +529,10 @@ def watch_recording(addon_uri, addon_handle, recording_id, start=0):
   max_bandwidth = __addon__.getSetting('max_bandwidth')
   if DASH: stream_type='dash'
   else: stream_type='hls'
+
   params = {'recording_id': recording_id, 'stream_type': stream_type, 'maxrate':max_bandwidth}
   resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/watch', params)
+  #debug ('ResultData: '+str(resultData))
   if resultData is not None:
     streams = resultData['stream']['watch_urls']
 
@@ -524,7 +548,7 @@ def watch_recording(addon_uri, addon_handle, recording_id, start=0):
         li.setProperty('inputstream.adaptive.manifest_type', 'mpd')
 
     xbmcplugin.setResolvedUrl(addon_handle, True, li)
-    
+    pos=0
     xbmc.sleep(2000)
     player=xbmc.Player()
     while (player.isPlaying()):
@@ -542,7 +566,7 @@ def setup_recording(program_id):
   #print('RECORDING: '+program_id)
   params = {'program_id': program_id}
   resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/playlist/program', params)
-  debug('Recording:'+str(params)+'  '+str(resultData))
+  #debug('Recording:'+str(params)+'  '+str(resultData))
   if resultData is not None:
     xbmcgui.Dialog().ok(__addonname__, __addon__.getLocalizedString(31903), __addon__.getLocalizedString(31904))
   else:
@@ -551,22 +575,43 @@ def setup_recording(program_id):
   _library_.make_library()  # NEW added - by Samoth
 
 
-def delete_recording(recording_id):
-  params = {'recording_id': recording_id}
-  folder=__addon__.getSetting('library_dir') # NEW added - by Samoth
-  if folder: # NEW added - by Samoth
-    _library_.delete_entry_from_library(str(recording_id)) # NEW added - by Samoth
-  resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/playlist/remove', params)
-  xbmc.executebuiltin('Container.Refresh')
+def delete_recording(recording_id, title):
+  dialog = xbmcgui.Dialog()
+  ret = dialog.yesno(local(19112), str(title), '[COLOR gold]'+localString(32025)+'[/COLOR]', localString(32026),'','[COLOR red]'+local(19291)+'[/COLOR]')
+  if ret ==1:
+    params = {'recording_id': recording_id}
+    folder=__addon__.getSetting('library_dir') # NEW added - by Samoth
+    if folder: # NEW added - by Samoth
+      _library_.delete_entry_from_library(str(recording_id)) # NEW added - by Samoth
+    resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/playlist/remove', params)
+    xbmc.executebuiltin('Container.Refresh')
 # times in local timestamps
 
 def delete_series(recording_id, series):
+  dialog = xbmcgui.Dialog()
   params = {'recording_id': recording_id, 'tv_series_id':series, 'remove_recording':'true'}
   folder=__addon__.getSetting('library_dir') # NEW added - by Samoth
   if folder: # NEW added - by Samoth
     _library_.delete_entry_from_library(str(recording_id)) # NEW added - by Samoth
   resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/series_recording/remove', params)
   xbmc.executebuiltin('Container.Refresh')
+
+def start_download(recording_id, title, duration):
+    max_bandwidth = __addon__.getSetting('max_bandwidth')
+    params = {'recording_id': recording_id, 'stream_type': 'hls', 'maxrate':max_bandwidth}
+    resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/watch', params)
+    #debug ('Result:'+str(resultData))
+    if resultData is not None:
+      streams = resultData['stream']['watch_urls']
+
+    if len(streams)==0:
+      xbmcgui.Dialog().notification("ERROR", "NO STREAM FOUND, CHECK SETTINGS!", channelInfo['logo'], 5000, False)
+      return
+    elif len(streams) > 1 and  __addon__.getSetting('audio_stream') == 'B' and streams[1]['audio_channel'] == 'B': streamNr = 1
+    else: streamNr = 0
+    url = streams[streamNr]['url']
+   
+    _ffmpg_.start_download(url, title, duration)
 
 def slugify(value):
     """
@@ -597,7 +642,7 @@ def watch_channel(channel_id, start, end, showID="", restart=False, showOSD=Fals
 
   if DASH: stream_type='dash'
   else:  stream_type='hls'
-
+  
 
   if restart: 
     startTime = datetime.datetime.fromtimestamp(int(start))
@@ -740,7 +785,7 @@ def search_show(addon_uri, addon_handle):
     return
 
   programs = sorted(resultData['programs'], key=lambda prog: ( prog['start'], prog['cid']))
-  debug('Suche: '+str(programs))
+  #debug('Suche: '+str(programs))
   channels = _zattooDB_.getChannelList(False)
   '''
   chanDict = {}
@@ -891,7 +936,7 @@ def showEpg():
   from resources.epg.epg import EPG
   currentChannel = _zattooDB_.get_playing()['channel']
   channelList = _zattooDB_.getChannelList(_listMode_ == 'favourites')
-  debug(str(channelList))
+  #debug(str(channelList))
   try:
     currentNr=channelList[currentChannel]['nr']
   except:
@@ -1359,7 +1404,8 @@ def main():
     watch_recording(addon_uri, addon_handle, recording_id, start)
   elif action == 'remove_recording':
     recording_id = args.get('recording_id')[0]
-    delete_recording(recording_id)
+    title = args.get('title')[0]
+    delete_recording(recording_id, title)
   elif action == 'remove_series':
     recording_id = args.get('recording_id')[0]
     series = args.get('series')[0]
@@ -1417,5 +1463,11 @@ def main():
     _helpmy_.showHelp(img)
     
   elif action == 'showhelp': showHelp(addon_uri, addon_handle)
-    
+  
+  elif action == 'download':
+    recording_id = args.get('recording_id')[0]
+    title = args.get('title')[0]
+    duration = args.get('duration')[0]
+    start_download(recording_id, title, duration)
+        
 main()

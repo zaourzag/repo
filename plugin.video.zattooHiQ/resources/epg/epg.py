@@ -688,7 +688,7 @@ class EPG(xbmcgui.WindowXML):
 
 	def _nextDay(self):
 		date = (self.viewStartDate + datetime.timedelta(days=1))
-		datehigh = (datetime.datetime.today() + datetime.timedelta(days=13))
+		datehigh = (datetime.datetime.today() + datetime.timedelta(days=14))
 		if date > datehigh:
 			d = datetime.datetime.strftime(datetime.datetime.date(date), '%d.%m.%Y')
 			xbmcgui.Dialog().notification(str(d), localString(31303), time=3000) 
@@ -766,9 +766,10 @@ class EPG(xbmcgui.WindowXML):
 			return
 # 		 channelsWithoutPrograms = list(channels)
 		'''
-		
-		self.db.updateProgram(startTime)
-
+                xbmc.executebuiltin("ActivateWindow(busydialog)")
+		ret=self.db.updateProgram(startTime)
+                xbmc.executebuiltin("Dialog.Close(busydialog)")
+                
 		# date and time row
 		#Date = str(self.viewStartDate.strftime ('%A %d. %B %Y'))
 		self.setControlLabel(self.C_MAIN_DATE, self.formatDate(self.viewStartDate))
@@ -1055,7 +1056,7 @@ class EPG(xbmcgui.WindowXML):
 		today = datetime.date.today()
 		date = dialog.numeric(1, localString(31924)).replace(' ','0').replace('/','.')
 		datelow = (datetime.date.today() - datetime.timedelta(days=7))
-		datehigh = (datetime.date.today() + datetime.timedelta(days=13))
+		datehigh = (datetime.date.today() + datetime.timedelta(days=14))
 
 		debug('date EPG '+ str(date))
 		
