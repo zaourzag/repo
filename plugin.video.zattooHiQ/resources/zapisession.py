@@ -121,7 +121,7 @@ class ZapiSession:
 		url = self.ZAPIUrl + api
 		#debug( "ZapiCall  " + str(url))
 		content = self.request_url(url, params)
-		if content is None and context != 'session' and self.renew_session():
+		if content is None and context != 'session':# and self.renew_session():
 			content = self.request_url(url, params)
 		if content is None:
 			return None
