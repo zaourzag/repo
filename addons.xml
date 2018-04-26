@@ -73,7 +73,7 @@
 	</extension>
 </addon>
 
-<addon id="plugin.video.zattooHiQ" version="1.6.2.2" name="Zattoo HiQ" provider-name="Steffen Rolapp">
+<addon id="plugin.video.zattooHiQ" version="1.6.3" name="Zattoo HiQ" provider-name="Steffen Rolapp">
   <requires>
     <import addon="xbmc.python" version="2.14.0"/>
     <import addon="xbmc.addon" version="13.0.0" />
@@ -775,7 +775,7 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
   </extension>
 </addon>
 
-<addon id="plugin.video.zattooHiQ-2" version="1.6.2.2" name="Zattoo HiQ-2" provider-name="Steffen Rolapp">
+<addon id="plugin.video.zattooHiQ-2" version="1.6.3" name="Zattoo HiQ-2" provider-name="Steffen Rolapp">
   <requires>
     <import addon="xbmc.python" version="2.14.0"/>
     <import addon="xbmc.addon" version="13.0.0" />
@@ -1426,7 +1426,7 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
     </extension>
 </addon>
 
-<addon id="plugin.video.skygo.de" name="Sky Go" version="1.10.10.2" provider-name="jojo, frankr612, Maven, Linkinsoldier">
+<addon id="plugin.video.skygo.de" name="Sky Go" version="1.11.0" provider-name="jojo, frankr612, Maven, Linkinsoldier">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
 		<import addon="script.module.requests" version="2.9.1"/>
@@ -1446,7 +1446,7 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
 		<description lang="de">
 Abonnenten von Sky Deutschland mit Zugang zu Sky Go (Extra) erhalten Zugriff auf sämtliche Inhalte.
 Achtung: Dies ist kein offizielles Addon und wird von Sky Deutschland Fernsehen GmbH &amp; Co. KG nicht unterstützt.
-Hinweis: Dieses Addon verwendet die TMDb API (themoviedb.org) um User-Ratings und Fanartbilder zu verwenden, aber steht in keinem Zusammenhang bzw. ist nicht zertifiziert von TMDb. Dies kann in den Einstellungen deaktiviert werden.
+Hinweis: Dieses Addon verwendet die TMDb API (themoviedb.org), um User-Ratings und Fanartbilder zu verwenden, aber steht in keinem Zusammenhang bzw. ist nicht zertifiziert von TMDb. Dies kann in den Einstellungen deaktiviert werden.
 		</description>
 		<description lang="en_gb">
 Allows you to stream all your content from german sky go.
@@ -1462,7 +1462,7 @@ This product uses the TMDb API (themoviedb.org) but is not endorsed or certified
 		<email></email>
 		<source></source>
 		<news>
-			- Fix für die Anzeige der TMDb-Poster
+			- Vorbereitende Änderung für python3
 		</news>
 	</extension>
 </addon>
@@ -2428,7 +2428,7 @@ To support the backport the addon will now always create the merged_epg.xml.gz
   </extension>
 </addon>
 
-<addon id="plugin.video.skyticket.de" name="Sky Ticket" version="1.0.8.2" provider-name="jojo, frankr612, Maven, Linkinsoldier">
+<addon id="plugin.video.skyticket.de" name="Sky Ticket" version="1.0.9" provider-name="jojo, frankr612, Maven, Linkinsoldier">
 	<requires>
 		<import addon="xbmc.python" version="2.1.0"/>
 		<import addon="script.module.requests" version="2.9.1"/>
@@ -2464,7 +2464,7 @@ This product uses the TMDb API (themoviedb.org) but is not endorsed or certified
 		<email></email>
 		<source></source>
 		<news>
-			- Fix für die Anzeige der TMDb-Poster
+			- Vorbereitende Änderung für python3
 		</news>
 	</extension>
 </addon>
@@ -3077,13 +3077,9 @@ This product uses the TMDb API (themoviedb.org) but is not endorsed or certified
     </extension>
 </addon>
 
-<addon id="context.L0RE.showseries" name="Zur Series" version="0.1" provider-name="L0RE">
+<addon id="context.L0RE.showseries" name="Zur Series" version="0.1.1" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.20.0" />
-        <import addon="script.module.pyxbmct" version="1.1.7"/>        
-        <import addon="script.common.plugin.cache" version="2.5.5"/> # Add this 
-        <import addon="script.module.requests" version="2.12.4"/>  
-        <import addon="script.module.youtube.dl" version="14.810.0"/>        
     </requires>
     <extension point="kodi.context.item" library="addon.py">
         <item>
