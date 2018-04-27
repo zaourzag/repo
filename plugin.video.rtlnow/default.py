@@ -689,7 +689,7 @@ def hashplay(idd):
     debug(felder)
     if felder[0]==idd:    
           debug("Gefunden")
-          stream=felder[1]
+          stream=felder[1].split("?")[0]
           title=felder[2]          
           bild=felder[3]                      
           laenge=felder[4] 
