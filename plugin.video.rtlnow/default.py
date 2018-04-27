@@ -84,8 +84,8 @@ except:
 cachezeit=addon.getSetting("cachetime")   
 cache = StorageServer.StorageServer("plugin.video.rtlnow", cachezeit) # (Your plugin name, Cache time in hours
 
-def addLink(name, url, mode, iconimage, duration="", desc="", genre=''):
-  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
+def addLink(name, url, mode, iconimage, duration="", desc="", genre='',stunden=""):
+  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&stunden="+str(stunden)
   ok = True
   liz = xbmcgui.ListItem(name, iconImage="", thumbnailImage=iconimage)
   liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Genre": genre})
@@ -132,8 +132,8 @@ def parameters_string_to_dict(parameters):
 				paramDict[paramSplits[0]] = paramSplits[1]
 	return paramDict
   
-def addDir(name, url, mode, iconimage, desc="", duration="",nummer=0,bild="",title="",addtype=0,serie=""):
-    u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&nummer="+str(nummer)+"&bild="+str(bild)+"&title="+str(title)
+def addDir(name, url, mode, iconimage, desc="", duration="",nummer=0,bild="",title="",addtype=0,serie="",stunden=""):
+    u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&nummer="+str(nummer)+"&bild="+str(bild)+"&title="+str(title)+"&stunden="+str(stunden)
     ok = True
     liz = xbmcgui.ListItem(name)
     liz.setArt({ 'fanart': iconimage })
@@ -409,8 +409,10 @@ def staffel(idd,url) :
           #listitem.setInfo(type='video')          
           xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url="plugin://plugin.video.rtlnow/?nummer="+haswert+"&mode=hashplay", listitem=listitem)
           #addLink(name, stream, "playvideo", bild) 
- 
-  xbmcplugin.addDirectoryItems(addon_handle,menu)  
+  updatestd=addon.getSetting("updatestd")  
+  debug(urllib.quote_plus(sys.argv[2]))
+  menu.append(addDir("Add to Library",url,"tolibrary","",stunden=str(updatestd)))    
+  xbmcplugin.addDirectoryItems(addon_handle,menu)
   f = open( os.path.join(temp,"menu.txt"), 'w')  
   f.write(menulist)
   f.close()     
@@ -494,6 +496,8 @@ def generatefiles(url) :
           serienname=folge["format"]["title"]
           folgenname=folge["title"].encode("utf-8")
           airdate=folge["broadcastStartDate"].encode("utf-8")
+          seriendesc=folge["format"]["infoTextLong"]
+          serienbild=folge["format"]["defaultDvdImage"]
           debug("staffel e")
           try:          
             type=folge["format"]["categoryId"]
@@ -524,7 +528,7 @@ def generatefiles(url) :
              once=0             
           filename=os.path.join(ppath,titlef+".strm")          
           nfostring="""
-          <tvshow>
+          <episodedetails>
             <title>%s</title>
             <season>%s</season>
             <episode>%s</episode>
@@ -534,7 +538,14 @@ def generatefiles(url) :
             <thumb aspect="" type="" season="">%s</thumb>            
             <aired>%s</aired>            
           </tvshow>"""           
+          nfoseriestring="""
+          <tvshow>
+            <title>%s</title>           
+            <plot>%s</plot>            
+            <thumb aspect="" type="" season="">%s</thumb>                        
+          </tvshow>"""           
           nfostring=nfostring%(folgenname,str(sstaffel).encode("utf-8"),folgenr,serienname.encode("utf-8"),plot.encode("utf-8"),str(laengemin),bild,airdate)          
+          nfoseriestring=nfoseriestring%(serienname.encode("utf-8"),seriendesc.encode("utf-8"),serienbild.encode("utf-8"))          
           nfofile=os.path.join(ppath,titlef+".nfo")           
           file = xbmcvfs.File(nfofile,"w")  
           file.write(nfostring)
@@ -544,12 +555,12 @@ def generatefiles(url) :
           file = xbmcvfs.File(filename,"w")           
           file.write("plugin://plugin.video.rtlnow/?mode=playfolge&url="+urllib.quote_plus(str(url))+"&nummer="+str(idd))
           file.close()
- 
-  xbmcplugin.addDirectoryItems(addon_handle,menu)  
-  f = open( os.path.join(temp,"menu.txt"), 'w')  
-  f.write(menulist)
-  f.close()     
-  xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)  
+  nfofile=os.path.join(ppath,"tvshow.nfo")           
+  file = xbmcvfs.File(nfofile,"w")  
+  file.write(nfoseriestring)
+
+
+  
 def playfolge(url,nummer):
   debug("PLAYFOLGE :"+url)
   ret,token=login()
@@ -1025,6 +1036,7 @@ def tolibrary(url,name,stunden):
     urln=urllib.quote_plus(urln)
     debug("tolibrary urln : "+urln)
     xbmc.executebuiltin('XBMC.RunPlugin(plugin://service.L0RE.cron/?mode=adddata&name=%s&stunden=%s&url=%s)'%(name,stunden,urln))
+    #xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)
 
 def listfav()  :    
     menu=[]
