@@ -250,9 +250,9 @@ def generatefiles(url,fname):
             if once==1:
               shutil.rmtree(ppath)
               once=0
-              os.mkdir(ppath)
+              xbmcvfs.mkdir(ppath)
           else:
-             ret=os.mkdir(ppath) 
+             ret=xbmcvfs.mkdir(ppath) 
              debug("Angelegt ppath "+str(ret))
              once=0                       
           file = xbmcvfs.File(filename,"w")             
