@@ -1,0 +1,5 @@
+<settings>
+     <setting id="username" type="text" label="Benutzerkennung" default=""/>
+     <setting id="password" type="text" label="Passwort/Geburtsdatum" default=""/>
+     <setting id="btype" type="labelenum" label="Bücherrei" values="Berlin|XX" default="0"/>
+</settings>
