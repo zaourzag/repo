@@ -73,7 +73,7 @@
 	</extension>
 </addon>
 
-<addon id="plugin.video.zattooHiQ" version="1.6.3" name="Zattoo HiQ" provider-name="Steffen Rolapp">
+<addon id="plugin.video.zattooHiQ" version="1.6.3.1" name="Zattoo HiQ" provider-name="Steffen Rolapp">
   <requires>
     <import addon="xbmc.python" version="2.14.0"/>
     <import addon="xbmc.addon" version="13.0.0" />
@@ -775,7 +775,7 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
   </extension>
 </addon>
 
-<addon id="plugin.video.zattooHiQ-2" version="1.6.3" name="Zattoo HiQ-2" provider-name="Steffen Rolapp">
+<addon id="plugin.video.zattooHiQ-2" version="1.6.3.1" name="Zattoo HiQ-2" provider-name="Steffen Rolapp">
   <requires>
     <import addon="xbmc.python" version="2.14.0"/>
     <import addon="xbmc.addon" version="13.0.0" />
@@ -819,7 +819,7 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
   </extension>
 </addon>
 
-<addon id="skin.embuary" version="17.0.1" name="Embuary (Krypton)" provider-name="sualfred">
+<addon id="skin.embuary" version="17.0.2" name="Embuary (Krypton)" provider-name="sualfred">
 	<requires>
 		<import addon="xbmc.gui" version="5.12.0"/>
 		<import addon="script.globalsearch" version="7.0.0"/>
@@ -3216,7 +3216,7 @@ This product uses the TMDb API (themoviedb.org) but is not endorsed or certified
 	</extension>
 </addon>
 
-<addon id="plugin.video.L0RE.cinetrailer" name="Cinetrailer" version="0.2" provider-name="L0RE">
+<addon id="plugin.video.L0RE.cinetrailer" name="Cinetrailer" version="0.3" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="script.module.requests" version="2.12.4"/>
@@ -4123,7 +4123,7 @@ Parental warning: The Maxdome Plattform consists of differnt types of content - 
   </extension>
 </addon>
 
-<addon id="plugin.video.rtlnow" name="TV Now" version="0.6.1" provider-name="L0RE">
+<addon id="plugin.video.rtlnow" name="TV Now" version="0.6.3" provider-name="L0RE">
  <requires>
         <import addon="xbmc.python" version="2.1.0"/>   
         <import addon="script.common.plugin.cache" version="2.5.5"/> # Add this    
