@@ -36,8 +36,16 @@ DEBUG = __addon__.getSetting('debug')
 VERSION = __addon__.getAddonInfo('version')
 OLDVERSION = _zattooDB_.get_version(VERSION)
 
-def debug(s):
-	if DEBUG: xbmc.log(str(s), xbmc.LOGDEBUG)
+def debug(content):
+    if DEBUG:log(content, xbmc.LOGDEBUG)
+    
+def notice(content):
+    log(content, xbmc.LOGNOTICE)
+
+def log(msg, level=xbmc.LOGNOTICE):
+    addon = xbmcaddon.Addon()
+    addonID = addon.getAddonInfo('id')
+    xbmc.log('%s: %s' % (addonID, msg), level) 
 	
 def refreshProg():
     import urllib

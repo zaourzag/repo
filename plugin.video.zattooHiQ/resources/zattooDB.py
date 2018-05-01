@@ -52,8 +52,16 @@ if REMOTE_DBG:
     sys.stderr.write("Error: You must add org.python.pydev.debug.pysrc to your PYTHONPATH.")
     sys.exit(1)
 
-def debug(s):
-	if DEBUG: xbmc.log(str(s), xbmc.LOGDEBUG)
+def debug(content):
+    if DEBUG:log(content, xbmc.LOGDEBUG)
+    
+def notice(content):
+    log(content, xbmc.LOGNOTICE)
+
+def log(msg, level=xbmc.LOGNOTICE):
+    addon = xbmcaddon.Addon()
+    addonID = addon.getAddonInfo('id')
+    xbmc.log('%s: %s' % (addonID, msg), level) 
     
 class reloadDB(xbmcgui.WindowXMLDialog):
 
@@ -66,12 +74,11 @@ class reloadDB(xbmcgui.WindowXMLDialog):
         self.wartungImg =xbmcgui.ControlImage(50, 50, 1180, 596,__addon__.getAddonInfo('path') + '/resources/media/wartung.png'  , aspectRatio=0)
     self.addControl(self.wartungImg)
     self.show()
-    #self.reloadDB()
+    
   def reloadDB(self):
-    #self.wartungImg.setVisible(True)
-    #self.wartungImg.setPosition(50, 50, 1230, 556)
+    debug('ReloadDB')
     from resources.library import library
-    _library_=library()
+    _library_ = library()
     DB = ZattooDB()
     news = __addon__.getAddonInfo('path')+'/resources/media/news.png'        
     xbmc.executebuiltin("ActivateWindow(busydialog)")
@@ -83,25 +90,25 @@ class reloadDB(xbmcgui.WindowXMLDialog):
         except:
             pass
     try:
-        #os.remove(os.path.join(xbmc.translate_path(__addon__.getAddonInfo('path') + '/resources/media/'), news.png))
         os.remove(os.path.join(profilePath, 'cookie.cache'))
         os.remove(os.path.join(profilePath, 'session.cache'))
-        #os.remove(os.path.join(profilePath, 'account.cache'))
+        os.remove(os.path.join(profilePath, 'account.cache'))
         #os.remove(os.path.join(profilePath, 'apicall.cache'))
        
     except:
         pass
-    
+    #DB.zapi.AccountData = None
+    DB.zapiSession()
     DB._createTables()
-    time.sleep(5)
+    #time.sleep(5)
     xbmcgui.Dialog().notification(localString(31916), localString(30110),  __addon__.getAddonInfo('path') + '/icon.png', 3000, False)
     DB.updateChannels(True)
-    time.sleep(2)
+    #time.sleep(2)
     DB.updateProgram(datetime.datetime.now(), True)
     
     startTime=datetime.datetime.now()#-datetime.timedelta(minutes = 60)
     endTime=datetime.datetime.now()+datetime.timedelta(minutes = 20)
-    time.sleep(2)
+    #time.sleep(2)
     DB.getProgInfo(True, startTime, endTime)
     xbmcgui.Dialog().notification(localString(31106), localString(31915),  __addon__.getAddonInfo('path') + '/icon.png', 3000, False)
     _library_.make_library()
@@ -142,15 +149,16 @@ class ZattooDB(object):
     elif PROVIDER == "12": ZAPIUrl = "https://tvonline.ewe.de"
     elif PROVIDER == "13": ZapiUrl = "https://www.quantum-tv.com"
     
-    if zapiSession.init_session(__addon__.getSetting('username'), __addon__.getSetting('password'), ZAPIUrl):
-                                
+    if zapiSession.init_session(__addon__.getSetting('username'), __addon__.getSetting('password'), ZAPIUrl):                                
       return zapiSession
+      
     else:
       # show home window, zattooHiQ settings and quit
       xbmc.executebuiltin('ActivateWindow(10000)')
       xbmcgui.Dialog().ok(__addon__.getAddonInfo('name'), __addon__.getLocalizedString(31902))
       __addon__.openSettings()
       zapiSession.renew_session()
+      xbmcgui.Dialog().ok(__addon__.getAddonInfo('name'), local(24074))
       import sys
       sys.exit()
 
@@ -224,7 +232,9 @@ class ZattooDB(object):
 
     except sqlite3.OperationalError, ex:
       pass
-
+    VERSION = __addon__.getAddonInfo('version')
+    self.set_version(VERSION)
+    
   def updateChannels(self, rebuild=False):
     c = self.conn.cursor()
 
@@ -239,17 +249,20 @@ class ZattooDB(object):
 
     # always clear db on update
     c.execute('DELETE FROM channels')
-    #print "account  "+ self.zapi.AccountData['account']['power_guide_hash']
+    
+    #debug( "account  "+ self.zapi.AccountData['account']['power_guide_hash'])
     api = '/zapi/v2/cached/channels/' + self.zapi.AccountData['account']['power_guide_hash'] + '?details=False'
     channelsData = self.zapi.exec_zapiCall(api, None)
-    #debug("channels: " +str(channelsData))
-    time.sleep(2)
+    debug("channels: " +str(channelsData))
+    #time.sleep(5)
     api = '/zapi/channels/favorites'
     favoritesData = self.zapi.exec_zapiCall(api, None)
-    
+    debug (str(favoritesData))
     if favoritesData == None: 
-        time.sleep(2)
+	debug('favourites = None')
+        time.sleep(5)
         favoritesData = self.zapi.exec_zapiCall(api, None)
+	debug (str(favoritesData))
     
     nr = 0
     for group in channelsData['channel_groups']:

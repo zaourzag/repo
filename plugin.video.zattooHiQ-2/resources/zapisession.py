@@ -20,8 +20,16 @@ DEBUG = __addon__.getSetting('debug')
 
 USERAGENT = 'Kodi-'+str(KODIVERSION)+' '+str(__addonname__)+'-'+str(__addonVersion__)+' (Kodi Video Addon)'
 
-def debug(s):
-	if DEBUG: xbmc.log(str(s), xbmc.LOGDEBUG)
+def debug(content):
+    if DEBUG:log(content, xbmc.LOGDEBUG)
+    
+def notice(content):
+    log(content, xbmc.LOGNOTICE)
+
+def log(msg, level=xbmc.LOGNOTICE):
+    addon = xbmcaddon.Addon()
+    addonID = addon.getAddonInfo('id')
+    xbmc.log('%s: %s' % (addonID, msg), level) 
 
 if sys.version_info > (2, 7, 9):
 	import ssl
@@ -55,7 +63,10 @@ class ZapiSession:
 		self.Username = username
 		self.Password = password
 		self.ZAPIUrl = api_url
-		return self.restore_session() or self.renew_session()
+		if self.restore_session():
+		    debug ('Restore = '+str(self.restore_session()))
+		    return self.restore_session() 
+		else: return self.renew_session()
 
 	def restore_session(self):
 		if os.path.isfile(self.COOKIE_FILE) and os.path.isfile(self.ACCOUNT_FILE) and os.path.isfile(self.SESSION_FILE):
@@ -103,6 +114,7 @@ class ZapiSession:
 
 	def request_url(self, url, params):
 		try:
+			#debug (str(url) +' '+str(params))
 			response = self.HttpHandler.open(url, urllib.urlencode(params) if params is not None else None)
 			if response is not None:
 				sessionId = self.extract_sessionId(response.info().getheader('Set-Cookie'))
@@ -121,7 +133,7 @@ class ZapiSession:
 		url = self.ZAPIUrl + api
 		#debug( "ZapiCall  " + str(url))
 		content = self.request_url(url, params)
-		if content is None and context != 'session':# and self.renew_session():
+		if content is None:# and self.renew_session():
 			content = self.request_url(url, params)
 		if content is None:
 			return None
@@ -135,7 +147,7 @@ class ZapiSession:
 		return None
 
 	def fetch_appToken(self):
-		debug("ZapiUrL= "+str(self.ZAPIUrl))
+		#debug("ZapiUrL= "+str(self.ZAPIUrl))
 		try:
 			handle = urllib2.urlopen(self.ZAPIUrl + '/')
 		except:

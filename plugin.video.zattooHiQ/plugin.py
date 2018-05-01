@@ -269,7 +269,7 @@ def build_channelsList(addon_uri, addon_handle):
   import urllib
   channels = _zattooDB_.getChannelList(_listMode_ == 'favourites')
   li = False
-  nr=1
+  nr=0
   for chan in channels['index']:
     nr+=1
   if channels is not None:
@@ -1341,10 +1341,11 @@ def main():
   addon_handle = int(sys.argv[1])
   args = urlparse.parse_qs(sys.argv[2][1:])
   action=args.get('mode', ['root'])[0]
-  
-  channel=_zattooDB_.get_playing()['channel']
-  channeltitle=_zattooDB_.get_channeltitle(channel)
-  program = _zattooDB_.getPrograms({'index':[channel]}, True, datetime.datetime.now(), datetime.datetime.now())
+  try:
+    channel=_zattooDB_.get_playing()['channel']
+    channeltitle=_zattooDB_.get_channeltitle(channel)
+    program = _zattooDB_.getPrograms({'index':[channel]}, True, datetime.datetime.now(), datetime.datetime.now())
+  except:pass
   try:
     program=program[0]
   except:pass
