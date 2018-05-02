@@ -604,6 +604,8 @@ def playfolge(url,nummer):
           debug("--")
           name=folge["title"]         
           idd=folge["id"]
+          if not str(idd)==str(nummer):
+            continue             
           debug("staffel a")
           bild="https://ais.tvnow.de/tvnow/movie/"+str(idd)+"/600x600/title.jpg"
           stream=folge["manifest"]["dashclear"].strip()
@@ -643,14 +645,14 @@ def playfolge(url,nummer):
           titlef=title.replace(" ","_").replace(":","_")
           serief=serienname.replace(" ","_").replace(":","_")
           #debug(namef)
-          if idd==nummer:
-            if kodi18=="true" :
+          if kodi18=="true" :
               if not streamcode=="0":
                 stream=streamcode
               debug("STREAM : #" +stream +"#")
           content = getUrl(deeplink)
           referer=re.compile("webLink = '(.+?)'", re.DOTALL).findall(content)[0]                
           headerfelder="user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36&Referer="+referer
+          stream=stream.split("?")[0]
           if kodi18=="true" :                
                 listitem = xbmcgui.ListItem(path=stream+"|"+headerfelder,label=title,iconImage=bild,thumbnailImage=bild)
           else:
