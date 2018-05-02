@@ -61,8 +61,6 @@
 	</variable>
 	<!-- Embcon/Native DB vars -->
 	<variable name="View_Cast_Content">
-		<value condition="Container.Content(sets) | String.IsEqual(ListItem.DBType,set)"></value>
-		<value condition="!Container.Content(seasons) + ListItem.IsParentFolder"></value>
 		<value condition="String.StartsWith(ListItem.Path,plugin://plugin.video.embycon) + Container.Content(seasons) + ListItem.IsParentFolder">plugin://plugin.video.embycon?mode=WIDGET_CONTENT_CAST&amp;id=$INFO[ListItem(1).Property(id)]</value>
 		<value condition="String.StartsWith(ListItem.Path,plugin://plugin.video.embycon)">plugin://plugin.video.embycon?mode=WIDGET_CONTENT_CAST&amp;id=$INFO[ListItem.Property(id)]</value>
 		<value condition="String.IsEqual(ListItem.DBType,movie) + !String.IsEmpty(ListItem.DBID) + !String.IsEqual(ListItem.DBID,0)">plugin://plugin.get.cast?mode=dbid&amp;&amp;dbtype=movie&amp;&amp;dbinfo=$INFO[ListItem.DBID]</value>
@@ -174,6 +172,7 @@
 		<value condition="!String.IsEmpty(Container.ShowTitle)">$INFO[Container.ShowTitle]</value>
 		<value condition="Window.IsVisible(MyPVRGuide.xml)">$LOCALIZE[19069]</value>
 		<value condition="Window.IsVisible(MyPVRRecordings.xml)">$LOCALIZE[19017]</value>
+		<value condition="!String.IsEmpty(Container.Foldername) + !String.StartsWith(Colder.Folderpath,plugin://plugin.video.emby)">$INFO[Container.Foldername]</value>
 		<value condition="Container.Content(sets)">$LOCALIZE[31169]</value>
 		<value condition="Container.Content(movies)">$LOCALIZE[342]</value>
 		<value condition="Container.Content(tvshows)">$LOCALIZE[20343]</value>
@@ -347,7 +346,7 @@
 		<value condition="!String.IsEmpty(ListItem.Art(tvshow.landscape))">$INFO[ListItem.Art(tvshow.landscape)]</value>
 		<value condition="!String.IsEmpty(ListItem.Art(landscape))">$INFO[ListItem.Art(landscape)]</value>
 		<value condition="!String.IsEmpty(ListItem.Art(tvshow.fanart))">$INFO[ListItem.Art(tvshow.fanart)]</value>
-		<value condition="!String.IsEmpty(ListItem.Art(fanart)) + [!String.IsEmpty(ListItem.DBType) | String.StartsWith(ListItem.Path,plugin://plugin.video.embycon) | Window.IsVisible(addonbrowser) | Window.IsVisible(programs)]">$INFO[ListItem.Art(fanart)]</value>
+		<value condition="!String.IsEmpty(ListItem.Art(fanart)) + [!String.IsEmpty(ListItem.DBType) | String.StartsWith(ListItem.Path,plugin://) | Window.IsVisible(addonbrowser) | Window.IsVisible(programs)]">$INFO[ListItem.Art(fanart)]</value>
 		<value condition="!String.IsEmpty(ListItem.Property(fanart))">$INFO[ListItem.Property(fanart)]</value>
 		<value condition="!String.StartsWith(ListItem.Icon,Default)">$INFO[ListItem.Icon]</value>
 	</variable>
@@ -409,6 +408,8 @@
 		<value condition="Container.Content(tvshows) + !String.IsEmpty(ListItem.Property(TotalEpisodes))">$INFO[ListItem.Property(TotalEpisodes),, $LOCALIZE[20453]]</value>
 		<value condition="Container.Content(albums)">$INFO[ListItem.Year]</value>
 		<value condition="Container.Content(songs)">$INFO[ListItem.Duration]</value>
+		<value condition="Window.IsVisible(MyPics.xml) + !String.IsEmpty(ListItem.Date)">$INFO[ListItem.Date]</value>
+		<value condition="ListItem.IsFolder">$LOCALIZE[19076]</value>
 	</variable>
 	<variable name="RightListLabel2">
 		<value condition="Container.Content(tvshows) + !String.IsEmpty(ListItem.Property(TotalSeasons))">$INFO[ListItem.Property(TotalSeasons),, $LOCALIZE[36905]]</value>
@@ -416,6 +417,7 @@
 		<value condition="Container.Content(albums)">$INFO[ListItem.Genre]</value>
 		<value condition="!String.IsEmpty(ListItem.Duration) + !String.IsEmpty(ListItem.EndTimeResume)">$INFO[ListItem.EndTimeResume,$LOCALIZE[31037] ]</value>
 		<value condition="!String.IsEmpty(ListItem.Duration) + !String.IsEmpty(ListItem.EndTime)">$INFO[ListItem.EndTime,$LOCALIZE[31037] ]</value>
+		<value condition="Window.IsVisible(MyPics.xml) + !String.IsEmpty(ListItem.Label2)">$INFO[ListItem.Label2]</value>
 	</variable>
 	<variable name="VisibleContainer">
 		<value condition="Control.IsVisible(50)">50</value>

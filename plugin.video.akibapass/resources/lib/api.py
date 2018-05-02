@@ -89,9 +89,8 @@ def getPage(args, url, data=None):
     response = urlopen("https://www.akibapass.de/de/v2/account/login?ReturnUrl=%2Fde%2Fv2",
                        post_data.encode(getCharset(response)))
 
-    # post data again
-    if data:
-        response = urlopen(url, data)
+    # get page again
+    response = urlopen(url, data)
     html = getHTML(response)
 
     if isLoggedin(html):
