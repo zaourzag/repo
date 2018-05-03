@@ -285,20 +285,7 @@
 							<texture colordiffuse="thumb_background_fallback_secondary" diffuse="items/mask_poster_db.png">common/white.jpg</texture>
 							<aspectratio scalediffuse="false">stretch</aspectratio>
 						</control>
-						<control type="textbox">
-							<top>10</top>
-							<left>10</left>
-							<width>217</width>
-							<height>335</height>
-							<font>Material50</font>
-							<align>center</align>
-							<aligny>center</aligny>
-							<label></label>
-						</control>
-						<control type="group">
-							<visible>Container($PARAM[id]).IsUpdating</visible>
-							<include content="WidgetLoadingSpinner"/>
-						</control>
+						<include content="WidgetLoadingSpinner"/>
 					</control>
 					<control type="fixedlist" id="$PARAM[id]">
 						<visible>$PARAM[content_visible]</visible>
@@ -584,6 +571,7 @@
 					<onright>noop</onright>
 					<onleft>900</onleft>
 					<onup>$PARAM[onup]</onup>
+					<onback>action(firstpage)</onback>
 					<itemlayout width="297">
 						<control type="group">
 							<left>72</left>
@@ -673,6 +661,7 @@
 					<onright>noop</onright>
 					<onleft>900</onleft>
 					<onup>$PARAM[onup]</onup>
+					<onback>action(firstpage)</onback>
 					<include condition="$PARAM[use_custom_onclick]" content="ContainerOnClick">
 						<param name="onclick" value="$PARAM[onclick]"/>
 						<param name="onclick2" value="$PARAM[onclick2]"/>
@@ -791,6 +780,7 @@
 					<onright>noop</onright>
 					<onleft>900</onleft>
 					<onup>$PARAM[onup]</onup>
+					<onback>action(firstpage)</onback>
 					<include condition="$PARAM[use_custom_onclick]" content="ContainerOnClick">
 						<param name="onclick" value="$PARAM[onclick]"/>
 						<param name="onclick2" value="$PARAM[onclick2]"/>
@@ -907,6 +897,7 @@
 					<onright>noop</onright>
 					<onleft>900</onleft>
 					<onup>$PARAM[onup]</onup>
+					<onback>action(firstpage)</onback>
 					<include condition="$PARAM[use_custom_onclick]" content="ContainerOnClick">
 						<param name="onclick" value="$PARAM[onclick]"/>
 						<param name="onclick2" value="$PARAM[onclick2]"/>
@@ -997,6 +988,7 @@
 					<onright>noop</onright>
 					<onleft>900</onleft>
 					<onup>$PARAM[onup]</onup>
+					<onback>action(firstpage)</onback>
 					<itemlayout width="296">
 						<control type="group">
 							<left>72</left>
@@ -1149,6 +1141,7 @@
 					<onright>noop</onright>
 					<onleft>900</onleft>
 					<onup>$PARAM[id]01</onup>
+					<onback>action(firstpage)</onback>
 					<include condition="$PARAM[use_custom_onclick]" content="ContainerOnClick">
 						<param name="onclick" value="$PARAM[onclick]"/>
 						<param name="onclick2" value="$PARAM[onclick2]"/>
