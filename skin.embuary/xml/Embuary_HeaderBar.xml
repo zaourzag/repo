@@ -14,6 +14,7 @@
 			<control type="group">
 				<animation effect="slide" start="0,0" end="0,-80"  time="500" delay="100" condition="!ControlGroup(6666).HasFocus + [[Container($PARAM[id]).HasPrevious + !Integer.IsEqual(Container($PARAM[id]).CurrentItem,1) + $PARAM[auto_hide]] | [$PARAM[hide_header]]]" tween="sine" easing="inout">Conditional</animation>
 				<control type="group">
+					<include>Animation_ScrollbarIsVisible</include>
 					<visible>!$EXP[InfoDialogActive]</visible>
 					<control type="image">
 						<top>0</top>
@@ -40,6 +41,7 @@
 					<texture colordiffuse="headerbar" border="2">common/gradient.png</texture>
 					<aspectratio>stretch</aspectratio>
 					<visible>$EXP[InfoDialogActive]</visible>
+					<animation effect="slide" start="0,0" end="-8,0"  time="0" condition="Control.IsVisible(17)">Conditional</animation>
 				</control>
 				<control type="grouplist">
 					<left>10</left>
@@ -103,6 +105,7 @@
 					<include>$PARAM[content]</include>
 				</control>
 				<control type="grouplist">
+					<include>Animation_ScrollbarIsVisible</include>
 					<top>0</top>
 					<height>58</height>
 					<width>400</width>
@@ -180,7 +183,49 @@
 			</control>
 			<!-- Currently playing -->
 			<control type="group">
-				<visible>[Window.IsVisible(home) | Window.IsVisible(1120) | Window.IsVisible(1121) | Window.IsVisible(1122) | Window.IsVisible(1123) | Window.IsVisible(1124) | Window.IsVisible(MyPVRGuide.xml)] + Player.HasMedia + !Window.IsVisible(extendedprogressdialog) + !Window.IsVisible(fullscreeninfo) + !Window.IsVisible(fullscreenvideo) + !Window.IsVisible(visualisation) + !$EXP[InfoDialogActive] + $EXP[HolidayThemeSound]</visible>
+				<visible>[
+					Window.IsVisible(home)
+					| Window.IsVisible(1120)
+					| Window.IsVisible(1121)
+					| Window.IsVisible(1122)
+					| Window.IsVisible(1123)
+					| Window.IsVisible(1124)
+					| Window.IsVisible(1130)
+					| Window.IsVisible(1131)
+					| Window.IsVisible(1132)
+					| Window.IsVisible(1133)
+					| Window.IsVisible(1134)
+					| Window.IsVisible(1135)
+					| Window.IsVisible(1136)
+					| Window.IsVisible(1137)
+					| Window.IsVisible(1138)
+					| Window.IsVisible(1139)
+					| Window.IsVisible(1160)
+					| Window.IsVisible(1161)
+					| Window.IsVisible(1162)
+					| Window.IsVisible(1163)
+					| Window.IsVisible(1164)
+					| Window.IsVisible(1165)
+					| Window.IsVisible(1166)
+					| Window.IsVisible(1167)
+					| Window.IsVisible(1168)
+					| Window.IsVisible(1169)
+					| Window.IsVisible(1114)
+					| Window.IsVisible(script-NextAired-TVGuide.xml)
+					| Window.IsVisible(script-NextAired-TVGuide2.xml)
+					| Window.IsVisible(script-globalsearch-main.xml)
+					| Window.IsVisible(MyPVRGuide.xml)
+					| Window.IsVisible(settings)
+					| Window.IsVisible(favourites)
+					]
+					+ Player.HasMedia
+					+ !Window.IsVisible(extendedprogressdialog)
+					+ !Window.IsVisible(fullscreeninfo)
+					+ !Window.IsVisible(fullscreenvideo)
+					+ !Window.IsVisible(visualisation)
+					+ !$EXP[InfoDialogActive]
+					+ $EXP[HolidayThemeSound]
+				</visible>
 				<animation effect="slide" start="0,0" end="0,58"  time="500" tween="sine" easing="inout">Hidden</animation>
 				<animation effect="slide" start="0,58" end="0,0"  time="500" tween="sine" easing="inout">Visible</animation>
 				<animation effect="slide" start="0,0" end="0,80"  time="500" delay="100" condition="!ControlGroup(6666).HasFocus + [[Container($PARAM[id]).HasPrevious + !Integer.IsEqual(Container($PARAM[id]).CurrentItem,1) + $PARAM[auto_hide]] | [$PARAM[hide_header]]]" tween="sine" easing="inout">Conditional</animation>
@@ -231,6 +276,7 @@
 					</control>
 				</control>
 				<control type="grouplist">
+					<include>Animation_ScrollbarIsVisible</include>
 					<bottom>0</bottom>
 					<height>58</height>
 					<width>400</width>
@@ -394,11 +440,13 @@
 			<include>HeaderButton</include>
 			<label>$LOCALIZE[137]</label>
 			<include>search_action</include>
+			<visible>!Window.IsVisible(script-globalsearch-main.xml) + !Window.IsVisible(script-globalsearch.xml) + !Window.IsVisible(1115)</visible>
 		</control>
 		<control type="button" id="6605">
 			<include>HeaderButton</include>
 			<label>$INFO[Control.GetLabel(28)]</label>
 			<onclick>SendClick(28)</onclick>
+			<visible>false</visible>
 			<visible>[Window.IsVisible(MyPVRTimers.xml) | Window.IsVisible(MyPVRSearch.xml)]</visible>
 		</control>
 		<control type="button" id="6606">
@@ -455,7 +503,7 @@
 				<param name="align" value="false"/>
 			</include>
 			<onclick>SetFocus(4100)</onclick>
-			<visible>Integer.IsGreater(Container(4200).NumItems,1)</visible>
+			<visible>Integer.IsGreater(Container(4200).NumItems,1) + !Skin.HasSetting(KioskMode)</visible>
 		</control>
 		<control type="button" id="6611">
 			<font>Material22</font>
