@@ -14,7 +14,7 @@
 				<align>left</align>
 				<aligny>center</aligny>
 				<label>$PARAM[headline]</label>
-				<visible>!Control.HasFocus($PARAM[id]) | [Control.HasFocus($PARAM[id]) + ![Container($PARAM[id]).IsUpdating | !Integer.IsGreater(Container($PARAM[id]).NumItems,0)]]</visible>
+				<visible>!Control.HasFocus($PARAM[id]) | [Control.HasFocus($PARAM[id]) + ![Container($PARAM[id]).IsUpdating + !Integer.IsGreater(Container($PARAM[id]).NumItems,0)]]</visible>
 			</control>
 			<control type="label">
 				<top>$PARAM[top]</top>
@@ -26,7 +26,7 @@
 				<aligny>center</aligny>
 				<label>$PARAM[headline]</label>
 				<textcolor>emby</textcolor>
-				<visible>Control.HasFocus($PARAM[id]) + [Container($PARAM[id]).IsUpdating | !Integer.IsGreater(Container($PARAM[id]).NumItems,0)]</visible>
+				<visible>Control.HasFocus($PARAM[id]) + [Container($PARAM[id]).IsUpdating + !Integer.IsGreater(Container($PARAM[id]).NumItems,0)]</visible>
 			</control>
 		</definition>
 	</include>
@@ -471,6 +471,7 @@
 		<control type="group">
 			<visible>Container.Scrolling +  [[String.IsEqual(Container.SortMethod,$LOCALIZE[551]) + Control.IsEnabled(4)] | String.IsEqual(Container.SortMethod,$LOCALIZE[561]) | String.IsEqual(Container.SortMethod,$LOCALIZE[558]) | String.IsEqual(Container.SortMethod,$LOCALIZE[557]) | String.IsEqual(Container.SortMethod,$LOCALIZE[556]) | String.IsEqual(Container.SortMethod,$LOCALIZE[563]) | String.IsEqual(Container.SortMethod,$LOCALIZE[549]) | String.IsEqual(Container.SortMethod,$LOCALIZE[20359])]</visible>
 			<animation effect="fade" start="0" end="100" time="120" reversible="true" delay="300">VisibleChange</animation>
+			<animation effect="slide" start="0,0" end="0,-58" time="0" reversible="true" condition="Window.IsVisible(extendedprogressdialog)">Conditional</animation>
 			<control type="group">
 				<visible>String.IsEqual(Container.Viewmode,$LOCALIZE[31199]) | Window.IsVisible(videoplaylist)</visible>
 				<right>23</right>
@@ -1545,7 +1546,7 @@
 					<include condition="$PARAM[focused]">Animation_FocusTextureFade</include>
 				</control>
 				<control type="group">
-					<visible>!String.IsEmpty(ListItem.Icon) | !String.IsEmpty(ListItem.Property(embyart))</visible>
+					<visible>!String.IsEmpty(ListItem.Icon) | !String.IsEmpty(ListItem.Property(defaultart))</visible>
 					<control type="image">
 						<width>277</width>
 						<height>156</height>
@@ -1556,13 +1557,13 @@
 					<control type="image">
 						<width>277</width>
 						<height>156</height>
-						<texture diffuse="items/mask_button.png" background="true">$INFO[ListItem.Property(embyart)]</texture>
+						<texture diffuse="items/mask_button.png" background="true">$INFO[ListItem.Property(defaultart)]</texture>
 						<aspectratio scalediffuse="false">scale</aspectratio>
 						<visible>String.IsEmpty(ListItem.Icon)</visible>
 					</control>
 				</control>
 				<control type="group">
-					<visible>String.IsEmpty(ListItem.Icon) + String.IsEmpty(ListItem.Property(embyart)) + [String.IsEmpty(ListItem.Property(Art1)) | String.IsEmpty(ListItem.Property(Art2)) | String.IsEmpty(ListItem.Property(Art3)) | String.IsEmpty(ListItem.Property(Art4))]</visible>
+					<visible>String.IsEmpty(ListItem.Icon) + String.IsEmpty(ListItem.Property(defaultart)) + [String.IsEmpty(ListItem.Property(Art1)) | String.IsEmpty(ListItem.Property(Art2)) | String.IsEmpty(ListItem.Property(Art3)) | String.IsEmpty(ListItem.Property(Art4))]</visible>
 					<control type="image">
 						<width>277</width>
 						<height>156</height>
@@ -1606,7 +1607,7 @@
 					</control>
 				</control>
 				<control type="group">
-					<visible>String.IsEmpty(ListItem.Icon) + String.IsEmpty(ListItem.Property(embyart)) + !String.IsEmpty(ListItem.Property(Art1)) + !String.IsEmpty(ListItem.Property(Art2)) + !String.IsEmpty(ListItem.Property(Art3)) + !String.IsEmpty(ListItem.Property(Art4))</visible>
+					<visible>String.IsEmpty(ListItem.Icon) + String.IsEmpty(ListItem.Property(defaultart)) + !String.IsEmpty(ListItem.Property(Art1)) + !String.IsEmpty(ListItem.Property(Art2)) + !String.IsEmpty(ListItem.Property(Art3)) + !String.IsEmpty(ListItem.Property(Art4))</visible>
 					<top>2</top>
 					<width>277</width>
 					<control type="image">

@@ -104,6 +104,9 @@
 				<include condition="Integer.IsGreaterOrEqual(Window(home).Property(PositionCount),33)" content="$PARAM[content]">
 					<param name="nr" value="33"/>
 				</include>
+				<include condition="Integer.IsGreaterOrEqual(Window(home).Property(PositionCount),34)" content="$PARAM[content]">
+					<param name="nr" value="34"/>
+				</include>
 			</content>
 		</definition>
 	</include>
@@ -951,6 +954,11 @@
 			<param name="visible" value="$EXP[MenuPVRVisiblity]"/>
 		</include>
 		<include content="MainMenuSelectAvailableItems">
+			<param name="label" value="$LOCALIZE[19017]"/>
+			<param name="item" value="recordings"/>
+			<param name="visible" value="$EXP[MenuPVRVisiblity]"/>
+		</include>
+		<include content="MainMenuSelectAvailableItems">
 			<param name="label" value="$LOCALIZE[2]"/>
 			<param name="item" value="music"/>
 			<param name="setlabel" value="true"/>
@@ -1075,6 +1083,8 @@
 				<onclick condition="$PARAM[setitem] + String.IsEqual(Skin.String(home_menu_pos_32.label),$PARAM[label])">Skin.Reset(home_menu_pos_32.label)</onclick>
 				<onclick condition="$PARAM[setitem] + String.IsEqual(Skin.String(home_menu_pos_33),$PARAM[item])">Skin.Reset(home_menu_pos_33)</onclick>
 				<onclick condition="$PARAM[setitem] + String.IsEqual(Skin.String(home_menu_pos_33.label),$PARAM[label])">Skin.Reset(home_menu_pos_33.label)</onclick>
+				<onclick condition="$PARAM[setitem] + String.IsEqual(Skin.String(home_menu_pos_33),$PARAM[item])">Skin.Reset(home_menu_pos_34)</onclick>
+				<onclick condition="$PARAM[setitem] + String.IsEqual(Skin.String(home_menu_pos_33.label),$PARAM[label])">Skin.Reset(home_menu_pos_34.label)</onclick>
 				<onclick>Skin.SetString(home_menu_pos_$PARAM[nr].label,$PARAM[label])</onclick>
 				<onclick condition="$PARAM[setitem]">Skin.SetString(home_menu_pos_$PARAM[nr],$PARAM[item])</onclick>
 				<onclick condition="$PARAM[clearitem]">Skin.Reset(home_menu_pos_$PARAM[nr])</onclick>
