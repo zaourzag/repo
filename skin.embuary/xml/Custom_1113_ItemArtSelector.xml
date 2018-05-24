@@ -73,6 +73,15 @@
 								<width>75</width>
 								<left>10</left>
 								<bordersize>5</bordersize>
+								<texture>DefaultFolder.png</texture>
+								<aspectratio>keep</aspectratio>
+								<visible>String.IsEmpty(ListItem.Icon) + String.IsEmpty(ListItem.Property(custom_art))</visible>
+							</control>
+							<control type="image">
+								<height>75</height>
+								<width>75</width>
+								<left>10</left>
+								<bordersize>5</bordersize>
 								<texture background="true">$INFO[ListItem.Icon]</texture>
 								<aspectratio>keep</aspectratio>
 								<visible>String.IsEmpty(ListItem.Property(custom_art))</visible>
@@ -84,16 +93,7 @@
 								<bordersize>5</bordersize>
 								<texture background="true">$INFO[ListItem.Property(custom_art)]</texture>
 								<aspectratio>keep</aspectratio>
-								<visible>!String.IsEmpty(ListItem.Property(custom_art)) + !String.IsEqual(ListItem.Property(custom_art),embyart)</visible>
-							</control>
-							<control type="image">
-								<height>75</height>
-								<width>75</width>
-								<left>10</left>
-								<bordersize>5</bordersize>
-								<texture background="true">$INFO[ListItem.Property(emby_art)]</texture>
-								<aspectratio>keep</aspectratio>
-								<visible>!String.IsEmpty(ListItem.Property(custom_art)) + String.IsEqual(ListItem.Property(custom_art),embyart)</visible>
+								<visible>!String.IsEmpty(ListItem.Property(custom_art))</visible>
 							</control>
 							<control type="label">
 								<right>20</right>
@@ -116,6 +116,15 @@
 								<width>75</width>
 								<left>10</left>
 								<bordersize>5</bordersize>
+								<texture>DefaultFolder.png</texture>
+								<aspectratio>keep</aspectratio>
+								<visible>String.IsEmpty(ListItem.Icon) + String.IsEmpty(ListItem.Property(custom_art))</visible>
+							</control>
+							<control type="image">
+								<height>75</height>
+								<width>75</width>
+								<left>10</left>
+								<bordersize>5</bordersize>
 								<texture background="true">$INFO[ListItem.Icon]</texture>
 								<aspectratio>keep</aspectratio>
 								<visible>String.IsEmpty(ListItem.Property(custom_art))</visible>
@@ -127,16 +136,7 @@
 								<bordersize>5</bordersize>
 								<texture background="true">$INFO[ListItem.Property(custom_art)]</texture>
 								<aspectratio>keep</aspectratio>
-								<visible>!String.IsEmpty(ListItem.Property(custom_art)) + !String.IsEqual(ListItem.Property(custom_art),embyart)</visible>
-							</control>
-							<control type="image">
-								<height>75</height>
-								<width>75</width>
-								<left>10</left>
-								<bordersize>5</bordersize>
-								<texture background="true">$INFO[ListItem.Property(emby_art)]</texture>
-								<aspectratio>keep</aspectratio>
-								<visible>!String.IsEmpty(ListItem.Property(custom_art)) + String.IsEqual(ListItem.Property(custom_art),embyart)</visible>
+								<visible>!String.IsEmpty(ListItem.Property(custom_art))</visible>
 							</control>
 							<control type="label">
 								<right>20</right>
@@ -152,6 +152,11 @@
 								<param name="label" value="$LOCALIZE[31180]"/>
 								<param name="item" value="movies"/>
 								<param name="visible" value="$EXP[MenuMoviesVisiblity]"/>
+							</include>
+							<include content="MainMenuItemArtSelector">
+								<param name="label" value="$LOCALIZE[31169]"/>
+								<param name="item" value="sets"/>
+								<param name="visible" value="Library.HasContent(MovieSets)"/>
 							</include>
 							<include content="MainMenuItemArtSelector">
 								<param name="label" value="$LOCALIZE[31179]"/>
@@ -283,6 +288,13 @@
 							<include content="MainMenuItemArtSelector">
 								<param name="label" value="$VAR[PVRLabel]"/>
 								<param name="item" value="pvr"/>
+								<param name="icon" value="special://skin/extras/thumb_livetv.jpg"/>
+								<param name="visible" value="$EXP[MenuPVRVisiblity]"/>
+							</include>
+							<include content="MainMenuItemArtSelector">
+								<param name="label" value="$LOCALIZE[19017]"/>
+								<param name="item" value="recordings"/>
+								<param name="icon" value="special://skin/extras/thumb_recordings.jpg"/>
 								<param name="visible" value="$EXP[MenuPVRVisiblity]"/>
 							</include>
 							<include content="MainMenuItemArtSelector">
@@ -298,6 +310,7 @@
 							<include content="MainMenuItemArtSelector">
 								<param name="label" value="$LOCALIZE[24001]"/>
 								<param name="item" value="addons"/>
+								<param name="icon" value="special://skin/extras/thumb_addons.jpg"/>
 								<param name="visible" value="true"/>
 							</include>
 							<include content="MainMenuItemArtSelector">

@@ -285,20 +285,7 @@
 							<texture colordiffuse="thumb_background_fallback_secondary" diffuse="items/mask_poster_db.png">common/white.jpg</texture>
 							<aspectratio scalediffuse="false">stretch</aspectratio>
 						</control>
-						<control type="textbox">
-							<top>10</top>
-							<left>10</left>
-							<width>217</width>
-							<height>335</height>
-							<font>Material50</font>
-							<align>center</align>
-							<aligny>center</aligny>
-							<label></label>
-						</control>
-						<control type="group">
-							<visible>Container($PARAM[id]).IsUpdating</visible>
-							<include content="WidgetLoadingSpinner"/>
-						</control>
+						<include content="WidgetLoadingSpinner"/>
 					</control>
 					<control type="fixedlist" id="$PARAM[id]">
 						<visible>$PARAM[content_visible]</visible>
@@ -619,6 +606,7 @@
 	<!-- Wide -->
 	<include name="HomeWideWidget">
 		<param name="visible">true</param>
+		<param name="force_visible">false</param>
 		<param name="content_visible">true</param>
 		<param name="headline">$LOCALIZE[416]</param>
 		<param name="mainlabel">$VAR[MainListLabel]</param>
@@ -629,7 +617,7 @@
 		<definition>
 			<control type="group" id="$PARAM[id]1">
 				<visible>$PARAM[visible]</visible>
-				<visible>Integer.IsGreater(Container($PARAM[id]).NumItems,0) | Container($PARAM[id]).IsUpdating</visible>
+				<visible>Integer.IsGreater(Container($PARAM[id]).NumItems,0) | Container($PARAM[id]).IsUpdating | $PARAM[force_visible]</visible>
 				<width>100%</width>
 				<height>556</height>
 				<include content="widget_headline">
@@ -852,6 +840,7 @@
 	<!-- Square -->
 	<include name="HomeSquareWidget">
 		<param name="visible">true</param>
+		<param name="force_visible">false</param>
 		<param name="content_visible">true</param>
 		<param name="headline">$LOCALIZE[416]</param>
 		<param name="mainlabel">$VAR[MainListLabel]</param>
@@ -863,7 +852,7 @@
 		<definition>
 			<control type="group" id="$PARAM[id]1">
 				<visible>$PARAM[visible]</visible>
-				<visible>Integer.IsGreater(Container($PARAM[id]).NumItems,0) | Container($PARAM[id]).IsUpdating</visible>
+				<visible>Integer.IsGreater(Container($PARAM[id]).NumItems,0) | Container($PARAM[id]).IsUpdating | $PARAM[force_visible]</visible>
 				<width>100%</width>
 				<height>$PARAM[height]</height>
 				<include content="widget_headline">

@@ -192,7 +192,7 @@
 					<onleft>100</onleft>
 					<onright>noop</onright>
 					<ondown>noop</ondown>
-					<pagecontrol>17</pagecontrol>
+					<pagecontrol>60</pagecontrol>
 					<scrolltime>200</scrolltime>
 					<itemgap>0</itemgap>
 					<!-- background -->
@@ -344,6 +344,12 @@
 						<selected>!Skin.HasSetting(NoJumpToFirstPage)</selected>
 						<label>$LOCALIZE[31221]</label>
 					</control>
+					<control type="button" id="238">
+						<include>SettingsButton</include>
+						<label>$LOCALIZE[31228]</label>
+						<label2>[COLOR emby]$VAR[SearchProvider][/COLOR]</label2>
+						<onclick>Skin.ToggleSetting(UseGlobalsearch)</onclick>
+					</control>
 				</control>
 				<!-- home -->
 				<control type="grouplist" id="300">
@@ -365,7 +371,7 @@
 					</include>
 					<control type="button" id="311">
 						<include>SettingsButton</include>
-						<onclick>SetProperty(PositionCount,32,home)</onclick>
+						<onclick>SetProperty(PositionCount,34,home)</onclick>
 						<onclick>ActivateWindow(1110)</onclick>
 						<label>$LOCALIZE[31218]</label>
 					</control>
@@ -1116,7 +1122,8 @@
 			</control>
 		</control>
 		<!-- scrollbar -->
-		<include content="ViewScrollbar">
+		<include content="Scrollbar">
+			<param name="id" value="60"/>
 			<param name="visible" value="true"/>
 			<param name="top" value="122"/>
 			<param name="bottom" value="122"/>

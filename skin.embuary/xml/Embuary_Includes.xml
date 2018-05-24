@@ -398,7 +398,7 @@
 						<param name="label">$LOCALIZE[20389]</param>
 						<param name="icon">&#xE030;</param>
 						<param name="condition1">Library.HasContent(musicvideos)</param>
-						<param name="action1">ActivateWindow(videos,videodb://musicvideos/titles/)</param>
+						<param name="action1">ActivateWindow(videos,videodb://musicvideos/titles/,return)</param>
 						<param name="visible">!Skin.HasSetting(HideSPMusicvideos) + Library.HasContent(musicvideos)</param>
 					</include>
 					<include content="SideMenuButton">
@@ -698,13 +698,14 @@
 		<onunload>ClearProperty(FocusBounce,home)</onunload>
 	</include>
 	<!-- Scrollbars -->
-	<include name="ViewScrollbar">
+	<include name="Scrollbar">
 		<param name="id">17</param>
 		<param name="width">8</param>
 		<param name="top">0</param>
 		<param name="bottom">0</param>
-		<param name="onup">SetFocus(6666)</param>
-		<param name="visible">Control.IsVisible(50) | Control.IsVisible(51) | Control.IsVisible(52) | Control.IsVisible(53) | Control.IsVisible(58)</param>
+		<param name="onup">noop</param>
+		<param name="ondown">noop</param>
+		<param name="visible">$EXP[ScrollbarContainers]</param>
 		<definition>
 			<control type="scrollbar" id="$PARAM[id]">
 				<visible>$PARAM[visible]</visible>
@@ -713,14 +714,12 @@
 				<right>0</right>
 				<width>$PARAM[width]</width>
 				<onup>$PARAM[onup]</onup>
+				<ondown>$PARAM[ondown]</ondown>
 				<onleft condition="Control.IsVisible(50)">50</onleft>
 				<onleft condition="Control.IsVisible(51)">51</onleft>
 				<onleft condition="Control.IsVisible(52)">52</onleft>
 				<onleft condition="Control.IsVisible(53)">53</onleft>
-				<onleft condition="Control.IsVisible(54)">54</onleft>
-				<onleft condition="Control.IsVisible(55)">55</onleft>
-				<onleft condition="Control.IsVisible(56)">56</onleft>
-				<onleft condition="Control.IsVisible(57)">57</onleft>
+				<onleft condition="Control.IsVisible(58)">58</onleft>
 				<orientation>vertical</orientation>
 				<showonepage>false</showonepage>
 				<texturesliderbackground colordiffuse="ff3b3b3b">common/white.jpg</texturesliderbackground>
@@ -970,16 +969,11 @@
 		<lefttexture>-</lefttexture>
 	</include>
 	<include name="search_action">
-		<onclick condition="!System.HasAddon(plugin.video.embycon)">RunScript(script.globalsearch)</onclick>
-		<onclick condition="System.HasAddon(plugin.video.embycon)">SetProperty(Dialog.1.Label,$LOCALIZE[31072])</onclick>
-		<onclick condition="System.HasAddon(plugin.video.embycon)">SetProperty(Dialog.1.BuiltIn,RunScript(script.globalsearch))</onclick>
-		<onclick condition="System.HasAddon(plugin.video.embycon)">SetProperty(Dialog.2.Label,$LOCALIZE[31073])</onclick>
-		<onclick condition="System.HasAddon(plugin.video.embycon)">SetProperty(Dialog.2.BuiltIn,ActivateWindow(videos,plugin://plugin.video.embycon/?item_type=Movie&amp;mode=NEW_SEARCH))</onclick>
-		<onclick condition="System.HasAddon(plugin.video.embycon)">SetProperty(Dialog.3.Label,$LOCALIZE[31074])</onclick>
-		<onclick condition="System.HasAddon(plugin.video.embycon)">SetProperty(Dialog.3.BuiltIn,ActivateWindow(videos,plugin://plugin.video.embycon/?item_type=Series&amp;mode=NEW_SEARCH))</onclick>
-		<onclick condition="System.HasAddon(plugin.video.embycon)">SetProperty(Dialog.4.Label,$LOCALIZE[31075])</onclick>
-		<onclick condition="System.HasAddon(plugin.video.embycon)">SetProperty(Dialog.4.BuiltIn,ActivateWindow(videos,plugin://plugin.video.embycon/?item_type=Episode&amp;mode=NEW_SEARCH))</onclick>
-		<onclick condition="System.HasAddon(plugin.video.embycon)">RunScript(script.toolbox,info=selectdialog,header=$LOCALIZE[137])</onclick>
+		<onclick condition="!Skin.HasSetting(UseGlobalsearch)">SetProperty(CustomSearch,1,home)</onclick>
+		<onclick condition="!Skin.HasSetting(UseGlobalsearch)">Skin.Reset(CustomSearchTerm)</onclick>
+		<onclick condition="!Skin.HasSetting(UseGlobalsearch)">Skin.SetString(CustomSearchTerm)</onclick>
+		<onclick condition="!Skin.HasSetting(UseGlobalsearch)">ActivateWindow(1115)</onclick>
+		<onclick condition="Skin.HasSetting(UseGlobalsearch)">RunScript(script.globalsearch)</onclick>
 	</include>
 	<include name="CustomWidgetTemplate">
 		<control type="radiobutton" id="$PARAM[section]$PARAM[id]1">
@@ -1326,20 +1320,6 @@
 				<onclick>Container.SetViewMode(53)</onclick>
 				<selected>Control.IsVisible(53)</selected>
 				<visible>$EXP[ListViewVisible]</visible>
-			</control>
-			<control type="radiobutton" id="$PARAM[id]14">
-				<include content="CommonButton"/>
-				<label>$LOCALIZE[31220]</label>
-				<onclick>Container.SetViewMode(10)</onclick>
-				<selected>Control.IsVisible(10)</selected>
-				<visible>Window.IsVisible(MyPVRguide.xml)</visible>
-			</control>
-			<control type="radiobutton" id="$PARAM[id]15">
-				<include content="CommonButton"/>
-				<label>$LOCALIZE[31219]</label>
-				<onclick>Container.SetViewMode(20)</onclick>
-				<selected>Control.IsVisible(20)</selected>
-				<visible>Window.IsVisible(MyPVRguide.xml)</visible>
 			</control>
 		</definition>
 	</include>
