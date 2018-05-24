@@ -14,6 +14,7 @@ import base64
 import requests
 from bs4 import BeautifulSoup
 from HTMLParser import HTMLParser
+from inputstreamhelper import Helper
 
 # Setting Variablen Des Plugins
 global debuging
@@ -262,6 +263,9 @@ def getserie(url):
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
   
 def playdash(mpd,key,url):    
+    helper = Helper(protocol='mpd', drm='widevine')
+    if not helper.check_inputstream():
+       xbmc.executebuiltin('Notification("Inputstream", "DRM geschützte Folgen gehen nur mit Inputstream")')
     debug("playdash")
     debug(mpd)
     debug(key)

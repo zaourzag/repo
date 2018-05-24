@@ -16,6 +16,7 @@ import base64
 import datetime
 from tzlocal import get_localzone
 import requests
+from inputstreamhelper import Helper
 #import pytz
 
 try:
@@ -169,6 +170,9 @@ def getstreamtype():
   return is_type
 
 def playdash(file,session,userid,channelid,ids,desc="",title="",is_type="",mediathek=0): 
+  helper = Helper(protocol='mpd', drm='widevine')
+  if not helper.check_inputstream():
+    xbmc.executebuiltin('Notification("Inputstream", "DRM geschützte Folgen gehen nur mit Inputstream")')
   header=[]
   header.append (("Authorization","Bearer "+session))
   header.append (("UserId",userid))

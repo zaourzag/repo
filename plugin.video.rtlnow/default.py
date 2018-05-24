@@ -13,6 +13,7 @@ import base64
 import ssl
 import hashlib
 from collections import OrderedDict
+from inputstreamhelper import Helper
 
 
 # Setting Variablen Des Plugins
@@ -284,6 +285,9 @@ def get_min(time_str):
     return int(h) * 3600 + int(m) * 60 + int(s) /60
 
 def playdash(xstream,xlink,xdrm):
+    helper = Helper(protocol='mpd', drm='widevine')
+    if not helper.check_inputstream():
+       xbmc.executebuiltin('Notification("Inputstream", "DRM geschützte Folgen gehen nur mit Inputstream")')
     kodi18 = addon.getSetting("kodi18")
     pos = 0
     xbmc.log("[plugin.video.rtlnow](playdash) xSTREAM : %s" %(xstream), xbmc.LOGNOTICE)
@@ -894,7 +898,10 @@ def genreliste():
 def inputsettings()    :
   xbmcaddon.Addon(is_addon).openSettings()
   
-def playchannel_dash(url,name,image):
+def playchannel_dash(url,name,image): 
+    helper = Helper(protocol='mpd', drm='widevine')
+    if not helper.check_inputstream():
+       xbmc.executebuiltin('Notification("Inputstream", "DRM geschützte Folgen gehen nur mit Inputstream")')
     ret,token=login()
     if token=="0":
         dialog = xbmcgui.Dialog()
