@@ -459,9 +459,9 @@ def listDdpVideos(type, url, limit):
 				completeTitle = firstTitle+'   [COLOR deepskyblue][AW: '+str(LW)+'|2W: '+str(twoW)+'|3W: '+str(threeW)+'][/COLOR]'
 		except: completeTitle = firstTitle
 		try:
-			thumb = re.findall('style="background.+?http://poolposition.mp3(.*?);"',entry,re.S)[0]
+			thumb = re.findall('style="background.+?//poolposition.mp3(.*?);"',entry,re.S)[0]
 			if thumb:
-				thumb = "http://poolposition.mp3"+thumb.split('&amp;')[0]
+				thumb = "https://poolposition.mp3"+thumb.split('&amp;width')[0]
 		except: thumb = pic+'noimage.png'
 		filtered = False
 		for entry2 in blacklist:
@@ -1305,7 +1305,7 @@ def showInfo():
 	else: pass
 	
 def cleanTitle(title):
-	title = title.replace("&lt;", "<").replace("&gt;", ">").replace("&amp;", "&").replace("&Amp;", "&").replace("&#39;", "'").replace("&#039;", "'").replace("&quot;", "\"").replace("&Quot;", "\"").replace("&reg;", "").replace("&szlig;", "ß").replace("&mdash;", "-").replace("&ndash;", "-").replace('–', '-')
+	title = title.replace("&lt;", "<").replace("&gt;", ">").replace("&amp;", "&").replace("&Amp;", "&").replace("&#34;", "”").replace("&#39;", "'").replace("&#039;", "'").replace("&quot;", "\"").replace("&Quot;", "\"").replace("&reg;", "").replace("&szlig;", "ß").replace("&mdash;", "-").replace("&ndash;", "-").replace('–', '-')
 	title = title.replace("&#x00c4", "Ä").replace("&#x00e4", "ä").replace("&#x00d6", "Ö").replace("&#x00f6", "ö").replace("&#x00dc", "Ü").replace("&#x00fc", "ü").replace("&#x00df", "ß")
 	title = title.replace("&Auml;", "Ä").replace("&auml;", "ä").replace("&Euml;", "Ë").replace("&euml;", "ë").replace("&Iuml;", "Ï").replace("&iuml;", "ï").replace("&Ouml;", "Ö").replace("&ouml;", "ö").replace("&Uuml;", "Ü").replace("&uuml;", "ü").replace("&#376;", "Ÿ").replace("&yuml;", "ÿ")
 	title = title.replace("&agrave;", "à").replace("&Agrave;", "À").replace("&aacute;", "á").replace("&Aacute;", "Á").replace("&egrave;", "è").replace("&Egrave;", "È").replace("&eacute;", "é").replace("&Eacute;", "É").replace("&igrave;", "ì").replace("&Igrave;", "Ì").replace("&iacute;", "í").replace("&Iacute;", "Í")

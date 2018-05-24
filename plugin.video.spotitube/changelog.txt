@@ -107,3 +107,6 @@
 - fixed: Hypem - "Popular: Last Week" and "Time-Machine" listing (html > json)
 - added: "https://spotifycharts.com" under "SPOTIFY - International" with *VIRAL top 50* and *TOP Streams* of many countries
 - changed: new Addon-fanart.jpg
+
+[B]Version 2.1.0  (18.05.2018)[/B] by realvito
+- fixed: German-DJ-Playlist - Video-Images are not displayed

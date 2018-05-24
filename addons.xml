@@ -4008,7 +4008,7 @@ Parental warning: The Maxdome Plattform consists of differnt types of content - 
   </extension>
 </addon>
 
-<addon id="plugin.video.spotitube" name="Youtube Music" version="2.0.9" provider-name="realvito (inspired by L0RE)">
+<addon id="plugin.video.spotitube" name="Youtube Music" version="2.1.0" provider-name="realvito (inspired by L0RE)">
 	<requires>
 		<import addon="xbmc.python" version="2.20.0"/>
 		<import addon="plugin.video.youtube" version="5.3.7"/>
@@ -4034,14 +4034,8 @@ Parental warning: The Maxdome Plattform consists of differnt types of content - 
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 2.0.9  (25.02.2018)[/COLOR][/B] by realvito[CR]
-- fixed: Beatport - text errors in genres and Video-Images are not displayed
-- removed: Beatport - subgenres, since no more available
-- fixed: Billboard-Archive because of webpage changes
-- added: German-DJ-Playlist (on special request !)
-- fixed: Hypem - "Popular: Last Week" and "Time-Machine" listing (html > json)
-- added: "https://spotifycharts.com" under the rubric "SPOTIFY - International" with *VIRAL top 50* and *TOP Streams* of many countries
-- changed: new Addon-fanart.jpg
+		<news>[B][COLOR orangered]Version 2.1.0  (18.05.2018)[/COLOR][/B] by realvito[CR]
+- fixed: German-DJ-Playlist - Video-Images are not displayed
 		</news>
 	</extension>
 </addon>
