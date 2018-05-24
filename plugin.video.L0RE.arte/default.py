@@ -67,10 +67,7 @@ def addDir(name, url, mode, thump, desc="", page=1, nosub=0):
     u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&page="+str(page)+"&nosub="+str(nosub)
     ok = True
     liz = xbmcgui.ListItem(name)  
-    liz.setArt({'fanart': thump})
-    liz.setArt({'thumb': thump})
-    liz.setArt({'banner': icon})
-    liz.setArt({'fanart': icon})
+    liz.setArt({'thumb': thump, 'fanart': thump, 'banner': icon})
     liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc})
     ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
     return ok
@@ -81,7 +78,7 @@ def addLink(name, url, mode, thump, duration="", desc="", genre='', director="",
     u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
     ok = True
     liz = xbmcgui.ListItem(name,thumbnailImage=thump)
-    liz.setArt({ 'fanart' : icon })
+    liz.setArt({'fanart' : icon})
     liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Genre": genre, "Director": director, "Rating": bewertung})
     liz.setProperty('IsPlayable', 'true')
     liz.addStreamInfo('video', { 'duration' : duration })
@@ -226,13 +223,13 @@ query = urllib.unquote_plus(params.get('query', ''))
 def videoliste(url,page="1"):  
     debug("Start Videoliste")
     debug(url)
-    SUPPORTED = ['Bonus', 'Programm', 'Programme']
+    SUPPORTED = ['Bonus', 'Live', 'Programm', 'Programme']
     #https://www.arte.tv/guide/api/api/zones/de/web/videos_subcategory_OPE?page=2&limit=10
     #https://www.arte.tv/sites/de/webproductions/api/?lang=de&paged=3  
     if int(page)==1:
         content=geturl(url)
         #"nextPage":"https:\u002F\u002Fapi-cdn.arte.tv\u002Fapi\u002Femac\u002Fv2\u002Fde\u002Fweb\u002Fzones\u002Fvideos_subcategory_OPE?page=2&limit=10"
-        content=re.compile(' window.__INITIAL_STATE__ = (.+?)</script>', re.DOTALL).findall(content)[0]
+        content=re.compile(' window.__INITIAL_STATE__ = (.+?)window.__CLASS_IDS__ =', re.DOTALL).findall(content)[0]
         content=content.strip()[:-1]
         debug("++++++++++++++#####")
         debug(content)
@@ -310,7 +307,7 @@ def abiszetc(url,page="1",query=False):
     newUrl = url
     if int(page)==1:
         content=geturl(url)
-        content=re.compile(' window.__INITIAL_STATE__ = (.+?)</script>', re.DOTALL).findall(content)[0]
+        content=re.compile(' window.__INITIAL_STATE__ = (.+?)window.__CLASS_IDS__ =', re.DOTALL).findall(content)[0]
         content=content.strip()[:-1]
         debug("#########")
         debug(content)
