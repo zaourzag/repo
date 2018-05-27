@@ -8,10 +8,9 @@
         <extension point="xbmc.addon.metadata">
                 <summary>The Repository for the Kodi Netflix Addon</summary>
                 <summary lang="de">Das Repository für das Kodi Netflix Addon</summary>
-                <description>Provides the Netflix Addons fpr kodi.</description>
+                <description>Provides the Netflix Addons for kodi.</description>
                 <description lang="de">Stellt das Kodi Netflix Addon bereit</description>
                 <disclaimer>Some parts of this Repository may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
                 <platform>all</platform>
         </extension>
 </addon>
-
