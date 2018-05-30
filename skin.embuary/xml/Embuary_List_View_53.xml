@@ -19,7 +19,7 @@
 					<animation effect="slide" time="0" end="0,-360" condition="!Container.HasParent + [Integer.IsEqual(Container($PARAM[id]).NumItems,2) | Integer.IsEqual(Container($PARAM[id]).NumItems,1)]">Conditional</animation>
 					<animation effect="slide" time="0" end="0,-120" condition="Container.HasParent + [Integer.IsEqual(Container($PARAM[id]).NumItems,5) | Integer.IsEqual(Container($PARAM[id]).NumItems,4)]">Conditional</animation>
 					<animation effect="slide" time="0" end="0,-240" condition="Container.HasParent + [Integer.IsEqual(Container($PARAM[id]).NumItems,3) | Integer.IsEqual(Container($PARAM[id]).NumItems,2)]">Conditional</animation>
-					<animation effect="slide" time="0" end="0,-360" condition="Container.HasParent + Integer.IsEqual(Container($PARAM[id]).NumItems,1)">Conditional</animation>
+					<animation effect="slide" time="0" end="0,-360" condition="Container.HasParent + [Integer.IsEqual(Container($PARAM[id]).NumItems,1) | Integer.IsEqual(Container($PARAM[id]).NumItems,0)]">Conditional</animation>
 					<left>690</left>
 					<height>100%</height>
 					<onup>SetFocus(6666)</onup>
@@ -89,7 +89,7 @@
 						<width>590</width>
 						<!-- wide thumb -->
 						<control type="group">
-							<visible>String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,set) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,season) | String.StartsWith(ListItem.Path,pvr://) | [String.StartsWith(Container.FolderPath,plugin://plugin.video.emby/) + String.Contains(Container.FolderPath,type=homevideos)] | [String.StartsWith(Container.FolderPath,plugin://plugin.video.embycon) + !String.EndsWith(ListItem.Icon,icon.png)]</visible>
+							<visible>$EXP[ListHasWideThumb]</visible>
 							<control type="group">
 								<control type="image">
 									<top>-2</top>
@@ -98,46 +98,49 @@
 									<height>338</height>
 									<texture border="20,20,20,20">items/shadow.png</texture>
 								</control>
-								<control type="image">
-									<width>590</width>
-									<height>332</height>
-									<texture colordiffuse="thumb_background_fallback" diffuse="items/mask_wide_big.png">common/white.jpg</texture>
-									<aspectratio scalediffuse="false">stretch</aspectratio>
-									<visible>String.IsEmpty(ListItem.Icon) | String.StartsWith(ListItem.Icon,Default)</visible>
+								<control type="group">
+									<visible>String.IsEmpty(ListItem.Art(fanart)) + String.IsEmpty(ListItem.Art(tvshow.fanart)) + String.IsEmpty(ListItem.Art(landscape)) + String.IsEmpty(ListItem.Art(tvshow.landscape)) + [String.IsEmpty(ListItem.Icon) | String.StartsWith(ListItem.Icon,Default)]</visible>
+									<control type="image">
+										<width>590</width>
+										<height>332</height>
+										<texture colordiffuse="thumb_background_fallback" diffuse="items/mask_wide_big.png">common/white.jpg</texture>
+										<aspectratio scalediffuse="false">stretch</aspectratio>
+									</control>
+									<control type="textbox">
+										<top>10</top>
+										<left>10</left>
+										<width>570</width>
+										<height>312</height>
+										<font>Light24</font>
+										<textcolor>white</textcolor>
+										<align>center</align>
+										<aligny>center</aligny>
+										<label>$PARAM[thumblabel]</label>
+									</control>
 								</control>
-								<control type="image">
-									<width>590</width>
-									<height>332</height>
-									<texture colordiffuse="dark_button" diffuse="items/mask_wide_big.png">common/white.jpg</texture>
-									<aspectratio scalediffuse="false">stretch</aspectratio>
-									<visible>!String.IsEmpty(ListItem.Icon) + !String.StartsWith(ListItem.Icon,Default)</visible>
-								</control>
-								<control type="textbox">
-									<top>10</top>
-									<left>10</left>
-									<width>570</width>
-									<height>312</height>
-									<font>Light24</font>
-									<textcolor>white</textcolor>
-									<align>center</align>
-									<aligny>center</aligny>
-									<label>$PARAM[thumblabel]</label>
-									<visible>String.IsEmpty(ListItem.Icon) | String.StartsWith(ListItem.Icon,Default)</visible>
-								</control>
-								<control type="image">
-									<width>590</width>
-									<height>332</height>
-									<texture diffuse="items/mask_wide_db.png" background="true">$VAR[IconLandscape]</texture>
-									<aspectratio scalediffuse="false">keep</aspectratio>
-									<bordersize>20</bordersize>
-									<visible>String.StartsWith(ListItem.Path,pvr://) + !String.StartsWith(ListItem.Icon,Default)</visible>
-								</control>
-								<control type="image">
-									<width>590</width>
-									<height>332</height>
-									<texture diffuse="items/mask_wide_db.png" background="true">$VAR[IconLandscape]</texture>
-									<aspectratio scalediffuse="false">keep</aspectratio>
-									<visible>!String.StartsWith(ListItem.Path,pvr://) + !String.StartsWith(ListItem.Icon,Default)</visible>
+								<control type="group">
+									<visible>![String.IsEmpty(ListItem.Art(fanart)) + String.IsEmpty(ListItem.Art(tvshow.fanart)) + String.IsEmpty(ListItem.Art(landscape)) + String.IsEmpty(ListItem.Art(tvshow.landscape)) + [String.IsEmpty(ListItem.Icon) | String.StartsWith(ListItem.Icon,Default)]]</visible>
+									<control type="image">
+										<width>590</width>
+										<height>332</height>
+										<texture colordiffuse="thumb_background" diffuse="items/mask_wide_big.png">common/white.jpg</texture>
+										<aspectratio scalediffuse="false">stretch</aspectratio>
+									</control>
+									<control type="image">
+										<width>590</width>
+										<height>332</height>
+										<texture diffuse="items/mask_wide_db.png" background="true">$VAR[IconLandscape]</texture>
+										<aspectratio scalediffuse="false">keep</aspectratio>
+										<bordersize>20</bordersize>
+										<visible>String.StartsWith(ListItem.Path,pvr://) + !String.Contains(ListItem.Icon,.jpg)</visible>
+									</control>
+									<control type="image">
+										<width>590</width>
+										<height>332</height>
+										<texture diffuse="items/mask_wide_db.png" background="true">$VAR[IconLandscape]</texture>
+										<aspectratio scalediffuse="false">keep</aspectratio>
+										<visible>!String.StartsWith(ListItem.Path,pvr://) | [String.StartsWith(ListItem.Path,pvr://) + String.Contains(ListItem.Icon,.jpg)]</visible>
+									</control>
 								</control>
 								<control type="group">
 									<width>590</width>
@@ -153,8 +156,7 @@
 						</control>
 						<!-- poster thumb -->
 						<control type="group">
-							<visible>false</visible>
-							<visible>!String.IsEmpty(ListItem.Art(poster)) | !String.IsEmpty(ListItem.Art(tvshow.poster))</visible>
+							<visible>[!String.IsEmpty(ListItem.Art(poster)) | !String.IsEmpty(ListItem.Art(tvshow.poster))]	+ !$EXP[ListHasWideThumb] + !String.EndsWith(ListItem.Art(poster),\icon.png) + !String.EndsWith(ListItem.Art(poster),/icon.png)</visible>
 							<control type="group">
 								<control type="group">
 									<centerleft>50%</centerleft>
@@ -176,7 +178,7 @@
 									<control type="image">
 										<width>222</width>
 										<height>332</height>
-										<texture colordiffuse="dark_button" diffuse="items/mask_poster_list.png">common/white.jpg</texture>
+										<texture colordiffuse="thumb_background" diffuse="items/mask_poster_list.png">common/white.jpg</texture>
 										<aspectratio scalediffuse="false">stretch</aspectratio>
 										<visible>!String.IsEmpty(ListItem.Icon) + !String.StartsWith(ListItem.Icon,Default)</visible>
 									</control>
@@ -213,7 +215,7 @@
 						</control>
 						<!-- square thumb -->
 						<control type="group">
-							<visible>![String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,set) | String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,season) | String.StartsWith(ListItem.Path,pvr://) | [String.StartsWith(Container.FolderPath,plugin://plugin.video.emby/) + String.Contains(Container.FolderPath,type=homevideos)] | [String.StartsWith(Container.FolderPath,plugin://plugin.video.embycon) + !String.EndsWith(ListItem.Icon,icon.png)]]</visible>
+							<visible>[String.EndsWith(ListItem.Art(poster),\icon.png) | String.EndsWith(ListItem.Art(poster),/icon.png) | [String.IsEmpty(ListItem.Art(poster)) + String.IsEmpty(ListItem.Art(tvshow.poster))]] + !$EXP[ListHasWideThumb]</visible>
 							<centerleft>50%</centerleft>
 							<width>590</width>
 							<control type="group">

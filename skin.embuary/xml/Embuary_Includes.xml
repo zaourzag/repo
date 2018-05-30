@@ -188,7 +188,7 @@
 	</include>
 	<!-- Side Menu Button Layout -->
 	<include name="SideMenuButton">
-		<param name="width">400</param>
+		<param name="width">100%</param>
 		<param name="icon"></param>
 		<param name="icon_left">55</param>
 		<param name="label_left">100</param>
@@ -251,7 +251,7 @@
 	</include>
 	<!-- Side Menu Headline -->
 	<include name="SideMenuHeadline">
-		<param name="width">400</param>
+		<param name="width">100%</param>
 		<param name="visible">true</param>
 		<definition>
 			<control type="group" id="99$PARAM[nr]">
@@ -290,7 +290,7 @@
 	</include>
 	<!-- Side Menu -->
 	<include name="SidePanel">
-		<param name="width">400</param>
+		<param name="width">450</param>
 		<param name="onright">10</param>
 		<definition>
 			<include content="DiffuseMask">
@@ -398,7 +398,7 @@
 						<param name="label">$LOCALIZE[20389]</param>
 						<param name="icon">&#xE030;</param>
 						<param name="condition1">Library.HasContent(musicvideos)</param>
-						<param name="action1">ActivateWindow(videos,videodb://musicvideos/titles/)</param>
+						<param name="action1">ActivateWindow(videos,videodb://musicvideos/titles/,return)</param>
 						<param name="visible">!Skin.HasSetting(HideSPMusicvideos) + Library.HasContent(musicvideos)</param>
 					</include>
 					<include content="SideMenuButton">
@@ -698,13 +698,14 @@
 		<onunload>ClearProperty(FocusBounce,home)</onunload>
 	</include>
 	<!-- Scrollbars -->
-	<include name="ViewScrollbar">
+	<include name="Scrollbar">
 		<param name="id">17</param>
 		<param name="width">8</param>
 		<param name="top">0</param>
 		<param name="bottom">0</param>
-		<param name="onup">SetFocus(6666)</param>
-		<param name="visible">Control.IsVisible(50) | Control.IsVisible(51) | Control.IsVisible(52) | Control.IsVisible(53) | Control.IsVisible(58)</param>
+		<param name="onup">noop</param>
+		<param name="ondown">noop</param>
+		<param name="visible">$EXP[ScrollbarContainers]</param>
 		<definition>
 			<control type="scrollbar" id="$PARAM[id]">
 				<visible>$PARAM[visible]</visible>
@@ -713,14 +714,13 @@
 				<right>0</right>
 				<width>$PARAM[width]</width>
 				<onup>$PARAM[onup]</onup>
+				<ondown>$PARAM[ondown]</ondown>
 				<onleft condition="Control.IsVisible(50)">50</onleft>
 				<onleft condition="Control.IsVisible(51)">51</onleft>
 				<onleft condition="Control.IsVisible(52)">52</onleft>
 				<onleft condition="Control.IsVisible(53)">53</onleft>
-				<onleft condition="Control.IsVisible(54)">54</onleft>
-				<onleft condition="Control.IsVisible(55)">55</onleft>
-				<onleft condition="Control.IsVisible(56)">56</onleft>
-				<onleft condition="Control.IsVisible(57)">57</onleft>
+				<onleft condition="Control.IsVisible(58)">58</onleft>
+				<onleft condition="Control.IsVisible(59)">59</onleft>
 				<orientation>vertical</orientation>
 				<showonepage>false</showonepage>
 				<texturesliderbackground colordiffuse="ff3b3b3b">common/white.jpg</texturesliderbackground>
@@ -970,67 +970,49 @@
 		<lefttexture>-</lefttexture>
 	</include>
 	<include name="search_action">
-		<onclick condition="!System.HasAddon(plugin.video.embycon)">RunScript(script.globalsearch)</onclick>
-		<onclick condition="System.HasAddon(plugin.video.embycon)">SetProperty(Dialog.1.Label,$LOCALIZE[31072])</onclick>
-		<onclick condition="System.HasAddon(plugin.video.embycon)">SetProperty(Dialog.1.BuiltIn,RunScript(script.globalsearch))</onclick>
-		<onclick condition="System.HasAddon(plugin.video.embycon)">SetProperty(Dialog.2.Label,$LOCALIZE[31073])</onclick>
-		<onclick condition="System.HasAddon(plugin.video.embycon)">SetProperty(Dialog.2.BuiltIn,ActivateWindow(videos,plugin://plugin.video.embycon/?item_type=Movie&amp;mode=NEW_SEARCH))</onclick>
-		<onclick condition="System.HasAddon(plugin.video.embycon)">SetProperty(Dialog.3.Label,$LOCALIZE[31074])</onclick>
-		<onclick condition="System.HasAddon(plugin.video.embycon)">SetProperty(Dialog.3.BuiltIn,ActivateWindow(videos,plugin://plugin.video.embycon/?item_type=Series&amp;mode=NEW_SEARCH))</onclick>
-		<onclick condition="System.HasAddon(plugin.video.embycon)">SetProperty(Dialog.4.Label,$LOCALIZE[31075])</onclick>
-		<onclick condition="System.HasAddon(plugin.video.embycon)">SetProperty(Dialog.4.BuiltIn,ActivateWindow(videos,plugin://plugin.video.embycon/?item_type=Episode&amp;mode=NEW_SEARCH))</onclick>
-		<onclick condition="System.HasAddon(plugin.video.embycon)">RunScript(script.toolbox,info=selectdialog,header=$LOCALIZE[137])</onclick>
+		<onclick condition="!Skin.HasSetting(UseGlobalsearch)">SetProperty(CustomSearch,1,home)</onclick>
+		<onclick condition="!Skin.HasSetting(UseGlobalsearch)">Skin.Reset(CustomSearchTerm)</onclick>
+		<onclick condition="!Skin.HasSetting(UseGlobalsearch)">Skin.SetString(CustomSearchTerm)</onclick>
+		<onclick condition="!Skin.HasSetting(UseGlobalsearch)">ActivateWindow(1115)</onclick>
+		<onclick condition="Skin.HasSetting(UseGlobalsearch)">RunScript(script.globalsearch)</onclick>
 	</include>
 	<include name="CustomWidgetTemplate">
-		<control type="radiobutton" id="$PARAM[section]$PARAM[id]1">
+		<include content="SkinSettingsHeadlineLabel">
+			<param name="id" value="$PARAM[id]1"/>
+			<param name="label" value="$LOCALIZE[31200] $PARAM[nr]$INFO[Skin.String(UserWidget$PARAM[nr]_name), - ]"/>
+		</include>
+		<control type="button" id="$PARAM[id]2">
 			<include>SettingsButton</include>
-			<onclick condition="Skin.HasSetting(User$PARAM[type]Widget$PARAM[id])">Skin.Reset(User$PARAM[type]Widget$PARAM[id]_path)</onclick>
-			<onclick condition="Skin.HasSetting(User$PARAM[type]Widget$PARAM[id])">Skin.Reset(User$PARAM[type]Widget$PARAM[id]_target)</onclick>
-			<onclick condition="Skin.HasSetting(User$PARAM[type]Widget$PARAM[id])">Skin.Reset(User$PARAM[type]Widget$PARAM[id]_name)</onclick>
-			<onclick condition="Skin.HasSetting(User$PARAM[type]Widget$PARAM[id])">Skin.Reset(User$PARAM[type]Widget$PARAM[id]_action)</onclick>
-			<onclick>Skin.ToggleSetting(User$PARAM[type]Widget$PARAM[id])</onclick>
-			<selected>Skin.HasSetting(User$PARAM[type]Widget$PARAM[id])</selected>
-			<label>$LOCALIZE[31100] #$PARAM[id]</label>
+			<onclick>RunScript(script.skinshortcuts,type=shortcuts&amp;showNone=True&amp;custom=True&amp;grouping=widget&amp;skinLabel=UserWidget$PARAM[nr]_name&amp;skinAction=UserWidget$PARAM[nr]_action&amp;skinList=UserWidget$PARAM[nr]_path)</onclick>
+			<label>$LOCALIZE[748]</label>
+			<label2>$INFO[Skin.String(UserWidget$PARAM[nr]_path)]</label2>
 		</control>
-		<control type="button" id="$PARAM[section]$PARAM[id]2">
+		<control type="button" id="$PARAM[id]3">
 			<textcolor>emby</textcolor>
 			<texturenofocus colordiffuse="subsetting_nofocus">common/white.jpg</texturenofocus>
 			<include>SettingsButton</include>
-			<onclick>RunScript(script.skinshortcuts,type=shortcuts&amp;showNone=True&amp;custom=True&amp;grouping=widget&amp;skinLabel=User$PARAM[type]Widget$PARAM[id]_name&amp;skinAction=UserUser$PARAM[type]Widget$PARAM[id]_action&amp;skinList=User$PARAM[type]Widget$PARAM[id]_path)</onclick>
-			<label>• $LOCALIZE[573]</label>
-			<label2>$INFO[Skin.String(User$PARAM[type]Widget$PARAM[id]_path)]</label2>
-			<enable>Skin.HasSetting(User$PARAM[type]Widget$PARAM[id])</enable>
-			<visible>Skin.HasSetting(User$PARAM[type]Widget$PARAM[id])</visible>
-		</control>
-		<control type="button" id="$PARAM[section]$PARAM[id]3">
-			<textcolor>emby</textcolor>
-			<texturenofocus colordiffuse="subsetting_nofocus">common/white.jpg</texturenofocus>
-			<include>SettingsButton</include>
-			<onclick>RunScript(script.skin.helper.service,action=setskinsetting,setting=User$PARAM[type]Widget$PARAM[id]_target,header=$LOCALIZE[15021])</onclick>
+			<onclick>RunScript(script.skin.helper.service,action=setskinsetting,setting=UserWidget$PARAM[nr]_target,header=$LOCALIZE[15021])</onclick>
 			<label>• $LOCALIZE[15021]</label>
-			<label2>$INFO[Skin.String(User$PARAM[type]Widget$PARAM[id]_target)]</label2>
-			<enable>Skin.HasSetting(User$PARAM[type]Widget$PARAM[id])</enable>
-			<visible>Skin.HasSetting(User$PARAM[type]Widget$PARAM[id]) + !String.IsEmpty(Skin.String(User$PARAM[type]Widget$PARAM[id]_path))</visible>
+			<label2>$INFO[Skin.String(UserWidget$PARAM[nr]_target)]</label2>
+			<visible>!String.IsEmpty(Skin.String(UserWidget$PARAM[nr]_path))</visible>
 		</control>
-		<control type="button" id="$PARAM[section]$PARAM[id]4">
+		<control type="button" id="$PARAM[id]4">
 			<textcolor>emby</textcolor>
 			<texturenofocus colordiffuse="subsetting_nofocus">common/white.jpg</texturenofocus>
 			<include>SettingsButton</include>
-			<onclick>Skin.SetString(User$PARAM[type]Widget$PARAM[id]_name)</onclick>
+			<onclick>Skin.SetString(UserWidget$PARAM[nr]_name)</onclick>
 			<label>• $LOCALIZE[21864]</label>
-			<label2>$INFO[Skin.String(User$PARAM[type]Widget$PARAM[id]_name)]</label2>
-			<enable>Skin.HasSetting(User$PARAM[type]Widget$PARAM[id])</enable>
-			<visible>Skin.HasSetting(User$PARAM[type]Widget$PARAM[id]) + !String.IsEmpty(Skin.String(User$PARAM[type]Widget$PARAM[id]_path))</visible>
+			<label2>$INFO[Skin.String(UserWidget$PARAM[nr]_name)]</label2>
+			<visible>!String.IsEmpty(Skin.String(UserWidget$PARAM[nr]_path))</visible>
 		</control>
-		<control type="button" id="$PARAM[section]$PARAM[id]5">
+		<control type="button" id="$PARAM[id]5">
 			<textcolor>emby</textcolor>
 			<texturenofocus colordiffuse="subsetting_nofocus">common/white.jpg</texturenofocus>
 			<include>SettingsButton</include>
-			<onclick>RunScript(script.skin.helper.service,action=setskinsetting,setting=User$PARAM[type]Widget$PARAM[id]_layout,header=$LOCALIZE[31099])</onclick>
+			<onclick>RunScript(script.skin.helper.service,action=setskinsetting,setting=UserWidget$PARAM[nr]_layout,header=$LOCALIZE[31099])</onclick>
 			<label>• $LOCALIZE[31101]</label>
-			<label2>$INFO[Skin.String(User$PARAM[type]Widget$PARAM[id]_layout.label)]</label2>
-			<enable>Skin.HasSetting(User$PARAM[type]Widget$PARAM[id])</enable>
-			<visible>Skin.HasSetting(User$PARAM[type]Widget$PARAM[id]) + !String.IsEmpty(Skin.String(User$PARAM[type]Widget$PARAM[id]_path))</visible>
+			<label2>$INFO[Skin.String(UserWidget$PARAM[nr]_layout.label)]</label2>
+			<visible>!String.IsEmpty(Skin.String(UserWidget$PARAM[nr]_path))</visible>
 		</control>
 	</include>
 	<include name="CustomHubShortcutSettingsTemplate">
@@ -1225,6 +1207,120 @@
 			</control>
 		</definition>
 	</include>
+	<!-- Available views check -->
+	<include name="AvailableViewsCheck">
+		<control type="grouplist" id="4200">
+			<include>HiddenObject</include>
+			<include content="AvailableViews">
+				<param name="id" value="42"/>
+			</include>
+		</control>
+	</include>
+	<include name="AvailableViews">
+		<param name="id">41</param>
+		<definition>
+			<control type="radiobutton" id="$PARAM[id]02">
+				<include content="CommonButton"/>
+				<label>$LOCALIZE[20021]</label>
+				<onclick>Container.SetViewMode(51)</onclick>
+				<selected>Control.IsVisible(51)</selected>
+				<visible>$EXP[PosterViewVisible]</visible>
+			</control>
+			<control type="radiobutton" id="$PARAM[id]03">
+				<textcolor>emby</textcolor>
+				<texturenofocus border="10" colordiffuse="subsetting_nofocus">common/menu_back.png</texturenofocus>
+				<include content="CommonButton"/>
+				<label>• $LOCALIZE[31198]</label>
+				<onclick>Skin.ToggleSetting(HidePosterLabels)</onclick>
+				<selected>Skin.HasSetting(HidePosterLabels)</selected>
+				<visible>Control.IsVisible(51) + Window.IsVisible(myvideonav.xml)</visible>
+			</control>
+			<control type="radiobutton" id="$PARAM[id]04">
+				<include content="CommonButton"/>
+				<label>$LOCALIZE[31004]</label>
+				<onclick>Container.SetViewMode(50)</onclick>
+				<selected>Control.IsVisible(50)</selected>
+				<visible>$EXP[WideViewVisible]</visible>
+			</control>
+			<control type="radiobutton" id="$PARAM[id]05">
+				<textcolor>emby</textcolor>
+				<texturenofocus border="10" colordiffuse="subsetting_nofocus">common/menu_back.png</texturenofocus>
+				<include content="CommonButton"/>
+				<label>• $LOCALIZE[31198]</label>
+				<onclick>Skin.ToggleSetting(HideWideLabels)</onclick>
+				<selected>Skin.HasSetting(HideWideLabels)</selected>
+				<visible>Control.IsVisible(50) + Window.IsVisible(myvideonav.xml)</visible>
+			</control>
+			<control type="radiobutton" id="$PARAM[id]06">
+				<include content="CommonButton"/>
+				<label>$LOCALIZE[31199]</label>
+				<onclick>Container.SetViewMode(56)</onclick>
+				<selected>Control.IsVisible(56)</selected>
+				<visible>$EXP[SetViewVisible]</visible>
+			</control>
+			<control type="radiobutton" id="$PARAM[id]07">
+				<include content="CommonButton"/>
+				<label>$LOCALIZE[31199]</label>
+				<onclick>Container.SetViewMode(57)</onclick>
+				<selected>Control.IsVisible(57)</selected>
+				<visible>Window.IsVisible(tvchannels) | Window.IsVisible(tvrecordings)</visible>
+			</control>
+			<control type="radiobutton" id="$PARAM[id]08">
+				<include content="CommonButton"/>
+				<label>$LOCALIZE[20020]</label>
+				<onclick>Container.SetViewMode(58)</onclick>
+				<selected>Control.IsVisible(58)</selected>
+				<visible>$EXP[BannerViewVisible]</visible>
+			</control>
+			<control type="radiobutton" id="$PARAM[id]09">
+				<textcolor>emby</textcolor>
+				<texturenofocus border="10" colordiffuse="subsetting_nofocus">common/menu_back.png</texturenofocus>
+				<include content="CommonButton"/>
+				<label>• $LOCALIZE[31198]</label>
+				<onclick>Skin.ToggleSetting(HideBannerLabels)</onclick>
+				<selected>Skin.HasSetting(HideBannerLabels)</selected>
+				<visible>Control.IsVisible(58) + Window.IsVisible(myvideonav.xml)</visible>
+			</control>
+			<control type="radiobutton" id="$PARAM[id]10">
+				<include content="CommonButton"/>
+				<label>$LOCALIZE[31005]</label>
+				<onclick>Container.SetViewMode(52)</onclick>
+				<selected>Control.IsVisible(52)</selected>
+				<visible>$EXP[SquareViewVisible]</visible>
+			</control>
+			<control type="radiobutton" id="$PARAM[id]11">
+				<include content="CommonButton"/>
+				<label>$LOCALIZE[20373]</label>
+				<onclick>Container.SetViewMode(54)</onclick>
+				<selected>Control.IsVisible(54)</selected>
+				<visible>$EXP[SeasonViewVisible]</visible>
+			</control>
+			<control type="radiobutton" id="$PARAM[id]12">
+				<include content="CommonButton"/>
+				<label>$LOCALIZE[20359] - $LOCALIZE[31219]</label>
+				<onclick condition="Skin.HasSetting(ViewEpisodeList)">Skin.ToggleSetting(ViewEpisodeList)</onclick>
+				<onclick>Container.SetViewMode(55)</onclick>
+				<selected>Control.IsVisible(55) + !Skin.HasSetting(ViewEpisodeList)</selected>
+				<visible>$EXP[EpisodeViewVisible]</visible>
+			</control>
+			<control type="radiobutton" id="$PARAM[id]13">
+				<include content="CommonButton"/>
+				<label>$LOCALIZE[535]</label>
+				<onclick>Container.SetViewMode(53)</onclick>
+				<selected>Control.IsVisible(53)</selected>
+				<visible>$EXP[ListViewVisible]</visible>
+			</control>
+			<control type="radiobutton" id="$PARAM[id]14">
+				<include content="CommonButton"/>
+				<label>$LOCALIZE[20359] - $LOCALIZE[31220]</label>
+				<onclick condition="!Skin.HasSetting(ViewEpisodeList)">Skin.ToggleSetting(ViewEpisodeList)</onclick>
+				<onclick>Container.SetViewMode(59)</onclick>
+				<selected>Control.IsVisible(59) + Skin.HasSetting(ViewEpisodeList)</selected>
+				<visible>$EXP[EpisodeViewVisible]</visible>
+			</control>
+		</definition>
+	</include>
+	<!-- View selector -->
 	<include name="ViewSelector">
 		<control type="group">
 			<include>FullscreenDimensions</include>
@@ -1252,96 +1348,7 @@
 						<height>10</height>
 						<texture border="5" colordiffuse="panel">common/menu_top.png</texture>
 					</control>
-					<control type="radiobutton" id="4102">
-						<include content="CommonButton"/>
-						<label>$LOCALIZE[20021]</label>
-						<onclick>Container.SetViewMode(51)</onclick>
-						<selected>Control.IsVisible(51)</selected>
-						<visible>$EXP[PosterViewVisible]</visible>
-					</control>
-					<control type="radiobutton" id="4103">
-						<textcolor>emby</textcolor>
-						<texturenofocus border="10" colordiffuse="subsetting_nofocus">common/menu_back.png</texturenofocus>
-						<include content="CommonButton"/>
-						<label>• $LOCALIZE[31198]</label>
-						<onclick>Skin.ToggleSetting(HidePosterLabels)</onclick>
-						<selected>Skin.HasSetting(HidePosterLabels)</selected>
-						<visible>Control.IsVisible(51) + Window.IsVisible(myvideonav.xml)</visible>
-					</control>
-					<control type="radiobutton" id="4104">
-						<include content="CommonButton"/>
-						<label>$LOCALIZE[31004]</label>
-						<onclick>Container.SetViewMode(50)</onclick>
-						<selected>Control.IsVisible(50)</selected>
-						<visible>$EXP[WideViewVisible]</visible>
-					</control>
-					<control type="radiobutton" id="4105">
-						<textcolor>emby</textcolor>
-						<texturenofocus border="10" colordiffuse="subsetting_nofocus">common/menu_back.png</texturenofocus>
-						<include content="CommonButton"/>
-						<label>• $LOCALIZE[31198]</label>
-						<onclick>Skin.ToggleSetting(HideWideLabels)</onclick>
-						<selected>Skin.HasSetting(HideWideLabels)</selected>
-						<visible>Control.IsVisible(50) + Window.IsVisible(myvideonav.xml)</visible>
-					</control>
-					<control type="radiobutton" id="4106">
-						<include content="CommonButton"/>
-						<label>$LOCALIZE[31199]</label>
-						<onclick>Container.SetViewMode(56)</onclick>
-						<selected>Control.IsVisible(56)</selected>
-						<visible>$EXP[SetViewVisible]</visible>
-					</control>
-					<control type="radiobutton" id="4107">
-						<include content="CommonButton"/>
-						<label>$LOCALIZE[31199]</label>
-						<onclick>Container.SetViewMode(57)</onclick>
-						<selected>Control.IsVisible(57)</selected>
-						<visible>Window.IsVisible(tvchannels) | Window.IsVisible(tvrecordings)</visible>
-					</control>
-					<control type="radiobutton" id="4108">
-						<include content="CommonButton"/>
-						<label>$LOCALIZE[20020]</label>
-						<onclick>Container.SetViewMode(58)</onclick>
-						<selected>Control.IsVisible(58)</selected>
-						<visible>$EXP[BannerViewVisible]</visible>
-					</control>
-					<control type="radiobutton" id="4109">
-						<textcolor>emby</textcolor>
-						<texturenofocus border="10" colordiffuse="subsetting_nofocus">common/menu_back.png</texturenofocus>
-						<include content="CommonButton"/>
-						<label>• $LOCALIZE[31198]</label>
-						<onclick>Skin.ToggleSetting(HideBannerLabels)</onclick>
-						<selected>Skin.HasSetting(HideBannerLabels)</selected>
-						<visible>Control.IsVisible(58) + Window.IsVisible(myvideonav.xml)</visible>
-					</control>
-					<control type="radiobutton" id="4110">
-						<include content="CommonButton"/>
-						<label>$LOCALIZE[31005]</label>
-						<onclick>Container.SetViewMode(52)</onclick>
-						<selected>Control.IsVisible(52)</selected>
-						<visible>$EXP[SquareViewVisible]</visible>
-					</control>
-					<control type="radiobutton" id="4111">
-						<include content="CommonButton"/>
-						<label>$LOCALIZE[20373]</label>
-						<onclick>Container.SetViewMode(54)</onclick>
-						<selected>Control.IsVisible(54)</selected>
-						<visible>$EXP[SeasonViewVisible]</visible>
-					</control>
-					<control type="radiobutton" id="4112">
-						<include content="CommonButton"/>
-						<label>$LOCALIZE[20359]</label>
-						<onclick>Container.SetViewMode(55)</onclick>
-						<selected>Control.IsVisible(55)</selected>
-						<visible>$EXP[EpisodeViewVisible]</visible>
-					</control>
-					<control type="radiobutton" id="4113">
-						<include content="CommonButton"/>
-						<label>$LOCALIZE[535]</label>
-						<onclick>Container.SetViewMode(53)</onclick>
-						<selected>Control.IsVisible(53)</selected>
-						<visible>$EXP[ListViewVisible]</visible>
-					</control>
+					<include>AvailableViews</include>
 					<control type="image" id="4120">
 						<width>100%</width>
 						<height>10</height>

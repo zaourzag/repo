@@ -15,6 +15,12 @@
 				<visible>System.HasAddon(plugin.video.embycon)</visible>
 			</item>
 			<item>
+				<label>$INFO[System.AddonTitle(script.viewmaster)]</label>
+				<label2></label2>
+				<onclick>RunScript(script.viewmaster)</onclick>
+				<visible>System.HasAddon(script.viewmaster)</visible>
+			</item>
+			<item>
 				<label>$INFO[System.AddonTitle(plugin.video.plexbmc)]</label>
 				<label2></label2>
 				<onclick>Addon.OpenSettings(plugin.video.plexbmc)</onclick>
@@ -90,13 +96,19 @@
 				<onclick>ActivateWindow(SystemSettings)</onclick>
 			</item>
 			<item>
-				<label>$LOCALIZE[31124]</label>
+				<label>$INFO[System.AddonTitle(service.coreelec.settings)]</label>
+				<label2></label2>
+				<onclick>RunAddon(service.coreelec.settings)</onclick>
+				<visible>System.HasAddon(service.coreelec.settings)</visible>
+			</item>
+			<item>
+				<label>$INFO[System.AddonTitle(service.libreelec.settings)]</label>
 				<label2></label2>
 				<onclick>RunAddon(service.libreelec.settings)</onclick>
 				<visible>System.HasAddon(service.libreelec.settings)</visible>
 			</item>
 			<item>
-				<label>My OSMC</label>
+				<label>$INFO[System.AddonTitle(service.osmc.settings)]</label>
 				<label2></label2>
 				<onclick>RunAddon(service.osmc.settings)</onclick>
 				<visible>System.HasAddon(service.osmc.settings)</visible>

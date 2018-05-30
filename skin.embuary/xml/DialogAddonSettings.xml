@@ -16,6 +16,7 @@
 				<top>112</top>
 				<include content="SideMenuHeadline">
 					<param name="nr">1</param>
+					<param name="width">400</param>
 					<param name="label">$LOCALIZE[5]</param>
 				</include>
 				<control type="grouplist" id="9">
@@ -107,7 +108,7 @@
 				<onleft>9</onleft>
 				<onright>noop</onright>
 				<ondown>1000</ondown>
-				<pagecontrol>17</pagecontrol>
+				<pagecontrol>60</pagecontrol>
 				<scrolltime>200</scrolltime>
 				<itemgap>0</itemgap>
 			</control>
@@ -142,7 +143,8 @@
 			</control>
 		</control>
 		<!-- scrollbar -->
-		<include content="ViewScrollbar">
+		<include content="Scrollbar">
+			<param name="id" value="60"/>
 			<param name="visible" value="true"/>
 			<param name="top" value="122"/>
 			<param name="bottom" value="122"/>

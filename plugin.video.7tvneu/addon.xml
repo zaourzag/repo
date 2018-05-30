@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.7tvneu" name="7TV" version="0.5.24" provider-name="L0RE">
+<addon id="plugin.video.7tvneu" name="7TV" version="0.5.25" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="script.module.requests" version="2.12.4"/>
+          <import addon="inputstream.adaptive" version="1.0.8"/>
+         <import addon="script.module.inputstreamhelper" version="0.2.2"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="default.py">
         <provides>video</provides>

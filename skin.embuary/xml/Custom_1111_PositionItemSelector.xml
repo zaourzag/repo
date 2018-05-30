@@ -55,16 +55,16 @@
 				</control>
 				<!-- list -->
 				<control type="group">
-					<height>470</height>
+					<height>770</height>
 					<control type="image">
-						<height>470</height>
+						<height>770</height>
 						<texture colordiffuse="thumb_background">common/white.jpg</texture>
 						<aspectratio>stretch</aspectratio>
 					</control>
 					<control type="list" id="100">
 						<centerleft>50%</centerleft>
 						<top>10</top>
-						<height>450</height>
+						<height>750</height>
 						<onup>noop</onup>
 						<onleft>101</onleft>
 						<onright>101</onright>
@@ -77,8 +77,18 @@
 								<width>75</width>
 								<left>10</left>
 								<bordersize>5</bordersize>
+								<texture>DefaultFolder.png</texture>
+								<aspectratio>keep</aspectratio>
+								<visible>String.IsEmpty(ListItem.Icon)</visible>
+							</control>
+							<control type="image">
+								<height>75</height>
+								<width>75</width>
+								<left>10</left>
+								<bordersize>5</bordersize>
 								<texture background="true">$INFO[ListItem.Icon]</texture>
 								<aspectratio>keep</aspectratio>
+								<visible>!String.IsEmpty(ListItem.Icon)</visible>
 							</control>
 							<control type="label">
 								<right>20</right>
@@ -101,8 +111,18 @@
 								<width>75</width>
 								<left>10</left>
 								<bordersize>5</bordersize>
+								<texture>DefaultFolder.png</texture>
+								<aspectratio>keep</aspectratio>
+								<visible>String.IsEmpty(ListItem.Icon)</visible>
+							</control>
+							<control type="image">
+								<height>75</height>
+								<width>75</width>
+								<left>10</left>
+								<bordersize>5</bordersize>
 								<texture background="true">$INFO[ListItem.Icon]</texture>
 								<aspectratio>keep</aspectratio>
+								<visible>!String.IsEmpty(ListItem.Icon)</visible>
 							</control>
 							<control type="label">
 								<right>20</right>

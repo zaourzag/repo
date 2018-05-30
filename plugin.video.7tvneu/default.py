@@ -15,6 +15,8 @@ import time
 import requests
 from datetime import datetime
 import ssl
+from inputstreamhelper import Helper
+
 try:
     _create_unverified_https_context = ssl._create_unverified_context
 except AttributeError:
@@ -405,6 +407,8 @@ def getvideoid(client_location):
 
 def playvideo(video_id,  client_location, source_id=None):
         from hashlib import sha1
+        
+
 
         adaptivaddon=xbmc.executeJSONRPC('{"jsonrpc": "2.0", "id": 1, "method": "Addons.GetAddonDetails", "params": {"addonid": "inputstream.adaptive", "properties": ["enabled"]}}')        
         struktur = json.loads(adaptivaddon) 
@@ -498,6 +502,9 @@ def playvideo(video_id,  client_location, source_id=None):
                     data=ul
             except:
               data=ul                                 
+        helper = Helper(protocol='mpd', drm='widevine')
+        if not helper.check_inputstream():
+            xbmc.executebuiltin('Notification("Inputstream", "DRM geschützte Folgen gehen nur mit Inputstream")')
         #data=json_data["sources"][-1]["url"]               
         userAgent = 'User-Agent=Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/53.0.2785.143 Safari/537.36'
         addon_handle = int(sys.argv[1])
