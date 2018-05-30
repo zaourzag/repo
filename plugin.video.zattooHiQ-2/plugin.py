@@ -204,6 +204,7 @@ def build_directoryContent(content, addon_handle, cache=True, root=False, con='m
     
     # context menu
     contextMenuItems = []
+    contextMenuItems.append(('Info', 'Action(Info)'))
     if record['url2'] !='':
        contextMenuItems.append((localString(31301), 'RunPlugin('+str(record['url2'])+')') )
     li.addContextMenuItems(contextMenuItems, replaceItems=True)
@@ -457,14 +458,14 @@ def build_recordingsList(addon_uri, addon_handle):
     
     director=''
     cast=[]
+    try:
+		for person in showInfo['credits']:
+		  if person['role']=='director': director=person['person']
+		  else: cast.append(person['person'])
+    except: pass   
 
-    for person in showInfo['credits']:
-      if person['role']=='director': director=person['person']
-      else: cast.append(person['person'])
-          
-
-    meta.update({'title':label,'year':showInfo['year'], 'plot':showInfo['description'], 'country':showInfo['description'],'director':director, 'cast':cast, 'genre':', '.join(showInfo['genres'])  })
-    
+    #meta.update({'title':label,'year':showInfo['year'], 'plot':showInfo['description'], 'country':showInfo['description'],'director':director, 'cast':cast, 'genre':', '.join(showInfo['genres'])  })
+    meta.update({'title':label})
     '''
     #mark watched
     if (position>end-660):  #10min padding from zattoo +1min safety margin
@@ -499,6 +500,7 @@ def build_recordingsList(addon_uri, addon_handle):
       seriesrec = 'None'
   
     contextMenuItems = []
+    contextMenuItems.append(('Info', 'Action(Info)'))
     contextMenuItems.append((localString(31926), 'Action(ToggleWatched)'))
     if seriesrec == 'true':
       contextMenuItems.append((localString(31925),'RunPlugin("plugin://'+__addonId__+'/?mode=remove_series&recording_id='+str(record['id'])+'&series='+str(series)+'")',))
@@ -600,10 +602,11 @@ def start_download(recording_id, title, duration):
     max_bandwidth = __addon__.getSetting('max_bandwidth')
     params = {'recording_id': recording_id, 'stream_type': 'hls', 'maxrate':max_bandwidth}
     resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/watch', params)
-    #debug ('Result:'+str(resultData))
+    debug ('Result:'+str(resultData))
+    streams = None
     if resultData is not None:
       streams = resultData['stream']['watch_urls']
-
+    
     if len(streams)==0:
       xbmcgui.Dialog().notification("ERROR", "NO STREAM FOUND, CHECK SETTINGS!", channelInfo['logo'], 5000, False)
       return
@@ -665,7 +668,7 @@ def watch_channel(channel_id, start, end, showID="", restart=False, showOSD=Fals
   if restart: resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/watch/selective_recall/'+channel_id+'/'+showID, params)
   else: resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/watch',params)
   #resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/watch',params)
-  
+  debug('Streams :' +str(resultData))
   if resultData is None:
     xbmcgui.Dialog().notification("ERROR", "NO ZAPI RESULT", channelInfo['logo'], 5000, False)
     return
@@ -1412,7 +1415,7 @@ def main():
     series = args.get('series')[0]
     delete_series(recording_id, series)
   elif action == 'reloadDB':  
-    _zattooDB_.reloadDB()   
+    _zattooDB_.reloadDB(True)   
   elif action == 'changeStream':
     
     if not DASH: change_stream(1)

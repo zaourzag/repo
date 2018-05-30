@@ -18,11 +18,13 @@
 #    along with zattooHiQ.  If not, see <http://www.gnu.org/licenses/>.
 #
 
+print 'ZattooHiq-Service started'
 
 import xbmc, xbmcgui, xbmcaddon, datetime, time
 import os, urlparse
 from resources.library import library
 from resources.zattooDB import ZattooDB
+from resources.zapisession import ZapiSession
 
 _zattooDB_ = ZattooDB()
 __addon__ = xbmcaddon.Addon()
@@ -120,7 +122,7 @@ def getProgNextDay():
     tomorrow = datetime.datetime.today() + datetime.timedelta(days=1)
 
     if now > start:
-        debug('NextDay ' + str(start) + ' - ' + str(now) + ' - ' + str(tomorrow))
+        #debug('NextDay ' + str(start) + ' - ' + str(now) + ' - ' + str(tomorrow))
         _zattooDB_.updateProgram(tomorrow)
 
 
@@ -185,7 +187,7 @@ class myPlayer(xbmc.Player):
         except:pass
         
 ###########################################################################################
-
+debug('Service started')
 player=myPlayer()
    
 if OLDVERSION != VERSION:
@@ -194,8 +196,9 @@ if OLDVERSION != VERSION:
    
 elif __addon__.getSetting('dbonstart') == 'true':
 	start()
-    
-getProgNextDay()
+try:    
+    getProgNextDay()
+except:pass
 refreshProg()
 
 

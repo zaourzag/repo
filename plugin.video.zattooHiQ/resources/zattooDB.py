@@ -75,7 +75,7 @@ class reloadDB(xbmcgui.WindowXMLDialog):
     self.addControl(self.wartungImg)
     self.show()
     
-  def reloadDB(self):
+  def reloadDB(self, cache=False):
     debug('ReloadDB')
     from resources.library import library
     _library_ = library()
@@ -89,14 +89,14 @@ class reloadDB(xbmcgui.WindowXMLDialog):
             os.remove(os.path.join(xbmc.translatePath(__addon__.getAddonInfo('path') + '/resources/media/'), 'news.png'))
         except:
             pass
-    try:
-        os.remove(os.path.join(profilePath, 'cookie.cache'))
-        os.remove(os.path.join(profilePath, 'session.cache'))
-        os.remove(os.path.join(profilePath, 'account.cache'))
-        #os.remove(os.path.join(profilePath, 'apicall.cache'))
-       
-    except:
-        pass
+    if cache:
+	try:
+	    os.remove(os.path.join(profilePath, 'cookie.cache'))
+	    os.remove(os.path.join(profilePath, 'session.cache'))
+	    os.remove(os.path.join(profilePath, 'account.cache'))
+	    #os.remove(os.path.join(profilePath, 'apicall.cache'))
+	except:
+	    pass
     #DB.zapi.AccountData = None
     DB.zapiSession()
     DB._createTables()
@@ -187,7 +187,8 @@ class ZattooDB(object):
     # check if DB exists
     c = self.conn.cursor()
     try: c.execute('SELECT * FROM showinfos')
-    except: self._createTables()
+    except: 
+	self._createTables()
     c.close()
 
   def _createTables(self):
@@ -234,6 +235,7 @@ class ZattooDB(object):
       pass
     VERSION = __addon__.getAddonInfo('version')
     self.set_version(VERSION)
+    
     
   def updateChannels(self, rebuild=False):
     c = self.conn.cursor()
@@ -331,7 +333,7 @@ class ZattooDB(object):
 
         #print "apiData   "+api
         programData = self.zapi.exec_zapiCall(api, None)
-        #debug ('ProgrammData: '+str(programData))
+        debug ('ProgrammData: '+str(programData))
         count=0
         for channel in programData['channels']:
             cid = channel['cid']
@@ -342,8 +344,8 @@ class ZattooDB(object):
                 continue
             if cid == firstchan and not channel['programs']:
                 xbmcgui.Dialog().notification('Update Program', 'No Data',  __addon__.getAddonInfo('path') + '/icon.png', 3000, False)
-                c.close()
-                return 
+                #c.close()
+                continue
            
             for program in channel['programs']:
                 count+=1
@@ -512,7 +514,14 @@ class ZattooDB(object):
             
             #info.execute('UPDATE programs SET info=? WHERE showID=?',[json.dumps(infoall), showID ])
             
-            #debug ('Showinfo  ' + str(showInfo))
+            debug ('Showinfo  ' + str(showInfo))
+            if showInfo['program']['cid'] == 'none':
+                longDesc=''
+                year=''
+                category=''
+                country=''
+                info.close()
+                return {'description':longDesc, 'year':year, 'country':country, 'category':category}
             if showInfo is None:
                 longDesc=''
                 year=''

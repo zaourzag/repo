@@ -45,7 +45,7 @@ class library:
     if not os.path.exists(libraryPath): os.makedirs(libraryPath)
     
     resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/playlist', None)
-    #debug('Resultdata:'+str(resultData))
+    debug('Resultdata:'+str(resultData))
     if resultData is None: return
     for record in resultData['recordings']:
       showInfo=_zattooDB_.getShowInfo(record['program_id'])

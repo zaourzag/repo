@@ -42,7 +42,7 @@ def getAddonSetting(doc,id):
 class ffmpg(): 
     
     def start_download(self, file, title, duration):    
-        debug("Start downloadffmpg")
+        debug("Start downloadffmpg"+str(duration))
        
         import time
         title=title.decode('utf-8')
@@ -72,21 +72,20 @@ class ffmpg():
         debug(erg)
 
         #try:
-        dialog=xbmcgui.DialogProgressBG()
+        #dialog=xbmcgui.DialogProgressBG()
         # download started
-        dialog.create(translation(32100), title)
+        #dialog.create(translation(32100), title)
         start = datetime.fromtimestamp(time.time())
         zstart=start.strftime('%X')
         debug(zstart) 
         #count=0       
-        ret = ff.run(stdout=subprocess.PIPE, duration=duration)
+        ret = ff.run(stdout=subprocess.PIPE, duration=duration, title=title)
         
         end = datetime.fromtimestamp(time.time())
         zend = end.strftime('%X')
         debug(zend)
         time = end - start
-        
-        dialog.close()
+      
         dialog2 = xbmcgui.Dialog()                
         nr=dialog2.ok(translation(32101), translation(32102), str(time))
         #except:
@@ -141,14 +140,14 @@ class FFmpeg(object):
         self._cmd += normalized_global_options
         self._cmd += _merge_args_opts(inputs, add_input_option=True)
         self._cmd += _merge_args_opts(outputs)
-
+	#self._cmd += shlex.split('> output.log 2>&1 < /dev/null &')
         self.cmd = subprocess.list2cmdline(self._cmd)
         self.process = None
 
     def __repr__(self):
         return '<{0!r} {1!r}>'.format(self.__class__.__name__, self.cmd)
 
-    def run(self, input_data=None, stdout=None, stderr=None, duration=None):
+    def run(self, input_data=None, stdout=None, stderr=None, duration=None, title=None):
         """Execute FFmpeg command line.
 
         ``input_data`` can contain input for FFmpeg in case ``pipe`` protocol is used for input.
@@ -176,6 +175,7 @@ class FFmpeg(object):
         :raise: `FFRuntimeError` in case FFmpeg command exits with a non-zero code;
             `FFExecutableNotFoundError` in case the executable path passed was not valid
         """
+
         try:
             self.process = subprocess.Popen(
                 self._cmd,
@@ -183,31 +183,26 @@ class FFmpeg(object):
                 stdout=stdout,
                 stderr=subprocess.PIPE
             )
-            
-            while True:
-
-                chunk = self.process.stderr.read()
-                debug("OUTPUT>>> " + chunk.rstrip())
-                #if not chunk:
-                    #break
-
-                #result = re.search(r'\stime=(?P<time>\S+) ', chunk)
-                #elapsed_time = float(result.groupdict()['time'])
-
-                ## Assuming you have the duration in seconds
-                #progress = (elapsed_time / duration) * 100
-
-                ## Do something with progress here
-                #debug(progress)
-
-                #time.sleep(10)
-        
+           
+           
         except OSError as e:
             if e.errno == errno.ENOENT:
                 raise FFExecutableNotFoundError("Executable '{0}' not found".format(self.executable))
             else:
                 raise
+		
+	n=0
+	dialog=xbmcgui.DialogProgressBG()
+	dialog.create(translation(32100), title)
+	while self.process.poll() is None:
 
+		n +=1
+		percent = int(n * 100 / duration)
+		#debug(percent)
+                dialog.update(percent)
+		xbmc.sleep(1000)
+                
+	dialog.close()
         out = self.process.communicate(input=input_data)
         if self.process.returncode != 0:
             raise FFRuntimeError(self.cmd, self.process.returncode, out[0], out[1])

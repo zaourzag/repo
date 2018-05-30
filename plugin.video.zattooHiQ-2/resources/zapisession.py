@@ -64,7 +64,7 @@ class ZapiSession:
 		self.Password = password
 		self.ZAPIUrl = api_url
 		if self.restore_session():
-		    debug ('Restore = '+str(self.restore_session()))
+		    #debug ('Restore = '+str(self.restore_session()))
 		    return self.restore_session() 
 		else: return self.renew_session()
 
@@ -122,8 +122,8 @@ class ZapiSession:
 					self.set_cookie(sessionId)
 					self.persist_sessionId(sessionId)
 				return response.read()
-		except Exception:
-			pass
+		except Exception as e:
+			debug(str(e))
 		return None
 
 	# zapiCall with params=None creates GET request otherwise POST
@@ -131,7 +131,7 @@ class ZapiSession:
 	def exec_zapiCall(self, api, params, context='default'):
 		#url = self.ZAPIAuthUrl + api if context == 'session' else self.ZAPIUrl + api
 		url = self.ZAPIUrl + api
-		#debug( "ZapiCall  " + str(url))
+		#debug( "ZapiCall  " + str(url)+str(params))
 		content = self.request_url(url, params)
 		if content is None:# and self.renew_session():
 			content = self.request_url(url, params)
@@ -173,6 +173,7 @@ class ZapiSession:
 	def login(self):
 		api = '/zapi/account/login'
 		params = {"login": self.Username, "password" : self.Password}
+		debug (params)
 		accountData = self.exec_zapiCall(api, params, 'session')
 		debug ('Login: '+str(accountData))
 		if accountData is not None:
@@ -183,4 +184,4 @@ class ZapiSession:
 
 	def renew_session(self):
 		return self.session() and self.login()
-
+		
