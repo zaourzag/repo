@@ -412,7 +412,10 @@ def showday(tag):
         duration=element["duration"]
         broadcastDates=element["broadcastDates"][0]
         #"2018-02-28T04:00:00Z"
-        datetime_object = datetime.datetime.strptime(broadcastDates, '%Y-%m-%dT%H:%M:%SZ')
+        try:	
+		datetime_object = datetime.datetime.strptime(broadcastDates, '%Y-%m-%dT%H:%M:%SZ')
+	except TypeError:
+		datetime_object = datetime.datetime(*(time.strptime(broadcastDates, '%Y-%m-%dT%H:%M:%SZ')[0:6]))
         wann="[COLOR orangered]"+datetime_object.strftime("%H:%M")+"[/COLOR]"
         debug("-----------------------")
         debug(wann)
