@@ -1280,7 +1280,7 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
     </extension>
 </addon>
 
-<addon id="plugin.video.L0RE.dmax" name="DMAX Mediathek" version="0.3.4" provider-name="L0RE">
+<addon id="plugin.video.L0RE.dmax" name="DMAX Mediathek" version="0.3.5" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
         <import addon="script.module.requests" version="2.12.4"/>
@@ -4039,25 +4039,39 @@ Parental warning: The Maxdome Plattform consists of differnt types of content - 
 	</extension>
 </addon>
 
-<addon id="plugin.video.filmstarts" name="Filmstarts" version="0.6.14" provider-name="L0RE">
-    <requires>
-        <import addon="xbmc.python" version="2.24.0"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="de">Film und Serien (Trailer, Making of,Teaser,...)  von http://www.filmstarts.de/</summary>
-    <summary lang="en">Film an Series (Trailer, Making of,Teaser,...) from http://www.filmstarts.de/</summary>
-    <description lang="en">Film an Series (Trailer, Making of,Teaser,...) from http://www.filmstarts.de/</description>
-    <description lang="de">Film und Serien (Trailer, Making of,Teaser,...) von http://www.filmstarts.de/</description>
-    <website></website>
-    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-    <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.filmstarts</source>
-    <forum>https://www.kodinerds.net/index.php/Thread/53743-RERelease-filmstarts/</forum>
-    <email>andreas at vogler dot name</email>
-    <platform>all</platform>
-  </extension>
+<addon id="plugin.video.filmstarts" name="Filmstarts" version="0.7.0" provider-name="L0RE">
+	<requires>
+		<import addon="xbmc.python" version="2.24.0"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de">Filme und Serien (Trailer, Making of, Teaser ...)</summary>
+		<summary lang="en">Movies and Series (Trailer, Making of, Teaser ...)</summary>
+		<description lang="de">FILMSTARTS.de ist das führende Online-Magazine rund um das Medium Film.[CR]In der FILMSTARTS-Datenbank befinden sich mittlerweile Informationen zu mehr als 70.000 Filmen.[CR]Schaue Filme und Serien (Trailer, Making of, Teaser etc.) von http://www.filmstarts.de/</description>
+		<description lang="en">FILMSTARTS.de is the leading online magazine for the medium of film.[CR]The FILMSTARTS database now contains information of more than 70,000 movies.[CR]Watch movies and series (trailers, making of, teasers, etc.) from http://www.filmstarts.de/</description>
+		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum>https://www.kodinerds.net/index.php/Thread/53743-RERelease-filmstarts/</forum>
+		<website>http://www.filmstarts.de/</website>
+		<email>andreas at vogler dot name</email>
+		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.filmstarts</source>
+		<assets>
+			<icon>icon.png</icon>
+			<fanart>fanart.jpg</fanart>
+		</assets>
+		<news>[B][COLOR orangered]Version 0.7.0  (02.06.2018)[/COLOR][/B][CR]
+- fixed: Es werden nicht alle Bilder zu den Titeln angezeigt
+- fixed: Titel-Sonderzeichen werden nicht richtig dargestellt
+- fixed: Auflistung-Titel in Video-Archiv (Serien)
+- fixed: Shutil-Error beim Entfernen des Temp-Ordners
+- fixed: Einige andere kleine Änderungen
+		</news>
+	</extension>
 </addon>
 
 <addon id="service.fritz.automation" name="Fritz Automation" version="0.2.1" provider-name="L0RE">
