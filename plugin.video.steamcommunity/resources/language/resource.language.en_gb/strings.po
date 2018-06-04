@@ -1,0 +1,99 @@
+# Kodi Media Center language file
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@kodi.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+
+# Steam Community Settings
+
+msgctxt "#30004"
+msgid "Configure InputStream Adaptive"
+msgstr ""
+
+
+# Steam Community Menue
+
+msgctxt "#30040"
+msgid "Search hubs"
+msgstr ""
+
+msgctxt "#30041"
+msgid "Search user"
+msgstr ""
+
+msgctxt "#30045"
+msgid "Popular"
+msgstr ""
+
+msgctxt "#30046"
+msgid "Most recent"
+msgstr ""
+
+msgctxt "#30050"
+msgid "All"
+msgstr ""
+
+msgctxt "#30051"
+msgid "Screenshots"
+msgstr ""
+
+msgctxt "#30052"
+msgid "Artwork"
+msgstr ""
+
+msgctxt "#30053"
+msgid "Broadcasts"
+msgstr ""
+
+msgctxt "#30054"
+msgid "Videos"
+msgstr ""
+
+msgctxt "#30055"
+msgid "Workshop"
+msgstr ""
+
+msgctxt "#30056"
+msgid "News"
+msgstr ""
+
+msgctxt "#30057"
+msgid "Guides"
+msgstr ""
+
+msgctxt "#30058"
+msgid "Reviews"
+msgstr ""
+
+
+# Steam Community Messages
+
+msgctxt "#30060"
+msgid "Login failed"
+msgstr ""
+
+msgctxt "#30061"
+msgid "An error occurred"
+msgstr ""
+
+msgctxt "#30062"
+msgid "You need to be logged in"
+msgstr ""
+
+msgctxt "#30063"
+msgid "This profile is private"
+msgstr ""
+
+msgctxt "#30064"
+msgid "Failed to play video"
+msgstr ""

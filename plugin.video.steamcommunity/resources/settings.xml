@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <setting id="inputstream_adaptive" type="action" label="30004" option="close" action="RunPlugin(plugin://plugin.video.steamcommunity/?mode=hls)"/>
+</settings>
