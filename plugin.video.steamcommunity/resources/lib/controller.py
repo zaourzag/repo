@@ -29,11 +29,97 @@ from . import api
 from . import view
 
 
+def viewScreenshots(args):
+    """Show all screenshots
+    """
+    # get website
+    html = api.getPage(args, "https://steamcommunity.com/apps/allcontenthome/?l=" + args._lang + "&browsefilter=trend&appHubSubSection=2&forceanon=1")
+    if not html:
+        view.add_item(args, {"title": args._addon.getLocalizedString(30061)})
+        view.endofdirectory()
+        return
+
+    # parse html
+    xbmcplugin.setContent(int(sys.argv[1]), "images")
+    soup = BeautifulSoup(html, "html.parser")
+
+    # for every list entry
+    for div in soup.find_all("div", {"class": "modalContentLink"}):
+        # get values
+        sText  = div.find("div", {"class": "apphub_CardContentTitle"}).string.strip()
+        sGame = div.find("div", {"class": "apphub_CardContentType"}).string.strip()
+        sRating = div.find("div", {"class": "apphub_CardRating"}).string.strip()
+        sThumb  = div.find("img", {"class": "apphub_CardContentPreviewImage"})["src"]
+        sURL = re.findall(r", (.*?) ", div.find("img", {"class": "apphub_CardContentPreviewImage"})["srcset"])[-1]
+        try:
+            sAuthor = div.find("div", {"class": "apphub_CardContentAuthorName"}).a.string.strip()
+        except AttributeError:
+            sAuthor = div.find("div", {"class": "apphub_CardContentAppName"}).a.string.strip()
+
+        # add to view
+        view.add_item(args,
+                      {"url":         sURL,
+                       "mode":        "imageplay",
+                       "title":       sAuthor + " - " + sText,
+                       "tvshowtitle": sAuthor + " - " + sText,
+                       "plot":        sAuthor + "\n" + sText + "\n" + sGame + "\nLikes " + sRating,
+                       "plotoutline": sAuthor + "\n" + sText + "\n" + sGame + "\nLikes " + sRating,
+                       "thumb":       sThumb,
+                       "fanart":      sThumb,
+                       "credits":     sAuthor},
+                      isFolder=False, mediatype="video")
+
+    view.endofdirectory()
+
+
+def viewArtwork(args):
+    """Show all artwork
+    """
+    # get website
+    html = api.getPage(args, "https://steamcommunity.com/apps/allcontenthome/?l=" + args._lang + "&browsefilter=trend&appHubSubSection=4&forceanon=1")
+    if not html:
+        view.add_item(args, {"title": args._addon.getLocalizedString(30061)})
+        view.endofdirectory()
+        return
+
+    # parse html
+    xbmcplugin.setContent(int(sys.argv[1]), "images")
+    soup = BeautifulSoup(html, "html.parser")
+
+    # for every list entry
+    for div in soup.find_all("div", {"class": "modalContentLink"}):
+        # get values
+        sText  = div.find("div", {"class": "apphub_CardContentTitle"}).string.strip()
+        sGame = div.find("div", {"class": "apphub_CardContentType"}).string.strip()
+        sRating = div.find("div", {"class": "apphub_CardRating"}).string.strip()
+        sThumb  = div.find("img", {"class": "apphub_CardContentPreviewImage"})["src"]
+        sURL = re.findall(r", (.*?) ", div.find("img", {"class": "apphub_CardContentPreviewImage"})["srcset"])[-1]
+        try:
+            sAuthor = div.find("div", {"class": "apphub_CardContentAuthorName"}).a.string.strip()
+        except AttributeError:
+            sAuthor = div.find("div", {"class": "apphub_CardContentAppName"}).a.string.strip()
+
+        # add to view
+        view.add_item(args,
+                      {"url":         sURL,
+                       "mode":        "imageplay",
+                       "title":       sAuthor + " - " + sText,
+                       "tvshowtitle": sAuthor + " - " + sText,
+                       "plot":        sAuthor + "\n" + sText + "\n" + sGame + "\nLikes " + sRating,
+                       "plotoutline": sAuthor + "\n" + sText + "\n" + sGame + "\nLikes " + sRating,
+                       "thumb":       sThumb,
+                       "fanart":      sThumb,
+                       "credits":     sAuthor},
+                      isFolder=False, mediatype="video")
+
+    view.endofdirectory()
+
+
 def viewBroadcasts(args):
     """Show all broadcasts
     """
     # get website
-    html = api.getPage(args, "https://steamcommunity.com/apps/allcontenthome/?l=german&browsefilter=trend&appHubSubSection=13&forceanon=1&userreviewsoffset=0&broadcastsoffset=0&p=1&numperpage=0&appid=0")
+    html = api.getPage(args, "https://steamcommunity.com/apps/allcontenthome/?l=" + args._lang + "&browsefilter=trend&appHubSubSection=13&forceanon=1")
     if not html:
         view.add_item(args, {"title": args._addon.getLocalizedString(30061)})
         view.endofdirectory()
@@ -53,7 +139,7 @@ def viewBroadcasts(args):
         # add to view
         view.add_item(args,
                       {"url":         div.a["href"],
-                       "mode":        "videoplay",
+                       "mode":        "videoplay_broadcast",
                        "title":       sAuthor + " - " + sTitle,
                        "tvshowtitle": sAuthor + " - " + sTitle,
                        "plot":        sAuthor + "\n" + sTitle + "\n" + sViewer,
@@ -66,9 +152,65 @@ def viewBroadcasts(args):
     view.endofdirectory()
 
 
-def startplayback(args):
-    """Plays a video
+def viewVideos(args):
+    """Show all videos
     """
+    # get website
+    html = api.getPage(args, "https://steamcommunity.com/apps/allcontenthome/?l=" + args._lang + "&browsefilter=trend&appHubSubSection=3&forceanon=1")
+    if not html:
+        view.add_item(args, {"title": args._addon.getLocalizedString(30061)})
+        view.endofdirectory()
+        return
+
+    # parse html
+    soup = BeautifulSoup(html, "html.parser")
+
+    # for every list entry
+    for div in soup.find_all("div", {"class": "modalContentLink"}):
+        # get values
+        sTitle  = div.find("div", {"class": "apphub_CardContentTitle"}).string.strip()
+        sGame = div.find("div", {"class": "apphub_CardContentType"}).string.strip()
+        sThumb  = div.find("img", {"class": "apphub_CardContentPreviewImage"})["src"]
+        try:
+            sAuthor = div.find("div", {"class": "apphub_CardContentAuthorName"}).a.string.strip()
+        except AttributeError:
+            sAuthor = div.find("div", {"class": "apphub_CardContentAppName"}).a.string.strip()
+
+        # add to view
+        view.add_item(args,
+                      {"url":         re.search(r"youtube\.com\/vi\/(.*?)\/0\.jpg", sThumb).group(1),
+                       "mode":        "videoplay_youtube",
+                       "title":       sAuthor + " - " + sTitle,
+                       "tvshowtitle": sAuthor + " - " + sTitle,
+                       "plot":        sAuthor + "\n" + sTitle + "\n" + sGame,
+                       "plotoutline": sAuthor + "\n" + sTitle + "\n" + sGame,
+                       "thumb":       sThumb,
+                       "fanart":      sThumb,
+                       "credits":     sAuthor},
+                      isFolder=False, mediatype="video")
+
+    view.endofdirectory()
+
+
+def startplayback_images(args):
+    """Plays a image
+    """
+    # start video
+    item = xbmcgui.ListItem(getattr(args, "title", "Title not provided"), path=args.url)
+    #item.setInfo("pictures", {"picturepath": args.url})
+    #xbmc.Player().play(args.url, item)
+    xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, item)
+
+
+def startplayback_broadcast(args):
+    """Plays a broadcast stream
+    """
+    # start video
+    if u"youtube.com" in args.url:
+        item = xbmcgui.ListItem(getattr(args, "title", "Title not provided"), path=args.url)
+        xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, item)
+        return True
+
     # get stream id
     streamid = re.search(r"/watch/(.*?)$", args.url).group(1)
 
@@ -95,3 +237,11 @@ def startplayback(args):
         item.setProperty("inputstream.adaptive.manifest_type", "mpd")
         # start playback
         xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, item)
+
+
+def startplayback_youtube(args):
+    """Plays a youtube video
+    """
+    # start video
+    item = xbmcgui.ListItem(getattr(args, "title", "Title not provided"), path="plugin://plugin.video.youtube/play/?video_id=" + args.url)
+    xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, item)

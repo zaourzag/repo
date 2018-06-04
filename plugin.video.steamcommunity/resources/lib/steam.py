@@ -16,7 +16,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import sys
-import random
 import inputstreamhelper
 
 import xbmc
@@ -36,11 +35,17 @@ def main():
     args = model.parse()
 
     # inputstream adaptive settings
-    if hasattr(args, "mode") and args.mode == "hls":
-        is_helper = inputstreamhelper.Helper("hls")
+    if hasattr(args, "mode") and args.mode == "mpd":
+        is_helper = inputstreamhelper.Helper("mpd")
         if is_helper.check_inputstream():
             xbmcaddon.Addon(id="inputstream.adaptive").openSettings()
         return True
+
+    # set language
+    language = {"0": "arabic", "1": "bulgarian", "2": "schinese", "3": "tchinese", "4": "czech", "5": "danish", "6": "dutch", "7": "english", "8": "finnish", "9": "french",
+                "10": "german", "11": "greek", "12": "hungarian", "13": "italian", "14": "japanese", "15": "koreana", "16": "norwegian", "17": "polish", "18": "portuguese", "19": "brazilian",
+                "20": "romanian", "21": "russian", "22": "spanish", "23": "swedish", "24": "thai", "25": "turkish", "26": "ukrainian"}
+    args._lang = language[args._addon.getSetting("language")]
 
     # list menue
     api.start(args)
@@ -60,21 +65,21 @@ def check_mode(args):
     if not mode:
         showMainMenue(args)
 
-    elif mode == "queue":
-        pass #controller.showQueue(args)
-    elif mode == "search":
-        pass #controller.searchAnime(args)
-    elif mode == "history":
-        pass #controller.showHistory(args)
-    elif mode == "random":
-        pass #controller.showRandom(args)
-
+    elif mode == "screenshots":
+        controller.viewScreenshots(args)
+    elif mode == "artwork":
+        controller.viewArtwork(args)
     elif mode == "broadcasts":
         controller.viewBroadcasts(args)
-    elif mode == "episodes":
-        pass #controller.viewEpisodes(args)
-    elif mode == "videoplay":
-        controller.startplayback(args)
+    elif mode == "videos":
+        controller.viewVideos(args)
+
+    elif mode == "imageplay":
+        controller.startplayback_images(args)
+    elif mode == "videoplay_broadcast":
+        controller.startplayback_broadcast(args)
+    elif mode == "videoplay_youtube":
+        controller.startplayback_youtube(args)
     else:
         # unkown mode
         xbmc.log("[PLUGIN] %s: Failed in check_mode '%s'" % (args._addonname, str(mode)), xbmc.LOGERROR)
