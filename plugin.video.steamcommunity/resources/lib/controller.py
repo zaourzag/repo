@@ -23,9 +23,10 @@ from bs4 import BeautifulSoup
 from os.path import join
 from distutils.version import StrictVersion
 try:
-    from urllib import URLopener
+    from urllib import URLopener, quote_plus
 except ImportError:
     from urllib.request import URLopener
+    from urllib.parse import quote_plus
 
 import xbmc
 import xbmcgui
@@ -36,11 +37,45 @@ from . import api
 from . import view
 
 
+def searchHub(args):
+    """Search function for community hubs
+    """
+    # ask for search string
+    d = xbmcgui.Dialog().input(args._addon.getLocalizedString(30040), type=xbmcgui.INPUT_ALPHANUM)
+    if not d:
+        return
+
+    # get website
+    html = api.getPage(args, "https://steamcommunity.com/actions/SearchApps/" + quote_plus(d))
+    if not html:
+        view.add_item(args, {"title": args._addon.getLocalizedString(30061)})
+        view.endofdirectory()
+        return
+
+    # parse json
+    json_obj = json.loads(html)
+    
+    # for every list entry
+    for item in json_obj:
+        # add to view
+        view.add_item(args,
+                      {"mode":        "viewhub",
+                       "title":       item["name"],
+                       "tvshowtitle": item["name"],
+                       "appid":       item["appid"],
+                       "thumb":       item["logo"],
+                       "fanart":      item["logo"]},
+                      isFolder=True, mediatype="video")
+
+    view.endofdirectory()
+
+
 def viewScreenshots(args):
     """Show all screenshots
     """
     # get website
-    html = api.getPage(args, "https://steamcommunity.com/apps/allcontenthome/?l=" + args._lang + "&browsefilter=trend&appHubSubSection=2&forceanon=1")
+    page = str(getattr(args, "offset", 1))
+    html = api.getPage(args, "https://steamcommunity.com/apps/allcontenthome/?l=" + args._lang + "&browsefilter=" + args._filter + "&appHubSubSection=2&forceanon=1&userreviewsoffset=0&p=" + page + "&workshopitemspage=" + page + "&readytouseitemspage=" + page + "&mtxitemspage=" + page + "&itemspage=" + page + "&screenshotspage=" + page + "&videospage=" + page + "&artpage=" + page + "&allguidepage=" + page + "&webguidepage=" + page + "&integratedguidepage=" + page + "&discussionspage=" + page + "&numperpage=10&appid=0")
     if not html:
         view.add_item(args, {"title": args._addon.getLocalizedString(30061)})
         view.endofdirectory()
@@ -57,7 +92,10 @@ def viewScreenshots(args):
         sGame = div.find("div", {"class": "apphub_CardContentType"}).string.strip()
         sRating = div.find("div", {"class": "apphub_CardRating"}).string.strip()
         sThumb  = div.find("img", {"class": "apphub_CardContentPreviewImage"})["src"]
-        sURL = re.findall(r", (.*?) ", div.find("img", {"class": "apphub_CardContentPreviewImage"})["srcset"])[-1]
+        try:
+            sURL = re.findall(r", (.*?) ", div.find("img", {"class": "apphub_CardContentPreviewImage"})["srcset"])[-1]
+        except IndexError:
+            sURL = div.find("img", {"class": "apphub_CardContentPreviewImage"})["srcset"].split(" ")[0]
         try:
             sAuthor = div.find("div", {"class": "apphub_CardContentAuthorName"}).a.string.strip()
         except AttributeError:
@@ -76,6 +114,12 @@ def viewScreenshots(args):
                        "credits":     sAuthor},
                       isFolder=False, mediatype="video")
 
+    # next page
+    view.add_item(args,
+                  {"title":  args._addon.getLocalizedString(30042),
+                   "url":    getattr(args, "url", ""),
+                   "offset": str(int(getattr(args, "offset", 1)) + 1),
+                   "mode":   args.mode})
     view.endofdirectory()
 
 
@@ -83,7 +127,8 @@ def viewArtwork(args):
     """Show all artwork
     """
     # get website
-    html = api.getPage(args, "https://steamcommunity.com/apps/allcontenthome/?l=" + args._lang + "&browsefilter=trend&appHubSubSection=4&forceanon=1")
+    page = str(getattr(args, "offset", 1))
+    html = api.getPage(args, "https://steamcommunity.com/apps/allcontenthome/?l=" + args._lang + "&browsefilter=" + args._filter + "&appHubSubSection=4&forceanon=1&userreviewsoffset=0&p=" + page + "&workshopitemspage=" + page + "&readytouseitemspage=" + page + "&mtxitemspage=" + page + "&itemspage=" + page + "&screenshotspage=" + page + "&videospage=" + page + "&artpage=" + page + "&allguidepage=" + page + "&webguidepage=" + page + "&integratedguidepage=" + page + "&discussionspage=" + page + "&numperpage=10&appid=0")
     if not html:
         view.add_item(args, {"title": args._addon.getLocalizedString(30061)})
         view.endofdirectory()
@@ -100,7 +145,10 @@ def viewArtwork(args):
         sGame = div.find("div", {"class": "apphub_CardContentType"}).string.strip()
         sRating = div.find("div", {"class": "apphub_CardRating"}).string.strip()
         sThumb  = div.find("img", {"class": "apphub_CardContentPreviewImage"})["src"]
-        sURL = re.findall(r", (.*?) ", div.find("img", {"class": "apphub_CardContentPreviewImage"})["srcset"])[-1]
+        try:
+            sURL = re.findall(r", (.*?) ", div.find("img", {"class": "apphub_CardContentPreviewImage"})["srcset"])[-1]
+        except IndexError:
+            sURL = div.find("img", {"class": "apphub_CardContentPreviewImage"})["srcset"].split(" ")[0]
         try:
             sAuthor = div.find("div", {"class": "apphub_CardContentAuthorName"}).a.string.strip()
         except AttributeError:
@@ -119,6 +167,12 @@ def viewArtwork(args):
                        "credits":     sAuthor},
                       isFolder=False, mediatype="video")
 
+    # next page
+    view.add_item(args,
+                  {"title":  args._addon.getLocalizedString(30042),
+                   "url":    getattr(args, "url", ""),
+                   "offset": str(int(getattr(args, "offset", 1)) + 1),
+                   "mode":   args.mode})
     view.endofdirectory()
 
 
@@ -133,7 +187,8 @@ def viewBroadcasts(args):
         return
 
     # get website
-    html = api.getPage(args, "https://steamcommunity.com/apps/allcontenthome/?l=" + args._lang + "&browsefilter=trend&appHubSubSection=13&forceanon=1")
+    page = str(getattr(args, "offset", 1))
+    html = api.getPage(args, "https://steamcommunity.com/apps/allcontenthome/?l=" + args._lang + "&browsefilter=" + args._filter + "&appHubSubSection=13&forceanon=1&userreviewsoffset=0&broadcastsoffset=10&p=" + page + "&workshopitemspage=" + page + "&readytouseitemspage=" + page + "&mtxitemspage=" + page + "&itemspage=" + page + "&screenshotspage=" + page + "&videospage=" + page + "&artpage=" + page + "&allguidepage=" + page + "&webguidepage=" + page + "&integratedguidepage=" + page + "&discussionspage=" + page + "&numperpage=10&appid=0")
     if not html:
         view.add_item(args, {"title": args._addon.getLocalizedString(30061)})
         view.endofdirectory()
@@ -163,6 +218,12 @@ def viewBroadcasts(args):
                        "credits":     sAuthor},
                       isFolder=False, mediatype="video")
 
+    # next page
+    view.add_item(args,
+                  {"title":  args._addon.getLocalizedString(30042),
+                   "url":    getattr(args, "url", ""),
+                   "offset": str(int(getattr(args, "offset", 1)) + 1),
+                   "mode":   args.mode})
     view.endofdirectory()
 
 
@@ -170,7 +231,8 @@ def viewVideos(args):
     """Show all videos
     """
     # get website
-    html = api.getPage(args, "https://steamcommunity.com/apps/allcontenthome/?l=" + args._lang + "&browsefilter=trend&appHubSubSection=3&forceanon=1")
+    page = str(getattr(args, "offset", 1))
+    html = api.getPage(args, "https://steamcommunity.com/apps/allcontenthome/?l=" + args._lang + "&browsefilter=" + args._filter + "&appHubSubSection=3&forceanon=1&userreviewsoffset=0&p=" + page + "&workshopitemspage=" + page + "&readytouseitemspage=" + page + "&mtxitemspage=" + page + "&itemspage=" + page + "&screenshotspage=" + page + "&videospage=" + page + "&artpage=" + page + "&allguidepage=" + page + "&webguidepage=" + page + "&integratedguidepage=" + page + "&discussionspage=" + page + "&numperpage=10&appid=0")
     if not html:
         view.add_item(args, {"title": args._addon.getLocalizedString(30061)})
         view.endofdirectory()
@@ -203,21 +265,21 @@ def viewVideos(args):
                        "credits":     sAuthor},
                       isFolder=False, mediatype="video")
 
+    # next page
+    view.add_item(args,
+                  {"title":  args._addon.getLocalizedString(30042),
+                   "url":    getattr(args, "url", ""),
+                   "offset": str(int(getattr(args, "offset", 1)) + 1),
+                   "mode":   args.mode})
     view.endofdirectory()
-
-
-class ImageGUI(xbmcgui.WindowDialog):
-    def onAction(self, action):
-        if action.getId() >= 9:
-            self.close()
 
 
 def startplayback_images(args):
     """Shows an image
     """
     # cache path
-    sPath = xbmc.translatePath(args._addon.getAddonInfo("profile"))
-    sPath = join(sPath.decode("utf-8"), u"image.jpg")
+    sDir = xbmc.translatePath(args._addon.getAddonInfo("profile"))
+    sPath = join(sDir.decode("utf-8"), u"image.jpg")
 
     # download image
     file = URLopener()
@@ -226,7 +288,7 @@ def startplayback_images(args):
     # display image
     item = xbmcgui.ListItem(getattr(args, "title", "Title not provided"), path=sPath)
     xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, item)
-    xbmc.executebuiltin("SlideShow(" + xbmc.translatePath(args._addon.getAddonInfo("profile")) + ")")
+    xbmc.executebuiltin("SlideShow(" + sDir + ")")
 
 
 def startplayback_broadcast(args):

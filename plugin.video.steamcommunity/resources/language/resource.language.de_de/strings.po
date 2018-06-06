@@ -20,6 +20,10 @@ msgctxt "#30000"
 msgid "Language"
 msgstr "Sprache"
 
+msgctxt "#30001"
+msgid "Filter"
+msgstr "Filter"
+
 msgctxt "#30004"
 msgid "Configure InputStream Adaptive"
 msgstr "InputStream Adaptive konfigurieren"
@@ -142,6 +146,10 @@ msgstr "Hubs suchen"
 msgctxt "#30041"
 msgid "Search user"
 msgstr "Personen suchen"
+
+msgctxt "#30042"
+msgid "Next page"
+msgstr "Nächste Seite"
 
 msgctxt "#30045"
 msgid "Popular"

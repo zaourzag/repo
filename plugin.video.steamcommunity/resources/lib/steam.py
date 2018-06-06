@@ -41,11 +41,14 @@ def main():
             xbmcaddon.Addon(id="inputstream.adaptive").openSettings()
         return True
 
-    # set language
+    # get language
     language = {"0": "arabic", "1": "bulgarian", "2": "schinese", "3": "tchinese", "4": "czech", "5": "danish", "6": "dutch", "7": "english", "8": "finnish", "9": "french",
                 "10": "german", "11": "greek", "12": "hungarian", "13": "italian", "14": "japanese", "15": "koreana", "16": "norwegian", "17": "polish", "18": "portuguese", "19": "brazilian",
                 "20": "romanian", "21": "russian", "22": "spanish", "23": "swedish", "24": "thai", "25": "turkish", "26": "ukrainian"}
     args._lang = language[args._addon.getSetting("language")]
+    #get sortorder
+    filter = {"0": "trend", "1": "mostrecent"}
+    args._filter = filter[args._addon.getSetting("filter")]
 
     # list menue
     api.start(args)
@@ -64,6 +67,11 @@ def check_mode(args):
 
     if not mode:
         showMainMenue(args)
+
+    elif mode == "search_hub":
+        controller.searchHub(args)
+    elif mode == "search_user":
+        pass #controller.searchUser(args)
 
     elif mode == "screenshots":
         controller.viewScreenshots(args)
@@ -90,12 +98,12 @@ def check_mode(args):
 def showMainMenue(args):
     """Show main menu
     """
-    view.add_item(args,
-                  {"title": args._addon.getLocalizedString(30040),
-                   "mode":  "search_hub"})
-    view.add_item(args,
-                  {"title": args._addon.getLocalizedString(30041),
-                   "mode":  "search_user"})
+    #view.add_item(args,
+                  #{"title": args._addon.getLocalizedString(30040),
+                   #"mode":  "search_hub"})
+    #view.add_item(args,
+                  #{"title": args._addon.getLocalizedString(30041),
+                   #"mode":  "search_user"})
 
     #view.add_item(args,
                   #{"title": args._addon.getLocalizedString(30050),
