@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-# Wakanim - Watch videos from the german anime platform Wakanim.tv on Kodi.
-# Copyright (C) 2017 MrKrabat
+# Steam Community
+# Copyright (C) 2018 MrKrabat
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -20,9 +20,16 @@ import sys
 import json
 import inputstreamhelper
 from bs4 import BeautifulSoup
+from os.path import join
+from distutils.version import StrictVersion
+try:
+    from urllib import URLopener
+except ImportError:
+    from urllib.request import URLopener
 
 import xbmc
 import xbmcgui
+import xbmcaddon
 import xbmcplugin
 
 from . import api
@@ -118,6 +125,13 @@ def viewArtwork(args):
 def viewBroadcasts(args):
     """Show all broadcasts
     """
+    # check inputstream adaptive version
+    if StrictVersion(xbmcaddon.Addon(id="inputstream.adaptive").getAddonInfo("version")) < StrictVersion("2.2.19"):
+        xbmc.log("[PLUGIN] %s: inputstream.adaptive is too old for broadcasting 2.2.19 is required" % args._addonname, xbmc.LOGERROR)
+        view.add_item(args, {"title": args._addon.getLocalizedString(30065)})
+        view.endofdirectory()
+        return
+
     # get website
     html = api.getPage(args, "https://steamcommunity.com/apps/allcontenthome/?l=" + args._lang + "&browsefilter=trend&appHubSubSection=13&forceanon=1")
     if not html:
@@ -192,14 +206,27 @@ def viewVideos(args):
     view.endofdirectory()
 
 
+class ImageGUI(xbmcgui.WindowDialog):
+    def onAction(self, action):
+        if action.getId() >= 9:
+            self.close()
+
+
 def startplayback_images(args):
-    """Plays a image
+    """Shows an image
     """
-    # start video
-    item = xbmcgui.ListItem(getattr(args, "title", "Title not provided"), path=args.url)
-    #item.setInfo("pictures", {"picturepath": args.url})
-    #xbmc.Player().play(args.url, item)
+    # cache path
+    sPath = xbmc.translatePath(args._addon.getAddonInfo("profile"))
+    sPath = join(sPath.decode("utf-8"), u"image.jpg")
+
+    # download image
+    file = URLopener()
+    file.retrieve(args.url, sPath)
+
+    # display image
+    item = xbmcgui.ListItem(getattr(args, "title", "Title not provided"), path=sPath)
     xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, item)
+    xbmc.executebuiltin("SlideShow(" + xbmc.translatePath(args._addon.getAddonInfo("profile")) + ")")
 
 
 def startplayback_broadcast(args):

@@ -16,9 +16,121 @@ msgstr ""
 
 # Steam Community Settings
 
+msgctxt "#30000"
+msgid "Language"
+msgstr "Sprache"
+
 msgctxt "#30004"
 msgid "Configure InputStream Adaptive"
 msgstr "InputStream Adaptive konfigurieren"
+
+msgctxt "#30010"
+msgid "Arabic"
+msgstr "Arabisch"
+
+msgctxt "#30011"
+msgid "Bulgarian"
+msgstr "Bulgarisch"
+
+msgctxt "#30012"
+msgid "Chinese (Simplified)"
+msgstr "Chinesisch vereinfacht"
+
+msgctxt "#30013"
+msgid "Chinese (Traditional)"
+msgstr "Chinesisch traditionell"
+
+msgctxt "#30014"
+msgid "Czech"
+msgstr "Tschechisch"
+
+msgctxt "#30015"
+msgid "Danish"
+msgstr "Dänisch"
+
+msgctxt "#30016"
+msgid "Dutch"
+msgstr "Niederländisch"
+
+msgctxt "#30017"
+msgid "English"
+msgstr "Englisch"
+
+msgctxt "#30018"
+msgid "Finnish"
+msgstr "Finnisch"
+
+msgctxt "#30019"
+msgid "French"
+msgstr "Französisch"
+
+msgctxt "#30020"
+msgid "German"
+msgstr "Deutsch"
+
+msgctxt "#30021"
+msgid "Greek"
+msgstr "Griechisch"
+
+msgctxt "#30022"
+msgid "Hungarian"
+msgstr "Ungarisch"
+
+msgctxt "#30023"
+msgid "Italian"
+msgstr "Italienisch"
+
+msgctxt "#30024"
+msgid "Japanese"
+msgstr "Japanisch"
+
+msgctxt "#30025"
+msgid "Korean"
+msgstr "Koreanisch"
+
+msgctxt "#30026"
+msgid "Norwegian"
+msgstr "Norwegisch"
+
+msgctxt "#30027"
+msgid "Polish"
+msgstr "Polnisch"
+
+msgctxt "#30028"
+msgid "Portuguese"
+msgstr "Portugiesisch"
+
+msgctxt "#30029"
+msgid "Portuguese-Brazil"
+msgstr "Portugiesisch Brasilien"
+
+msgctxt "#30030"
+msgid "Romanian"
+msgstr "Rumänisch"
+
+msgctxt "#30031"
+msgid "Russian"
+msgstr "Russisch"
+
+msgctxt "#30032"
+msgid "Spanish"
+msgstr "Spanisch"
+
+msgctxt "#30033"
+msgid "Swedish"
+msgstr "Schwedisch"
+
+msgctxt "#30034"
+msgid "Thai"
+msgstr "Thailändisch"
+
+msgctxt "#30035"
+msgid "Turkish"
+msgstr "Türkisch"
+
+msgctxt "#30036"
+msgid "Ukrainian"
+msgstr "Ukrainisch"
 
 
 # Steam Community Menue
@@ -97,3 +209,7 @@ msgstr "Dieses Profil ist privat"
 msgctxt "#30064"
 msgid "Failed to play video"
 msgstr "Fehlgeschlagen das Video abzuspielen"
+
+msgctxt "#30065"
+msgid "Broadcasting requires a newer version of inputstream.adaptive"
+msgstr "Broadcasting setzt eine neuere Version von inputstream.adaptive voraus"

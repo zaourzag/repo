@@ -209,3 +209,7 @@ msgstr ""
 msgctxt "#30064"
 msgid "Failed to play video"
 msgstr ""
+
+msgctxt "#30065"
+msgid "Broadcasting requires a newer version of inputstream.adaptive"
+msgstr ""
