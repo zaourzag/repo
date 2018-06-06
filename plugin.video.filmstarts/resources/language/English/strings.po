@@ -18,11 +18,11 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
 msgctxt "Addon Summary"
-msgid "Film an Series Information from http://www.filmstarts.de/"
+msgid "Movies and Series (Trailer, Making of, Teaser ...)"
 msgstr ""
 
 msgctxt "Addon Description"
-msgid "Film an Series Information from http://www.filmstarts.de/"
+msgid "FILMSTARTS.de is the leading online magazine for the medium of film.[CR]The FILMSTARTS database now contains information of more than 70,000 movies.[CR]Watch movies and series (trailers, making of, teasers, etc.) from http://www.filmstarts.de/"
 msgstr ""
 
 
@@ -47,7 +47,7 @@ msgid "News"
 msgstr ""
 
 msgctxt "#30006"
-msgid "Next"
+msgid "Next Page >>>"
 msgstr ""
 
 msgctxt "#30007"
@@ -55,7 +55,7 @@ msgid "All Videos"
 msgstr ""
 
 msgctxt "#30008"
-msgid "Most Wanted Trailer"
+msgid "Most popular Trailer"
 msgstr ""
 
 msgctxt "#30009"
@@ -67,7 +67,7 @@ msgid "Commic soon to Cinema"
 msgstr ""
 
 msgctxt "#30011"
-msgid "Neweset Trailer"
+msgid "Newest Trailer"
 msgstr ""
 
 msgctxt "#30012"
@@ -79,11 +79,11 @@ msgid "Actual Cinema Films"
 msgstr ""
 
 msgctxt "#30014"
-msgid "New Film This Week"
+msgid "New Film this week in Cinema"
 msgstr ""
 
 msgctxt "#30015"
-msgid "Best Film in Cinema"
+msgid "Best voted Film in Cinema"
 msgstr ""
 
 msgctxt "#30016"
@@ -91,7 +91,7 @@ msgid "Cinema Films for Children"
 msgstr ""
 
 msgctxt "#30017"
-msgid "Cinema Film Per Week"
+msgid "Cinema Film per Week"
 msgstr ""
 
 msgctxt "#30018"
@@ -107,27 +107,27 @@ msgid "Children Films"
 msgstr ""
 
 msgctxt "#30021"
-msgid "Best Series"
+msgid "Most readed Series"
 msgstr ""
 
 msgctxt "#30022"
-msgid "Best Voted"
+msgid "Best voted Series"
 msgstr ""
 
 msgctxt "#30023"
-msgid "Most Wanted Series"
+msgid "Most popular Series"
 msgstr ""
 
 msgctxt "#30024"
-msgid "Most wanted Series"
+msgid "Most wanted new Seasons"
 msgstr ""
 
 msgctxt "#30025"
-msgid "New Started Series"
+msgid "New started Series"
 msgstr ""
 
 msgctxt "#30026"
-msgid "New Series Trailer"
+msgid "New Series-Trailer"
 msgstr ""
 
 msgctxt "#30027"
@@ -147,7 +147,7 @@ msgid "Interviews"
 msgstr ""
 
 msgctxt "#30031"
-msgid "My Most Loved Filmscene"
+msgid "My most loved Filmscene"
 msgstr ""
 
 msgctxt "#30032"
@@ -183,9 +183,9 @@ msgid "Filter Format"
 msgstr ""
 
 msgctxt "#30040"
-msgid "Next Week"
+msgid "> Next Week *"
 msgstr ""
 
 msgctxt "#30041"
-msgid "Last Week"
+msgid "< Last Week *"
 msgstr ""

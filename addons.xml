@@ -73,7 +73,7 @@
 	</extension>
 </addon>
 
-<addon id="plugin.video.zattooHiQ" version="1.6.3.2" name="Zattoo HiQ" provider-name="Steffen Rolapp">
+<addon id="plugin.video.zattooHiQ" version="1.6.4" name="Zattoo HiQ" provider-name="Steffen Rolapp">
   <requires>
     <import addon="xbmc.python" version="2.14.0"/>
     <import addon="xbmc.addon" version="13.0.0" />
@@ -775,7 +775,7 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
   </extension>
 </addon>
 
-<addon id="plugin.video.zattooHiQ-2" version="1.6.3.2" name="Zattoo HiQ-2" provider-name="Steffen Rolapp">
+<addon id="plugin.video.zattooHiQ-2" version="1.6.4" name="Zattoo HiQ-2" provider-name="Steffen Rolapp">
   <requires>
     <import addon="xbmc.python" version="2.14.0"/>
     <import addon="xbmc.addon" version="13.0.0" />
@@ -819,7 +819,7 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
   </extension>
 </addon>
 
-<addon id="skin.embuary" version="17.1.1" name="Embuary (Krypton)" provider-name="sualfred">
+<addon id="skin.embuary" version="17.1.2" name="Embuary (Krypton)" provider-name="sualfred">
 	<requires>
 		<import addon="xbmc.gui" version="5.12.0"/>
 		<import addon="script.globalsearch" version="7.0.0"/>
@@ -1280,7 +1280,7 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
     </extension>
 </addon>
 
-<addon id="plugin.video.L0RE.dmax" name="DMAX Mediathek" version="0.3.4" provider-name="L0RE">
+<addon id="plugin.video.L0RE.dmax" name="DMAX Mediathek" version="0.3.5" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
         <import addon="script.module.requests" version="2.12.4"/>
@@ -1303,7 +1303,7 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
   </extension>
 </addon>
 
-<addon id="plugin.video.L0RE.arte" name="Arte.TV" version="0.5.0" provider-name="L0RE">
+<addon id="plugin.video.L0RE.arte" name="Arte.TV" version="0.5.1" provider-name="L0RE">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
         <import addon="script.module.requests" version="2.12.4"/>
@@ -1553,13 +1553,12 @@ To support the backport the addon will now always create the merged_epg.xml.gz
         <extension point="xbmc.addon.metadata">
                 <summary>The Repository for the Kodi Netflix Addon</summary>
                 <summary lang="de">Das Repository für das Kodi Netflix Addon</summary>
-                <description>Provides the Netflix Addons fpr kodi.</description>
+                <description>Provides the Netflix Addons for kodi.</description>
                 <description lang="de">Stellt das Kodi Netflix Addon bereit</description>
                 <disclaimer>Some parts of this Repository may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
                 <platform>all</platform>
         </extension>
 </addon>
-
 
 <addon id="plugin.video.servustv_com" name="ServusTV.com" version="2.1.1" provider-name="L0RE">
     <requires>
@@ -3240,6 +3239,58 @@ This product uses the TMDb API (themoviedb.org) but is not endorsed or certified
     </extension>
 </addon>
 
+<addon id="plugin.video.steamcommunity" name="Steam Community" version="0.1.0" provider-name="MrKrabat">
+    <requires>
+        <import addon="xbmc.python" version="2.25.0"/>
+        <import addon="plugin.video.youtube" version="6.0.2"/>
+        <import addon="inputstream.adaptive" version="2.2.19"/>
+        <import addon="script.module.beautifulsoup4" version="4.5.3"/>
+        <import addon="script.module.inputstreamhelper" version="0.3.3"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video image</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <language></language>
+        <summary lang="en_GB">Community and official content for all games and software on Steam.</summary>
+        <summary lang="zh_CN">Steam 上所有游戏与软件的社区和官方内容。</summary>
+        <summary lang="ru_RU">Фанатский и официальный контент для всех игр и программ в Steam.</summary>
+        <summary lang="es_ES">Contenido oficial y de la comunidad para todos los juegos y software de Steam.</summary>
+        <summary lang="de_DE">Community- und offizielle Inhalte für alle Spiele und Software bei Steam.</summary>
+        <summary lang="pt_BR">Conteúdo oficial e comunitário para todos os jogos e software no Steam.</summary>
+        <summary lang="fr_FR">Contenu officiel et de la communauté pour tous les produits sur Steam.</summary>
+        <summary lang="ko_KR">Steam에 있는 모든 게임과 소프트웨어를 위한 커뮤니티와 공식 콘텐츠입니다.</summary>
+        <summary lang="pl_PL">Zawartość oficjalna i od społeczności dla wszystkich gier i programów na Steam.</summary>
+        <summary lang="tr_TR">Steam'deki tüm oyunlar ve yazılımlar için topluluk yapımı ve resmî içerikler.</summary>
+        <summary lang="ja_JP">Steam 上の全てのゲームとソフトウェアのための、コミュニティとオフィシャルコンテンツ。</summary>
+        <description lang="en_GB">Community Hubs are collections of all the best community and official game content as rated by users.</description>
+        <description lang="zh_CN">社区中心集合了所有由玩家评价的最佳社区及官方游戏内容。</description>
+        <description lang="ru_RU">Центры сообществ — это коллекции лучшего контента от разработчиков и сообщества, выбранные и оцененные пользователями.</description>
+        <description lang="es_ES">Los puntos de encuentro son colecciones del mejor contenido oficial y de la comunidad recomendado por los jugadores.</description>
+        <description lang="de_DE">Communityhubs sind Sammlungen der nach Benutzerbewertungen besten offiziellen und von der Community erstellten Inhalten.</description>
+        <description lang="pt_BR">Centrais Comunitárias são coleções de todos os melhores conteúdos oficiais e da comunidade que são avaliados pelos utilizadores.</description>
+        <description lang="fr_FR">Les hubs des communautés sont des collections de toutes les meilleures communautés et des contenus des jeux officiels évalués par les utilisateurs.</description>
+        <description lang="ko_KR">커뮤니티 허브는 사용자들이 평가한 최고의 커뮤니티와 공식 콘텐츠의 모음집입니다.</description>
+        <description lang="pl_PL">Centra społeczności to organizowane według ocen użytkowników zbiory materiałów oficjalnych oraz tworzonych przez społeczność.</description>
+        <description lang="tr_TR">Topluluk Merkezleri, kullanıcılar tarafından değerlendirilen en iyi topluluk yapımı ve resmî oyun içeriklerinin bulunduğu koleksiyonlardır.</description>
+        <description lang="ja_JP">コミュニティハブは、コミュニティ製、メーカー製を問わずユーザーに評価されているコンテンツのコレクションです。</description>
+        <news></news>
+        <license>GNU Affero General Public License, v3</license>
+        <forum></forum>
+        <website>https://steamcommunity.com/</website>
+        <source>https://github.com/MrKrabat/plugin.video.steamcommunity</source>
+        <email></email>
+        <assets>
+            <icon>icon.png</icon>
+            <fanart>fanart.jpg</fanart>
+            <screenshot>resources/media/screenshot-01.jpg</screenshot>
+            <screenshot>resources/media/screenshot-02.jpg</screenshot>
+            <screenshot>resources/media/screenshot-03.jpg</screenshot>
+        </assets>
+    </extension>
+</addon>
+
 <addon id="plugin.video.amvnews" version="1.3.4" name="AMV News" provider-name="Jin">
   <requires>
    <import addon="xbmc.python" version="2.1.0"/>
@@ -3387,6 +3438,39 @@ NOTE: Streams are available in SD only
     <email>andreas at vogler dot name</email>
     <platform>all</platform>
   </extension>
+</addon>
+
+<addon id="plugin.video.crunchyroll" name="Crunchyroll" version="3.0.0" provider-name="MrKrabat">
+    <requires>
+        <import addon="xbmc.python" version="2.25.0"/>
+        <import addon="script.module.inputstreamhelper" version="0.3.3"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <language>en es pt fr de ar it ru</language>
+        <summary lang="en_GB">Watch videos from Crunchyroll.com!</summary>
+        <summary lang="de_DE">Schaue Videos von Crunchyroll.com!</summary>
+        <description lang="en_GB">Crunchyroll is an online video service and community that offers full-length episodes and movies of the very best in Japanese anime and Asian entertainment.</description>
+        <description lang="de_DE">Crunchyroll ist ein online Video-Streaming-Dienst und bietet Zugang zu vollen Episoden und Filmen der besten japanischen Anime und asiatischer Unterhaltung.</description>
+        <disclaimer lang="en_GB">WARNING: You MUST be a PREMIUM member to use this Plugin</disclaimer>
+        <disclaimer lang="de_DE">HINWEIS: Du MUSST PREMIUM Mitglied sein um dieses Plugin zu benutzen</disclaimer>
+        <news>v3.0.0 (2018.02.xx)[CR]- Addon rewriten from scratch</news>
+        <license>GNU Affero General Public License, v3</license>
+        <forum></forum>
+        <website>http://www.crunchyroll.com/</website>
+        <source>https://github.com/MrKrabat/plugin.video.crunchyroll</source>
+        <email></email>
+        <assets>
+            <icon>icon.png</icon>
+            <fanart>fanart.jpg</fanart>
+            <screenshot>resources/media/screenshot-01.jpg</screenshot>
+            <screenshot>resources/media/screenshot-02.jpg</screenshot>
+            <screenshot>resources/media/screenshot-03.jpg</screenshot>
+        </assets>
+    </extension>
 </addon>
 
 <addon id="plugin.video.sky_mediathek" name="Sky Mediathek" version="1.1.0" provider-name="PUR3">
@@ -4040,25 +4124,39 @@ Parental warning: The Maxdome Plattform consists of differnt types of content - 
 	</extension>
 </addon>
 
-<addon id="plugin.video.filmstarts" name="Filmstarts" version="0.6.14" provider-name="L0RE">
-    <requires>
-        <import addon="xbmc.python" version="2.24.0"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-  <extension point="xbmc.addon.metadata">
-    <summary lang="de">Film und Serien (Trailer, Making of,Teaser,...)  von http://www.filmstarts.de/</summary>
-    <summary lang="en">Film an Series (Trailer, Making of,Teaser,...) from http://www.filmstarts.de/</summary>
-    <description lang="en">Film an Series (Trailer, Making of,Teaser,...) from http://www.filmstarts.de/</description>
-    <description lang="de">Film und Serien (Trailer, Making of,Teaser,...) von http://www.filmstarts.de/</description>
-    <website></website>
-    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-    <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.filmstarts</source>
-    <forum>https://www.kodinerds.net/index.php/Thread/53743-RERelease-filmstarts/</forum>
-    <email>andreas at vogler dot name</email>
-    <platform>all</platform>
-  </extension>
+<addon id="plugin.video.filmstarts" name="Filmstarts" version="0.7.0" provider-name="L0RE">
+	<requires>
+		<import addon="xbmc.python" version="2.24.0"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de">Filme und Serien (Trailer, Making of, Teaser ...)</summary>
+		<summary lang="en">Movies and Series (Trailer, Making of, Teaser ...)</summary>
+		<description lang="de">FILMSTARTS.de ist das führende Online-Magazine rund um das Medium Film.[CR]In der FILMSTARTS-Datenbank befinden sich mittlerweile Informationen zu mehr als 70.000 Filmen.[CR]Schaue Filme und Serien (Trailer, Making of, Teaser etc.) von http://www.filmstarts.de/</description>
+		<description lang="en">FILMSTARTS.de is the leading online magazine for the medium of film.[CR]The FILMSTARTS database now contains information of more than 70,000 movies.[CR]Watch movies and series (trailers, making of, teasers, etc.) from http://www.filmstarts.de/</description>
+		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum>https://www.kodinerds.net/index.php/Thread/53743-RERelease-filmstarts/</forum>
+		<website>http://www.filmstarts.de/</website>
+		<email>andreas at vogler dot name</email>
+		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.filmstarts</source>
+		<assets>
+			<icon>icon.png</icon>
+			<fanart>fanart.jpg</fanart>
+		</assets>
+		<news>[B][COLOR orangered]Version 0.7.0  (02.06.2018)[/COLOR][/B][CR]
+- fixed: Es werden nicht alle Bilder zu den Titeln angezeigt
+- fixed: Titel-Sonderzeichen werden nicht richtig dargestellt
+- fixed: Auflistung-Titel in Video-Archiv (Serien)
+- fixed: Shutil-Error beim Entfernen des Temp-Ordners
+- fixed: Einige andere kleine Änderungen
+		</news>
+	</extension>
 </addon>
 
 <addon id="service.fritz.automation" name="Fritz Automation" version="0.2.1" provider-name="L0RE">

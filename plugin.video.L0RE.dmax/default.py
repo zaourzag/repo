@@ -196,7 +196,9 @@ def playvideo(idd):
     inputstream=addon.getSetting("inputstream")
     if inputstream=="true":     
         licfile=struktur["data"]["attributes"]["protection"]["schemes"]["clearkey"]["licenseUrl"]
-        lickey=re.compile('\?(.+)', re.DOTALL).findall(licfile)[0]        
+        contentI=geturl(licfile,header=header)
+		strukturI = json.loads(contentI)
+		lickey=strukturI["keys"][0]["k"]        
         listitem.setProperty('inputstreamaddon', 'inputstream.adaptive')
         listitem.setProperty('inputstream.adaptive.manifest_type', 'hls')
         #listitem.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')

@@ -19,10 +19,12 @@
 	</include>
 	<include name="CustomBusySpinner">
 		<param name="visible">Container.IsUpdating</param>
+		<param name="diffuse">true</param>
 		<definition>
 			<control type="group">
 				<visible>$PARAM[visible]</visible>
-				<include content="DiffuseMask"/>
+				<include condition="$PARAM[diffuse]" content="DiffuseMask"/>
+				<include condition="!$PARAM[diffuse]" content="PlainBackground"/>
 				<include>FullscreenBusySpinner</include>
 				<control type="label">
 					<bottom>35%</bottom>
@@ -285,6 +287,13 @@
 			<include>FullscreenDimensions</include>
 			<texture colordiffuse="CC000000">common/white.jpg</texture>
 			<aspectratio>stretch</aspectratio>
+			<visible>$PARAM[visible]</visible>
+		</control>
+	</include>
+	<include name="PlainBackground">
+		<control type="image">
+			<include>FullscreenDimensions</include>
+			<texture colordiffuse="background">common/white.jpg</texture>
 			<visible>$PARAM[visible]</visible>
 		</control>
 	</include>
@@ -1313,10 +1322,10 @@
 			<control type="radiobutton" id="$PARAM[id]14">
 				<include content="CommonButton"/>
 				<label>$LOCALIZE[20359] - $LOCALIZE[31220]</label>
-				<onclick condition="!Skin.HasSetting(ViewEpisodeList)">Skin.ToggleSetting(ViewEpisodeList)</onclick>
+				<onclick condition="!Skin.HasSetting(ViewEpisodeList) + !Window.IsVisible(MyPVRRecordings.xml)">Skin.ToggleSetting(ViewEpisodeList)</onclick>
 				<onclick>Container.SetViewMode(59)</onclick>
-				<selected>Control.IsVisible(59) + Skin.HasSetting(ViewEpisodeList)</selected>
-				<visible>$EXP[EpisodeViewVisible]</visible>
+				<selected>Control.IsVisible(59) + [Skin.HasSetting(ViewEpisodeList) | Window.IsVisible(MyPVRRecordings.xml)]</selected>
+				<visible>$EXP[EpisodeViewVisible] | Window.IsVisible(MyPVRRecordings.xml)</visible>
 			</control>
 		</definition>
 	</include>
