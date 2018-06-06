@@ -54,7 +54,7 @@ class ZapiSession:
 		self.COOKIE_FILE = os.path.join(dataFolder, 'cookie.cache')
 		self.SESSION_FILE = os.path.join(dataFolder, 'session.cache')
 		self.ACCOUNT_FILE = os.path.join(dataFolder, 'account.cache')
-		self.ACCOUNT_JSON = os.path.join(dataFolder, 'account.json' )
+		self.COOKIE_JSON = os.path.join(dataFolder, 'cookie.json' )
 		self.APICALL_FILE = os.path.join(dataFolder, 'apicall.cache')
 		self.HttpHandler = urllib2.build_opener()
 		self.HttpHandler.addheaders = [('User-Agent', USERAGENT), ('Content-type', 'application/x-www-form-urlencoded'), ('Accept', 'application/json')]
@@ -102,6 +102,8 @@ class ZapiSession:
 	def persist_sessionId(self, sessionId):
 		with open(self.COOKIE_FILE, 'w') as f:
 			f.write(base64.b64encode(sessionId))
+		with open(self.COOKIE_JSON, 'w') as f:
+			f.write(sessionId)
 			
 	def persist_sessionData(self, sessionData):
 		with open(self.SESSION_FILE, 'w') as f:
@@ -111,13 +113,16 @@ class ZapiSession:
 
 	def set_cookie(self, sessionId):
 		self.HttpHandler.addheaders.append(('Cookie', 'beaker.session.id=' + sessionId))
+		
 
 	def request_url(self, url, params):
 		try:
-			#debug (str(url) +' '+str(params))
+			debug (str(url) +' '+str(params))
 			response = self.HttpHandler.open(url, urllib.urlencode(params) if params is not None else None)
+
 			if response is not None:
 				sessionId = self.extract_sessionId(response.info().getheader('Set-Cookie'))
+				
 				if sessionId is not None:
 					self.set_cookie(sessionId)
 					self.persist_sessionId(sessionId)

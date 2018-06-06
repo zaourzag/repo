@@ -356,7 +356,7 @@ class ZattooDB(object):
                   #http://images.zattic.com/system/images/6dcc/8817/50d1/dfab/f21c/format_480x360.jpg
                 else: image = ""
     
-                c.execute('INSERT OR IGNORE INTO programs(channel, title, start_date, end_date, description, genre, image_small, showID, category) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                c.execute('INSERT OR IGNORE INTO programs(channel, title, start_date, end_date, description,  genre, image_small, showID, category) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)',
                     [cid, program['t'], program['s'], program['e'], program['et'], ', '.join(program['g']), image, program['id'], ', '.join(program['c']) ])
            
 
@@ -441,8 +441,8 @@ class ZattooDB(object):
 
       for row in r:
         description_long = row['description_long']
-        #year = row['year']
-        #country = row['country']
+        year = row['year']
+        country = row['country']
         if get_long_description and description_long is None:
             #description_long = self.getShowInfo(row["showID"],'description')
             info = self.getShowLongDescription(row['showID'])
@@ -508,20 +508,21 @@ class ZattooDB(object):
             while os.path.exists(profilePath+"/zattoo.db-journal"):
                 debug('Database is locked')
                 time.sleep(1)
-            api = '/zapi/program/details?program_id=' + showID + '&complete=True'
+            #api = '/zapi/program/details?program_id=' + showID + '&complete=True'
+            api = '/zapi/v2/cached/program/power_details/'+ self.zapi.AccountData['account']['power_guide_hash'] + '?program_ids='+str(showID)
             showInfo = self.zapiSession().exec_zapiCall(api, None)
             #infoall = showInfo['program']
             
             #info.execute('UPDATE programs SET info=? WHERE showID=?',[json.dumps(infoall), showID ])
             
             debug ('Showinfo  ' + str(showInfo))
-            if showInfo['program']['cid'] == 'none':
-                longDesc=''
-                year=''
-                category=''
-                country=''
-                info.close()
-                return {'description':longDesc, 'year':year, 'country':country, 'category':category}
+            # if showInfo['program']['cid'] == 'none':
+                # longDesc=''
+                # year=''
+                # category=''
+                # country=''
+                # info.close()
+                # return {'description':longDesc, 'year':year, 'country':country, 'category':category}
             if showInfo is None:
                 longDesc=''
                 year=''
@@ -529,29 +530,29 @@ class ZattooDB(object):
                 country=''
                 info.close()
                 return {'description':longDesc, 'year':year, 'country':country, 'category':category}
-            longDesc = showInfo['program']['description']
+            longDesc = showInfo['programs'][0]['d']
             info.execute('UPDATE programs SET description_long=? WHERE showID=?', [longDesc, showID ])
-            year = showInfo['program']['year']
+            year = showInfo['programs'][0]['year']
             if year is None: year=''
             info.execute('UPDATE programs SET year=? WHERE showID=?', [year, showID ])
             #category = ', '.join(showInfo['program']['categories'])
             #info.execute('UPDATE programs SET category=? WHERE showID=?', [category, showID ])
-            country = showInfo['program']['country']
+            country = showInfo['programs'][0]['country']
             country = country.replace('|',', ')
             info.execute('UPDATE programs SET country=? WHERE showID=?', [country, showID ])
-            series = showInfo['program']['series_recording_eligible']
-            info.execute('UPDATE programs SET series=? WHERE showID=?', [series, showID])
-            cred = showInfo['program']['credits']
+            #series = showInfo['programs']['series_recording_eligible']
+            #info.execute('UPDATE programs SET series=? WHERE showID=?', [series, showID])
+            cred = showInfo['programs'][0]['cr']
             #debug('cred: '+str(cred))
             info.execute('UPDATE programs SET credits=? WHERE showID=?', [json.dumps(cred), showID])
             try:
-                restart = showInfo['program']['selective_recall_until']
+                restart = showInfo['programs'][0]['selective_recall_until']
                 info.execute('UPDATE programs SET restart=? WHERE showID=?', [True, showID])
             except:
                 info.execute('UPDATE programs SET restart=? WHERE showID=?', [False, showID])
                 
            
-            record = showInfo['program']['recording_eligible']
+            record = showInfo['programs'][0]['r_e']
             info.execute('UPDATE programs SET record=? WHERE showID=?', [record, showID])
             #print 'Restart  ' +str(showID) + '  ' + str(restart)
 
@@ -579,12 +580,14 @@ class ZattooDB(object):
             showInfoJson=row['info']
             showInfo=json.loads(showInfoJson)
         else:
-            api = '/zapi/program/details?program_id=' + str(showID) + '&complete=True'
+            #api = '/zapi/program/details?program_id=' + str(showID) + '&complete=True'
+            api = '/zapi/v2/cached/program/power_details/' + self.zapi.AccountData['account']['power_guide_hash']+'?program_ids='+str(showID)
+            debug(api)
             showInfo = self.zapi.exec_zapiCall(api, None)
             if showInfo is None:
                 c.close()
                 return "NONE"
-            showInfo = showInfo['program']
+            showInfo = showInfo['programs']
             try: c.execute('INSERT INTO showinfos(showID, info) VALUES(?, ?)',(int(showID), json.dumps(showInfo)))
             except: pass
         self.conn.commit()
@@ -595,23 +598,24 @@ class ZattooDB(object):
        
     c = self.conn.cursor()
     
-    api = '/zapi/program/details?program_id=' + str(showID) + '&complete=True'
+    #api = '/zapi/program/details?program_id=' + str(showID) + '&complete=True'
+    api = '/zapi/v2/cached/program/power_details/' + self.zapi.AccountData['account']['power_guide_hash'] + '?program_ids='+str(showID)
     showInfo = self.zapi.exec_zapiCall(api, None)
     if showInfo is None:
         c.close()
         return "NONE"
     
-    title = showInfo['program']['title']
-    channel = showInfo['program']['cid']
-    start = showInfo['program']['start']
+    title = showInfo['programs']['']
+    channel = showInfo['programs']['cid']
+    start = showInfo['programs']['s']
     start = int(time.mktime(time.strptime(start, "%Y-%m-%dT%H:%M:%SZ")))
-    end = showInfo['program']['end']
+    end = showInfo['programs']['e']
     end = int(time.mktime(time.strptime(end, "%Y-%m-%dT%H:%M:%SZ")))
-    genre = showInfo['program']['genres']
-    year = showInfo['program']['year']
-    country = showInfo['program']['country']
-    description = showInfo['program']['description']
-    cred = showInfo['program']['credits']
+    genre = showInfo['programs']['g']
+    year = showInfo['programs']['year']
+    country = showInfo['programs']['country']
+    description = showInfo['programs']['d']
+    cred = showInfo['programs']['cr']
                 
     c.execute('INSERT OR IGNORE INTO programs(showID, title, channel, start_date, end_date, genre, year, country, description_long, credits) VALUES(?,?,?,?,?,?,?,?,?,?)', [showID, title, channel, start, end, ', '.join(genre) ,year, country, description, json.dumps(cred)])
     

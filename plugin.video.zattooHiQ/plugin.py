@@ -312,14 +312,14 @@ def build_channelsList(addon_uri, addon_handle):
       director=''
       cast=[]      
       credjson = prog.get('credits','')
-      if credjson is not None:
-        try:
-          cred = json.loads(credjson)
-        except:pass
+      # if credjson is not None:
+        # try:
+          # cred = json.loads(credjson)
+        # except:pass
         
-        for person in cred:
-          if person['role']=='director': director+=person['person']+', '
-          else: cast.append(person['person'])
+        # for person in cred:
+          # if person['role']=='director': director+=person['person']+', '
+          # else: cast.append(person['person'])
       
       #debug(str(prog))
       if RECALL: 
@@ -454,17 +454,17 @@ def build_recordingsList(addon_uri, addon_handle):
       title=record['title']
       meta = {'title':record['title']}
     if showInfo == "NONE": continue
-    label+=' ('+showInfo['channel_name']+')'
+    label+=' ('+showInfo[0]['channel_name']+')'
     
     director=''
     cast=[]
-    try:
-		for person in showInfo['credits']:
-		  if person['role']=='director': director=person['person']
-		  else: cast.append(person['person'])
-    except: pass   
+    # try:
+		# for person in showInfo['cr']:
+		  # if person['role']=='director': director=person['person']
+		  # else: cast.append(person['person'])
+    # except: pass   
 
-    #meta.update({'title':label,'year':showInfo['year'], 'plot':showInfo['description'], 'country':showInfo['description'],'director':director, 'cast':cast, 'genre':', '.join(showInfo['genres'])  })
+    meta.update({'title':label,'year':showInfo[0]['year'], 'plot':showInfo[0]['d'], 'country':showInfo[0]['country'],'director':director, 'cast':cast, 'genre':', '.join(showInfo[0]['g'])  })
     meta.update({'title':label})
     '''
     #mark watched
@@ -1028,20 +1028,20 @@ def makeOsdInfo():
       
   cred=''
   director=''
-  actor=[]
+  #actor=[]
   credjson = program['credits']
   credjs = json.dumps(credjson)
-  
-  if credjson is not None:
-    try:
-      cred = json.loads(credjson)
-    except:pass
+  actor=''
+  # if credjson is not None:
+    # try:
+      # cred = json.loads(credjson)
+    # except:pass
    
-    for person in cred:
-      if person['role']=='director': director+=person['person']+', '
-      else: actor.append(person['person'])
-  actor = json.dumps(actor, ensure_ascii=False).encode('utf8')
-  actor = actor.replace('"','').replace('[','').replace(']','')
+    # for person in cred:
+      # if person['role']=='director': director+=person['person']+', '
+      # else: actor.append(person['person'])
+  # actor = json.dumps(actor, ensure_ascii=False).encode('utf8')
+  # actor = actor.replace('"','').replace('[','').replace(']','')
   
   description = program['description']
   if description is None: description = ''
@@ -1415,7 +1415,7 @@ def main():
     series = args.get('series')[0]
     delete_series(recording_id, series)
   elif action == 'reloadDB':  
-    _zattooDB_.reloadDB(True)   
+    _zattooDB_.reloadDB()   
   elif action == 'changeStream':
     
     if not DASH: change_stream(1)
