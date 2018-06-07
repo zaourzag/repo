@@ -73,14 +73,17 @@ def check_mode(args):
     elif mode == "search_user":
         pass #controller.searchUser(args)
 
+    elif mode == "viewhub":
+        showHubMenue(args)
+
     elif mode == "screenshots":
-        controller.viewScreenshots(args)
+        controller.viewScreenshots(args, getattr(args, "appid", None))
     elif mode == "artwork":
-        controller.viewArtwork(args)
+        controller.viewArtwork(args, getattr(args, "appid", None))
     elif mode == "broadcasts":
-        controller.viewBroadcasts(args)
+        controller.viewBroadcasts(args, getattr(args, "appid", None))
     elif mode == "videos":
-        controller.viewVideos(args)
+        controller.viewVideos(args, getattr(args, "appid", None))
 
     elif mode == "imageplay":
         controller.startplayback_images(args)
@@ -98,9 +101,9 @@ def check_mode(args):
 def showMainMenue(args):
     """Show main menu
     """
-    #view.add_item(args,
-                  #{"title": args._addon.getLocalizedString(30040),
-                   #"mode":  "search_hub"})
+    view.add_item(args,
+                  {"title": args._addon.getLocalizedString(30040),
+                   "mode":  "search_hub"})
     #view.add_item(args,
                   #{"title": args._addon.getLocalizedString(30041),
                    #"mode":  "search_user"})
@@ -132,4 +135,26 @@ def showMainMenue(args):
     #view.add_item(args,
                   #{"title": args._addon.getLocalizedString(30058),
                    #"mode":  "reviews"})
+    view.endofdirectory()
+
+
+def showHubMenue(args):
+    """Show hub menu
+    """
+    view.add_item(args,
+                  {"title": args._addon.getLocalizedString(30051),
+                   "mode":  "screenshots",
+                   "appid": args.appid})
+    view.add_item(args,
+                  {"title": args._addon.getLocalizedString(30052),
+                   "mode":  "artwork",
+                   "appid": args.appid})
+    view.add_item(args,
+                  {"title": args._addon.getLocalizedString(30053),
+                   "mode":  "broadcasts",
+                   "appid": args.appid})
+    view.add_item(args,
+                  {"title": args._addon.getLocalizedString(30054),
+                   "mode":  "videos",
+                   "appid": args.appid})
     view.endofdirectory()
