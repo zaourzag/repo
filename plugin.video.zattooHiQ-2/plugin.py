@@ -315,12 +315,10 @@ def build_channelsList(addon_uri, addon_handle):
       if credjson is not None:
         try:
           cred = json.loads(credjson)
+          debug (cred)       
+          director=cred['director']
+          cast=cred['actor']
         except:pass
-        debug (cred)
-        
-        director=cred['director']
-        cast=cred['actor']
-      
       #debug(str(prog))
       if RECALL: 
         url2 = "plugin://"+__addonId__+"/?mode=watch_c&id=" + prog.get('channel', '') + "&start=" + str(zstart+300) + "&end=" + str(zend)
@@ -393,11 +391,12 @@ def build_category(addon_uri, addon_handle, cat):
       if credjson is not None:
         try:
           cred = json.loads(credjson)
+          director=cred['director']
+          cast=cred['actor']          
         except:pass
-        debug (cred)
+
         
-        director=cred['director']
-        cast=cred['actor']
+        
       if RECALL: 
         url2 = "plugin://"+__addonId__+"/?mode=watch_c&id=" + channels[prog]['id'] + "&start=" + str(zstart+300) + "&end=" + str(zend)
       elif RESTART:
