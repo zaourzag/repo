@@ -42,7 +42,6 @@ class ZapiSession:
 	COOKIE_FILE = None
 	SESSION_FILE = None
 	ACCOUNT_FILE = None
-	ACCOUNT_JSON = None
 	HttpHandler = None
 	Username = None
 	Password = None
@@ -54,7 +53,6 @@ class ZapiSession:
 		self.COOKIE_FILE = os.path.join(dataFolder, 'cookie.cache')
 		self.SESSION_FILE = os.path.join(dataFolder, 'session.cache')
 		self.ACCOUNT_FILE = os.path.join(dataFolder, 'account.cache')
-		self.COOKIE_JSON = os.path.join(dataFolder, 'cookie.json' )
 		self.APICALL_FILE = os.path.join(dataFolder, 'apicall.cache')
 		self.HttpHandler = urllib2.build_opener()
 		self.HttpHandler.addheaders = [('User-Agent', USERAGENT), ('Content-type', 'application/x-www-form-urlencoded'), ('Accept', 'application/json')]
@@ -96,14 +94,11 @@ class ZapiSession:
 	def persist_accountData(self, accountData):
 		with open(self.ACCOUNT_FILE, 'w') as f:
 			f.write(base64.b64encode(json.dumps(accountData)))
-		#with open(self.ACCOUNT_JSON, 'w') as f:
-			#f.write(json.dumps(accountData))
 
 	def persist_sessionId(self, sessionId):
 		with open(self.COOKIE_FILE, 'w') as f:
 			f.write(base64.b64encode(sessionId))
-		with open(self.COOKIE_JSON, 'w') as f:
-			f.write(sessionId)
+		
 			
 	def persist_sessionData(self, sessionData):
 		with open(self.SESSION_FILE, 'w') as f:

@@ -90,13 +90,13 @@ class reloadDB(xbmcgui.WindowXMLDialog):
         except:
             pass
     if cache:
-	try:
-	    os.remove(os.path.join(profilePath, 'cookie.cache'))
-	    os.remove(os.path.join(profilePath, 'session.cache'))
-	    os.remove(os.path.join(profilePath, 'account.cache'))
-	    #os.remove(os.path.join(profilePath, 'apicall.cache'))
-	except:
-	    pass
+		try:
+		    os.remove(os.path.join(profilePath, 'cookie.cache'))
+		    os.remove(os.path.join(profilePath, 'session.cache'))
+		    os.remove(os.path.join(profilePath, 'account.cache'))
+		    #os.remove(os.path.join(profilePath, 'apicall.cache'))
+		except:
+		    pass
     #DB.zapi.AccountData = None
     DB.zapiSession()
     DB._createTables()
@@ -535,15 +535,15 @@ class ZattooDB(object):
             year = showInfo['programs'][0]['year']
             if year is None: year=''
             info.execute('UPDATE programs SET year=? WHERE showID=?', [year, showID ])
-            #category = ', '.join(showInfo['program']['categories'])
-            #info.execute('UPDATE programs SET category=? WHERE showID=?', [category, showID ])
+            category = ', '.join(showInfo['programs'][0]['c'])
+            info.execute('UPDATE programs SET category=? WHERE showID=?', [category, showID ])
             country = showInfo['programs'][0]['country']
             country = country.replace('|',', ')
             info.execute('UPDATE programs SET country=? WHERE showID=?', [country, showID ])
             #series = showInfo['programs']['series_recording_eligible']
             #info.execute('UPDATE programs SET series=? WHERE showID=?', [series, showID])
             cred = showInfo['programs'][0]['cr']
-            #debug('cred: '+str(cred))
+
             info.execute('UPDATE programs SET credits=? WHERE showID=?', [json.dumps(cred), showID])
             try:
                 restart = showInfo['programs'][0]['selective_recall_until']
@@ -655,9 +655,9 @@ class ZattooDB(object):
     self.conn.commit()
     c.close()
 
-  def reloadDB(self):
+  def reloadDB(self, cache=False):
     gui = reloadDB("wartung.xml", __addon__.getAddonInfo('path'))
-    gui.reloadDB()
+    gui.reloadDB(cache)
     gui.show()
     del gui
     

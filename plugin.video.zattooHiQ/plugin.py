@@ -309,17 +309,17 @@ def build_channelsList(addon_uri, addon_handle):
       yy = prog.get('year','')
       
       cred=''
-      director=''
+      director=[]
       cast=[]      
       credjson = prog.get('credits','')
-      # if credjson is not None:
-        # try:
-          # cred = json.loads(credjson)
-        # except:pass
+      if credjson is not None:
+        try:
+          cred = json.loads(credjson)
+        except:pass
+        debug (cred)
         
-        # for person in cred:
-          # if person['role']=='director': director+=person['person']+', '
-          # else: cast.append(person['person'])
+        director=cred['director']
+        cast=cred['actor']
       
       #debug(str(prog))
       if RECALL: 
@@ -386,7 +386,7 @@ def build_category(addon_uri, addon_handle, cat):
       else: chnr = str(nr)
       yy = program[chan]['year']
       cred=''
-      director=''
+      director=[]
       cast=[]      
       credjson = program[chan]['credits']
     
@@ -394,11 +394,10 @@ def build_category(addon_uri, addon_handle, cat):
         try:
           cred = json.loads(credjson)
         except:pass
+        debug (cred)
         
-        for person in cred:
-          if person['role']=='director': director+=person['person']+', '
-          else: cast.append(person['person'])
-      
+        director=cred['director']
+        cast=cred['actor']
       if RECALL: 
         url2 = "plugin://"+__addonId__+"/?mode=watch_c&id=" + channels[prog]['id'] + "&start=" + str(zstart+300) + "&end=" + str(zend)
       elif RESTART:
@@ -456,15 +455,10 @@ def build_recordingsList(addon_uri, addon_handle):
     if showInfo == "NONE": continue
     label+=' ('+showInfo[0]['channel_name']+')'
     
-    director=''
+    director=[]
     cast=[]
-    # try:
-		# for person in showInfo['cr']:
-		  # if person['role']=='director': director=person['person']
-		  # else: cast.append(person['person'])
-    # except: pass   
 
-    meta.update({'title':label,'year':showInfo[0]['year'], 'plot':showInfo[0]['d'], 'country':showInfo[0]['country'],'director':director, 'cast':cast, 'genre':', '.join(showInfo[0]['g'])  })
+    meta.update({'title':label,'year':showInfo[0]['year'], 'plot':showInfo[0]['d'], 'country':showInfo[0]['country'],'director':showInfo[0]['cr']['director'], 'cast':showInfo[0]['cr']['actor'], 'genre':', '.join(showInfo[0]['g'])  })
     meta.update({'title':label})
     '''
     #mark watched
@@ -1415,7 +1409,7 @@ def main():
     series = args.get('series')[0]
     delete_series(recording_id, series)
   elif action == 'reloadDB':  
-    _zattooDB_.reloadDB()   
+    _zattooDB_.reloadDB(True)   
   elif action == 'changeStream':
     
     if not DASH: change_stream(1)
