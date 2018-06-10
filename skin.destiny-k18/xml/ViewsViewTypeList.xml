@@ -463,8 +463,18 @@
 				  <width>85</width>
 				  <height>120</height>
 				  <texture background="true" fallback="default/noposter.jpg">$VAR[Poster]</texture>
-				  <aspectratio align="center" aligny="top">scale</aspectratio>
+				  <aspectratio align="center" aligny="top">stretch</aspectratio>
 				  <bordertexture border="10">ThumbShadow.png</bordertexture>
+			      <bordersize>7</bordersize>
+			    </control>	
+				<control type="image">
+				  <left>10</left>
+				  <top>10</top>
+				  <width>85</width>
+				  <height>120</height>
+				  <texture background="true">$VAR[uhdtypehackcase]</texture>
+				  <aspectratio align="center" aligny="top">stretch</aspectratio>
+				  <bordertexture border="10"></bordertexture>
 			      <bordersize>7</bordersize>
 			    </control>	
 		        <control type="label">
@@ -623,10 +633,20 @@
 				  <width>145</width>
 				  <height>220</height>
 				  <texture background="true" fallback="default/noposter.jpg">$VAR[Poster]</texture>
-				  <aspectratio align="center" aligny="top">scale</aspectratio>
+				  <aspectratio align="center" aligny="top">stretch</aspectratio>
 				  <bordertexture border="10">ThumbShadow.png</bordertexture>
 			      <bordersize>7</bordersize>
 			    </control>	
+				<control type="image">
+				  <left>10</left>
+				  <top>10</top>
+				  <width>145</width>
+				  <height>220</height>
+				  <texture background="true">$VAR[uhdtypehackcase]</texture>
+				  <aspectratio align="center" aligny="top">stretch</aspectratio>
+				  <bordertexture border="10"></bordertexture>
+			      <bordersize>7</bordersize>
+			    </control>
 		        <control type="label">
 			      <left>165</left>
 				  <top>20</top>

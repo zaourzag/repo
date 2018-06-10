@@ -774,9 +774,10 @@
 		<value condition="[String.Contains(ListItem.FilenameAndPath,web) | String.Contains(ListItem.FilenameAndPath,webdl)]">case/WEBDL.png</value>
 		<value condition="[String.Contains(ListItem.FilenameAndPath,pdtv) | String.Contains(ListItem.FilenameAndPath,hdtv) | String.Contains(ListItem.FilenameAndPath,dsr)]">case/HDTV.png</value>
 		<value condition="String.Contains(ListItem.Filenameandpath,3dbd) | String.Contains(ListItem.Filenameandpath,3d)">case/3D.png</value>
-		<value condition="String.Contains(ListItem.Path,videodb://movies/sets/,left)">case/SET.png</value>
-		<value condition="Container.Content(TVShows) | Container.Content(Seasons)">case/TVSERIE.png</value>
-		<value condition="String.Contains(ListItem.Filenameandpath,steelbook)">case/steelbook.png</value>
+	</variable>
+	
+	<variable name="uhdtypehackcase">
+		<value condition="String.Contains(ListItem.Filenameandpath,UHD) | String.Contains(ListItem.Filenameandpath,uhd)">skin/uhdcover.png</value>
 	</variable>
 	
 	<variable name="LangFlagging">

@@ -1122,7 +1122,7 @@
 		<item id="3">
 		  <description>Movies</description>
 		  <label>$LOCALIZE[50236]</label>
-		  <onclick>ActivateWindow(10025,videodb://movies/titles/,return)</onclick>
+		  <onclick>ActivateWindow(10025,special://skin/playlists/All Movies.xsp,return)</onclick>
 		  <icon></icon>
 		  <thumb fallback="special://skin/backgrounds/FALLBACK.jpg">$INFO[Skin.String(Home_Custom_Back_Movies_Folder)]</thumb>
 		  <property name="MenuIcon" fallback="home/homeicons/film.png">$INFO[Skin.String(IconMovies_Icon)]</property>
@@ -1234,8 +1234,8 @@
 		  <icon></icon>
 		  <thumb fallback="special://skin/backgrounds/FALLBACK.jpg">$INFO[Skin.String(Home_Custom_Back_Playlist1_Folder)]</thumb>
 		  <property name="MenuIcon" fallback="home/homeicons/film.png">$INFO[Skin.String(IconPlaylist01_Icon)]</property>
-		  <property name="BackWebOS9">home/button/webos_button.png</property>
-		  <property name="BackTizen9">home/button/submenubutton.png</property>	
+		  <property name="BackWebOS7">home/button/webos_button.png</property>
+		  <property name="BackTizen7">home/button/submenubutton.png</property>	
 		  <onclick>SetFocus(9010)</onclick>
 		  <visible>Skin.HasSetting(movieplaylistButton100)</visible>
 		</item>
@@ -1251,8 +1251,8 @@
 		  <property name="WidgetLabel">$INFO[Skin.String(Playlist1HomeItem.WidgetLabel)]</property>
 		  <property name="WidgetType">$INFO[Skin.String(Playlist1HomeItem.WidgetType)]</property>
 		  <property name="MenuIcon" fallback="home/homeicons/film.png">$INFO[Skin.String(IconPlaylist01_Icon)]</property>
-		  <property name="BackWebOS9">home/button/webos_button.png</property>
-		  <property name="BackTizen9">home/button/submenubutton.png</property>	
+		  <property name="BackWebOS7">home/button/webos_button.png</property>
+		  <property name="BackTizen7">home/button/submenubutton.png</property>	
 		  <visible>Skin.HasSetting(movieplaylistButton1000)</visible>
 		</item>
 	</include>
@@ -1263,8 +1263,8 @@
 		  <icon></icon>
 		  <thumb fallback="special://skin/backgrounds/FALLBACK.jpg">$INFO[Skin.String(Home_Custom_Back_Playlist2_Folder)]</thumb>
 		  <property name="MenuIcon" fallback="home/homeicons/film.png">$INFO[Skin.String(IconPlaylist02_Icon)]</property>
-		  <property name="BackWebOS10">home/button/webos_button.png</property>
-		  <property name="BackTizen10">home/button/submenubutton.png</property>	
+		  <property name="BackWebOS8">home/button/webos_button.png</property>
+		  <property name="BackTizen8">home/button/submenubutton.png</property>	
 		  <onclick>SetFocus(9010)</onclick>
 		  <visible>Skin.HasSetting(movieplaylistButton200)</visible>
 		</item>
@@ -1280,8 +1280,8 @@
 		  <property name="WidgetLabel">$INFO[Skin.String(Playlist2HomeItem.WidgetLabel)]</property>
 		  <property name="WidgetType">$INFO[Skin.String(Playlist2HomeItem.WidgetType)]</property>
 		  <property name="MenuIcon" fallback="home/homeicons/film.png">$INFO[Skin.String(IconPlaylist02_Icon)]</property>
-		  <property name="BackWebOS10">home/button/webos_button.png</property>
-		  <property name="BackTizen10">home/button/submenubutton.png</property>	
+		  <property name="BackWebOS8">home/button/webos_button.png</property>
+		  <property name="BackTizen8">home/button/submenubutton.png</property>	
 		  <visible>Skin.HasSetting(movieplaylistButton2000)</visible>
 		</item>
 	</include>
@@ -1292,8 +1292,8 @@
 		  <icon></icon>
 		  <thumb fallback="special://skin/backgrounds/FALLBACK.jpg">$INFO[Skin.String(Home_Custom_Back_Playlist3_Folder)]</thumb>
 		  <property name="MenuIcon" fallback="home/homeicons/film.png">$INFO[Skin.String(IconPlaylist03_Icon)]</property>
-		  <property name="BackWebOS11">home/button/webos_button.png</property>
-		  <property name="BackTizen11">home/button/submenubutton.png</property>	
+		  <property name="BackWebOS9">home/button/webos_button.png</property>
+		  <property name="BackTizen9">home/button/submenubutton.png</property>	
 		  <onclick>SetFocus(9010)</onclick>
 		  <visible>Skin.HasSetting(movieplaylistButton300)</visible>
 		</item>
@@ -1309,8 +1309,8 @@
 		  <property name="WidgetLabel">$INFO[Skin.String(Playlist3HomeItem.WidgetLabel)]</property>
 		  <property name="WidgetType">$INFO[Skin.String(Playlist3HomeItem.WidgetType)]</property>
 		  <property name="MenuIcon" fallback="home/homeicons/film.png">$INFO[Skin.String(IconPlaylist03_Icon)]</property>
-		  <property name="BackWebOS11">home/button/webos_button.png</property>
-		  <property name="BackTizen11">home/button/submenubutton.png</property>	
+		  <property name="BackWebOS9">home/button/webos_button.png</property>
+		  <property name="BackTizen9">home/button/submenubutton.png</property>	
 		  <visible>Skin.HasSetting(movieplaylistButton3000)</visible>
 		</item>
 	</include>
@@ -1327,8 +1327,8 @@
 		  <property name="WidgetLabel">$INFO[Skin.String(Playlist4HomeItem.WidgetLabel)]</property>
 		  <property name="WidgetType">$INFO[Skin.String(Playlist4HomeItem.WidgetType)]</property>
 		  <property name="MenuIcon" fallback="home/homeicons/film.png">$INFO[Skin.String(IconPlaylist04_Icon)]</property>
-		  <property name="BackWebOS12">home/button/webos_button.png</property>
-		  <property name="BackTizen12">home/button/submenubutton.png</property>	
+		  <property name="BackWebOS10">home/button/webos_button.png</property>
+		  <property name="BackTizen10">home/button/submenubutton.png</property>	
 		  <visible>Skin.HasSetting(movieplaylistButton1001)</visible>
 		</item>
 	</include>
@@ -1345,8 +1345,8 @@
 		  <property name="WidgetLabel">$INFO[Skin.String(Playlist5HomeItem.WidgetLabel)]</property>
 		  <property name="WidgetType">$INFO[Skin.String(Playlist5HomeItem.WidgetType)]</property>
 		  <property name="MenuIcon" fallback="home/homeicons/film.png">$INFO[Skin.String(IconPlaylist05_Icon)]</property>
-		  <property name="BackWebOS13">home/button/webos_button.png</property>
-		  <property name="BackTizen13">home/button/submenubutton.png</property>	
+		  <property name="BackWebOS11">home/button/webos_button.png</property>
+		  <property name="BackTizen11">home/button/submenubutton.png</property>	
 		  <visible>Skin.HasSetting(movieplaylistButton1002)</visible>
 		</item>
 	</include>
@@ -1363,8 +1363,8 @@
 		  <property name="WidgetLabel">$INFO[Skin.String(Playlist6HomeItem.WidgetLabel)]</property>
 		  <property name="WidgetType">$INFO[Skin.String(Playlist6HomeItem.WidgetType)]</property>
 		  <property name="MenuIcon" fallback="home/homeicons/film.png">$INFO[Skin.String(IconPlaylist06_Icon)]</property>
-		  <property name="BackWebOS14">home/button/webos_button.png</property>
-		  <property name="BackTizen14">home/button/submenubutton.png</property>	
+		  <property name="BackWebOS12">home/button/webos_button.png</property>
+		  <property name="BackTizen12">home/button/submenubutton.png</property>	
 		  <visible>Skin.HasSetting(movieplaylistButton1003)</visible>
 		</item>
 	</include>
@@ -1381,8 +1381,8 @@
 		  <property name="WidgetLabel">$INFO[Skin.String(Playlist7HomeItem.WidgetLabel)]</property>
 		  <property name="WidgetType">$INFO[Skin.String(Playlist7HomeItem.WidgetType)]</property>
 		  <property name="MenuIcon" fallback="home/homeicons/film.png">$INFO[Skin.String(IconPlaylist07_Icon)]</property>
-		  <property name="BackWebOS15">home/button/webos_button.png</property>
-		  <property name="BackTizen15">home/button/submenubutton.png</property>	
+		  <property name="BackWebOS13">home/button/webos_button.png</property>
+		  <property name="BackTizen13">home/button/submenubutton.png</property>	
 		  <visible>Skin.HasSetting(movieplaylistButton1004)</visible>
 		</item>
 	</include>
@@ -1399,8 +1399,8 @@
 		  <property name="WidgetLabel">$INFO[Skin.String(Playlist8HomeItem.WidgetLabel)]</property>
 		  <property name="WidgetType">$INFO[Skin.String(Playlist8HomeItem.WidgetType)]</property>
 		  <property name="MenuIcon" fallback="home/homeicons/film.png">$INFO[Skin.String(IconPlaylist08_Icon)]</property>
-		  <property name="BackWebOS16">home/button/webos_button.png</property>
-		  <property name="BackTizen16">home/button/submenubutton.png</property>	
+		  <property name="BackWebOS14">home/button/webos_button.png</property>
+		  <property name="BackTizen14">home/button/submenubutton.png</property>	
 		  <visible>Skin.HasSetting(movieplaylistButton1005)</visible>
 		</item>
 	</include>
@@ -1417,8 +1417,8 @@
 		  <property name="WidgetLabel">$INFO[Skin.String(Playlist9HomeItem.WidgetLabel)]</property>
 		  <property name="WidgetType">$INFO[Skin.String(Playlist9HomeItem.WidgetType)]</property>
 		  <property name="MenuIcon" fallback="home/homeicons/film.png">$INFO[Skin.String(IconPlaylist09_Icon)]</property>
-		  <property name="BackWebOS17">home/button/webos_button.png</property>
-		  <property name="BackTizen17">home/button/submenubutton.png</property>	
+		  <property name="BackWebOS15">home/button/webos_button.png</property>
+		  <property name="BackTizen15">home/button/submenubutton.png</property>	
 		  <visible>Skin.HasSetting(movieplaylistButton1006)</visible>
 		</item>
 	</include>
@@ -1435,8 +1435,8 @@
 		  <property name="WidgetLabel">$INFO[Skin.String(Playlist10HomeItem.WidgetLabel)]</property>
 		  <property name="WidgetType">$INFO[Skin.String(Playlist10HomeItem.WidgetType)]</property>
 		  <property name="MenuIcon" fallback="home/homeicons/film.png">$INFO[Skin.String(IconPlaylist10_Icon)]</property>
-		  <property name="BackWebOS18">home/button/webos_button.png</property>
-		  <property name="BackTizen18">home/button/submenubutton.png</property>	
+		  <property name="BackWebOS16">home/button/webos_button.png</property>
+		  <property name="BackTizen16">home/button/submenubutton.png</property>	
 		  <visible>Skin.HasSetting(movieplaylistButton1007)</visible>
 		</item>
 	</include>
@@ -1448,8 +1448,8 @@
 		  <icon></icon>
 		  <thumb fallback="special://skin/backgrounds/FALLBACK.jpg">$INFO[Skin.String(Home_Custom_Back_Music_Folder)]</thumb>
 		  <property name="MenuIcon" fallback="home/homeicons/cd.png">$INFO[Skin.String(IconMusic_Icon)]</property>
-		  <property name="BackWebOS19">home/button/webos_button.png</property>
-		  <property name="BackTizen19">home/button/submenubutton.png</property>
+		  <property name="BackWebOS17">home/button/webos_button.png</property>
+		  <property name="BackTizen17">home/button/submenubutton.png</property>
 		  <property name="Info">$LOCALIZE[132]: $INFO[Window(Home).Property(Music.AlbumsCount)]</property>	
 		  <property name="submenuVisibility" fallback="x10">$INFO[Skin.String(MusicHomeItem.SubMenu)]</property>
 		  <visible>!Skin.HasSetting(HomeMenuNoMusicButton)</visible>
@@ -1463,8 +1463,8 @@
 		  <icon></icon>
 		  <thumb fallback="special://skin/backgrounds/FALLBACK.jpg">$INFO[Skin.String(Home_Custom_Back_Programs_Folder)]</thumb>
 		  <property name="MenuIcon" fallback="home/homeicons/addons.png">$INFO[Skin.String(IconAddons_Icon)]</property>
-		  <property name="BackWebOS20">home/button/webos_button.png</property>
-		  <property name="BackTizen20">home/button/submenubutton.png</property>	
+		  <property name="BackWebOS18">home/button/webos_button.png</property>
+		  <property name="BackTizen18">home/button/submenubutton.png</property>	
 		  <property name="submenuVisibility" fallback="x11">$INFO[Skin.String(ProgramsHomeItem.SubMenu)]</property>
 		  <visible>!Skin.HasSetting(HomeMenuNoScriptsButton)</visible>
 		</item>
@@ -1476,8 +1476,8 @@
 		  <icon></icon>
 		  <thumb fallback="special://skin/backgrounds/FALLBACK.jpg">$INFO[Skin.String(Home_Custom_Back_Concerts_Folder)]</thumb>
 		  <property name="MenuIcon" fallback="home/homeicons/musicvideos.png">$INFO[Skin.String(IconMusicvideo_Icon)]</property>
-		  <property name="BackWebOS21">home/button/webos_button.png</property>
-		  <property name="BackTizen21">home/button/submenubutton.png</property>	
+		  <property name="BackWebOS19">home/button/webos_button.png</property>
+		  <property name="BackTizen19">home/button/submenubutton.png</property>	
 		  <property name="Info">$LOCALIZE[20389]: $INFO[Window(Home).Property(MusicVideos.Count)]</property>
 		  <property name="submenuVisibility" fallback="x12">$INFO[Skin.String(MusicVideoHomeItem.SubMenu)]</property>
 		  <onclick>SetFocus(9010)</onclick>
@@ -1492,8 +1492,8 @@
 		  <icon></icon>
 		  <thumb fallback="special://skin/backgrounds/FALLBACK.jpg">$INFO[Skin.String(Home_Custom_Back_Pictures_Folder)]</thumb>
 		  <property name="MenuIcon" fallback="home/homeicons/photos.png">$INFO[Skin.String(IconPictures_Icon)]</property>
-		  <property name="BackWebOS22">home/button/webos_button.png</property>
-		  <property name="BackTizen22">home/button/submenubutton.png</property>	
+		  <property name="BackWebOS20">home/button/webos_button.png</property>
+		  <property name="BackTizen20">home/button/submenubutton.png</property>	
 		  <property name="submenuVisibility" fallback="x13">$INFO[Skin.String(PicturesHomeItem.SubMenu)]</property>
 		  <visible>!Skin.HasSetting(HomeMenuNoPicturesButton)</visible>
 		</item>
@@ -1506,8 +1506,8 @@
 		  <icon></icon>
 		  <thumb fallback="special://skin/backgrounds/FALLBACK.jpg">$INFO[Skin.String(Home_Custom_Back_Weather_Folder)]</thumb>
 		  <property name="MenuIcon" fallback="home/homeicons/weather.png">$INFO[Skin.String(IconWeather_Icon)]</property>
-		  <property name="BackWebOS23">home/button/webos_button.png</property>
-		  <property name="BackTizen23">home/button/submenubutton.png</property>	
+		  <property name="BackWebOS21">home/button/webos_button.png</property>
+		  <property name="BackTizen21">home/button/submenubutton.png</property>	
 		  <property name="submenuVisibility" fallback="x14">$INFO[Skin.String(WeatherHomeItem.SubMenu)]</property>
 		  <visible>!Skin.HasSetting(HomeMenuNoWeatherButton) + !String.IsEmpty(Weather.Plugin)</visible>
 		</item>
@@ -1520,8 +1520,8 @@
 		  <icon></icon>
 		  <thumb fallback="special://skin/backgrounds/FALLBACK.jpg">$INFO[Skin.String(Home_Custom_Back_Option_Folder)]</thumb>
 		  <property name="MenuIcon" fallback="home/homeicons/sonstiges.png">$INFO[Skin.String(IconSettings_Icon)]</property>
-		  <property name="BackWebOS24">home/button/webos_button.png</property>
-		  <property name="BackTizen24">home/button/submenubutton.png</property>	
+		  <property name="BackWebOS22">home/button/webos_button.png</property>
+		  <property name="BackTizen22">home/button/submenubutton.png</property>	
 		  <property name="submenuVisibility" fallback="x15">$INFO[Skin.String(SettingsHomeItem.SubMenu)]</property>
 		  <visible>!Skin.HasSetting(enablesonstiges)</visible>
 		</item>
@@ -1534,8 +1534,8 @@
 		  <icon></icon>
 		  <thumb fallback="special://skin/backgrounds/FALLBACK.jpg">$INFO[Skin.String(Home_Custom_Back_PlayDisc_Folder)]</thumb>
 		  <property name="MenuIcon" fallback="home/homeicons/dvd.png">$INFO[Skin.String(IconDVD_Icon)]</property>
-		  <property name="BackWebOS25">home/button/webos_button.png</property>
-		  <property name="BackTizen25">home/button/submenubutton.png</property>	
+		  <property name="BackWebOS23">home/button/webos_button.png</property>
+		  <property name="BackTizen23">home/button/submenubutton.png</property>	
 		  <property name="submenuVisibility" fallback="x16">$INFO[Skin.String(PlayDiscHomeItem.SubMenu)]</property>
 		  <visible>System.HasMediaDVD + !Skin.HasSetting(HomeDiscDriveButtonDiscOnly)</visible>
 		  <visible>!Skin.HasSetting(HomeMenuNoDiscDriveButton)</visible>
@@ -1548,8 +1548,8 @@
 		  <icon></icon>
 		  <thumb fallback="special://skin/backgrounds/FALLBACK.jpg">$INFO[Skin.String(Home_Custom_Back_Games_Folder)]</thumb>
 		  <property name="MenuIcon" fallback="home/homeicons/games.png">$INFO[Skin.String(IconGames_Icon)]</property>
-		  <property name="BackWebOS26">home/button/webos_button.png</property>
-		  <property name="BackTizen26">home/button/submenubutton.png</property>	
+		  <property name="BackWebOS24">home/button/webos_button.png</property>
+		  <property name="BackTizen24">home/button/submenubutton.png</property>	
 		  <visible>System.GetBool(gamesgeneral.enable)</visible>	 
 		</item>
 	</include>
@@ -1560,8 +1560,8 @@
 		  <icon></icon>
 		  <thumb fallback="special://skin/backgrounds/FALLBACK.jpg">$INFO[Skin.String(Home_Custom_Back_ScriptWatchlist_Folder)]</thumb>
 		  <property name="MenuIcon" fallback="home/homeicons/news.png">$INFO[Skin.String(IconSimplePlaylists_Icon)]</property>
-		  <property name="BackWebOS28">home/button/webos_button.png</property>
-		  <property name="BackTizen28">home/button/submenubutton.png</property>	
+		  <property name="BackWebOS25">home/button/webos_button.png</property>
+		  <property name="BackTizen25">home/button/submenubutton.png</property>	
 		  <visible>Skin.HasSetting(HomeMenuNoScriptWatchlistButton)</visible> 	 
 		</item>
 	</include>

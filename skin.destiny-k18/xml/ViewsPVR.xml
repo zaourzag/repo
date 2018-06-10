@@ -514,7 +514,7 @@
 						<height>140</height>
 						<aspectratio>keep</aspectratio>
 						<texture>$INFO[ListItem.Icon]</texture>
-						<bordertexture border="10">ThumbShadow.png</bordertexture>
+						<bordertexture border="10"></bordertexture>
 		                <bordersize>7</bordersize>
 						<visible>!Skin.HasSetting(livetvicon)</visible>
 					</control>
@@ -629,7 +629,7 @@
 						<height>140</height>
 						<aspectratio>keep</aspectratio>
 						<texture>$INFO[ListItem.Icon]</texture>
-						<bordertexture border="10">ThumbShadow.png</bordertexture>
+						<bordertexture border="10"></bordertexture>
 		                <bordersize>7</bordersize>
 						<visible>!Skin.HasSetting(livetvicon)</visible>
 					</control>

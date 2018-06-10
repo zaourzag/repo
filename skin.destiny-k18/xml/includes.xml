@@ -257,7 +257,7 @@
 	  <top>0</top>
 	  <width>1920</width>
 	  <height>1080</height>
-	  <texture background="true" fallback="special://skin/backgrounds/FALLBACK.jpg">$VAR[VarWidgetsFanart]</texture>
+	  <texture background="true" fallback="special://skin/backgrounds/FALLBACK2.jpg">$VAR[VarWidgetsFanart]</texture>
 	  <aspectratio>stretch</aspectratio>
 	  <visible>!Window.IsVisible(home)</visible>
 	</control>
