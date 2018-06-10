@@ -68,6 +68,7 @@ class ZapiSession:
 
 	def restore_session(self):
 		if os.path.isfile(self.COOKIE_FILE) and os.path.isfile(self.ACCOUNT_FILE) and os.path.isfile(self.SESSION_FILE):
+		#if os.path.isfile(self.COOKIE_FILE) and os.path.isfile(self.ACCOUNT_FILE):
 			with open(self.ACCOUNT_FILE, 'r') as f:
 				accountData = json.loads(base64.b64decode(f.readline()))
 			if accountData['success'] == True:
@@ -171,7 +172,7 @@ class ZapiSession:
 		return False
 
 	def login(self):
-		api = '/zapi/account/login'
+		api = '/zapi/v2/account/login'
 		params = {"login": self.Username, "password" : self.Password}
 		debug (params)
 		accountData = self.exec_zapiCall(api, params, 'session')
@@ -184,4 +185,4 @@ class ZapiSession:
 
 	def renew_session(self):
 		return self.session() and self.login()
-		
+		#return self.login() and self.session()

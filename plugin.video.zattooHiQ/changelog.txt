@@ -1,4 +1,10 @@
 ==================================================
+[B]ZattooHiQ v1.6.5 [/B]24.04.2018 Steffen Rolapp
+==================================================
+- login auf v2 umgestellt
+- Programminfo auf v2 umgestellt
+
+==================================================
 [B]ZattooHiQ v1.6.3 [/B]24.04.2018 Steffen Rolapp
 ==================================================
 - Ja/Nein Abfrage Aufnahme löschen

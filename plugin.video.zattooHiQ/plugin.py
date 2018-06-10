@@ -90,11 +90,11 @@ def convert_date(date):
 ### Account Data ###
 
 accountData=_zattooDB_.zapi.get_accountData()
-premiumUser=accountData['account']['subscriptions']!=[]
+premiumUser=accountData['session']['user']['subscriptions']!=[]
 
-RECALL=accountData['account']['recall_eligible']
+RECALL=accountData['session']['recall_eligible']
 try:
-  RESTART=accountData['account']['selective_recall_eligible']
+  RESTART=accountData['session']['selective_recall_eligible']
 except KeyError:RESTART = False
 
 if RECALL:
@@ -104,44 +104,45 @@ elif RESTART:
 else:
   __addon__.setSetting('recall', '')
 
-country=accountData['account']['service_region_country']
+country=accountData['session']['service_region_country']
 __addon__.setSetting('country', country)
 
-dateregistered=accountData['account']['dateregistered']
+dateregistered=accountData['session']['user']['dateregistered']
 __addon__.setSetting('dateregistered',convert_date(dateregistered))
 
 if premiumUser:
-  product=accountData['account']['products'][0]['name']
+  product=accountData['session']['user']['products'][0]['name']
   __addon__.setSetting('product', product)
   
-  cost=accountData['account']['products'][0]['cost']
+  cost=accountData['session']['user']['products'][0]['cost']
   if cost != 0:
-    currency=accountData['account']['products'][0]['currency']
+    currency=accountData['session']['user']['products'][0]['currency']
     price = str(float(cost)/100)
     __addon__.setSetting('price', price+' '+currency)
   else:
     __addon__.setSetting('price', '')
     
-  expiration=accountData['account']['subscriptions'][0]['expiration']
+  expiration=accountData['session']['user']['subscriptions'][0]['expiration']
   if expiration is not None:
     __addon__.setSetting('expiration', convert_date(expiration))
   else:
     __addon__.setSetting('expiration', '')
   
-  if accountData['account']['subscriptions'][0]['autorenewing']:
-    renewal_date=accountData['account']['subscriptions'][0]['renewal_date']
+  if accountData['session']['user']['subscriptions'][0]['autorenewing']:
+    renewal_date=accountData['session']['user']['subscriptions'][0]['renewal_date']
     if expiration is not None:
       __addon__.setSetting('renewal_date', convert_date(renewal_date))
   else:
     __addon__.setSetting('renewal_date', '')
     
-  if accountData['account']['products'][0]['currency'] == 'CHF':
+  if accountData['session']['user']['products'][0]['currency'] == 'CHF':
     __addon__.setSetting('country', 'CH')
     
 else:
   __addon__.setSetting('product', '')
   __addon__.setSetting('price', '')
   __addon__.setSetting('expiration', '')
+  __addon__.setSetting('renewal_date', '')
  
 if __addon__.getSetting('country') == 'CH': SWISS = True
 else: SWISS = False
@@ -938,7 +939,7 @@ def showEpg():
   except:
     currentNr=0
   accountData=_zattooDB_.zapi.get_accountData()
-  premiumUser=accountData['account']['subscriptions']!=[]
+  premiumUser=accountData['session']['user']['subscriptions']!=[]
   epg = EPG(currentNr, premiumUser)
   epg.loadChannels(_listMode_ == 'favourites')
   epg.show() #doModal()

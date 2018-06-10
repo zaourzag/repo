@@ -95,10 +95,13 @@ class reloadDB(xbmcgui.WindowXMLDialog):
 		    os.remove(os.path.join(profilePath, 'session.cache'))
 		    os.remove(os.path.join(profilePath, 'account.cache'))
 		    #os.remove(os.path.join(profilePath, 'apicall.cache'))
+		    DB.zapiSession()
+		    DB._createTables()
+		    xbmcgui.Dialog().ok(__addon__.getAddonInfo('name'), local(24074))
 		except:
 		    pass
     #DB.zapi.AccountData = None
-    DB.zapiSession()
+    
     DB._createTables()
     #time.sleep(5)
     xbmcgui.Dialog().notification(localString(31916), localString(30110),  __addon__.getAddonInfo('path') + '/icon.png', 3000, False)
@@ -151,7 +154,7 @@ class ZattooDB(object):
     
     if zapiSession.init_session(__addon__.getSetting('username'), __addon__.getSetting('password'), ZAPIUrl):                                
       return zapiSession
-      
+
     else:
       # show home window, zattooHiQ settings and quit
       xbmc.executebuiltin('ActivateWindow(10000)')
@@ -252,8 +255,8 @@ class ZattooDB(object):
     # always clear db on update
     c.execute('DELETE FROM channels')
     
-    #debug( "account  "+ self.zapi.AccountData['account']['power_guide_hash'])
-    api = '/zapi/v2/cached/channels/' + self.zapi.AccountData['account']['power_guide_hash'] + '?details=False'
+
+    api = '/zapi/v2/cached/channels/' + self.zapi.AccountData['session']['power_guide_hash'] + '?details=False'
     channelsData = self.zapi.exec_zapiCall(api, None)
     debug("channels: " +str(channelsData))
     #time.sleep(5)
@@ -328,7 +331,7 @@ class ZattooDB(object):
 
     #update 09.02.2018: zattoo only sends max 5h (6h?) of programdata -> load 6*4h
     for nr in range(0, 6):
-        api = '/zapi/v2/cached/program/power_guide/' + self.zapi.AccountData['account']['power_guide_hash'] + '?end=' + str(fromTime+14400) + '&start=' + str(fromTime)
+        api = '/zapi/v2/cached/program/power_guide/' + self.zapi.AccountData['session']['power_guide_hash'] + '?end=' + str(fromTime+14400) + '&start=' + str(fromTime)
         fromTime+=14400
 
         #print "apiData   "+api
@@ -509,20 +512,20 @@ class ZattooDB(object):
                 debug('Database is locked')
                 time.sleep(1)
             #api = '/zapi/program/details?program_id=' + showID + '&complete=True'
-            api = '/zapi/v2/cached/program/power_details/'+ self.zapi.AccountData['account']['power_guide_hash'] + '?program_ids='+str(showID)
+            api = '/zapi/v2/cached/program/power_details/'+ self.zapi.AccountData['session']['power_guide_hash'] + '?program_ids='+str(showID)
             showInfo = self.zapiSession().exec_zapiCall(api, None)
             #infoall = showInfo['program']
             
             #info.execute('UPDATE programs SET info=? WHERE showID=?',[json.dumps(infoall), showID ])
             
             debug ('Showinfo  ' + str(showInfo))
-            # if showInfo['program']['cid'] == 'none':
-                # longDesc=''
-                # year=''
-                # category=''
-                # country=''
-                # info.close()
-                # return {'description':longDesc, 'year':year, 'country':country, 'category':category}
+            if len(showInfo['programs']) == 0:
+                 longDesc=''
+                 year=''
+                 category=''
+                 country=''
+                 info.close()
+                 return {'description':longDesc, 'year':year, 'country':country, 'category':category}
             if showInfo is None:
                 longDesc=''
                 year=''
@@ -540,13 +543,13 @@ class ZattooDB(object):
             country = showInfo['programs'][0]['country']
             country = country.replace('|',', ')
             info.execute('UPDATE programs SET country=? WHERE showID=?', [country, showID ])
-            #series = showInfo['programs']['series_recording_eligible']
-            #info.execute('UPDATE programs SET series=? WHERE showID=?', [series, showID])
+            series = showInfo['programs'][0]['ser_e']
+            info.execute('UPDATE programs SET series=? WHERE showID=?', [series, showID])
             cred = showInfo['programs'][0]['cr']
 
             info.execute('UPDATE programs SET credits=? WHERE showID=?', [json.dumps(cred), showID])
             try:
-                restart = showInfo['programs'][0]['selective_recall_until']
+                restart = showInfo['programs'][0]['sr_u']
                 info.execute('UPDATE programs SET restart=? WHERE showID=?', [True, showID])
             except:
                 info.execute('UPDATE programs SET restart=? WHERE showID=?', [False, showID])
@@ -581,7 +584,7 @@ class ZattooDB(object):
             showInfo=json.loads(showInfoJson)
         else:
             #api = '/zapi/program/details?program_id=' + str(showID) + '&complete=True'
-            api = '/zapi/v2/cached/program/power_details/' + self.zapi.AccountData['account']['power_guide_hash']+'?program_ids='+str(showID)
+            api = '/zapi/v2/cached/program/power_details/' + self.zapi.AccountData['session']['power_guide_hash']+'?program_ids='+str(showID)
             debug(api)
             showInfo = self.zapi.exec_zapiCall(api, None)
             if showInfo is None:
@@ -599,7 +602,7 @@ class ZattooDB(object):
     c = self.conn.cursor()
     
     #api = '/zapi/program/details?program_id=' + str(showID) + '&complete=True'
-    api = '/zapi/v2/cached/program/power_details/' + self.zapi.AccountData['account']['power_guide_hash'] + '?program_ids='+str(showID)
+    api = '/zapi/v2/cached/program/power_details/' + self.zapi.AccountData['session']['power_guide_hash'] + '?program_ids='+str(showID)
     showInfo = self.zapi.exec_zapiCall(api, None)
     if showInfo is None:
         c.close()

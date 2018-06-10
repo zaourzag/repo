@@ -470,9 +470,9 @@ class EPG(xbmcgui.WindowXML):
 				else: return 
 				
 			elif end < now :
-				if not self.premiumUser:return 
-				url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] +"&showID=" + program['showID'] + "&restart=true" + "&start=" + str(start) + "&end=" + str(end)
-
+				 #if not self.premiumUser:return 
+				 #url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] +"&showID=" + program['showID'] + "&restart=true" + "&start=" + str(start) + "&end=" + str(end)
+				return
 			else:
 				if (__addon__.getSetting('epgPlay')=='true') or (not self.premiumUser):# or (not _zattooDB_.getRestart(program['showID'])):
 					url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] + "&showID=" + program['showID']
@@ -498,11 +498,11 @@ class EPG(xbmcgui.WindowXML):
 						if ret==0:  #watch live
 							url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] + "&showID=" + program['showID']
 						
-						elif ret==2: #record
+						elif ret==1: #record
 							#url = "plugin://"+__addonId__+"/?mode=record_p&program_id=" + program['showID']
 							setup_recording({'program_id': program['showID']})
 							return
-						elif ret==3: #record series
+						elif ret==2: #record series
 							#url = "plugin://"+__addonId__+"/?mode=record_p&program_id=" + program['showID']
 							setup_recording({'program_id': program['showID'], 'series': 'true'})
 							return
