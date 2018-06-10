@@ -54,7 +54,7 @@ def searchHub(args):
 
     # parse json
     json_obj = json.loads(html)
-    
+
     # for every list entry
     for item in json_obj:
         # add to view
@@ -70,12 +70,15 @@ def searchHub(args):
     view.endofdirectory()
 
 
-def viewScreenshots(args):
+def viewScreenshots(args, appid = None):
     """Show all screenshots
     """
     # get website
     page = str(getattr(args, "offset", 1))
-    html = api.getPage(args, "https://steamcommunity.com/apps/allcontenthome/?l=" + args._lang + "&browsefilter=" + args._filter + "&appHubSubSection=2&forceanon=1&userreviewsoffset=0&p=" + page + "&workshopitemspage=" + page + "&readytouseitemspage=" + page + "&mtxitemspage=" + page + "&itemspage=" + page + "&screenshotspage=" + page + "&videospage=" + page + "&artpage=" + page + "&allguidepage=" + page + "&webguidepage=" + page + "&integratedguidepage=" + page + "&discussionspage=" + page + "&numperpage=10&appid=0")
+    if not appid:
+        html = api.getPage(args, "https://steamcommunity.com/apps/allcontenthome/?l=" + args._lang + "&browsefilter=" + args._filter + "&appHubSubSection=2&forceanon=1&userreviewsoffset=0&p=" + page + "&workshopitemspage=" + page + "&readytouseitemspage=" + page + "&mtxitemspage=" + page + "&itemspage=" + page + "&screenshotspage=" + page + "&videospage=" + page + "&artpage=" + page + "&allguidepage=" + page + "&webguidepage=" + page + "&integratedguidepage=" + page + "&discussionspage=" + page + "&numperpage=10&appid=0")
+    else:
+        html = api.getPage(args, "https://steamcommunity.com/app/" + appid + "/homecontent/?userreviewsoffset=0&p=" + page + "&workshopitemspage=" + page + "&readytouseitemspage=" + page + "&mtxitemspage=" + page + "&itemspage=" + page + "&screenshotspage=" + page + "&videospage=" + page + "&artpage=" + page + "&allguidepage=" + page + "&webguidepage=" + page + "&integratedguidepage=" + page + "&discussionspage=" + page + "&numperpage=10&browsefilter=" + args._filter + "&l=" + args._lang + "&appHubSubSection=2&filterLanguage=default&searchText=&forceanon=1")
     if not html:
         view.add_item(args, {"title": args._addon.getLocalizedString(30061)})
         view.endofdirectory()
@@ -119,16 +122,20 @@ def viewScreenshots(args):
                   {"title":  args._addon.getLocalizedString(30042),
                    "url":    getattr(args, "url", ""),
                    "offset": str(int(getattr(args, "offset", 1)) + 1),
+                   "appid":  appid,
                    "mode":   args.mode})
     view.endofdirectory()
 
 
-def viewArtwork(args):
+def viewArtwork(args, appid = None):
     """Show all artwork
     """
     # get website
     page = str(getattr(args, "offset", 1))
-    html = api.getPage(args, "https://steamcommunity.com/apps/allcontenthome/?l=" + args._lang + "&browsefilter=" + args._filter + "&appHubSubSection=4&forceanon=1&userreviewsoffset=0&p=" + page + "&workshopitemspage=" + page + "&readytouseitemspage=" + page + "&mtxitemspage=" + page + "&itemspage=" + page + "&screenshotspage=" + page + "&videospage=" + page + "&artpage=" + page + "&allguidepage=" + page + "&webguidepage=" + page + "&integratedguidepage=" + page + "&discussionspage=" + page + "&numperpage=10&appid=0")
+    if not appid:
+        html = api.getPage(args, "https://steamcommunity.com/apps/allcontenthome/?l=" + args._lang + "&browsefilter=" + args._filter + "&appHubSubSection=4&forceanon=1&userreviewsoffset=0&p=" + page + "&workshopitemspage=" + page + "&readytouseitemspage=" + page + "&mtxitemspage=" + page + "&itemspage=" + page + "&screenshotspage=" + page + "&videospage=" + page + "&artpage=" + page + "&allguidepage=" + page + "&webguidepage=" + page + "&integratedguidepage=" + page + "&discussionspage=" + page + "&numperpage=10&appid=0")
+    else:
+        html = api.getPage(args, "https://steamcommunity.com/app/" + appid + "/homecontent/?userreviewsoffset=0&p=" + page + "&workshopitemspage=" + page + "&readytouseitemspage=" + page + "&mtxitemspage=" + page + "&itemspage=" + page + "&screenshotspage=" + page + "&videospage=" + page + "&artpage=" + page + "&allguidepage=" + page + "&webguidepage=" + page + "&integratedguidepage=" + page + "&discussionspage=" + page + "&numperpage=10&browsefilter=" + args._filter + "&l=" + args._lang + "&appHubSubSection=4&filterLanguage=default&searchText=&forceanon=1")
     if not html:
         view.add_item(args, {"title": args._addon.getLocalizedString(30061)})
         view.endofdirectory()
@@ -172,11 +179,12 @@ def viewArtwork(args):
                   {"title":  args._addon.getLocalizedString(30042),
                    "url":    getattr(args, "url", ""),
                    "offset": str(int(getattr(args, "offset", 1)) + 1),
+                   "appid":  appid,
                    "mode":   args.mode})
     view.endofdirectory()
 
 
-def viewBroadcasts(args):
+def viewBroadcasts(args, appid = None):
     """Show all broadcasts
     """
     # check inputstream adaptive version
@@ -188,7 +196,10 @@ def viewBroadcasts(args):
 
     # get website
     page = str(getattr(args, "offset", 1))
-    html = api.getPage(args, "https://steamcommunity.com/apps/allcontenthome/?l=" + args._lang + "&browsefilter=" + args._filter + "&appHubSubSection=13&forceanon=1&userreviewsoffset=0&broadcastsoffset=10&p=" + page + "&workshopitemspage=" + page + "&readytouseitemspage=" + page + "&mtxitemspage=" + page + "&itemspage=" + page + "&screenshotspage=" + page + "&videospage=" + page + "&artpage=" + page + "&allguidepage=" + page + "&webguidepage=" + page + "&integratedguidepage=" + page + "&discussionspage=" + page + "&numperpage=10&appid=0")
+    if not appid:
+        html = api.getPage(args, "https://steamcommunity.com/apps/allcontenthome/?l=" + args._lang + "&browsefilter=" + args._filter + "&appHubSubSection=13&forceanon=1&userreviewsoffset=0&broadcastsoffset=10&p=" + page + "&workshopitemspage=" + page + "&readytouseitemspage=" + page + "&mtxitemspage=" + page + "&itemspage=" + page + "&screenshotspage=" + page + "&videospage=" + page + "&artpage=" + page + "&allguidepage=" + page + "&webguidepage=" + page + "&integratedguidepage=" + page + "&discussionspage=" + page + "&numperpage=10&appid=0")
+    else:
+        html = api.getPage(args, "https://steamcommunity.com/app/" + appid + "/homecontent/?userreviewsoffset=0&broadcastsoffset=12&p=" + page + "&workshopitemspage=" + page + "&readytouseitemspage=" + page + "&mtxitemspage=" + page + "&itemspage=" + page + "&screenshotspage=" + page + "&videospage=" + page + "&artpage=" + page + "&allguidepage=" + page + "&webguidepage=" + page + "&integratedguidepage=" + page + "&discussionspage=" + page + "&numperpage=12&browsefilter=" + args._filter + "&l=" + args._lang + "&appHubSubSection=13&filterLanguage=default&searchText=&forceanon=1")
     if not html:
         view.add_item(args, {"title": args._addon.getLocalizedString(30061)})
         view.endofdirectory()
@@ -223,16 +234,20 @@ def viewBroadcasts(args):
                   {"title":  args._addon.getLocalizedString(30042),
                    "url":    getattr(args, "url", ""),
                    "offset": str(int(getattr(args, "offset", 1)) + 1),
+                   "appid":  appid,
                    "mode":   args.mode})
     view.endofdirectory()
 
 
-def viewVideos(args):
+def viewVideos(args, appid = None):
     """Show all videos
     """
     # get website
     page = str(getattr(args, "offset", 1))
-    html = api.getPage(args, "https://steamcommunity.com/apps/allcontenthome/?l=" + args._lang + "&browsefilter=" + args._filter + "&appHubSubSection=3&forceanon=1&userreviewsoffset=0&p=" + page + "&workshopitemspage=" + page + "&readytouseitemspage=" + page + "&mtxitemspage=" + page + "&itemspage=" + page + "&screenshotspage=" + page + "&videospage=" + page + "&artpage=" + page + "&allguidepage=" + page + "&webguidepage=" + page + "&integratedguidepage=" + page + "&discussionspage=" + page + "&numperpage=10&appid=0")
+    if not appid:
+        html = api.getPage(args, "https://steamcommunity.com/apps/allcontenthome/?l=" + args._lang + "&browsefilter=" + args._filter + "&appHubSubSection=3&forceanon=1&userreviewsoffset=0&p=" + page + "&workshopitemspage=" + page + "&readytouseitemspage=" + page + "&mtxitemspage=" + page + "&itemspage=" + page + "&screenshotspage=" + page + "&videospage=" + page + "&artpage=" + page + "&allguidepage=" + page + "&webguidepage=" + page + "&integratedguidepage=" + page + "&discussionspage=" + page + "&numperpage=10&appid=0")
+    else:
+        html = api.getPage(args, "https://steamcommunity.com/app/" + appid + "/homecontent/?userreviewsoffset=0&p=" + page + "&workshopitemspage=" + page + "&readytouseitemspage=" + page + "&mtxitemspage=" + page + "&itemspage=" + page + "&screenshotspage=" + page + "&videospage=" + page + "&artpage=" + page + "&allguidepage=" + page + "&webguidepage=" + page + "&integratedguidepage=" + page + "&discussionspage=" + page + "&numperpage=10&browsefilter=" + args._filter + "&l=" + args._lang + "&appHubSubSection=3&filterLanguage=default&searchText=&forceanon=1")
     if not html:
         view.add_item(args, {"title": args._addon.getLocalizedString(30061)})
         view.endofdirectory()
@@ -270,6 +285,7 @@ def viewVideos(args):
                   {"title":  args._addon.getLocalizedString(30042),
                    "url":    getattr(args, "url", ""),
                    "offset": str(int(getattr(args, "offset", 1)) + 1),
+                   "appid":  appid,
                    "mode":   args.mode})
     view.endofdirectory()
 

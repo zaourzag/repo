@@ -2065,17 +2065,17 @@
             <height>50</height>
             <font>primal_20</font>
             <label>$LOCALIZE[50139]</label>
-            <onclick>Skin.ToggleSetting(ColorBackWebOS24)</onclick>
-            <selected>Skin.HasSetting(ColorBackWebOS24)</selected>
+            <onclick>Skin.ToggleSetting(ColorBackWebOS12)</onclick>
+            <selected>Skin.HasSetting(ColorBackWebOS12)</selected>
           </control>
 		  <control type="button" id="108916">
 			<width>1337</width>
             <height>50</height>
             <font>primal_20</font>
 			<label>$LOCALIZE[50314]</label>
-			<label2>[COLOR=selected]$INFO[Skin.String(SelfColorWebOS24_Path)][/COLOR]</label2>
-			<onclick>Skin.SetString(SelfColorWebOS24_Path)</onclick>
-			<visible>Skin.HasSetting(ColorBackWebOS24)</visible>
+			<label2>[COLOR=selected]$INFO[Skin.String(SelfColorWebOS12_Path)][/COLOR]</label2>
+			<onclick>Skin.SetString(SelfColorWebOS12_Path)</onclick>
+			<visible>Skin.HasSetting(ColorBackWebOS12)</visible>
 		  </control>
 		  <control type="radiobutton" id="108917">
 			<font>primal_20</font>
@@ -2152,17 +2152,17 @@
             <height>50</height>
             <font>primal_20</font>
             <label>$LOCALIZE[50139]</label>
-            <onclick>Skin.ToggleSetting(ColorBackWebOS25)</onclick>
-            <selected>Skin.HasSetting(ColorBackWebOS25)</selected>
+            <onclick>Skin.ToggleSetting(ColorBackWebOS13)</onclick>
+            <selected>Skin.HasSetting(ColorBackWebOS13)</selected>
           </control>
 		  <control type="button" id="108930">
 			<width>1337</width>
             <height>50</height>
             <font>primal_20</font>
 			<label>$LOCALIZE[50314]</label>
-			<label2>[COLOR=selected]$INFO[Skin.String(SelfColorWebOS25_Path)][/COLOR]</label2>
-			<onclick>Skin.SetString(SelfColorWebOS25_Path)</onclick>
-			<visible>Skin.HasSetting(ColorBackWebOS25)</visible>
+			<label2>[COLOR=selected]$INFO[Skin.String(SelfColorWebOS13_Path)][/COLOR]</label2>
+			<onclick>Skin.SetString(SelfColorWebOS13_Path)</onclick>
+			<visible>Skin.HasSetting(ColorBackWebOS13)</visible>
 		  </control>
 		  <control type="radiobutton" id="108931">
 			<font>primal_20</font>
@@ -2239,17 +2239,17 @@
             <height>50</height>
             <font>primal_20</font>
             <label>$LOCALIZE[50139]</label>
-            <onclick>Skin.ToggleSetting(ColorBackWebOS26)</onclick>
-            <selected>Skin.HasSetting(ColorBackWebOS26)</selected>
+            <onclick>Skin.ToggleSetting(ColorBackWebOS14)</onclick>
+            <selected>Skin.HasSetting(ColorBackWebOS14)</selected>
           </control>
 		  <control type="button" id="108945">
 			<width>1337</width>
             <height>50</height>
             <font>primal_20</font>
 			<label>$LOCALIZE[50314]</label>
-			<label2>[COLOR=selected]$INFO[Skin.String(SelfColorWebOS26_Path)][/COLOR]</label2>
-			<onclick>Skin.SetString(SelfColorWebOS26_Path)</onclick>
-			<visible>Skin.HasSetting(ColorBackWebOS26)</visible>
+			<label2>[COLOR=selected]$INFO[Skin.String(SelfColorWebOS14_Path)][/COLOR]</label2>
+			<onclick>Skin.SetString(SelfColorWebOS14_Path)</onclick>
+			<visible>Skin.HasSetting(ColorBackWebOS14)</visible>
 		  </control>
 		  <control type="radiobutton" id="108946">
 			<font>primal_20</font>
@@ -2326,17 +2326,17 @@
             <height>50</height>
             <font>primal_20</font>
             <label>$LOCALIZE[50139]</label>
-            <onclick>Skin.ToggleSetting(ColorBackWebOS27)</onclick>
-            <selected>Skin.HasSetting(ColorBackWebOS27)</selected>
+            <onclick>Skin.ToggleSetting(ColorBackWebOS15)</onclick>
+            <selected>Skin.HasSetting(ColorBackWebOS15)</selected>
           </control>
 		  <control type="button" id="108955">
 			<width>1337</width>
             <height>50</height>
             <font>primal_20</font>
 			<label>$LOCALIZE[50314]</label>
-			<label2>[COLOR=selected]$INFO[Skin.String(SelfColorWebOS27_Path)][/COLOR]</label2>
-			<onclick>Skin.SetString(SelfColorWebOS27_Path)</onclick>
-			<visible>Skin.HasSetting(ColorBackWebOS27)</visible>
+			<label2>[COLOR=selected]$INFO[Skin.String(SelfColorWebOS15_Path)][/COLOR]</label2>
+			<onclick>Skin.SetString(SelfColorWebOS15_Path)</onclick>
+			<visible>Skin.HasSetting(ColorBackWebOS15)</visible>
 		  </control>
 		  <control type="radiobutton" id="108956">
 			<font>primal_20</font>
@@ -2413,17 +2413,17 @@
             <height>50</height>
             <font>primal_20</font>
             <label>$LOCALIZE[50139]</label>
-            <onclick>Skin.ToggleSetting(ColorBackWebOS28)</onclick>
-            <selected>Skin.HasSetting(ColorBackWebOS28)</selected>
+            <onclick>Skin.ToggleSetting(ColorBackWebOS16)</onclick>
+            <selected>Skin.HasSetting(ColorBackWebOS16)</selected>
           </control>
 		  <control type="button" id="108965">
 			<width>1337</width>
             <height>50</height>
             <font>primal_20</font>
 			<label>$LOCALIZE[50314]</label>
-			<label2>[COLOR=selected]$INFO[Skin.String(SelfColorWebOS28_Path)][/COLOR]</label2>
-			<onclick>Skin.SetString(SelfColorWebOS28_Path)</onclick>
-			<visible>Skin.HasSetting(ColorBackWebOS28)</visible>
+			<label2>[COLOR=selected]$INFO[Skin.String(SelfColorWebOS16_Path)][/COLOR]</label2>
+			<onclick>Skin.SetString(SelfColorWebOS16_Path)</onclick>
+			<visible>Skin.HasSetting(ColorBackWebOS16)</visible>
 		  </control>
 		  <control type="radiobutton" id="108966">
 			<font>primal_20</font>

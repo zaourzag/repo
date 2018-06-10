@@ -73,7 +73,7 @@
 	</extension>
 </addon>
 
-<addon id="plugin.video.zattooHiQ" version="1.6.4.2" name="Zattoo HiQ" provider-name="Steffen Rolapp">
+<addon id="plugin.video.zattooHiQ" version="1.6.4.3" name="Zattoo HiQ" provider-name="Steffen Rolapp">
   <requires>
     <import addon="xbmc.python" version="2.14.0"/>
     <import addon="xbmc.addon" version="13.0.0" />
@@ -775,7 +775,7 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
   </extension>
 </addon>
 
-<addon id="plugin.video.zattooHiQ-2" version="1.6.4.2" name="Zattoo HiQ-2" provider-name="Steffen Rolapp">
+<addon id="plugin.video.zattooHiQ-2" version="1.6.4.3" name="Zattoo HiQ-2" provider-name="Steffen Rolapp">
   <requires>
     <import addon="xbmc.python" version="2.14.0"/>
     <import addon="xbmc.addon" version="13.0.0" />
@@ -3239,7 +3239,7 @@ This product uses the TMDb API (themoviedb.org) but is not endorsed or certified
     </extension>
 </addon>
 
-<addon id="plugin.video.steamcommunity" name="Steam Community" version="0.1.0" provider-name="MrKrabat">
+<addon id="plugin.video.steamcommunity" name="Steam Community" version="0.2.0" provider-name="MrKrabat">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
         <import addon="plugin.video.youtube" version="6.0.2"/>
@@ -3274,9 +3274,9 @@ This product uses the TMDb API (themoviedb.org) but is not endorsed or certified
         <description lang="pl_PL">Centra społeczności to organizowane według ocen użytkowników zbiory materiałów oficjalnych oraz tworzonych przez społeczność.</description>
         <description lang="tr_TR">Topluluk Merkezleri, kullanıcılar tarafından değerlendirilen en iyi topluluk yapımı ve resmî oyun içeriklerinin bulunduğu koleksiyonlardır.</description>
         <description lang="ja_JP">コミュニティハブは、コミュニティ製、メーカー製を問わずユーザーに評価されているコンテンツのコレクションです。</description>
-        <news></news>
+        <news>v0.2.0 (2018.06.07)[CR]- Added filter[CR]- Added hub search and browsing[CR]- Added browsing through multiple pages[CR]- Fixed showing images does not work</news>
         <license>GNU Affero General Public License, v3</license>
-        <forum></forum>
+        <forum>https://www.kodinerds.net/index.php/Thread/62053-WIP-Steam-Community/</forum>
         <website>https://steamcommunity.com/</website>
         <source>https://github.com/MrKrabat/plugin.video.steamcommunity</source>
         <email></email>
@@ -3986,7 +3986,7 @@ Parental warning: The Maxdome Plattform consists of differnt types of content - 
   </extension>
 </addon>
 
-<addon id="plugin.video.wakanim" name="Wakanim" version="0.7.2" provider-name="MrKrabat">
+<addon id="plugin.video.wakanim" name="Wakanim" version="0.7.3" provider-name="MrKrabat">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
         <import addon="script.module.beautifulsoup4" version="4.5.3"/>
@@ -4010,7 +4010,7 @@ Parental warning: The Maxdome Plattform consists of differnt types of content - 
         <disclaimer lang="de_DE">HINWEIS: Du MUSST PREMIUM Mitglied sein oder Videos KAUFEN um dieses Plugin zu benutzen</disclaimer>
         <disclaimer lang="fr_FR">AVERTISSEMENT: VOUS DEVEZ être un membre PREMIUM ou ACHETER des vidéos pour utiliser ce plugin</disclaimer>
         <disclaimer lang="ru_RU">ВНИМАНИЕ: Для использования этого плагина Вы должны оформить подписку или купить аниме</disclaimer>
-        <news>v0.7.2 (2018.03.25)[CR]- Added Python3 support[CR]- Fix Wakanim website changes[CR]- Improved stream parameters parsing[CR]- Refactoring</news>
+        <news>v0.7.3 (2018.06.08)[CR]- Added 2FA verification</news>
         <license>GNU Affero General Public License, v3</license>
         <forum>https://forum.kodi.tv/showthread.php?tid=322763</forum>
         <website>https://www.wakanim.tv/</website>
@@ -4468,7 +4468,7 @@ Parental warning: The Maxdome Plattform consists of differnt types of content - 
     </extension>
 </addon>
 
-<addon id="skin.destiny-k18" name="Destiny K18" version="1.0.0" provider-name="Jugger">
+<addon id="skin.destiny-k18" name="Destiny K18" version="1.1.0" provider-name="Jugger">
     <requires>
 		<import addon="xbmc.gui" version="5.13.0"/>
 	</requires>
