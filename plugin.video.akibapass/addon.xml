@@ -10,6 +10,7 @@
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
         <language>de</language>
+        <reuselanguageinvoker>false</reuselanguageinvoker>
         <summary lang="en_GB">Watch videos from the german platform Akibapass.de!</summary>
         <summary lang="de_DE">Schaue Videos von der deutschen Streaming Plattform Akibapass.de!</summary>
         <description lang="en_GB">All of your favorite series directly from japan here at Akibapass.de. Access new simulcasts and a lot of classics.</description>
