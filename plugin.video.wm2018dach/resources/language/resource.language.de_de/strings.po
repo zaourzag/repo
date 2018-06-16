@@ -1,0 +1,56 @@
+# Kodi Media Center language file
+msgid ""
+msgstr ""
+"Project-Id-Version: Kodi Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@kodi.org\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+
+# WM2018 Settings
+
+msgctxt "#30000"
+msgid "Stream"
+msgstr "Steams"
+
+msgctxt "#30001"
+msgid "ARD"
+msgstr "ARD"
+
+msgctxt "#30002"
+msgid "ZDF"
+msgstr "ZDF"
+
+msgctxt "#30003"
+msgid "ORF"
+msgstr "ORF"
+
+msgctxt "#30004"
+msgid "ORF UHD"
+msgstr "ORF UHD"
+
+msgctxt "#30010"
+msgid "Activate InputStream Adaptive"
+msgstr "Aktiviere InputStream Adaptive"
+
+msgctxt "#30011"
+msgid "Configure InputStream Adaptive"
+msgstr "InputStream Adaptive konfigurieren"
+
+
+# WM2018 Menue
+
+msgctxt "#30040"
+msgid "Football matches live"
+msgstr "Fußballspiele live"
+
+msgctxt "#30041"
+msgid "Press conference live"
+msgstr "Pressekonferenz live"
