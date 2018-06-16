@@ -106,7 +106,7 @@ def startplayback(args):
 
     # inputstream adaptive
     is_helper = inputstreamhelper.Helper("hls")
-    if args._addon.getSetting("inputstream_adaptive_active") == "true" and is_helper.check_inputstream():
+    if not args._addon.getSetting("stream") == "2" and args._addon.getSetting("inputstream_adaptive_active") == "true" and is_helper.check_inputstream():
         item.setProperty("inputstreamaddon", "inputstream.adaptive")
         item.setProperty("inputstream.adaptive.manifest_type", "hls")
 
