@@ -46,8 +46,8 @@ def main(argv):
                 "20": "romanian", "21": "russian", "22": "spanish", "23": "swedish", "24": "thai", "25": "turkish", "26": "ukrainian"}
     args._lang = language[args._addon.getSetting("language")]
     #get sortorder
-    filter = {"0": "trend", "1": "mostrecent"}
-    args._filter = filter[args._addon.getSetting("filter")]
+    sortorder = {"0": "trend", "1": "mostrecent"}
+    args._filter = sortorder[args._addon.getSetting("filter")]
 
     # list menue
     api.start(args)
