@@ -33,5 +33,3 @@ if __name__ == "__main__":
     from resources.lib import steam
     # start addon
     steam.main(sys.argv)
-
-#sys.modules.clear()
