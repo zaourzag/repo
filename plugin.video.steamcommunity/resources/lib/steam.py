@@ -15,7 +15,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import sys
 import inputstreamhelper
 
 import xbmc
@@ -29,10 +28,10 @@ from . import model
 from . import controller
 
 
-def main():
+def main(argv):
     """Main function for the addon
     """
-    args = model.parse()
+    args = model.parse(argv)
 
     # inputstream adaptive settings
     if hasattr(args, "mode") and args.mode == "mpd":
@@ -47,12 +46,12 @@ def main():
                 "20": "romanian", "21": "russian", "22": "spanish", "23": "swedish", "24": "thai", "25": "turkish", "26": "ukrainian"}
     args._lang = language[args._addon.getSetting("language")]
     #get sortorder
-    sortorder = {"0": "trend", "1": "mostrecent"}
-    args._filter = sortorder[args._addon.getSetting("filter")]
+    filter = {"0": "trend", "1": "mostrecent"}
+    args._filter = filter[args._addon.getSetting("filter")]
 
     # list menue
     api.start(args)
-    xbmcplugin.setContent(int(sys.argv[1]), "tvshows")
+    xbmcplugin.setContent(int(args._argv[1]), "tvshows")
     check_mode(args)
     api.close(args)
 
@@ -135,7 +134,7 @@ def showMainMenue(args):
     #view.add_item(args,
                   #{"title": args._addon.getLocalizedString(30058),
                    #"mode":  "reviews"})
-    view.endofdirectory()
+    view.endofdirectory(args)
 
 
 def showHubMenue(args):
@@ -157,4 +156,4 @@ def showHubMenue(args):
                   {"title": args._addon.getLocalizedString(30054),
                    "mode":  "videos",
                    "appid": args.appid})
-    view.endofdirectory()
+    view.endofdirectory(args)

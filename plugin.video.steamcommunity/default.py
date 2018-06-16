@@ -32,6 +32,6 @@ xbmc.log("[PLUGIN] %s: version %s initialized" % (_plugin, _version))
 if __name__ == "__main__":
     from resources.lib import steam
     # start addon
-    steam.main()
+    steam.main(sys.argv)
 
-sys.modules.clear()
+#sys.modules.clear()

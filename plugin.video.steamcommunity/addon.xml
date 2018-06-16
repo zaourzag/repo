@@ -12,7 +12,6 @@
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
         <language></language>
-        <reuselanguageinvoker>false</reuselanguageinvoker>
         <summary lang="en_GB">Community and official content for all games and software on Steam.</summary>
         <summary lang="zh_CN">Steam 上所有游戏与软件的社区和官方内容。</summary>
         <summary lang="ru_RU">Фанатский и официальный контент для всех игр и программ в Steam.</summary>

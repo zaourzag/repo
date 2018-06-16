@@ -16,7 +16,6 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import re
-import sys
 import json
 import inputstreamhelper
 from bs4 import BeautifulSoup
@@ -49,7 +48,7 @@ def searchHub(args):
     html = api.getPage(args, "https://steamcommunity.com/actions/SearchApps/" + quote_plus(d))
     if not html:
         view.add_item(args, {"title": args._addon.getLocalizedString(30061)})
-        view.endofdirectory()
+        view.endofdirectory(args)
         return
 
     # parse json
@@ -67,7 +66,7 @@ def searchHub(args):
                        "fanart":      item["logo"]},
                       isFolder=True, mediatype="video")
 
-    view.endofdirectory()
+    view.endofdirectory(args)
 
 
 def viewScreenshots(args, appid = None):
@@ -81,11 +80,11 @@ def viewScreenshots(args, appid = None):
         html = api.getPage(args, "https://steamcommunity.com/app/" + appid + "/homecontent/?userreviewsoffset=0&p=" + page + "&workshopitemspage=" + page + "&readytouseitemspage=" + page + "&mtxitemspage=" + page + "&itemspage=" + page + "&screenshotspage=" + page + "&videospage=" + page + "&artpage=" + page + "&allguidepage=" + page + "&webguidepage=" + page + "&integratedguidepage=" + page + "&discussionspage=" + page + "&numperpage=10&browsefilter=" + args._filter + "&l=" + args._lang + "&appHubSubSection=2&filterLanguage=default&searchText=&forceanon=1")
     if not html:
         view.add_item(args, {"title": args._addon.getLocalizedString(30061)})
-        view.endofdirectory()
+        view.endofdirectory(args)
         return
 
     # parse html
-    xbmcplugin.setContent(int(sys.argv[1]), "images")
+    xbmcplugin.setContent(int(args._argv[1]), "images")
     soup = BeautifulSoup(html, "html.parser")
 
     # for every list entry
@@ -124,7 +123,7 @@ def viewScreenshots(args, appid = None):
                    "offset": str(int(getattr(args, "offset", 1)) + 1),
                    "appid":  appid,
                    "mode":   args.mode})
-    view.endofdirectory()
+    view.endofdirectory(args)
 
 
 def viewArtwork(args, appid = None):
@@ -138,11 +137,11 @@ def viewArtwork(args, appid = None):
         html = api.getPage(args, "https://steamcommunity.com/app/" + appid + "/homecontent/?userreviewsoffset=0&p=" + page + "&workshopitemspage=" + page + "&readytouseitemspage=" + page + "&mtxitemspage=" + page + "&itemspage=" + page + "&screenshotspage=" + page + "&videospage=" + page + "&artpage=" + page + "&allguidepage=" + page + "&webguidepage=" + page + "&integratedguidepage=" + page + "&discussionspage=" + page + "&numperpage=10&browsefilter=" + args._filter + "&l=" + args._lang + "&appHubSubSection=4&filterLanguage=default&searchText=&forceanon=1")
     if not html:
         view.add_item(args, {"title": args._addon.getLocalizedString(30061)})
-        view.endofdirectory()
+        view.endofdirectory(args)
         return
 
     # parse html
-    xbmcplugin.setContent(int(sys.argv[1]), "images")
+    xbmcplugin.setContent(int(args._argv[1]), "images")
     soup = BeautifulSoup(html, "html.parser")
 
     # for every list entry
@@ -181,7 +180,7 @@ def viewArtwork(args, appid = None):
                    "offset": str(int(getattr(args, "offset", 1)) + 1),
                    "appid":  appid,
                    "mode":   args.mode})
-    view.endofdirectory()
+    view.endofdirectory(args)
 
 
 def viewBroadcasts(args, appid = None):
@@ -191,7 +190,7 @@ def viewBroadcasts(args, appid = None):
     if StrictVersion(xbmcaddon.Addon(id="inputstream.adaptive").getAddonInfo("version")) < StrictVersion("2.2.19"):
         xbmc.log("[PLUGIN] %s: inputstream.adaptive is too old for broadcasting 2.2.19 is required" % args._addonname, xbmc.LOGERROR)
         view.add_item(args, {"title": args._addon.getLocalizedString(30065)})
-        view.endofdirectory()
+        view.endofdirectory(args)
         return
 
     # get website
@@ -202,7 +201,7 @@ def viewBroadcasts(args, appid = None):
         html = api.getPage(args, "https://steamcommunity.com/app/" + appid + "/homecontent/?userreviewsoffset=0&broadcastsoffset=12&p=" + page + "&workshopitemspage=" + page + "&readytouseitemspage=" + page + "&mtxitemspage=" + page + "&itemspage=" + page + "&screenshotspage=" + page + "&videospage=" + page + "&artpage=" + page + "&allguidepage=" + page + "&webguidepage=" + page + "&integratedguidepage=" + page + "&discussionspage=" + page + "&numperpage=12&browsefilter=" + args._filter + "&l=" + args._lang + "&appHubSubSection=13&filterLanguage=default&searchText=&forceanon=1")
     if not html:
         view.add_item(args, {"title": args._addon.getLocalizedString(30061)})
-        view.endofdirectory()
+        view.endofdirectory(args)
         return
 
     # parse html
@@ -236,7 +235,7 @@ def viewBroadcasts(args, appid = None):
                    "offset": str(int(getattr(args, "offset", 1)) + 1),
                    "appid":  appid,
                    "mode":   args.mode})
-    view.endofdirectory()
+    view.endofdirectory(args)
 
 
 def viewVideos(args, appid = None):
@@ -250,7 +249,7 @@ def viewVideos(args, appid = None):
         html = api.getPage(args, "https://steamcommunity.com/app/" + appid + "/homecontent/?userreviewsoffset=0&p=" + page + "&workshopitemspage=" + page + "&readytouseitemspage=" + page + "&mtxitemspage=" + page + "&itemspage=" + page + "&screenshotspage=" + page + "&videospage=" + page + "&artpage=" + page + "&allguidepage=" + page + "&webguidepage=" + page + "&integratedguidepage=" + page + "&discussionspage=" + page + "&numperpage=10&browsefilter=" + args._filter + "&l=" + args._lang + "&appHubSubSection=3&filterLanguage=default&searchText=&forceanon=1")
     if not html:
         view.add_item(args, {"title": args._addon.getLocalizedString(30061)})
-        view.endofdirectory()
+        view.endofdirectory(args)
         return
 
     # parse html
@@ -287,7 +286,7 @@ def viewVideos(args, appid = None):
                    "offset": str(int(getattr(args, "offset", 1)) + 1),
                    "appid":  appid,
                    "mode":   args.mode})
-    view.endofdirectory()
+    view.endofdirectory(args)
 
 
 def startplayback_images(args):
@@ -303,7 +302,7 @@ def startplayback_images(args):
 
     # display image
     item = xbmcgui.ListItem(getattr(args, "title", "Title not provided"), path=sPath)
-    xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, item)
+    xbmcplugin.setResolvedUrl(int(args._argv[1]), True, item)
     xbmc.executebuiltin("SlideShow(" + sDir + ")")
 
 
@@ -313,7 +312,7 @@ def startplayback_broadcast(args):
     # start video
     if u"youtube.com" in args.url:
         item = xbmcgui.ListItem(getattr(args, "title", "Title not provided"), path=args.url)
-        xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, item)
+        xbmcplugin.setResolvedUrl(int(args._argv[1]), True, item)
         return True
 
     # get stream id
@@ -324,7 +323,7 @@ def startplayback_broadcast(args):
     html = api.getPage(args, "https://steamcommunity.com/broadcast/getbroadcastmpd/?steamid=" + streamid + "&broadcastid=0")
     if not html:
         item = xbmcgui.ListItem(getattr(args, "title", "Title not provided"))
-        xbmcplugin.setResolvedUrl(int(sys.argv[1]), False, item)
+        xbmcplugin.setResolvedUrl(int(args._argv[1]), False, item)
         return
 
     # parse json
@@ -341,7 +340,7 @@ def startplayback_broadcast(args):
         item.setProperty("inputstreamaddon", "inputstream.adaptive")
         item.setProperty("inputstream.adaptive.manifest_type", "mpd")
         # start playback
-        xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, item)
+        xbmcplugin.setResolvedUrl(int(args._argv[1]), True, item)
 
 
 def startplayback_youtube(args):
@@ -349,4 +348,4 @@ def startplayback_youtube(args):
     """
     # start video
     item = xbmcgui.ListItem(getattr(args, "title", "Title not provided"), path="plugin://plugin.video.youtube/play/?video_id=" + args.url)
-    xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, item)
+    xbmcplugin.setResolvedUrl(int(args._argv[1]), True, item)
