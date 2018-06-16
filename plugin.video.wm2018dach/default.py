@@ -32,6 +32,4 @@ xbmc.log("[PLUGIN] %s: version %s initialized" % (_plugin, _version))
 if __name__ == "__main__":
     from resources.lib import wm2018
     # start addon
-    wm2018.main()
-
-sys.modules.clear()
+    wm2018.main(sys.argv)

@@ -15,7 +15,6 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import sys
 import inputstreamhelper
 
 import xbmc
@@ -27,10 +26,10 @@ from . import view
 from . import model
 
 
-def main():
+def main(argv):
     """Main function for the addon
     """
-    args = model.parse()
+    args = model.parse(argv)
 
     # inputstream adaptive settings
     if hasattr(args, "mode") and args.mode == "hls":
@@ -40,7 +39,7 @@ def main():
         return True
 
     # list menue
-    xbmcplugin.setContent(int(sys.argv[1]), "tvshows")
+    xbmcplugin.setContent(int(args._argv[1]), "tvshows")
     check_mode(args)
 
 
@@ -93,7 +92,7 @@ def showMainMenue(args):
                        "mode":  "videoplay"},
                       isFolder=False)
 
-    view.endofdirectory()
+    view.endofdirectory(args)
 
 
 def startplayback(args):
@@ -111,4 +110,4 @@ def startplayback(args):
         item.setProperty("inputstream.adaptive.manifest_type", "hls")
 
     # start playback
-    xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, item)
+    xbmcplugin.setResolvedUrl(int(args._argv[1]), True, item)
