@@ -616,7 +616,7 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
   </extension>
 </addon>
 
-<addon id="plugin.video.watchbox" name="Watchbox" version="0.4.3" provider-name="MrKrabat">
+<addon id="plugin.video.watchbox" name="Watchbox" version="0.4.4" provider-name="MrKrabat">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
         <import addon="script.module.beautifulsoup4" version="4.5.3"/>
@@ -627,14 +627,13 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
         <language>de</language>
-        <reuselanguageinvoker>false</reuselanguageinvoker>
         <summary lang="en_GB">Movies and series from the top genres | WATCHBOX</summary>
         <summary lang="de_DE">Filme und Serien aus den Top Genres | WATCHBOX</summary>
         <description lang="en_GB">Whether anime, horror, action or comedy! Browse through our top genres! All films and series for free as online stream at WATCHBOX.</description>
         <description lang="de_DE">Ob Anime, Horror, Action oder Komödie! Stöber durch unsere Top Genres! Alle Filme und Serien kostenlos im Online-Stream bei WATCHBOX.</description>
         <disclaimer lang="en_GB">WARNING: This plugin is only available from Germany by geo blocking!</disclaimer>
         <disclaimer lang="de_DE">HINWEIS: Dieses Plugin ist durch Geoblocking nur von Deutschland aus verfügbar!</disclaimer>
-        <news>v0.4.3 (2018.04.29)[CR]- Fix website changes[CR]- Fix login</news>
+        <news>v0.4.4 (2018.06.16)[CR]- Compatibility with latest Kodi 18</news>
         <license>GNU Affero General Public License, v3</license>
         <forum>https://www.kodinerds.net/index.php/Thread/58398-Release-Watchbox-de/</forum>
         <website>https://www.watchbox.de/</website>
