@@ -32,10 +32,6 @@ msgctxt "#30003"
 msgid "ORF"
 msgstr "ORF"
 
-msgctxt "#30004"
-msgid "ORF UHD"
-msgstr "ORF UHD"
-
 msgctxt "#30010"
 msgid "Activate InputStream Adaptive"
 msgstr "Aktiviere InputStream Adaptive"
@@ -43,14 +39,3 @@ msgstr "Aktiviere InputStream Adaptive"
 msgctxt "#30011"
 msgid "Configure InputStream Adaptive"
 msgstr "InputStream Adaptive konfigurieren"
-
-
-# WM2018 Menue
-
-msgctxt "#30040"
-msgid "Football matches live"
-msgstr "Fußballspiele live"
-
-msgctxt "#30041"
-msgid "Press conference live"
-msgstr "Pressekonferenz live"
