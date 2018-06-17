@@ -293,7 +293,10 @@ def startplayback_images(args):
     """
     # cache path
     sDir = xbmc.translatePath(args._addon.getAddonInfo("profile"))
-    sPath = join(sDir.decode("utf-8"), u"image.jpg")
+    if args.PY2:
+        sPath = join(sDir.decode("utf-8"), u"image.jpg")
+    else:
+        sPath = join(sDir, "image.jpg")
 
     # download image
     file = URLopener()
