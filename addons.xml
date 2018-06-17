@@ -284,7 +284,7 @@ Zattoo Live TV, Aufnahmen und EPG
   </extension>
 </addon>
 
-<addon id="plugin.video.akibapass" name="Akibapass" version="0.6.2" provider-name="MrKrabat">
+<addon id="plugin.video.akibapass" name="Akibapass" version="0.6.3" provider-name="MrKrabat">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
         <import addon="script.module.beautifulsoup4" version="4.5.3"/>
@@ -301,10 +301,10 @@ Zattoo Live TV, Aufnahmen und EPG
         <description lang="de_DE">Alle deine Lieblingsserien direkt aus Japan bei Akibapass.de. Zugang zu aktuellen Simulcasts und jeder Menge Klassikern.</description>
         <disclaimer lang="en_GB">WARNING: You MUST be a PREMIUM member or BUY videos to use this plugin</disclaimer>
         <disclaimer lang="de_DE">HINWEIS: Du MUSST PREMIUM Mitglied sein oder Videos KAUFEN um dieses Plugin zu benutzen</disclaimer>
-        <news>v0.6.2 (2018.04.29)[CR]- Some fixes</news>
+        <news>v0.6.3 (2018.06.16)[CR]- Compatibility with latest Kodi 18</news>
         <license>GNU Affero General Public License, v3</license>
         <forum>https://www.kodinerds.net/index.php/Thread/58346-Release-Akibapass-de/</forum>
-        <website>https://www.akibapass.de/</website>
+        <website>https://www.akibapass.de/de/v2</website>
         <source>https://github.com/MrKrabat/plugin.video.akibapass</source>
         <email></email>
         <assets>
@@ -557,6 +557,39 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
     </extension>
 </addon>
 
+<addon id="plugin.video.wm2018dach" name="Fußball-WM 2018 DACH" version="1.0.2" provider-name="MrKrabat">
+    <requires>
+        <import addon="xbmc.python" version="2.25.0"/>
+        <import addon="script.module.inputstreamhelper" version="0.3.3"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <language>de</language>
+        <summary lang="en_GB">The FIFA World Cup 2018 free and legal from public service broadcasting</summary>
+        <summary lang="de_DE">Die Fußball-WM 2018 kostenlos und legal vom öffentlich-rechtlichen Rundfunk</summary>
+        <description lang="en_GB">The FIFA World Cup 2018 free and legal from public service broadcasting</description>
+        <description lang="de_DE">Die Fußball-WM 2018 kostenlos und legal vom öffentlich-rechtlichen Rundfunk</description>
+        <disclaimer lang="en_GB">This addon is not affiliated with the broadcasters.</disclaimer>
+        <disclaimer lang="de_DE">Dieses Addon steht in keiner Verbindung zu den Sendeanstalten.</disclaimer>
+        <news>v1.0.2 (2018.06.17)[CR]- Compatibility with latest Kodi 18</news>
+        <license>GNU Affero General Public License, v3</license>
+        <forum>https://www.kodinerds.net/index.php/Thread/62160-Fu%C3%9Fball-WM-2018-DACH/</forum>
+        <website></website>
+        <source>https://github.com/MrKrabat/plugin.video.wm2018dach</source>
+        <email></email>
+        <assets>
+            <icon>icon.png</icon>
+            <fanart>fanart.jpg</fanart>
+            <screenshot>resources/media/screenshot-01.jpg</screenshot>
+            <screenshot>resources/media/screenshot-02.jpg</screenshot>
+            <screenshot>resources/media/screenshot-03.jpg</screenshot>
+        </assets>
+    </extension>
+</addon>
+
 <addon id="plugin.video.mediathekdirekt" name="Mediathek Direkt" version="0.0.11" provider-name="P_Aeh">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
@@ -580,6 +613,39 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
     <source>https://github.com/dojomo/plugin.video.mediathekdirekt</source>
     <news></news>
   </extension>
+</addon>
+
+<addon id="plugin.video.watchbox" name="Watchbox" version="0.4.4" provider-name="MrKrabat">
+    <requires>
+        <import addon="xbmc.python" version="2.25.0"/>
+        <import addon="script.module.beautifulsoup4" version="4.5.3"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <language>de</language>
+        <summary lang="en_GB">Movies and series from the top genres | WATCHBOX</summary>
+        <summary lang="de_DE">Filme und Serien aus den Top Genres | WATCHBOX</summary>
+        <description lang="en_GB">Whether anime, horror, action or comedy! Browse through our top genres! All films and series for free as online stream at WATCHBOX.</description>
+        <description lang="de_DE">Ob Anime, Horror, Action oder Komödie! Stöber durch unsere Top Genres! Alle Filme und Serien kostenlos im Online-Stream bei WATCHBOX.</description>
+        <disclaimer lang="en_GB">WARNING: This plugin is only available from Germany by geo blocking!</disclaimer>
+        <disclaimer lang="de_DE">HINWEIS: Dieses Plugin ist durch Geoblocking nur von Deutschland aus verfügbar!</disclaimer>
+        <news>v0.4.4 (2018.06.16)[CR]- Compatibility with latest Kodi 18</news>
+        <license>GNU Affero General Public License, v3</license>
+        <forum>https://www.kodinerds.net/index.php/Thread/58398-Release-Watchbox-de/</forum>
+        <website>https://www.watchbox.de/</website>
+        <source>https://github.com/MrKrabat/plugin.video.watchbox</source>
+        <email></email>
+        <assets>
+            <icon>icon.png</icon>
+            <fanart>fanart.jpg</fanart>
+            <screenshot>resources/media/screenshot-01.jpg</screenshot>
+            <screenshot>resources/media/screenshot-02.jpg</screenshot>
+            <screenshot>resources/media/screenshot-03.jpg</screenshot>
+        </assets>
+    </extension>
 </addon>
 
 <addon id="plugin.video.L0RE.premiershiprugby" name="Premiership Rugby" version="0.2.0" provider-name="L0RE">
@@ -819,7 +885,7 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
   </extension>
 </addon>
 
-<addon id="skin.embuary" version="17.1.2" name="Embuary (Krypton)" provider-name="sualfred">
+<addon id="skin.embuary" version="17.1.3" name="Embuary (Krypton)" provider-name="sualfred">
 	<requires>
 		<import addon="xbmc.gui" version="5.12.0"/>
 		<import addon="script.globalsearch" version="7.0.0"/>
@@ -3239,7 +3305,7 @@ This product uses the TMDb API (themoviedb.org) but is not endorsed or certified
     </extension>
 </addon>
 
-<addon id="plugin.video.steamcommunity" name="Steam Community" version="0.2.0" provider-name="MrKrabat">
+<addon id="plugin.video.steamcommunity" name="Steam Community" version="0.2.1" provider-name="MrKrabat">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
         <import addon="plugin.video.youtube" version="6.0.2"/>
@@ -3274,7 +3340,7 @@ This product uses the TMDb API (themoviedb.org) but is not endorsed or certified
         <description lang="pl_PL">Centra społeczności to organizowane według ocen użytkowników zbiory materiałów oficjalnych oraz tworzonych przez społeczność.</description>
         <description lang="tr_TR">Topluluk Merkezleri, kullanıcılar tarafından değerlendirilen en iyi topluluk yapımı ve resmî oyun içeriklerinin bulunduğu koleksiyonlardır.</description>
         <description lang="ja_JP">コミュニティハブは、コミュニティ製、メーカー製を問わずユーザーに評価されているコンテンツのコレクションです。</description>
-        <news>v0.2.0 (2018.06.07)[CR]- Added filter[CR]- Added hub search and browsing[CR]- Added browsing through multiple pages[CR]- Fixed showing images does not work</news>
+        <news>v0.2.1 (2018.06.16)[CR]- Compatibility with latest Kodi 18</news>
         <license>GNU Affero General Public License, v3</license>
         <forum>https://www.kodinerds.net/index.php/Thread/62053-WIP-Steam-Community/</forum>
         <website>https://steamcommunity.com/</website>
@@ -3437,39 +3503,6 @@ NOTE: Streams are available in SD only
     <email>andreas at vogler dot name</email>
     <platform>all</platform>
   </extension>
-</addon>
-
-<addon id="plugin.video.crunchyroll" name="Crunchyroll" version="3.0.0" provider-name="MrKrabat">
-    <requires>
-        <import addon="xbmc.python" version="2.25.0"/>
-        <import addon="script.module.inputstreamhelper" version="0.3.3"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <language>en es pt fr de ar it ru</language>
-        <summary lang="en_GB">Watch videos from Crunchyroll.com!</summary>
-        <summary lang="de_DE">Schaue Videos von Crunchyroll.com!</summary>
-        <description lang="en_GB">Crunchyroll is an online video service and community that offers full-length episodes and movies of the very best in Japanese anime and Asian entertainment.</description>
-        <description lang="de_DE">Crunchyroll ist ein online Video-Streaming-Dienst und bietet Zugang zu vollen Episoden und Filmen der besten japanischen Anime und asiatischer Unterhaltung.</description>
-        <disclaimer lang="en_GB">WARNING: You MUST be a PREMIUM member to use this Plugin</disclaimer>
-        <disclaimer lang="de_DE">HINWEIS: Du MUSST PREMIUM Mitglied sein um dieses Plugin zu benutzen</disclaimer>
-        <news>v3.0.0 (2018.02.xx)[CR]- Addon rewriten from scratch</news>
-        <license>GNU Affero General Public License, v3</license>
-        <forum></forum>
-        <website>http://www.crunchyroll.com/</website>
-        <source>https://github.com/MrKrabat/plugin.video.crunchyroll</source>
-        <email></email>
-        <assets>
-            <icon>icon.png</icon>
-            <fanart>fanart.jpg</fanart>
-            <screenshot>resources/media/screenshot-01.jpg</screenshot>
-            <screenshot>resources/media/screenshot-02.jpg</screenshot>
-            <screenshot>resources/media/screenshot-03.jpg</screenshot>
-        </assets>
-    </extension>
 </addon>
 
 <addon id="plugin.video.sky_mediathek" name="Sky Mediathek" version="1.1.0" provider-name="PUR3">
@@ -3986,7 +4019,7 @@ Parental warning: The Maxdome Plattform consists of differnt types of content - 
   </extension>
 </addon>
 
-<addon id="plugin.video.wakanim" name="Wakanim" version="0.7.3" provider-name="MrKrabat">
+<addon id="plugin.video.wakanim" name="Wakanim" version="0.7.4" provider-name="MrKrabat">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
         <import addon="script.module.beautifulsoup4" version="4.5.3"/>
@@ -4010,7 +4043,7 @@ Parental warning: The Maxdome Plattform consists of differnt types of content - 
         <disclaimer lang="de_DE">HINWEIS: Du MUSST PREMIUM Mitglied sein oder Videos KAUFEN um dieses Plugin zu benutzen</disclaimer>
         <disclaimer lang="fr_FR">AVERTISSEMENT: VOUS DEVEZ être un membre PREMIUM ou ACHETER des vidéos pour utiliser ce plugin</disclaimer>
         <disclaimer lang="ru_RU">ВНИМАНИЕ: Для использования этого плагина Вы должны оформить подписку или купить аниме</disclaimer>
-        <news>v0.7.3 (2018.06.08)[CR]- Added 2FA verification</news>
+        <news>v0.7.4 (2018.06.16)[CR]- Compatibility with latest Kodi 18</news>
         <license>GNU Affero General Public License, v3</license>
         <forum>https://forum.kodi.tv/showthread.php?tid=322763</forum>
         <website>https://www.wakanim.tv/</website>

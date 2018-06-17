@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.steamcommunity" name="Steam Community" version="0.2.0" provider-name="MrKrabat">
+<addon id="plugin.video.steamcommunity" name="Steam Community" version="0.2.1" provider-name="MrKrabat">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
         <import addon="plugin.video.youtube" version="6.0.2"/>
@@ -34,7 +34,7 @@
         <description lang="pl_PL">Centra społeczności to organizowane według ocen użytkowników zbiory materiałów oficjalnych oraz tworzonych przez społeczność.</description>
         <description lang="tr_TR">Topluluk Merkezleri, kullanıcılar tarafından değerlendirilen en iyi topluluk yapımı ve resmî oyun içeriklerinin bulunduğu koleksiyonlardır.</description>
         <description lang="ja_JP">コミュニティハブは、コミュニティ製、メーカー製を問わずユーザーに評価されているコンテンツのコレクションです。</description>
-        <news>v0.2.0 (2018.06.07)[CR]- Added filter[CR]- Added hub search and browsing[CR]- Added browsing through multiple pages[CR]- Fixed showing images does not work</news>
+        <news>v0.2.1 (2018.06.16)[CR]- Compatibility with latest Kodi 18</news>
         <license>GNU Affero General Public License, v3</license>
         <forum>https://www.kodinerds.net/index.php/Thread/62053-WIP-Steam-Community/</forum>
         <website>https://steamcommunity.com/</website>
