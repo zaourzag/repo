@@ -52,8 +52,8 @@ class library:
       start = int(time.mktime(time.strptime(record['start'], "%Y-%m-%dT%H:%M:%SZ"))) + _timezone_  # local timestamp
       if showInfo == "NONE": continue
       
-      if showInfo['episode_title']: name=showInfo['title']+'-'+showInfo['episode_title']
-      else: name=showInfo['title']
+      if showInfo[0]['et']: name=showInfo[0]['t']+'-'+showInfo[0]['et']
+      else: name=showInfo[0]['t']
   
       fileName=slugify(name)
       strmFile=os.path.join(libraryPath, fileName+"/"+fileName+".strm")
@@ -66,16 +66,15 @@ class library:
       
       out='<?xml version="1.0" encoding="UTF-8" standalone="yes" ?><movie>'
       out+='<title>'+name+' [COLOR red]ZBE[/COLOR]</title>'
-      out+='<year>'+str(showInfo['year'])+'</year>'
-      out+='<plot>'+showInfo['description']+'</plot>'
-      out+='<thumb>'+showInfo['image_url']+'</thumb>'
-      out+='<fanart><thumb>'+showInfo['image_url']+'</thumb></fanart>'
-      for genre in showInfo['genres']:
-        out+='<genre>'+genre+'</genre>'
-      for cr in showInfo['credits']:
-        role=cr['role']
-        if role=='actor':out+='<actor><name>'+cr['person']+'</name></actor>'
-        else: out+='<'+role+'>'+cr['person']+'</'+role+'>'
+      out+='<year>'+str(showInfo[0]['year'])+'</year>'
+      out+='<plot>'+showInfo[0]['d']+'</plot>'
+      out+='<thumb>'+showInfo[0]['i_url']+'</thumb>'
+      out+='<fanart><thumb>'+showInfo[0]['i_url']+'</thumb></fanart>'
+      out+='<genre clear="true>'+str(showInfo[0]['g'])+'</genre>'
+      # for actor in showInfo[0]['cr']['actor']:
+        # out+='<actor><name>'+actor+'</name></actor>'
+      #out+='<actor>'+str(showInfo[0]['cr']['actor'])+'</actor>'
+
       out+='</movie>'
       
       nfoFile=os.path.join(libraryPath, fileName+"/"+fileName+".nfo")

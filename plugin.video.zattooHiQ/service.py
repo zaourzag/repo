@@ -191,7 +191,7 @@ debug('Service started')
 player=myPlayer()
    
 if OLDVERSION != VERSION:
-   _zattooDB_.reloadDB(False)
+   _zattooDB_.reloadDB(True)
    _zattooDB_.set_version(VERSION)
    
 elif __addon__.getSetting('dbonstart') == 'true':
