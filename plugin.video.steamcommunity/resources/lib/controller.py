@@ -189,8 +189,7 @@ def viewBroadcasts(args, appid = None):
     # check inputstream adaptive version
     if StrictVersion(xbmcaddon.Addon(id="inputstream.adaptive").getAddonInfo("version")) < StrictVersion("2.2.19"):
         xbmc.log("[PLUGIN] %s: inputstream.adaptive is too old for broadcasting 2.2.19 is required" % args._addonname, xbmc.LOGERROR)
-        view.add_item(args, {"title": args._addon.getLocalizedString(30065)})
-        view.endofdirectory(args)
+        xbmcgui.Dialog().ok(args._addonname, args._addon.getLocalizedString(30065))
         return
 
     # get website
