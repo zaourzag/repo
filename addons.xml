@@ -3305,7 +3305,7 @@ This product uses the TMDb API (themoviedb.org) but is not endorsed or certified
     </extension>
 </addon>
 
-<addon id="plugin.video.steamcommunity" name="Steam Community" version="0.2.1" provider-name="MrKrabat">
+<addon id="plugin.video.steamcommunity" name="Steam Community" version="0.2.2" provider-name="MrKrabat">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
         <import addon="plugin.video.youtube" version="6.0.2"/>
@@ -3340,7 +3340,7 @@ This product uses the TMDb API (themoviedb.org) but is not endorsed or certified
         <description lang="pl_PL">Centra społeczności to organizowane według ocen użytkowników zbiory materiałów oficjalnych oraz tworzonych przez społeczność.</description>
         <description lang="tr_TR">Topluluk Merkezleri, kullanıcılar tarafından değerlendirilen en iyi topluluk yapımı ve resmî oyun içeriklerinin bulunduğu koleksiyonlardır.</description>
         <description lang="ja_JP">コミュニティハブは、コミュニティ製、メーカー製を問わずユーザーに評価されているコンテンツのコレクションです。</description>
-        <news>v0.2.1 (2018.06.16)[CR]- Compatibility with latest Kodi 18</news>
+        <news>v0.2.2 (2018.06.17)[CR]- Compatibility with latest Kodi 18</news>
         <license>GNU Affero General Public License, v3</license>
         <forum>https://www.kodinerds.net/index.php/Thread/62053-WIP-Steam-Community/</forum>
         <website>https://steamcommunity.com/</website>

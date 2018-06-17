@@ -1,4 +1,4 @@
-v0.2.1 (2018.06.16)
+v0.2.2 (2018.06.17)
 - Compatibility with latest Kodi 18
 
 v0.2.0 (2018.06.07)
