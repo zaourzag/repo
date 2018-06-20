@@ -8,6 +8,8 @@
         <provides>video</provides>
     </extension>
     <extension point="xbmc.addon.metadata">
+        <reuselanguageinvoker>false</reuselanguageinvoker>
+        <broken>login url broken</broken>
         <news>
 - added non defined settings to settings.xml
 - minor updates/fixes
