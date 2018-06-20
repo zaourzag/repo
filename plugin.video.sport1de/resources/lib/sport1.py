@@ -2,13 +2,6 @@
 
 from common import *
 
-def get_category_items():
-    return [
-                {'type':'dir', 'mode':'tv_category', 'name':'TV'},
-                {'type':'dir', 'mode':'live_radio', 'name':'Radio'},
-                {'type':'dir', 'mode':'video_category', 'name':'Mediathek'}
-            ]
-
 def get_video_category_items(data, id):
     items = []
     if id:
@@ -76,7 +69,7 @@ def get_video_items(data):
 
 def get_tv_items(data):
     items = []
-    stations = data['stations']
+    stations = data.get('stations', [])
     for s in stations:
         channel = s['title']
         current_programs = s['current_programs'][0]
@@ -90,15 +83,16 @@ def get_tv_items(data):
         items.append({'type':'video', 'mode':'play_tv', 'name':utfenc(name.replace('Live', '[COLOR red]Live[/COLOR]')), 'id':link, 'description':utfenc(description), 'duration':'0'})
     items.append({'type':'dir', 'mode':'livestream', 'name':'Weitere Livestreams', 'id':'', 'description':''})
     items.append({'type':'dir', 'mode':'replay', 'name':'Sendung verpasst?', 'id':'', 'description':''})
+    items.append({'type':'dir', 'mode':'video_category', 'name':'Mediathek'})
     return items
 
 def get_live_video_items(data):
     items = []
-    live = re.search('id="stream_tile_livestream"(.*?)<hr>', data, re.S)
+    live = re.search('id="stream_tile_livestream"(.*?)</div>\s*\n*</div>\s*\n*</div>', data, re.S)
     if live:
         a = live.group(1)
         items = get_event_items(items,a,live=True)
-    ondemand = re.search('id="stream_tile_ondemandstream"(.*?)<hr>', data, re.S)
+    ondemand = re.search('id="stream_tile_ondemandstream"(.*?)</div>\s*\n*</div>\s*\n*</div>', data, re.S)
     if ondemand:
         a = ondemand.group(1)
         items = get_event_items(items,a,live=False)
@@ -146,22 +140,6 @@ def replay_items(a):
             e = tv_base+e
         h = '%s %s' % (f[:16],g)
         items.insert(0, {'type':'video', 'mode':'play_tv', 'name':utfenc(h), 'id':d, 'image':e, 'description':utfenc(p), 'duration':'0'})
-    return items
-    
-def get_live_radio_items(data):
-    items = []
-    content = data['content']
-    for i in content:
-        url = i['url']
-        desc = i['description']
-        if not url and desc.startswith('http'):
-            url = desc
-        description = '%s\n%s' % (i['startzeit'][:22], desc)
-        if 'streamtheworld' in url:
-            file = os.path.basename(url)
-            url = 'http://playerservices.streamtheworld.com/api/livestream-redirect/' + os.path.splitext(file)[0]
-        item = {'type':'video', 'mode':'play_video', 'name':utfenc(i['titel']), 'id':url, 'description':utfenc(description), 'duration':i['duration']}
-        items.append(item)
     return items
 
 def get_hls(data):

@@ -2,7 +2,9 @@
 
 from common import *
 
-datapath = xbmc.translatePath('special://profile/addon_data/plugin.video.sport1de/').encode('utf-8')
+datapath = xbmc.translatePath('special://profile/addon_data/plugin.video.sport1de/').decode('utf-8')
+if not xbmcvfs.exists(datapath):
+    xbmcvfs.mkdir(datapath)
 file = os.path.join(datapath,'cache.json')
 
 def get_cache_data():

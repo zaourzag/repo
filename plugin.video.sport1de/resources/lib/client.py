@@ -29,9 +29,6 @@ class Client:
 
     def get_tv_epg(self):
         return self.json_request(video_base + '/api/epg/tv')
-
-    def get_fm_epg(self):
-        return self.json_request(video_base + '/api/epg/fm/amazon')
     
     def get_replay(self):
         self.headers['Referer'] = tv_base

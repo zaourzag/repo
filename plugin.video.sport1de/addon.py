@@ -7,27 +7,20 @@ from resources.lib import cache
 
 client = Client()
 
-def categories():
-    cache.cache_data(client.get_video_root())
-    list_items(sport1.get_category_items())
-    xbmcplugin.endOfDirectory(addon_handle)
-
 def tv_category():
+    if addon.getSetting('startup') == 'true':
+        video_root = client.get_video_root()
+        if video_root:
+            cache.cache_data(video_root)
+            addon.setSetting('startup', 'false')
     data = client.get_tv_epg()
-    if data:
-        list_items(sport1.get_tv_items(data))
+    list_items(sport1.get_tv_items(data))
     xbmcplugin.endOfDirectory(addon_handle)
 
 def video_category():
     data = cache.get_cache_data()
     if data:
         list_items(sport1.get_video_category_items(data, id))
-    xbmcplugin.endOfDirectory(addon_handle)
-
-def live_radio():
-    data = client.get_fm_epg()
-    if data:
-        list_items(sport1.get_live_radio_items(data))
     xbmcplugin.endOfDirectory(addon_handle)
 
 def videos():
@@ -69,9 +62,9 @@ def play(url):
     if not url.startswith('http'):
         url = 'https:' + url
     listitem = xbmcgui.ListItem(path=url)
-    if 'm3u8' in url:
-        listitem.setProperty('inputstreamaddon', 'inputstream.adaptive')
-        listitem.setProperty('inputstream.adaptive.manifest_type', 'hls')
+    # if 'm3u8' in url:
+        # listitem.setProperty('inputstreamaddon', 'inputstream.adaptive')
+        # listitem.setProperty('inputstream.adaptive.manifest_type', 'hls')
     xbmcplugin.setResolvedUrl(addon_handle, True, listitem)
     
 def list_items(items):
@@ -105,6 +98,6 @@ id = args.get('id', [''])[0]
 log('[%s] Arguments: %s' % (addon_id, str(args)))
 
 if mode==None:
-    categories()
+    tv_category()
 else:
     exec '%s()' % mode[0]
