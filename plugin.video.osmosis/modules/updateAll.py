@@ -3,7 +3,7 @@
 #
 # This file is part of OSMOSIS
 #
-# OSMOSIS is free software: you can redistribute it. 
+# OSMOSIS is free software: you can redistribute it.
 # You can modify it for private use only.
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -13,87 +13,89 @@
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-
 # -*- coding: utf-8 -*-
+
 import os
-import time
 import sys
 from modules import create
 from modules import guiTools
-from modules import kodiDB
-from modules import fileSys
 from modules import moduleUtil
+from modules import stringUtils
 
 import utils
 import xbmc, xbmcgui, xbmcaddon, xbmcvfs
 import re
 
-# Debug option pydevd:
-if False:
-    import pydevd
-    pydevd.settrace(stdoutToServer=True, stderrToServer=True)
-
-global thelist
-thelist = None
-
-ADDON_ID = 'plugin.video.osmosis'
-REAL_SETTINGS = xbmcaddon.Addon(id=ADDON_ID)
-ADDON_ID = REAL_SETTINGS.getAddonInfo('id')
-ADDON_NAME = REAL_SETTINGS.getAddonInfo('name')
-ADDON_PATH = REAL_SETTINGS.getAddonInfo('path')
-ADDON_SETTINGS = REAL_SETTINGS.getAddonInfo('profile')
-# PC Settings Info
-MediaList_LOC = xbmc.translatePath(os.path.join(ADDON_SETTINGS, 'MediaList.xml'))
-Automatic_Update_Time = REAL_SETTINGS.getSetting('Automatic_Update_Time') 
+addon = xbmcaddon.Addon()
+ADDON_PATH = addon.getAddonInfo('path')
+MEDIALIST_PATH = addon.getSetting('MediaList_LOC')
+MediaList_LOC = xbmc.translatePath(os.path.join(MEDIALIST_PATH, 'MediaList.xml'))
 represent = os.path.join(ADDON_PATH, 'icon.png')
-itime = 900000000000000  # in miliseconds  
+
+actor_update_manual = 0
+actor_update_periodictime = 1
+actor_update_fixtime = 2
+
 
 def readMediaList(purge=False):
     try:
         if xbmcvfs.exists(MediaList_LOC):
-            fle = open(MediaList_LOC, "r")
-            thelist = fle.readlines()
+            fle = xbmcvfs.File(MediaList_LOC, "r")
+            thelist = fle.read().splitlines()
             fle.close()
             return thelist
     except:
         pass
 
-def strm_update(selectedItems=None):
+
+def strm_update(selectedItems=None, actor=0):
     try:
         if xbmcvfs.exists(MediaList_LOC):
-            thelist = readMediaList() if selectedItems is None else selectedItems
+            thelist = selectedItems if selectedItems else readMediaList()
             if len(thelist) > 0:
                 dialogeBG = xbmcgui.DialogProgressBG()
-                dialogeBG.create("OSMOSIS: " ,  'Total Update-Progress:')
+                dialogeBG.create("OSMOSIS: " , 'Total Update-Progress:')
 
-                listLen = len(thelist)
-                step = j = 100 / listLen
+                iUrls = 0
+                splittedEntries = []
                 for entry in thelist:
                     splits = entry.strip().split('|')
-                    cType, name, url = splits[0], splits[1], splits[2]
+                    iUrls += len(splits[2].split('<next>'))
+                    splittedEntries.append(splits)
 
-                    try:
-                        plugin_id = re.search('%s([^\/\?]*)' % ("plugin:\/\/"), url)
-                        if plugin_id:
-                            module = moduleUtil.getModule(plugin_id.group(1))
-                            if module and hasattr(module, 'update'):
-                                url = module.update(name, url, 'video', thelist)
-    
-                        dialogeBG.update(j, "OSMOSIS total update process: " , "Current Item: " + name.replace('++RenamedTitle++','') + " Items left: " + str(listLen))
-                        j += step
-    
-                        create.fillPluginItems(url, strm=True, strm_name=name, strm_type=cType)
-                        listLen -= 1
-                    except:
-                        pass
+                step = j = 100 / iUrls
+                for splittedEntry in splittedEntries:
+                    cType, name, url = splittedEntry[0], splittedEntry[1], splittedEntry[2]
+
+                    urls = url.split('<next>')
+                    for url in urls:
+                        try:
+                            plugin_id = re.search('plugin:\/\/([^\/\?]*)', url)
+                            if plugin_id:
+                                module = moduleUtil.getModule(plugin_id.group(1))
+                                if module and hasattr(module, 'update'):
+                                    url = module.update(name, url, 'video', readMediaList() if selectedItems else thelist)
+
+                            dialogeBG.update(j, "OSMOSIS total update process: " , "Current Item: %s Items left: %d" % (stringUtils.getStrmname(name), iUrls))
+                            j += step
+
+                            create.fillPluginItems(url, strm=True, strm_name=name, strm_type=cType)
+                            iUrls -= 1
+                        except:
+                            pass
+
                 dialogeBG.close()
-                xbmc.executebuiltin('Notification(%s, %s, %d, %s)' % (ADDON_NAME, "Next update in: " + Automatic_Update_Time + "h" , 5000, represent))
+                if actor == actor_update_periodictime:
+                    xbmc.executebuiltin('Notification(%s, %s, %d, %s)' % (addon.getAddonInfo('name'), "Next update in: " + addon.getSetting('Automatic_Update_Time') + "h" , 5000, represent))
+                elif actor == actor_update_fixtime:
+                    next_run = addon.getSetting('update_time')[:5]
+                    xbmc.executebuiltin('Notification(%s, %s, %d, %s)' % (addon.getAddonInfo('name'), "Next update: " + next_run + "h" , 5000, represent))
     except IOError as (errno, strerror):
         print ("I/O error({0}): {1}").format(errno, strerror)
     except ValueError:
         print ("No valid integer in line.")
     except:
-        guiTools.infoDialog("Unexpected error: " + str(sys.exc_info()[1])+ (". See your Kodi.log!"))
+        guiTools.infoDialog("Unexpected error: " + str(sys.exc_info()[1]) + (". See your Kodi.log!"))
         utils.addon_log(("Unexpected error: ") + str(sys.exc_info()[1]))
         print ("Unexpected error:"), sys.exc_info()[1]
         pass

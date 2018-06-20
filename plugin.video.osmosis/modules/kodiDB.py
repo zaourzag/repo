@@ -3,7 +3,7 @@
 #
 # This file is part of OSMOSIS
 #
-# OSMOSIS is free software: you can redistribute it. 
+# OSMOSIS is free software: you can redistribute it.
 # You can modify it for private use only.
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
@@ -28,19 +28,17 @@ import sqlite3
 import mysql.connector
 import utils
 
-#Addon
-addon_id = 'plugin.video.osmosis'
-addon = xbmcaddon.Addon(addon_id)
-ADDON_SETTINGS = addon.getAddonInfo('profile')
-MusicDB_LOC = xbmc.translatePath(os.path.join(ADDON_SETTINGS, 'Musik.db'))
-MODBPATH = xbmc.translatePath(os.path.join(ADDON_SETTINGS, 'Movies.db'))
-SHDBPATH = xbmc.translatePath(os.path.join(ADDON_SETTINGS, 'Shows.db'))
-MODBPATH_MYSQL = xbmc.translatePath(os.path.join(ADDON_SETTINGS, 'Movies'))
-SHDBPATH_MYSQL = xbmc.translatePath(os.path.join(ADDON_SETTINGS, 'TVShows'))
+addon = xbmcaddon.Addon()
+profile = addon.getAddonInfo('profile')
+MusicDB_LOC = xbmc.translatePath(os.path.join(profile, 'Musik.db'))
+MODBPATH = xbmc.translatePath(os.path.join(profile, 'Movies.db'))
+SHDBPATH = xbmc.translatePath(os.path.join(profile, 'Shows.db'))
+MODBPATH_MYSQL = xbmc.translatePath(os.path.join(profile, 'Movies'))
+SHDBPATH_MYSQL = xbmc.translatePath(os.path.join(profile, 'TVShows'))
 STRM_LOC = xbmc.translatePath(os.path.join(addon.getSetting('STRM_LOC')))
 DATABASE_MYSQL = addon.getSetting('USE_MYSQL')
 
-#Databases
+# Databases
 KMDBUSERNAME = addon.getSetting('KMusic-DB username')
 KMDBPASSWORD = addon.getSetting('KMusic-DB password')
 KMDBNAME = addon.getSetting('KMusic-DB name')
@@ -73,10 +71,8 @@ MDBNAME = addon.getSetting('Music-DB name')
 MDBIP = addon.getSetting('Music-DB IP')
 MDBPORT = addon.getSetting('Music-DB port')
 
-try:    
-    kodi_version = int(xbmc.getInfoLabel("System.BuildVersion")[:2])
-except:
-    kodi_version = 17
+kodi_version = int(xbmc.getInfoLabel("System.BuildVersion")[:2])
+
 
 class Config(object):
     """Configure me so examples work
@@ -85,17 +81,17 @@ class Config(object):
     
         mysql.connector.Connect(**Config.dbinfo())
     """
-    
+
     if DATABASE_MYSQL == "false":
         DATABASE = 'Shows.db'
         USER = 'kodi'
         PASSWORD = 'admin'
         PORT = 3306
-        
+
         CHARSET = 'utf8'
         UNICODE = True
         WARNINGS = True
-        
+
         @classmethod
         def dbinfo(cls):
             return {
@@ -108,6 +104,7 @@ class Config(object):
                 'use_unicode': cls.UNICODE,
                 'get_warnings': cls.WARNINGS,
                 }
+
     else:
         DATABASETYPE = ""
         CHARSET = 'utf8'
@@ -115,15 +112,15 @@ class Config(object):
         WARNINGS = True
         BUFFERED = True
 
-        #Databases
+        # Databases
         @classmethod
         def dataBaseVal(cls):
-           
+
             DBValuses = ["SERNAME", "PASSWORD", "NAME", "IP", "PORT"]
-            
+
             if cls.DATABASETYPE == "KMovies":
                 DBValuses = [KMODBUSERNAME, KMODBPASSWORD, KMODBNAME, KMODBIP, KMODBPORT]
-            elif cls.DATABASETYPE == "KMusic":   
+            elif cls.DATABASETYPE == "KMusic":
                 DBValuses = [KMDBUSERNAME, KMDBPASSWORD, KMDBNAME, KMDBIP, KMDBPORT]
             elif cls.DATABASETYPE == "Movies":
                 DBValuses = [MOVDBUSERNAME, MOVDBPASSWORD, MOVDBNAME, MOVDBIP, MOVDBPORT]
@@ -131,8 +128,7 @@ class Config(object):
                 DBValuses = [TVSDBUSERNAME, TVSDBPASSWORD, TVSDBNAME, TVSDBIP, TVSDBPORT]
             elif cls.DATABASETYPE == "Music":
                 DBValuses = [MDBUSERNAME, MDBPASSWORD, MDBNAME, MDBIP, MDBPORT]
-            
-     
+
             return {
                 'user': DBValuses[0],
                 'password': DBValuses[1],
@@ -144,7 +140,8 @@ class Config(object):
                 'get_warnings': cls.WARNINGS,
                 'buffered': cls.BUFFERED,
                 }
-    
+
+
 def musicDatabase(strAlbumName, strArtistName, strSongTitle, strPath, strURL, iTrack, iDuration, strArtPath, tFileModTime=None):
     strPath = fileSys.completePath(os.path.join(STRM_LOC, strPath))
 
@@ -160,7 +157,7 @@ def musicDatabase(strAlbumName, strArtistName, strSongTitle, strPath, strURL, iT
     writeAlbumArtist(iArtistID, iAlbumID, strArtistName)
     writeThump(iArtistID, "artist", "thumb", strArtPath)
     writeThump(iAlbumID, "album", "thumb", strArtPath)
-    
+
     if DATABASE_MYSQL == "false":
         if not xbmcvfs.exists(MusicDB_LOC):
             createMusicDB()
@@ -168,6 +165,7 @@ def musicDatabase(strAlbumName, strArtistName, strSongTitle, strPath, strURL, iT
         createMusicDB()
 
     writeIntoSongTable(strSongTitle, iSongID, strArtistName, strAlbumName, iAlbumID, strPath, iPathID, strURL, iRoleID, iArtistID, iSongArtistID, "F")
+
 
 def createMusicDB():
     try:
@@ -195,50 +193,56 @@ def createMusicDB():
         cursor.close()
         con.close()
 
+
 def writeRole(strRole):
     selectQuery = "SELECT idRole FROM role WHERE strRole LIKE '{}';"
-    selectArgs =  (strRole,)
+    selectArgs = (strRole,)
     insertQuery = "INSERT INTO role (strRole) VALUES ('{}');"
-    insertArgs =  (strRole,)
-    
+    insertArgs = (strRole,)
+
     return manageDbRecord(selectQuery, selectArgs, insertQuery, insertArgs)
-    
+
+
 def writePath(strPath):
     selectStrPath = strPath if DATABASE_MYSQL == "false" else strPath.replace('\\', '\\\\\\\\')
     insertStrPath = strPath if DATABASE_MYSQL == "false" else strPath.replace('\\', '\\\\')
 
     selectQuery = "SELECT idPath FROM path WHERE strPath LIKE '{}';"
-    selectArgs =  (selectStrPath,)
+    selectArgs = (selectStrPath,)
     insertQuery = "INSERT INTO path (strPath) VALUES ('{}');"
-    insertArgs =  (insertStrPath,)
+    insertArgs = (insertStrPath,)
 
     return manageDbRecord(selectQuery, selectArgs, insertQuery, insertArgs)
+
 
 def writeArtist(strArtist):
     selectQuery = "SELECT idArtist FROM artist WHERE strArtist LIKE '{}';"
-    selectArgs =  (strArtist,)
+    selectArgs = (strArtist,)
     insertQuery = "INSERT INTO artist (strArtist) VALUES ('{}');"
-    insertArgs =  (strArtist,)
+    insertArgs = (strArtist,)
 
     return manageDbRecord(selectQuery, selectArgs, insertQuery, insertArgs)
+
 
 def writeGenre(strGenre):
     selectQuery = "SELECT idGenre FROM genre WHERE strGenre LIKE '{}';"
-    selectArgs =  (strGenre,)
+    selectArgs = (strGenre,)
     insertQuery = "INSERT INTO genre (strGenre) VALUES ('{}');"
-    insertArgs =  (strGenre,)
+    insertArgs = (strGenre,)
 
     return manageDbRecord(selectQuery, selectArgs, insertQuery, insertArgs)
+
 
 def writeAlbums(strAlbum, strArtist, strReleaseType='album'):
     artistCol = "strArtistDisp" if kodi_version >= 18 else "strArtists"
 
     selectQuery = "SELECT idAlbum FROM album WHERE strAlbum LIKE '{}';"
-    selectArgs =  (strAlbum,)
+    selectArgs = (strAlbum,)
     insertQuery = "INSERT INTO album (strAlbum, " + artistCol + ", strReleaseType, strGenres) VALUES ('{}', '{}', '{}', '{}');"
-    insertArgs =  (strAlbum, strArtist, strReleaseType, 'osmosis')
-    
+    insertArgs = (strAlbum, strArtist, strReleaseType, 'osmosis')
+
     return manageDbRecord(selectQuery, selectArgs, insertQuery, insertArgs)
+
 
 def writeSong(iPathID, iAlbumID, strArtist, strTitle, iDuration, iTrack, tFileModTime):
     tDateAdded = datetime.datetime.fromtimestamp(tFileModTime) if tFileModTime else datetime.datetime.now()
@@ -250,55 +254,61 @@ def writeSong(iPathID, iAlbumID, strArtist, strTitle, iDuration, iTrack, tFileMo
     strFileName += ".strm"
 
     selectQuery = "SELECT idSong FROM song WHERE {} LIKE '{}' AND strTitle LIKE '{}';"
-    selectArgs =  (artistCol, strArtist, strTitle)
+    selectArgs = (artistCol, strArtist, strTitle)
     insertQuery = "INSERT INTO song (iYear, dateAdded, idAlbum, idPath, " + artistCol + ", strTitle, strFileName, iTrack, strGenres, iDuration, iTimesPlayed, iStartOffset, iEndOffset, userrating, comment, mood, votes)"
-    insertQuery +=  " VALUES ({}, '{}', {}, {}, '{}', '{}', '{}', {}, '{}', {}, {}, {}, {}, {}, '{}', '{}', {});"
-    insertArgs =  (iYear, strDateAdded, iAlbumID, iPathID, strArtist, strTitle, strFileName, iTrack, 'osmosis', iDuration, 0, 0, 0, 0, 'osmosis', 'osmosis', 0)
-    
-    return manageDbRecord(selectQuery, selectArgs, insertQuery, insertArgs)
-           
-def writeSongArtist(iArtistID, iSongID, iRoleID, strArtist, iOrderID):
-    selectQuery = "SELECT idSong FROM song_artist WHERE idSong = {};"
-    selectArgs =  (iSongID,)
-    insertQuery = "INSERT INTO song_artist (idArtist, idSong, idRole, iOrder, strArtist) VALUES ('{}', '{}', '{}', '{}', '{}');"
-    insertArgs =  (iArtistID, iSongID, iRoleID, iOrderID, strArtist)
+    insertQuery += " VALUES ({}, '{}', {}, {}, '{}', '{}', '{}', {}, '{}', {}, {}, {}, {}, {}, '{}', '{}', {});"
+    insertArgs = (iYear, strDateAdded, iAlbumID, iPathID, strArtist, strTitle, strFileName, iTrack, 'osmosis', iDuration, 0, 0, 0, 0, 'osmosis', 'osmosis', 0)
 
     return manageDbRecord(selectQuery, selectArgs, insertQuery, insertArgs)
+
+
+def writeSongArtist(iArtistID, iSongID, iRoleID, strArtist, iOrderID):
+    selectQuery = "SELECT idSong FROM song_artist WHERE idSong = {};"
+    selectArgs = (iSongID,)
+    insertQuery = "INSERT INTO song_artist (idArtist, idSong, idRole, iOrder, strArtist) VALUES ('{}', '{}', '{}', '{}', '{}');"
+    insertArgs = (iArtistID, iSongID, iRoleID, iOrderID, strArtist)
+
+    return manageDbRecord(selectQuery, selectArgs, insertQuery, insertArgs)
+
 
 def writeSongGenre(genreID, songID):
     selectQuery = "SELECT idSong FROM song_genre WHERE idGenre='{}' and idSong='{}';"
-    selectArgs =  (genreID, songID)
+    selectArgs = (genreID, songID)
     insertQuery = "INSERT INTO song_genre (idGenre, idSong, iOrder) VALUES ('{}', '{}', '{}');"
-    insertArgs =  (genreID, songID, 0)
+    insertArgs = (genreID, songID, 0)
 
     return manageDbRecord(selectQuery, selectArgs, insertQuery, insertArgs)
+
 
 def writeAlbumArtist(iArtistID, iAlbumID, strArtist):
     selectQuery = "SELECT idAlbum FROM album_artist WHERE idAlbum = {};"
-    selectArgs =  (iAlbumID,)
+    selectArgs = (iAlbumID,)
     insertQuery = "INSERT INTO album_artist (idArtist, idAlbum, iOrder, strArtist) VALUES ('{}', '{}', '{}', '{}');"
-    insertArgs =  (iArtistID, iAlbumID, 0, strArtist)
+    insertArgs = (iArtistID, iAlbumID, 0, strArtist)
 
     return manageDbRecord(selectQuery, selectArgs, insertQuery, insertArgs)
+
 
 def writeThump(iMediaID, strMediaType, strImageType, strArtPath):
     selectQuery = "SELECT media_id FROM art WHERE media_id = {} AND media_type LIKE '{}';"
-    selectArgs =  (iMediaID, strMediaType)
+    selectArgs = (iMediaID, strMediaType)
     insertQuery = "INSERT INTO art (media_id, media_type, type, url) VALUES ('{}', '{}', '{}', '{}');"
-    insertArgs =  (iMediaID, strMediaType, strImageType, strArtPath)
+    insertArgs = (iMediaID, strMediaType, strImageType, strArtPath)
 
     return manageDbRecord(selectQuery, selectArgs, insertQuery, insertArgs)
 
+
 def writeIntoSongTable (strSongTitle, iSongID, strArtistName, strAlbumName, iAlbumID, strPath, iPathID, strURL, iRoleID, iArtistID, iSongArtistID, strDelSong):
     strPath = strPath if DATABASE_MYSQL == "false" else strPath.replace('\\', '\\\\')
-    strSongTitle = strSongTitle.replace("'","''")
+    strSongTitle = strSongTitle.replace("'", "''")
 
     selectQuery = "SELECT id FROM songs WHERE songID = {} AND artistID = {} AND albumID = {};"
-    selectArgs =  (iSongID, iArtistID, iAlbumID)
+    selectArgs = (iSongID, iArtistID, iAlbumID)
     insertQuery = "INSERT INTO songs (strSongTitle, songID, strArtistName, strAlbumName, albumID, strPath, pathID, strURL, roleID, artistID, songArtistRel, delSong) VALUES ('{}', {}, '{}', '{}', {}, '{}', {}, '{}', {}, {}, '{}', '{}');"
-    insertArgs =  (strSongTitle, iSongID, strArtistName, strAlbumName, iAlbumID, strPath, iPathID, strURL, iRoleID, iArtistID, iSongArtistID, strDelSong)
-    
+    insertArgs = (strSongTitle, iSongID, strArtistName, strAlbumName, iAlbumID, strPath, iPathID, strURL, iRoleID, iArtistID, iSongArtistID, strDelSong)
+
     return manageDbRecord(selectQuery, selectArgs, insertQuery, insertArgs, MusicDB_LOC)
+
 
 def manageDbRecord(selectQuery, selectArgs, insertQuery, insertArgs, database=KMDBPATH):
     dID = None
@@ -323,8 +333,9 @@ def manageDbRecord(selectQuery, selectArgs, insertQuery, insertArgs, database=KM
     finally:
         cursor.close()
         con.close()
-    
+
     return dID
+
 
 def valDB(database):
     con, cursor = openDB(database, database)
@@ -344,10 +355,11 @@ def valDB(database):
 
         cursor.execute(query)
         result = cursor.fetchone()
-        
+
         cursor.close()
         con.close()
-        return True if result else False    
+        return True if result else False
+
 
 def writeMovie(movieList):
     dbMovieList = []
@@ -364,21 +376,23 @@ def writeMovie(movieList):
 
     for entry in movieList:
         try:
-            movID = movieExists(entry.get('title'), entry.get('path'))
+            kmovName = kmovieExists(entry.get('title'), entry.get('imdbnumber'))
+            movID = movieExists(kmovName, entry.get('path'))
             if movID is not None:
                 movieStreamExists(movID, entry.get('provider'), entry.get('url'))
-                dbMovieList.append({'path': entry.get('path'), 'title': entry.get('title'), 'movieID': movID, 'provider': entry.get('provider')})
+                dbMovieList.append({'path': entry.get('path'), 'title': kmovName, 'movieID': movID, 'provider': entry.get('provider')})
         except IOError as (errno, strerror):
             print ("I/O error({0}): {1}").format(errno, strerror)
         except ValueError:
-            print ("No valid integer in line.") 
+            print ("No valid integer in line.")
         except:
-            guiTools.infoDialog("Unexpected error: " + str(sys.exc_info()[1])+ (". See your Kodi.log!"))
-            utils.addon_log("Unexpected error: " + str(movID) +" "+ str(i[3]) + " "+ str( url))
+            guiTools.infoDialog("Unexpected error: " + str(sys.exc_info()[1]) + (". See your Kodi.log!"))
+            utils.addon_log("Unexpected error: " + str(movID) + " " + str(i[3]) + " " + str(url))
             print ("Unexpected error:"), sys.exc_info()[1]
             pass
 
     return dbMovieList
+
 
 def writeShow(episode):
     dbEpisode = None
@@ -402,14 +416,15 @@ def writeShow(episode):
         except IOError as (errno, strerror):
             print ("I/O error({0}): {1}").format(errno, strerror)
         except ValueError:
-            print ("No valid integer in line.") 
+            print ("No valid integer in line.")
         except:
-            guiTools.infoDialog("Unexpected error: " + str(sys.exc_info()[1])+ (". See your Kodi.log!"))
-            utils.addon_log("Unexpected error: " + str(showID) +" "+ str(i[4]) + " "+ str( url))
+            guiTools.infoDialog("Unexpected error: " + str(sys.exc_info()[1]) + (". See your Kodi.log!"))
+            utils.addon_log("Unexpected error: " + str(showID) + " " + str(i[4]) + " " + str(url))
             print ("Unexpected error:"), sys.exc_info()[1]
             pass
 
     return dbEpisode
+
 
 def createMovDB():
     try:
@@ -423,11 +438,12 @@ def createMovDB():
 
         cursor.execute(sql_strm_ref)
         cursor.execute(sql_movtable)
-        con.commit()         
+        con.commit()
     finally:
         cursor.close()
         con.close()
-    
+
+
 def createShowDB():
     try:
         con, cursor = openDB(SHDBPATH, 'TVShows')
@@ -440,11 +456,34 @@ def createShowDB():
 
         cursor.execute(sql_strm_ref)
         cursor.execute(sql_showtable)
-        con.commit()         
+        con.commit()
     finally:
         cursor.close()
         con.close()
-    
+
+
+def kmovieExists(title, imdbnumber):
+    dbMovieName = None
+    try:
+        con, cursor = openDB(KMODBPATH, 'KMovies')
+
+        # title = stringUtils.invCommas(title)
+        cursor.execute("SELECT strFileName FROM movie_view WHERE uniqueid_value LIKE '{}';".format(imdbnumber))
+
+        dbMovieName = cursor.fetchone()
+
+        if dbMovieName is None:
+            dbMovieName = title
+        else:
+            dbMovieName = dbMovieName[0]
+        dbMovieName = stringUtils.cleanTitle(dbMovieName)
+    finally:
+        cursor.close()
+        con.close()
+
+    return dbMovieName
+
+
 def movieExists(title, path):
     dbMovieID = None
     try:
@@ -468,7 +507,8 @@ def movieExists(title, path):
         con.close()
 
     return dbMovieID
- 
+
+
 def movieStreamExists(movieID, provider, url):
     try:
         con, cursor = openDB(MODBPATH, 'Movies')
@@ -485,10 +525,11 @@ def movieStreamExists(movieID, provider, url):
         else:
             if str(dbMovie[1]) != url:
                 cursor.execute("UPDATE stream_ref SET url='{}' WHERE mov_id = {};".format(url, movieID))
-                con.commit() 
+                con.commit()
     finally:
         cursor.close()
         con.close()
+
 
 def showExists(title, path):
     dbShowID = None
@@ -514,6 +555,7 @@ def showExists(title, path):
 
     return dbShowID
 
+
 def episodeStreamExists(showID, seEp, provider, url):
     try:
         con, cursor = openDB(SHDBPATH, 'TVShows')
@@ -523,7 +565,7 @@ def episodeStreamExists(showID, seEp, provider, url):
 
         cursor.execute("SELECT show_id, url FROM stream_ref WHERE show_id = {} AND seasonEpisode LIKE '{}' AND provider LIKE '{}';".format(showID, seEp, provider))
         dbShow = cursor.fetchone()
-        
+
         if dbShow is None:
             cursor.execute("INSERT INTO stream_ref (show_id, seasonEpisode, provider, url) VALUES ({}, '{}', '{}', '{}');".format(showID, seEp, provider, url))
             con.commit()
@@ -534,49 +576,54 @@ def episodeStreamExists(showID, seEp, provider, url):
     finally:
         cursor.close()
         con.close()
-    
+
+
 def getVideo(ID, seasonEpisode=None):
     provList = None
 
-    try:    
+    try:
         args = {'sqliteDB': MODBPATH, 'mysqlDB': 'Movies'} if seasonEpisode is None else {'sqliteDB': SHDBPATH, 'mysqlDB': 'TVShows'}
         con, cursor = openDB(**args)
-                
+
         if seasonEpisode is None:
             query = "SELECT url, provider FROM stream_ref WHERE mov_id = {};"
             args = (ID,)
         else:
             query = "SELECT url, provider FROM stream_ref WHERE show_id = {} AND seasonEpisode LIKE '{}';"
             args = (ID, seasonEpisode)
-    
+
         cursor.execute(query.format(*args))
         provList = cursor.fetchall()
     finally:
         cursor.close()
         con.close()
 
-    return provList    
+    return provList
 
-def getPlayedURLResumePoint(url):
+
+def getPlayedURLResumePoint(args):
     urlResumePoint = None
 
     try:
         con, cursor = openDB(KMODBPATH, 'KMovies')
 
-        url = stringUtils.invCommas(url)
+        query = "SELECT timeInSeconds, totalTimeInSeconds, idBookmark FROM bookmark INNER JOIN files on files.idFile = bookmark.idFile"
+        if(args.get('url', None)):
+            url = stringUtils.invCommas(args.get('url'))
+            query += "  WHERE files.strFilename LIKE '{}';".format(url)
+        else:
+            filename = stringUtils.invCommas(args.get('filename'))
+            path = stringUtils.invCommas(args.get('path'))
+            query += " INNER JOIN path on path.idPath = files.idPath WHERE files.strFilename LIKE '{}' AND path.strPath LIKE '{}';".format(filename, path)
 
-        cursor.execute("SELECT idFile FROM files WHERE strFilename LIKE '{}';".format(url))
-        dbfile = cursor.fetchone()
-
-        if dbfile:
-            dbfileID = dbfile[0]
-            cursor.execute("SELECT timeInSeconds, totalTimeInSeconds, idBookmark FROM bookmark WHERE idFile = {};".format(dbfileID))
-            urlResumePoint = cursor.fetchone()
+        cursor.execute(query)
+        urlResumePoint = cursor.fetchone()
     finally:
         cursor.close()
         con.close()
 
     return urlResumePoint
+
 
 def delBookMark(bookmarkID, fileID):
     try:
@@ -604,6 +651,7 @@ def delBookMark(bookmarkID, fileID):
         cursor.close()
         con.close()
 
+
 def getKodiMovieID(sTitle):
     dbMovie = None
 
@@ -621,6 +669,7 @@ def getKodiMovieID(sTitle):
 
     return dbMovie
 
+
 def getKodiEpisodeID(sTVShowTitle, iSeason, iEpisode):
     dbEpisode = None
 
@@ -631,7 +680,7 @@ def getKodiEpisodeID(sTVShowTitle, iSeason, iEpisode):
 
         # episode.c00 = title; episode.c05 = aired; episode.c12 = season; episode.c13 = episode; tvshow.c00 = title
         query = "SELECT episode.idEpisode, episode.idFile, episode.c00, episode.c05 FROM episode INNER JOIN tvshow ON tvshow.idShow = episode.idShow WHERE episode.c12 = {} and episode.c13 = {} and tvshow.c00 LIKE '{}';"
-        
+
         cursor.execute(query.format(iSeason, iEpisode, sTVShowTitle))
         dbEpisode = cursor.fetchone()
     finally:
@@ -639,6 +688,7 @@ def getKodiEpisodeID(sTVShowTitle, iSeason, iEpisode):
         con.close()
 
     return dbEpisode
+
 
 def openDB(sqliteDB, mysqlDB):
     if DATABASE_MYSQL == "false":
