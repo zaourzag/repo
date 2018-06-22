@@ -4128,9 +4128,9 @@ Parental warning: The Maxdome Plattform consists of differnt types of content - 
   </extension>
 </addon>
 
-<addon id="plugin.video.spotitube" name="Youtube Music" version="2.1.0" provider-name="realvito (inspired by L0RE)">
+<addon id="plugin.video.spotitube" name="Youtube Music" version="2.1.1" provider-name="realvito (inspired by L0RE)">
 	<requires>
-		<import addon="xbmc.python" version="2.20.0"/>
+		<import addon="xbmc.python" version="2.24.0"/>
 		<import addon="plugin.video.youtube" version="5.3.7"/>
 	</requires>
 	<extension point="xbmc.python.pluginsource" library="default.py">
@@ -4154,8 +4154,9 @@ Parental warning: The Maxdome Plattform consists of differnt types of content - 
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 2.1.0  (18.05.2018)[/COLOR][/B] by realvito[CR]
-- fixed: German-DJ-Playlist - Video-Images are not displayed
+		<news>[B][COLOR orangered]Version 2.1.1  (22.06.2018)[/COLOR][/B] by realvito[CR]
+- fixed: Videolists under "SPOTIFY - Regional" are emty (Website changes)
+- removed: Regional in German-DJ-Playlist International (don't exist anymore)
 		</news>
 	</extension>
 </addon>

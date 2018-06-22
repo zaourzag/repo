@@ -1,22 +1,22 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+import xbmc
+import xbmcplugin
+import xbmcgui
+import xbmcaddon
 import os
 import re
 import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
-import json
-import random
-import socket
 import urllib
 import urllib2
 import urlparse
-import datetime
-import xbmc
-import xbmcplugin
-import xbmcgui
-import xbmcaddon
+import json
 import xbmcvfs
+import random
+import socket
+import datetime
 import time
 from operator import itemgetter
 from StringIO import StringIO
@@ -40,7 +40,7 @@ addonPath = xbmc.translatePath(addon.getAddonInfo('path')).decode('utf-8')
 dataPath = xbmc.translatePath(addon.getAddonInfo('profile')).decode('utf-8')
 region = xbmc.getLanguage(xbmc.ISO_639_1, region=True).split("-")[1]
 icon = os.path.join(addonPath, 'icon.png').decode('utf-8')
-fanart = os.path.join(addonPath, 'fanart.jpg').decode('utf-8')
+defaultFanart = os.path.join(addonPath, 'fanart.jpg').decode('utf-8')
 pic = os.path.join(addonPath, 'resources/media/')
 blacklist = addon.getSetting("blacklist").split(',')
 infoEnabled = addon.getSetting("showInfo") == "true"
@@ -70,6 +70,7 @@ urlBaseSCC = "https://spotifycharts.com/"
 urlBaseSTUN = "https://api.tunigo.com/v3/space/"
 #REtoken2 = "AIzaSyBT8_HQW02I1hNSeQdfnapsReDda9Mz0N4"
 token = "AIzaSyCIM4EzNqi1in22f4Z3Ru3iYvLaY8tc3bo"
+xbmcplugin.setContent(int(sys.argv[1]), 'musicvideos')
 	
 if itunesForceCountry and itunesCountry:
 	iTunesRegion = itunesCountry
@@ -373,8 +374,6 @@ def ddpMain():
 			if not 'schlager' in url2.lower():
 				if 'top 100' in title.lower() or 'hot 50' in title.lower() or 'einsteiger' in title.lower():
 					addAutoPlayDir('     '+title, url2, "listDdpVideos", pic+'ddp-international.png', "", "browse")
-				elif 'regional' in title.lower():
-					addDir('     '+title, url2, "listDdpRegional", pic+'ddp-international.png')
 				elif 'jahrescharts' in title.lower():
 					addDir('     '+title, url2, "listDdpYearCharts", pic+'ddp-international.png')
 	addDir("[COLOR deepskyblue]"+translation(40127)+"[/COLOR]", "", "ddpMain", pic+'ddp-schlager.png')
@@ -389,18 +388,6 @@ def ddpMain():
 	xbmcplugin.endOfDirectory(pluginhandle)
 	if forceView:
 		xbmc.executebuiltin('Container.SetViewMode('+viewIDGenres+')')
-	
-def listDdpRegional(url):
-	content = cache(url, 1)
-	content = content[content.find('<div class="headline"><h1>DDP - REGIONALCHARTS</h1>')+1:]
-	content = content[:content.find('<div id="banner_fuss">')]
-	match = re.compile('<span><strong><a href="(.*?)" alt=".+?">(.*?)</a></strong></span>\s+<span class=".+?">(.*?)</span>', re.DOTALL).findall(content)
-	for url2, toptitle, subtitle in match:
-		endURL = urlBaseDDP+'DDP-Charts-Regional/?'+url2.split('/?')[1]
-		addAutoPlayDir(cleanTitle(toptitle.strip()+'  [I]'+subtitle.strip()+'[/I]'), endURL, "listDdpVideos", pic+'ddp-international.png', "", "browse")
-	xbmcplugin.endOfDirectory(pluginhandle)
-	if forceView:
-		xbmc.executebuiltin('Container.SetViewMode('+viewIDPlaylists+')')
 	
 def listDdpYearCharts(url):
 	musicVideos = []
@@ -666,7 +653,6 @@ def listOcVideos(type, url, limit):
 		playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
 		playlist.clear()
 	content = cache(url, 1)
-	match = re.compile('class="track">(.*?)<div class="label-cat">', re.DOTALL).findall(content)
 	spl = content.split('<div class="track">')
 	count = 0
 	pos = 1
@@ -778,7 +764,7 @@ def listSpotifyCC_Videos(type, url, limit):
 		musicIsolated.add(title)
 		try:
 			thumb = re.compile('<img src="(.*?)">', re.DOTALL).findall(entry)[0]
-			if not thumb.startswith("http"):
+			if thumb[:4] != "http":
 				#thumb = "https://u.scdn.co/images/pl/default/"+thumb
 				thumb = "https://i.scdn.co/image/"+thumb
 		except: thumb = pic+'noimage.png'
@@ -842,23 +828,23 @@ def listSpotifyTUN_Playlists(url):
 		title = item['playlist']['title'].encode('utf-8')
 		if title.isupper():
 			title = title.title()
-		description = item['playlist']['description'].encode('utf-8')
+		plot = item['playlist']['description'].encode('utf-8')
 		uriUrl = item['playlist']['uri']
 		try:
 			thumb = item['playlist']['image']
-			if not thumb.startswith("http") and not thumb.lower().endswith("default.jpg"):
+			if thumb[:4] != "http" and thumb[-11:].lower() != "default.jpg":
 				#thumb = "https://u.scdn.co/images/pl/default/"+thumb
 				thumb = "https://i.scdn.co/image/"+thumb
-			elif not thumb.startswith("http") and thumb.lower().endswith("default.jpg"):
+			elif thumb[:4] != "http" and thumb[-11:].lower() == "default.jpg":
 				thumb = "https://charts-images.scdn.co/"+thumb
 		except: thumb = pic+'noimage.png'
-		addAutoPlayDir(title, uriUrl, "listSpotifyTUN_Videos", thumb, description, "browse")
-	match = re.compile('page=(.+?)&per_page=(.+?)&', re.DOTALL).findall(url)
+		addAutoPlayDir(title, uriUrl, "listSpotifyTUN_Videos", thumb, plot, "browse")
+	match = re.compile('&page=(.+?)&per_page=(.+?)&', re.DOTALL).findall(url)
 	currentPage = int(match[0][0])
 	perPage = int(match[0][1])
 	goNextPage = currentPage+1
 	if goNextPage*perPage < response['totalItems']:
-		addDir(translation(40206), url.replace("page="+str(currentPage),"page="+str(goNextPage)), "listSpotifyTUN_Playlists", pic+'nextpage.png')
+		addDir(translation(40206), url.replace("&page="+str(currentPage),"&page="+str(goNextPage)), "listSpotifyTUN_Playlists", pic+'nextpage.png')
 	xbmcplugin.endOfDirectory(pluginhandle)
 	if forceView:
 		xbmc.executebuiltin('Container.SetViewMode('+viewIDPlaylists+')')
@@ -872,50 +858,29 @@ def listSpotifyTUN_Videos(type, url, limit):
 		playlist.clear()
 	#content = cache("https://open.spotify.com/embed?uri="+url, 1)
 	content = cache("https://embed.spotify.com/?uri="+url, 1)
-	if '<div class="ppbtn"></div>' in content:
-		spl = content.split('music-paused item')
-		x=0
-	else:
-		result = content[content.find('<ul class="track-list">')+1:]
-		result = result[:result.find('<button id')]
-		spl = result.split('class="track-row"')
-		x=1
-	for i in range(1,len(spl),1):
-		entry = spl[i]
-		if x==0:
-			song = re.compile('class="track-title.+?>(.*?)<', re.DOTALL).findall(entry)[0]
-		else:
-			song = re.compile('data-name="(.*?)"', re.DOTALL).findall(entry)[0]
-		if x==0:
-			artist = re.compile('class="artist.+?>(.*?)<', re.DOTALL).findall(entry)[0]
-		else:
-			artist = re.compile('data-artists="(.*?)"', re.DOTALL).findall(entry)[0]
+	jsonObject = json.loads(re.compile('type="application/json">(.*?)</script>', re.DOTALL).findall(content)[-1].strip())
+	for item in jsonObject['tracks']['items']:
+		artist = item['track']['artists'][0]['name'].encode('utf-8')
+		song = item['track']['name'].encode('utf-8')
+		album = item['track']['album']['name'].encode('utf-8')
 		if "(original mix)" in song.lower():
 			song = song.lower().split('(original mix)')[0]
-		#if " [" in song:
-			#song = song.split(' [')[0]
 		if " - " in song:
 			firstTitle = song[:song.rfind(' - ')]
 			secondTitle = song[song.rfind(' - ')+3:]
 			song = firstTitle+' ['+secondTitle+']'
 		if "," in artist:
 			artist = artist.split(',')[0]
-		if artist.islower():
-			artist = artist.title()
 		title = cleanTitle(artist.strip()+" - "+song.strip())
 		if title in musicIsolated or artist == "":
 			continue
 		musicIsolated.add(title)
 		try:
-			if x==0:
-				thumb = re.compile('data-ca="(.*?)"', re.DOTALL).findall(entry)[0]
-			else:
-				thumb = re.findall('data-size-[0-9]+="(.*?)"',entry,re.S)[0]
-			if not thumb.startswith("http"):
+			thumb = item['track']['album']['images'][0]['url']
+			if thumb[:4] != "http":
 				#thumb = "https://u.scdn.co/images/pl/default/"+thumb
 				thumb = "https://i.scdn.co/image/"+thumb
 		except: thumb = pic+'noimage.png'
-		rank = re.compile('class="track-row-number">(.*?)</div>', re.DOTALL).findall(entry)[0]
 		filtered = False
 		for entry2 in blacklist:
 			if entry2.strip().lower() and entry2.strip().lower() in title.lower():
@@ -926,12 +891,11 @@ def listSpotifyTUN_Videos(type, url, limit):
 			url = "plugin://"+addon.getAddonInfo('id')+"/?url="+urllib.quote_plus(title.replace(" - ", " "))+"&mode=playYTByTitle"
 		else:
 			url = title
-		musicVideos.append([int(rank), title, url, thumb])
-	musicVideos = sorted(musicVideos, key=itemgetter(0))
+		musicVideos.append([title, album, url, thumb])
 	if type == "browse":
-		for rank, title, url, thumb in musicVideos:
+		for title, album, url, thumb in musicVideos:
 			count += 1
-			name = '[COLOR chartreuse]'+str(count)+' •  [/COLOR]'+title
+			name = '[COLOR chartreuse]'+str(count)+' •  [/COLOR]'+title+'   [COLOR deepskyblue][Album: '+album+'][/COLOR]'
 			addLink(name, url.replace(" - ", " "), "playYTByTitle", thumb)
 		xbmcplugin.endOfDirectory(pluginhandle)
 		if forceView:
@@ -940,7 +904,7 @@ def listSpotifyTUN_Videos(type, url, limit):
 		if limit:
 			musicVideos = musicVideos[:int(limit)]
 		random.shuffle(musicVideos)
-		for rank, title, url, thumb in musicVideos:
+		for title, album, url, thumb in musicVideos:
 			listitem = xbmcgui.ListItem(title, thumbnailImage=thumb)
 			playlist.add(url, listitem)
 		xbmc.Player().play(playlist)
@@ -1236,9 +1200,12 @@ def getYoutubeId(title):
 		xbmc.executebuiltin('Notification(Youtube Music : [COLOR red]!!! URL - ERROR !!![/COLOR], ERROR = [COLOR red]No *SingleEntry* found on YOUTUBE ![/COLOR],6000,'+icon+')')
 	return videoBest
 	
-def queueVideo(url, name, thumb):
+def queueVideo(url, name, image):
 	playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
-	playlist.add(url, xbmcgui.ListItem(name, iconImage=thumb, thumbnailImage=thumb))
+	listitem = xbmcgui.ListItem(name, thumbnailImage=image)
+	if useThumbAsFanart:
+		listitem.setArt({'fanart': defaultFanart})
+	playlist.add(url, listitem)
 	
 def makeRequest(url, headers=False):
 	req = urllib2.Request(url)
@@ -1246,7 +1213,7 @@ def makeRequest(url, headers=False):
 		for key in headers:
 			req.add_header(key, headers[key])
 	else:
-		req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:49.0) Gecko/20100101 Firefox/49.0')
+		req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:50.0) Gecko/20100101 Firefox/50.0')
 		req.add_header('Accept-Encoding','gzip, deflate')
 	response = urllib2.urlopen(req, timeout=30)
 	if response.info().get('Content-Encoding') == 'gzip':
@@ -1315,7 +1282,7 @@ def cleanTitle(title):
 	title = title.replace("&alpha;", "a").replace("&Alpha;", "A").replace("&aring;", "å").replace("&Aring;", "Å").replace("&aelig;", "æ").replace("&AElig;", "Æ").replace("&epsilon;", "e").replace("&Epsilon;", "Ε").replace("&eth;", "ð").replace("&ETH;", "Ð").replace("&gamma;", "g").replace("&Gamma;", "G")
 	title = title.replace("&oslash;", "ø").replace("&Oslash;", "Ø").replace("&theta;", "θ").replace("&thorn;", "þ").replace("&THORN;", "Þ")
 	title = title.replace("\\'", "'").replace("&x27;", "'").replace("&iexcl;", "¡").replace("&iquest;", "¿").replace("&rsquo;", "’").replace("&lsquo;", "‘").replace("&sbquo;", "’").replace("&rdquo;", "”").replace("&ldquo;", "“").replace("&bdquo;", "”").replace("&rsaquo;", "›").replace("lsaquo;", "‹").replace("&raquo;", "»").replace("&laquo;", "«")
-	title = title.replace(" ft ", " feat. ").replace(" FT ", " feat. ").replace(" Ft ", " feat. ").replace("Ft.", "feat.").replace("ft.", "feat.").replace(" FEAT ", " feat. ").replace(" Feat ", " feat. ").replace("Feat.", "feat.").replace("Featuring", "feat.")
+	title = title.replace(" ft ", " feat. ").replace(" FT ", " feat. ").replace(" Ft ", " feat. ").replace("Ft.", "feat.").replace("ft.", "feat.").replace(" FEAT ", " feat. ").replace(" Feat ", " feat. ").replace("Feat.", "feat.").replace("Featuring", "feat.").replace("™", "")
 	title = title.strip()
 	return title
 	
@@ -1329,38 +1296,30 @@ def parameters_string_to_dict(parameters):
 				paramDict[paramSplits[0]] = paramSplits[1]
 	return paramDict
 	
-def addLink(name, url, mode, iconimage, description=""):
+def addLink(name, url, mode, image, plot=""):
 	u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
-	ok = True
-	liz = xbmcgui.ListItem(name, iconImage="DefaultAudio.png", thumbnailImage=iconimage)
-	liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": description, 'mediatype':'video'})
+	liz = xbmcgui.ListItem(name, iconImage="DefaultAudio.png", thumbnailImage=image)
+	liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": plot, 'mediatype':'video'})
+	if useThumbAsFanart:
+		liz.setArt({'fanart': defaultFanart})
 	liz.setProperty('IsPlayable', 'true')
-	if useThumbAsFanart:
-		liz.setProperty("fanart_image", fanart)
-	xbmcplugin.setContent(int(sys.argv[1]), 'musicvideos')
-	entries = []
-	entries.append((translation(40208),'RunPlugin(plugin://'+addon.getAddonInfo('id')+'/?mode=queueVideo&url='+urllib.quote_plus(u)+'&name='+urllib.quote_plus(name)+'&thumb='+urllib.quote_plus(iconimage)+')',))
-	liz.addContextMenuItems(entries)
-	ok = xbmcplugin.addDirectoryItem(pluginhandle, url=u, listitem=liz)
-	return ok
+	liz.addContextMenuItems([(translation(40208), 'RunPlugin(plugin://'+addon.getAddonInfo('id')+'/?mode=queueVideo&url='+urllib.quote_plus(u)+'&name='+urllib.quote_plus(name)+'&image='+urllib.quote_plus(image)+')',)])
+	return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
 	
-def addDir(name, url, mode, iconimage="", description=""):
-	u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
-	ok = True
-	liz = xbmcgui.ListItem(name, iconImage="DefaultMusicVideos.png", thumbnailImage=iconimage)
-	liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": description})
+def addDir(name, url, mode, image, plot=""):
+	u = u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
+	liz = xbmcgui.ListItem(name, iconImage="DefaultMusicVideos.png", thumbnailImage=image)
+	liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": plot})
 	if useThumbAsFanart:
-		liz.setProperty("fanart_image", fanart)
-	ok = xbmcplugin.addDirectoryItem(pluginhandle, url=u, listitem=liz, isFolder=True)
-	return ok
+		liz.setArt({'fanart': defaultFanart})
+	return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
 	
-def addAutoPlayDir(name, url, mode, iconimage="", description="", type="", limit=""):
-	u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&type="+str(type)+"&limit="+str(limit)+'&thumb='+urllib.quote_plus(iconimage)
-	ok = True
-	liz = xbmcgui.ListItem(name, iconImage="DefaultMusicVideos.png", thumbnailImage=iconimage)
-	liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": description, 'mediatype':'video'})
+def addAutoPlayDir(name, url, mode, image, plot="", type="", limit=""):
+	u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&type="+str(type)+"&limit="+str(limit)
+	liz = xbmcgui.ListItem(name, iconImage="DefaultMusicVideos.png", thumbnailImage=image)
+	liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": plot, 'mediatype':'video'})
 	if useThumbAsFanart:
-		liz.setProperty("fanart_image", fanart)
+		liz.setArt({'fanart': defaultFanart})
 	entries = []
 	entries.append((translation(40231), 'RunPlugin(plugin://'+addon.getAddonInfo('id')+'/?mode='+str(mode)+'&url='+urllib.quote_plus(url)+'&type=play&limit=)',))
 	entries.append((translation(40232), 'RunPlugin(plugin://'+addon.getAddonInfo('id')+'/?mode='+str(mode)+'&url='+urllib.quote_plus(url)+'&type=play&limit=10)',))
@@ -1369,14 +1328,13 @@ def addAutoPlayDir(name, url, mode, iconimage="", description="", type="", limit
 	entries.append((translation(40235), 'RunPlugin(plugin://'+addon.getAddonInfo('id')+'/?mode='+str(mode)+'&url='+urllib.quote_plus(url)+'&type=play&limit=40)',))
 	entries.append((translation(40236), 'RunPlugin(plugin://'+addon.getAddonInfo('id')+'/?mode='+str(mode)+'&url='+urllib.quote_plus(url)+'&type=play&limit=50)',))
 	liz.addContextMenuItems(entries)
-	ok = xbmcplugin.addDirectoryItem(pluginhandle, url=u, listitem=liz, isFolder=True)
-	return ok
+	return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
 	
 params = parameters_string_to_dict(sys.argv[2])
 name = urllib.unquote_plus(params.get('name', ''))
 url = urllib.unquote_plus(params.get('url', ''))
 mode = urllib.unquote_plus(params.get('mode', ''))
-thumb = urllib.unquote_plus(params.get('thumb', ''))
+image = urllib.unquote_plus(params.get('image', ''))
 type = urllib.unquote_plus(params.get('type', ''))
 limit = urllib.unquote_plus(params.get('limit', ''))
 	
@@ -1398,8 +1356,6 @@ elif mode == 'listBillboardCH_Videos':
 	listBillboardCH_Videos(type, url, limit)
 elif mode == 'ddpMain':
 	ddpMain()
-elif mode == 'listDdpRegional':
-	listDdpRegional(url)
 elif mode == 'listDdpYearCharts':
 	listDdpYearCharts(url)
 elif mode == 'listDdpVideos':
@@ -1447,7 +1403,7 @@ elif mode == 'listDeezerVideos':
 elif mode == 'playYTByTitle':
 	playYTByTitle(url)
 elif mode == 'queueVideo':
-	queueVideo(url, name, thumb)
+	queueVideo(url, name, image)
 elif mode == 'Settings':
 	addon.openSettings()
 else:

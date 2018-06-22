@@ -102,7 +102,7 @@
 	<string id="40205">[B][COLOR FFFF456E]!!! NO Results were found for the Search term !!![/COLOR][/B]</string>
 	<string id="40206">[COLOR orangered]Next Page  >>>[/COLOR]</string>
 	<string id="40207">Now playing:</string>
-	<string id="40208">[B][COLOR chartreuse]Add to Playlist[/COLOR][/B]</string>
+	<string id="40208">[B][COLOR yellow]Add to YTM-Queue[/COLOR][/B]</string>
 	
 	<string id="40231">[B][COLOR chartreuse]+ Play All +[/COLOR][/B]</string>
 	<string id="40232">[B]Play >>> [COLOR chartreuse]Top 10[/COLOR][/B]</string>

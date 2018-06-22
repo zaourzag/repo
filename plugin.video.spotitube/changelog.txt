@@ -110,3 +110,7 @@
 
 [B]Version 2.1.0  (18.05.2018)[/B] by realvito
 - fixed: German-DJ-Playlist - Video-Images are not displayed
+
+[B]Version 2.1.1  (18.06.2018)[/B] by realvito
+- fixed: Videolists under "SPOTIFY - Regional" are emty (Website changes)
+- removed: Regional in German-DJ-Playlist International (don't exist anymore)
