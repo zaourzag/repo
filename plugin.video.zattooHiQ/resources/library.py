@@ -123,8 +123,8 @@ class library:
         showInfo=_zattooDB_.getShowInfo(record['program_id']) 
         if showInfo == "NONE": continue 
         
-        if showInfo['episode_title']: name=showInfo['title']+'-'+showInfo['episode_title'] 
-        else: name=showInfo['title'] 
+        if showInfo[0]['et']: name=showInfo[0]['t']+'-'+showInfo[0]['et'] 
+        else: name=showInfo[0]['t'] 
   
         fileName=slugify(name) 
         strmDir=os.path.join(libraryPath, fileName) 

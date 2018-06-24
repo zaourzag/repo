@@ -113,7 +113,7 @@ class ZapiSession:
 
 	def request_url(self, url, params):
 		try:
-			debug (str(url) +' '+str(params))
+			debug (str(url) )
 			response = self.HttpHandler.open(url, urllib.urlencode(params) if params is not None else None)
 
 			if response is not None:
@@ -174,7 +174,6 @@ class ZapiSession:
 	def login(self):
 		api = '/zapi/v2/account/login'
 		params = {"login": self.Username, "password" : self.Password}
-		debug (params)
 		accountData = self.exec_zapiCall(api, params, 'session')
 		debug ('Login: '+str(accountData))
 		if accountData is not None:

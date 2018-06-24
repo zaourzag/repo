@@ -322,7 +322,7 @@ def build_channelsList(addon_uri, addon_handle):
         except:pass
       #debug(str(prog))
       if RECALL: 
-        url2 = "plugin://"+__addonId__+"/?mode=watch_c&id=" + prog.get('channel', '') + "&start=" + str(zstart+300) + "&end=" + str(zend)
+        url2 = "plugin://"+__addonId__+"/?mode=watch_c&id=" + prog.get('channel', '') +'&showID=' + prog.get('showID','') + "&start=" + str(zstart+300) + "&end=" + str(zend)
       elif RESTART:
         url2 = "plugin://"+__addonId__+"/?mode=watch_c&id=" + prog.get('channel', '') +'&showID=' + prog.get('showID', '') + '&restart=true' + "&start=" + str(zstart+300) + "&end=" + str(zend) 
       else: url2=''
@@ -338,7 +338,7 @@ def build_channelsList(addon_uri, addon_handle):
         'year': yy,
         'country': prog.get('country',''),
         'isFolder': False,
-        'url': addon_uri + '?' + urllib.urlencode({'mode': 'watch_c', 'id': channels[chan]['id']}),
+        'url': addon_uri + '?' + urllib.urlencode({'mode': 'watch_c', 'id': channels[chan]['id'], 'showID': prog.get('showID', '')}),
         'url2': url2,
         'selected' : channels[chan]['id'] == playing['channel']
       })
@@ -653,10 +653,10 @@ def watch_channel(channel_id, start, end, showID="", restart=False, showOSD=Fals
   else:
     startTime = datetime.datetime.fromtimestamp(int(start))
     endTime = datetime.datetime.fromtimestamp(int(end))
-    zStart = datetime.datetime.fromtimestamp(int(start) - _timezone_ ).strftime("%Y-%m-%dT%H:%M:%SZ")  #5min zattoo skips back
+    zStart = datetime.datetime.fromtimestamp(int(start) - _timezone_ ).strftime("%Y-%m-%dT%H:%M:%SZ") #5min zattoo skips back
     zEnd = datetime.datetime.fromtimestamp(int(end) - _timezone_ ).strftime("%Y-%m-%dT%H:%M:%SZ")
     params = {'cid': channel_id, 'stream_type': stream_type, 'start':zStart, 'end':zEnd, 'maxrate':max_bandwidth }
-    #print "RECALL: " +str(zStart) + "  " + str(startTime) + "  " +str(_timezone_)
+   
   channelInfo = _zattooDB_.get_channelInfo(channel_id)
 
   if restart: resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/watch/selective_recall/'+channel_id+'/'+showID, params)
@@ -680,7 +680,7 @@ def watch_channel(channel_id, start, end, showID="", restart=False, showOSD=Fals
   streamsList = []
   for stream in resultData['stream']['watch_urls']: streamsList.append(stream['url'])
   streamsList = '|'.join(streamsList)
-  _zattooDB_.set_playing(channel_id, streamsList, streamNr)
+  _zattooDB_.set_playing(channel_id, showID, streamsList, streamNr)
 
   #make Info
   program = _zattooDB_.getPrograms({'index':[channel_id]}, True, startTime, endTime)
@@ -717,9 +717,11 @@ def watch_channel(channel_id, start, end, showID="", restart=False, showOSD=Fals
     if toggleChannel !="": showToggleImg()
     
   else:
-    player= myPlayer(300)
+    player= myPlayer()
     player.startTime=startTime
     player.play(streams[streamNr]['url'], listitem)
+    #xbmc.sleep(1000)
+    #player.seekTime(300)
     while (player.playing):xbmc.sleep(100)
     
 def skip_channel(skipDir):
@@ -1021,21 +1023,21 @@ def makeOsdInfo():
       xbmc.executebuiltin( "Skin.Reset(%s)" %'restart')
       
   cred=''
-  director=''
-  #actor=[]
+  director=[]
+  cast=[]      
   credjson = program['credits']
-  credjs = json.dumps(credjson)
-  actor=''
-  # if credjson is not None:
-    # try:
-      # cred = json.loads(credjson)
-    # except:pass
-   
-    # for person in cred:
-      # if person['role']=='director': director+=person['person']+', '
-      # else: actor.append(person['person'])
-  # actor = json.dumps(actor, ensure_ascii=False).encode('utf8')
-  # actor = actor.replace('"','').replace('[','').replace(']','')
+
+  if credjson is not None:
+	try:
+	  cred = json.loads(credjson)
+	  director = cred['director']
+	  director = json.dumps(director, ensure_ascii=False).encode('utf8')
+	  director = director.replace('"','').replace('[','').replace(']','')
+	  actor  = cred['actor']
+	  actor = json.dumps(actor, ensure_ascii=False).encode('utf8')
+	  actor = actor.replace('"','').replace('[','').replace(']','')          
+	except:pass
+
   
   description = program['description']
   if description is None: description = ''
@@ -1049,8 +1051,8 @@ def makeOsdInfo():
   win.setProperty('genre', '[COLOR blue]'+ local(135) + ':  ' + '[/COLOR]'+ program['genre'])
   win.setProperty('year', '[COLOR blue]' + local(345) + ':  ' + '[/COLOR]' + program['year'])
   win.setProperty('country', '[COLOR blue]' + local(574) + ':  ' + '[/COLOR]' + program['country'])
-  win.setProperty('director', '[COLOR blue]' + local(20339) + ':  ' + '[/COLOR]' + director)
-  win.setProperty('actor', '[COLOR blue]' + local(20337) + ':  ' + '[/COLOR]' + actor)
+  win.setProperty('director', '[COLOR blue]' + local(20339) + ':  ' + '[/COLOR]' + str(director))
+  win.setProperty('actor', '[COLOR blue]' + local(20337) + ':  ' + '[/COLOR]' + str(actor))
   win.setProperty('nextprog', '[COLOR blue]' + localString(30010) +'[/COLOR]'+ '[COLOR aquamarine]' + nextprog[0]['title'] + '[/COLOR]' + '  ' + '[COLOR khaki]' + nextprog[0]['start_date'].strftime('%A %H:%M')+' - ' +nextprog[0]['end_date'].strftime('%H:%M')+'[/COLOR]')
   
   played = datetime.datetime.now()-program['start_date']
@@ -1069,10 +1071,10 @@ class myPlayer(xbmc.Player):
       self.startTime=0
       self.playing=True
     def onPlayBackStarted(self):
-      
-      if (self.skip>0):
-        self.seekTime(self.skip)
-        self.startTime=self.startTime-datetime.timedelta(seconds=self.skip)
+		
+		if (self.skip>0):
+			self.seekTime(self.skip)
+			self.startTime=self.startTime-datetime.timedelta(seconds=self.skip)
     def onPlayBackSeek(self, time, seekOffset):
       
       if self.startTime+datetime.timedelta(milliseconds=time) > datetime.datetime.now().replace(microsecond=0):
@@ -1086,10 +1088,23 @@ class myPlayer(xbmc.Player):
         self.playing=False
         
     def onPlayBackEnded(self):
-        channel=_zattooDB_.get_playing()['channel']
-        self.playing=False 
-             
-        xbmc.executebuiltin('RunPlugin("plugin://'+__addonId__+'/?mode=watch_c&id='+channel+'&showOSD=1")')
+		channel=_zattooDB_.get_playing()['channel']
+		showID=_zattooDB_.get_playing()['showID']
+		# debug(showID)
+		# program=_zattooDB_.get_showID(showID)
+		# debug(program)
+		# #program = _zattooDB_.getPrograms({'index':[channel]}, True, datetime.datetime.now(), datetime.datetime.now())
+		# nextprog = _zattooDB_.getPrograms({'index':[channel]}, True, program[0]['end_date']+datetime.timedelta(seconds=60), program[0]['end_date']+datetime.timedelta(seconds=60))
+		# debug ('Nextprog'+str(nextprog))
+		# start = int(time.mktime(nextprog[0]['start_date'].timetuple()))+1500
+		# debug(start)
+		# end = int(time.mktime(nextprog[0]['end_date'].timetuple()))
+		# url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + nextprog[0]['channel'] + "&showID=" + nextprog[0]['showID'] + "&start=" + str(start) + "&end=" + str(end)
+		self.playing=False 
+		#debug(url)
+		#xbmc.executebuiltin('RunPlugin('+url+')')
+
+		xbmc.executebuiltin('RunPlugin("plugin://'+__addonId__+'/?mode=watch_c&id='+channel+'&showOSD=1")')
 
 class zattooPiP(xbmcgui.WindowXMLDialog):
 

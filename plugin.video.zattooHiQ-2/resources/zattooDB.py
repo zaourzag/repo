@@ -227,7 +227,7 @@ class ZattooDB(object):
       c.execute('CREATE TABLE updates(id INTEGER, date TIMESTAMP, type TEXT, PRIMARY KEY (id) )')
       #c.execute('CREATE TABLE playing(channel TEXT, start_date TIMESTAMP, action_time TIMESTAMP, current_stream INTEGER, streams TEXT, PRIMARY KEY (channel))')
       c.execute('CREATE TABLE showinfos(showID INTEGER, info TEXT, PRIMARY KEY (showID))')
-      c.execute('CREATE TABLE playing(channel TEXT, current_stream INTEGER, streams TEXT, PRIMARY KEY (channel))')
+      c.execute('CREATE TABLE playing(channel TEXT, showID TEXT, current_stream INTEGER, streams TEXT, PRIMARY KEY (channel))')
       c.execute('CREATE TABLE version(version TEXT, PRIMARY KEY (version))')
     
    
@@ -628,11 +628,11 @@ class ZattooDB(object):
 
 
 
-  def set_playing(self, channel=None, streams=None, streamNr=0):
+  def set_playing(self, channel=None, showID='', streams=None, streamNr=0):
     c = self.conn.cursor()
     c.execute('DELETE FROM playing')
     #c.execute('INSERT INTO playing(channel, start_date, action_time, current_stream,  streams) VALUES(?, ?, ?, ?, ?)', [channel, start, datetime.datetime.now(), streamNr, streams])
-    c.execute('INSERT INTO playing(channel, current_stream,  streams) VALUES(?, ?, ?)', [channel, streamNr, streams])    
+    c.execute('INSERT INTO playing(channel, showID, current_stream,  streams) VALUES(?, ?, ?, ?)', [channel, showID, streamNr, streams])    
     self.conn.commit()
     c.close()
     
@@ -643,7 +643,7 @@ class ZattooDB(object):
     row = c.fetchone()
     #debug('print row:'+str(row))
     if row is not None:
-      playing = {'channel':row['channel'], 'current_stream':row['current_stream'], 'streams':row['streams']}
+      playing = {'channel':row['channel'], 'current_stream':row['current_stream'], 'streams':row['streams'], 'showID':row['showID']}
     else:
       c.execute('SELECT * FROM channels ORDER BY weight ASC LIMIT 1')
       row = c.fetchone()
@@ -651,7 +651,33 @@ class ZattooDB(object):
     c.close()
     #debug( "now playing" +str(playing))
     return playing
-
+  
+  def get_showID(self, showID):
+		c = self.conn.cursor()
+		programList = []
+		try:
+			c.execute('SELECT * FROM programs WHERE showID = ? ', [showID])
+		except:pass
+		row = c.fetchone()
+		programList.append({
+            'channel': row['channel'],
+            'showID' : row['showID'],
+            'title' : row['title'],
+            'description' : row['description'],
+            'year': row['year'],
+            'genre': row['genre'],
+            'country': row['country'],
+            'category': row['category'],
+            'start_date' : row['start_date'],
+            'end_date' : row['end_date'],
+            'image_small' : row['image_small'],
+            'credits' : row['credits'],
+            'restart': row['restart']
+           
+            })
+		c.close
+		return programList
+		
   def set_currentStream(self, nr):
     c = self.conn.cursor()
     c.execute('UPDATE playing SET current_stream=?', [nr])
