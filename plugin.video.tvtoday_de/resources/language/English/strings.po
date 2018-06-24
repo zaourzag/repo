@@ -1,7 +1,7 @@
 # Kodi Media Center language file
 # Addon Name: TV Today - Best of Mediatheken
 # Addon id: plugin.video.tvtoday_de
-# Addon version: 1.4.0
+# Addon version: 1.4.1
 # Addon Provider: realvito
 msgid ""
 msgstr ""
@@ -122,5 +122,5 @@ msgstr ""
 #empty strings from id 30374 to 40200
 
 msgctxt "#40201"
-msgid "[B][COLOR chartreuse]Add to TvToday-Playlist[/COLOR][/B]"
+msgid "[B][COLOR yellow]Add to TvToday-Playlist[/COLOR][/B]"
 msgstr ""

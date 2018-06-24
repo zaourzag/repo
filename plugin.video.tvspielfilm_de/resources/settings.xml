@@ -6,7 +6,7 @@
 		<setting type="sep"/>
 		<setting label="30231" type="lsep"/>
 		<setting label="30112" type="bool" id="enableChannelID" default="true"/>
-		<setting label="30113" type="bool" id="enableTVnow" default="false"/>
+		<setting label="30113" type="bool" id="enableTVnow" default="true"/>
 		<setting type="sep"/>
 		<setting label="30232" type="lsep"/>
 		<setting label="30114" type="bool" id="useThumbAsFanart" default="true"/>

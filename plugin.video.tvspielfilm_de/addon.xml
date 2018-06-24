@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<addon id="plugin.video.tvspielfilm_de" name="TV Spielfilm - Das Beste aus den Mediatheken" version="1.1.1" provider-name="realvito">
+<addon id="plugin.video.tvspielfilm_de" name="TV Spielfilm - Das Beste aus den Mediatheken" version="1.1.2" provider-name="realvito">
 	<requires>
-		<import addon="xbmc.python" version="2.20.0"/>
-		<import addon="plugin.video.arte_tv" optional="true"/>
+		<import addon="xbmc.python" version="2.24.0"/>
+		<import addon="plugin.video.L0RE.arte" optional="true"/>
 		<import addon="plugin.video.arteplussept" optional="true"/>
 		<import addon="plugin.video.rtlnow" optional="true"/>
 	</requires>
@@ -18,17 +18,24 @@
 		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
 		<language></language>
 		<platform>all</platform>
-		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-		<forum>http://www.kodinerds.net/index.php/Thread/53329-RERELEASE-TVTODAY/</forum>
-		<website>http://www.tvspielfilm.de/mediathek/</website>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 3, June 2007</license>
+		<forum>https://www.kodinerds.net/index.php/Thread/53329-RERELEASE-TVTODAY/</forum>
+		<website>https://www.tvspielfilm.de/mediathek/</website>
 		<email></email>
 		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.tvspielfilm_de</source>
 		<assets>
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 1.1.1  (28.02.2018)[/COLOR][/B][CR]
-- fixed: Rubrik "Sender sortiert" Sender werden NICHT aufgelistet (leer)
+		<news>[B][COLOR orangered]Version 1.1.2  (24.06.2018)[/COLOR][/B][CR]
+- fixed: Alle angeklickten Ordner sind leer
+- fixed: Umstellung der Webseite von "TvSpielfilm" auf "https"
+- optimized: Unter den Rubriken "nach Tag" und "nach Sender" werden jetzt mehr Filminfos im Titel angezeigt
+- optimized: Wiedergabequalität-Aufbereitung von ZDF-Links (mp4) - neue Codes hinzugefügt
+- optimized: Script überarbeitet - unnötige Codeschnipsel entfernt
+- removed: Abhängigkeit "plugin.video.arte_tv" von @PUR3 (broken) zum Abspielen von ARTE-Links
+- added: Abhängigkeit als 2.ARTE-Addon "plugin.video.L0RE.arte" von @L0RE zum Abspielen von ARTE-Links
+- added: Addon kompatibel mit PYTHON-Vers.3 gemacht (für KODI-19 >) :-)
 		</news>
 	</extension>
 </addon>

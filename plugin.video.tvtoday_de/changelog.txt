@@ -108,3 +108,11 @@
  - optimized: Wiedergabequalität von ARD-Links (mp4), wegen "mp4-Link" Veränderungen angepasst
  - added: TVNOW-Links funktionieren wieder und werden jetzt über das "plugin.video.rtlnow" von *L0RE* abgespielt
  - added: Rubrik - SENDER sortiert (Auflistung der abspielbaren Titel nach Sender)
+
+[B]Version 1.4.1  (24.06.2018)[/B]
+ - fixed: Umstellung der Webseite von "TvToday" auf "https"
+ - optimized: Wiedergabequalität-Aufbereitung von ZDF-Links (mp4) - neue Codes hinzugefügt
+ - optimized: Script überarbeitet - unnötige Codeschnipsel entfernt
+ - removed: Abhängigkeit "plugin.video.arte_tv" von @PUR3 (broken) zum Abspielen von ARTE-Links
+ - added: Abhängigkeit als 2.ARTE-Addon "plugin.video.L0RE.arte" von @L0RE zum Abspielen von ARTE-Links
+ - added: Addon kompatibel mit PYTHON-Vers.3 gemacht (für KODI-19 >) :-)

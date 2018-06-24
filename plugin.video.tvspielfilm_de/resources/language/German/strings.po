@@ -1,7 +1,7 @@
 # Kodi Media Center language file
 # Addon Name: TV Spielfilm - Das Beste aus den Mediatheken
 # Addon id: plugin.video.tvspielfilm_de
-# Addon version: 1.1.0
+# Addon version: 1.1.2
 # Addon Provider: realvito
 msgid ""
 msgstr ""
@@ -41,7 +41,7 @@ msgstr "Ansicht"
 
 msgctxt "#30110"
 msgid "     Date of Broadcast in the Title"
-msgstr "     Austrahlungsdatum im Titel"
+msgstr "     Ausstrahlungsdatum im Titel"
 
 msgctxt "#30111"
 msgid "     Hide duplicate entries (titles)"
@@ -122,5 +122,5 @@ msgstr "     • [COLOR chartreuse]Einstellung »[/COLOR]mp4[COLOR chartreuse]«
 #empty strings from id 30374 to 40200
 
 msgctxt "#40201"
-msgid "[B][COLOR chartreuse]Add to TvSpielfilm-Playlist[/COLOR][/B]"
-msgstr "[B][COLOR chartreuse]In TvSpielfilm-Abspielliste einreihen[/COLOR][/B]"
+msgid "[B][COLOR yellow]Add to TvSpielfilm-Playlist[/COLOR][/B]"
+msgstr "[B][COLOR yellow]In TvSpielfilm-Abspielliste einreihen[/COLOR][/B]"
