@@ -15,10 +15,12 @@ class Client:
                             
         self.params = {}
         self.post_data = {}
+        self.cookie = cookie
                             
         self.v2 = 'https://club.laola1.tv/sp/laola1tv/api/v2/'
         self.v3 ='https://club.laola1.tv/sp/laola1tv/api/v3/'
         self.feed = 'http://www.laola1.tv'
+        self.web_login = 'https://club.laola1.tv/sp/laola1tv/web/login'
         
         self.partner = '22'
         self.target = '8'
@@ -49,7 +51,7 @@ class Client:
         else:
             target = self.target_vod
             
-        self.headers.update({'cookie':cookie})
+        self.headers.update({'cookie': self.cookie})
         
         self.post_data = {
             '0': 'tv.laola1.laolatv.premiumclub',
@@ -79,46 +81,73 @@ class Client:
                 'p': utfenc(credentials.password)
             }
             r = requests.post(self.v2 + 'session', headers=self.headers, data=post_data)
-            if r.headers.get('content-type', '').startswith('application/json'):
+            if r.headers.get('content-type', '').startswith('application/json') and not '<html>' in r.text:
                 data = r.json()
                 if data.get('error', None):
-                    log('[%s] login: %s' % (addon_id, data['error'][0]))
+                    msg = data['error'][0]
+                    log('[%s] login: %s' % (addon_id, msg))
+                    dialog.ok(addon_name, msg)
+                    self.cookie = ''
                     credentials.reset()
                 elif data.get('result', None):
+                    self.cookie = r.headers.get('set-cookie', '')
                     log('[%s] login: premium=%s' % (addon_id, data['result']['premium']))
-                    addon.setSetting('cookie', r.headers.get('set-cookie', ''))
                     credentials.save()
                 else:
+                    self.cookie = ''
                     log('[%s] login: %s' % (addon_id, 'error - reset cookie'))
-                    addon.setSetting('cookie', '')
+            else:
+                post_data_ = {
+                    'email': utfenc(credentials.email),
+                    'password': utfenc(credentials.password)
+                }
+                params_ = {'redirect': 'http://www.laola1.tv/de-de/home/'}
+                r = requests.post(self.web_login, headers=self.headers, params=params_, data=post_data_, allow_redirects=False)
+                self.cookie = r.headers.get('set-cookie', '')
+                self.session()
+                result = self.user(login_=False)
+                if result:
+                    credentials.save()
+                else:
+                    self.cookie = ''
+                    credentials.reset()
+        addon.setSetting('cookie', self.cookie)
         
     def logout(self):
-        if cookie:
-            self.headers['cookie'] = cookie
+        if self.cookie:
+            self.headers['cookie'] = self.cookie
             r = requests.post(self.v2 + 'session/delete', headers=self.headers)
             
     def session(self):
-        self.headers['cookie'] = cookie
+        self.headers['cookie'] = self.cookie
         r = requests.get(self.v2 + 'session', headers=self.headers)
-        addon.setSetting('cookie', r.headers.get('set-cookie', ''))
+        self.cookie = r.headers.get('set-cookie', '')
+        addon.setSetting('cookie', self.cookie)
 
     def deletesession(self):
-        if cookie:
-            self.headers['cookie'] = cookie
+        if self.cookie:
+            self.headers['cookie'] = self.cookie
             r = requests.post(self.v3 + 'user/session/premium/delete', headers=self.headers)
 
-    def user(self):
-        self.headers['cookie'] = cookie
+    def user(self, login_=True):
+        result = False
+        self.headers['cookie'] = self.cookie
         data = self.json_request(self.v2 + 'user')
         if data.get('error', None):
             log('[%s] user: %s' % (addon_id, data['error'][0]))
-            self.login()
+            if login_:
+                self.login()
         elif data.get('result', None):
             log('[%s] user: country=%s premium=%s' % (addon_id, data['result']['country'], data['result']['premium']))
-            self.session()
+            result = True
+            if login_:
+                self.session()
         else:
             log('[%s] user: %s' % (addon_id, 'error - reset cookie'))
-            addon.setSetting('cookie', '')
+            self.cookie = ''
+            addon.setSetting('cookie', self.cookie)
+        if not login_:
+            return result
         
     def json_request(self, url):
         if self.post_data:

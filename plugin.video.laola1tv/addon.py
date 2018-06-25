@@ -9,10 +9,17 @@ client = Client()
 
 def run():
     if mode == 'root':
-        data = client.menu()
-        cache.cache_data(data)
-        laola.menu(data)
         client.user()
+        if client.cookie:
+            if addon.getSetting('startup') == 'true':
+                start_is_helper()
+                data = client.menu()
+                if data:
+                    cache.cache_data(data)
+                    addon.setSetting('startup', 'false')
+            else:
+                data = cache.get_cache_data()
+            laola.menu(data)
     elif mode == 'sports':
         laola.sports(cache.get_cache_data(), title)
     elif mode == 'sub_menu':
@@ -44,7 +51,7 @@ def master(data):
     if a and b:
         return '%s?hdnea=%s' % (b.group(1), a.group(1))
     elif c:
-        dialog.ok('Laola1 TV', utfenc(c.group(1)))
+        dialog.ok(addon_name, utfenc(c.group(1)))
 
 args = urlparse.parse_qs(sys.argv[2][1:])
 mode = args.get('mode', ['root'])[0]

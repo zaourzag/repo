@@ -43,6 +43,11 @@ def timedelta_total_seconds(timedelta):
         timedelta.microseconds + 0.0 +
         (timedelta.seconds + timedelta.days * 24 * 3600) * 10 ** 6) / 10 ** 6
 
+def start_is_helper():
+    from inputstreamhelper import Helper
+    helper = Helper(protocol='hls')
+    return helper.check_inputstream()
+
 def uniq_id(t=1):
     mac_addr = xbmc.getInfoLabel('Network.MacAddress')
     if not ":" in mac_addr: mac_addr = xbmc.getInfoLabel('Network.MacAddress')

@@ -52,4 +52,5 @@ def video(data):
     items.list()
     
 def play(path):
-    items.play(path)
+    if path:
+        items.play(path)

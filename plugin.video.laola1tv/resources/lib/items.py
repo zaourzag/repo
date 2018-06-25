@@ -53,5 +53,10 @@ class Items:
         xbmcplugin.addDirectoryItem(addon_handle, build_url(data), listitem, folder)
         
     def play(self, path):
-        listitem = xbmcgui.ListItem(path=path)
+        listitem = xbmcgui.ListItem()
+        listitem.setContentLookup(False)
+        listitem.setMimeType('application/x-mpegURL')
+        listitem.setProperty('inputstreamaddon', 'inputstream.adaptive')
+        listitem.setProperty('inputstream.adaptive.manifest_type', 'hls')
+        listitem.setPath(path)
         xbmcplugin.setResolvedUrl(addon_handle, True, listitem)
