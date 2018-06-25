@@ -65,10 +65,6 @@ def check_mode(args):
 def showMainMenue(args):
     """Show main menu
     """
-    # fix UHD removed
-    if args._addon.getSetting("stream") == "3":
-        args._addon.setSetting("stream", "2")
-
     # stream files
     streams = {"0": {"Fußballspiel live":    "https://wm2018.akamaized.net/hls/live/625036/wm2018/master.m3u8?b=0-", # ARD
                      "Pressekonferenz live": "https://wdrardevent1-lh.akamaihd.net/i/ardevent1_weltweit@566648/master.m3u8?b=0-"},
@@ -79,9 +75,16 @@ def showMainMenue(args):
                      "Trainersicht live":    "http://zdf0304-lh.akamaihd.net/i/de04_v1@392856/master.m3u8",
                      "Pressekonferenz live": "https://zdf0506-lh.akamaihd.net/i/de06_v1@392858/master.m3u8?"},
 
-               "2": {"Adaptiv Fußballspiel live": "http://orf1ad.orf.cdn.ors.at/out/u/orf1ad/qxb/manifest.m3u8", # ORF
-                     "4K Fußballspiel live":      "http://ors-uhd.cdn.ors.at/out/u/orfuhd-abr-hdr10_1.m3u8",
-                     "2K Fußballspiel live":      "http://ors-uhd.cdn.ors.at/out/u/orfuhd-abr-hdr10_2.m3u8"}}
+               "2": {"720p adaptive live": "http://orf1ad.orf.cdn.ors.at/out/u/orf1ad/qxb/manifest.m3u8", # ORF
+                     "4K HDR live":        "http://ors-uhd.cdn.ors.at/out/u/orfuhd-abr-hdr10_1.m3u8",
+                     "2K HDR live":        "http://ors-uhd.cdn.ors.at/out/u/orfuhd-abr-hdr10_2.m3u8",
+                     "1080p HDR live":     "http://ors-uhd.cdn.ors.at/out/u/orfuhd-abr-hdr10_3.m3u8",
+                     "720p HDR live":      "http://ors-uhd.cdn.ors.at/out/u/orfuhd-abr-hdr10_4.m3u8"},
+
+               "3": {"Fußballspiel live": "https://srgssruni2ch-lh.akamaihd.net/i/enc2uni_ch@191041/master.m3u8?dw=0"}, # SRF
+               "4": {"Fußballspiel live": "https://srgssruni10ch-lh.akamaihd.net/i/enc10uni_ch@191367/master.m3u8?dw=0"}, # RTS
+               "5": {"Fußballspiel live": "https://srgssrgop20a-lh.akamaihd.net/i/enc20a_gop@141646/master.m3u8?dw=0"} # RSI
+              }
 
 
     # create directory

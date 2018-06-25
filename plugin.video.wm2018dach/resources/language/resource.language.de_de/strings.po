@@ -21,16 +21,28 @@ msgid "Stream"
 msgstr "Steams"
 
 msgctxt "#30001"
-msgid "ARD"
-msgstr "ARD"
+msgid "ARD (Germany)"
+msgstr "ARD (Deutschland)"
 
 msgctxt "#30002"
-msgid "ZDF"
-msgstr "ZDF"
+msgid "ZDF (Germany)"
+msgstr "ZDF (Deutschland)"
 
 msgctxt "#30003"
-msgid "ORF"
-msgstr "ORF"
+msgid "ORF (Austria)"
+msgstr "ORF (Österreich)"
+
+msgctxt "#30004"
+msgid "SRF (Switzerland)"
+msgstr "SRF (Schweiz)"
+
+msgctxt "#30005"
+msgid "RTS (Switzerland)"
+msgstr "RTS (Schweiz)"
+
+msgctxt "#30006"
+msgid "RSI (Switzerland)"
+msgstr "RSI (Schweiz)"
 
 msgctxt "#30010"
 msgid "Activate InputStream Adaptive"

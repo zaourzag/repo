@@ -21,15 +21,27 @@ msgid "Stream"
 msgstr ""
 
 msgctxt "#30001"
-msgid "ARD"
+msgid "ARD (Germany)"
 msgstr ""
 
 msgctxt "#30002"
-msgid "ZDF"
+msgid "ZDF (Germany)"
 msgstr ""
 
 msgctxt "#30003"
-msgid "ORF"
+msgid "ORF (Austria)"
+msgstr ""
+
+msgctxt "#30004"
+msgid "SRF (Switzerland)"
+msgstr ""
+
+msgctxt "#30005"
+msgid "RTS (Switzerland)"
+msgstr ""
+
+msgctxt "#30006"
+msgid "RSI (Switzerland)"
 msgstr ""
 
 msgctxt "#30010"
