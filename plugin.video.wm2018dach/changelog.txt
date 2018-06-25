@@ -1,6 +1,7 @@
-v1.1.0 (2018.06.25)
+v1.1.1 (2018.06.25)
 - Added streams for switzerland
 - Added more austria streams
+- Added ZDFInfo and ONE ARD
 
 v1.0.2 (2018.06.17)
 - Compatibility with latest Kodi 18

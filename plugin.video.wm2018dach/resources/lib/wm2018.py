@@ -83,7 +83,10 @@ def showMainMenue(args):
 
                "3": {"Fußballspiel live": "https://srgssruni2ch-lh.akamaihd.net/i/enc2uni_ch@191041/master.m3u8?dw=0"}, # SRF
                "4": {"Fußballspiel live": "https://srgssruni10ch-lh.akamaihd.net/i/enc10uni_ch@191367/master.m3u8?dw=0"}, # RTS
-               "5": {"Fußballspiel live": "https://srgssrgop20a-lh.akamaihd.net/i/enc20a_gop@141646/master.m3u8?dw=0"} # RSI
+               "5": {"Fußballspiel live": "https://srgssrgop20a-lh.akamaihd.net/i/enc20a_gop@141646/master.m3u8?dw=0"}, # RSI
+
+               "6": {"Fußballspiel live": "https://onelivestream-lh.akamaihd.net/i/one_livestream@568814/master.m3u8"}, # ONE ARD
+               "7": {"Fußballspiel live": "https://zdf1112-lh.akamaihd.net/i/de12_v1@392882/master.m3u8?dw=0"} # ZDFInfo
               }
 
 
@@ -108,7 +111,7 @@ def startplayback(args):
 
     # inputstream adaptive
     is_helper = inputstreamhelper.Helper("hls")
-    if not args._addon.getSetting("stream") == "2" and args._addon.getSetting("inputstream_adaptive_active") == "true" and is_helper.check_inputstream():
+    if not args._addon.getSetting("stream") == "2" and not args._addon.getSetting("stream") == "6" and args._addon.getSetting("inputstream_adaptive_active") == "true" and is_helper.check_inputstream():
         item.setProperty("inputstreamaddon", "inputstream.adaptive")
         item.setProperty("inputstream.adaptive.manifest_type", "hls")
 

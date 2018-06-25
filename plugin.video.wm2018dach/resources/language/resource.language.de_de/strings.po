@@ -44,6 +44,14 @@ msgctxt "#30006"
 msgid "RSI (Switzerland)"
 msgstr "RSI (Schweiz)"
 
+msgctxt "#30007"
+msgid "ONE ARD (Germany)"
+msgstr "ONE ARD (Deutschland)"
+
+msgctxt "#30008"
+msgid "ZDFinfo (Germany)"
+msgstr "ZDFinfo (Deutschland)"
+
 msgctxt "#30010"
 msgid "Activate InputStream Adaptive"
 msgstr "Aktiviere InputStream Adaptive"
