@@ -1,12 +1,12 @@
 ﻿#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-'''
+"""
     This Plugin is compatible between Python 2.X and Python 3+
     without using any extra extern Plugins from XBMC (KODI)
     Copyright (C) 2018 by realvito
     Released under GPL(v3)
-'''
+"""
 
 import xbmc
 import xbmcplugin
@@ -39,7 +39,7 @@ import shutil
 import socket
 import time
 from datetime import date,datetime,timedelta
-from io import BytesIO
+import io
 import gzip
 
 #token = 'ffc9a283b511b7e11b326fdc3d76c5559b50544e reraeB'
@@ -49,7 +49,6 @@ import gzip
 base_url = sys.argv[0]
 pluginhandle = int(sys.argv[1])
 addon = xbmcaddon.Addon()
-translation = addon.getLocalizedString
 addonPath = xbmc.translatePath(addon.getAddonInfo('path')).encode('utf-8').decode('utf-8')
 dataPath = xbmc.translatePath(addon.getAddonInfo('profile')).encode('utf-8').decode('utf-8')
 temp        = xbmc.translatePath(os.path.join(dataPath, 'temp', '')).encode('utf-8').decode('utf-8')
@@ -81,14 +80,30 @@ cj = makeCooks.LWPCookieJar();
 if xbmcvfs.exists(cookie):
 	cj.load(cookie, ignore_discard=True, ignore_expires=True)
 
-def debug(msg, level=xbmc.LOGNOTICE):
+def translation(id):
+	LANGUAGE = addon.getLocalizedString(id)
+	if sys.version_info[0] < 3:
+		if isinstance(LANGUAGE, unicode):
+			LANGUAGE = LANGUAGE.encode('utf-8')
+	return LANGUAGE
+
+def log_MS(msg, level=xbmc.LOGNOTICE):
+	if sys.version_info[0] < 3:
+		if isinstance(msg, unicode):
+			msg = msg.encode('utf-8')
+	xbmc.log('[TV-Spielfilm]'+msg, level)
+
+def debug_MS(msg, level=xbmc.LOGNOTICE):
 	if enableDebug:
-		xbmc.log('[TvSpielfilm]'+msg, level)
+		if sys.version_info[0] < 3:
+			if isinstance(msg, unicode):
+				msg = msg.encode('utf-8')
+		xbmc.log('[TV-Spielfilm]'+msg, level)
 
 def getUrl(url, header=False, referer=False):
 	global cj
 	for cook in cj:
-		debug("(getUrl) Cookie : %s" %str(cook))
+		debug_MS("(getUrl) Cookie : {0}".format(str(cook)))
 	pos = 0
 	opener = makeRequest.build_opener(makeRequest.HTTPCookieProcessor(cj))
 	try:
@@ -102,26 +117,29 @@ def getUrl(url, header=False, referer=False):
 		response = opener.open(url, timeout=30)
 		content = response.read()
 		if response.headers.get('Content-Encoding', '') == 'gzip':
-			content = gzip.GzipFile(fileobj=BytesIO(content)).read().decode('utf-8')
+			if sys.version_info[0] < 3:
+				content = gzip.GzipFile(fileobj=io.BytesIO(content)).read()
+			else:
+				content = gzip.GzipFile(fileobj=io.BytesIO(content)).read().decode('utf-8')
 	except Exception as e:
-		if pos < 1 and 'SSL23_GET_SERVER_HELLO' in str(e):
+		failure = str(e)
+		if pos < 1 and 'SSL23_GET_SERVER_HELLO' in failure:
 			pos += 1
 			try:
-				python_version = str(sys.version).split(')')[0].strip()+")"
+				Python_Version = str(sys.version).split(')')[0].strip()+")"
 			except:
-				python_version = "Unbekannte Version - NICHT ermittelbar"
-			xbmcgui.Dialog().ok(addon.getAddonInfo('id'), "[COLOR orangered]ACHTUNG : ... die installierte PHYTONVERSION : *"+python_version+"* ist zu alt !!![/COLOR]", "Bitte zu KODI-Krypton (Version 17 oder höher) oder -FTMC updaten !!!")
-			xbmc.log("[TvSpielfilm](getUrl) ERROR - ERROR - ERROR : ##### Die installierte PHYTONVERSION : *"+python_version+"* ist zu alt !!! ##### Bitte zu KODI-Krypton (Version 17 oder höher) oder -FTMC updaten !!! #####", xbmc.LOGFATAL)
-		elif pos < 1 and 'getaddrinfo failed' in str(e):
+				Python_Version = translation(30501)
+			xbmcgui.Dialog().ok(addon.getAddonInfo('id'), (translation(30502).format(Python_Version)))
+			log_MS("(getUrl) ERROR - ERROR - ERROR : ########## Die installierte PYTHONVERSION : *** {0} *** ist zu alt !!! ##########\n########## Bitte zu KODI-Krypton (Version 17 oder hoeher) oder -FTMC updaten !!! ##########".format(Python_Version))
+		elif pos < 1 and 'getaddrinfo failed' in failure:
 			pos += 1
-			xbmcgui.Dialog().ok(addon.getAddonInfo('id'), "[COLOR orangered]ACHTUNG : ... Es besteht ein Problem mit dem Netzwerk !!![/COLOR]", "Entweder ist die angeforderte - WebSeite - zurzeit nicht erreichbar oder ...", "... überprüfen Sie, ob Ihre Internetverbindung funktioniert ?!")
-			xbmc.log("[TvSpielfilm](getUrl) ERROR - ERROR - ERROR : ########## %s ##########" %(str(e)), xbmc.LOGFATAL)
+			xbmcgui.Dialog().ok(addon.getAddonInfo('id'), translation(30503))
+			log_MS("(getUrl) ERROR - ERROR - ERROR : ########## Es besteht ein Problem mit dem Netzwerk === {0} === ##########\n########## Entweder ist die angeforderte - WebSeite - zurzeit nicht erreichbar oder überprüfen Sie, ob Ihre Internetverbindung funktioniert ?! ##########".format(failure))
 		else:
-			err = str(e)
 			if hasattr(e, 'code'):
-				xbmc.log("[TvSpielfilm](getUrl) ERROR - ERROR - ERROR : ########## %s = %s ##########" %(url, err), xbmc.LOGFATAL)
+				log_MS("(getUrl) ERROR - ERROR - ERROR : ########## {0} === {1} ##########".format(url, failure))
 			elif hasattr(e, 'reason'):
-				xbmc.log("[TvSpielfilm](getUrl) ERROR - ERROR - ERROR : ########## %s = %s ##########" %(url, err), xbmc.LOGFATAL)
+				log_MS("(getUrl) ERROR - ERROR - ERROR : ########## {0} === {1} ##########".format(url, failure))
 		content = ""
 		return sys.exit(0)
 	opener.close()
@@ -162,11 +180,11 @@ def index():
 def listChannel(url):
 	xbmcplugin.addSortMethod(pluginhandle, xbmcplugin.SORT_METHOD_LABEL)
 	html = getUrl(url)
-	debug("(listChannel) SENDER-SORTIERUNG : Alle Sender in TvSpielfilm")
+	debug_MS("(listChannel) SENDER-SORTIERUNG : Alle Sender in TV-Spielfilm")
 	if showNOW == 'true':
-		debug("(listChannel) --- NowTV - Sender EINGEBLENDET ---")
+		debug_MS("(listChannel) --- NowTV - Sender EINGEBLENDET ---")
 	else:
-		debug("(listChannel) --- NowTV - Sender AUSGEBLENDET ---")
+		debug_MS("(listChannel) --- NowTV - Sender AUSGEBLENDET ---")
 	content = html[html.find('<section class="mediathek-channels">'):]
 	content = content[:content.find('</section>')]
 	spl = content.split('title=')
@@ -176,22 +194,23 @@ def listChannel(url):
 			url = re.compile(r'href=["\'](https?://.*?)["\']>', re.DOTALL).findall(entry)[0]
 			channelID = url.split('channel=')[1].strip()
 			channelID = cleanStation(channelID.strip())
-			title = channelID.replace('(', '').replace(')', '').replace(' ', '')
+			title = channelID.replace('(', '').replace(')', '').replace('  ', '')
 			if showNOW == 'false':
 				if ("RTL" in channelID or "VOX" in channelID or "SUPER" in channelID):
 					continue
-			debug("(listChannel) Link : %s%s" %(url, channelID))
-			addDir('[COLOR lime]'+title+'[/COLOR]', url, 'listVideos_Day_Channel_Highlights', pic+title+'.png')
-		except: pass
+			debug_MS("(listChannel) Link : {0}{1}".format(url, channelID))
+			addDir('[COLOR lime]'+title+'[/COLOR]', url, 'listVideos_Day_Channel_Highlights', pic+title.lower().replace(' ', '')+'.png', studio=title)
+		except:
+			log_MS("(listChannel) Fehler-Eintrag : {0}".format(str(entry)))
 	xbmcplugin.endOfDirectory(pluginhandle)
 
 def listVideos_Day_Channel_Highlights(url):
 	html = getUrl(url)
-	debug("(listVideos_Day_Channel_Highlights) MEDIATHEK : %s" %url)
+	debug_MS("(listVideos_Day_Channel_Highlights) MEDIATHEK : {0}".format(url))
 	if showNOW == 'true':
-		debug("(listVideos_Day_Channel_Highlights) --- NowTV - Sender EINGEBLENDET ---")
+		debug_MS("(listVideos_Day_Channel_Highlights) --- NowTV - Sender EINGEBLENDET ---")
 	else:
-		debug("(listVideos_Day_Channel_Highlights) --- NowTV - Sender AUSGEBLENDET ---")
+		debug_MS("(listVideos_Day_Channel_Highlights) --- NowTV - Sender AUSGEBLENDET ---")
 	if "?date=" in url or "?channel=" in url:
 		content = html[html.find('<section class="teaser-section">')+1:]
 		content = content[:content.find('</section>')]
@@ -229,7 +248,11 @@ def listVideos_Day_Channel_Highlights(url):
 				if first == third:
 					title = cleanTitle(first.strip())
 				else:
-					title = cleanTitle(first.strip())+" - "+cleanTitle(third.replace(first, "").strip())
+					testing3 = cleanTitle(third.replace(first, "").strip())
+					if testing3 == "":
+						title = cleanTitle(first.strip())
+					else:
+						title = cleanTitle(first.strip())+" - "+testing3
 				added = match2[0].split('|')[0].strip()
 				channelID = cleanTitle(match2[0].split('|')[1].strip())
 				channelID = cleanStation(channelID.strip())
@@ -245,22 +268,23 @@ def listVideos_Day_Channel_Highlights(url):
 			if showNOW == 'false' and channelID != "":
 				if ("RTL" in channelID or "VOX" in channelID or "SUPER" in channelID):
 					continue
-			debug("(listVideos_Day_Channel_Highlights) Name : %s" %title)
-			debug("(listVideos_Day_Channel_Highlights) Link : %s" %urlFW)
-			debug("(listVideos_Day_Channel_Highlights) Icon : %s" %photo)
+			debug_MS("(listVideos_Day_Channel_Highlights) Name : {0}".format(title))
+			debug_MS("(listVideos_Day_Channel_Highlights) Link : {0}".format(urlFW))
+			debug_MS("(listVideos_Day_Channel_Highlights) Icon : {0}".format(photo))
 			addLink(title, urlFW, 'playVideo', photo, studio=studio)
-		except: pass
+		except:
+			log_MS("(listVideos_Day_Channel_Highlights) Fehler-Eintrag : {0}".format(str(entry)))
 	xbmcplugin.endOfDirectory(pluginhandle)
 	if forceViewMode:
 		xbmc.executebuiltin('Container.SetViewMode('+viewMode+')')
 
 def listVideosGenre(category):
 	html = getUrl(baseURL+"/mediathek/")
-	debug("(listVideosGenre) MEDIATHEK : %s/mediathek/ - Genre = *%s*" %(baseURL, category.upper()))
+	debug_MS("(listVideosGenre) MEDIATHEK : {0}/mediathek/ - Genre = *{1}*".format(baseURL, category.upper()))
 	if showNOW == 'true':
-		debug("(listVideosGenre) --- NowTV - Sender EINGEBLENDET ---")
+		debug_MS("(listVideosGenre) --- NowTV - Sender EINGEBLENDET ---")
 	else:
-		debug("(listVideosGenre) --- NowTV - Sender AUSGEBLENDET ---")
+		debug_MS("(listVideosGenre) --- NowTV - Sender AUSGEBLENDET ---")
 	content = html[html.find('<span>'+category+'</span>')+1:]
 	content = content[:content.find('<div class="scroll-box">')]
 	spl = content.split('<li>')
@@ -291,16 +315,17 @@ def listVideosGenre(category):
 			photo = re.compile(r'<img src=["\'](https?://.*?.jpg)["\']', re.DOTALL).findall(entry)[0]
 			if ',' in photo:
 				photo = photo.split(',')[0].rstrip()+'.jpg'
-			if showTVchannel:
+			if showTVchannel and channelID != "":
 				title += channelID
-			if showNOW == 'false':
+			if showNOW == 'false' and channelID != "":
 				if ("RTL" in channelID or "VOX" in channelID or "SUPER" in channelID):
 					continue
-			debug("(listVideosGenre) Name : %s" %title)
-			debug("(listVideosGenre) Link : %s" %urlFW)
-			debug("(listVideosGenre) Icon : %s" %photo)
+			debug_MS("(listVideosGenre) Name : {0}".format(title))
+			debug_MS("(listVideosGenre) Link : {0}".format(urlFW))
+			debug_MS("(listVideosGenre) Icon : {0}".format(photo))
 			addLink(title, urlFW, 'playVideo', photo, studio=studio)
-		except: pass
+		except:
+			log_MS("(listVideosGenre) Fehler-Eintrag : {0}".format(str(entry)))
 	xbmcplugin.endOfDirectory(pluginhandle)
 	if forceViewMode:
 		xbmc.executebuiltin('Container.SetViewMode('+viewMode+')')
@@ -309,34 +334,35 @@ def playVideo(url):
 	finalURL = False
 	ARD_SCHEMES = ('http://www.ardmediathek.de', 'https://www.ardmediathek.de', 'http://mediathek.daserste.de', 'https://mediathek.daserste.de')
 	RTL_SCHEMES = ('http://www.nowtv.de', 'https://www.nowtv.de', 'http://www.tvnow.de', 'https://www.tvnow.de')
-	xbmc.log("[TvSpielfilm](playVideo) --- START WIEDERGABE ANFORDERUNG ---", xbmc.LOGNOTICE)
-	xbmc.log("[TvSpielfilm](playVideo) frei", xbmc.LOGNOTICE)
+	log_MS("(playVideo) --- START WIEDERGABE ANFORDERUNG ---")
+	log_MS("(playVideo) frei")
 	try:
 		content = getUrl(url)
 		LINK = re.compile('<header class="broadcast-detail__header">.+?<a href="([^"]+)" class="mediathek-open col-hover-thek"', re.DOTALL).findall(content)[0]
-		xbmc.log("[TvSpielfilm](playVideo) AbspielLink (Original) : %s" %(LINK), xbmc.LOGNOTICE)
+		log_MS("(playVideo) AbspielLink (Original) : {0}".format(LINK))
 	except:
-		LINK = False
-		xbmc.log("[TvSpielfilm](playVideo) MediathekLink-00 : MediathekLink der Sendung in TvSpielfilm NICHT gefunden !!!", xbmc.LOGERROR)
-		xbmc.executebuiltin('Notification(TvSpielfilm : [COLOR red]!!! MediathekURL - ERROR !!![/COLOR], ERROR = [COLOR red]*MediathekLink* der Sendung NICHT gefunden ![/COLOR],6000,'+icon+')')
-	xbmc.log("[TvSpielfilm](playVideo) frei", xbmc.LOGNOTICE)
+		log_MS("(playVideo) MediathekLink-00 : MediathekLink der Sendung in TV-Spielfilm NICHT gefunden !!!")
+		xbmcgui.Dialog().notification(translation(30521), translation(30522), icon, 8000)
+		LINK = ""
+	log_MS("(playVideo) frei")
 	if LINK.startswith("https://www.arte.tv"):
 		videoID = re.compile("arte.tv/de/videos/([^/]+?)/", re.DOTALL).findall(LINK)[0]
 		try:
 			plugin2 = xbmcaddon.Addon(id='plugin.video.L0RE.arte')
 			finalURL = 'plugin://'+plugin2.getAddonInfo('id')+'/?mode=playvideo&url='+videoID
-			xbmc.log("[TvSpielfilm](playVideo) AbspielLink-1 (ARTE-TV) : %s" %(finalURL), xbmc.LOGNOTICE)
+			log_MS("(playVideo) AbspielLink-1 (ARTE-TV) : {0}".format(finalURL))
 		except:
 			try:
 				plugin3 = xbmcaddon.Addon(id='plugin.video.arteplussept')
 				finalURL = 'plugin://'+plugin3.getAddonInfo('id')+'/play/'+quote_plus(videoID)
-				xbmc.log("[TvSpielfilm](playVideo) AbspielLink-2 (ARTE-plussept) : %s" %(finalURL), xbmc.LOGNOTICE)
+				log_MS("(playVideo) AbspielLink-2 (ARTE-plussept) : {0}".format(finalURL))
 			except:
 				if finalURL:
-					xbmc.log("[TvSpielfilm](playVideo) AbspielLink-00 (ARTE) : *ARTE-Plugin* VIDEO konnte NICHT abgespielt werden !!!", xbmc.LOGERROR)
+					log_MS("(playVideo) AbspielLink-00 (ARTE) : *ARTE-Plugin* Der angeforderte -VideoLink- existiert NICHT !!!")
+					xbmcgui.Dialog().notification((translation(30523).format('ARTE - Plugin')), translation(30525), icon, 8000)
 				else:
-					xbmc.log("[TvSpielfilm](playVideo) AbspielLink-00 (ARTE) : KEIN *ARTE-Plugin* zur Wiedergabe vorhanden !!!", xbmc.LOGFATAL)
-					xbmc.executebuiltin('Notification(TvSpielfilm : [COLOR red]!!! ADDON - ERROR !!![/COLOR], ERROR = [COLOR red]KEIN *ARTE-Plugin* installiert[/COLOR] - bitte überprüfen ...,6000,'+icon+')')
+					log_MS("(playVideo) AbspielLink-00 (ARTE) : KEIN *ARTE-Addon* zur Wiedergabe vorhanden !!!")
+					xbmcgui.Dialog().notification((translation(30523).format('ARTE - Addon')), (translation(30524).format('ARTE-Addon')), icon, 8000)
 				pass
 	elif LINK.startswith(ARD_SCHEMES):
 		videoID = LINK.split('documentId=')[1]
@@ -351,12 +377,12 @@ def playVideo(url):
 		LINK = LINK.replace('http://', 'https://').replace('www.nowtv.de/', 'www.tvnow.de/').replace('list/aktuell/', '').replace('/player', '')
 		videoSE = LINK.split('/')[4].strip()
 		videoEP = LINK.split('/')[-1].strip()
-		xbmc.log("[TvSpielfilm](playVideo) --- RTL-Daten : ### Serie ["+videoSE+"] ### Episode ["+videoEP+"] ### ---", xbmc.LOGNOTICE)
+		log_MS("(playVideo) --- RTL-Daten : ### Serie [{0}] ### Episode [{1}] ### ---".format(videoSE, videoEP))
 		return RtlGetVideo(videoSE, videoEP, LINK)
 	if finalURL:
 		listitem = xbmcgui.ListItem(name, path=finalURL)
 		xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
-	xbmc.log("[TvSpielfilm](playVideo) --- ENDE WIEDERGABE ANFORDERUNG ---", xbmc.LOGNOTICE)
+	log_MS("(playVideo) --- ENDE WIEDERGABE ANFORDERUNG ---")
 
 def ArdGetVideo(videoID):
 	finalURL = False
@@ -374,13 +400,13 @@ def ArdGetVideo(videoID):
 				stream = item["_stream"]
 				if item["_quality"] == 'auto' and 'mil/master.m3u8' in stream:
 					finalURL = stream
-					xbmc.log("[TvSpielfilm](ArdGetVideo) Wir haben 2 *m3u8-Streams* (ARD+3) - wähle den Ersten : %s" %(finalURL), xbmc.LOGNOTICE)
+					log_MS("(ArdGetVideo) Wir haben 2 *m3u8-Streams* (ARD+3) - wähle den Ersten : {0}".format(finalURL))
 			if not finalURL:
 				for item in m3u8Links_2:
 					stream = item["_stream"]
 					if item["_quality"] == 'auto' and 'mil/master.m3u8' in stream:
 						finalURL = stream
-						xbmc.log("[TvSpielfilm](ArdGetVideo) Wir haben 1 *m3u8-Stream*  (ARD+3) - wähle Diesen : %s" %(finalURL), xbmc.LOGNOTICE)
+						log_MS("(ArdGetVideo) Wir haben 1 *m3u8-Stream*  (ARD+3) - wähle Diesen : {0}".format(finalURL))
 			if finalURL and finalURL[:4] != "http":
 				finalURL = "http:"+finalURL
 		if mp4Links and not finalURL:
@@ -389,7 +415,7 @@ def ArdGetVideo(videoID):
 				for element in mp4Links:
 					if element["_quality"] != 'auto' and element["_quality"] > linkQuality and '_stream' in element:
 						linkQuality = element["_quality"]
-			xbmc.log("[TvSpielfilm](ArdGetVideo) ##### LINK-Qualität (ARD+3) = %s ##### [3=beste|2=mittlere|1=schlechteste]" %(str(linkQuality)), xbmc.LOGNOTICE)
+			log_MS("(ArdGetVideo) ##### LINK-Qualität (ARD+3) = {0} ##### [3=beste|2=mittlere|1=schlechteste]".format(str(linkQuality)))
 			for element in mp4Links:
 				if linkQuality != element["_quality"]:
 					continue
@@ -398,28 +424,28 @@ def ArdGetVideo(videoID):
 				if type(stream) is list or type(stream) is tuple:
 					if len(stream) > 1:
 						ARD_Url = stream[0]
-						xbmc.log("[TvSpielfilm](ArdGetVideo) Wir haben 2 *mp4-Streams* (ARD+3) - wähle den Ersten : %s" %(ARD_Url), xbmc.LOGNOTICE)
+						log_MS("(ArdGetVideo) Wir haben 2 *mp4-Streams* (ARD+3) - wähle den Ersten : {0}".format(ARD_Url))
 					else:
 						ARD_Url = stream[0]
-						xbmc.log("[TvSpielfilm](ArdGetVideo) Wir haben 1 *mp4-Stream* (ARD+3) in der Liste : %s" %(ARD_Url), xbmc.LOGNOTICE)
+						log_MS("(ArdGetVideo) Wir haben 1 *mp4-Stream* (ARD+3) in der Liste : {0}".format(ARD_Url))
 				else:
 					ARD_Url = stream
-					xbmc.log("[TvSpielfilm](ArdGetVideo) Wir haben 1 *mp4-Stream* (ARD+3) - wähle Diesen : %s" %(ARD_Url), xbmc.LOGNOTICE)
+					log_MS("(ArdGetVideo) Wir haben 1 *mp4-Stream* (ARD+3) - wähle Diesen : {0}".format(ARD_Url))
 			if ARD_Url != "" and ARD_Url[:4] != "http":
 				ARD_Url = "http:"+ARD_Url
 			finalURL = VideoBEST(ARD_Url, improve='ard-YES') # *mp4URL* Qualität nachbessern, überprüfen, danach abspielen
 		if not finalURL:
 			finalURL = ndrPodcastHack(finalURL)
 			finalURL = dwHack(finalURL)
-			xbmc.log("[TvSpielfilm](ArdGetVideo) finalURL (ARD+3) NICHT gefunden - nutze Hack !", xbmc.LOGNOTICE)
+			log_MS("(ArdGetVideo) finalURL (ARD+3) NICHT gefunden - nutze Hack !")
 		else:
 			listitem = xbmcgui.ListItem(name, path=finalURL)
 			xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
-			xbmc.log("[TvSpielfilm](ArdGetVideo) END-Qualität (ARD+3) : %s" %(finalURL), xbmc.LOGNOTICE)
+			log_MS("(ArdGetVideo) END-Qualität (ARD+3) : {0}".format(finalURL))
 	except:
-		xbmc.log("[TvSpielfilm](ArdGetVideo) AbspielLink-00 (ARD+3) : *ARD-Plugin* Der angeforderte -VideoLink- existiert NICHT !!!", xbmc.LOGERROR)
-		xbmc.executebuiltin('Notification(TvSpielfilm : [COLOR red]!!! VideoURL - ERROR !!![/COLOR], ERROR = [COLOR red]Der angeforderte *VideoLink* existiert NICHT ![/COLOR],6000,'+icon+')')
-	xbmc.log("[TvSpielfilm](playVideo) --- ENDE WIEDERGABE ANFORDERUNG ---", xbmc.LOGNOTICE)
+		log_MS("(ArdGetVideo) AbspielLink-00 (ARD+3) : *ARD-Intern* Der angeforderte -VideoLink- existiert NICHT !!!")
+		xbmcgui.Dialog().notification((translation(30523).format('ARD - Intern')), translation(30525), icon, 8000)
+	log_MS("(playVideo) --- ENDE WIEDERGABE ANFORDERUNG ---")
 
 def ndrPodcastHack(url):
 	try:
@@ -449,22 +475,22 @@ def RtlGetVideo(SERIES, EPISODE, REFERER):
 		#http://api.tvnow.de/v3/movies/shopping-queen/2361-lisa-marie-nuernberg-flower-power-praesentiere-dich-in-deinem-neuen-bluetenkleid?fields=manifest,isDrm,free
 		streamURL = False
 		try:
-			content = getUrl('http://api.tvnow.de/v3/movies/%s/%s?fields=manifest,isDrm,free' %(SERIES, EPISODE))
+			content = getUrl('http://api.tvnow.de/v3/movies/{0}/{1}?fields=manifest,isDrm,free'.format(SERIES, EPISODE))
 			response = json.loads(content)
 			drm = response["isDrm"]
 			free = response["free"]
-			xbmc.log("[TvSpielfilm](RtlGetVideo) --- RTL-Optionen : ### DRM = %s ### FREE = %s ### ---" %(drm, free), xbmc.LOGNOTICE)
+			log_MS("(RtlGetVideo) --- RTL-Optionen : ### DRM = {0} ### FREE = {1} ### ---".format(drm, free))
 			videoFREE = response["manifest"]["dashclear"].strip()
 			if drm == True:
-				debug("(RtlGetVideo) ~~~ Video ist DRM - geschützt ~~~")
+				debug_MS("(RtlGetVideo) ~~~ Video ist DRM - geschützt ~~~")
 				try:
 					videoDRM = response["manifest"]["dash"].strip()
 				except:
 					videoDRM = "0"
-				xbmc.log("[TvSpielfilm](RtlGetVideo) videoDRM : %s" %(videoDRM), xbmc.LOGNOTICE)
+				log_MS("(RtlGetVideo) videoDRM : {0}".format(videoDRM))
 			else:
 				videoDRM = "0"
-				xbmc.log("[TvSpielfilm](RtlGetVideo) videoFREE : %s" %(videoFREE), xbmc.LOGNOTICE)
+				log_MS("(RtlGetVideo) videoFREE : {0}".format(videoFREE))
 			if videoDRM != "0":
 				streamURL = videoDRM.replace('vodnowusodash.secure.footprint.net', 'vodnowusodash-a.akamaihd.net').split('.mpd')[0]+'.mpd'
 				protected = "1"
@@ -472,17 +498,17 @@ def RtlGetVideo(SERIES, EPISODE, REFERER):
 				streamURL = videoFREE.replace('vodnowusodash.secure.footprint.net', 'vodnowusodash-a.akamaihd.net').split('.mpd')[0]+'.mpd'
 				protected = "0"
 			if streamURL:
-				xbmc.log("[TvSpielfilm](RtlGetVideo) END-Qualität (TVnow) : %s" %(streamURL), xbmc.LOGNOTICE)
+				log_MS("(RtlGetVideo) END-Qualität (TV-Now) : {0}".format(streamURL))
 				listitem = xbmcgui.ListItem(path='plugin://plugin.video.rtlnow/?mode=playdash&xstream='+str(streamURL)+'&xlink='+REFERER+'&xdrm='+protected)
 				xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
 		except:
-			xbmc.log("[TvSpielfilm](RtlGetVideo) AbspielLink-00 (TVnow) : *TVnow-Plugin* Der angeforderte -VideoLink- existiert NICHT !!!", xbmc.LOGERROR)
-			xbmc.executebuiltin('Notification(TvSpielfilm : [COLOR red]!!! VideoURL - ERROR !!![/COLOR], ERROR = [COLOR red]Der angeforderte *VideoLink* existiert NICHT ![/COLOR],6000,'+icon+')')
+			log_MS("(RtlGetVideo) AbspielLink-00 (TV-Now) : *TVNow-Plugin* Der angeforderte -VideoLink- existiert NICHT !!!")
+			xbmcgui.Dialog().notification((translation(30523).format('TVNow - Plugin')), translation(30525), icon, 8000)
 	else:
-		xbmc.log("[TvSpielfilm](playVideo) AbspielLink-00 (TVnow) : KEIN *TVnow-Plugin* zur Wiedergabe vorhanden !!!", xbmc.LOGFATAL)
-		xbmc.executebuiltin('Notification(TvSpielfilm : [COLOR red]!!! ADDON - ERROR !!![/COLOR], ERROR = [COLOR red]KEIN *TVnow-Plugin* installiert[/COLOR] - bitte überprüfen ...,6000,'+icon+')')
+		log_MS("(RtlGetVideo) AbspielLink-00 (TV-Now) : KEIN *TVNow-Addon* zur Wiedergabe vorhanden !!!")
+		xbmcgui.Dialog().notification((translation(30523).format('TVNow - Addon')), (translation(30524).format('TVNow-Addon')), icon, 8000)
 		pass
-	xbmc.log("[TvSpielfilm](playVideo) --- ENDE WIEDERGABE ANFORDERUNG ---", xbmc.LOGNOTICE)
+	log_MS("(playVideo) --- ENDE WIEDERGABE ANFORDERUNG ---")
 
 def ZdfGetVideo(url):
 	try: 
@@ -492,7 +518,7 @@ def ZdfGetVideo(url):
 			teaser = firstURL['content']
 			secret = firstURL['apiToken']
 			header = [('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36'), ('Api-Auth', 'Bearer '+secret)]
-			xbmc.log("[TvSpielfilm](ZdfGetVideo) SECRET gefunden (ZDF+3) : xxxxx %s xxxxx" %str(secret), xbmc.LOGNOTICE)
+			log_MS("(ZdfGetVideo) SECRET gefunden (ZDF+3) : xxxxx {0} xxxxx".format(str(secret)))
 			if teaser[:4] != "http":
 				teaser = ZDFapiUrl+teaser
 			secondURL = getUrl(teaser, header=header)
@@ -513,9 +539,9 @@ def ZdfGetVideo(url):
 				jsonObject = json.loads(thirdURL)
 				return ZdfExtractQuality(jsonObject)
 	except:
-		xbmc.log("[TvSpielfilm](ZdfGetVideo) AbspielLink-00 (ZDF+3) : *ZDF-Plugin* Der angeforderte -VideoLink- existiert NICHT !!!", xbmc.LOGERROR)
-		xbmc.log("[TvSpielfilm](playVideo) --- ENDE WIEDERGABE ANFORDERUNG ---", xbmc.LOGNOTICE)
-		xbmc.executebuiltin('Notification(TvSpielfilm : [COLOR red]!!! VideoURL - ERROR !!![/COLOR], ERROR = [COLOR red]Der angeforderte *VideoLink* existiert NICHT ![/COLOR],6000,'+icon+')')
+		log_MS("(ZdfGetVideo) AbspielLink-00 (ZDF+3) : *ZDF-Intern* Der angeforderte -VideoLink- existiert NICHT !!!")
+		log_MS("(playVideo) --- ENDE WIEDERGABE ANFORDERUNG ---")
+		xbmcgui.Dialog().notification((translation(30523).format('ZDF - Intern')), translation(30525), icon, 8000)
 
 def ZdfExtractQuality(jsonObject):
 	DATA = {}
@@ -530,23 +556,23 @@ def ZdfExtractQuality(jsonObject):
 						if quality['quality'] == found:
 							DATA['media'].append({'url': quality['audio']['tracks'][0]['uri'], 'type': 'video', 'mimeType': 'application/x-mpegURL'})
 				finalURL = DATA['media'][0]['url']
-				xbmc.log("[TvSpielfilm](ZdfExtractQuality) m3u8-Stream (ZDF+3) : %s" %(finalURL), xbmc.LOGNOTICE)
+				log_MS("(ZdfExtractQuality) m3u8-Stream (ZDF+3) : {0}".format(finalURL))
 			if each['formitaeten'][0]['type'] == 'h264_aac_mp4_http_na_na' and not finalURL:
 				for found in QUALITIES:
 					for quality in each['formitaeten'][0]['qualities']:
 						if quality['quality'] == found:
 							DATA['media'].append({'url': quality['audio']['tracks'][0]['uri'], 'type': 'video', 'mimeType': 'video/mp4'})
-				xbmc.log("[TvSpielfilm](ZdfExtractQuality) ZDF-STANDARDurl : %s" %(DATA['media'][0]['url']), xbmc.LOGNOTICE)
+				log_MS("(ZdfExtractQuality) ZDF-STANDARDurl : {0}".format(DATA['media'][0]['url']))
 				finalURL = VideoBEST(DATA['media'][0]['url'], improve='zdf-YES') # *mp4URL* Qualität nachbessern, überprüfen, danach abspielen
 		if not finalURL:
-			xbmc.log("[TvSpielfilm](ZdfExtractQuality) AbspielLink-00 (ZDF+3) : *ZDF-Plugin* VIDEO konnte NICHT abgespielt werden !!!", xbmc.LOGERROR)
+			log_MS("(ZdfExtractQuality) AbspielLink-00 (ZDF+3) : *ZDF-Intern* VIDEO konnte NICHT abgespielt werden !!!")
 		else:
 			listitem = xbmcgui.ListItem(name, path=finalURL)
 			xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
-			xbmc.log("[TvSpielfilm](ZdfExtractQuality) END-Qualität (ZDF+3) : %s" %(finalURL), xbmc.LOGNOTICE)
+			log_MS("(ZdfExtractQuality) END-Qualität (ZDF+3) : {0}".format(finalURL))
 	except:
-		xbmc.log("[TvSpielfilm](ZdfExtractQuality) AbspielLink-00 (ZDF+3) : *ZDF-Plugin* Fehler bei Anforderung des AbspielLinks !!!", xbmc.LOGERROR)
-	xbmc.log("[TvSpielfilm](playVideo) --- ENDE WIEDERGABE ANFORDERUNG ---", xbmc.LOGNOTICE)
+		log_MS("(ZdfExtractQuality) AbspielLink-00 (ZDF+3) : *ZDF-Intern* Fehler bei Anforderung des AbspielLinks !!!")
+	log_MS("(playVideo) --- ENDE WIEDERGABE ANFORDERUNG ---")
 
 def VideoBEST(best_url, improve=False):
 	# *mp4URL* Qualität nachbessern, überprüfen, danach abspielen
@@ -579,9 +605,9 @@ def cleanStation(channelID):
 		try:
 			channelID = channelID.replace(' ', '')
 			if 'ARD' in channelID or 'DasErste' in channelID:
-				channelID = '  (DasErste)'
+				channelID = '  (Das Erste)'
 			elif 'ONE' in channelID:
-				channelID = '  (ARDone)'
+				channelID = '  (ONE)'
 			elif 'Arte' in channelID or 'ARTE' in channelID:
 				channelID = '  (ARTE)'
 			elif '2INFO' in channelID or 'ZINFO' in channelID:
@@ -617,19 +643,22 @@ def parameters_string_to_dict(parameters):
 				paramDict[paramSplits[0]] = paramSplits[1]
 	return paramDict
 
-def queueVideo(url, name, image):
-	playlist = xbmc.PlayList(xbmc.PLAYLIST_VIDEO)
+def addVideoList(url, name, image, studio):
+	PL = xbmc.PlayList(1)
 	listitem = xbmcgui.ListItem(name, thumbnailImage=image)
+	listitem.setInfo(type="Video", infoLabels={"Title": name, "Studio": studio, "mediatype": "video"})
 	if useThumbAsFanart and image != icon:
 		listitem.setArt({'fanart': image})
 	else:
 		listitem.setArt({'fanart': defaultFanart})
-	playlist.add(url, listitem)
+	listitem.setProperty('IsPlayable', 'true')
+	listitem.setContentLookup(False)
+	PL.add(url, listitem)
 
-def addDir(name, url, mode, image, plot=None):
+def addDir(name, url, mode, image, plot=None, studio=None, genre=None):
 	u = sys.argv[0]+"?url="+quote_plus(url)+"&mode="+str(mode)
 	liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=image)
-	liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": plot})
+	liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": plot, "Studio": studio, "Genre": genre})
 	if useThumbAsFanart and image != icon:
 		liz.setArt({'fanart': image})
 	else:
@@ -639,7 +668,7 @@ def addDir(name, url, mode, image, plot=None):
 def addLink(name, url, mode, image, plot=None, studio=None, genre=None, duration=None, director=None, rating=None):
 	u = sys.argv[0]+"?url="+quote_plus(url)+"&mode="+str(mode)
 	liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=image)
-	liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": plot, "Studio": studio, "Genre": genre, "Duration": duration, "Director": director, "Rating": rating})
+	liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": plot, "Studio": studio, "Genre": genre, "Duration": duration, "Director": director, "Rating": rating, "mediatype": "video"})
 	if useThumbAsFanart and image != icon:
 		liz.setArt({'fanart': image})
 	else:
@@ -647,7 +676,8 @@ def addLink(name, url, mode, image, plot=None, studio=None, genre=None, duration
 	if duration is not None:
 		liz.addStreamInfo('Video', {'Duration': duration})
 	liz.setProperty('IsPlayable', 'true')
-	liz.addContextMenuItems([(translation(40201), 'RunPlugin(plugin://'+addon.getAddonInfo('id')+'/?mode=queueVideo&url='+quote_plus(u)+'&name='+quote_plus(name)+'&image='+quote_plus(image)+')',)])
+	liz.setContentLookup(False)
+	liz.addContextMenuItems([(translation(30601), 'RunPlugin(plugin://{0}?mode=addVideoList&url={1}&name={2}&image={3}&studio={4})'.format(addon.getAddonInfo('id'), quote_plus(u), quote_plus(name), quote_plus(image), quote_plus(studio)))])
 	return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
 
 params = parameters_string_to_dict(sys.argv[2])
@@ -655,6 +685,7 @@ name = unquote_plus(params.get('name', ''))
 url = unquote_plus(params.get('url', ''))
 mode = unquote_plus(params.get('mode', ''))
 image = unquote_plus(params.get('image', ''))
+studio = unquote_plus(params.get('studio', ''))
 referer = unquote_plus(params.get('referer', ''))
 
 if mode == 'listChannel':
@@ -665,7 +696,7 @@ elif mode == 'listVideosGenre':
 	listVideosGenre(url)
 elif mode == 'playVideo':
 	playVideo(url)
-elif mode == 'queueVideo':
-	queueVideo(url, name, image)
+elif mode == 'addVideoList':
+	addVideoList(url, name, image, studio)
 else:
 	index()

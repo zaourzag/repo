@@ -19,9 +19,9 @@
 		<setting label="30116" type="enum" id="streamSelection" values="m3u8|mp4" default="0"/>
 		<setting type="sep"/>
 		<setting label="30235" type="lsep"/>
-		<setting label="30371" type="text" option="readable"/>
-		<setting label="30372" type="text" option="readable"/>
-		<setting label="30373" type="text" option="readable"/>
+		<setting label="30350" type="text" option="readable"/>
+		<setting label="30351" type="text" option="readable"/>
+		<setting label="30352" type="text" option="readable"/>
 	</category>
 	<category label="30002">
 		<setting label="30236" type="lsep"/>
