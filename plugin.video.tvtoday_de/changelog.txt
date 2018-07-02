@@ -117,7 +117,7 @@
  - added: Abhängigkeit als 2.ARTE-Addon "plugin.video.L0RE.arte" von @L0RE zum Abspielen von ARTE-Links
  - added: Addon kompatibel mit PYTHON-Vers.3 gemacht (für KODI-19 >) :-)
 
-[B]Version 1.4.2  (02.07.2018)[/B]
+[B]Version 1.4.3  (02.07.2018)[/B]
  - fixed: KODI-18/Win/64bit~alpha3-Nightly macht stellenweise Probleme mit Umlauten + Sonderzeichen
  - fixed: Beim Abspielen von der Playliste wird NICHT immer der Titel der Sendung angezeigt
  - optimized: SprachFiles des Addons aufgestockt
