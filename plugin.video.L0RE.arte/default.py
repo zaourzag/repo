@@ -1,26 +1,44 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+#import urlparse  # Python 2.X
+#import urllib.parse  # Python 3+
 import sys
-import urlparse
 import xbmcgui
 import xbmcplugin
 import xbmcaddon
 import xbmc
 import xbmcvfs
-import urllib, urllib2, socket, cookielib, re, os, shutil,json
+import socket, re, os, shutil, json
+try:
+	import urllib, urllib2  # Python 2.X
+	import cookielib  # Python 2.X
+	from HTMLParser import HTMLParser  # Python 2.X
+	unquote_plus = urllib.unquote_plus
+	quote_plus = urllib.quote_plus
+	quote = urllib.quote
+	makeRequest = urllib2
+	makeCooks = cookielib
+except ImportError:
+	import urllib.parse, urllib.request  # Python 3+
+	import http.cookiejar  # Python 3+
+	from html.parser import HTMLParser  # Python 3+
+	unquote_plus = urllib.parse.unquote_plus
+	quote_plus = urllib.parse.quote_plus
+	quote = urllib.parse.quote
+	makeRequest = urllib.request
+	makeCooks = http.cookiejar
 import time
+import datetime
 import base64
 import requests
 from bs4 import BeautifulSoup
-from HTMLParser import HTMLParser
-import datetime
 
 # Setting Variablen Des Plugins
 global debuging
 base_url = sys.argv[0]
 addon_handle = int(sys.argv[1])
-args = urlparse.parse_qs(sys.argv[2][1:])
+#args = urlparse.parse_qs(sys.argv[2][1:])
 addon = xbmcaddon.Addon()
 # Lade Sprach Variablen
 translation = addon.getLocalizedString
@@ -30,24 +48,21 @@ xbmcplugin.setContent(addon_handle, 'movies')
 baseURL = "https://www.arte.tv/"
 ARTE_apiURL = "https://www.arte.tv/guide/api/api"
 
-
 xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_UNSORTED)
 xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
 
+icon = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')+'/icon.png').encode("utf-8").decode('utf-8')
 
-icon = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')+'/icon.png').decode('utf-8')
-
-
-profile    = xbmc.translatePath(addon.getAddonInfo('profile')).decode("utf-8")
-temp       = xbmc.translatePath(os.path.join( profile, 'temp', '')).decode("utf-8")
+profile    = xbmc.translatePath(addon.getAddonInfo('profile')).encode("utf-8").decode('utf-8')
+temp       = xbmc.translatePath(os.path.join( profile, 'temp', '')).encode("utf-8").decode('utf-8')
 
 try:
     if xbmcvfs.exists(temp):
         shutil.rmtree(temp)
 except: pass
 xbmcvfs.mkdirs(temp)
-cookie=os.path.join( temp, 'cookie.jar')
-cj = cookielib.LWPCookieJar();
+cookie=os.path.join( temp, 'cookie.lwp')
+cj = makeCooks.LWPCookieJar();
 
 if xbmcvfs.exists(cookie):
     cj.load(cookie,ignore_discard=True, ignore_expires=True)                  
@@ -64,27 +79,22 @@ def log(msg, level=xbmc.LOGNOTICE):
     xbmc.log('%s: %s' % (addonID, msg), level) 
 
 def addDir(name, url, mode, thump, desc="", page=1, nosub=0):   
-    u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&page="+str(page)+"&nosub="+str(nosub)
-    ok = True
+    u = sys.argv[0]+"?url="+quote_plus(url)+"&mode="+str(mode)+"&page="+str(page)+"&nosub="+str(nosub)
     liz = xbmcgui.ListItem(name)  
     liz.setArt({'thumb': thump, 'fanart': thump, 'banner': icon})
     liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc})
-    ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
-    return ok
+    return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
 
 def addLink(name, url, mode, thump, duration="", desc="", genre='', director="", bewertung=""):
-    debug("URL ADDLINK :"+url)
+    debug("URL ADDLINK :"+quote_plus(url))
     debug(icon)
-    u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
-    ok = True
-    liz = xbmcgui.ListItem(name,thumbnailImage=thump)
-    liz.setArt({'fanart' : icon})
-    liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Genre": genre, "Director": director, "Rating": bewertung})
+    u = sys.argv[0]+"?url="+quote_plus(url)+"&mode="+str(mode)
+    liz = xbmcgui.ListItem(name)
+    liz.setArt({'thumb': thump, 'fanart': thump, 'banner': icon})
+    liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Genre": genre, "Studio": "ARTE", "Director": director, "Rating": bewertung})
     liz.setProperty('IsPlayable', 'true')
     liz.addStreamInfo('video', { 'duration' : duration })
-    #xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
-    ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
-    return ok
+    return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
   
 def parameters_string_to_dict(parameters):
     paramDict = {}
@@ -101,7 +111,7 @@ def geturl(url,data="x",header="",referer=""):
     debug("Get Url: " +url)
     for cook in cj:
         debug(" Cookie :"+ str(cook))
-    opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
+    opener = makeRequest.build_opener(makeRequest.HTTPCookieProcessor(cj))
     userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36"
     if header=="":
         opener.addheaders = [('User-Agent', userAgent)]
@@ -114,10 +124,9 @@ def geturl(url,data="x",header="",referer=""):
             content=opener.open(url,data=data).read()
         else:
             content=opener.open(url).read()
-    except urllib2.HTTPError as e:
-        #debug( e.code )  
-        cc=e.read()  
-        debug("Error : " +cc)
+    except Exception as e:
+        err = str(e) 
+        debug("Error : " +err)
         content=""
     opener.close()
     cj.save(cookie,ignore_discard=True, ignore_expires=True)
@@ -127,11 +136,11 @@ def liste():
     UN_Supported = ['360', 'Accue', 'Direct', 'Digitale', 'Edition', 'Guide', 'Home', 'Live', 'Magazin', 'productions', 'Programm', 'VOD/DVD']
     content=geturl(baseURL+country+"/")
     htmlPage = BeautifulSoup(content, 'html.parser')
-    elemente = htmlPage.find_all("li",attrs={"class":"next-menu-nav__item"})
+    elemente = htmlPage.find_all("div",attrs={"list":"left"})
     for element in elemente:
         link=element.find("a")
-        name=link.text.strip()
         url=link["href"]
+        name=link.text.strip()
         if not any(x in name for x in UN_Supported):
             addDir(name,url,"subrubrik",icon)
     xbmcplugin.endOfDirectory(addon_handle)
@@ -139,28 +148,25 @@ def liste():
 def subrubrik(surl):
     content=geturl(surl)
     htmlPage = BeautifulSoup(content, 'html.parser')
-    elemente = htmlPage.find_all("li",attrs={"class":"next-menu-nav__item"})
+    elemente = htmlPage.find_all("div",attrs={"list":"submenu"})
     anz=0
-    for element in elemente :
-        if '"'+surl+'"' in str(element):
+    for element in elemente:
+        try:
+            debug("+++++++")
+            debug(element)
+            debug("+++++++")
+            link=element.find("a")
+            url=link["href"]
+            name=link.text.strip()
+            if not "arte info" in name.lower() and surl in url:
+                addDir(name,url,"videoliste",icon)
+                anz=1
+        except: 
+            debug("------")
             debug(element)
             debug("------")
-            try:
-                elemente2=element.find_all("li",attrs={"class":"next-menu-nav__item"})
-                debug("++++++++++++")
-                debug(elemente2)
-                for element in elemente2:
-                    debug(element)
-                    debug("+++++++")
-                    link=element.find("a")
-                    url=link["href"]
-                    name=link.text.strip()
-                    if not "arte info" in name.lower():
-                        addDir(name,url,"videoliste",icon)
-                        anz=1
-            except: pass
     if anz==0:
-         videoliste(surl)
+        videoliste(surl)
     xbmcplugin.endOfDirectory(addon_handle) 
 
 def playvideo(url):
@@ -213,23 +219,24 @@ def playvideo(url):
         xbmcgui.Dialog().notification(addon.getAddonInfo('id')+" : [COLOR red]!!! VIDEO - URL - ERROR !!![/COLOR]", "ERROR = [COLOR red]Der übertragene *Video-Abspiel-Link* ist FEHLERHAFT ![/COLOR]", xbmcgui.NOTIFICATION_ERROR, time=6000)
 
 params = parameters_string_to_dict(sys.argv[2])
-mode = urllib.unquote_plus(params.get('mode', ''))
-url = urllib.unquote_plus(params.get('url', ''))
-referer = urllib.unquote_plus(params.get('referer', ''))
-page = urllib.unquote_plus(params.get('page', ''))
-nosub= urllib.unquote_plus(params.get('nosub', ''))
-query = urllib.unquote_plus(params.get('query', ''))
+url = unquote_plus(params.get('url', ''))
+mode = unquote_plus(params.get('mode', ''))
+thump = unquote_plus(params.get('thump', ''))
+referer = unquote_plus(params.get('referer', ''))
+page = unquote_plus(params.get('page', ''))
+nosub= unquote_plus(params.get('nosub', ''))
+query = unquote_plus(params.get('query', ''))
 
 def videoliste(url,page="1"):  
     debug("Start Videoliste")
     debug(url)
-    SUPPORTED = ['Bonus', 'Live', 'Programm', 'Programme']
+    SUPPORTED = ['Ausschnitt', 'Bonus', 'Live', 'Programm', 'Programme']
     #https://www.arte.tv/guide/api/api/zones/de/web/videos_subcategory_OPE?page=2&limit=10
     #https://www.arte.tv/sites/de/webproductions/api/?lang=de&paged=3  
     if int(page)==1:
         content=geturl(url)
         #"nextPage":"https:\u002F\u002Fapi-cdn.arte.tv\u002Fapi\u002Femac\u002Fv2\u002Fde\u002Fweb\u002Fzones\u002Fvideos_subcategory_OPE?page=2&limit=10"
-        content=re.compile(' window.__INITIAL_STATE__ = (.+?)window.__CLASS_IDS__ =', re.DOTALL).findall(content)[0]
+        content=re.compile(b' window.__INITIAL_STATE__ = (.+?)window.__CLASS_IDS__ =', re.DOTALL).findall(content)[0]
         content=content.strip()[:-1]
         debug("++++++++++++++#####")
         debug(content)
@@ -238,7 +245,7 @@ def videoliste(url,page="1"):
         debug("###")
         debug(struktur1)
         sub1=struktur1["pages"]["list"]
-        key=sub1.keys()[0]
+        key=list(sub1)[0]
         sub2=sub1[key]["zones"]
         debug(sub2)
         for zone in sub2:
@@ -250,13 +257,13 @@ def videoliste(url,page="1"):
                     code=zone["code"]
                     break
             except: pass
-        url=ARTE_apiURL+"/zones/"+country+"/web/"+str(code)
-    jsonurl=url+"?page="+page+"&limit=50"
+        url=ARTE_apiURL+"/zones/"+country+"/"+str(code)
+    jsonurl=url+"/?page="+page+"&limit=50"
     debug(jsonurl)
     content=geturl(jsonurl)
     struktur2 = json.loads(content)
     for element in struktur2["data"]:
-        videourl=element["url"].encode("utf-8")
+        videourl=element["url"]
         title=element["title"].encode("utf-8")
         try:
             subtitle=element["subtitle"].encode("utf-8")
@@ -264,7 +271,7 @@ def videoliste(url,page="1"):
         except: pass
         try: desc=element["description"].encode("utf-8")
         except: desc=""
-        bild=element["images"]["landscape"]["resolutions"][-1]["url"].encode("utf-8")
+        bild=element["images"]["landscape"]["resolutions"][-1]["url"]
         duration=element["duration"]
         if duration and duration != "" and duration != "0":
             addLink(title,videourl,"playvideo",bild,duration=duration,desc=desc)
@@ -303,11 +310,10 @@ def menu():
     xbmcplugin.endOfDirectory(addon_handle)
 
 def abiszetc(url,page="1",query=False):
-    xbmcplugin.setContent(addon_handle, 'tvshows')
     newUrl = url
     if int(page)==1:
         content=geturl(url)
-        content=re.compile(' window.__INITIAL_STATE__ = (.+?)window.__CLASS_IDS__ =', re.DOTALL).findall(content)[0]
+        content=re.compile(b' window.__INITIAL_STATE__ = (.+?)window.__CLASS_IDS__ =', re.DOTALL).findall(content)[0]
         content=content.strip()[:-1]
         debug("#########")
         debug(content)
@@ -316,22 +322,22 @@ def abiszetc(url,page="1",query=False):
         debug("###")
         debug(struktur1)
         sub1=struktur1["pages"]["list"]
-        key=sub1.keys()[0]
+        key=list(sub1)[0]
         sub2=sub1[key]["zones"]    
         code=sub2[0]["code"]
         debug("CODE : "+code)
-        url=ARTE_apiURL+"/zones/"+country+"/web/"+str(code)
+        url=ARTE_apiURL+"/zones/"+country+"/"+str(code)
     if '###' in url:
         nextQuery=url.split('###')[1].replace('###', '')
-        jsonurl=url.split('###')[0]+"?page="+page+"&limit=50&query="+nextQuery
+        jsonurl=url.split('###')[0]+"/?page="+page+"&limit=50&query="+nextQuery
     elif not '###' in url and query != "":
-        jsonurl=url+"?page="+page+"&limit=50&query="+query
+        jsonurl=url+"/?page="+page+"&limit=50&query="+query
     else:
-        jsonurl=url+"?page="+page+"&limit=50"
+        jsonurl=url+"/?page="+page+"&limit=50"
     content=geturl(jsonurl)
     struktur2 = json.loads(content)
     for element in struktur2["data"]:
-        videourl=element["url"].encode("utf-8")
+        videourl=element["url"]
         title=element["title"].encode("utf-8")
         try:
             subtitle=element["subtitle"].encode("utf-8")
@@ -339,7 +345,7 @@ def abiszetc(url,page="1",query=False):
         except: pass
         try: desc=element["description"].encode("utf-8")
         except: desc=""
-        bild=element["images"]["landscape"]["resolutions"][-1]["url"].encode("utf-8")
+        bild=element["images"]["landscape"]["resolutions"][-1]["url"]
         duration=element["duration"]
         if "/sendungen/" in newUrl.lower() or "/emissions/" in newUrl.lower():
             addDir(title,videourl,"videoliste",bild,desc=desc)
@@ -396,11 +402,11 @@ def datumselect(wert):
     xbmcplugin.endOfDirectory(addon_handle)
 
 def showday(tag):
-    url=ARTE_apiURL+"/pages/"+country+"/web/TV_GUIDE/?day="+tag
+    url=ARTE_apiURL+"/pages/"+country+"/TV_GUIDE/?day="+tag
     content=geturl(url)
     struktur = json.loads(content)
     for element in struktur["zones"][-1]["data"]:
-        videourl=element["url"].encode("utf-8")
+        videourl=element["url"]
         title=element["title"].encode("utf-8")
         try:
             subtitle=element["subtitle"].encode("utf-8")
@@ -408,20 +414,20 @@ def showday(tag):
         except: pass
         try: desc=element["fullDescription"].encode("utf-8")
         except: desc=""
-        bild=element["images"]["landscape"]["resolutions"][-1]["url"].encode("utf-8")
+        bild=element["images"]["landscape"]["resolutions"][-1]["url"]
         duration=element["duration"]
         broadcastDates=element["broadcastDates"][0]
         #"2018-02-28T04:00:00Z"
-        try:	
-		datetime_object = datetime.datetime.strptime(broadcastDates, '%Y-%m-%dT%H:%M:%SZ')
-	except TypeError:
-		datetime_object = datetime.datetime(*(time.strptime(broadcastDates, '%Y-%m-%dT%H:%M:%SZ')[0:6]))
+        try:
+            datetime_object = datetime.datetime.strptime(broadcastDates, '%Y-%m-%dT%H:%M:%SZ')
+        except TypeError:
+            datetime_object = datetime.datetime(*(time.strptime(broadcastDates, '%Y-%m-%dT%H:%M:%SZ')[0:6]))
         wann="[COLOR orangered]"+datetime_object.strftime("%H:%M")+"[/COLOR]"
         debug("-----------------------")
         debug(wann)
         stickers=str(element["stickers"])
         if "PLAYABLE" in stickers:
-            addLink(wann+"  "+title,videourl,"playvideo",bild,duration=duration,desc=desc)
+            addLink(wann+"  "+title.decode('utf-8'),videourl,"playvideo",bild,duration=duration,desc=desc)
     xbmcplugin.endOfDirectory(addon_handle)
 
 def listVideos_Time():
@@ -441,7 +447,7 @@ def SearchArte():
     #https://www.arte.tv/guide/api/api/zones/de/web/listing_SEARCH?page=1&limit=20&query=filme
     someReceived = False
     word = xbmcgui.Dialog().input("Search ARTE ...", type=xbmcgui.INPUT_ALPHANUM)
-    word = urllib.quote(word, safe='')
+    word = quote_plus(word, safe='')
     if word == "": return
     title_SEARCH = baseURL+country+"/search/?q="+word
     debug("SearchArte - Url: "+title_SEARCH)
