@@ -15,6 +15,10 @@ __addonId__=__addon__.getAddonInfo('id')
 __addonname__ = __addon__.getAddonInfo('name')
 
 URL = __addon__.getSetting('dnsurl')
+if URL == '':
+	__addon__.openSettings()
+	URL = __addon__.getSetting('dnsurl')
+	
 TESTIP = 'http://ifconfig.co/ip'
 OLDIP = "0"
 
@@ -27,11 +31,12 @@ def testip(IP):
         newip = OLDIP
    
     if  OLDIP != newip:
-        OLDIP = newip
-        handle = urllib2.urlopen(URL)
-        html = handle.read()
+		
+		OLDIP = newip
+		handle = urllib2.urlopen(URL)	
+		html = handle.read()
         #html = 'test'
-        xbmcgui.Dialog().notification('SmartDNS', str(html) + " " + str(newip),   __addon__.getAddonInfo('path') + '/icon.jpg', 3000, False)
+		xbmcgui.Dialog().notification('SmartDNS', str(html) + " " + str(newip),   __addon__.getAddonInfo('path') + '/icon.jpg', 3000, False)
     return OLDIP
         
 def timer(OLDIP):

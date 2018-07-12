@@ -196,9 +196,8 @@ if OLDVERSION != VERSION:
    
 elif __addon__.getSetting('dbonstart') == 'true':
 	start()
-try:    
-    getProgNextDay()
-except:pass
-refreshProg()
+
+tomorrow = datetime.datetime.today() + datetime.timedelta(days=1)
+_zattooDB_.updateProgram(tomorrow)
 
 

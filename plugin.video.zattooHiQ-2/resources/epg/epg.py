@@ -698,7 +698,7 @@ class EPG(xbmcgui.WindowXML):
 
 	def _previousDay(self):
 		date = (self.viewStartDate - datetime.timedelta(days=1))
-		datelow = (datetime.datetime.today() - datetime.timedelta(days=8))
+4		datelow = (datetime.datetime.today() - datetime.timedelta(days=7))
 		if date < datelow:
 			d = datetime.datetime.strftime(datetime.datetime.date(date), '%d.%m.%Y')
 			xbmcgui.Dialog().notification(str(d), localString(31304), time=3000) 
@@ -1067,28 +1067,16 @@ class EPG(xbmcgui.WindowXML):
 			xbmcgui.Dialog().notification(str(date), localString(31303), time=3000) 
 			return
 		date = time.strptime(date, '%d.%m.%Y')
-		today = time.strptime(str(today), '%Y-%m-%d')
-		timedelta = datetime.timedelta(seconds=time.mktime(date) - time.mktime(today))
+		current = time.strptime(str(self.viewStartDate.strftime ('%Y-%m-%d')), '%Y-%m-%d')
+		timedelta = datetime.timedelta(seconds=time.mktime(date) - time.mktime(current))
 		if timedelta.seconds == 82800: 
 			timedelta += datetime.timedelta(hours=1)
 		debug('Timedelta '+str(timedelta))
-		if date > today:
-			self.viewStartDate = datetime.datetime.today()
+		if date > current:
 			self.viewStartDate += datetime.timedelta(days=int(str(timedelta)[:2]))
-			self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30,
-													 seconds=self.viewStartDate.second)
 			self.onRedrawEPG(self.channelIdx, self.viewStartDate)
-		elif date < today:
-			self.viewStartDate = datetime.datetime.today()
+		elif date < current:
 			delta = str(timedelta).replace('-','')[:2]
 			self.viewStartDate -= datetime.timedelta(days=int(delta))
-			self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30,
-													 seconds=self.viewStartDate.second)
-			self.onRedrawEPG(self.channelIdx, self.viewStartDate)
-			
-		else:
-			self.viewStartDate = datetime.datetime.today()
-			self.viewStartDate -= datetime.timedelta(minutes=self.viewStartDate.minute % 30,
-													 seconds=self.viewStartDate.second)								 
 			self.onRedrawEPG(self.channelIdx, self.viewStartDate)
 		
