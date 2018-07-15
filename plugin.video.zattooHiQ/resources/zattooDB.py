@@ -90,29 +90,37 @@ class reloadDB(xbmcgui.WindowXMLDialog):
         except:
             pass
     if cache:
-		try:
-		    os.remove(os.path.join(profilePath, 'cookie.cache'))
-		    os.remove(os.path.join(profilePath, 'session.cache'))
-		    os.remove(os.path.join(profilePath, 'account.cache'))
-		    #os.remove(os.path.join(profilePath, 'apicall.cache'))
-		    DB.zapiSession()
-		    DB._createTables()
-		    xbmcgui.Dialog().ok(__addon__.getAddonInfo('name'), local(24074))
-		except:
-		    pass
+        try:
+            os.remove(os.path.join(profilePath, 'cookie.cache'))
+            os.remove(os.path.join(profilePath, 'session.cache'))
+            os.remove(os.path.join(profilePath, 'account.cache'))
+            #os.remove(os.path.join(profilePath, 'apicall.cache'))
+            DB.zapiSession()
+            DB._createTables()
+            #xbmcgui.Dialog().ok(__addon__.getAddonInfo('name'), local(24074))
+            
+        except:
+            pass
     #DB.zapi.AccountData = None
     
     DB._createTables()
-    #time.sleep(5)
+    time.sleep(5)
     xbmcgui.Dialog().notification(localString(31916), localString(30110),  __addon__.getAddonInfo('path') + '/icon.png', 3000, False)
     DB.updateChannels(True)
     #time.sleep(2)
     DB.updateProgram(datetime.datetime.now(), True)
     
+    try: 
+        tomorrow = datetime.datetime.today() + datetime.timedelta(days=1)
+        DB.updateProgram(tomorrow)
+    except:pass
+    
     startTime=datetime.datetime.now()#-datetime.timedelta(minutes = 60)
     endTime=datetime.datetime.now()+datetime.timedelta(minutes = 20)
     #time.sleep(2)
     DB.getProgInfo(True, startTime, endTime)
+   
+    
     xbmcgui.Dialog().notification(localString(31106), localString(31915),  __addon__.getAddonInfo('path') + '/icon.png', 3000, False)
     _library_.make_library()
     xbmc.executebuiltin("Dialog.Close(busydialog)")
@@ -162,6 +170,7 @@ class ZattooDB(object):
       __addon__.openSettings()
       zapiSession.renew_session()
       xbmcgui.Dialog().ok(__addon__.getAddonInfo('name'), local(24074))
+      
       import sys
       sys.exit()
 
@@ -189,9 +198,10 @@ class ZattooDB(object):
 
     # check if DB exists
     c = self.conn.cursor()
-    try: c.execute('SELECT * FROM showinfos')
+    try: 
+        c.execute('SELECT * FROM showinfos')
     except: 
-	self._createTables()
+        self._createTables()
     c.close()
 
   def _createTables(self):
@@ -264,10 +274,10 @@ class ZattooDB(object):
     favoritesData = self.zapi.exec_zapiCall(api, None)
     debug (str(favoritesData))
     if favoritesData == None: 
-	debug('favourites = None')
+        debug('favourites = None')
         time.sleep(5)
         favoritesData = self.zapi.exec_zapiCall(api, None)
-	debug (str(favoritesData))
+    debug (str(favoritesData))
     
     nr = 0
     for group in channelsData['channel_groups']:
@@ -415,19 +425,19 @@ class ZattooDB(object):
     nr=0
     #max 10 items per request -> request 3times for 30 items
     for page in range(3):
-  		api = '/zapi/v2/cached/' + self.zapi.SessionData['session']['power_guide_hash'] + '/teaser_collections/most_watched_live_now_de?page='+str(page)+'&per_page=10'
-  		mostWatched = self.zapi.exec_zapiCall(api, None)
-  		if mostWatched is None: continue
-  		for data in mostWatched['teasers']:
-  			data=data['teasable']
-  			popularList[data['cid']]={
-  				'id': str(data['cid']),
-  				'title': data['t'],
-  				'logo': channels[data['cid']]['logo'],
-  				'nr':nr
-  			}
-  			popularList['index'].append(str(data['cid']))
-  			nr+=1
+          api = '/zapi/v2/cached/' + self.zapi.SessionData['session']['power_guide_hash'] + '/teaser_collections/most_watched_live_now_de?page='+str(page)+'&per_page=10'
+          mostWatched = self.zapi.exec_zapiCall(api, None)
+          if mostWatched is None: continue
+          for data in mostWatched['teasers']:
+              data=data['teasable']
+              popularList[data['cid']]={
+                  'id': str(data['cid']),
+                  'title': data['t'],
+                  'logo': channels[data['cid']]['logo'],
+                  'nr':nr
+              }
+              popularList['index'].append(str(data['cid']))
+              nr+=1
     return popularList
 
   def getPrograms(self, channels, get_long_description=False, startTime=datetime.datetime.now(), endTime=datetime.datetime.now()):
@@ -562,7 +572,7 @@ class ZattooDB(object):
         try:
             self.conn.commit()
         except:
-			print 'IntegrityError: FOREIGN KEY constraint failed zattooDB 355'
+            print 'IntegrityError: FOREIGN KEY constraint failed zattooDB 355'
         info.close()
         return {'description':longDesc, 'year':year, 'country':country, 'category':category, 'genre':genre, 'credits':cred}
         
@@ -653,13 +663,13 @@ class ZattooDB(object):
     return playing
   
   def get_showID(self, showID):
-		c = self.conn.cursor()
-		programList = []
-		try:
-			c.execute('SELECT * FROM programs WHERE showID = ? ', [showID])
-		except:pass
-		row = c.fetchone()
-		programList.append({
+        c = self.conn.cursor()
+        programList = []
+        try:
+            c.execute('SELECT * FROM programs WHERE showID = ? ', [showID])
+        except:pass
+        row = c.fetchone()
+        programList.append({
             'channel': row['channel'],
             'showID' : row['showID'],
             'title' : row['title'],
@@ -675,9 +685,9 @@ class ZattooDB(object):
             'restart': row['restart']
            
             })
-		c.close
-		return programList
-		
+        c.close
+        return programList
+        
   def set_currentStream(self, nr):
     c = self.conn.cursor()
     c.execute('UPDATE playing SET current_stream=?', [nr])
@@ -819,31 +829,31 @@ class ZattooDB(object):
         return
 
   def formatDate(self, timestamp):
-		if timestamp:
- 			format = xbmc.getRegion('datelong')
- 			date = timestamp.strftime(format)
- 			date = date.replace('Monday', local(11))
- 			date = date.replace('Tuesday', local(12))
- 			date = date.replace('Wednesday', local(13))
- 			date = date.replace('Thursday', local(14))
- 			date = date.replace('Friday', local(15))
- 			date = date.replace('Saturday', local(16))
- 			date = date.replace('Sunday', local(17))
- 			date = date.replace('January', local(21))
- 			date = date.replace('February', local(22))
- 			date = date.replace('March', local(23))
- 			date = date.replace('April', local(24))
- 			date = date.replace('May', local(25))
- 			date = date.replace('June', local(26))
- 			date = date.replace('July', local(27))
- 			date = date.replace('August', local(28))
- 			date = date.replace('September', local(29))
- 			date = date.replace('October', local(30))
- 			date = date.replace('November', local(31))
- 			date = date.replace('December', local(32))
-			return date
-		else:
-			return ''
+        if timestamp:
+            format = xbmc.getRegion('datelong')
+            date = timestamp.strftime(format)
+            date = date.replace('Monday', local(11))
+            date = date.replace('Tuesday', local(12))
+            date = date.replace('Wednesday', local(13))
+            date = date.replace('Thursday', local(14))
+            date = date.replace('Friday', local(15))
+            date = date.replace('Saturday', local(16))
+            date = date.replace('Sunday', local(17))
+            date = date.replace('January', local(21))
+            date = date.replace('February', local(22))
+            date = date.replace('March', local(23))
+            date = date.replace('April', local(24))
+            date = date.replace('May', local(25))
+            date = date.replace('June', local(26))
+            date = date.replace('July', local(27))
+            date = date.replace('August', local(28))
+            date = date.replace('September', local(29))
+            date = date.replace('October', local(30))
+            date = date.replace('November', local(31))
+            date = date.replace('December', local(32))
+            return date
+        else:
+            return ''
 
   def getSeries(self, showID):
         c = self.conn.cursor()

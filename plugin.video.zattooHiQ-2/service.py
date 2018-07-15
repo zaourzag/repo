@@ -48,7 +48,7 @@ def log(msg, level=xbmc.LOGNOTICE):
     addon = xbmcaddon.Addon()
     addonID = addon.getAddonInfo('id')
     xbmc.log('%s: %s' % (addonID, msg), level) 
-	
+    
 def refreshProg():
     import urllib
     monitor = xbmc.Monitor()
@@ -144,7 +144,7 @@ class myPlayer(xbmc.Player):
       playingFile=xbmc.getInfoLabel('Player.Filenameandpath')
       print "playingfile: " + str(playingFile)
       if playingFile.find('dash-live')>-1 or playingFile.find('hls-live')>-1:
-			self.loadKeymap()
+            self.loadKeymap()
      
       else: #start recall while playing -> unload keymap
         self.unloadKeymap()
@@ -195,9 +195,10 @@ if OLDVERSION != VERSION:
    _zattooDB_.set_version(VERSION)
    
 elif __addon__.getSetting('dbonstart') == 'true':
-	start()
+    start()
+    try: 
+        tomorrow = datetime.datetime.today() + datetime.timedelta(days=1)
+        _zattooDB_.updateProgram(tomorrow)
+    except:pass
 
-tomorrow = datetime.datetime.today() + datetime.timedelta(days=1)
-_zattooDB_.updateProgram(tomorrow)
-
-
+refreshProg()
