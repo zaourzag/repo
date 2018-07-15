@@ -483,6 +483,19 @@ msgctxt "#31016"
 msgid "Only finished recordings"
 msgstr ""
 
+msgctxt "#31017"
+msgid "Date format in the recording list"
+msgstr ""
+
+msgctxt "#31018"
+msgid "year.month.day hour:minute"
+msgstr ""
+
+msgctxt "#31019"
+msgid "weekday day.month.year hour:minute"
+msgstr ""
+
+
 
 ### Datenbank ###
 msgctxt "#31020"

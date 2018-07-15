@@ -93,6 +93,12 @@ def start():
     from resources.zattooDB import ZattooDB
     _zattooDB_ = ZattooDB()
     _zattooDB_.updateProgram()
+    
+    try: 
+        tomorrow = datetime.datetime.today() + datetime.timedelta(days=1)
+        _zattooDB_.updateProgram(tomorrow)
+    except:pass
+
 
     startTime=datetime.datetime.now()#-datetime.timedelta(minutes = 60)
     endTime=datetime.datetime.now()+datetime.timedelta(minutes = 20)
@@ -196,9 +202,5 @@ if OLDVERSION != VERSION:
    
 elif __addon__.getSetting('dbonstart') == 'true':
     start()
-    try: 
-        tomorrow = datetime.datetime.today() + datetime.timedelta(days=1)
-        _zattooDB_.updateProgram(tomorrow)
-    except:pass
-
+    
 refreshProg()

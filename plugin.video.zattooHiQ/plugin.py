@@ -443,7 +443,10 @@ def build_recordingsList(addon_uri, addon_handle):
     if (now>end): color='green'
     if RECREADY == "true":
       if color != "green": continue
-    label=datetime.datetime.fromtimestamp(start).strftime('%d.%m.%Y. %H:%M')+' ' # NEW changed - by Samoth
+    if __addon__.getSetting('rec_name') == '0':
+        label=datetime.datetime.fromtimestamp(start).strftime('%Y.%m.%d. %H:%M')+' ' 
+    elif __addon__.getSetting('rec_name') == '1':
+        label=datetime.datetime.fromtimestamp(start).strftime('%a %d.%m.%Y. %H:%M')+' ' 
     if record['episode_title']:
       label+='[COLOR '+color+']'+record['title']+'[/COLOR]: '+record['episode_title']
       title=record['title']+': '+record['episode_title']
@@ -457,9 +460,9 @@ def build_recordingsList(addon_uri, addon_handle):
     
     director=[]
     cast=[]
-
-    meta.update({'title':label,'year':showInfo[0]['year'], 'plot':showInfo[0]['d'], 'country':showInfo[0]['country'],'director':showInfo[0]['cr']['director'], 'cast':showInfo[0]['cr']['actor'], 'genre':', '.join(showInfo[0]['g'])  })
-    meta.update({'title':label})
+    date = datetime.datetime.fromtimestamp(start).strftime('%d.%m.%Y')
+    meta.update({'title':label,'date':date,'year':showInfo[0]['year'], 'plot':showInfo[0]['d'], 'country':showInfo[0]['country'],'director':showInfo[0]['cr']['director'], 'cast':showInfo[0]['cr']['actor'], 'genre':', '.join(showInfo[0]['g'])  })
+    meta.update({'sorttitle':record['title']})
     '''
     #mark watched
     if (position>end-660):  #10min padding from zattoo +1min safety margin
@@ -510,8 +513,9 @@ def build_recordingsList(addon_uri, addon_handle):
     )
   xbmcplugin.endOfDirectory(addon_handle)
   xbmcplugin.setContent(addon_handle, 'movies')
-  xbmcplugin.addSortMethod(addon_handle, 2)
-  xbmcplugin.addSortMethod(addon_handle, 9)
+  xbmcplugin.addSortMethod(addon_handle, 1)
+  xbmcplugin.addSortMethod(addon_handle, 3)
+  xbmcplugin.addSortMethod(addon_handle, xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE )
 
 def watch_recording(addon_uri, addon_handle, recording_id, start=0):
   #if xbmc.Player().isPlaying(): return

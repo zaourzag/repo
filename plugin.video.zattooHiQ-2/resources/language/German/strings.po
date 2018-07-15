@@ -462,6 +462,18 @@ msgctxt "#31016"
 msgid "Only finished recordings"
 msgstr "nur fertige Aufnahmen anzeigen"
 
+msgctxt "#31017"
+msgid "Date format in the recording list"
+msgstr "Datumsformat in der Aufnahmelliste"
+
+msgctxt "#31018"
+msgid "year.month.day hour:minute"
+msgstr "Jahr.Monat.Tag Stunde:Minute"
+
+msgctxt "#31019"
+msgid "weekday day.month.year hour:minute"
+msgstr "Wochentag Tag.Monat.Jahr Stunde:Minute"
+
 # ## Datenbank ###
 msgctxt "#31020"
 msgid "Database"
