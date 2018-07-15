@@ -698,9 +698,7 @@ class EPG(xbmcgui.WindowXML):
 
 	def _previousDay(self):
 		date = (self.viewStartDate - datetime.timedelta(days=1))
-
 		datelow = (datetime.datetime.today() - datetime.timedelta(days=7))
-
 		if date < datelow:
 			d = datetime.datetime.strftime(datetime.datetime.date(date), '%d.%m.%Y')
 			xbmcgui.Dialog().notification(str(d), localString(31304), time=3000) 
