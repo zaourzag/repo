@@ -1,0 +1,83 @@
+# Kodi Media Center language file
+# Addon Name: Tele5 Mediathek
+# Addon id: plugin.video.tele5_de
+# Addon version: 1.3.0
+# Addon Provider: L0RE
+msgid ""
+msgstr ""
+"Project-Id-Version: KODI-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2018-07-09 11:30+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Tele5 - Mediathek"
+msgstr ""
+
+msgctxt "Addon Description"
+msgid "Discover the official Tele 5 entertainment program! Enjoy full episodes of original series, movies or exclusive videos.[CR]Hollywood classics like Ben Hur or Spartacus, Hollywood stars like Kirk Douglas or Clint Eastwood, all of which have shaped Hollywood, are featured regularly in the Tele5 media library."
+msgstr ""
+
+#strings start
+# SETTINGS-CATEGORIES
+
+msgctxt "#30000"
+msgid "General"
+msgstr ""
+
+#empty strings from id 30001 to 30109
+# SETTINGS-BUTTONS
+
+msgctxt "#30110"
+msgid "Sort all titles alphabetically (every folder customizable - otherwise standard)"
+msgstr ""
+
+#empty strings from id 30111 to 30229
+# SETTINGS-TITLES
+
+#empty strings from id 30229 to 30349
+# SETTINGS-DESCRIPTIONS
+
+#empty strings from id 30349 to 30500
+# WARNING-MESSAGES-OK
+
+#empty strings from id 30500 to 30520
+# WARNING-MESSAGES-NOTIFICATION
+
+msgctxt "#30521"
+msgid "Tele5 - Mediathek : [COLOR red]!!! {0:s} - ERROR !!![/COLOR]"
+msgstr ""
+
+msgctxt "#30522"
+msgid "[COLOR red]An error has occured, please check *LOG* ![/COLOR]"
+msgstr ""
+
+#empty strings from id 30523 to 30600
+# PLUGIN-MAIN and SIDEMENU
+
+msgctxt "#30601"
+msgid "Overview"
+msgstr ""
+
+msgctxt "#30602"
+msgid "Individual Productions"
+msgstr ""
+
+msgctxt "#30603"
+msgid "Series"
+msgstr ""
+
+msgctxt "#30604"
+msgid "Movies"
+msgstr ""
+
+msgctxt "#30605"
+msgid "[COLOR yellow]Add to TELE5-Playlist[/COLOR]"
+msgstr ""
