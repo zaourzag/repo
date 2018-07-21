@@ -3586,6 +3586,20 @@ NOTE: Streams are available in SD only
     </extension>
 </addon>
 
+<addon id="script.module.jwt" name="PyJWT" version="1.6.4" provider-name="jpadilla">
+  <requires>
+    <import addon="xbmc.python" version="2.25.0"/>
+  </requires>
+  <extension point="xbmc.python.module" library="lib"/>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">JSON Web Token implementation in Python</summary>
+    <website>https://pyjwt.readthedocs.io/</website>
+    <license>MIT</license>
+    <platform>all</platform>
+    <source>https://github.com/jpadilla/pyjwt</source>
+  </extension>
+</addon>
+
 <addon id="plugin.audio.soundcloud" name="SoundCloud" version="2.0.6" provider-name="bromix">
 	<requires>
 		<import addon="xbmc.python" version="2.14.0"/>
