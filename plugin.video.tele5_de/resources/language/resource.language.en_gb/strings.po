@@ -1,4 +1,4 @@
-# Kodi Media Center language file
+﻿# Kodi Media Center language file
 # Addon Name: Tele5 Mediathek
 # Addon id: plugin.video.tele5_de
 # Addon version: 1.3.0
