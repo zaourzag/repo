@@ -43,14 +43,19 @@ base_url = sys.argv[0]
 pluginhandle = int(sys.argv[1])
 #args = urlparse.parse_qs(sys.argv[2][1:])
 addon = xbmcaddon.Addon()
-addonPath = xbmc.translatePath(addon.getAddonInfo('path')).encode('utf-8').decode('utf-8')
-dataPath = xbmc.translatePath(addon.getAddonInfo('profile')).encode('utf-8').decode('utf-8')
-temp        = xbmc.translatePath(os.path.join(dataPath, 'temp', '')).encode('utf-8').decode('utf-8')
-defaultFanart = os.path.join(addonPath ,'fanart.jpg').encode('utf-8').decode('utf-8')
-icon = os.path.join(addonPath ,'icon.png').encode('utf-8').decode('utf-8')
+addonPath = xbmc.translatePath(addon.getAddonInfo('path'))
+dataPath = xbmc.translatePath(addon.getAddonInfo('profile'))
+temp        = xbmc.translatePath(os.path.join(dataPath, 'temp', ''))
+defaultFanart = os.path.join(addonPath ,'fanart.jpg')
+icon = os.path.join(addonPath ,'icon.png')
+PY2 = sys.version_info[0] == 2
 baseURL = "https://www.tele5.de/"
 
 xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
+
+if addon.getSetting("enableTitleOrder") == 'true':
+	xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
+xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_UNSORTED)
 
 if xbmcvfs.exists(temp) and os.path.isdir(temp):
 	shutil.rmtree(temp, ignore_errors=True)
@@ -61,17 +66,18 @@ cj = makeCooks.LWPCookieJar();
 if xbmcvfs.exists(cookie):
 	cj.load(cookie, ignore_discard=True, ignore_expires=True)
 
+def py2_encode(s, encoding='utf-8'):
+	if PY2 and isinstance(s, unicode):
+		s = s.encode(encoding)
+	return s
+
 def translation(id):
 	LANGUAGE = addon.getLocalizedString(id)
-	if sys.version_info[0] < 3:
-		if isinstance(LANGUAGE, unicode):
-			LANGUAGE = LANGUAGE.encode('utf-8')
+	LANGUAGE = py2_encode(LANGUAGE)
 	return LANGUAGE
 
 def log_Special(msg, level=xbmc.LOGNOTICE):
-	if sys.version_info[0] < 3:
-		if isinstance(msg, unicode):
-			msg = msg.encode('utf-8')
+	msg = py2_encode(msg)
 	xbmc.log('[Tele5]'+msg, level)
 
 def debug(content):
@@ -81,12 +87,10 @@ def notice(content):
 	log(content, xbmc.LOGNOTICE)
 
 def log(msg, level=xbmc.LOGNOTICE):
-	if sys.version_info[0] < 3:
-		if isinstance(msg, unicode):
-			msg = msg.encode('utf-8')
+	msg = py2_encode(msg)
 	xbmc.log('[plugin.video.tele5_de]'+msg, level)
 
-def getUrl(url, header=False, referer=False):
+def getUrl(url, header=None, referer=None):
 	global cj
 	debug("Get Url : "+url)
 	for cook in cj:
@@ -96,14 +100,14 @@ def getUrl(url, header=False, referer=False):
 		if header:
 			opener.addheaders = header
 		else:
-			opener.addheaders = [('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36')]
+			opener.addheaders = [('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:50.0) Gecko/20100101 Firefox/50.0')]
 			opener.addheaders = [('Accept-Encoding', 'gzip, deflate')]
 		if referer:
 			opener.addheaders = [('Referer', referer)]
-		response = opener.open(url, timeout=40)
+		response = opener.open(url, timeout=30)
 		content = response.read()
 		if response.headers.get('Content-Encoding', '') == 'gzip':
-			if sys.version_info[0] < 3:
+			if PY2:
 				content = gzip.GzipFile(fileobj=io.BytesIO(content)).read()
 			else:
 				content = gzip.GzipFile(fileobj=io.BytesIO(content)).read().decode('utf-8')
@@ -111,19 +115,21 @@ def getUrl(url, header=False, referer=False):
 		failure = str(e)
 		if hasattr(e, 'code'):
 			log_Special("(getUrl) ERROR - ERROR - ERROR : ########## {0} === {1} ##########".format(url, failure))
+			xbmcgui.Dialog().notification((translation(30521).format('URL')), "ERROR = [COLOR red]{0}[/COLOR]".format(failure), icon, 15000)
 		elif hasattr(e, 'reason'):
 			log_Special("(getUrl) ERROR - ERROR - ERROR : ########## {0} === {1} ##########".format(url, failure))
-		content =""
+			xbmcgui.Dialog().notification((translation(30521).format('URL')), "ERROR = [COLOR red]{0}[/COLOR]".format(failure), icon, 15000)
+		content = ""
+		return sys.exit(0)
 	opener.close()
 	cj.save(cookie,ignore_discard=True, ignore_expires=True)
 	return content
 
 def index():
-	addDir("Übersicht", baseURL+"mediathek", "listCategories", icon)
-	addDir("Eigenproduktionen", baseURL+"mediathek/eigenproduktionen", "listCategories", icon)
-	addDir("Serien", baseURL+"mediathek/serien-online", "listCategories", icon)
-	addDir("Spielfilme", baseURL+"mediathek/filme-online", "listCategories", icon)
-	#addDir("Lucha Undergroud", baseURL+"/videos/lucha-underground", "listCategories", icon)
+	addDir(translation(30601), baseURL+"mediathek", "listCategories", icon)
+	addDir(translation(30602), baseURL+"mediathek/eigenproduktionen", "listCategories", icon)
+	addDir(translation(30603), baseURL+"mediathek/serien-online", "listCategories", icon)
+	addDir(translation(30604), baseURL+"mediathek/filme-online", "listCategories", icon)
 	xbmcplugin.endOfDirectory(pluginhandle)
 
 def listCategories(url, type="listCategories"):
@@ -131,42 +137,47 @@ def listCategories(url, type="listCategories"):
 	starturl = url
 	content = getUrl(url)
 	anz=0
-	if "ce_teaserelemen" in content:
-		part2 = content.split('ce_teaserelemen')
-		for i in range(1, len(part2), 1):
-			entry = part2[i]
+	pos1 = 0
+	pos2 = 0
+	if "ce_teaserelement" in content:
+		match = re.findall('ce_teaserelement(.*?)<div class="user-overlay">',content,re.S)
+		for chtml in match:
 			try:
-				url = re.compile('href="(.+?)"', re.DOTALL).findall(entry)[0]
+				url = re.compile('href="(.+?)"', re.DOTALL).findall(chtml)[0]
 				if url[:4] != "http":
 					url = baseURL+url
 				try:
-					title = re.compile('<h2>(.+?)</h2>', re.DOTALL).findall(entry)[0]
+					title = re.compile('<h2>(.+?)</h2>', re.DOTALL).findall(chtml)[0]
 					title = cleanTitle(title)
 				except: title =""
 				try:
-					subtitle = re.compile('<span class="shortdesc">(.+?)</span>', re.DOTALL).findall(entry)[0]
+					subtitle = re.compile('<span class="shortdesc">(.+?)</span>', re.DOTALL).findall(chtml)[0]
 					subtitle = cleanTitle(subtitle)
 				except: subtitle =""
+				if title == "" and subtitle == "":
+					title = re.compile('ERROR - ERROR(.+?)ERROR', re.DOTALL).findall(chtml)[0]
 				if title =="":
 					title = subtitle
-				if subtitle !="" and title != subtitle:
+				if subtitle !="" and subtitle != title:
 					title = title+" - "+subtitle
 				try:
-					thumb = re.compile('source srcset="(.+?)" sizes="1200w" media=', re.DOTALL).findall(entry)[0]
-					if "," in thumb:
-						thumb = thumb.split(',')[1].strip()
-				except: thumb = ""
-				debug("listCategories newUrl :"+url)
-				debug("listCategories type :"+type)
+					thumb = re.compile(r'source srcset="(?:.+?w, )?(.+?(?:\.jpg|\.jpeg|\.png))', re.DOTALL).findall(chtml)[0].strip()
+				except:
+					try:
+						thumb = re.compile('<img src="(assets/.+?)"', re.DOTALL).findall(chtml)[0]
+					except: thumb = ""
 				try: idd = re.compile(r'\?(?:vid=|v=)(.+)', re.DOTALL).findall(url)[0]
 				except: idd = ""
-				if not "filme-online" in starturl and not '<span class="broadcast">' in entry and idd == "":
+				if not "filme-online" in starturl and not '<span class="broadcast"' in chtml and idd == "":
 					addDir(title, url, type, baseURL+thumb)
-				elif idd != "":
+				elif not '<span class="broadcast"' in chtml and idd != "":
 					addLink(title, idd, "playVideo", baseURL+thumb)
 				anz=anz+1
 			except:
-				log_Special("(listCategories) Fehler-Eintrag-01 : {0}".format(str(entry)))
+				pos1 += 1
+				log_Special("(listCategories) Fehler-Eintrag-01 : {0}".format(str(chtml)))
+				if pos1 > 1:
+					xbmcgui.Dialog().notification((translation(30521).format('DISPLAY')), translation(30522), icon, 8000)
 	if 'class="scrollable"' in content:
 		content1 = content[content.find('ce_tele5slider')+1:]
 		content1 = content1[:content1.find('</ul>')]
@@ -179,26 +190,30 @@ def listCategories(url, type="listCategories"):
 					url = baseURL+url
 				title = re.compile('<h1>(.+?)</h1>', re.DOTALL).findall(element)[0]
 				title = cleanTitle(title)
-				thumb = re.compile('<img src="(assets/.+?)"', re.DOTALL).findall(element)[0]
-				if "," in thumb:
-					thumb = thumb.split(',')[1].strip()
+				try:
+					thumb = re.compile('<img src="(assets/.+?)"', re.DOTALL).findall(element)[0]
+				except: thumb = ""
 				try: idd = re.compile(r'\?(?:vid=|v=)(.+)', re.DOTALL).findall(url)[0]
 				except: idd = ""
-				if not "filme-online" in starturl and not '<span class="broadcast">' in element and idd == "":
+				if not "filme-online" in starturl and not '<span class="broadcast"' in element and idd == "":
 					addDir(title, url, type, baseURL+thumb)
-				elif idd != "":
+				elif not '<span class="broadcast"' in element and idd != "":
 					addLink(title, idd, "playVideo", baseURL+thumb)
 				anz=anz+1
 			except:
-				log_Special("(listCategories) Fehler-Eintrag-02 : {0}".format(str(entry)))
+				pos2 += 1
+				log_Special("(listCategories) Fehler-Eintrag-02 : {0}".format(str(element)))
+				if pos2 > 1:
+					xbmcgui.Dialog().notification((translation(30521).format('DISPLAY')), translation(30522), icon, 8000)
 	listVideos(starturl)
 	xbmcplugin.endOfDirectory(pluginhandle)
 
 def listVideos(url):
 	debug("listVideos URL :"+url)
 	content = getUrl(url)
-	#http://tele5.flowcenter.de/gg/play/l/17:pid=vplayer_1560&tt=1&se=1&rpl=1&ssd=1&ssp=1&sst=1&lbt=1&
-	#<div class="fwlist" lid="14" pid="vplayer_3780" tt="1" ssp="1" sst="1" lbt="1" ></div>		</div>
+	pos3 = 0
+	# https://tele5.flowcenter.de/gg/play/l/17:pid=vplayer_1560&tt=1&se=1&rpl=1&ssd=1&ssp=1&sst=1&lbt=1&
+	# <div class="fwlist" lid="14" pid="vplayer_3780" tt="1" ssp="1" sst="1" lbt="1" ></div>
 	y=0
 	try:
 		debug("1.")
@@ -211,7 +226,7 @@ def listVideos(url):
 		for type, inhalt in all:
 			if type !="lid":
 				url = url+type+"="+inhalt
-				#url = "http://tele5.flowcenter.de/gg/play/l/"+lid+":pid="+ pid +"&tt="+ tt +"&se="+ se +"&rpl="+ rpl +"&ssd="+ ssd +"&ssp="+ ssp +"&sst="+ sst +"&lbt="+lbt +"&"
+				# url = "https://tele5.flowcenter.de/gg/play/l/"+lid+":pid="+ pid +"&tt="+ tt +"&se="+ se +"&rpl="+ rpl +"&ssd="+ ssd +"&ssp="+ ssp +"&sst="+ sst +"&lbt="+lbt +"&"
 		debug("URL :"+url)
 	except:
 		y=1
@@ -268,7 +283,7 @@ def listVideos(url):
 		content = '{"id"'+content+"}"
 		debug("CONTENT")
 		debug(content)
-		struktur = json.loads(content) 
+		struktur = json.loads(content)
 		elements = struktur["entries"]
 		for element in elements:
 			try:
@@ -277,8 +292,8 @@ def listVideos(url):
 				utitle = cleanTitle(element["utitel"])
 				title = cleanTitle(element["title"])
 				id = element["id"]
-				last = element["vodate"]
-				genre = element["welt"]
+				last = element["vodate"][:10]
+				genre = element["welt"].upper()
 				image = element["image"].replace("\/","/")
 				if episode =="0":
 					name = title
@@ -286,49 +301,52 @@ def listVideos(url):
 					name = "Folge "+str(episode)
 				if utitle !="" and utitle != name:
 					name = name+" - "+utitle
-				addLink(name, str(id), 'playVideo', image, last=last, genre=genre, episode=episode, season=season)
+				addLink(name, str(id), 'playVideo', image, genre=genre, season=season, episode=episode, last=last)
 			except:
+				pos3 += 1
 				log_Special("(listVideos) Fehler-Eintrag-03 : {0}".format(str(element)))
-			#addLink("Folge :"+ episode , str(id), 'playVideo', image) 
-			# addLink(h.unescape(title[i]), url, 'playVideo', thumb[i]) 
+				if pos3 > 1:
+					xbmcgui.Dialog().notification((translation(30521).format('DISPLAY')), translation(30522), icon, 8000)
 	xbmcplugin.endOfDirectory(pluginhandle)
 
 def playVideo(url):
 	debug("playVideo URL :"+url)
 	stream_url = None
+	headerfields = "User-Agent=Mozilla/5.0 (Windows NT 10.0; WOW64; rv:50.0) Gecko/20100101 Firefox/50.0"
 	try:
-		content = getUrl("https://tele5.flowcenter.de/gg/play/p/"+url+":mobile=0&nsrc="+url+"&" )
-		file = re.compile('"file":"(.+?)"', re.DOTALL).findall(content)[-2].replace("\/","/")
-		result = getUrl(file)
-		try:
-			mpeg = re.compile(b'<BaseURL>(.+?)</BaseURL>').findall(result)[-1]
-			stream_url = file.replace("manifest.mpd", mpeg.decode('utf-8'))
-			debug("MPEG-stream-bytes : "+stream_url)
-		except:
-			mpeg = re.compile('<BaseURL>(.+?)</BaseURL>').findall(result)[-1]
-			stream_url = file.replace("manifest.mpd", mpeg)
-			debug("MPEG-stream-string : "+stream_url)
+		content = getUrl("https://tele5.flowcenter.de/gg/play/p/"+url+":nl=1&mobile=0&opto=0&nsrc="+url+"&https=1&" )
+		#content = getUrl("https://tele5.flowcenter.de/gg/play/p/"+url+":mobile=0&nsrc="+url+"&" )
+		m_mpd = re.compile('"file":"(.+?)"', re.DOTALL).findall(content)[0].replace("\/","/")
+		result = getUrl(m_mpd)
+		mp4 = re.compile(b'<BaseURL>(.+?)</BaseURL>').findall(result)[-1]
+		stream_url = m_mpd.replace("manifest.mpd", mp4.decode('utf-8'))
+		log_Special("(playVideo) MPEG-stream-bytes : {0}".format(stream_url))
+		listitem = xbmcgui.ListItem(path=stream_url+"|"+headerfields)
 	except:
 		try:
-			result = json.loads(getUrl('https://arc.nexx.cloud/api/video/'+url+'.json'))
+			content = getUrl('https://arc.nexx.cloud/api/video/'+url+'.json')
+			result = json.loads(content)
 			secret = ""
-			if result['result']['protectiondata']['token'] != "":
-				secret = '?hdnts=' + j['result']['protectiondata']['token']
+			if "token" in result['result']['protectiondata'] and result['result']['protectiondata']['token'] != "":
+				secret = "?hdnts="+result['result']['protectiondata']['token']
 			if "tokenHLS" in result['result']['protectiondata'] and result['result']['protectiondata']['tokenHLS'] != "":
-				secretHLS = "?hdnts=" + result['result']['protectiondata']['tokenHLS']
+				secretHLS = "?hdnts="+result['result']['protectiondata']['tokenHLS']
 			else:
 				secretHLS = secret
 			HLS = "https://"+result['result']['streamdata']['cdnShieldHTTP']+result['result']['streamdata']['azureLocator']+"/"+str(result['result']['general']['ID'])+"_src.ism/Manifest(format=m3u8-aapl)"+secretHLS
 			stream_url = HLS
-			debug("HLS-stream : "+stream_url)
-		except: log_Special("(playVideo) ##### Abspielen des Videos NICHT möglich - VideoCode : {0} - #####\n    ########## KEINEN Eintrag für NeXX-Player gefunden !!! ##########".format(url))
-	listitem = xbmcgui.ListItem(path=stream_url)
+			listitem = xbmcgui.ListItem(path=stream_url+"|"+headerfields)
+			#listitem.setMimeType('application/vnd.apple.mpegurl')
+			#listitem.setProperty('inputstreamaddon', 'inputstream.adaptive')
+			#listitem.setProperty('inputstream.adaptive.manifest_type', 'hls')
+			log_Special("(playVideo) HLS-stream : {0}".format(stream_url))
+		except:
+			log_Special("(playVideo) ##### Abspielen des Videos NICHT möglich - VideoCode : {0} - #####\n    ########## KEINEN Eintrag für FlowCenter-/NeXX- Player gefunden !!! ##########".format(url))
+			xbmcgui.Dialog().notification((translation(30521).format('PLAY')), translation(30522), icon, 8000)
 	xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
 
 def cleanTitle(title):
-	if sys.version_info[0] < 3:
-		if isinstance(title, unicode):
-			title = title.encode('utf-8')
+	title = py2_encode(title)
 	title = title.replace('\\', '').replace('&lt;', '<').replace('&gt;', '>').replace('&amp;', '&').replace('&#39;', '\'').replace('&#039;', '\'').replace('&quot;', '"').replace('&szlig;', 'ß').replace('&ndash;', '-').replace('#', '')
 	title = title.replace("&Auml;", "Ä").replace("&Uuml;", "Ü").replace("&Ouml;", "Ö").replace("&auml;", "ä").replace("&uuml;", "ü").replace("&ouml;", "ö")
 	title = title.replace("u00C4", "Ä").replace("u00c4", "Ä").replace("u00E4", "ä").replace("u00e4", "ä").replace("u00D6", "Ö").replace("u00d6", "Ö").replace("u00F6", "ö").replace("u00f6", "ö")
@@ -360,10 +378,10 @@ def addVideoList(url, name, iconimage):
 	listitem.setContentLookup(False)
 	PL.add(url, listitem)
 
-def addLink(name, url, mode, iconimage, plot=None, duration=None, count=0, last=0, genre=None, episode=0, season=0):
-	u = sys.argv[0]+"?url="+quote_plus(url)+"&mode="+str(mode)+"&count="+str(count)
+def addLink(name, url, mode, iconimage, plot=None, duration=None, genre=None, season=None, episode=None, last=None):
+	u = sys.argv[0]+"?url="+quote_plus(url)+"&mode="+str(mode)
 	liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=iconimage)
-	liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": plot, "Duration": duration ,"Lastplayed": last, "Genre": genre, "Episode": episode, "Season": season, "mediatype": "video"})
+	liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": plot, "Duration": duration, "Genre": genre, "Season": season, "Episode": episode, "Lastplayed": last, "Studio": "Tele5", "mediatype": "video"})
 	if iconimage != icon:
 		liz.setArt({'fanart': iconimage})
 	else:
@@ -371,13 +389,13 @@ def addLink(name, url, mode, iconimage, plot=None, duration=None, count=0, last=
 	liz.addStreamInfo('Video', {'Duration': duration})
 	liz.setProperty('IsPlayable', 'true')
 	liz.setContentLookup(False)
-	liz.addContextMenuItems([(translation(30205), 'RunPlugin(plugin://{0}?mode=addVideoList&url={1}&name={2}&iconimage={3})'.format(addon.getAddonInfo('id'), quote_plus(u), quote_plus(name), quote_plus(iconimage)))])
+	liz.addContextMenuItems([(translation(30605), 'RunPlugin(plugin://{0}?mode=addVideoList&url={1}&name={2}&iconimage={3})'.format(addon.getAddonInfo('id'), quote_plus(u), quote_plus(name), quote_plus(iconimage)))])
 	return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
 
-def addDir(name, url, mode, iconimage, plot=None, duration=None):
+def addDir(name, url, mode, iconimage, plot=None):
 	u = sys.argv[0]+"?url="+quote_plus(url)+"&mode="+str(mode)
 	liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=iconimage)
-	liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": plot, "Duration": duration})
+	liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": plot})
 	if iconimage != icon:
 		liz.setArt({'fanart': iconimage})
 	else:
@@ -389,7 +407,6 @@ name = unquote_plus(params.get('name', ''))
 url = unquote_plus(params.get('url', ''))
 mode = unquote_plus(params.get('mode', ''))
 iconimage = unquote_plus(params.get('iconimage', ''))
-count  = unquote_plus(params.get('count', ''))
 referer = unquote_plus(params.get('referer', ''))
 
 if mode == 'listCategories':
