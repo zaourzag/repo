@@ -99,7 +99,7 @@
 								<font>material24</font>
 								<label>[B][/B]</label>
 								<altlabel>[B][COLOR red][/COLOR][/B]</altlabel>
-								<onclick>ToggleWatched</onclick>
+								<include>ToggleWatchedAction</include>
 								<onup>SetFocus(6666)</onup>
 								<ondown>SetFocus(54)</ondown>
 								<selected>String.IsEqual(ListItem.Overlay,OverlayWatched.png) | Integer.IsGreaterOrEqual(ListItem.PlayCount,1) | [String.IsEqual(ListItem.DBtype,tvshow) + !String.IsEmpty(ListItem.Property(UnWatchedEpisodes)) + Integer.IsLess(ListItem.Property(UnWatchedEpisodes),1)]</selected>
@@ -113,7 +113,7 @@
 							<label>$INFO[Window(home).Property(EmbyGenre),$LOCALIZE[515]: ,   ]</label>
 							<font>reg22</font>
 							<aligny>top</aligny>
-							<textcolor>emby</textcolor>
+							<textcolor>accent</textcolor>
 							<visible>String.IsEmpty(ListItem.Genre) + !String.IsEmpty(Window(home).Property(EmbyGenre)) + String.StartsWith(ListItem.Path,plugin://plugin.video.embycon)</visible>
 						</control>
 						<control type="textbox">
