@@ -68,7 +68,7 @@ local = xbmc.getLocalizedString
 DEBUG = __addon__.getSetting('debug')
 
 def debug(s):
-	if DEBUG: xbmc.log(str(s), xbmc.LOGDEBUG)
+    if DEBUG: xbmc.log(str(s), xbmc.LOGDEBUG)
 
 # get Timezone Offset
 from tzlocal import get_localzone
@@ -212,7 +212,7 @@ def build_directoryContent(content, addon_handle, cache=True, root=False, con='m
 
     xbmcplugin.addDirectoryItem(handle=addon_handle, url=record['url'], listitem=li, isFolder=record['isFolder'])
     
-    
+  #xbmcplugin.addSortMethod(addon_handle, xbmcplugin.SORT_METHOD_GENRE)
   xbmcplugin.endOfDirectory(addon_handle, True, root, cache)
 
 
@@ -511,11 +511,13 @@ def build_recordingsList(addon_uri, addon_handle):
       listitem=li,
       isFolder=False
     )
-  xbmcplugin.endOfDirectory(addon_handle)
+  
   xbmcplugin.setContent(addon_handle, 'movies')
-  xbmcplugin.addSortMethod(addon_handle, 1)
-  xbmcplugin.addSortMethod(addon_handle, 3)
-  xbmcplugin.addSortMethod(addon_handle, xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE )
+  xbmcplugin.addSortMethod(addon_handle, xbmcplugin.SORT_METHOD_LABEL)
+  xbmcplugin.addSortMethod(addon_handle, xbmcplugin.SORT_METHOD_DATE)
+  xbmcplugin.addSortMethod(addon_handle, xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
+  xbmcplugin.addSortMethod(addon_handle, xbmcplugin.SORT_METHOD_GENRE)
+  xbmcplugin.endOfDirectory(addon_handle)
 
 def watch_recording(addon_uri, addon_handle, recording_id, start=0):
   #if xbmc.Player().isPlaying(): return
@@ -1032,15 +1034,15 @@ def makeOsdInfo():
   credjson = program['credits']
 
   if credjson is not None:
-	try:
-	  cred = json.loads(credjson)
-	  director = cred['director']
-	  director = json.dumps(director, ensure_ascii=False).encode('utf8')
-	  director = director.replace('"','').replace('[','').replace(']','')
-	  actor  = cred['actor']
-	  actor = json.dumps(actor, ensure_ascii=False).encode('utf8')
-	  actor = actor.replace('"','').replace('[','').replace(']','')          
-	except:pass
+    try:
+      cred = json.loads(credjson)
+      director = cred['director']
+      director = json.dumps(director, ensure_ascii=False).encode('utf8')
+      director = director.replace('"','').replace('[','').replace(']','')
+      actor  = cred['actor']
+      actor = json.dumps(actor, ensure_ascii=False).encode('utf8')
+      actor = actor.replace('"','').replace('[','').replace(']','')          
+    except:pass
 
   
   description = program['description']
@@ -1075,10 +1077,10 @@ class myPlayer(xbmc.Player):
       self.startTime=0
       self.playing=True
     def onPlayBackStarted(self):
-		
-		if (self.skip>0):
-			self.seekTime(self.skip)
-			self.startTime=self.startTime-datetime.timedelta(seconds=self.skip)
+        
+        if (self.skip>0):
+            self.seekTime(self.skip)
+            self.startTime=self.startTime-datetime.timedelta(seconds=self.skip)
     def onPlayBackSeek(self, time, seekOffset):
       
       if self.startTime+datetime.timedelta(milliseconds=time) > datetime.datetime.now().replace(microsecond=0):
@@ -1092,23 +1094,23 @@ class myPlayer(xbmc.Player):
         self.playing=False
         
     def onPlayBackEnded(self):
-		channel=_zattooDB_.get_playing()['channel']
-		showID=_zattooDB_.get_playing()['showID']
-		# debug(showID)
-		# program=_zattooDB_.get_showID(showID)
-		# debug(program)
-		# #program = _zattooDB_.getPrograms({'index':[channel]}, True, datetime.datetime.now(), datetime.datetime.now())
-		# nextprog = _zattooDB_.getPrograms({'index':[channel]}, True, program[0]['end_date']+datetime.timedelta(seconds=60), program[0]['end_date']+datetime.timedelta(seconds=60))
-		# debug ('Nextprog'+str(nextprog))
-		# start = int(time.mktime(nextprog[0]['start_date'].timetuple()))+1500
-		# debug(start)
-		# end = int(time.mktime(nextprog[0]['end_date'].timetuple()))
-		# url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + nextprog[0]['channel'] + "&showID=" + nextprog[0]['showID'] + "&start=" + str(start) + "&end=" + str(end)
-		self.playing=False 
-		#debug(url)
-		#xbmc.executebuiltin('RunPlugin('+url+')')
+        channel=_zattooDB_.get_playing()['channel']
+        showID=_zattooDB_.get_playing()['showID']
+        # debug(showID)
+        # program=_zattooDB_.get_showID(showID)
+        # debug(program)
+        # #program = _zattooDB_.getPrograms({'index':[channel]}, True, datetime.datetime.now(), datetime.datetime.now())
+        # nextprog = _zattooDB_.getPrograms({'index':[channel]}, True, program[0]['end_date']+datetime.timedelta(seconds=60), program[0]['end_date']+datetime.timedelta(seconds=60))
+        # debug ('Nextprog'+str(nextprog))
+        # start = int(time.mktime(nextprog[0]['start_date'].timetuple()))+1500
+        # debug(start)
+        # end = int(time.mktime(nextprog[0]['end_date'].timetuple()))
+        # url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + nextprog[0]['channel'] + "&showID=" + nextprog[0]['showID'] + "&start=" + str(start) + "&end=" + str(end)
+        self.playing=False 
+        #debug(url)
+        #xbmc.executebuiltin('RunPlugin('+url+')')
 
-		xbmc.executebuiltin('RunPlugin("plugin://'+__addonId__+'/?mode=watch_c&id='+channel+'&showOSD=1")')
+        xbmc.executebuiltin('RunPlugin("plugin://'+__addonId__+'/?mode=watch_c&id='+channel+'&showOSD=1")')
 
 class zattooPiP(xbmcgui.WindowXMLDialog):
 
