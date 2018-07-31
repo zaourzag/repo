@@ -930,23 +930,30 @@
 			</control>
 			<control type="button" id="80283">
 				<include>ButtonHomeSubCommonValues</include>
+				<label>CoreELEC</label>
+				<onclick>RunAddon(service.coreelec.settings)</onclick>
+				<visible>System.HasAddon(service.coreelec.settings)</visible>
+				<visible>!Skin.HasSetting(SubMenu_Music_NoLibreelecButton)</visible>
+			</control>
+			<control type="button" id="80284">
+				<include>ButtonHomeSubCommonValues</include>
 				<label>7</label>
 				<onclick>ActivateWindow(FileManager)</onclick>
 				<visible>!Skin.HasSetting(SubMenu_Music_NoFilemanagerButton)</visible>
 			</control>
-			<control type="button" id="80284">
+			<control type="button" id="80285">
 				<include>ButtonHomeSubCommonValues</include>
 				<label>13200</label>
 				<onclick>ActivateWindow(Profiles)</onclick>
 				<visible>!Skin.HasSetting(SubMenu_Music_NoProfileButton)</visible>
 			</control>
-			<control type="button" id="80285">
+			<control type="button" id="80286">
 				<include>ButtonHomeSubCommonValues</include>
 				<label>130</label>
 				<onclick>ActivateWindow(SystemInfo)</onclick>
 				<visible>!Skin.HasSetting(SubMenu_Music_NoSystemInfoButton)</visible>
 			</control>
-			<control type="button" id="80286">
+			<control type="button" id="80287">
 				<include>ButtonHomeSubCommonValues</include>
 				<label>14114</label>
 				<onclick>ActivateWindow(EventLog,events://,return)</onclick>
