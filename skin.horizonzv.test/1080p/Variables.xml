@@ -191,7 +191,7 @@
         <value>FFFFFFFF</value>
     </variable>
     <variable name="BackgroundOverlayColorLabel">
-        <value condition="Skin.HasSetting(color_blue)">$LOCALIZE[51520]</value>
+        <value condition="Skin.HasSetting(color_blue)">$LOCALIZE[515200]</value>
         <value condition="Skin.HasSetting(color_selectedhome)">$LOCALIZE[51521]</value>
         <value condition="Skin.HasSetting(color_selected)">$LOCALIZE[51522]</value>
         <value condition="Skin.HasSetting(color_black)">$LOCALIZE[51523]</value>

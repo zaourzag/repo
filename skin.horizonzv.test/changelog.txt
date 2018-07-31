@@ -1,5 +1,15 @@
-﻿v 1.18.0.11
+﻿v 1.18.0.12
+- CoreElec aufgenommen, Einstellungen im Untermenü bei System
+- Farben etwas abgedunkelt
+
+v 1.18.0.11
 - Bugfix Script German Telecast Offers
+
+v 1.18.0.09
+- Bugfix Hauptmenü Games - oncklick korrigiert
+- Bugfix Widget Games
+- Widget Label um "Emby" erweitert
+- Sprachdateien erweitert, korrigiert
 
 v 1.18.0.08
 - Bugfix SteamFlag (Netflix, strm)
