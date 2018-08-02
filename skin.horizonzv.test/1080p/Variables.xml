@@ -992,4 +992,8 @@
 		<value condition="Player.HasVideo">$INFO[VideoPlayer.Time]</value>
 		<value>$INFO[Player.Time]</value>
 	</variable>
+	<variable name="ProgressPlayerVar">
+		<value condition="VideoPlayer.HasEpg">Pvr.EpgEventProgress</value>
+		<value>Player.Progress</value>
+	</variable>
 </includes>

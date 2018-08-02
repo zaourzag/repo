@@ -1,4 +1,7 @@
-﻿v 1.18.0.13
+﻿v 1.18.0.15
+- Bugfix PrgressBar
+
+v 1.18.0.13
 - PVR + Radio - Kanalnummern, Time, Duration und TimeRemaining an Kodi18 angepasst
 
 v 1.18.0.12

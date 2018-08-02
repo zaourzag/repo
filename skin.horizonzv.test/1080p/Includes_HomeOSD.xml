@@ -463,7 +463,7 @@
                                 <left>180</left>
                                 <top>438</top>
                                 <width>480</width>
-                                <info>Player.Progress</info>
+                                <info>$VAR[ProgressPlayerVar]</info>
                             </control>
                             <control type="label">
                                 <left>-8</left>

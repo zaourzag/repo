@@ -175,7 +175,7 @@
                         <top>45r</top>
                         <width>720</width>
                         <height>15</height>
-                        <info>Player.Progress</info>
+                        <info>$VAR[ProgressPlayerVar]</info>
                     </control>
                     <control type="grouplist">
                         <left>30</left>

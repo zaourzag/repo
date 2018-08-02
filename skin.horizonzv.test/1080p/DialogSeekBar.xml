@@ -49,7 +49,7 @@
                                 <top>21</top>
                                 <width>1926</width>
                                 <height>51</height>
-                                <info>Player.Progress</info>
+                                <info>$VAR[ProgressPlayerVar]</info>
                                 <texturebg/>
                                 <visible>true</visible>
                             </control>
@@ -326,7 +326,7 @@
                                 <height>26</height>
                                 <texturebg border="10,0,10,0">osd/ProgressBack2.png</texturebg>
                                 <midtexture border="10,0,10,0" colordiffuse="description">osd/ProgressMid2.png</midtexture>
-                                <info>Player.Progress</info>
+                                <info>$VAR[ProgressPlayerVar]</info>
                                 <visible>true</visible>
                             </control>
                             <control type="slider" id="401">

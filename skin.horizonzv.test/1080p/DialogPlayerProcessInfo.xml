@@ -208,7 +208,7 @@
 					<height>10</height>
 					<onup>8010</onup>
 					<ondown>650</ondown>
-					<info>Player.Progress</info>
+					<info>$VAR[ProgressPlayerVar]</info>
 					<action>seek</action>
 					<visible>!Control.HasFocus(87)</visible>
 				</control>
@@ -227,7 +227,7 @@
 					<top>0</top>
 					<width>1880</width>
 					<height>10</height>
-					<info>Player.Progress</info>
+					<info>$VAR[ProgressPlayerVar]</info>
 				</control>
 				<control type="button" id="87">
 					<include>HiddenButton</include>
