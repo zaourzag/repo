@@ -159,7 +159,7 @@
                                 <width>375</width>
                                 <align>left</align>
                                 <selectedcolor>selected</selectedcolor>
-                                <label>$INFO[ListItem.VideoPlayer.ChannelNumberLabel,(,) - ]$INFO[ListItem.ChannelName]</label>
+                                <label>$INFO[ListItem.ChannelNumberLabel,(,) - ]$INFO[ListItem.ChannelName]</label>
                             </control>
                         </itemlayout>
                         <focusedlayout height="60">
@@ -196,7 +196,7 @@
                                 <aligny>center</aligny>
                                 <textcolor>black</textcolor>
                                 <selectedcolor>selected</selectedcolor>
-                                <label>$INFO[ListItem.VideoPlayer.ChannelNumberLabel,(,) - ]$INFO[ListItem.ChannelName]</label>
+                                <label>$INFO[ListItem.ChannelNumberLabel,(,) - ]$INFO[ListItem.ChannelName]</label>
                             </control>
                         </focusedlayout>
                     </control>
@@ -259,7 +259,7 @@
                                 <width>375</width>
                                 <align>left</align>
                                 <selectedcolor>selected</selectedcolor>
-                                <label>$INFO[ListItem.VideoPlayer.ChannelNumberLabel,(,) - ]$INFO[ListItem.ChannelName]</label>
+                                <label>$INFO[ListItem.ChannelNumberLabel,(,) - ]$INFO[ListItem.ChannelName]</label>
                             </control>
                         </itemlayout>
                         <focusedlayout height="60">
@@ -296,7 +296,7 @@
                                 <aligny>center</aligny>
                                 <textcolor>black</textcolor>
                                 <selectedcolor>selected</selectedcolor>
-                                <label>$INFO[ListItem.VideoPlayer.ChannelNumberLabel,(,) - ]$INFO[ListItem.ChannelName]</label>
+                                <label>$INFO[ListItem.ChannelNumberLabel,(,) - ]$INFO[ListItem.ChannelName]</label>
                             </control>
                         </focusedlayout>
                     </control>

@@ -51,7 +51,7 @@
 				<visible>Player.Muted</visible>
 			</control>
 		</control>
-        <control type="gr oup">
+        <control type="group">
             <!-- Fake Videowindow for flowing presentation -->
             <control type="videowindow">
                 <left>0</left>

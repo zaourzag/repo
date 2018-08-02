@@ -187,7 +187,7 @@
                             <font>ubuntu-r26b</font>
                             <textcolor>white</textcolor>
                             <shadowcolor/>
-                            <label>$INFO[Player.Time]$INFO[Player.Duration, / ,]</label>
+                            <label>$VAR[SeekTimeLabelVar]$VAR[SeekDurationLabelVar, / ,]</label>
                         </control>
                     </control>
                 </control>
@@ -415,7 +415,7 @@
                                 <font>ubuntu-r13b</font>
                                 <textcolor>orange</textcolor>
                                 <shadowcolor>black</shadowcolor>
-                                <label>$INFO[Player.Time]</label>
+                                <label>$VAR[SeekTimeLabelVar]</label>
                             </control>
                             <control type="label">
                                 <width>auto</width>
@@ -423,7 +423,7 @@
                                 <font>ubuntu-r13b</font>
                                 <textcolor>orange</textcolor>
                                 <shadowcolor>black</shadowcolor>
-                                <label>$INFO[Player.Duration,/ ,]</label>
+                                <label>$VAR[SeekDurationLabelVar,/ ,]</label>
                             </control>
                             <control type="label">
                                 <width>auto</width>
@@ -431,7 +431,7 @@
                                 <font>ubuntu-r13b</font>
                                 <textcolor>orange</textcolor>
                                 <shadowcolor>black</shadowcolor>
-                                <label>$INFO[Player.TimeRemaining,(-,)]</label>
+                                <label>$VAR[SeekTimeRemainingLabelVar,(-,)]</label>
                             </control>
                             <control type="label">
                                 <width>auto</width>

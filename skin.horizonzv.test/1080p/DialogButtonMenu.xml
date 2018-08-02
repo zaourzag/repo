@@ -279,7 +279,7 @@
 				<font>impacted26</font>
 				<textcolor>white</textcolor>
 				<shadowcolor/>
-				<label>$VAR[HomeOSDTitle]$INFO[Player.TimeRemaining, - ,]</label>
+				<label>$VAR[HomeOSDTitle]$INFO[$VAR[SeekTimeRemainingLabelVar], - ,]</label>
 				<visible>Player.HasVideo</visible>
 			</control>
 			<control type="image">

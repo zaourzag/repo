@@ -22,7 +22,7 @@
                     <align>right</align>
                     <aligny>center</aligny>
                     <textcolor>white</textcolor>
-                    <info>ListItem.VideoPlayer.ChannelNumberLabel</info>
+                    <info>ListItem.ChannelNumberLabel</info>
                 </control>
                 <control type="label">
                     <left>195</left>
@@ -121,7 +121,7 @@
                         <height>52</height>
                         <align>right</align>
                         <aligny>center</aligny>
-                        <info>ListItem.VideoPlayer.ChannelNumberLabel</info>
+                        <info>ListItem.ChannelNumberLabel</info>
                     </control>
                     <control type="label">
                         <left>195</left>
@@ -519,7 +519,7 @@
                         <aligny>center</aligny>
                         <font>Small</font>
                         <textcolor>white</textcolor>
-                        <info>ListItem.VideoPlayer.ChannelNumberLabel</info>
+                        <info>ListItem.ChannelNumberLabel</info>
                     </control>
                     <control type="label">
                         <left>0</left>

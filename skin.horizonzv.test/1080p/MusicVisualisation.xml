@@ -1354,7 +1354,7 @@
                                         <width>450</width>
                                         <scroll>true</scroll>
                                         <align>left</align>
-                                        <label>$INFO[Player.TimeRemaining]</label>
+                                        <label>$INFO[$VAR[SeekTimeRemainingLabelVar]]</label>
                                         <font>ubuntu-r21</font>
                                         <shadowcolor>grey3</shadowcolor>
                                         <visible>!String.IsEmpty(Player.TimeRemaining)</visible>

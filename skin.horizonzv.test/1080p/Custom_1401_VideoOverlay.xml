@@ -110,8 +110,8 @@
                         <height>51</height>
                         <textcolor>white</textcolor>
                         <shadowcolor/>
-                        <label>$INFO[VideoPlayer.Time, [COLOR=description]•[/COLOR]  , ]$INFO[VideoPlayer.Duration,[COLOR=grey]/ [/COLOR], ]</label>
-                        <visible>!String.IsEmpty(Player.TimeRemaining)</visible>
+                        <label>$VAR[SeekTimeLabelVar, [COLOR=description]•[/COLOR]  , ]$VAR[SeekDurationLabelVar,[COLOR=grey]/ [/COLOR], ]</label>
+                        <!-- <visible>!String.IsEmpty(Player.TimeRemaining)</visible> -->
                     </control>
                 </control>
             </control>

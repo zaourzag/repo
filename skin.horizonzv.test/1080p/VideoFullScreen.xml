@@ -220,7 +220,7 @@
                                 <height>30</height>
                                 <align>left</align>
                                 <font>impacted18</font>
-                                <label>$INFO[VideoPlayer.TimeRemaining]</label>
+                                <label>$VAR[SeekTimeRemainingLabelVar]</label>
                             </control>
                             <control type="progress" id="1">
                                 <description>Progressbar</description>
@@ -228,7 +228,8 @@
                                 <top>183</top>
                                 <width>870</width>
                                 <height>15</height>
-                                <info>Pvr.Progress</info>
+                                <info>Pvr.EpgEventProgress</info>
+								<visible>VideoPlayer.HasEpg</visible>
                             </control>
                             <control type="label" id="1">
                                 <left>504</left>
@@ -296,7 +297,7 @@
                         <align>center</align>
                         <font>menufontimpacted</font>
                         <shadowcolor/>
-                        <label>$INFO[VideoPlayer.ChannelNumber]</label>
+                        <label>$INFO[VideoPlayer.ChannelNumberLabel]</label>
                     </control>
                     <control type="image" id="1">
                         <description>Seperator</description>

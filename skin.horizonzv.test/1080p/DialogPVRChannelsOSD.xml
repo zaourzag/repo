@@ -92,7 +92,7 @@
                             <aligny>center</aligny>
                             <textcolor>grey</textcolor>
                             <shadowcolor/>
-                            <info>ListItem.VideoPlayer.ChannelNumberLabel</info>
+                            <info>ListItem.ChannelNumberLabel</info>
                         </control>
                         <control type="image">
                             <left>30</left>
@@ -203,7 +203,7 @@
                                 <textcolor>black</textcolor>
                                 <selectedcolor>black</selectedcolor>
                                 <shadowcolor/>
-                                <info>ListItem.VideoPlayer.ChannelNumberLabel</info>
+                                <info>ListItem.ChannelNumberLabel</info>
                             </control>
                             <control type="image">
                                 <left>30</left>

@@ -84,7 +84,7 @@
                         <align>left</align>
                         <aligny>center</aligny>
                         <textcolor>grey</textcolor>
-                        <info>ListItem.VideoPlayer.ChannelNumberLabel</info>
+                        <info>ListItem.ChannelNumberLabel</info>
                     </control>
                     <control type="image">
                         <left>68</left>
@@ -140,7 +140,7 @@
                             <height>52</height>
                             <align>left</align>
                             <aligny>center</aligny>
-                            <info>ListItem.VideoPlayer.ChannelNumberLabel</info>
+                            <info>ListItem.ChannelNumberLabel</info>
                         </control>
                         <control type="image">
                             <left>68</left>

@@ -1,4 +1,7 @@
-﻿v 1.18.0.12
+﻿v 1.18.0.13
+- PVR + Radio - Kanalnummern, Time, Duration und TimeRemaining an Kodi18 angepasst
+
+v 1.18.0.12
 - CoreElec aufgenommen, Einstellungen im Untermenü bei System
 - Farben etwas abgedunkelt
 
