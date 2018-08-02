@@ -56,8 +56,8 @@
             <control type="videowindow">
                 <left>0</left>
                 <top>0</top>
-                <width>200</width>
-                <height>200</height>
+                <width>1</width>
+                <height>1</height>
 				<visible>![Window.IsVisible(MyPVRChannels.xml)|Window.IsVisible(MyPVRGuide.xml)|Window.IsVisible(MyPVRRecordings.xml)|Window.IsVisible(MyPVRTimers.xml)|Window.IsVisible(MyPVRSearch.xml)]</visible>
                 <visible>!Window.IsVisible(Home)+!Window.IsVisible(fullscreenvideo)+!Window.IsVisible(movieinformation)</visible>
             </control>
