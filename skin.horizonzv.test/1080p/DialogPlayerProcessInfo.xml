@@ -208,8 +208,21 @@
 					<height>10</height>
 					<onup>8010</onup>
 					<ondown>650</ondown>
-					<info>$VAR[ProgressPlayerVar]</info>
 					<action>seek</action>
+					<info>Pvr.EpgEventProgress</info>
+					<visible>VideoPlayer.HasEpg</visible>
+					<visible>!Control.HasFocus(87)</visible>
+				</control>
+				<control type="slider">
+					<left>20</left>
+					<top>0</top>
+					<width>1880</width>
+					<height>10</height>
+					<onup>8010</onup>
+					<ondown>650</ondown>
+					<action>seek</action>
+					<info>Player.Progress</info>
+					<visible>!VideoPlayer.HasEpg</visible>
 					<visible>!Control.HasFocus(87)</visible>
 				</control>
 				<control type="progress">
@@ -227,7 +240,17 @@
 					<top>0</top>
 					<width>1880</width>
 					<height>10</height>
-					<info>$VAR[ProgressPlayerVar]</info>
+					<info>Pvr.EpgEventProgress</info>
+					<visible>VideoPlayer.HasEpg</visible>
+				</control>
+				<control type="progress" id="23">
+					<animation effect="fade" end="0" time="200">WindowClose</animation>
+					<left>20</left>
+					<top>0</top>
+					<width>1880</width>
+					<height>10</height>
+					<info>Player.Progress</info>
+					<visible>!VideoPlayer.HasEpg</visible>
 				</control>
 				<control type="button" id="87">
 					<include>HiddenButton</include>

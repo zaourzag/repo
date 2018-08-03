@@ -113,7 +113,7 @@
                         <height>51</height>
                         <textcolor>white</textcolor>
                         <shadowcolor/>
-                        <label>$INFO[MusicPlayer.Time, [COLOR=description]•[/COLOR] , ]$INFO[MusicPlayer.Duration,[COLOR=grey]/ [/COLOR], ]</label>
+                        <label>$VAR[SeekTimeLabelVar, [COLOR=description]•[/COLOR] , ]$VAR[SeekDurationLabelVar,[COLOR=grey]/ [/COLOR], ]</label>
                         <scroll>true</scroll>
                         <visible>!String.IsEmpty(Player.TimeRemaining)</visible>
                         <visible>!String.Contains(Window(videos).Property(TvTunesIsAlive),TRUE)</visible>

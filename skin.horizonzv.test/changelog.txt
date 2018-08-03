@@ -1,4 +1,7 @@
-﻿v 1.18.0.15
+﻿v 1.18.0.16
+- Bugfix Zeitangaben bei PVR (Radio und TV)
+
+v 1.18.0.15
 - Bugfix PrgressBar
 
 v 1.18.0.13

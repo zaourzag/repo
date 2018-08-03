@@ -975,25 +975,21 @@
 		<value condition="System.HasAddon(script.service.gto)">plugin://script.service.gto?action=getcontent&amp;ts=$INFO[Window(Home).Property(GTO.timestamp)]</value>
 	</variable>
 	<variable name="SeekTimeRemainingLabelVar">
-		<value condition="VideoPlayer.HasEpg">$INFO[PVR.EpgEventRemainingTime]</value>
+		<value condition="VideoPlayer.HasEpg">$INFO[PVR.EpgEventRemainingTime(hh:mm)]</value>
 		<value condition="Player.HasAudio">$INFO[MusicPlayer.TimeRemaining]</value>
 		<value condition="Player.HasVideo">$INFO[VideoPlayer.TimeRemaining]</value>
 		<value>$INFO[Player.TimeRemaining]</value>
 	</variable>
 	<variable name="SeekDurationLabelVar">
-		<value condition="VideoPlayer.HasEpg">$INFO[PVR.EpgEventDuration]</value>
+		<value condition="VideoPlayer.HasEpg">$INFO[PVR.EpgEventDuration(hh:mm)]</value>
 		<value condition="Player.HasAudio">$INFO[MusicPlayer.Duration]</value>
 		<value condition="Player.HasVideo">$INFO[VideoPlayer.Duration]</value>
 		<value>$INFO[Player.Duration]</value>
 	</variable>
 	<variable name="SeekTimeLabelVar">
-		<value condition="VideoPlayer.HasEpg">$INFO[PVR.EpgEventElapsedTime]</value>
+		<value condition="VideoPlayer.HasEpg">$INFO[PVR.EpgEventElapsedTime(hh:mm)]</value>
 		<value condition="Player.HasAudio">$INFO[MusicPlayer.Time]</value>
 		<value condition="Player.HasVideo">$INFO[VideoPlayer.Time]</value>
 		<value>$INFO[Player.Time]</value>
-	</variable>
-	<variable name="ProgressPlayerVar">
-		<value condition="VideoPlayer.HasEpg">Pvr.EpgEventProgress</value>
-		<value>Player.Progress</value>
 	</variable>
 </includes>

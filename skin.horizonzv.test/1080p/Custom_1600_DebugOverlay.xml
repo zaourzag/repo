@@ -544,5 +544,21 @@
             <label>ListItem.FileExtension: $INFO[ListItem.FileExtension] VAR ListFlag: $VAR[ListFlag]</label>
             <visible>Skin.HasSetting(DebugInfo)</visible>
         </control>
+        <control type="label">
+            <left>0</left>
+            <top>290</top>
+            <include>PathID</include>
+            <label>Live TV läuft</label>
+            <visible>PVR.IsPlayingTv</visible>
+            <visible>Skin.HasSetting(DebugInfo)</visible>
+        </control>
+        <control type="label">
+            <left>0</left>
+            <top>290</top>
+            <include>PathID</include>
+            <label>Radio läuft</label>
+            <visible>PVR.IsPlayingRadio</visible>
+            <visible>Skin.HasSetting(DebugInfo)</visible>
+        </control>
     </controls>
 </window>
