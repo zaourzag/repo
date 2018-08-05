@@ -268,10 +268,10 @@
 				<shadowcolor/>
 				<label>$VAR[HomeOSDTitle]</label>
 				<label>$VAR[HomeOSDLabel]</label>
-				<visible>Player.HasAudio</visible>
+				<!-- <visible>Player.HasAudio</visible> -->
 			</control>
 			<control type="label">
-				<top>405</top>
+				<top>455</top>
 				<width>950</width>
 				<height>45</height>
 				<align>left</align>
@@ -279,8 +279,8 @@
 				<font>impacted26</font>
 				<textcolor>white</textcolor>
 				<shadowcolor/>
-				<label>$VAR[HomeOSDTitle]$INFO[$VAR[SeekTimeRemainingLabelVar], - ,]</label>
-				<visible>Player.HasVideo</visible>
+				<label>$VAR[SeekTimeLabelVar]$VAR[SeekDurationLabelVar, / ,]</label>
+				<visible>Player.HasMedia</visible>
 			</control>
 			<control type="image">
 				<!-- Artistlogo -->

@@ -68,8 +68,7 @@
                                 <width>960</width>
                                 <height>60</height>
                                 <texture background="true">GlassPanel.png</texture>
-                                <!-- <include>openclosemedium</include> -->
-                                <animation effect="slide" start="0,0" end="-105,0" time="0" condition="Pvr.IsPlayingTv">Conditional</animation>
+                                <animation effect="slide" start="0,0" end="-105,0" time="0" condition="PVR.IsPlayingTv|PVR.IsPlayingRadio">Conditional</animation>
                                 <visible>Player.HasMedia</visible>
                             </control>
                             <control type="label">
@@ -83,12 +82,12 @@
                                 <align>right</align>
                                 <label>[UPPERCASE]$INFO[System.CurrentControl][/UPPERCASE]</label>
                                 <include>openclosevisible</include>
-                                <animation effect="slide" start="0,0" end="-105,0" time="0" condition="Pvr.IsPlayingTv">Conditional</animation>
+                                <animation effect="slide" start="0,0" end="-105,0" time="0" condition="PVR.IsPlayingTv|PVR.IsPlayingRadio">Conditional</animation>
                                 <visible>Player.HasMedia+Control.HasFocus(600)</visible>
                             </control>
                             <!-- OSD Buttons Music -->
                             <control type="list" id="600">
-                                <visible>!Pvr.IsPlayingTv</visible>
+                                <visible>!PVR.IsPlayingTv+!PVR.IsPlayingRadio</visible>
                                 <left>225</left>
                                 <top>4</top>
                                 <width>315</width>
@@ -101,7 +100,6 @@
                                 <viewtype label="list">list</viewtype>
                                 <itemgap>6</itemgap>
                                 <orientation>horizontal</orientation>
-                                <animation effect="slide" end="22" condition="!PVR.CanRecordPlayingChannel">Conditional</animation>
                                 <itemlayout width="45" height="45">
                                     <control type="image">
                                         <left>6</left>
@@ -205,7 +203,7 @@
                             </control>
                             <!-- OSD Buttons LiveTV -->
                             <control type="list" id="600">
-                                <visible>Pvr.IsPlayingTv</visible>
+                                <visible>PVR.IsPlayingTv|PVR.IsPlayingRadio</visible>
                                 <left>142</left>
                                 <top>4</top>
                                 <width>315</width>
@@ -361,12 +359,12 @@
                             <height>278</height>
                             <aspectratio scalediffuse="false">stretch</aspectratio>
                             <texture background="true" diffuse="masks/CdCoverMask.png">$INFO[MusicPlayer.Cover]</texture>
-                            <visible>!VideoPlayer.Content(movies)+!VideoPlayer.Content(episodes)+[!Pvr.IsPlayingTv|Videoplayer.Content(Music)]</visible>
+                            <visible>!VideoPlayer.Content(movies)+!VideoPlayer.Content(episodes)+[!PVR.IsPlayingTv|Videoplayer.Content(Music)]</visible>
                         </control>
                         <control type="group">
                             <left>123</left>
                             <top>144</top>
-                            <visible>Pvr.IsPlayingTv</visible>
+                            <visible>PVR.IsPlayingTv</visible>
                             <control type="image">
                                 <left>3</left>
                                 <top>3</top>
@@ -412,7 +410,7 @@
                             <texture background="true" diffuse="masks/MovieCoverMask.png">$INFO[VideoPlayer.Cover]</texture>
                             <visible>Player.HasVideo</visible>
                             <visible>[!VideoPlayer.Content(episodes)|VideoPlayer.HasMenu]+!Player.IsInternetStream|String.Contains(Player.FolderPath,lovefilm)</visible>
-                            <visible>!Pvr.IsPlayingTv</visible>
+                            <visible>!PVR.IsPlayingTv</visible>
                         </control>
                         <control type="image">
                             <left>0</left>
@@ -463,7 +461,7 @@
                                 <left>180</left>
                                 <top>438</top>
                                 <width>480</width>
-                                <info>Pvr.EpgEventProgress</info>
+                                <info>PVR.EpgEventProgress</info>
 								<visible>VideoPlayer.HasEpg</visible>
                             </control>
                             <control type="progress">
