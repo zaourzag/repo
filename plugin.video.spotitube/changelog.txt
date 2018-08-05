@@ -114,3 +114,9 @@
 [B]Version 2.1.1  (18.06.2018)[/B] by realvito
 - fixed: Videolists under "SPOTIFY - Regional" are emty (Website changes)
 - removed: Regional in German-DJ-Playlist International (don't exist anymore)
+
+[B]Version 2.1.2  (05.08.2018)[/B] by realvito
+- fixed: all Videolists under "Billboard" are empty (Website-Structure changes)
+- fixed: Error if open Videolists under "Search"
+- changed: Language-Files from "strings.xml" to "strings.po"
+- added: make Addon compatible with PYTHON vers.3 (for KODI-19+) :-)
