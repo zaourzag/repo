@@ -1,3 +1,6 @@
+v1.1.2 (2018.08.07)
+- Fußball-WM 2018 ist zuende
+
 v1.1.1 (2018.06.25)
 - Added streams for switzerland
 - Added more austria streams
