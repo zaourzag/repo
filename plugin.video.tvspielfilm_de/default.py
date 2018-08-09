@@ -8,31 +8,24 @@
     Released under GPL(v3)
 """
 
-import xbmc
-import xbmcplugin
-import xbmcgui
-import xbmcaddon
+import sys
 import os
 import re
-import sys
-try:
-	import urllib, urllib2  # Python 2.X
-	import cookielib  # Python 2.X
-	unquote_plus = urllib.unquote_plus
-	quote_plus = urllib.quote_plus
-	quote = urllib.quote
-	urlopen = urllib.urlopen
-	makeRequest = urllib2
-	makeCooks = cookielib
-except ImportError:
-	import urllib.parse, urllib.request  # Python 3+
-	import http.cookiejar  # Python 3+
-	unquote_plus = urllib.parse.unquote_plus
-	quote_plus = urllib.parse.quote_plus
-	quote = urllib.parse.quote
-	urlopen = urllib.request.urlopen
-	makeRequest = urllib.request
-	makeCooks = http.cookiejar
+import xbmc
+import xbmcgui
+import xbmcplugin
+import xbmcaddon
+PY2 = sys.version_info[0] == 2
+PY3 = sys.version_info[0] == 3
+if PY2:
+	from urllib import quote, unquote, quote_plus, unquote_plus, urlencode, urlopen  # Python 2.X
+	from urllib2 import build_opener, HTTPCookieProcessor  # Python 2.X
+	from cookielib import LWPCookieJar  # Python 2.X
+	from urlparse import urljoin, urlparse, urlunparse  # Python 2.X
+elif PY3:
+	from urllib.parse import quote, unquote, quote_plus, unquote_plus, urlencode, urljoin, urlparse, urlunparse  # Python 3+
+	from urllib.request import build_opener, HTTPCookieProcessor, urlopen  # Python 3+
+	from http.cookiejar import LWPCookieJar  # Python 3+
 import json
 import xbmcvfs
 import shutil
@@ -46,7 +39,6 @@ import gzip
 #getheader = {'Api-Auth': 'reraeB '+token[::-1]} = Gespiegelt
 #getheader = {'Api-Auth': 'Bearer '+token} = Original
 
-base_url = sys.argv[0]
 pluginhandle = int(sys.argv[1])
 addon = xbmcaddon.Addon()
 addonPath = xbmc.translatePath(addon.getAddonInfo('path')).encode('utf-8').decode('utf-8')
@@ -69,43 +61,44 @@ ZDFapiUrl = "https://api.zdf.de"
 
 xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
 
-try:
-	if xbmcvfs.exists(temp):
-		shutil.rmtree(temp)
-except: pass
+if xbmcvfs.exists(temp) and os.path.isdir(temp):
+	shutil.rmtree(temp, ignore_errors=True)
 xbmcvfs.mkdirs(temp)
-cookie=os.path.join(temp, 'cookie.lwp')
-cj = makeCooks.LWPCookieJar();
+cookie = os.path.join(temp, 'cookie.lwp')
+cj = LWPCookieJar()
 
 if xbmcvfs.exists(cookie):
 	cj.load(cookie, ignore_discard=True, ignore_expires=True)
 
+def py2_enc(s, encoding='utf-8'):
+	if PY2 and isinstance(s, unicode):
+		s = s.encode(encoding)
+	return s
+
+def py3_dec(d, encoding='utf-8'):
+	if PY3 and isinstance(d, bytes):
+		d = d.decode(encoding)
+	return d
+
 def translation(id):
 	LANGUAGE = addon.getLocalizedString(id)
-	if sys.version_info[0] < 3:
-		if isinstance(LANGUAGE, unicode):
-			LANGUAGE = LANGUAGE.encode('utf-8')
+	LANGUAGE = py2_enc(LANGUAGE)
 	return LANGUAGE
 
+def debug_MS(content):
+	if enableDebug:
+		log_MS(content, xbmc.LOGNOTICE)
+
 def log_MS(msg, level=xbmc.LOGNOTICE):
-	if sys.version_info[0] < 3:
-		if isinstance(msg, unicode):
-			msg = msg.encode('utf-8')
+	msg = py2_enc(msg)
 	xbmc.log('[TV-Spielfilm]'+msg, level)
 
-def debug_MS(msg, level=xbmc.LOGNOTICE):
-	if enableDebug:
-		if sys.version_info[0] < 3:
-			if isinstance(msg, unicode):
-				msg = msg.encode('utf-8')
-		xbmc.log('[TV-Spielfilm]'+msg, level)
-
-def getUrl(url, header=False, referer=False):
+def getUrl(url, header=None, referer=None):
 	global cj
 	for cook in cj:
 		debug_MS("(getUrl) Cookie : {0}".format(str(cook)))
 	pos = 0
-	opener = makeRequest.build_opener(makeRequest.HTTPCookieProcessor(cj))
+	opener = build_opener(HTTPCookieProcessor(cj))
 	try:
 		if header:
 			opener.addheaders = header
@@ -115,12 +108,10 @@ def getUrl(url, header=False, referer=False):
 		if referer:
 			opener.addheaders = [('Referer', referer)]
 		response = opener.open(url, timeout=30)
-		content = response.read()
-		if response.headers.get('Content-Encoding', '') == 'gzip':
-			if sys.version_info[0] < 3:
-				content = gzip.GzipFile(fileobj=io.BytesIO(content)).read()
-			else:
-				content = gzip.GzipFile(fileobj=io.BytesIO(content)).read().decode('utf-8')
+		if response.info().get('Content-Encoding') == 'gzip':
+			content = py3_dec(gzip.GzipFile(fileobj=io.BytesIO(response.read())).read())
+		else:
+			content = py3_dec(response.read())
 	except Exception as e:
 		failure = str(e)
 		if pos < 1 and 'SSL23_GET_SERVER_HELLO' in failure:
@@ -229,33 +220,33 @@ def listVideos_Day_Channel_Highlights(url):
 				first = match1[0].replace('…', '').replace('...', '').strip()
 				third = match3[0].replace('…', '').replace('...', '').strip()
 				if first == third:
-					title = cleanTitle(first.strip())
+					title = cleanTitle(first)
 				else:
 					title = cleanTitle(first.strip())+" - "+cleanTitle(third.replace(first, "").strip())
 				added = ""
 				channelID = cleanTitle(url.split('/')[-1].replace('?channel=', '').strip())
-				channelID = cleanStation(channelID.strip())
+				channelID = cleanStation(channelID)
 				studio = channelID.replace('(', '').replace(')', '').replace('  ', '')
 			elif (match1[0] and match2[0] and not match3[0]):
 				title = cleanTitle(match1[0].strip())+" - "+cleanTitle(match2[0].split('|')[-1].strip())
 				added = match2[0].split('|')[0].strip()
 				channelID = cleanTitle(match2[0].split('|')[1].strip())
-				channelID = cleanStation(channelID.strip())
+				channelID = cleanStation(channelID)
 				studio = channelID.replace('(', '').replace(')', '').replace('  ', '')
 			elif (match1[0] and match2[0] and match3[0]):
 				first = match1[0].replace('…', '').replace('...', '').strip()
 				third = match3[0].replace('…', '').replace('...', '').strip()
 				if first == third:
-					title = cleanTitle(first.strip())
+					title = cleanTitle(first)
 				else:
 					testing3 = cleanTitle(third.replace(first, "").strip())
 					if testing3 == "":
-						title = cleanTitle(first.strip())
+						title = cleanTitle(first)
 					else:
-						title = cleanTitle(first.strip())+" - "+testing3
+						title = cleanTitle(first)+" - "+testing3
 				added = match2[0].split('|')[0].strip()
 				channelID = cleanTitle(match2[0].split('|')[1].strip())
-				channelID = cleanStation(channelID.strip())
+				channelID = cleanStation(channelID)
 				studio = channelID.replace('(', '').replace(')', '').replace('  ', '')
 			if showDATE and added != "":
 				title = added.strip()+"  "+title
@@ -297,19 +288,19 @@ def listVideosGenre(category):
 			secondONE = match2[0][0].strip()
 			secondTWO = match2[0][1].strip()
 			if first == secondONE:
-				title = cleanTitle(first.strip())
+				title = cleanTitle(first)
 			elif ('...' in secondONE and not '...' in secondTWO):
 				title = cleanTitle(first.replace(secondTWO, "").strip())+" - "+cleanTitle(secondTWO.strip())
 			elif ('...' in secondONE and '...' in secondTWO):
-				title = cleanTitle(first.strip())
+				title = cleanTitle(first)
 			else:
 				title = cleanTitle(secondONE.strip())+" - "+cleanTitle(first.replace(secondONE, "").strip())
 			added = re.compile(r'<div class=["\']col["\']>(.*?)</div>', re.DOTALL).findall(entry)[0]
 			if showDATE and added != "":
 				title = added.strip()+"  "+title
 			match3 = re.compile(r'target=["\']_self["\'] title=["\'].+?["\']>(.*?)</a>', re.DOTALL).findall(entry)
-			channelID = cleanTitle(match3[0].strip())
-			channelID = cleanStation(channelID.strip())
+			channelID = cleanTitle(match3[0])
+			channelID = cleanStation(channelID)
 			studio = channelID.replace('(', '').replace(')', '').replace('  ', '')
 			urlFW = re.compile(r'<a href=["\'](https?://.*?mediathek/.*?)["\']', re.DOTALL).findall(entry)[0]
 			photo = re.compile(r'<img src=["\'](https?://.*?.jpg)["\']', re.DOTALL).findall(entry)[0]
@@ -513,7 +504,8 @@ def RtlGetVideo(SERIES, EPISODE, REFERER):
 def ZdfGetVideo(url):
 	try: 
 		content = getUrl(url)
-		firstURL = json.loads(re.compile("data-zdfplayer-jsb='(\{.*?\})'", re.DOTALL).findall(content)[0])
+		response = re.compile("data-zdfplayer-jsb='(\{.*?\})'", re.DOTALL).findall(content)[0]
+		firstURL = json.loads(response)
 		if firstURL:
 			teaser = firstURL['content']
 			secret = firstURL['apiToken']
@@ -523,17 +515,17 @@ def ZdfGetVideo(url):
 				teaser = ZDFapiUrl+teaser
 			secondURL = getUrl(teaser, header=header)
 			element = json.loads(secondURL)
-			if element['contentType'] == "episode":
-				if not element['hasVideo']:
-					return False
+			if element['profile'] == "http://zdf.de/rels/not-found":
+				return False
+			if element['contentType'] == "clip":
+				component = element['mainVideoContent']['http://zdf.de/rels/target']
+				#videoFOUND2 = ZDFapiUrl+element['mainVideoContent']['http://zdf.de/rels/target']['http://zdf.de/rels/streams/ptmd-template'].replace('{playerId}', 'ngplayer_2_3')
+			elif element['contentType'] == "episode":
 				if "mainVideoContent" in element:
 					component = element['mainVideoContent']['http://zdf.de/rels/target']
 				elif "mainContent" in element:
 					component = element['mainContent'][0]['videoContent'][0]['http://zdf.de/rels/target']
-				videoFOUND = ZDFapiUrl+component['http://zdf.de/rels/streams/ptmd']
-			elif element['contentType'] == "clip":
-				videoFOUND = ZDFapiUrl+element['mainVideoContent']['http://zdf.de/rels/target']['http://zdf.de/rels/streams/ptmd']
-				#videoFOUND2 = ZDFapiUrl+element['mainVideoContent']['http://zdf.de/rels/target']['http://zdf.de/rels/streams/ptmd-template'].replace('{playerId}', 'ngplayer_2_3')
+			videoFOUND = ZDFapiUrl+component['http://zdf.de/rels/streams/ptmd']
 			if videoFOUND:
 				thirdURL = getUrl(videoFOUND, header=header)
 				jsonObject = json.loads(thirdURL)
@@ -550,14 +542,14 @@ def ZdfExtractQuality(jsonObject):
 	finalURL = False
 	try:
 		for each in jsonObject['priorityList']:
-			if preferredStreamType == "0" and each['formitaeten'][0]['type'] == 'h264_aac_ts_http_m3u8_http':
+			if preferredStreamType == "0" and each['formitaeten'][0]['type'] == "h264_aac_ts_http_m3u8_http":
 				for found in QUALITIES:
 					for quality in each['formitaeten'][0]['qualities']:
 						if quality['quality'] == found:
 							DATA['media'].append({'url': quality['audio']['tracks'][0]['uri'], 'type': 'video', 'mimeType': 'application/x-mpegURL'})
 				finalURL = DATA['media'][0]['url']
 				log_MS("(ZdfExtractQuality) m3u8-Stream (ZDF+3) : {0}".format(finalURL))
-			if each['formitaeten'][0]['type'] == 'h264_aac_mp4_http_na_na' and not finalURL:
+			if each['formitaeten'][0]['type'] == "h264_aac_mp4_http_na_na" and not finalURL:
 				for found in QUALITIES:
 					for quality in each['formitaeten'][0]['qualities']:
 						if quality['quality'] == found:
@@ -590,6 +582,7 @@ def VideoBEST(best_url, improve=False):
 	return best_url
 
 def cleanTitle(title):
+	title = py2_enc(title)
 	title = title.replace('&lt;', '<').replace('&gt;', '>').replace('&amp;', '&').replace('amp;', '').replace('&#39;', '\'').replace('&#039;', '\'').replace('&quot;', '"').replace('&szlig;', 'ß').replace('&ndash;', '-').replace('#', '')
 	title = title.replace('&#x00c4', 'Ä').replace('&#x00e4', 'ä').replace('&#x00d6', 'Ö').replace('&#x00f6', 'ö').replace('&#x00dc', 'Ü').replace('&#x00fc', 'ü').replace('&#x00df', 'ß')
 	title = title.replace('&Auml;', 'Ä').replace('&Ouml;', 'Ö').replace('&Uuml;', 'Ü').replace('&auml;', 'ä').replace('&ouml;', 'ö').replace('&uuml;', 'ü')

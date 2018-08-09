@@ -39,7 +39,7 @@
 	</extension>
 </addon>
 
-<addon id="plugin.video.tvspielfilm_de" name="TV Spielfilm - Das Beste aus den Mediatheken" version="1.1.5" provider-name="realvito">
+<addon id="plugin.video.tvspielfilm_de" name="TV Spielfilm - Das Beste aus den Mediatheken" version="1.1.6" provider-name="realvito">
 	<requires>
 		<import addon="xbmc.python" version="2.24.0"/>
 		<import addon="plugin.video.L0RE.arte" optional="true"/>
@@ -67,11 +67,8 @@
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 1.1.3 - 1.1.5  (02.07.2018)[/COLOR][/B][CR]
-- fixed: KODI-18/Win/64bit~alpha3-Nightly macht stellenweise Probleme mit Umlauten + Sonderzeichen
-- fixed: Beim Abspielen von der Playliste wird NICHT immer der Titel der Sendung angezeigt
-- optimized: SprachFiles des Addons aufgestockt
-- fixed: Fehler in "kodinerds.repo" - alte Ordner+Dateien wurden NICHT gelöscht
+		<news>[B][COLOR orangered]Version 1.1.6  (09.08.2018)[/COLOR][/B][CR]
+- fixed: Alle ZDF-Videos werden NICHT abgespielt
 		</news>
 	</extension>
 </addon>
@@ -3184,7 +3181,7 @@ This product uses the TMDb API (themoviedb.org) but is not endorsed or certified
   </extension>
 </addon>
 
-<addon id="plugin.video.tvtoday_de" name="TV Today - Best of Mediatheken" version="1.4.5" provider-name="realvito">
+<addon id="plugin.video.tvtoday_de" name="TV Today - Best of Mediatheken" version="1.4.6" provider-name="realvito">
 	<requires>
 		<import addon="xbmc.python" version="2.24.0"/>
 		<import addon="plugin.video.L0RE.arte" optional="true"/>
@@ -3212,11 +3209,8 @@ This product uses the TMDb API (themoviedb.org) but is not endorsed or certified
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 1.4.2 - 1.4.5  (02.07.2018)[/COLOR][/B][CR]
-- fixed: KODI-18/Win/64bit~alpha3-Nightly macht stellenweise Probleme mit Umlauten + Sonderzeichen
-- fixed: Beim Abspielen von der Playliste wird NICHT immer der Titel der Sendung angezeigt
-- optimized: SprachFiles des Addons aufgestockt
-- fixed: Fehler in "kodinerds.repo" - alte Ordner+Dateien wurden NICHT gelöscht
+		<news>[B][COLOR orangered]Version 1.4.6  (09.08.2018)[/COLOR][/B][CR]
+- fixed: Alle ZDF-Videos werden NICHT abgespielt
 		</news>
 	</extension>
 </addon>

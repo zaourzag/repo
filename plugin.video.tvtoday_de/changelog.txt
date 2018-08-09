@@ -122,3 +122,6 @@
  - fixed: Beim Abspielen von der Playliste wird NICHT immer der Titel der Sendung angezeigt
  - optimized: SprachFiles des Addons aufgestockt
  - fixed: Fehler in "kodinerds.repo" - alte Ordner+Dateien wurden NICHT gelöscht
+
+[B]Version 1.4.6  (09.08.2018)[/B]
+ - fixed: Alle ZDF-Videos werden NICHT abgespielt
