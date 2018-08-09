@@ -1,33 +1,23 @@
-﻿#!/usr/bin/python
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 
-#import urlparse  # Python 2.X
-#import urllib.parse  # Python 3+
-import xbmc
-import xbmcplugin
-import xbmcgui
-import xbmcaddon
+import sys
 import os
 import re
-import sys
-try:
-	import urllib, urllib2  # Python 2.X
-	import cookielib  # Python 2.X
-	unquote_plus = urllib.unquote_plus
-	quote_plus = urllib.quote_plus
-	quote = urllib.quote
-	urlopen = urllib.urlopen
-	makeRequest = urllib2
-	makeCooks = cookielib
-except ImportError:
-	import urllib.parse, urllib.request  # Python 3+
-	import http.cookiejar  # Python 3+
-	unquote_plus = urllib.parse.unquote_plus
-	quote_plus = urllib.parse.quote_plus
-	quote = urllib.parse.quote
-	urlopen = urllib.request.urlopen
-	makeRequest = urllib.request
-	makeCooks = http.cookiejar
+import xbmc
+import xbmcgui
+import xbmcplugin
+import xbmcaddon
+PY2 = sys.version_info[0] == 2
+PY3 = sys.version_info[0] == 3
+if PY2:
+	from urllib import quote, unquote, quote_plus, unquote_plus, urlencode, urlopen  # Python 2.X
+	from urllib2 import build_opener, HTTPCookieProcessor  # Python 2.X
+	from cookielib import LWPCookieJar  # Python 2.X
+	from urlparse import urljoin, urlparse, urlunparse  # Python 2.X
+elif PY3:
+	from urllib.parse import quote, unquote, quote_plus, unquote_plus, urlencode, urljoin, urlparse, urlunparse  # Python 3+
+	from urllib.request import build_opener, HTTPCookieProcessor, urlopen  # Python 3+
+	from http.cookiejar import LWPCookieJar  # Python 3+
 import json
 import xbmcvfs
 import shutil
@@ -41,14 +31,13 @@ import gzip
 global debuging
 base_url = sys.argv[0]
 pluginhandle = int(sys.argv[1])
-#args = urlparse.parse_qs(sys.argv[2][1:])
+#args = parse_qs(sys.argv[2][1:])
 addon = xbmcaddon.Addon()
-addonPath = xbmc.translatePath(addon.getAddonInfo('path'))
-dataPath = xbmc.translatePath(addon.getAddonInfo('profile'))
-temp        = xbmc.translatePath(os.path.join(dataPath, 'temp', ''))
-defaultFanart = os.path.join(addonPath ,'fanart.jpg')
-icon = os.path.join(addonPath ,'icon.png')
-PY2 = sys.version_info[0] == 2
+addonPath = xbmc.translatePath(addon.getAddonInfo('path')).encode('utf-8').decode('utf-8')
+dataPath = xbmc.translatePath(addon.getAddonInfo('profile')).encode('utf-8').decode('utf-8')
+temp        = xbmc.translatePath(os.path.join(dataPath, 'temp', '')).encode('utf-8').decode('utf-8')
+defaultFanart = os.path.join(addonPath ,'fanart.jpg').encode('utf-8').decode('utf-8')
+icon = os.path.join(addonPath ,'icon.png').encode('utf-8').decode('utf-8')
 baseURL = "https://www.tele5.de/"
 
 xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
@@ -59,25 +48,31 @@ xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_UNSORTED)
 
 if xbmcvfs.exists(temp) and os.path.isdir(temp):
 	shutil.rmtree(temp, ignore_errors=True)
+	xbmc.sleep(500)
 xbmcvfs.mkdirs(temp)
 cookie = os.path.join(temp, 'cookie.lwp')
-cj = makeCooks.LWPCookieJar();
+cj = LWPCookieJar()
 
 if xbmcvfs.exists(cookie):
 	cj.load(cookie, ignore_discard=True, ignore_expires=True)
 
-def py2_encode(s, encoding='utf-8'):
+def py2_enc(s, encoding='utf-8'):
 	if PY2 and isinstance(s, unicode):
 		s = s.encode(encoding)
 	return s
 
+def py3_dec(d, encoding='utf-8'):
+	if PY3 and isinstance(d, bytes):
+		d = d.decode(encoding)
+	return d
+
 def translation(id):
 	LANGUAGE = addon.getLocalizedString(id)
-	LANGUAGE = py2_encode(LANGUAGE)
+	LANGUAGE = py2_enc(LANGUAGE)
 	return LANGUAGE
 
 def log_Special(msg, level=xbmc.LOGNOTICE):
-	msg = py2_encode(msg)
+	msg = py2_enc(msg)
 	xbmc.log('[Tele5]'+msg, level)
 
 def debug(content):
@@ -87,7 +82,7 @@ def notice(content):
 	log(content, xbmc.LOGNOTICE)
 
 def log(msg, level=xbmc.LOGNOTICE):
-	msg = py2_encode(msg)
+	msg = py2_enc(msg)
 	xbmc.log('[plugin.video.tele5_de]'+msg, level)
 
 def getUrl(url, header=None, referer=None):
@@ -95,7 +90,7 @@ def getUrl(url, header=None, referer=None):
 	debug("Get Url : "+url)
 	for cook in cj:
 		debug("Cookie : "+str(cook))
-	opener = makeRequest.build_opener(makeRequest.HTTPCookieProcessor(cj))
+	opener = build_opener(HTTPCookieProcessor(cj))
 	try:
 		if header:
 			opener.addheaders = header
@@ -105,12 +100,10 @@ def getUrl(url, header=None, referer=None):
 		if referer:
 			opener.addheaders = [('Referer', referer)]
 		response = opener.open(url, timeout=30)
-		content = response.read()
-		if response.headers.get('Content-Encoding', '') == 'gzip':
-			if PY2:
-				content = gzip.GzipFile(fileobj=io.BytesIO(content)).read()
-			else:
-				content = gzip.GzipFile(fileobj=io.BytesIO(content)).read().decode('utf-8')
+		if response.info().get('Content-Encoding') == 'gzip':
+			content = py3_dec(gzip.GzipFile(fileobj=io.BytesIO(response.read())).read())
+		else:
+			content = py3_dec(response.read())
 	except Exception as e:
 		failure = str(e)
 		if hasattr(e, 'code'):
@@ -122,7 +115,7 @@ def getUrl(url, header=None, referer=None):
 		content = ""
 		return sys.exit(0)
 	opener.close()
-	cj.save(cookie,ignore_discard=True, ignore_expires=True)
+	cj.save(cookie, ignore_discard=True, ignore_expires=True)
 	return content
 
 def index():
@@ -137,6 +130,7 @@ def listCategories(url, type="listCategories"):
 	starturl = url
 	content = getUrl(url)
 	anz=0
+	count = 0
 	pos1 = 0
 	pos2 = 0
 	if "ce_teaserelement" in content:
@@ -176,7 +170,8 @@ def listCategories(url, type="listCategories"):
 			except:
 				pos1 += 1
 				log_Special("(listCategories) Fehler-Eintrag-01 : {0}".format(str(chtml)))
-				if pos1 > 1:
+				if pos1 > 1 and count == 0:
+					count += 1
 					xbmcgui.Dialog().notification((translation(30521).format('DISPLAY')), translation(30522), icon, 8000)
 	if 'class="scrollable"' in content:
 		content1 = content[content.find('ce_tele5slider')+1:]
@@ -203,7 +198,8 @@ def listCategories(url, type="listCategories"):
 			except:
 				pos2 += 1
 				log_Special("(listCategories) Fehler-Eintrag-02 : {0}".format(str(element)))
-				if pos2 > 1:
+				if pos2 > 1 and count == 0:
+					count += 1
 					xbmcgui.Dialog().notification((translation(30521).format('DISPLAY')), translation(30522), icon, 8000)
 	listVideos(starturl)
 	xbmcplugin.endOfDirectory(pluginhandle)
@@ -211,6 +207,7 @@ def listCategories(url, type="listCategories"):
 def listVideos(url):
 	debug("listVideos URL :"+url)
 	content = getUrl(url)
+	count = 0
 	pos3 = 0
 	# https://tele5.flowcenter.de/gg/play/l/17:pid=vplayer_1560&tt=1&se=1&rpl=1&ssd=1&ssp=1&sst=1&lbt=1&
 	# <div class="fwlist" lid="14" pid="vplayer_3780" tt="1" ssp="1" sst="1" lbt="1" ></div>
@@ -305,13 +302,14 @@ def listVideos(url):
 			except:
 				pos3 += 1
 				log_Special("(listVideos) Fehler-Eintrag-03 : {0}".format(str(element)))
-				if pos3 > 1:
+				if pos3 > 1 and count == 0:
+					count += 1
 					xbmcgui.Dialog().notification((translation(30521).format('DISPLAY')), translation(30522), icon, 8000)
 	xbmcplugin.endOfDirectory(pluginhandle)
 
 def playVideo(url):
 	debug("playVideo URL :"+url)
-	stream_url = None
+	stream_url = False
 	headerfields = "User-Agent=Mozilla/5.0 (Windows NT 10.0; WOW64; rv:50.0) Gecko/20100101 Firefox/50.0"
 	try:
 		content = getUrl("https://tele5.flowcenter.de/gg/play/p/"+url+":nl=1&mobile=0&opto=0&nsrc="+url+"&https=1&" )
@@ -320,8 +318,8 @@ def playVideo(url):
 		result = getUrl(m_mpd)
 		mp4 = re.compile(b'<BaseURL>(.+?)</BaseURL>').findall(result)[-1]
 		stream_url = m_mpd.replace("manifest.mpd", mp4.decode('utf-8'))
-		log_Special("(playVideo) MPEG-stream-bytes : {0}".format(stream_url))
 		listitem = xbmcgui.ListItem(path=stream_url+"|"+headerfields)
+		log_Special("(playVideo) MPEG-stream-bytes : {0}".format(stream_url))
 	except:
 		try:
 			content = getUrl('https://arc.nexx.cloud/api/video/'+url+'.json')
@@ -343,10 +341,11 @@ def playVideo(url):
 		except:
 			log_Special("(playVideo) ##### Abspielen des Videos NICHT möglich - VideoCode : {0} - #####\n    ########## KEINEN Eintrag für FlowCenter-/NeXX- Player gefunden !!! ##########".format(url))
 			xbmcgui.Dialog().notification((translation(30521).format('PLAY')), translation(30522), icon, 8000)
-	xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
+	if stream_url:
+		xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
 
 def cleanTitle(title):
-	title = py2_encode(title)
+	title = py2_enc(title)
 	title = title.replace('\\', '').replace('&lt;', '<').replace('&gt;', '>').replace('&amp;', '&').replace('&#39;', '\'').replace('&#039;', '\'').replace('&quot;', '"').replace('&szlig;', 'ß').replace('&ndash;', '-').replace('#', '')
 	title = title.replace("&Auml;", "Ä").replace("&Uuml;", "Ü").replace("&Ouml;", "Ö").replace("&auml;", "ä").replace("&uuml;", "ü").replace("&ouml;", "ö")
 	title = title.replace("u00C4", "Ä").replace("u00c4", "Ä").replace("u00E4", "ä").replace("u00e4", "ä").replace("u00D6", "Ö").replace("u00d6", "Ö").replace("u00F6", "ö").replace("u00f6", "ö")

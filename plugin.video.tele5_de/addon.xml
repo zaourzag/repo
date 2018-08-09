@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<addon id="plugin.video.tele5_de" name="Tele5 Mediathek" version="1.3.2" provider-name="L0RE">
+<addon id="plugin.video.tele5_de" name="Tele5 Mediathek" version="1.3.3" provider-name="L0RE">
 	<requires>
 		<import addon="xbmc.python" version="2.24.0"/>
 		<import addon="script.module.beautifulsoup4" version="4.3.2"/>
@@ -25,15 +25,9 @@
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 1.3.2  (21.07.2018)[/COLOR][/B] by realvito[CR]
-- fixed: WebSeite wurde zum Teil verändert und ist zu "https" gewechselt
-- fixed: Manche Videos werden nicht abgespielt (Tele5 nutzt vereinzelt den nexxPLAYER) zurzeit Wiedergabe möglich ?!
-- fixed: KODI-18/Win/64bit~alpha3-Nightly macht stellenweise Probleme mit Umlauten + Sonderzeichen
-- optimized: Script komplett überarbeitet
-- optimized: Normale LOG-Meldungen eingefügt, falls Fehler im Addon auftreten
-- removed: Rubrik "Lucha Underground" existiert nicht mehr
-- added: Sortierung der Titel nach Alphabet (settings)
-- added: Addon kompatibel mit PYTHON-Vers.3 gemacht (für KODI-19 >) :-)
+		<news>[B][COLOR orangered]Version 1.3.3  (09.08.2018)[/COLOR][/B] by realvito[CR]
+- optimized: Script-Code verbessert
+- optimized: Doppelte Fehlermeldungen unterbunden
 		</news>
 	</extension>
 </addon>
