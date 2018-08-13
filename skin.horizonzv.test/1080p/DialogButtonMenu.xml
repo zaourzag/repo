@@ -154,9 +154,7 @@
 						<visible>System.Loggedon</visible>
 					</item>
 					<item>
-						<label>$LOCALIZE[20046]</label>
-						<altlabel>$LOCALIZE[20045]</altlabel>
-						<usealttexture>!System.IsMaster</usealttexture>
+						<label>$VAR[MasterModeLabel]</label>
 						<onclick>mastermode</onclick>
 						<visible>System.HasLocks</visible>
 					</item>
@@ -189,11 +187,11 @@
 						<visible>Skin.HasSetting(shutdown_restart)</visible>
 					</item>
 					<item>
-						<label>$LOCALIZE[13013] $LOCALIZE[19156] Nand</label>
-						<onclick>dialog.close(all,true)</onclick>
+						<!-- <label>$LOCALIZE[13013] $LOCALIZE[19156] Nand</label> -->
+						<label>Reboot from internal</label>
 						<onclick>System.ExecWait("/usr/sbin/rebootfromnand")</onclick>
+						<onclick>Reset()</onclick>
 						<visible>System.CanReboot</visible>
-						<!-- <visible>System.Platform.Android</visible> -->
 						<visible>Skin.HasSetting(shutdown_nand)</visible>
 					</item>
 					<item>

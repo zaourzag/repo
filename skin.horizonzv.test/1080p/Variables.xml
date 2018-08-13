@@ -993,4 +993,8 @@
 		<value condition="Player.HasVideo">$INFO[VideoPlayer.Time]</value>
 		<value>$INFO[Player.Time]</value>
 	</variable>
+	<variable name="MasterModeLabel">
+		<value condition="!System.IsMaster">$LOCALIZE[20045]</value>
+		<value>$LOCALIZE[20046]</value>
+	</variable>
 </includes>
