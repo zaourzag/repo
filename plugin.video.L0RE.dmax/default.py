@@ -8,12 +8,8 @@ import xbmcplugin
 import xbmcaddon
 import xbmc
 import xbmcvfs
-import urllib, urllib2, socket, cookielib, re, os, shutil,json
+import urllib, urllib2, socket, cookielib, re, os, shutil, json
 import time
-import base64
-import requests
-from bs4 import BeautifulSoup
-from HTMLParser import HTMLParser
 import goldfinch
 
 # Setting Variablen Des Plugins
@@ -61,11 +57,8 @@ def log(msg, level=xbmc.LOGNOTICE):
     addon = xbmcaddon.Addon()
     addonID = addon.getAddonInfo('id')
     xbmc.log('%s: %s' % (addonID, msg), level) 
-    
 
-  
 def addDir(name, url, mode, thump, desc="",page=1,nosub=0,type="items",addtype=0): 
-  
   u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&page="+str(page)+"&nosub="+str(nosub)+"&type="+str(type)
   ok = True
   liz = xbmcgui.ListItem(name)  
@@ -108,7 +101,6 @@ def parameters_string_to_dict(parameters):
 				paramDict[paramSplits[0]] = paramSplits[1]
 	return paramDict
 
-
 def geturl(url,data="x",header="",referer=""):
         global cj
         debug("Get Url: " +url)
@@ -138,13 +130,7 @@ def geturl(url,data="x",header="",referer=""):
         cj.save(cookie,ignore_discard=True, ignore_expires=True)               
         return content
 
-
-    
-
-   
-   
-  
-def liste():      
+def liste():
     addDir("Alle Sendungen" , "https://www.dmax.de/api/search?query=*&limit=100&page=1", "videoliste","",nosub="recently-added",type="shows")
     addDir("Themen" , "", "themenliste","")            
     addDir("Featured" , "https://www.dmax.de/api/shows/highlights?limit=100&page=1", "videoliste","",nosub="featured") 
@@ -187,18 +173,16 @@ def playvideo(idd):
     debug(content)
     struktur = json.loads(content)    
     videofile=struktur["data"]["attributes"]["streaming"]["hls"]["url"]
-    
     debug(videofile)
     #debug(licfile)    
     listitem = xbmcgui.ListItem(path=videofile)    
     listitem.setProperty('IsPlayable', 'true')
-    
     inputstream=addon.getSetting("inputstream")
     if inputstream=="true":     
         licfile=struktur["data"]["attributes"]["protection"]["schemes"]["clearkey"]["licenseUrl"]
         contentI=geturl(licfile,header=header)
-		strukturI = json.loads(contentI)
-		lickey=strukturI["keys"][0]["k"]        
+        strukturI = json.loads(contentI)
+        lickey=strukturI["keys"][0]["k"]        
         listitem.setProperty('inputstreamaddon', 'inputstream.adaptive')
         listitem.setProperty('inputstream.adaptive.manifest_type', 'hls')
         #listitem.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')
@@ -215,7 +199,6 @@ type= urllib.unquote_plus(params.get('type', ''))
 name= urllib.unquote_plus(params.get('name', ''))
 stunden= urllib.unquote_plus(params.get('stunden', ''))
 
-
 def tolibrary(url,name,stunden):
     mediapath=addon.getSetting("mediapath")
     if mediapath=="":
@@ -226,6 +209,7 @@ def tolibrary(url,name,stunden):
     urln=urllib.quote_plus(urln)
     debug("tolibrary urln : "+urln)
     xbmc.executebuiltin('XBMC.RunPlugin(plugin://service.L0RE.cron/?mode=adddata&name=%s&stunden=%s&url=%s)'%(name,stunden,urln))
+
 def listserie(idd):
   url="https://www.dmax.de/api/show-detail/"+str(idd)
   debug("listserie :"+url)
@@ -249,7 +233,7 @@ def listserie(idd):
         airdate=video["airDate"]
         addLink(title,idd,"playvideo",image,desc=desc,duration=duration)
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
-  
+
 def generatefiles(idd,name):
   url="https://www.dmax.de/api/show-detail/"+str(idd)
   debug("generatefiles :"+url)
@@ -301,12 +285,12 @@ def generatefiles(idd,name):
         nfofile=os.path.join(ppath,namef+".nfo")           
         file = xbmcvfs.File(nfofile,"w")  
         file.write(nfostring)
-        file.close()             
+        file.close()
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
-  
-def videoliste(url,page=1,nosub="",type="items"):    
+
+def videoliste(url,page=1,nosub="",type="items"):
   if not "http" in url:
-     url="http://www.demax.de/"+url
+    url="http://www.dmax.de/"+url
   content=geturl(url)
   debug("videoliste : "+content)
   struktur = json.loads(content) 
@@ -321,18 +305,18 @@ def videoliste(url,page=1,nosub="",type="items"):
     addDir(title,idd,"listserie",image,desc=desc,addtype=1)
   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
   
-def inputsettings()    :
+def inputsettings():
   xbmcaddon.Addon("inputstream.adaptive").openSettings()  
 
 debug("#######"+mode)  
 # Haupt Menu Anzeigen      
 if mode is '':
-     liste()   
+     liste()
 else:
-  # Wenn Settings ausgew√§hlt wurde
+  # Wenn Settings ausgew‰hlt wurde
   if mode == 'Settings':
           addon.openSettings()
-  # Wenn Kategory ausgew√§hlt wurde
+  # Wenn Kategory ausgew‰hlt wurde
   if mode == 'playvideo':
           playvideo(url)
   if mode == 'subrubrik':
