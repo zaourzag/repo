@@ -2700,7 +2700,7 @@ This product uses the TMDb API (themoviedb.org) but is not endorsed or certified
   	</extension>
 </addon>
 
-<addon id="skin.horizonzv.test" name="Horizonz V (Kodi 18) BETA!" version="1.18.0.18" provider-name="blauesgruen">
+<addon id="skin.horizonzv.test" name="Horizonz V (Kodi 18) BETA!" version="1.18.0.19" provider-name="blauesgruen">
 	<requires>
 		<import addon="xbmc.gui" version="5.13.0"/>
 		<import addon="script.image.resource.select" version="2.0.1"/>
