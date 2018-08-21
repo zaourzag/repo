@@ -290,9 +290,8 @@
     </variable>
     <variable name="PosterThumb">
 		<value condition="ListItem.IsParentFolder">$INFO[ListItem.Icon]</value>
-        <value condition="!String.IsEmpty(ListItem.Art(poster))+!ListItem.IsCollection">$INFO[ListItem.Art(poster)]</value>
-        <value condition="[String.IsEmpty(ListItem.Art(poster))+!String.IsEqual(Container(9000).ListItem.Property(homemenu_id),tvshow)]|ListItem.IsCollection">$INFO[ListItem.Icon]</value>
-        <value condition="Container.Content(episodes)|String.IsEqual(Container(9000).ListItem.Property(homemenu_id),tvshow)">$INFO[ListItem.Art(tvshow.poster)]</value>
+        <value condition="!String.IsEmpty(ListItem.Art(poster))">$INFO[ListItem.Art(poster)]</value>
+        <value condition="String.Contains(Container.ListItem.DBTYPE,episode)+Window.IsVisible(home)">$INFO[ListItem.Art(tvshow.poster)]</value>
         <value condition="String.Contains(Skin.String(studiologos.name),coloured)+Container.Content(studios)+!ListItem.IsParentFolder+!Window.IsVisible(music)">$INFO[ListItem.Label,resource://resource.images.studios.coloured/,]$VAR[MovieMovieStudiosVar]</value>
         <value condition="String.Contains(Skin.String(studiologos.name),white)+Container.Content(studios)+!ListItem.IsParentFolder+!Window.IsVisible(music)">$INFO[ListItem.Label,resource://resource.images.studios.white/,]$VAR[MovieMovieStudiosVar]</value>
         <value condition="String.Contains(Skin.String(moviegenreicons.name),coloured)+Container.Content(genres)+!ListItem.IsParentFolder+!Window.IsVisible(music)">$INFO[ListItem.Label,resource://resource.images.moviegenreicons.coloured/,]$VAR[MovieMoviegenreiconsExtVar]</value>
@@ -640,8 +639,8 @@
         <value condition="Container(8006).HasFocus(30)">addon_fav30</value>
     </variable>
     <variable name="DashboardAddonLabel">
-        <value condition="!String.IsEmpty(Container(8005).ListItem.Label2)+Control.HasFocus(8005)">$INFO[Container(8005).ListItem.Label2]</value>
-        <value condition="String.IsEmpty(Container(8005).ListItem.Label2)+Control.HasFocus(8005)">$INFO[Container(8005).ListItem.Label]</value>
+        <value condition="!String.IsEmpty(Container(8009).ListItem.Label2)+Control.HasFocus(8009)">$INFO[Container(8009).ListItem.Label2]</value>
+        <value condition="String.IsEmpty(Container(8009).ListItem.Label2)+Control.HasFocus(8009)">$INFO[Container(8009).ListItem.Label]</value>
     </variable>
     <variable name="DashboardAddonLabel3">
         <value condition="String.IsEmpty(Container(8006).ListItem.Label)+![String.IsEmpty(Container(8006).ListItem.Label2)|String.IsEmpty(Container(8006).ListItem.Icon)]">! kein Addon gewählt !</value>

@@ -1,4 +1,8 @@
-﻿v 1.18.0.18
+﻿v 1.18.0.19
+- Bugfix Addontext unter Dashboard
+- Bugfix ID50 doppelte image Id
+
+v 1.18.0.18
 - CoreELEC und LibreELEC Icon in die Einstellungen eingebaut
 
 v 1.18.0.16

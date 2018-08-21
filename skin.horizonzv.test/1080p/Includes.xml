@@ -572,7 +572,10 @@
                 <visible>Window.IsVisible(home)+Skin.HasSetting(BackgroundVideo)</visible>
             </control>
             <control type="videowindow" id="2015">
-                <include>Dimensions_Fullscreen</include>
+				<left>0</left>
+				<top>0</top>
+				<!-- <width>1920</width>
+				<height>1080</height> -->
                 <include>openclosevisible</include>
                 <visible>!Skin.HasSetting(BackgroundOverlay)+Skin.HasSetting(BackgroundVideo)+Window.IsVisible(home)</visible>
             </control>
@@ -658,10 +661,10 @@
             <visible>!String.Contains(VideoPlayer.Title,theme.mp4)</visible>
         </control>
         <control type="videowindow">
-            <left>0</left>
+            <!-- <left>0</left>
             <top>0</top>
             <width>1920</width>
-            <height>1080</height>
+            <height>1080</height> -->
             <visible>Player.HasVideo</visible>
             <visible>String.Contains(VideoPlayer.Title,theme.mp4)</visible>
         </control>

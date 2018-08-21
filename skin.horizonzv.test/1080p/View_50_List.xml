@@ -291,7 +291,7 @@
                         <include>opencloseslideleft</include>
                         <visible>!Container.Content(Episodes)</visible>
                     </control>
-                    <control type="image" id="1112">
+                    <control type="image" id="1113">
                         <left>-150</left>
                         <top>150</top>
                         <width>705</width>
