@@ -2900,7 +2900,7 @@ This product uses the TMDb API (themoviedb.org) but is not endorsed or certified
 	</extension>
 </addon>
 
-<addon id="plugin.video.dokustreams.de" name="Dokustreams.de" version="1.0.3" provider-name="itouch5000">
+<addon id="plugin.video.dokustreams.de" name="Dokustreams.de" version="1.0.4" provider-name="itouch5000">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="script.module.requests" version="2.7.0"/>
