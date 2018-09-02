@@ -5,8 +5,10 @@
 	<views>50,51,52,53,54,55,56,58,59</views>
 	<menucontrol>6666</menucontrol>
 	<include>UnloadSetProperties</include>
-	<onload condition="!Window.Previous(fullscreenvideo) + !Window.Previous(visualisation) + !Skin.HasSetting(NoJumpToFirstPage)">action(firstpage)</onload>
-	<include>PropertyIncludes</include>
+	<onload condition="!Window.Previous(fullscreenvideo) + !Window.Previous(visualisation) + Skin.HasSetting(JumpToFirstPage)">action(firstpage)</onload>
+	<include content="PropertyIncludes">
+		<param name="ShowHeader" value="true"/>
+	</include>
 	<controls>
 		<!-- hidden -->
 		<control type="button" id="2">
@@ -16,6 +18,11 @@
 			<visible>Control.IsVisible(54) | Control.IsVisible(55) | Control.IsVisible(56)</visible>
 			<include>HiddenObject</include>
 			<content limit="1">$VAR[View_Cast_Content]</content>
+		</control>
+		<control type="list" id="2001">
+			<include>HiddenObject</include>
+			<content sortby="year">$INFO[ListItem.FolderPath]</content>
+			<visible>String.IsEqual(ListItem.DBtype,set)</visible>
 		</control>
 		<!-- background -->
 		<include>Background</include>

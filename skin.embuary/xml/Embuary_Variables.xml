@@ -209,7 +209,8 @@
 	</variable>
 	<variable name="ContainerContentPrefix">
 		<value condition="Window.IsVisible(script-globalsearch.xml) | Window.IsVisible(script-globalsearch-main.xml)">Globalsearch - </value>
-		<value condition="String.StartsWith(Container.Folderpath,plugin://plugin.video.embycon) | Window.IsVisible(1160) | Window.IsVisible(1161) | Window.IsVisible(1162) | Window.IsVisible(1163) | Window.IsVisible(1164) | Window.IsVisible(1165) | Window.IsVisible(1166) | Window.IsVisible(1167) | Window.IsVisible(1168) | Window.IsVisible(1169)">EmbyCon - </value>
+		<value condition="String.StartsWith(Container.Folderpath,plugin://plugin.video.embycon) | Window.IsVisible(1131)">EmbyCon - </value>
+		<value condition="Window.IsVisible(1130)">Emby - </value>
 	</variable>
 	<variable name="ContainerContent">
 		<value condition="Window.IsVisible(dialogpvrinfo.xml)">$LOCALIZE[19047]</value>
@@ -222,8 +223,8 @@
 		<value condition="String.StartsWith(Container.FolderPath,plugin://plugin.video.emby/) + String.Contains(Container.FolderPath,type=homevideos)">$LOCALIZE[31187]</value>
 		<value condition="Window.IsVisible(1114)">$LOCALIZE[135]</value>
 		<value condition="Window.IsVisible(1115)">$LOCALIZE[283]</value>
-		<value condition="Window.IsVisible(1130)">$INFO[Control.GetLabel(199)]</value>
-		<value condition="Window.IsVisible(1131)">$INFO[Control.GetLabel(199)]</value>
+		<value condition="Window.IsVisible(1130)">$INFO[Control.GetLabel(199),, ]$LOCALIZE[31253]</value>
+		<value condition="Window.IsVisible(1131)">$INFO[Control.GetLabel(199),, ]$LOCALIZE[31253]</value>
 		<value condition="String.StartsWith(Container.FolderPath,videodb://movies/genres/)">$INFO[Container.Foldername]</value>
 		<value condition="String.StartsWith(Container.FolderPath,videodb://tvshows/genres/)">$INFO[Container.Foldername]</value>
 		<value condition="String.StartsWith(Container.FolderPath,plugin://script.skin.helper.widgets/?action=browsegenres)">$LOCALIZE[135]</value>
@@ -255,11 +256,11 @@
 		<value condition="Window.IsVisible(DialogAddonSettings.xml)">$INFO[Control.GetLabel(20)]</value>
 		<value condition="Window.IsVisible(SettingsCategory.xml)">$LOCALIZE[5]: $INFO[Control.GetLabel(2)]</value>
 		<value condition="Window.IsVisible(Settings.xml)">$LOCALIZE[5]</value>
-		<value condition="Window.IsVisible(1120)">$LOCALIZE[342]</value>
-		<value condition="Window.IsVisible(1121)">$LOCALIZE[20343]</value>
-		<value condition="Window.IsVisible(1122)">$LOCALIZE[2]</value>
-		<value condition="Window.IsVisible(1123)">$LOCALIZE[24001]</value>
-		<value condition="Window.IsVisible(1124)">$VAR[PVRLabel]</value>
+		<value condition="Window.IsVisible(1120)">$LOCALIZE[31173]</value>
+		<value condition="Window.IsVisible(1121)">$LOCALIZE[31172]</value>
+		<value condition="Window.IsVisible(1122)">$LOCALIZE[31174]</value>
+		<value condition="Window.IsVisible(1123)">$LOCALIZE[31251]</value>
+		<value condition="Window.IsVisible(1124)">$LOCALIZE[31252]</value>
 		<value condition="!String.IsEmpty(Container.ShowTitle)">$INFO[Container.ShowTitle]</value>
 		<value condition="Window.IsVisible(MyPVRGuide.xml)">$LOCALIZE[19069]</value>
 		<value condition="Window.IsVisible(MyPVRRecordings.xml)">$LOCALIZE[19017]</value>
@@ -1312,7 +1313,7 @@
 		<value condition="!String.IsEmpty(Container(100).ListItem.Property(Comment))">$INFO[Container(100).ListItem.Property(Comment)]</value>
 	</variable>
 	<variable name="ListViewPlot">
-		<value condition="String.IsEqual(ListItem.DBType,set) + !String.StartsWith(ListItem.Path,plugin://plugin.video)">$INFO[Window(home).Property(SkinHelper.ListItem.Count),[B]$LOCALIZE[342]: ,[/B][CR]]$INFO[Window(home).Property(SkinHelper.ListItem.ExtendedPlot)]</value>
+		<value condition="String.IsEqual(ListItem.DBType,set) + !String.IsEmpty(Container(2001).ListItem.Label)">$INFO[Container(2001).ListItemAbsolute(0).Label]$INFO[Container(2001).ListItemAbsolute(0).Year, (,)[CR]]$INFO[Container(2001).ListItemAbsolute(1).Label]$INFO[Container(2001).ListItemAbsolute(1).Year, (,)[CR]]$INFO[Container(2001).ListItemAbsolute(2).Label]$INFO[Container(2001).ListItemAbsolute(2).Year, (,)[CR]]$INFO[Container(2001).ListItemAbsolute(3).Label]$INFO[Container(2001).ListItemAbsolute(3).Year, (,)[CR]]$INFO[Container(2001).ListItemAbsolute(4).Label]$INFO[Container(2001).ListItemAbsolute(4).Year, (,)[CR]]$INFO[Container(2001).ListItemAbsolute(5).Label]$INFO[Container(2001).ListItemAbsolute(5).Year, (,)[CR]]$INFO[Container(2001).ListItemAbsolute(6).Label]$INFO[Container(2001).ListItemAbsolute(6).Year, (,)[CR]]$INFO[Container(2001).ListItemAbsolute(7).Label]$INFO[Container(2001).ListItemAbsolute(7).Year, (,)[CR]]$INFO[Container(2001).ListItemAbsolute(8).Label]$INFO[Container(2001).ListItemAbsolute(8).Year, (,)[CR]]$INFO[Container(2001).ListItemAbsolute(9).Label]$INFO[Container(2001).ListItemAbsolute(9).Year, (,)[CR]]$INFO[Container(2001).ListItemAbsolute(10).Label]$INFO[Container(2001).ListItemAbsolute(10).Year, (,)[CR]]$INFO[Container(2001).ListItemAbsolute(11).Label]$INFO[Container(2001).ListItemAbsolute(11).Year, (,)[CR]]$INFO[Container(2001).ListItemAbsolute(12).Label]$INFO[Container(2001).ListItemAbsolute(12).Year, (,)[CR]]$INFO[Container(2001).ListItemAbsolute(13).Label]$INFO[Container(2001).ListItemAbsolute(13).Year, (,)[CR]]$INFO[Container(2001).ListItemAbsolute(14).Label]$INFO[Container(2001).ListItemAbsolute(14).Year, (,)[CR]]$INFO[Container(2001).ListItemAbsolute(15).Label]$INFO[Container(2001).ListItemAbsolute(15).Year, (,)[CR]]$INFO[Container(2001).ListItemAbsolute(16).Label]$INFO[Container(2001).ListItemAbsolute(16).Year, (,)[CR]]$INFO[Container(2001).ListItemAbsolute(17).Label]$INFO[Container(2001).ListItemAbsolute(17).Year, (,)[CR]]$INFO[Container(2001).ListItemAbsolute(18).Label]$INFO[Container(2001).ListItemAbsolute(18).Year, (,)[CR]]$INFO[Container(2001).ListItemAbsolute(19).Label]$INFO[Container(2001).ListItemAbsolute(19).Year, (,)[CR]]$INFO[Container(2001).ListItemAbsolute(20).Label]$INFO[Container(2001).ListItemAbsolute(20).Year, (,)[CR]]$INFO[Container(2001).ListItemAbsolute(21).Label]$INFO[Container(2001).ListItemAbsolute(21).Year, (,)[CR]]$INFO[Container(2001).ListItemAbsolute(22).Label]$INFO[Container(2001).ListItemAbsolute(22).Year, (,)[CR]]$INFO[Container(2001).ListItemAbsolute(23).Label]$INFO[Container(2001).ListItemAbsolute(23).Year, (,)[CR]]$INFO[Container(2001).ListItemAbsolute(24).Label]$INFO[Container(2001).ListItemAbsolute(24).Year, (,)[CR]]$INFO[Container(2001).ListItemAbsolute(25).Label]$INFO[Container(2001).ListItemAbsolute(25).Year, (,)[CR]]</value>
 		<value condition="Window.IsVisible(tvrecordings)">$INFO[ListItem.Plot]</value>
 		<value condition="!String.IsEmpty(ListItem.Property(Album_Description))">$INFO[ListItem.Property(Album_Description)]</value>
 		<value condition="!String.IsEmpty(ListItem.Property(Artist_Description))">$INFO[ListItem.Property(Artist_Description)]</value>
@@ -1320,6 +1321,7 @@
 		<value>$INFO[ListItem.Tagline,[B],[/B][CR][CR]]$INFO[ListItem.Plot]</value>
 	</variable>
 	<variable name="SetViewPlot">
+		<value condition="String.IsEqual(ListItem.DBType,set)">$INFO[Container(2001).ListItemAbsolute(0).Label]$INFO[Container(2001).ListItemAbsolute(0).Year, (,)]$INFO[Container(2001).ListItemAbsolute(1).Label,  /  ]$INFO[Container(2001).ListItemAbsolute(1).Year, (,)]$INFO[Container(2001).ListItemAbsolute(2).Label,  /  ]$INFO[Container(2001).ListItemAbsolute(2).Year, (,)]$INFO[Container(2001).ListItemAbsolute(3).Label,  /  ]$INFO[Container(2001).ListItemAbsolute(3).Year, (,)]$INFO[Container(2001).ListItemAbsolute(4).Label,  /  ]$INFO[Container(2001).ListItemAbsolute(4).Year, (,)]$INFO[Container(2001).ListItemAbsolute(5).Label,  /  ]$INFO[Container(2001).ListItemAbsolute(5).Year, (,)]$INFO[Container(2001).ListItemAbsolute(6).Label,  /  ]$INFO[Container(2001).ListItemAbsolute(6).Year, (,)]$INFO[Container(2001).ListItemAbsolute(7).Label,  /  ]$INFO[Container(2001).ListItemAbsolute(7).Year, (,)]$INFO[Container(2001).ListItemAbsolute(8).Label,  /  ]$INFO[Container(2001).ListItemAbsolute(8).Year, (,)]$INFO[Container(2001).ListItemAbsolute(9).Label,  /  ]$INFO[Container(2001).ListItemAbsolute(9).Year, (,)]$INFO[Container(2001).ListItemAbsolute(10).Label,  /  ]$INFO[Container(2001).ListItemAbsolute(10).Year, (,)]$INFO[Container(2001).ListItemAbsolute(11).Label,  /  ]$INFO[Container(2001).ListItemAbsolute(11).Year, (,)]$INFO[Container(2001).ListItemAbsolute(12).Label,  /  ]$INFO[Container(2001).ListItemAbsolute(12).Year, (,)]$INFO[Container(2001).ListItemAbsolute(13).Label,  /  ]$INFO[Container(2001).ListItemAbsolute(13).Year, (,)]$INFO[Container(2001).ListItemAbsolute(14).Label,  /  ]$INFO[Container(2001).ListItemAbsolute(14).Year, (,)]$INFO[Container(2001).ListItemAbsolute(15).Label,  /  ]$INFO[Container(2001).ListItemAbsolute(15).Year, (,)]$INFO[Container(2001).ListItemAbsolute(16).Label,  /  ]$INFO[Container(2001).ListItemAbsolute(16).Year, (,)]$INFO[Container(2001).ListItemAbsolute(17).Label,  /  ]$INFO[Container(2001).ListItemAbsolute(17).Year, (,)]$INFO[Container(2001).ListItemAbsolute(18).Label,  /  ]$INFO[Container(2001).ListItemAbsolute(18).Year, (,)]$INFO[Container(2001).ListItemAbsolute(19).Label,  /  ]$INFO[Container(2001).ListItemAbsolute(19).Year, (,)]$INFO[Container(2001).ListItemAbsolute(20).Label,  /  ]$INFO[Container(2001).ListItemAbsolute(20).Year, (,)]$INFO[Container(2001).ListItemAbsolute(21).Label,  /  ]$INFO[Container(2001).ListItemAbsolute(21).Year, (,)]$INFO[Container(2001).ListItemAbsolute(22).Label,  /  ]$INFO[Container(2001).ListItemAbsolute(22).Year, (,)]$INFO[Container(2001).ListItemAbsolute(23).Label,  /  ]$INFO[Container(2001).ListItemAbsolute(23).Year, (,)]$INFO[Container(2001).ListItemAbsolute(24).Label,  /  ]$INFO[Container(2001).ListItemAbsolute(24).Year, (,)]$INFO[Container(2001).ListItemAbsolute(25).Label,  /  ]$INFO[Container(2001).ListItemAbsolute(25).Year, (,)]</value>
 		<value condition="!String.IsEmpty(ListItem.Plot)">$INFO[ListItem.Tagline,[B],[/B][CR]]$INFO[ListItem.Plot]</value>
 		<value condition="!String.IsEmpty(Window(home).Property(SkinHelper.ListItem.Plot))">$INFO[Window(home).Property(SkinHelper.ListItem.Plot)]</value>
 		<value>$LOCALIZE[19055]</value>

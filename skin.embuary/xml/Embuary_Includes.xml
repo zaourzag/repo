@@ -53,6 +53,8 @@
 		<texturenofocus />
 		<label></label>
 		<font></font>
+		<itemlayout/>
+		<focusedlayout/>
 	</include>
 	<!-- Music Background -->
 	<include name="MusicBackground">
@@ -737,8 +739,13 @@
 	</include>
 	<!-- Global property onload unload -->
 	<include name="PropertyIncludes">
-		<onload>ClearProperty(FocusBounce,home)</onload>
-		<onunload>ClearProperty(FocusBounce,home)</onunload>
+		<param name="ShowHeader">false</param>
+		<definition>
+			<onload>ClearProperty(FocusBounce,home)</onload>
+			<onunload>ClearProperty(FocusBounce,home)</onunload>
+			<onunload condition="$PARAM[ShowHeader]">SetProperty(ShowHeader,1,home)</onunload>
+			<onunload condition="$PARAM[ShowHeader]">AlarmClock(ShowHeader,ClearProperty(ShowHeader,home),00:02,silent)</onunload>
+		</definition>
 	</include>
 	<!-- Scrollbars -->
 	<include name="Scrollbar">
@@ -1209,7 +1216,7 @@
 						<effect type="fade" delay="160" end="100" time="240" />
 					</animation>
 					<animation type="Conditional" reversible="false" condition="!ControlGroup(4100).HasFocus">
-						<effect type="slide" delay="0" end="0,-3000" start="0,0" time="0" />
+						<effect type="slide" delay="240" end="0,-3000" start="0,0" time="0" />
 						<effect type="zoom" start="100" end="80" center="960,540" easing="in" tween="circle" easin="out" time="240" />
 						<effect type="fade" start="100" end="0" time="240" />
 					</animation>
@@ -1347,7 +1354,7 @@
 		</definition>
 	</include>
 	<include name="ScrollTime">
-		<scrolltime tween="cubic" easing="out">700</scrolltime>
+		<scrolltime tween="sine" easing="inout">300</scrolltime>
 	</include>
 	<include name="FocusBounce">
 		<onup condition="!Skin.HasSetting(MinimalFocusAnimation)">SetProperty(FocusBounce,1,home)</onup>
