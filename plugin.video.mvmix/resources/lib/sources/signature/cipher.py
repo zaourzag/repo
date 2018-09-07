@@ -131,7 +131,11 @@ class Cipher(object):
         return json_script
 
     def _find_signature_function_name(self, java_script):
-        match = re.search('"signature",(?P<name>[$a-zA-Z]+)\(', java_script)
+        match = re.search(r'(?P<name>\w+)\s*=\s*function\((\w+)\){\s*\2=\s*\2\.split\(""\)\s*;', java_script)
+        if not match:
+            match = re.search(r'(["\'])signature\1\s*,\s*(?P<sig>[a-zA-Z0-9$]+)\(', java_script)
+        if not match:
+            match = re.search(r'\.sig\|\|(?P<sig>[a-zA-Z0-9$]+)\(', java_script)
         if match:
             return match.group('name')
 
