@@ -6,12 +6,15 @@
 	<onunload condition="!String.IsEmpty(Window(home).Property(PlayItem))">PlayMedia($INFO[Window(home).Property(PlayItem)])</onunload>
 	<onunload>ClearProperty(NextWindow,home)</onunload>
 	<onunload>ClearProperty(PlayItem,home)</onunload>
-	<menucontrol>6666</menucontrol>
 	<include content="PropertyIncludes">
 		<param name="ShowHeader" value="true"/>
 	</include>
 	<controls>
-		<include>Background</include>
+		<!-- background -->
+		<include content="Background">
+			<param name="forced_visible" value="true"/>
+		</include>
+		<!-- favs -->
 		<control type="grouplist" id="10">
 			<include>Window_OpenClose</include>
 			<defaultcontrol>10000</defaultcontrol>
@@ -28,7 +31,7 @@
 			<!-- local favs -->
 			<include content="SquareWidget">
 				<param name="id" value="450"/>
-				<param name="onup" value="6666"/>
+				<param name="onup" value="noop"/>
 				<param name="ondown" value="201"/>
 				<param name="height" value="476"/>
 				<param name="layout" value="SquareFavourits"/>
@@ -48,7 +51,7 @@
 				<param name="use_custom_onclick" value="true"/>
 				<param name="onclick" value="SetProperty(PlayItem,$INFO[ListItem.FileNameAndPath],home)"/>
 				<param name="onclick2" value="close"/>
-				<param name="content" value="library://video/emby_Favorite movies.xml"/>
+				<param name="content" value="$VAR[Emby.FavMovies]"/>
 			</include>
 			<include content="PosterWidget">
 				<param name="visible" value="System.HasAddon(plugin.video.embycon)"/>
@@ -76,7 +79,7 @@
 				<param name="use_custom_onclick" value="true"/>
 				<param name="onclick" value="SetProperty(NextWindow,$INFO[ListItem.FolderPath],home)"/>
 				<param name="onclick2" value="close"/>
-				<param name="content" value="library://video/emby_Favorite tvshows.xml"/>
+				<param name="content" value="$VAR[Emby.FavShows]"/>
 			</include>
 			<include content="PosterWidget">
 				<param name="visible" value="System.HasAddon(plugin.video.embycon)"/>
@@ -104,7 +107,7 @@
 				<param name="use_custom_onclick" value="true"/>
 				<param name="onclick" value="SetProperty(PlayItem,$INFO[ListItem.FileNameAndPath],home)"/>
 				<param name="onclick2" value="close"/>
-				<param name="content" value="library://video/emby_Favorite episodes.xml"/>
+				<param name="content" value="$VAR[Emby.FavEpisodes]"/>
 			</include>
 			<include content="WideWidget">
 				<param name="visible" value="System.HasAddon(plugin.video.embycon)"/>
@@ -173,6 +176,7 @@
 		<!-- header bar -->
 		<include content="HeaderBar">
 			<param name="id">10</param>
+			<param name="header_label">$LOCALIZE[1036]</param>
 		</include>
 		<!-- side panel -->
 		<include content="SidePanel">

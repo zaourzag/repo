@@ -103,7 +103,19 @@
 	<variable name="EmbyCon.SearchMusic">
 		<value condition="!String.IsEmpty(Skin.String(CustomSearchTerm)) + System.HasAddon(plugin.video.embycon)">plugin://plugin.video.embycon/?item_type=audio&amp;mode=NEW_SEARCH&amp;query=$INFO[Skin.String(CustomSearchTerm)]</value>
 	</variable>
-
+	<!-- Emby Fav sources -->
+	<variable name="Emby.FavMovies">
+		<value condition="String.StartsWith(System.AddonVersion(plugin.video.emby),3.0)">library://video/emby_Favorite movies.xml</value>
+		<value>library://video/emby_Favoritemovies.xml</value>
+	</variable>
+	<variable name="Emby.FavShows">
+		<value condition="String.StartsWith(System.AddonVersion(plugin.video.emby),3.0)">library://video/emby_Favorite tvshows.xml</value>
+		<value>library://video/emby_Favoritetvshows.xml</value>
+	</variable>
+	<variable name="Emby.FavEpisodes">
+		<value condition="String.StartsWith(System.AddonVersion(plugin.video.emby),3.0)">library://video/emby_Favorite episodes.xml</value>
+		<value>library://video/emby_Favoriteepisodes.xml</value>
+	</variable>
 	<!-- EmbyCon sources -->
 	<variable name="EmbyCon.SetsPath">
 		<value>ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems?ParentId=$PARAM[parentID]&amp;IsVirtualUnaired%3dfalse%26CollapseBoxSetItems%3dtrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26format%3djson,return)</value>
@@ -168,6 +180,7 @@
 	</variable>
 	<!-- Embcon/Native DB vars -->
 	<variable name="View_Cast_Content">
+		<value condition="!String.IsEmpty(Container.Pluginname) + !String.StartsWith(Container.Folderpath,plugin://plugin.video.embycon)"></value>
 		<value condition="String.StartsWith(ListItem.Path,plugin://plugin.video.embycon) + Container.Content(seasons) + ListItem.IsParentFolder">plugin://plugin.video.embycon?mode=WIDGET_CONTENT_CAST&amp;id=$INFO[ListItem(1).Property(id)]</value>
 		<value condition="String.StartsWith(ListItem.Path,plugin://plugin.video.embycon)">plugin://plugin.video.embycon?mode=WIDGET_CONTENT_CAST&amp;id=$INFO[ListItem.Property(id)]</value>
 		<value condition="String.IsEqual(ListItem.DBType,movie) + !String.IsEmpty(ListItem.DBID) + !String.IsEqual(ListItem.DBID,0)">plugin://plugin.get.cast?mode=dbid&amp;&amp;dbtype=movie&amp;&amp;dbinfo=$INFO[ListItem.DBID]</value>
@@ -179,14 +192,17 @@
 		<value condition="Container.Content(seasons) + !String.IsEmpty(ListItem(2).DBID)">plugin://plugin.get.cast?mode=title&amp;&amp;dbtype=tvshow&amp;&amp;dbinfo=$INFO[ListItem(2).TVShowTitle]</value>
 	</variable>
 	<variable name="View54_NextUp_Content">
+		<value condition="!String.IsEmpty(Container.Pluginname) + !String.StartsWith(Container.Folderpath,plugin://plugin.video.embycon)"></value>
 		<value condition="Container.Content(seasons) + Integer.IsGreater(Window(home).Property(UnwatchedEpisodes),0) + String.StartsWith(ListItem.Path,plugin://plugin.video.embycon)">plugin://plugin.video.embycon/?mode=GET_CONTENT&amp;media_type=Episodes&amp;url=%7Bserver%7D%2Femby%2FShows%2FNextUp%3FuserId%3D%7Buserid%7D%26Limit%3D%7BItemLimit%7D%26Filters%3D%7Bfield_filters%7D%26format%3Djson%26ImageTypeLimit%3D1%26IsMissing%3DFalse%26SeriesId%3D$INFO[Window(home).Property(EmbyID)]</value>
 		<value condition="Container.Content(seasons) + Integer.IsGreater(Window(home).Property(UnwatchedEpisodes),0) + !String.IsEmpty(Window(home).Property(TVShowDBID))">videodb://inprogresstvshows/$INFO[Window(home).Property(TVShowDBID)]/-2/?tvshowid=$INFO[Window(home).Property(TVShowDBID)]</value>
 	</variable>
 	<variable name="InfoDialog_NextUp_Content">
+		<value condition="!String.IsEmpty(Container.Pluginname) + !String.StartsWith(Container.Folderpath,plugin://plugin.video.embycon)"></value>
 		<value condition="Integer.IsGreater(Window(home).Property(UnwatchedEpisodes),0) + String.StartsWith(ListItem.Path,plugin://plugin.video.embycon)">plugin://plugin.video.embycon/?mode=GET_CONTENT&amp;media_type=Episodes&amp;url=%7Bserver%7D%2Femby%2FShows%2FNextUp%3FuserId%3D%7Buserid%7D%26Limit%3D%7BItemLimit%7D%26Filters%3D%7Bfield_filters%7D%26format%3Djson%26ImageTypeLimit%3D1%26IsMissing%3DFalse%26SeriesId%3D$INFO[ListItem.Property(id)]</value>
 		<value condition="Integer.IsGreater(Window(home).Property(UnwatchedEpisodes),0) + !String.IsEmpty(ListItem.DBID)">videodb://inprogresstvshows/$INFO[ListItem.DBID]/-2/?tvshowid=$INFO[ListItem.DBID]</value>
 	</variable>
 	<variable name="InfoDialog_MoreLikeThis_Content">
+		<value condition="!String.IsEmpty(Container.Pluginname) + !String.StartsWith(Container.Folderpath,plugin://plugin.video.embycon)"></value>
 		<value condition="String.StartsWith(ListItem.Path,plugin://plugin.video.embycon)">plugin://plugin.video.embycon/?mode=GET_CONTENT&amp;media_type=Movies&amp;url=%7Bserver%7D%2Femby%2FItems%2F$INFO[ListItem.Property(id)]%2FSimilar%3FuserId%3D%7Buserid%7D%26Limit%3D%7BItemLimit%7D%26format%3Djson%26ImageTypeLimit%3D1%26IsMissing%3DFalse%26Filters%3D%7Bfield_filters%7D</value>
 		<value condition="String.IsEqual(ListItem.DBType,movie) + !String.IsEmpty(ListItem.IMDBNumber)">plugin://script.skin.helper.widgets/?action=similar&amp;mediatype=movies&amp;imdbid=$INFO[ListItem.IMDBNumber]</value>
 		<value>plugin://script.skin.helper.widgets/?action=similarshows&amp;imdbid=$INFO[ListItem.IMDBNumber]</value>
@@ -220,6 +236,8 @@
 		<value condition="Window.IsVisible(movieinformation) + String.IsEqual(ListItem.DBType,tvshow)">$LOCALIZE[20351]</value>
 		<value condition="Window.IsVisible(movieinformation) + String.IsEqual(ListItem.DBType,movie)">$LOCALIZE[10524]</value>
 		<value condition="Window.IsVisible(movieinformation) + String.IsEqual(ListItem.DBType,episode)">$LOCALIZE[20352]</value>
+		<value condition="Window.IsVisible(favourites)">$LOCALIZE[1036]</value>
+		<value condition="Window.IsVisible(script-globalsearch.xml) | Window.IsVisible(script-globalsearch-main.xml)">$LOCALIZE[283]</value>
 		<value condition="String.StartsWith(Container.FolderPath,plugin://plugin.video.emby/) + String.Contains(Container.FolderPath,type=homevideos)">$LOCALIZE[31187]</value>
 		<value condition="Window.IsVisible(1114)">$LOCALIZE[135]</value>
 		<value condition="Window.IsVisible(1115)">$LOCALIZE[283]</value>
@@ -238,7 +256,6 @@
 		<value condition="Window.IsVisible(script-nextup-notification-PostPlayInfo.xml)">$LOCALIZE[31079]</value>
 		<value condition="Window.IsVisible(musicplaylisteditor)">$LOCALIZE[10503]</value>
 		<value condition="Window.IsVisible(weather)">$LOCALIZE[8]</value>
-		<value condition="Window.IsVisible(favourites)">$LOCALIZE[1036]</value>
 		<value condition="Window.IsVisible(smartplaylisteditor)">$LOCALIZE[10136]</value>
 		<value condition="Window.IsVisible(DialogPVRChannelManager.xml)">$LOCALIZE[19199]</value>
 		<value condition="Window.IsVisible(pvrgroupmanager)">$LOCALIZE[19048]</value>
@@ -460,6 +477,7 @@
 	<variable name="ListItemEpisodeName">
 		<value condition="!String.IsEmpty(ListItem.EpisodeName)">$INFO[ListItem.EpisodeName]</value>
 		<value condition="!String.IsEmpty(ListItem.Genre) + !Window.IsVisible(pvrguideinfo) + !Control.IsVisible(57)">$LOCALIZE[515]: $INFO[ListItem.Genre]</value>
+		<value condition="ListItem.IsFolder">$LOCALIZE[19076]</value>
 		<value>[COLOR text_sublabel]$LOCALIZE[31156][/COLOR]</value>
 	</variable>
 	<variable name="PlayerEpisodeName">
@@ -1288,6 +1306,7 @@
 		<value condition="String.IsEqual(ListItem.DBType,set)">$LOCALIZE[1024]</value>
 		<value condition="ListItem.IsResumable">$LOCALIZE[13404]</value>
 		<value condition="Integer.IsGreater(ListItem.PlayCount,0)">$LOCALIZE[31009]</value>
+		<value condition="ListItem.IsFolder">$LOCALIZE[1024]</value>
 		<value>$LOCALIZE[31010]</value>
 	</variable>
 	<variable name="TinyInfoDialogHeadline">
@@ -1496,6 +1515,7 @@
 		<value condition="!Control.HasFocus(607)">white</value>
 	</variable>
 	<variable name="PlayerFullLabel">
+		<value condition="String.Contains(Player.Art(thumb),KodiCinemaMode)">$LOCALIZE[31255]</value>
 		<value condition="String.IsEqual(VideoPlayer.Title,stream) + String.Contains(Player.Filenameandpath,/emby/videos/)">$LOCALIZE[31186]</value>
 		<value condition="!String.IsEmpty(MusicPlayer.Title) + !String.Contains(MusicPlayer.Title,pvr.hts_)">$INFO[MusicPlayer.Artist,, - ]$INFO[MusicPlayer.Tracknumber,,. ]$INFO[MusicPlayer.Title]</value>
 		<value condition="!String.IsEmpty(MusicPlayer.Title)">$INFO[MusicPlayer.Artist]</value>
@@ -1505,6 +1525,7 @@
 		<value>$INFO[VideoPlayer.Title]</value>
 	</variable>
 	<variable name="PlayerTitleLabel">
+		<value condition="String.Contains(Player.Art(thumb),KodiCinemaMode)">$LOCALIZE[31255]</value>
 		<value condition="String.IsEqual(VideoPlayer.Filename,stream) + String.Contains(VideoPlayer.Filenameandpath,/emby/videos/)">$LOCALIZE[31186]</value>
 		<value condition="!String.IsEmpty(MusicPlayer.Title)">$INFO[MusicPlayer.Title]</value>
 		<value condition="!String.IsEmpty(VideoPlayer.TVShowTitle)">$INFO[VideoPlayer.TVShowTitle]</value>
@@ -1522,7 +1543,7 @@
 		<value>$INFO[MusicPlayer.Title]</value>
 	</variable>
 	<variable name="PlayerTimeLabels">
-		<value condition="!Pvr.IsTimeShift + Player.HasVideo + !Window.IsVisible(fullscreeninfo)">$VAR[PlayerTime]$VAR[PlayerDuration, / ]$INFO[Player.FinishTime,  -  $LOCALIZE[31037] ]</value>
+		<value condition="!Pvr.IsTimeShift + Player.HasVideo + !Window.IsVisible(fullscreeninfo) + !String.Contains(Player.Art(thumb),KodiCinemaMode)">$VAR[PlayerTime]$VAR[PlayerDuration, / ]$INFO[Player.FinishTime,  -  $LOCALIZE[31037] ]</value>
 		<value>$VAR[PlayerTime]$VAR[PlayerDuration, / ]</value>
 	</variable>
 	<variable name="PlayerIcon">
