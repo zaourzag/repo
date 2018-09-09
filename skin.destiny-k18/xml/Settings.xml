@@ -6,7 +6,7 @@
     <control type="group">
       <left>0</left>
       <top>0</top>
-      <include>CommonHomeBack</include>	
+      <include>CommonViewBack</include>	
 	  
 	  <control type="image">
 		<left>-20</left>

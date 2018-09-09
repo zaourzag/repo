@@ -209,10 +209,10 @@
 					<description>View</description>
 					<height>60</height>
 		            <width>398</width>
-					<label>Infowall</label>
+					<label>Netflix/Amazon</label>
 					<onclick>Container.SetViewMode(611)</onclick>
 					<onclick>Action(down)</onclick>
-					<visible>Container.Content(Movies) | Container.Content(TVShows)</visible>
+					<visible>Container.Content(Movies) | Container.Content(Sets) | Container.Content(TVShows) | Container.Content(Seasons) | Container.Content(Episodes)</visible>
 				</control>
 				<control type="button" id="833">
 					<description>View</description>

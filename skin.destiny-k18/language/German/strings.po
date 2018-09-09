@@ -1724,3 +1724,7 @@ msgstr "Hier kannst du einige Addons installieren die in den Skin schon eingebau
 msgctxt "#50411"
 msgid "Visualisation im Home"
 msgstr "Visualisation im Home"
+
+msgctxt "#50412"
+msgid "Live TV Tipps"
+msgstr "Live TV Tipps"

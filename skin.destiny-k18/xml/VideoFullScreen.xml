@@ -258,7 +258,7 @@
 				<textcolor>$VAR[ColorFontNormal]</textcolor>
 				<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 				<label>A</label>
-				<visible>!substring(PVR.ActStreamDevice,#0)</visible>
+				<visible>!String.Contains(PVR.ActStreamDevice,#0)</visible>
 			</control>
 			<control type="label" id="1">
 				<left>295</left>
@@ -266,10 +266,10 @@
 				<height>38</height>
 				<align>left</align>
 				<font>primal_18</font>
-				<textcolor>$VAR[ColorProgress]</textcolor>
+				<textcolor>$VAR[ColorFontSelected]</textcolor>
 				<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 				<label>A</label>
-				<visible>substring(PVR.ActStreamDevice,#0)</visible>
+				<visible>String.Contains(PVR.ActStreamDevice,#0)</visible>
 			</control>
 			<control type="label" id="1">
 				<left>320</left>
@@ -280,7 +280,7 @@
 				<textcolor>$VAR[ColorFontNormal]</textcolor>
 				<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 				<label>B</label>
-				<visible>!substring(PVR.ActStreamDevice,#1)</visible>
+				<visible>!String.Contains(PVR.ActStreamDevice,#1)</visible>
 			</control>
 			<control type="label" id="1">
 				<left>320</left>
@@ -288,10 +288,10 @@
 				<height>38</height>
 				<align>left</align>
 				<font>primal_18</font>
-				<textcolor>$VAR[ColorProgress]</textcolor>
+				<textcolor>$VAR[ColorFontSelected]</textcolor>
 				<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 				<label>B</label>
-				<visible>substring(PVR.ActStreamDevice,#1)</visible>
+				<visible>String.Contains(PVR.ActStreamDevice,#1)</visible>
 			</control>
 			<control type="label" id="1">
 				<left>345</left>
@@ -302,7 +302,7 @@
 				<textcolor>$VAR[ColorFontNormal]</textcolor>
 				<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 				<label>C</label>
-				<visible>!substring(PVR.ActStreamDevice,#2)</visible>
+				<visible>!String.Contains(PVR.ActStreamDevice,#2)</visible>
 			</control>
 			<control type="label" id="1">
 				<left>345</left>
@@ -310,10 +310,10 @@
 				<height>38</height>
 				<align>left</align>
 				<font>primal_18</font>
-				<textcolor>$VAR[ColorProgress]</textcolor>
+				<textcolor>$VAR[ColorFontSelected]</textcolor>
 				<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 				<label>C</label>
-				<visible>substring(PVR.ActStreamDevice,#2)</visible>
+				<visible>String.Contains(PVR.ActStreamDevice,#2)</visible>
 			</control>
 			<control type="label" id="1">
 				<left>370</left>
@@ -324,7 +324,7 @@
 				<textcolor>$VAR[ColorFontNormal]</textcolor>
 				<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 				<label>D</label>
-				<visible>!substring(PVR.ActStreamDevice,#3)</visible>
+				<visible>!String.Contains(PVR.ActStreamDevice,#3)</visible>
 			</control>
 			<control type="label" id="1">
 				<left>370</left>
@@ -332,10 +332,10 @@
 				<height>38</height>
 				<align>left</align>
 				<font>primal_18</font>
-				<textcolor>$VAR[ColorProgress]</textcolor>
+				<textcolor>$VAR[ColorFontSelected]</textcolor>
 				<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 				<label>D</label>
-				<visible>substring(PVR.ActStreamDevice,#3)</visible>
+				<visible>String.Contains(PVR.ActStreamDevice,#3)</visible>
 			</control>
 		</control>
 		
@@ -354,12 +354,12 @@
 				<label>S</label>
 			</control>
 			<control type="label" id="1">
-				<visible>SubString(PVR.ActStreamEncryptionName,01) | SubString(PVR.ActStreamEncryptionName,9F)</visible>
+				<visible>String.Contains(PVR.ActStreamEncryptionName,01) | String.Contains(PVR.ActStreamEncryptionName,9F)</visible>
 				<width>50</width>
 				<height>38</height>
 				<align>left</align>
 				<font>primal_18</font>
-				<textcolor>$VAR[ColorProgress]</textcolor>
+				<textcolor>$VAR[ColorFontSelected]</textcolor>
 				<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 				<label>S</label>
 			</control>
@@ -374,13 +374,13 @@
 				<label>V</label>
 			</control>
 			<control type="label" id="1">
-				<visible>SubString(PVR.ActStreamEncryptionName,5)</visible>
+				<visible>String.Contains(PVR.ActStreamEncryptionName,5)</visible>
 				<left>30</left>
 				<width>50</width>
 				<height>38</height>
 				<align>left</align>
 				<font>primal_18</font>
-				<textcolor>$VAR[ColorProgress]</textcolor>
+				<textcolor>$VAR[ColorFontSelected]</textcolor>
 				<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 				<label>V</label>
 			</control>
@@ -395,13 +395,13 @@
 				<label>I</label>
 			</control>
 			<control type="label" id="1">
-				<visible>SubString(PVR.ActStreamEncryptionName,06)</visible>
+				<visible>String.Contains(PVR.ActStreamEncryptionName,06)</visible>
 				<left>63</left>
 				<width>50</width>
 				<height>38</height>
 				<align>left</align>
 				<font>primal_18</font>
-				<textcolor>$VAR[ColorProgress]</textcolor>
+				<textcolor>$VAR[ColorFontSelected]</textcolor>
 				<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 				<label>I</label>
 			</control>
@@ -416,13 +416,13 @@
 				<label>ND</label>
 			</control>
 			<control type="label" id="1">
-				<visible>SubString(PVR.ActStreamEncryptionName,09)</visible>
+				<visible>String.Contains(PVR.ActStreamEncryptionName,09)</visible>
 				<left>85</left>
 				<width>50</width>
 				<height>38</height>
 				<align>left</align>
 				<font>primal_18</font>
-				<textcolor>$VAR[ColorProgress]</textcolor>
+				<textcolor>$VAR[ColorFontSelected]</textcolor>
 				<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 				<label>ND</label>
 			</control>
@@ -437,13 +437,13 @@
 				<label>CO</label>
 			</control>
 			<control type="label" id="1">
-				<visible>SubString(PVR.ActStreamEncryptionName,0B)</visible>
+				<visible>String.Contains(PVR.ActStreamEncryptionName,0B)</visible>
 				<left>135</left>
 				<width>50</width>
 				<height>38</height>
 				<align>left</align>
 				<font>primal_18</font>
-				<textcolor>$VAR[ColorProgress]</textcolor>
+				<textcolor>$VAR[ColorFontSelected]</textcolor>
 				<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 				<label>CO</label>
 			</control>
@@ -458,13 +458,13 @@
 				<label>CW</label>
 			</control>
 			<control type="label" id="1">
-				<visible>SubString(PVR.ActStreamEncryptionName,0D)</visible>
+				<visible>String.Contains(PVR.ActStreamEncryptionName,0D)</visible>
 				<left>180</left>
 				<width>50</width>
 				<height>38</height>
 				<align>left</align>
 				<font>primal_18</font>
-				<textcolor>$VAR[ColorProgress]</textcolor>
+				<textcolor>$VAR[ColorFontSelected]</textcolor>
 				<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 				<label>CW</label>
 			</control>
@@ -479,13 +479,13 @@
 				<label>B</label>
 			</control>
 			<control type="label" id="1">
-				<visible>SubString(PVR.ActStreamEncryptionName,17)</visible>
+				<visible>String.Contains(PVR.ActStreamEncryptionName,17)</visible>
 				<left>230</left>
 				<width>70</width>
 				<height>38</height>
 				<align>left</align>
 				<font>primal_18</font>
-				<textcolor>$VAR[ColorProgress]</textcolor>
+				<textcolor>$VAR[ColorFontSelected]</textcolor>
 				<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 				<label>B</label>
 			</control>
@@ -500,25 +500,35 @@
 				<label>N</label>
 			</control>
 			<control type="label" id="1">
-				<visible>SubString(PVR.ActStreamEncryptionName,18)</visible>
+				<visible>String.Contains(PVR.ActStreamEncryptionName,18)</visible>
 				<left>258</left>
 				<width>50</width>
 				<height>38</height>
 				<align>left</align>
 				<font>primal_18</font>
-				<textcolor>$VAR[ColorProgress]</textcolor>
+				<textcolor>$VAR[ColorFontSelected]</textcolor>
 				<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 				<label>N</label>
 			</control>
 			<control type="label" id="1">
 				<left>320</left>
+				<width>300</width>
+				<height>38</height>
+				<align>left</align>
+				<font>primal_18</font>
+				<textcolor>$VAR[ColorFontSelected]</textcolor>
+				<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+				<label>$INFO[PVR.ActStreamEncryptionName]</label>
+			</control>
+			<control type="label" id="1">
+				<left>620</left>
 				<width>1000</width>
 				<height>38</height>
 				<align>left</align>
 				<font>primal_18</font>
-				<textcolor>$VAR[ColorProgress]</textcolor>
+				<textcolor>$VAR[ColorFontSelected]</textcolor>
 				<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
-				<label>$INFO[PVR.ActStreamEncryptionName]</label>
+				<label>$INFO[PVR.ActStreamClient]</label>
 			</control>
 		</control>
 		<!-- GROUP FOR INFOS REC LiveTV -->
@@ -585,6 +595,7 @@
 		  <left>220</left>
 		  <top>385</top>
 		  <visible>VideoPlayer.Content(Movies) | VideoPlayer.Content(episodes) | VideoPlayer.Content(files) | VideoPlayer.Content(MusicVideos)</visible>
+		  <visible>!VideoPlayer.Content(LiveTV)</visible>
 		<control type="label" id="1">
 		  <left>80</left>
 		  <top>315</top>
@@ -1095,8 +1106,7 @@
 			<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 		</control>
 	</control>
-			
-
+		
 	
 	</controls>
 </window>

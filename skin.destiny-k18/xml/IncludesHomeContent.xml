@@ -1093,7 +1093,7 @@
 		  <label>$LOCALIZE[50201]</label>
 		  <onclick>ActivateWindow(tvchannels)</onclick>
 		  <icon></icon>
-		  <thumb fallback="special://skin/backgrounds/FALLBACK.jpg">$INFO[Skin.String(Home_Custom_Back_TV_Folder)]</thumb>
+		  <thumb fallback="backgrounds/09.jpg">$INFO[Skin.String(Home_Custom_Back_TV_Folder)]</thumb>
 		  <property name="MenuIcon" fallback="home/homeicons/tv.png">$INFO[Skin.String(IconLiveTV_Icon)]</property>
 		  <property name="BackWebOS1">home/button/webos_button.png</property>
 		  <property name="BackTizen1">home/button/submenubutton.png</property>
@@ -1109,7 +1109,7 @@
 		  <label>$LOCALIZE[19021]</label>
 		  <onclick>ActivateWindow(RadioChannels)</onclick>
 		  <icon></icon>
-		  <thumb fallback="special://skin/backgrounds/FALLBACK.jpg">$INFO[Skin.String(Home_Custom_Back_Radio_Folder)]</thumb>
+		  <thumb fallback="backgrounds/09.jpg">$INFO[Skin.String(Home_Custom_Back_Radio_Folder)]</thumb>
 		  <property name="MenuIcon" fallback="home/homeicons/music.png">$INFO[Skin.String(IconRadio_Icon)]</property>
 		  <property name="BackWebOS2">home/button/webos_button.png</property>
 		  <property name="BackTizen2">home/button/submenubutton.png</property>	
@@ -1124,7 +1124,7 @@
 		  <label>$LOCALIZE[50236]</label>
 		  <onclick>ActivateWindow(10025,special://skin/playlists/All Movies.xsp,return)</onclick>
 		  <icon></icon>
-		  <thumb fallback="special://skin/backgrounds/FALLBACK.jpg">$INFO[Skin.String(Home_Custom_Back_Movies_Folder)]</thumb>
+		  <thumb fallback="backgrounds/09.jpg">$INFO[Skin.String(Home_Custom_Back_Movies_Folder)]</thumb>
 		  <property name="MenuIcon" fallback="home/homeicons/film.png">$INFO[Skin.String(IconMovies_Icon)]</property>
 		  <property name="BackWebOS3">home/button/webos_button.png</property>
 		  <property name="BackTizen3">home/button/submenubutton.png</property>
@@ -1141,7 +1141,7 @@
 		  <onclick condition="String.IsEmpty(Window(Home).Property(first_load_done))">ActivateWindow(Videos,videodb://movies/titles/,return)</onclick>
 		  <onclick>ActivateWindow(Videos,plugin://plugin.video.embycon/?mode=SHOW_CONTENT&amp;item_type=Movie&amp;media_type=movies,return)</onclick>
 		  <onclick>SetProperty(first_load_done, done, 10000)</onclick>
-		  <thumb>special://skin/backgrounds/FALLBACK.jpg</thumb>
+		  <thumb fallback="backgrounds/09.jpg">$INFO[Skin.String(Home_Custom_Back_Movies_Folder)]</thumb>
 		  <property name="MenuIcon" fallback="home/homeicons/film.png">$INFO[Skin.String(IconMovies_Icon)]</property>
 		  <property name="BackWebOS3">home/button/webos_button.png</property>
 		  <property name="BackTizen3">home/button/submenubutton.png</property>
@@ -1156,7 +1156,7 @@
 	      <description>Collection</description>
 		  <label>Collection</label>
 		  <onclick>ActivateWindow(Videos,MovieSets,return)</onclick>
-		  <thumb>special://skin/backgrounds/FALLBACK.jpg</thumb>
+		  <thumb>backgrounds/09.jpg</thumb>
 		  <property name="MenuIcon" fallback="home/homeicons/collections.png">$INFO[Skin.String(IconMovies_Icon)]</property>
 		  <property name="BackWebOS4">home/button/webos_button.png</property>
 		  <property name="BackTizen4">home/button/submenubutton.png</property>
@@ -1171,7 +1171,7 @@
 	      <description>Emby Collection</description>
 		  <label>Emby Collection</label>
 		  <onclick>ActivateWindow(Videos,&quot;plugin://plugin.video.embycon/?url=%7Bserver%7D/emby/Users/%7Buserid%7D/Items%3FParentId%3D9df4efab1f9566a6088195a3f6029855%26IsVirtualUnaired%3Dfalse%26IsMissing%3DFalse%26Fields%3D%7Bfield_filters%7D%26ImageTypeLimit%3D1%26format%3Djson&amp;mode=GET_CONTENT&amp;media_type=boxsets&quot;,return)</onclick>
-		  <thumb>special://skin/backgrounds/FALLBACK.jpg</thumb>
+		  <thumb>backgrounds/09.jpg</thumb>
 		  <property name="MenuIcon" fallback="home/homeicons/collections.png">$INFO[Skin.String(IconMovies_Icon)]</property>
 		  <property name="BackWebOS4">home/button/webos_button.png</property>
 		  <property name="BackTizen4">home/button/submenubutton.png</property>
@@ -1187,7 +1187,7 @@
 		  <label>$LOCALIZE[50204]</label>
 		  <onclick>ActivateWindow(10025,videodb://tvshows/titles/,return)</onclick>  
 		  <icon></icon>    
-		  <thumb fallback="special://skin/backgrounds/FALLBACK.jpg">$INFO[Skin.String(Home_Custom_Back_TVShow_Folder)]</thumb>
+		  <thumb fallback="backgrounds/09.jpg">$INFO[Skin.String(Home_Custom_Back_TVShow_Folder)]</thumb>
 		  <property name="MenuIcon" fallback="home/homeicons/tvshows.png">$INFO[Skin.String(IconTVShows_Icon)]</property>
 		  <property name="BackWebOS5">home/button/webos_button.png</property>
 		  <property name="BackTizen5">home/button/submenubutton.png</property>
@@ -1204,7 +1204,7 @@
 		  <onclick condition="String.IsEmpty(Window(Home).Property(first_load_done))">ActivateWindow(Videos,videodb://movies/titles/,return)</onclick>
 		  <onclick>ActivateWindow(Videos,plugin://plugin.video.embycon/?mode=SHOW_CONTENT&amp;item_type=Series&amp;media_type=tvshows,return)</onclick>
 		  <onclick>SetProperty(first_load_done, done, 10000)</onclick>
-		  <thumb fallback="special://skin/backgrounds/FALLBACK.jpg">$INFO[Skin.String(Home_Custom_Back_TVShow_Folder)]</thumb>
+		  <thumb fallback="backgrounds/09.jpg">$INFO[Skin.String(Home_Custom_Back_TVShow_Folder)]</thumb>
 		  <property name="MenuIcon" fallback="home/homeicons/tvshows.png">$INFO[Skin.String(IconTVShows_Icon)]</property>
 		  <property name="BackWebOS5">home/button/webos_button.png</property>
 		  <property name="BackTizen5">home/button/submenubutton.png</property>
@@ -1219,7 +1219,7 @@
 		  <label>$LOCALIZE[3]</label>
 		  <onclick>ActivateWindow(Videos,Root)</onclick>
 		  <icon></icon>
-		  <thumb fallback="special://skin/backgrounds/FALLBACK.jpg">$INFO[Skin.String(Home_Custom_Back_Video_Folder)]</thumb>
+		  <thumb fallback="backgrounds/09.jpg">$INFO[Skin.String(Home_Custom_Back_Video_Folder)]</thumb>
 		  <property name="MenuIcon" fallback="home/homeicons/video.png">$INFO[Skin.String(IconVideo_Icon)]</property>
 		  <property name="BackWebOS6">home/button/webos_button.png</property>
 		  <property name="BackTizen6">home/button/submenubutton.png</property>	
@@ -1232,7 +1232,7 @@
 		  <description>Playlist 1</description>
 		  <label>$INFO[Skin.String(movieplaylistButton100_label)]</label>
 		  <icon></icon>
-		  <thumb fallback="special://skin/backgrounds/FALLBACK.jpg">$INFO[Skin.String(Home_Custom_Back_Playlist1_Folder)]</thumb>
+		  <thumb fallback="backgrounds/09.jpg">$INFO[Skin.String(Home_Custom_Back_Playlist1_Folder)]</thumb>
 		  <property name="MenuIcon" fallback="home/homeicons/film.png">$INFO[Skin.String(IconPlaylist01_Icon)]</property>
 		  <property name="BackWebOS7">home/button/webos_button.png</property>
 		  <property name="BackTizen7">home/button/submenubutton.png</property>	
@@ -1244,7 +1244,7 @@
 		  <label fallback="Playlist 1">$INFO[Skin.String(Playlist1HomeItem.Label)]</label>
 		  <onclick>$INFO[Container(9000).ListItem.Property(Path)]</onclick>
 		  <icon></icon>
-		  <thumb fallback="special://skin/backgrounds/FALLBACK.jpg">$INFO[Skin.String(Home_Custom_Back_Playlist1_Folder)]</thumb>
+		  <thumb fallback="backgrounds/09.jpg">$INFO[Skin.String(Home_Custom_Back_Playlist1_Folder)]</thumb>
 		  <property name="Path">$INFO[Skin.String(Playlist1HomeItem.Path)]</property>
 		  <property name="Item">Playlist1</property>
 		  <property name="Widget">$INFO[Skin.String(Playlist1HomeItem.Widget)]</property>
@@ -1261,7 +1261,7 @@
 		  <description>Playlist 2</description>
 		  <label>$INFO[Skin.String(movieplaylistButton200_label)]</label>
 		  <icon></icon>
-		  <thumb fallback="special://skin/backgrounds/FALLBACK.jpg">$INFO[Skin.String(Home_Custom_Back_Playlist2_Folder)]</thumb>
+		  <thumb fallback="backgrounds/09.jpg">$INFO[Skin.String(Home_Custom_Back_Playlist2_Folder)]</thumb>
 		  <property name="MenuIcon" fallback="home/homeicons/film.png">$INFO[Skin.String(IconPlaylist02_Icon)]</property>
 		  <property name="BackWebOS8">home/button/webos_button.png</property>
 		  <property name="BackTizen8">home/button/submenubutton.png</property>	
@@ -1273,7 +1273,7 @@
 		  <label fallback="Playlist 2">$INFO[Skin.String(Playlist2HomeItem.Label)]</label>
 		  <onclick>$INFO[Container(9000).ListItem.Property(Path)]</onclick>
 		  <icon></icon>
-		  <thumb fallback="special://skin/backgrounds/FALLBACK.jpg">$INFO[Skin.String(Home_Custom_Back_Playlist2_Folder)]</thumb>
+		  <thumb fallback="backgrounds/09.jpg">$INFO[Skin.String(Home_Custom_Back_Playlist2_Folder)]</thumb>
 		  <property name="Path">$INFO[Skin.String(Playlist2HomeItem.Path)]</property>
 		  <property name="Item">Playlist2</property>
 		  <property name="Widget">$INFO[Skin.String(Playlist2HomeItem.Widget)]</property>
@@ -1290,7 +1290,7 @@
 		  <description>Playlist 3</description>
 		  <label>$INFO[Skin.String(movieplaylistButton300_label)]</label>
 		  <icon></icon>
-		  <thumb fallback="special://skin/backgrounds/FALLBACK.jpg">$INFO[Skin.String(Home_Custom_Back_Playlist3_Folder)]</thumb>
+		  <thumb fallback="backgrounds/09.jpg">$INFO[Skin.String(Home_Custom_Back_Playlist3_Folder)]</thumb>
 		  <property name="MenuIcon" fallback="home/homeicons/film.png">$INFO[Skin.String(IconPlaylist03_Icon)]</property>
 		  <property name="BackWebOS9">home/button/webos_button.png</property>
 		  <property name="BackTizen9">home/button/submenubutton.png</property>	
@@ -1302,7 +1302,7 @@
 		  <label fallback="Playlist 3">$INFO[Skin.String(Playlist3HomeItem.Label)]</label>
 		  <onclick>$INFO[Container(9000).ListItem.Property(Path)]</onclick>
 		  <icon></icon>
-		  <thumb fallback="special://skin/backgrounds/FALLBACK.jpg">$INFO[Skin.String(Home_Custom_Back_Playlist3_Folder)]</thumb>
+		  <thumb fallback="backgrounds/09.jpg">$INFO[Skin.String(Home_Custom_Back_Playlist3_Folder)]</thumb>
 		  <property name="Path">$INFO[Skin.String(Playlist3HomeItem.Path)]</property>
 		  <property name="Item">Playlist3</property>
 		  <property name="Widget">$INFO[Skin.String(Playlist3HomeItem.Widget)]</property>
@@ -1320,7 +1320,7 @@
 		  <label fallback="Playlist 4">$INFO[Skin.String(Playlist4HomeItem.Label)]</label>
 		  <onclick>$INFO[Container(9000).ListItem.Property(Path)]</onclick>
 		  <icon></icon>
-		  <thumb fallback="special://skin/backgrounds/FALLBACK.jpg">$INFO[Skin.String(Home_Custom_Back_Playlist4_Folder)]</thumb>
+		  <thumb fallback="backgrounds/09.jpg">$INFO[Skin.String(Home_Custom_Back_Playlist4_Folder)]</thumb>
 		  <property name="Path">$INFO[Skin.String(Playlist4HomeItem.Path)]</property>
 		  <property name="Item">Playlist4</property>
 		  <property name="Widget">$INFO[Skin.String(Playlist4HomeItem.Widget)]</property>
@@ -1338,7 +1338,7 @@
 		  <label fallback="Playlist 5">$INFO[Skin.String(Playlist5HomeItem.Label)]</label>
 		  <onclick>$INFO[Container(9000).ListItem.Property(Path)]</onclick>
 		  <icon></icon>
-		  <thumb fallback="special://skin/backgrounds/FALLBACK.jpg">$INFO[Skin.String(Home_Custom_Back_Playlist5_Folder)]</thumb>
+		  <thumb fallback="backgrounds/09.jpg">$INFO[Skin.String(Home_Custom_Back_Playlist5_Folder)]</thumb>
 		  <property name="Path">$INFO[Skin.String(Playlist5HomeItem.Path)]</property>
 		  <property name="Item">Playlist5</property>
 		  <property name="Widget">$INFO[Skin.String(Playlist5HomeItem.Widget)]</property>
@@ -1356,7 +1356,7 @@
 		  <label fallback="Playlist 6">$INFO[Skin.String(Playlist6HomeItem.Label)]</label>
 		  <onclick>$INFO[Container(9000).ListItem.Property(Path)]</onclick>
 		  <icon></icon>
-		  <thumb fallback="special://skin/backgrounds/FALLBACK.jpg">$INFO[Skin.String(Home_Custom_Back_Playlist6_Folder)]</thumb>
+		  <thumb fallback="backgrounds/09.jpg">$INFO[Skin.String(Home_Custom_Back_Playlist6_Folder)]</thumb>
 		  <property name="Path">$INFO[Skin.String(Playlist6HomeItem.Path)]</property>
 		  <property name="Item">Playlist6</property>
 		  <property name="Widget">$INFO[Skin.String(Playlist6HomeItem.Widget)]</property>
@@ -1374,7 +1374,7 @@
 		  <label fallback="Playlist 7">$INFO[Skin.String(Playlist7HomeItem.Label)]</label>
 		  <onclick>$INFO[Container(9000).ListItem.Property(Path)]</onclick>
 		  <icon></icon>
-		  <thumb fallback="special://skin/backgrounds/FALLBACK.jpg">$INFO[Skin.String(Home_Custom_Back_Playlist7_Folder)]</thumb>
+		  <thumb fallback="backgrounds/09.jpg">$INFO[Skin.String(Home_Custom_Back_Playlist7_Folder)]</thumb>
 		  <property name="Path">$INFO[Skin.String(Playlist7HomeItem.Path)]</property>
 		  <property name="Item">Playlist7</property>
 		  <property name="Widget">$INFO[Skin.String(Playlist7HomeItem.Widget)]</property>
@@ -1392,7 +1392,7 @@
 		  <label fallback="Playlist 8">$INFO[Skin.String(Playlist8HomeItem.Label)]</label>
 		  <onclick>$INFO[Container(9000).ListItem.Property(Path)]</onclick>
 		  <icon></icon>
-		  <thumb fallback="special://skin/backgrounds/FALLBACK.jpg">$INFO[Skin.String(Home_Custom_Back_Playlist8_Folder)]</thumb>
+		  <thumb fallback="backgrounds/09.jpg">$INFO[Skin.String(Home_Custom_Back_Playlist8_Folder)]</thumb>
 		  <property name="Path">$INFO[Skin.String(Playlist8HomeItem.Path)]</property>
 		  <property name="Item">Playlist8</property>
 		  <property name="Widget">$INFO[Skin.String(Playlist8HomeItem.Widget)]</property>
@@ -1410,7 +1410,7 @@
 		  <label fallback="Playlist 9">$INFO[Skin.String(Playlist9HomeItem.Label)]</label>
 		  <onclick>$INFO[Container(9000).ListItem.Property(Path)]</onclick>
 		  <icon></icon>
-		  <thumb fallback="special://skin/backgrounds/FALLBACK.jpg">$INFO[Skin.String(Home_Custom_Back_Playlist9_Folder)]</thumb>
+		  <thumb fallback="backgrounds/09.jpg">$INFO[Skin.String(Home_Custom_Back_Playlist9_Folder)]</thumb>
 		  <property name="Path">$INFO[Skin.String(Playlist9HomeItem.Path)]</property>
 		  <property name="Item">Playlist9</property>
 		  <property name="Widget">$INFO[Skin.String(Playlist9HomeItem.Widget)]</property>
@@ -1428,7 +1428,7 @@
 		  <label fallback="Playlist 10">$INFO[Skin.String(Playlist10HomeItem.Label)]</label>
 		  <onclick>$INFO[Container(9000).ListItem.Property(Path)]</onclick>
 		  <icon></icon>
-		  <thumb fallback="special://skin/backgrounds/FALLBACK.jpg">$INFO[Skin.String(Home_Custom_Back_Playlist10_Folder)]</thumb>
+		  <thumb fallback="backgrounds/09.jpg">$INFO[Skin.String(Home_Custom_Back_Playlist10_Folder)]</thumb>
 		  <property name="Path">$INFO[Skin.String(Playlist10HomeItem.Path)]</property>
 		  <property name="Item">Playlist10</property>
 		  <property name="Widget">$INFO[Skin.String(Playlist10HomeItem.Widget)]</property>
@@ -1446,7 +1446,7 @@
 		  <label>$LOCALIZE[2]</label>
 		  <onclick>ActivateWindow(10502,musicdb://albums/,return)</onclick>
 		  <icon></icon>
-		  <thumb fallback="special://skin/backgrounds/FALLBACK.jpg">$INFO[Skin.String(Home_Custom_Back_Music_Folder)]</thumb>
+		  <thumb fallback="backgrounds/09.jpg">$INFO[Skin.String(Home_Custom_Back_Music_Folder)]</thumb>
 		  <property name="MenuIcon" fallback="home/homeicons/cd.png">$INFO[Skin.String(IconMusic_Icon)]</property>
 		  <property name="BackWebOS17">home/button/webos_button.png</property>
 		  <property name="BackTizen17">home/button/submenubutton.png</property>
@@ -1461,7 +1461,7 @@
 		  <label>$LOCALIZE[50197]</label>
 		  <onclick>ActivateWindow(Programs,Addons,return)</onclick>
 		  <icon></icon>
-		  <thumb fallback="special://skin/backgrounds/FALLBACK.jpg">$INFO[Skin.String(Home_Custom_Back_Programs_Folder)]</thumb>
+		  <thumb fallback="backgrounds/09.jpg">$INFO[Skin.String(Home_Custom_Back_Programs_Folder)]</thumb>
 		  <property name="MenuIcon" fallback="home/homeicons/addons.png">$INFO[Skin.String(IconAddons_Icon)]</property>
 		  <property name="BackWebOS18">home/button/webos_button.png</property>
 		  <property name="BackTizen18">home/button/submenubutton.png</property>	
@@ -1474,7 +1474,7 @@
 		  <description>Concerts</description>
 		  <label>$LOCALIZE[50199]</label>
 		  <icon></icon>
-		  <thumb fallback="special://skin/backgrounds/FALLBACK.jpg">$INFO[Skin.String(Home_Custom_Back_Concerts_Folder)]</thumb>
+		  <thumb fallback="backgrounds/09.jpg">$INFO[Skin.String(Home_Custom_Back_Concerts_Folder)]</thumb>
 		  <property name="MenuIcon" fallback="home/homeicons/musicvideos.png">$INFO[Skin.String(IconMusicvideo_Icon)]</property>
 		  <property name="BackWebOS19">home/button/webos_button.png</property>
 		  <property name="BackTizen19">home/button/submenubutton.png</property>	
@@ -1490,7 +1490,7 @@
 		  <label>$LOCALIZE[1]</label>
 		  <onclick>ActivateWindow(Pictures)</onclick>
 		  <icon></icon>
-		  <thumb fallback="special://skin/backgrounds/FALLBACK.jpg">$INFO[Skin.String(Home_Custom_Back_Pictures_Folder)]</thumb>
+		  <thumb fallback="backgrounds/09.jpg">$INFO[Skin.String(Home_Custom_Back_Pictures_Folder)]</thumb>
 		  <property name="MenuIcon" fallback="home/homeicons/photos.png">$INFO[Skin.String(IconPictures_Icon)]</property>
 		  <property name="BackWebOS20">home/button/webos_button.png</property>
 		  <property name="BackTizen20">home/button/submenubutton.png</property>	
@@ -1504,7 +1504,7 @@
 		  <label>$LOCALIZE[8]</label>
 		  <onclick>ActivateWindow(Weather)</onclick>
 		  <icon></icon>
-		  <thumb fallback="special://skin/backgrounds/FALLBACK.jpg">$INFO[Skin.String(Home_Custom_Back_Weather_Folder)]</thumb>
+		  <thumb fallback="backgrounds/09.jpg">$INFO[Skin.String(Home_Custom_Back_Weather_Folder)]</thumb>
 		  <property name="MenuIcon" fallback="home/homeicons/weather.png">$INFO[Skin.String(IconWeather_Icon)]</property>
 		  <property name="BackWebOS21">home/button/webos_button.png</property>
 		  <property name="BackTizen21">home/button/submenubutton.png</property>	
@@ -1518,7 +1518,7 @@
 		  <label>33063</label>
 		  <onclick>ActivateWindow(Settings)</onclick>
 		  <icon></icon>
-		  <thumb fallback="special://skin/backgrounds/FALLBACK.jpg">$INFO[Skin.String(Home_Custom_Back_Option_Folder)]</thumb>
+		  <thumb fallback="backgrounds/09.jpg">$INFO[Skin.String(Home_Custom_Back_Option_Folder)]</thumb>
 		  <property name="MenuIcon" fallback="home/homeicons/sonstiges.png">$INFO[Skin.String(IconSettings_Icon)]</property>
 		  <property name="BackWebOS22">home/button/webos_button.png</property>
 		  <property name="BackTizen22">home/button/submenubutton.png</property>	
@@ -1532,7 +1532,7 @@
 		  <label2>31010</label2>
 		  <onclick>PlayDVD()</onclick>
 		  <icon></icon>
-		  <thumb fallback="special://skin/backgrounds/FALLBACK.jpg">$INFO[Skin.String(Home_Custom_Back_PlayDisc_Folder)]</thumb>
+		  <thumb fallback="backgrounds/09.jpg">$INFO[Skin.String(Home_Custom_Back_PlayDisc_Folder)]</thumb>
 		  <property name="MenuIcon" fallback="home/homeicons/dvd.png">$INFO[Skin.String(IconDVD_Icon)]</property>
 		  <property name="BackWebOS23">home/button/webos_button.png</property>
 		  <property name="BackTizen23">home/button/submenubutton.png</property>	
@@ -1546,7 +1546,7 @@
 		  <label>10821</label>
 		  <onclick>ActivateWindow(Games)</onclick>
 		  <icon></icon>
-		  <thumb fallback="special://skin/backgrounds/FALLBACK.jpg">$INFO[Skin.String(Home_Custom_Back_Games_Folder)]</thumb>
+		  <thumb fallback="backgrounds/09.jpg">$INFO[Skin.String(Home_Custom_Back_Games_Folder)]</thumb>
 		  <property name="MenuIcon" fallback="home/homeicons/games.png">$INFO[Skin.String(IconGames_Icon)]</property>
 		  <property name="BackWebOS24">home/button/webos_button.png</property>
 		  <property name="BackTizen24">home/button/submenubutton.png</property>	
@@ -1558,7 +1558,7 @@
 		  <label>SimplePlaylists</label>
 		  <onclick>RunPlugin(plugin://script.simpleplaylists/?mode=showPlaylists)</onclick>
 		  <icon></icon>
-		  <thumb fallback="special://skin/backgrounds/FALLBACK.jpg">$INFO[Skin.String(Home_Custom_Back_ScriptWatchlist_Folder)]</thumb>
+		  <thumb fallback="backgrounds/09.jpg">$INFO[Skin.String(Home_Custom_Back_ScriptWatchlist_Folder)]</thumb>
 		  <property name="MenuIcon" fallback="home/homeicons/news.png">$INFO[Skin.String(IconSimplePlaylists_Icon)]</property>
 		  <property name="BackWebOS25">home/button/webos_button.png</property>
 		  <property name="BackTizen25">home/button/submenubutton.png</property>	
@@ -1570,7 +1570,7 @@
 		  <label>137</label>
 		  <onclick>RunScript(script.globalsearch)</onclick>
 		  <icon></icon>
-		  <thumb fallback="special://skin/backgrounds/FALLBACK.jpg">$INFO[Skin.String(Home_Custom_Back_Search_Folder)]</thumb>
+		  <thumb fallback="backgrounds/09.jpg">$INFO[Skin.String(Home_Custom_Back_Search_Folder)]</thumb>
 		  <property name="MenuIcon" fallback="home/homeicons/search.png">$INFO[Skin.String(IconSearch_Icon)]</property>
 		  <property name="BackWebOS1">home/button/webos_button.png</property>
 		  <property name="BackTizen1">home/button/submenubutton.png</property>	
@@ -1582,7 +1582,7 @@
 		  <label>33060</label>
 		  <onclick>SetFocus(9010)</onclick>
 		  <icon></icon>
-		  <thumb fallback="special://skin/backgrounds/FALLBACK.jpg">$INFO[Skin.String(Home_Custom_Back_Power_Folder)]</thumb>
+		  <thumb fallback="backgrounds/09.jpg">$INFO[Skin.String(Home_Custom_Back_Power_Folder)]</thumb>
 		  <property name="MenuIcon">home/homeicons/off.png</property>
 		  <property name="MenuIcon" fallback="home/homeicons/off.png">$INFO[Skin.String(IconPower_Icon)]</property>
 		  <property name="BackWebOS2">home/button/webos_button.png</property>

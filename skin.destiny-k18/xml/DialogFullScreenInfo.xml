@@ -46,6 +46,7 @@
 	  <colordiffuse>$VAR[BackColorButton]</colordiffuse>
 	  <visible>!VideoPlayer.Content(LiveTV)</visible>
 	</control>
+	
 
 	<!-- GROUP FOR INFOS LiveTV -->
 	<control type="group">
@@ -278,7 +279,7 @@
 			<textcolor>$VAR[ColorFontNormal]</textcolor>
 			<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 			<label>A</label>
-			<visible>!substring(PVR.ActStreamDevice,#0)</visible>
+			<visible>!String.Contains(PVR.ActStreamDevice,#0)</visible>
 		</control>
 		<control type="label" id="1">
 			<left>295</left>
@@ -286,10 +287,10 @@
 			<height>38</height>
 			<align>left</align>
 			<font>primal_18</font>
-			<textcolor>$VAR[ColorProgress]</textcolor>
+			<textcolor>$VAR[ColorFontSelected]</textcolor>
 			<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 			<label>A</label>
-			<visible>substring(PVR.ActStreamDevice,#0)</visible>
+			<visible>String.Contains(PVR.ActStreamDevice,#0)</visible>
 		</control>
 		<control type="label" id="1">
 			<left>320</left>
@@ -300,7 +301,7 @@
 			<textcolor>$VAR[ColorFontNormal]</textcolor>
 			<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 			<label>B</label>
-			<visible>!substring(PVR.ActStreamDevice,#1)</visible>
+			<visible>!String.Contains(PVR.ActStreamDevice,#1)</visible>
 		</control>
 		<control type="label" id="1">
 			<left>320</left>
@@ -308,10 +309,10 @@
 			<height>38</height>
 			<align>left</align>
 			<font>primal_18</font>
-			<textcolor>$VAR[ColorProgress]</textcolor>
+			<textcolor>$VAR[ColorFontSelected]</textcolor>
 			<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 			<label>B</label>
-			<visible>substring(PVR.ActStreamDevice,#1)</visible>
+			<visible>String.Contains(PVR.ActStreamDevice,#1)</visible>
 		</control>
 		<control type="label" id="1">
 			<left>345</left>
@@ -322,7 +323,7 @@
 			<textcolor>$VAR[ColorFontNormal]</textcolor>
 			<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 			<label>C</label>
-			<visible>!substring(PVR.ActStreamDevice,#2)</visible>
+			<visible>!String.Contains(PVR.ActStreamDevice,#2)</visible>
 		</control>
 		<control type="label" id="1">
 			<left>345</left>
@@ -330,10 +331,10 @@
 			<height>38</height>
 			<align>left</align>
 			<font>primal_18</font>
-			<textcolor>$VAR[ColorProgress]</textcolor>
+			<textcolor>$VAR[ColorFontSelected]</textcolor>
 			<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 			<label>C</label>
-			<visible>substring(PVR.ActStreamDevice,#2)</visible>
+			<visible>String.Contains(PVR.ActStreamDevice,#2)</visible>
 		</control>
 		<control type="label" id="1">
 			<left>370</left>
@@ -344,7 +345,7 @@
 			<textcolor>$VAR[ColorFontNormal]</textcolor>
 			<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 			<label>D</label>
-			<visible>!substring(PVR.ActStreamDevice,#3)</visible>
+			<visible>!String.Contains(PVR.ActStreamDevice,#3)</visible>
 		</control>
 		<control type="label" id="1">
 			<left>370</left>
@@ -352,10 +353,10 @@
 			<height>38</height>
 			<align>left</align>
 			<font>primal_18</font>
-			<textcolor>$VAR[ColorProgress]</textcolor>
+			<textcolor>$VAR[ColorFontSelected]</textcolor>
 			<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 			<label>D</label>
-			<visible>substring(PVR.ActStreamDevice,#3)</visible>
+			<visible>String.Contains(PVR.ActStreamDevice,#3)</visible>
 		</control>
 	</control>
 	
@@ -374,12 +375,12 @@
 			<label>S</label>
 		</control>
 		<control type="label" id="1">
-			<visible>SubString(PVR.ActStreamEncryptionName,01) | SubString(PVR.ActStreamEncryptionName,9F)</visible>
+			<visible>String.Contains(PVR.ActStreamEncryptionName,01) | String.Contains(PVR.ActStreamEncryptionName,9F)</visible>
 			<width>50</width>
 			<height>38</height>
 			<align>left</align>
 			<font>primal_18</font>
-			<textcolor>$VAR[ColorProgress]</textcolor>
+			<textcolor>$VAR[ColorFontSelected]</textcolor>
 			<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 			<label>S</label>
 		</control>
@@ -394,13 +395,13 @@
 			<label>V</label>
 		</control>
 		<control type="label" id="1">
-			<visible>SubString(PVR.ActStreamEncryptionName,5)</visible>
+			<visible>String.Contains(PVR.ActStreamEncryptionName,5)</visible>
 			<left>30</left>
 			<width>50</width>
 			<height>38</height>
 			<align>left</align>
 			<font>primal_18</font>
-			<textcolor>$VAR[ColorProgress]</textcolor>
+			<textcolor>$VAR[ColorFontSelected]</textcolor>
 			<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 			<label>V</label>
 		</control>
@@ -415,13 +416,13 @@
 			<label>I</label>
 		</control>
 		<control type="label" id="1">
-			<visible>SubString(PVR.ActStreamEncryptionName,06)</visible>
+			<visible>String.Contains(PVR.ActStreamEncryptionName,06)</visible>
 			<left>63</left>
 			<width>50</width>
 			<height>38</height>
 			<align>left</align>
 			<font>primal_18</font>
-			<textcolor>$VAR[ColorProgress]</textcolor>
+			<textcolor>$VAR[ColorFontSelected]</textcolor>
 			<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 			<label>I</label>
 		</control>
@@ -436,13 +437,13 @@
 			<label>ND</label>
 		</control>
 		<control type="label" id="1">
-			<visible>SubString(PVR.ActStreamEncryptionName,09)</visible>
+			<visible>String.Contains(PVR.ActStreamEncryptionName,09)</visible>
 			<left>85</left>
 			<width>50</width>
 			<height>38</height>
 			<align>left</align>
 			<font>primal_18</font>
-			<textcolor>$VAR[ColorProgress]</textcolor>
+			<textcolor>$VAR[ColorFontSelected]</textcolor>
 			<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 			<label>ND</label>
 		</control>
@@ -457,13 +458,13 @@
 			<label>CO</label>
 		</control>
 		<control type="label" id="1">
-			<visible>SubString(PVR.ActStreamEncryptionName,0B)</visible>
+			<visible>String.Contains(PVR.ActStreamEncryptionName,0B)</visible>
 			<left>135</left>
 			<width>50</width>
 			<height>38</height>
 			<align>left</align>
 			<font>primal_18</font>
-			<textcolor>$VAR[ColorProgress]</textcolor>
+			<textcolor>$VAR[ColorFontSelected]</textcolor>
 			<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 			<label>CO</label>
 		</control>
@@ -478,13 +479,13 @@
 			<label>CW</label>
 		</control>
 		<control type="label" id="1">
-			<visible>SubString(PVR.ActStreamEncryptionName,0D)</visible>
+			<visible>String.Contains(PVR.ActStreamEncryptionName,0D)</visible>
 			<left>180</left>
 			<width>50</width>
 			<height>38</height>
 			<align>left</align>
 			<font>primal_18</font>
-			<textcolor>$VAR[ColorProgress]</textcolor>
+			<textcolor>$VAR[ColorFontSelected]</textcolor>
 			<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 			<label>CW</label>
 		</control>
@@ -499,13 +500,13 @@
 			<label>B</label>
 		</control>
 		<control type="label" id="1">
-			<visible>SubString(PVR.ActStreamEncryptionName,17)</visible>
+			<visible>String.Contains(PVR.ActStreamEncryptionName,17)</visible>
 			<left>230</left>
 			<width>70</width>
 			<height>38</height>
 			<align>left</align>
 			<font>primal_18</font>
-			<textcolor>$VAR[ColorProgress]</textcolor>
+			<textcolor>$VAR[ColorFontSelected]</textcolor>
 			<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 			<label>B</label>
 		</control>
@@ -520,32 +521,41 @@
 			<label>N</label>
 		</control>
 		<control type="label" id="1">
-			<visible>SubString(PVR.ActStreamEncryptionName,18)</visible>
+			<visible>String.Contains(PVR.ActStreamEncryptionName,18)</visible>
 			<left>258</left>
 			<width>50</width>
 			<height>38</height>
 			<align>left</align>
 			<font>primal_18</font>
-			<textcolor>$VAR[ColorProgress]</textcolor>
+			<textcolor>$VAR[ColorFontSelected]</textcolor>
 			<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 			<label>N</label>
 		</control>
 		<control type="label" id="1">
 			<left>320</left>
+			<width>300</width>
+			<height>38</height>
+			<align>left</align>
+			<font>primal_18</font>
+			<textcolor>$VAR[ColorFontSelected]</textcolor>
+			<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			<label>$INFO[PVR.ActStreamEncryptionName]</label>
+		</control>
+		<control type="label" id="1">
+			<left>620</left>
 			<width>1000</width>
 			<height>38</height>
 			<align>left</align>
 			<font>primal_18</font>
-			<textcolor>$VAR[ColorProgress]</textcolor>
+			<textcolor>$VAR[ColorFontSelected]</textcolor>
 			<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
-			<label>$INFO[PVR.ActStreamEncryptionName]</label>
+			<label>$INFO[PVR.ActStreamClient]</label>
 		</control>
 	</control>
-	
-	<!--====================== TV ZUSATZINFOS =========================-->
+
 	<control type="grouplist">
-	<left>230</left>
-	<top>198</top>
+	<left>960</left>
+	<top>310</top>
 	<height>50</height>
 	<width>900</width>
 	<visible>VideoPlayer.Content(LiveTV)</visible>
@@ -556,7 +566,7 @@
 	<orientation>horizontal</orientation>
 	  <control type="button" id="14800">
 		<height>50</height>
-		<width>300</width>
+		<width>250</width>
 		<aligny>center</aligny>
 		<font>primal_18</font>
 		<textoffsetx>15</textoffsetx>
@@ -568,7 +578,7 @@
 	  </control>
 	  <control type="button" id="14801">
 		<height>50</height>
-		<width>300</width>
+		<width>250</width>
 		<aligny>center</aligny>
 		<font>primal_18</font>
 		<textoffsetx>15</textoffsetx>
@@ -585,10 +595,10 @@
 	  <visible>VideoPlayer.Content(LiveTV)</visible>
 	  <animation effect="fade" time="500"  delay="2000">WindowOpen</animation>
 	  <control type="image">
-		<left>200</left>
-		<top>240</top>
-		<width>1520</width>
-		<height>500</height>
+		<left>950</left>
+		<top>350</top>
+		<width>940</width>
+		<height>405</height>
 		<aspectratio>stretch</aspectratio>
 		<texture background="true">skin/button_klein_tranz90.png</texture>
 		<bordertexture border="10">ThumbShadow.png</bordertexture>
@@ -597,37 +607,37 @@
 		<visible>VideoPlayer.Content(LiveTV)</visible>
 	  </control>
 	  <control type="label">
-		<left>230</left>
-		<top>280</top>
-		<width>1455</width>
+		<left>975</left>
+		<top>370</top>
+		<width>880</width>
 		<height>38</height>
 		<label>[UPPERCASE]$INFO[VideoPlayer.Title][/UPPERCASE]</label>
 		<scroll>true</scroll>
 		<align>left</align>
 		<aligny>center</aligny>
-		<font>primal_40</font>
+		<font>primal_20_Title</font>
 		<textcolor>$VAR[ColorFontNormal]</textcolor>
 		<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 		<visible>Control.HasFocus(14800)</visible>
 	  </control>
 	  <control type="label">
-		<left>230</left>
-		<top>280</top>
-		<width>1455</width>
+		<left>975</left>
+		<top>370</top>
+		<width>880</width>
 		<height>38</height>
 		<label>[UPPERCASE]$INFO[VideoPlayer.NextTitle][/UPPERCASE]</label>
 		<scroll>true</scroll>
 		<align>left</align>
 		<aligny>center</aligny>
-		<font>primal_40</font>
+		<font>primal_20_Title</font>
 		<textcolor>$VAR[ColorFontNormal]</textcolor>
 		<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 		<visible>Control.HasFocus(14801)</visible>
 	  </control>
 	  <control type="textbox">
-		<left>230</left>
-		<top>350</top>
-		<width>1455</width>
+		<left>975</left>
+		<top>440</top>
+		<width>880</width>
 		<height>300</height>
 		<label>[COLOR $VAR[ColorFontNormal]]$INFO[VideoPlayer.Plot][/COLOR]</label>
 		<align>justify</align>
@@ -636,9 +646,9 @@
 		<visible>Control.HasFocus(14800)</visible>
 	  </control>
 	  <control type="textbox">
-		<left>230</left>
-		<top>350</top>
-		<width>1455</width>
+		<left>975</left>
+		<top>440</top>
+		<width>880</width>
 		<height>300</height>
 		<label>[COLOR $VAR[ColorFontNormal]]$INFO[VideoPlayer.NextPlot][/COLOR]</label>
 		<align>justify</align>
@@ -711,6 +721,7 @@
 	  <left>220</left>
 	  <top>385</top>
 	  <visible>VideoPlayer.Content(Movies) | VideoPlayer.Content(episodes) | VideoPlayer.Content(files) | VideoPlayer.Content(MusicVideos)</visible>
+	  <visible>!VideoPlayer.Content(LiveTV)</visible>
 	<control type="label">
 	  <left>80</left>
 	  <top>315</top>
@@ -851,5 +862,166 @@
 	</control>
   </control>
  </control>
+ 
+ <control type="group">
+	   <left>0</left>
+	   <visible>VideoPlayer.Content(LiveTV)</visible>
+	   <animation effect="fade" time="500"  delay="2000">WindowOpen</animation>
+	   <animation type="WindowClose">
+		<effect type="slide" time="500" start="0,0" end="0,800" tween="sine" easing="in" />
+		<effect type="fade" time="600" start="100" end="0" />
+	   </animation>
+	   <control type="button" id="14800">
+	      <left>20</left>
+		  <top>305</top>
+		  <height>50</height>
+		  <width>285</width>
+		  <aligny>center</aligny>
+		  <font>primal_18</font>
+		  <textoffsetx>15</textoffsetx>
+		  <pulseonselect>false</pulseonselect>
+		  <label>50412</label>
+		  <texturenofocus colordiffuse="$VAR[BackColorButton]">skin/button_klein_tranz80.png</texturenofocus>
+		  <texturefocus colordiffuse="$VAR[BackColorButton]">skin/button_klein_tranz80.png</texturefocus>
+		  <onclick></onclick>
+	   </control>
+	   <control type="panel" id="63446">
+          <left>5</left>
+		  <top>350</top>
+		  <width>930</width>
+		  <height>400</height>
+          <onleft>9000</onleft>
+          <onright>63446</onright>
+		  <onup>1830</onup>
+          <ondown>1603</ondown>
+          <viewtype>list</viewtype>
+		  <orientation>horizontal</orientation>
+          <focusposition>0</focusposition>
+          <pagecontrol>-</pagecontrol>
+          <scrolltime>500</scrolltime>
+		  <itemlayout width="310" height="230">
+		    <control type="image">
+              <left>0</left>
+              <top>0</top>
+              <width>315</width>
+              <height>460</height>
+              <texture background="true">skin/button_klein_tranz80.png</texture>
+			  <bordertexture border="10">ThumbShadow.png</bordertexture>
+		      <bordersize>6</bordersize>
+              <aspectratio>stretch</aspectratio>
+			  <colordiffuse>$VAR[ColorButtonDialogeBack]</colordiffuse>
+            </control>
+            <control type="image">
+              <left>6</left>
+              <top>6</top>
+              <width>302</width>
+              <height>199</height>
+              <texture background="true" fallback="special://skin/backgrounds/fallback_addons.jpg">$INFO[ListItem.Thumb]</texture>
+              <aspectratio align="left" aligny="top">stretch</aspectratio>
+            </control>
+			<control type="label">
+			  <description>Title label</description>
+			  <left>25</left>
+			  <top>225</top>
+			  <height>200</height>
+			  <width>270</width>
+			  <label>$INFO[ListItem.Label]</label>
+			  <align>left</align>
+			  <aligny>left</aligny>
+			  <font>primal_15_Title</font>
+			  <textcolor>$VAR[ColorFontNormal]</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			</control>
+			<control type="label">
+			  <description>Title label</description>
+			  <left>25</left>
+			  <top>255</top>
+			  <height>200</height>
+			  <width>270</width>
+			  <label>[COLOR=$VAR[ColorFontSelected]]$INFO[ListItem.Label2][/COLOR]$INFO[ListItem.Property(StartTime), / ]$INFO[ListItem.Property(EndTime), - ]</label>
+			  <align>left</align>
+			  <aligny>left</aligny>
+			  <font>primal_13</font>
+			  <textcolor>$VAR[ColorFontNormal]</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			</control>
+			<control type="textbox">
+			  <description>Plot</description>
+			  <left>25</left>
+			  <top>300</top>
+			  <height>80</height>
+			  <width>270</width>
+			  <font>primal_14</font>
+			  <align>left</align>
+			  <textcolor>white</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			  <label>[COLOR $VAR[ColorFontNormal]]$INFO[ListItem.Plot][/COLOR]</label>
+			</control> 
+          </itemlayout>
+          <focusedlayout width="310" height="230">
+		    <control type="image">
+              <left>0</left>
+              <top>0</top>
+              <width>315</width>
+              <height>460</height>
+              <texture background="true">skin/button_klein_tranz70.png</texture>
+			  <bordertexture border="10">ThumbShadow.png</bordertexture>
+		      <bordersize>6</bordersize>
+              <aspectratio>stretch</aspectratio>
+			  <colordiffuse>$VAR[BackColorButton]</colordiffuse>
+			  <visible>Control.HasFocus(63446)</visible>
+            </control>
+            <control type="image">
+              <left>6</left>
+              <top>6</top>
+              <width>302</width>
+              <height>199</height>
+              <texture background="true" fallback="special://skin/backgrounds/fallback_addons.jpg">$INFO[ListItem.Thumb]</texture>
+              <aspectratio align="left" aligny="top">stretch</aspectratio>
+            </control>
+			<control type="label">
+			  <description>Title label</description>
+			  <left>25</left>
+			  <top>225</top>
+			  <height>200</height>
+			  <width>270</width>
+			  <label>$INFO[ListItem.Label]</label>
+			  <align>left</align>
+			  <aligny>left</aligny>
+			  <font>primal_15_Title</font>
+			  <textcolor>$VAR[ColorFontNormal]</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			</control>
+			<control type="label">
+			  <description>Title label</description>
+			  <left>25</left>
+			  <top>255</top>
+			  <height>200</height>
+			  <width>270</width>
+			  <label>[COLOR=$VAR[ColorFontSelected]]$INFO[ListItem.Label2][/COLOR]$INFO[ListItem.Property(StartTime), / ]$INFO[ListItem.Property(EndTime), - ]</label>
+			  <align>left</align>
+			  <aligny>left</aligny>
+			  <font>primal_13</font>
+			  <textcolor>$VAR[ColorFontNormal]</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			</control>
+			<control type="textbox">
+			  <description>Plot</description>
+			  <left>25</left>
+			  <top>300</top>
+			  <height>80</height>
+			  <width>270</width>
+			  <font>primal_14</font>
+			  <align>left</align>
+			  <textcolor>white</textcolor>
+			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			  <label>[COLOR $VAR[ColorFontNormal]]$INFO[ListItem.Plot][/COLOR]</label>
+			</control> 
+          </focusedlayout>
+			  <content target="pvr">plugin://script.service.gto?action=getcontent&amp;ts=$INFO[Window(Home).Property(GTO.timestamp)]</content>
+			  <onclick>RunScript(script.service.gto,action=infopopup&amp;blob=$INFO[ListItem.Property(BlobId)])</onclick>
+        </control>
+	  </control>
+	  
 </controls>
 </window>

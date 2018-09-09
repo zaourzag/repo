@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <includes>
-
+	
 	<variable name="VarWidgetsFanart">
 	  <value condition="Control.HasFocus(601)">$INFO[Container(601).ListItem.Art(fanart)]</value>
 	  <value condition="Control.HasFocus(603)">$INFO[Container(603).ListItem.Art(fanart)]</value>
 	  <value condition="Control.HasFocus(608)">$INFO[Container(608).ListItem.Art(fanart)]</value>
+	  <value condition="Control.HasFocus(611)">$INFO[Container(611).ListItem.Art(fanart)]</value>
 	  <value condition="Control.HasFocus(62593)">$INFO[Container(62593).ListItem.Art(fanart)]</value>
 	  <value condition="Control.HasFocus(8304)">$INFO[Container(8304).ListItem.Art(fanart)]</value>
 	  <value condition="Control.HasFocus(8305)">$INFO[Container(8305).ListItem.Art(fanart)]</value>
@@ -161,6 +162,15 @@
 	  <value>$INFO[ListItem.Icon]</value>
 	</variable>
 	
+	<variable name="LandscapeThumb">	  
+	  <value condition="Container.Content(Movies)">$INFO[ListItem.Art(fanart)]</value>
+	  <value condition="Container.Content(TVShows)">$INFO[ListItem.Art(fanart)]</value>	
+	  <value condition="Container.Content(Episodes)">$INFO[ListItem.Icon]</value>  
+	  <value condition="Container.Content(Seasons)">$INFO[ListItem.Art(fanart)]</value>
+	  <value condition="Container.Content(Sets)">$INFO[ListItem.Art(set.fanart)]</value>
+	  <value>$INFO[ListItem.Art(fanart)]</value>
+	</variable>
+	
 	<variable name="VarFanartVideoInfos">
 	  <value condition="Control.IsVisible(600)">$INFO[Container(600).ListItem.Art(fanart)]</value>
 	  <value condition="Control.IsVisible(603)">$INFO[Container(603).ListItem.Art(fanart)]</value>
@@ -174,7 +184,7 @@
 	<variable name="VarLandsape">
 	  <value condition="!String.IsEmpty(ListItem.Art(landscape))">$INFO[ListItem.Art(landscape)]</value>
 	  <value condition="!String.IsEmpty(ListItem.Art(fanart))">$INFO[ListItem.Art(fanart)]</value>
-	  <value>special://skin/backgrounds/fallback_addons.jpg</value>
+	  <value>backgrounds/09.jpg</value>
 	</variable>	
 	
 	<variable name="VarClearart">

@@ -42,7 +42,7 @@
 		<usecontrolcoords>false</usecontrolcoords>
 		<onleft>200</onleft>
 		<onright>200</onright>
-		<onup>1830</onup>
+		<onup>63446</onup>
 		<ondown>1830</ondown>
 		<control type="button" id="1630">
 		  <width>80</width>
@@ -293,7 +293,7 @@
 		  <itemgap>5</itemgap>
 		  <onleft>1613</onleft>
 		  <onright>1613</onright>
-		  <onup>500</onup>
+		  <onup>63446</onup>
 		  <ondown>1613</ondown>
 		  <orientation>vertical</orientation>
 		  <visible>Control.HasFocus(1614) | ControlGroup(500).HasFocus</visible>
@@ -373,7 +373,7 @@
 		  <itemgap>5</itemgap>
 		  <onleft>1612</onleft>
 		  <onright>1612</onright>
-		  <onup>500</onup>
+		  <onup>63446</onup>
 		  <ondown>1612</ondown>
 		  <orientation>vertical</orientation>
 		  <visible>Control.HasFocus(1612) | ControlGroup(400).HasFocus</visible>
@@ -429,6 +429,8 @@
 		  </control>
      </control>
 	</control>
+	
+	
 
   </controls>
 </window>
