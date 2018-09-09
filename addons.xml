@@ -4501,7 +4501,7 @@ Parental warning: The Maxdome Plattform consists of differnt types of content - 
     </extension>
 </addon>
 
-<addon id="skin.destiny-k18" name="Destiny K18" version="1.1.0" provider-name="Jugger">
+<addon id="skin.destiny-k18" name="Destiny K18" version="2.0.0" provider-name="Jugger">
     <requires>
 		<import addon="xbmc.gui" version="5.13.0"/>
 	</requires>
