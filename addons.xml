@@ -406,11 +406,10 @@ Zattoo Live TV, Aufnahmen und EPG
   </extension>
 </addon>
 
-<addon id="plugin.video.sport1de" version="2.1.0" name="Sport1" provider-name="Jin">
+<addon id="plugin.video.sport1de" version="2.1.1" name="Sport1" provider-name="Jin">
     <requires>
         <import addon="xbmc.python" version="2.24.0"/>
         <import addon="script.module.requests" version="2.12.4"/>
-        <import addon="inputstream.adaptive" version="2.0.10"/>
         <import addon="script.module.pydes" version="2.0.1"/>
     </requires>
     <extension point="xbmc.python.pluginsource" library="addon.py">
@@ -420,9 +419,7 @@ Zattoo Live TV, Aufnahmen und EPG
     <extension point="xbmc.addon.metadata">
         <reuselanguageinvoker>false</reuselanguageinvoker>
         <news>
-- disabled inputstream adaptive usage
-- removed radio
-- fixed weitere livestreams
+- adjust api base url
         </news>
         <summary>Sportnachrichten - aktuelle News und Livestreams</summary>
         <description>Für Sport1US und Sport1+ wird ein ABO auf sport1.de benötigt.</description>
