@@ -62,9 +62,6 @@ def play(url):
     if not url.startswith('http'):
         url = 'https:' + url
     listitem = xbmcgui.ListItem(path=url)
-    # if 'm3u8' in url:
-        # listitem.setProperty('inputstreamaddon', 'inputstream.adaptive')
-        # listitem.setProperty('inputstream.adaptive.manifest_type', 'hls')
     xbmcplugin.setResolvedUrl(addon_handle, True, listitem)
     
 def list_items(items):

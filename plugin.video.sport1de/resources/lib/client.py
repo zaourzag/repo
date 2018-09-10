@@ -16,7 +16,7 @@ class Client:
         self.cookie = cookie
 
     def get_video_root(self):
-        return self.json_request(video_base + '/api/navigations/video_navigation_root')
+        return self.json_request(www_base + '/api/navigations/video_navigation_root')
     
     def get_resource(self, url):
         return self.json_request(url)
@@ -25,10 +25,10 @@ class Client:
         return self.json_request(url)
 
     def get_video(self,id):
-        return self.json_request(video_base + '/api/video/%s' % (id))
+        return self.json_request(www_base + '/api/video/%s' % (id))
 
     def get_tv_epg(self):
-        return self.json_request(video_base + '/api/epg/tv')
+        return self.json_request(www_base + '/api/epg/tv')
     
     def get_replay(self):
         self.headers['Referer'] = tv_base

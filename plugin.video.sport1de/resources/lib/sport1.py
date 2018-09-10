@@ -8,15 +8,15 @@ def get_video_category_items(data, id):
         children = find_children(data['children'][0]['children'], id)
     else:
         children = data['children'][0]['children']
-        items.append({'type': 'dir', 'mode': 'videos', 'name': 'Neue Videos', 'id': video_base + '/api/playlist/neue-videos'})
-        items.append({'type': 'dir', 'mode': 'videos', 'name': 'Top Videos', 'id': video_base + '/api/playlist/top-videos'})
+        items.append({'type': 'dir', 'mode': 'videos', 'name': 'Neue Videos', 'id': www_base + '/api/playlist/neue-videos'})
+        items.append({'type': 'dir', 'mode': 'videos', 'name': 'Top Videos', 'id': www_base + '/api/playlist/top-videos'})
     for child in children:
         sub_children = child['children']
         resource = child['resource']
         if sub_children:
             items.append({'type': 'dir', 'mode': 'video_category', 'name': utfenc(child['title']), 'id': child['slug']})
         elif resource:
-            items.append({'type': 'dir', 'mode': 'videos', 'name': utfenc(child['title']), 'id': resource})
+            items.append({'type': 'dir', 'mode': 'videos', 'name': utfenc(child['title']), 'id': resource.replace('http://video.sport1.de', www_base)})
     return items
 
 def get_children(children, search_slug):
