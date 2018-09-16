@@ -1,3 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
-    <setting label="Cache Zeitraum" type="slider" id="cachetime" default="24" range="0,1,100" option="int" />    
+		<category label="30000">
+		<setting label="30230" type="lsep"/>
+		<setting label="30110" type="slider" id="cacheTime" range="6,6,96" default="24" option="int"/>
+		<setting type="sep"/>
+		<setting label="30111" type="action" action="RunPlugin(plugin://plugin.video.sporttotal/?mode=clearCache)" visible="true"/>
+		<setting type="sep"/>
+	</category>
 </settings>

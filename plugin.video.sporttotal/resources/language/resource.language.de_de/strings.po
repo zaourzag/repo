@@ -1,0 +1,151 @@
+﻿# Kodi Media Center language file
+# Addon Name: Sport Total
+# Addon id: plugin.video.sporttotal
+# Addon version: 0.4.0
+# Addon Provider: L0RE
+msgid ""
+msgstr ""
+"Project-Id-Version: KODI-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2018-09-03 14:15+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid "Regionalsport on Sporttotal"
+msgstr "Regionalsport auf Sporttotal"
+
+msgctxt "Addon Description"
+msgid "Sporttotal shows Germany's amateur sport in full length and width. The league game of the home club? The funny and best scenes from Germany's amateur leagues?[CR]Selected and compiled by Sporttotal (https://www.sporttotal.tv)."
+msgstr "Sporttotal zeigt Deutschlands Amateursport in voller Länge und Breite. Das Oberligaspiel vom Heimatverein? Die lustigen und besten Szenen aus Deutschlands Amateurligen?[CR]Ausgewählt und zusammengestellt von Sporttotal (https://www.sporttotal.tv)."
+
+#strings start
+# SETTINGS-CATEGORIES
+
+msgctxt "#30000"
+msgid "General"
+msgstr "Allgemein"
+
+#empty strings from id 30001 to 30109
+# SETTINGS-BUTTONS
+
+msgctxt "#30110"Cache storage (in hours)
+msgid "     Cache storage (in hours)"
+msgstr "     Cache-Speicherung  (in Stunden)"
+
+msgctxt "#30111"
+msgid "     [COLOR orangered]<<< >>> DELETE Cache = CLICK HERE <<< >>>[/COLOR]"
+msgstr "     [COLOR orangered]<<< >>> Cache LÖSCHEN = HIER KLICKEN <<< >>>[/COLOR]"
+
+#empty strings from id 30112 to 30229
+# SETTINGS-TITLES
+
+msgctxt "#30230"
+msgid "[B][COLOR ff0099ff]CACHE[/COLOR][/B]"
+msgstr "[B][COLOR ff0099ff]CACHE[/COLOR][/B]"
+
+#empty strings from id 30231 to 30349
+# SETTINGS-DESCRIPTIONS
+
+#empty strings from id 30350 to 30500
+# WARNING-MESSAGES-OK
+
+msgctxt "#30501"
+msgid "[COLOR orangered]ATTENTION : ... DELETE Addon Cache !!![/COLOR][CR]The complete Cache of [COLOR green]* Sport Total *[/ COLOR] was deleted successfully !!!"
+msgstr "[COLOR orangered]ACHTUNG : ... LÖSCHVORGANG Addon-Cache !!![/COLOR][CR]Der komplette Cache von [COLOR green]* Sport Total *[/COLOR] wurde erfolgreich gelöscht !!!"
+
+msgctxt "#30502"
+msgid "[COLOR orangered]ATTENTION : ... The installed PYTHON VERSION : ***[/ COLOR] {0: s} [COLOR orangered]*** is not compatible !!![/COLOR][CR]Clearing the Cache will be ABORTED [COLOR green]and the Cache will be DISABLED[/ COLOR] !!!"
+msgstr "[COLOR orangered]ACHTUNG : ... Die installierte PYTHONVERSION : ***[/COLOR] {0:s} [COLOR orangered]*** ist nicht kompatibel !!![/COLOR][CR]Das Löschen des Cache wird ABGEBROCHEN [COLOR green]und Die Cachefunktion wird DEAKTIVIERT[/COLOR] !!!"
+
+#empty strings from id 30503 to 30520
+# WARNING-MESSAGES-NOTIFICATION
+
+msgctxt "#30521"
+msgid "Sport Total : [COLOR red]!!! {0:s} - ERROR !!![/COLOR]"
+msgstr "Sport Total : [COLOR red]!!! {0:s} - ERROR !!![/COLOR]"
+
+msgctxt "#30522"
+msgid "[COLOR red]An error has occured, please check *LOG* ![/COLOR]"
+msgstr "[COLOR red]Es ist ein Fehler aufgetreten, bitte *LOG* einsehen ![/COLOR]"
+
+msgctxt "#30523"
+msgid "[COLOR red]Unfortunately, there are NO results :[/COLOR]"
+msgstr "[COLOR red]Leider gibt es KEINE Ergebnisse :[/COLOR]"
+
+msgctxt "#30524"
+msgid "* [COLOR blue]To the respective search term[/ COLOR] * at Sport Total"
+msgstr "* [COLOR blue]Zu dem betr. Suchbegriff[/COLOR] * bei Sport Total"
+
+msgctxt "#30525"
+msgid "ERROR = [COLOR red]NO Stream entry found ![/COLOR]"
+msgstr "ERROR = [COLOR red]KEIN Stream-Eintrag gefunden ![/COLOR]"
+
+msgctxt "#30526"
+msgid "ERROR = [COLOR red]KEIN Stream-Eintrag gefunden ![/COLOR]"
+msgstr "ERROR = [COLOR red]Die Stream-Url ist OFFLINE ![/COLOR]"
+
+#empty strings from id 30527 to 30600
+# PLUGIN-MAIN and SIDEMENU
+
+msgctxt "#30601"
+msgid "LIVE"
+msgstr "LIVE"
+
+msgctxt "#30602"
+msgid "Highlights"
+msgstr "Highlights"
+
+msgctxt "#30603"
+msgid "Top Clips"
+msgstr "Top Clips"
+
+msgctxt "#30604"
+msgid "LEAGUES"
+msgstr "LIGEN"
+
+msgctxt "#30605"
+msgid "Archive"
+msgstr "Archiv"
+
+msgctxt "#30606"
+msgid "* Overview - Highlights *"
+msgstr "* Übersicht - Highlights *"
+
+msgctxt "#30607"
+msgid "* Overview - Recordings *"
+msgstr "* Übersicht - Aufzeichnungen *"
+
+msgctxt "#30608"
+msgid "SPORTTOTAL Settings"
+msgstr "SPORTTOTAL Einstellungen"
+
+msgctxt "#30609"
+msgid "[B][COLOR orangered]•  •  •  •  •  •  •  •  [/COLOR]Currently in the live Broadcast[COLOR orangered]  •  •  •  •  •  •  •  •[/COLOR][/B]"
+msgstr "[B][COLOR orangered]•  •  •  •  •  •  •  •  [/COLOR]Zurzeit in der LIVE-Übertragung[COLOR orangered]  •  •  •  •  •  •  •  •[/COLOR][/B]"
+
+msgctxt "#30610"
+msgid "[B][COLOR orangered]•  •  •  •  •  •  •  •  [/COLOR]Finished or coming Games[COLOR orangered]  •  •  •  •  •  •  •  •[/COLOR][/B]"
+msgstr "[B][COLOR orangered]•  •  •  •  •  •  •  •  [/COLOR]Beendete oder kommende Spiele[COLOR orangered]  •  •  •  •  •  •  •  •[/COLOR][/B]"
+
+msgctxt "#30611"
+msgid "     Season"
+msgstr "     Saison"
+
+msgctxt "#30612"
+msgid "     League"
+msgstr "     Liga"
+
+msgctxt "#30613"
+msgid "     Club"
+msgstr "     Verein"
+
+msgctxt "#30614"
+msgid "[B][COLOR orangered]•  •  •  •  •  [/COLOR]Show Results[COLOR orangered]  •  •  •  •  •[/COLOR][/B]"
+msgstr "[B][COLOR orangered]•  •  •  •  •  [/COLOR]Ergebnisse anzeigen[COLOR orangered]  •  •  •  •  •[/COLOR][/B]"

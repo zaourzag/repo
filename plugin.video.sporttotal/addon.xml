@@ -1,24 +1,38 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.sporttotal" name="Sport total" version="0.3.7" provider-name="L0RE">
-    <requires>
-        <import addon="xbmc.python" version="2.24.0"/>
-        <import addon="script.module.beautifulsoup4" version="4.3.2"/>
-        <import addon="script.common.plugin.cache" version="2.5.5"/> # Add this   
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-  <extension point="xbmc.addon.metadata">    
-    <summary lang="de">Regional Fussball Liegen von https://www.sporttotal.tv</summary>
-    <summary lang="en">Regional Fussball Liegen von https://www.sporttotal.tv</summary>
-    <language>de</language>
-    <description lang="de">Regional Fussball Liegen von https://www.sporttotal.tv</description>
-    <description lang="en">Regional Fussball Liegen von https://www.sporttotal.tv</description>
-    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-    <website></website>
-    <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.sporttotal</source>
-    <forum>http://www.kodinerds.net/</forum>
-    <email>andreas at vogler dot name</email>
-    <platform>all</platform>
-  </extension>
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<addon id="plugin.video.sporttotal" name="Sport Total" version="0.4.0" provider-name="L0RE">
+	<requires>
+		<import addon="xbmc.python" version="2.24.0"/>
+		<import addon="script.module.beautifulsoup4" version="4.3.2"/>
+		<import addon="script.common.plugin.cache" version="2.5.5" optional="true"/> # Add this
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">Regionalsport on Sporttotal</summary>
+		<summary lang="de">Regionalsport auf Sporttotal</summary>
+		<description lang="en">Sporttotal shows Germany's amateur sport in full length and width. The league game of the home club? The funny and best scenes from Germany's amateur leagues?[CR]Selected and compiled by Sporttotal (https://www.sporttotal.tv).</description>
+		<description lang="de">Sporttotal zeigt Deutschlands Amateursport in voller Länge und Breite. Das Oberligaspiel vom Heimatverein? Die lustigen und besten Szenen aus Deutschlands Amateurligen?[CR]Ausgewählt und zusammengestellt von Sporttotal (https://www.sporttotal.tv).</description>
+		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
+		<website>https://www.sporttotal.tv/</website>
+		<email></email>
+		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.sporttotal</source>
+		<assets>
+			<icon>icon.png</icon>
+			<fanart>fanart.jpg</fanart>
+		</assets>
+		<news>[B][COLOR orangered]Version 0.4.0  (16.09.2018)[/COLOR][/B] by realvito[CR]
+- fixed: In der Rubrik "LIVE" werden nicht alle Spiele gelistet
+- fixed: Die Auswahlfunktion in der Rubrik "Highlights" ist fehlerhaft und es werden nicht alle Ergebnisse angezeigt
+- fixed: In der Rubrik "Topclips" werden nur Fehler produziert
+- fixed: Scriptfehler bereinigt
+- added: Rubriken = Ligen mit Auswahlfunktion, Archiv mit Auswahlfunktion, Übersicht - Highlights, Übersicht - Aufzeichnungen
+- optimized: Icon aktualisiert und Fanart hinzugefügt
+		</news>
+	</extension>
 </addon>

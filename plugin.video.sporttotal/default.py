@@ -1,361 +1,589 @@
-#!/usr/bin/python
+﻿#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
 import sys
-import urlparse
+import os
+import re
+import xbmc
 import xbmcgui
 import xbmcplugin
 import xbmcaddon
-import xbmc
+PY2 = sys.version_info[0] == 2
+PY3 = sys.version_info[0] == 3
+if PY2:
+	from urllib import quote, unquote, quote_plus, unquote_plus, urlencode  # Python 2.X
+	from urllib2 import build_opener, HTTPCookieProcessor, Request, urlopen  # Python 2.X
+	from cookielib import LWPCookieJar  # Python 2.X
+	from urlparse import urljoin, urlparse, urlunparse  # Python 2.X
+	try:
+		import StorageServer
+	except:
+		from resources.lib import storageserverdummy as StorageServer
+elif PY3:
+	from urllib.parse import quote, unquote, quote_plus, unquote_plus, urlencode, urljoin, urlparse, urlunparse  # Python 3+
+	from urllib.request import build_opener, HTTPCookieProcessor, Request, urlopen  # Python 3+
+	from http.cookiejar import LWPCookieJar  # Python 3+
+import json
 import xbmcvfs
-import urllib, urllib2, socket, cookielib, re, os, shutil,json
+import shutil
+import socket
 import time
 import datetime
 from bs4 import BeautifulSoup
+import io
+import gzip
 
-# Setting Variablen Des Plugins
+
 global debuging
-base_url = sys.argv[0]
-addon_handle = int(sys.argv[1])
-
-args = urlparse.parse_qs(sys.argv[2][1:])
+pluginhandle = int(sys.argv[1])
 addon = xbmcaddon.Addon()
-# Lade Sprach Variablen
-translation = addon.getLocalizedString
-defaultBackground = ""
-defaultThumb = ""
-cliplist=[]
-filelist=[]
-profile    = xbmc.translatePath( addon.getAddonInfo('profile') ).decode("utf-8")
-temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
-mainurl="https://www.sporttotal.tv"
+addonPath = xbmc.translatePath(addon.getAddonInfo('path')).encode('utf-8').decode('utf-8')
+dataPath     = xbmc.translatePath(addon.getAddonInfo('profile')).encode('utf-8').decode('utf-8')
+temp            = xbmc.translatePath(os.path.join(dataPath, 'temp', '')).encode('utf-8').decode('utf-8')
+defaultFanart = os.path.join(addonPath, 'fanart.jpg')
+icon = os.path.join(addonPath, 'icon.png')
+if PY2:
+	cachePERIOD = int(addon.getSetting("cacheTime"))
+	cache = StorageServer.StorageServer(addon.getAddonInfo('id'), cachePERIOD) # (Your plugin name, Cache time in hours)
+baseURL = "https://www.sporttotal.tv"
 
-#Directory für Token Anlegen
-if not xbmcvfs.exists(temp):       
-       xbmcvfs.mkdirs(temp)
-       
-xbmcplugin.setContent(int(sys.argv[1]), 'musicvideos')
-icon = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')+'/icon.png').decode('utf-8')
-useThumbAsFanart=addon.getSetting("useThumbAsFanart") == "true"
+xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
 
-try:
-   import StorageServer
-except:
-   import storageserverdummy as StorageServer
+if xbmcvfs.exists(temp) and os.path.isdir(temp):
+	shutil.rmtree(temp, ignore_errors=True)
+xbmcvfs.mkdirs(temp)
+cookie = os.path.join(temp, 'cookie.lwp')
+cj = LWPCookieJar()
 
-cachezeit=addon.getSetting("cachetime")   
-cache = StorageServer.StorageServer("plugin.video.rtlnow", cachezeit) # (Your plugin name, Cache time in hours
+if xbmcvfs.exists(cookie):
+	cj.load(cookie, ignore_discard=True, ignore_expires=True)
+
+def py2_enc(s, encoding='utf-8'):
+	if PY2 and isinstance(s, unicode):
+		s = s.encode(encoding)
+	return s
+
+def py2_uni(s, encoding='utf-8'):
+	if PY2 and isinstance(s, str):
+		s = unicode(s, encoding)
+	return s
+
+def py3_dec(d, encoding='utf-8'):
+	if PY3 and isinstance(d, bytes):
+		d = d.decode(encoding)
+	return d
+
+def translation(id):
+	LANGUAGE = addon.getLocalizedString(id)
+	LANGUAGE = py2_enc(LANGUAGE)
+	return LANGUAGE
+
+def failing(content):
+	log(content, xbmc.LOGERROR)
 
 def debug(content):
-    log(content, xbmc.LOGDEBUG)
-    
-def notice(content):
-    log(content, xbmc.LOGNOTICE)
+	log(content, xbmc.LOGDEBUG)
 
 def log(msg, level=xbmc.LOGNOTICE):
-    addon = xbmcaddon.Addon()
-    addonID = addon.getAddonInfo('id')
-    xbmc.log('%s: %s' % (addonID, msg), level) 
+	msg = py2_enc(msg)
+	xbmc.log("["+addon.getAddonInfo('id')+"-"+addon.getAddonInfo('version')+"]"+msg, level)
+
+def makeREQUEST(url):
+	if PY2:
+		INQUIRE = cache.cacheFunction(getUrl, url)
+	elif PY3:
+		INQUIRE = getUrl(url)
+	return INQUIRE
+
+def getUrl(url, header=None, referer=None):
+	global cj
+	for cook in cj:
+		debug("(getUrl) Cookie : {0}".format(str(cook)))
+	pos = 0
+	opener = build_opener(HTTPCookieProcessor(cj))
+	try:
+		if header:
+			opener.addheaders = header
+		else:
+			opener.addheaders = [('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36')]
+			opener.addheaders = [('Accept-Encoding', 'gzip, deflate')]
+		if referer:
+			opener.addheaders = [('Referer', referer)]
+		response = opener.open(url, timeout=40)
+		if response.info().get('Content-Encoding') == 'gzip':
+			content = py3_dec(gzip.GzipFile(fileobj=io.BytesIO(response.read())).read())
+		else:
+			content = py3_dec(response.read())
+	except Exception as e:
+		failure = str(e)
+		if hasattr(e, 'code'):
+			failing("(getUrl) ERROR - ERROR - ERROR : ########## {0} === {1} ##########".format(url, failure))
+		elif hasattr(e, 'reason'):
+			failing("(getUrl) ERROR - ERROR - ERROR : ########## {0} === {1} ##########".format(url, failure))
+		content = ""
+		return sys.exit(0)
+	opener.close()
+	cj.save(cookie, ignore_discard=True, ignore_expires=True)               
+	return content
+
+def clearCache():
+	if PY2:
+		debug("Clear Cache")
+		cache.delete("%")
+		xbmc.sleep(2000)
+		xbmcgui.Dialog().ok(addon.getAddonInfo('id'), translation(30501))
+	elif PY3:
+		Python_Version = str(sys.version).split(')')[0].strip()+")"
+		xbmcgui.Dialog().ok(addon.getAddonInfo('id'), (translation(30502).format(Python_Version)))
+
+def index():
+	addDir(translation(30601), "", 'Live_Games', icon)
+	addDir(translation(30602), baseURL+"/highlights", 'selection_Archiv_Highlights', icon, ffilter="")
+	addDir(translation(30603), baseURL+"/topclips/", 'Topclips_Categories', icon)
+	addDir(translation(30604), baseURL+"/ligen/", 'Ligen_Overview', icon)
+	addDir(translation(30605), baseURL+"/archiv", 'selection_Archiv_Highlights', icon, ffilter="")
+	addDir(translation(30606), baseURL+"/highlights?saison=&liga=&verein=", 'Archiv_Highlights_Ligen_Videos', icon, ffilter="Spielzusammenfassungen")
+	addDir(translation(30607), baseURL+"/archiv?saison=&liga=&verein=", 'Archiv_Highlights_Ligen_Videos', icon, ffilter="Wiederholungen")
+	addDir(translation(30608), "", "aSettings", icon)
+	xbmcplugin.endOfDirectory(pluginhandle) 
+
+def Live_Games():
+	debug("(Live_Games) ##### URL={0} #####".format(baseURL+"/live/"))
+	content = getUrl(baseURL+"/live/")
+	COMBINATION1 = []
+	COMBINATION2 = []
+	videoIsolated_List = set()
+	count = 0
+	pos1 = 0
+	if '<div id="livegames-large" class="livegame-table">' in content:
+		result = content[content.find('<section class="container home-tile">')+1:]
+		result = result[:result.find('</section>')]
+		part = result.split('class="table-link"')
+		for i in range(1, len(part), 1):
+			element = part[i]
+			try:
+				vidURL = re.compile('href="(.+?)">', re.DOTALL).findall(element)[0]
+				if vidURL[:4] != "http":
+					vidURL = baseURL+vidURL
+				division = re.compile('class="Division">(.+?)</td>', re.DOTALL).findall(element)[0].strip()
+				division = cleanTitle(division)
+				teams = re.compile('class="teams">(.+?)</td>', re.DOTALL).findall(element)[0]
+				teams = cleanTitle(teams)
+				if teams =="":
+					continue
+				relevance = re.compile('class="date">(.+?)</td>', re.DOTALL).findall(element)[0].strip()
+				try:
+					datetime_object = datetime.datetime.strptime(relevance, '%d.%m.%Y %H:%M')
+				except TypeError:
+					datetime_object = datetime.datetime(*(time.strptime(relevance, '%d.%m.%Y %H:%M')[0:6]))
+				actualTIME = datetime_object.strftime("%H:%M")
+				title = relevance+" - "+teams
+				if title in videoIsolated_List:
+					continue
+				videoIsolated_List.add(title)
+				try:
+					photo = re.compile('<img.+?src="([^"]+?)"', re.DOTALL).findall(element)[0]
+				except: photo = ""
+				if photo != "" and photo[:4] != "http":
+					photo = baseURL+photo
+				if photo != "" and "?w=" in photo:
+					photo = photo.split('?w=')[0]+"?w=300"
+				if 'class="badge badge-danger">' in element:
+					name = "[COLOR chartreuse][B]~ ~ ~  ( LIVE )[/B][/COLOR]  ["+actualTIME+"]  "+teams+"  [COLOR chartreuse][B]~ ~ ~[/B][/COLOR]"
+					COMBINATION1.append([datetime_object, name, vidURL, photo])
+				else:
+					name = relevance+" - "+teams+"  ("+division+")"
+					COMBINATION2.append([datetime_object, name, vidURL, photo])
+			except:
+				pos1 += 1
+				failing("(Live_Games) Fehler-Eintrag-01 : {0}".format(str(element)))
+				if pos1 > 1 and count == 0:
+					count += 1
+					xbmcgui.Dialog().notification((translation(30521).format('DISPLAY')), translation(30522), icon, 8000)
+		if COMBINATION1:
+			addDir(translation(30609), "", "Live_Games", icon)
+			for datetime_object, name, vidURL, photo in sorted(COMBINATION1, key=lambda item:item[0], reverse=False):
+				addLink(name, vidURL, "playVideo", photo, background="KEIN HINTERGRUND")
+		if COMBINATION2:
+			addDir(translation(30610), "", "Live_Games", icon)
+			for datetime_object, name, vidURL, photo in sorted(COMBINATION2, key=lambda item:item[0], reverse=False):
+				addLink(name, vidURL, "playVideo", photo, background="KEIN HINTERGRUND")
+	xbmcplugin.endOfDirectory(pluginhandle, cacheToDisc=False)
+
+def list_Archiv_Highlights(url, ffilter="", category=""):
+	xbmcplugin.addSortMethod(pluginhandle, xbmcplugin.SORT_METHOD_TITLE)
+	debug("(list_Archiv_Highlights) ##### URL={0} ##### FFILTER={1} ##### CATEGORY={2} #####".format(url, ffilter, category))
+	content = makeREQUEST(url)
+	# <select name="liga" class="form-control">
+	result = content[content.find('<select name="'+category+'" class="form-control">'):]
+	result = result[:result.find('</select>')]
+	selection = re.findall('<option.*?>(.*?)</option>', result, re.DOTALL)
+	for title in selection:
+		if title != "":
+			name = cleanTitle(title)
+			if name == "Alle Ligen":
+				name = "-- Alle Ligen --"
+			addDir(name, url, 'selection_Archiv_Highlights', icon, ffilter=ffilter+"&"+category+"="+name)
+	xbmcplugin.endOfDirectory(pluginhandle)
+
+def selection_Archiv_Highlights(url, ffilter=""):
+	# Zuordnung = ARCHIV: saison=&liga=&verein= / HIGHLIGHTS: liga=&verein=&saison=
+	debug("(selection_Archiv_Highlights) no.1 ##### URL : {0} #####".format(url))
+	params = parameters_string_to_dict(ffilter)
+	saison = unquote_plus(params.get('saison', '')) 
+	liga = unquote_plus(params.get('liga', ''))
+	verein = unquote_plus(params.get('verein', ''))
+	debug("(selection_Archiv_Highlights) no.2 ##### SAISON={0} ##### LIGA={1} ##### VEREIN={2} #####".format(saison, liga, verein))
+	saisonfilter =""
+	ligafilter =""
+	vereinfilter =""
+	if saison !="" and saison !="-- Saison --":
+		saisonfilter="&saison="+saison.replace(" ","+")
+	if liga !="" and liga !="-- Alle Ligen --":
+		ligafilter="&liga="+liga.replace(" ","+")
+	if verein !="" and verein !="-- Verein --":
+		vereinfilter="&verein="+verein.replace(" ","+")
+	if saisonfilter =="":
+		addDir(translation(30611), url, 'list_Archiv_Highlights', icon, ffilter=saisonfilter+ligafilter+vereinfilter, category="saison")
+		saisonfilter = "saison="
+	if ligafilter =="":
+		addDir(translation(30612), url, 'list_Archiv_Highlights', icon, ffilter=saisonfilter+ligafilter+vereinfilter, category="liga")
+		ligafilter = "&liga="
+	if vereinfilter =="":
+		addDir(translation(30613), url, 'list_Archiv_Highlights', icon, ffilter=saisonfilter+ligafilter+vereinfilter, category="verein")
+		vereinfilter = "&verein="
+	addDir(translation(30614), url, 'result_Archiv_Highlights_Ligen', icon, ffilter=saisonfilter+ligafilter+vereinfilter)
+	debug("(selection_Archiv_Highlights) no.3 ##### SAISONfilter={0} ##### LIGAfilter={1} ##### VEREINfilter={2} #####".format(saisonfilter, ligafilter, vereinfilter))
+	xbmcplugin.endOfDirectory(pluginhandle)
+
+def result_Archiv_Highlights_Ligen(url, ffilter=""):
+	debug("(result_Archiv_Highlights_Ligen) no.1 ##### URL={0} ##### FFILTER={1} #####".format(url, ffilter))
+	if ('/archiv' in url and not url.endswith('archiv?')) or ('/highlights' in url and not url.endswith('highlights?')):
+		url = url+"?"
+	if '/archiv' in url or '/highlights' in url:
+		fullURL = url+ffilter
+	else:
+		fullURL = url
+	content = makeREQUEST(fullURL)
+	debug("(result_Archiv_Highlights_Ligen) no.2 ##### URL={0} ##### FFILTER={1} #####".format(url, ffilter))
+	home = re.findall('<section class="container home-tile">(.*?)</section>', content, re.DOTALL)
+	if home and not 'Leider gibt es keine Ergebnisse' in home[0]:
+		for chtml in home:
+			section = re.compile('<h2 class="section-title">(.+?)</h2>', re.DOTALL).findall(chtml)
+			for title in section:
+				if title != "":
+					name = cleanTitle(title)
+					if name == "Teams":
+						addDir(name, fullURL, 'selection_Ligen_Teams', icon, ffilter=name)
+					else:
+						addDir(name, fullURL, 'Archiv_Highlights_Ligen_Videos', icon, ffilter=name)
+	else:
+		xbmcgui.Dialog().notification(translation(30523), translation(30524), icon, 8000)
+		return
+	xbmcplugin.endOfDirectory(pluginhandle)
+
+def Archiv_Highlights_Ligen_Videos(url, ffilter=""):
+	debug("(Archiv_Highlights_Ligen_Videos) no.1 ##### URL={0} ##### FFILTER={1} #####".format(url, ffilter))
+	COMBINATION = []
+	CHOICE = unquote_plus(ffilter)
+	content = makeREQUEST(url)
+	match = re.findall('<section class="container home-tile">(.*?)</section>', content, re.DOTALL)
+	count = 0
+	pos1 = 0
+	for chtml in match:
+		section = re.compile('class="section-title">(.+?)</h2>', re.DOTALL).findall(chtml)
+		debug("(Archiv_Highlights_Ligen_Videos) no.2 ##### SECTION={0} ##### CHOICE={1} #####".format(section, CHOICE))
+		for RUBRIK in section:
+			correctRUBRIK = cleanTitle(RUBRIK)
+			if correctRUBRIK == CHOICE:
+				debug("(Archiv_Highlights_Ligen_Videos) no.3 ##### RUBRIK={0} ##### CHOICE={1} #####".format(RUBRIK, CHOICE))
+				result = chtml[chtml.find('class="section-title">'+RUBRIK+'</h2>')+6:]
+				result = result[:result.find('class="section-title">')]
+				videos = re.compile('class="col-sm-4(.+?)</a>', re.DOTALL).findall(result)
+				for video in videos:
+					try:
+						vidURL = re.compile('href="(.+?)" class=', re.DOTALL).findall(video)[0]
+						if vidURL[:4] != "http":
+							vidURL = baseURL+vidURL
+						try:
+							photo = re.compile(r'style="background-image.+?(?:\(|\")([^)"]+?)(?:\)|\")', re.DOTALL).findall(video)[0]
+						except: photo = ""
+						if photo != "" and photo[:4] != "http":
+							photo = baseURL+photo
+						if photo != "" and "?w=" in photo:
+							photo = photo.split('?w=')[0]+"?w=1280"
+						title = re.compile('class="caption">(.+?)<', re.DOTALL).findall(video)[0].replace('Highlights', '').replace('Zusammenfassung', '')
+						title = cleanTitle(title)
+						if title =="":
+							continue
+						relevance = re.compile('class="date">(.+?)<', re.DOTALL).findall(video)[0].strip()
+						try:
+							datetime_object = datetime.datetime.strptime(relevance, '%d.%m.%Y')
+						except TypeError:
+							datetime_object = datetime.datetime(*(time.strptime(relevance, '%d.%m.%Y')[0:6]))
+						division = re.compile('class="caption league">(.+?)<', re.DOTALL).findall(video)[0]
+						division = cleanTitle(division)
+						COMBINATION.append([datetime_object, relevance, title, division, vidURL, photo])
+					except:
+						pos1 += 1
+						failing("(Archiv_Highlights_Ligen_Videos) Fehler-Eintrag-01 : {0}".format(str(video)))
+						if pos1 > 1 and count == 0:
+							count += 1
+							xbmcgui.Dialog().notification((translation(30521).format('DISPLAY')), translation(30522), icon, 8000)
+		for datetime_object, relevance, title, division, vidURL, photo in sorted(COMBINATION, key=lambda item:item[0], reverse=True):
+			name = relevance+" - "+title+"  ("+division+")"
+			addLink(name, vidURL, "playVideo", photo)
+	xbmcplugin.endOfDirectory(pluginhandle)
+
+def Topclips_Categories(url):
+	debug("(Topclips_Categories) ##### URL={0} #####".format(url))
+	content = makeREQUEST(url)
+	result = content[content.find('<ul class="nav">')+1:]
+	result = result[:result.find('</ul>')]
+	part = result.split('<li class="nav-item">')
+	for i in range(1, len(part), 1):
+		element = part[i]
+		title = re.compile('<a class="nav-link.+?">(.+?)</a>', re.DOTALL).findall(element)[0]
+		name = cleanTitle(title)
+		if name !="":
+			addDir(name, url, 'Topclips_Videos', icon, ffilter=name)
+	xbmcplugin.endOfDirectory(pluginhandle)
+
+def Topclips_Videos(url, ffilter=""):
+	debug("(Topclips_Videos) no.1 ##### URL={0} ##### FFILTER={1} #####".format(url, ffilter))
+	COMBINATION = []
+	sortedArray = []
+	CHOICE = unquote_plus(ffilter)
+	content = makeREQUEST(url)
+	match = re.findall('<section class="container home-tile">(.*?)</section>', content, re.DOTALL)
+	count = 0
+	pos1 = 0
+	for chtml in match:
+		section = re.compile('class="section-title">(.+?)</h2>', re.DOTALL).findall(chtml)
+		debug("(Topclips_Videos) no.2 ##### SECTION={0} ##### CHOICE={1} #####".format(section, CHOICE))
+		for RUBRIK in section:
+			correctRUBRIK = cleanTitle(RUBRIK)
+			if correctRUBRIK == CHOICE:
+				debug("(Topclips_Videos) no.3 ##### RUBRIK={0} ##### CHOICE={1} #####".format(RUBRIK, CHOICE))
+				result = chtml[chtml.find('class="section-title">'+RUBRIK+'</h2>')+6:]
+				result = result[:result.find('class="section-title">')]
+				videos = re.compile('class="col-sm-4(.+?)</a>', re.DOTALL).findall(result)
+				for video in videos:
+					try:
+						vidURL = re.compile('href="(.+?)" class=', re.DOTALL).findall(video)[0]
+						if vidURL[:4] != "http":
+							vidURL = baseURL+vidURL
+						try:
+							photo = re.compile(r'style="background-image.+?(?:\(|\")([^)"]+?)(?:\)|\")', re.DOTALL).findall(video)[0]
+						except: photo = ""
+						if photo != "" and photo[:4] != "http":
+							photo = baseURL+photo
+						if photo != "" and "?w=" in photo:
+							photo = photo.split('?w=')[0]+"?w=1280"
+						title = re.compile('class="caption">(.+?)<', re.DOTALL).findall(video)[0]
+						title = cleanTitle(title)
+						if title =="":
+							continue
+						relevance = re.compile('class="date">(.+?)<', re.DOTALL).findall(video)[0].strip()
+						division = re.compile('class="caption league">(.+?)<', re.DOTALL).findall(video)[0]
+						division = cleanTitle(division)
+						name = relevance+" - "+title+"  ("+division+")"
+						addLink(name, vidURL, "playVideo", photo)
+					except:
+						pos1 += 1
+						failing("(Topclips_Videos) Fehler-Eintrag-01 : {0}".format(str(video)))
+						if pos1 > 1 and count == 0:
+							count += 1
+							xbmcgui.Dialog().notification((translation(30521).format('DISPLAY')), translation(30522), icon, 8000)
+	xbmcplugin.endOfDirectory(pluginhandle)
+
+def Ligen_Overview(url):
+	xbmcplugin.addSortMethod(pluginhandle, xbmcplugin.SORT_METHOD_TITLE)
+	debug("(Ligen_Overview) ##### URL={0} #####".format(url))
+	content = makeREQUEST(url)
+	result = content[content.find('<section class="container home-tile league-selector">'):]
+	result = result[:result.find('</ul>')]
+	selection = re.findall('href="(.*?)">.+?<h4>(.*?)</h4>.+?<h3>(.*?)</h3>', result, re.DOTALL)
+	for url2, title, counter in selection:
+		if title != "":
+			if url2[:4] != "http":
+				url2 = baseURL+url2
+			name = cleanTitle(title)
+			number = re.compile('([0-9]+)', re.DOTALL).findall(counter)[0].strip()
+			addDir(name+"  [COLOR chartreuse]("+number+")[/COLOR]", url2, 'selection_Ligen_Other', icon)
+	xbmcplugin.endOfDirectory(pluginhandle)
+
+def selection_Ligen_Other(url):
+	xbmcplugin.addSortMethod(pluginhandle, xbmcplugin.SORT_METHOD_TITLE)
+	debug("(selection_Ligen_Other) ##### URL={0} #####".format(url))
+	content = makeREQUEST(url)
+	result = content[content.find('<ul class="slider-leagues">'):]
+	result = result[:result.find('</ul>')]
+	match = re.findall('class="league-item">(.*?)</li>', result, re.DOTALL)
+	count = 0
+	pos1 = 0
+	for league in match:
+		try:
+			url2 = re.compile('href="(.+?)">', re.DOTALL).findall(league)[0]
+			if url2[:4] != "http":
+				url2 = baseURL+url2
+			title = re.compile('<h4>(.+?)<', re.DOTALL).findall(league)[0]
+			name = cleanTitle(title)
+			if name !="":
+				addDir(name, url2, 'result_Archiv_Highlights_Ligen', icon)
+		except:
+			pos1 += 1
+			failing("(selection_Ligen_Other) Fehler-Eintrag-01 : {0}".format(str(league)))
+			if pos1 > 1 and count == 0:
+				count += 1
+				xbmcgui.Dialog().notification((translation(30521).format('DISPLAY')), translation(30522), icon, 8000)
+	xbmcplugin.endOfDirectory(pluginhandle)
+
+def selection_Ligen_Teams(url, ffilter=""):
+	xbmcplugin.addSortMethod(pluginhandle, xbmcplugin.SORT_METHOD_TITLE)
+	debug("(selection_Ligen_Teams) ##### URL={0} ##### FFILTER={1} #####".format(url, ffilter))
+	rubrik = unquote_plus(ffilter)
+	content = makeREQUEST(url)
+	result = content[content.find('class="teams-grid">'):]
+	result = result[:result.find('</ul>')]
+	match = re.findall('<li>(.*?)</li>', result, re.DOTALL)
+	count = 0
+	pos1 = 0
+	for team in match:
+		try:
+			url2 = re.compile('href="(.+?)">', re.DOTALL).findall(team)[0]
+			if url2[:4] != "http":
+				url2 = baseURL+url2
+			try:
+				photo = re.compile('<img.+?src="([^"]+?)"', re.DOTALL).findall(team)[0]
+			except: photo = ""
+			if photo != "" and photo[:4] != "http":
+				photo = baseURL+photo
+			if photo != "" and "?w=" in photo:
+				photo = photo.split('?w=')[0]+"?w=300"
+			title = re.compile('<h4>(.+?)<', re.DOTALL).findall(team)[0]
+			name = cleanTitle(title)
+			if name !="":
+				addDir(name, url2, 'result_Archiv_Highlights_Ligen', photo, ffilter=rubrik, background="KEIN HINTERGRUND")
+		except:
+			pos1 += 1
+			failing("(selection_Ligen_Teams) Fehler-Eintrag-01 : {0}".format(str(team)))
+			if pos1 > 1 and count == 0:
+				count += 1
+				xbmcgui.Dialog().notification((translation(30521).format('DISPLAY')), translation(30522), icon, 8000)
+	xbmcplugin.endOfDirectory(pluginhandle)
+
+def playVideo(url):
+	debug("(playVideo) no.1 ##### URL={0} #####".format(url))
+	fileURL = False
+	testURL = False
+	content = getUrl(url)
+	try:
+		stream = re.compile('file: "(https?://[^"]+?)"', re.DOTALL|re.UNICODE).findall(content)[0].replace('\n', '')
+		fileURL = True
+	except: 
+		failing("(playVideo) ##### Abspielen des Streams NICHT möglich ##### URL : {0} #####\n   ########## KEINEN Stream-Eintrag auf der Webseite von *sporttotal.tv* gefunden !!! ##########".format(url))
+		xbmcgui.Dialog().notification((translation(30521).format('URL 1')), translation(30525), icon, 8000)
+		return
+	standardSTREAM = re.compile(r'(?:/[^/]+?\.mp4|/[^/]+?\.m3u8)', re.DOTALL).findall(stream)[0]
+	correctSTREAM = quote(standardSTREAM)
+	debug("(playVideo) no.2 ##### standardSTREAM={0} ##### correctSTREAM={1} #####".format(standardSTREAM, correctSTREAM))
+	finalURL = stream.replace(standardSTREAM, correctSTREAM)
+	try:
+		code = urlopen(finalURL).getcode()
+		if str(code) == "200":
+			testURL = True
+	except: pass
+	if fileURL and testURL:
+		log("(playVideo) StreamURL : {0}".format(finalURL))
+		listitem = xbmcgui.ListItem(path=finalURL)
+		xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
+	else:
+		failing("(playVideo) ##### Abspielen des Streams NICHT möglich ##### URL : {0} #####\n   ########## Die Stream-Url auf der Webseite von *sporttotal.tv* ist OFFLINE !!! ##########".format(finalURL))
+		xbmcgui.Dialog().notification((translation(30521).format('URL 2')), translation(30526), icon, 8000)
+
+def cleanTitle(title):
+	title = py2_enc(title)
+	title = title.replace('&#196;', 'Ä').replace('&#214;', 'Ö').replace('&#220;', 'Ü').replace('&#228;', 'ä').replace('&#246;', 'ö').replace('&#252;', 'ü').replace('&#223;', 'ß').replace('&#160;', ' ')
+	title = title.replace('&#192;', 'À').replace('&#193;', 'Á').replace('&#194;', 'Â').replace('&#195;', 'Ã').replace('&#197;', 'Å').replace('&#199;', 'Ç').replace('&#200;', 'È').replace('&#201;', 'É').replace('&#202;', 'Ê')
+	title = title.replace('&#203;', 'Ë').replace('&#204;', 'Ì').replace('&#205;', 'Í').replace('&#206;', 'Î').replace('&#207;', 'Ï').replace('&#209;', 'Ñ').replace('&#210;', 'Ò').replace('&#211;', 'Ó').replace('&#212;', 'Ô')
+	title = title.replace('&#213;', 'Õ').replace('&#215;', '×').replace('&#216;', 'Ø').replace('&#217;', 'Ù').replace('&#218;', 'Ú').replace('&#219;', 'Û').replace('&#221;', 'Ý').replace('&#222;', 'Þ').replace('&#224;', 'à')
+	title = title.replace('&#225;', 'á').replace('&#226;', 'â').replace('&#227;', 'ã').replace('&#229;', 'å').replace('&#231;', 'ç').replace('&#232;', 'è').replace('&#233;', 'é').replace('&#234;', 'ê').replace('&#235;', 'ë')
+	title = title.replace('&#236;', 'ì').replace('&#237;', 'í').replace('&#238;', 'î').replace('&#239;', 'ï').replace('&#240;', 'ð').replace('&#241;', 'ñ').replace('&#242;', 'ò').replace('&#243;', 'ó').replace('&#244;', 'ô')
+	title = title.replace('&#245;', 'õ').replace('&#247;', '÷').replace('&#248;', 'ø').replace('&#249;', 'ù').replace('&#250;', 'ú').replace('&#251;', 'û').replace('&#253;', 'ý').replace('&#254;', 'þ').replace('&#255;', 'ÿ')
+	title = title.replace('&#352;', 'Š').replace('&#353;', 'š').replace('&#376;', 'Ÿ').replace('&#402;', 'ƒ')
+	title = title.replace('&#8211;', '–').replace('&#8212;', '—').replace('&#8226;', '•').replace('&#8230;', '…').replace('&#8240;', '‰').replace('&#8364;', '€').replace('&#8482;', '™').replace('&#169;', '©').replace('&#174;', '®')
+	title = title.replace("&Auml;", "Ä").replace("&Uuml;", "Ü").replace("&Ouml;", "Ö").replace("&auml;", "ä").replace("&uuml;", "ü").replace("&ouml;", "ö").replace('&quot;', '"').replace('&szlig;', 'ß').replace('&ndash;', '-')
+	title = title.strip()
+	return title
 
 def parameters_string_to_dict(parameters):
-  paramDict = {}
-  if parameters:
-    paramPairs = parameters[1:].split("&")
-    for paramsPair in paramPairs:
-      paramSplits = paramsPair.split('=')
-      if (len(paramSplits)) == 2:
-        paramDict[paramSplits[0]] = paramSplits[1]
-  return paramDict
+	paramDict = {}
+	if parameters:
+		paramPairs = parameters[1:].split("&")
+		for paramsPair in paramPairs:
+			paramSplits = paramsPair.split('=')
+			if (len(paramSplits)) == 2:
+				paramDict[paramSplits[0]] = paramSplits[1]
+	return paramDict
+
+def addDir(name, url, mode, iconimage, desc="", ffilter="", category="", background=""):
+	u = sys.argv[0]+"?url="+quote_plus(url)+"&mode="+str(mode)+"&ffilter="+quote_plus(ffilter)+"&category="+quote_plus(category)
+	liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=iconimage)
+	liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc})
+	if iconimage != icon and background != "KEIN HINTERGRUND":
+		liz.setArt({'fanart': iconimage})
+	else:
+		liz.setArt({'fanart': defaultFanart})
+	return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
   
-    
-def addDir(name, url, mode, iconimage, desc="",text="",page="",ffilter="",ttype=""):
-    debug("FFILTER :"+ ffilter)
-    u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&text="+str(text)+"&page="+str(page)+"&name"+str(name)+"&ffilter="+urllib.quote_plus(ffilter)
-    u=u+"&ttype="+urllib.quote_plus(ttype)
-    ok = True
-    liz = xbmcgui.ListItem(name, iconImage="DefaultFolder.png", thumbnailImage=iconimage)
-    liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc})
-    ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
-    return ok
-  
-def addLink(name, url, mode, iconimage, duration="", desc="",artist_id="",genre="",shortname="",production_year=0,zeit=0,liedid=0):  
-  cd=addon.getSetting("password")  
-  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)
-  ok = True
-  liz = xbmcgui.ListItem(name, iconImage=defaultThumb, thumbnailImage=iconimage)
-  liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Genre": genre,"Sorttitle":shortname,"Dateadded":zeit,"year":production_year })
-  liz.setProperty('IsPlayable', 'true')
-  liz.addStreamInfo('video', { 'duration' : duration })
-  liz.setArt({ 'fanart': iconimage })   
-  ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
-  return ok
-
-
-def getUrl(url,data="x"):        
-        debug("Get Url: " +url)
-        opener = urllib2.build_opener(urllib2.HTTPCookieProcessor())
-        userAgent = "Dalvik/2.1.0 (Linux; U; Android 5.0;)"
-        opener.addheaders = [('User-Agent', userAgent)]
-        try:
-          if data!="x" :
-             content=opener.open(url,data=data).read()
-          else:
-             content=opener.open(url).read()
-        except urllib2.HTTPError as e:
-             #print e.code   
-             cc=e.read()  
-             struktur = json.loads(cc)  
-             error=struktur["errors"][0] 
-             error=unicode(error).encode("utf-8")
-             debug("ERROR : " + error)
-             dialog = xbmcgui.Dialog()
-             nr=dialog.ok("Error", error)
-             return ""
-             
-        opener.close()
-        return content
-
-
-      #addDir(namenliste[i], namenliste[i], mode+datum,logoliste[i],ids=str(idliste[i]))
-   #xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)   
-  
-
-
+def addLink(name, url, mode, iconimage, desc="", duration="", background=""):
+	u = sys.argv[0]+"?url="+quote_plus(url)+"&mode="+str(mode)
+	liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=iconimage)
+	liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Duration": duration, 'mediatype': 'video'})
+	if iconimage != icon and background != "KEIN HINTERGRUND":
+		liz.setArt({'fanart': iconimage})
+	else:
+		liz.setArt({'fanart': defaultFanart})
+	liz.addStreamInfo('Video', {'Duration': duration})
+	liz.setProperty('IsPlayable', 'true')
+	liz.setContentLookup(False)
+	return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
 
 params = parameters_string_to_dict(sys.argv[2])
-mode = urllib.unquote_plus(params.get('mode', ''))
-url = urllib.unquote_plus(params.get('url', ''))
-ffilter = urllib.unquote_plus(params.get('ffilter', ''))
-ttype = urllib.unquote_plus(params.get('ttype', ''))
-debug(params)
+url = unquote_plus(params.get('url', ''))
+mode = unquote_plus(params.get('mode', ''))
+iconimage = unquote_plus(params.get('iconimage', ''))
+ffilter = unquote_plus(params.get('ffilter', ''))
+category = unquote_plus(params.get('category', ''))
+background = unquote_plus(params.get('background', ''))
+referer = unquote_plus(params.get('referer', ''))
 
-def playvideo(url):
-  debug("URL PLAY : "+url)  
-  content = getUrl(url)
-  file=re.compile('file: "([^"]+?)"', re.DOTALL).findall(content)[0].replace("\n","")
-  try:    
-    suchstring=re.compile('/(.+?)\.mp4', re.DOTALL).findall(file)[0]
-  except:
-    suchstring=re.compile('/(.+?)\.m3u8', re.DOTALL).findall(file)[0]
-  debug("------------------------------------------------------------>")
-  debug(content)
-  debug("------------------------------------------------------------>")
-  replacestring=urllib2.quote(suchstring)  
-  debug("suchstring :"+suchstring)
-  debug("replacestring :"+replacestring)
-  file=file.replace(suchstring,replacestring)
-  #file=urllib2.quote(file.encode("utf-8")).replace("%3A",":")  
-  debug("-------------")
-  debug(file)
-  listitem = xbmcgui.ListItem(path=file)
-  xbmcplugin.setResolvedUrl(addon_handle, True, listitem)
-
-  
-  
-def live(url):
-  xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_VIDEO_SORT_TITLE)
-  content = getUrl(url)  
-  htmlPage = BeautifulSoup(content, 'html.parser')   
-  videoliste = htmlPage.find("div",{"class" :"col-sm-3 related-videos"})        
-  liste = videoliste.findAll("li")        
-  for element in liste: 
-          debug(element)
-          name=element.findAll("h4")[0].text
-          datum=element.find("h4",{"class" :"date"}).text.encode("utf-8").strip()
-          if "LIVE" in name:
-            live=1
-          else :
-             live=0
-          name=name.replace("LIVE","").encode("utf-8").strip()
-          if live==1:
-             name =" ( LIVE ) "+name 
-          else:
-              name = datum +" - "+name
-          debug("NAME :"+name)          
-          url=mainurl+ element.find("a")["href"]    
-          addLink(name, url, 'playvideo',"")   
-  xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)           
-
-def highlite_filter(url,ffilter=""):
-    debug("------------------------")
-    debug("highlite_filter filter :"+ffilter)
-    params = parameters_string_to_dict(ffilter)
-    liga = urllib.unquote_plus(params.get('liga', ''))    
-    saison = urllib.unquote_plus(params.get('saison', '')) 
-    verein = urllib.unquote_plus(params.get('verein', ''))
-    debug("LIGA :"+liga+"#")
-    debug("saison :"+saison)
-    debug("verein :"+verein)
-    ligafilter=""
-    saisonfilter=""
-    vereinfilter=""
-    if not liga=='' and not liga=="Alle Ligen":  
-       ligafilter="&liga="+liga.replace(" ","+")
-    if not saison=="" and not saison=="-- Saison --":        
-       saisonfilter="&saison="+saison.replace(" ","+")         
-    if not verein=="" and not verein=="-- Verein --":      
-       vereinfilter="&verein="+verein.replace(" ","+")               
-    if ligafilter=="":
-      addDir("Liega", url, 'highlite',"",ffilter=ligafilter+saisonfilter+vereinfilter,ttype="liga")   
-    if saisonfilter=="":    
-        addDir("Saison", url, 'highlite',"",ffilter=ligafilter+saisonfilter+vereinfilter,ttype="saison")   
-    if vereinfilter=="":    
-        addDir("Verein", url, 'highlite',"",ffilter=ligafilter+saisonfilter+vereinfilter,ttype="verein")       
-    addDir("Alle", url, 'subliste',"",ffilter=ligafilter+saisonfilter+vereinfilter)  
-    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)           
-
-def highlite(url,ffilter="",ttype=""):
-    debug("--------------------")
-    debug("highlite ffilter :"+ffilter)    
-    content = cache.cacheFunction(getUrl,url)  
-    htmlPage = BeautifulSoup(content, 'html.parser')       
-    #<select name="liga" class="form-control">
-    listelement = htmlPage.find("select",{"name" :ttype})  
-    debug(listelement)
-    liste = listelement.findAll("option")     
-    for element in liste:   
-       name=element.text.encode("utf-8").strip()       
-       debug("--- >"+ name +" : "+       "&liga="+name)
-       addDir(name, url, 'highlite_filter',"",ffilter=ffilter+"&"+ttype+"="+name)   
-    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)  
-
-def subliste(url,ffilter=""):
-  print("URL Subliste :"+url+ffilter)
-  content = cache.cacheFunction(getUrl,url+ffilter)  
-  htmlPage = BeautifulSoup(content, 'html.parser')    
-  liste = htmlPage.findAll("section",{"class" :"container home-tile"})     
-  for element in liste:     
-     rubrik = element.find("h2",{"class" :"section-title"}).text
-     addDir(rubrik, url+ffilter, 'listvideo',"",ffilter=rubrik)   
-  xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
-  
-def  listvideo( url,rubrik_suche):
-  debug("listvideo  url:"+url)
-  debug("listvideo  rubrik_suche:"+rubrik_suche)
-  content = cache.cacheFunction(getUrl,url)
-  htmlPage = BeautifulSoup(content, 'html.parser')    
-  liste = htmlPage.findAll("section",{"class" :"container home-tile"})     
-  for element in liste:     
-     rubrik = element.find("h2",{"class" :"section-title"}).text
-     if rubrik==rubrik_suche:
-       liste2 = element.findAll("a",{"class" :"teaser-tile-clip"}) 
-       for element2 in liste2:  
-        debug("ELEMENT2")
-        debug(    element2)   
-        urll=element2["href"]
-        img=re.compile('url\((.+?)\)', re.DOTALL).findall(str(element2))[0]                
-        datum=element2.find("h4",{"class" :"date"}).text        
-        beschreibung1=element2.findAll("h4",{"class" :"caption"})[0].text.encode("utf-8").strip()     
-        beschreibung2=element2.findAll("h4",{"class" :"caption"})[1].text.encode("utf-8").strip()      
-        debug("URLL :"+urll)
-        debug("img :"+img)
-        debug("beschreibung1 :"+beschreibung1)
-        debug("beschreibung2 :"+beschreibung2)
-        addLink(beschreibung1+" - "+beschreibung2,mainurl+urll, 'playvideo',img)   
-  xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)  
-
-def oberliegen(url):
-    debug("--------------------")
-    debug("highlite ffilter :"+ffilter)   
-    content = cache.cacheFunction(getUrl,url)
-    htmlPage = BeautifulSoup(content, 'html.parser')       
-    #<select name="liga" class="form-control">
-    listelement = htmlPage.find("select",{"name" :ttype})  
-    debug(listelement)
-    liste = listelement.findAll("option")     
-    for element in liste:   
-       name=element.text.encode("utf-8").strip()       
-       debug("--- >"+ name +" : "+       "&liga="+name)
-       addDir(name, url, 'highlite_filter',"",ffilter=ffilter+"&"+ttype+"="+name)   
-    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True)  
-
-def topclips(url):    
-    content = cache.cacheFunction(getUrl,url)
-    htmlPage = BeautifulSoup(content, 'html.parser')     
-    listelement = htmlPage.find_all("a",{"class" :"dropdown-item"})  
-    for element in listelement:
-       debug("-----")
-       debug(element)
-       name=element.text.encode("utf-8").strip()   
-       wert=element["data-target"]
-       addDir(name, url, 'list_top_a',"",ffilter=wert)   
-    listelement = htmlPage.findAll("h2",{"class" :"section-title"})  
-    for element in listelement:
-        name=element.text.encode("utf-8").strip()   
-        addDir(name, url, 'list_top_b',"",ffilter=name)   
-    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
-
-def   list_top_a(url,rubrik)  :
-   debug("URL : "+url)
-   debug("Rubrik : "+rubrik)
-   if rubrik==".related-content.clips":
-       rubrik="related-content show clips"
-   if rubrik==".related-content.vod":
-       rubrik="related-content vod"      
-   content = cache.cacheFunction(getUrl,url)
-   htmlPage = BeautifulSoup(content, 'html.parser') 
-   komplett = htmlPage.find("ul",{"class" :rubrik})  
-   listelement = komplett.findAll("li")
-   for element in listelement:    
-     link = element.find("a")["href"]
-     link =mainurl+link
-     string = element.find("div",{"class" :"item-thumb"})["style"]     
-     img=re.compile('url\((.+)', re.DOTALL).findall(string)[0]
-     img=mainurl+img
-     text = element.findAll("h4")[0].text.encode("utf-8").strip()
-     datum = element.find("h4",{"class" :"date"}).text.encode("utf-8").strip()
-     debug(link)
-     debug("-------")
-     addLink(text+" ( "+datum +" )",link,"playvideo",img)
-   xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
-
-def   list_top_b(url,rubrik)   :
-    rubrik=urllib.unquote_plus(rubrik)  
-    content = cache.cacheFunction(getUrl,url)
-    htmlPage = BeautifulSoup(content, 'html.parser') 
-    komplett = htmlPage.findAll("section",{"class" :"container home-tile"})
-    for liste in komplett:
-       rubrikname = liste.find("h2",{"class" :"section-title"}).text.encode("utf-8").strip()
-       debug( rubrik +"<--->"+rubrikname)
-       if not rubrik in rubrikname:
-          continue
-       #
-       videos = liste.findAll("a",{"class" :"teaser-tile-clip"})
-       for video in videos:
-           debug("----------------------")
-           debug(video)
-           link=mainurl+video["href"]
-           img=video.find("img")["src"]
-           title=video.findAll("h4",{"class" :"caption"})[1].text.encode("utf-8").strip()
-           datum=video.find("h4",{"class" :"date"}).text.encode("utf-8").strip()
-           addLink(title+" ( "+datum +" )",link,"playvideo",img)
-    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
-
-   
-if mode is '':
-    addDir("Live", "https://www.sporttotal.tv/live/", 'live',"")   
-    addDir("Highlights", "https://www.sporttotal.tv/highlights?x=1", 'highlite_filter',"",ffilter="")   
-    addDir("Top Clips", "https://www.sporttotal.tv/topclips/", 'topclips',"")   
-    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
+if mode == 'aSettings':
+	addon.openSettings()
+elif mode == 'clearCache':
+	clearCache()
+elif mode == 'Live_Games':
+	Live_Games()
+elif mode == 'list_Archiv_Highlights':
+	list_Archiv_Highlights(url, ffilter, category)
+elif mode == 'selection_Archiv_Highlights':
+	selection_Archiv_Highlights(url, ffilter)
+elif mode == 'result_Archiv_Highlights_Ligen':
+	result_Archiv_Highlights_Ligen(url, ffilter)
+elif mode == 'Archiv_Highlights_Ligen_Videos':
+	Archiv_Highlights_Ligen_Videos(url, ffilter)
+elif mode == 'Topclips_Categories':
+	Topclips_Categories(url)
+elif mode == 'Topclips_Videos':
+	Topclips_Videos(url, ffilter)
+elif mode == 'Ligen_Overview':
+	Ligen_Overview(url)
+elif mode == 'selection_Ligen_Other':
+	selection_Ligen_Other(url)
+elif mode == 'selection_Ligen_Teams':
+	selection_Ligen_Teams(url, ffilter)
+elif mode == 'playVideo':
+	playVideo(url)
 else:
-  # Wenn Settings ausgewählt wurde
-  if mode == 'Settings':
-          addon.openSettings()
-  if mode == 'live':
-          live(url)
-  if mode == 'playvideo':
-          playvideo(url)
-  if mode == 'highlite':
-          highlite(url,ffilter=ffilter,ttype=ttype)   
-  if mode == 'highlite_filter':
-          highlite_filter(url,ffilter=ffilter)             
-  if mode == 'subliste':
-          subliste(url,ffilter=ffilter)   
-  if mode == 'listvideo':
-          listvideo(url,ffilter)        
-  if mode == 'topclips':
-          topclips(url)
-  if mode == 'list_top_a':
-            list_top_a(url,ffilter)
-  if mode == 'list_top_b':
-            list_top_b(url,ffilter)            
+	index()
