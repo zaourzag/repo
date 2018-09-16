@@ -1,325 +1,263 @@
-#!/usr/bin/python
+﻿#!/usr/bin/python
 # -*- coding: utf-8 -*-
-import urllib
-import urllib2
-import socket
+
 import sys
 import os
 import re
+import xbmc
+import xbmcgui
 import xbmcplugin
-import xbmcaddon,xbmc
-import xbmcgui,json
-import pyxbmct,time
+import xbmcaddon
+PY2 = sys.version_info[0] == 2
+PY3 = sys.version_info[0] == 3
+if PY2:
+	from urllib import quote, unquote, quote_plus, unquote_plus, urlencode  # Python 2.X
+	from urllib2 import build_opener, HTTPCookieProcessor, Request, urlopen  # Python 2.X
+	from cookielib import LWPCookieJar  # Python 2.X
+	from urlparse import urljoin, urlparse, urlunparse  # Python 2.X
+elif PY3:
+	from urllib.parse import quote, unquote, quote_plus, unquote_plus, urlencode, urljoin, urlparse, urlunparse  # Python 3+
+	from urllib.request import build_opener, HTTPCookieProcessor, Request, urlopen  # Python 3+
+	from http.cookiejar import LWPCookieJar  # Python 3+
+import json
+import xbmcvfs
+import shutil
+import socket
+import time
 from bs4 import BeautifulSoup
-from HTMLParser import HTMLParser
 from django.utils.encoding import smart_str
+import io
+import gzip
 
-addon = xbmcaddon.Addon()
-socket.setdefaulttimeout(30)
+
+global debuging
 pluginhandle = int(sys.argv[1])
-addonID = addon.getAddonInfo('id')
-translation = addon.getLocalizedString
+addon = xbmcaddon.Addon()
+addonPath = xbmc.translatePath(addon.getAddonInfo('path')).encode('utf-8').decode('utf-8')
+dataPath    = xbmc.translatePath(addon.getAddonInfo('profile')).encode('utf-8').decode('utf-8')
+temp           = xbmc.translatePath(os.path.join(dataPath, 'temp', '')).encode('utf-8').decode('utf-8')
+defaultFanart = os.path.join(addonPath, 'fanart.jpg')
+icon = os.path.join(addonPath, 'icon.png')
+language2 = {0: 'www', 1: 'gr', 2: 'fr', 3: 'de', 4: 'it', 5: 'es', 6: 'pt', 7: 'hu', 8: 'ru', 9: 'ua', 10: 'tr', 11: 'arabic', 12: 'fa'}[int(addon.getSetting('language'))]
+# Spachennummerierung(settings) ~ English=0|Greek=1|French=2|German=3|Italian=4|Spanish=5|Portuguese=6|Hungarian=7|Russian=8|Ukrainian=9|Turkish=10|Arabic=11|Persian=12
+#         Webseitenkürzel(euronews) = 0: www|1: gr|2: fr|3: de|4: it|5: es|6: pt|7: hu|8: ru|9: ua|10: tr|11: arabic|12: fa
+baseURL = "https://"+language2+".euronews.com"
 
-while (not os.path.exists(xbmc.translatePath("special://profile/addon_data/"+addonID+"/settings.xml"))):
-    addon.openSettings()
+xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
 
-language = addon.getSetting("language")
-languages = ["en", "gr", "fr", "de", "it", "es", "pt", "pl", "ru", "ua", "tr", "ar", "pe"]
-language = languages[int(language)]
-language2 = language.replace("en", "www").replace("pe", "persian").replace("ar", "arabic")
+if not os.path.exists(os.path.join(dataPath, 'settings.xml')):
+	addon.openSettings()
+
+if xbmcvfs.exists(temp) and os.path.isdir(temp):
+	shutil.rmtree(temp, ignore_errors=True)
+xbmcvfs.mkdirs(temp)
+cookie = os.path.join(temp, 'cookie.lwp')
+cj = LWPCookieJar()
+
+if xbmcvfs.exists(cookie):
+	cj.load(cookie, ignore_discard=True, ignore_expires=True)
+
+def py2_enc(s, encoding='utf-8'):
+	if PY2 and isinstance(s, unicode):
+		s = s.encode(encoding)
+	return s
+
+def py3_dec(d, encoding='utf-8'):
+	if PY3 and isinstance(d, bytes):
+		d = d.decode(encoding)
+	return d
+
+def translation(id):
+	LANGUAGE = addon.getLocalizedString(id)
+	LANGUAGE = py2_enc(LANGUAGE)
+	return LANGUAGE
+
+def failing(content):
+	log(content, xbmc.LOGERROR)
 
 def debug(content):
-    log(content, xbmc.LOGDEBUG)
-    
-def notice(content):
-    log(content, xbmc.LOGNOTICE)
+	log(content, xbmc.LOGDEBUG)
 
 def log(msg, level=xbmc.LOGNOTICE):
-    addon = xbmcaddon.Addon()
-    addonID = addon.getAddonInfo('id')
-    xbmc.log('%s: %s' % (addonID, msg), level) 
-
-def artikeltext(text):
-#
-    text=text.replace ("</p>","").replace("<p>","").replace("<div id='articleTranscript'>","").replace("<br />","").replace('<div id="image-caption">',"").replace("	","").replace("<p","")
-    text=text.replace ("<em>","").replace("</em>","")
-    text=text.replace ("<h3>","").replace("</h3>","")
-    text=text.replace ("<hr>","")
-    text = text.replace("&quot;", "\"")
-    text = text.replace("&apos;", "'")
-    text = text.replace("&amp;", "&")
-    text = text.replace("&lt;", "<")
-    text = text.replace("&gt;", ">")
-    text = text.replace("&laquo;", "<<")
-    text = text.replace("&raquo;", ">>")
-    text = text.replace("&#039;", "'")
-    text = text.replace("&#8220;", "\"")
-    text = text.replace("&#8221;", "\"")
-    text = text.replace("&#8211;", "-")
-    text = text.replace("&#8216;", "\'")
-    text = text.replace("&#8217;", "\'")
-    text = text.replace("&#9632;", "")
-    text = text.replace("&#8226;", "-")
-    text = text.replace('<span class="caps">', "")
-    text = text.replace('</span>', "")
-    text = text.replace('\u00fc', "ü")  
-    text = text.replace('\u00e4', "ä")     
-    text = text.replace('\u00df', "ß")      
-    text = text.replace('\u00f6', "ö")      
-    text = text.replace('\/', "/")    
-    #text = text.replace('\n', "")    
-    text = text.strip()
-    return text
-    
-class Infowindow(pyxbmct.AddonDialogWindow):
-    bild=""
-    nur_bild=""
-    text=""
-    pos=0
-    def __init__(self, title='',text='',image='',nurbild=0):
-        super(Infowindow, self).__init__(title)
-        self.setGeometry(600,600,8,8)
-        self.bild=image
-        self.nur_bild=nurbild
-        self.text=text        
-        self.set_info_controls()
-        # Connect a key action (Backspace) to close the window.
-        self.connect(pyxbmct.ACTION_NAV_BACK, self.close)
-
-    def set_info_controls(self):
-      self.textbox=pyxbmct.TextBox()  
-      self.image = pyxbmct.Image(self.bild)           
-      if self.nur_bild==0:
-        self.placeControl(self.image, 0, 0,columnspan=2,rowspan=2)
-        self.placeControl(self.textbox, 2, 0, columnspan=8,rowspan=6)                  
-      else:
-        self.placeControl(self.image, 0, 0,columnspan=8,rowspan=6)
-        #self.placeControl(self.textbox, 6, 0,columnspan=8,rowspan=2)     
-      self.textbox.setText(self.text)
-      self.connectEventList(
-             [pyxbmct.ACTION_MOVE_UP,
-             pyxbmct.ACTION_MOUSE_WHEEL_UP],
-            self.hoch)         
-      self.connectEventList(
-            [pyxbmct.ACTION_MOVE_DOWN,
-             pyxbmct.ACTION_MOUSE_WHEEL_DOWN],
-            self.runter)                  
-      self.setFocus(self.textbox)            
-    def hoch(self):
-        self.pos=self.pos-1
-        if self.pos < 0:
-          self.pos=0
-        self.textbox.scroll(self.pos)
-    def runter(self):
-        self.pos=self.pos+1        
-        self.textbox.scroll(self.pos)
-        posnew=self.textbox.getPosition()
-        debug("POSITION : "+ str(posnew))
-              
-
-#       window = Infowindow(title=title_artikel,text=text,image=bild,nurbild=nurbild)
-#       window.doModal()
- #      del window
-       
+	msg = py2_enc(msg)
+	xbmc.log("["+addon.getAddonInfo('id')+"-"+addon.getAddonInfo('version')+"]"+msg, level)
 
 def cleanTitle(title):
-    return title.replace("&lt;", "<").replace("&gt;", ">").replace("&amp;", "&").replace("&#038;", "&").replace("&#39;", "'").replace("&#039;", "'").replace("&#8211;", "-").replace("&#8220;", "-").replace("&#8221;", "-").replace("&#8217;", "'").replace("&#8230;", "…").replace("&quot;", "\"").strip()
+	return title.replace("&lt;", "<").replace("&gt;", ">").replace("&amp;", "&").replace("&#038;", "&").replace("&#39;", "'").replace("&#039;", "'").replace("&#8211;", "-").replace("&#8220;", "-").replace("&#8221;", "-").replace("&#8217;", "'").replace("&#8230;", "…").replace("&quot;", "\"").strip()
 
+def getUrl(url, header=None, referer=None):
+	global cj
+	debug("Get Url : "+url)
+	for cook in cj:
+		debug("Cookie : "+str(cook))
+	opener = build_opener(HTTPCookieProcessor(cj))
+	try:
+		if header:
+			opener.addheaders = header
+		else:
+			opener.addheaders = [('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:50.0) Gecko/20100101 Firefox/50.0')]
+			opener.addheaders = [('Accept-Encoding', 'gzip, deflate')]
+		if referer:
+			opener.addheaders = [('Referer', referer)]
+		response = opener.open(url, timeout=30)
+		if response.info().get('Content-Encoding') == 'gzip':
+			content = py3_dec(gzip.GzipFile(fileobj=io.BytesIO(response.read())).read())
+		else:
+			content = py3_dec(response.read())
+	except Exception as e:
+		failure = str(e)
+		if hasattr(e, 'code'):
+			failing("(getUrl) ERROR - ERROR - ERROR : ########## {0} === {1} ##########".format(url, failure))
+		elif hasattr(e, 'reason'):
+			failing("(getUrl) ERROR - ERROR - ERROR : ########## {0} === {1} ##########".format(url, failure))
+		content = ""
+		return sys.exit(0)
+	opener.close()
+	try: cj.save(cookie, ignore_discard=True, ignore_expires=True)
+	except: pass
+	return content
 
-def getUrl(url, data=None, cookie=None):
-    debug("URL :" + url)
-    if data != None:
-        req = urllib2.Request(url, data)
-        req.add_header('Content-Type', 'application/x-www-form-urlencoded')
-    else:
-        req = urllib2.Request(url)
-    req.add_header(
-        'User-Agent', 'Mozilla/5.0 (Windows NT 6.1; rv:22.0) Gecko/20100101 Firefox/22.0')
-    if cookie != None:
-        req.add_header('Cookie', cookie)
-    response = urllib2.urlopen(req)
-    link = response.read()
-    response.close()
-    return link
+def Rubriken():
+	xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_LABEL_IGNORE_THE)
+	un_WANTED = ['Video', 'Living It']
+	content = getUrl(baseURL)
+	htmlPage = BeautifulSoup(content, 'html.parser')
+	elemente = htmlPage.find_all("a",attrs={"class":"enw-menuList__sub-title"})
+	liste = []
+	for element in elemente:
+		url = element["href"]
+		name = element.get_text().strip()
+		if not name in liste and not any(x in name for x in un_WANTED):
+			debug("(Rubriken) ##### URL : "+str(url)+" #####")
+			addDir(name, url, 'SubRubriken', icon)
+			liste.append(name)
+	live(baseURL+"/api/watchlive.json")
+	xbmcplugin.endOfDirectory(pluginhandle)   
 
+def SubRubriken(urls):
+	debug("(SubRubriken) ##### URLS : "+urls+" #####")
+	content = getUrl(baseURL)
+	htmlPage = BeautifulSoup(content, "html.parser")
+	items = htmlPage.find_all("div",attrs={"class": "medium-2 columns"})
+	anz = 0
+	liste = []
+	addDir("NEWS", urls, 'listVideos', icon)
+	for item in items:
+		linkmain = item.find("a",attrs={"class":"enw-menuList__sub-title"})["href"]
+		if urls == linkmain:
+			debug("(SubRubriken) ##### Gefunden #####")
+			elemente2 = item.find_all("a",attrs={'class':"enw-menuList__sub-item"})   
+			for element2 in elemente2:
+				link = baseURL+element2["href"]
+				name = element2.get_text().strip()
+				debug("(SubRubriken) ##### LINK : "+str(link)+" ##### TITLE : "+str(name)+" #####")
+				if not name in liste:
+					anz+=1
+					url2 = link.split('/')[-1].strip()
+					debug("(SubRubriken) ##### URL-2 : "+url2+" #####")
+					addDir(name, "/api/program/"+url2, 'listVideos', icon, offset=anz)
+					liste.append(name)
+	xbmcplugin.endOfDirectory(pluginhandle)
+   
+def listVideos(url, offset):
+	debug("(listVideos) ##### URL : "+url+" ##### OFFSET : "+str(offset)+" #####")
+	finalURL = False
+	plot =""
+	duration =""
+	if not "/api/program/" in url and not "###" in url:
+		content1 = getUrl(baseURL+url)
+		url = re.compile('data-api-url="(.+?)"', re.DOTALL).findall(content1)[0]
+  # https://de.euronews.com/api/program/state-of-the-union?before=1519998565&extra=1&offset=13
+	url2 = baseURL+url.replace('###', '')+"?extra=1&offset="+str(offset)
+	content2 = getUrl(url2)  
+	struktur = json.loads(content2)
+	for artikel in struktur["articles"]:
+		debug("(listVideos) ##### ARTIKEL : "+str(artikel)+" #####")
+		title = smart_str(artikel["title"])
+		bild = artikel["images"][0]["url"].replace("{{w}}x{{h}}","800x450")
+		if "leadin" in artikel and artikel["leadin"] !="":
+			plot = smart_str(artikel["leadin"]).strip()
+		for video in artikel["videos"]:
+			if "duration" in video and video["duration"] !="":
+				duration = video["duration"].strip()
+				duration = int(duration)/1000
+			if video["quality"] == "hd":
+				finalURL = video["url"]
+		if not finalURL:
+			for video in artikel["videos"]:
+				if video["quality"] == "md":
+					finalURL = video["url"]
+		if finalURL:
+			addLink(title, finalURL, "playVideo", bild, duration=duration, plot=plot, text=video["quality"].replace('hd', 'HIGH').replace('md', 'MEDIUM').upper())
+	#if struktur["extra"]["offset"]< struktur["extra"]["total"]:
+		#addDir("Next Page", url+"###", 'listVideos', icon, offset=struktur["extra"]["offset"]+struktur["extra"]["count"]) 
+	xbmcplugin.endOfDirectory(pluginhandle)   
+
+def live(url):
+	content = getUrl(url)   
+	url1 = re.compile('"url":"(.+?)"', re.DOTALL).findall(content)[0]
+	url1 = url1.replace("\/","/").split('//')[1]
+	debug("(live) ##### URL-1 : "+url1+" #####")
+	content1 = getUrl("https://"+url1)  
+	url2 = re.compile('"primary":"(.+?)"', re.DOTALL).findall(content1)[0]
+	url2 = url2.replace("\/","/").split('//')[1]
+	debug("(live) ##### URL-2 : "+url2+" #####")
+	addLink("LIVE TV", "https://"+url2, "playVideo", icon)
+
+def playVideo(url, quality):
+	log("(playVideo) Quality = "+quality.replace('hd', 'HIGH').replace('md', 'MEDIUM').upper()+" | Url = "+url)
+	listitem = xbmcgui.ListItem(path=url)  
+	xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
 
 def parameters_string_to_dict(parameters):
-    paramDict = {}
-    if parameters:
-        paramPairs = parameters[1:].split("&")
-        for paramsPair in paramPairs:
-            paramSplits = paramsPair.split('=')
-            if (len(paramSplits)) == 2:
-                paramDict[paramSplits[0]] = paramSplits[1]
-    return paramDict
+	paramDict = {}
+	if parameters:
+		paramPairs = parameters[1:].split("&")
+		for paramsPair in paramPairs:
+			paramSplits = paramsPair.split('=')
+			if (len(paramSplits)) == 2:
+				paramDict[paramSplits[0]] = paramSplits[1]
+	return paramDict
 
-
-def addLink(name, url, mode, iconimage, duration="", desc="", genre='',text=""):
-	u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name"+urllib.quote_plus(name)+"&text="+urllib.quote_plus(text)+"&bild="+iconimage
-	ok = True
-	liz = xbmcgui.ListItem(name, iconImage="", thumbnailImage=iconimage)
-	liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc, "Genre": genre})
+def addLink(name, url, mode, iconimage, duration="", plot="", genre='', text="unknown"):
+	u = sys.argv[0]+"?url="+quote_plus(url)+"&mode="+str(mode)+"&name="+str(name)+"&text="+str(text)
+	liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=iconimage)
+	liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": plot, "Duration": duration, "Genre": "News", "Studio": "euronews"})
+	if iconimage != icon:
+		liz.setArt({'fanart': iconimage})
+	else:
+		liz.setArt({'fanart': defaultFanart})
+	liz.addStreamInfo('Video', {'Duration': duration})
 	liz.setProperty('IsPlayable', 'true')
-	liz.addStreamInfo('video', { 'duration' : duration })
-	liz.setProperty("fanart_image", iconimage)
-	#liz.setProperty("fanart_image", defaultBackground)
-	xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
-	ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
-	return ok
+	liz.setContentLookup(False)
+	return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
 
-def addDir(name, url, mode, iconimage, desc="",text="",offset=""):
-    u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&text="+str(text)+"&offset="+str(offset)+"&name"+str(name)
-    ok = True
-    liz = xbmcgui.ListItem(name, iconImage="DefaultFolder.png", thumbnailImage=iconimage)
-    liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc})
-    ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
-    return ok
+def addDir(name, url, mode, iconimage, plot="", text="unknown", offset=1):
+	u = sys.argv[0]+"?url="+quote_plus(url)+"&mode="+str(mode)+'&name='+str(name)+"&offset="+str(offset)
+	liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=iconimage)
+	liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": plot})
+	if iconimage != icon:
+		liz.setArt({'fanart': iconimage})
+	else:
+		liz.setArt({'fanart': defaultFanart})
+	return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
 
 params = parameters_string_to_dict(sys.argv[2])
-mode = urllib.unquote_plus(params.get('mode', ''))
-url = urllib.unquote_plus(params.get('url', ''))
-text = urllib.unquote_plus(params.get('text', ''))
-name = urllib.unquote_plus(params.get('name', ''))
-bild = urllib.unquote_plus(params.get('bild', ''))
-offset = urllib.unquote_plus(params.get('offset', ''))
+name = unquote_plus(params.get('name', ''))
+url = unquote_plus(params.get('url', ''))
+mode = unquote_plus(params.get('mode', ''))
+text = unquote_plus(params.get('text', ''))
+offset = unquote_plus(params.get('offset', ''))
+bild = unquote_plus(params.get('bild', ''))
+referer = unquote_plus(params.get('referer', ''))
 
- 
-def playLive():    
-    url="http://"+language+"-par-iphone-1.cdn.hexaglobe.net/streaming/euronews_ewns/iphone_"+language+".m3u8"
-    listitem = xbmcgui.ListItem(path=url)
-    xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
-
-  
-def Rubriken(urls):
-   debug("Rubriken urls :"+urls)
-   content = getUrl(urls)     
-   htmlPage = BeautifulSoup(content, 'html.parser')
-   elemente = htmlPage.find_all("a",attrs={'class':'enw-menuList__sub-title'})
-   anz=0
-   liste=[]
-   for element in elemente:
-      if not element.text.strip() in liste:
-        if not element.text.strip()=="Video" and not element.text.strip()=="Living It":
-            debug(element["href"])
-            addDir(element.text.strip().encode("utf-8"), element["href"], 'Rubrik', "", "",text=str(anz))           
-            liste.append(element.text.strip())
-      anz+=1   
-
-      
-def SubRubriken(urls):
-   debug("Rubriken urls :"+urls)
-   if not "http:" in urls:
-      newurl="http://"+language2+".euronews.com"+urls
-   else: 
-      newurl=urls
-   content = getUrl(newurl)     
-   htmlPage = BeautifulSoup(content, 'html.parser')
-   elemente = htmlPage.find_all("div",attrs={'class':"medium-2 columns"})   
-   anz=0
-   liste=[]
-   for element in elemente:
-      linkmain=element.find("a",attrs={"class":"enw-menuList__sub-title"})["href"]
-      if urls in linkmain:
-          debug("Gefunden")
-          elemente2=element.find_all("a",attrs={'class':"enw-menuList__sub-item"})   
-          for element2 in elemente2:
-              print (element2)
-              print("#####")
-              title=element2.text.strip().encode('utf-8')
-              if not element2.text.strip() in liste:
-                try:
-                    match=re.compile('/(.+?)/(.+)', re.DOTALL).findall(element2["href"])
-                    debug(match)                
-                    urlt="/"+match[0][1]
-                    addDir(element2.text.strip().encode('utf-8'), "/api/program"+ urlt, 'Seite', "", "",text=str(anz))           
-                    liste.append(element2.text.strip())
-                    anz+=1   
-                except:
-                    pass
-   try:                
-    link=re.compile('data-api-url="(.+?)"', re.DOTALL).findall(content)[0]
-    addDir("Artikel", link, 'Seite', "",offset=1)           
-   except:
-     pass
-   #GET http://www.euronews.com/api/theme/culture?offset=16&extra=1                
-   return anz
-   
-def Seite(url,offset=1):
-  debug("URL :"+url)
-  urln="http://"+language2+".euronews.com"+url+"?offset="+str(offset)+"&extra=1"
-  content = getUrl(urln)  
-  struktur = json.loads(content)
-  for artikel in struktur["articles"]:
-        debug(artikel)
-        title=smart_str(artikel["title"])
-        bild=artikel["images"][0]["url"].replace("{{w}}x{{h}}","800x800")
-        videourlhd=""
-        videourlmd=""
-        x=0
-        for video in artikel["videos"] :
-                debug(video)
-                if video["quality"]=="hd":
-                    try:
-                        videourlhd=video["url"]
-                    except:
-                        pass
-                if  video["quality"]=="md":#
-                    videourlmd=video["url"]
-                debug("Title :"+title)            
-                x=x+1
-        if x>0:
-            addLink(title,videourlhd,"Play",bild)        
-        #else:
-         #   addLink("TXT: "+title.decode('ascii', 'ignore'),"","infofenster",bild,text=smart_str(artikel["plainText"]))
-        # pass
-  debug(struktur["extra"]["offset"])
-  debug(struktur["extra"]["total"])
-  debug(struktur["extra"]["count"])
-  if struktur["extra"]["offset"]< struktur["extra"]["total"]:
-     addDir("next", url, 'Seite', "",offset=struktur["extra"]["offset"]+struktur["extra"]["count"])           
-  xbmcplugin.endOfDirectory(pluginhandle)   
-  
-def Rubrik(url):
-   debug("Rubrik urls :"+url)   
-   anz=SubRubriken(url)
-   xbmcplugin.endOfDirectory(pluginhandle)   
-   
-def index():  
-  #ListRubriken("http://"+language2+".euronews.com","",x=1)
-  addLink("Live","","playlive","")
-  Rubriken("http://"+language2+".euronews.com/")  
-  xbmcplugin.endOfDirectory(pluginhandle)   
-
-def  Play(url):  
-  listitem = xbmcgui.ListItem(path=url)
-  xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)  
-  
-def infofenster(title_artikel,text,bild):
-    window = Infowindow(title=title_artikel,text=text,image=bild,nurbild=0)
-    window.doModal()
-    del window
-
-def playlive():
-  url="http://"+language2+".euronews.com/api/watchlive.json"
-  content = getUrl(url)   
-  urln=re.compile('"url":"(.+?)"', re.DOTALL).findall(content)[0]
-  urln=urln.replace("\/","/")  
-  content = getUrl(urln)  
-  url2=re.compile('"primary":"(.+?)"', re.DOTALL).findall(content)[0]
-  url2=url2.replace("\/","/")  
-  Play(url2)
-    
-if mode == 'PlayVideo':
-     playVideo(url)       
-if mode == "":
-    index()
-if  mode =="Rubrik":
-    Rubrik(url)    
-if  mode =="Seite":
-    Seite(url,offset)    
-if  mode == "Play":
-    Play(url)    
-if  mode == "infofenster":
-    infofenster(name,text,bild)        
-if mode  == "playlive":
-    playlive()
+if mode == "SubRubriken":
+	SubRubriken(url)
+elif mode == "listVideos":
+	listVideos(url, offset)
+elif mode  == "live":
+	live(url)
+elif mode == "playVideo":
+	playVideo(url, text)
+else:
+	Rubriken()

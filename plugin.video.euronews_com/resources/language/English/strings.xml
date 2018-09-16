@@ -1,12 +1,17 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <strings>
-  <string id="30001">Live</string>
-  <string id="30002">News</string>
-  <string id="30003">All</string>
-  <string id="30004">Search</string>
-  <string id="30005">No video available</string>
-  <string id="30006">Add to queue</string>
-  <string id="30100">Language</string>
-  <string id="30101">Force View</string>
-  <string id="30102">ViewID</string>
+	<string id="30100">Euronews - Language</string>
+	<string id="30101">English</string>
+	<string id="30102">Greek</string>
+	<string id="30103">French</string>
+	<string id="30104">German</string>
+	<string id="30105">Italian</string>
+	<string id="30106">Spanish</string>
+	<string id="30107">Portuguese</string>
+	<string id="30108">Hungarian</string>
+	<string id="30109">Russian</string>
+	<string id="30110">Ukrainian</string>
+	<string id="30111">Turkish</string>
+	<string id="30112">Arabic</string>
+	<string id="30113">Persian</string>
 </strings>

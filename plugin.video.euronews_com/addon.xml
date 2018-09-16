@@ -1,23 +1,34 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<addon id="plugin.video.euronews_com" name="euronews.com" version="2.0.25" provider-name="L0RE">
-    <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
-        <import addon="script.module.beautifulsoup4" version="4.3.2"/>        
-		<import addon="script.module.pyxbmct" version="1.1.7"/>
-    </requires>
-    <extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <summary lang="en">Livestream and latest news videos from euronews.com | Available languages: English, Greek, French, German, Italian, Spanish, Portuguese, Polish, Russian, Ukrainian, Turkish, Arabic and Persian</summary>
-        <language></language>
-        <description lang="en">Livestream and latest news videos from euronews.com | Available languages: English, Greek, French, German, Italian, Spanish, Portuguese, Polish, Russian, Ukrainian, Turkish, Arabic and Persian</description>
-        <disclaimer lang="en">Some parts of this addon may not be legal in your country of residence - please check with your local laws before installing.</disclaimer>
-        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
-        <source>https://github.com/AddonScriptorDE/plugin.video.euronews_com</source>
-        <forum>http://forum.xbmc.org/showthread.php?tid=157182</forum>
-        <email>AddonScriptorDE at yahoo dot de</email>
-        <website>http://www.euronews.com</website>
-    </extension>
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<addon id="plugin.video.euronews_com" name="euronews.com" version="2.1.0" provider-name="L0RE">
+	<requires>
+		<import addon="xbmc.python" version="2.24.0"/>
+		<import addon="script.module.beautifulsoup4" version="4.3.2"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">Videoportal of EURONEWS</summary>
+		<summary lang="de">Videoportal von EURONEWS</summary>
+		<description lang="en">euronews offers a unique perspective on world affairs. euronews gives people the opportunity to form their own opinion, by presenting factual analysis and a variety of viewpoints.[CR]euronews World news daily 24 hours are available in 12 different editions in Arabic, English, French, German, Greek, Hungarian, Italian, Persian, Portuguese, Russian, Spanish and Turkish.</description>
+		<description lang="de">euronews bietet eine einzigartige Perspektive auf das Weltgeschehen. euronews gibt Menschen die Möglichkeit, sich eine eigene Meinung zu bilden, indem sachliche Analysen und eine Vielzahl von Standpunkten dargestellt werden.[CR]euronews Weltnachrichten täglich 24 Stunden gibt es in 12 versch. Ausgaben auf Arabisch, Englisch, Französisch, Deutsch, Griechisch, Ungarisch, Italienisch, Persisch, Portugiesisch, Russisch, Spanisch und Türkisch.</description>
+		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
+		<website>https://de.euronews.com/</website>
+		<email>andreas at vogler dot name</email>
+		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.euronews_com</source>
+		<assets>
+			<icon>icon.png</icon>
+			<fanart>fanart.jpg</fanart>
+		</assets>
+		<news>[B][COLOR orangered]Version 2.1.0  (16.09.2018)[/COLOR][/B] by realvito[CR]
+- fixed: euronews - LIVE TV
+- added: Video - Laufzeit und Plot 
+- optimized: Script komplett überarbeitet und unnötige Inhalte entfernt
+		</news>
+	</extension>
 </addon>
