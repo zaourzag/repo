@@ -36,21 +36,21 @@ def log(msg, level=xbmc.LOGNOTICE):
 	msg = py2_enc(msg)
 	xbmc.log("["+displayADDON.getAddonInfo('id')+"-"+displayADDON.getAddonInfo('version')+"]"+msg, level)
 
-def savemessage(addon,message,image1,grey,lesezeit,xmessage,ymessage,breitemessage,hoehemessage,breitebild1,hoehebild1,fontname="font14",fontcolor="FFFFFFFF",startxbild1=-1,startybild1=-1,image2="",startxbild2=-1,startybild2=-1,breitebild2=0,hoehebild2=0):
+def saveMESSAGE(addon,message,image1,grey,lesezeit,xmessage,ymessage,breitemessage,hoehemessage,breitebild1=0,hoehebild1=0,fontname="font14",fontcolor="FFFFFFFF",startxbild1=-1,startybild1=-1,image2="",startxbild2=-1,startybild2=-1,breitebild2=0,hoehebild2=0):
 	incomingA_Name = addon.getAddonInfo('name').replace(' ', '-')
 	message = smart_str(message)
-	debug("(savemessage) ##### Message : {0} #####".format(message))
-	debug("(savemessage) ##### Image1 : {0} #####".format(image1))
-	debug("(savemessage) ##### Image2 : {0} #####".format(image2))
-	debug("(savemessage) ##### grey : {0} #####".format(grey))
-	debug("(savemessage) ##### displayA_Temp : {0} #####".format(displayA_Temp))
-	debug("(savemessage) ##### Lesezeit : {0} #####".format(str(lesezeit)))
+	debug("(saveMESSAGE) ##### Message : {0} #####".format(message))
+	debug("(saveMESSAGE) ##### Image1 : {0} #####".format(image1))
+	debug("(saveMESSAGE) ##### Image2 : {0} #####".format(image2))
+	debug("(saveMESSAGE) ##### grey : {0} #####".format(grey))
+	debug("(saveMESSAGE) ##### displayA_Temp : {0} #####".format(displayA_Temp))
+	debug("(saveMESSAGE) ##### Lesezeit : {0} #####".format(str(lesezeit)))
 	filename = incomingA_Name+ "_"+md5.new(message).hexdigest()
-	debug("(savemessage) ##### Filename : {0} #####".format(str(filename)))
+	debug("(saveMESSAGE) ##### Filename : {0} #####".format(str(filename)))
 	with open(os.path.join(displayA_Temp, filename), 'w') as input:
 		input.write(message+"###"+image1+"###"+grey+"###"+str(lesezeit)+"###"+str(xmessage)+"###"+str(ymessage)+"###"+ str(breitemessage)+"###"+str(hoehemessage)+"###"+str(startxbild1)+"###"+str(startybild1)+ "###"+str(breitebild1)+"###"+str(hoehebild1)+"###"+image2+"###"+str(startxbild2)+"###"+str(startybild2)+ "###"+str(breitebild2)+"###"+str(hoehebild2)+"###"+ str(fontname)+"###"+fontcolor)
 
-def deletemessage(addon):
+def deleteMESSAGE(addon):
 	incomingA_Name = addon.getAddonInfo('name').replace(' ', '-')
 	filename = "DELETE_"+incomingA_Name 
 	with open(os.path.join(displayA_Temp, filename), 'w') as input:
