@@ -2392,7 +2392,6 @@ To support the backport the addon will now always create the merged_epg.xml.gz
 	</extension>
 </addon>
 
-
 <addon id="plugin.video.laola1tv" version="2.2.0" name="Laola1 TV" provider-name="Jin">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
