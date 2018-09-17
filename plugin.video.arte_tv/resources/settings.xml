@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<settings>
-   <setting id="language" type="enum" label="30101" values="Deutsch|Français" default="0"/>
-   <setting id="prefVideoQuality" type="enum" label="30106" values="216p@0.3mbps|406p@0.8mbps|406p@1.5mbps|720p@2.2mbps" default="3"/>
-   <setting id="videosPerPage" type="enum" label="30108" values="10|15|20|25|50" default="1"/>
-   <setting id="loadExtraDetails" type="bool" label="30105" default="false"/>
-   <setting id="useThumbAsFanart" type="bool" label="30107" default="false"/>
-</settings>
