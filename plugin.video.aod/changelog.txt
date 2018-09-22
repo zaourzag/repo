@@ -1,4 +1,11 @@
-﻿0.6.0
+﻿[B]Version 0.6.5  (22.09.2018)[/B] by realvito
+- fixed: Titel-Bilder werden nicht angezeigt (Thx an @Nerto aus dem kodinerds-forum für die Vorlage)
+- fixed: Einige Youtube-Trailer können nicht abgespielt werden
+- optimized: Textinfobox in der Rubrik: News - Größe, Text, Übersicht angepasst
+- optimized: Script und Übersetzung überarbeitet
+
+...
+0.6.0
 - Bugfixes
 - Improvments
 0.5.1
