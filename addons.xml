@@ -1040,19 +1040,43 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
     </extension>
 </addon>
 
-<addon id="plugin.video.atv_at" name="ATV.at Mediathek" version="2.7.0" provider-name="PUR3">
+<addon id="plugin.video.atv_at" name="ATV.at - Mediathek" version="3.0.0" provider-name="realvito">
 	<requires>
-    	<import addon="xbmc.python" version="2.1.0"/>
+		<import addon="xbmc.python" version="2.24.0"/>
+		<import addon="script.module.requests" version="2.12.4"/>
+		<import addon="script.common.plugin.cache" version="2.5.5" optional="true"/> # Add this
 	</requires>
 	<extension point="xbmc.python.pluginsource" library="default.py">
-        <provides>video</provides>
-    </extension>
+		<provides>video</provides>
+	</extension>
 	<extension point="xbmc.addon.metadata">
-	    <summary lang="de">Videos aus der Mediathek von ATV.at</summary>
-	    <description lang="de">Schauen Sie ganze Folgen und Bonusclips aus der Mediathek von ATV.at.</description>
-	    <platform>all</platform>
-	    <language>de</language>
-  	</extension>
+		<summary lang="de">Die Mediathek von ATV.at</summary>
+		<summary lang="en">The Media-Library of ATV.at</summary>
+		<description lang="de">ATV-Produktionen in Österreichs größtem Fernsehprogramm, Filme und Serien sowie ganze Folgen in der Mediathek zum Nachsehen. Da macht online Fernsehen Spaß.[CR]Zusammengestellt von ATV (www.atv.at).[CR][CR]Für mehr Informationen zu allen Neuerungen siehe - CHANGELOG.     TEST IT AND LIKE IT</description>
+		<description lang="en">ATV-Productions in Austria's largest television program, movies and series as well as entire episodes in the media library to see. That's what makes online TV fun.[CR]Compiled by ATV (www.atv.at).[CR][CR]For more information about all new features see - CHANGELOG.     TEST IT AND LIKE IT</description>
+		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 3, June 2007</license>
+		<forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
+		<website>https://atv.at</website>
+		<email></email>
+		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.atv_at</source>
+		<assets>
+			<icon>icon.png</icon>
+			<fanart>fanart.jpg</fanart>
+		</assets>
+		<news>[B][COLOR orangered]Version 3.0.0  (22.09.2018)[/COLOR][/B][CR]Original by PUR3 / Revised by realvito[CR]
+- gefixt: KODI stürzt manchmal beim starten eines Videos ab
+- added: Auswahl des Video-Dateiformats (Settings) zwischen m3u8/mp4
+- added: 3-fache Auswahl der Video-Abspielmethode (Settings) *ausprobieren*
+- added: Zeige alle Episoden der aufgerufenen Staffel auf einer Seite (Settings)
+- added: Mehr Bilder und maximale Qualität der Serien- und Episodenbilder
+- added: Debug-Log (Settings) für bessere Fehlerkontrolle
+- optimized: Im "mp4" Betrieb - versuche alten "rtsp-Link" zu normalem "http-Link" umzuwandeln, falls nicht möglich - spiele ".m3u8" ab
+		</news>
+	</extension>
 </addon>
 
 <addon id="metadata.themoviedbconcert.org" name="The Movie Database Concert Mod" version="6.0.0" provider-name="Team Kodi mod by RudizonE">
