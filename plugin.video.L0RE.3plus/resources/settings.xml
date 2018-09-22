@@ -1,5 +1,15 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
-    <setting label="Cache Zeitraum (Stunden)" type="slider" id="cachetime" default="24" range="0,1,100" option="int" />
-    <setting id="quality" type="select" label="Wiedergabe Qualität" default="hd720" values="small|medium|mediumlarge|hd720" />
+	<category label="30000">
+		<setting label="30230" type="lsep"/>
+		<setting label="30110" type="slider" id="cacheTime" range="1,1,10" default="3" option="int"/>
+		<setting label="30111" type="action" action="RunPlugin(plugin://plugin.video.L0RE.3plus/?mode=clearCache)" visible="true"/>
+		<setting type="sep"/>
+		<setting label="30231" type="lsep"/>
+		<setting label="30112" type="bool" id="inputstream" default="false"/>
+		<setting label="30350" type="text" option="readable" enable="eq(-1,true)"/>
+		<setting type="sep"/>
+		<setting label="30113" type="enum" id="streamSelection" values="m3u8|mp4" default="0" enable="eq(-3,false)"/>
+		<setting label="30114" type="select" id="prefVideoQuality" lvalues="30155|30156|30157|30158" default="0" option="int" enable="eq(-1,1)+eq(-4,false)"/>
+	</category>
 </settings>
