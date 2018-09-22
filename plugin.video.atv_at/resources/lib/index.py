@@ -1,38 +1,68 @@
-# -*- coding: utf-8 -*-
-import api
+﻿# -*- coding: utf-8 -*-
+
 import sys
-import urllib
-
-
-def play(**kwargs):
-    import gui
-    import xbmcaddon
-    addon = xbmcaddon.Addon(id='plugin.video.atv_at')
-    protocol = ('http', 'rtsp')[int(addon.getSetting('protocol'))]
-    if addon.getSetting('video.as_playlist') == 'true':
-        playlist = api.get_playlist(urllib.unquote(kwargs['url']), protocol)
-        gui.play_playlist(playlist)
-    else:
-        gui.play(api.get_video_url(urllib.unquote(kwargs['url']), protocol))
-
-
-def cluster(**kwargs):
-    api.list_cluster(urllib.unquote(kwargs['url']))
+PY2 = sys.version_info[0] == 2
+PY3 = sys.version_info[0] == 3
+if PY2:
+	from urllib import unquote, unquote_plus  # Python 2.X
+elif PY3:
+	from urllib.parse import unquote, unquote_plus   # Python 3+
+from . import api
+from . import gui
 
 
 def index():
-    api.list_clusters()
+	api.list_series()
 
 
-def videos(**kwargs):
-    api.list_videos(urllib.unquote(kwargs['url']))
+def cluster(url):
+	api.list_cluster(url)
 
 
-def more(**kwargs):
-    kwargs['url'] = urllib.unquote(kwargs['url'])
-    cluster(**kwargs)
+def episodes(url):
+	api.list_episodes(url)
 
 
-d = dict(p.split('=') for p in sys.argv[2][1:].split('&') if len(p.split('=')) == 2)
-f = d.pop('f', 'index')
-exec '%s(**d)' % f
+def following_page(url):
+	url = unquote(url)
+	cluster(url)
+
+
+def collect_video_parts(url, photo):
+	import xbmcaddon
+	addon = xbmcaddon.Addon()
+	if addon.getSetting('play_technique') == "2":
+		ASSEMBLY = api.get_video_url(url, photo)
+		gui.play_playlist(ASSEMBLY)
+	else:
+		ASSEMBLY = api.get_video_url(url, photo)
+		gui.play_standard(ASSEMBLY)
+
+
+def parameters_string_to_dict(parameters):
+	paramDict = {}
+	if parameters:
+		paramPairs = parameters[1:].split("&")
+		for paramsPair in paramPairs:
+			paramSplits = paramsPair.split('=')
+			if (len(paramSplits)) == 2:
+				paramDict[paramSplits[0]] = paramSplits[1]
+	return paramDict
+
+
+params = parameters_string_to_dict(sys.argv[2])
+mode = unquote_plus(params.get('mode', ''))
+url = unquote_plus(params.get('url', ''))
+photo = unquote_plus(params.get('photo', ''))
+
+
+if mode == 'cluster':
+	cluster(url)
+elif mode == 'episodes':
+	episodes(url)
+elif mode == 'following_page':
+	following_page(url)
+elif mode == 'collect_video_parts':
+	collect_video_parts(url, photo)
+else:
+	index()

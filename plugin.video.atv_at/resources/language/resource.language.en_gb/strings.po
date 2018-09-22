@@ -1,0 +1,151 @@
+﻿# Kodi Media Center language file
+# Addon Name: ATV.at - Mediathek
+# Addon id: plugin.video.atv_at
+# Addon version: 3.0.0
+# Addon Provider: realvito
+msgid ""
+msgstr ""
+"Project-Id-Version: KODI-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2018-07-22 14:30+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid "The Media-Library of ATV.at"
+msgstr ""
+
+msgctxt "Addon Description"
+msgid "ATV-Productions in Austria's largest television program, movies and series as well as entire episodes in the media library to see. That's what makes online TV fun.[CR]Compiled by ATV (www.atv.at).[CR][CR]For more information about all new features see - CHANGELOG.     TEST IT AND LIKE IT"
+msgstr ""
+
+# strings start
+# SETTINGS-CATEGORIES
+
+msgctxt "#30000"
+msgid "General"
+msgstr ""
+
+msgctxt "#30001"
+msgid "Cache/Log"
+msgstr ""
+
+# empty strings from id 30002 to 30109
+# SETTINGS-BUTTONS
+
+msgctxt "#30110"
+msgid "     Preferred Video-file format  [COLOR yellow](mp4|m3u8)[/COLOR]"
+msgstr ""
+
+msgctxt "#30111"
+msgid "     Preferred Playback-Method  [COLOR yellow](Try out !!!)[/ ​​COLOR]"
+msgstr ""
+
+msgctxt "#30112"
+msgid "* xbmcplugin.setResolvedUrl = STANDARD 1 *"
+msgstr ""
+
+msgctxt "#30113"
+msgid "* xbmc.Player().play = STANDARD 2 *"
+msgstr ""
+
+msgctxt "#30114"
+msgid "* xbmc.PlayList = PLAYLIST *"
+msgstr ""
+
+msgctxt "#30115"
+msgid "     View all Episodes of the selected Season on one Page"
+msgstr ""
+
+msgctxt "#30116"
+msgid "     Cache storage  (in days)"
+msgstr ""
+
+msgctxt "#30117"
+msgid "     [COLOR orangered]<<<>>> Cache DELETE = CLICK HERE <<<>>>[/COLOR]"
+msgstr ""
+
+msgctxt "#30118"
+msgid "     Detailed Program-Debug (otherwise only Minimal-Log)"
+msgstr ""
+
+# empty strings from id 30119 to 30229
+# SETTINGS-TITLES
+
+msgctxt "#30230"
+msgid "[B][COLOR ff0099ff]PLAY-FORMAT[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30231"
+msgid "[B][COLOR ff0099ff]PLAY-METHOD[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30232"
+msgid "[B][COLOR ff0099ff]EPISODES[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30233"
+msgid "[B][COLOR ff0099ff]CACHE[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30234"
+msgid "[B][COLOR ff0099ff]LOG[/COLOR][/B]"
+msgstr ""
+
+# empty strings from id 30235 to 30349
+# SETTINGS-DESCRIPTIONS
+
+msgctxt "#30350"
+msgid "     * [COLOR chartreuse]Selection for STANDARD- and as PLAYLIST- Playback[/COLOR] *"
+msgstr ""
+
+msgctxt "#30351"
+msgid "     * [COLOR chartreuse]Before that, please select preferred Video-file format[/COLOR] *"
+msgstr ""
+
+msgctxt "#30352"
+msgid "     * [COLOR yellow]!!! Cache-Function ONLY with PhytonVersion < 3 activ !!![/COLOR] *"
+msgstr ""
+
+# empty strings from id 30353 to 30500
+# WARNING/INFORMATION-MESSAGES-OK
+
+msgctxt "#30501"
+msgid "[COLOR orangered]ATTENTION: ... DELETE Addon-Cache !!![/COLOR][CR]The complete Cache of [COLOR green]* ATV.at - Mediathek *[/ COLOR] has been deleted successfully !!!"
+msgstr ""
+
+msgctxt "#30502"
+msgid "[COLOR orangered]ATTENTION: ... DELETE Addon-Cache !!![/COLOR][CR][COLOR yellow]!!! Currently NO Function in PythonVersion 3 !!![/COLOR][CR][COLOR green]--------------- CANCEL ---------------[/COLOR]"
+msgstr ""
+
+# empty strings from id 30503 to 30520
+# WARNING/INFORMATION-MESSAGES-NOTIFICATION
+
+msgctxt "#30521"
+msgid "ATV.at : [COLOR red]!!! Video - BLOCKED !!![/COLOR]"
+msgstr ""
+
+msgctxt "#30522"
+msgid "[COLOR red]THIS VIDEO MAY ONLY BE AVAILABLE IN *AUSTRIA* ![/COLOR]"
+msgstr ""
+
+msgctxt "#30523"
+msgid "ATV.at : [COLOR red]!!! NO - Video !!![/COLOR]"
+msgstr ""
+
+msgctxt "#30524"
+msgid "[COLOR red]NO *VIDEOLINK* COULD BE DETERMINED ![/COLOR]"
+msgstr ""
+
+# empty strings from id 30525 to 30600
+# PLUGIN-MAIN and SIDEMENU
+
+msgctxt "#30601"
+msgid "[COLOR chartreuse]Next Page  >>>[/COLOR]"
+msgstr ""

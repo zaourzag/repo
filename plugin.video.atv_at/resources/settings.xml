@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
-   <setting id="protocol" type="enum" label="30100" values="M3U8|RTSP" default="0"/>
-   <setting id="video.as_playlist" type="bool" label="30101" default="true"/>
+	<category label="30000">
+		<setting label="30230" type="lsep"/>
+		<setting label="30110" type="enum" id="streamSelection" values="mp4|m3u8" default="0"/>
+		<setting label="30350" type="text" option="readable"/>
+		<setting type="sep"/>
+		<setting label="30231" type="lsep"/>
+		<setting label="30111" type="select" id="play_technique" lvalues="30112|30113|30114" default="0"/>
+		<setting label="30351" type="text" option="readable"/>
+		<setting type="sep"/>
+		<setting label="30232" type="lsep"/>
+		<setting label="30115" type="bool" id="show.all_episodes" default="true"/>
+	</category>
+	<category label="30001">
+		<setting label="30233" type="lsep"/>
+		<setting label="30116" type="slider" id="cacheTime" range="1,1,7" default="1" option="int"/>
+		<setting label="30117" type="action" action="RunScript($CWD/resources/lib/unload.py, loeschen)" visible="true"/>
+		<setting label="30352" type="text" option="readable"/>
+		<setting type="sep"/>
+		<setting label="30234" type="lsep"/>
+		<setting label="30118" type="bool" id="enableDebug" default="false"/>
+	</category>
 </settings>

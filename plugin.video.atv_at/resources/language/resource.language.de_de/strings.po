@@ -1,0 +1,151 @@
+﻿# Kodi Media Center language file
+# Addon Name: ATV.at - Mediathek
+# Addon id: plugin.video.atv_at
+# Addon version: 3.0.0
+# Addon Provider: realvito
+msgid ""
+msgstr ""
+"Project-Id-Version: KODI-Addons\n"
+"Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
+"POT-Creation-Date: 2018-07-22 14:15+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgctxt "Addon Summary"
+msgid "The Media-Library of ATV.at"
+msgstr "Die Mediathek von ATV.at"
+
+msgctxt "Addon Description"
+msgid "ATV-Productions in Austria's largest television program, movies and series as well as entire episodes in the media library to see. That's what makes online TV fun.[CR]Compiled by ATV (www.atv.at).[CR][CR]For more information about all new features see - CHANGELOG.     TEST IT AND LIKE IT"
+msgstr "ATV-Produktionen in Österreichs größtem Fernsehprogramm, Filme und Serien sowie ganze Folgen in der Mediathek zum Nachsehen. Da macht online Fernsehen Spaß.[CR]Zusammengestellt von ATV (www.atv.at).[CR][CR]Für mehr Informationen zu allen Neuerungen siehe - CHANGELOG.     TEST IT AND LIKE IT"
+
+# strings start
+# SETTINGS-CATEGORIES
+
+msgctxt "#30000"
+msgid "General"
+msgstr "Allgemein"
+
+msgctxt "#30001"
+msgid "Cache/Log"
+msgstr "Cache/Log"
+
+# empty strings from id 30002 to 30109
+# SETTINGS-BUTTONS
+
+msgctxt "#30110"
+msgid "     Preferred Video-file format  [COLOR yellow](mp4|m3u8)[/COLOR]"
+msgstr "     Bevorzugtes Video-Dateiformat  [COLOR yellow](mp4|m3u8)[/COLOR]"
+
+msgctxt "#30111"
+msgid "     Preferred Playback-Method  [COLOR yellow](Try out !!!)[/ ​​COLOR]"
+msgstr "     Bevorzugte Abspiel-Methode  [COLOR yellow](!!! ausprobieren !!!)[/COLOR]"
+
+msgctxt "#30112"
+msgid "* xbmcplugin.setResolvedUrl = STANDARD 1 *"
+msgstr "* xbmcplugin.setResolvedUrl = STANDARD 1 *"
+
+msgctxt "#30113"
+msgid "* xbmc.Player().play = STANDARD 2 *"
+msgstr "* xbmc.Player().play = STANDARD 2 *"
+
+msgctxt "#30114"
+msgid "* xbmc.PlayList = PLAYLIST *"
+msgstr "* xbmc.PlayList = PLAYLISTE *"
+
+msgctxt "#30115"
+msgid "     View all Episodes of the selected Season on one Page"
+msgstr "     Alle Episoden der ausgewählten Staffel auf einer Seite anzeigen"
+
+msgctxt "#30116"
+msgid "     Cache storage  (in days)"
+msgstr "     Cache-Speicherung  (in Tagen)"
+
+msgctxt "#30117"
+msgid "     [COLOR orangered]<<<>>> Cache DELETE = CLICK HERE <<<>>>[/COLOR]"
+msgstr "     [COLOR orangered]<<<>>> Cache LÖSCHEN = HIER KLICKEN <<<>>>[/COLOR]"
+
+msgctxt "#30118"
+msgid "     Detailed Program-Debug (otherwise only Minimal-Log)"
+msgstr "     Programm-Debug mit Details (sonst nur Minimal-Log)"
+
+# empty strings from id 30119 to 30229
+# SETTINGS-TITLES
+
+msgctxt "#30230"
+msgid "[B][COLOR ff0099ff]PLAY-FORMAT[/COLOR][/B]"
+msgstr "[B][COLOR ff0099ff]ABSPIEL-FORMAT[/COLOR][/B]"
+
+msgctxt "#30231"
+msgid "[B][COLOR ff0099ff]PLAY-METHOD[/COLOR][/B]"
+msgstr "[B][COLOR ff0099ff]ABSPIEL-METHODE[/COLOR][/B]"
+
+msgctxt "#30232"
+msgid "[B][COLOR ff0099ff]EPISODES[/COLOR][/B]"
+msgstr "[B][COLOR ff0099ff]EPISODEN[/COLOR][/B]"
+
+msgctxt "#30233"
+msgid "[B][COLOR ff0099ff]CACHE[/COLOR][/B]"
+msgstr "[B][COLOR ff0099ff]CACHE[/COLOR][/B]"
+
+msgctxt "#30234"
+msgid "[B][COLOR ff0099ff]LOG[/COLOR][/B]"
+msgstr "[B][COLOR ff0099ff]LOG[/COLOR][/B]"
+
+# empty strings from id 30235 to 30349
+# SETTINGS-DESCRIPTIONS
+
+msgctxt "#30350"
+msgid "     * [COLOR chartreuse]Selection for STANDARD- and as PLAYLIST- Playback[/COLOR] *"
+msgstr "     * [COLOR chartreuse]Auswahl für STANDARD- und als PLAYLISTE- Abspielen[/COLOR] *"
+
+msgctxt "#30351"
+msgid "     * [COLOR chartreuse]Before that, please select preferred Video-file format[/COLOR] *"
+msgstr "     * [COLOR chartreuse]Vorher bitte bevorzugtes Video-Dateiformat auswählen[/COLOR] *"
+
+msgctxt "#30352"
+msgid "     * [COLOR yellow]!!! Cache-Function ONLY with PhytonVersion < 3 activ !!![/COLOR] *"
+msgstr "     * [COLOR yellow]!!! Cache-Funktion NUR mit PhytonVersion < 3 aktiv !!![/COLOR] *"
+
+# empty strings from id 30353 to 30500
+# WARNING/INFORMATION-MESSAGES-OK
+
+msgctxt "#30501"
+msgid "[COLOR orangered]ATTENTION: ... DELETE Addon-Cache !!![/COLOR][CR]The complete Cache of [COLOR green]* ATV.at - Mediathek *[/ COLOR] has been deleted successfully !!!"
+msgstr "[COLOR orangered]ACHTUNG : ... LÖSCHVORGANG Addon-Cache !!![/COLOR][CR]Der komplette Cache von [COLOR green]* ATV.at - Mediathek *[/COLOR] wurde erfolgreich gelöscht !!!"
+
+msgctxt "#30502"
+msgid "[COLOR orangered]ATTENTION: ... DELETE Addon-Cache !!![/COLOR][CR][COLOR yellow]!!! Currently NO Function in PythonVersion 3 !!![/COLOR][CR][COLOR green]--------------- CANCEL ---------------[/COLOR]"
+msgstr "[COLOR orangered]ACHTUNG : ... LÖSCHVORGANG Addon-Cache !!![/COLOR][CR][COLOR yellow]!!! Derzeit KEINE Funktion in PythonVersion 3 !!![/COLOR][CR][COLOR green]--------------- ABBRECHEN ---------------[/COLOR]"
+
+# empty strings from id 30503 to 30520
+# WARNING/INFORMATION-MESSAGES-NOTIFICATION
+
+msgctxt "#30521"
+msgid "ATV.at : [COLOR red]!!! Video - BLOCKED !!![/COLOR]"
+msgstr "ATV.at : [COLOR red]!!! Video - GEBLOCKT !!![/COLOR]"
+
+msgctxt "#30522"
+msgid "[COLOR red]THIS VIDEO MAY ONLY BE AVAILABLE IN *AUSTRIA* ![/COLOR]"
+msgstr "[COLOR red]DIESES VIDEO IST NUR IN *ÖSTERREICH* VERFÜGBAR ![/COLOR]"
+
+msgctxt "#30523"
+msgid "ATV.at : [COLOR red]!!! NO - Video !!![/COLOR]"
+msgstr "ATV.at : [COLOR red]!!! KEIN - Video !!![/COLOR]"
+
+msgctxt "#30524"
+msgid "[COLOR red]NO *VIDEOLINK* COULD BE DETERMINED ![/COLOR]"
+msgstr "[COLOR red]ES KONNTE KEIN *VIDEOLINK* ERMITTELT WERDEN ![/COLOR]"
+
+# empty strings from id 30525 to 30600
+# PLUGIN-MAIN and SIDEMENU
+
+msgctxt "#30601"
+msgid "[COLOR chartreuse]Next Page  >>>[/COLOR]"
+msgstr "[COLOR chartreuse]Nächste Seite  >>>[/COLOR]"
