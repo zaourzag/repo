@@ -40,7 +40,7 @@ from resources.library import library
 from resources.guiactions import *
 from resources.keymap import KeyMap
 from resources.helpmy import helpmy
-from resources.download import ffmpg
+
 
 __addon__ = xbmcaddon.Addon()
 __addonId__=__addon__.getAddonInfo('id')
@@ -58,7 +58,7 @@ _zattooDB_=ZattooDB()
 _library_=library()
 _keymap_=KeyMap()
 _helpmy_=helpmy()
-_ffmpg_=ffmpg()
+
 
 
 _umlaut_ = {ord(u'ä'): u'ae', ord(u'ö'): u'oe', ord(u'ü'): u'ue', ord(u'ß'): u'ss'}
@@ -67,8 +67,16 @@ localString = __addon__.getLocalizedString
 local = xbmc.getLocalizedString
 DEBUG = __addon__.getSetting('debug')
 
-def debug(s):
-    if DEBUG: xbmc.log(str(s), xbmc.LOGDEBUG)
+def debug(content):
+    if DEBUG:log(content, xbmc.LOGDEBUG)
+    
+def notice(content):
+    log(content, xbmc.LOGNOTICE)
+
+def log(msg, level=xbmc.LOGNOTICE):
+    addon = xbmcaddon.Addon()
+    addonID = addon.getAddonInfo('id')
+    xbmc.log('%s: %s' % (addonID, msg), level) 
 
 # get Timezone Offset
 from tzlocal import get_localzone
@@ -264,8 +272,10 @@ def build_root(addon_uri, addon_handle):
   build_directoryContent(content, addon_handle, True, False, 'files')
   
   #update db
-  _zattooDB_.updateChannels()
-  _zattooDB_.updateProgram()
+  #_zattooDB_.updateChannels()
+  #_zattooDB_.updateProgram()
+  
+  _zattooDB_.getProgInfo(True, datetime.datetime.now(), datetime.datetime.now()+datetime.timedelta(minutes = 20))
  
 def build_channelsList(addon_uri, addon_handle):
   import urllib
@@ -432,6 +442,8 @@ def build_recordingsList(addon_uri, addon_handle):
   
   for record in resultData['recordings']:
     showInfo=_zattooDB_.getShowInfo(record['program_id'])
+    if not showInfo: continue
+    if showInfo == "NONE": continue
     #mark if show is future, running or finished
     start = int(time.mktime(time.strptime(record['start'], "%Y-%m-%dT%H:%M:%SZ"))) + _timezone_  # local timestamp
     end = int(time.mktime(time.strptime(record['end'], "%Y-%m-%dT%H:%M:%SZ"))) + _timezone_  # local timestamp
@@ -829,17 +841,16 @@ def search_show(addon_uri, addon_handle):
       
     #debug('ShowID: '+str(showID)+'  '+str(info))
     cred=''
-    director=''
+    director=[]
     cast=[]      
-    credjson = info['credits']
+    credjson = program.get('credits','')
     if credjson is not None:
-      try:
-        cred = json.loads(credjson)
-      except:pass
-      
-      for person in cred:
-        if person['role']=='director': director+=person['person']+', '
-        else: cast.append(person['person'])
+        try:
+          cred = json.loads(credjson)
+          debug (cred)       
+          director=cred['director']
+          cast=cred['actor']
+        except:pass
     
     item = {
         'title': '[COLOR yellow]' + time.strftime("%d.%m. %H:%M ", startLocal) + '[/COLOR]' + '[COLOR green]' + program.get('cid', '') + '[/COLOR]' + ': ' + program.get('title', '') + ' - ' + episode_title,
@@ -1133,9 +1144,10 @@ class zattooPiP(xbmcgui.WindowXMLDialog):
 
   def showToggleImg(self):
     
-    VERSION=xbmc.getInfoLabel( "System.BuildVersion" )
-    if '18' in VERSION: xbmc.executebuiltin("Action(FullScreen)") 
-    
+    #VERSION=xbmc.getInfoLabel( "System.BuildVersion" )
+    #debug(VERSION)
+    #if '18' in VERSION: xbmc.executebuiltin("Action(FullScreen)") 
+
     if self.PiP == "0":
       self.toggleImgBG.setPosition(1022, 574)
       self.toggleImg.setPosition(1024, 576)
@@ -1488,5 +1500,6 @@ def main():
     title = args.get('title')[0]
     duration = args.get('duration')[0]
     start_download(recording_id, title, duration)
-        
+    
+
 main()

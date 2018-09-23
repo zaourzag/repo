@@ -763,12 +763,24 @@
                     <aspectratio>scale</aspectratio>
                     <fadetime>500</fadetime>
                     <texture>fanart.png</texture>
+                    <visible>!Control.IsVisible(4025)</visible>
+                </control>
+                
+                <control type="videowindow" id="4025">
+                    <description>Program logo / Source logo</description>
+                    <posx>958</posx>
+                    <posy>522</posy>
+                    <width>300</width>
+                    <height>160</height>
+              
+                 
+                    <visible>Player.HasVideo</visible>
                 </control>
 
             </control>
-        
-
+            
         </control> <!--id="5000" -->
+
 
         <control type="label" id="6000">
             <description>visibility marker for OSD Info bar</description>

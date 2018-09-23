@@ -1,5 +1,14 @@
 ==================================================
-[B]ZattooHiQ v1.6.7.1 [/B]15.072018 Steffen Rolapp
+[B]ZattooHiQ v1.6.8 [/B]23.09.2018 Steffen Rolapp
+==================================================
+- Fehler in der Suche ist behoben
+- Salt.tv als Reseller eingefügt
+- default für Aufnahme Format eingefügt
+- Das laden der Programminfos im Hintergrund überarbeitet
+- Option Anzeige Livebild im EPG hinzugefügt
+
+==================================================
+[B]ZattooHiQ v1.6.7.1 [/B]15.07.2018 Steffen Rolapp
 ==================================================
 - diverse Bugfixes
 - sortiefunktion für Aufnahmen

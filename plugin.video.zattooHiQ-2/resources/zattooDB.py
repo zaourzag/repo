@@ -23,7 +23,7 @@
 import xbmc, xbmcgui, xbmcaddon, os, xbmcplugin, datetime, time
 import json
 from zapisession import ZapiSession
-
+import sqlite3
 import sys
 reload(sys)
 sys.setdefaultencoding('utf8')
@@ -159,6 +159,7 @@ class ZattooDB(object):
     elif PROVIDER == "11": ZAPIUrl = "https://nettv.netcologne.de"
     elif PROVIDER == "12": ZAPIUrl = "https://tvonline.ewe.de"
     elif PROVIDER == "13": ZapiUrl = "https://www.quantum-tv.com"
+    elif PROVIDER == "14": ZapiUrl = "https://tv.salt.ch"
     
     if zapiSession.init_session(__addon__.getSetting('username'), __addon__.getSetting('password'), ZAPIUrl):                                
       return zapiSession
@@ -228,7 +229,7 @@ class ZattooDB(object):
     try:
       c = self.conn.cursor()
       c.execute('CREATE TABLE channels(id TEXT, title TEXT, logo TEXT, weight INTEGER, favourite BOOLEAN, PRIMARY KEY (id) )')
-      c.execute('CREATE TABLE programs(showID TEXT, title TEXT, channel TEXT, start_date TIMESTAMP, end_date TIMESTAMP, restart BOOLEAN, series BOOLEAN, record BOOLEAN, description TEXT, description_long TEXT, year TEXT, country TEXT, genre TEXT, category TEXT, image_small TEXT, credits TEXT, updates_id INTEGER , PRIMARY KEY (showID), FOREIGN KEY(channel) REFERENCES channels(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED, FOREIGN KEY(updates_id) REFERENCES updates(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED)')
+      c.execute('CREATE TABLE programs(showID TEXT, title TEXT, channel TEXT, start_date TIMESTAMP, end_date TIMESTAMP, restart BOOLEAN, series BOOLEAN, record BOOLEAN, description TEXT, description_long TEXT, year TEXT, country TEXT, genre TEXT, category TEXT, image_small TEXT, credits TEXT, PRIMARY KEY (showID), FOREIGN KEY(channel) REFERENCES channels(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED)')
 
       c.execute('CREATE INDEX program_list_idx ON programs(channel, start_date, end_date)')
       c.execute('CREATE INDEX start_date_idx ON programs(start_date)')
@@ -263,7 +264,7 @@ class ZattooDB(object):
         return
 
     # always clear db on update
-    c.execute('DELETE FROM channels')
+    if rebuild: c.execute('DELETE FROM channels')
     
 
     api = '/zapi/v2/cached/channels/' + self.zapi.AccountData['session']['power_guide_hash'] + '?details=False'
@@ -315,9 +316,9 @@ class ZattooDB(object):
 
     c = self.conn.cursor()
 
-    if rebuild:
-      c.execute('DELETE FROM programs')
-      self.conn.commit()
+    # if rebuild:
+      # c.execute('DELETE FROM programs')
+      # self.conn.commit()
 
     # get whole day
     fromTime = int(time.mktime(date.timetuple()))  # UTC time for zattoo
@@ -327,18 +328,19 @@ class ZattooDB(object):
     row = c.fetchone()
     firstchan = row['id']
     
-    try:
-        c.execute('SELECT * FROM programs WHERE start_date > ? AND end_date < ?', (fromTime+18000, fromTime+25200,)) #get shows between 05:00 and 07:00
-    except:pass
-    count=c.fetchall()
+    #try:
+    c.execute('SELECT * FROM programs WHERE start_date > ? AND end_date < ?', [fromTime+18000, fromTime+25200,]) #get shows between 05:00 and 07:00
+    #except:pass
+    count = c.fetchall()
+
     if len(count)>0:
         c.close()
         return
     
 
-    #xbmcgui.Dialog().notification(__addon__.getLocalizedString(31917), self.formatDate(date), __addon__.getAddonInfo('path') + '/icon.png', 5000, False)
+    xbmcgui.Dialog().notification(__addon__.getLocalizedString(31917), self.formatDate(date), __addon__.getAddonInfo('path') + '/icon.png', 5000, False)
     #xbmc.executebuiltin("ActivateWindow(busydialog)")
-
+    debug('update Program')
     #update 09.02.2018: zattoo only sends max 5h (6h?) of programdata -> load 6*4h
     for nr in range(0, 6):
         api = '/zapi/v2/cached/program/power_guide/' + self.zapi.AccountData['session']['power_guide_hash'] + '?end=' + str(fromTime+14400) + '&start=' + str(fromTime)
@@ -454,6 +456,7 @@ class ZattooDB(object):
 
       for row in r:
         description_long = row['description_long']
+        #debug(str(row['channel'])+' '+str(description_long))
         year = row['year']
         country = row['country']
         if get_long_description and description_long is None:
@@ -496,6 +499,7 @@ class ZattooDB(object):
             return None
             
         show = info.fetchone()
+        info.close()
         if show is None:
             info.close()
             longDesc=''
@@ -504,7 +508,7 @@ class ZattooDB(object):
             country=''
             genre =''
             cred=''
-            info.close()
+
             return {'description':longDesc, 'year':year, 'country':country, 'category':category, 'genre':genre, 'credits':cred}
         longDesc = show['description_long']
         year = show['year']
@@ -529,13 +533,7 @@ class ZattooDB(object):
             #info.execute('UPDATE programs SET info=? WHERE showID=?',[json.dumps(infoall), showID ])
             
             debug ('Showinfo  ' + str(showInfo))
-            if len(showInfo['programs']) == 0:
-                 longDesc=''
-                 year=''
-                 category=''
-                 country=''
-                 info.close()
-                 return {'description':longDesc, 'year':year, 'country':country, 'category':category}
+            
             if showInfo is None:
                 longDesc=''
                 year=''
@@ -543,6 +541,15 @@ class ZattooDB(object):
                 country=''
                 info.close()
                 return {'description':longDesc, 'year':year, 'country':country, 'category':category}
+                
+            if len(showInfo['programs']) == 0:
+                 longDesc=''
+                 year=''
+                 category=''
+                 country=''
+                 info.close()
+                 return {'description':longDesc, 'year':year, 'country':country, 'category':category}
+            info = self.conn.cursor()     
             longDesc = showInfo['programs'][0]['d']
             info.execute('UPDATE programs SET description_long=? WHERE showID=?', [longDesc, showID ])
             year = showInfo['programs'][0]['year']
@@ -567,7 +574,6 @@ class ZattooDB(object):
            
             record = showInfo['programs'][0]['r_e']
             info.execute('UPDATE programs SET record=? WHERE showID=?', [record, showID])
-            #print 'Restart  ' +str(showID) + '  ' + str(restart)
 
         try:
             self.conn.commit()
@@ -614,21 +620,24 @@ class ZattooDB(object):
     #api = '/zapi/program/details?program_id=' + str(showID) + '&complete=True'
     api = '/zapi/v2/cached/program/power_details/' + self.zapi.AccountData['session']['power_guide_hash'] + '?program_ids='+str(showID)
     showInfo = self.zapi.exec_zapiCall(api, None)
+    debug(showInfo)
     if showInfo is None:
         c.close()
         return "NONE"
     
-    title = showInfo['programs']['']
-    channel = showInfo['programs']['cid']
-    start = showInfo['programs']['s']
-    start = int(time.mktime(time.strptime(start, "%Y-%m-%dT%H:%M:%SZ")))
-    end = showInfo['programs']['e']
-    end = int(time.mktime(time.strptime(end, "%Y-%m-%dT%H:%M:%SZ")))
-    genre = showInfo['programs']['g']
-    year = showInfo['programs']['year']
-    country = showInfo['programs']['country']
-    description = showInfo['programs']['d']
-    cred = showInfo['programs']['cr']
+    title = showInfo['programs'][0]['t']
+    channel = showInfo['programs'][0]['cid']
+    start = datetime.datetime.fromtimestamp(showInfo['programs'][0]['s'])
+    #start = time.mktime(time.strptime(start, "%Y-%m-%dT%H:%M:%SZ"))
+    start = start.strftime("%Y-%m-%dT%H:%M:%SZ")
+    end = datetime.datetime.fromtimestamp(showInfo['programs'][0]['e'])
+    #end = int(time.mktime(time.strptime(end, "%Y-%m-%dT%H:%M:%SZ")))
+    end = end.strftime("%Y-%m-%dT%H:%M:%SZ")
+    genre = showInfo['programs'][0]['g']
+    year = showInfo['programs'][0]['year']
+    country = showInfo['programs'][0]['country']
+    description = showInfo['programs'][0]['d']
+    cred = showInfo['programs'][0]['cr']
                 
     c.execute('INSERT OR IGNORE INTO programs(showID, title, channel, start_date, end_date, genre, year, country, description_long, credits) VALUES(?,?,?,?,?,?,?,?,?,?)', [showID, title, channel, start, end, ', '.join(genre) ,year, country, description, json.dumps(cred)])
     
@@ -731,53 +740,95 @@ class ZattooDB(object):
     c.close()
     return channelid
 
-  def getProgInfo(self, notify=False, startTime=datetime.datetime.now(), endTime=datetime.datetime.now()):
+  def getProgInfo(self, notify=False, startTime=datetime.datetime.now(), endTime=datetime.datetime.now(), chan='fav'):
+        import urllib
         fav = False
-        if __addon__.getSetting('onlyfav') == 'true': fav = 'favorites'
+        if __addon__.getSetting('onlyfav') == 'true': fav = True
+        if chan == 'all': fav = False
         channels = self.getChannelList(fav)
-
+        
         c = self.conn.cursor()
         #print 'START Programm'
         # for startup-notify
         if notify:
+            #xbmc.executebuiltin("ActivateWindow(busydialog)")
+            #c = self.conn.cursor()
             PopUp = xbmcgui.DialogProgressBG()
             #counter = len(channels)
             counter = 0
             for chan in channels['index']:
                 #debug( str(chan) + ' - ' + str(startTime) + str(endTime))
                 c.execute('SELECT * FROM programs WHERE channel = ? AND start_date < ? AND end_date > ?', [chan, endTime, startTime])
-                r=c.fetchall()
-                for row in r:
+                d=c.fetchall()
+                for nr in d:
                     counter += 1
+               
             bar = 0         # Progressbar (Null Prozent)
             PopUp.create('zattooHiQ lade Programm Informationen ...', '')
             PopUp.update(bar)
-
+            #c.close
         for chan in channels['index']:
             #if DEBUG: print str(chan) + ' - ' + str(startTime) + str(endTime)
+            
             try:
                 c.execute('SELECT * FROM programs WHERE channel = ? AND start_date < ? AND end_date > ?', [chan, endTime, startTime])
-            except Exception:
-                if DEBUG: print "InterfaceError on zattooHiQ"
-                return
+            except:pass
             
-            r=c.fetchall()
-
-            for row in r:
-                #print str(row['channel']) + ' - ' + str(row['showID'])
+            f=c.fetchall()
+            
+            for row in f:
+       
+                description_long = row['description_long']
+                debug(str(row['channel'])+' ' +str(row['description_long']))
                 if notify:
                     bar += 1
                     percent = int(bar * 100 / counter)
-                description_long = row["description_long"]
-
+                
                 if description_long is None:
-                    #print 'Lang ' + str(row['channel'])
+                    debug (str(row['channel'])+' ' +str(row["showID"]))
                     if notify:
                         PopUp.update(percent,localString(31922), localString(31923) + str(row['channel']))
                     description_long = self.getShowLongDescription(row["showID"])
+                    
         c.close()
         if notify:
             PopUp.close()
+            #xbmc.executebuiltin("Dialog.Close(busydialog)")
+        return
+  def dummy(self, notify=False, startTime=datetime.datetime.now(), endTime=datetime.datetime.now()):
+        import urllib
+        fav = False
+        if __addon__.getSetting('onlyfav') == 'true': fav = True
+        channels = self.getChannelList(fav)
+        
+        c = self.conn.cursor()
+        c.execute('SELECT * FROM channels ORDER BY weight ASC LIMIT 1')
+        chan = c.fetchone()
+
+        #if DEBUG: print str(chan) + ' - ' + str(startTime) + str(endTime)
+        
+        try:
+            c.execute('SELECT * FROM programs WHERE channel = ? AND start_date < ? AND end_date > ?', [row['id'], endTime, startTime])
+        except:pass
+        
+        f=c.fetchall()
+        
+        for row in f:
+            debug(row[0])
+            description_long = row['description_long']
+            debug(str(row['channel'])+' ' +str(row['description_long']))
+            # if notify:
+                # bar += 1
+                # percent = int(bar * 100 / counter)
+            
+            if description_long is None:
+                debug ('LoadLongDescription '+str(description_long)+' ' + str(row['channel'])+' ' +str(row["showID"]))
+                # if notify:
+                    # PopUp.update(percent,localString(31922), localString(31923) + str(row['channel']))
+                description_long = self.getShowLongDescription(row["showID"])
+                
+        c.close()
+
         return
 
   def cleanProg(self, silent=False):
@@ -790,6 +841,7 @@ class ZattooDB(object):
             c.execute('SELECT * FROM programs WHERE start_date < ?', [datelow])
             r=c.fetchall()
         except:
+            c.close
             return
 
         if len(r)>0:
@@ -822,6 +874,7 @@ class ZattooDB(object):
             c.execute('DELETE FROM updates WHERE date < ?', [date])
             r=c.fetchall()
         except:
+            c.close
             return
         
         self.conn.commit()

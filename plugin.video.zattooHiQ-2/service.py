@@ -62,7 +62,7 @@ def refreshProg():
 
         try:
             getProgNextDay()
-            _zattooDB_.getProgInfo(False, startTime, endTime)
+            _zattooDB_.getProgInfo(False, startTime, endTime,'all')
         except:
             pass
 
@@ -78,7 +78,7 @@ def recInfo():
 
 def start():
     import urllib
-
+    #xbmc.executebuiltin('ActivateWindow(busydialognocancel)')
     #re-import ZattooDB to prevent "convert_timestamp" error
     from resources.zattooDB import ZattooDB
     _zattooDB_ = ZattooDB()
@@ -87,12 +87,18 @@ def start():
     #re-import ZattooDB to prevent "convert_timestamp" error
     from resources.zattooDB import ZattooDB
     _zattooDB_ = ZattooDB()
-    _zattooDB_.updateChannels(True)
+    _zattooDB_.updateChannels()
     
     #re-import ZattooDB to prevent "convert_timestamp" error
     from resources.zattooDB import ZattooDB
     _zattooDB_ = ZattooDB()
     _zattooDB_.updateProgram()
+    
+    try: 
+        tomorrow = datetime.datetime.today() + datetime.timedelta(days=1)
+        _zattooDB_.updateProgram(tomorrow)
+    except:pass
+
 
     startTime=datetime.datetime.now()#-datetime.timedelta(minutes = 60)
     endTime=datetime.datetime.now()+datetime.timedelta(minutes = 20)
@@ -101,15 +107,17 @@ def start():
     from resources.zattooDB import ZattooDB
     _zattooDB_ = ZattooDB()
     #xbmcgui.Dialog().notification(localString(31916), localString(30110),  __addon__.getAddonInfo('path') + '/icon.png', 3000, False)
-    _zattooDB_.getProgInfo(True, startTime, endTime)
-
+    
+    if __addon__.getSetting('dbonstart') == 'true':
+        _zattooDB_.getProgInfo(True, startTime, endTime)
+        recInfo()
+        _library_.delete_library() # add by samoth
+        _library_.make_library()
   
     #xbmcgui.Dialog().notification(localString(31106), localString(31915),  __addon__.getAddonInfo('path') + '/icon.png', 3000, False)
-    #xbmc.executebuiltin("ActivateWindow(busydialog)")
-    recInfo()
-    _library_.delete_library() # add by samoth
-    _library_.make_library()
-    #xbmc.executebuiltin("Dialog.Close(busydialog)")
+   
+    
+    #xbmc.executebuiltin('Dialog.Close(busydialognocancel)')
 
 
 
@@ -189,16 +197,12 @@ class myPlayer(xbmc.Player):
 ###########################################################################################
 debug('Service started')
 player=myPlayer()
-   
+
 if OLDVERSION != VERSION:
    _zattooDB_.reloadDB(True)
    _zattooDB_.set_version(VERSION)
-   
-elif __addon__.getSetting('dbonstart') == 'true':
-    start()
-    try: 
-        tomorrow = datetime.datetime.today() + datetime.timedelta(days=1)
-        _zattooDB_.updateProgram(tomorrow)
-    except:pass
 
+start()
+    
 refreshProg()
+

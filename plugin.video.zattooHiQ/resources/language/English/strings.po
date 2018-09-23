@@ -495,7 +495,9 @@ msgctxt "#31019"
 msgid "weekday day.month.year hour:minute"
 msgstr ""
 
-
+msgctxt "#310171"
+msgid "show LiveTV in EPG"
+msgstr ""
 
 ### Datenbank ###
 msgctxt "#31020"

@@ -49,9 +49,10 @@ class library:
     if resultData is None: return
     for record in resultData['recordings']:
       showInfo=_zattooDB_.getShowInfo(record['program_id'])
+      #debug(str(showInfo))
       start = int(time.mktime(time.strptime(record['start'], "%Y-%m-%dT%H:%M:%SZ"))) + _timezone_  # local timestamp
       if showInfo == "NONE": continue
-      
+      if not showInfo: continue
       if showInfo[0]['et']: name=showInfo[0]['t']+'-'+showInfo[0]['et']
       else: name=showInfo[0]['t']
   
@@ -82,23 +83,23 @@ class library:
       f.write(out.encode("UTF-8"))
       f.close()
       
-      max_bandwidth = __addon__.getSetting('max_bandwidth')
-      params = {'recording_id': record['id'], 'stream_type': 'hls', 'maxrate': max_bandwidth}
-      Data = _zattooDB_.zapi.exec_zapiCall('/zapi/watch', params)
-      #debug('resultdata'+str(Data)+'  '+str(record['id']))
-      if Data is not None:
-        streams = Data['stream']['watch_urls']
-        debug('resultData:'+str(streams))
-        if len(streams)==0:
-          xbmcgui.Dialog().notification("ERROR", "NO STREAM FOUND, CHECK SETTINGS!", channelInfo['logo'], 5000, False)
-          return
-        elif len(streams) > 1 and  __addon__.getSetting('audio_stream') == 'B' and streams[1]['audio_channel'] == 'B': streamNr = 1
-        else: streamNr = 0
-        dlFile=os.path.join(libraryPath, fileName+"/"+fileName+".dl")
+      # max_bandwidth = __addon__.getSetting('max_bandwidth')
+      # params = {'recording_id': record['id'], 'stream_type': 'hls', 'maxrate': max_bandwidth}
+      # Data = _zattooDB_.zapi.exec_zapiCall('/zapi/watch', params)
+      # #debug('resultdata'+str(Data)+'  '+str(record['id']))
+      # if Data is not None:
+        # streams = Data['stream']['watch_urls']
+        # debug('resultData:'+str(streams))
+        # if len(streams)==0:
+          # xbmcgui.Dialog().notification("ERROR", "NO STREAM FOUND, CHECK SETTINGS!", channelInfo['logo'], 5000, False)
+          # return
+        # elif len(streams) > 1 and  __addon__.getSetting('audio_stream') == 'B' and streams[1]['audio_channel'] == 'B': streamNr = 1
+        # else: streamNr = 0
+        # dlFile=os.path.join(libraryPath, fileName+"/"+fileName+".dl")
         
-        f = open(dlFile,"w")
-        f.write(streams[streamNr]['url'])
-        f.close()
+        # f = open(dlFile,"w")
+        # f.write(streams[streamNr]['url'])
+        # f.close()
     #xbmcgui.Dialog().notification('Ordner für Filme aktualisiert', __addon__.getLocalizedString(31251),  __addon__.getAddonInfo('path') + '/icon.png', 5000, False)    
       #xbmcgui.Dialog().notification(localString(31106), localString(31915),  __addon__.getAddonInfo('path') + '/icon.png', 3000, False) 
       
