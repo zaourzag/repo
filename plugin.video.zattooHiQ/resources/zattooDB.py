@@ -144,7 +144,7 @@ class ZattooDB(object):
   def zapiSession(self):
     zapiSession   = ZapiSession(xbmc.translatePath(__addon__.getAddonInfo('profile')).decode('utf-8'))
     PROVIDER = __addon__.getSetting('provider')
-    
+    debug('Provider '+str(PROVIDER))
     if PROVIDER == "0": ZAPIUrl = "https://zattoo.com"
     elif PROVIDER == "1": ZAPIUrl = "https://www.netplus.tv"
     elif PROVIDER == "2": ZAPIUrl = "https://mobiltv.quickline.com"
@@ -158,8 +158,8 @@ class ZattooDB(object):
     elif PROVIDER == "10": ZAPIUrl = "https://www.saktv.ch"
     elif PROVIDER == "11": ZAPIUrl = "https://nettv.netcologne.de"
     elif PROVIDER == "12": ZAPIUrl = "https://tvonline.ewe.de"
-    elif PROVIDER == "13": ZapiUrl = "https://www.quantum-tv.com"
-    elif PROVIDER == "14": ZapiUrl = "https://tv.salt.ch"
+    elif PROVIDER == "13": ZAPIUrl = "https://www.quantum-tv.com"
+    elif PROVIDER == "14": ZAPIUrl = "https://tv.salt.ch"
     
     if zapiSession.init_session(__addon__.getSetting('username'), __addon__.getSetting('password'), ZAPIUrl):                                
       return zapiSession
@@ -240,6 +240,7 @@ class ZattooDB(object):
       c.execute('CREATE TABLE showinfos(showID INTEGER, info TEXT, PRIMARY KEY (showID))')
       c.execute('CREATE TABLE playing(channel TEXT, showID TEXT, current_stream INTEGER, streams TEXT, PRIMARY KEY (channel))')
       c.execute('CREATE TABLE version(version TEXT, PRIMARY KEY (version))')
+      c.execute('CREATE TABLE search(search TEXT, PRIMARY KEY (search))')
     
    
       self.conn.commit()
@@ -532,7 +533,7 @@ class ZattooDB(object):
             
             #info.execute('UPDATE programs SET info=? WHERE showID=?',[json.dumps(infoall), showID ])
             
-            debug ('Showinfo  ' + str(showInfo))
+            #debug ('Showinfo  ' + str(showInfo))
             
             if showInfo is None:
                 longDesc=''
@@ -779,13 +780,13 @@ class ZattooDB(object):
             for row in f:
        
                 description_long = row['description_long']
-                debug(str(row['channel'])+' ' +str(row['description_long']))
+                #debug(str(row['channel'])+' ' +str(row['description_long']))
                 if notify:
                     bar += 1
                     percent = int(bar * 100 / counter)
                 
                 if description_long is None:
-                    debug (str(row['channel'])+' ' +str(row["showID"]))
+                    #debug (str(row['channel'])+' ' +str(row["showID"]))
                     if notify:
                         PopUp.update(percent,localString(31922), localString(31923) + str(row['channel']))
                     description_long = self.getShowLongDescription(row["showID"])
@@ -950,8 +951,35 @@ class ZattooDB(object):
             self._createTables()
             self.set_version(version)
             
+  def get_search(self):
         
-        
+    c = self.conn.cursor()
+    c.execute('SELECT * FROM search')
+    searchList = {'index':[]}
+
+    for row in c:
+        searchList[row['search']]={
+        'id': str(row['search'])
+        }
+        searchList['index'].append(str(row['search']))
+  
+    c.close()
+    return searchList
+    
+            
+  def set_search(self,search):
+    c = self.conn.cursor()
+    try:
+        c.execute('INSERT INTO search(search) VALUES(?)', [search])
+    except:pass
+    self.conn.commit()
+    c.execute("SELECT Count(*) FROM `search`")
+    for res in c:
+        debug(res[0])
+        if res[0] > 10:
+            debug(res[0])
+            c.execute('delete  from search limit 1')
+    c.close()
             
   def set_version(self, version):
     c = self.conn.cursor()
