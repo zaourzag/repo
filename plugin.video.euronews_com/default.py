@@ -139,7 +139,6 @@ def SubRubriken(urls):
 	content = getUrl(baseURL)
 	htmlPage = BeautifulSoup(content, "html.parser")
 	items = htmlPage.find_all("div",attrs={"class": "medium-2 columns"})
-	anz = 0
 	liste = []
 	addDir("NEWS", urls, 'listVideos', icon)
 	for item in items:
@@ -152,43 +151,53 @@ def SubRubriken(urls):
 				name = element2.get_text().strip()
 				debug("(SubRubriken) ##### LINK : "+str(link)+" ##### TITLE : "+str(name)+" #####")
 				if not name in liste:
-					anz+=1
 					url2 = link.split('/')[-1].strip()
 					debug("(SubRubriken) ##### URL-2 : "+url2+" #####")
-					addDir(name, "/api/program/"+url2, 'listVideos', icon, offset=anz)
+					addDir(name, "/api/program/"+url2, 'listVideos', icon)
 					liste.append(name)
 	xbmcplugin.endOfDirectory(pluginhandle)
    
-def listVideos(url, offset):
-	debug("(listVideos) ##### URL : "+url+" ##### OFFSET : "+str(offset)+" #####")
+def listVideos(url):
 	finalURL = False
+	YTID = False
 	plot =""
 	duration =""
+	vid_ISOLATED = set()
 	if not "/api/program/" in url and not "###" in url:
 		content1 = getUrl(baseURL+url)
 		url = re.compile('data-api-url="(.+?)"', re.DOTALL).findall(content1)[0]
   # https://de.euronews.com/api/program/state-of-the-union?before=1519998565&extra=1&offset=13
-	url2 = baseURL+url.replace('###', '')+"?extra=1&offset="+str(offset)
+	url2 = baseURL+url.replace('###', '')+"?extra=1"
+	debug("(listVideos) ##### URL : "+url2+" #####")
 	content2 = getUrl(url2)  
 	struktur = json.loads(content2)
 	for artikel in struktur["articles"]:
 		debug("(listVideos) ##### ARTIKEL : "+str(artikel)+" #####")
 		title = smart_str(artikel["title"])
-		bild = artikel["images"][0]["url"].replace("{{w}}x{{h}}","800x450")
+		thumb = artikel["images"][0]["url"].replace("{{w}}x{{h}}","800x450")
 		if "leadin" in artikel and artikel["leadin"] !="":
 			plot = smart_str(artikel["leadin"]).strip()
+		debug("(listVideos) ##### Title : "+title+" #####")
+		debug("(listVideos) ##### Thumb : "+thumb+" #####")
 		for video in artikel["videos"]:
-			if "duration" in video and video["duration"] !="":
-				duration = video["duration"].strip()
-				duration = int(duration)/1000
-			if video["quality"] == "hd":
+			if "quality" in video and video["quality"] == "md":
 				finalURL = video["url"]
-		if not finalURL:
-			for video in artikel["videos"]:
-				if video["quality"] == "md":
-					finalURL = video["url"]
-		if finalURL:
-			addLink(title, finalURL, "playVideo", bild, duration=duration, plot=plot, text=video["quality"].replace('hd', 'HIGH').replace('md', 'MEDIUM').upper())
+			elif "quality" in video and video["quality"] == "hd":
+				finalURL = video["url"]
+			if "youtubeId" in video and video["youtubeId"] != "" and "quality" in video and video["quality"] == "md":
+				YTID = video["youtubeId"]
+			elif "youtubeId" in video and video["youtubeId"] != "" and "quality" in video and video["quality"] == "hd":
+				YTID = video["youtubeId"]
+			if "duration" in video and video["duration"] != "" and "quality" in video and video["quality"] == "md":
+				duration = int(video["duration"])/1000
+			elif "duration" in video and video["duration"] != "" and "quality" in video and video["quality"] == "hd":
+				duration = int(video["duration"])/1000
+		if not finalURL or finalURL in vid_ISOLATED:
+			continue
+		vid_ISOLATED.add(finalURL)
+		debug("(listVideos) ##### Video : "+finalURL+" #####")
+		debug("(listVideos) ##### YT-ID : "+str(YTID)+" #####")
+		addLink(title, finalURL, "playVideo", thumb, duration=duration, plot=plot, text=str(YTID))
 	#if struktur["extra"]["offset"]< struktur["extra"]["total"]:
 		#addDir("Next Page", url+"###", 'listVideos', icon, offset=struktur["extra"]["offset"]+struktur["extra"]["count"]) 
 	xbmcplugin.endOfDirectory(pluginhandle)   
@@ -204,8 +213,10 @@ def live(url):
 	debug("(live) ##### URL-2 : "+url2+" #####")
 	addLink("LIVE TV", "https://"+url2, "playVideo", icon)
 
-def playVideo(url, quality):
-	log("(playVideo) Quality = "+quality.replace('hd', 'HIGH').replace('md', 'MEDIUM').upper()+" | Url = "+url)
+def playVideo(url, youtubeID):
+	log("(playVideo) YoutubeID = "+youtubeID+" | Standard-URL = "+url)
+	if (addon.getSetting("preferredStream_YOUTUBE") == "true" and youtubeID != "None" and youtubeID != ""):
+		url = 'plugin://plugin.video.youtube/play/?video_id='+youtubeID
 	listitem = xbmcgui.ListItem(path=url)  
 	xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
 
@@ -219,7 +230,7 @@ def parameters_string_to_dict(parameters):
 				paramDict[paramSplits[0]] = paramSplits[1]
 	return paramDict
 
-def addLink(name, url, mode, iconimage, duration="", plot="", genre='', text="unknown"):
+def addLink(name, url, mode, iconimage, duration="", plot="", genre='', text="None"):
 	u = sys.argv[0]+"?url="+quote_plus(url)+"&mode="+str(mode)+"&name="+str(name)+"&text="+str(text)
 	liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=iconimage)
 	liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": plot, "Duration": duration, "Genre": "News", "Studio": "euronews"})
@@ -232,8 +243,8 @@ def addLink(name, url, mode, iconimage, duration="", plot="", genre='', text="un
 	liz.setContentLookup(False)
 	return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
 
-def addDir(name, url, mode, iconimage, plot="", text="unknown", offset=1):
-	u = sys.argv[0]+"?url="+quote_plus(url)+"&mode="+str(mode)+'&name='+str(name)+"&offset="+str(offset)
+def addDir(name, url, mode, iconimage, plot="", text="None"):
+	u = sys.argv[0]+"?url="+quote_plus(url)+"&mode="+str(mode)+'&name='+str(name)
 	liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=iconimage)
 	liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": plot})
 	if iconimage != icon:
@@ -246,15 +257,15 @@ params = parameters_string_to_dict(sys.argv[2])
 name = unquote_plus(params.get('name', ''))
 url = unquote_plus(params.get('url', ''))
 mode = unquote_plus(params.get('mode', ''))
+iconimage = unquote_plus(params.get('bild', ''))
 text = unquote_plus(params.get('text', ''))
-offset = unquote_plus(params.get('offset', ''))
-bild = unquote_plus(params.get('bild', ''))
+#offset = unquote_plus(params.get('offset', ''))
 referer = unquote_plus(params.get('referer', ''))
 
 if mode == "SubRubriken":
 	SubRubriken(url)
 elif mode == "listVideos":
-	listVideos(url, offset)
+	listVideos(url)
 elif mode  == "live":
 	live(url)
 elif mode == "playVideo":

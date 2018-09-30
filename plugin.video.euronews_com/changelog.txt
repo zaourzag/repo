@@ -18,3 +18,7 @@
 - fixed: euronews - LIVE TV
 - added: Video - Laufzeit und Plot 
 - optimized: Script komplett überarbeitet und unnötige Inhalte entfernt
+
+[B]Version 2.1.1  (30.09.2018)[/B] by realvito
+- fixed: mehrfache Video-Links desselben Artikels
+- added: Videos - bevorzugt über Youtube abspielen (höhere Qualität), sofern Link vorhanden (settings)
