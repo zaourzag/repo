@@ -1,110 +1,108 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 
-import time, sys, os
-import xbmc ,xbmcgui, xbmcaddon,xbmcvfs
-import urlparse,urllib
+import sys
+import os
+import xbmc
+import xbmcaddon
+import xbmcvfs
+import time
+from datetime import datetime,timedelta
 import sqlite3
-import time,datetime
-import _strptime
 
 
-__addon__ = xbmcaddon.Addon()
+global debuging
+PY2 = sys.version_info[0] == 2
+__addon__ = xbmcaddon.Addon()  
+profile    = xbmc.translatePath(__addon__.getAddonInfo('profile')).encode('utf-8').decode('utf-8')
+temp       = xbmc.translatePath(os.path.join(profile, 'temp', '')).encode('utf-8').decode('utf-8')
 
+wait_time = 180  # 180 seconds = 3 minutes - wait at KODI start
+loop_time = 3600  # 3600 seconds = 1 hour - time when the process started again
 
-profile    = xbmc.translatePath( __addon__.getAddonInfo('profile') ).decode("utf-8")
-temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
-translation = __addon__.getLocalizedString
-  
+def py2_enc(s, encoding='utf-8'):
+	if PY2 and isinstance(s, unicode):
+		s = s.encode(encoding)
+	return s
+	
+def py2_uni(s, encoding='utf-8'):
+	if PY2 and isinstance(s, str):
+		s = unicode(s, encoding)
+	return s
 
-base_url = sys.argv[0]
-addon = xbmcaddon.Addon()
+def translation(id):
+	LANGUAGE = __addon__.getLocalizedString(id)
+	LANGUAGE = py2_enc(LANGUAGE)
+	return LANGUAGE
 
-profile    = xbmc.translatePath( __addon__.getAddonInfo('profile') ).decode("utf-8")
-temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
-translation = __addon__.getLocalizedString
-
-  
-try:
-  if xbmcvfs.exists(temp):
-    shutil.rmtree(temp)
-  xbmcvfs.mkdirs(temp)
-except:
-  pass
-       
-# Einlesen von Parametern, Notwendig für Reset der Twitter API
-def parameters_string_to_dict(parameters):
-	paramDict = {}
-	if parameters:
-		paramPairs = parameters[1:].split("&")
-		for paramsPair in paramPairs:
-			paramSplits = paramsPair.split('=')
-			if (len(paramSplits)) == 2:
-				paramDict[paramSplits[0]] = paramSplits[1]
-	return paramDict
+def special(msg, level=xbmc.LOGNOTICE):
+	xbmc.log(msg, level)
 
 def debug(content):
-    log(content, xbmc.LOGDEBUG)
-    
-def notice(content):
-    log(content, xbmc.LOGNOTICE)
+	log(content, xbmc.LOGDEBUG)
 
-def log(msg, level=xbmc.LOGDEBUG):
-    addon = xbmcaddon.Addon()
-    addonID = addon.getAddonInfo('id')
-    xbmc.log('%s: %s' % (addonID, msg), level) 
+def failing(content):
+	log(content, xbmc.LOGERROR)
 
-def insert(name,url,stunden,last):
-    conn = sqlite3.connect(temp+'/cron.db')
-    c = conn.cursor()    
-    try:
-        c.execute('insert into cron (name,url,stunden,last) values ("%s","%s",%d,%s)'%(name,url,stunden,last))
-    except:
-        var = traceback.format_exc()
-        debug(var)
-    conn.commit()
-    c.close()    
-def fixtime(date_string,format):
-    debug("date_string,format :" +str(date_string)+","+str(format))
-    try:
-        x=datetime.datetime.strptime(date_string, format)
-    except TypeError:
-        x=datetime.datetime(*(time.strptime(date_string, format)[0:6]))
-    return x
+def log(msg, level=xbmc.LOGNOTICE):
+	msg = py2_enc(msg)
+	xbmc.log("["+__addon__.getAddonInfo('id')+"-"+__addon__.getAddonInfo('version')+"](service.py) "+msg, level)
 
-        
+def fixtime(date_string, format):
+	debug("fixtime ##### date_string : "+str(date_string)+" ##### format :" +str(format)+" #####")
+	try:
+		object = datetime.strptime(date_string, format)
+	except TypeError:
+		object = datetime(*(time.strptime(date_string, format)[0:6]))
+	return object
+
 if __name__ == '__main__':
-    notice("START")
-    temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
-    monitor = xbmc.Monitor()         
-    while not monitor.abortRequested():  
-      notice("LOOP")    
-      try:
-        conn = sqlite3.connect(temp+'/cron.db')      
-        c = conn.cursor()          
-        c.execute('select * from cron')    
-        r = list(c)
-        conn.commit()
-        c.close()  
-        for member in r:
-            time=member[0]        
-            url=member[1]
-            #print("###### "+url)
-            name=member[2]
-            last=member[3]
-            debug("###### "+last)
-            now = datetime.datetime.now()
-            date1 = fixtime(last, "%Y-%m-%d %H:%M:%S")
-            if now>date1 + datetime.timedelta(hours=time):
-                debug("ZEIT ABGELAUFEN "+last)
-                conn = sqlite3.connect(temp+'/cron.db')      
-                c = conn.cursor()    
-                c.execute('update cron set last=datetime() where url="'+url+'"')
-                conn.commit()           
-                c.close()
-            xbmc.executebuiltin('XBMC.RunPlugin('+url+')')           
-      except:
-         pass
-      if monitor.waitForAbort(3600):                     
-        break            
-          
+	special("#######################################################################################")
+	special("########## RUNNING: "+__addon__.getAddonInfo('id')+" PLUGIN VERSION "+__addon__.getAddonInfo('version')+" / ON PLATFORM: "+sys.platform+" ##########")
+	special("################# Start the Service in 3 minutes - wait for other Instances to close #################")
+	special("#######################################################################################")
+	time.sleep(wait_time)
+	log("########## START SERVICE ##########")
+	MAX_ERRORS = 10
+	errors = 0
+	monitor = xbmc.Monitor()
+	while not monitor.abortRequested():
+		if not xbmc.getCondVisibility('Library.IsScanningVideo'):
+			debug("########## START LOOP ... ##########")
+			try:
+				conn = sqlite3.connect(temp+'/cron.db')
+				cur = conn.cursor()
+				cur.execute('SELECT * FROM cron')
+				r = list(cur)
+				conn.commit()
+				cur.close()
+				conn.close()
+				for member in r:
+					std = member[0]
+					url = member[1]
+					name = member[2]
+					last = member[3]
+					debug("###### Control-Session for TITLE = "+py2_uni(name)+" / LASTUPDATE: "+last+" ##########")
+					now = datetime.now()
+					previous = fixtime(last, "%Y-%m-%d %H:%M:%S")
+					if now > previous + timedelta(hours=std):
+						log("########## start ACTION for TITLE = "+py2_uni(name)+" / LASTUPDATE = "+last+" ##########")
+						conn = sqlite3.connect(temp+'/cron.db')
+						cur = conn.cursor()
+						cur.execute('UPDATE cron SET last={0} WHERE url="{1}"'.format("datetime('now','localtime')", py2_enc(url)))
+						conn.commit()
+						cur.close()
+						conn.close()
+						xbmc.executebuiltin('RunPlugin('+py2_enc(url)+')')
+			except Exception as e:
+				failure = str(e)
+				errors += 1
+				if errors >= MAX_ERRORS:
+					failing("ERROR - ERROR - ERROR : ########## ({0}) received... (Number: {1}/{2}) ...Ending Service ##########".format(failure, errors, MAX_ERRORS))
+					break
+				else:
+					failing("ERROR - ERROR - ERROR : ########## ({0}) received... (Number: {1}/{2}) ...Continuing Service ##########".format(failure, errors, MAX_ERRORS))
+			else:
+				errors = 0
+			debug("########## ... END LOOP ##########")
+			if monitor.waitForAbort(loop_time):
+				break

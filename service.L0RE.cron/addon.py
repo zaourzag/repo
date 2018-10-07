@@ -1,39 +1,62 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
-import sys,os
-import xbmc,xbmcaddon,xbmcgui,xbmcvfs,xbmcplugin
+﻿# -*- coding: utf-8 -*-
+
+import sys
+import os
+import xbmc
+import xbmcgui
+import xbmcplugin
+import xbmcaddon
+PY2 = sys.version_info[0] == 2
+PY3 = sys.version_info[0] == 3
+if PY2:
+	from urllib import quote, unquote, quote_plus, unquote_plus, urlencode, urlopen  # Python 2.X
+elif PY3:
+	from urllib.parse import quote, unquote, quote_plus, unquote_plus, urlencode  # Python 3+
+	from urllib.request import urlopen  # Python 3+
+import xbmcvfs
+import shutil
+import time
 from datetime import datetime
-import urlparse,urllib
-import sqlite3,traceback
+import sqlite3
+import traceback
+
 
 global debuging
-base_url = sys.argv[0]
-addon_handle = int(sys.argv[1])
-args = urlparse.parse_qs(sys.argv[2][1:])
-addon = xbmcaddon.Addon()
-translation = addon.getLocalizedString
-addon = xbmcaddon.Addon()
+pluginhandle = int(sys.argv[1])
+__addon__ = xbmcaddon.Addon()  
+addonPath = xbmc.translatePath(__addon__.getAddonInfo('path')).encode('utf-8').decode('utf-8')
+profile    = xbmc.translatePath(__addon__.getAddonInfo('profile')).encode('utf-8').decode('utf-8')
+temp       = xbmc.translatePath(os.path.join( profile, 'temp', '')).encode('utf-8').decode('utf-8')
+icon = os.path.join(addonPath ,'icon.png')
+forceTrash = __addon__.getSetting("forceErasing") == 'true'
 
-profile    = xbmc.translatePath( addon.getAddonInfo('profile') ).decode("utf-8")
-temp       = xbmc.translatePath( os.path.join( profile, 'temp', '') ).decode("utf-8")
+if not xbmcvfs.exists(temp):
+	xbmcvfs.mkdirs(temp)
 
-icon = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')+'/icon.png').decode('utf-8')
+def py2_enc(s, encoding='utf-8'):
+	if PY2 and isinstance(s, unicode):
+		s = s.encode(encoding)
+	return s
 
-thread="https://www.kodinerds.net/index.php/Thread/11148-Was-ist-eure-Lieblingsserie-Serientalk-Empfehlungen/"
-if not xbmcvfs.exists(temp):       
-       xbmcvfs.mkdirs(temp)
-       
+def py2_uni(s, encoding='utf-8'):
+	if PY2 and isinstance(s, str):
+		s = unicode(s, encoding)
+	return s
+
+def translation(id):
+	LANGUAGE = __addon__.getLocalizedString(id)
+	LANGUAGE = py2_enc(LANGUAGE)
+	return LANGUAGE
 
 def debug(content):
-    log(content, xbmc.LOGDEBUG)
-    
-def notice(content):
-    log(content, xbmc.LOGNOTICE)
+	log(content, xbmc.LOGDEBUG)
+
+def failing(content):
+	log(content, xbmc.LOGERROR)
 
 def log(msg, level=xbmc.LOGNOTICE):
-    addon = xbmcaddon.Addon()
-    addonID = addon.getAddonInfo('id')
-    xbmc.log('%s: %s' % (addonID, msg), level) 
+	msg = py2_enc(msg)
+	xbmc.log("["+__addon__.getAddonInfo('id')+"-"+__addon__.getAddonInfo('version')+"](addon.py) "+msg, level)
 
 def parameters_string_to_dict(parameters):
 	paramDict = {}
@@ -45,104 +68,106 @@ def parameters_string_to_dict(parameters):
 				paramDict[paramSplits[0]] = paramSplits[1]
 	return paramDict
 
-def adddata():
-    reg,msg=post.postdb()
-    if reg=="1":
-       dialog = xbmcgui.Dialog()
-       nr=dialog.ok("Fehler", msg)
-    else:
-       dialog = xbmcgui.Dialog()
-       nr=dialog.ok("OK", msg)
-       
-def addDir(name, url, mode, thump, desc="",seite=1,anz=0,serienname=0,stattfolgen=0,play=0):   
-  u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&seite="+str(seite)+"&anz="+str(anz)+"&serienname="+str(serienname)+"&stattfolgen="+str(stattfolgen)
-  ok = True
-  liz = xbmcgui.ListItem(name)  
-  liz.setArt({ 'fanart' : thump })
-  liz.setArt({ 'thumb' : thump })
-  liz.setArt({ 'banner' : icon })
-  liz.setArt({ 'fanart' : icon })
-  if play==1: 
-    liz.setProperty('IsPlayable', 'true')
-  liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": desc})
-	
-  ok = xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
-  return ok
-  
+def addDir(name, url, mode, iconimage, source=None):
+	u = sys.argv[0]+"?url="+quote_plus(url)+"&mode="+str(mode)+"&name="+quote_plus(name)+"&source="+quote_plus(source)
+	liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=iconimage)
+	liz.setInfo(type="Video", infoLabels={"Title": name})
+	xbmcplugin.setContent(int(sys.argv[1]), 'movies')
+	return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
+
 params = parameters_string_to_dict(sys.argv[2])
-debug("--->")
-debug(params)
-debug(sys.argv[2])
-mode = urllib.unquote_plus(params.get('mode', ''))
-url = urllib.unquote_plus(params.get('url', ''))
-name= urllib.unquote_plus(params.get('name', ''))
-stunden= urllib.unquote_plus(params.get('stunden', ''))
+name = unquote_plus(params.get('name', ''))
+url = unquote_plus(params.get('url', ''))
+mode = unquote_plus(params.get('mode', ''))
+stunden = unquote_plus(params.get('stunden', ''))
+source = unquote_plus(params.get('source', ''))
 
 def createtable():
-    conn = sqlite3.connect(temp+'/cron.db')
-    c = conn.cursor()
-    try:
-            c.execute('CREATE TABLE cron (stunden INTEGER ,url text PRIMARY KEY,name text,last datetime)')
-    except :
-              var = traceback.format_exc()
-              debug(var)
-    conn.commit()
-    c.close()
-def insert(name,url,stunden,last):
-    conn = sqlite3.connect(temp+'/cron.db')
-    c = conn.cursor()    
-    try:
-        c.execute('insert into cron (name,url,stunden,last) values ("%s","%s",%d,%s)'%(name,url,stunden,last))
-    except:
-        var = traceback.format_exc()
-        debug(var)
-    conn.commit()
-    c.close()
-def delete(url):
-    conn = sqlite3.connect(temp+'/cron.db')
-    c = conn.cursor()    
-    try:
-        c.execute('delete from cron where url="%s"'%(url))
-    except:
-        var = traceback.format_exc()
-        debug(var)
-    conn.commit()
-def liste(surl):
-    namelist=[]
-    urllist=[]
-    conn = sqlite3.connect(temp+'/cron.db')
-    c = conn.cursor()    
-    try:
-        if url=="":
-            search='select name,url from cron where url like "%"'
-        else:
-            search='select name,url from cron where url like "%'+surl+'%"'
-        
-        debug(search)
-        debug("#+#+#+#+")
-        c.execute(search)        
-        r = list(c)
-        for member in r:
-           debug(member[0].encode("utf-8"))
-           addDir("Loesche: "+member[0].encode("utf-8"),member[1].encode("utf-8"),"delete","")
-    except:
-        var = traceback.format_exc()
-        debug(var)
-    conn.commit()
-    c.close()  
-    xbmcplugin.endOfDirectory(addon_handle,succeeded=True,updateListing=False,cacheToDisc=True) 
+	conn = sqlite3.connect(temp+'/cron.db')
+	cur = conn.cursor()
+	try:
+		cur.execute('CREATE TABLE IF NOT EXISTS cron (stunden INTEGER, url TEXT PRIMARY KEY, name TEXT, last DATETIME)')
+		try:
+			cur.execute('ALTER TABLE cron ADD COLUMN source TEXT')
+		except sqlite3.OperationalError: pass
+	except :
+		var = traceback.format_exc()
+		debug(var)
+	conn.commit()#Do not forget this !
+	cur.close()
+	conn.close()
 
-if mode == '':
-   liste("")
-if mode == 'delete':
-   delete(url)
-if mode == 'liste':
-   liste(url)
+def insert(name, url, stunden, last, source=""):
+	try:
+		conn = sqlite3.connect(temp+'/cron.db')
+		cur = conn.cursor()
+		cur.execute('INSERT OR REPLACE INTO cron VALUES ({0}, "{1}", "{2}", {3}, "{4}")'.format(int(stunden), url, name, last, source))
+		conn.commit()
+	except:
+		conn.rollback()
+		var = traceback.format_exc()
+		debug(var)
+	cur.close()
+	conn.close()
+
+def delete(name, url, source=""):
+	if source.startswith("special://"):
+		source = xbmc.translatePath(os.path.join('source', ''))
+	source = py2_uni(source)
+	try:
+		conn = sqlite3.connect(temp+'/cron.db')
+		cur = conn.cursor()
+		cur.execute('DELETE FROM cron WHERE url="{0}"'.format(url))
+		conn.commit()
+		if source != "" and os.path.isdir(source) and forceTrash:
+			shutil.rmtree(source, ignore_errors=True)
+			log("########## DELETING from Crontab and System - TITLE = "+py2_enc(name).split(':')[1].replace('[/COLOR]', '').strip()+" ##########")
+		elif source == "" or not forceTrash:
+			xbmcgui.Dialog().ok(__addon__.getAddonInfo('id'), translation(30501))
+			log("########## DELETING only from Crontab - TITLE = "+py2_enc(name).split(':')[1].replace('[/COLOR]', '').strip()+" ##########")
+	except:
+		conn.rollback()# Roll back any change if something goes wrong
+		var = traceback.format_exc()
+		failing("ERROR - ERROR - ERROR : ########## ({0}) received... ({1}) ...Delete Name in List failed ##########".format(py2_enc(name).split(':')[1].replace('[/COLOR]', '').strip(), var))
+	cur.close()
+	conn.close()
+
+def list_entries():
+	xbmcplugin.addSortMethod(pluginhandle, xbmcplugin.SORT_METHOD_TITLE_IGNORE_THE)
+	try:
+		conn = sqlite3.connect(temp+'/cron.db')
+		cur = conn.cursor()
+		cur.execute('SELECT * FROM cron')
+		r = list(cur)
+		for member in r:
+			std = member[0]
+			url = member[1]
+			name = member[2]
+			last = member[3]
+			source = member[4] if member[4] != None else ""
+			debug("##### stunden= "+str(std)+" / url= "+url+" / name= "+name+" / last= "+str(last)+" / source= "+source+" #####")
+			if forceTrash:
+				addDir("[COLOR orangered]Eintrag+Ordner löschen: [/COLOR]"+py2_enc(name), py2_enc(url), "delete", "", py2_enc(source))
+			else:
+				addDir("[COLOR orangered]Nur Eintrag löschen: [/COLOR]"+py2_enc(name), py2_enc(url), "delete", "", py2_enc(source))
+	except:
+		var = traceback.format_exc()
+		debug(var)
+	conn.commit()
+	cur.close()
+	conn.close()
+	xbmcplugin.endOfDirectory(pluginhandle) 
+
 if mode == 'adddata':
-      debug("URL :"+url)
-      createtable()
-      debug("instert")
-      insert(name,url,int(stunden),"datetime()")
-      debug("AFTER INSTERT")
-      debug(url)
-      xbmc.executebuiltin('XBMC.RunPlugin('+url+')')
+	debug("########## URL-1 = "+url+" ##########")
+	createtable()
+	debug("########## START INSTERT ##########")
+	insert(name, url, stunden, "datetime('now','localtime')", source)
+	debug("########## AFTER INSTERT ##########")
+	debug("########## URL-2 = "+url+" ##########")
+	xbmc.executebuiltin('RunPlugin('+url+')')
+elif mode == 'delete':
+	delete(name, url, source)
+else:
+	xbmc.sleep(500)
+	list_entries()
