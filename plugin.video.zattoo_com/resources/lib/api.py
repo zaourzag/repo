@@ -7,7 +7,8 @@ import xbmcaddon
 addon = xbmcaddon.Addon(id='plugin.video.zattoo_com')
 standard_header = {
     'Accept': 'application/json',
-    'Content-Type': 'application/x-www-form-urlencoded'
+    'Content-Type': 'application/x-www-form-urlencoded',
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.67 Safari/537.36'
 }
 
 
