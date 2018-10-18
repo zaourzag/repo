@@ -1,31 +1,31 @@
 # -*- coding: utf-8 -*-
 import sys
 import json
-import xbmcgui, xbmc, xbmcplugin
 from resources.lib.api import get_json_data
 import resources.lib.pyxbmct as pyxbmct
 
 URI = sys.argv[0]
 ADDON_HANDLE = int(sys.argv[1])
 
-def list_epg_item(pid, SESSION):
-    url = 'https://zattoo.com/zapi/program/details?program_id=%s&complete=True' % pid
+
+def list_epg_item(pid, SESSION, pg_hash):
+    url = 'https://zattoo.com/zapi/v2/cached/program/power_details/%s?program_ids=%s&complete=True' % (pg_hash, pid)
     json_data = get_json_data(url, SESSION)
-    program_info = json.loads(json_data)['program']
+    program_info = json.loads(json_data)['programs'][0]
     channel_name = program_info['channel_name'].encode('utf-8')
     cid = program_info['cid']
-    countries = program_info['country'].replace('|',', ').encode('utf-8')
-    genres = ', '.join(program_info['genres']).encode('utf-8')
-    categories = ', '.join(program_info['categories']).encode('utf-8')
-    directors = ', '.join([d['person'] for d in program_info['credits'] if d['role'] == 'director']).encode('utf-8')
-    actors = ', '.join([a['person'] for a in program_info['credits'] if a['role'] == 'actor']).encode('utf-8')
-    desc = program_info['description'].encode('utf-8')
-    subtitle = (program_info['episode_title'] or '').encode('utf-8')
-    thumb = program_info['image_url']
-    title = program_info['title'].encode('utf-8')
+    countries = program_info['country'].replace('|', ', ').encode('utf-8')
+    genres = ', '.join(program_info['g']).encode('utf-8')
+    categories = ', '.join(program_info['c']).encode('utf-8')
+    directors = ', '.join([d for d in program_info['cr']['director']]).encode('utf-8')
+    actors = ', '.join([a for a in program_info['cr']['actor']]).encode('utf-8')
+    desc = program_info['d'].encode('utf-8')
+    subtitle = (program_info['et'] or '').encode('utf-8')
+    thumb = program_info['i']
+    title = program_info['t'].encode('utf-8')
     if subtitle:
         title = '%s: %s' % (title, subtitle)
-    year = program_info['year']   
+    year = program_info['year']
     text = ''
     if desc:
         text += '[COLOR blue]Plot:[/COLOR] %s\n\n' % desc
@@ -39,7 +39,7 @@ def list_epg_item(pid, SESSION):
         text += '\n[COLOR blue]Direktoren:[/COLOR] %s' % directors
     if actors:
         text += '\n[COLOR blue]Schauspieler:[/COLOR] %s' % actors
-        
+
     if text:
         title = '[B][COLOR blue]%s[/COLOR][/B] %s' % (channel_name, title)
         if year:
@@ -52,4 +52,3 @@ def list_epg_item(pid, SESSION):
         box.setText(text)
         window.doModal()
         del window
-    
