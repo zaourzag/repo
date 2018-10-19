@@ -10,9 +10,9 @@
 				<itemgap>5</itemgap>
 				<orientation>horizontal</orientation>
 				<control type="label">
-					<label>$INFO[Window(home).Property(SkinHelper.ListItem.Year)]   </label>
+					<label>$INFO[Container(5601).ListItemAbsolute(0).Year]$VAR[SetLastYear, - ]   </label>
 					<include>MetaLabel</include>
-					<visible>!String.IsEmpty(Window(home).Property(SkinHelper.ListItem.Year))</visible>
+					<visible>!String.IsEmpty(Container(5601).NumItems) + !String.IsEqual(Container(5601).NumItems,0) + [!Container(5601).IsUpdating | !String.StartsWith(Container.Folderpath,plugin://)]</visible>
 				</control>
 				<control type="label">
 					<label>$INFO[Container(5601).NumItems,, $LOCALIZE[36901]]   </label>
@@ -23,11 +23,6 @@
 					<label>$LOCALIZE[1040]   </label>
 					<include>MetaLabel</include>
 					<visible>![!String.IsEmpty(Container(5601).NumItems) + !String.IsEqual(Container(5601).NumItems,0) + [!Container(5601).IsUpdating | !String.StartsWith(Container.Folderpath,plugin://)]]</visible>
-				</control>
-				<control type="label">
-					<label>$INFO[Window(home).Property(SkinHelper.ListItem.Runtime),, $LOCALIZE[31089]]   </label>
-					<include>MetaLabel</include>
-					<visible>!String.IsEmpty(Window(home).Property(SkinHelper.ListItem.Runtime))</visible>
 				</control>
 			</control>
 		</definition>
@@ -54,7 +49,6 @@
 				<include>MpaaIcon</include>
 				<include>CCIcon</include>
 				<include>MetaRating</include>
-				<include>SkinHelperRatings</include>
 				<control type="label">
 					<include>MetaLabel</include>
 					<label>$INFO[ListItem.EndTimeResume,$LOCALIZE[31037] ]</label>
@@ -312,9 +306,6 @@
 				<include content="MetaRating">
 					<param name="type" value="VideoPlayer"/>
 				</include>
-				<include content="SkinHelperRatings">
-					<param name="type" value="Player"/>
-				</include>
 			</control>
 		</definition>
 	</include>
@@ -332,7 +323,7 @@
 			<control type="image">
 				<width>276</width>
 				<height>414</height>
-				<texture colordiffuse="thumb_background_fallback">common/white.jpg</texture>
+				<texture colordiffuse="$VAR[ThumbFallbackColor]">common/white.jpg</texture>
 				<aspectratio scalediffuse="false">stretch</aspectratio>
 				<visible>String.IsEmpty(ListItem.Art(poster)) + String.IsEmpty(ListItem.Art(tvshow.poster)) + String.StartsWith(ListItem.Icon,default)</visible>
 			</control>
@@ -376,7 +367,7 @@
 			<control type="image">
 				<width>276</width>
 				<height>414</height>
-				<texture colordiffuse="thumb_background_fallback">common/white.jpg</texture>
+				<texture colordiffuse="$VAR[ThumbFallbackColor]">common/white.jpg</texture>
 				<aspectratio scalediffuse="false">stretch</aspectratio>
 				<visible>String.IsEmptyWindow.Property(thumb)</visible>
 			</control>
@@ -420,7 +411,7 @@
 			<control type="image">
 				<width>276</width>
 				<height>414</height>
-				<texture colordiffuse="thumb_background_fallback">common/white.jpg</texture>
+				<texture colordiffuse="$VAR[ThumbFallbackColor]">common/white.jpg</texture>
 				<aspectratio scalediffuse="false">stretch</aspectratio>
 				<visible>String.IsEmpty(Player.Art(poster)) + String.IsEmpty(Player.Art(tvshow.poster)) + String.StartsWith(VideoPlayer.Cover,Default)</visible>
 			</control>
@@ -454,7 +445,7 @@
 			<control type="image">
 				<width>430</width>
 				<height>242</height>
-				<texture colordiffuse="thumb_background_fallback">common/white.jpg</texture>
+				<texture colordiffuse="$VAR[ThumbFallbackColor]">common/white.jpg</texture>
 				<aspectratio scalediffuse="false">stretch</aspectratio>
 				<visible>String.IsEmpty(ListItem.Icon) | String.StartsWith(ListItem.Icon,Default)</visible>
 			</control>
@@ -532,7 +523,7 @@
 			<control type="image">
 				<width>340</width>
 				<height>340</height>
-				<texture colordiffuse="thumb_background_fallback">common/white.jpg</texture>
+				<texture colordiffuse="$VAR[ThumbFallbackColor]">common/white.jpg</texture>
 				<aspectratio scalediffuse="false">stretch</aspectratio>
 				<visible>String.IsEmpty(ListItem.Icon) | String.StartsWith(ListItem.Icon,Default)</visible>
 			</control>
@@ -581,7 +572,7 @@
 					<control type="image">
 						<width>590</width>
 						<height>332</height>
-						<texture colordiffuse="thumb_background_fallback">common/white.jpg</texture>
+						<texture colordiffuse="$VAR[ThumbFallbackColor]">common/white.jpg</texture>
 						<aspectratio scalediffuse="false">stretch</aspectratio>
 						<visible>String.IsEmpty(ListItem.Icon) | String.StartsWith(ListItem.Icon,Default)</visible>
 					</control>
@@ -660,7 +651,7 @@
 				<control type="image">
 					<width>590</width>
 					<height>332</height>
-					<texture colordiffuse="thumb_background_fallback">common/white.jpg</texture>
+					<texture colordiffuse="$VAR[ThumbFallbackColor]">common/white.jpg</texture>
 					<aspectratio scalediffuse="false">stretch</aspectratio>
 					<visible>String.IsEmpty(VideoPlayer.Cover) | String.StartsWith(VideoPlayer.Cover,Default)</visible>
 				</control>
@@ -753,45 +744,6 @@
 			</control>
 		</definition>
 	</include>
-	<include name="SkinHelperRatings">
-		<param name="type">ListItem</param>
-		<definition>
-			<control type="image">
-				<animation effect="slide" end="0,3" time="0" condition="true">Conditional</animation>
-				<width>24</width>
-				<height>20</height>
-				<texture>icons/rating/metacritics_logo.png</texture>
-				<aspectratio>keep</aspectratio>
-				<visible>!String.IsEmpty(Window(Home).Property(SkinHelper.$PARAM[type].MetaCritic.Rating))</visible>
-			</control>
-			<control type="label">
-				<label>$INFO[Window(Home).Property(SkinHelper.$PARAM[type].MetaCritic.Rating),,%]   </label>
-				<include>MetaLabel</include>
-				<visible>!String.IsEmpty(Window(Home).Property(SkinHelper.$PARAM[type].MetaCritic.Rating))</visible>
-			</control>
-			<control type="image">
-				<animation effect="slide" end="0,3" time="0" condition="true">Conditional</animation>
-				<width>24</width>
-				<height>20</height>
-				<texture>icons/rating/rotten_fresh.png</texture>
-				<aspectratio>keep</aspectratio>
-				<visible>!String.IsEmpty(Window(Home).Property(SkinHelper.$PARAM[type].RottenTomatoes.Rating)) + Integer.IsGreater(Window(Home).Property(SkinHelper.$PARAM[type].RottenTomatoes.Rating),59)</visible>
-			</control>e
-			<control type="image">
-				<animation effect="slide" end="0,3" time="0" condition="true">Conditional</animation>
-				<width>24</width>
-				<height>20</height>
-				<texture>icons/rating/rotten_rotten.png</texture>
-				<aspectratio>keep</aspectratio>
-				<visible>!String.IsEmpty(Window(Home).Property(SkinHelper.$PARAM[type].RottenTomatoes.Rating)) + !Integer.IsGreater(Window(Home).Property(SkinHelper.$PARAM[type].RottenTomatoes.Rating),59)</visible>
-			</control>
-			<control type="label">
-				<label>$INFO[Window(Home).Property(SkinHelper.$PARAM[type].RottenTomatoes.Rating),,%]   </label>
-				<include>MetaLabel</include>
-				<visible>!String.IsEmpty(Window(Home).Property(SkinHelper.$PARAM[type].RottenTomatoes.Rating))</visible>
-			</control>
-		</definition>
-	</include>
 	<include name="MpaaIcon">
 		<param name="type">ListItem</param>
 		<definition>
@@ -872,7 +824,7 @@
 				<label>$INFO[ListItem.AddonType,$LOCALIZE[21866]: , ]$INFO[$PARAM[type].Genre,$LOCALIZE[515]: ,   ]$INFO[$PARAM[type].Director,$LOCALIZE[20339]: ]</label>
 				<font>reg22</font>
 				<aligny>top</aligny>
-				<textcolor>accent</textcolor>
+				<textcolor>$VAR[AccentColor]</textcolor>
 				<visible>$PARAM[visible]</visible>
 				<visible>!String.IsEmpty(ListItem.AddonType) | !String.IsEmpty($PARAM[type].Genre) | !String.IsEmpty($PARAM[type].Director)</visible>
 			</control>
@@ -883,7 +835,7 @@
 				<label>[CAPITALIZE]$LOCALIZE[31189][/CAPITALIZE]</label>
 				<font>reg22</font>
 				<aligny>top</aligny>
-				<textcolor>accent</textcolor>
+				<textcolor>$VAR[AccentColor]</textcolor>
 				<visible>$PARAM[visible]</visible>
 				<visible>String.IsEqual(ListItem.DBType,set)</visible>
 			</control>
@@ -1019,6 +971,18 @@
 	<include name="AddonFlags">
 		<control type="button">
 			<include>MetaFlagsButton</include>
+			<label>$LOCALIZE[449]</label>
+			<visible>ListItem.Property(Addon.IsInstalled) + ListItem.Property(Addon.IsEnabled)</visible>
+		</control>
+		<control type="button">
+			<texturefocus border="10" colordiffuse="red">items/button.png</texturefocus>
+			<texturenofocus border="10" colordiffuse="red">items/button.png</texturenofocus>
+			<include>MetaFlagsButton</include>
+			<label>$LOCALIZE[1223]</label>
+			<visible>ListItem.Property(Addon.IsInstalled) + !ListItem.Property(Addon.IsEnabled)</visible>
+		</control>
+		<control type="button">
+			<include>MetaFlagsButton</include>
 			<label>$LOCALIZE[31035]</label>
 			<visible>!String.IsEmpty(ListItem.AddonBroken)</visible>
 		</control>
@@ -1036,6 +1000,13 @@
 			<include>MetaFlagsButton</include>
 			<label>$LOCALIZE[12014]: $INFO[ListItem.AddonLastUpdated]</label>
 			<visible>!String.IsEmpty(ListItem.AddonLastUpdated)</visible>
+		</control>
+		<control type="button">
+			<texturefocus border="10" colordiffuse="blue">items/button.png</texturefocus>
+			<texturenofocus border="10" colordiffuse="blue">items/button.png</texturenofocus>
+			<include>MetaFlagsButton</include>
+			<label>$LOCALIZE[24068]</label>
+			<visible>ListItem.Property(Addon.HasUpdate)</visible>
 		</control>
 	</include>
 </includes>

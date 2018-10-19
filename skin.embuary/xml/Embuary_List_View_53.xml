@@ -37,7 +37,7 @@
 					<pagecontrol>17</pagecontrol>
 					<include>ScrollTime</include>
 					<preloaditems>4</preloaditems>
-					<oninfo condition="String.IsEqual(ListItem.DBType,set) + !String.IsEmpty(Container(2001).ListItem.Label)">RunScript(script.skin.helper.service,action=textviewer,header='$ESCINFO[ListItem.Title]',message='$ESCVAR[ListViewPlot]')</oninfo>
+					<oninfo condition="String.IsEqual(ListItem.DBType,set) + !String.IsEmpty(Container(2001).ListItem.Label)">RunScript(script.embuary.helper,action=textviewer,header='$ESCINFO[ListItem.Title]',message='$ESCVAR[ListViewPlot]')</oninfo>
 					<itemlayout height="120" width="1230">
 						<control type="group">
 							<left>70</left>
@@ -105,7 +105,7 @@
 									<control type="image">
 										<width>590</width>
 										<height>332</height>
-										<texture colordiffuse="thumb_background_fallback">common/white.jpg</texture>
+										<texture colordiffuse="$VAR[ThumbFallbackColor]">common/white.jpg</texture>
 										<aspectratio scalediffuse="false">stretch</aspectratio>
 									</control>
 									<control type="textbox">
@@ -172,7 +172,7 @@
 									<control type="image">
 										<width>222</width>
 										<height>332</height>
-										<texture colordiffuse="thumb_background_fallback">common/white.jpg</texture>
+										<texture colordiffuse="$VAR[ThumbFallbackColor]">common/white.jpg</texture>
 										<aspectratio scalediffuse="false">stretch</aspectratio>
 										<visible>String.IsEmpty(ListItem.Icon) | String.StartsWith(ListItem.Icon,Default)</visible>
 									</control>
@@ -232,7 +232,7 @@
 									<control type="image">
 										<width>332</width>
 										<height>332</height>
-										<texture colordiffuse="thumb_background_fallback">common/white.jpg</texture>
+										<texture colordiffuse="$VAR[ThumbFallbackColor]">common/white.jpg</texture>
 										<aspectratio scalediffuse="false">stretch</aspectratio>
 										<visible>String.IsEmpty(ListItem.Icon) | String.StartsWith(ListItem.Icon,Default)</visible>
 									</control>
@@ -322,7 +322,7 @@
 								<height>50</height>
 								<font>material24</font>
 								<label></label>
-								<onclick>RunScript(script.skin.helper.service,action=textviewer,header='$ESCVAR[TinyInfoDialogHeadline]',message='$ESCVAR[TinyInfoDialogPlot]')</onclick>
+								<onclick>RunScript(script.embuary.helper,action=textviewer,header='$ESCVAR[TinyInfoDialogHeadline]',message='$ESCVAR[TinyInfoDialogPlot]')</onclick>
 								<visible>!String.IsEmpty(ListItem.Plot) + Window.IsVisible(videoplaylist)</visible>
 							</control>
 						</control>
@@ -345,17 +345,7 @@
 							<label>$VAR[ListViewPlot]</label>
 							<font>Light24</font>
 							<autoscroll>false</autoscroll>
-							<visible>!Window.IsVisible(MyPlaylist.xml) + [!String.IsEqual(ListItem.DBType,set) | String.IsEmpty(Container(2001).ListItem.Label)]</visible>
-						</control>
-						<control type="textbox">
-							<top>435</top>
-							<bottom>0</bottom>
-							<align>justify</align>
-							<aligny>top</aligny>
-							<label>[B]$INFO[Container(2001).NumItems,, ]$LOCALIZE[342]:[/B][CR]$VAR[ListViewPlot]</label>
-							<font>Light24</font>
-							<autoscroll>false</autoscroll>
-							<visible>!Window.IsVisible(MyPlaylist,xnk) + String.IsEqual(ListItem.DBType,set) + !String.IsEmpty(Container(2001).ListItem.Label)</visible>
+							<visible>!Window.IsVisible(MyPlaylist.xml)</visible>
 						</control>
 					</control>
 				</control>

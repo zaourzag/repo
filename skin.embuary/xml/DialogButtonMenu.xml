@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window>
 	<defaultcontrol always="true">6000</defaultcontrol>
+	<zorder>999</zorder>
 	<onload>Control.Move(6000,$INFO[Container(6000).CurrentItem,-])</onload>
 	<onload>Control.Move(6000,1)</onload>
 	<include>PropertyIncludes</include>
@@ -140,7 +141,7 @@
 								<width>264</width>
 								<height>264</height>
 								<texture>items/big_circle_focus.png</texture>
-								<colordiffuse>accent</colordiffuse>
+								<colordiffuse>$VAR[AccentColor]</colordiffuse>
 								<include>Animation_FocusTextureFade</include>
 								<visible>Control.HasFocus(6000)</visible>
 							</control>

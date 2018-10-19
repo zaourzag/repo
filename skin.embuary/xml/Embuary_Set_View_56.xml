@@ -69,6 +69,7 @@
 								<onclick>SetFocus(50)</onclick>
 								<onclick>Select</onclick>
 								<ondown>50</ondown>
+								<onback>SetFocus(50)</onback>
 							</control>
 							<control type="button" id="56102">
 								<visible>Container.Content(tvshows)</visible>
@@ -78,6 +79,7 @@
 								<onclick>SetFocus(50)</onclick>
 								<onclick>Select</onclick>
 								<ondown>50</ondown>
+								<onback>SetFocus(50)</onback>
 							</control>
 							<control type="button" id="56104">
 								<visible>!String.IsEmpty(ListItem.Trailer)</visible>
@@ -86,6 +88,7 @@
 								<onup>SetFocus(6666)</onup>
 								<onclick>PlayMedia($INFO[ListItem.Trailer])</onclick>
 								<ondown>50</ondown>
+								<onback>SetFocus(50)</onback>
 							</control>
 							<control type="button" id="56103">
 								<visible>!String.IsEmpty(ListItem.Plot) | !String.IsEmpty(Window(home).Property(SkinHelper.ListItem.Plot)) | !String.IsEmpty(Container(2001).ListItem.Label)</visible>
@@ -94,10 +97,11 @@
 								<height>50</height>
 								<font>material24</font>
 								<label></label>
-								<onclick condition="!String.IsEqual(ListItem.DBType,set)">RunScript(script.skin.helper.service,action=textviewer,header='$ESCINFO[ListItem.Title]',message='$ESCINFO[ListItem.Plot]')</onclick>
-								<onclick condition="String.IsEqual(ListItem.DBType,set) + !String.IsEmpty(Container(2001).ListItem.Label)">RunScript(script.skin.helper.service,action=textviewer,header='$ESCINFO[ListItem.Title]',message='$ESCVAR[ListViewPlot]')</onclick>
+								<onclick condition="!String.IsEqual(ListItem.DBType,set)">RunScript(script.embuary.helper,action=textviewer,header='$ESCINFO[ListItem.Title]',message='$ESCINFO[ListItem.Plot]')</onclick>
+								<onclick condition="String.IsEqual(ListItem.DBType,set) + !String.IsEmpty(Container(2001).ListItem.Label)">RunScript(script.embuary.helper,action=textviewer,header='$ESCINFO[ListItem.Title]',message='$ESCVAR[ListViewPlot]')</onclick>
 								<onup>SetFocus(6666)</onup>
 								<ondown>50</ondown>
+								<onback>SetFocus(50)</onback>
 							</control>
 							<control type="togglebutton" id="56105">
 								<include>LightGreyButton</include>
@@ -109,6 +113,7 @@
 								<include>ToggleWatchedAction</include>
 								<onup>SetFocus(6666)</onup>
 								<ondown>50</ondown>
+								<onback>SetFocus(50)</onback>
 								<selected>String.IsEqual(ListItem.Overlay,OverlayWatched.png) | Integer.IsGreaterOrEqual(ListItem.PlayCount,1)</selected>
 							</control>
 						</control>

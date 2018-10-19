@@ -6,14 +6,12 @@
 	<color name="black_diffuse">80141414</color>
 
 	<!-- widgets and views-->
-	<color name="focus_widget">FF52b54b</color>
 	<color name="thumb_background">ff222222</color>
 	<color name="thumb_background_fallback">ff388e3c</color>
 	<color name="thumb_background_fallback_secondary">ff0288d1</color>
 
 	<!-- player -->
 	<color name="player_osd_color">FF52b54b</color>
-	<color name="player_osd_buttons">FF52b54b</color>
 	<color name="thumb_background_player">ff222222</color>
 
 	<!-- common colors -->
@@ -44,12 +42,9 @@
 	<color name="selected_button">800288d1</color>
 	<color name="grey_button">ff303030</color>
 	<color name="subsetting_nofocus">ff1b1b1b</color>
-	<color name="button_focus">ff52b54b</color>
-
 
 	<!-- main focused colors -->
 	<color name="accent">FF52b54b</color>
-	<color name="accent_diffuse">5552b54b</color>
 
 	<!-- sidepanel -->
 	<color name="sidepanel_background">ff1c1c1f</color>
@@ -67,7 +62,6 @@
 	<color name="grid_title">ff222326</color>
 	<color name="grid_label">ff1c1d1f</color>
 	<color name="grid_label_inprogress">ff282828</color>
-	<color name="grid_hover">ff555555</color>
 	<color name="grid_border">ff383838</color>
 
 	<!-- header bar -->
@@ -93,8 +87,5 @@
 	<color name="panel_subitem">ff151515</color>
 	<color name="panel_textcolor">ccffffff</color>
 	<color name="panel_textcolor2">66ffffff</color>
-
-	<color name="headline_line">FF52b54b</color>
-
 
 </colors>

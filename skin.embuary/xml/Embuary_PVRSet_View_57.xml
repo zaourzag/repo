@@ -57,20 +57,22 @@
 								<include>LightGreyButton</include>
 								<label>$VAR[VideoInfoButton8]</label>
 								<onup>SetFocus(6666)</onup>
-								<onclick>SetFocus(50)</onclick>
+								<onclick>SetFocus(57)</onclick>
 								<onclick>Select</onclick>
-								<ondown>50</ondown>
+								<ondown>SetFocus(57)</ondown>
+								<onback>SetFocus(57)</onback>
 							</control>
-							<control type="button" id="56103">
+							<control type="button" id="57103">
 								<visible>!String.IsEmpty(ListItem.Plot)</visible>
 								<include>LightGreyButton</include>
 								<width>70</width>
 								<height>50</height>
 								<font>material24</font>
 								<label></label>
-								<onclick>RunScript(script.skin.helper.service,action=textviewer,header='$ESCINFO[ListItem.Title]',message='$ESCINFO[ListItem.Plot]')</onclick>
+								<onclick>RunScript(script.embuary.helper,action=textviewer,header='$ESCINFO[ListItem.Title]',message='$ESCINFO[ListItem.Plot]')</onclick>
 								<onup>SetFocus(6666)</onup>
-								<ondown>50</ondown>
+								<ondown>SetFocus(57)</ondown>
+								<onback>SetFocus(57)</onback>
 							</control>
 						</control>
 						<!-- genre -->

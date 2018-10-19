@@ -125,10 +125,11 @@
 			<property name="isDefault">true</property>
 			<property name="list">-</property>
 			<visible>[System.HasAddon(plugin.video.emby) + !String.IsEmpty(Window(home).Property(emby.connected)) + !String.IsEmpty(Window(home).Property(emby.nodes.0.content)) + [String.IsEqual(Window(home).Property(emby.nodes.0.type),movies) | String.IsEqual(Window(home).Property(emby.nodes.0.type),tvshows) | String.IsEqual(Window(home).Property(emby.nodes.0.type),homevideos)]]</visible>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.0.type),homevideos)">SetProperty(EmbyHubNr,0,home)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.0.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.0.type),movies)">SetProperty(EmbyHubNr,0,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,0,home)</property>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.0.type),homevideos)">ActivateWindow(1130)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(emby.nodes.0.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.nodes.0.content)],return)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.0.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.0.type),movies)">ActivateWindow(1130)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.0.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.wnodes.0.content)],return)</onclick>
+			<onclick condition="String.Contains(Window(home).Property(emby.wnodes.0.type),books)">ActivateWindow(videos,$INFO[Window(home).Property(emby.wnodes.0.content)],return)</onclick>
 			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-emby-nodes-0-title</property>
 			<property name="group">mainmenu</property>
@@ -149,10 +150,11 @@
 			<property name="isDefault">true</property>
 			<property name="list">-</property>
 			<visible>[System.HasAddon(plugin.video.emby) + !String.IsEmpty(Window(home).Property(emby.connected)) + !String.IsEmpty(Window(home).Property(emby.nodes.1.content)) + [String.IsEqual(Window(home).Property(emby.nodes.1.type),movies) | String.IsEqual(Window(home).Property(emby.nodes.1.type),tvshows) | String.IsEqual(Window(home).Property(emby.nodes.1.type),homevideos)]]</visible>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.1.type),homevideos)">SetProperty(EmbyHubNr,1,home)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.1.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.1.type),movies)">SetProperty(EmbyHubNr,1,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,1,home)</property>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.1.type),homevideos)">ActivateWindow(1130)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(emby.nodes.1.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.nodes.1.content)],return)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.1.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.1.type),movies)">ActivateWindow(1130)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.1.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.wnodes.1.content)],return)</onclick>
+			<onclick condition="String.Contains(Window(home).Property(emby.wnodes.1.type),books)">ActivateWindow(videos,$INFO[Window(home).Property(emby.wnodes.1.content)],return)</onclick>
 			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-emby-nodes-1-title</property>
 			<property name="group">mainmenu</property>
@@ -173,10 +175,11 @@
 			<property name="isDefault">true</property>
 			<property name="list">-</property>
 			<visible>[System.HasAddon(plugin.video.emby) + !String.IsEmpty(Window(home).Property(emby.connected)) + !String.IsEmpty(Window(home).Property(emby.nodes.2.content)) + [String.IsEqual(Window(home).Property(emby.nodes.2.type),movies) | String.IsEqual(Window(home).Property(emby.nodes.2.type),tvshows) | String.IsEqual(Window(home).Property(emby.nodes.2.type),homevideos)]]</visible>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.2.type),homevideos)">SetProperty(EmbyHubNr,2,home)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.2.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.2.type),movies)">SetProperty(EmbyHubNr,2,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,2,home)</property>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.2.type),homevideos)">ActivateWindow(1130)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(emby.nodes.2.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.nodes.2.content)],return)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.2.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.2.type),movies)">ActivateWindow(1130)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.2.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.wnodes.2.content)],return)</onclick>
+			<onclick condition="String.Contains(Window(home).Property(emby.wnodes.2.type),books)">ActivateWindow(videos,$INFO[Window(home).Property(emby.wnodes.2.content)],return)</onclick>
 			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-emby-nodes-2-title</property>
 			<property name="group">mainmenu</property>
@@ -197,10 +200,11 @@
 			<property name="isDefault">true</property>
 			<property name="list">-</property>
 			<visible>[System.HasAddon(plugin.video.emby) + !String.IsEmpty(Window(home).Property(emby.connected)) + !String.IsEmpty(Window(home).Property(emby.nodes.3.content)) + [String.IsEqual(Window(home).Property(emby.nodes.3.type),movies) | String.IsEqual(Window(home).Property(emby.nodes.3.type),tvshows) | String.IsEqual(Window(home).Property(emby.nodes.3.type),homevideos)]]</visible>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.3.type),homevideos)">SetProperty(EmbyHubNr,3,home)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.3.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.3.type),movies)">SetProperty(EmbyHubNr,3,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,3,home)</property>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.3.type),homevideos)">ActivateWindow(1130)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(emby.nodes.3.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.nodes.3.content)],return)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.3.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.3.type),movies)">ActivateWindow(1130)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.3.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.wnodes.3.content)],return)</onclick>
+			<onclick condition="String.Contains(Window(home).Property(emby.wnodes.3.type),books)">ActivateWindow(videos,$INFO[Window(home).Property(emby.wnodes.3.content)],return)</onclick>
 			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-emby-nodes-3-title</property>
 			<property name="group">mainmenu</property>
@@ -221,10 +225,11 @@
 			<property name="isDefault">true</property>
 			<property name="list">-</property>
 			<visible>[System.HasAddon(plugin.video.emby) + !String.IsEmpty(Window(home).Property(emby.connected)) + !String.IsEmpty(Window(home).Property(emby.nodes.4.content)) + [String.IsEqual(Window(home).Property(emby.nodes.4.type),movies) | String.IsEqual(Window(home).Property(emby.nodes.4.type),tvshows) | String.IsEqual(Window(home).Property(emby.nodes.4.type),homevideos)]]</visible>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.4.type),homevideos)">SetProperty(EmbyHubNr,4,home)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.4.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.4.type),movies)">SetProperty(EmbyHubNr,4,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,4,home)</property>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.4.type),homevideos)">ActivateWindow(1130)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(emby.nodes.4.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.nodes.4.content)],return)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.4.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.4.type),movies)">ActivateWindow(1130)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.4.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.wnodes.4.content)],return)</onclick>
+			<onclick condition="String.Contains(Window(home).Property(emby.wnodes.4.type),books)">ActivateWindow(videos,$INFO[Window(home).Property(emby.wnodes.4.content)],return)</onclick>
 			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-emby-nodes-4-title</property>
 			<property name="group">mainmenu</property>
@@ -245,10 +250,11 @@
 			<property name="isDefault">true</property>
 			<property name="list">-</property>
 			<visible>[System.HasAddon(plugin.video.emby) + !String.IsEmpty(Window(home).Property(emby.connected)) + !String.IsEmpty(Window(home).Property(emby.nodes.5.content)) + [String.IsEqual(Window(home).Property(emby.nodes.5.type),movies) | String.IsEqual(Window(home).Property(emby.nodes.5.type),tvshows) | String.IsEqual(Window(home).Property(emby.nodes.5.type),homevideos)]]</visible>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.5.type),homevideos)">SetProperty(EmbyHubNr,5,home)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.5.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.5.type),movies)">SetProperty(EmbyHubNr,5,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,5,home)</property>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.5.type),homevideos)">ActivateWindow(1130)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(emby.nodes.5.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.nodes.5.content)],return)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.5.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.5.type),movies)">ActivateWindow(1130)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.5.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.wnodes.5.content)],return)</onclick>
+			<onclick condition="String.Contains(Window(home).Property(emby.wnodes.5.type),books)">ActivateWindow(videos,$INFO[Window(home).Property(emby.wnodes.5.content)],return)</onclick>
 			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-emby-nodes-5-title</property>
 			<property name="group">mainmenu</property>
@@ -269,10 +275,11 @@
 			<property name="isDefault">true</property>
 			<property name="list">-</property>
 			<visible>[System.HasAddon(plugin.video.emby) + !String.IsEmpty(Window(home).Property(emby.connected)) + !String.IsEmpty(Window(home).Property(emby.nodes.6.content)) + [String.IsEqual(Window(home).Property(emby.nodes.6.type),movies) | String.IsEqual(Window(home).Property(emby.nodes.6.type),tvshows) | String.IsEqual(Window(home).Property(emby.nodes.6.type),homevideos)]]</visible>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.6.type),homevideos)">SetProperty(EmbyHubNr,6,home)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.6.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.6.type),movies)">SetProperty(EmbyHubNr,6,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,6,home)</property>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.6.type),homevideos)">ActivateWindow(1130)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(emby.nodes.6.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.nodes.6.content)],return)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.6.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.6.type),movies)">ActivateWindow(1130)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.6.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.wnodes.6.content)],return)</onclick>
+			<onclick condition="String.Contains(Window(home).Property(emby.wnodes.6.type),books)">ActivateWindow(videos,$INFO[Window(home).Property(emby.wnodes.6.content)],return)</onclick>
 			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-emby-nodes-6-title</property>
 			<property name="group">mainmenu</property>
@@ -293,10 +300,11 @@
 			<property name="isDefault">true</property>
 			<property name="list">-</property>
 			<visible>[System.HasAddon(plugin.video.emby) + !String.IsEmpty(Window(home).Property(emby.connected)) + !String.IsEmpty(Window(home).Property(emby.nodes.7.content)) + [String.IsEqual(Window(home).Property(emby.nodes.7.type),movies) | String.IsEqual(Window(home).Property(emby.nodes.7.type),tvshows) | String.IsEqual(Window(home).Property(emby.nodes.7.type),homevideos)]]</visible>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.7.type),homevideos)">SetProperty(EmbyHubNr,7,home)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.7.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.7.type),movies)">SetProperty(EmbyHubNr,7,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,7,home)</property>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.7.type),homevideos)">ActivateWindow(1130)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(emby.nodes.7.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.nodes.7.content)],return)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.7.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.7.type),movies)">ActivateWindow(1130)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.7.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.wnodes.7.content)],return)</onclick>
+			<onclick condition="String.Contains(Window(home).Property(emby.wnodes.7.type),books)">ActivateWindow(videos,$INFO[Window(home).Property(emby.wnodes.7.content)],return)</onclick>
 			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-emby-nodes-7-title</property>
 			<property name="group">mainmenu</property>
@@ -317,10 +325,11 @@
 			<property name="isDefault">true</property>
 			<property name="list">-</property>
 			<visible>[System.HasAddon(plugin.video.emby) + !String.IsEmpty(Window(home).Property(emby.connected)) + !String.IsEmpty(Window(home).Property(emby.nodes.8.content)) + [String.IsEqual(Window(home).Property(emby.nodes.8.type),movies) | String.IsEqual(Window(home).Property(emby.nodes.8.type),tvshows) | String.IsEqual(Window(home).Property(emby.nodes.8.type),homevideos)]]</visible>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.8.type),homevideos)">SetProperty(EmbyHubNr,8,home)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.8.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.8.type),movies)">SetProperty(EmbyHubNr,8,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,8,home)</property>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.8.type),homevideos)">ActivateWindow(1130)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(emby.nodes.8.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.nodes.8.content)],return)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.8.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.8.type),movies)">ActivateWindow(1130)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.8.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.wnodes.8.content)],return)</onclick>
+			<onclick condition="String.Contains(Window(home).Property(emby.wnodes.8.type),books)">ActivateWindow(videos,$INFO[Window(home).Property(emby.wnodes.8.content)],return)</onclick>
 			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-emby-nodes-8-title</property>
 			<property name="group">mainmenu</property>
@@ -341,10 +350,11 @@
 			<property name="isDefault">true</property>
 			<property name="list">-</property>
 			<visible>[System.HasAddon(plugin.video.emby) + !String.IsEmpty(Window(home).Property(emby.connected)) + !String.IsEmpty(Window(home).Property(emby.nodes.9.content)) + [String.IsEqual(Window(home).Property(emby.nodes.9.type),movies) | String.IsEqual(Window(home).Property(emby.nodes.9.type),tvshows) | String.IsEqual(Window(home).Property(emby.nodes.9.type),homevideos)]]</visible>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.9.type),homevideos)">SetProperty(EmbyHubNr,9,home)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.9.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.9.type),movies)">SetProperty(EmbyHubNr,9,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,9,home)</property>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.9.type),homevideos)">ActivateWindow(1130)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(emby.nodes.9.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.nodes.9.content)],return)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.9.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.9.type),movies)">ActivateWindow(1130)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.9.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.wnodes.9.content)],return)</onclick>
+			<onclick condition="String.Contains(Window(home).Property(emby.wnodes.9.type),books)">ActivateWindow(videos,$INFO[Window(home).Property(emby.wnodes.9.content)],return)</onclick>
 			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-emby-nodes-9-title</property>
 			<property name="group">mainmenu</property>
@@ -365,10 +375,11 @@
 			<property name="isDefault">true</property>
 			<property name="list">-</property>
 			<visible>[System.HasAddon(plugin.video.emby) + !String.IsEmpty(Window(home).Property(emby.connected)) + !String.IsEmpty(Window(home).Property(emby.nodes.10.content)) + [String.IsEqual(Window(home).Property(emby.nodes.10.type),movies) | String.IsEqual(Window(home).Property(emby.nodes.10.type),tvshows) | String.IsEqual(Window(home).Property(emby.nodes.10.type),homevideos)]]</visible>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.10.type),homevideos)">SetProperty(EmbyHubNr,10,home)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.10.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.10.type),movies)">SetProperty(EmbyHubNr,10,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,10,home)</property>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.10.type),homevideos)">ActivateWindow(1130)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(emby.nodes.10.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.nodes.10.content)],return)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.10.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.10.type),movies)">ActivateWindow(1130)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.10.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.wnodes.10.content)],return)</onclick>
+			<onclick condition="String.Contains(Window(home).Property(emby.wnodes.10.type),books)">ActivateWindow(videos,$INFO[Window(home).Property(emby.wnodes.10.content)],return)</onclick>
 			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-emby-nodes-10-title</property>
 			<property name="group">mainmenu</property>
@@ -389,10 +400,11 @@
 			<property name="isDefault">true</property>
 			<property name="list">-</property>
 			<visible>[System.HasAddon(plugin.video.emby) + !String.IsEmpty(Window(home).Property(emby.connected)) + !String.IsEmpty(Window(home).Property(emby.nodes.11.content)) + [String.IsEqual(Window(home).Property(emby.nodes.11.type),movies) | String.IsEqual(Window(home).Property(emby.nodes.11.type),tvshows) | String.IsEqual(Window(home).Property(emby.nodes.11.type),homevideos)]]</visible>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.11.type),homevideos)">SetProperty(EmbyHubNr,11,home)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.11.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.11.type),movies)">SetProperty(EmbyHubNr,11,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,11,home)</property>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.11.type),homevideos)">ActivateWindow(1130)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(emby.nodes.11.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.nodes.11.content)],return)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.11.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.11.type),movies)">ActivateWindow(1130)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.11.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.wnodes.11.content)],return)</onclick>
+			<onclick condition="String.Contains(Window(home).Property(emby.wnodes.11.type),books)">ActivateWindow(videos,$INFO[Window(home).Property(emby.wnodes.11.content)],return)</onclick>
 			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-emby-nodes-11-title</property>
 			<property name="group">mainmenu</property>
@@ -413,10 +425,11 @@
 			<property name="isDefault">true</property>
 			<property name="list">-</property>
 			<visible>[System.HasAddon(plugin.video.emby) + !String.IsEmpty(Window(home).Property(emby.connected)) + !String.IsEmpty(Window(home).Property(emby.nodes.12.content)) + [String.IsEqual(Window(home).Property(emby.nodes.12.type),movies) | String.IsEqual(Window(home).Property(emby.nodes.12.type),tvshows) | String.IsEqual(Window(home).Property(emby.nodes.12.type),homevideos)]]</visible>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.12.type),homevideos)">SetProperty(EmbyHubNr,12,home)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.12.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.12.type),movies)">SetProperty(EmbyHubNr,12,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,12,home)</property>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.12.type),homevideos)">ActivateWindow(1130)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(emby.nodes.12.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.nodes.12.content)],return)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.12.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.12.type),movies)">ActivateWindow(1130)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.12.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.wnodes.12.content)],return)</onclick>
+			<onclick condition="String.Contains(Window(home).Property(emby.wnodes.12.type),books)">ActivateWindow(videos,$INFO[Window(home).Property(emby.wnodes.12.content)],return)</onclick>
 			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-emby-nodes-12-title</property>
 			<property name="group">mainmenu</property>
@@ -437,10 +450,11 @@
 			<property name="isDefault">true</property>
 			<property name="list">-</property>
 			<visible>[System.HasAddon(plugin.video.emby) + !String.IsEmpty(Window(home).Property(emby.connected)) + !String.IsEmpty(Window(home).Property(emby.nodes.13.content)) + [String.IsEqual(Window(home).Property(emby.nodes.13.type),movies) | String.IsEqual(Window(home).Property(emby.nodes.13.type),tvshows) | String.IsEqual(Window(home).Property(emby.nodes.13.type),homevideos)]]</visible>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.13.type),homevideos)">SetProperty(EmbyHubNr,13,home)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.13.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.13.type),movies)">SetProperty(EmbyHubNr,13,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,13,home)</property>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.13.type),homevideos)">ActivateWindow(1130)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(emby.nodes.13.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.nodes.13.content)],return)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.13.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.13.type),movies)">ActivateWindow(1130)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.13.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.wnodes.13.content)],return)</onclick>
+			<onclick condition="String.Contains(Window(home).Property(emby.wnodes.13.type),books)">ActivateWindow(videos,$INFO[Window(home).Property(emby.wnodes.13.content)],return)</onclick>
 			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-emby-nodes-13-title</property>
 			<property name="group">mainmenu</property>
@@ -461,10 +475,11 @@
 			<property name="isDefault">true</property>
 			<property name="list">-</property>
 			<visible>[System.HasAddon(plugin.video.emby) + !String.IsEmpty(Window(home).Property(emby.connected)) + !String.IsEmpty(Window(home).Property(emby.nodes.14.content)) + [String.IsEqual(Window(home).Property(emby.nodes.14.type),movies) | String.IsEqual(Window(home).Property(emby.nodes.14.type),tvshows) | String.IsEqual(Window(home).Property(emby.nodes.14.type),homevideos)]]</visible>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.14.type),homevideos)">SetProperty(EmbyHubNr,14,home)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.14.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.14.type),movies)">SetProperty(EmbyHubNr,14,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,14,home)</property>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.14.type),homevideos)">ActivateWindow(1130)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(emby.nodes.14.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.nodes.14.content)],return)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.14.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.14.type),movies)">ActivateWindow(1130)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.14.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.wnodes.14.content)],return)</onclick>
+			<onclick condition="String.Contains(Window(home).Property(emby.wnodes.14.type),books)">ActivateWindow(videos,$INFO[Window(home).Property(emby.wnodes.14.content)],return)</onclick>
 			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-emby-nodes-14-title</property>
 			<property name="group">mainmenu</property>
@@ -485,10 +500,11 @@
 			<property name="isDefault">true</property>
 			<property name="list">-</property>
 			<visible>[System.HasAddon(plugin.video.emby) + !String.IsEmpty(Window(home).Property(emby.connected)) + !String.IsEmpty(Window(home).Property(emby.nodes.15.content)) + [String.IsEqual(Window(home).Property(emby.nodes.15.type),movies) | String.IsEqual(Window(home).Property(emby.nodes.15.type),tvshows) | String.IsEqual(Window(home).Property(emby.nodes.15.type),homevideos)]]</visible>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.15.type),homevideos)">SetProperty(EmbyHubNr,15,home)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.15.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.15.type),movies)">SetProperty(EmbyHubNr,15,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,15,home)</property>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.15.type),homevideos)">ActivateWindow(1130)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(emby.nodes.15.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.nodes.15.content)],return)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.15.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.15.type),movies)">ActivateWindow(1130)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.15.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.wnodes.15.content)],return)</onclick>
+			<onclick condition="String.Contains(Window(home).Property(emby.wnodes.15.type),books)">ActivateWindow(videos,$INFO[Window(home).Property(emby.wnodes.15.content)],return)</onclick>
 			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-emby-nodes-15-title</property>
 			<property name="group">mainmenu</property>
@@ -509,10 +525,11 @@
 			<property name="isDefault">true</property>
 			<property name="list">-</property>
 			<visible>[System.HasAddon(plugin.video.emby) + !String.IsEmpty(Window(home).Property(emby.connected)) + !String.IsEmpty(Window(home).Property(emby.nodes.16.content)) + [String.IsEqual(Window(home).Property(emby.nodes.16.type),movies) | String.IsEqual(Window(home).Property(emby.nodes.16.type),tvshows) | String.IsEqual(Window(home).Property(emby.nodes.16.type),homevideos)]]</visible>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.16.type),homevideos)">SetProperty(EmbyHubNr,16,home)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.16.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.16.type),movies)">SetProperty(EmbyHubNr,16,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,16,home)</property>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.16.type),homevideos)">ActivateWindow(1130)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(emby.nodes.16.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.nodes.16.content)],return)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.16.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.16.type),movies)">ActivateWindow(1130)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.16.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.wnodes.16.content)],return)</onclick>
+			<onclick condition="String.Contains(Window(home).Property(emby.wnodes.16.type),books)">ActivateWindow(videos,$INFO[Window(home).Property(emby.wnodes.16.content)],return)</onclick>
 			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-emby-nodes-16-title</property>
 			<property name="group">mainmenu</property>
@@ -533,10 +550,11 @@
 			<property name="isDefault">true</property>
 			<property name="list">-</property>
 			<visible>[System.HasAddon(plugin.video.emby) + !String.IsEmpty(Window(home).Property(emby.connected)) + !String.IsEmpty(Window(home).Property(emby.nodes.17.content)) + [String.IsEqual(Window(home).Property(emby.nodes.17.type),movies) | String.IsEqual(Window(home).Property(emby.nodes.17.type),tvshows) | String.IsEqual(Window(home).Property(emby.nodes.17.type),homevideos)]]</visible>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.17.type),homevideos)">SetProperty(EmbyHubNr,17,home)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.17.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.17.type),movies)">SetProperty(EmbyHubNr,17,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,17,home)</property>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.17.type),homevideos)">ActivateWindow(1130)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(emby.nodes.17.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.nodes.17.content)],return)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.17.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.17.type),movies)">ActivateWindow(1130)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.17.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.wnodes.17.content)],return)</onclick>
+			<onclick condition="String.Contains(Window(home).Property(emby.wnodes.17.type),books)">ActivateWindow(videos,$INFO[Window(home).Property(emby.wnodes.17.content)],return)</onclick>
 			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-emby-nodes-17-title</property>
 			<property name="group">mainmenu</property>
@@ -557,10 +575,11 @@
 			<property name="isDefault">true</property>
 			<property name="list">-</property>
 			<visible>[System.HasAddon(plugin.video.emby) + !String.IsEmpty(Window(home).Property(emby.connected)) + !String.IsEmpty(Window(home).Property(emby.nodes.18.content)) + [String.IsEqual(Window(home).Property(emby.nodes.18.type),movies) | String.IsEqual(Window(home).Property(emby.nodes.18.type),tvshows) | String.IsEqual(Window(home).Property(emby.nodes.18.type),homevideos)]]</visible>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.18.type),homevideos)">SetProperty(EmbyHubNr,18,home)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.18.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.18.type),movies)">SetProperty(EmbyHubNr,18,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,18,home)</property>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.18.type),homevideos)">ActivateWindow(1130)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(emby.nodes.18.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.nodes.18.content)],return)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.18.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.18.type),movies)">ActivateWindow(1130)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.18.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.wnodes.18.content)],return)</onclick>
+			<onclick condition="String.Contains(Window(home).Property(emby.wnodes.18.type),books)">ActivateWindow(videos,$INFO[Window(home).Property(emby.wnodes.18.content)],return)</onclick>
 			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-emby-nodes-18-title</property>
 			<property name="group">mainmenu</property>
@@ -581,10 +600,11 @@
 			<property name="isDefault">true</property>
 			<property name="list">-</property>
 			<visible>[System.HasAddon(plugin.video.emby) + !String.IsEmpty(Window(home).Property(emby.connected)) + !String.IsEmpty(Window(home).Property(emby.nodes.19.content)) + [String.IsEqual(Window(home).Property(emby.nodes.19.type),movies) | String.IsEqual(Window(home).Property(emby.nodes.19.type),tvshows) | String.IsEqual(Window(home).Property(emby.nodes.19.type),homevideos)]]</visible>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.19.type),homevideos)">SetProperty(EmbyHubNr,19,home)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.19.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.19.type),movies)">SetProperty(EmbyHubNr,19,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,19,home)</property>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.19.type),homevideos)">ActivateWindow(1130)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(emby.nodes.19.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.nodes.19.content)],return)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.19.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.19.type),movies)">ActivateWindow(1130)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.19.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.wnodes.19.content)],return)</onclick>
+			<onclick condition="String.Contains(Window(home).Property(emby.wnodes.19.type),books)">ActivateWindow(videos,$INFO[Window(home).Property(emby.wnodes.19.content)],return)</onclick>
 			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-emby-nodes-19-title</property>
 			<property name="group">mainmenu</property>

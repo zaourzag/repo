@@ -73,26 +73,28 @@
 							<itemgap>5</itemgap>
 							<onright>noop</onright>
 							<onleft>900</onleft>
-							<control type="button" id="101">
+							<control type="button" id="54101">
 								<include>LightGreyButton</include>
 								<label>$VAR[VideoInfoButton8]</label>
 								<onup>SetFocus(6666)</onup>
-								<onclick>SetFocus(50)</onclick>
+								<onclick>SetFocus(54)</onclick>
 								<onclick>Select</onclick>
-								<ondown>SetFocus(50)</ondown>
+								<ondown>SetFocus(54)</ondown>
+								<onback>SetFocus(54)</onback>
 							</control>
-							<control type="button" id="110">
+							<control type="button" id="54110">
 								<visible>!String.IsEmpty(ListItem.Plot)</visible>
 								<include>LightGreyButton</include>
 								<width>70</width>
 								<height>50</height>
 								<font>material24</font>
 								<label></label>
-								<onclick>RunScript(script.skin.helper.service,action=textviewer,header='$ESCINFO[ListItem.TVShowTitle]',message='$ESCINFO[ListItem.Plot]')</onclick>
+								<onclick>RunScript(script.embuary.helper,action=textviewer,header='$ESCINFO[ListItem.TVShowTitle]',message='$ESCINFO[ListItem.Plot]')</onclick>
 								<onup>SetFocus(6666)</onup>
 								<ondown>SetFocus(54)</ondown>
+								<onback>SetFocus(54)</onback>
 							</control>
-							<control type="togglebutton" id="102">
+							<control type="togglebutton" id="54102">
 								<include>LightGreyButton</include>
 								<width>70</width>
 								<height>50</height>
@@ -102,6 +104,7 @@
 								<include>ToggleWatchedAction</include>
 								<onup>SetFocus(6666)</onup>
 								<ondown>SetFocus(54)</ondown>
+								<onback>SetFocus(54)</onback>
 								<selected>String.IsEqual(ListItem.Overlay,OverlayWatched.png) | Integer.IsGreaterOrEqual(ListItem.PlayCount,1) | [String.IsEqual(ListItem.DBtype,tvshow) + !String.IsEmpty(ListItem.Property(UnWatchedEpisodes)) + Integer.IsLess(ListItem.Property(UnWatchedEpisodes),1)]</selected>
 							</control>
 						</control>
@@ -113,7 +116,7 @@
 							<label>$INFO[Window(home).Property(EmbyGenre),$LOCALIZE[515]: ,   ]</label>
 							<font>reg22</font>
 							<aligny>top</aligny>
-							<textcolor>accent</textcolor>
+							<textcolor>$VAR[AccentColor]</textcolor>
 							<visible>String.IsEmpty(ListItem.Genre) + !String.IsEmpty(Window(home).Property(EmbyGenre)) + String.StartsWith(ListItem.Path,plugin://plugin.video.embycon)</visible>
 						</control>
 						<control type="textbox">

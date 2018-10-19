@@ -78,7 +78,7 @@
 							<height>50</height>
 							<font>material24</font>
 							<label></label>
-							<onclick>RunScript(script.skin.helper.service,action=textviewer,header='$ESCINFO[ListItem.Title]',message='$ESCINFO[ListItem.Plot]')</onclick>
+							<onclick>RunScript(script.embuary.helper,action=textviewer,header='$ESCINFO[ListItem.Title]',message='$ESCINFO[ListItem.Plot]')</onclick>
 							<ondown>200</ondown>
 						</control>
 						<control type="button" id="103">
@@ -233,7 +233,7 @@
 							<height>50</height>
 							<font>material24</font>
 							<label></label>
-							<onclick>RunScript(script.skin.helper.service,action=textviewer,header='$ESCINFO[ListItem.TVShowTitle]',message='$ESCVAR[TinyInfoDialogPlot]')</onclick>
+							<onclick>RunScript(script.embuary.helper,action=textviewer,header='$ESCINFO[ListItem.TVShowTitle]',message='$ESCVAR[TinyInfoDialogPlot]')</onclick>
 							<ondown>200</ondown>
 						</control>
 						<control type="button" id="103">
@@ -402,7 +402,7 @@
 							<height>50</height>
 							<font>material24</font>
 							<label></label>
-							<onclick>RunScript(script.skin.helper.service,action=textviewer,header='$ESCINFO[ListItem.TVShowTitle]',message='$ESCVAR[TinyInfoDialogPlot]')</onclick>
+							<onclick>RunScript(script.embuary.helper,action=textviewer,header='$ESCINFO[ListItem.TVShowTitle]',message='$ESCVAR[TinyInfoDialogPlot]')</onclick>
 							<ondown>200</ondown>
 						</control>
 						<control type="button" id="103">
@@ -436,7 +436,7 @@
 			</control>
 			<!-- More from seasons %i -->
 			<include content="WideWidget">
-				<param name="visible" value="String.IsEmpty(Container.Pluginname) + !String.IsEmpty(ListItem.DBID) + !String.IsEmpty(Window(home).Property(TVShowDBID)) + !String.IsEmpty(ListItem.Season)"/>
+				<param name="visible" value="String.IsEmpty(Container.Pluginname) + !String.IsEmpty(ListItem.DBID) + !String.IsEmpty(ListItem.Season)"/>
 				<param name="id" value="200"/>
 				<param name="onup" value="100"/>
 				<param name="ondown" value="300"/>
@@ -550,7 +550,7 @@
 				<font>Med23</font>
 				<align>left</align>
 				<aligny>center</aligny>
-				<focusedcolor>accent</focusedcolor>
+				<focusedcolor>$VAR[AccentColor]</focusedcolor>
 				<label>$LOCALIZE[544]</label>
 				<onclick>noop</onclick>
 				<onup>$PARAM[onup]</onup>
@@ -675,7 +675,7 @@
 								<font>material24</font>
 								<label></label>
 								<ondown>200</ondown>
-								<onclick>RunScript(script.skin.helper.service,action=textviewer,header='$ESCINFO[ListItem.Label]',message='$ESCINFO[ListItem.Property(Artist_Description)]')</onclick>
+								<onclick>RunScript(script.embuary.helper,action=textviewer,header='$ESCINFO[ListItem.Label]',message='$ESCINFO[ListItem.Property(Artist_Description)]')</onclick>
 								<visible>!String.IsEmpty(ListItem.Property(Artist_Description))</visible>
 							</control>
 							<control type="button" id="104">
