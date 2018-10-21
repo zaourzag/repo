@@ -3838,7 +3838,7 @@ oder online unter https://goo.gl/GtK41L nachlesen.
     </extension>
 </addon>
 
-<addon id="plugin.video.L0RE.3plus" name="3plus TV" version="0.2.0" provider-name="L0RE">
+<addon id="plugin.video.L0RE.3plus" name="3plus TV" version="0.2.1" provider-name="L0RE">
 	<requires>
 		<import addon="xbmc.python" version="2.24.0"/>
 		<import addon="script.module.beautifulsoup4" version="4.3.2"/>
@@ -3865,12 +3865,8 @@ oder online unter https://goo.gl/GtK41L nachlesen.
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 0.2.0  (22.09.2018)[/COLOR][/B] by realvito[CR]
-- added: Videos können jetzt auch als "m3u8" oder "HLS" mit Inputstream abgespielt werden (Settings)
-- added: Löschfunktion für den internen Cache des Addons (Settings)
-- optimized: Alle Episoden einer Staffel werden jetzt in einem Ordner angezeigt
-- optimized: Trailer und Previews werden herausgefiltert
-- optimized: Bei angezeigten Videos - Titelbild = grösser + bessere Qualität
+		<news>[B][COLOR orangered]Version 0.2.1  (21.10.2018)[/COLOR][/B] by realvito[CR]
+- fixed: Videos können nicht abgespielt werden (verursacht durch Änderung der Webseitencodierung)
 		</news>
 	</extension>
 </addon>
