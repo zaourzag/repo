@@ -7,3 +7,6 @@
 - optimized: Alle Episoden einer Staffel werden jetzt in einem Ordner angezeigt
 - optimized: Trailer und Previews werden herausgefiltert
 - optimized: Bei angezeigten Videos - Titelbild = grösser + bessere Qualität
+
+[B]Version 0.2.1  (21.10.2018)[/B] by realvito
+- fixed: Videos können nicht abgespielt werden (verursacht durch Änderung der Webseitencodierung)

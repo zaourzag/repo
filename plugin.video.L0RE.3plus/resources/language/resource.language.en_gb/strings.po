@@ -95,11 +95,11 @@ msgstr ""
 # WARNING-MESSAGES-OK
 
 msgctxt "#30501"
-msgid "[COLOR orangered]ATTENTION : ... DELETE Addon Cache !!![/COLOR][CR]The complete Cache of [COLOR green]* 3plus TV *[/ COLOR] was deleted successfully !!!"
+msgid "[COLOR orangered]ATTENTION : ... DELETE Addon Cache !!![/COLOR][CR]The complete Cache of [COLOR green]* 3plus TV *[/COLOR] was deleted successfully !!!"
 msgstr ""
 
 msgctxt "#30502"
-msgid "[COLOR orangered]ATTENTION : ... The installed PYTHON VERSION : ***[/ COLOR] {0: s} [COLOR orangered]*** is not compatible !!![/COLOR][CR]Clearing the Cache will be ABORTED [COLOR green]and the Cache will be DISABLED[/ COLOR] !!!"
+msgid "[COLOR orangered]ATTENTION : ... The installed PYTHON VERSION : ***[/COLOR] {0:s} [COLOR orangered]*** is not compatible !!![/COLOR][CR]Clearing the Cache will be ABORTED [COLOR green]and the Cache will be DISABLED[/COLOR] !!!"
 msgstr ""
 
 msgctxt "#30503"

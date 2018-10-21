@@ -2,7 +2,7 @@
 <settings>
 	<category label="30000">
 		<setting label="30230" type="lsep"/>
-		<setting label="30110" type="slider" id="cacheTime" range="1,1,10" default="3" option="int"/>
+		<setting label="30110" type="slider" id="cacheTime" range="0,1,10" default="1" option="int"/>
 		<setting label="30111" type="action" action="RunPlugin(plugin://plugin.video.L0RE.3plus/?mode=clearCache)" visible="true"/>
 		<setting type="sep"/>
 		<setting label="30231" type="lsep"/>

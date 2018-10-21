@@ -37,7 +37,6 @@ import gzip
 global debuging
 pluginhandle = int(sys.argv[1])
 addon = xbmcaddon.Addon()
-socket.setdefaulttimeout(30)
 addonPath = xbmc.translatePath(addon.getAddonInfo('path')).encode('utf-8').decode('utf-8')
 dataPath = xbmc.translatePath(addon.getAddonInfo('profile')).encode('utf-8').decode('utf-8')
 temp        = xbmc.translatePath(os.path.join(dataPath, 'temp', '')).encode('utf-8').decode('utf-8')
@@ -274,7 +273,7 @@ def playVideo(token1):
 	ref1 = "http://playout.3qsdn.com/"+token1
 	content1 = getUrl(firstUrl, referer=ref1)
 	debug("(playVideo) ##### firstURL : "+firstUrl+" #####")
-	content1 = content1.replace('\\x2A', '*').replace('\\x2B', '+').replace('\\x2D', '-').replace('\\x2E', '.').replace('\\x2F', '/').replace('\\x5F', '_')
+	content1 = cleanSymbols(content1)
 	videos1 = re.compile("{src:'(.+?)', type: '(.+?)', quality: '(.+?)'", re.DOTALL).findall(content1) 
 	for found in QUALITIES:
 		for vid, type, quality in videos1:
@@ -315,7 +314,7 @@ def playVideo(token1):
 		ref2 = "http://playout.3qsdn.com/"+token2
 		content2 = getUrl(secondUrl, referer=ref2)
 		debug("(playVideo) ##### secondURL : "+secondUrl+" #####")
-		content2 = content2.replace('\\x2A', '*').replace('\\x2B', '+').replace('\\x2D', '-').replace('\\x2E', '.').replace('\\x2F', '/').replace('\\x5F', '_')
+		content2 = cleanSymbols(content2)
 		videos2 = re.compile("{src:'(.+?)', type: '(.+?)', quality: '(.+?)'", re.DOTALL).findall(content2)
 		for found in QUALITIES:
 			for vid, type, quality in videos2:
@@ -368,6 +367,12 @@ def playVideo(token1):
 		failing("(playVideo) ##### Abspielen des Videos NICHT möglich - URL : {0} - #####\n    ########## KEINEN Stream-Eintrag auf der Webseite von *3plus.tv* gefunden !!! ##########".format(url))
 		xbmcgui.Dialog().notification((translation(30521).format('PLAY')), translation(30523), icon, 8000)
 
+def cleanSymbols(s):
+	s = s.replace('\\x2A', '*').replace('\\x2B', '+').replace('\\x2D', '-').replace('\\x2E', '.').replace('\\x2F', '/').replace('\\x5F', '_')
+	s = s.replace('\\u002A', '*').replace('\\u002B', '+').replace('\\u002D', '-').replace('\\u002E', '.').replace('\\u002F', '/').replace('\\u005F', '_')
+	s = s.replace('\/', '/')
+	return s
+
 def addVideoList(url, name, image):
 	PL = xbmc.PlayList(1)
 	listitem = xbmcgui.ListItem(name, thumbnailImage=image)
@@ -400,7 +405,7 @@ def addLink(name, url, mode, image, plot=None, duration=None, genre=None, direct
 	liz.setArt({'fanart': defaultFanart})
 	liz.addStreamInfo('Video', {'Duration': duration})
 	liz.setProperty('IsPlayable', 'true')
-	#xbmcplugin.setContent(int(sys.argv[1]), 'episodes')
+	xbmcplugin.setContent(int(sys.argv[1]), 'episodes')
 	liz.addContextMenuItems([(translation(30654), 'RunPlugin(plugin://{0}?mode=addVideoList&url={1}&name={2}&image={3}'.format(addon.getAddonInfo('id'), quote_plus(u), quote_plus(name), quote_plus(image)))])
 	return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
 
