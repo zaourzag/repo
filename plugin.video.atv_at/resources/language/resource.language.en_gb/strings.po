@@ -33,7 +33,7 @@ msgid "General"
 msgstr ""
 
 msgctxt "#30001"
-msgid "Cache/Log"
+msgid "Cache"
 msgstr ""
 
 # empty strings from id 30002 to 30109
@@ -44,7 +44,7 @@ msgid "     Preferred Video-file format  [COLOR yellow](mp4|m3u8)[/COLOR]"
 msgstr ""
 
 msgctxt "#30111"
-msgid "     Preferred Playback-Method  [COLOR yellow](Try out !!!)[/ ​​COLOR]"
+msgid "     Preferred Playback-Method  [COLOR yellow](Try out !!!)[/COLOR]"
 msgstr ""
 
 msgctxt "#30112"
@@ -64,15 +64,15 @@ msgid "     View all Episodes of the selected Season on one Page"
 msgstr ""
 
 msgctxt "#30116"
-msgid "     Cache storage  (in days)"
+msgid "     Show *[COLOR yellow] Start Stream ... [/COLOR]* in STANDARD 2 mode"
 msgstr ""
 
 msgctxt "#30117"
-msgid "     [COLOR orangered]<<<>>> Cache DELETE = CLICK HERE <<<>>>[/COLOR]"
+msgid "     Cache storage  (in days)"
 msgstr ""
 
 msgctxt "#30118"
-msgid "     Detailed Program-Debug (otherwise only Minimal-Log)"
+msgid "     [COLOR orangered]<<<>>> Cache DELETE = CLICK HERE <<<>>>[/COLOR]"
 msgstr ""
 
 # empty strings from id 30119 to 30229
@@ -91,11 +91,11 @@ msgid "[B][COLOR ff0099ff]EPISODES[/COLOR][/B]"
 msgstr ""
 
 msgctxt "#30233"
-msgid "[B][COLOR ff0099ff]CACHE[/COLOR][/B]"
+msgid "[B][COLOR ff0099ff]MESSAGES[/COLOR][/B]"
 msgstr ""
 
 msgctxt "#30234"
-msgid "[B][COLOR ff0099ff]LOG[/COLOR][/B]"
+msgid "[B][COLOR ff0099ff]CACHE[/COLOR][/B]"
 msgstr ""
 
 # empty strings from id 30235 to 30349
@@ -117,35 +117,59 @@ msgstr ""
 # WARNING/INFORMATION-MESSAGES-OK
 
 msgctxt "#30501"
-msgid "[COLOR orangered]ATTENTION: ... DELETE Addon-Cache !!![/COLOR][CR]The complete Cache of [COLOR green]* ATV.at - Mediathek *[/ COLOR] has been deleted successfully !!!"
+msgid "[COLOR orangered]ATTENTION: ... DELETE Addon-Cache !!![/COLOR][CR]The complete Cache of [COLOR green]* ATV.at - Mediathek *[/COLOR] has been deleted successfully !!!"
 msgstr ""
 
 msgctxt "#30502"
-msgid "[COLOR orangered]ATTENTION: ... DELETE Addon-Cache !!![/COLOR][CR][COLOR yellow]!!! Currently NO Function in PythonVersion 3 !!![/COLOR][CR][COLOR green]--------------- CANCEL ---------------[/COLOR]"
+msgid "[COLOR orangered]ATTENTION : ... The installed PYTHON VERSION : ***[/COLOR] {0:s} [COLOR orangered]*** is not compatible !!![/COLOR][CR]Clearing the Cache will be ABORTED [COLOR green]and the Cache will be DISABLED[/COLOR] !!!"
 msgstr ""
 
 # empty strings from id 30503 to 30520
 # WARNING/INFORMATION-MESSAGES-NOTIFICATION
 
 msgctxt "#30521"
-msgid "ATV.at : [COLOR red]!!! Video - BLOCKED !!![/COLOR]"
+msgid "ATV.at - Mediathek : [COLOR red]!!! {0:s} - ERROR !!![/COLOR]"
 msgstr ""
 
 msgctxt "#30522"
-msgid "[COLOR red]THIS VIDEO MAY ONLY BE AVAILABLE IN *AUSTRIA* ![/COLOR]"
+msgid "[COLOR red]An error has occured, please check *LOG* ![/COLOR]"
 msgstr ""
 
 msgctxt "#30523"
-msgid "ATV.at : [COLOR red]!!! NO - Video !!![/COLOR]"
+msgid "ATV.at : [COLOR red]!!! Video - BLOCKED !!![/COLOR]"
 msgstr ""
 
 msgctxt "#30524"
+msgid "[COLOR red]THIS VIDEO MAY ONLY BE AVAILABLE IN *AUSTRIA* ![/COLOR]"
+msgstr ""
+
+msgctxt "#30525"
+msgid "ATV.at : [COLOR red]!!! NO - Video !!![/COLOR]"
+msgstr ""
+
+msgctxt "#30526"
 msgid "[COLOR red]NO *VIDEOLINK* COULD BE DETERMINED ![/COLOR]"
 msgstr ""
 
-# empty strings from id 30525 to 30600
+msgctxt "#30527"
+msgid "ATV.at : [COLOR chartreuse]Start Stream ...[/COLOR]"
+msgstr ""
+
+msgctxt "#30528"
+msgid "* [COLOR chartreuse]{0:s}[/COLOR] *"
+msgstr ""
+
+# empty strings from id 30529 to 30600
 # PLUGIN-MAIN and SIDEMENU
 
 msgctxt "#30601"
+msgid "ATV.at - Mediathek"
+msgstr ""
+
+msgctxt "#30602"
+msgid "ATV Settings"
+msgstr ""
+
+msgctxt "#30603"
 msgid "[COLOR chartreuse]Next Page  >>>[/COLOR]"
 msgstr ""

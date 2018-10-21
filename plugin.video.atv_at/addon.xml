@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<addon id="plugin.video.atv_at" name="ATV.at - Mediathek" version="3.0.0" provider-name="realvito">
+<addon id="plugin.video.atv_at" name="ATV.at - Mediathek" version="3.0.1" provider-name="realvito">
 	<requires>
 		<import addon="xbmc.python" version="2.24.0"/>
 		<import addon="script.module.requests" version="2.12.4"/>
@@ -26,14 +26,8 @@
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 3.0.0  (22.09.2018)[/COLOR][/B][CR]Original by PUR3 / Revised by realvito[CR]
-- gefixt: KODI stürzt manchmal beim starten eines Videos ab
-- added: Auswahl des Video-Dateiformats (Settings) zwischen m3u8/mp4
-- added: 3-fache Auswahl der Video-Abspielmethode (Settings) *ausprobieren*
-- added: Zeige alle Episoden der aufgerufenen Staffel auf einer Seite (Settings)
-- added: Mehr Bilder und maximale Qualität der Serien- und Episodenbilder
-- added: Debug-Log (Settings) für bessere Fehlerkontrolle
-- optimized: Im "mp4" Betrieb - versuche alten "rtsp-Link" zu normalem "http-Link" umzuwandeln, falls nicht möglich - spiele ".m3u8" ab
+		<news>[B][COLOR orangered]Version 3.0.1  (21.10.2018)[/COLOR][/B][CR]Original by PUR3 / Revised by realvito[CR]
+- optimized and fixed: Script komplett umgeschrieben und auf eine ".py" minimiert (auf manchen Systemen - andauernd Encodingfehler)
 		</news>
 	</extension>
 </addon>

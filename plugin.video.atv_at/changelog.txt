@@ -9,3 +9,6 @@
 - added: Mehr Bilder und maximale Qualität der Serien- und Episodenbilder
 - added: Debug-Log (Settings) für bessere Fehlerkontrolle
 - optimized: Im "mp4" Betrieb - versuche alten "rtsp-Link" zu normalem "http-Link" umzuwandeln, falls nicht möglich - spiele ".m3u8" ab
+
+[B]Version 3.0.1  (21.10.2018)[/B][CR]Original by PUR3 / Revised by realvito
+- optimized and fixed: Script komplett umgeschrieben und auf eine ".py" minimiert (auf manchen Systemen - andauernd Encodingfehler)
