@@ -1305,7 +1305,7 @@ msgstr ""
 
 #: /shortcuts/overrides.xml
 msgctxt "#31257"
-msgid "Use an Emby styled artwork (if possible)"
+msgid "Default (Uses an Emby styled artwork if possible)"
 msgstr ""
 
 #: /xml/Embuary_Variables.xml
@@ -1376,4 +1376,9 @@ msgstr ""
 #: /xml/SkinSettings.xml
 msgctxt "#31271"
 msgid "Background vignette opacity"
+msgstr ""
+
+#: /xml/script-skin_helper_service-ColorPicker.xml
+msgctxt "#31272"
+msgid "Set for all"
 msgstr ""
