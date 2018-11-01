@@ -3,28 +3,6 @@
 	<include name="skinshortcuts-mainmenu">
 		<item id="1">
 			<property name="id">$NUMBER[1]</property>
-			<label>$LOCALIZE[3]</label>
-			<label2 />
-			<icon>DefaultShortcut.png</icon>
-			<thumb />
-			<property name="labelID">3</property>
-			<property name="defaultID">embuary_videos</property>
-			<property name="isDefault">true</property>
-			<property name="list">-</property>
-			<visible>!Library.HasContent(movies) + !Library.HasContent(tvshows)</visible>
-			<onclick>ActivateWindow(Videos,sources://video/,return)</onclick>
-			<property name="path">ActivateWindow(Videos,sources://video/,return)</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
-			<property name="submenuVisibility">num-3</property>
-			<property name="group">mainmenu</property>
-			<property name="art1">$INFO[Container(4343$NUMBER[1]).ListItem(0).Icon]</property>
-			<property name="art3">$INFO[Container(4343$NUMBER[1]).ListItem(2).Icon]</property>
-			<property name="art2">$INFO[Container(4343$NUMBER[1]).ListItem(1).Icon]</property>
-			<property name="art4">$INFO[Container(4343$NUMBER[1]).ListItem(3).Icon]</property>
-			<property name="hasSubmenu">False</property>
-		</item>
-		<item id="2">
-			<property name="id">$NUMBER[2]</property>
 			<label>$LOCALIZE[31180]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -59,17 +37,17 @@
 		]]]</visible>
 			<onclick>ActivateWindow(1120,return)</onclick>
 			<property name="path">ActivateWindow(1120,return)</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">num-31180</property>
 			<property name="group">mainmenu</property>
-			<property name="art1">$INFO[Container(4343$NUMBER[2]).ListItem(0).Icon]</property>
-			<property name="art3">$INFO[Container(4343$NUMBER[2]).ListItem(2).Icon]</property>
-			<property name="art2">$INFO[Container(4343$NUMBER[2]).ListItem(1).Icon]</property>
-			<property name="art4">$INFO[Container(4343$NUMBER[2]).ListItem(3).Icon]</property>
+			<property name="art1">$INFO[Container(4343$NUMBER[1]).ListItem(0).Icon]</property>
+			<property name="art3">$INFO[Container(4343$NUMBER[1]).ListItem(2).Icon]</property>
+			<property name="art2">$INFO[Container(4343$NUMBER[1]).ListItem(1).Icon]</property>
+			<property name="art4">$INFO[Container(4343$NUMBER[1]).ListItem(3).Icon]</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="3">
-			<property name="id">$NUMBER[3]</property>
+		<item id="2">
+			<property name="id">$NUMBER[2]</property>
 			<label>$LOCALIZE[31169]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -82,17 +60,17 @@
 			<visible>[Library.HasContent(MovieSets)] + [Library.HasContent(MovieSets)]</visible>
 			<onclick>ActivateWindow(videos,library://video/movies/sets.xml/,return)</onclick>
 			<property name="path">ActivateWindow(videos,library://video/movies/sets.xml/,return)</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">num-31169</property>
 			<property name="group">mainmenu</property>
-			<property name="art1">$INFO[Container(4343$NUMBER[3]).ListItem(0).Icon]</property>
-			<property name="art3">$INFO[Container(4343$NUMBER[3]).ListItem(2).Icon]</property>
-			<property name="art2">$INFO[Container(4343$NUMBER[3]).ListItem(1).Icon]</property>
-			<property name="art4">$INFO[Container(4343$NUMBER[3]).ListItem(3).Icon]</property>
+			<property name="art1">$INFO[Container(4343$NUMBER[2]).ListItem(0).Icon]</property>
+			<property name="art3">$INFO[Container(4343$NUMBER[2]).ListItem(2).Icon]</property>
+			<property name="art2">$INFO[Container(4343$NUMBER[2]).ListItem(1).Icon]</property>
+			<property name="art4">$INFO[Container(4343$NUMBER[2]).ListItem(3).Icon]</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="4">
-			<property name="id">$NUMBER[4]</property>
+		<item id="3">
+			<property name="id">$NUMBER[3]</property>
 			<label>$LOCALIZE[31179]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -127,17 +105,17 @@
 		]]]</visible>
 			<onclick>ActivateWindow(1121,return)</onclick>
 			<property name="path">ActivateWindow(1121,return)</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">num-31179</property>
 			<property name="group">mainmenu</property>
-			<property name="art1">$INFO[Container(4343$NUMBER[4]).ListItem(0).Icon]</property>
-			<property name="art3">$INFO[Container(4343$NUMBER[4]).ListItem(2).Icon]</property>
-			<property name="art2">$INFO[Container(4343$NUMBER[4]).ListItem(1).Icon]</property>
-			<property name="art4">$INFO[Container(4343$NUMBER[4]).ListItem(3).Icon]</property>
+			<property name="art1">$INFO[Container(4343$NUMBER[3]).ListItem(0).Icon]</property>
+			<property name="art3">$INFO[Container(4343$NUMBER[3]).ListItem(2).Icon]</property>
+			<property name="art2">$INFO[Container(4343$NUMBER[3]).ListItem(1).Icon]</property>
+			<property name="art4">$INFO[Container(4343$NUMBER[3]).ListItem(3).Icon]</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="5">
-			<property name="id">$NUMBER[5]</property>
+		<item id="4">
+			<property name="id">$NUMBER[4]</property>
 			<label>$INFO[Window(home).Property(emby.nodes.0.title)]</label>
 			<label2 />
 			<icon>$INFO[Window(home).Property(emby.nodes.0.artwork)]</icon>
@@ -147,21 +125,22 @@
 			<property name="isDefault">true</property>
 			<property name="list">-</property>
 			<visible>[System.HasAddon(plugin.video.emby) + !String.IsEmpty(Window(home).Property(emby.connected)) + !String.IsEmpty(Window(home).Property(emby.nodes.0.content)) + [String.IsEqual(Window(home).Property(emby.nodes.0.type),movies) | String.IsEqual(Window(home).Property(emby.nodes.0.type),tvshows) | String.IsEqual(Window(home).Property(emby.nodes.0.type),homevideos)]]</visible>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.0.type),homevideos)">SetProperty(EmbyHubNr,0,home)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.0.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.0.type),movies)">SetProperty(EmbyHubNr,0,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,0,home)</property>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.0.type),homevideos)">ActivateWindow(1130)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(emby.nodes.0.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.nodes.0.content)],return)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.0.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.0.type),movies)">ActivateWindow(1130)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.0.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.wnodes.0.content)],return)</onclick>
+			<onclick condition="String.Contains(Window(home).Property(emby.wnodes.0.type),books)">ActivateWindow(videos,$INFO[Window(home).Property(emby.wnodes.0.content)],return)</onclick>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-emby-nodes-0-title</property>
 			<property name="group">mainmenu</property>
-			<property name="art1">$INFO[Container(4343$NUMBER[5]).ListItem(0).Icon]</property>
-			<property name="art3">$INFO[Container(4343$NUMBER[5]).ListItem(2).Icon]</property>
-			<property name="art2">$INFO[Container(4343$NUMBER[5]).ListItem(1).Icon]</property>
-			<property name="art4">$INFO[Container(4343$NUMBER[5]).ListItem(3).Icon]</property>
+			<property name="art1">$INFO[Container(4343$NUMBER[4]).ListItem(0).Icon]</property>
+			<property name="art3">$INFO[Container(4343$NUMBER[4]).ListItem(2).Icon]</property>
+			<property name="art2">$INFO[Container(4343$NUMBER[4]).ListItem(1).Icon]</property>
+			<property name="art4">$INFO[Container(4343$NUMBER[4]).ListItem(3).Icon]</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="6">
-			<property name="id">$NUMBER[6]</property>
+		<item id="5">
+			<property name="id">$NUMBER[5]</property>
 			<label>$INFO[Window(home).Property(emby.nodes.1.title)]</label>
 			<label2 />
 			<icon>$INFO[Window(home).Property(emby.nodes.1.artwork)]</icon>
@@ -171,21 +150,22 @@
 			<property name="isDefault">true</property>
 			<property name="list">-</property>
 			<visible>[System.HasAddon(plugin.video.emby) + !String.IsEmpty(Window(home).Property(emby.connected)) + !String.IsEmpty(Window(home).Property(emby.nodes.1.content)) + [String.IsEqual(Window(home).Property(emby.nodes.1.type),movies) | String.IsEqual(Window(home).Property(emby.nodes.1.type),tvshows) | String.IsEqual(Window(home).Property(emby.nodes.1.type),homevideos)]]</visible>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.1.type),homevideos)">SetProperty(EmbyHubNr,1,home)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.1.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.1.type),movies)">SetProperty(EmbyHubNr,1,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,1,home)</property>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.1.type),homevideos)">ActivateWindow(1130)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(emby.nodes.1.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.nodes.1.content)],return)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.1.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.1.type),movies)">ActivateWindow(1130)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.1.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.wnodes.1.content)],return)</onclick>
+			<onclick condition="String.Contains(Window(home).Property(emby.wnodes.1.type),books)">ActivateWindow(videos,$INFO[Window(home).Property(emby.wnodes.1.content)],return)</onclick>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-emby-nodes-1-title</property>
 			<property name="group">mainmenu</property>
-			<property name="art1">$INFO[Container(4343$NUMBER[6]).ListItem(0).Icon]</property>
-			<property name="art3">$INFO[Container(4343$NUMBER[6]).ListItem(2).Icon]</property>
-			<property name="art2">$INFO[Container(4343$NUMBER[6]).ListItem(1).Icon]</property>
-			<property name="art4">$INFO[Container(4343$NUMBER[6]).ListItem(3).Icon]</property>
+			<property name="art1">$INFO[Container(4343$NUMBER[5]).ListItem(0).Icon]</property>
+			<property name="art3">$INFO[Container(4343$NUMBER[5]).ListItem(2).Icon]</property>
+			<property name="art2">$INFO[Container(4343$NUMBER[5]).ListItem(1).Icon]</property>
+			<property name="art4">$INFO[Container(4343$NUMBER[5]).ListItem(3).Icon]</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="7">
-			<property name="id">$NUMBER[7]</property>
+		<item id="6">
+			<property name="id">$NUMBER[6]</property>
 			<label>$INFO[Window(home).Property(emby.nodes.2.title)]</label>
 			<label2 />
 			<icon>$INFO[Window(home).Property(emby.nodes.2.artwork)]</icon>
@@ -195,21 +175,22 @@
 			<property name="isDefault">true</property>
 			<property name="list">-</property>
 			<visible>[System.HasAddon(plugin.video.emby) + !String.IsEmpty(Window(home).Property(emby.connected)) + !String.IsEmpty(Window(home).Property(emby.nodes.2.content)) + [String.IsEqual(Window(home).Property(emby.nodes.2.type),movies) | String.IsEqual(Window(home).Property(emby.nodes.2.type),tvshows) | String.IsEqual(Window(home).Property(emby.nodes.2.type),homevideos)]]</visible>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.2.type),homevideos)">SetProperty(EmbyHubNr,2,home)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.2.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.2.type),movies)">SetProperty(EmbyHubNr,2,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,2,home)</property>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.2.type),homevideos)">ActivateWindow(1130)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(emby.nodes.2.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.nodes.2.content)],return)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.2.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.2.type),movies)">ActivateWindow(1130)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.2.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.wnodes.2.content)],return)</onclick>
+			<onclick condition="String.Contains(Window(home).Property(emby.wnodes.2.type),books)">ActivateWindow(videos,$INFO[Window(home).Property(emby.wnodes.2.content)],return)</onclick>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-emby-nodes-2-title</property>
 			<property name="group">mainmenu</property>
-			<property name="art1">$INFO[Container(4343$NUMBER[7]).ListItem(0).Icon]</property>
-			<property name="art3">$INFO[Container(4343$NUMBER[7]).ListItem(2).Icon]</property>
-			<property name="art2">$INFO[Container(4343$NUMBER[7]).ListItem(1).Icon]</property>
-			<property name="art4">$INFO[Container(4343$NUMBER[7]).ListItem(3).Icon]</property>
+			<property name="art1">$INFO[Container(4343$NUMBER[6]).ListItem(0).Icon]</property>
+			<property name="art3">$INFO[Container(4343$NUMBER[6]).ListItem(2).Icon]</property>
+			<property name="art2">$INFO[Container(4343$NUMBER[6]).ListItem(1).Icon]</property>
+			<property name="art4">$INFO[Container(4343$NUMBER[6]).ListItem(3).Icon]</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="8">
-			<property name="id">$NUMBER[8]</property>
+		<item id="7">
+			<property name="id">$NUMBER[7]</property>
 			<label>$INFO[Window(home).Property(emby.nodes.3.title)]</label>
 			<label2 />
 			<icon>$INFO[Window(home).Property(emby.nodes.3.artwork)]</icon>
@@ -219,21 +200,22 @@
 			<property name="isDefault">true</property>
 			<property name="list">-</property>
 			<visible>[System.HasAddon(plugin.video.emby) + !String.IsEmpty(Window(home).Property(emby.connected)) + !String.IsEmpty(Window(home).Property(emby.nodes.3.content)) + [String.IsEqual(Window(home).Property(emby.nodes.3.type),movies) | String.IsEqual(Window(home).Property(emby.nodes.3.type),tvshows) | String.IsEqual(Window(home).Property(emby.nodes.3.type),homevideos)]]</visible>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.3.type),homevideos)">SetProperty(EmbyHubNr,3,home)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.3.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.3.type),movies)">SetProperty(EmbyHubNr,3,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,3,home)</property>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.3.type),homevideos)">ActivateWindow(1130)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(emby.nodes.3.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.nodes.3.content)],return)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.3.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.3.type),movies)">ActivateWindow(1130)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.3.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.wnodes.3.content)],return)</onclick>
+			<onclick condition="String.Contains(Window(home).Property(emby.wnodes.3.type),books)">ActivateWindow(videos,$INFO[Window(home).Property(emby.wnodes.3.content)],return)</onclick>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-emby-nodes-3-title</property>
 			<property name="group">mainmenu</property>
-			<property name="art1">$INFO[Container(4343$NUMBER[8]).ListItem(0).Icon]</property>
-			<property name="art3">$INFO[Container(4343$NUMBER[8]).ListItem(2).Icon]</property>
-			<property name="art2">$INFO[Container(4343$NUMBER[8]).ListItem(1).Icon]</property>
-			<property name="art4">$INFO[Container(4343$NUMBER[8]).ListItem(3).Icon]</property>
+			<property name="art1">$INFO[Container(4343$NUMBER[7]).ListItem(0).Icon]</property>
+			<property name="art3">$INFO[Container(4343$NUMBER[7]).ListItem(2).Icon]</property>
+			<property name="art2">$INFO[Container(4343$NUMBER[7]).ListItem(1).Icon]</property>
+			<property name="art4">$INFO[Container(4343$NUMBER[7]).ListItem(3).Icon]</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="9">
-			<property name="id">$NUMBER[9]</property>
+		<item id="8">
+			<property name="id">$NUMBER[8]</property>
 			<label>$INFO[Window(home).Property(emby.nodes.4.title)]</label>
 			<label2 />
 			<icon>$INFO[Window(home).Property(emby.nodes.4.artwork)]</icon>
@@ -243,21 +225,22 @@
 			<property name="isDefault">true</property>
 			<property name="list">-</property>
 			<visible>[System.HasAddon(plugin.video.emby) + !String.IsEmpty(Window(home).Property(emby.connected)) + !String.IsEmpty(Window(home).Property(emby.nodes.4.content)) + [String.IsEqual(Window(home).Property(emby.nodes.4.type),movies) | String.IsEqual(Window(home).Property(emby.nodes.4.type),tvshows) | String.IsEqual(Window(home).Property(emby.nodes.4.type),homevideos)]]</visible>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.4.type),homevideos)">SetProperty(EmbyHubNr,4,home)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.4.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.4.type),movies)">SetProperty(EmbyHubNr,4,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,4,home)</property>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.4.type),homevideos)">ActivateWindow(1130)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(emby.nodes.4.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.nodes.4.content)],return)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.4.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.4.type),movies)">ActivateWindow(1130)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.4.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.wnodes.4.content)],return)</onclick>
+			<onclick condition="String.Contains(Window(home).Property(emby.wnodes.4.type),books)">ActivateWindow(videos,$INFO[Window(home).Property(emby.wnodes.4.content)],return)</onclick>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-emby-nodes-4-title</property>
 			<property name="group">mainmenu</property>
-			<property name="art1">$INFO[Container(4343$NUMBER[9]).ListItem(0).Icon]</property>
-			<property name="art3">$INFO[Container(4343$NUMBER[9]).ListItem(2).Icon]</property>
-			<property name="art2">$INFO[Container(4343$NUMBER[9]).ListItem(1).Icon]</property>
-			<property name="art4">$INFO[Container(4343$NUMBER[9]).ListItem(3).Icon]</property>
+			<property name="art1">$INFO[Container(4343$NUMBER[8]).ListItem(0).Icon]</property>
+			<property name="art3">$INFO[Container(4343$NUMBER[8]).ListItem(2).Icon]</property>
+			<property name="art2">$INFO[Container(4343$NUMBER[8]).ListItem(1).Icon]</property>
+			<property name="art4">$INFO[Container(4343$NUMBER[8]).ListItem(3).Icon]</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="10">
-			<property name="id">$NUMBER[10]</property>
+		<item id="9">
+			<property name="id">$NUMBER[9]</property>
 			<label>$INFO[Window(home).Property(emby.nodes.5.title)]</label>
 			<label2 />
 			<icon>$INFO[Window(home).Property(emby.nodes.5.artwork)]</icon>
@@ -267,21 +250,22 @@
 			<property name="isDefault">true</property>
 			<property name="list">-</property>
 			<visible>[System.HasAddon(plugin.video.emby) + !String.IsEmpty(Window(home).Property(emby.connected)) + !String.IsEmpty(Window(home).Property(emby.nodes.5.content)) + [String.IsEqual(Window(home).Property(emby.nodes.5.type),movies) | String.IsEqual(Window(home).Property(emby.nodes.5.type),tvshows) | String.IsEqual(Window(home).Property(emby.nodes.5.type),homevideos)]]</visible>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.5.type),homevideos)">SetProperty(EmbyHubNr,5,home)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.5.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.5.type),movies)">SetProperty(EmbyHubNr,5,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,5,home)</property>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.5.type),homevideos)">ActivateWindow(1130)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(emby.nodes.5.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.nodes.5.content)],return)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.5.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.5.type),movies)">ActivateWindow(1130)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.5.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.wnodes.5.content)],return)</onclick>
+			<onclick condition="String.Contains(Window(home).Property(emby.wnodes.5.type),books)">ActivateWindow(videos,$INFO[Window(home).Property(emby.wnodes.5.content)],return)</onclick>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-emby-nodes-5-title</property>
 			<property name="group">mainmenu</property>
-			<property name="art1">$INFO[Container(4343$NUMBER[10]).ListItem(0).Icon]</property>
-			<property name="art3">$INFO[Container(4343$NUMBER[10]).ListItem(2).Icon]</property>
-			<property name="art2">$INFO[Container(4343$NUMBER[10]).ListItem(1).Icon]</property>
-			<property name="art4">$INFO[Container(4343$NUMBER[10]).ListItem(3).Icon]</property>
+			<property name="art1">$INFO[Container(4343$NUMBER[9]).ListItem(0).Icon]</property>
+			<property name="art3">$INFO[Container(4343$NUMBER[9]).ListItem(2).Icon]</property>
+			<property name="art2">$INFO[Container(4343$NUMBER[9]).ListItem(1).Icon]</property>
+			<property name="art4">$INFO[Container(4343$NUMBER[9]).ListItem(3).Icon]</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="11">
-			<property name="id">$NUMBER[11]</property>
+		<item id="10">
+			<property name="id">$NUMBER[10]</property>
 			<label>$INFO[Window(home).Property(emby.nodes.6.title)]</label>
 			<label2 />
 			<icon>$INFO[Window(home).Property(emby.nodes.6.artwork)]</icon>
@@ -291,21 +275,22 @@
 			<property name="isDefault">true</property>
 			<property name="list">-</property>
 			<visible>[System.HasAddon(plugin.video.emby) + !String.IsEmpty(Window(home).Property(emby.connected)) + !String.IsEmpty(Window(home).Property(emby.nodes.6.content)) + [String.IsEqual(Window(home).Property(emby.nodes.6.type),movies) | String.IsEqual(Window(home).Property(emby.nodes.6.type),tvshows) | String.IsEqual(Window(home).Property(emby.nodes.6.type),homevideos)]]</visible>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.6.type),homevideos)">SetProperty(EmbyHubNr,6,home)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.6.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.6.type),movies)">SetProperty(EmbyHubNr,6,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,6,home)</property>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.6.type),homevideos)">ActivateWindow(1130)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(emby.nodes.6.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.nodes.6.content)],return)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.6.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.6.type),movies)">ActivateWindow(1130)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.6.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.wnodes.6.content)],return)</onclick>
+			<onclick condition="String.Contains(Window(home).Property(emby.wnodes.6.type),books)">ActivateWindow(videos,$INFO[Window(home).Property(emby.wnodes.6.content)],return)</onclick>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-emby-nodes-6-title</property>
 			<property name="group">mainmenu</property>
-			<property name="art1">$INFO[Container(4343$NUMBER[11]).ListItem(0).Icon]</property>
-			<property name="art3">$INFO[Container(4343$NUMBER[11]).ListItem(2).Icon]</property>
-			<property name="art2">$INFO[Container(4343$NUMBER[11]).ListItem(1).Icon]</property>
-			<property name="art4">$INFO[Container(4343$NUMBER[11]).ListItem(3).Icon]</property>
+			<property name="art1">$INFO[Container(4343$NUMBER[10]).ListItem(0).Icon]</property>
+			<property name="art3">$INFO[Container(4343$NUMBER[10]).ListItem(2).Icon]</property>
+			<property name="art2">$INFO[Container(4343$NUMBER[10]).ListItem(1).Icon]</property>
+			<property name="art4">$INFO[Container(4343$NUMBER[10]).ListItem(3).Icon]</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="12">
-			<property name="id">$NUMBER[12]</property>
+		<item id="11">
+			<property name="id">$NUMBER[11]</property>
 			<label>$INFO[Window(home).Property(emby.nodes.7.title)]</label>
 			<label2 />
 			<icon>$INFO[Window(home).Property(emby.nodes.7.artwork)]</icon>
@@ -315,21 +300,22 @@
 			<property name="isDefault">true</property>
 			<property name="list">-</property>
 			<visible>[System.HasAddon(plugin.video.emby) + !String.IsEmpty(Window(home).Property(emby.connected)) + !String.IsEmpty(Window(home).Property(emby.nodes.7.content)) + [String.IsEqual(Window(home).Property(emby.nodes.7.type),movies) | String.IsEqual(Window(home).Property(emby.nodes.7.type),tvshows) | String.IsEqual(Window(home).Property(emby.nodes.7.type),homevideos)]]</visible>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.7.type),homevideos)">SetProperty(EmbyHubNr,7,home)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.7.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.7.type),movies)">SetProperty(EmbyHubNr,7,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,7,home)</property>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.7.type),homevideos)">ActivateWindow(1130)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(emby.nodes.7.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.nodes.7.content)],return)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.7.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.7.type),movies)">ActivateWindow(1130)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.7.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.wnodes.7.content)],return)</onclick>
+			<onclick condition="String.Contains(Window(home).Property(emby.wnodes.7.type),books)">ActivateWindow(videos,$INFO[Window(home).Property(emby.wnodes.7.content)],return)</onclick>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-emby-nodes-7-title</property>
 			<property name="group">mainmenu</property>
-			<property name="art1">$INFO[Container(4343$NUMBER[12]).ListItem(0).Icon]</property>
-			<property name="art3">$INFO[Container(4343$NUMBER[12]).ListItem(2).Icon]</property>
-			<property name="art2">$INFO[Container(4343$NUMBER[12]).ListItem(1).Icon]</property>
-			<property name="art4">$INFO[Container(4343$NUMBER[12]).ListItem(3).Icon]</property>
+			<property name="art1">$INFO[Container(4343$NUMBER[11]).ListItem(0).Icon]</property>
+			<property name="art3">$INFO[Container(4343$NUMBER[11]).ListItem(2).Icon]</property>
+			<property name="art2">$INFO[Container(4343$NUMBER[11]).ListItem(1).Icon]</property>
+			<property name="art4">$INFO[Container(4343$NUMBER[11]).ListItem(3).Icon]</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="13">
-			<property name="id">$NUMBER[13]</property>
+		<item id="12">
+			<property name="id">$NUMBER[12]</property>
 			<label>$INFO[Window(home).Property(emby.nodes.8.title)]</label>
 			<label2 />
 			<icon>$INFO[Window(home).Property(emby.nodes.8.artwork)]</icon>
@@ -339,21 +325,22 @@
 			<property name="isDefault">true</property>
 			<property name="list">-</property>
 			<visible>[System.HasAddon(plugin.video.emby) + !String.IsEmpty(Window(home).Property(emby.connected)) + !String.IsEmpty(Window(home).Property(emby.nodes.8.content)) + [String.IsEqual(Window(home).Property(emby.nodes.8.type),movies) | String.IsEqual(Window(home).Property(emby.nodes.8.type),tvshows) | String.IsEqual(Window(home).Property(emby.nodes.8.type),homevideos)]]</visible>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.8.type),homevideos)">SetProperty(EmbyHubNr,8,home)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.8.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.8.type),movies)">SetProperty(EmbyHubNr,8,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,8,home)</property>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.8.type),homevideos)">ActivateWindow(1130)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(emby.nodes.8.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.nodes.8.content)],return)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.8.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.8.type),movies)">ActivateWindow(1130)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.8.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.wnodes.8.content)],return)</onclick>
+			<onclick condition="String.Contains(Window(home).Property(emby.wnodes.8.type),books)">ActivateWindow(videos,$INFO[Window(home).Property(emby.wnodes.8.content)],return)</onclick>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-emby-nodes-8-title</property>
 			<property name="group">mainmenu</property>
-			<property name="art1">$INFO[Container(4343$NUMBER[13]).ListItem(0).Icon]</property>
-			<property name="art3">$INFO[Container(4343$NUMBER[13]).ListItem(2).Icon]</property>
-			<property name="art2">$INFO[Container(4343$NUMBER[13]).ListItem(1).Icon]</property>
-			<property name="art4">$INFO[Container(4343$NUMBER[13]).ListItem(3).Icon]</property>
+			<property name="art1">$INFO[Container(4343$NUMBER[12]).ListItem(0).Icon]</property>
+			<property name="art3">$INFO[Container(4343$NUMBER[12]).ListItem(2).Icon]</property>
+			<property name="art2">$INFO[Container(4343$NUMBER[12]).ListItem(1).Icon]</property>
+			<property name="art4">$INFO[Container(4343$NUMBER[12]).ListItem(3).Icon]</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="14">
-			<property name="id">$NUMBER[14]</property>
+		<item id="13">
+			<property name="id">$NUMBER[13]</property>
 			<label>$INFO[Window(home).Property(emby.nodes.9.title)]</label>
 			<label2 />
 			<icon>$INFO[Window(home).Property(emby.nodes.9.artwork)]</icon>
@@ -363,21 +350,22 @@
 			<property name="isDefault">true</property>
 			<property name="list">-</property>
 			<visible>[System.HasAddon(plugin.video.emby) + !String.IsEmpty(Window(home).Property(emby.connected)) + !String.IsEmpty(Window(home).Property(emby.nodes.9.content)) + [String.IsEqual(Window(home).Property(emby.nodes.9.type),movies) | String.IsEqual(Window(home).Property(emby.nodes.9.type),tvshows) | String.IsEqual(Window(home).Property(emby.nodes.9.type),homevideos)]]</visible>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.9.type),homevideos)">SetProperty(EmbyHubNr,9,home)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.9.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.9.type),movies)">SetProperty(EmbyHubNr,9,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,9,home)</property>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.9.type),homevideos)">ActivateWindow(1130)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(emby.nodes.9.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.nodes.9.content)],return)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.9.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.9.type),movies)">ActivateWindow(1130)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.9.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.wnodes.9.content)],return)</onclick>
+			<onclick condition="String.Contains(Window(home).Property(emby.wnodes.9.type),books)">ActivateWindow(videos,$INFO[Window(home).Property(emby.wnodes.9.content)],return)</onclick>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-emby-nodes-9-title</property>
 			<property name="group">mainmenu</property>
-			<property name="art1">$INFO[Container(4343$NUMBER[14]).ListItem(0).Icon]</property>
-			<property name="art3">$INFO[Container(4343$NUMBER[14]).ListItem(2).Icon]</property>
-			<property name="art2">$INFO[Container(4343$NUMBER[14]).ListItem(1).Icon]</property>
-			<property name="art4">$INFO[Container(4343$NUMBER[14]).ListItem(3).Icon]</property>
+			<property name="art1">$INFO[Container(4343$NUMBER[13]).ListItem(0).Icon]</property>
+			<property name="art3">$INFO[Container(4343$NUMBER[13]).ListItem(2).Icon]</property>
+			<property name="art2">$INFO[Container(4343$NUMBER[13]).ListItem(1).Icon]</property>
+			<property name="art4">$INFO[Container(4343$NUMBER[13]).ListItem(3).Icon]</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="15">
-			<property name="id">$NUMBER[15]</property>
+		<item id="14">
+			<property name="id">$NUMBER[14]</property>
 			<label>$INFO[Window(home).Property(emby.nodes.10.title)]</label>
 			<label2 />
 			<icon>$INFO[Window(home).Property(emby.nodes.10.artwork)]</icon>
@@ -387,21 +375,22 @@
 			<property name="isDefault">true</property>
 			<property name="list">-</property>
 			<visible>[System.HasAddon(plugin.video.emby) + !String.IsEmpty(Window(home).Property(emby.connected)) + !String.IsEmpty(Window(home).Property(emby.nodes.10.content)) + [String.IsEqual(Window(home).Property(emby.nodes.10.type),movies) | String.IsEqual(Window(home).Property(emby.nodes.10.type),tvshows) | String.IsEqual(Window(home).Property(emby.nodes.10.type),homevideos)]]</visible>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.10.type),homevideos)">SetProperty(EmbyHubNr,10,home)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.10.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.10.type),movies)">SetProperty(EmbyHubNr,10,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,10,home)</property>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.10.type),homevideos)">ActivateWindow(1130)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(emby.nodes.10.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.nodes.10.content)],return)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.10.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.10.type),movies)">ActivateWindow(1130)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.10.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.wnodes.10.content)],return)</onclick>
+			<onclick condition="String.Contains(Window(home).Property(emby.wnodes.10.type),books)">ActivateWindow(videos,$INFO[Window(home).Property(emby.wnodes.10.content)],return)</onclick>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-emby-nodes-10-title</property>
 			<property name="group">mainmenu</property>
-			<property name="art1">$INFO[Container(4343$NUMBER[15]).ListItem(0).Icon]</property>
-			<property name="art3">$INFO[Container(4343$NUMBER[15]).ListItem(2).Icon]</property>
-			<property name="art2">$INFO[Container(4343$NUMBER[15]).ListItem(1).Icon]</property>
-			<property name="art4">$INFO[Container(4343$NUMBER[15]).ListItem(3).Icon]</property>
+			<property name="art1">$INFO[Container(4343$NUMBER[14]).ListItem(0).Icon]</property>
+			<property name="art3">$INFO[Container(4343$NUMBER[14]).ListItem(2).Icon]</property>
+			<property name="art2">$INFO[Container(4343$NUMBER[14]).ListItem(1).Icon]</property>
+			<property name="art4">$INFO[Container(4343$NUMBER[14]).ListItem(3).Icon]</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="16">
-			<property name="id">$NUMBER[16]</property>
+		<item id="15">
+			<property name="id">$NUMBER[15]</property>
 			<label>$INFO[Window(home).Property(emby.nodes.11.title)]</label>
 			<label2 />
 			<icon>$INFO[Window(home).Property(emby.nodes.11.artwork)]</icon>
@@ -411,21 +400,22 @@
 			<property name="isDefault">true</property>
 			<property name="list">-</property>
 			<visible>[System.HasAddon(plugin.video.emby) + !String.IsEmpty(Window(home).Property(emby.connected)) + !String.IsEmpty(Window(home).Property(emby.nodes.11.content)) + [String.IsEqual(Window(home).Property(emby.nodes.11.type),movies) | String.IsEqual(Window(home).Property(emby.nodes.11.type),tvshows) | String.IsEqual(Window(home).Property(emby.nodes.11.type),homevideos)]]</visible>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.11.type),homevideos)">SetProperty(EmbyHubNr,11,home)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.11.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.11.type),movies)">SetProperty(EmbyHubNr,11,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,11,home)</property>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.11.type),homevideos)">ActivateWindow(1130)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(emby.nodes.11.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.nodes.11.content)],return)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.11.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.11.type),movies)">ActivateWindow(1130)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.11.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.wnodes.11.content)],return)</onclick>
+			<onclick condition="String.Contains(Window(home).Property(emby.wnodes.11.type),books)">ActivateWindow(videos,$INFO[Window(home).Property(emby.wnodes.11.content)],return)</onclick>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-emby-nodes-11-title</property>
 			<property name="group">mainmenu</property>
-			<property name="art1">$INFO[Container(4343$NUMBER[16]).ListItem(0).Icon]</property>
-			<property name="art3">$INFO[Container(4343$NUMBER[16]).ListItem(2).Icon]</property>
-			<property name="art2">$INFO[Container(4343$NUMBER[16]).ListItem(1).Icon]</property>
-			<property name="art4">$INFO[Container(4343$NUMBER[16]).ListItem(3).Icon]</property>
+			<property name="art1">$INFO[Container(4343$NUMBER[15]).ListItem(0).Icon]</property>
+			<property name="art3">$INFO[Container(4343$NUMBER[15]).ListItem(2).Icon]</property>
+			<property name="art2">$INFO[Container(4343$NUMBER[15]).ListItem(1).Icon]</property>
+			<property name="art4">$INFO[Container(4343$NUMBER[15]).ListItem(3).Icon]</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="17">
-			<property name="id">$NUMBER[17]</property>
+		<item id="16">
+			<property name="id">$NUMBER[16]</property>
 			<label>$INFO[Window(home).Property(emby.nodes.12.title)]</label>
 			<label2 />
 			<icon>$INFO[Window(home).Property(emby.nodes.12.artwork)]</icon>
@@ -435,21 +425,22 @@
 			<property name="isDefault">true</property>
 			<property name="list">-</property>
 			<visible>[System.HasAddon(plugin.video.emby) + !String.IsEmpty(Window(home).Property(emby.connected)) + !String.IsEmpty(Window(home).Property(emby.nodes.12.content)) + [String.IsEqual(Window(home).Property(emby.nodes.12.type),movies) | String.IsEqual(Window(home).Property(emby.nodes.12.type),tvshows) | String.IsEqual(Window(home).Property(emby.nodes.12.type),homevideos)]]</visible>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.12.type),homevideos)">SetProperty(EmbyHubNr,12,home)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.12.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.12.type),movies)">SetProperty(EmbyHubNr,12,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,12,home)</property>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.12.type),homevideos)">ActivateWindow(1130)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(emby.nodes.12.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.nodes.12.content)],return)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.12.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.12.type),movies)">ActivateWindow(1130)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.12.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.wnodes.12.content)],return)</onclick>
+			<onclick condition="String.Contains(Window(home).Property(emby.wnodes.12.type),books)">ActivateWindow(videos,$INFO[Window(home).Property(emby.wnodes.12.content)],return)</onclick>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-emby-nodes-12-title</property>
 			<property name="group">mainmenu</property>
-			<property name="art1">$INFO[Container(4343$NUMBER[17]).ListItem(0).Icon]</property>
-			<property name="art3">$INFO[Container(4343$NUMBER[17]).ListItem(2).Icon]</property>
-			<property name="art2">$INFO[Container(4343$NUMBER[17]).ListItem(1).Icon]</property>
-			<property name="art4">$INFO[Container(4343$NUMBER[17]).ListItem(3).Icon]</property>
+			<property name="art1">$INFO[Container(4343$NUMBER[16]).ListItem(0).Icon]</property>
+			<property name="art3">$INFO[Container(4343$NUMBER[16]).ListItem(2).Icon]</property>
+			<property name="art2">$INFO[Container(4343$NUMBER[16]).ListItem(1).Icon]</property>
+			<property name="art4">$INFO[Container(4343$NUMBER[16]).ListItem(3).Icon]</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="18">
-			<property name="id">$NUMBER[18]</property>
+		<item id="17">
+			<property name="id">$NUMBER[17]</property>
 			<label>$INFO[Window(home).Property(emby.nodes.13.title)]</label>
 			<label2 />
 			<icon>$INFO[Window(home).Property(emby.nodes.13.artwork)]</icon>
@@ -459,21 +450,22 @@
 			<property name="isDefault">true</property>
 			<property name="list">-</property>
 			<visible>[System.HasAddon(plugin.video.emby) + !String.IsEmpty(Window(home).Property(emby.connected)) + !String.IsEmpty(Window(home).Property(emby.nodes.13.content)) + [String.IsEqual(Window(home).Property(emby.nodes.13.type),movies) | String.IsEqual(Window(home).Property(emby.nodes.13.type),tvshows) | String.IsEqual(Window(home).Property(emby.nodes.13.type),homevideos)]]</visible>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.13.type),homevideos)">SetProperty(EmbyHubNr,13,home)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.13.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.13.type),movies)">SetProperty(EmbyHubNr,13,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,13,home)</property>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.13.type),homevideos)">ActivateWindow(1130)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(emby.nodes.13.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.nodes.13.content)],return)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.13.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.13.type),movies)">ActivateWindow(1130)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.13.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.wnodes.13.content)],return)</onclick>
+			<onclick condition="String.Contains(Window(home).Property(emby.wnodes.13.type),books)">ActivateWindow(videos,$INFO[Window(home).Property(emby.wnodes.13.content)],return)</onclick>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-emby-nodes-13-title</property>
 			<property name="group">mainmenu</property>
-			<property name="art1">$INFO[Container(4343$NUMBER[18]).ListItem(0).Icon]</property>
-			<property name="art3">$INFO[Container(4343$NUMBER[18]).ListItem(2).Icon]</property>
-			<property name="art2">$INFO[Container(4343$NUMBER[18]).ListItem(1).Icon]</property>
-			<property name="art4">$INFO[Container(4343$NUMBER[18]).ListItem(3).Icon]</property>
+			<property name="art1">$INFO[Container(4343$NUMBER[17]).ListItem(0).Icon]</property>
+			<property name="art3">$INFO[Container(4343$NUMBER[17]).ListItem(2).Icon]</property>
+			<property name="art2">$INFO[Container(4343$NUMBER[17]).ListItem(1).Icon]</property>
+			<property name="art4">$INFO[Container(4343$NUMBER[17]).ListItem(3).Icon]</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="19">
-			<property name="id">$NUMBER[19]</property>
+		<item id="18">
+			<property name="id">$NUMBER[18]</property>
 			<label>$INFO[Window(home).Property(emby.nodes.14.title)]</label>
 			<label2 />
 			<icon>$INFO[Window(home).Property(emby.nodes.14.artwork)]</icon>
@@ -483,21 +475,22 @@
 			<property name="isDefault">true</property>
 			<property name="list">-</property>
 			<visible>[System.HasAddon(plugin.video.emby) + !String.IsEmpty(Window(home).Property(emby.connected)) + !String.IsEmpty(Window(home).Property(emby.nodes.14.content)) + [String.IsEqual(Window(home).Property(emby.nodes.14.type),movies) | String.IsEqual(Window(home).Property(emby.nodes.14.type),tvshows) | String.IsEqual(Window(home).Property(emby.nodes.14.type),homevideos)]]</visible>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.14.type),homevideos)">SetProperty(EmbyHubNr,14,home)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.14.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.14.type),movies)">SetProperty(EmbyHubNr,14,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,14,home)</property>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.14.type),homevideos)">ActivateWindow(1130)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(emby.nodes.14.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.nodes.14.content)],return)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.14.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.14.type),movies)">ActivateWindow(1130)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.14.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.wnodes.14.content)],return)</onclick>
+			<onclick condition="String.Contains(Window(home).Property(emby.wnodes.14.type),books)">ActivateWindow(videos,$INFO[Window(home).Property(emby.wnodes.14.content)],return)</onclick>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-emby-nodes-14-title</property>
 			<property name="group">mainmenu</property>
-			<property name="art1">$INFO[Container(4343$NUMBER[19]).ListItem(0).Icon]</property>
-			<property name="art3">$INFO[Container(4343$NUMBER[19]).ListItem(2).Icon]</property>
-			<property name="art2">$INFO[Container(4343$NUMBER[19]).ListItem(1).Icon]</property>
-			<property name="art4">$INFO[Container(4343$NUMBER[19]).ListItem(3).Icon]</property>
+			<property name="art1">$INFO[Container(4343$NUMBER[18]).ListItem(0).Icon]</property>
+			<property name="art3">$INFO[Container(4343$NUMBER[18]).ListItem(2).Icon]</property>
+			<property name="art2">$INFO[Container(4343$NUMBER[18]).ListItem(1).Icon]</property>
+			<property name="art4">$INFO[Container(4343$NUMBER[18]).ListItem(3).Icon]</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="20">
-			<property name="id">$NUMBER[20]</property>
+		<item id="19">
+			<property name="id">$NUMBER[19]</property>
 			<label>$INFO[Window(home).Property(emby.nodes.15.title)]</label>
 			<label2 />
 			<icon>$INFO[Window(home).Property(emby.nodes.15.artwork)]</icon>
@@ -507,21 +500,22 @@
 			<property name="isDefault">true</property>
 			<property name="list">-</property>
 			<visible>[System.HasAddon(plugin.video.emby) + !String.IsEmpty(Window(home).Property(emby.connected)) + !String.IsEmpty(Window(home).Property(emby.nodes.15.content)) + [String.IsEqual(Window(home).Property(emby.nodes.15.type),movies) | String.IsEqual(Window(home).Property(emby.nodes.15.type),tvshows) | String.IsEqual(Window(home).Property(emby.nodes.15.type),homevideos)]]</visible>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.15.type),homevideos)">SetProperty(EmbyHubNr,15,home)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.15.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.15.type),movies)">SetProperty(EmbyHubNr,15,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,15,home)</property>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.15.type),homevideos)">ActivateWindow(1130)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(emby.nodes.15.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.nodes.15.content)],return)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.15.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.15.type),movies)">ActivateWindow(1130)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.15.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.wnodes.15.content)],return)</onclick>
+			<onclick condition="String.Contains(Window(home).Property(emby.wnodes.15.type),books)">ActivateWindow(videos,$INFO[Window(home).Property(emby.wnodes.15.content)],return)</onclick>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-emby-nodes-15-title</property>
 			<property name="group">mainmenu</property>
-			<property name="art1">$INFO[Container(4343$NUMBER[20]).ListItem(0).Icon]</property>
-			<property name="art3">$INFO[Container(4343$NUMBER[20]).ListItem(2).Icon]</property>
-			<property name="art2">$INFO[Container(4343$NUMBER[20]).ListItem(1).Icon]</property>
-			<property name="art4">$INFO[Container(4343$NUMBER[20]).ListItem(3).Icon]</property>
+			<property name="art1">$INFO[Container(4343$NUMBER[19]).ListItem(0).Icon]</property>
+			<property name="art3">$INFO[Container(4343$NUMBER[19]).ListItem(2).Icon]</property>
+			<property name="art2">$INFO[Container(4343$NUMBER[19]).ListItem(1).Icon]</property>
+			<property name="art4">$INFO[Container(4343$NUMBER[19]).ListItem(3).Icon]</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="21">
-			<property name="id">$NUMBER[21]</property>
+		<item id="20">
+			<property name="id">$NUMBER[20]</property>
 			<label>$INFO[Window(home).Property(emby.nodes.16.title)]</label>
 			<label2 />
 			<icon>$INFO[Window(home).Property(emby.nodes.16.artwork)]</icon>
@@ -531,21 +525,22 @@
 			<property name="isDefault">true</property>
 			<property name="list">-</property>
 			<visible>[System.HasAddon(plugin.video.emby) + !String.IsEmpty(Window(home).Property(emby.connected)) + !String.IsEmpty(Window(home).Property(emby.nodes.16.content)) + [String.IsEqual(Window(home).Property(emby.nodes.16.type),movies) | String.IsEqual(Window(home).Property(emby.nodes.16.type),tvshows) | String.IsEqual(Window(home).Property(emby.nodes.16.type),homevideos)]]</visible>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.16.type),homevideos)">SetProperty(EmbyHubNr,16,home)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.16.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.16.type),movies)">SetProperty(EmbyHubNr,16,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,16,home)</property>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.16.type),homevideos)">ActivateWindow(1130)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(emby.nodes.16.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.nodes.16.content)],return)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.16.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.16.type),movies)">ActivateWindow(1130)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.16.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.wnodes.16.content)],return)</onclick>
+			<onclick condition="String.Contains(Window(home).Property(emby.wnodes.16.type),books)">ActivateWindow(videos,$INFO[Window(home).Property(emby.wnodes.16.content)],return)</onclick>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-emby-nodes-16-title</property>
 			<property name="group">mainmenu</property>
-			<property name="art1">$INFO[Container(4343$NUMBER[21]).ListItem(0).Icon]</property>
-			<property name="art3">$INFO[Container(4343$NUMBER[21]).ListItem(2).Icon]</property>
-			<property name="art2">$INFO[Container(4343$NUMBER[21]).ListItem(1).Icon]</property>
-			<property name="art4">$INFO[Container(4343$NUMBER[21]).ListItem(3).Icon]</property>
+			<property name="art1">$INFO[Container(4343$NUMBER[20]).ListItem(0).Icon]</property>
+			<property name="art3">$INFO[Container(4343$NUMBER[20]).ListItem(2).Icon]</property>
+			<property name="art2">$INFO[Container(4343$NUMBER[20]).ListItem(1).Icon]</property>
+			<property name="art4">$INFO[Container(4343$NUMBER[20]).ListItem(3).Icon]</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="22">
-			<property name="id">$NUMBER[22]</property>
+		<item id="21">
+			<property name="id">$NUMBER[21]</property>
 			<label>$INFO[Window(home).Property(emby.nodes.17.title)]</label>
 			<label2 />
 			<icon>$INFO[Window(home).Property(emby.nodes.17.artwork)]</icon>
@@ -555,21 +550,22 @@
 			<property name="isDefault">true</property>
 			<property name="list">-</property>
 			<visible>[System.HasAddon(plugin.video.emby) + !String.IsEmpty(Window(home).Property(emby.connected)) + !String.IsEmpty(Window(home).Property(emby.nodes.17.content)) + [String.IsEqual(Window(home).Property(emby.nodes.17.type),movies) | String.IsEqual(Window(home).Property(emby.nodes.17.type),tvshows) | String.IsEqual(Window(home).Property(emby.nodes.17.type),homevideos)]]</visible>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.17.type),homevideos)">SetProperty(EmbyHubNr,17,home)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.17.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.17.type),movies)">SetProperty(EmbyHubNr,17,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,17,home)</property>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.17.type),homevideos)">ActivateWindow(1130)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(emby.nodes.17.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.nodes.17.content)],return)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.17.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.17.type),movies)">ActivateWindow(1130)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.17.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.wnodes.17.content)],return)</onclick>
+			<onclick condition="String.Contains(Window(home).Property(emby.wnodes.17.type),books)">ActivateWindow(videos,$INFO[Window(home).Property(emby.wnodes.17.content)],return)</onclick>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-emby-nodes-17-title</property>
 			<property name="group">mainmenu</property>
-			<property name="art1">$INFO[Container(4343$NUMBER[22]).ListItem(0).Icon]</property>
-			<property name="art3">$INFO[Container(4343$NUMBER[22]).ListItem(2).Icon]</property>
-			<property name="art2">$INFO[Container(4343$NUMBER[22]).ListItem(1).Icon]</property>
-			<property name="art4">$INFO[Container(4343$NUMBER[22]).ListItem(3).Icon]</property>
+			<property name="art1">$INFO[Container(4343$NUMBER[21]).ListItem(0).Icon]</property>
+			<property name="art3">$INFO[Container(4343$NUMBER[21]).ListItem(2).Icon]</property>
+			<property name="art2">$INFO[Container(4343$NUMBER[21]).ListItem(1).Icon]</property>
+			<property name="art4">$INFO[Container(4343$NUMBER[21]).ListItem(3).Icon]</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="23">
-			<property name="id">$NUMBER[23]</property>
+		<item id="22">
+			<property name="id">$NUMBER[22]</property>
 			<label>$INFO[Window(home).Property(emby.nodes.18.title)]</label>
 			<label2 />
 			<icon>$INFO[Window(home).Property(emby.nodes.18.artwork)]</icon>
@@ -579,21 +575,22 @@
 			<property name="isDefault">true</property>
 			<property name="list">-</property>
 			<visible>[System.HasAddon(plugin.video.emby) + !String.IsEmpty(Window(home).Property(emby.connected)) + !String.IsEmpty(Window(home).Property(emby.nodes.18.content)) + [String.IsEqual(Window(home).Property(emby.nodes.18.type),movies) | String.IsEqual(Window(home).Property(emby.nodes.18.type),tvshows) | String.IsEqual(Window(home).Property(emby.nodes.18.type),homevideos)]]</visible>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.18.type),homevideos)">SetProperty(EmbyHubNr,18,home)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.18.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.18.type),movies)">SetProperty(EmbyHubNr,18,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,18,home)</property>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.18.type),homevideos)">ActivateWindow(1130)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(emby.nodes.18.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.nodes.18.content)],return)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.18.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.18.type),movies)">ActivateWindow(1130)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.18.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.wnodes.18.content)],return)</onclick>
+			<onclick condition="String.Contains(Window(home).Property(emby.wnodes.18.type),books)">ActivateWindow(videos,$INFO[Window(home).Property(emby.wnodes.18.content)],return)</onclick>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-emby-nodes-18-title</property>
 			<property name="group">mainmenu</property>
-			<property name="art1">$INFO[Container(4343$NUMBER[23]).ListItem(0).Icon]</property>
-			<property name="art3">$INFO[Container(4343$NUMBER[23]).ListItem(2).Icon]</property>
-			<property name="art2">$INFO[Container(4343$NUMBER[23]).ListItem(1).Icon]</property>
-			<property name="art4">$INFO[Container(4343$NUMBER[23]).ListItem(3).Icon]</property>
+			<property name="art1">$INFO[Container(4343$NUMBER[22]).ListItem(0).Icon]</property>
+			<property name="art3">$INFO[Container(4343$NUMBER[22]).ListItem(2).Icon]</property>
+			<property name="art2">$INFO[Container(4343$NUMBER[22]).ListItem(1).Icon]</property>
+			<property name="art4">$INFO[Container(4343$NUMBER[22]).ListItem(3).Icon]</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="24">
-			<property name="id">$NUMBER[24]</property>
+		<item id="23">
+			<property name="id">$NUMBER[23]</property>
 			<label>$INFO[Window(home).Property(emby.nodes.19.title)]</label>
 			<label2 />
 			<icon>$INFO[Window(home).Property(emby.nodes.19.artwork)]</icon>
@@ -603,21 +600,22 @@
 			<property name="isDefault">true</property>
 			<property name="list">-</property>
 			<visible>[System.HasAddon(plugin.video.emby) + !String.IsEmpty(Window(home).Property(emby.connected)) + !String.IsEmpty(Window(home).Property(emby.nodes.19.content)) + [String.IsEqual(Window(home).Property(emby.nodes.19.type),movies) | String.IsEqual(Window(home).Property(emby.nodes.19.type),tvshows) | String.IsEqual(Window(home).Property(emby.nodes.19.type),homevideos)]]</visible>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.19.type),homevideos)">SetProperty(EmbyHubNr,19,home)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.19.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.19.type),movies)">SetProperty(EmbyHubNr,19,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,19,home)</property>
-			<onclick condition="!String.IsEqual(Window(home).Property(emby.nodes.19.type),homevideos)">ActivateWindow(1130)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(emby.nodes.19.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.nodes.19.content)],return)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.19.type),tvshows) | String.IsEqual(Window(home).Property(emby.wnodes.19.type),movies)">ActivateWindow(1130)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(emby.wnodes.19.type),homevideos)">ActivateWindow(pictures,$INFO[Window(home).Property(emby.wnodes.19.content)],return)</onclick>
+			<onclick condition="String.Contains(Window(home).Property(emby.wnodes.19.type),books)">ActivateWindow(videos,$INFO[Window(home).Property(emby.wnodes.19.content)],return)</onclick>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-emby-nodes-19-title</property>
 			<property name="group">mainmenu</property>
-			<property name="art1">$INFO[Container(4343$NUMBER[24]).ListItem(0).Icon]</property>
-			<property name="art3">$INFO[Container(4343$NUMBER[24]).ListItem(2).Icon]</property>
-			<property name="art2">$INFO[Container(4343$NUMBER[24]).ListItem(1).Icon]</property>
-			<property name="art4">$INFO[Container(4343$NUMBER[24]).ListItem(3).Icon]</property>
+			<property name="art1">$INFO[Container(4343$NUMBER[23]).ListItem(0).Icon]</property>
+			<property name="art3">$INFO[Container(4343$NUMBER[23]).ListItem(2).Icon]</property>
+			<property name="art2">$INFO[Container(4343$NUMBER[23]).ListItem(1).Icon]</property>
+			<property name="art4">$INFO[Container(4343$NUMBER[23]).ListItem(3).Icon]</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="25">
-			<property name="id">$NUMBER[25]</property>
+		<item id="24">
+			<property name="id">$NUMBER[24]</property>
 			<label>$INFO[Window(home).Property(plugin.video.embycon-view_item.0.name)] $VAR[EmbyConLabel]</label>
 			<label2 />
 			<icon>$INFO[Window(home).Property(plugin.video.embycon-view_item.0.thumb)]</icon>
@@ -631,17 +629,17 @@
 			<property name="path">SetProperty(EmbyHubNr,0,home)</property>
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.0.type),boxsets)">ActivateWindow(1131)</onclick>
 			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.0.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems?ParentId=$INFO[Window(home).Property(plugin.video.embycon-view_item.0.id)]&amp;IsVirtualUnaired%3dfalse%26CollapseBoxSetItems%3dtrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26format%3djson,return)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-plugin-video-embycon-view-item-0-name-var-embyconlabel</property>
 			<property name="group">mainmenu</property>
-			<property name="art1">$INFO[Container(4343$NUMBER[25]).ListItem(0).Icon]</property>
-			<property name="art3">$INFO[Container(4343$NUMBER[25]).ListItem(2).Icon]</property>
-			<property name="art2">$INFO[Container(4343$NUMBER[25]).ListItem(1).Icon]</property>
-			<property name="art4">$INFO[Container(4343$NUMBER[25]).ListItem(3).Icon]</property>
+			<property name="art1">$INFO[Container(4343$NUMBER[24]).ListItem(0).Icon]</property>
+			<property name="art3">$INFO[Container(4343$NUMBER[24]).ListItem(2).Icon]</property>
+			<property name="art2">$INFO[Container(4343$NUMBER[24]).ListItem(1).Icon]</property>
+			<property name="art4">$INFO[Container(4343$NUMBER[24]).ListItem(3).Icon]</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="26">
-			<property name="id">$NUMBER[26]</property>
+		<item id="25">
+			<property name="id">$NUMBER[25]</property>
 			<label>$INFO[Window(home).Property(plugin.video.embycon-view_item.1.name)] $VAR[EmbyConLabel]</label>
 			<label2 />
 			<icon>$INFO[Window(home).Property(plugin.video.embycon-view_item.1.thumb)]</icon>
@@ -655,17 +653,17 @@
 			<property name="path">SetProperty(EmbyHubNr,1,home)</property>
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.1.type),boxsets)">ActivateWindow(1131)</onclick>
 			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.1.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems?ParentId=$INFO[Window(home).Property(plugin.video.embycon-view_item.1.id)]&amp;IsVirtualUnaired%3dfalse%26CollapseBoxSetItems%3dtrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26format%3djson,return)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-plugin-video-embycon-view-item-1-name-var-embyconlabel</property>
 			<property name="group">mainmenu</property>
-			<property name="art1">$INFO[Container(4343$NUMBER[26]).ListItem(0).Icon]</property>
-			<property name="art3">$INFO[Container(4343$NUMBER[26]).ListItem(2).Icon]</property>
-			<property name="art2">$INFO[Container(4343$NUMBER[26]).ListItem(1).Icon]</property>
-			<property name="art4">$INFO[Container(4343$NUMBER[26]).ListItem(3).Icon]</property>
+			<property name="art1">$INFO[Container(4343$NUMBER[25]).ListItem(0).Icon]</property>
+			<property name="art3">$INFO[Container(4343$NUMBER[25]).ListItem(2).Icon]</property>
+			<property name="art2">$INFO[Container(4343$NUMBER[25]).ListItem(1).Icon]</property>
+			<property name="art4">$INFO[Container(4343$NUMBER[25]).ListItem(3).Icon]</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="27">
-			<property name="id">$NUMBER[27]</property>
+		<item id="26">
+			<property name="id">$NUMBER[26]</property>
 			<label>$INFO[Window(home).Property(plugin.video.embycon-view_item.2.name)] $VAR[EmbyConLabel]</label>
 			<label2 />
 			<icon>$INFO[Window(home).Property(plugin.video.embycon-view_item.2.thumb)]</icon>
@@ -679,17 +677,17 @@
 			<property name="path">SetProperty(EmbyHubNr,2,home)</property>
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.2.type),boxsets)">ActivateWindow(1131)</onclick>
 			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.2.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems?ParentId=$INFO[Window(home).Property(plugin.video.embycon-view_item.2.id)]&amp;IsVirtualUnaired%3dfalse%26CollapseBoxSetItems%3dtrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26format%3djson,return)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-plugin-video-embycon-view-item-2-name-var-embyconlabel</property>
 			<property name="group">mainmenu</property>
-			<property name="art1">$INFO[Container(4343$NUMBER[27]).ListItem(0).Icon]</property>
-			<property name="art3">$INFO[Container(4343$NUMBER[27]).ListItem(2).Icon]</property>
-			<property name="art2">$INFO[Container(4343$NUMBER[27]).ListItem(1).Icon]</property>
-			<property name="art4">$INFO[Container(4343$NUMBER[27]).ListItem(3).Icon]</property>
+			<property name="art1">$INFO[Container(4343$NUMBER[26]).ListItem(0).Icon]</property>
+			<property name="art3">$INFO[Container(4343$NUMBER[26]).ListItem(2).Icon]</property>
+			<property name="art2">$INFO[Container(4343$NUMBER[26]).ListItem(1).Icon]</property>
+			<property name="art4">$INFO[Container(4343$NUMBER[26]).ListItem(3).Icon]</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="28">
-			<property name="id">$NUMBER[28]</property>
+		<item id="27">
+			<property name="id">$NUMBER[27]</property>
 			<label>$INFO[Window(home).Property(plugin.video.embycon-view_item.3.name)] $VAR[EmbyConLabel]</label>
 			<label2 />
 			<icon>$INFO[Window(home).Property(plugin.video.embycon-view_item.3.thumb)]</icon>
@@ -703,17 +701,17 @@
 			<property name="path">SetProperty(EmbyHubNr,3,home)</property>
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.3.type),boxsets)">ActivateWindow(1131)</onclick>
 			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.3.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems?ParentId=$INFO[Window(home).Property(plugin.video.embycon-view_item.3.id)]&amp;IsVirtualUnaired%3dfalse%26CollapseBoxSetItems%3dtrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26format%3djson,return)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-plugin-video-embycon-view-item-3-name-var-embyconlabel</property>
 			<property name="group">mainmenu</property>
-			<property name="art1">$INFO[Container(4343$NUMBER[28]).ListItem(0).Icon]</property>
-			<property name="art3">$INFO[Container(4343$NUMBER[28]).ListItem(2).Icon]</property>
-			<property name="art2">$INFO[Container(4343$NUMBER[28]).ListItem(1).Icon]</property>
-			<property name="art4">$INFO[Container(4343$NUMBER[28]).ListItem(3).Icon]</property>
+			<property name="art1">$INFO[Container(4343$NUMBER[27]).ListItem(0).Icon]</property>
+			<property name="art3">$INFO[Container(4343$NUMBER[27]).ListItem(2).Icon]</property>
+			<property name="art2">$INFO[Container(4343$NUMBER[27]).ListItem(1).Icon]</property>
+			<property name="art4">$INFO[Container(4343$NUMBER[27]).ListItem(3).Icon]</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="29">
-			<property name="id">$NUMBER[29]</property>
+		<item id="28">
+			<property name="id">$NUMBER[28]</property>
 			<label>$INFO[Window(home).Property(plugin.video.embycon-view_item.4.name)] $VAR[EmbyConLabel]</label>
 			<label2 />
 			<icon>$INFO[Window(home).Property(plugin.video.embycon-view_item.4.thumb)]</icon>
@@ -727,17 +725,17 @@
 			<property name="path">SetProperty(EmbyHubNr,4,home)</property>
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.4.type),boxsets)">ActivateWindow(1131)</onclick>
 			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.4.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems?ParentId=$INFO[Window(home).Property(plugin.video.embycon-view_item.4.id)]&amp;IsVirtualUnaired%3dfalse%26CollapseBoxSetItems%3dtrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26format%3djson,return)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-plugin-video-embycon-view-item-4-name-var-embyconlabel</property>
 			<property name="group">mainmenu</property>
-			<property name="art1">$INFO[Container(4343$NUMBER[29]).ListItem(0).Icon]</property>
-			<property name="art3">$INFO[Container(4343$NUMBER[29]).ListItem(2).Icon]</property>
-			<property name="art2">$INFO[Container(4343$NUMBER[29]).ListItem(1).Icon]</property>
-			<property name="art4">$INFO[Container(4343$NUMBER[29]).ListItem(3).Icon]</property>
+			<property name="art1">$INFO[Container(4343$NUMBER[28]).ListItem(0).Icon]</property>
+			<property name="art3">$INFO[Container(4343$NUMBER[28]).ListItem(2).Icon]</property>
+			<property name="art2">$INFO[Container(4343$NUMBER[28]).ListItem(1).Icon]</property>
+			<property name="art4">$INFO[Container(4343$NUMBER[28]).ListItem(3).Icon]</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="30">
-			<property name="id">$NUMBER[30]</property>
+		<item id="29">
+			<property name="id">$NUMBER[29]</property>
 			<label>$INFO[Window(home).Property(plugin.video.embycon-view_item.5.name)] $VAR[EmbyConLabel]</label>
 			<label2 />
 			<icon>$INFO[Window(home).Property(plugin.video.embycon-view_item.5.thumb)]</icon>
@@ -751,17 +749,17 @@
 			<property name="path">SetProperty(EmbyHubNr,5,home)</property>
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.5.type),boxsets)">ActivateWindow(1131)</onclick>
 			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.5.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems?ParentId=$INFO[Window(home).Property(plugin.video.embycon-view_item.5.id)]&amp;IsVirtualUnaired%3dfalse%26CollapseBoxSetItems%3dtrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26format%3djson,return)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-plugin-video-embycon-view-item-5-name-var-embyconlabel</property>
 			<property name="group">mainmenu</property>
-			<property name="art1">$INFO[Container(4343$NUMBER[30]).ListItem(0).Icon]</property>
-			<property name="art3">$INFO[Container(4343$NUMBER[30]).ListItem(2).Icon]</property>
-			<property name="art2">$INFO[Container(4343$NUMBER[30]).ListItem(1).Icon]</property>
-			<property name="art4">$INFO[Container(4343$NUMBER[30]).ListItem(3).Icon]</property>
+			<property name="art1">$INFO[Container(4343$NUMBER[29]).ListItem(0).Icon]</property>
+			<property name="art3">$INFO[Container(4343$NUMBER[29]).ListItem(2).Icon]</property>
+			<property name="art2">$INFO[Container(4343$NUMBER[29]).ListItem(1).Icon]</property>
+			<property name="art4">$INFO[Container(4343$NUMBER[29]).ListItem(3).Icon]</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="31">
-			<property name="id">$NUMBER[31]</property>
+		<item id="30">
+			<property name="id">$NUMBER[30]</property>
 			<label>$INFO[Window(home).Property(plugin.video.embycon-view_item.6.name)] $VAR[EmbyConLabel]</label>
 			<label2 />
 			<icon>$INFO[Window(home).Property(plugin.video.embycon-view_item.6.thumb)]</icon>
@@ -775,17 +773,17 @@
 			<property name="path">SetProperty(EmbyHubNr,6,home)</property>
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.6.type),boxsets)">ActivateWindow(1131)</onclick>
 			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.6.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems?ParentId=$INFO[Window(home).Property(plugin.video.embycon-view_item.6.id)]&amp;IsVirtualUnaired%3dfalse%26CollapseBoxSetItems%3dtrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26format%3djson,return)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-plugin-video-embycon-view-item-6-name-var-embyconlabel</property>
 			<property name="group">mainmenu</property>
-			<property name="art1">$INFO[Container(4343$NUMBER[31]).ListItem(0).Icon]</property>
-			<property name="art3">$INFO[Container(4343$NUMBER[31]).ListItem(2).Icon]</property>
-			<property name="art2">$INFO[Container(4343$NUMBER[31]).ListItem(1).Icon]</property>
-			<property name="art4">$INFO[Container(4343$NUMBER[31]).ListItem(3).Icon]</property>
+			<property name="art1">$INFO[Container(4343$NUMBER[30]).ListItem(0).Icon]</property>
+			<property name="art3">$INFO[Container(4343$NUMBER[30]).ListItem(2).Icon]</property>
+			<property name="art2">$INFO[Container(4343$NUMBER[30]).ListItem(1).Icon]</property>
+			<property name="art4">$INFO[Container(4343$NUMBER[30]).ListItem(3).Icon]</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="32">
-			<property name="id">$NUMBER[32]</property>
+		<item id="31">
+			<property name="id">$NUMBER[31]</property>
 			<label>$INFO[Window(home).Property(plugin.video.embycon-view_item.7.name)] $VAR[EmbyConLabel]</label>
 			<label2 />
 			<icon>$INFO[Window(home).Property(plugin.video.embycon-view_item.7.thumb)]</icon>
@@ -799,17 +797,17 @@
 			<property name="path">SetProperty(EmbyHubNr,7,home)</property>
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.7.type),boxsets)">ActivateWindow(1131)</onclick>
 			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.7.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems?ParentId=$INFO[Window(home).Property(plugin.video.embycon-view_item.7.id)]&amp;IsVirtualUnaired%3dfalse%26CollapseBoxSetItems%3dtrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26format%3djson,return)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-plugin-video-embycon-view-item-7-name-var-embyconlabel</property>
 			<property name="group">mainmenu</property>
-			<property name="art1">$INFO[Container(4343$NUMBER[32]).ListItem(0).Icon]</property>
-			<property name="art3">$INFO[Container(4343$NUMBER[32]).ListItem(2).Icon]</property>
-			<property name="art2">$INFO[Container(4343$NUMBER[32]).ListItem(1).Icon]</property>
-			<property name="art4">$INFO[Container(4343$NUMBER[32]).ListItem(3).Icon]</property>
+			<property name="art1">$INFO[Container(4343$NUMBER[31]).ListItem(0).Icon]</property>
+			<property name="art3">$INFO[Container(4343$NUMBER[31]).ListItem(2).Icon]</property>
+			<property name="art2">$INFO[Container(4343$NUMBER[31]).ListItem(1).Icon]</property>
+			<property name="art4">$INFO[Container(4343$NUMBER[31]).ListItem(3).Icon]</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="33">
-			<property name="id">$NUMBER[33]</property>
+		<item id="32">
+			<property name="id">$NUMBER[32]</property>
 			<label>$INFO[Window(home).Property(plugin.video.embycon-view_item.8.name)] $VAR[EmbyConLabel]</label>
 			<label2 />
 			<icon>$INFO[Window(home).Property(plugin.video.embycon-view_item.8.thumb)]</icon>
@@ -823,17 +821,17 @@
 			<property name="path">SetProperty(EmbyHubNr,8,home)</property>
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.8.type),boxsets)">ActivateWindow(1131)</onclick>
 			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.8.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems?ParentId=$INFO[Window(home).Property(plugin.video.embycon-view_item.8.id)]&amp;IsVirtualUnaired%3dfalse%26CollapseBoxSetItems%3dtrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26format%3djson,return)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-plugin-video-embycon-view-item-8-name-var-embyconlabel</property>
 			<property name="group">mainmenu</property>
-			<property name="art1">$INFO[Container(4343$NUMBER[33]).ListItem(0).Icon]</property>
-			<property name="art3">$INFO[Container(4343$NUMBER[33]).ListItem(2).Icon]</property>
-			<property name="art2">$INFO[Container(4343$NUMBER[33]).ListItem(1).Icon]</property>
-			<property name="art4">$INFO[Container(4343$NUMBER[33]).ListItem(3).Icon]</property>
+			<property name="art1">$INFO[Container(4343$NUMBER[32]).ListItem(0).Icon]</property>
+			<property name="art3">$INFO[Container(4343$NUMBER[32]).ListItem(2).Icon]</property>
+			<property name="art2">$INFO[Container(4343$NUMBER[32]).ListItem(1).Icon]</property>
+			<property name="art4">$INFO[Container(4343$NUMBER[32]).ListItem(3).Icon]</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="34">
-			<property name="id">$NUMBER[34]</property>
+		<item id="33">
+			<property name="id">$NUMBER[33]</property>
 			<label>$INFO[Window(home).Property(plugin.video.embycon-view_item.9.name)] $VAR[EmbyConLabel]</label>
 			<label2 />
 			<icon>$INFO[Window(home).Property(plugin.video.embycon-view_item.9.thumb)]</icon>
@@ -847,17 +845,17 @@
 			<property name="path">SetProperty(EmbyHubNr,9,home)</property>
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.9.type),boxsets)">ActivateWindow(1131)</onclick>
 			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.9.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems?ParentId=$INFO[Window(home).Property(plugin.video.embycon-view_item.9.id)]&amp;IsVirtualUnaired%3dfalse%26CollapseBoxSetItems%3dtrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26format%3djson,return)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-plugin-video-embycon-view-item-9-name-var-embyconlabel</property>
 			<property name="group">mainmenu</property>
-			<property name="art1">$INFO[Container(4343$NUMBER[34]).ListItem(0).Icon]</property>
-			<property name="art3">$INFO[Container(4343$NUMBER[34]).ListItem(2).Icon]</property>
-			<property name="art2">$INFO[Container(4343$NUMBER[34]).ListItem(1).Icon]</property>
-			<property name="art4">$INFO[Container(4343$NUMBER[34]).ListItem(3).Icon]</property>
+			<property name="art1">$INFO[Container(4343$NUMBER[33]).ListItem(0).Icon]</property>
+			<property name="art3">$INFO[Container(4343$NUMBER[33]).ListItem(2).Icon]</property>
+			<property name="art2">$INFO[Container(4343$NUMBER[33]).ListItem(1).Icon]</property>
+			<property name="art4">$INFO[Container(4343$NUMBER[33]).ListItem(3).Icon]</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="35">
-			<property name="id">$NUMBER[35]</property>
+		<item id="34">
+			<property name="id">$NUMBER[34]</property>
 			<label>$INFO[Window(home).Property(plugin.video.embycon-view_item.10.name)] $VAR[EmbyConLabel]</label>
 			<label2 />
 			<icon>$INFO[Window(home).Property(plugin.video.embycon-view_item.10.thumb)]</icon>
@@ -871,17 +869,17 @@
 			<property name="path">SetProperty(EmbyHubNr,10,home)</property>
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.10.type),boxsets)">ActivateWindow(1131)</onclick>
 			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.10.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems?ParentId=$INFO[Window(home).Property(plugin.video.embycon-view_item.10.id)]&amp;IsVirtualUnaired%3dfalse%26CollapseBoxSetItems%3dtrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26format%3djson,return)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-plugin-video-embycon-view-item-10-name-var-embyconlabel</property>
 			<property name="group">mainmenu</property>
-			<property name="art1">$INFO[Container(4343$NUMBER[35]).ListItem(0).Icon]</property>
-			<property name="art3">$INFO[Container(4343$NUMBER[35]).ListItem(2).Icon]</property>
-			<property name="art2">$INFO[Container(4343$NUMBER[35]).ListItem(1).Icon]</property>
-			<property name="art4">$INFO[Container(4343$NUMBER[35]).ListItem(3).Icon]</property>
+			<property name="art1">$INFO[Container(4343$NUMBER[34]).ListItem(0).Icon]</property>
+			<property name="art3">$INFO[Container(4343$NUMBER[34]).ListItem(2).Icon]</property>
+			<property name="art2">$INFO[Container(4343$NUMBER[34]).ListItem(1).Icon]</property>
+			<property name="art4">$INFO[Container(4343$NUMBER[34]).ListItem(3).Icon]</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="36">
-			<property name="id">$NUMBER[36]</property>
+		<item id="35">
+			<property name="id">$NUMBER[35]</property>
 			<label>$INFO[Window(home).Property(plugin.video.embycon-view_item.11.name)] $VAR[EmbyConLabel]</label>
 			<label2 />
 			<icon>$INFO[Window(home).Property(plugin.video.embycon-view_item.11.thumb)]</icon>
@@ -895,17 +893,17 @@
 			<property name="path">SetProperty(EmbyHubNr,11,home)</property>
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.11.type),boxsets)">ActivateWindow(1131)</onclick>
 			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.11.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems?ParentId=$INFO[Window(home).Property(plugin.video.embycon-view_item.11.id)]&amp;IsVirtualUnaired%3dfalse%26CollapseBoxSetItems%3dtrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26format%3djson,return)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-plugin-video-embycon-view-item-11-name-var-embyconlabel</property>
 			<property name="group">mainmenu</property>
-			<property name="art1">$INFO[Container(4343$NUMBER[36]).ListItem(0).Icon]</property>
-			<property name="art3">$INFO[Container(4343$NUMBER[36]).ListItem(2).Icon]</property>
-			<property name="art2">$INFO[Container(4343$NUMBER[36]).ListItem(1).Icon]</property>
-			<property name="art4">$INFO[Container(4343$NUMBER[36]).ListItem(3).Icon]</property>
+			<property name="art1">$INFO[Container(4343$NUMBER[35]).ListItem(0).Icon]</property>
+			<property name="art3">$INFO[Container(4343$NUMBER[35]).ListItem(2).Icon]</property>
+			<property name="art2">$INFO[Container(4343$NUMBER[35]).ListItem(1).Icon]</property>
+			<property name="art4">$INFO[Container(4343$NUMBER[35]).ListItem(3).Icon]</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="37">
-			<property name="id">$NUMBER[37]</property>
+		<item id="36">
+			<property name="id">$NUMBER[36]</property>
 			<label>$INFO[Window(home).Property(plugin.video.embycon-view_item.12.name)] $VAR[EmbyConLabel]</label>
 			<label2 />
 			<icon>$INFO[Window(home).Property(plugin.video.embycon-view_item.12.thumb)]</icon>
@@ -919,17 +917,17 @@
 			<property name="path">SetProperty(EmbyHubNr,12,home)</property>
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.12.type),boxsets)">ActivateWindow(1131)</onclick>
 			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.12.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems?ParentId=$INFO[Window(home).Property(plugin.video.embycon-view_item.12.id)]&amp;IsVirtualUnaired%3dfalse%26CollapseBoxSetItems%3dtrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26format%3djson,return)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-plugin-video-embycon-view-item-12-name-var-embyconlabel</property>
 			<property name="group">mainmenu</property>
-			<property name="art1">$INFO[Container(4343$NUMBER[37]).ListItem(0).Icon]</property>
-			<property name="art3">$INFO[Container(4343$NUMBER[37]).ListItem(2).Icon]</property>
-			<property name="art2">$INFO[Container(4343$NUMBER[37]).ListItem(1).Icon]</property>
-			<property name="art4">$INFO[Container(4343$NUMBER[37]).ListItem(3).Icon]</property>
+			<property name="art1">$INFO[Container(4343$NUMBER[36]).ListItem(0).Icon]</property>
+			<property name="art3">$INFO[Container(4343$NUMBER[36]).ListItem(2).Icon]</property>
+			<property name="art2">$INFO[Container(4343$NUMBER[36]).ListItem(1).Icon]</property>
+			<property name="art4">$INFO[Container(4343$NUMBER[36]).ListItem(3).Icon]</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="38">
-			<property name="id">$NUMBER[38]</property>
+		<item id="37">
+			<property name="id">$NUMBER[37]</property>
 			<label>$INFO[Window(home).Property(plugin.video.embycon-view_item.13.name)] $VAR[EmbyConLabel]</label>
 			<label2 />
 			<icon>$INFO[Window(home).Property(plugin.video.embycon-view_item.13.thumb)]</icon>
@@ -943,17 +941,17 @@
 			<property name="path">SetProperty(EmbyHubNr,13,home)</property>
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.13.type),boxsets)">ActivateWindow(1131)</onclick>
 			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.13.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems?ParentId=$INFO[Window(home).Property(plugin.video.embycon-view_item.13.id)]&amp;IsVirtualUnaired%3dfalse%26CollapseBoxSetItems%3dtrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26format%3djson,return)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-plugin-video-embycon-view-item-13-name-var-embyconlabel</property>
 			<property name="group">mainmenu</property>
-			<property name="art1">$INFO[Container(4343$NUMBER[38]).ListItem(0).Icon]</property>
-			<property name="art3">$INFO[Container(4343$NUMBER[38]).ListItem(2).Icon]</property>
-			<property name="art2">$INFO[Container(4343$NUMBER[38]).ListItem(1).Icon]</property>
-			<property name="art4">$INFO[Container(4343$NUMBER[38]).ListItem(3).Icon]</property>
+			<property name="art1">$INFO[Container(4343$NUMBER[37]).ListItem(0).Icon]</property>
+			<property name="art3">$INFO[Container(4343$NUMBER[37]).ListItem(2).Icon]</property>
+			<property name="art2">$INFO[Container(4343$NUMBER[37]).ListItem(1).Icon]</property>
+			<property name="art4">$INFO[Container(4343$NUMBER[37]).ListItem(3).Icon]</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="39">
-			<property name="id">$NUMBER[39]</property>
+		<item id="38">
+			<property name="id">$NUMBER[38]</property>
 			<label>$INFO[Window(home).Property(plugin.video.embycon-view_item.14.name)] $VAR[EmbyConLabel]</label>
 			<label2 />
 			<icon>$INFO[Window(home).Property(plugin.video.embycon-view_item.14.thumb)]</icon>
@@ -967,17 +965,17 @@
 			<property name="path">SetProperty(EmbyHubNr,14,home)</property>
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.14.type),boxsets)">ActivateWindow(1131)</onclick>
 			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.14.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems?ParentId=$INFO[Window(home).Property(plugin.video.embycon-view_item.14.id)]&amp;IsVirtualUnaired%3dfalse%26CollapseBoxSetItems%3dtrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26format%3djson,return)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-plugin-video-embycon-view-item-14-name-var-embyconlabel</property>
 			<property name="group">mainmenu</property>
-			<property name="art1">$INFO[Container(4343$NUMBER[39]).ListItem(0).Icon]</property>
-			<property name="art3">$INFO[Container(4343$NUMBER[39]).ListItem(2).Icon]</property>
-			<property name="art2">$INFO[Container(4343$NUMBER[39]).ListItem(1).Icon]</property>
-			<property name="art4">$INFO[Container(4343$NUMBER[39]).ListItem(3).Icon]</property>
+			<property name="art1">$INFO[Container(4343$NUMBER[38]).ListItem(0).Icon]</property>
+			<property name="art3">$INFO[Container(4343$NUMBER[38]).ListItem(2).Icon]</property>
+			<property name="art2">$INFO[Container(4343$NUMBER[38]).ListItem(1).Icon]</property>
+			<property name="art4">$INFO[Container(4343$NUMBER[38]).ListItem(3).Icon]</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="40">
-			<property name="id">$NUMBER[40]</property>
+		<item id="39">
+			<property name="id">$NUMBER[39]</property>
 			<label>$INFO[Window(home).Property(plugin.video.embycon-view_item.15.name)] $VAR[EmbyConLabel]</label>
 			<label2 />
 			<icon>$INFO[Window(home).Property(plugin.video.embycon-view_item.15.thumb)]</icon>
@@ -991,17 +989,17 @@
 			<property name="path">SetProperty(EmbyHubNr,15,home)</property>
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.15.type),boxsets)">ActivateWindow(1131)</onclick>
 			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.15.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems?ParentId=$INFO[Window(home).Property(plugin.video.embycon-view_item.15.id)]&amp;IsVirtualUnaired%3dfalse%26CollapseBoxSetItems%3dtrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26format%3djson,return)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-plugin-video-embycon-view-item-15-name-var-embyconlabel</property>
 			<property name="group">mainmenu</property>
-			<property name="art1">$INFO[Container(4343$NUMBER[40]).ListItem(0).Icon]</property>
-			<property name="art3">$INFO[Container(4343$NUMBER[40]).ListItem(2).Icon]</property>
-			<property name="art2">$INFO[Container(4343$NUMBER[40]).ListItem(1).Icon]</property>
-			<property name="art4">$INFO[Container(4343$NUMBER[40]).ListItem(3).Icon]</property>
+			<property name="art1">$INFO[Container(4343$NUMBER[39]).ListItem(0).Icon]</property>
+			<property name="art3">$INFO[Container(4343$NUMBER[39]).ListItem(2).Icon]</property>
+			<property name="art2">$INFO[Container(4343$NUMBER[39]).ListItem(1).Icon]</property>
+			<property name="art4">$INFO[Container(4343$NUMBER[39]).ListItem(3).Icon]</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="41">
-			<property name="id">$NUMBER[41]</property>
+		<item id="40">
+			<property name="id">$NUMBER[40]</property>
 			<label>$INFO[Window(home).Property(plugin.video.embycon-view_item.16.name)] $VAR[EmbyConLabel]</label>
 			<label2 />
 			<icon>$INFO[Window(home).Property(plugin.video.embycon-view_item.16.thumb)]</icon>
@@ -1015,17 +1013,17 @@
 			<property name="path">SetProperty(EmbyHubNr,16,home)</property>
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.16.type),boxsets)">ActivateWindow(1131)</onclick>
 			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.16.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems?ParentId=$INFO[Window(home).Property(plugin.video.embycon-view_item.16.id)]&amp;IsVirtualUnaired%3dfalse%26CollapseBoxSetItems%3dtrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26format%3djson,return)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-plugin-video-embycon-view-item-16-name-var-embyconlabel</property>
 			<property name="group">mainmenu</property>
-			<property name="art1">$INFO[Container(4343$NUMBER[41]).ListItem(0).Icon]</property>
-			<property name="art3">$INFO[Container(4343$NUMBER[41]).ListItem(2).Icon]</property>
-			<property name="art2">$INFO[Container(4343$NUMBER[41]).ListItem(1).Icon]</property>
-			<property name="art4">$INFO[Container(4343$NUMBER[41]).ListItem(3).Icon]</property>
+			<property name="art1">$INFO[Container(4343$NUMBER[40]).ListItem(0).Icon]</property>
+			<property name="art3">$INFO[Container(4343$NUMBER[40]).ListItem(2).Icon]</property>
+			<property name="art2">$INFO[Container(4343$NUMBER[40]).ListItem(1).Icon]</property>
+			<property name="art4">$INFO[Container(4343$NUMBER[40]).ListItem(3).Icon]</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="42">
-			<property name="id">$NUMBER[42]</property>
+		<item id="41">
+			<property name="id">$NUMBER[41]</property>
 			<label>$INFO[Window(home).Property(plugin.video.embycon-view_item.17.name)] $VAR[EmbyConLabel]</label>
 			<label2 />
 			<icon>$INFO[Window(home).Property(plugin.video.embycon-view_item.17.thumb)]</icon>
@@ -1039,17 +1037,17 @@
 			<property name="path">SetProperty(EmbyHubNr,17,home)</property>
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.17.type),boxsets)">ActivateWindow(1131)</onclick>
 			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.17.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems?ParentId=$INFO[Window(home).Property(plugin.video.embycon-view_item.17.id)]&amp;IsVirtualUnaired%3dfalse%26CollapseBoxSetItems%3dtrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26format%3djson,return)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-plugin-video-embycon-view-item-17-name-var-embyconlabel</property>
 			<property name="group">mainmenu</property>
-			<property name="art1">$INFO[Container(4343$NUMBER[42]).ListItem(0).Icon]</property>
-			<property name="art3">$INFO[Container(4343$NUMBER[42]).ListItem(2).Icon]</property>
-			<property name="art2">$INFO[Container(4343$NUMBER[42]).ListItem(1).Icon]</property>
-			<property name="art4">$INFO[Container(4343$NUMBER[42]).ListItem(3).Icon]</property>
+			<property name="art1">$INFO[Container(4343$NUMBER[41]).ListItem(0).Icon]</property>
+			<property name="art3">$INFO[Container(4343$NUMBER[41]).ListItem(2).Icon]</property>
+			<property name="art2">$INFO[Container(4343$NUMBER[41]).ListItem(1).Icon]</property>
+			<property name="art4">$INFO[Container(4343$NUMBER[41]).ListItem(3).Icon]</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="43">
-			<property name="id">$NUMBER[43]</property>
+		<item id="42">
+			<property name="id">$NUMBER[42]</property>
 			<label>$INFO[Window(home).Property(plugin.video.embycon-view_item.18.name)] $VAR[EmbyConLabel]</label>
 			<label2 />
 			<icon>$INFO[Window(home).Property(plugin.video.embycon-view_item.18.thumb)]</icon>
@@ -1063,17 +1061,17 @@
 			<property name="path">SetProperty(EmbyHubNr,18,home)</property>
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.18.type),boxsets)">ActivateWindow(1131)</onclick>
 			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.18.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems?ParentId=$INFO[Window(home).Property(plugin.video.embycon-view_item.18.id)]&amp;IsVirtualUnaired%3dfalse%26CollapseBoxSetItems%3dtrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26format%3djson,return)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-plugin-video-embycon-view-item-18-name-var-embyconlabel</property>
 			<property name="group">mainmenu</property>
-			<property name="art1">$INFO[Container(4343$NUMBER[43]).ListItem(0).Icon]</property>
-			<property name="art3">$INFO[Container(4343$NUMBER[43]).ListItem(2).Icon]</property>
-			<property name="art2">$INFO[Container(4343$NUMBER[43]).ListItem(1).Icon]</property>
-			<property name="art4">$INFO[Container(4343$NUMBER[43]).ListItem(3).Icon]</property>
+			<property name="art1">$INFO[Container(4343$NUMBER[42]).ListItem(0).Icon]</property>
+			<property name="art3">$INFO[Container(4343$NUMBER[42]).ListItem(2).Icon]</property>
+			<property name="art2">$INFO[Container(4343$NUMBER[42]).ListItem(1).Icon]</property>
+			<property name="art4">$INFO[Container(4343$NUMBER[42]).ListItem(3).Icon]</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="44">
-			<property name="id">$NUMBER[44]</property>
+		<item id="43">
+			<property name="id">$NUMBER[43]</property>
 			<label>$INFO[Window(home).Property(plugin.video.embycon-view_item.19.name)] $VAR[EmbyConLabel]</label>
 			<label2 />
 			<icon>$INFO[Window(home).Property(plugin.video.embycon-view_item.19.thumb)]</icon>
@@ -1087,17 +1085,17 @@
 			<property name="path">SetProperty(EmbyHubNr,19,home)</property>
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.19.type),boxsets)">ActivateWindow(1131)</onclick>
 			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.19.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems?ParentId=$INFO[Window(home).Property(plugin.video.embycon-view_item.19.id)]&amp;IsVirtualUnaired%3dfalse%26CollapseBoxSetItems%3dtrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26format%3djson,return)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-plugin-video-embycon-view-item-19-name-var-embyconlabel</property>
 			<property name="group">mainmenu</property>
-			<property name="art1">$INFO[Container(4343$NUMBER[44]).ListItem(0).Icon]</property>
-			<property name="art3">$INFO[Container(4343$NUMBER[44]).ListItem(2).Icon]</property>
-			<property name="art2">$INFO[Container(4343$NUMBER[44]).ListItem(1).Icon]</property>
-			<property name="art4">$INFO[Container(4343$NUMBER[44]).ListItem(3).Icon]</property>
+			<property name="art1">$INFO[Container(4343$NUMBER[43]).ListItem(0).Icon]</property>
+			<property name="art3">$INFO[Container(4343$NUMBER[43]).ListItem(2).Icon]</property>
+			<property name="art2">$INFO[Container(4343$NUMBER[43]).ListItem(1).Icon]</property>
+			<property name="art4">$INFO[Container(4343$NUMBER[43]).ListItem(3).Icon]</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="45">
-			<property name="id">$NUMBER[45]</property>
+		<item id="44">
+			<property name="id">$NUMBER[44]</property>
 			<label>$VAR[PVRLabel]</label>
 			<label2 />
 			<icon>special://skin/extras/icons/thumb_livetv.jpg</icon>
@@ -1109,17 +1107,17 @@
 			<visible>Pvr.HasTVChannels</visible>
 			<onclick>ActivateWindow(1124,return)</onclick>
 			<property name="path">ActivateWindow(1124,return)</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">var-pvrlabel</property>
 			<property name="group">mainmenu</property>
-			<property name="art1">$INFO[Container(4343$NUMBER[45]).ListItem(0).Icon]</property>
-			<property name="art3">$INFO[Container(4343$NUMBER[45]).ListItem(2).Icon]</property>
-			<property name="art2">$INFO[Container(4343$NUMBER[45]).ListItem(1).Icon]</property>
-			<property name="art4">$INFO[Container(4343$NUMBER[45]).ListItem(3).Icon]</property>
+			<property name="art1">$INFO[Container(4343$NUMBER[44]).ListItem(0).Icon]</property>
+			<property name="art3">$INFO[Container(4343$NUMBER[44]).ListItem(2).Icon]</property>
+			<property name="art2">$INFO[Container(4343$NUMBER[44]).ListItem(1).Icon]</property>
+			<property name="art4">$INFO[Container(4343$NUMBER[44]).ListItem(3).Icon]</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="46">
-			<property name="id">$NUMBER[46]</property>
+		<item id="45">
+			<property name="id">$NUMBER[45]</property>
 			<label>$LOCALIZE[19017]</label>
 			<label2 />
 			<icon>special://skin/extras/icons/thumb_recordings.jpg</icon>
@@ -1131,17 +1129,17 @@
 			<visible>[System.HasPVRAddon] + [Pvr.HasTVChannels]</visible>
 			<onclick>ActivateWindow(tvrecordings)</onclick>
 			<property name="path">ActivateWindow(tvrecordings)</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">num-19017</property>
 			<property name="group">mainmenu</property>
-			<property name="art1">$INFO[Container(4343$NUMBER[46]).ListItem(0).Icon]</property>
-			<property name="art3">$INFO[Container(4343$NUMBER[46]).ListItem(2).Icon]</property>
-			<property name="art2">$INFO[Container(4343$NUMBER[46]).ListItem(1).Icon]</property>
-			<property name="art4">$INFO[Container(4343$NUMBER[46]).ListItem(3).Icon]</property>
+			<property name="art1">$INFO[Container(4343$NUMBER[45]).ListItem(0).Icon]</property>
+			<property name="art3">$INFO[Container(4343$NUMBER[45]).ListItem(2).Icon]</property>
+			<property name="art2">$INFO[Container(4343$NUMBER[45]).ListItem(1).Icon]</property>
+			<property name="art4">$INFO[Container(4343$NUMBER[45]).ListItem(3).Icon]</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="47">
-			<property name="id">$NUMBER[47]</property>
+		<item id="46">
+			<property name="id">$NUMBER[46]</property>
 			<label>$LOCALIZE[2]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -1176,17 +1174,17 @@
 		]]]</visible>
 			<onclick>ActivateWindow(1122,return)</onclick>
 			<property name="path">ActivateWindow(1122,return)</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">num-2</property>
 			<property name="group">mainmenu</property>
-			<property name="art1">$INFO[Container(4343$NUMBER[47]).ListItem(0).Icon]</property>
-			<property name="art3">$INFO[Container(4343$NUMBER[47]).ListItem(2).Icon]</property>
-			<property name="art2">$INFO[Container(4343$NUMBER[47]).ListItem(1).Icon]</property>
-			<property name="art4">$INFO[Container(4343$NUMBER[47]).ListItem(3).Icon]</property>
+			<property name="art1">$INFO[Container(4343$NUMBER[46]).ListItem(0).Icon]</property>
+			<property name="art3">$INFO[Container(4343$NUMBER[46]).ListItem(2).Icon]</property>
+			<property name="art2">$INFO[Container(4343$NUMBER[46]).ListItem(1).Icon]</property>
+			<property name="art4">$INFO[Container(4343$NUMBER[46]).ListItem(3).Icon]</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="48">
-			<property name="id">$NUMBER[48]</property>
+		<item id="47">
+			<property name="id">$NUMBER[47]</property>
 			<label>$LOCALIZE[20389]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -1198,17 +1196,17 @@
 			<visible>[Library.HasContent(MusicVideos)] + [Library.HasContent(musicvideos)]</visible>
 			<onclick>ActivateWindow(videos,videodb://musicvideos/titles/,return)</onclick>
 			<property name="path">ActivateWindow(videos,videodb://musicvideos/titles/,return)</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">musicvideos</property>
 			<property name="group">mainmenu</property>
-			<property name="art1">$INFO[Container(4343$NUMBER[48]).ListItem(0).Icon]</property>
-			<property name="art3">$INFO[Container(4343$NUMBER[48]).ListItem(2).Icon]</property>
-			<property name="art2">$INFO[Container(4343$NUMBER[48]).ListItem(1).Icon]</property>
-			<property name="art4">$INFO[Container(4343$NUMBER[48]).ListItem(3).Icon]</property>
+			<property name="art1">$INFO[Container(4343$NUMBER[47]).ListItem(0).Icon]</property>
+			<property name="art3">$INFO[Container(4343$NUMBER[47]).ListItem(2).Icon]</property>
+			<property name="art2">$INFO[Container(4343$NUMBER[47]).ListItem(1).Icon]</property>
+			<property name="art4">$INFO[Container(4343$NUMBER[47]).ListItem(3).Icon]</property>
 			<property name="hasSubmenu">False</property>
 		</item>
-		<item id="49">
-			<property name="id">$NUMBER[49]</property>
+		<item id="48">
+			<property name="id">$NUMBER[48]</property>
 			<label>$LOCALIZE[24001]</label>
 			<label2 />
 			<icon>special://skin/extras/icons/thumb_addons.jpg</icon>
@@ -1219,13 +1217,13 @@
 			<property name="list">-</property>
 			<onclick>ActivateWindow(1123,return)</onclick>
 			<property name="path">ActivateWindow(1123,return)</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">num-24001</property>
 			<property name="group">mainmenu</property>
-			<property name="art1">$INFO[Container(4343$NUMBER[49]).ListItem(0).Icon]</property>
-			<property name="art3">$INFO[Container(4343$NUMBER[49]).ListItem(2).Icon]</property>
-			<property name="art2">$INFO[Container(4343$NUMBER[49]).ListItem(1).Icon]</property>
-			<property name="art4">$INFO[Container(4343$NUMBER[49]).ListItem(3).Icon]</property>
+			<property name="art1">$INFO[Container(4343$NUMBER[48]).ListItem(0).Icon]</property>
+			<property name="art3">$INFO[Container(4343$NUMBER[48]).ListItem(2).Icon]</property>
+			<property name="art2">$INFO[Container(4343$NUMBER[48]).ListItem(1).Icon]</property>
+			<property name="art4">$INFO[Container(4343$NUMBER[48]).ListItem(3).Icon]</property>
 			<property name="hasSubmenu">False</property>
 		</item>
 	</include>
@@ -1233,7 +1231,7 @@
 	<include name="skinshortcuts-submenu">
 		<item id="1">
 			<property name="id">$NUMBER[1]</property>
-			<property name="mainmenuid">50</property>
+			<property name="mainmenuid">49</property>
 			<label>$LOCALIZE[31180]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -1245,13 +1243,13 @@
 			<onclick>ActivateWindow(videos,library://video/movies/titles.xml/,return)</onclick>
 			<property name="path">ActivateWindow(videos,library://video/movies/titles.xml/,return)</property>
 			<property name="list">library://video/movies/titles.xml/</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">moviehub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="2">
 			<property name="id">$NUMBER[2]</property>
-			<property name="mainmenuid">50</property>
+			<property name="mainmenuid">49</property>
 			<label>$LOCALIZE[31169]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -1263,13 +1261,13 @@
 			<onclick>ActivateWindow(videos,library://video/movies/sets.xml/,return)</onclick>
 			<property name="path">ActivateWindow(videos,library://video/movies/sets.xml/,return)</property>
 			<property name="list">library://video/movies/sets.xml/</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">moviehub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="3">
 			<property name="id">$NUMBER[3]</property>
-			<property name="mainmenuid">50</property>
+			<property name="mainmenuid">49</property>
 			<label>$LOCALIZE[31209]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -1281,13 +1279,13 @@
 			<onclick>ActivateWindow(videos,special://skin/playlists/video/UnwatchedMovies.xsp,return)</onclick>
 			<property name="path">ActivateWindow(videos,special://skin/playlists/video/UnwatchedMovies.xsp,return)</property>
 			<property name="list">special://skin/playlists/video/UnwatchedMovies.xsp</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">moviehub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="4">
 			<property name="id">$NUMBER[4]</property>
-			<property name="mainmenuid">50</property>
+			<property name="mainmenuid">49</property>
 			<label>$LOCALIZE[135]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -1300,13 +1298,13 @@
 			<property name="path">SetProperty(ListGenres,videodb://movies/genres,home)</property>
 			<property name="list">SetProperty(ListGenres,videodb://movies/genres,home)</property>
 			<onclick>ActivateWindow(1114)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">moviehub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="5">
 			<property name="id">$NUMBER[5]</property>
-			<property name="mainmenuid">50</property>
+			<property name="mainmenuid">49</property>
 			<label>$LOCALIZE[31160]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -1318,13 +1316,13 @@
 			<onclick>ActivateWindow(10025,"plugin://plugin.video.embycon/?media_type=Movies&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems%3fFields%3dDateCreated%2cEpisodeCount%2cSeasonCount%2cPath%2cGenres%2cStudios%2cEtag%2cMediaStreams%2cOverview%26Recursive%3dtrue%26IncludeItemTypes%3dMovie%26ImageTypeLimit%3d1%26format%3djson",return)</onclick>
 			<property name="path">ActivateWindow(10025,"plugin://plugin.video.embycon/?media_type=Movies&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems%3fFields%3dDateCreated%2cEpisodeCount%2cSeasonCount%2cPath%2cGenres%2cStudios%2cEtag%2cMediaStreams%2cOverview%26Recursive%3dtrue%26IncludeItemTypes%3dMovie%26ImageTypeLimit%3d1%26format%3djson",return)</property>
 			<property name="list">plugin://plugin.video.embycon/?media_type=Movies&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems%3fFields%3dDateCreated%2cEpisodeCount%2cSeasonCount%2cPath%2cGenres%2cStudios%2cEtag%2cMediaStreams%2cOverview%26Recursive%3dtrue%26IncludeItemTypes%3dMovie%26ImageTypeLimit%3d1%26format%3djson</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">moviehub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="6">
 			<property name="id">$NUMBER[6]</property>
-			<property name="mainmenuid">50</property>
+			<property name="mainmenuid">49</property>
 			<label>$LOCALIZE[14022]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -1336,13 +1334,13 @@
 			<onclick>ActivateWindow(videos,library://video/movies/,return)</onclick>
 			<property name="path">ActivateWindow(videos,library://video/movies/,return)</property>
 			<property name="list">library://video/movies/</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">moviehub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="7">
 			<property name="id">$NUMBER[7]</property>
-			<property name="mainmenuid">50</property>
+			<property name="mainmenuid">49</property>
 			<label>$LOCALIZE[137]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -1359,13 +1357,13 @@
 			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">Skin.SetString(CustomSearchTerm)</onclick>
 			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">ActivateWindow(1115)</onclick>
 			<onclick condition="Skin.HasSetting(UseGlobalsearch)">RunScript(script.globalsearch)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">moviehub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="1">
 			<property name="id">$NUMBER[1]</property>
-			<property name="mainmenuid">51</property>
+			<property name="mainmenuid">50</property>
 			<label>$LOCALIZE[31179]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -1373,17 +1371,17 @@
 			<property name="labelID">31179</property>
 			<property name="defaultID">embuary_tvshowhub_tvshows</property>
 			<property name="isDefault">true</property>
-			<visible>[[Library.HasContent(TVShows)] + [Library.HasContent(tvshows)]] + String.IsEqual(Container(100).ListItem.Property(submenuVisibility),tvshowhub)</visible>
-			<onclick>ActivateWindow(videos,library://video/tvshows/titles.xml/,return)</onclick>
-			<property name="path">ActivateWindow(videos,library://video/tvshows/titles.xml/,return)</property>
-			<property name="list">library://video/tvshows/titles.xml/</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>[Library.HasContent(tvshows)] + String.IsEqual(Container(100).ListItem.Property(submenuVisibility),tvshowhub)</visible>
+			<onclick>ctivateWindow(videos,library://video/tvshows/titles.xml/,return)</onclick>
+			<property name="path">ctivateWindow(videos,library://video/tvshows/titles.xml/,return)</property>
+			<property name="list">ctivateWindow(videos,library://video/tvshows/titles.xml/,return)</property>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">tvshowhub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="2">
 			<property name="id">$NUMBER[2]</property>
-			<property name="mainmenuid">51</property>
+			<property name="mainmenuid">50</property>
 			<label>$LOCALIZE[31210]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -1395,13 +1393,13 @@
 			<onclick>ActivateWindow(videos,special://skin/playlists/video/UnwatchedTVShows.xsp,return)</onclick>
 			<property name="path">ActivateWindow(videos,special://skin/playlists/video/UnwatchedTVShows.xsp,return)</property>
 			<property name="list">special://skin/playlists/video/UnwatchedTVShows.xsp</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">tvshowhub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="3">
 			<property name="id">$NUMBER[3]</property>
-			<property name="mainmenuid">51</property>
+			<property name="mainmenuid">50</property>
 			<label>$LOCALIZE[135]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -1414,13 +1412,13 @@
 			<property name="path">SetProperty(ListGenres,videodb://tvshows/genres,home)</property>
 			<property name="list">SetProperty(ListGenres,videodb://tvshows/genres,home)</property>
 			<onclick>ActivateWindow(1114)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">tvshowhub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="4">
 			<property name="id">$NUMBER[4]</property>
-			<property name="mainmenuid">51</property>
+			<property name="mainmenuid">50</property>
 			<label>$LOCALIZE[31154]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -1432,13 +1430,13 @@
 			<onclick>RunScript(script.tv.show.next.aired)</onclick>
 			<property name="path">RunScript(script.tv.show.next.aired)</property>
 			<property name="list">RunScript(script.tv.show.next.aired)</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">tvshowhub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="5">
 			<property name="id">$NUMBER[5]</property>
-			<property name="mainmenuid">51</property>
+			<property name="mainmenuid">50</property>
 			<label>$LOCALIZE[31239]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -1450,13 +1448,13 @@
 			<onclick>ActivateWindow(10025,"plugin://plugin.video.embycon/?media_type=tvshows&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems%3fFields%3dDateCreated%2cEpisodeCount%2cSeasonCount%2cPath%2cGenres%2cStudios%2cEtag%2cMediaStreams%2cOverview%26Recursive%3dtrue%26IncludeItemTypes%3dSeries%26ImageTypeLimit%3d1%26format%3djson",return)</onclick>
 			<property name="path">ActivateWindow(10025,"plugin://plugin.video.embycon/?media_type=tvshows&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems%3fFields%3dDateCreated%2cEpisodeCount%2cSeasonCount%2cPath%2cGenres%2cStudios%2cEtag%2cMediaStreams%2cOverview%26Recursive%3dtrue%26IncludeItemTypes%3dSeries%26ImageTypeLimit%3d1%26format%3djson",return)</property>
 			<property name="list">plugin://plugin.video.embycon/?media_type=tvshows&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems%3fFields%3dDateCreated%2cEpisodeCount%2cSeasonCount%2cPath%2cGenres%2cStudios%2cEtag%2cMediaStreams%2cOverview%26Recursive%3dtrue%26IncludeItemTypes%3dSeries%26ImageTypeLimit%3d1%26format%3djson</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">tvshowhub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="6">
 			<property name="id">$NUMBER[6]</property>
-			<property name="mainmenuid">51</property>
+			<property name="mainmenuid">50</property>
 			<label>$LOCALIZE[14022]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -1468,13 +1466,13 @@
 			<onclick>ActivateWindow(videos,library://video/tvshows/,return)</onclick>
 			<property name="path">ActivateWindow(videos,library://video/tvshows/,return)</property>
 			<property name="list">library://video/tvshows/</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">tvshowhub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="7">
 			<property name="id">$NUMBER[7]</property>
-			<property name="mainmenuid">51</property>
+			<property name="mainmenuid">50</property>
 			<label>$LOCALIZE[137]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -1491,13 +1489,13 @@
 			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">Skin.SetString(CustomSearchTerm)</onclick>
 			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">ActivateWindow(1115)</onclick>
 			<onclick condition="Skin.HasSetting(UseGlobalsearch)">RunScript(script.globalsearch)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">tvshowhub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="1">
 			<property name="id">$NUMBER[1]</property>
-			<property name="mainmenuid">52</property>
+			<property name="mainmenuid">51</property>
 			<label>$LOCALIZE[133]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -1509,13 +1507,13 @@
 			<onclick>ActivateWindow(music,library://music/artists.xml/,return)</onclick>
 			<property name="path">ActivateWindow(music,library://music/artists.xml/,return)</property>
 			<property name="list">library://music/artists.xml/</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">musichub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="2">
 			<property name="id">$NUMBER[2]</property>
-			<property name="mainmenuid">52</property>
+			<property name="mainmenuid">51</property>
 			<label>$LOCALIZE[132]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -1527,13 +1525,13 @@
 			<onclick>ActivateWindow(music,library://music/albums.xml/,return)</onclick>
 			<property name="path">ActivateWindow(music,library://music/albums.xml/,return)</property>
 			<property name="list">library://music/albums.xml/</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">musichub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="3">
 			<property name="id">$NUMBER[3]</property>
-			<property name="mainmenuid">52</property>
+			<property name="mainmenuid">51</property>
 			<label>$LOCALIZE[134]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -1545,13 +1543,13 @@
 			<onclick>ActivateWindow(music,library://music/songs.xml/,return)</onclick>
 			<property name="path">ActivateWindow(music,library://music/songs.xml/,return)</property>
 			<property name="list">library://music/songs.xml/</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">musichub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="4">
 			<property name="id">$NUMBER[4]</property>
-			<property name="mainmenuid">52</property>
+			<property name="mainmenuid">51</property>
 			<label>$LOCALIZE[136]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -1563,13 +1561,13 @@
 			<onclick>ActivateWindow(music,special://musicplaylists/,return)</onclick>
 			<property name="path">ActivateWindow(music,special://musicplaylists/,return)</property>
 			<property name="list">special://musicplaylists/</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">musichub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="5">
 			<property name="id">$NUMBER[5]</property>
-			<property name="mainmenuid">52</property>
+			<property name="mainmenuid">51</property>
 			<label>$LOCALIZE[14022]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -1580,13 +1578,13 @@
 			<onclick>ActivateWindow(music,musicdb://root,return)</onclick>
 			<property name="path">ActivateWindow(music,musicdb://root,return)</property>
 			<property name="list">musicdb://root</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(100).ListItem.Property(submenuVisibility),musichub)</visible>
+			<visible>[String.IsEqual(System.ProfileName,Master us)] + String.IsEqual(Container(100).ListItem.Property(submenuVisibility),musichub)</visible>
 			<property name="group">musichub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="6">
 			<property name="id">$NUMBER[6]</property>
-			<property name="mainmenuid">52</property>
+			<property name="mainmenuid">51</property>
 			<label>$LOCALIZE[20389]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -1598,13 +1596,13 @@
 			<onclick>ActivateWindow(videos,library://video/musicvideos/titles.xml/,return)</onclick>
 			<property name="path">ActivateWindow(videos,library://video/musicvideos/titles.xml/,return)</property>
 			<property name="list">library://video/musicvideos/titles.xml/</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">musichub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="7">
 			<property name="id">$NUMBER[7]</property>
-			<property name="mainmenuid">52</property>
+			<property name="mainmenuid">51</property>
 			<label>$VAR[PartyModeButton]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -1617,13 +1615,13 @@
 			<property name="path">Playercontrol(stop)</property>
 			<property name="list">Playercontrol(stop)</property>
 			<onclick condition="!MusicPartyMode.Enabled">Playercontrol(partymode(music))</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">musichub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="8">
 			<property name="id">$NUMBER[8]</property>
-			<property name="mainmenuid">52</property>
+			<property name="mainmenuid">51</property>
 			<label>$LOCALIZE[31240]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -1635,13 +1633,13 @@
 			<onclick>ActivateWindow(music,plugin://plugin.video.embycon/?media_type=MusicArtists&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fArtists%2fAlbumArtists%3fRecursive%3dtrue%26ImageTypeLimit%3d1%26EnableImageTypes%3dPrimary%2cBackdrop%2cBanner%2cThumb%26format%3djson,return)</onclick>
 			<property name="path">ActivateWindow(music,plugin://plugin.video.embycon/?media_type=MusicArtists&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fArtists%2fAlbumArtists%3fRecursive%3dtrue%26ImageTypeLimit%3d1%26EnableImageTypes%3dPrimary%2cBackdrop%2cBanner%2cThumb%26format%3djson,return)</property>
 			<property name="list">plugin://plugin.video.embycon/?media_type=MusicArtists&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fArtists%2fAlbumArtists%3fRecursive%3dtrue%26ImageTypeLimit%3d1%26EnableImageTypes%3dPrimary%2cBackdrop%2cBanner%2cThumb%26format%3djson</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">musichub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="9">
 			<property name="id">$NUMBER[9]</property>
-			<property name="mainmenuid">52</property>
+			<property name="mainmenuid">51</property>
 			<label>$LOCALIZE[31241]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -1653,13 +1651,13 @@
 			<onclick>ActivateWindow(music,plugin://plugin.video.embycon/?media_type=MusicAlbums&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems%3fRecursive%3dtrue%26IncludeItemTypes%3dMusicAlbum%26ImageTypeLimit%3d1%26EnableImageTypes%3dPrimary%2cBackdrop%2cBanner%2cThumb%26format%3djson,return)</onclick>
 			<property name="path">ActivateWindow(music,plugin://plugin.video.embycon/?media_type=MusicAlbums&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems%3fRecursive%3dtrue%26IncludeItemTypes%3dMusicAlbum%26ImageTypeLimit%3d1%26EnableImageTypes%3dPrimary%2cBackdrop%2cBanner%2cThumb%26format%3djson,return)</property>
 			<property name="list">plugin://plugin.video.embycon/?media_type=MusicAlbums&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems%3fRecursive%3dtrue%26IncludeItemTypes%3dMusicAlbum%26ImageTypeLimit%3d1%26EnableImageTypes%3dPrimary%2cBackdrop%2cBanner%2cThumb%26format%3djson</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">musichub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="10">
 			<property name="id">$NUMBER[10]</property>
-			<property name="mainmenuid">52</property>
+			<property name="mainmenuid">51</property>
 			<label>$LOCALIZE[137]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -1676,16 +1674,10 @@
 			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">Skin.SetString(CustomSearchTerm)</onclick>
 			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">ActivateWindow(1115)</onclick>
 			<onclick condition="Skin.HasSetting(UseGlobalsearch)">RunScript(script.globalsearch)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">musichub</property>
 			<property name="isSubmenu">True</property>
 		</item>
-	</include>
-	<include name="skinshortcuts-group-num-3">
-		<description>No items</description>
-	</include>
-	<include name="skinshortcuts-group-alt-num-3">
-		<description>No items</description>
 	</include>
 	<include name="skinshortcuts-group-num-31180">
 		<description>No items</description>
@@ -1978,7 +1970,7 @@
 	<include name="skinshortcuts-group-moviehub">
 		<item id="1">
 			<property name="id">$NUMBER[1]</property>
-			<property name="mainmenuid">50</property>
+			<property name="mainmenuid">49</property>
 			<label>$LOCALIZE[31180]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -1990,13 +1982,13 @@
 			<onclick>ActivateWindow(videos,library://video/movies/titles.xml/,return)</onclick>
 			<property name="path">ActivateWindow(videos,library://video/movies/titles.xml/,return)</property>
 			<property name="list">library://video/movies/titles.xml/</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">moviehub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="2">
 			<property name="id">$NUMBER[2]</property>
-			<property name="mainmenuid">50</property>
+			<property name="mainmenuid">49</property>
 			<label>$LOCALIZE[31169]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -2008,13 +2000,13 @@
 			<onclick>ActivateWindow(videos,library://video/movies/sets.xml/,return)</onclick>
 			<property name="path">ActivateWindow(videos,library://video/movies/sets.xml/,return)</property>
 			<property name="list">library://video/movies/sets.xml/</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">moviehub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="3">
 			<property name="id">$NUMBER[3]</property>
-			<property name="mainmenuid">50</property>
+			<property name="mainmenuid">49</property>
 			<label>$LOCALIZE[31209]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -2026,13 +2018,13 @@
 			<onclick>ActivateWindow(videos,special://skin/playlists/video/UnwatchedMovies.xsp,return)</onclick>
 			<property name="path">ActivateWindow(videos,special://skin/playlists/video/UnwatchedMovies.xsp,return)</property>
 			<property name="list">special://skin/playlists/video/UnwatchedMovies.xsp</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">moviehub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="4">
 			<property name="id">$NUMBER[4]</property>
-			<property name="mainmenuid">50</property>
+			<property name="mainmenuid">49</property>
 			<label>$LOCALIZE[135]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -2045,13 +2037,13 @@
 			<property name="path">SetProperty(ListGenres,videodb://movies/genres,home)</property>
 			<property name="list">SetProperty(ListGenres,videodb://movies/genres,home)</property>
 			<onclick>ActivateWindow(1114)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">moviehub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="5">
 			<property name="id">$NUMBER[5]</property>
-			<property name="mainmenuid">50</property>
+			<property name="mainmenuid">49</property>
 			<label>$LOCALIZE[31160]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -2063,13 +2055,13 @@
 			<onclick>ActivateWindow(10025,"plugin://plugin.video.embycon/?media_type=Movies&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems%3fFields%3dDateCreated%2cEpisodeCount%2cSeasonCount%2cPath%2cGenres%2cStudios%2cEtag%2cMediaStreams%2cOverview%26Recursive%3dtrue%26IncludeItemTypes%3dMovie%26ImageTypeLimit%3d1%26format%3djson",return)</onclick>
 			<property name="path">ActivateWindow(10025,"plugin://plugin.video.embycon/?media_type=Movies&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems%3fFields%3dDateCreated%2cEpisodeCount%2cSeasonCount%2cPath%2cGenres%2cStudios%2cEtag%2cMediaStreams%2cOverview%26Recursive%3dtrue%26IncludeItemTypes%3dMovie%26ImageTypeLimit%3d1%26format%3djson",return)</property>
 			<property name="list">plugin://plugin.video.embycon/?media_type=Movies&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems%3fFields%3dDateCreated%2cEpisodeCount%2cSeasonCount%2cPath%2cGenres%2cStudios%2cEtag%2cMediaStreams%2cOverview%26Recursive%3dtrue%26IncludeItemTypes%3dMovie%26ImageTypeLimit%3d1%26format%3djson</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">moviehub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="6">
 			<property name="id">$NUMBER[6]</property>
-			<property name="mainmenuid">50</property>
+			<property name="mainmenuid">49</property>
 			<label>$LOCALIZE[14022]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -2081,13 +2073,13 @@
 			<onclick>ActivateWindow(videos,library://video/movies/,return)</onclick>
 			<property name="path">ActivateWindow(videos,library://video/movies/,return)</property>
 			<property name="list">library://video/movies/</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">moviehub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="7">
 			<property name="id">$NUMBER[7]</property>
-			<property name="mainmenuid">50</property>
+			<property name="mainmenuid">49</property>
 			<label>$LOCALIZE[137]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -2104,7 +2096,7 @@
 			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">Skin.SetString(CustomSearchTerm)</onclick>
 			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">ActivateWindow(1115)</onclick>
 			<onclick condition="Skin.HasSetting(UseGlobalsearch)">RunScript(script.globalsearch)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">moviehub</property>
 			<property name="isSubmenu">True</property>
 		</item>
@@ -2112,7 +2104,7 @@
 	<include name="skinshortcuts-group-alt-moviehub">
 		<item id="1">
 			<property name="id">$NUMBER[1]</property>
-			<property name="mainmenuid">50</property>
+			<property name="mainmenuid">49</property>
 			<label>$LOCALIZE[31180]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -2124,13 +2116,13 @@
 			<onclick>ActivateWindow(videos,library://video/movies/titles.xml/,return)</onclick>
 			<property name="path">ActivateWindow(videos,library://video/movies/titles.xml/,return)</property>
 			<property name="list">library://video/movies/titles.xml/</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">moviehub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="2">
 			<property name="id">$NUMBER[2]</property>
-			<property name="mainmenuid">50</property>
+			<property name="mainmenuid">49</property>
 			<label>$LOCALIZE[31169]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -2142,13 +2134,13 @@
 			<onclick>ActivateWindow(videos,library://video/movies/sets.xml/,return)</onclick>
 			<property name="path">ActivateWindow(videos,library://video/movies/sets.xml/,return)</property>
 			<property name="list">library://video/movies/sets.xml/</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">moviehub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="3">
 			<property name="id">$NUMBER[3]</property>
-			<property name="mainmenuid">50</property>
+			<property name="mainmenuid">49</property>
 			<label>$LOCALIZE[31209]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -2160,13 +2152,13 @@
 			<onclick>ActivateWindow(videos,special://skin/playlists/video/UnwatchedMovies.xsp,return)</onclick>
 			<property name="path">ActivateWindow(videos,special://skin/playlists/video/UnwatchedMovies.xsp,return)</property>
 			<property name="list">special://skin/playlists/video/UnwatchedMovies.xsp</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">moviehub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="4">
 			<property name="id">$NUMBER[4]</property>
-			<property name="mainmenuid">50</property>
+			<property name="mainmenuid">49</property>
 			<label>$LOCALIZE[135]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -2179,13 +2171,13 @@
 			<property name="path">SetProperty(ListGenres,videodb://movies/genres,home)</property>
 			<property name="list">SetProperty(ListGenres,videodb://movies/genres,home)</property>
 			<onclick>ActivateWindow(1114)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">moviehub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="5">
 			<property name="id">$NUMBER[5]</property>
-			<property name="mainmenuid">50</property>
+			<property name="mainmenuid">49</property>
 			<label>$LOCALIZE[31160]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -2197,13 +2189,13 @@
 			<onclick>ActivateWindow(10025,"plugin://plugin.video.embycon/?media_type=Movies&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems%3fFields%3dDateCreated%2cEpisodeCount%2cSeasonCount%2cPath%2cGenres%2cStudios%2cEtag%2cMediaStreams%2cOverview%26Recursive%3dtrue%26IncludeItemTypes%3dMovie%26ImageTypeLimit%3d1%26format%3djson",return)</onclick>
 			<property name="path">ActivateWindow(10025,"plugin://plugin.video.embycon/?media_type=Movies&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems%3fFields%3dDateCreated%2cEpisodeCount%2cSeasonCount%2cPath%2cGenres%2cStudios%2cEtag%2cMediaStreams%2cOverview%26Recursive%3dtrue%26IncludeItemTypes%3dMovie%26ImageTypeLimit%3d1%26format%3djson",return)</property>
 			<property name="list">plugin://plugin.video.embycon/?media_type=Movies&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems%3fFields%3dDateCreated%2cEpisodeCount%2cSeasonCount%2cPath%2cGenres%2cStudios%2cEtag%2cMediaStreams%2cOverview%26Recursive%3dtrue%26IncludeItemTypes%3dMovie%26ImageTypeLimit%3d1%26format%3djson</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">moviehub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="6">
 			<property name="id">$NUMBER[6]</property>
-			<property name="mainmenuid">50</property>
+			<property name="mainmenuid">49</property>
 			<label>$LOCALIZE[14022]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -2215,13 +2207,13 @@
 			<onclick>ActivateWindow(videos,library://video/movies/,return)</onclick>
 			<property name="path">ActivateWindow(videos,library://video/movies/,return)</property>
 			<property name="list">library://video/movies/</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">moviehub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="7">
 			<property name="id">$NUMBER[7]</property>
-			<property name="mainmenuid">50</property>
+			<property name="mainmenuid">49</property>
 			<label>$LOCALIZE[137]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -2238,7 +2230,7 @@
 			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">Skin.SetString(CustomSearchTerm)</onclick>
 			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">ActivateWindow(1115)</onclick>
 			<onclick condition="Skin.HasSetting(UseGlobalsearch)">RunScript(script.globalsearch)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">moviehub</property>
 			<property name="isSubmenu">True</property>
 		</item>
@@ -2246,7 +2238,7 @@
 	<include name="skinshortcuts-group-tvshowhub">
 		<item id="1">
 			<property name="id">$NUMBER[1]</property>
-			<property name="mainmenuid">51</property>
+			<property name="mainmenuid">50</property>
 			<label>$LOCALIZE[31179]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -2254,17 +2246,17 @@
 			<property name="labelID">31179</property>
 			<property name="defaultID">embuary_tvshowhub_tvshows</property>
 			<property name="isDefault">true</property>
-			<visible>[Library.HasContent(TVShows)] + [Library.HasContent(tvshows)]</visible>
-			<onclick>ActivateWindow(videos,library://video/tvshows/titles.xml/,return)</onclick>
-			<property name="path">ActivateWindow(videos,library://video/tvshows/titles.xml/,return)</property>
-			<property name="list">library://video/tvshows/titles.xml/</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>Library.HasContent(tvshows)</visible>
+			<onclick>ctivateWindow(videos,library://video/tvshows/titles.xml/,return)</onclick>
+			<property name="path">ctivateWindow(videos,library://video/tvshows/titles.xml/,return)</property>
+			<property name="list">ctivateWindow(videos,library://video/tvshows/titles.xml/,return)</property>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">tvshowhub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="2">
 			<property name="id">$NUMBER[2]</property>
-			<property name="mainmenuid">51</property>
+			<property name="mainmenuid">50</property>
 			<label>$LOCALIZE[31210]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -2276,13 +2268,13 @@
 			<onclick>ActivateWindow(videos,special://skin/playlists/video/UnwatchedTVShows.xsp,return)</onclick>
 			<property name="path">ActivateWindow(videos,special://skin/playlists/video/UnwatchedTVShows.xsp,return)</property>
 			<property name="list">special://skin/playlists/video/UnwatchedTVShows.xsp</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">tvshowhub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="3">
 			<property name="id">$NUMBER[3]</property>
-			<property name="mainmenuid">51</property>
+			<property name="mainmenuid">50</property>
 			<label>$LOCALIZE[135]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -2295,13 +2287,13 @@
 			<property name="path">SetProperty(ListGenres,videodb://tvshows/genres,home)</property>
 			<property name="list">SetProperty(ListGenres,videodb://tvshows/genres,home)</property>
 			<onclick>ActivateWindow(1114)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">tvshowhub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="4">
 			<property name="id">$NUMBER[4]</property>
-			<property name="mainmenuid">51</property>
+			<property name="mainmenuid">50</property>
 			<label>$LOCALIZE[31154]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -2313,13 +2305,13 @@
 			<onclick>RunScript(script.tv.show.next.aired)</onclick>
 			<property name="path">RunScript(script.tv.show.next.aired)</property>
 			<property name="list">RunScript(script.tv.show.next.aired)</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">tvshowhub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="5">
 			<property name="id">$NUMBER[5]</property>
-			<property name="mainmenuid">51</property>
+			<property name="mainmenuid">50</property>
 			<label>$LOCALIZE[31239]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -2331,13 +2323,13 @@
 			<onclick>ActivateWindow(10025,"plugin://plugin.video.embycon/?media_type=tvshows&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems%3fFields%3dDateCreated%2cEpisodeCount%2cSeasonCount%2cPath%2cGenres%2cStudios%2cEtag%2cMediaStreams%2cOverview%26Recursive%3dtrue%26IncludeItemTypes%3dSeries%26ImageTypeLimit%3d1%26format%3djson",return)</onclick>
 			<property name="path">ActivateWindow(10025,"plugin://plugin.video.embycon/?media_type=tvshows&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems%3fFields%3dDateCreated%2cEpisodeCount%2cSeasonCount%2cPath%2cGenres%2cStudios%2cEtag%2cMediaStreams%2cOverview%26Recursive%3dtrue%26IncludeItemTypes%3dSeries%26ImageTypeLimit%3d1%26format%3djson",return)</property>
 			<property name="list">plugin://plugin.video.embycon/?media_type=tvshows&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems%3fFields%3dDateCreated%2cEpisodeCount%2cSeasonCount%2cPath%2cGenres%2cStudios%2cEtag%2cMediaStreams%2cOverview%26Recursive%3dtrue%26IncludeItemTypes%3dSeries%26ImageTypeLimit%3d1%26format%3djson</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">tvshowhub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="6">
 			<property name="id">$NUMBER[6]</property>
-			<property name="mainmenuid">51</property>
+			<property name="mainmenuid">50</property>
 			<label>$LOCALIZE[14022]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -2349,13 +2341,13 @@
 			<onclick>ActivateWindow(videos,library://video/tvshows/,return)</onclick>
 			<property name="path">ActivateWindow(videos,library://video/tvshows/,return)</property>
 			<property name="list">library://video/tvshows/</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">tvshowhub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="7">
 			<property name="id">$NUMBER[7]</property>
-			<property name="mainmenuid">51</property>
+			<property name="mainmenuid">50</property>
 			<label>$LOCALIZE[137]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -2372,7 +2364,7 @@
 			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">Skin.SetString(CustomSearchTerm)</onclick>
 			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">ActivateWindow(1115)</onclick>
 			<onclick condition="Skin.HasSetting(UseGlobalsearch)">RunScript(script.globalsearch)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">tvshowhub</property>
 			<property name="isSubmenu">True</property>
 		</item>
@@ -2380,7 +2372,7 @@
 	<include name="skinshortcuts-group-alt-tvshowhub">
 		<item id="1">
 			<property name="id">$NUMBER[1]</property>
-			<property name="mainmenuid">51</property>
+			<property name="mainmenuid">50</property>
 			<label>$LOCALIZE[31179]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -2388,17 +2380,17 @@
 			<property name="labelID">31179</property>
 			<property name="defaultID">embuary_tvshowhub_tvshows</property>
 			<property name="isDefault">true</property>
-			<visible>[[Library.HasContent(TVShows)] + [Library.HasContent(tvshows)]] + String.IsEqual(Window(10000).Property(submenuVisibility),tvshowhub)</visible>
-			<onclick>ActivateWindow(videos,library://video/tvshows/titles.xml/,return)</onclick>
-			<property name="path">ActivateWindow(videos,library://video/tvshows/titles.xml/,return)</property>
-			<property name="list">library://video/tvshows/titles.xml/</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>[Library.HasContent(tvshows)] + String.IsEqual(Window(10000).Property(submenuVisibility),tvshowhub)</visible>
+			<onclick>ctivateWindow(videos,library://video/tvshows/titles.xml/,return)</onclick>
+			<property name="path">ctivateWindow(videos,library://video/tvshows/titles.xml/,return)</property>
+			<property name="list">ctivateWindow(videos,library://video/tvshows/titles.xml/,return)</property>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">tvshowhub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="2">
 			<property name="id">$NUMBER[2]</property>
-			<property name="mainmenuid">51</property>
+			<property name="mainmenuid">50</property>
 			<label>$LOCALIZE[31210]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -2410,13 +2402,13 @@
 			<onclick>ActivateWindow(videos,special://skin/playlists/video/UnwatchedTVShows.xsp,return)</onclick>
 			<property name="path">ActivateWindow(videos,special://skin/playlists/video/UnwatchedTVShows.xsp,return)</property>
 			<property name="list">special://skin/playlists/video/UnwatchedTVShows.xsp</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">tvshowhub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="3">
 			<property name="id">$NUMBER[3]</property>
-			<property name="mainmenuid">51</property>
+			<property name="mainmenuid">50</property>
 			<label>$LOCALIZE[135]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -2429,13 +2421,13 @@
 			<property name="path">SetProperty(ListGenres,videodb://tvshows/genres,home)</property>
 			<property name="list">SetProperty(ListGenres,videodb://tvshows/genres,home)</property>
 			<onclick>ActivateWindow(1114)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">tvshowhub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="4">
 			<property name="id">$NUMBER[4]</property>
-			<property name="mainmenuid">51</property>
+			<property name="mainmenuid">50</property>
 			<label>$LOCALIZE[31154]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -2447,13 +2439,13 @@
 			<onclick>RunScript(script.tv.show.next.aired)</onclick>
 			<property name="path">RunScript(script.tv.show.next.aired)</property>
 			<property name="list">RunScript(script.tv.show.next.aired)</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">tvshowhub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="5">
 			<property name="id">$NUMBER[5]</property>
-			<property name="mainmenuid">51</property>
+			<property name="mainmenuid">50</property>
 			<label>$LOCALIZE[31239]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -2465,13 +2457,13 @@
 			<onclick>ActivateWindow(10025,"plugin://plugin.video.embycon/?media_type=tvshows&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems%3fFields%3dDateCreated%2cEpisodeCount%2cSeasonCount%2cPath%2cGenres%2cStudios%2cEtag%2cMediaStreams%2cOverview%26Recursive%3dtrue%26IncludeItemTypes%3dSeries%26ImageTypeLimit%3d1%26format%3djson",return)</onclick>
 			<property name="path">ActivateWindow(10025,"plugin://plugin.video.embycon/?media_type=tvshows&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems%3fFields%3dDateCreated%2cEpisodeCount%2cSeasonCount%2cPath%2cGenres%2cStudios%2cEtag%2cMediaStreams%2cOverview%26Recursive%3dtrue%26IncludeItemTypes%3dSeries%26ImageTypeLimit%3d1%26format%3djson",return)</property>
 			<property name="list">plugin://plugin.video.embycon/?media_type=tvshows&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems%3fFields%3dDateCreated%2cEpisodeCount%2cSeasonCount%2cPath%2cGenres%2cStudios%2cEtag%2cMediaStreams%2cOverview%26Recursive%3dtrue%26IncludeItemTypes%3dSeries%26ImageTypeLimit%3d1%26format%3djson</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">tvshowhub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="6">
 			<property name="id">$NUMBER[6]</property>
-			<property name="mainmenuid">51</property>
+			<property name="mainmenuid">50</property>
 			<label>$LOCALIZE[14022]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -2483,13 +2475,13 @@
 			<onclick>ActivateWindow(videos,library://video/tvshows/,return)</onclick>
 			<property name="path">ActivateWindow(videos,library://video/tvshows/,return)</property>
 			<property name="list">library://video/tvshows/</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">tvshowhub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="7">
 			<property name="id">$NUMBER[7]</property>
-			<property name="mainmenuid">51</property>
+			<property name="mainmenuid">50</property>
 			<label>$LOCALIZE[137]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -2506,7 +2498,7 @@
 			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">Skin.SetString(CustomSearchTerm)</onclick>
 			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">ActivateWindow(1115)</onclick>
 			<onclick condition="Skin.HasSetting(UseGlobalsearch)">RunScript(script.globalsearch)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">tvshowhub</property>
 			<property name="isSubmenu">True</property>
 		</item>
@@ -2514,7 +2506,7 @@
 	<include name="skinshortcuts-group-musichub">
 		<item id="1">
 			<property name="id">$NUMBER[1]</property>
-			<property name="mainmenuid">52</property>
+			<property name="mainmenuid">51</property>
 			<label>$LOCALIZE[133]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -2526,13 +2518,13 @@
 			<onclick>ActivateWindow(music,library://music/artists.xml/,return)</onclick>
 			<property name="path">ActivateWindow(music,library://music/artists.xml/,return)</property>
 			<property name="list">library://music/artists.xml/</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">musichub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="2">
 			<property name="id">$NUMBER[2]</property>
-			<property name="mainmenuid">52</property>
+			<property name="mainmenuid">51</property>
 			<label>$LOCALIZE[132]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -2544,13 +2536,13 @@
 			<onclick>ActivateWindow(music,library://music/albums.xml/,return)</onclick>
 			<property name="path">ActivateWindow(music,library://music/albums.xml/,return)</property>
 			<property name="list">library://music/albums.xml/</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">musichub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="3">
 			<property name="id">$NUMBER[3]</property>
-			<property name="mainmenuid">52</property>
+			<property name="mainmenuid">51</property>
 			<label>$LOCALIZE[134]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -2562,13 +2554,13 @@
 			<onclick>ActivateWindow(music,library://music/songs.xml/,return)</onclick>
 			<property name="path">ActivateWindow(music,library://music/songs.xml/,return)</property>
 			<property name="list">library://music/songs.xml/</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">musichub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="4">
 			<property name="id">$NUMBER[4]</property>
-			<property name="mainmenuid">52</property>
+			<property name="mainmenuid">51</property>
 			<label>$LOCALIZE[136]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -2580,13 +2572,13 @@
 			<onclick>ActivateWindow(music,special://musicplaylists/,return)</onclick>
 			<property name="path">ActivateWindow(music,special://musicplaylists/,return)</property>
 			<property name="list">special://musicplaylists/</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">musichub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="5">
 			<property name="id">$NUMBER[5]</property>
-			<property name="mainmenuid">52</property>
+			<property name="mainmenuid">51</property>
 			<label>$LOCALIZE[14022]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -2597,13 +2589,13 @@
 			<onclick>ActivateWindow(music,musicdb://root,return)</onclick>
 			<property name="path">ActivateWindow(music,musicdb://root,return)</property>
 			<property name="list">musicdb://root</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">musichub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="6">
 			<property name="id">$NUMBER[6]</property>
-			<property name="mainmenuid">52</property>
+			<property name="mainmenuid">51</property>
 			<label>$LOCALIZE[20389]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -2615,13 +2607,13 @@
 			<onclick>ActivateWindow(videos,library://video/musicvideos/titles.xml/,return)</onclick>
 			<property name="path">ActivateWindow(videos,library://video/musicvideos/titles.xml/,return)</property>
 			<property name="list">library://video/musicvideos/titles.xml/</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">musichub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="7">
 			<property name="id">$NUMBER[7]</property>
-			<property name="mainmenuid">52</property>
+			<property name="mainmenuid">51</property>
 			<label>$VAR[PartyModeButton]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -2634,13 +2626,13 @@
 			<property name="path">Playercontrol(stop)</property>
 			<property name="list">Playercontrol(stop)</property>
 			<onclick condition="!MusicPartyMode.Enabled">Playercontrol(partymode(music))</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">musichub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="8">
 			<property name="id">$NUMBER[8]</property>
-			<property name="mainmenuid">52</property>
+			<property name="mainmenuid">51</property>
 			<label>$LOCALIZE[31240]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -2652,13 +2644,13 @@
 			<onclick>ActivateWindow(music,plugin://plugin.video.embycon/?media_type=MusicArtists&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fArtists%2fAlbumArtists%3fRecursive%3dtrue%26ImageTypeLimit%3d1%26EnableImageTypes%3dPrimary%2cBackdrop%2cBanner%2cThumb%26format%3djson,return)</onclick>
 			<property name="path">ActivateWindow(music,plugin://plugin.video.embycon/?media_type=MusicArtists&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fArtists%2fAlbumArtists%3fRecursive%3dtrue%26ImageTypeLimit%3d1%26EnableImageTypes%3dPrimary%2cBackdrop%2cBanner%2cThumb%26format%3djson,return)</property>
 			<property name="list">plugin://plugin.video.embycon/?media_type=MusicArtists&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fArtists%2fAlbumArtists%3fRecursive%3dtrue%26ImageTypeLimit%3d1%26EnableImageTypes%3dPrimary%2cBackdrop%2cBanner%2cThumb%26format%3djson</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">musichub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="9">
 			<property name="id">$NUMBER[9]</property>
-			<property name="mainmenuid">52</property>
+			<property name="mainmenuid">51</property>
 			<label>$LOCALIZE[31241]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -2670,13 +2662,13 @@
 			<onclick>ActivateWindow(music,plugin://plugin.video.embycon/?media_type=MusicAlbums&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems%3fRecursive%3dtrue%26IncludeItemTypes%3dMusicAlbum%26ImageTypeLimit%3d1%26EnableImageTypes%3dPrimary%2cBackdrop%2cBanner%2cThumb%26format%3djson,return)</onclick>
 			<property name="path">ActivateWindow(music,plugin://plugin.video.embycon/?media_type=MusicAlbums&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems%3fRecursive%3dtrue%26IncludeItemTypes%3dMusicAlbum%26ImageTypeLimit%3d1%26EnableImageTypes%3dPrimary%2cBackdrop%2cBanner%2cThumb%26format%3djson,return)</property>
 			<property name="list">plugin://plugin.video.embycon/?media_type=MusicAlbums&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems%3fRecursive%3dtrue%26IncludeItemTypes%3dMusicAlbum%26ImageTypeLimit%3d1%26EnableImageTypes%3dPrimary%2cBackdrop%2cBanner%2cThumb%26format%3djson</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">musichub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="10">
 			<property name="id">$NUMBER[10]</property>
-			<property name="mainmenuid">52</property>
+			<property name="mainmenuid">51</property>
 			<label>$LOCALIZE[137]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -2693,7 +2685,7 @@
 			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">Skin.SetString(CustomSearchTerm)</onclick>
 			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">ActivateWindow(1115)</onclick>
 			<onclick condition="Skin.HasSetting(UseGlobalsearch)">RunScript(script.globalsearch)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">musichub</property>
 			<property name="isSubmenu">True</property>
 		</item>
@@ -2701,7 +2693,7 @@
 	<include name="skinshortcuts-group-alt-musichub">
 		<item id="1">
 			<property name="id">$NUMBER[1]</property>
-			<property name="mainmenuid">52</property>
+			<property name="mainmenuid">51</property>
 			<label>$LOCALIZE[133]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -2713,13 +2705,13 @@
 			<onclick>ActivateWindow(music,library://music/artists.xml/,return)</onclick>
 			<property name="path">ActivateWindow(music,library://music/artists.xml/,return)</property>
 			<property name="list">library://music/artists.xml/</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">musichub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="2">
 			<property name="id">$NUMBER[2]</property>
-			<property name="mainmenuid">52</property>
+			<property name="mainmenuid">51</property>
 			<label>$LOCALIZE[132]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -2731,13 +2723,13 @@
 			<onclick>ActivateWindow(music,library://music/albums.xml/,return)</onclick>
 			<property name="path">ActivateWindow(music,library://music/albums.xml/,return)</property>
 			<property name="list">library://music/albums.xml/</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">musichub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="3">
 			<property name="id">$NUMBER[3]</property>
-			<property name="mainmenuid">52</property>
+			<property name="mainmenuid">51</property>
 			<label>$LOCALIZE[134]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -2749,13 +2741,13 @@
 			<onclick>ActivateWindow(music,library://music/songs.xml/,return)</onclick>
 			<property name="path">ActivateWindow(music,library://music/songs.xml/,return)</property>
 			<property name="list">library://music/songs.xml/</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">musichub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="4">
 			<property name="id">$NUMBER[4]</property>
-			<property name="mainmenuid">52</property>
+			<property name="mainmenuid">51</property>
 			<label>$LOCALIZE[136]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -2767,13 +2759,13 @@
 			<onclick>ActivateWindow(music,special://musicplaylists/,return)</onclick>
 			<property name="path">ActivateWindow(music,special://musicplaylists/,return)</property>
 			<property name="list">special://musicplaylists/</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">musichub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="5">
 			<property name="id">$NUMBER[5]</property>
-			<property name="mainmenuid">52</property>
+			<property name="mainmenuid">51</property>
 			<label>$LOCALIZE[14022]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -2784,13 +2776,13 @@
 			<onclick>ActivateWindow(music,musicdb://root,return)</onclick>
 			<property name="path">ActivateWindow(music,musicdb://root,return)</property>
 			<property name="list">musicdb://root</property>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),musichub)</visible>
+			<visible>[String.IsEqual(System.ProfileName,Master us)] + String.IsEqual(Window(10000).Property(submenuVisibility),musichub)</visible>
 			<property name="group">musichub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="6">
 			<property name="id">$NUMBER[6]</property>
-			<property name="mainmenuid">52</property>
+			<property name="mainmenuid">51</property>
 			<label>$LOCALIZE[20389]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -2802,13 +2794,13 @@
 			<onclick>ActivateWindow(videos,library://video/musicvideos/titles.xml/,return)</onclick>
 			<property name="path">ActivateWindow(videos,library://video/musicvideos/titles.xml/,return)</property>
 			<property name="list">library://video/musicvideos/titles.xml/</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">musichub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="7">
 			<property name="id">$NUMBER[7]</property>
-			<property name="mainmenuid">52</property>
+			<property name="mainmenuid">51</property>
 			<label>$VAR[PartyModeButton]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -2821,13 +2813,13 @@
 			<property name="path">Playercontrol(stop)</property>
 			<property name="list">Playercontrol(stop)</property>
 			<onclick condition="!MusicPartyMode.Enabled">Playercontrol(partymode(music))</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">musichub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="8">
 			<property name="id">$NUMBER[8]</property>
-			<property name="mainmenuid">52</property>
+			<property name="mainmenuid">51</property>
 			<label>$LOCALIZE[31240]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -2839,13 +2831,13 @@
 			<onclick>ActivateWindow(music,plugin://plugin.video.embycon/?media_type=MusicArtists&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fArtists%2fAlbumArtists%3fRecursive%3dtrue%26ImageTypeLimit%3d1%26EnableImageTypes%3dPrimary%2cBackdrop%2cBanner%2cThumb%26format%3djson,return)</onclick>
 			<property name="path">ActivateWindow(music,plugin://plugin.video.embycon/?media_type=MusicArtists&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fArtists%2fAlbumArtists%3fRecursive%3dtrue%26ImageTypeLimit%3d1%26EnableImageTypes%3dPrimary%2cBackdrop%2cBanner%2cThumb%26format%3djson,return)</property>
 			<property name="list">plugin://plugin.video.embycon/?media_type=MusicArtists&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fArtists%2fAlbumArtists%3fRecursive%3dtrue%26ImageTypeLimit%3d1%26EnableImageTypes%3dPrimary%2cBackdrop%2cBanner%2cThumb%26format%3djson</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">musichub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="9">
 			<property name="id">$NUMBER[9]</property>
-			<property name="mainmenuid">52</property>
+			<property name="mainmenuid">51</property>
 			<label>$LOCALIZE[31241]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -2857,13 +2849,13 @@
 			<onclick>ActivateWindow(music,plugin://plugin.video.embycon/?media_type=MusicAlbums&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems%3fRecursive%3dtrue%26IncludeItemTypes%3dMusicAlbum%26ImageTypeLimit%3d1%26EnableImageTypes%3dPrimary%2cBackdrop%2cBanner%2cThumb%26format%3djson,return)</onclick>
 			<property name="path">ActivateWindow(music,plugin://plugin.video.embycon/?media_type=MusicAlbums&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems%3fRecursive%3dtrue%26IncludeItemTypes%3dMusicAlbum%26ImageTypeLimit%3d1%26EnableImageTypes%3dPrimary%2cBackdrop%2cBanner%2cThumb%26format%3djson,return)</property>
 			<property name="list">plugin://plugin.video.embycon/?media_type=MusicAlbums&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems%3fRecursive%3dtrue%26IncludeItemTypes%3dMusicAlbum%26ImageTypeLimit%3d1%26EnableImageTypes%3dPrimary%2cBackdrop%2cBanner%2cThumb%26format%3djson</property>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">musichub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 		<item id="10">
 			<property name="id">$NUMBER[10]</property>
-			<property name="mainmenuid">52</property>
+			<property name="mainmenuid">51</property>
 			<label>$LOCALIZE[137]</label>
 			<label2 />
 			<icon>DefaultShortcut.png</icon>
@@ -2880,30 +2872,30 @@
 			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">Skin.SetString(CustomSearchTerm)</onclick>
 			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">ActivateWindow(1115)</onclick>
 			<onclick condition="Skin.HasSetting(UseGlobalsearch)">RunScript(script.globalsearch)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">musichub</property>
 			<property name="isSubmenu">True</property>
 		</item>
 	</include>
 	<include name="skinshortcuts-template-itemArt">
-		<include condition="String.IsEqual(System.ProfileName,Master user)">skinshortcuts-template-itemArt-Master user</include>
+		<include condition="String.IsEqual(System.ProfileName,Master us)">skinshortcuts-template-itemArt-Master us</include>
 	</include>
-	<include name="skinshortcuts-template-itemArt-Master user">
+	<include name="skinshortcuts-template-itemArt-Master us">
 		<control id="43431" type="list">
-			<include>HiddenObject</include>
-			<content limit="4" sortby="random">-</content>
-		</control>
-		<control id="43432" type="list">
 			<include>HiddenObject</include>
 			<content limit="4" sortby="random">videodb://movies/titles/</content>
 		</control>
-		<control id="43433" type="list">
+		<control id="43432" type="list">
 			<include>HiddenObject</include>
 			<content limit="4" sortby="random">videodb://movies/sets/</content>
 		</control>
-		<control id="43434" type="list">
+		<control id="43433" type="list">
 			<include>HiddenObject</include>
 			<content limit="4" sortby="random">videodb://tvshows/titles/</content>
+		</control>
+		<control id="43434" type="list">
+			<include>HiddenObject</include>
+			<content limit="4" sortby="random">-</content>
 		</control>
 		<control id="43435" type="list">
 			<include>HiddenObject</include>
@@ -3071,17 +3063,13 @@
 		</control>
 		<control id="434346" type="list">
 			<include>HiddenObject</include>
-			<content limit="4" sortby="random">-</content>
+			<content limit="4" sortby="random">musicdb://albums/</content>
 		</control>
 		<control id="434347" type="list">
 			<include>HiddenObject</include>
-			<content limit="4" sortby="random">musicdb://albums/</content>
-		</control>
-		<control id="434348" type="list">
-			<include>HiddenObject</include>
 			<content limit="4" sortby="random">videodb://musicvideos/titles/</content>
 		</control>
-		<control id="434349" type="list">
+		<control id="434348" type="list">
 			<include>HiddenObject</include>
 			<content limit="4" sortby="random">-</content>
 		</control>
