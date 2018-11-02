@@ -125,3 +125,7 @@
 
 [B]Version 1.4.6  (09.08.2018)[/B]
  - fixed: Alle ZDF-Videos werden NICHT abgespielt
+
+[B]Version 1.4.7  (02.11.2018)[/B]
+ - fixed: Alle ARD-Videos werden NICHT abgespielt (Webseitenstruktur verändert)
+ - fixed: Alle ZDF-Videos werden NICHT abgespielt (Webseite verändert)

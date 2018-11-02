@@ -2,7 +2,7 @@
 - Last release @PUR3
 
 [B]Version 3.0.0  (22.09.2018)[/B][CR]Original by PUR3 / Revised by realvito
-- gefixt: KODI stürzt manchmal beim starten eines Videos ab
+- fixed: KODI stürzt manchmal beim starten eines Videos ab
 - added: Auswahl des Video-Dateiformats (Settings) zwischen m3u8/mp4
 - added: 3-fache Auswahl der Video-Abspielmethode (Settings) *ausprobieren*
 - added: Zeige alle Episoden der aufgerufenen Staffel auf einer Seite (Settings)
@@ -12,3 +12,6 @@
 
 [B]Version 3.0.1  (21.10.2018)[/B][CR]Original by PUR3 / Revised by realvito
 - optimized and fixed: Script komplett umgeschrieben und auf eine ".py" minimiert (auf manchen Systemen - andauernd Encodingfehler)
+
+[B]Version 3.0.2  (02.11.2018)[/B][CR]Original by PUR3 / Revised by realvito
+- fixed: Alle Videos werden NICHT abgespielt (Webseite verändert)

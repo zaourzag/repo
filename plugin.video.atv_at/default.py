@@ -353,11 +353,11 @@ def playVideo(url, photo):
 		plot = re.sub('\<.*?\>', '', desc)
 		plot = cleanTEXT(plot)
 	except: plot = ""
-	match = re.search('FlashPlayer" data-jsb="(.*?)">', html)
+	match = re.search('class="jsb_video/VideoPlaylist" data-jsb="(.*?)">', html)
 	if match:
 		content = cleanTEXT(match.group(1))
 		DATA = json.loads(content)
-		parts = DATA['config']['initial_video']['parts']
+		parts = DATA['videos'][0]['parts']
 		geoblocked_parts = 0
 		single_videoURL = False
 		for part in parts:
@@ -379,6 +379,9 @@ def playVideo(url, photo):
 			if part['tracking']['nurago']['episodename'] and "Episode " in part['tracking']['nurago']['episodename'] and episode=="":
 				try: episode = part['tracking']['nurago']['episodename'].split('Episode')[1].split('-')[0].split(',')[0].strip() # Episode 2
 				except: episode = ""
+			if part['tracking']['nurago']['clipreferer'] and ("folge-" in part['tracking']['nurago']['clipreferer'] or "episode-" in part['tracking']['nurago']['clipreferer']) and episode=="":
+				try: episode = part['tracking']['nurago']['clipreferer'].split('https://atv.at/')[1].split('folge-')[-1].split('episode-')[-1].split('/')[0].strip() # https://atv.at/bauer-sucht-frau-staffel-14/die-hofwochen-folge-12/d1958945/
+				except: episode = ""
 			duration = int(part['tracking']['nurago']['videoduration']) # 1250
 			thumb = part['preview_image_url'].split('?cb=')[0].strip() # https://static.atv.cdn.tvnext.tv/static/assets/cms/media_items/teaser_image_file/1930300.jpg
 			if not videotitle in book and count1 < 1:
@@ -389,7 +392,7 @@ def playVideo(url, photo):
 			debug("(playVideo[1]) ##### Season : "+str(season)+" / Episode : "+str(episode)+" #####")
 			debug("(playVideo[1]) ##### Dauer (seconds) : "+str(duration)+" #####")
 			debug("(playVideo[1]) ##### Thumb : "+thumb+" #####")
-			if part['is_geo_ip_blocked']:
+			if part['is_geo_ip_blocked'] and part['is_geo_ip_blocked'] == True:
 				geoblocked_parts += 1
 			M3U8_Part = part['sources'][0]['src']
 			if not M3U8_Part:
