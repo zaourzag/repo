@@ -1,20 +1,26 @@
-# -*- coding: utf-8 -*-
-import urllib
-import urllib2
-import os.path
+﻿# -*- coding: utf-8 -*-
+
+import sys
+import os
 import re
+import xbmc
+import xbmcgui
 import xbmcplugin
 import xbmcaddon
-import xbmcgui
+import urllib
+import urllib2
 
-img_resolution = '640x360'
-path = os.path.dirname(os.path.realpath(__file__))
-icon = os.path.join(path, "icon.png")
-addonID = 'plugin.video.dfb_tv'
-addon = xbmcaddon.Addon(id=addonID)
+pluginhandle = int(sys.argv[1])
+addon = xbmcaddon.Addon()
+addonPath = xbmc.translatePath(addon.getAddonInfo('path')).encode('utf-8').decode('utf-8')
+dataPath = xbmc.translatePath(addon.getAddonInfo('profile')).encode('utf-8').decode('utf-8')
+defaultFanart = os.path.join(addonPath, 'fanart.jpg')
+icon = os.path.join(addonPath, 'icon.png')
 is_xbox = xbmc.getCondVisibility("System.Platform.xbox")
 if is_xbox: hd = False
 else: hd = addon.getSetting("maxVideoQuality") == "1"
+
+xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
 
 def index():
     add_category(title = 'Neue Videos', mode = 'list-videos')
@@ -35,20 +41,20 @@ def get_last_page(total_results):
 
 def clean_text(text):
     return text.replace('\n', '').replace('\t', '').replace('&amp;', '&').replace('   ', '').replace('  ', ' ').replace('\\"', '"').replace('\\u0026', '&').replace('\\t', '')
-    
+
 def is_livestreamdata_available():
-    css_url = 'http://tv.dfb.de/style/main.css'
+    css_url = 'https://tv.dfb.de/style/main.css'
     try:
         css_data = urllib2.urlopen(css_url).read()
         regex_livestream_color = '.livestream_link.*?{(.+?)}'
         livestream_color = re.findall(regex_livestream_color, css_data, re.DOTALL)[0]
     except: return False
     return 'red' in livestream_color
-    
-def list_livestreams(live_url = 'http://tv.dfb.de/static/livestreams/'):
+
+def list_livestreams(live_url = 'https://tv.dfb.de/static/livestreams/'):
     try:
         html = urllib2.urlopen(live_url).read()
-        regex_videos = '<div class="video-teaser.*?<img src="/images/(.+?)_.*?subline">(.+?)</.*?-headline">(.+?)</'
+        regex_videos = '<div class="video-teaser.*?<img src=".*?/images/(.+?)_.*?subline">(.+?)</.*?-headline">(.+?)</'
         videos = re.findall(regex_videos, html, re.DOTALL)
     except: return False
     item_added = False
@@ -57,7 +63,8 @@ def list_livestreams(live_url = 'http://tv.dfb.de/static/livestreams/'):
             video_id = video[0]
             subline = clean_text(video[1])
             title = clean_text(video[2])
-            thumb = 'http://tv.dfb.de/images/' + video_id + '_' + img_resolution + '.jpg'
+            if hd: thumb = 'https://search.dfb.de/proxy/large_hires?url=https://tv.dfb.de/images/' + video_id + '_1360x760.jpg'
+            else: thumb = 'https://search.dfb.de/proxy/medium_hires?url=https://tv.dfb.de/images/' + video_id + '_1360x760.jpg'
             date = subline[:subline.find('//')]
             add_video(date + title, video_id, thumb, 'play-livestream', title + '\n' + subline)
             item_added = True
@@ -65,12 +72,6 @@ def list_livestreams(live_url = 'http://tv.dfb.de/static/livestreams/'):
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
     return item_added
 
-#def is_livestream_online(video_id):
-#    xml_url = 'http://tv.dfb.de/server/hd_video.php?play=' + video_id
-#    try: xml_data = urllib2.urlopen(xml_url).read()
-#    except: return False
-#    return not ('Video not found' in xml_data)
-    
 def get_search_string():
     keyboard = xbmc.Keyboard('', 'Suche')
     keyboard.doModal()
@@ -95,7 +96,8 @@ def list_all_videos(search_string = '', categories = '', current_page = 1, last_
         try:
             video_id = video[0]
             title = clean_text(video[1])
-            thumb = video[2]
+            if hd: thumb = video[2].replace('medium_hires', 'large_hires')
+            else: thumb = video[2].replace('medium?', 'medium_hires?')
             date = video[3]
             add_video(date + ' - ' + title, video_id, thumb, 'play-video')
             item_added = True
@@ -114,8 +116,13 @@ def add_video(title, video_id, thumb, mode, desc = ''):
     link = sys.argv[0] + "?id=" + video_id + "&title=" + urllib.quote_plus(title) + "&thumb=" + urllib.quote_plus(thumb) + "&mode=" + mode
     liz = xbmcgui.ListItem(title, iconImage=icon, thumbnailImage=thumb)
     liz.setInfo(type="Video", infoLabels={"Title": title, "Plot": desc})
-    return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=link, listitem=liz, isFolder=True)
-    
+    if thumb != icon:
+        liz.setArt({'fanart': thumb})
+    else:
+        liz.setArt({'fanart': defaultFanart})
+    liz.setProperty('IsPlayable', 'true')
+    return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=link, listitem=liz)
+
 def add_category(title, mode, thumb = '', current_page = 1, last_page = 0, search_string = '', categories = '', meta = ''):
     link = sys.argv[0] + "?current_page=" + str(current_page) + "&last_page=" + str(last_page) + "&thumb=" + urllib.quote_plus(thumb) + "&mode=" + mode
     if search_string: link += '&search_string=' + urllib.quote_plus(search_string)
@@ -123,23 +130,29 @@ def add_category(title, mode, thumb = '', current_page = 1, last_page = 0, searc
     if meta: link += '&meta=' + urllib.quote_plus(meta)
     liz = xbmcgui.ListItem(title, iconImage=icon, thumbnailImage=thumb)
     liz.setInfo(type="Video", infoLabels={"Title": title})
+    if thumb != "" and thumb != icon:
+        liz.setArt({'fanart': thumb})
+    else:
+        liz.setArt({'fanart': defaultFanart})
     return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=link, listitem=liz, isFolder=True)
-    
+
 def play_video(title, stream, thumb):
-    liz = xbmcgui.ListItem(title, iconImage=icon, thumbnailImage=thumb)
-    liz.setInfo(type="Video", infoLabels={"Title": title})
-    xbmc.Player().play(stream, liz)
-    return True
+    listitem = xbmcgui.ListItem(path=stream)
+    listitem.setInfo(type="Video", infoLabels={'Title': title})
+    listitem.setArt({'thumb': thumb, 'fanart': thumb})
+    listitem.setMimeType('application/vnd.apple.mpegurl')
+    listitem.setContentLookup(False)
+    xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
 
 def get_stream_url(video_id):
-    xml_url = 'http://tv.dfb.de/server/hd_video.php?play=' + video_id
+    xml_url = 'https://tv.dfb.de/server/hd_video.php?play=' + video_id
     try:
         xml_data = urllib2.urlopen(xml_url).read()
         if '<live>true</live>' in xml_data:
             if not ('<islive>true</islive>' in xml_data): return False
         regex_url = '<url>(.+?)</url>'
         xml_url_video = clean_text(re.findall(regex_url, xml_data, re.DOTALL)[0]).split('?')[0] + '?format=iphone'
-        xml_url_video = 'http:' + xml_url_video.replace(' //', '//')
+        xml_url_video = 'http:' + xml_url_video.strip()
         xml_data_video = urllib2.urlopen(xml_url_video).read()
         regex_url_video = 'url="(.+?)"'
         video_url = re.findall(regex_url_video, xml_data_video, re.DOTALL)[0]
@@ -165,8 +178,8 @@ def parameters_string_to_dict(parameters):
             if (len(paramSplits)) == 2:
                 paramDict[paramSplits[0]] = paramSplits[1]
     return paramDict
-    
-def warning(text, title = 'DFB TV', time = 4500):
+
+def warning(text, title = 'DFB TV', time = 5000):
     xbmc.executebuiltin('Notification(%s, %s, %d, %s)' % (title, text, time, icon))
 
 params = parameters_string_to_dict(sys.argv[2])

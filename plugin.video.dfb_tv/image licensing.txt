@@ -1,4 +1,4 @@
-Logo
+﻿Logo
 ==========
 Name: icon.png
 Source: https://play.google.com/store/apps/details?id=de.dfb
