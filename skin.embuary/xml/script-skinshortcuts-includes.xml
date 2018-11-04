@@ -1349,14 +1349,14 @@
 			<property name="defaultID">embuary_moviehub_search</property>
 			<property name="isDefault">true</property>
 			<visible>[[Library.HasContent(movies) | System.HasAddon(plugin.video.embycon)]] + String.IsEqual(Container(100).ListItem.Property(submenuVisibility),moviehub)</visible>
-			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">SetProperty(CustomSearch,1,home)</onclick>
+			<onclick condition="!Skin.HasSetting(UseGlobalsearch) | !System.HasAddon(script.globalsearch)">SetProperty(CustomSearch,1,home)</onclick>
 			<property name="path">SetProperty(CustomSearch,1,home)</property>
 			<property name="list">SetProperty(CustomSearch,1,home)</property>
-			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">Skin.Reset(CustomSearchTerm)</onclick>
-			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">Skin.Reset(CustomSearchEmbyID)</onclick>
-			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">Skin.SetString(CustomSearchTerm)</onclick>
-			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">ActivateWindow(1115)</onclick>
-			<onclick condition="Skin.HasSetting(UseGlobalsearch)">RunScript(script.globalsearch)</onclick>
+			<onclick condition="!Skin.HasSetting(UseGlobalsearch) | !System.HasAddon(script.globalsearch)">Skin.Reset(CustomSearchTerm)</onclick>
+			<onclick condition="!Skin.HasSetting(UseGlobalsearch) | !System.HasAddon(script.globalsearch)">Skin.Reset(CustomSearchEmbyID)</onclick>
+			<onclick condition="!Skin.HasSetting(UseGlobalsearch) | !System.HasAddon(script.globalsearch)">Skin.SetString(CustomSearchTerm)</onclick>
+			<onclick condition="!Skin.HasSetting(UseGlobalsearch) | !System.HasAddon(script.globalsearch)">ActivateWindow(1115)</onclick>
+			<onclick condition="Skin.HasSetting(UseGlobalsearch) + System.HasAddon(script.globalsearch)">RunScript(script.globalsearch)</onclick>
 			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">moviehub</property>
 			<property name="isSubmenu">True</property>
@@ -1481,14 +1481,14 @@
 			<property name="defaultID">embuary_tvshowhub_search</property>
 			<property name="isDefault">true</property>
 			<visible>[[Library.HasContent(tvshows) | System.HasAddon(plugin.video.embycon)]] + String.IsEqual(Container(100).ListItem.Property(submenuVisibility),tvshowhub)</visible>
-			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">SetProperty(CustomSearch,1,home)</onclick>
+			<onclick condition="!Skin.HasSetting(UseGlobalsearch) | !System.HasAddon(script.globalsearch)">SetProperty(CustomSearch,1,home)</onclick>
 			<property name="path">SetProperty(CustomSearch,1,home)</property>
 			<property name="list">SetProperty(CustomSearch,1,home)</property>
-			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">Skin.Reset(CustomSearchTerm)</onclick>
-			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">Skin.Reset(CustomSearchEmbyID)</onclick>
-			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">Skin.SetString(CustomSearchTerm)</onclick>
-			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">ActivateWindow(1115)</onclick>
-			<onclick condition="Skin.HasSetting(UseGlobalsearch)">RunScript(script.globalsearch)</onclick>
+			<onclick condition="!Skin.HasSetting(UseGlobalsearch) | !System.HasAddon(script.globalsearch)">Skin.Reset(CustomSearchTerm)</onclick>
+			<onclick condition="!Skin.HasSetting(UseGlobalsearch) | !System.HasAddon(script.globalsearch)">Skin.Reset(CustomSearchEmbyID)</onclick>
+			<onclick condition="!Skin.HasSetting(UseGlobalsearch) | !System.HasAddon(script.globalsearch)">Skin.SetString(CustomSearchTerm)</onclick>
+			<onclick condition="!Skin.HasSetting(UseGlobalsearch) | !System.HasAddon(script.globalsearch)">ActivateWindow(1115)</onclick>
+			<onclick condition="Skin.HasSetting(UseGlobalsearch) + System.HasAddon(script.globalsearch)">RunScript(script.globalsearch)</onclick>
 			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">tvshowhub</property>
 			<property name="isSubmenu">True</property>
@@ -1666,14 +1666,14 @@
 			<property name="defaultID">embuary_musichub_search</property>
 			<property name="isDefault">true</property>
 			<visible>[[Library.HasContent(music) | System.HasAddon(plugin.video.embycon)]] + String.IsEqual(Container(100).ListItem.Property(submenuVisibility),musichub)</visible>
-			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">SetProperty(CustomSearch,1,home)</onclick>
+			<onclick condition="!Skin.HasSetting(UseGlobalsearch) | !System.HasAddon(script.globalsearch)">SetProperty(CustomSearch,1,home)</onclick>
 			<property name="path">SetProperty(CustomSearch,1,home)</property>
 			<property name="list">SetProperty(CustomSearch,1,home)</property>
-			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">Skin.Reset(CustomSearchTerm)</onclick>
-			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">Skin.Reset(CustomSearchEmbyID)</onclick>
-			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">Skin.SetString(CustomSearchTerm)</onclick>
-			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">ActivateWindow(1115)</onclick>
-			<onclick condition="Skin.HasSetting(UseGlobalsearch)">RunScript(script.globalsearch)</onclick>
+			<onclick condition="!Skin.HasSetting(UseGlobalsearch) | !System.HasAddon(script.globalsearch)">Skin.Reset(CustomSearchTerm)</onclick>
+			<onclick condition="!Skin.HasSetting(UseGlobalsearch) | !System.HasAddon(script.globalsearch)">Skin.Reset(CustomSearchEmbyID)</onclick>
+			<onclick condition="!Skin.HasSetting(UseGlobalsearch) | !System.HasAddon(script.globalsearch)">Skin.SetString(CustomSearchTerm)</onclick>
+			<onclick condition="!Skin.HasSetting(UseGlobalsearch) | !System.HasAddon(script.globalsearch)">ActivateWindow(1115)</onclick>
+			<onclick condition="Skin.HasSetting(UseGlobalsearch) + System.HasAddon(script.globalsearch)">RunScript(script.globalsearch)</onclick>
 			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">musichub</property>
 			<property name="isSubmenu">True</property>
@@ -2088,14 +2088,14 @@
 			<property name="defaultID">embuary_moviehub_search</property>
 			<property name="isDefault">true</property>
 			<visible>[Library.HasContent(movies) | System.HasAddon(plugin.video.embycon)]</visible>
-			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">SetProperty(CustomSearch,1,home)</onclick>
+			<onclick condition="!Skin.HasSetting(UseGlobalsearch) | !System.HasAddon(script.globalsearch)">SetProperty(CustomSearch,1,home)</onclick>
 			<property name="path">SetProperty(CustomSearch,1,home)</property>
 			<property name="list">SetProperty(CustomSearch,1,home)</property>
-			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">Skin.Reset(CustomSearchTerm)</onclick>
-			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">Skin.Reset(CustomSearchEmbyID)</onclick>
-			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">Skin.SetString(CustomSearchTerm)</onclick>
-			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">ActivateWindow(1115)</onclick>
-			<onclick condition="Skin.HasSetting(UseGlobalsearch)">RunScript(script.globalsearch)</onclick>
+			<onclick condition="!Skin.HasSetting(UseGlobalsearch) | !System.HasAddon(script.globalsearch)">Skin.Reset(CustomSearchTerm)</onclick>
+			<onclick condition="!Skin.HasSetting(UseGlobalsearch) | !System.HasAddon(script.globalsearch)">Skin.Reset(CustomSearchEmbyID)</onclick>
+			<onclick condition="!Skin.HasSetting(UseGlobalsearch) | !System.HasAddon(script.globalsearch)">Skin.SetString(CustomSearchTerm)</onclick>
+			<onclick condition="!Skin.HasSetting(UseGlobalsearch) | !System.HasAddon(script.globalsearch)">ActivateWindow(1115)</onclick>
+			<onclick condition="Skin.HasSetting(UseGlobalsearch) + System.HasAddon(script.globalsearch)">RunScript(script.globalsearch)</onclick>
 			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">moviehub</property>
 			<property name="isSubmenu">True</property>
@@ -2222,14 +2222,14 @@
 			<property name="defaultID">embuary_moviehub_search</property>
 			<property name="isDefault">true</property>
 			<visible>[[Library.HasContent(movies) | System.HasAddon(plugin.video.embycon)]] + String.IsEqual(Window(10000).Property(submenuVisibility),moviehub)</visible>
-			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">SetProperty(CustomSearch,1,home)</onclick>
+			<onclick condition="!Skin.HasSetting(UseGlobalsearch) | !System.HasAddon(script.globalsearch)">SetProperty(CustomSearch,1,home)</onclick>
 			<property name="path">SetProperty(CustomSearch,1,home)</property>
 			<property name="list">SetProperty(CustomSearch,1,home)</property>
-			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">Skin.Reset(CustomSearchTerm)</onclick>
-			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">Skin.Reset(CustomSearchEmbyID)</onclick>
-			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">Skin.SetString(CustomSearchTerm)</onclick>
-			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">ActivateWindow(1115)</onclick>
-			<onclick condition="Skin.HasSetting(UseGlobalsearch)">RunScript(script.globalsearch)</onclick>
+			<onclick condition="!Skin.HasSetting(UseGlobalsearch) | !System.HasAddon(script.globalsearch)">Skin.Reset(CustomSearchTerm)</onclick>
+			<onclick condition="!Skin.HasSetting(UseGlobalsearch) | !System.HasAddon(script.globalsearch)">Skin.Reset(CustomSearchEmbyID)</onclick>
+			<onclick condition="!Skin.HasSetting(UseGlobalsearch) | !System.HasAddon(script.globalsearch)">Skin.SetString(CustomSearchTerm)</onclick>
+			<onclick condition="!Skin.HasSetting(UseGlobalsearch) | !System.HasAddon(script.globalsearch)">ActivateWindow(1115)</onclick>
+			<onclick condition="Skin.HasSetting(UseGlobalsearch) + System.HasAddon(script.globalsearch)">RunScript(script.globalsearch)</onclick>
 			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">moviehub</property>
 			<property name="isSubmenu">True</property>
@@ -2356,14 +2356,14 @@
 			<property name="defaultID">embuary_tvshowhub_search</property>
 			<property name="isDefault">true</property>
 			<visible>[Library.HasContent(tvshows) | System.HasAddon(plugin.video.embycon)]</visible>
-			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">SetProperty(CustomSearch,1,home)</onclick>
+			<onclick condition="!Skin.HasSetting(UseGlobalsearch) | !System.HasAddon(script.globalsearch)">SetProperty(CustomSearch,1,home)</onclick>
 			<property name="path">SetProperty(CustomSearch,1,home)</property>
 			<property name="list">SetProperty(CustomSearch,1,home)</property>
-			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">Skin.Reset(CustomSearchTerm)</onclick>
-			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">Skin.Reset(CustomSearchEmbyID)</onclick>
-			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">Skin.SetString(CustomSearchTerm)</onclick>
-			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">ActivateWindow(1115)</onclick>
-			<onclick condition="Skin.HasSetting(UseGlobalsearch)">RunScript(script.globalsearch)</onclick>
+			<onclick condition="!Skin.HasSetting(UseGlobalsearch) | !System.HasAddon(script.globalsearch)">Skin.Reset(CustomSearchTerm)</onclick>
+			<onclick condition="!Skin.HasSetting(UseGlobalsearch) | !System.HasAddon(script.globalsearch)">Skin.Reset(CustomSearchEmbyID)</onclick>
+			<onclick condition="!Skin.HasSetting(UseGlobalsearch) | !System.HasAddon(script.globalsearch)">Skin.SetString(CustomSearchTerm)</onclick>
+			<onclick condition="!Skin.HasSetting(UseGlobalsearch) | !System.HasAddon(script.globalsearch)">ActivateWindow(1115)</onclick>
+			<onclick condition="Skin.HasSetting(UseGlobalsearch) + System.HasAddon(script.globalsearch)">RunScript(script.globalsearch)</onclick>
 			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">tvshowhub</property>
 			<property name="isSubmenu">True</property>
@@ -2490,14 +2490,14 @@
 			<property name="defaultID">embuary_tvshowhub_search</property>
 			<property name="isDefault">true</property>
 			<visible>[[Library.HasContent(tvshows) | System.HasAddon(plugin.video.embycon)]] + String.IsEqual(Window(10000).Property(submenuVisibility),tvshowhub)</visible>
-			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">SetProperty(CustomSearch,1,home)</onclick>
+			<onclick condition="!Skin.HasSetting(UseGlobalsearch) | !System.HasAddon(script.globalsearch)">SetProperty(CustomSearch,1,home)</onclick>
 			<property name="path">SetProperty(CustomSearch,1,home)</property>
 			<property name="list">SetProperty(CustomSearch,1,home)</property>
-			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">Skin.Reset(CustomSearchTerm)</onclick>
-			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">Skin.Reset(CustomSearchEmbyID)</onclick>
-			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">Skin.SetString(CustomSearchTerm)</onclick>
-			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">ActivateWindow(1115)</onclick>
-			<onclick condition="Skin.HasSetting(UseGlobalsearch)">RunScript(script.globalsearch)</onclick>
+			<onclick condition="!Skin.HasSetting(UseGlobalsearch) | !System.HasAddon(script.globalsearch)">Skin.Reset(CustomSearchTerm)</onclick>
+			<onclick condition="!Skin.HasSetting(UseGlobalsearch) | !System.HasAddon(script.globalsearch)">Skin.Reset(CustomSearchEmbyID)</onclick>
+			<onclick condition="!Skin.HasSetting(UseGlobalsearch) | !System.HasAddon(script.globalsearch)">Skin.SetString(CustomSearchTerm)</onclick>
+			<onclick condition="!Skin.HasSetting(UseGlobalsearch) | !System.HasAddon(script.globalsearch)">ActivateWindow(1115)</onclick>
+			<onclick condition="Skin.HasSetting(UseGlobalsearch) + System.HasAddon(script.globalsearch)">RunScript(script.globalsearch)</onclick>
 			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">tvshowhub</property>
 			<property name="isSubmenu">True</property>
@@ -2677,14 +2677,14 @@
 			<property name="defaultID">embuary_musichub_search</property>
 			<property name="isDefault">true</property>
 			<visible>[Library.HasContent(music) | System.HasAddon(plugin.video.embycon)]</visible>
-			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">SetProperty(CustomSearch,1,home)</onclick>
+			<onclick condition="!Skin.HasSetting(UseGlobalsearch) | !System.HasAddon(script.globalsearch)">SetProperty(CustomSearch,1,home)</onclick>
 			<property name="path">SetProperty(CustomSearch,1,home)</property>
 			<property name="list">SetProperty(CustomSearch,1,home)</property>
-			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">Skin.Reset(CustomSearchTerm)</onclick>
-			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">Skin.Reset(CustomSearchEmbyID)</onclick>
-			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">Skin.SetString(CustomSearchTerm)</onclick>
-			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">ActivateWindow(1115)</onclick>
-			<onclick condition="Skin.HasSetting(UseGlobalsearch)">RunScript(script.globalsearch)</onclick>
+			<onclick condition="!Skin.HasSetting(UseGlobalsearch) | !System.HasAddon(script.globalsearch)">Skin.Reset(CustomSearchTerm)</onclick>
+			<onclick condition="!Skin.HasSetting(UseGlobalsearch) | !System.HasAddon(script.globalsearch)">Skin.Reset(CustomSearchEmbyID)</onclick>
+			<onclick condition="!Skin.HasSetting(UseGlobalsearch) | !System.HasAddon(script.globalsearch)">Skin.SetString(CustomSearchTerm)</onclick>
+			<onclick condition="!Skin.HasSetting(UseGlobalsearch) | !System.HasAddon(script.globalsearch)">ActivateWindow(1115)</onclick>
+			<onclick condition="Skin.HasSetting(UseGlobalsearch) + System.HasAddon(script.globalsearch)">RunScript(script.globalsearch)</onclick>
 			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">musichub</property>
 			<property name="isSubmenu">True</property>
@@ -2864,14 +2864,14 @@
 			<property name="defaultID">embuary_musichub_search</property>
 			<property name="isDefault">true</property>
 			<visible>[[Library.HasContent(music) | System.HasAddon(plugin.video.embycon)]] + String.IsEqual(Window(10000).Property(submenuVisibility),musichub)</visible>
-			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">SetProperty(CustomSearch,1,home)</onclick>
+			<onclick condition="!Skin.HasSetting(UseGlobalsearch) | !System.HasAddon(script.globalsearch)">SetProperty(CustomSearch,1,home)</onclick>
 			<property name="path">SetProperty(CustomSearch,1,home)</property>
 			<property name="list">SetProperty(CustomSearch,1,home)</property>
-			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">Skin.Reset(CustomSearchTerm)</onclick>
-			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">Skin.Reset(CustomSearchEmbyID)</onclick>
-			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">Skin.SetString(CustomSearchTerm)</onclick>
-			<onclick condition="!Skin.HasSetting(UseGlobalsearch)">ActivateWindow(1115)</onclick>
-			<onclick condition="Skin.HasSetting(UseGlobalsearch)">RunScript(script.globalsearch)</onclick>
+			<onclick condition="!Skin.HasSetting(UseGlobalsearch) | !System.HasAddon(script.globalsearch)">Skin.Reset(CustomSearchTerm)</onclick>
+			<onclick condition="!Skin.HasSetting(UseGlobalsearch) | !System.HasAddon(script.globalsearch)">Skin.Reset(CustomSearchEmbyID)</onclick>
+			<onclick condition="!Skin.HasSetting(UseGlobalsearch) | !System.HasAddon(script.globalsearch)">Skin.SetString(CustomSearchTerm)</onclick>
+			<onclick condition="!Skin.HasSetting(UseGlobalsearch) | !System.HasAddon(script.globalsearch)">ActivateWindow(1115)</onclick>
+			<onclick condition="Skin.HasSetting(UseGlobalsearch) + System.HasAddon(script.globalsearch)">RunScript(script.globalsearch)</onclick>
 			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="group">musichub</property>
 			<property name="isSubmenu">True</property>
