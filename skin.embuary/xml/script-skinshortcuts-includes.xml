@@ -628,7 +628,7 @@
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.0.type),boxsets)">SetProperty(EmbyHubNr,0,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,0,home)</property>
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.0.type),boxsets)">ActivateWindow(1131)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.0.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems?ParentId=$INFO[Window(home).Property(plugin.video.embycon-view_item.0.id)]&amp;IsVirtualUnaired%3dfalse%26CollapseBoxSetItems%3dtrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26format%3djson,return)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.0.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems%3fParentId%3d$INFO[Window(home).Property(plugin.video.embycon-view_item.0.id)]&amp;%26IsVirtualUnaired%3dfalse%26IncludeItemTypes%3dBoxset%26CollapseBoxSetItems%3dTrue%26GroupItemsIntoCollections%3dTrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26SortBy%3dName%26SortOrder%3dAscending%26format%3djson,return)</onclick>
 			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-plugin-video-embycon-view-item-0-name-var-embyconlabel</property>
 			<property name="group">mainmenu</property>
@@ -652,7 +652,7 @@
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.1.type),boxsets)">SetProperty(EmbyHubNr,1,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,1,home)</property>
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.1.type),boxsets)">ActivateWindow(1131)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.1.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems?ParentId=$INFO[Window(home).Property(plugin.video.embycon-view_item.1.id)]&amp;IsVirtualUnaired%3dfalse%26CollapseBoxSetItems%3dtrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26format%3djson,return)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.1.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems%3fParentId%3d$INFO[Window(home).Property(plugin.video.embycon-view_item.1.id)]&amp;%26IsVirtualUnaired%3dfalse%26IncludeItemTypes%3dBoxset%26CollapseBoxSetItems%3dTrue%26GroupItemsIntoCollections%3dTrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26SortBy%3dName%26SortOrder%3dAscending%26format%3djson,return)</onclick>
 			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-plugin-video-embycon-view-item-1-name-var-embyconlabel</property>
 			<property name="group">mainmenu</property>
@@ -676,7 +676,7 @@
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.2.type),boxsets)">SetProperty(EmbyHubNr,2,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,2,home)</property>
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.2.type),boxsets)">ActivateWindow(1131)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.2.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems?ParentId=$INFO[Window(home).Property(plugin.video.embycon-view_item.2.id)]&amp;IsVirtualUnaired%3dfalse%26CollapseBoxSetItems%3dtrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26format%3djson,return)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.2.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems%3fParentId%3d$INFO[Window(home).Property(plugin.video.embycon-view_item.2.id)]&amp;%26IsVirtualUnaired%3dfalse%26IncludeItemTypes%3dBoxset%26CollapseBoxSetItems%3dTrue%26GroupItemsIntoCollections%3dTrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26SortBy%3dName%26SortOrder%3dAscending%26format%3djson,return)</onclick>
 			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-plugin-video-embycon-view-item-2-name-var-embyconlabel</property>
 			<property name="group">mainmenu</property>
@@ -700,7 +700,7 @@
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.3.type),boxsets)">SetProperty(EmbyHubNr,3,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,3,home)</property>
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.3.type),boxsets)">ActivateWindow(1131)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.3.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems?ParentId=$INFO[Window(home).Property(plugin.video.embycon-view_item.3.id)]&amp;IsVirtualUnaired%3dfalse%26CollapseBoxSetItems%3dtrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26format%3djson,return)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.3.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems%3fParentId%3d$INFO[Window(home).Property(plugin.video.embycon-view_item.3.id)]&amp;%26IsVirtualUnaired%3dfalse%26IncludeItemTypes%3dBoxset%26CollapseBoxSetItems%3dTrue%26GroupItemsIntoCollections%3dTrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26SortBy%3dName%26SortOrder%3dAscending%26format%3djson,return)</onclick>
 			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-plugin-video-embycon-view-item-3-name-var-embyconlabel</property>
 			<property name="group">mainmenu</property>
@@ -724,7 +724,7 @@
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.4.type),boxsets)">SetProperty(EmbyHubNr,4,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,4,home)</property>
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.4.type),boxsets)">ActivateWindow(1131)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.4.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems?ParentId=$INFO[Window(home).Property(plugin.video.embycon-view_item.4.id)]&amp;IsVirtualUnaired%3dfalse%26CollapseBoxSetItems%3dtrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26format%3djson,return)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.4.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems%3fParentId%3d$INFO[Window(home).Property(plugin.video.embycon-view_item.4.id)]&amp;%26IsVirtualUnaired%3dfalse%26IncludeItemTypes%3dBoxset%26CollapseBoxSetItems%3dTrue%26GroupItemsIntoCollections%3dTrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26SortBy%3dName%26SortOrder%3dAscending%26format%3djson,return)</onclick>
 			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-plugin-video-embycon-view-item-4-name-var-embyconlabel</property>
 			<property name="group">mainmenu</property>
@@ -748,7 +748,7 @@
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.5.type),boxsets)">SetProperty(EmbyHubNr,5,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,5,home)</property>
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.5.type),boxsets)">ActivateWindow(1131)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.5.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems?ParentId=$INFO[Window(home).Property(plugin.video.embycon-view_item.5.id)]&amp;IsVirtualUnaired%3dfalse%26CollapseBoxSetItems%3dtrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26format%3djson,return)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.5.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems%3fParentId%3d$INFO[Window(home).Property(plugin.video.embycon-view_item.5.id)]&amp;%26IsVirtualUnaired%3dfalse%26IncludeItemTypes%3dBoxset%26CollapseBoxSetItems%3dTrue%26GroupItemsIntoCollections%3dTrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26SortBy%3dName%26SortOrder%3dAscending%26format%3djson,return)</onclick>
 			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-plugin-video-embycon-view-item-5-name-var-embyconlabel</property>
 			<property name="group">mainmenu</property>
@@ -772,7 +772,7 @@
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.6.type),boxsets)">SetProperty(EmbyHubNr,6,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,6,home)</property>
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.6.type),boxsets)">ActivateWindow(1131)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.6.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems?ParentId=$INFO[Window(home).Property(plugin.video.embycon-view_item.6.id)]&amp;IsVirtualUnaired%3dfalse%26CollapseBoxSetItems%3dtrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26format%3djson,return)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.6.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems%3fParentId%3d$INFO[Window(home).Property(plugin.video.embycon-view_item.6.id)]&amp;%26IsVirtualUnaired%3dfalse%26IncludeItemTypes%3dBoxset%26CollapseBoxSetItems%3dTrue%26GroupItemsIntoCollections%3dTrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26SortBy%3dName%26SortOrder%3dAscending%26format%3djson,return)</onclick>
 			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-plugin-video-embycon-view-item-6-name-var-embyconlabel</property>
 			<property name="group">mainmenu</property>
@@ -796,7 +796,7 @@
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.7.type),boxsets)">SetProperty(EmbyHubNr,7,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,7,home)</property>
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.7.type),boxsets)">ActivateWindow(1131)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.7.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems?ParentId=$INFO[Window(home).Property(plugin.video.embycon-view_item.7.id)]&amp;IsVirtualUnaired%3dfalse%26CollapseBoxSetItems%3dtrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26format%3djson,return)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.7.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems%3fParentId%3d$INFO[Window(home).Property(plugin.video.embycon-view_item.7.id)]&amp;%26IsVirtualUnaired%3dfalse%26IncludeItemTypes%3dBoxset%26CollapseBoxSetItems%3dTrue%26GroupItemsIntoCollections%3dTrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26SortBy%3dName%26SortOrder%3dAscending%26format%3djson,return)</onclick>
 			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-plugin-video-embycon-view-item-7-name-var-embyconlabel</property>
 			<property name="group">mainmenu</property>
@@ -820,7 +820,7 @@
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.8.type),boxsets)">SetProperty(EmbyHubNr,8,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,8,home)</property>
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.8.type),boxsets)">ActivateWindow(1131)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.8.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems?ParentId=$INFO[Window(home).Property(plugin.video.embycon-view_item.8.id)]&amp;IsVirtualUnaired%3dfalse%26CollapseBoxSetItems%3dtrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26format%3djson,return)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.8.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems%3fParentId%3d$INFO[Window(home).Property(plugin.video.embycon-view_item.8.id)]&amp;%26IsVirtualUnaired%3dfalse%26IncludeItemTypes%3dBoxset%26CollapseBoxSetItems%3dTrue%26GroupItemsIntoCollections%3dTrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26SortBy%3dName%26SortOrder%3dAscending%26format%3djson,return)</onclick>
 			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-plugin-video-embycon-view-item-8-name-var-embyconlabel</property>
 			<property name="group">mainmenu</property>
@@ -844,7 +844,7 @@
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.9.type),boxsets)">SetProperty(EmbyHubNr,9,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,9,home)</property>
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.9.type),boxsets)">ActivateWindow(1131)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.9.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems?ParentId=$INFO[Window(home).Property(plugin.video.embycon-view_item.9.id)]&amp;IsVirtualUnaired%3dfalse%26CollapseBoxSetItems%3dtrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26format%3djson,return)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.9.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems%3fParentId%3d$INFO[Window(home).Property(plugin.video.embycon-view_item.9.id)]&amp;%26IsVirtualUnaired%3dfalse%26IncludeItemTypes%3dBoxset%26CollapseBoxSetItems%3dTrue%26GroupItemsIntoCollections%3dTrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26SortBy%3dName%26SortOrder%3dAscending%26format%3djson,return)</onclick>
 			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-plugin-video-embycon-view-item-9-name-var-embyconlabel</property>
 			<property name="group">mainmenu</property>
@@ -868,7 +868,7 @@
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.10.type),boxsets)">SetProperty(EmbyHubNr,10,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,10,home)</property>
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.10.type),boxsets)">ActivateWindow(1131)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.10.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems?ParentId=$INFO[Window(home).Property(plugin.video.embycon-view_item.10.id)]&amp;IsVirtualUnaired%3dfalse%26CollapseBoxSetItems%3dtrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26format%3djson,return)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.10.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems%3fParentId%3d$INFO[Window(home).Property(plugin.video.embycon-view_item.10.id)]&amp;%26IsVirtualUnaired%3dfalse%26IncludeItemTypes%3dBoxset%26CollapseBoxSetItems%3dTrue%26GroupItemsIntoCollections%3dTrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26SortBy%3dName%26SortOrder%3dAscending%26format%3djson,return)</onclick>
 			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-plugin-video-embycon-view-item-10-name-var-embyconlabel</property>
 			<property name="group">mainmenu</property>
@@ -892,7 +892,7 @@
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.11.type),boxsets)">SetProperty(EmbyHubNr,11,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,11,home)</property>
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.11.type),boxsets)">ActivateWindow(1131)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.11.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems?ParentId=$INFO[Window(home).Property(plugin.video.embycon-view_item.11.id)]&amp;IsVirtualUnaired%3dfalse%26CollapseBoxSetItems%3dtrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26format%3djson,return)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.11.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems%3fParentId%3d$INFO[Window(home).Property(plugin.video.embycon-view_item.11.id)]&amp;%26IsVirtualUnaired%3dfalse%26IncludeItemTypes%3dBoxset%26CollapseBoxSetItems%3dTrue%26GroupItemsIntoCollections%3dTrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26SortBy%3dName%26SortOrder%3dAscending%26format%3djson,return)</onclick>
 			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-plugin-video-embycon-view-item-11-name-var-embyconlabel</property>
 			<property name="group">mainmenu</property>
@@ -916,7 +916,7 @@
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.12.type),boxsets)">SetProperty(EmbyHubNr,12,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,12,home)</property>
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.12.type),boxsets)">ActivateWindow(1131)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.12.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems?ParentId=$INFO[Window(home).Property(plugin.video.embycon-view_item.12.id)]&amp;IsVirtualUnaired%3dfalse%26CollapseBoxSetItems%3dtrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26format%3djson,return)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.12.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems%3fParentId%3d$INFO[Window(home).Property(plugin.video.embycon-view_item.12.id)]&amp;%26IsVirtualUnaired%3dfalse%26IncludeItemTypes%3dBoxset%26CollapseBoxSetItems%3dTrue%26GroupItemsIntoCollections%3dTrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26SortBy%3dName%26SortOrder%3dAscending%26format%3djson,return)</onclick>
 			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-plugin-video-embycon-view-item-12-name-var-embyconlabel</property>
 			<property name="group">mainmenu</property>
@@ -940,7 +940,7 @@
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.13.type),boxsets)">SetProperty(EmbyHubNr,13,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,13,home)</property>
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.13.type),boxsets)">ActivateWindow(1131)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.13.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems?ParentId=$INFO[Window(home).Property(plugin.video.embycon-view_item.13.id)]&amp;IsVirtualUnaired%3dfalse%26CollapseBoxSetItems%3dtrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26format%3djson,return)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.13.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems%3fParentId%3d$INFO[Window(home).Property(plugin.video.embycon-view_item.13.id)]&amp;%26IsVirtualUnaired%3dfalse%26IncludeItemTypes%3dBoxset%26CollapseBoxSetItems%3dTrue%26GroupItemsIntoCollections%3dTrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26SortBy%3dName%26SortOrder%3dAscending%26format%3djson,return)</onclick>
 			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-plugin-video-embycon-view-item-13-name-var-embyconlabel</property>
 			<property name="group">mainmenu</property>
@@ -964,7 +964,7 @@
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.14.type),boxsets)">SetProperty(EmbyHubNr,14,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,14,home)</property>
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.14.type),boxsets)">ActivateWindow(1131)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.14.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems?ParentId=$INFO[Window(home).Property(plugin.video.embycon-view_item.14.id)]&amp;IsVirtualUnaired%3dfalse%26CollapseBoxSetItems%3dtrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26format%3djson,return)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.14.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems%3fParentId%3d$INFO[Window(home).Property(plugin.video.embycon-view_item.14.id)]&amp;%26IsVirtualUnaired%3dfalse%26IncludeItemTypes%3dBoxset%26CollapseBoxSetItems%3dTrue%26GroupItemsIntoCollections%3dTrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26SortBy%3dName%26SortOrder%3dAscending%26format%3djson,return)</onclick>
 			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-plugin-video-embycon-view-item-14-name-var-embyconlabel</property>
 			<property name="group">mainmenu</property>
@@ -988,7 +988,7 @@
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.15.type),boxsets)">SetProperty(EmbyHubNr,15,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,15,home)</property>
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.15.type),boxsets)">ActivateWindow(1131)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.15.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems?ParentId=$INFO[Window(home).Property(plugin.video.embycon-view_item.15.id)]&amp;IsVirtualUnaired%3dfalse%26CollapseBoxSetItems%3dtrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26format%3djson,return)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.15.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems%3fParentId%3d$INFO[Window(home).Property(plugin.video.embycon-view_item.15.id)]&amp;%26IsVirtualUnaired%3dfalse%26IncludeItemTypes%3dBoxset%26CollapseBoxSetItems%3dTrue%26GroupItemsIntoCollections%3dTrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26SortBy%3dName%26SortOrder%3dAscending%26format%3djson,return)</onclick>
 			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-plugin-video-embycon-view-item-15-name-var-embyconlabel</property>
 			<property name="group">mainmenu</property>
@@ -1012,7 +1012,7 @@
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.16.type),boxsets)">SetProperty(EmbyHubNr,16,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,16,home)</property>
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.16.type),boxsets)">ActivateWindow(1131)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.16.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems?ParentId=$INFO[Window(home).Property(plugin.video.embycon-view_item.16.id)]&amp;IsVirtualUnaired%3dfalse%26CollapseBoxSetItems%3dtrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26format%3djson,return)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.16.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems%3fParentId%3d$INFO[Window(home).Property(plugin.video.embycon-view_item.16.id)]&amp;%26IsVirtualUnaired%3dfalse%26IncludeItemTypes%3dBoxset%26CollapseBoxSetItems%3dTrue%26GroupItemsIntoCollections%3dTrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26SortBy%3dName%26SortOrder%3dAscending%26format%3djson,return)</onclick>
 			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-plugin-video-embycon-view-item-16-name-var-embyconlabel</property>
 			<property name="group">mainmenu</property>
@@ -1036,7 +1036,7 @@
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.17.type),boxsets)">SetProperty(EmbyHubNr,17,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,17,home)</property>
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.17.type),boxsets)">ActivateWindow(1131)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.17.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems?ParentId=$INFO[Window(home).Property(plugin.video.embycon-view_item.17.id)]&amp;IsVirtualUnaired%3dfalse%26CollapseBoxSetItems%3dtrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26format%3djson,return)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.17.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems%3fParentId%3d$INFO[Window(home).Property(plugin.video.embycon-view_item.17.id)]&amp;%26IsVirtualUnaired%3dfalse%26IncludeItemTypes%3dBoxset%26CollapseBoxSetItems%3dTrue%26GroupItemsIntoCollections%3dTrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26SortBy%3dName%26SortOrder%3dAscending%26format%3djson,return)</onclick>
 			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-plugin-video-embycon-view-item-17-name-var-embyconlabel</property>
 			<property name="group">mainmenu</property>
@@ -1060,7 +1060,7 @@
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.18.type),boxsets)">SetProperty(EmbyHubNr,18,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,18,home)</property>
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.18.type),boxsets)">ActivateWindow(1131)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.18.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems?ParentId=$INFO[Window(home).Property(plugin.video.embycon-view_item.18.id)]&amp;IsVirtualUnaired%3dfalse%26CollapseBoxSetItems%3dtrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26format%3djson,return)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.18.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems%3fParentId%3d$INFO[Window(home).Property(plugin.video.embycon-view_item.18.id)]&amp;%26IsVirtualUnaired%3dfalse%26IncludeItemTypes%3dBoxset%26CollapseBoxSetItems%3dTrue%26GroupItemsIntoCollections%3dTrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26SortBy%3dName%26SortOrder%3dAscending%26format%3djson,return)</onclick>
 			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-plugin-video-embycon-view-item-18-name-var-embyconlabel</property>
 			<property name="group">mainmenu</property>
@@ -1084,7 +1084,7 @@
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.19.type),boxsets)">SetProperty(EmbyHubNr,19,home)</onclick>
 			<property name="path">SetProperty(EmbyHubNr,19,home)</property>
 			<onclick condition="!String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.19.type),boxsets)">ActivateWindow(1131)</onclick>
-			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.19.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems?ParentId=$INFO[Window(home).Property(plugin.video.embycon-view_item.19.id)]&amp;IsVirtualUnaired%3dfalse%26CollapseBoxSetItems%3dtrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26format%3djson,return)</onclick>
+			<onclick condition="String.IsEqual(Window(home).Property(plugin.video.embycon-view_item.19.type),boxsets)">ActivateWindow(videos,plugin://plugin.video.embycon/?media_type=boxsets&amp;mode=GET_CONTENT&amp;url=%7bserver%7d%2femby%2fUsers%2f%7buserid%7d%2fItems%3fParentId%3d$INFO[Window(home).Property(plugin.video.embycon-view_item.19.id)]&amp;%26IsVirtualUnaired%3dfalse%26IncludeItemTypes%3dBoxset%26CollapseBoxSetItems%3dTrue%26GroupItemsIntoCollections%3dTrue%26Recursive%3dtrue%26IsMissing%3dFalse%26Fields%3d%7bfield_filters%7d%26ImageTypeLimit%3d1%26SortBy%3dName%26SortOrder%3dAscending%26format%3djson,return)</onclick>
 			<visible>String.IsEqual(System.ProfileName,Master us)</visible>
 			<property name="submenuVisibility">info-window-home-property-plugin-video-embycon-view-item-19-name-var-embyconlabel</property>
 			<property name="group">mainmenu</property>
