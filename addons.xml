@@ -319,7 +319,7 @@ Zattoo Live TV, Aufnahmen und EPG
     </extension>
 </addon>
 
-<addon id="plugin.video.sporttotal" name="Sport Total" version="0.4.0" provider-name="L0RE">
+<addon id="plugin.video.sporttotal" name="Sport Total" version="0.5.0" provider-name="L0RE">
 	<requires>
 		<import addon="xbmc.python" version="2.24.0"/>
 		<import addon="script.module.beautifulsoup4" version="4.3.2"/>
@@ -346,13 +346,9 @@ Zattoo Live TV, Aufnahmen und EPG
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 0.4.0  (16.09.2018)[/COLOR][/B] by realvito[CR]
-- fixed: In der Rubrik "LIVE" werden nicht alle Spiele gelistet
-- fixed: Die Auswahlfunktion in der Rubrik "Highlights" ist fehlerhaft und es werden nicht alle Ergebnisse angezeigt
-- fixed: In der Rubrik "Topclips" werden nur Fehler produziert
-- fixed: Scriptfehler bereinigt
-- added: Rubriken = Ligen mit Auswahlfunktion, Archiv mit Auswahlfunktion, Übersicht - Highlights, Übersicht - Aufzeichnungen
-- optimized: Icon aktualisiert und Fanart hinzugefügt
+		<news>[B][COLOR orangered]Version 0.5.0  (11.11.2018)[/COLOR][/B] by realvito[CR]
+- optimized: In der Rubrik = LIVE andere Sportarten hinzugefügt (Volleyball, Eishockey, Basketball ...)
+- added: Rubrik = Alle Sportarten mit Topclips und Wiederholungen aus versch. Sportbereichen (Volleyball, Eishockey, Basketball ...)
 		</news>
 	</extension>
 </addon>
