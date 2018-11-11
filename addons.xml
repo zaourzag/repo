@@ -2828,7 +2828,7 @@ V1.1.1
     </extension>
 </addon>
 
-<addon id="plugin.audio.prime_music" name="Amazon Prime Music" version="0.10.2" provider-name="piet">
+<addon id="plugin.audio.prime_music" name="Amazon Prime Music" version="0.10.3" provider-name="piet">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="script.module.mechanize" version="0.2.6"/>
