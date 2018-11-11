@@ -1,3 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
-   <setting id="datetitle" type="bool" label="Austrahlungsdatum im Title" default="false"/>
+	<setting label="Austrahlungsdatum im Titel" type="bool" id="datetitle" default="false"/>
 </settings>
