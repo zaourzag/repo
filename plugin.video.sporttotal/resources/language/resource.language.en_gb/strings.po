@@ -54,18 +54,18 @@ msgstr ""
 # SETTINGS-DESCRIPTIONS
 
 #empty strings from id 30350 to 30500
-# WARNING-MESSAGES-OK
+# WARNING/INFORMATION-MESSAGES-OK
 
 msgctxt "#30501"
-msgid "[COLOR orangered]ATTENTION : ... DELETE Addon Cache !!![/COLOR][CR]The complete Cache of [COLOR green]* Sport Total *[/ COLOR] was deleted successfully !!!"
+msgid "[COLOR orangered]ATTENTION : ... DELETE Addon Cache !!![/COLOR][CR]The complete Cache of [COLOR green]* Sport Total *[/COLOR] was deleted successfully !!!"
 msgstr ""
 
 msgctxt "#30502"
-msgid "[COLOR orangered]ATTENTION : ... The installed PYTHON VERSION : ***[/ COLOR] {0: s} [COLOR orangered]*** is not compatible !!![/COLOR][CR]Clearing the Cache will be ABORTED [COLOR green]and the Cache will be DISABLED[/ COLOR] !!!"
+msgid "[COLOR orangered]ATTENTION : ... The installed PYTHONVERSION : ***[/COLOR] {0:s} [COLOR orangered]*** is not compatible !!![/COLOR][CR]Clearing the Cache will be ABORTED [COLOR green]and the Cache will be DISABLED[/COLOR] !!!"
 msgstr ""
 
 #empty strings from id 30503 to 30520
-# WARNING-MESSAGES-NOTIFICATION
+# WARNING/INFORMATION-MESSAGES-NOTIFICATION
 
 msgctxt "#30521"
 msgid "Sport Total : [COLOR red]!!! {0:s} - ERROR !!![/COLOR]"
@@ -80,72 +80,84 @@ msgid "[COLOR red]Unfortunately, there are NO results :[/COLOR]"
 msgstr ""
 
 msgctxt "#30524"
-msgid "* [COLOR blue]To the respective search term[/ COLOR] * at Sport Total"
+msgid "* [COLOR blue]To the respective search term[/COLOR] * at Sport Total"
 msgstr ""
 
 msgctxt "#30525"
-msgid "ERROR = [COLOR red]NO Stream entry found ![/COLOR]"
+msgid "[COLOR red]Unfortunately, there are NO entries :[/COLOR]"
 msgstr ""
 
 msgctxt "#30526"
-msgid "ERROR = [COLOR red]KEIN Stream-Eintrag gefunden ![/COLOR]"
+msgid "* [COLOR blue]In the category: {0:s}[/COLOR] * at Sport Total"
 msgstr ""
 
-#empty strings from id 30527 to 30600
+msgctxt "#30527"
+msgid "ERROR = [COLOR red]NO Stream entry found ![/COLOR]"
+msgstr ""
+
+msgctxt "#30528"
+msgid "ERROR = [COLOR red]The Stream-Url is OFFLINE ![/COLOR]"
+msgstr ""
+
+#empty strings from id 30529 to 30600
 # PLUGIN-MAIN and SIDEMENU
 
 msgctxt "#30601"
-msgid "LIVE"
+msgid "LIVE - Broadcasts"
 msgstr ""
 
 msgctxt "#30602"
-msgid "Highlights"
+msgid "All Sportarts"
 msgstr ""
 
 msgctxt "#30603"
-msgid "Top Clips"
+msgid "Highlights"
 msgstr ""
 
 msgctxt "#30604"
-msgid "LEAGUES"
+msgid "Top Clips"
 msgstr ""
 
 msgctxt "#30605"
-msgid "Archive"
+msgid "LEAGUES"
 msgstr ""
 
 msgctxt "#30606"
-msgid "* Overview - Highlights *"
+msgid "Archive"
 msgstr ""
 
 msgctxt "#30607"
-msgid "* Overview - Recordings *"
+msgid "* Overview - Highlights *"
 msgstr ""
 
 msgctxt "#30608"
-msgid "SPORTTOTAL Settings"
+msgid "* Overview - Recordings *"
 msgstr ""
 
 msgctxt "#30609"
-msgid "[B][COLOR orangered]•  •  •  •  •  •  •  •  [/COLOR]Currently in the live Broadcast[COLOR orangered]  •  •  •  •  •  •  •  •[/COLOR][/B]"
+msgid "SPORTTOTAL Settings"
 msgstr ""
 
 msgctxt "#30610"
-msgid "[B][COLOR orangered]•  •  •  •  •  •  •  •  [/COLOR]Finished or coming Games[COLOR orangered]  •  •  •  •  •  •  •  •[/COLOR][/B]"
+msgid "[B][COLOR orangered]•  •  •  •  •  •  •  •  [/COLOR]Currently in the live Broadcast[COLOR orangered]  •  •  •  •  •  •  •  •[/COLOR][/B]"
 msgstr ""
 
 msgctxt "#30611"
-msgid "     Season"
+msgid "[B][COLOR orangered]•  •  •  •  •  •  •  •  [/COLOR]Finished or coming Games[COLOR orangered]  •  •  •  •  •  •  •  •[/COLOR][/B]"
 msgstr ""
 
 msgctxt "#30612"
-msgid "     League"
+msgid "     Season"
 msgstr ""
 
 msgctxt "#30613"
-msgid "     Club"
+msgid "     League"
 msgstr ""
 
 msgctxt "#30614"
+msgid "     Club"
+msgstr ""
+
+msgctxt "#30615"
 msgid "[B][COLOR orangered]•  •  •  •  •  [/COLOR]Show Results[COLOR orangered]  •  •  •  •  •[/COLOR][/B]"
 msgstr ""

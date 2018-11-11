@@ -37,6 +37,7 @@ import gzip
 global debuging
 pluginhandle = int(sys.argv[1])
 addon = xbmcaddon.Addon()
+socket.setdefaulttimeout(40)
 addonPath = xbmc.translatePath(addon.getAddonInfo('path')).encode('utf-8').decode('utf-8')
 dataPath     = xbmc.translatePath(addon.getAddonInfo('profile')).encode('utf-8').decode('utf-8')
 temp            = xbmc.translatePath(os.path.join(dataPath, 'temp', '')).encode('utf-8').decode('utf-8')
@@ -137,25 +138,50 @@ def clearCache():
 		xbmcgui.Dialog().ok(addon.getAddonInfo('id'), (translation(30502).format(Python_Version)))
 
 def index():
-	addDir(translation(30601), "", 'Live_Games', icon)
-	addDir(translation(30602), baseURL+"/highlights", 'selection_Archiv_Highlights', icon, ffilter="")
-	addDir(translation(30603), baseURL+"/topclips/", 'Topclips_Categories', icon)
-	addDir(translation(30604), baseURL+"/ligen/", 'Ligen_Overview', icon)
-	addDir(translation(30605), baseURL+"/archiv", 'selection_Archiv_Highlights', icon, ffilter="")
-	addDir(translation(30606), baseURL+"/highlights?saison=&liga=&verein=", 'Archiv_Highlights_Ligen_Videos', icon, ffilter="Spielzusammenfassungen")
-	addDir(translation(30607), baseURL+"/archiv?saison=&liga=&verein=", 'Archiv_Highlights_Ligen_Videos', icon, ffilter="Wiederholungen")
-	addDir(translation(30608), "", "aSettings", icon)
+	addDir(translation(30601), "", 'Allsportarts_Overview', icon, ffilter="Uebertragungen")
+	addDir(translation(30602), "", 'Allsportarts_Overview', icon, ffilter="Anderes")
+	addDir(translation(30603), baseURL+"/highlights", 'selection_Archiv_Highlights', icon, ffilter="")
+	addDir(translation(30604), baseURL+"/topclips/", 'Topclips_Categories', icon, category="Top Clips")
+	addDir(translation(30605), baseURL+"/ligen/", 'Ligen_Overview', icon)
+	addDir(translation(30606), baseURL+"/archiv", 'selection_Archiv_Highlights', icon, ffilter="")
+	addDir(translation(30607), baseURL+"/highlights?saison=&liga=&verein=", 'Archiv_Highlights_Ligen_Videos', icon, ffilter="Spielzusammenfassungen")
+	addDir(translation(30608), baseURL+"/archiv?saison=&liga=&verein=", 'Archiv_Highlights_Ligen_Videos', icon, ffilter="Wiederholungen")
+	addDir(translation(30609), "", "aSettings", icon)
 	xbmcplugin.endOfDirectory(pluginhandle) 
 
-def Live_Games():
-	debug("(Live_Games) ##### URL={0} #####".format(baseURL+"/live/"))
-	content = getUrl(baseURL+"/live/")
+def Allsportarts_Overview(ffilter=""):
+	debug("(Allsportarts_Overview) ##### URL={0} #####".format(baseURL))
+	content = makeREQUEST(baseURL)
+	result = content[content.find('Alle Sportarten')+1:]
+	result = result[:result.find('</li>')]
+	selection = re.findall('class="dropdown-item" href="(.+?)">(.+?)</a>', result, re.DOTALL)
+	for url2, title in selection:
+		if title != "":
+			if url2[:4] != "http" and url2 != "/":
+				url2 = baseURL+url2
+			name = cleanTitle(title)
+			if ffilter == 'Uebertragungen':
+				if name !="" and name.lower() != 'fußball':
+					addDir(name, url2, 'Livegames_Videos', icon, category=name)
+				else:
+					addDir("Fußball", baseURL+"/live/", 'Livegames_Videos', icon, category="Fußball")
+			elif ffilter == 'Anderes':
+				if name !="" and name.lower() != 'fußball':
+					addDir(name, url2, 'Topclips_Categories', icon, category=name)
+				else:
+					addDir("Fußball", baseURL+"/topclips/", 'Topclips_Categories', icon, category="Fußball")
+	xbmcplugin.endOfDirectory(pluginhandle)
+
+def Livegames_Videos(url, category=""):
+	log("(Livegames_Videos) ##### URL={0} #####".format(url))
+	SPORTSNAME = unquote_plus(category)
+	content = getUrl(url)
 	COMBINATION1 = []
 	COMBINATION2 = []
 	videoIsolated_List = set()
 	count = 0
 	pos1 = 0
-	if '<div id="livegames-large" class="livegame-table">' in content:
+	if '<div id="livegames' and 'class="livegame-table">' in content:
 		result = content[content.find('<section class="container home-tile">')+1:]
 		result = result[:result.find('</section>')]
 		part = result.split('class="table-link"')
@@ -165,7 +191,8 @@ def Live_Games():
 				vidURL = re.compile('href="(.+?)">', re.DOTALL).findall(element)[0]
 				if vidURL[:4] != "http":
 					vidURL = baseURL+vidURL
-				division = re.compile('class="Division">(.+?)</td>', re.DOTALL).findall(element)[0].strip()
+				try: division = re.compile('class="Division">(.+?)</td>', re.DOTALL).findall(element)[0].strip()
+				except: division = re.compile('class="staffelname">(.+?)</td>', re.DOTALL).findall(element)[0].strip()
 				division = cleanTitle(division)
 				teams = re.compile('class="teams">(.+?)</td>', re.DOTALL).findall(element)[0]
 				teams = cleanTitle(teams)
@@ -201,13 +228,15 @@ def Live_Games():
 					count += 1
 					xbmcgui.Dialog().notification((translation(30521).format('DISPLAY')), translation(30522), icon, 8000)
 		if COMBINATION1:
-			addDir(translation(30609), "", "Live_Games", icon)
+			addDir(translation(30610), "", "Livegames_Videos", icon)
 			for datetime_object, name, vidURL, photo in sorted(COMBINATION1, key=lambda item:item[0], reverse=False):
 				addLink(name, vidURL, "playVideo", photo, background="KEIN HINTERGRUND")
 		if COMBINATION2:
-			addDir(translation(30610), "", "Live_Games", icon)
+			addDir(translation(30611), "", "Livegames_Videos", icon)
 			for datetime_object, name, vidURL, photo in sorted(COMBINATION2, key=lambda item:item[0], reverse=False):
 				addLink(name, vidURL, "playVideo", photo, background="KEIN HINTERGRUND")
+	else:
+		return xbmcgui.Dialog().notification(translation(30525), (translation(30526).format(SPORTSNAME.upper()+' - LIVE')), icon, 8000)
 	xbmcplugin.endOfDirectory(pluginhandle, cacheToDisc=False)
 
 def list_Archiv_Highlights(url, ffilter="", category=""):
@@ -244,15 +273,15 @@ def selection_Archiv_Highlights(url, ffilter=""):
 	if verein !="" and verein !="-- Verein --":
 		vereinfilter="&verein="+verein.replace(" ","+")
 	if saisonfilter =="":
-		addDir(translation(30611), url, 'list_Archiv_Highlights', icon, ffilter=saisonfilter+ligafilter+vereinfilter, category="saison")
+		addDir(translation(30612), url, 'list_Archiv_Highlights', icon, ffilter=saisonfilter+ligafilter+vereinfilter, category="saison")
 		saisonfilter = "saison="
 	if ligafilter =="":
-		addDir(translation(30612), url, 'list_Archiv_Highlights', icon, ffilter=saisonfilter+ligafilter+vereinfilter, category="liga")
+		addDir(translation(30613), url, 'list_Archiv_Highlights', icon, ffilter=saisonfilter+ligafilter+vereinfilter, category="liga")
 		ligafilter = "&liga="
 	if vereinfilter =="":
-		addDir(translation(30613), url, 'list_Archiv_Highlights', icon, ffilter=saisonfilter+ligafilter+vereinfilter, category="verein")
+		addDir(translation(30614), url, 'list_Archiv_Highlights', icon, ffilter=saisonfilter+ligafilter+vereinfilter, category="verein")
 		vereinfilter = "&verein="
-	addDir(translation(30614), url, 'result_Archiv_Highlights_Ligen', icon, ffilter=saisonfilter+ligafilter+vereinfilter)
+	addDir(translation(30615), url, 'result_Archiv_Highlights_Ligen', icon, ffilter=saisonfilter+ligafilter+vereinfilter)
 	debug("(selection_Archiv_Highlights) no.3 ##### SAISONfilter={0} ##### LIGAfilter={1} ##### VEREINfilter={2} #####".format(saisonfilter, ligafilter, vereinfilter))
 	xbmcplugin.endOfDirectory(pluginhandle)
 
@@ -278,8 +307,7 @@ def result_Archiv_Highlights_Ligen(url, ffilter=""):
 					else:
 						addDir(name, fullURL, 'Archiv_Highlights_Ligen_Videos', icon, ffilter=name)
 	else:
-		xbmcgui.Dialog().notification(translation(30523), translation(30524), icon, 8000)
-		return
+		return xbmcgui.Dialog().notification(translation(30523), translation(30524), icon, 8000)
 	xbmcplugin.endOfDirectory(pluginhandle)
 
 def Archiv_Highlights_Ligen_Videos(url, ffilter=""):
@@ -335,18 +363,23 @@ def Archiv_Highlights_Ligen_Videos(url, ffilter=""):
 			addLink(name, vidURL, "playVideo", photo)
 	xbmcplugin.endOfDirectory(pluginhandle)
 
-def Topclips_Categories(url):
+def Topclips_Categories(url, category=""):
 	debug("(Topclips_Categories) ##### URL={0} #####".format(url))
+	UN_Supported = ['übertragungen', 'Übertragungen']
+	SPORTSNAME = unquote_plus(category)
 	content = makeREQUEST(url)
 	result = content[content.find('<ul class="nav">')+1:]
 	result = result[:result.find('</ul>')]
-	part = result.split('<li class="nav-item">')
-	for i in range(1, len(part), 1):
-		element = part[i]
-		title = re.compile('<a class="nav-link.+?">(.+?)</a>', re.DOTALL).findall(element)[0]
-		name = cleanTitle(title)
-		if name !="":
-			addDir(name, url, 'Topclips_Videos', icon, ffilter=name)
+	if '<li class="nav-item">' in result:
+		part = result.split('<li class="nav-item">')
+		for i in range(1, len(part), 1):
+			element = part[i]
+			title = re.compile('<a class="nav-link.+?">(.+?)</a>', re.DOTALL).findall(element)[0]
+			name = cleanTitle(title)
+			if name !="" and not any(x in name for x in UN_Supported):
+				addDir(name, url, 'Topclips_Videos', icon, ffilter=name)
+	else:
+		return xbmcgui.Dialog().notification(translation(30525), (translation(30526).format(SPORTSNAME.upper())), icon, 8000)
 	xbmcplugin.endOfDirectory(pluginhandle)
 
 def Topclips_Videos(url, ffilter=""):
@@ -387,7 +420,10 @@ def Topclips_Videos(url, ffilter=""):
 						relevance = re.compile('class="date">(.+?)<', re.DOTALL).findall(video)[0].strip()
 						division = re.compile('class="caption league">(.+?)<', re.DOTALL).findall(video)[0]
 						division = cleanTitle(division)
-						name = relevance+" - "+title+"  ("+division+")"
+						if division != "":
+							name = relevance+" - "+title+"  ("+division+")"
+						elif division == "":
+							name = relevance+" - "+title
 						addLink(name, vidURL, "playVideo", photo)
 					except:
 						pos1 += 1
@@ -483,7 +519,7 @@ def playVideo(url):
 		fileURL = True
 	except: 
 		failing("(playVideo) ##### Abspielen des Streams NICHT möglich ##### URL : {0} #####\n   ########## KEINEN Stream-Eintrag auf der Webseite von *sporttotal.tv* gefunden !!! ##########".format(url))
-		xbmcgui.Dialog().notification((translation(30521).format('URL 1')), translation(30525), icon, 8000)
+		xbmcgui.Dialog().notification((translation(30521).format('URL 1')), translation(30527), icon, 8000)
 		return
 	standardSTREAM = re.compile(r'(?:/[^/]+?\.mp4|/[^/]+?\.m3u8)', re.DOTALL).findall(stream)[0]
 	correctSTREAM = quote(standardSTREAM)
@@ -500,7 +536,7 @@ def playVideo(url):
 		xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
 	else:
 		failing("(playVideo) ##### Abspielen des Streams NICHT möglich ##### URL : {0} #####\n   ########## Die Stream-Url auf der Webseite von *sporttotal.tv* ist OFFLINE !!! ##########".format(finalURL))
-		xbmcgui.Dialog().notification((translation(30521).format('URL 2')), translation(30526), icon, 8000)
+		xbmcgui.Dialog().notification((translation(30521).format('URL 2')), translation(30528), icon, 8000)
 
 def cleanTitle(title):
 	title = py2_enc(title)
@@ -514,6 +550,7 @@ def cleanTitle(title):
 	title = title.replace('&#352;', 'Š').replace('&#353;', 'š').replace('&#376;', 'Ÿ').replace('&#402;', 'ƒ')
 	title = title.replace('&#8211;', '–').replace('&#8212;', '—').replace('&#8226;', '•').replace('&#8230;', '…').replace('&#8240;', '‰').replace('&#8364;', '€').replace('&#8482;', '™').replace('&#169;', '©').replace('&#174;', '®')
 	title = title.replace("&Auml;", "Ä").replace("&Uuml;", "Ü").replace("&Ouml;", "Ö").replace("&auml;", "ä").replace("&uuml;", "ü").replace("&ouml;", "ö").replace('&quot;', '"').replace('&szlig;', 'ß').replace('&ndash;', '-')
+	title = title.replace("HIGHLIGHTS", "").replace("Highlights", "").replace("HIGHLIGHT", "").replace("Highlight", "")
 	title = title.strip()
 	return title
 
@@ -563,8 +600,10 @@ if mode == 'aSettings':
 	addon.openSettings()
 elif mode == 'clearCache':
 	clearCache()
-elif mode == 'Live_Games':
-	Live_Games()
+elif mode == 'Allsportarts_Overview':
+	Allsportarts_Overview(ffilter)
+elif mode == 'Livegames_Videos':
+	Livegames_Videos(url, category)
 elif mode == 'list_Archiv_Highlights':
 	list_Archiv_Highlights(url, ffilter, category)
 elif mode == 'selection_Archiv_Highlights':
@@ -574,7 +613,7 @@ elif mode == 'result_Archiv_Highlights_Ligen':
 elif mode == 'Archiv_Highlights_Ligen_Videos':
 	Archiv_Highlights_Ligen_Videos(url, ffilter)
 elif mode == 'Topclips_Categories':
-	Topclips_Categories(url)
+	Topclips_Categories(url, category)
 elif mode == 'Topclips_Videos':
 	Topclips_Videos(url, ffilter)
 elif mode == 'Ligen_Overview':

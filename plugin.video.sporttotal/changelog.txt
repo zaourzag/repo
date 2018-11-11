@@ -9,3 +9,7 @@
 - fixed: Scriptfehler bereinigt
 - added: Rubriken = Ligen mit Auswahlfunktion, Archiv mit Auswahlfunktion, Übersicht - Highlights, Übersicht - Aufzeichnungen
 - optimized: Icon aktualisiert und Fanart hinzugefügt
+
+[B]Version 0.5.0  (11.11.2018)[/B] by realvito
+- optimized: In der Rubrik = LIVE andere Sportarten hinzugefügt (Volleyball, Eishockey, Basketball ...)
+- added: Rubrik = Alle Sportarten mit Topclips und Wiederholungen aus versch. Sportbereichen (Volleyball, Eishockey, Basketball ...)
