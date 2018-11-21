@@ -190,7 +190,7 @@ Zattoo Live TV, Aufnahmen und EPG
     </extension>
 </addon>
 
-<addon id="script.homematic.sonoff" name="Sonoff WLAN Switcher" version="0.0.3" provider-name="Birger Jesch">
+<addon id="script.homematic.sonoff" name="Sonoff WLAN Switcher" version="0.0.5" provider-name="Birger Jesch">
   <requires>
     <import addon="xbmc.python" version="2.25.0" />
     <import addon="xbmc.json" version="7.0.0" />
@@ -214,6 +214,7 @@ Zattoo Live TV, Aufnahmen und EPG
       <icon>resources/icon.png</icon>
       <fanart>resources/fanart.jpg</fanart>
     </assets>
+    <news>[B]0.0.5:[/B][CR]- JSON responses changed due Tasmota firmware updates[CR][B]0.0.4:[/B][CR]- Icons updated[CR]- Sonoff multiswitch implemented</news>
   </extension>
 </addon>
 
@@ -487,7 +488,7 @@ Zattoo Live TV, Aufnahmen und EPG
   </extension>
 </addon>
 
-<addon id="script.service.gto" name="German Telecast Offers" version="2.0.27" provider-name="Birger Jesch">
+<addon id="script.service.gto" name="German Telecast Offers" version="2.1.9" provider-name="Birger Jesch">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
         <import addon="xbmc.json" version="7.0.0"/>
@@ -518,7 +519,14 @@ Hierfür bitte README.txt im Ordner 'integration' beachten.
         <email>birger.jesch@gmail.com</email>
         <website>http://vdr4bj1.no-ip.org/index.php?action=list&amp;item=addon</website>
         <news>
-            Smaller Bugfixes[CR]Support for Estuary Mod V2 (Kodi 18)[CR]Recording capabilities added, some new tv/sports scrapers added
+- 2.1.8. Bugfix
+- 2.1.7: Improved startup behaviour[CR]
+- 2.1.6: Improvements on PVR widget for Estuary Mod V2[CR]
+- 2.1.5: Workaround for urllib2 SSL error[CR]
+- 2.1.3: Scraper updated (TV Spielfilm)[CR]
+- 2.1.1: minor Bugfixes, new time structures[CR][CR]
+- 2.0.29: Scraper for TVGuide UK added[CR]- Smaller Bugfixes[CR]
+- Support for Estuary Mod V2 (Kodi 18)[CR]- Recording capabilities added, some new tv/sports scrapers added
         </news>
         <assets>
             <icon>icon.png</icon>
