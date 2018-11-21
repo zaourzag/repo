@@ -10,15 +10,17 @@ class Scraper():
         # Properties
 
         self.enabled = True
-        self.baseurl = 'http://www.klack.de'
-        self.lang = 'de_DE'
-        self.rssurl = 'http://www.klack.de/xml/fussballRSS.xml'
-        self.friendlyname = 'klack.de - Fussball'
-        self.shortname = 'klack.de - Fussball'
-        self.icon = 'klack.png'
-        self.selector = '<item>'
-        self.detailselector = '<table id="content">'
-        self.err404 = 'klackde_dummy.jpg'
+        self.baseurl = 'http://www.tvguide.co.uk'
+        self.lang = 'en_GB'
+        self.rssurl = 'http://www.tvguide.co.uk/TVhighlights.asp'
+        self.friendlyname = 'TVGuide.co.uk - TV Highlights'
+        self.shortname = 'TVGuide.co.uk'
+        self.icon = 'tvguide.uk_logo.png'
+        self.selector = '<span class=programmeheading'
+        self.subselector = 'id="table1"'
+        self.detailselector = '<div id="divLHS">'
+        self.err404 = 'tvguide.uk_logo.png'
+
 
     def reset(self):
 
@@ -42,21 +44,21 @@ class Scraper():
         self.reset()
 
         try:
-            self.channel = re.compile('<title>(.+?)</title>', re.DOTALL).findall(content)[0].split(': ')[0]
-            self.detailURL = re.compile('<link>(.+?)</link>', re.DOTALL).findall(content)[0]
-            self.title = re.compile('<title>(.+?)</title>', re.DOTALL).findall(content)[0].split(': ')[1]
-            self.thumb = re.compile('<img align="left" src="(.+?)"', re.DOTALL).findall(content)[0].replace('150x100.jpg', '500x333.jpg')
+            self.channel = re.compile('<span class="tvchannel">(.+?)</span>', re.DOTALL).findall(content)[-1]
+            self.detailURL = re.compile('<a href="(.+?)" title="Click to rate and review">', re.DOTALL).findall(content)[0]
+            self.title = re.compile('<span id=programmeheading class="programmeheading">(.+?)</span>', re.DOTALL).findall(content)[0]
+            self.thumb = re.compile('background-image: url\((.+?)\)', re.DOTALL).findall(content)[0]
         except IndexError:
             pass
 
         self.thumb = checkResource(self.thumb, self.err404)
         try:
-            self.plot = re.compile('<description>(.+?)</description>', re.DOTALL).findall(content)[0].split('</a>')[1][:-3]
+            self.plot = re.compile('<span class="programmetext">(.+?)</span>', re.DOTALL).findall(content)[0]
         except IndexError:
             pass
 
         try:
-            self.startdate = parser.parse((re.compile('<dc:date>(.+?)</dc:date>', re.DOTALL).findall(content)[0][0:19]).replace('T', ' '))
+            self.startdate = parser.parse((re.compile('<span class="datetime">(.+?)</span>', re.DOTALL).findall(content)[0]))
         except IndexError:
             pass
 
@@ -72,8 +74,9 @@ class Scraper():
                 # Broadcast Info (stop)
 
                 try:
-                    _s = re.compile('<span style="color: #d10159!important">(.+?)</span>', re.DOTALL).findall(content)[0].split()[2]
-                    self.enddate = self.startdate.replace(hour=int(_s[0:2]), minute=int(_s[3:5]))
+                    _stop = re.compile('<br>(.+?)<span style="color:#999">', re.DOTALL).findall(content)[0]
+                    _pos = _stop.rfind('<br>') + 4
+                    self.enddate = parser.parse(_stop[_pos:].split('-')[1])
                 except IndexError:
                     self.enddate = self.startdate
 
@@ -82,7 +85,7 @@ class Scraper():
 
                 # Genre
                 try:
-                    self.genre = re.compile('<span>(.+?)</span>', re.DOTALL).findall(content)[4].strip()
+                    self.genre = re.compile('Category: (.+?)</br>', re.DOTALL).findall(content)[0]
 
                     # Cast
                     self.cast = ', '.join(re.compile('<td class="actor">(.+?)</td>', re.DOTALL).findall(content))

@@ -1,11 +1,7 @@
 #!/usr/bin/python
 
-import re
-import urllib2
-import datetime
+from tools import *
 from dateutil import parser
-
-RSS_TIME_FORMAT = '%Y-%m-%d %H:%M:%S'
 
 class Scraper():
 
@@ -15,6 +11,7 @@ class Scraper():
 
         self.enabled = True
         self.baseurl = 'http://www.klack.de'
+        self.lang = 'de_DE'
         self.rssurl = 'http://www.klack.de/xml/tippsRSS.xml'
         self.friendlyname = 'klack.de - TV Highlights'
         self.shortname = 'klack.de'
@@ -41,19 +38,6 @@ class Scraper():
         self.rating = ''
 
 
-    def checkResource(self, resource, fallback):
-        if not resource: return fallback
-        _req = urllib2.Request(resource)
-        try:
-            _res = urllib2.urlopen(_req, timeout=5)
-        except urllib2.HTTPError as e:
-            if e.code == '404': return fallback
-        except urllib2.URLError as e:
-            return fallback
-        else:
-            return resource
-        return fallback
-
     def scrapeRSS(self, content):
 
         self.reset()
@@ -61,19 +45,19 @@ class Scraper():
         try:
             self.channel = re.compile('<title>(.+?)</title>', re.DOTALL).findall(content)[0].split(': ')[0]
             self.detailURL = re.compile('<link>(.+?)</link>', re.DOTALL).findall(content)[0]
-            self.title = re.compile('<title>(.+?)</title>', re.DOTALL).findall(content)[0].split(': ')[1]
+            self.title = re.compile('<title>(.+?)</title>', re.DOTALL).findall(content)[0].split(': ', 1)[1]
             self.thumb = re.compile('<img align="left" src="(.+?)"', re.DOTALL).findall(content)[0].replace('150x100.jpg', '500x333.jpg')
         except IndexError:
             pass
 
-        self.thumb = self.checkResource(self.thumb, self.err404)
+        self.thumb = checkResource(self.thumb, self.err404)
         try:
             self.plot = re.compile('<description>(.+?)</description>', re.DOTALL).findall(content)[0].split('</a>')[1][:-3]
         except IndexError:
             pass
 
         try:
-            self.startdate = (re.compile('<dc:date>(.+?)</dc:date>', re.DOTALL).findall(content)[0][0:19]).replace('T', ' ')
+            self.startdate = parser.parse((re.compile('<dc:date>(.+?)</dc:date>', re.DOTALL).findall(content)[0][0:19]).replace('T', ' '))
         except IndexError:
             pass
 
@@ -88,16 +72,14 @@ class Scraper():
 
                 # Broadcast Info (stop)
 
-                _start = parser.parse(self.startdate)
                 try:
                     _s = re.compile('<span style="color: #d10159!important">(.+?)</span>', re.DOTALL).findall(content)[0].split()[2]
-                    _stop = _start.replace(hour=int(_s[0:2]), minute=int(_s[3:5]))
+                    self.enddate = self.startdate.replace(hour=int(_s[0:2]), minute=int(_s[3:5]))
                 except IndexError:
-                    _stop = _start
+                    self.enddate = self.startdate
 
-                if _start > _stop: _stop += datetime.timedelta(days=1)
-                self.enddate = datetime.datetime.strftime(_stop, RSS_TIME_FORMAT)
-                self.runtime = str((_stop - _start).seconds / 60)
+                if self.startdate > self.enddate: self.enddate += datetime.timedelta(days=1)
+                self.runtime = str((self.enddate - self.startdate).seconds / 60)
 
                 # Genre
                 try:

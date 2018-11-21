@@ -18,14 +18,14 @@ for i in xrange(1, 9):
                                       'name': getAddonSetting('%s_name_%s' % (i, j))}
             devices.append(device_properties)
 
-print devices
+writeLog(str(devices))
 _devlist = []
 for device in devices:
     sd = Sonoff_Switch()
     if device['multichannel']:
-        device.update({'status': sd.send_command(device['ip'], sd.STATUS[device['channel']], channel=device['channel'] + 1)})
+        device.update({'status': sd.send_command(device['ip'], sd.STATUS[device['channel']], channel=device['channel'] + 1, timeout=5)})
     else:
-        device.update({'status': sd.send_command(device['ip'], sd.STATUS[device['channel']])})
+        device.update({'status': sd.send_command(device['ip'], sd.STATUS[device['channel']], timeout=5)})
 
     if device['status'] == 'ON':
         L2 = LS(30021) if device['switchable'] else LS(30024)

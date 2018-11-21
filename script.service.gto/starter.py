@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
-import os,re,xbmc,xbmcgui,xbmcaddon
+from resources.lib.tools import *
+import time
 
 __addon__ = xbmcaddon.Addon()
 __addonID__ = __addon__.getAddonInfo('id')
@@ -15,43 +16,8 @@ DELAY = 15                      # wait for PVR content
 CYCLE = 60                      # poll cycle
 OSD = xbmcgui.Dialog()
 
-__screenrefresh__ = 0
-__refreshratio__ = 0
-
-# Helpers #
-
-def writeLog(message, level=xbmc.LOGDEBUG):
-        xbmc.log('[%s %s]: %s' % (__addonID__, __version__,  message.encode('utf-8')), level)
-
-# End Helpers #
-
-def getNumVals(setting, multiplicator):
-    try:
-        return int(re.match('\d+', __addon__.getSetting(setting)).group()) * multiplicator
-    except AttributeError:
-        return 0
-
-def getSettings():
-    global __screenrefresh__
-    global __refreshratio__
-
-    __enableinfo__ = True if __addon__.getSetting('enableinfo').upper() == 'TRUE' else False
-    __prefer_hd__ = True if __addon__.getSetting('prefer_hd').upper() == 'TRUE' else False
-    __mdelay__ = getNumVals('mdelay', 60)
-    __screenrefresh__ = getNumVals('screenrefresh', 60)
-    __refreshratio__ = __mdelay__ / __screenrefresh__
-    __scrapermodule__ = __addon__.getSetting('scraper')
-
-    writeLog('Settings (re)loaded')
-    writeLog('preferred scraper module: %s' % (__scrapermodule__))
-    writeLog('Show notifications:       %s' % (__enableinfo__))
-    writeLog('Prefer HD channel:        %s' % (__prefer_hd__))
-    writeLog('Refresh interval content: %s secs' % (__mdelay__))
-    writeLog('Refresh interval widget:  %s secs' % (__screenrefresh__))
-    writeLog('Refreshing ratio:         %s' % (__refreshratio__))
-
-    xbmc.executebuiltin('XBMC.RunScript(script.service.gto,action=scrape)')
-
+OPT_SCREENREFRESH = 0
+REFRESH_RATIO = 0
 
 class MyMonitor(xbmc.Monitor):
 
@@ -61,50 +27,66 @@ class MyMonitor(xbmc.Monitor):
 
     def onSettingsChanged(self):
         self.settingsChanged = True
-        getSettings()
         xbmc.executebuiltin('XBMC.RunScript(script.service.gto,action=scrape)')
 
 
 class Starter():
 
+    class pvrResponseTimeout(Exception):
+        writeLog('PVR not responsible', xbmc.LOGERROR)
+
     def __init__(self):
         pass
 
-    def start(self):
-        writeLog('Starting %s V.%s' % (__addonname__, __version__), level=xbmc.LOGNOTICE)
-        getSettings()
+    def loadSettings(self):
+        self.OPT_MDELAY = getAddonSetting('mdelay', NUM, 60)
+        self.OPT_SCREENREFRESH = getAddonSetting('screenrefresh', NUM, 60)
+        self.REFRESH_RATIO = self.OPT_MDELAY / self.OPT_SCREENREFRESH
+        xbmc.executebuiltin('XBMC.RunScript(script.service.gto,action=scrape)')
 
-        HOME.setProperty('PVRisReady', 'no')
+
+    def start(self):
+        writeLog('Starting %s V.%s' % (ADDON_NAME, ADDON_VERSION), level=xbmc.LOGNOTICE)
+        self.loadSettings()
 
         _c = 0
-        _attempts = 4
-
         monitor = MyMonitor()
 
         while not monitor.abortRequested():
 
+            _st = int(time.time())
+            _attempts = 6
+            _haspvr = False
+
             if monitor.settingsChanged:
                 _c = 0
-                _attempts = 4
+                self.loadSettings()
                 monitor.settingsChanged = False
 
-            while HOME.getProperty('PVRisReady') == 'no' and _attempts > 0:
-                if monitor.waitForAbort(DELAY): return
-                if HOME.getProperty('PVRisReady') == 'yes': break
-                xbmc.executebuiltin('XBMC.RunScript(script.service.gto,action=refresh)')
+            while not _haspvr and _attempts > 0:
+                query = {'method': 'PVR.GetProperties',
+                         'params': {'properties': ['available']}}
+                response = jsonrpc(query)
+                _haspvr = True if (response is not None and response.get('available', False)) else False
+                if _haspvr: break
+                if monitor.waitForAbort(5): break
                 _attempts -= 1
 
-            writeLog('Next action %s seconds remaining' % (__screenrefresh__))
-            if monitor.waitForAbort(__screenrefresh__): break
+            writeLog('Waiting %s seconds for PVR response' % (int(time.time()) - _st))
+            if not _haspvr:
+                raise self.pvrResponseTimeout()
+
+            writeLog('Service initiates refreshing of content')
+            xbmc.executebuiltin('XBMC.RunScript(script.service.gto,action=refresh)')
+
+            writeLog('Next action %s seconds remaining' % (self.OPT_SCREENREFRESH or 120))
+            if monitor.waitForAbort(self.OPT_SCREENREFRESH or 120): break
             _c += 1
 
-            if _c >= __refreshratio__:
-                writeLog('Scraping feeds')
+            if _c >= self.REFRESH_RATIO:
+                writeLog('Service initiates scraping of content provider')
                 xbmc.executebuiltin('XBMC.RunScript(script.service.gto,action=scrape)')
                 _c = 0
-
-            writeLog('Refresh content')
-            xbmc.executebuiltin('XBMC.RunScript(script.service.gto,action=refresh)')
 
 if __name__ == '__main__':
     starter = Starter()
