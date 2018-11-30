@@ -3,7 +3,7 @@
 
 import os
 import xbmc, xbmcgui, xbmcplugin, xbmcaddon, xbmcvfs
-import requests
+
 import urllib2
 import json
 import datetime
@@ -32,6 +32,7 @@ icon_file = xbmc.translatePath(addon.getAddonInfo('path') + '/icon.png').decode(
 skygo = None
 htmlparser = HTMLParser()
 
+
 # Blacklist: diese nav_ids nicht anzeigen
 # 15 = Snap
 # Sportsection: 27 = Aktuell, 32 = News, 33 = Mediathek, 34 = Datencenter
@@ -45,7 +46,9 @@ js_showall = addon.getSetting('js_showall')
 
 
 def getNav():
-    feed = urllib2.urlopen('https://www.skygo.sky.de/sg/multiplatform/ipad/json/navigation.xml')
+    opener = urllib2.build_opener()
+    opener.addheaders = [('User-Agent', skygo.user_agent)]
+    feed = opener.open('https://www.skygo.sky.de/sg/multiplatform/ipad/json/navigation.xml')
     nav = ET.parse(feed)
     return nav.getroot()
 
@@ -106,49 +109,55 @@ def showParentalSettings():
             else:
                 addon.setSetting('js_showall', 'false')
     else:
-        xbmcgui.Dialog().notification('Sky Go - Jugendschutz', 'Fehlerhafte PIN', xbmcgui.NOTIFICATION_ERROR, 2000, True)
+        xbmcgui.Dialog().notification('Sky Go: Jugendschutz', 'Fehlerhafte PIN', xbmcgui.NOTIFICATION_ERROR, 2000, True)
 
 
 def getHeroImage(data):
     if 'main_picture' in data:
         for pic in data['main_picture']['picture']:
             if pic['type'] == 'hero_img':
-                return skygo.baseUrl + pic['path'] + '/' + pic['file']
+                return skygo.baseUrl + pic['path'] + '/' + pic['file'] + '|User-Agent=' + skygo.user_agent
     if 'item_image' in data:
-        return skygo.baseUrl + data['item_image']
+        return skygo.baseUrl + data['item_image'] + '|User-Agent=' + skygo.user_agent
     if 'picture' in data:
-        return skygo.baseUrl + data['picture']
+        return skygo.baseUrl + data['picture'] + '|User-Agent=' + skygo.user_agent
 
     return ''
 
 
-def getPoster(data):
+def getPoster(data, type=None):
     if 'name' in data and addon.getSetting('enable_customlogos') == 'true':
         img = getLocalChannelLogo(data['name'])
         if img:
             return img
+    baseUrl = skygo.baseUrl
+    if type and type == 'live':
+        skygo.baseUrlLive
     if data.get('dvd_cover', '') != '':
-        return skygo.baseUrl + data['dvd_cover']['path'] + '/' + data['dvd_cover']['file']
+        return baseUrl + data['dvd_cover']['path'] + '/' + data['dvd_cover']['file'] + '|User-Agent=' + skygo.user_agent
     if data.get('item_preview_image', '') != '':
-        return skygo.baseUrl + data['item_preview_image']
+        return baseUrl + data['item_preview_image'] + '|User-Agent=' + skygo.user_agent
     if data.get('picture', '') != '':
-        return skygo.baseUrl + data['picture']
+        return baseUrl + data['picture'] + '|User-Agent=' + skygo.user_agent
     if data.get('logo', '') != '':
-        return skygo.baseUrl + data['logo']
+        return baseUrl + data['logo'] + '|User-Agent=' + skygo.user_agent
 
     return ''
 
 
-def getChannelLogo(data):
+def getChannelLogo(data, type=None):
     logopath = ''
     if 'channelLogo' in data:
+        baseUrl = skygo.baseUrl
+        if type and type == 'live':
+            baseUrl = skygo.baseUrlLive
         basepath = data['channelLogo']['basepath'] + '/'
         size = 0
         for logo in data['channelLogo']['logos']:
             logosize = logo['size'][:logo['size'].find('x')]
             if int(logosize) > size:
                 size = int(logosize)
-                logopath = skygo.baseUrl + basepath + logo['imageFile']
+                logopath = baseUrl + basepath + logo['imageFile'] + '|User-Agent=' + skygo.user_agent
     return logopath
 
 
@@ -198,46 +207,80 @@ def listLiveTvChannelDirs():
 
 
 def listLiveTvChannels(channeldir_name):
+    if addon.getSetting('show_refresh') == 'true':
+        url = common.build_url({'action': 'refresh'})
+        li = xbmcgui.ListItem(label='Aktualisieren', iconImage=icon_file, thumbnailImage=icon_file)
+        xbmcplugin.addDirectoryItem(handle=skygo.addon_handle, url=url, listitem=li, isFolder=False)
+
     data = getlistLiveChannelData(channeldir_name)
     for tab in data:
         if tab['tabName'].lower() == channeldir_name.lower():
             details = getLiveChannelDetails(tab.get('eventList'), None)
-
-            if addon.getSetting('show_refresh') == 'true':
-                url = common.build_url({'action': 'refresh'})
-                li = xbmcgui.ListItem(label='Aktualisieren', iconImage=icon_file, thumbnailImage=icon_file)
-                xbmcplugin.addDirectoryItem(handle=skygo.addon_handle, url=url, listitem=li, isFolder=False)
-
             listAssets(sorted(details.values(), key=lambda k:k['data']['channel']['name']))
 
+    xbmcplugin.addSortMethod(handle=skygo.addon_handle, sortMethod=xbmcplugin.SORT_METHOD_NONE)
+    xbmcplugin.addSortMethod(handle=skygo.addon_handle, sortMethod=xbmcplugin.SORT_METHOD_LABEL)
+    xbmcplugin.endOfDirectory(skygo.addon_handle, cacheToDisc=True)
 
-def getlistLiveChannelData(channel=''):
-    url = 'https://www.skygo.sky.de/epgd/sg/ipad/excerpt/'
-    data = requests.get(url).json()
-    data = [json for json in data if json['tabName'] != 'welt']
 
-    if channel.lower() == 'bundesliga' or channel.lower() == 'sport':
-        channel_list = []
-        for tab in data:
-            for event in tab['eventList']:
-                channel_list.append(event['channel']['name'])
-
-        url = 'https://www.skygo.sky.de/epgd/sg/web/excerpt/'
-        data_web = requests.get(url).json()
-        data_web = [json for json in data_web if json['tabName'] != 'welt']
-        for tab_web in data_web:
-            for event_web in tab_web['eventList']:
-                if event_web['channel']['name'] not in channel_list:
-                    channel_list.append(event_web['channel']['name'])
-                    for tab in data:
-                        if tab['tabName'] == tab_web['tabName']:
-                            tab['eventList'].append(event_web)
+def getlistLiveChannelData(channel=None):
+    attempt = 0
+    data = {}
+    url = 'https://skyticket.sky.de/epgd/st/ipad/excerpt/'
+    while attempt < 3 and len(data) == 0:
+        res = skygo.session.get(url)
+        data = res.json() if res.headers['content-type'].find('application/json') >= 0 else {}
+        attempt += 1
 
     for tab in data:
         if tab['tabName'] == 'film':
             tab['tabName'] = 'cinema'
         elif tab['tabName'] == 'buli':
             tab['tabName'] = 'bundesliga'
+
+    if channel:
+        channel_list = []
+
+        data = [json for json in data if json['tabName'].lower() == channel.lower()]
+        for tab in data:
+            for event in tab['eventList']:
+                channel_list.append(event['channel']['name'])
+
+        attempt = 0
+        data_web = {}
+        url = 'https://skyticket.sky.de/epgd/st/web/excerpt/'
+        while attempt < 3 and len(data) == 0:
+            res = skygo.session.get(url)
+            data_web = res.json() if res.headers['content-type'].find('application/json') >= 0 else {}
+            attempt += 1
+
+        data_web = [json for json in data_web if json['tabName'] == channel]
+        for tab_web in data_web:
+            for event_web in tab_web['eventList']:
+                if event_web['channel']['name'] not in channel_list:
+                    for tab in data:
+                        event_web['event']['assetid'] = re.search('\/(\d+)\.html', event_web['event']['detailPage']).group(1) if event_web['event']['detailPage'].startswith('http') else None
+                        event_web['event']['cmsid'] = int(re.search('(\d+)', event_web['event']['image'][event_web['event']['image'].rfind('_') + 1:]).group(1)) if event_web['event']['image'].endswith('png') else None
+
+                        msMediaUrl = None
+                        if event_web['channel']['mediaurl'].startswith('http'):
+                            msMediaUrl = event_web['channel']['mediaurl']
+                        elif event_web['event']['assetid']:
+                            try:
+                                media_url = getAssetDetailsFromCache(event_web['event']['assetid']).get('media_url', None)
+                                if media_url and media_url.startswith('http'):
+                                    msMediaUrl = media_url
+                            except:
+                                pass
+
+                        if msMediaUrl:
+                            channel_list.append(event_web['channel']['name'])
+                            event_web['channel']['msMediaUrl'] = msMediaUrl
+                            tab['eventList'].append(event_web)
+
+    if len(data) == 0:
+        xbmcgui.Dialog().notification('Sky Go: Datenabruf', 'Es konnten keine Daten geladen werden', xbmcgui.NOTIFICATION_ERROR, 3000, True)
+
     return sorted(data, key=lambda k: k['tabName'])
 
 
@@ -247,10 +290,10 @@ def getLiveChannelDetails(eventlist, s_manifest_url=None):
         url = ''
         manifest_url = ''
 
-        if 'msMediaUrl' in event['channel'] and event['channel']['msMediaUrl'].startswith('http'):
+        if event['channel'].get('msMediaUrl', None) and event['channel']['msMediaUrl'].startswith('http'):
             manifest_url = event['channel']['msMediaUrl']
             url = common.build_url({'action': 'playLive', 'manifest_url': manifest_url, 'package_code': event['channel']['mobilepc']})
-        elif s_manifest_url is None and 'assetid' in event['event']:
+        elif s_manifest_url is None and event['event'].get('assetid', None):
             try:
                 if event['event']['assetid'] > 0 and extMediaInfos and extMediaInfos == 'true':
                     mediainfo = getAssetDetailsFromCache(event['event']['assetid'])
@@ -261,7 +304,7 @@ def getLiveChannelDetails(eventlist, s_manifest_url=None):
             url = common.build_url({'action': 'playVod', 'vod_id': event['event']['assetid']})
 
         if 'mediainfo' not in event and extMediaInfos and extMediaInfos == 'true':
-            assetid_match = re.search('\/([0-9]*)\.html', event['event']['detailPage'])
+            assetid_match = re.search('\/(\d+)\.html', event['event']['detailPage'])
             if assetid_match:
                 assetid = 0
                 try:
@@ -314,7 +357,7 @@ def getLiveChannelDetails(eventlist, s_manifest_url=None):
 
 def listEpisodesFromSeason(series_id, season_id):
     url = skygo.baseUrl + '/sg/multiplatform/web/json/details/series/' + str(series_id) + '_global.json'
-    r = requests.get(url)
+    r = skygo.session.get(url)
     data = r.json()['serieRecap']['serie']
     xbmcplugin.setContent(skygo.addon_handle, 'episodes')
     for season in data['seasons']['season']:
@@ -334,9 +377,9 @@ def listEpisodesFromSeason(series_id, season_id):
                 li.setInfo('video', info)
                 li.setLabel(info['title'])
                 li = addStreamInfo(li, episode)
-                li.setArt({'poster': skygo.baseUrl + season['path'],
+                li.setArt({'poster': skygo.baseUrl + season['path'] + '|User-Agent=' + skygo.user_agent,
                            'fanart': getHeroImage(data),
-                           'thumb': skygo.baseUrl + episode['webplayer_config']['assetThumbnail']})
+                           'thumb': skygo.baseUrl + episode['webplayer_config']['assetThumbnail'] + '|User-Agent=' + skygo.user_agent})
                 url = common.build_url({'action': 'playVod', 'vod_id': episode['id'], 'infolabels': info, 'parental_rating': parental_rating})
                 xbmcplugin.addDirectoryItem(handle=skygo.addon_handle, url=url, listitem=li, isFolder=False)
 
@@ -351,7 +394,7 @@ def listEpisodesFromSeason(series_id, season_id):
 
 def listSeasonsFromSeries(series_id):
     url = skygo.baseUrl + '/sg/multiplatform/web/json/details/series/' + str(series_id) + '_global.json'
-    r = requests.get(url)
+    r = skygo.session.get(url)
     data = r.json()['serieRecap']['serie']
     xbmcplugin.setContent(skygo.addon_handle, 'tvshows')
     for season in data['seasons']['season']:
@@ -359,7 +402,7 @@ def listSeasonsFromSeries(series_id):
         label = '%s - Staffel %02d' % (data['title'], season['nr'])
         li = xbmcgui.ListItem(label=label)
         li.setProperty('IsPlayable', 'false')
-        li.setArt({'poster': skygo.baseUrl + season['path'],
+        li.setArt({'poster': skygo.baseUrl + season['path'] + '|User-Agent=' + skygo.user_agent,
                    'fanart': getHeroImage(data),
                    'thumb': icon_file})
         li.setInfo('video', {'plot': data['synopsis'].replace('\n', '').strip()})
@@ -388,7 +431,7 @@ def getAssets(data, key='asset_type'):
             asset_list.append({'type': asset[key], 'label': asset['title'], 'url': url, 'data': asset})
         elif asset[key].lower() == 'season':
             url = skygo.baseUrl + '/sg/multiplatform/web/json/details/series/' + str(asset['serie_id']) + '_global.json'
-            r = requests.get(url)
+            r = skygo.session.get(url)
             serie = r.json()['serieRecap']['serie']
             asset['synopsis'] = serie['synopsis']
             for season in serie['seasons']['season']:
@@ -538,7 +581,7 @@ def getInfoLabel(asset_type, item_data):
         item_data['event']['subtitle'] = htmlparser.unescape(item_data['event'].get('subtitle', ''))
         info['title'] = item_data['event'].get('subtitle', '')
         info['plot'] = data.get('synopsis', '').replace('\n', '').strip() if data.get('synopsis', '') != '' else item_data['event'].get('subtitle', '')
-        if 'assetid' in item_data['event'] and not item_data['channel']['msMediaUrl'].startswith('http'):
+        if 'assetid' in item_data['event'] and (item_data['channel'].get('msMediaUrl', None) is None or not item_data['channel']['msMediaUrl'].startswith('http')):
             if 'mediainfo' in item_data:
                 info['title'] = data.get('title', '')
                 info['plot'] = data.get('synopsis', '').replace('\n', '').strip()
@@ -686,7 +729,7 @@ def listAssets(asset_list, isWatchlist=False):
 def listPath(path):
     page = {}
     path = path.replace('ipad', 'web')
-    r = requests.get(skygo.baseUrl + path)
+    r = skygo.session.get(skygo.baseUrl + path)
     if r.status_code != 404:
         page = r.json()
     else:
@@ -824,9 +867,9 @@ def clearCache():
     try:
         assetDetailsCache.delete("%")
         TMDBCache.delete("%")
-        xbmcgui.Dialog().notification('Sky Go - Cache', 'Leeren des Caches erfolgreich', xbmcgui.NOTIFICATION_INFO, 2000, True)
+        xbmcgui.Dialog().notification('Sky Go: Cache', 'Leeren des Caches erfolgreich', xbmcgui.NOTIFICATION_INFO, 2000, True)
     except:
-        xbmcgui.Dialog().notification('Sky Go - Cache', 'Leeren des Caches fehlgeschlagen', xbmcgui.NOTIFICATION_ERROR, 2000, True)
+        xbmcgui.Dialog().notification('Sky Go: Cache', 'Leeren des Caches fehlgeschlagen', xbmcgui.NOTIFICATION_ERROR, 2000, True)
 
 
 def getArt(item):
@@ -849,17 +892,17 @@ def getArt(item):
             poster_path = getPoster(item['data'])
         art.update({'poster': poster_path})
     elif item['type'] == 'live':
-        fanart = skygo.baseUrl + item['data']['event']['image'] if item['data']['channel']['name'].find('News') == -1 else skygo.baseUrl + '/bin/Picture/817/C_1_Picture_7179_content_4.jpg'
-        thumb = skygo.baseUrl + item['data']['event']['image'] if item['data']['channel']['name'].find('News') == -1 else getChannelLogo(item['data']['channel'])
+        fanart = skygo.baseUrlLive + item['data']['event']['image'] if item['data']['channel']['name'].find('News') == -1 else skygo.baseUrlLive + '/bin/Picture/817/C_1_Picture_7179_content_4.jpg'
+        thumb = skygo.baseUrlLive + item['data']['event']['image'] if item['data']['channel']['name'].find('News') == -1 else getChannelLogo(item['data']['channel'], item['type'])
         if 'TMDb_poster_path' in item['data'] or ('mediainfo' in item['data'] and not item['data']['channel']['name'].startswith('Sky Sport')):
             if 'TMDb_poster_path' in item['data']:
                 poster = item['data']['TMDb_poster_path']
             else:
-                poster = getPoster(item['data']['mediainfo'])
+                poster = getPoster(item['data']['mediainfo'], item['type'])
             thumb = poster
             xbmcplugin.setContent(skygo.addon_handle, 'movies')
         else:
-            poster = getPoster(item['data']['channel'])
-        art.update({'poster': poster, 'fanart': fanart, 'thumb': thumb})
+            poster = getPoster(item['data']['channel'], item['type'])
+        art.update({'poster':  poster + '|User-Agent=' + skygo.user_agent, 'fanart': fanart + '|User-Agent=' + skygo.user_agent, 'thumb': thumb + '|User-Agent=' + skygo.user_agent})
 
     return art
