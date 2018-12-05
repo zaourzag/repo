@@ -7,6 +7,7 @@ import xbmc, xbmcgui, xbmcplugin, xbmcaddon, xbmcvfs
 import urllib2
 import json
 import datetime
+import _strptime
 import time
 import xml.etree.ElementTree as ET
 import resources.lib.common as common
@@ -14,7 +15,6 @@ import watchlist
 import re
 import urllib
 import base64
-from HTMLParser import HTMLParser
 
 try:
     import StorageServer
@@ -30,8 +30,6 @@ TMDBCache = StorageServer.StorageServer(addon.getAddonInfo('name') + '.TMDBdata'
 extMediaInfos = addon.getSetting('enable_extended_mediainfos')
 icon_file = xbmc.translatePath(addon.getAddonInfo('path') + '/icon.png').decode('utf-8')
 skygo = None
-htmlparser = HTMLParser()
-
 
 # Blacklist: diese nav_ids nicht anzeigen
 # 15 = Snap
@@ -224,14 +222,7 @@ def listLiveTvChannels(channeldir_name):
 
 
 def getlistLiveChannelData(channel=None):
-    attempt = 0
-    data = {}
-    url = 'https://skyticket.sky.de/epgd/st/ipad/excerpt/'
-    while attempt < 3 and len(data) == 0:
-        res = skygo.session.get(url)
-        data = res.json() if res.headers['content-type'].find('application/json') >= 0 else {}
-        attempt += 1
-
+    data = skygo.session.get('https://skyticket.sky.de/epgd/st/ipad/excerpt/').json()
     for tab in data:
         if tab['tabName'] == 'film':
             tab['tabName'] = 'cinema'
@@ -244,23 +235,23 @@ def getlistLiveChannelData(channel=None):
         data = [json for json in data if json['tabName'].lower() == channel.lower()]
         for tab in data:
             for event in tab['eventList']:
+                if event.get('event').get('assetid', None) is None:
+                    event['event']['assetid'] = re.search('\/(\d+)\.html', event['event']['detailPage']).group(1) if event['event']['detailPage'].startswith('http') else None
+                if event.get('event').get('cmsid', None) is None:
+                    event['event']['cmsid'] = int(re.search('(\d+)', event['event']['image'][event['event']['image'].rfind('_') + 1:]).group(1)) if event['event']['image'].endswith('png') else None
+
                 channel_list.append(event['channel']['name'])
 
-        attempt = 0
-        data_web = {}
-        url = 'https://skyticket.sky.de/epgd/st/web/excerpt/'
-        while attempt < 3 and len(data) == 0:
-            res = skygo.session.get(url)
-            data_web = res.json() if res.headers['content-type'].find('application/json') >= 0 else {}
-            attempt += 1
-
-        data_web = [json for json in data_web if json['tabName'] == channel]
+        data_web = skygo.session.get('https://skyticket.sky.de/epgd/st/web/excerpt/').json()
+        data_web = [json for json in data_web if json['tabName'].lower() == channel.lower()]
         for tab_web in data_web:
             for event_web in tab_web['eventList']:
                 if event_web['channel']['name'] not in channel_list:
                     for tab in data:
-                        event_web['event']['assetid'] = re.search('\/(\d+)\.html', event_web['event']['detailPage']).group(1) if event_web['event']['detailPage'].startswith('http') else None
-                        event_web['event']['cmsid'] = int(re.search('(\d+)', event_web['event']['image'][event_web['event']['image'].rfind('_') + 1:]).group(1)) if event_web['event']['image'].endswith('png') else None
+                        if event_web.get('event').get('assetid', None) is None:
+                            event_web['event']['assetid'] = re.search('\/(\d+)\.html', event_web['event']['detailPage']).group(1) if event_web['event']['detailPage'].startswith('http') else None
+                        if event_web.get('event').get('cmsid', None) is None:
+                            event_web['event']['cmsid'] = int(re.search('(\d+)', event_web['event']['image'][event_web['event']['image'].rfind('_') + 1:]).group(1)) if event_web['event']['image'].endswith('png') else None
 
                         msMediaUrl = None
                         if event_web['channel']['mediaurl'].startswith('http'):
@@ -542,7 +533,7 @@ def getInfoLabel(asset_type, item_data):
         string_end_date = data.get('on_air', {}).get('end_date', '')
         split_end_date = string_end_date.split('/')
         if len(split_end_date) == 3:
-            info['plot'] = htmlparser.unescape('Verf&uuml;gbar bis %s.%s.%s\n\n%s' % (split_end_date[2], split_end_date[1], split_end_date[0], info.get('plot') if info.get('plot', None) is not None else ''))
+            info['plot'] = '%s bis %s.%s.%s\n\n%s' % ('Verfügbar'.decode('utf-8'), split_end_date[2], split_end_date[1], split_end_date[0], info.get('plot') if info.get('plot', None) is not None else '')
     info['duration'] = data.get('lenght', 0) * 60
     if data.get('main_trailer', {}).get('trailer', {}).get('url', '') != '':
         info['trailer'] = data.get('main_trailer', {}).get('trailer', {}).get('url', '')
@@ -578,15 +569,17 @@ def getInfoLabel(asset_type, item_data):
         info['plot'] = data.get('teaser_long', '')
         info['genre'] = data.get('item_category_name', '')
     if asset_type == 'live':
-        item_data['event']['subtitle'] = htmlparser.unescape(item_data['event'].get('subtitle', ''))
-        info['title'] = item_data['event'].get('subtitle', '')
+        if item_data['channel']['name'].startswith("Sky Sport"):
+            info['title'] = item_data['event'].get('subtitle', '')
+        if info['title'] == '':
+            info['title'] = item_data['event'].get('title', '')
         info['plot'] = data.get('synopsis', '').replace('\n', '').strip() if data.get('synopsis', '') != '' else item_data['event'].get('subtitle', '')
-        if 'assetid' in item_data['event'] and (item_data['channel'].get('msMediaUrl', None) is None or not item_data['channel']['msMediaUrl'].startswith('http')):
+        if not item_data['channel']['name'].startswith('Sky Sport'):
             if 'mediainfo' in item_data:
                 info['title'] = data.get('title', '')
                 info['plot'] = data.get('synopsis', '').replace('\n', '').strip()
             else:
-                if item_data['channel']['name'].lower().find('cinema') > -1 or item_data['channel']['color'].lower() == 'film':
+                if item_data['channel']['name'].lower().find('cinema') >= 0 or item_data['channel']['color'].lower() == 'film':
                     info['title'] = item_data.get('event', '').get('title', '')
                     data['title'] = info['title']
                     info['plot'] = item_data.get('event', '').get('subtitle', '')
@@ -687,8 +680,8 @@ def listAssets(asset_list, isWatchlist=False):
             li.setInfo('video', info)
             params.update({'infolabels': info, 'parental_rating': parental_rating})
             li.setLabel(info['title'])
-            if item['type'] not in ['Series', 'Season']:
-                li = addStreamInfo(li, item['data'])
+            # if item['type'] not in ['Series', 'Season']:
+            #    li = addStreamInfo(li, item['data'])
 
         if item['type'] in ['Film']:
             xbmcplugin.setContent(skygo.addon_handle, 'movies')
