@@ -270,6 +270,8 @@ class ZattooDB(object):
 
     api = '/zapi/v2/cached/channels/' + self.zapi.AccountData['session']['power_guide_hash'] + '?details=False'
     channelsData = self.zapi.exec_zapiCall(api, None)
+    if channelsData == None:
+        channelsData = self.zapi.exec_zapiCall(api, None)
     debug("channels: " +str(channelsData))
     #time.sleep(5)
     api = '/zapi/channels/favorites'

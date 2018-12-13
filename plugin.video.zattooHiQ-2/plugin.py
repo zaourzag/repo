@@ -222,7 +222,8 @@ def build_directoryContent(content, addon_handle, cache=True, root=False, con='m
     xbmcplugin.addDirectoryItem(handle=int(addon_handle), url=record['url'], listitem=li, isFolder=record['isFolder'])
     
   #xbmcplugin.addSortMethod(addon_handle, xbmcplugin.SORT_METHOD_GENRE)
-  debug('AddonHandle '+str(addon_handle))
+  # if con == 'movies':
+      # xbmc.executebuiltin('Container.SetViewMode(%s)' % '504')
   xbmcplugin.endOfDirectory(addon_handle, True, root, cache)
 
 
@@ -277,7 +278,7 @@ def build_root(addon_uri, addon_handle):
   #_zattooDB_.updateChannels()
   #_zattooDB_.updateProgram()
   
-  _zattooDB_.getProgInfo(True, datetime.datetime.now(), datetime.datetime.now()+datetime.timedelta(minutes = 20))
+  #_zattooDB_.getProgInfo(True, datetime.datetime.now(), datetime.datetime.now()+datetime.timedelta(minutes = 20))
  
 def build_searchList():
   import urllib
@@ -296,8 +297,8 @@ def build_searchList():
                  'url': addon_uri + '?' + urllib.urlencode({'mode': 'search', 'id': search[chan]['id']})
             })
             
-  debug('AddonHandle '+str(addon_handle))
-  build_directoryContent(content, addon_handle, True, False, 'files')
+  #debug('AddonHandle '+str(addon_handle))
+  build_directoryContent(content, addon_handle, False)
   
 def build_channelsList(addon_uri, addon_handle):
   import urllib
@@ -360,7 +361,7 @@ def build_channelsList(addon_uri, addon_handle):
       else: url2=''
         
       content.append({
-        'title': '[COLOR green]'+chnr+'[/COLOR]'+'  '+channels[chan]['title'] + ' - ' + prog.get('title', '')+ '  '+startend,
+        'title': '[COLOR lime]'+chnr+'[/COLOR]'+'  '+channels[chan]['title'] + ' - ' + prog.get('title', '')+ '  '+startend,
         'image': channels[chan]['logo'],
         'thumbnail': prog.get('image_small', ''),
         'genre': prog.get('genre',''),
@@ -472,11 +473,11 @@ def build_recordingsList(addon_uri, addon_handle):
     position = int(time.mktime(time.strptime(record['position'], "%Y-%m-%dT%H:%M:%SZ"))) + _timezone_  # local timestamp
     now = time.time()
     duration = end - start
-    color='red'
-    if (now>start): color='orange'
-    if (now>end): color='green'
+    color='crimson'
+    if (now>start): color='gold'
+    if (now>end): color='lime'
     if RECREADY == "true":
-      if color != "green": continue
+      if color != "lime": continue
     if __addon__.getSetting('rec_name') == '0':
         label=datetime.datetime.fromtimestamp(start).strftime('%Y.%m.%d. %H:%M')+' ' 
     elif __addon__.getSetting('rec_name') == '1':
@@ -817,11 +818,15 @@ def search_show(addon_uri, addon_handle, search):
   import urllib
 
   resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/program/search?query=' + search.replace(" ", "_"), None)
-  debug(resultData)
+  
   if resultData is None:
     build_directoryContent([{'title': __addon__.getLocalizedString(31203), 'isFolder': False, 'url':''}], addon_handle)
-    return
-
+    return 
+  #else:
+    #_zattooDB_.set_search(search)
+  if resultData['programs']:
+    _zattooDB_.set_search(search)
+    debug(resultData)
   programs = sorted(resultData['programs'], key=lambda prog: ( prog['start'], prog['cid']))
   #debug('Suche: '+str(programs))
   channels = _zattooDB_.getChannelList(False)
@@ -874,7 +879,7 @@ def search_show(addon_uri, addon_handle, search):
         except:pass
     
     item = {
-        'title': '[COLOR yellow]' + time.strftime("%d.%m. %H:%M ", startLocal) + '[/COLOR]' + '[COLOR green]' + program.get('cid', '') + '[/COLOR]' + ': ' + program.get('title', '') + ' - ' + episode_title,
+        'title': '[COLOR yellow]' + time.strftime("%d.%m. %H:%M ", startLocal) + '[/COLOR]' + '[COLOR lime]' + program.get('cid', '') + '[/COLOR]' + ': ' + program.get('title', '') + ' - ' + episode_title,
         'image': channels[program['cid']]['logo'],
         'thumbnail': program.get('image_url', ''),
         'plot':  info['description'],
@@ -886,7 +891,7 @@ def search_show(addon_uri, addon_handle, search):
         'isFolder': False
       }
     rec = {
-        'title': '[COLOR yellow]' + time.strftime("%d.%m. %H:%M ", startLocal) + '[/COLOR]' + '[COLOR green]' + program.get('cid', '') + '[/COLOR]' + ': ' + program.get('title', '') + ' - ' + episode_title,
+        'title': '[COLOR yellow]' + time.strftime("%d.%m. %H:%M ", startLocal) + '[/COLOR]' + '[COLOR lime]' + program.get('cid', '') + '[/COLOR]' + ': ' + program.get('title', '') + ' - ' + episode_title,
         'image': channels[program['cid']]['logo'],
         'thumbnail': program.get('image_url', ''),
         'plot':  info['description'],
@@ -942,7 +947,7 @@ def search_show(addon_uri, addon_handle, search):
     for rec in record_shows: content.append(rec)
   if record_shows == [] and recall_shows ==[]:
     content.append({'title': __addon__.getLocalizedString(31203), 'isFolder': False, 'url':''})
-  build_directoryContent(content, addon_handle, True, False, 'files')
+  build_directoryContent(content, addon_handle, True, False)
 
 
 def showPreview(popularList=''):
@@ -1535,7 +1540,7 @@ def main():
     debug('AddonHandle '+str(addon_handle))
     
     search = xbmcgui.Dialog().input(__addon__.getLocalizedString(31200), type=xbmcgui.INPUT_ALPHANUM)
-    _zattooDB_.set_search(search)
+   
     if search == '': return
     search_show(addon_uri, addon_handle, search)
 

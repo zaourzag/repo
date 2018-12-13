@@ -123,7 +123,7 @@
                 <posy>5</posy>
                 <width>160</width>
                 <height>65</height>
-                <aspectratio>scale</aspectratio>
+                <aspectratio>stetch</aspectratio>
                 <fadetime>500</fadetime>
                 <texture>icon.png</texture>
             </control>

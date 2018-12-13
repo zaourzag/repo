@@ -1,4 +1,12 @@
 ==================================================
+[B]ZattooHiQ v1.6.8.2[/B]13.12.2018 Steffen Rolapp
+==================================================
+- Recall fix für Reseller Accounts im EPG
+- Farben bei Aufnahmen geändert
+- Skin vom EPG geändert
+- Fix Session Renew 
+
+==================================================
 [B]ZattooHiQ v1.6.8 [/B]23.09.2018 Steffen Rolapp
 ==================================================
 - Fehler in der Suche ist behoben
