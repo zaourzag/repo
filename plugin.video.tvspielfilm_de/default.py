@@ -359,9 +359,11 @@ def playVideo(url):
 					xbmcgui.Dialog().notification((translation(30523).format('ARTE - Addon')), (translation(30524).format('ARTE-Addon')), icon, 8000)
 				pass
 	elif LINK.startswith(ARD_SCHEMES):
-		videoID = LINK.split('documentId=')[1]
-		if '&' in videoID:
-			videoID = videoID.split('&')[0]
+		if 'documentId=' in LINK:
+			videoID = LINK.split('documentId=')[1]
+		else:
+			secondURL = getUrl(LINK)
+			videoID = re.compile(r'["\']contentId["\']:([^,]+?),["\']metadataId["\']:', re.DOTALL).findall(secondURL)[0].replace('"', '').replace("'", "")
 		return ArdGetVideo(videoID)
 	elif LINK.startswith("https://www.zdf.de"):
 		cleanURL = LINK[:LINK.find('.html')]
@@ -383,7 +385,7 @@ def ArdGetVideo(videoID):
 	m3u8_List = []
 	ARD_Url = ""
 	try:
-		content = getUrl('http://www.ardmediathek.de/play/media/'+videoID)
+		content = getUrl('https://classic.ardmediathek.de/play/media/'+videoID)
 		result = json.loads(content)
 		allLinks = result["_mediaArray"][0]["_mediaStreamArray"]
 		linkQuality = 2 # Verfügbare mp4-Qualität in der ARD-Mediathek = 2 (Standard)
@@ -406,7 +408,7 @@ def ArdGetVideo(videoID):
 					log("(ArdGetVideo) Wir haben 1 *m3u8-Stream* (ARD+3) - wähle Diesen : {0}".format(str(m3u8_List[0])))
 				finalURL = m3u8_List[0]
 				if finalURL[:4] != "http":
-					finalURL = "http:"+finalURL
+					finalURL = "https:"+finalURL
 		if not finalURL and allLinks:
 			for quality in allLinks:
 				# Überprüfen, ob noch höhere mp4-Qualitäten verfügbar sind und die höchste verfügbare Qualitätsstufe festlegen
@@ -442,7 +444,7 @@ def ArdGetVideo(videoID):
 					log("(ArdGetVideo) Wir haben 1 *mp4-Stream* (ARD+3) - wähle Diesen : {0}".format(ARD_Url))
 			if ARD_Url != "":
 				if ARD_Url[:4] != "http":
-					ARD_Url = "http:"+ARD_Url
+					ARD_Url = "https:"+ARD_Url
 				finalURL = VideoBEST(ARD_Url, improve='ard-YES') # *mp4URL* Qualität nachbessern, überprüfen, danach abspielen
 		if not finalURL:
 			log("(ArdGetVideo) AbspielLink-00 (ARD+3) : *ARD-Intern* Der angeforderte -VideoLink- existiert NICHT !!!")
@@ -603,13 +605,13 @@ def cleanTitle(title):
 	return title
 
 def cleanStation(channelID):
-	ChannelCode = ('ARD','Das Erste','ONE','ZDF','2NEO','ZNEO','2INFO','ZINFO','3SAT','Arte','ARTE','BR','HR','KIKA','MDR','NDR','N3','ORF','PHOEN','RBB','SR','SWR','SWR/SR','WDR','RTL','RTL2','VOX','SRTL','SUPER')
+	ChannelCode = ('ARD','Das Erste','ONE','FES','ZDF','2NEO','ZNEO','2INFO','ZINFO','3SAT','Arte','ARTE','BR','HR','KIKA','MDR','NDR','N3','ORF','PHOEN','RBB','SR','SWR','SWR/SR','WDR','RTL','RTL2','VOX','SRTL','SUPER')
 	if channelID in ChannelCode and channelID != "":
 		try:
 			channelID = channelID.replace(' ', '')
 			if 'ARD' in channelID or 'DasErste' in channelID:
 				channelID = '  (Das Erste)'
-			elif 'ONE' in channelID:
+			elif 'ONE' in channelID or 'FES' in channelID:
 				channelID = '  (ONE)'
 			elif 'Arte' in channelID or 'ARTE' in channelID:
 				channelID = '  (ARTE)'
@@ -668,16 +670,15 @@ def addDir(name, url, mode, image, plot=None, studio=None, genre=None):
 		liz.setArt({'fanart': defaultFanart})
 	return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
 
-def addLink(name, url, mode, image, plot=None, studio=None, genre=None, duration=None, director=None, rating=None):
+def addLink(name, url, mode, image, plot=None, studio=None, duration=None, genre=None, director=None, rating=None):
 	u = sys.argv[0]+"?url="+quote_plus(url)+"&mode="+str(mode)
 	liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=image)
-	liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": plot, "Studio": studio, "Genre": genre, "Duration": duration, "Director": director, "Rating": rating, "mediatype": "video"})
+	liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": plot, "Studio": studio, "Duration": duration, "Genre": genre, "Director": director, "Rating": rating, "mediatype": "video"})
 	if useThumbAsFanart and image != icon:
 		liz.setArt({'fanart': image})
 	else:
 		liz.setArt({'fanart': defaultFanart})
-	if duration is not None:
-		liz.addStreamInfo('Video', {'Duration': duration})
+	liz.addStreamInfo('Video', {'Duration': duration})
 	liz.setProperty('IsPlayable', 'true')
 	liz.setContentLookup(False)
 	liz.addContextMenuItems([(translation(30601), 'RunPlugin(plugin://{0}?mode=addVideoList&url={1}&name={2}&image={3}&studio={4})'.format(addon.getAddonInfo('id'), quote_plus(u), quote_plus(name), quote_plus(image), quote_plus(studio)))])

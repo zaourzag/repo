@@ -211,12 +211,14 @@ def listVideos_Day_Channel(url):
 	for i in range(1, len(spl), 1):
 		entry = spl[i]
 		try:
-			match1 = re.compile(r'<img alt=["\'](.*?)["\']', re.DOTALL).findall(entry)
-			match2= re.compile(r'<p class=["\']h2["\']>(.*?)</p>.+?<span class=["\']date["\']>(.*?)/span>', re.DOTALL).findall(entry)
-			if (match2[0][0] and match2[0][1]):
-				title = cleanTitle(match2[0][0].strip())+" - "+cleanTitle(match2[0][1].replace(", <", " ").replace(",<", " ").replace("<", "").strip())
-			else:
-				title = cleanTitle(match1[0].strip())
+			name1 = re.compile(r'<img alt=["\'](.*?)["\']', re.DOTALL).findall(entry)[0]
+			try:
+				name2_1 = re.compile(r'<p class=["\']h2["\']>(.*?)</p>', re.DOTALL).findall(entry)[0]
+				name2_2 = re.compile(r'<span class=["\']date["\']>(.*?)/span>', re.DOTALL).findall(entry)[0].replace(", <", " ").replace(",<", " ").replace("<", "")
+				if name2_1 and name2_2:
+					title = cleanTitle(name2_1)+" - "+cleanTitle(name2_2)
+			except:
+				title = cleanTitle(name1)
 			fullUrl = re.compile(r'<a class=["\']img-box["\'] href=["\'](.*?.html)["\']>', re.DOTALL).findall(entry)[0]
 			if not baseURL in fullUrl:
 				fullUrl = baseURL+fullUrl
@@ -224,16 +226,16 @@ def listVideos_Day_Channel(url):
 			if ',' in photo:
 				photo = photo.split(',')[0].rstrip()+'.jpg'
 			if not '/mediathek/nach-sender' in url:
-				match3 = re.compile(r'data-credit=["\'](.*?)["\']>', re.DOTALL).findall(entry)
-				channelID = cleanTitle(match3[0].strip())
+				channel = re.compile(r'data-credit=["\'](.*?)["\']>', re.DOTALL).findall(entry)[0]
+				channelID = cleanTitle(channel)
 				channelID = cleanStation(channelID.strip())
 				studio = ""
 			else:
 				channelID = cleanTitle(url.split('/')[-1].replace('.html', '').strip())
 				channelID = cleanStation(channelID.strip())
 				studio = channelID.replace('(', '').replace(')', '').replace('  ', '')
-			match4 = re.compile(r'<p class=["\']short-copy["\']>(.*?)</p>', re.DOTALL).findall(entry)
-			plot = cleanTitle(match4[0].strip())
+			desc = re.compile(r'<p class=["\']short-copy["\']>(.*?)</p>', re.DOTALL).findall(entry)[0]
+			plot = cleanTitle(desc)
 			if showTVchannel and channelID != "":
 				title += channelID
 			if showNOW == 'false' and channelID != "":
@@ -242,7 +244,7 @@ def listVideos_Day_Channel(url):
 			debug_MS("(listVideos_Day_Channel) Name : {0}".format(title))
 			debug_MS("(listVideos_Day_Channel) Link : {0}".format(fullUrl))
 			debug_MS("(listVideos_Day_Channel) Icon : {0}".format(photo))
-			addLink(title, fullUrl, 'playVideo', photo, plot=plot, studio=studio)
+			addLink(title, fullUrl, 'playVideo', photo, plot, studio)
 		except:
 			failing("(listVideos_Day_Channel) Fehler-Eintrag : {0}".format(str(entry)))
 	xbmcplugin.endOfDirectory(pluginhandle)
@@ -262,14 +264,14 @@ def listVideosGenre(category):
 	for i in range(1, len(spl), 1):
 		entry = spl[i]
 		try:
-			match1 = re.compile(r'alt=["\'](.*?)["\']', re.DOTALL).findall(entry)
-			match2 = re.compile(r'<p class=["\']h7 name["\']>(.*?)</p>', re.DOTALL).findall(entry)
-			if match2 != "":
-				title = cleanTitle(match2[0].strip())
+			name1 = re.compile(r'alt=["\'](.*?)["\']', re.DOTALL).findall(entry)
+			name2 = re.compile(r'<p class=["\']h7 name["\']>(.*?)</p>', re.DOTALL).findall(entry)
+			if name2 != "":
+				title = cleanTitle(name2[0])
 			else:
-				title = cleanTitle(match1[0].strip())
-			match3 = re.compile(r'<span class=["\']h6 text["\']>(.*?)</span>', re.DOTALL).findall(entry)
-			channelID = cleanTitle(match3[0].strip())
+				title = cleanTitle(name1[0])
+			channel = re.compile(r'<span class=["\']h6 text["\']>(.*?)</span>', re.DOTALL).findall(entry)[0]
+			channelID = cleanTitle(channel)
 			channelID = cleanStation(channelID.strip())
 			studio = channelID.replace('(', '').replace(')', '').replace('  ', '')
 			fullUrl = re.compile(r'<a href=["\']([0-9a-zA-Z-_/.]+html)["\'] class=["\']element js-hover', re.DOTALL).findall(entry)[0]
@@ -278,8 +280,8 @@ def listVideosGenre(category):
 			photo = re.compile(r'data-lazy-load-src=["\'](https?://.*?.jpg)["\']', re.DOTALL).findall(entry)[0]
 			if ',' in photo:
 				photo = photo.split(',')[0].rstrip()+'.jpg'
-			match4 = re.compile(r'<p class=["\']small-meta description["\']>(.*?)</p>', re.DOTALL).findall(entry)
-			plot = cleanTitle(match4[0].strip())
+			desc = re.compile(r'<p class=["\']small-meta description["\']>(.*?)</p>', re.DOTALL).findall(entry)[0]
+			plot = cleanTitle(desc)
 			if showTVchannel and channelID != "":
 				title += channelID
 			if showNOW == 'false' and channelID != "":
@@ -288,7 +290,7 @@ def listVideosGenre(category):
 			debug_MS("(listVideosGenre) Name : {0}".format(title))
 			debug_MS("(listVideosGenre) Link : {0}".format(fullUrl))
 			debug_MS("(listVideosGenre) Icon : {0}".format(photo))
-			addLink(title, fullUrl, 'playVideo', photo, plot=plot, studio=studio)
+			addLink(title, fullUrl, 'playVideo', photo, plot, studio)
 		except:
 			failing("(listVideosGenre) Fehler-Eintrag : {0}".format(str(entry)))
 	xbmcplugin.endOfDirectory(pluginhandle)
@@ -330,9 +332,11 @@ def playVideo(url):
 					xbmcgui.Dialog().notification((translation(30523).format('ARTE - Addon')), (translation(30524).format('ARTE-Addon')), icon, 8000)
 				pass
 	elif LINK.startswith(ARD_SCHEMES):
-		videoID = LINK.split('documentId=')[1]
-		if '&' in videoID:
-			videoID = videoID.split('&')[0]
+		if 'documentId=' in LINK:
+			videoID = LINK.split('documentId=')[1]
+		else:
+			secondURL = getUrl(LINK)
+			videoID = re.compile(r'["\']contentId["\']:([^,]+?),["\']metadataId["\']:', re.DOTALL).findall(secondURL)[0].replace('"', '').replace("'", "")
 		return ArdGetVideo(videoID)
 	elif LINK.startswith("https://www.zdf.de"):
 		cleanURL = LINK[:LINK.find('.html')]
@@ -354,7 +358,7 @@ def ArdGetVideo(videoID):
 	m3u8_List = []
 	ARD_Url = ""
 	try:
-		content = getUrl('http://www.ardmediathek.de/play/media/'+videoID)
+		content = getUrl('https://classic.ardmediathek.de/play/media/'+videoID)
 		result = json.loads(content)
 		allLinks = result["_mediaArray"][0]["_mediaStreamArray"]
 		linkQuality = 2 # Verfügbare mp4-Qualität in der ARD-Mediathek = 2 (Standard)
@@ -377,7 +381,7 @@ def ArdGetVideo(videoID):
 					log("(ArdGetVideo) Wir haben 1 *m3u8-Stream* (ARD+3) - wähle Diesen : {0}".format(str(m3u8_List[0])))
 				finalURL = m3u8_List[0]
 				if finalURL[:4] != "http":
-					finalURL = "http:"+finalURL
+					finalURL = "https:"+finalURL
 		if not finalURL and allLinks:
 			for quality in allLinks:
 				# Überprüfen, ob noch höhere mp4-Qualitäten verfügbar sind und die höchste verfügbare Qualitätsstufe festlegen
@@ -413,7 +417,7 @@ def ArdGetVideo(videoID):
 					log("(ArdGetVideo) Wir haben 1 *mp4-Stream* (ARD+3) - wähle Diesen : {0}".format(ARD_Url))
 			if ARD_Url != "":
 				if ARD_Url[:4] != "http":
-					ARD_Url = "http:"+ARD_Url
+					ARD_Url = "https:"+ARD_Url
 				finalURL = VideoBEST(ARD_Url, improve='ard-YES') # *mp4URL* Qualität nachbessern, überprüfen, danach abspielen
 		if not finalURL:
 			log("(ArdGetVideo) AbspielLink-00 (ARD+3) : *ARD-Intern* Der angeforderte -VideoLink- existiert NICHT !!!")
@@ -574,13 +578,13 @@ def cleanTitle(title):
 	return title
 
 def cleanStation(channelID):
-	ChannelCode = ('ARD','Das Erste','ONE','ZDF','2NEO','ZNEO','2INFO','ZINFO','3SAT','Arte','ARTE','BR','HR','KIKA','MDR','NDR','N3','ORF','PHOEN','RBB','SR','SWR','SWR/SR','WDR','RTL','RTL2','VOX','SRTL','SUPER')
+	ChannelCode = ('ARD','Das Erste','ONE','FES','ZDF','2NEO','ZNEO','2INFO','ZINFO','3SAT','Arte','ARTE','BR','HR','KIKA','MDR','NDR','N3','ORF','PHOEN','RBB','SR','SWR','SWR/SR','WDR','RTL','RTL2','VOX','SRTL','SUPER')
 	if channelID in ChannelCode and channelID != "":
 		try:
 			channelID = channelID.replace(' ', '')
 			if 'ARD' in channelID or 'DasErste' in channelID:
 				channelID = '  (Das Erste)'
-			elif 'ONE' in channelID:
+			elif 'ONE' in channelID or 'FES' in channelID:
 				channelID = '  (ONE)'
 			elif 'Arte' in channelID or 'ARTE' in channelID:
 				channelID = '  (ARTE)'
@@ -639,16 +643,15 @@ def addDir(name, url, mode, image, plot=None, studio=None, genre=None):
 		liz.setArt({'fanart': defaultFanart})
 	return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
 
-def addLink(name, url, mode, image, plot=None, studio=None, genre=None, duration=None, director=None, rating=None):
+def addLink(name, url, mode, image, plot=None, studio=None, duration=None, genre=None, director=None, rating=None):
 	u = sys.argv[0]+"?url="+quote_plus(url)+"&mode="+str(mode)
 	liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=image)
-	liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": plot, "Studio": studio, "Genre": genre, "Duration": duration, "Director": director, "Rating": rating, "mediatype": "video"})
+	liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": plot, "Studio": studio, "Duration": duration, "Genre": genre, "Director": director, "Rating": rating, "mediatype": "video"})
 	if useThumbAsFanart and image != icon:
 		liz.setArt({'fanart': image})
 	else:
 		liz.setArt({'fanart': defaultFanart})
-	if duration is not None:
-		liz.addStreamInfo('Video', {'Duration': duration})
+	liz.addStreamInfo('Video', {'Duration': duration})
 	liz.setProperty('IsPlayable', 'true')
 	liz.setContentLookup(False)
 	liz.addContextMenuItems([(translation(30601), 'RunPlugin(plugin://{0}?mode=addVideoList&url={1}&name={2}&image={3}&plot={4}&studio={5})'.format(addon.getAddonInfo('id'), quote_plus(u), quote_plus(name), quote_plus(image), quote_plus(plot), quote_plus(studio)))])
