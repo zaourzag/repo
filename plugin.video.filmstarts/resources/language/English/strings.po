@@ -1,13 +1,13 @@
-# XBMC Media Center language file
+﻿# Kodi Media Center language file
 # Addon Name: Filmstarts
 # Addon id: plugin.video.filmstarts
-# Addon version: 0.6.4
+# Addon version: 1.0.1
 # Addon Provider: L0RE
 msgid ""
 msgstr ""
-"Project-Id-Version: XBMC-Addons\n"
+"Project-Id-Version: KODI-Addons\n"
 "Report-Msgid-Bugs-To: alanwww1@xbmc.org\n"
-"POT-Creation-Date: 2017-01-18 23:05+0000\n"
+"POT-Creation-Date: 2018-12-28 22:15+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE\n"
@@ -22,170 +22,242 @@ msgid "Movies and Series (Trailer, Making of, Teaser ...)"
 msgstr ""
 
 msgctxt "Addon Description"
-msgid "FILMSTARTS.de is the leading online magazine for the medium of film.[CR]The FILMSTARTS database now contains information of more than 70,000 movies.[CR]Watch movies and series (trailers, making of, teasers, etc.) from http://www.filmstarts.de/"
+msgid "FILMSTARTS.de is the leading online magazine about the medium of Movie.[CR]In the meantime the FILMSTARTS database contains information of more than 70.000 movies.[CR]Watch trailer, making of, teaser, etc. of movies and series, selected and compiled by http://www.filmstarts.de/."
 msgstr ""
 
+#strings start
+# SETTINGS-CATEGORIES
 
-msgctxt "#30001"
-msgid "Settings"
+msgctxt "#30000"
+msgid "General"
 msgstr ""
 
-msgctxt "#30002"
+#empty strings from id 30001 to 30109
+# SETTINGS-BUTTONS
+
+msgctxt "#30110"
+msgid "     Activate SSL-Certificate check [COLOR yellow](possibly switch off during Connection-Problems)[/COLOR]"
+msgstr ""
+
+msgctxt "#30111"
+msgid "     Additional next and previous Page-Display [COLOR yellow](Category: Cinema-Startdate)[/COLOR]"
+msgstr ""
+
+msgctxt "#30112"
+msgid "     Detailed Addon-Debug (otherwise only Minimal-Log)"
+msgstr ""
+
+#empty strings from id 30113 to 30229
+# SETTINGS-TITLES
+
+msgctxt "#30230"
+msgid "[B][COLOR ff0099ff]SSL - CERTIFICATE[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30231"
+msgid "[B][COLOR ff0099ff]PAGE - DISPLAY[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30232"
+msgid "[B][COLOR ff0099ff]LOG[/COLOR][/B]"
+msgstr ""
+
+#empty strings from id 30233 to 30349
+# SETTINGS-DESCRIPTIONS
+
+#empty strings from id 30349 to 30500
+# WARNING-MESSAGES-OK
+
+#empty strings from id 30500 to 30520
+# WARNING-MESSAGES-NOTIFICATION
+
+msgctxt "#30521"
+msgid "Filmstarts : [COLOR red]!!! {0:s} - ERROR !!![/COLOR]"
+msgstr ""
+
+msgctxt "#30522"
+msgid "[COLOR red]An error has occured, please check *LOG* ![/COLOR]"
+msgstr ""
+
+msgctxt "#30523"
+msgid "[COLOR red]Unfortunately, there are NO entries :[/COLOR]"
+msgstr ""
+
+msgctxt "#30524"
+msgid "* [COLOR blue]In this Category[/COLOR] * at Filmstarts"
+msgstr ""
+
+#empty strings from id 30525 to 30600
+# PLUGIN-MAIN and SIDEMENU
+
+msgctxt "#30601"
 msgid "Trailer"
 msgstr ""
 
-msgctxt "#30003"
-msgid "Series"
-msgstr ""
-
-msgctxt "#30004"
+msgctxt "#30602"
 msgid "Cinema"
 msgstr ""
 
-msgctxt "#30005"
+msgctxt "#30603"
+msgid "Series"
+msgstr ""
+
+msgctxt "#30604"
 msgid "News"
 msgstr ""
 
-msgctxt "#30006"
-msgid "Next Page >>>"
+msgctxt "#30608"
+msgid "FILMSTARTS Settings"
 msgstr ""
 
-msgctxt "#30007"
-msgid "All Videos"
-msgstr ""
-
-msgctxt "#30008"
+msgctxt "#30609"
 msgid "Most popular Trailer"
 msgstr ""
 
-msgctxt "#30009"
+msgctxt "#30610"
 msgid "Now in Cinema"
 msgstr ""
 
-msgctxt "#30010"
+msgctxt "#30611"
 msgid "Commic soon to Cinema"
 msgstr ""
 
-msgctxt "#30011"
+msgctxt "#30612"
 msgid "Newest Trailer"
 msgstr ""
 
-msgctxt "#30012"
-msgid "Video-Archiv"
+msgctxt "#30613"
+msgid "Trailer-Archive"
 msgstr ""
 
-msgctxt "#30013"
-msgid "Actual Cinema Films"
+msgctxt "#30614"
+msgid "Pre-premiere in Cinema"
 msgstr ""
 
-msgctxt "#30014"
-msgid "New Film this week in Cinema"
+msgctxt "#30615"
+msgid "Current Cinema Movies"
 msgstr ""
 
-msgctxt "#30015"
-msgid "Best voted Film in Cinema"
+msgctxt "#30616"
+msgid "New Movies this week in Cinema"
 msgstr ""
 
-msgctxt "#30016"
-msgid "Cinema Films for Children"
+msgctxt "#30617"
+msgid "Best voted Cinema Movies"
 msgstr ""
 
-msgctxt "#30017"
-msgid "Cinema Film per Week"
+msgctxt "#30618"
+msgid "Kids Movies in Cinema"
 msgstr ""
 
-msgctxt "#30018"
-msgid "Best Films"
+msgctxt "#30619"
+msgid "Start date per Week"
 msgstr ""
 
-msgctxt "#30019"
-msgid "Worst Films"
+msgctxt "#30620"
+msgid "Best Movies"
 msgstr ""
 
-msgctxt "#30020"
-msgid "Children Films"
+msgctxt "#30621"
+msgid "Worst Movies"
 msgstr ""
 
-msgctxt "#30021"
-msgid "Most readed Series"
+msgctxt "#30622"
+msgid "Kids Movies"
 msgstr ""
 
-msgctxt "#30022"
+msgctxt "#30623"
+msgid "Most liked Series"
+msgstr ""
+
+msgctxt "#30624"
 msgid "Best voted Series"
 msgstr ""
 
-msgctxt "#30023"
+msgctxt "#30625"
 msgid "Most popular Series"
 msgstr ""
 
-msgctxt "#30024"
-msgid "Most wanted new Seasons"
+msgctxt "#30626"
+msgid "Most expected new Seasons"
 msgstr ""
 
-msgctxt "#30025"
+msgctxt "#30627"
+msgid "New Seasons on German television"
+msgstr ""
+
+msgctxt "#30628"
+msgid "Upcoming Seasons on German television"
+msgstr ""
+
+msgctxt "#30629"
 msgid "New started Series"
 msgstr ""
 
-msgctxt "#30026"
+msgctxt "#30630"
 msgid "New Series-Trailer"
 msgstr ""
 
-msgctxt "#30027"
-msgid "Video-Archiv"
+msgctxt "#30631"
+msgid "Series-Archive"
 msgstr ""
 
-msgctxt "#30028"
-msgid "5 Stars"
+msgctxt "#30632"
+msgid "5***** Stars"
 msgstr ""
 
-msgctxt "#30029"
-msgid "Film Errors"
+msgctxt "#30633"
+msgid "Movie mistakes"
 msgstr ""
 
-msgctxt "#30030"
+msgctxt "#30634"
 msgid "Interviews"
 msgstr ""
 
-msgctxt "#30031"
-msgid "My most loved Filmscene"
+msgctxt "#30635"
+msgid "My favorite Movie scene"
 msgstr ""
 
-msgctxt "#30032"
-msgid "Germany"
+msgctxt "#30661"
+msgid "Filter by Genre"
 msgstr ""
 
-msgctxt "#30033"
-msgid "USA"
+msgctxt "#30662"
+msgid "Filter by Language"
 msgstr ""
 
-msgctxt "#30034"
-msgid "Filter Genres"
+msgctxt "#30663"
+msgid "Filter by Format"
 msgstr ""
 
-msgctxt "#30035"
-msgid "Filter Years"
+msgctxt "#30664"
+msgid "Filter by Years"
 msgstr ""
 
-msgctxt "#30036"
-msgid "Filter Country"
+msgctxt "#30665"
+msgid "Filter by Countries"
 msgstr ""
 
-msgctxt "#30037"
-msgid "Show Videos"
+msgctxt "#30670"
+msgid "[B][COLOR chartreuse]•  •  •  [/COLOR]Show Results[COLOR chartreuse]  •  •  •[/COLOR][/B]"
 msgstr ""
 
-msgctxt "#30038"
-msgid "Filter Language"
+msgctxt "#30685"
+msgid "[COLOR chartreuse]Next Page  >>>[/COLOR]"
 msgstr ""
 
-msgctxt "#30039"
-msgid "Filter Format"
+msgctxt "#30691"
+msgid "[COLOR chartreuse]>>>[/COLOR] Next Date ({0:s}) [COLOR chartreuse]>>>[/COLOR]"
 msgstr ""
 
-msgctxt "#30040"
-msgid "> Next Week *"
+msgctxt "#30692"
+msgid "[COLOR chartreuse]<<<[/COLOR] Previous Date ({0:s}) [COLOR chartreuse]<<<[/COLOR]"
 msgstr ""
 
-msgctxt "#30041"
-msgid "< Last Week *"
+msgctxt "#30693"
+msgid "[B][COLOR orangered]* * *[/COLOR] Please note: The Date must match with the List ! [COLOR orangered]* * *[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30701"
+msgid "  [COLOR orangered][NO TRAILER][/COLOR]"
 msgstr ""

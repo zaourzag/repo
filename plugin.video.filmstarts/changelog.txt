@@ -1,2 +1,10 @@
-﻿0.6.10
-- Initial Source
+﻿[B]Version 0.4.3  (02.12.2016)[/B]by L0RE
+- Initial release
+...
+
+[B]Version 1.0.1  (30.12.2018)[/B][CR]by realvito
+- fixed: Addon komplett umgeschrieben und sämtliche Bugs beseitigt :-)
+- added: Mehr Informationen in vielen Rubriken abrufbar (sofern vorhanden) - Datum, Genre, Regie, Bewertung ...
+- added: Rubriken = Vorpremieren im Kino, Neue und kommende Staffeln im deutschen Fernsehen
+- optimized: Exceptions eingebaut - damit ein Fehler nicht gleich das Addon lahmlegt
+- removed: Rubrik = Kinderfilme im Kino (kein Inhalt)
