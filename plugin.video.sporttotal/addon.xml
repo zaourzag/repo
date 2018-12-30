@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<addon id="plugin.video.sporttotal" name="Sport Total" version="0.5.0" provider-name="L0RE">
+<addon id="plugin.video.sporttotal" name="Sport-Total TV" version="1.0.1" provider-name="L0RE">
 	<requires>
 		<import addon="xbmc.python" version="2.24.0"/>
 		<import addon="script.module.beautifulsoup4" version="4.3.2"/>
@@ -9,10 +9,10 @@
 		<provides>video</provides>
 	</extension>
 	<extension point="xbmc.addon.metadata">
-		<summary lang="en">Regionalsport on Sporttotal</summary>
-		<summary lang="de">Regionalsport auf Sporttotal</summary>
-		<description lang="en">Sporttotal shows Germany's amateur sport in full length and width. The league game of the home club? The funny and best scenes from Germany's amateur leagues?[CR]Selected and compiled by Sporttotal (https://www.sporttotal.tv).</description>
-		<description lang="de">Sporttotal zeigt Deutschlands Amateursport in voller Länge und Breite. Das Oberligaspiel vom Heimatverein? Die lustigen und besten Szenen aus Deutschlands Amateurligen?[CR]Ausgewählt und zusammengestellt von Sporttotal (https://www.sporttotal.tv).</description>
+		<summary lang="en">Regionalsport on Sporttotal.tv</summary>
+		<summary lang="de">Regionalsport auf Sporttotal.tv</summary>
+		<description lang="en">Sporttotal.tv shows Germany's amateur sport in full length and width. The league game of the home club? The funny and best scenes from Germany's amateur leagues?[CR]Selected and compiled by Sporttotal.tv (https://www.sporttotal.tv).</description>
+		<description lang="de">Sporttotal.tv zeigt Deutschlands Amateursport in voller Länge und Breite. Das Oberligaspiel vom Heimatverein? Die lustigen und besten Szenen aus Deutschlands Amateurligen?[CR]Ausgewählt und zusammengestellt von Sporttotal.tv (https://www.sporttotal.tv).</description>
 		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
 		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
 		<language></language>
@@ -26,9 +26,9 @@
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 0.5.0  (11.11.2018)[/COLOR][/B] by realvito[CR]
-- optimized: In der Rubrik = LIVE andere Sportarten hinzugefügt (Volleyball, Eishockey, Basketball ...)
-- added: Rubrik = Alle Sportarten mit Topclips und Wiederholungen aus versch. Sportbereichen (Volleyball, Eishockey, Basketball ...)
+		<news>[B][COLOR orangered]Version 1.0.1  (30.12.2018)[/COLOR][/B][CR]by realvito[CR]
+- fixed: Addon an die Webseiten-Veränderungen von "https://www.sporttotal.tv/" angepasst und komplett umgeschrieben
+- added: Hauptrubriken = Live-Übertragungen, Sportarten, Ligen und AMATor
 		</news>
 	</extension>
 </addon>

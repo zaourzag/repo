@@ -1,4 +1,4 @@
-﻿0.1
+﻿0.1 by L0RE
 - Initial release
 ...
 
@@ -13,3 +13,7 @@
 [B]Version 0.5.0  (11.11.2018)[/B] by realvito
 - optimized: In der Rubrik = LIVE andere Sportarten hinzugefügt (Volleyball, Eishockey, Basketball ...)
 - added: Rubrik = Alle Sportarten mit Topclips und Wiederholungen aus versch. Sportbereichen (Volleyball, Eishockey, Basketball ...)
+
+[B]Version 1.0.1  (30.12.2018)[/B] by realvito
+- fixed: Addon an die Webseiten-Veränderungen von "https://www.sporttotal.tv/" angepasst und komplett umgeschrieben
+- added: Hauptrubriken = Live-Übertragungen, Sportarten, Ligen und AMATor
