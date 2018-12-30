@@ -2567,7 +2567,7 @@ To support the backport the addon will now always create the merged_epg.xml.gz
 	</extension>
 </addon>
 
-<addon id="context.serieninfos" name="Serien Infos" version="1.0.1" provider-name="L0RE">
+<addon id="context.serieninfos" name="Serien Infos" version="1.0.2" provider-name="L0RE">
 	<requires>
 		<import addon="xbmc.python" version="2.24.0"/>
 		<import addon="script.module.requests" version="2.12.4"/>
@@ -2598,10 +2598,9 @@ To support the backport the addon will now always create the merged_epg.xml.gz
 		<assets>
 			<icon>icon.png</icon>
 		</assets>
-		<news>[B][COLOR orangered]Version 1.0.1  (30.09.2018)[/COLOR][/B] by realvito[CR]
-- fixed: Keine Anzeige der abgefragten Daten - da die Webseite keine Rückmeldung gibt
-- fixed: Fehlermeldung, wenn Serie nicht gefunden wurde
-- optimized: Anpassung der angezeigten InfoBox - Abmessungen und Inhalt
+		<news>[B][COLOR orangered]Version 1.0.2  (30.12.2018)[/COLOR][/B] by realvito[CR]
+- fixed: Manche Serie wird nicht angezeigt, obwohl Suchergebnis vorhanden ist (Verursacher im Script entfernt)
+- fixed: Es wird kein Ergebnis angezeigt, da die Webseite im Cache fehlerhaft oder leer ist (nochmalige direkte Abfrage der Webseite - ohne Cache)
 		</news>
 	</extension>
 </addon>
