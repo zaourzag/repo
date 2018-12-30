@@ -85,7 +85,7 @@ def getUrl(url, __HEADERS=False, __TIMEOUT=30):
 	port = addon.getSetting("port")
 	response = requests.Session()
 	if not __HEADERS:
-		__HEADERS = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:53.0) Gecko/20100101 Firefox/53.0'}
+		__HEADERS = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:55.0) Gecko/20100101 Firefox/55.0'}
 	if ip !="" and port !="":
 		px ="http://"+ip+":"+str(port)
 		__PROXIES = {'http': px,'https': px}
@@ -224,8 +224,12 @@ def getEpisodedata(title):
 def get_all_Episodes(idd):
 	url ="https://api.themoviedb.org/3/tv/"+str(idd)+"?api_key="+themovieDB_apiKEY+"&language=en_US"
 	debug("(get_all_Episodes) ##### URL : "+url+" #####")
-	content = makeREQUEST(url)
-	structure = json.loads(content)
+	try:
+		content = makeREQUEST(url)
+		structure = json.loads(content)
+	except:
+		content = getUrl(url)
+		structure = json.loads(content)
 	now = datetime.datetime.now()
 	last = fixtime("1900-01-01", "%Y-%m-%d")
 	next = fixtime("2200-01-01", "%Y-%m-%d")
@@ -239,8 +243,12 @@ def get_all_Episodes(idd):
 			continue
 		seasonurl ="https://api.themoviedb.org/3/tv/"+str(idd)+"/season/"+str(nr)+"?api_key="+themovieDB_apiKEY+"&language=en_US"
 		debug("(get_all_Episodes) ##### seasonurl : "+seasonurl+" #####")
-		content2 = makeREQUEST(seasonurl)
-		structure = json.loads(content2)
+		try:
+			content2 = makeREQUEST(seasonurl)
+			structure = json.loads(content2)
+		except:
+			content2 = getUrl(seasonurl)
+			structure = json.loads(content2)
 		debug("(get_all_Episodes) ##### structure : "+str(structure)+" #####")
 		for episode in structure["episodes"]:
 			debug("(get_all_Episodes) ##### episode : "+str(episode)+" #####")
@@ -294,8 +302,12 @@ if mode =="":
 	title = re.sub('\(.+?\)', '', title)
 	url ="https://api.themoviedb.org/3/search/tv?api_key="+themovieDB_apiKEY+"&language=de-DE&query=" + title.replace(" ","+")
 	debug("(modeEMPTY) ##### Searchurl : "+url+" #####")
-	content = makeREQUEST(url)
-	wert = json.loads(content)
+	try:
+		content = makeREQUEST(url)
+		wert = json.loads(content)
+	except:
+		content = getUrl(url)
+		wert = json.loads(content)
 	count = 0
 	gefunden1 = 0
 	gefunden2 = 0
@@ -330,7 +342,7 @@ if mode =="":
 	debug("(modeEMPTY) ##### X : "+ str(x)+" #####")
 	debug("(modeEMPTY) ##### gefunden : "+ str(gefunden)+" #####")
 	debug("1. +++ Suche +++"+title)
-	if x ==0 or count > 2:
+	if x ==0:
 		xbmcgui.Dialog().ok(addon.getAddonInfo('name'), '[COLOR orangered]!!![/COLOR] Serie * [COLOR chartreuse]'+title+'[/COLOR] * leider NICHT gefunden [COLOR orangered]!!![/COLOR]')
 	else:
 		tvdbid = False
@@ -351,8 +363,12 @@ if mode =="":
 		debug("(modeEMPTY) ##### Bild : "+Bild+" #####")
 		serienurl="https://api.themoviedb.org/3/tv/"+str(idd)+"?api_key="+themovieDB_apiKEY+"&language=de-DE"
 		debug("(modeEMPTY) ##### serienurl : "+serienurl+" #####")
-		content_serie = makeREQUEST(serienurl) 
-		struct_serie = json.loads(content_serie)
+		try:
+			content_serie = makeREQUEST(serienurl) 
+			struct_serie = json.loads(content_serie)
+		except:
+			content_serie = getUrl(serienurl) 
+			struct_serie = json.loads(content_serie)
 		status = struct_serie["status"].decode("utf-8")
 		statustext ="Der Status der Serie ist : "+status
 		if status =="Returning Series":
@@ -379,18 +395,26 @@ if mode =="":
 		else:
 			textnext ="Nächste Folge :\n     US : "+nextfolge+" ( "+nextdatum+" )"
 		eidurl ="https://api.themoviedb.org/3/tv/"+str(idd)+"/external_ids?api_key="+themovieDB_apiKEY+"&language=de-DE"
-		debug("(modeEMPTY) ##### eidurl : "+eidurl+" #####")    
-		content = makeREQUEST(eidurl) 
-		wwert = json.loads(content)  
+		debug("(modeEMPTY) ##### eidurl : "+eidurl+" #####")
+		try:
+			content = makeREQUEST(eidurl)
+			wwert = json.loads(content)
+		except:
+			content = getUrl(eidurl) 
+			wwert = json.loads(content)
 		tvdbid = str(wwert["tvdb_id"])
 		if not tvdbid or tvdbid == "None":
 			tvdbid = str(idd)
 		debug("(modeEMPTY) ##### tvdbid : "+str(tvdbid)+" #####")
 		try:
 			getnextde ="https://www.glotz.info/api/"+glotzINFO_apiKEY+"/series/"+tvdbid+"/all/de.xml"
-			content = makeREQUEST(getnextde)
 			debug("(modeEMPTY) ##### getnextde : "+getnextde+" #####")
-			root = ET.fromstring(content)
+			try:
+				content = makeREQUEST(getnextde)
+				root = ET.fromstring(content)
+			except:
+				content = getUrl(getnextde)
+				root = ET.fromstring(content)
 		except: root = ""
 		if root !="":
 			now = time.time()
