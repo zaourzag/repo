@@ -61,7 +61,7 @@ def log(msg, level=xbmc.LOGNOTICE):
     xbmc.log('%s: %s' % (addonID, msg), level) 
     
 
-  
+
 def addDir(name, url, mode, thump, desc="",page=1,serie=0,genre=0):   
   u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&page="+str(page)+"&serie="+str(serie)+"&genre="+str(genre)
   ok = True
@@ -135,7 +135,33 @@ def geturl(url,data="x",header="",referer=""):
 
 
     
-
+def login_hamburg():
+    debug("login_hamburg")
+    username=addon.getSetting("username")
+    password=addon.getSetting("password")
+    page="https://www.filmfriend.de/customers/oauth/login/"
+    content=geturl(page)
+    authurl=re.compile('form id="hamburglogin" action="(.+?)"', re.DOTALL).findall(content)[0]
+    values = {
+        'borrower': username,
+        'pin': password
+    }
+    data = urllib.urlencode(values)
+    headers = {
+        'User-Agent':                'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36',
+        'Origin':                    'https://www.filmfriend.de',
+        'Upgrade-Insecure-Requests': "1",
+        'Referer':                   page,
+        "Content-Type":              "application/x-www-form-urlencoded",
+        "Accept":                    "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
+    }
+    global cj
+    content = requests.post(authurl, data=data, allow_redirects=False, verify=False, cookies=cj, headers=headers)
+    for respcookie in content.cookies:
+        debug(" Response Cookie :"+ str(respcookie))
+        cj.set_cookie(respcookie)
+    lasturl=content.headers['Location']
+    content=geturl(lasturl)  
    
 def login_berlin():
   debug("login_berlin")
@@ -279,6 +305,8 @@ def login():
     debug(type)
     if type=="Berlin":
        login_berlin()
+    elif type=="Hamburg":
+       login_hamburg()
 def playit(url):      
     
     getfilm(url)
