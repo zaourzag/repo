@@ -332,12 +332,8 @@ def playVideo(url):
 					xbmcgui.Dialog().notification((translation(30523).format('ARTE - Addon')), (translation(30524).format('ARTE-Addon')), icon, 8000)
 				pass
 	elif LINK.startswith(ARD_SCHEMES):
-		if 'documentId=' in LINK:
-			videoID = LINK.split('documentId=')[1]
-		else:
-			secondURL = getUrl(LINK)
-			videoID = re.compile(r'["\']contentId["\']:([^,]+?),["\']metadataId["\']:', re.DOTALL).findall(secondURL)[0].replace('"', '').replace("'", "")
-		return ArdGetVideo(videoID)
+		videoURL = LINK
+		return ArdGetVideo(videoURL)
 	elif LINK.startswith("https://www.zdf.de"):
 		cleanURL = LINK[:LINK.find('.html')]
 		videoURL = unquote_plus(cleanURL)+".html"
@@ -353,11 +349,16 @@ def playVideo(url):
 		xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
 	log("(playVideo) --- ENDE WIEDERGABE ANFORDERUNG ---")
 
-def ArdGetVideo(videoID):
+def ArdGetVideo(videoURL):
 	finalURL = False
 	m3u8_List = []
 	ARD_Url = ""
 	try:
+		if 'documentId=' in videoURL:
+			videoID = videoURL.split('documentId=')[1]
+		else:
+			secondURL = getUrl(videoURL)
+			videoID = re.compile(r'["\']contentId["\']:([^,]+?),["\']metadataId["\']:', re.DOTALL).findall(secondURL)[0].replace('"', '').replace("'", "")
 		content = getUrl('https://classic.ardmediathek.de/play/media/'+videoID)
 		result = json.loads(content)
 		allLinks = result["_mediaArray"][0]["_mediaStreamArray"]

@@ -11,12 +11,14 @@ PY2 = sys.version_info[0] == 2
 PY3 = sys.version_info[0] == 3
 if PY2:
 	from urllib import quote, unquote, quote_plus, unquote_plus, urlencode  # Python 2.X
-	from urllib2 import Request, urlopen  # Python 2.X
+	from urllib2 import build_opener, HTTPCookieProcessor, Request, urlopen  # Python 2.X
+	from cookielib import LWPCookieJar  # Python 2.X
 	from urlparse import urljoin, urlparse, urlunparse  # Python 2.X
 	bytes = str
 elif PY3:
 	from urllib.parse import quote, unquote, quote_plus, unquote_plus, urlencode, urljoin, urlparse, urlunparse  # Python 3+
-	from urllib.request import Request, urlopen  # Python 3+
+	from urllib.request import build_opener, HTTPCookieProcessor, Request, urlopen  # Python 3+
+	from http.cookiejar import LWPCookieJar  # Python 3+
 	bytes = bytes
 from operator import itemgetter
 import json
@@ -36,6 +38,7 @@ except AttributeError:
 else:
 	ssl._create_default_https_context = _create_unverified_https_context
 
+global debuging
 pluginhandle = int(sys.argv[1])
 addon = xbmcaddon.Addon()
 socket.setdefaulttimeout(40)
@@ -71,7 +74,8 @@ urlBaseHypem = "https://hypem.com"
 urlBaseOC = "http://www.officialcharts.com"
 urlBaseSCC = "https://spotifycharts.com/"
 urlBaseSTUN = "https://api.tunigo.com/v3/space/"
-#REtoken2 = "AIzaSyBT8_HQW02I1hNSeQdfnapsReDda9Mz0N4"
+#REtoken2 = "AIzaSyAdORXg7UZUo7sePv97JyoDqtQVi3Ll0b8"
+#REtoken3 = "AIzaSyDDxfHuYTdjwAUnFPeFUgqGvJM8qqLpdGc"
 token = "AIzaSyCIM4EzNqi1in22f4Z3Ru3iYvLaY8tc3bo"
 xbmcplugin.setContent(int(sys.argv[1]), 'musicvideos')
 	
@@ -128,6 +132,16 @@ def translation(id):
 	LANGUAGE = addon.getLocalizedString(id)
 	LANGUAGE = py2_enc(LANGUAGE)
 	return LANGUAGE
+
+def failing(content):
+	log(content, xbmc.LOGERROR)
+
+def debug(content):
+	log(content, xbmc.LOGDEBUG)
+
+def log(msg, level=xbmc.LOGNOTICE):
+	msg = py2_enc(msg)
+	xbmc.log("["+addon.getAddonInfo('id')+"-"+addon.getAddonInfo('version')+"]"+msg, level)
 	
 def index():
 	addDir(translation(30802), "", "SearchDeezer", pic+'deepsearch.gif')
@@ -244,9 +258,8 @@ def listBillboardAR_Genres(url):
 	content = content[:content.find('<aside class="simple-page__body-supplementary">')]
 	match = re.compile('<a href="/archive/charts/(.*?)">(.*?)</a>', re.DOTALL).findall(content)
 	for url2, title in match:
-		if any(x in title.strip().lower() for x in UN_Supported):
-			continue
-		addAutoPlayDir(cleanTitle(title), urlBaseBB+'/archive/charts/'+url2, "listBillboardAR_Videos", pic+'billboard.png', "", "browse")
+		if title != "" and not "empty" in title and not any(x in title.strip().lower() for x in UN_Supported):
+			addAutoPlayDir(cleanTitle(title), urlBaseBB+'/archive/charts/'+url2, "listBillboardAR_Videos", pic+'billboard.png', "", "browse")
 	xbmcplugin.endOfDirectory(pluginhandle)
 	if forceView:
 		xbmc.executebuiltin('Container.SetViewMode('+viewIDPlaylists+')')
@@ -349,7 +362,7 @@ def listBillboardCH_Videos(type, url, limit):
 		playlist = xbmc.PlayList(1)
 		playlist.clear()
 	content = cache(url, 1)
-	firstVIDEO = content[content.find('chart-number-one">'):]
+	firstVIDEO = content[content.find('<h1 class="chart-detail-header__chart-name">')+1:]
 	firstVIDEO = firstVIDEO[:firstVIDEO.find('<div class="chart-details ">')]
 	if firstVIDEO:
 		song = re.compile('<div class="chart-number-one__title">(.*?)</div>', re.DOTALL).findall(firstVIDEO)[0]
@@ -359,17 +372,18 @@ def listBillboardCH_Videos(type, url, limit):
 		artist = re.sub(r'\<.*?>', '', artist)
 		artist = cleanTitle(artist)
 		try:
-			thumb = re.compile(r'(?:data-)?srcset="(?:.+?w, )?(https?:.+?(?:.jpg|.jpeg|.png))', re.DOTALL).findall(firstVIDEO)[0]
+			thumb = re.compile(r'(?:data-)?srcset="(?:.+?w, )?(https?:.+?(?:\.jpg|\.jpeg|\.png))', re.DOTALL).findall(firstVIDEO)[0]
 			thumb = thumb.replace('-53x53', '').replace('-87x87', '').replace('-106x106', '').replace('-174x174', '').strip()
 		except:
 			try:
-				thumb = re.compile(r'<div class="chart-video__wrapper" data-brightcove-data=".+?(https?:.+?(?:.jpg|.jpeg|.png))', re.DOTALL).findall(firstVIDEO)[0]
-				thumb = thumb.replace('\/', '/').strip()
+				unThumb_1 = re.compile(r'class="chart-video__wrapper" data-brightcove-data="(.+?)data-rank=', re.DOTALL).findall(firstVIDEO)[0]
+				newTHUMB_1 = unThumb_1.replace('\/', '/').replace('&quot;', '"').strip()
+				thumb = re.compile('.*?(https?:.+?(?:\.jpg|\.jpeg|\.png)).*?', re.DOTALL).findall(newTHUMB_1)[0]
 			except: thumb = pic+'noimage.png'
 		title = artist+" - "+song
 		url = title
 		musicVideos1.append([title, url, thumb])
-	spl = content.split('<div class="chart-list-item__first-row">')
+	spl = content.split('class="chart-list-item__image-wrapper">')
 	for i in range(1,len(spl),1):
 		entry = spl[i]
 		song = re.compile('<span class="chart-list-item__title-text">(.*?)</span>', re.DOTALL).findall(entry)[0]
@@ -379,11 +393,12 @@ def listBillboardCH_Videos(type, url, limit):
 		artist = re.sub(r'\<.*?>', '', artist)
 		artist = cleanTitle(artist)
 		try:
-			thumb = re.compile(r'data-srcset="(?:.+?w, )?(https?:.+?(?:.jpg|.jpeg|.png))', re.DOTALL).findall(entry)[0]
+			thumb = re.compile(r'data-srcset="(?:.+?w, )?(https?:.+?(?:\.jpg|\.jpeg|\.png))', re.DOTALL).findall(entry)[0]
 			thumb = thumb.replace('-53x53', '').replace('-87x87', '').replace('-106x106', '').replace('-174x174', '').strip()
 			if "bb-placeholder" in thumb:
-				thumb = re.compile(r'<div class="chart-video__wrapper" data-brightcove-data=".+?(https?:.+?(?:.jpg|.jpeg|.png))', re.DOTALL).findall(entry)[0]
-				thumb = thumb.replace('\/', '/').strip()
+				unThumb_2 = re.compile(r'class="chart-video__wrapper" data-brightcove-data="(.+?)data-rank=', re.DOTALL).findall(entry)[0]
+				newTHUMB_2 = unThumb_2.replace('\/', '/').replace('&quot;', '"').strip()
+				thumb = re.compile('.*?(https?:.+?(?:\.jpg|\.jpeg|\.png)).*?', re.DOTALL).findall(newTHUMB_2)[0]
 		except: thumb = pic+'noimage.png'
 		title = artist+" - "+song
 		filtered = False
@@ -771,6 +786,7 @@ def spotifyMain():
 	
 def listSpotifyCC_Countries(type):
 	xbmcplugin.addSortMethod(pluginhandle, xbmcplugin.SORT_METHOD_LABEL)
+	musicIsolated = set()
 	UN_Supported = ['andorra', 'bulgaria', 'cyprus', 'hong kong', 'israel', 'japan', 'monaco', 'malta', 'nicaragua', 'singapore', 'thailand', 'taiwan'] # these lists are empty or signs are not readable
 	content = cache(urlBaseSCC+'regional', 1)
 	content = content[content.find('<div class="responsive-select" data-type="country">')+1:]
@@ -779,6 +795,9 @@ def listSpotifyCC_Countries(type):
 	for url2, toptitle in match:
 		if any(x in toptitle.strip().lower() for x in UN_Supported):
 			continue
+		if toptitle.strip() in musicIsolated:
+			continue
+		musicIsolated.add(toptitle)
 		if type == "viraldaily":
 			addAutoPlayDir(cleanTitle(toptitle), urlBaseSCC+'viral/'+url2+'/daily/latest', "listSpotifyCC_Videos", pic+'spotify.png', "", "browse")
 		elif type == "viralweekly":
@@ -1228,7 +1247,7 @@ def getHTML(url, headers=False, referer=False):
 		for key in headers:
 			req.add_header(key, headers[key])
 	else:
-		req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:50.0) Gecko/20100101 Firefox/50.0')
+		req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:55.0) Gecko/20100101 Firefox/55.0')
 		req.add_header('Accept-Encoding','gzip, deflate')
 	if referer:
 		req.add_header('Referer', referer)
@@ -1283,7 +1302,7 @@ def getYoutubeId(title):
 	
 def playYTByTitle(title):
 	try:
-		youtubeID = getYoutubeId(title)
+		youtubeID = getYoutubeId('official '+title)
 		finalURL = 'plugin://plugin.video.youtube/play/?video_id='+youtubeID
 		xbmcplugin.setResolvedUrl(pluginhandle, True, xbmcgui.ListItem(path=finalURL))
 		xbmc.sleep(1000)
@@ -1368,7 +1387,7 @@ def addLink(name, url, mode, image, plot=None):
 	return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
 	
 def addDir(name, url, mode, image, plot=None):
-	u = u = sys.argv[0]+"?url="+quote_plus(url)+"&mode="+str(mode)
+	u = sys.argv[0]+"?url="+quote_plus(url)+"&mode="+str(mode)
 	liz = xbmcgui.ListItem(name, iconImage="DefaultMusicVideos.png", thumbnailImage=image)
 	liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": plot})
 	if useThumbAsFanart:

@@ -417,8 +417,8 @@ msgstr "Dez"
 #empty strings from id 30664 to 30800
 
 msgctxt "#30801"
-msgid "Settings"
-msgstr "Einstellungen"
+msgid "YOUTUBE-MUSIC Settings"
+msgstr "YOUTUBE-MUSIC Einstellungen"
 
 msgctxt "#30802"
 msgid "Search ..."
