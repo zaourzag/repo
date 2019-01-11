@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<addon id="skin.horizonzv.test" name="Horizonz V (Kodi 18) BETA!" version="1.18.0.19" provider-name="blauesgruen">
+<addon id="skin.horizonzv.test" name="Horizonz V (Kodi 18) BETA!" version="1.18.0.20" provider-name="blauesgruen">
 	<requires>
-		<import addon="xbmc.gui" version="5.13.0"/>
+		<import addon="xbmc.gui" version="5.14.0"/>
 		<import addon="script.image.resource.select" version="2.0.1"/>
 		<import addon="resource.images.languageflags.colour" version="0.0.4"/>
 		<import addon="resource.images.weathericons.outline-hd" version="0.0.3"/>
