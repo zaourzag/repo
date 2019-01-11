@@ -125,6 +125,7 @@
                         <width>780</width>
                         <height>60</height>
                         <textcolor>black</textcolor>
+						<shadowcolor>grey2</shadowcolor>
                         <align>left</align>
                         <aligny>center</aligny>
                         <label>$VAR[OriginalTitle]</label>
@@ -200,7 +201,7 @@
                             <width>780</width>
                             <height>60</height>
                             <textcolor>white</textcolor>
-                            <shadowcolor>grey3</shadowcolor>
+							<shadowcolor>black</shadowcolor>
                             <align>left</align>
                             <aligny>center</aligny>
                             <label>$VAR[OriginalTitle]</label>
@@ -211,7 +212,7 @@
                             <width>750</width>
                             <height>60</height>
                             <textcolor>white</textcolor>
-                            <shadowcolor>grey3</shadowcolor>
+							<shadowcolor>black</shadowcolor>
                             <align>right</align>
                             <aligny>center</aligny>
                             <font>font16</font>

@@ -1,4 +1,10 @@
-﻿v 1.18.0.19
+﻿v 1.18.0.21
+- Sichtbarkeit von selektierten Objekten erhöht (selectedcolor)
+
+v 1.18.0.20
+- xbmc.gui auf 5.14.0 angehoben
+
+v 1.18.0.19
 - Bugfix Addontext unter Dashboard
 - Bugfix ID50 doppelte image Id
 

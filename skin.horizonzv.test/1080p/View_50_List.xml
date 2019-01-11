@@ -157,7 +157,7 @@
 							<width>870</width>
 							<height>52</height>
 							<colordiffuse>menudiffuse</colordiffuse>
-							<texture border="2">buttons/ButtonFO.png</texture>
+							<texture border="2" colordiffuse="grey1">buttons/ButtonFO.png</texture>
 							<visible>!Control.HasFocus(50)</visible>
 						</control>
 						<control type="image">
@@ -165,7 +165,7 @@
 							<top>6</top>
 							<width>870</width>
 							<height>52</height>
-							<texture border="2">buttons/ButtonFO.png</texture>
+							<texture border="2" colordiffuse="grey1">buttons/ButtonFO.png</texture>
 							<visible>Control.HasFocus(50)</visible>
 						</control>
 						<control type="image">
@@ -173,7 +173,6 @@
 							<top>6</top>
 							<width>870</width>
 							<height>52</height>
-							<colordiffuse>$VAR[BackgroundOverlayColor]</colordiffuse>
 							<texture border="5">buttons/ButtonNF.png</texture>
 							<visible>Control.HasFocus(50)</visible>
 						</control>
@@ -182,7 +181,7 @@
 							<width>795</width>
 							<height>66</height>
 							<align>left</align>
-							<textcolor>black</textcolor>
+							<shadowcolor>black</shadowcolor>
 							<label>$VAR[OriginalTitle]</label>
 						</control>
 						<control type="label">
@@ -250,7 +249,7 @@
 				<onleft>50</onleft>
 				<onright condition="Control.IsVisible(15000)">15000</onright>
 				<onright condition="!Control.IsVisible(15000)">732</onright>
-				<showonepage>false</showonepage>
+				<!-- <showonepage>false</showonepage> -->
 				<orientation>vertical</orientation>
 			</control>
         </control>
