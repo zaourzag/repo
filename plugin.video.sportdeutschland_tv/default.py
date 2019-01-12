@@ -7,7 +7,7 @@ import xbmcgui
 
 URI = sys.argv[0]
 ADDON_HANDLE = int(sys.argv[1])
-MAIN_API_URL = 'http://sportdeutschland.tv/api/'
+MAIN_API_URL = 'https://backend.sportdeutschland.tv/api/'
 MAX_PER_PAGE = 200
 PATH = os.path.dirname(os.path.realpath(__file__))
 ICON = os.path.join(PATH, 'icon.png')
