@@ -17,7 +17,8 @@ def play(**kwargs):
 
 def videos(**kwargs):
     resource = urllib.unquote_plus(kwargs['resource'])
-    api.list_videos(resource)
+    reliveOnly = kwargs['reliveOnly']
+    api.list_videos(resource, reliveOnly)
 
 
 def index():
@@ -27,13 +28,15 @@ def index():
         live_caption = '[B]Live (%s)[/B]' % live_caption
     else:
         live_caption = 'Live (%s)' % live_caption
-    gui.add_folder(live_caption, thumbnails.THUMB_MAIN, {'f': 'videos', 'resource': '/ran-mega/mobile/v1/livestreams.json'})
-    gui.add_folder('Neueste Videos', thumbnails.THUMB_MAIN, {'f': 'videos', 'resource': '/ran-mega/mobile/v1/videos.json'})
-    gui.add_folder('Fussball', thumbnails.THUMB_MAIN, {'f': 'videos', 'resource': '/ran-mega/mobile/v1/videos/fussball.json'})
-    gui.add_folder('Tennis', thumbnails.THUMB_MAIN, {'f': 'videos', 'resource': '/ran-mega/mobile/v1/videos/tennis.json'})
-    gui.add_folder('NFL', thumbnails.THUMB_MAIN, {'f': 'videos', 'resource': '/ran-mega/mobile/v1/videos/us-sport.json'})
-    gui.add_folder('Boxen', thumbnails.THUMB_MAIN, {'f': 'videos', 'resource': '/ran-mega/mobile/v1/videos/boxen.json'})
-    gui.add_folder('Golf', thumbnails.THUMB_MAIN, {'f': 'videos', 'resource': '/ran-mega/mobile/v1/videos/golf.json'})
+    gui.add_folder(live_caption, thumbnails.THUMB_MAIN, {'f': 'videos', 'resource': '/ran-mega/mobile/v1/livestreams.json', 'reliveOnly': False}, 'aktuelle Live Streams')
+    gui.add_folder('Neueste Videos', thumbnails.THUMB_MAIN, {'f': 'videos', 'resource': '/ran-mega/mobile/v1/videos.json', 'reliveOnly': False}, 'Liste der neuesten Videos - über alle Kategorien')
+    gui.add_folder('Neueste Videos - [COLOR blue] Re-Live only [/COLOR]', thumbnails.THUMB_MAIN, {'f': 'videos', 'resource': '/ran-mega/mobile/v1/videos.json', 'reliveOnly': True}, 'Liste der neuesten Re-Lives - über alle Kategorien')
+    gui.add_folder('Fussball', thumbnails.THUMB_MAIN, {'f': 'videos', 'resource': '/ran-mega/mobile/v1/videos/fussball.json', 'reliveOnly': False}, 'Liste der neuesten Fussball-Videos')
+    gui.add_folder('Tennis', thumbnails.THUMB_MAIN, {'f': 'videos', 'resource': '/ran-mega/mobile/v1/videos/tennis.json', 'reliveOnly': False}, 'Liste der neuesten Tennis-Videos')
+    gui.add_folder('US-Sports', thumbnails.THUMB_MAIN, {'f': 'videos', 'resource': '/ran-mega/mobile/v1/videos/us-sport.json', 'reliveOnly': False}, 'Liste der neuesten US-Sport-Videos (NBA, NFL, NHL)')
+    gui.add_folder('US-Sports: [COLOR blue] Re-Live only [/COLOR]', thumbnails.THUMB_MAIN, {'f': 'videos', 'resource': '/ran-mega/mobile/v1/videos/us-sport.json', 'reliveOnly': True}, 'Liste der neuesten Re-Live-Videos des US-Sports auf ran.de (NBA, NFL, NHL)')
+    gui.add_folder('Boxen', thumbnails.THUMB_MAIN, {'f': 'videos', 'resource': '/ran-mega/mobile/v1/videos/boxen.json', 'reliveOnly': False}, 'Liste der neuesten Box-Videos')
+    gui.add_folder('Golf', thumbnails.THUMB_MAIN, {'f': 'videos', 'resource': '/ran-mega/mobile/v1/videos/golf.json', 'reliveOnly': False}, 'Liste der neuesten Golf-Videos')
     gui.end_listing()
 
 

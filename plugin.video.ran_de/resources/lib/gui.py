@@ -12,8 +12,9 @@ def make_info_view_possible():
     xbmcplugin.setContent(ADDON_HANDLE, 'movies')
 
 
-def add_folder(title, thumb, url_params, context_menu_items=None):
+def add_folder(title, thumb, url_params, description, context_menu_items=None):
     item = xbmcgui.ListItem(title, thumbnailImage=thumb)
+    item.setInfo('video', {'plot': description})
     if context_menu_items is not None:
         item.addContextMenuItems(context_menu_items)
     make_info_view_possible()

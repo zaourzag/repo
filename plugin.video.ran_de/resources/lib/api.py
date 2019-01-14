@@ -31,7 +31,7 @@ def get_playlist_url(m3u8_url, height=720):
         return m3u8_url
 
 
-def list_videos(resource):
+def list_videos(resource, reliveOnly):
     try:
         json_url = RAN_API_BASE + resource
         print ("###########"+json_url)
@@ -77,7 +77,9 @@ def list_videos(resource):
         resource = video['resource']
         thumb = video['teaser']['image']  # .replace('ran_app_1280x720', 'ran_app_512x288')
         desc = video['teaser']['image_alt'] or video['teaser']['title']
-        gui.add_video(title, thumb, {'f': 'play', 'resource': resource},
+
+        if 'False' in reliveOnly or 'Relive' in video['teaser']['title'] or 'Re-Live' in video['teaser']['title']:
+            gui.add_video(title, thumb, {'f': 'play', 'resource': resource},
                       {'Title': video['teaser']['title'], 'Plot': desc, 'Genre': 'Sport', 'Year': year},
                       duration_in_seconds, thumb, is_playable=playable)
     gui.make_info_view_possible()
