@@ -12,7 +12,8 @@
   
   <include file="IncludesViewTypeList.xml" />
   <include file="IncludesViewWalls.xml" />
-  <include file="IncludesHomeWidgets.xml" />
+  <include file="IncludesHomeWidgetsVisible.xml" />
+  <include file="IncludesHomeWidgetsNotVisible.xml" />
   <include file="IncludesHomeWidgetsSubmenu.xml" />
   <include file="IncludesHomeMyChannel.xml" />
   <include file="IncludesHomeWidgetsForeign.xml" />

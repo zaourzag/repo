@@ -1,23 +1,11 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <window id="136">
-  <animation effect="fade" time="100">WindowOpen</animation>
-  <animation effect="fade" time="200">WindowClose</animation>
   <coordinates>
     <system>1</system>
     <left>0</left>
     <top>0</top>
   </coordinates>
   <controls>
-    <control type="image">
-	  <description>Background</description>
-	  <left>0</left>
-	  <top>0</top>
-	  <width>1920</width>
-	  <height>1080</height>
-	  <aspectratio>stretch</aspectratio>
-	  <texture background="true">background.png</texture>
-	  <colordiffuse>$VAR[BackColorFront]</colordiffuse>
-	</control>
     <control type="group">
       <left>0</left>
       <top>400</top>

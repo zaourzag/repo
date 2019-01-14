@@ -14,14 +14,14 @@
 	  <onup condition="Container(9000).Hasfocus(1)">43446</onup><!-- LiveTV -->
 	  <onup condition="Container(9000).Hasfocus(2)">18305</onup><!-- Radio -->
 	  <onup condition="Container(9000).Hasfocus(3)">300001</onup><!-- Filme -->
-	  <onup condition="Container(9000).Hasfocus(4)">18308</onup><!-- Videos -->
+	  <onup condition="Container(9000).Hasfocus(4)">300001</onup><!-- Videos -->
 	  <onup condition="Container(9000).Hasfocus(5) | Container(9000).Hasfocus(6) | Container(9000).Hasfocus(7) | Container(9000).Hasfocus(19) | Container(9000).Hasfocus(20) | Container(9000).Hasfocus(41) | Container(9000).Hasfocus(42) | Container(9000).Hasfocus(43) | Container(9000).Hasfocus(44) | Container(9000).Hasfocus(45)">18309</onup><!-- Playlisten -->
 	  <onup condition="Container(9000).Hasfocus(8)">300002</onup><!-- Serien -->
 	  <onup condition="Container(9000).Hasfocus(9)">1860</onup><!-- SimplePlaylists -->
 	  <onup condition="Container(9000).Hasfocus(10)">300005</onup><!-- Music -->  
 	  <onup condition="Container(9000).Hasfocus(11)">18501</onup><!-- Apps -->
 	  <onup condition="Container(9000).Hasfocus(12)">18310</onup><!-- Musicvideos -->
-	  <onup condition="Container(9000).Hasfocus(13)">18313</onup><!-- Pictures -->
+	  <onup condition="Container(9000).Hasfocus(13)">1860</onup><!-- Pictures -->
 	  <onup condition="Container(9000).Hasfocus(15)">1860</onup><!-- Settings -->
 	  <onup condition="Container(9000).Hasfocus(16)">300001</onup><!-- PlayDisc -->
 	  <onup condition="Container(9000).Hasfocus(17)">1860</onup><!-- Games -->
@@ -33,6 +33,7 @@
 	  <onup condition="Container(9000).Hasfocus(51)">300002</onup><!-- Emby TVShows --> 
 	  <onup condition="Container(9000).Hasfocus(52)">300001</onup><!-- Collection --> 
 	  <onup condition="Container(9000).Hasfocus(53)">300001</onup><!-- Emby Collection --> 
+	  <onup condition="Container(9000).Hasfocus(54)">300005</onup><!-- Emby Music -->
       <scrolltime tween="Quadratic" easing="out">500</scrolltime>
 	  <orientation>horizontal</orientation>
 	  <focusposition>0</focusposition>

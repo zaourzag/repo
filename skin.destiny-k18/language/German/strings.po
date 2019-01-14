@@ -1728,3 +1728,7 @@ msgstr "Visualisation im Home"
 msgctxt "#50412"
 msgid "Live TV Tipps"
 msgstr "Live TV Tipps"
+
+msgctxt "#50413"
+msgid "Home Widgets ever"
+msgstr "Home Widgets immer an"

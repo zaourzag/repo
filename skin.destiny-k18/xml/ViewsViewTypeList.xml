@@ -420,7 +420,8 @@
 			  <texture background="true">skin/button_klein_tranz50.png</texture>
 			  <bordertexture border="10">ThumbShadow.png</bordertexture>
 			  <bordersize>7</bordersize>
-			  <colordiffuse>$VAR[BackColorFront]</colordiffuse>					
+			  <colordiffuse>$VAR[BackColorFront]</colordiffuse>	
+			  <visible>Control.IsVisible(603)</visible>				
 		  </control>
 		  <control type="image">
 			  <left>1070</left>
@@ -1487,6 +1488,7 @@
 			<aligny>center</aligny>
 			<label>$VAR[ExtendedInfoYear]$VAR[ExtendedInfoRuntime, • ]$VAR[ExtendedInfoGenre, • ]</label>
 			<visible>!String.IsEqual(ListItem.label,..)</visible>
+			<visible>!ListItem.IsCollection</visible>
 		  </control>
 		  <control type="textbox">
 			<description>Movie Plot</description>
@@ -1501,13 +1503,30 @@
 			<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 			<label>[COLOR $VAR[ColorFontNormal]]$VAR[ExtendedInfoPlot][/COLOR]</label>
 			<autoscroll time="2000" delay="15000" repeat="5000">!Skin.HasSetting(NoPlotScroll)</autoscroll>
+			<visible>!ListItem.IsCollection</visible>
 		  </control> 
+		  <control type="textbox">
+			<description>Movie Plot</description>
+			<left>60</left>
+			<top>170</top>
+			<width>1400</width>
+			<height>155</height>
+			<include condition="!Skin.HasSetting(PlotFontBig)">PlotFontLowVar</include>
+			<include condition="Skin.HasSetting(PlotFontBig)">PlotFontBigVar</include>
+			<align>justify</align>
+			<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			<label>[COLOR $VAR[ColorFontNormal]]$INFO[ListItem.Plot][/COLOR]</label>
+			<autoscroll time="2000" delay="10000" repeat="5000">false</autoscroll>
+			<visible>!String.IsEqual(ListItem.label,..)</visible> 
+			<visible>ListItem.IsCollection</visible>
+		  </control>
 		  <control type="grouplist">
 			<left>55</left>
 			<top>340</top>
 			<itemgap>10</itemgap>
 			<orientation>horizontal</orientation>
 			<include>AudioLanguageFlaggingConditions</include>
+			<visible>!ListItem.IsCollection</visible>
 		  </control>
 		  <control type="grouplist">
 			<left>55</left>
@@ -1515,6 +1534,7 @@
 			<itemgap>10</itemgap>
 			<orientation>horizontal</orientation>
 			<include>VideoMPAAFlaggingConditions</include>
+			<visible>!ListItem.IsCollection</visible>
 		  </control>		
 	   </control>
 	  </control>
@@ -1565,6 +1585,7 @@
 			<texture background="true">$INFO[ListItem.Art(clearlogo)]</texture>
 			<aspectratio align="left" aligny="bottom">keep</aspectratio>
 			<visible>!String.IsEqual(ListItem.label,..)</visible>
+			<visible>!Container.Content(Episodes)</visible>
 		  </control>
 		  <control type="image">
 			<left>70</left>
@@ -1631,6 +1652,7 @@
 			<texture background="true">$INFO[ListItem.Art(clearlogo)]</texture>
 			<aspectratio align="left" aligny="bottom">keep</aspectratio>
 			<visible>!String.IsEqual(ListItem.label,..)</visible>
+			<visible>!Container.Content(Episodes)</visible>
 		  </control>
 		  <control type="image">
 			<left>70</left>

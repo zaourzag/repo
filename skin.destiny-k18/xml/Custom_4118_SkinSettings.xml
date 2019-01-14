@@ -376,6 +376,16 @@
 		  <onclick>Skin.ToggleSetting(VisualisationHome)</onclick>
 		  <selected>Skin.HasSetting(VisualisationHome)</selected>
 		</control>	
+		<control type="radiobutton" id="3053">
+		  <label>$LOCALIZE[50413]</label>
+		  <width>787</width>
+		  <height>60</height>
+		  <font>primal_20</font>
+		  <textoffsetx>30</textoffsetx>
+		  <textwidth>600</textwidth>
+		  <onclick>Skin.ToggleSetting(widgetsichtbar)</onclick>
+		  <selected>Skin.HasSetting(widgetsichtbar)</selected>
+		</control>
 	   </control>
 	   </control>
 	

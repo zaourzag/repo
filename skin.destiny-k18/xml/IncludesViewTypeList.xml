@@ -25,7 +25,7 @@
 			<include>View_55_FileMode</include>  
 			<include>View_601_Poster_Movies</include>
 			<include>View_603_Posterlist</include>
-			<include>View_605_WallView</include>
+			<!--<include>View_605_WallView</include>-->
 			<include>View_608_ListPanel</include>
 			<include>View_611_Wall_Infos</include>
 			<include>View_612_Bibliothek</include> 
@@ -187,7 +187,7 @@
 					<onclick>Action(down)</onclick>
 					<visible>Container.Content(Movies) | Container.Content(Sets) | Container.Content(Musicvideos) | Container.Content(Genres) | Container.Content(Actors) | Container.Content(TVShows) | Container.Content(Seasons) | Container.Content(Episodes)</visible>
 				</control>
-				<control type="button" id="826">
+				<!--<control type="button" id="826">
 					<description>View</description>
 					<height>60</height>
 		            <width>398</width>
@@ -195,7 +195,7 @@
 					<onclick>Container.SetViewMode(605)</onclick>
 					<onclick>Action(down)</onclick>
 					<visible>Container.Content(Movies) | Container.Content(TVShows) | Container.Content(Seasons)</visible>
-				</control>
+				</control>-->
 				<control type="button" id="828">
 					<description>View</description>
 					<height>60</height>

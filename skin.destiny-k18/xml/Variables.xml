@@ -167,7 +167,7 @@
 	  <value condition="Container.Content(TVShows)">$INFO[ListItem.Art(fanart)]</value>	
 	  <value condition="Container.Content(Episodes)">$INFO[ListItem.Icon]</value>  
 	  <value condition="Container.Content(Seasons)">$INFO[ListItem.Art(fanart)]</value>
-	  <value condition="Container.Content(Sets)">$INFO[ListItem.Art(set.fanart)]</value>
+	  <value condition="Container.Content(Sets)">$INFO[ListItem.Art(fanart)]</value>
 	  <value>$INFO[ListItem.Art(fanart)]</value>
 	</variable>
 	

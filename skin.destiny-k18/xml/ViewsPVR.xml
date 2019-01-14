@@ -13,6 +13,7 @@
 			  <texture background="true">default/panel_schatten_rechts.png</texture>
 			  <aspectratio>stretch</aspectratio>
 			  <colordiffuse>$VAR[ColorFontShadow]</colordiffuse>
+			  <visible>Control.IsVisible(51)</visible>
 			</control>
 			<control type="label">
 			  <left>50</left>
@@ -303,7 +304,8 @@
 			  <texture background="true">skin/button_klein_tranz50.png</texture>
 			  <bordertexture border="10">ThumbShadow.png</bordertexture>
 			  <bordersize>7</bordersize>
-			  <colordiffuse>$VAR[BackColorFront]</colordiffuse>					
+			  <colordiffuse>$VAR[BackColorFront]</colordiffuse>	
+			  <visible>Control.IsVisible(820)</visible>				
 			</control>
 			<control type="image">
 			  <left>1070</left>

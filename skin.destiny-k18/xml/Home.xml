@@ -12,8 +12,10 @@
 	</control>
       
 	  <include>CommonHomeBack</include>	
+	  <include>HomeWidgetsVisible</include> 
+	  <include>HomeWidgetsNotVisible</include> 
 	  <include>HomeMainMenuHorizontal</include>	
-	  <include>HomeWidgets</include> 	
+	  	
 	  <include>HomeMyChannel</include> 
 	  <include>HomeWidgetsSubmenu</include>
 	  <include>HomePlaying</include>	 		  	
