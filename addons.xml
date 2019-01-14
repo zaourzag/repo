@@ -4668,7 +4668,7 @@ Parental warning: The Maxdome Plattform consists of differnt types of content - 
   </extension>
 </addon>
 
-<addon id="plugin.video.ran_de" name="ran" version="2.2.7" provider-name="PUR3 u. L0RE">
+<addon id="plugin.video.ran_de" name="ran" version="2.3.0" provider-name="PUR3, L0RE, Linkinsoldier">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
     </requires>
