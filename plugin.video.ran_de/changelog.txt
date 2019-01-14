@@ -1,0 +1,10 @@
+2.3.1:
+- new Videos in Category Handball added
+- new Videos in Category Darts added
+- new Videos in Category eSports added
+- new Videos in Category DTM added
+- removed golf, since it no longer exists in app and golf.json is empty
+
+2.3.0:
+- enhanced gui to filter for "ReLive" or "Re-Live" only (to now see results often containted in (other) video titles)
+- small enhancements
