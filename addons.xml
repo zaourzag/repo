@@ -39,7 +39,7 @@
 	</extension>
 </addon>
 
-<addon id="plugin.video.tvspielfilm_de" name="TV Spielfilm - Das Beste aus den Mediatheken" version="1.1.9" provider-name="realvito">
+<addon id="plugin.video.tvspielfilm_de" name="TV Spielfilm - Das Beste aus den Mediatheken" version="1.2.0" provider-name="realvito">
 	<requires>
 		<import addon="xbmc.python" version="2.24.0"/>
 		<import addon="plugin.video.L0RE.arte" optional="true"/>
@@ -67,8 +67,8 @@
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 1.1.9  (06.01.2019)[/COLOR][/B][CR]
-- optimized: Manche ARD-Videos werden falsch weitergeleitet - Meldung integriert (Link in TvSpielfilm ist falsch)
+		<news>[B][COLOR orangered]Version 1.2.0  (18.01.2019)[/COLOR][/B][CR]
+- fixed: BUG? = Auf manchen Android-Systemen gibt es Probleme beim Speichern des Cookiefiles (ValueError: timestamp out of range for platform time_t)
 		</news>
 	</extension>
 </addon>
@@ -3328,7 +3328,7 @@ V1.1.1
   </extension>
 </addon>
 
-<addon id="plugin.video.tvtoday_de" name="TV Today - Best of Mediatheken" version="1.4.9" provider-name="realvito">
+<addon id="plugin.video.tvtoday_de" name="TV Today - Best of Mediatheken" version="1.5.0" provider-name="realvito">
 	<requires>
 		<import addon="xbmc.python" version="2.24.0"/>
 		<import addon="plugin.video.L0RE.arte" optional="true"/>
@@ -3356,8 +3356,9 @@ V1.1.1
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 1.4.9  (06.01.2019)[/COLOR][/B][CR]
-- optimized: Manche ARD-Videos werden falsch weitergeleitet - Meldung integriert (Link in TvToday ist falsch)
+		<news>[B][COLOR orangered]Version 1.5.0  (18.01.2019)[/COLOR][/B][CR]
+- fixed: BUG? = Auf manchen Android-Systemen gibt es Probleme beim Speichern des Cookiefiles (ValueError: timestamp out of range for platform time_t)
+- fixed: Alle Ordner im Genrebereich (z.B. Spielfilme...) sind leer
 		</news>
 	</extension>
 </addon>

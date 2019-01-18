@@ -105,7 +105,7 @@ def getUrl(url, header=None, referer=None):
 		if header:
 			opener.addheaders = header
 		else:
-			opener.addheaders = [('User-Agent=Mozilla/5.0 (Windows NT 10.0; WOW64; rv:50.0) Gecko/20100101 Firefox/50.0')]
+			opener.addheaders = [('User-Agent=Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101 Firefox/60.0')]
 			opener.addheaders = [('Accept-Encoding', 'gzip, deflate')]
 		if referer:
 			opener.addheaders = [('Referer', referer)]
@@ -136,7 +136,8 @@ def getUrl(url, header=None, referer=None):
 		content = ""
 		return sys.exit(0)
 	opener.close()
-	cj.save(cookie, ignore_discard=True, ignore_expires=True)               
+	try: cj.save(cookie, ignore_discard=True, ignore_expires=True)
+	except: pass
 	return content
 
 def index():
@@ -277,7 +278,7 @@ def listVideosGenre(category):
 			fullUrl = re.compile(r'<a href=["\']([0-9a-zA-Z-_/.]+html)["\'] class=["\']element js-hover', re.DOTALL).findall(entry)[0]
 			if not baseURL in fullUrl:
 				fullUrl = baseURL+fullUrl
-			photo = re.compile(r'data-lazy-load-src=["\'](https?://.*?.jpg)["\']', re.DOTALL).findall(entry)[0]
+			photo = re.compile(r'(?:data|img).+?src=["\'](https?://.*?.jpg)["\']', re.DOTALL).findall(entry)[0]
 			if ',' in photo:
 				photo = photo.split(',')[0].rstrip()+'.jpg'
 			desc = re.compile(r'<p class=["\']small-meta description["\']>(.*?)</p>', re.DOTALL).findall(entry)[0]
@@ -359,7 +360,9 @@ def ArdGetVideo(videoURL):
 		else:
 			secondURL = getUrl(videoURL)
 			videoID = re.compile(r'["\']contentId["\']:([^,]+?),["\']metadataId["\']:', re.DOTALL).findall(secondURL)[0].replace('"', '').replace("'", "")
+		debug_MS("(ArdGetVideo) ***** Extracted-videoID : {0} *****".format(videoID))
 		content = getUrl('https://classic.ardmediathek.de/play/media/'+videoID)
+		debug_MS("(ArdGetVideo) ##### CONTENT : {0} #####".format(str(content)))
 		result = json.loads(content)
 		allLinks = result["_mediaArray"][0]["_mediaStreamArray"]
 		linkQuality = 2 # Verfügbare mp4-Qualität in der ARD-Mediathek = 2 (Standard)
@@ -486,10 +489,11 @@ def ZdfGetVideo(videoURL):
 		if firstURL:
 			teaser = firstURL['content']
 			secret = firstURL['apiToken']
-			headerfields = [('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:50.0) Gecko/20100101 Firefox/50.0'), ('Api-Auth', 'Bearer '+secret)]
-			log("(ZdfGetVideo) SECRET gefunden (ZDF+3) : xxxxx {0} xxxxx".format(str(secret)))
+			headerfields = [('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101 Firefox/60.0'), ('Api-Auth', 'Bearer '+secret)]
+			log("(ZdfGetVideo) SECRET gefunden (ZDF+3) : ***** {0} *****".format(str(secret)))
 			if teaser[:4] != "http":
 				teaser = ZDFapiUrl+teaser
+			debug_MS("(ZdfGetVideo) ##### TEASER : {0} #####".format(teaser))
 			secondURL = getUrl(teaser, header=headerfields)
 			element = json.loads(secondURL)
 			if element['profile'] == "http://zdf.de/rels/not-found":
@@ -506,6 +510,7 @@ def ZdfGetVideo(videoURL):
 			if "http://zdf.de/rels/streams/ptmd-template" in component and component['http://zdf.de/rels/streams/ptmd-template'] != "":
 				videoFOUND = ZDFapiUrl+component['http://zdf.de/rels/streams/ptmd-template'].replace('{playerId}', 'ngplayer_2_3').replace('\/', '/')
 			if videoFOUND:
+				debug_MS("(ZdfGetVideo) ##### videoFOUND : {0} #####".format(videoFOUND))
 				thirdURL = getUrl(videoFOUND, header=headerfields)
 				return ZdfExtractQuality(thirdURL)
 	except:

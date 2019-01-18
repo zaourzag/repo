@@ -76,5 +76,8 @@
 [B]Version 1.1.8  (21.12.2018)[/B]
  - fixed: Alle ab dem 19.12.2018 hinzugefügten ARD-Videos werden NICHT abgespielt (Webseite verändert)
 
-[B][COLOR orangered]Version 1.1.9  (06.01.2019)[/B]
+[B]Version 1.1.9  (06.01.2019)[/B]
  - optimized: Manche ARD-Videos werden falsch weitergeleitet - Meldung integriert (Link in TvSpielfilm ist falsch)
+
+[B]Version 1.2.0  (18.01.2019)[/B]
+ - fixed: BUG? = Auf manchen Android-Systemen gibt es Probleme beim Speichern des Cookiefiles (ValueError: timestamp out of range for platform time_t)
