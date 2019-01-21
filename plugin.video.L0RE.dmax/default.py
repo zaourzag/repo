@@ -100,7 +100,7 @@ def getUrl(url, header=None, referer=None):
 		if header:
 			opener.addheaders = header
 		else:
-			opener.addheaders = [('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36')]
+			opener.addheaders = [('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.162 Safari/537.36')]
 			opener.addheaders = [('Accept-Encoding', 'gzip, deflate')]
 		if referer:
 			opener.addheaders = [('Referer', referer)]
@@ -118,7 +118,8 @@ def getUrl(url, header=None, referer=None):
 		content = ""
 		return sys.exit(0)
 	opener.close()
-	cj.save(cookie, ignore_discard=True, ignore_expires=True)
+	try: cj.save(cookie, ignore_discard=True, ignore_expires=True)
+	except: pass
 	return content
 
 def ADDON_operate(TESTING):
@@ -185,11 +186,13 @@ def listseries(url, PAGE, POS, ADDITION):
 		title = py2_enc(elem["title"])
 		name = title
 		idd = elem["id"]
-		plot = py2_enc(elem["description"]).replace('\n\n\n', '\n\n').strip()
+		try: plot = py2_enc(elem["description"]).replace('\n\n\n', '\n\n').strip()
+		except: plot = ""
 		image = elem["image"]["src"]
 		if "beliebt" in url:
 			name = "[COLOR chartreuse]"+str(count)+" •  [/COLOR]"+title
-		addDir(name, idd, "listepisodes", image, plot, nosub=ADDITION, originalSERIE=title, addType=1)
+		if idd !="" and len(idd) < 9:
+			addDir(name, idd, "listepisodes", image, plot, nosub=ADDITION, originalSERIE=title, addType=1)
 	currentRESULT = count
 	debug("(listseries) ##### currentRESULT : "+str(currentRESULT)+" #####")
 	try:
@@ -236,7 +239,8 @@ def listepisodes(idd, originalSERIE):
 					else:
 						title1 = title
 						title2 = ""
-					plot = py2_enc(vid["description"]).replace('\n\n\n', '\n\n')
+					try: plot = py2_enc(vid["description"]).replace('\n\n\n', '\n\n')
+					except: plot = ""
 					image = vid["image"]["src"]
 					idd2 = vid["id"]
 					duration = vid["videoDuration"]
@@ -262,7 +266,8 @@ def listepisodes(idd, originalSERIE):
 				else:
 					title1 = title
 					title2 = ""
-				plot = py2_enc(item["description"]).replace('\n\n\n', '\n\n')
+				try: plot = py2_enc(item["description"]).replace('\n\n\n', '\n\n')
+				except: plot = ""
 				image = item["image"]["src"]
 				idd2 = item["id"]
 				duration = item["videoDuration"]
@@ -300,8 +305,8 @@ def playvideo(idd2):
 			key = re.compile('sonicToken=(.*?) for', re.DOTALL).findall(str(cookief))[0]
 			break
 	playurl = "https://sonic-eu1-prod.disco-api.com/playback/videoPlaybackInfo/"+str(idd2)
-	header = [('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36'), ('Authorization', 'Bearer '+key)]
-	fields = "User-Agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36"
+	header = [('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.162 Safari/537.36'), ('Authorization', 'Bearer '+key)]
+	fields = "User-Agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.162 Safari/537.36"
 	result = getUrl(playurl, header=header)
 	debug("(playvideo) ##### result : "+result+" #####")
 	DATA = json.loads(result)
@@ -426,7 +431,8 @@ def generatefiles(idd, name):
 					EP_season = str(vid["season"])
 					EP_episode = str(vid["episode"])
 					EP_title = py2_enc(vid["title"]).replace("{S}","S").replace(".{E}","E")
-					EP_plot = py2_enc(vid["description"]).replace('\n\n\n', '\n\n')
+					try: EP_plot = py2_enc(vid["description"]).replace('\n\n\n', '\n\n')
+					except: EP_plot = ""
 					EP_image = vid["image"]["src"]
 					EP_idd = vid["id"]
 					EP_duration = vid["videoDuration"]
@@ -455,7 +461,8 @@ def generatefiles(idd, name):
 					EP_title = "S00E"+EP_episode+": "+py2_enc(item["title"])
 				else:
 					EP_title = py2_enc(item["title"]).replace("{S}","S").replace(".{E}","E")
-				EP_plot = py2_enc(item["description"]).replace('\n\n\n', '\n\n')
+				try: EP_plot = py2_enc(item["description"]).replace('\n\n\n', '\n\n')
+				except: EP_plot = ""
 				EP_image = item["image"]["src"]
 				EP_idd = item["id"]
 				EP_duration = item["videoDuration"]
