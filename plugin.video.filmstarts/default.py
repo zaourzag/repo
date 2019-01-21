@@ -103,15 +103,16 @@ def log(msg, level=xbmc.LOGNOTICE):
 
 def getUrl(url, header=None, referer=None):
 	global cj
-	debug("Get Url : "+url)
+	#debug_MS("(getUrl) -------------------------------------------------- START = getUrl --------------------------------------------------")
+	#debug_MS("(getUrl) ##### URL={0} #####".format(url))
 	for cook in cj:
-		debug("Cookie : "+str(cook))
+		debug_MS("(getUrl) ##### COOKIE={0} #####".format(str(cook)))
 	opener = build_opener(HTTPCookieProcessor(cj))
 	try:
 		if header:
 			opener.addheaders = header
 		else:
-			opener.addheaders = [('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36')]
+			opener.addheaders = [('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.162 Safari/537.36')]
 			opener.addheaders = [('Accept-Encoding', 'gzip, deflate')]
 		if referer:
 			opener.addheaders = [('Referer', referer)]
@@ -131,7 +132,8 @@ def getUrl(url, header=None, referer=None):
 		content = ""
 		return sys.exit(0)
 	opener.close()
-	cj.save(cookie, ignore_discard=True, ignore_expires=True)
+	try: cj.save(cookie, ignore_discard=True, ignore_expires=True)
+	except: pass
 	return content
 
 def index():
@@ -288,8 +290,12 @@ def selectionWeek(url):
 		element=part[i]
 		try:
 			datum = re.compile('eventLabel["\']:["\'](.+?)["\'],', re.DOTALL).findall(element)[0]
-			title = re.compile('value=["\']ACr.*?(?:["\'] >|["\'] selected>)([^<]+)</option>', re.DOTALL).findall(element)[0]
-			name = cleanTitle(title)
+			title = re.compile('value=["\']ACr.*?=["\']([^<]+)</option>', re.DOTALL).findall(element)[0].replace('>', '')
+			if "selected" in title:
+				title = title.replace('selected', '')
+				name = "[I][COLOR lime]"+cleanTitle(title)+translation(30636)+"[/COLOR][/I]"
+			else:
+				name = cleanTitle(title)
 			debug_MS("(selectionWeek) Name : "+name)
 			debug_MS("(selectionWeek) Datum : "+datum)
 			addDir(name, baseURL+"/filme-vorschau/de/week-", 'listKino_big', icon, datum=datum)
@@ -307,7 +313,7 @@ def listTrailer(url, page=1):
 		PGurl = url
 	debug_MS("(listTrailer) ##### URL={0} ##### PAGE={1} #####".format(PGurl, str(page)))
 	content = getUrl(PGurl)
-	selection = re.findall('<div class="card card-video-traile(.+?)<span class="thumbnail-count">', content, re.DOTALL)
+	selection = re.findall('<div class="card video-card-trailer(.+?)<span class="thumbnail-count">', content, re.DOTALL)
 	for chtml in selection:
 		try:
 			image = re.compile(r'src=["\'](https?://.+?(?:[0-9]+\.png|[a-z]+\.png|[0-9]+\.jpg|[a-z]+\.jpg|[0-9]+\.gif|[a-z]+\.gif))["\'\?]', re.DOTALL|re.IGNORECASE).findall(chtml)[0]
@@ -323,8 +329,10 @@ def listTrailer(url, page=1):
 		except:
 			failing("..... exception .....")
 			failing("(listTrailer) Fehler-Eintrag : {0} #####".format(str(chtml)))
-	if '<span class="txt">Nächste</span><i class="icon icon-right icon-arrow-right-a">' in content:
+	try:
+		nextP = re.compile(r'class=["\']((?:ACr[^<]+</span></div></nav>    </section>|button button-md item["\'] href=[^<]+</a></div></nav>    </section>))', re.DOTALL).findall(content)[0]
 		addDir(translation(30685), url, 'listTrailer', pic+"nextpage.png", page=page+1)
+	except: pass
 	xbmcplugin.endOfDirectory(pluginhandle)
 
 def listSpecial_Series_Trailer(url, page=1):
@@ -364,9 +372,9 @@ def listSpecial_Series_Trailer(url, page=1):
 					elif not ":" in RuTi:
 						duration = int(RuTi)
 				except: duration =""
-				match = re.compile('<a href=["\']([^"]+?)["\']>([^<]+)</a>', re.DOTALL).findall(element)
-				link = match[0][0]
-				name = match[0][1]
+				matchUN = re.compile('<a href=["\']([^"]+?)["\']>([^<]+)</a>', re.DOTALL).findall(element)
+				link = matchUN[0][0]
+				name = matchUN[0][1]
 				name = cleanTitle(name)
 				debug_MS("(listSpecial_Series_Trailer) Name : "+name)
 				debug_MS("(listSpecial_Series_Trailer) Link : "+baseURL+link)
@@ -396,11 +404,11 @@ def listKino_big(url, page=1, datum="N", position=0):
 	content = getUrl(PGurl)
 	if int(position) == 0:
 		try:
-			position = re.compile('<a class=["\']button button-md item["\'] href=["\'].+?page=[0-9]+["\']>([0-9]+)</a></div></nav>', re.DOTALL).findall(content)[0]
+			position = re.compile('<a class=["\']button button-md item["\'] href=.+?page=[0-9]+["\']>([0-9]+)</a></div></nav>', re.DOTALL).findall(content)[0]
 			debug_MS("(listKino_big) *FOUND-1* Pages-Maximum : {0}".format(str(position)))
 		except:
 			try:
-				position = re.compile('<span class=["\'].*?button-md item["\']>([0-9]+)</span></div></nav>', re.DOTALL).findall(content)[0]
+				position = re.compile('<span class=["\']ACr.+?button-md item["\']>([0-9]+)</span></div></nav>', re.DOTALL).findall(content)[0]
 				debug_MS("(listKino_big) *FOUND-2* Pages-Maximum : {0}".format(str(position)))
 			except: pass
 	result = content[content.find('class="card card-entity card-entity-list cf"')+1:]
@@ -463,7 +471,7 @@ def listKino_big(url, page=1, datum="N", position=0):
 			debug_MS("(listKino_big) Icon : "+photo)
 			debug_MS("(listKino_big) Regie : "+dDirector)
 			debug_MS("(listKino_big) Genre : "+gGenre)
-			if ("Trailer" in video[0] or "Teaser" in video[0]) and not 'button btn-disabled' in element:
+			if video and ("Trailer" in video[0] or "Teaser" in video[0]) and not 'button btn-disabled' in element:
 				FOUND = True
 				addLink(name, baseURL+newURL, 'playVideo', photo, plot, gGenre, dDirector, rRating, extraURL=url)
 			else:
@@ -744,34 +752,25 @@ def playVideo(url, extraURL=""):
 
 def cleanTitle(title):
 	title = py2_enc(title)
-	title = title.replace("&lt;", "<").replace("&gt;", ">").replace("&amp;", "&").replace("&Amp;", "&").replace("&#34;", "”").replace("&#39;", "'").replace("&#039;", "'").replace("&quot;", "\"").replace("&Quot;", "\"").replace("&reg;", "").replace("&szlig;", "ß").replace("&mdash;", "-").replace("&ndash;", "-").replace('–', '-').replace('&sup2;', '²')
-	title = title.replace("&#x00c4", "Ä").replace("&#x00e4", "ä").replace("&#x00d6", "Ö").replace("&#x00f6", "ö").replace("&#x00dc", "Ü").replace("&#x00fc", "ü").replace("&#x00df", "ß")
-	title = title.replace("&Auml;", "Ä").replace("&auml;", "ä").replace("&Euml;", "Ë").replace("&euml;", "ë").replace("&Iuml;", "Ï").replace("&iuml;", "ï").replace("&Ouml;", "Ö").replace("&ouml;", "ö").replace("&Uuml;", "Ü").replace("&uuml;", "ü").replace("&#376;", "Ÿ").replace("&yuml;", "ÿ")
-	title = title.replace("&agrave;", "à").replace("&Agrave;", "À").replace("&aacute;", "á").replace("&Aacute;", "Á").replace("&egrave;", "è").replace("&Egrave;", "È").replace("&eacute;", "é").replace("&Eacute;", "É").replace("&igrave;", "ì").replace("&Igrave;", "Ì").replace("&iacute;", "í").replace("&Iacute;", "Í")
-	title = title.replace("&ograve;", "ò").replace("&Ograve;", "Ò").replace("&oacute;", "ó").replace("&Oacute;", "ó").replace("&ugrave;", "ù").replace("&Ugrave;", "Ù").replace("&uacute;", "ú").replace("&Uacute;", "Ú").replace("&yacute;", "ý").replace("&Yacute;", "Ý")
-	title = title.replace("&atilde;", "ã").replace("&Atilde;", "Ã").replace("&ntilde;", "ñ").replace("&Ntilde;", "Ñ").replace("&otilde;", "õ").replace("&Otilde;", "Õ").replace("&Scaron;", "Š").replace("&scaron;", "š")
-	title = title.replace("&acirc;", "â").replace("&Acirc;", "Â").replace("&ccedil;", "ç").replace("&Ccedil;", "Ç").replace("&ecirc;", "ê").replace("&Ecirc;", "Ê").replace("&icirc;", "î").replace("&Icirc;", "Î").replace("&ocirc;", "ô").replace("&Ocirc;", "Ô").replace("&ucirc;", "û").replace("&Ucirc;", "Û")
-	title = title.replace("&alpha;", "a").replace("&Alpha;", "A").replace("&aring;", "å").replace("&Aring;", "Å").replace("&aelig;", "æ").replace("&AElig;", "Æ").replace("&epsilon;", "e").replace("&Epsilon;", "Ε").replace("&eth;", "ð").replace("&ETH;", "Ð").replace("&gamma;", "g").replace("&Gamma;", "G")
-	title = title.replace("&oslash;", "ø").replace("&Oslash;", "Ø").replace("&theta;", "θ").replace("&thorn;", "þ").replace("&THORN;", "Þ")
-	title = title.replace("\\'", "'").replace("&x27;", "'").replace("&iexcl;", "¡").replace("&iquest;", "¿").replace("&rsquo;", "’").replace("&lsquo;", "‘").replace("&sbquo;", "’").replace("&rdquo;", "”").replace("&ldquo;", "“").replace("&bdquo;", "”").replace("&rsaquo;", "›").replace("lsaquo;", "‹").replace("&raquo;", "»").replace("&laquo;", "«")
-	title = title.replace("&#183;", "·")
-	title = title.replace("&#196;", "Ä")
-	title = title.replace("&#214;", "Ö")
-	title = title.replace("&#220;", "Ü")
-	title = title.replace("&#223;", "ß")
-	title = title.replace("&#228;", "ä")
-	title = title.replace("&#232;", "è")
-	title = title.replace("&#233;", "é")
-	title = title.replace("&#234;", "ê")
-	title = title.replace("&#239;", "ï")
-	title = title.replace("&#246;", "ö")
-	title = title.replace("&#252;", "ü")
-	title = title.replace("&#287;", "ğ")
-	title = title.replace("&#304;", "İ")
-	title = title.replace("&#305;", "ı")
-	title = title.replace("&#350;", "Ş")
-	title = title.replace("&#351;", "ş")
-	title = title.replace("&#8211;", "-")
+	title = title.replace('&lt;', '<').replace('&gt;', '>').replace('&amp;', '&').replace('&Amp;', '&').replace('&nbsp;', ' ').replace("&quot;", "\"").replace("&Quot;", "\"").replace('&reg;', '').replace('&szlig;', 'ß').replace('&mdash;', '-').replace('&ndash;', '-').replace('–', '-').replace('&sup2;', '²')
+	title = title.replace('&#x00c4', 'Ä').replace('&#x00e4', 'ä').replace('&#x00d6', 'Ö').replace('&#x00f6', 'ö').replace('&#x00dc', 'Ü').replace('&#x00fc', 'ü').replace('&#x00df', 'ß')
+	title = title.replace('&Auml;', 'Ä').replace('Ä', 'Ä').replace('&auml;', 'ä').replace('ä', 'ä').replace('&Euml;', 'Ë').replace('&euml;', 'ë').replace('&Iuml;', 'Ï').replace('&iuml;', 'ï').replace('&Ouml;', 'Ö').replace('Ö', 'Ö').replace('&ouml;', 'ö').replace('ö', 'ö').replace('&Uuml;', 'Ü').replace('Ü', 'Ü').replace('&uuml;', 'ü').replace('ü', 'ü').replace('&yuml;', 'ÿ')
+	title = title.replace('&agrave;', 'à').replace('&Agrave;', 'À').replace('&aacute;', 'á').replace('&Aacute;', 'Á').replace('&egrave;', 'è').replace('&Egrave;', 'È').replace('&eacute;', 'é').replace('&Eacute;', 'É').replace('&igrave;', 'ì').replace('&Igrave;', 'Ì').replace('&iacute;', 'í').replace('&Iacute;', 'Í')
+	title = title.replace('&ograve;', 'ò').replace('&Ograve;', 'Ò').replace('&oacute;', 'ó').replace('&Oacute;', 'ó').replace('&ugrave;', 'ù').replace('&Ugrave;', 'Ù').replace('&uacute;', 'ú').replace('&Uacute;', 'Ú').replace('&yacute;', 'ý').replace('&Yacute;', 'Ý')
+	title = title.replace('&atilde;', 'ã').replace('&Atilde;', 'Ã').replace('&ntilde;', 'ñ').replace('&Ntilde;', 'Ñ').replace('&otilde;', 'õ').replace('&Otilde;', 'Õ').replace('&Scaron;', 'Š').replace('&scaron;', 'š')
+	title = title.replace('&acirc;', 'â').replace('&Acirc;', 'Â').replace('&ccedil;', 'ç').replace('&Ccedil;', 'Ç').replace('&ecirc;', 'ê').replace('&Ecirc;', 'Ê').replace('&icirc;', 'î').replace('&Icirc;', 'Î').replace('&ocirc;', 'ô').replace('&Ocirc;', 'Ô').replace('&ucirc;', 'û').replace('&Ucirc;', 'Û')
+	title = title.replace('&alpha;', 'a').replace('&Alpha;', 'A').replace('&aring;', 'å').replace('&Aring;', 'Å').replace('&aelig;', 'æ').replace('&AElig;', 'Æ').replace('&epsilon;', 'e').replace('&Epsilon;', 'Ε').replace('&eth;', 'ð').replace('&ETH;', 'Ð').replace('&gamma;', 'g').replace('&Gamma;', 'G')
+	title = title.replace('&oslash;', 'ø').replace('&Oslash;', 'Ø').replace('&theta;', 'θ').replace('&thorn;', 'þ').replace('&THORN;', 'Þ')
+	title = title.replace("\\'", "'").replace('&iexcl;', '¡').replace('&iquest;', '¿').replace('&rsquo;', '’').replace('&lsquo;', '‘').replace('&sbquo;', '’').replace('&rdquo;', '”').replace('&ldquo;', '“').replace('&bdquo;', '”').replace('&rsaquo;', '›').replace('lsaquo;', '‹').replace('&raquo;', '»').replace('&laquo;', '«')
+	title = title.replace("&x27;", "'").replace("&#34;", "”").replace("&#39;", "'").replace("&#039;", "'").replace('&#196;', 'Ä').replace('&#214;', 'Ö').replace('&#220;', 'Ü').replace('&#228;', 'ä').replace('&#246;', 'ö').replace('&#252;', 'ü').replace('&#223;', 'ß').replace('&#160;', ' ')
+	title = title.replace('&#192;', 'À').replace('&#193;', 'Á').replace('&#194;', 'Â').replace('&#195;', 'Ã').replace('&#197;', 'Å').replace('&#199;', 'Ç').replace('&#200;', 'È').replace('&#201;', 'É').replace('&#202;', 'Ê')
+	title = title.replace('&#203;', 'Ë').replace('&#204;', 'Ì').replace('&#205;', 'Í').replace('&#206;', 'Î').replace('&#207;', 'Ï').replace('&#209;', 'Ñ').replace('&#210;', 'Ò').replace('&#211;', 'Ó').replace('&#212;', 'Ô')
+	title = title.replace('&#213;', 'Õ').replace('&#215;', '×').replace('&#216;', 'Ø').replace('&#217;', 'Ù').replace('&#218;', 'Ú').replace('&#219;', 'Û').replace('&#221;', 'Ý').replace('&#222;', 'Þ').replace('&#224;', 'à')
+	title = title.replace('&#225;', 'á').replace('&#226;', 'â').replace('&#227;', 'ã').replace('&#229;', 'å').replace('&#231;', 'ç').replace('&#232;', 'è').replace('&#233;', 'é').replace('&#234;', 'ê').replace('&#235;', 'ë')
+	title = title.replace('&#236;', 'ì').replace('&#237;', 'í').replace('&#238;', 'î').replace('&#239;', 'ï').replace('&#240;', 'ð').replace('&#241;', 'ñ').replace('&#242;', 'ò').replace('&#243;', 'ó').replace('&#244;', 'ô')
+	title = title.replace('&#245;', 'õ').replace('&#247;', '÷').replace('&#248;', 'ø').replace('&#249;', 'ù').replace('&#250;', 'ú').replace('&#251;', 'û').replace('&#253;', 'ý').replace('&#254;', 'þ').replace('&#255;', 'ÿ').replace('&#287;', 'ğ')
+	title = title.replace('&#304;', 'İ').replace('&#305;', 'ı').replace('&#350;', 'Ş').replace('&#351;', 'ş').replace('&#352;', 'Š').replace('&#353;', 'š').replace('&#376;', 'Ÿ').replace('&#402;', 'ƒ')
+	title = title.replace('&#8211;', '–').replace('&#8212;', '—').replace('&#8226;', '•').replace('&#8230;', '…').replace('&#8240;', '‰').replace('&#8364;', '€').replace('&#8482;', '™').replace('&#169;', '©').replace('&#174;', '®').replace('&#183;', '·')
 	title = title.strip()
 	return title
 

@@ -2,9 +2,14 @@
 - Initial release
 ...
 
-[B]Version 1.0.1  (30.12.2018)[/B][CR]by realvito
+[B]Version 1.0.1  (30.12.2018)[/B] by realvito[CR]
 - fixed: Addon komplett umgeschrieben und sämtliche Bugs beseitigt :-)
 - added: Mehr Informationen in vielen Rubriken abrufbar (sofern vorhanden) - Datum, Genre, Regie, Bewertung ...
 - added: Rubriken = Vorpremieren im Kino, Neue und kommende Staffeln im deutschen Fernsehen
 - optimized: Exceptions eingebaut - damit ein Fehler nicht gleich das Addon lahmlegt
 - removed: Rubrik = Kinderfilme im Kino (kein Inhalt)
+
+[B]Version 1.0.2  (21.01.2019)[/B] by realvito[CR]
+- fixed: Hauptrubrik Trailer = sämtliche Unterordner ohne Inhalt
+- fixed: Unterordner Trailer = Anzeige der nächsten Seite
+- optimized: In der Rubrik = Kino/Starttermin nach Wochen - Aktuelle Woche farblich hervorgehoben

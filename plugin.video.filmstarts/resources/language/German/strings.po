@@ -218,6 +218,10 @@ msgctxt "#30635"
 msgid "My favorite Movie scene"
 msgstr "Meine Lieblings-Filmszene"
 
+msgctxt "#30636"
+msgid " ~ actual"
+msgstr " ~ aktuell"
+
 msgctxt "#30661"
 msgid "Filter by Genre"
 msgstr "Filter nach Genre"
