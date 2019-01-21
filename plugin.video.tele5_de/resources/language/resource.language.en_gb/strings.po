@@ -32,23 +32,87 @@ msgctxt "#30000"
 msgid "General"
 msgstr ""
 
-#empty strings from id 30001 to 30109
+msgctxt "#30001"
+msgid "Advanced"
+msgstr ""
+
+#empty strings from id 30002 to 30109
 # SETTINGS-BUTTONS
 
 msgctxt "#30110"
-msgid "Sort all titles alphabetically (every folder customizable - otherwise standard)"
+msgid "     Play HLS-Videos with [COLOR yellow]*Inputstream.Adaptive*[/COLOR] (since KODI-17+ possible)"
 msgstr ""
 
-#empty strings from id 30111 to 30229
+msgctxt "#30111"
+msgid "     Sort all titles alphabetically [COLOR yellow](every folder customizable - otherwise standard)[/COLOR]"
+msgstr ""
+
+msgctxt "#30112"
+msgid "     Use Thumb as Background-Fanart"
+msgstr ""
+
+msgctxt "#30113"
+msgid "     [COLOR orangered]Blacklist-Filter : [/COLOR]"
+msgstr ""
+
+msgctxt "#30114"
+msgid "     Show Addon-Settings in the overview"
+msgstr ""
+
+msgctxt "#30115"
+msgid "     Detailed Addon-Debug (otherwise only Minimal-Log)"
+msgstr ""
+
+#empty strings from id 30116 to 30229
 # SETTINGS-TITLES
 
-#empty strings from id 30229 to 30349
+msgctxt "#30230"
+msgid "[B][COLOR ff0099ff]PLAY[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30231"
+msgid "[B][COLOR ff0099ff]TITLE[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30232"
+msgid "[B][COLOR ff0099ff]FANART[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30233"
+msgid "[B][COLOR ff0099ff]BLACKLIST[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30234"
+msgid "[B][COLOR ff0099ff]SETTINGS[/COLOR][/B]"
+msgstr ""
+
+msgctxt "#30235"
+msgid "[B][COLOR ff0099ff]LOG[/COLOR][/B]"
+msgstr ""
+
+#empty strings from id 30236 to 30349
 # SETTINGS-DESCRIPTIONS
 
-#empty strings from id 30349 to 30500
+msgctxt "#30350"
+msgid "     * [COLOR yellow]For playback problems (audio interruptions,artifacts ...) probably an update to KODI-18 (Leia) is needed ![/COLOR] *"
+msgstr ""
+
+msgctxt "#30351"
+msgid "     * [COLOR yellow]Hide unwanted folders in the startup overview ![/COLOR] *"
+msgstr ""
+
+msgctxt "#30352"
+msgid "     * [COLOR chartreuse]Entries in exact spelling as shown and separated by comma ','[/COLOR] *"
+msgstr ""
+
+#empty strings from id 30353 to 30500
 # WARNING-MESSAGES-OK
 
-#empty strings from id 30500 to 30520
+msgctxt "#30501"
+msgid "[COLOR orangered]ATTENTION : ... the required addon *[/COLOR][COLOR yellow]inputstream.adaptive[/COLOR][COLOR orangered]* is NOT installed !!![/COLOR][CR]Please install KODI-Krypton (version 17 or higher), These contain the required addon in setup !!!"
+msgstr ""
+
+#empty strings from id 30502 to 30520
 # WARNING-MESSAGES-NOTIFICATION
 
 msgctxt "#30521"
@@ -56,10 +120,18 @@ msgid "Tele5 - Mediathek : [COLOR red]!!! {0:s} - ERROR !!![/COLOR]"
 msgstr ""
 
 msgctxt "#30522"
+msgid "[COLOR red]Unfortunately, there are NO {0:s} :[/COLOR]"
+msgstr ""
+
+msgctxt "#30523"
 msgid "[COLOR red]An error has occured, please check *LOG* ![/COLOR]"
 msgstr ""
 
-#empty strings from id 30523 to 30600
+msgctxt "#30524"
+msgid "* [COLOR blue]In this Category[/COLOR] * at Tele5"
+msgstr ""
+
+#empty strings from id 30525 to 30600
 # PLUGIN-MAIN and SIDEMENU
 
 msgctxt "#30601"
@@ -78,6 +150,14 @@ msgctxt "#30604"
 msgid "Movies"
 msgstr ""
 
-msgctxt "#30605"
+msgctxt "#30607"
+msgid "TELE5 Settings"
+msgstr ""
+
+msgctxt "#30608"
+msgid "Inputstream Settings"
+msgstr ""
+
+msgctxt "#30654"
 msgid "[COLOR yellow]Add to TELE5-Playlist[/COLOR]"
 msgstr ""
