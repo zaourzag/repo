@@ -72,7 +72,7 @@ msgid "     Cache storage  (in days)"
 msgstr ""
 
 msgctxt "#30118"
-msgid "     [COLOR orangered]<<<>>> Cache DELETE = CLICK HERE <<<>>>[/COLOR]"
+msgid "     [COLOR orangered]<<< >>> Cache DELETE = CLICK HERE <<< >>>[/COLOR]"
 msgstr ""
 
 # empty strings from id 30119 to 30229
@@ -102,7 +102,7 @@ msgstr ""
 # SETTINGS-DESCRIPTIONS
 
 msgctxt "#30350"
-msgid "     * [COLOR chartreuse]Selection for STANDARD- and as PLAYLIST- Playback[/COLOR] *"
+msgid "     * [COLOR chartreuse]Selection for STANDARD 1 or 2 and as PLAYLIST playback[/COLOR] *"
 msgstr ""
 
 msgctxt "#30351"
@@ -152,11 +152,11 @@ msgid "[COLOR red]NO *VIDEOLINK* COULD BE DETERMINED ![/COLOR]"
 msgstr ""
 
 msgctxt "#30527"
-msgid "ATV.at : [COLOR chartreuse]Start Stream ...[/COLOR]"
+msgid "ATV.at : [COLOR lime]Start Stream ...[/COLOR]"
 msgstr ""
 
 msgctxt "#30528"
-msgid "* [COLOR chartreuse]{0:s}[/COLOR] *"
+msgid "* [COLOR lime]{0:s}[/COLOR] *"
 msgstr ""
 
 # empty strings from id 30529 to 30600
@@ -171,5 +171,5 @@ msgid "ATV Settings"
 msgstr ""
 
 msgctxt "#30603"
-msgid "[COLOR chartreuse]Next Page  >>>[/COLOR]"
+msgid "[COLOR lime]Next Page  >>>[/COLOR]"
 msgstr ""

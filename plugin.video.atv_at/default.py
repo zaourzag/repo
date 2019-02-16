@@ -48,10 +48,11 @@ showStreamMESSAGE = addon.getSetting("show.stream_message") == 'true'
 if PY2:
 	cachePERIOD = int(addon.getSetting("cacheTime"))*24
 	cache = StorageServer.StorageServer(addon.getAddonInfo('id'), cachePERIOD) # (Your plugin name, Cache time in hours)
-baseURL = "https://atv.at"
+baseURL = "https://www.atv.at"
+startURL = "https://www.atv.at/"
 
 
-__HEADERS = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:50.0) Gecko/20100101 Firefox/50.0','Accept-Encoding': 'gzip, deflate'}
+__HEADERS = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101 Firefox/60.0','Accept-Encoding': 'gzip, deflate'}
 headerFIELDS = "User-Agent=Mozilla%2F5.0%20%28Windows%20NT%2010.0%3B%20Win64%3B%20x64%29%20AppleWebKit%2F537.36%20%28KHTML%2C%20like%20Gecko%29%20Chrome%2F67.0.3396.62%20Safari%2F537.36"
 
 xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
@@ -138,11 +139,11 @@ def listSeries(url):
 		if '<div class="video_indicator">' in cluster:
 			try:
 				url2 = re.compile('href="([^"]+?)"', re.DOTALL).findall(cluster)[0]
-				image = re.compile('<img src="(.*?)teaser_image_file(.*?)" alt=', re.DOTALL).findall(cluster)
-				pic1 = image[0][0]
-				pic2 = image[0][1]
-				if pic1.startswith('https://static.atv.cdn.tvnext.tv/dynamic/get_asset_resized.php') and 'path=format_pages%252F' in pic1:
-					thumb = "https://static.atv.cdn.tvnext.tv/static/assets/cms/format_pages/teaser_image_file"+pic2.split('&amp;percent')[0].replace('%252F', '/')
+				img = re.compile('<img src="(.*?)teaser_image_file(.*?)" alt=', re.DOTALL).findall(cluster)
+				pic1 = img[0][0]
+				pic2 = img[0][1]
+				if (pic1.startswith('https://static.atv.cdn.tvnext.tv/dynamic/get_asset_resized.php') or pic1.startswith('https://atv.at/dynamic/get_asset_resized.php') or pic1.startswith('https://www.atv.at/dynamic/get_asset_resized.php')) and 'path=format_pages%252F' in pic1:
+					thumb = baseURL+"/static/assets/cms/format_pages/teaser_image_file"+pic2.split('&amp;percent')[0].replace('%252F', '/')
 				else:
 					thumb = spPIC+"empty.jpg"
 				title = re.compile('<h3 class="program_title">([^<]+?)</h3>', re.DOTALL).findall(cluster)[0]
@@ -169,10 +170,9 @@ def listSeasons(html):
 	index_seasons = html.find('<select class="select jsb_ jsb_Select" data-jsb=')
 	if index_seasons != -1:
 		try:
-			pic = re.compile('<meta property="og:image" content="(https://static.atv.cdn.tvnext.tv/static/assets/cms/format_pages/teaser_image_file/.*?)" />', re.DOTALL).findall(html)[0]
-			thumb = pic.split('?cb=')[0]
-		except:
-			thumb = spPIC+"empty.jpg"
+			pic = re.compile(r'<meta property="og:image" content="https?://(?:static.atv.cdn.tvnext.tv|www.atv.at|atv.at)/static/assets/cms/format_pages/teaser_image_file/(.*?)" />', re.DOTALL).findall(html)[0]
+			thumb = baseURL+"/static/assets/cms/format_pages/teaser_image_file/"+pic.split('?cb=')[0]
+		except: thumb = spPIC+"empty.jpg"
 		seasons_block = html[index_seasons:html.find('</select>', index_seasons)]
 		seasons = re.findall('<option.*?value="(.*?)">(.*?)</option>', seasons_block, re.DOTALL)
 		for url2, title in seasons:
@@ -213,13 +213,13 @@ def listVideos(html):
 			url_get_ID = html[index_VideoID + 55:html.find('"', index_VideoID + 55)]
 			if url_get_ID.startswith('url='):
 				url_get_ID = url_get_ID[4:]
-			idNumber = url_get_ID.replace('%3A', ':').replace('%2F', '/').replace('%3F', '?').replace('%3D', '=').replace('https://atv.at/uri/fepe/', '').split('/')[0].strip()
+			idNumber = url_get_ID.replace('%3A', ':').replace('%2F', '/').replace('%3F', '?').replace('%3D', '=').replace(baseURL+'/uri/fepe/', '').split('/')[0].strip()
 		else: idNumber = "##### ID - Nicht gefunden ! #####"
 	debug("(listVideos[1]) idNumber : "+str(idNumber))
 	pageNumber = int(1)
 	if not "#####" in idNumber:
 		while pageNumber < int(8):
-			urlVideos_1 = "https://atv.at/uri/fepe/"+idNumber+"/?page="+str(pageNumber)
+			urlVideos_1 = baseURL+"/uri/fepe/"+idNumber+"/?page="+str(pageNumber)
 			content = makeREQUEST(urlVideos_1)
 			debug("(listVideos[1]) ##### urlVideos_1 : "+urlVideos_1+" #####")
 			if '<div class="more jsb_ jsb_MoreTeasersButton" data-jsb="' in content:
@@ -231,14 +231,14 @@ def listVideos(html):
 				if '<div class="video_indicator">' in video:
 					try:
 						url = re.compile('href="([^"]+?)" ', re.DOTALL).findall(video)[0]
-						image = re.compile('<img src="(.*?)teaser_image_file(.*?)" width=', re.DOTALL).findall(video)
-						pic1 = image[0][0]
-						pic2 = image[0][1]
-						if pic1.startswith('https://static.atv.cdn.tvnext.tv/dynamic/get_asset_resized.php'):
+						img = re.compile('<img src="(.*?)teaser_image_file(.*?)" width=', re.DOTALL).findall(video)
+						pic1 = img[0][0]
+						pic2 = img[0][1]
+						if (pic1.startswith('https://static.atv.cdn.tvnext.tv/dynamic/get_asset_resized.php') or pic1.startswith('https://atv.at/dynamic/get_asset_resized.php') or pic1.startswith('https://www.atv.at/dynamic/get_asset_resized.php')):
 							if 'path=detail_pages%252F' in pic1:
-								thumb = "https://static.atv.cdn.tvnext.tv/static/assets/cms/detail_pages/teaser_image_file"+pic2.split('&amp;percent')[0].replace('%252F', '/')
+								thumb = baseURL+"/static/assets/cms/detail_pages/teaser_image_file"+pic2.split('&amp;percent')[0].replace('%252F', '/')
 							elif 'path=media_items%252F' in pic1:
-								thumb = "https://static.atv.cdn.tvnext.tv/static/assets/cms/media_items/teaser_image_file"+pic2.split('&amp;percent')[0].replace('%252F', '/')
+								thumb = baseURL+"/static/assets/cms/media_items/teaser_image_file"+pic2.split('&amp;percent')[0].replace('%252F', '/')
 						else:
 							thumb = pic1+'teaser_image_file'+pic2.split('?cb=')[0]
 						title = re.compile('class="title">([^<]+?)</', re.DOTALL).findall(video)[0]
@@ -246,13 +246,13 @@ def listVideos(html):
 						season = ""
 						episode = ""
 						if "staffel-" in url:
-							try: season = url.split('https://atv.at/')[1].split('staffel-')[-1].split('/')[0].strip() # https://atv.at/bauer-sucht-frau-staffel-14/die-hofwochen-folge-12/d1958945/
+							try: season = url.split(startURL)[1].split('staffel-')[-1].split('/')[0].strip() # https://www.atv.at/bauer-sucht-frau-staffel-14/die-hofwochen-folge-12/d1958945/
 							except: season = ""
 						if "folge-" in url:
-							try: episode = url.split('https://atv.at/')[1].split('folge-')[-1].split('/')[0].split('-')[0].strip() # https://atv.at/bauer-sucht-frau-staffel-2/folge-13/v1642204/
+							try: episode = url.split(startURL)[1].split('folge-')[-1].split('/')[0].split('-')[0].strip() # https://www.atv.at/bauer-sucht-frau-staffel-2/folge-13/v1642204/
 							except: episode = ""
 						if "episode-" in url and episode=="":
-							try: episode = url.split('https://atv.at/')[1].split('episode-')[-1].split('/')[0].split('-')[0].strip() # https://atv.at/bauer-sucht-frau-staffel-3/episode-14-event-teil-1/v1640552/
+							try: episode = url.split(startURL)[1].split('episode-')[-1].split('/')[0].split('-')[0].strip() # https://www.atv.at/bauer-sucht-frau-staffel-3/episode-14-event-teil-1/v1640552/
 							except: episode = ""
 						if url in videoIsolated_List1:
 							continue
@@ -261,7 +261,7 @@ def listVideos(html):
 						debug("(listVideos[1]) ##### Titel : "+title+" #####")
 						debug("(listVideos[1]) ##### Season : "+str(season)+" / Episode : "+str(episode)+" #####")
 						debug("(listVideos[1]) ##### Thumb : "+thumb+" #####")
-						addLink(title, url, "playVideo", thumb, plot, season=season, episode=episode, seriesname=seriesname)
+						addLink(title, url, "playVideo", thumb, plot, seriesname, season, episode)
 					except:
 						pos1 += 1
 						failing("(listVideos[1]) Error-in-Video-1 : "+str(video))
@@ -273,14 +273,14 @@ def listVideos(html):
 			if '<div class="video_indicator">' in video:
 				try:
 					url = re.compile('href="([^"]+?)" ', re.DOTALL).findall(video)[0]
-					image = re.compile('<img src="(.*?)teaser_image_file(.*?)" width=', re.DOTALL).findall(video)
-					pic1 = image[0][0]
-					pic2 = image[0][1]
-					if pic1.startswith('https://static.atv.cdn.tvnext.tv/dynamic/get_asset_resized.php'):
+					img = re.compile('<img src="(.*?)teaser_image_file(.*?)" width=', re.DOTALL).findall(video)
+					pic1 = img[0][0]
+					pic2 = img[0][1]
+					if (pic1.startswith('https://static.atv.cdn.tvnext.tv/dynamic/get_asset_resized.php') or pic1.startswith('https://atv.at/dynamic/get_asset_resized.php') or pic1.startswith('https://www.atv.at/dynamic/get_asset_resized.php')):
 						if 'path=detail_pages%252F' in pic1:
-							thumb = "https://static.atv.cdn.tvnext.tv/static/assets/cms/detail_pages/teaser_image_file"+pic2.split('&amp;percent')[0].replace('%252F', '/')
+							thumb = baseURL+"/static/assets/cms/detail_pages/teaser_image_file"+pic2.split('&amp;percent')[0].replace('%252F', '/')
 						elif 'path=media_items%252F' in pic1:
-							thumb = "https://static.atv.cdn.tvnext.tv/static/assets/cms/media_items/teaser_image_file"+pic2.split('&amp;percent')[0].replace('%252F', '/')
+							thumb = baseURL+"/static/assets/cms/media_items/teaser_image_file"+pic2.split('&amp;percent')[0].replace('%252F', '/')
 					else:
 						thumb = pic1+'teaser_image_file'+pic2.split('?cb=')[0]
 					title = re.compile('class="title">([^<]+?)</', re.DOTALL).findall(video)[0]
@@ -288,15 +288,15 @@ def listVideos(html):
 					season = ""
 					episode = ""
 					if "staffel-" in url:
-						try: season = url.split('https://atv.at/')[1].split('staffel-')[-1].split('/')[0].strip() # https://atv.at/bauer-sucht-frau-staffel-14/die-hofwochen-folge-12/d1958945/
+						try: season = url.split(startURL)[1].split('staffel-')[-1].split('/')[0].strip() # https://www.atv.at/bauer-sucht-frau-staffel-14/die-hofwochen-folge-12/d1958945/
 						except: season = ""
 					if "folge-" in url:
-						try: episode = url.split('https://atv.at/')[1].split('folge-')[-1].split('/')[0].split('-')[0].strip() # https://atv.at/bauer-sucht-frau-staffel-2/folge-13/v1642204/
+						try: episode = url.split(startURL)[1].split('folge-')[-1].split('/')[0].split('-')[0].strip() # https://www.atv.at/bauer-sucht-frau-staffel-2/folge-13/v1642204/
 						except: episode = ""
 					if "episode-" in url and episode=="":
-						try: episode = url.split('https://atv.at/')[1].split('episode-')[-1].split('/')[0].split('-')[0].strip() # https://atv.at/bauer-sucht-frau-staffel-3/episode-14-event-teil-1/v1640552/
+						try: episode = url.split(startURL)[1].split('episode-')[-1].split('/')[0].split('-')[0].strip() # https://www.atv.at/bauer-sucht-frau-staffel-3/episode-14-event-teil-1/v1640552/
 						except: episode = ""
-					Wanted = url.split('https://atv.at/')[1].split('/')[0][:6]
+					Wanted = url.split(startURL)[1].split('/')[0][:6]
 					debug("(list_videos[2]) ##### Wanted-URL : "+Wanted+" #####")
 					if (url in videoIsolated_List1 or 'aufruf' in url.lower() or not Wanted in url):
 						continue
@@ -307,7 +307,7 @@ def listVideos(html):
 					debug("(listVideos[2]) ##### Titel : "+title+" #####")
 					debug("(listVideos[2]) ##### Season : "+str(season)+" / Episode : "+str(episode)+" #####")
 					debug("(listVideos[2]) ##### Thumb : "+thumb+" #####")
-					addLink(title, url, "playVideo", thumb, plot, season=season, episode=episode, seriesname=seriesname)
+					addLink(title, url, "playVideo", thumb, plot, seriesname, season, episode)
 				except:
 					pos2 += 1
 					failing("(listVideos[2]) Error-in-Video-2 : "+str(video))
@@ -371,7 +371,7 @@ def playVideo(url, photo):
 				try: season = part['tracking']['nurago']['seasonid'].strip() # 14
 				except: season = ""
 			if part['tracking']['nurago']['clipreferer'] and "staffel-" in part['tracking']['nurago']['clipreferer'] and season=="":
-				try: season = part['tracking']['nurago']['clipreferer'].split('https://atv.at/')[1].split('staffel-')[-1].split('/')[0].strip() # https://atv.at/bauer-sucht-frau-staffel-14/die-hofwochen-folge-12/d1958945/
+				try: season = part['tracking']['nurago']['clipreferer'].split(startURL)[1].split('staffel-')[-1].split('/')[0].strip() # https://www.atv.at/bauer-sucht-frau-staffel-14/die-hofwochen-folge-12/d1958945/
 				except: season = ""
 			if part['tracking']['nurago']['episodename'] and "Folge " in part['tracking']['nurago']['episodename']:
 				try: episode = part['tracking']['nurago']['episodename'].split('Folge')[1].split('-')[0].split(':')[0].strip() # Folge 14 - Die Hofwochen
@@ -380,7 +380,7 @@ def playVideo(url, photo):
 				try: episode = part['tracking']['nurago']['episodename'].split('Episode')[1].split('-')[0].split(',')[0].strip() # Episode 2
 				except: episode = ""
 			if part['tracking']['nurago']['clipreferer'] and ("folge-" in part['tracking']['nurago']['clipreferer'] or "episode-" in part['tracking']['nurago']['clipreferer']) and episode=="":
-				try: episode = part['tracking']['nurago']['clipreferer'].split('https://atv.at/')[1].split('folge-')[-1].split('episode-')[-1].split('/')[0].strip() # https://atv.at/bauer-sucht-frau-staffel-14/die-hofwochen-folge-12/d1958945/
+				try: episode = part['tracking']['nurago']['clipreferer'].split(startURL)[1].split('folge-')[-1].split('episode-')[-1].split('/')[0].strip() # https://www.atv.at/bauer-sucht-frau-staffel-14/die-hofwochen-folge-12/d1958945/
 				except: episode = ""
 			duration = int(part['tracking']['nurago']['videoduration']) # 1250
 			thumb = part['preview_image_url'].split('?cb=')[0].strip() # https://static.atv.cdn.tvnext.tv/static/assets/cms/media_items/teaser_image_file/1930300.jpg
@@ -455,13 +455,13 @@ def playVideo(url, photo):
 		for pos_MP4, MP4_Url, pos_M3U8, M3U8_Url, videotitle, tvshowtitle, title, NRS_title, season, episode, photo, thumb, duration in COMBINATION_2:
 			MP4_Video = str(pos_MP4)+MP4_Url
 			M3U8_Video = str(pos_M3U8)+M3U8_Url
-			log("(playVideo[3]) Video  -  MP4 = "+MP4_Video)
-			log("(playVideo[3]) Video - M3U8 = "+M3U8_Video)
+			#log("(playVideo[3]) Video  -  MP4 = "+MP4_Video)
+			#log("(playVideo[3]) Video - M3U8 = "+M3U8_Video)
 			if (firstURL == ""  or preferredStreamType == "1" or found_MP4 != len(parts)) and M3U8_Url != "" and found_M3U8 == len(parts):
 				single_videoURL = M3U8_Url
 			elif (M3U8_Url == "" or preferredStreamType == "0" or found_M3U8 != len(parts)) and MP4_Url != "" and found_MP4 == len(parts):
 				single_videoURL = MP4_Url
-			ASSEMBLY.append([single_videoURL, title, NRS_title, tvshowtitle, season, episode, plot, photo, thumb, duration])
+			ASSEMBLY.append([single_videoURL, tvshowtitle, title, NRS_title, season, episode, plot, photo, thumb, duration])
 		if geoblocked_parts == len(parts) and not USER_from_austria():
 			log("(playVideo[3]) Falsche IP ##### DIESE STREAMS SIND LEIDER NUR MIT EINER IP-ADRESSE IN ÖSTERREICH VERFÜGBAR #####")
 			return xbmcgui.Dialog().notification(translation(30523), translation(30524), icon, 10000)
@@ -474,7 +474,7 @@ def playVideo(url, photo):
 			if preferPlayTechnique == "1" and showStreamMESSAGE:
 				xbmcgui.Dialog().notification(translation(30527), (translation(30528).format(title)), icon, 5000)
 				xbmc.sleep(500)
-			for single_videoURL, title, NRS_title, tvshowtitle, season, episode, plot, photo, thumb, duration in ASSEMBLY:
+			for single_videoURL, tvshowtitle, title, NRS_title, season, episode, plot, photo, thumb, duration in ASSEMBLY:
 				pos_LISTE += 1
 				combined_videoURL += single_videoURL+" , "
 				if preferPlayTechnique == "0" or preferPlayTechnique == "1":
@@ -517,13 +517,13 @@ def parameters_string_to_dict(parameters):
 				paramDict[paramSplits[0]] = paramSplits[1]
 	return paramDict
 
-def addLink(name, url, mode, iconimage, plot=None, duration=None, genre=None, season=None, episode=None, seriesname=None):
-	u = sys.argv[0]+"?url="+quote_plus(url)+"&iconimage="+quote_plus(iconimage)+"&mode="+str(mode)
-	liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=iconimage)
-	liz.setInfo(type="Video", infoLabels={"TvShowtitle": seriesname, "Title": name, "Plot": plot, "Duration": duration, "Season": season, "Episode": episode, "Studio": "ATV.at", "Genre": "Unterhaltung", "mediatype": "episode"})
-	liz.setArt({'poster': iconimage})
-	if iconimage != icon:
-		liz.setArt({'fanart': iconimage})
+def addLink(name, url, mode, image, plot=None, seriesname=None, season=None, episode=None, duration=None, genre=None):
+	u = sys.argv[0]+"?url="+quote_plus(url)+"&image="+quote_plus(image)+"&mode="+str(mode)
+	liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=image)
+	liz.setInfo(type="Video", infoLabels={'TVShowTitle': seriesname, 'Title': name, 'Season': season, 'Episode': episode, 'Plot': plot, 'Duration': duration, 'Studio': 'ATV.at', 'Genre': 'Unterhaltung', 'mediatype': 'episode'})
+	liz.setArt({'poster': image})
+	if image != icon:
+		liz.setArt({'fanart': image})
 	else:
 		liz.setArt({'fanart': defaultFanart})
 	liz.addStreamInfo('Video', {'Duration': duration})
@@ -532,13 +532,13 @@ def addLink(name, url, mode, iconimage, plot=None, duration=None, genre=None, se
 		liz.setContentLookup(False)
 	return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=False)
 
-def addDir(name, url, mode, iconimage, plot=None):
+def addDir(name, url, mode, image, plot=None):
 	u = sys.argv[0]+"?url="+quote_plus(url)+"&mode="+str(mode)
-	liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=iconimage)
-	liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": plot})
-	liz.setArt({'poster': iconimage})
-	if iconimage != icon:
-		liz.setArt({'fanart': iconimage})
+	liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=image)
+	liz.setInfo(type="Video", infoLabels={'Title': name, 'Plot': plot})
+	liz.setArt({'poster': image})
+	if image != icon:
+		liz.setArt({'fanart': image})
 	else:
 		liz.setArt({'fanart': defaultFanart})
 	return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
@@ -547,7 +547,7 @@ params = parameters_string_to_dict(sys.argv[2])
 name = unquote_plus(params.get('name', ''))
 url = unquote_plus(params.get('url', ''))
 mode = unquote_plus(params.get('mode', ''))
-iconimage = unquote_plus(params.get('iconimage', ''))
+image = unquote_plus(params.get('image', ''))
 referer = unquote_plus(params.get('referer', ''))
 
 if mode == 'aSettings':
@@ -561,6 +561,6 @@ elif mode == 'listCluster':
 elif mode == 'listEpisodes':
 	listEpisodes(url)
 elif mode == 'playVideo':
-	playVideo(url, iconimage)
+	playVideo(url, image)
 else:
 	index()

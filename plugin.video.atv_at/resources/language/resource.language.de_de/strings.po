@@ -72,8 +72,8 @@ msgid "     Cache storage  (in days)"
 msgstr "     Cache-Speicherung  (in Tagen)"
 
 msgctxt "#30118"
-msgid "     [COLOR orangered]<<<>>> Cache DELETE = CLICK HERE <<<>>>[/COLOR]"
-msgstr "     [COLOR orangered]<<<>>> Cache LÖSCHEN = HIER KLICKEN <<<>>>[/COLOR]"
+msgid "     [COLOR orangered]<<< >>> Cache DELETE = CLICK HERE <<< >>>[/COLOR]"
+msgstr "     [COLOR orangered]<<< >>> Cache LÖSCHEN = HIER KLICKEN <<< >>>[/COLOR]"
 
 # empty strings from id 30119 to 30229
 # SETTINGS-TITLES
@@ -102,8 +102,8 @@ msgstr "[B][COLOR ff0099ff]CACHE[/COLOR][/B]"
 # SETTINGS-DESCRIPTIONS
 
 msgctxt "#30350"
-msgid "     * [COLOR chartreuse]Selection for STANDARD- and as PLAYLIST- Playback[/COLOR] *"
-msgstr "     * [COLOR chartreuse]Auswahl für STANDARD- und als PLAYLISTE- Abspielen[/COLOR] *"
+msgid "     * [COLOR chartreuse]Selection for STANDARD 1 or 2 and as PLAYLIST playback[/COLOR] *"
+msgstr "     * [COLOR chartreuse]Auswahl für STANDARD 1 oder 2 und als PLAYLISTE abspielen[/COLOR] *"
 
 msgctxt "#30351"
 msgid "     * [COLOR chartreuse]Before that, please select preferred Video-file format[/COLOR] *"
@@ -152,12 +152,12 @@ msgid "[COLOR red]NO *VIDEOLINK* COULD BE DETERMINED ![/COLOR]"
 msgstr "[COLOR red]ES KONNTE KEIN *VIDEOLINK* ERMITTELT WERDEN ![/COLOR]"
 
 msgctxt "#30527"
-msgid "ATV.at : [COLOR chartreuse]Start Stream ...[/COLOR]"
-msgstr "ATV.at : [COLOR chartreuse]Starte Stream ...[/COLOR]"
+msgid "ATV.at : [COLOR lime]Start Stream ...[/COLOR]"
+msgstr "ATV.at : [COLOR lime]Starte Stream ...[/COLOR]"
 
 msgctxt "#30528"
-msgid "* [COLOR chartreuse]{0:s}[/COLOR] *"
-msgstr "* [COLOR chartreuse]{0:s}[/COLOR] *"
+msgid "* [COLOR lime]{0:s}[/COLOR] *"
+msgstr "* [COLOR lime]{0:s}[/COLOR] *"
 
 # empty strings from id 30529 to 30600
 # PLUGIN-MAIN and SIDEMENU
@@ -171,5 +171,5 @@ msgid "ATV Settings"
 msgstr "ATV Einstellungen"
 
 msgctxt "#30603"
-msgid "[COLOR chartreuse]Next Page  >>>[/COLOR]"
-msgstr "[COLOR chartreuse]Nächste Seite  >>>[/COLOR]"
+msgid "[COLOR lime]Next Page  >>>[/COLOR]"
+msgstr "[COLOR lime]Nächste Seite  >>>[/COLOR]"
