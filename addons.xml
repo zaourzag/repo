@@ -3099,10 +3099,10 @@ V1.1.1
     </extension>
 </addon>
 
-<addon id="plugin.video.euronews_com" name="euronews.com" version="2.1.1" provider-name="L0RE">
+<addon id="plugin.video.euronews_com" name="euronews.com" version="2.1.2" provider-name="L0RE">
 	<requires>
 		<import addon="xbmc.python" version="2.24.0"/>
-		<import addon="plugin.video.youtube" version="5.3.7"/>
+		<import addon="plugin.video.youtube" version="6.1.0"/>
 		<import addon="script.module.beautifulsoup4" version="4.3.2"/>
 	</requires>
 	<extension point="xbmc.python.pluginsource" library="default.py">
@@ -3126,9 +3126,10 @@ V1.1.1
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 2.1.1  (30.09.2018)[/COLOR][/B] by realvito[CR]
-- fixed: mehrfache Video-Links desselben Artikels
-- added: Videos - bevorzugt über Youtube abspielen (höhere Qualität), sofern Link vorhanden (settings)
+		<news>[B][COLOR orangered]Version 2.1.2  (16.02.2019)[/COLOR][/B] by realvito[CR]
+- fixed: Es werden KEINE Unterordner der Startordner angezeigt
+- optimized: Doppelte Ordner werden jetzt herausgefiltert
+- added: Wenn KEINE Videos im Ordner vorhanden sind - Meldung eingebaut
 		</news>
 	</extension>
 </addon>
