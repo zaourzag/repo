@@ -38,10 +38,10 @@ dataPath    = xbmc.translatePath(addon.getAddonInfo('profile')).encode('utf-8').
 temp           = xbmc.translatePath(os.path.join(dataPath, 'temp', '')).encode('utf-8').decode('utf-8')
 defaultFanart = os.path.join(addonPath, 'fanart.jpg')
 icon = os.path.join(addonPath, 'icon.png')
-language2 = {0: 'www', 1: 'gr', 2: 'fr', 3: 'de', 4: 'it', 5: 'es', 6: 'pt', 7: 'hu', 8: 'ru', 9: 'ua', 10: 'tr', 11: 'arabic', 12: 'fa'}[int(addon.getSetting('language'))]
+langSHORTCUT = {0: 'www', 1: 'gr', 2: 'fr', 3: 'de', 4: 'it', 5: 'es', 6: 'pt', 7: 'hu', 8: 'ru', 9: 'ua', 10: 'tr', 11: 'arabic', 12: 'fa'}[int(addon.getSetting('language'))]
 # Spachennummerierung(settings) ~ English=0|Greek=1|French=2|German=3|Italian=4|Spanish=5|Portuguese=6|Hungarian=7|Russian=8|Ukrainian=9|Turkish=10|Arabic=11|Persian=12
 #         Webseitenkürzel(euronews) = 0: www|1: gr|2: fr|3: de|4: it|5: es|6: pt|7: hu|8: ru|9: ua|10: tr|11: arabic|12: fa
-baseURL = "https://"+language2+".euronews.com"
+baseURL = "https://"+langSHORTCUT+".euronews.com"
 
 xbmcplugin.setContent(int(sys.argv[1]), 'tvshows')
 
@@ -82,20 +82,17 @@ def log(msg, level=xbmc.LOGNOTICE):
 	msg = py2_enc(msg)
 	xbmc.log("["+addon.getAddonInfo('id')+"-"+addon.getAddonInfo('version')+"]"+msg, level)
 
-def cleanTitle(title):
-	return title.replace("&lt;", "<").replace("&gt;", ">").replace("&amp;", "&").replace("&#038;", "&").replace("&#39;", "'").replace("&#039;", "'").replace("&#8211;", "-").replace("&#8220;", "-").replace("&#8221;", "-").replace("&#8217;", "'").replace("&#8230;", "…").replace("&quot;", "\"").strip()
-
 def getUrl(url, header=None, referer=None):
 	global cj
-	debug("Get Url : "+url)
+	#debug("(getUrl) ##### getUrl : "+url+" #####")
 	for cook in cj:
-		debug("Cookie : "+str(cook))
+		debug("(getUrl) ##### COOKIE : "+str(cook)+" #####")
 	opener = build_opener(HTTPCookieProcessor(cj))
 	try:
 		if header:
 			opener.addheaders = header
 		else:
-			opener.addheaders = [('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:50.0) Gecko/20100101 Firefox/50.0')]
+			opener.addheaders = [('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:60.0) Gecko/20100101 Firefox/60.0')]
 			opener.addheaders = [('Accept-Encoding', 'gzip, deflate')]
 		if referer:
 			opener.addheaders = [('Referer', referer)]
@@ -108,8 +105,10 @@ def getUrl(url, header=None, referer=None):
 		failure = str(e)
 		if hasattr(e, 'code'):
 			failing("(getUrl) ERROR - ERROR - ERROR : ########## {0} === {1} ##########".format(url, failure))
+			xbmcgui.Dialog().notification((translation(30521).format("URL")), "ERROR = [COLOR red]{0}[/COLOR]".format(failure), icon, 12000)
 		elif hasattr(e, 'reason'):
 			failing("(getUrl) ERROR - ERROR - ERROR : ########## {0} === {1} ##########".format(url, failure))
+			xbmcgui.Dialog().notification((translation(30521).format("URL")), "ERROR = [COLOR red]{0}[/COLOR]".format(failure), icon, 12000)
 		content = ""
 		return sys.exit(0)
 	opener.close()
@@ -117,106 +116,126 @@ def getUrl(url, header=None, referer=None):
 	except: pass
 	return content
 
-def Rubriken():
-	xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORT_METHOD_LABEL_IGNORE_THE)
+def TopicsIndex():
+	xbmcplugin.addSortMethod(pluginhandle, xbmcplugin.SORT_METHOD_LABEL)
+	debug("(TopicsIndex) -------------------------------------------------- START = TopicsIndex --------------------------------------------------")
+	debug("(TopicsIndex) ##### baseURL : "+baseURL+" #####")
 	un_WANTED = ['Video', 'Living It']
+	title_ISOLATED = set()
 	content = getUrl(baseURL)
 	htmlPage = BeautifulSoup(content, 'html.parser')
-	elemente = htmlPage.find_all("a",attrs={"class":"enw-menuList__sub-title"})
-	liste = []
-	for element in elemente:
-		url = element["href"]
-		name = element.get_text().strip()
-		if not name in liste and not any(x in name for x in un_WANTED):
-			debug("(Rubriken) ##### URL : "+str(url)+" #####")
-			addDir(name, url, 'SubRubriken', icon)
-			liste.append(name)
-	live(baseURL+"/api/watchlive.json")
+	elements = htmlPage.find_all("a",attrs={"class":"enw-menuList__sub-title"})
+	for elem in elements:
+		url = elem["href"]
+		name = smart_str(elem.get_text()).strip()
+		if not any(x in name for x in un_WANTED):
+			newNAME = name.lower()
+			if newNAME in title_ISOLATED:
+				continue
+			title_ISOLATED.add(newNAME)
+			debug("(TopicsIndex) ### TITLE : "+name+" ### URL : "+url+" ###")
+			addDir(name, url, "SubTopics", icon)
+	liveTV(baseURL+"/api/watchlive.json")
 	xbmcplugin.endOfDirectory(pluginhandle)   
 
-def SubRubriken(urls):
-	debug("(SubRubriken) ##### URLS : "+urls+" #####")
+def SubTopics(firstURL):
+	debug("(SubTopics) -------------------------------------------------- START = SubTopics --------------------------------------------------")
+	debug("(SubTopics) ##### startURL : "+firstURL+" #####")
+	url_ISOLATED = set()
 	content = getUrl(baseURL)
-	htmlPage = BeautifulSoup(content, "html.parser")
-	items = htmlPage.find_all("div",attrs={"class": "medium-2 columns"})
-	liste = []
-	addDir("NEWS", urls, 'listVideos', icon)
-	for item in items:
-		linkmain = item.find("a",attrs={"class":"enw-menuList__sub-title"})["href"]
-		if urls == linkmain:
-			debug("(SubRubriken) ##### Gefunden #####")
-			elemente2 = item.find_all("a",attrs={'class':"enw-menuList__sub-item"})   
-			for element2 in elemente2:
-				link = baseURL+element2["href"]
-				name = element2.get_text().strip()
-				debug("(SubRubriken) ##### LINK : "+str(link)+" ##### TITLE : "+str(name)+" #####")
-				if not name in liste:
-					url2 = link.split('/')[-1].strip()
-					debug("(SubRubriken) ##### URL-2 : "+url2+" #####")
-					addDir(name, "/api/program/"+url2, 'listVideos', icon)
-					liste.append(name)
+	addDir("NEWS", firstURL, "listVideos", icon)
+	result = content[content.find('<li id="programs_links" class="programs_links">')+1:]
+	result = result[:result.find('<div class="top-bar-allviews__footer">')]
+	part = result.split('<h3')
+	for i in range(1,len(part),1):
+		entry = part[i]
+		debug("(SubTopics) xxxxx ENTRY : "+str(entry)+" xxxxx")
+		if firstURL in str(entry):
+			debug("(SubTopics) +++++ Eintrag gefunden +++++")
+			match = re.compile('<li><a href="([^"]+?)".*?class="js-menu.*?enw-menuList__sub-item.*?>([^<]+?)</a></li>', re.DOTALL).findall(entry)
+			for link, title in match:
+				newURL = link.split('/')[-1].strip()
+				if newURL in url_ISOLATED:
+					continue
+				url_ISOLATED.add(newURL)
+				name = smart_str(title).strip()
+				debug("(SubTopics) ### TITLE : "+name+" ### newURL : /api/program/"+newURL+" ###")
+				addDir(name, "/api/program/"+newURL, "listVideos", icon, category=name)
 	xbmcplugin.endOfDirectory(pluginhandle)
-   
-def listVideos(url):
+
+def listVideos(url, category=""):
+	debug("(listVideos) -------------------------------------------------- START = listVideos --------------------------------------------------")
+	debug("(listVideos) ### startURL : "+url+" ### CATEGORY : "+category+" ###")
 	finalURL = False
-	YTID = False
+	EMPTY = True
 	plot =""
+	YOUTUBE_id = ""
 	duration =""
 	vid_ISOLATED = set()
 	if not "/api/program/" in url and not "###" in url:
 		content1 = getUrl(baseURL+url)
 		url = re.compile('data-api-url="(.+?)"', re.DOTALL).findall(content1)[0]
-  # https://de.euronews.com/api/program/state-of-the-union?before=1519998565&extra=1&offset=13
-	url2 = baseURL+url.replace('###', '')+"?extra=1"
-	debug("(listVideos) ##### URL : "+url2+" #####")
+	# https://de.euronews.com/api/program/state-of-the-union?before=1519998565&extra=1&offset=13
+	if url[:2] == "//":
+		url2 = "https:"+url.replace('###', '')+"?extra=1"
+	else:
+		url2 = baseURL+url.replace('###', '')+"?extra=1"
+	debug("(listVideos) ##### URL-2 : "+url2+" #####")
 	content2 = getUrl(url2)  
-	struktur = json.loads(content2)
-	for artikel in struktur["articles"]:
-		debug("(listVideos) ##### ARTIKEL : "+str(artikel)+" #####")
-		title = smart_str(artikel["title"])
-		thumb = artikel["images"][0]["url"].replace("{{w}}x{{h}}","800x450")
-		if "leadin" in artikel and artikel["leadin"] !="":
-			plot = smart_str(artikel["leadin"]).strip()
-		debug("(listVideos) ##### Title : "+title+" #####")
+	DATA = json.loads(content2)
+	for article in DATA['articles']:
+		debug("(listVideos) xxxxx ARTIKEL : "+str(article)+" xxxxx")
+		name = smart_str(article['title']).strip()
+		thumb = article['images'][0]['url'].replace('{{w}}x{{h}}', '861x485')
+		if "leadin" in article and article['leadin'] !="":
+			plot = smart_str(article['leadin']).strip()
+		debug("(listVideos) ##### Title : "+name+" #####")
 		debug("(listVideos) ##### Thumb : "+thumb+" #####")
-		for video in artikel["videos"]:
-			if "quality" in video and video["quality"] == "md":
-				finalURL = video["url"]
-			elif "quality" in video and video["quality"] == "hd":
-				finalURL = video["url"]
-			if "youtubeId" in video and video["youtubeId"] != "" and "quality" in video and video["quality"] == "md":
-				YTID = video["youtubeId"]
-			elif "youtubeId" in video and video["youtubeId"] != "" and "quality" in video and video["quality"] == "hd":
-				YTID = video["youtubeId"]
-			if "duration" in video and video["duration"] != "" and "quality" in video and video["quality"] == "md":
-				duration = int(video["duration"])/1000
-			elif "duration" in video and video["duration"] != "" and "quality" in video and video["quality"] == "hd":
-				duration = int(video["duration"])/1000
+		for video in article['videos']:
+			if "quality" in video and video['quality'] == "md":
+				finalURL = video['url']
+				EMPTY = False
+			elif "quality" in video and video['quality'] == "hd":
+				finalURL = video['url']
+				EMPTY = False
+			if "youtubeId" in video and video['youtubeId'] != "" and "quality" in video and video['quality'] == "md":
+				YOUTUBE_id = video['youtubeId']
+			elif "youtubeId" in video and video['youtubeId'] != "" and "quality" in video and video['quality'] == "hd":
+				YOUTUBE_id = video['youtubeId']
+			if "duration" in video and video['duration'] != "" and "quality" in video and video['quality'] == "md":
+				duration = int(video['duration'])/1000
+			elif "duration" in video and video['duration'] != "" and "quality" in video and video['quality'] == "hd":
+				duration = int(video['duration'])/1000
 		if not finalURL or finalURL in vid_ISOLATED:
 			continue
 		vid_ISOLATED.add(finalURL)
-		debug("(listVideos) ##### Video : "+finalURL+" #####")
-		debug("(listVideos) ##### YT-ID : "+str(YTID)+" #####")
-		addLink(title, finalURL, "playVideo", thumb, duration=duration, plot=plot, text=str(YTID))
-	#if struktur["extra"]["offset"]< struktur["extra"]["total"]:
-		#addDir("Next Page", url+"###", 'listVideos', icon, offset=struktur["extra"]["offset"]+struktur["extra"]["count"]) 
+		debug("(listVideos) ##### Video : "+str(finalURL)+" #####")
+		debug("(listVideos) ##### YT-ID : "+str(YOUTUBE_id)+" #####")
+		addLink(name, finalURL, "playVideo", thumb, plot, duration, YOUTUBE_id)
+	#if DATA['extra']['offset'] < DATA['extra']['total']:
+		#addDir("Next Page  >>>", url+"###", "listVideos", icon, offset=DATA['extra']['offset']+DATA['extra']['count'])
+	if EMPTY:
+		return xbmcgui.Dialog().notification((translation(30522).format('Videos')), (translation(30524).format(category)), icon, 8000)
 	xbmcplugin.endOfDirectory(pluginhandle)   
 
-def live(url):
+def liveTV(url):
+	debug("(liveTV) -------------------------------------------------- START = liveTV --------------------------------------------------")
+	debug("(liveTV) ##### startURL : "+url+" #####")
 	content = getUrl(url)   
 	url1 = re.compile('"url":"(.+?)"', re.DOTALL).findall(content)[0]
 	url1 = url1.replace("\/","/").split('//')[1]
-	debug("(live) ##### URL-1 : "+url1+" #####")
+	debug("(liveTV) ##### URL-1 : https://"+url1+" #####")
 	content1 = getUrl("https://"+url1)  
 	url2 = re.compile('"primary":"(.+?)"', re.DOTALL).findall(content1)[0]
 	url2 = url2.replace("\/","/").split('//')[1]
-	debug("(live) ##### URL-2 : "+url2+" #####")
-	addLink("LIVE TV", "https://"+url2, "playVideo", icon)
+	debug("(liveTV) ##### URL-2 : https://"+url2+" #####")
+	addLink("[COLOR lime]* EURONEWS LIVE-TV *[/COLOR]", "https://"+url2, "playVideo", icon)
 
-def playVideo(url, youtubeID):
-	log("(playVideo) YoutubeID = "+youtubeID+" | Standard-URL = "+url)
-	if (addon.getSetting("preferredStream_YOUTUBE") == "true" and youtubeID != "None" and youtubeID != ""):
-		url = 'plugin://plugin.video.youtube/play/?video_id='+youtubeID
+def playVideo(url, YOUTUBE_id=""):
+	debug("(playVideo) -------------------------------------------------- START = playVideo --------------------------------------------------")
+	log("(playVideo) ### YoutubeID = "+YOUTUBE_id+" | Standard-URL = "+url+" ###")
+	if (addon.getSetting("preferredStream_YOUTUBE") == "true" and YOUTUBE_id != "None"):
+		url = 'plugin://plugin.video.youtube/play/?video_id='+YOUTUBE_id
 	listitem = xbmcgui.ListItem(path=url)  
 	xbmcplugin.setResolvedUrl(pluginhandle, True, listitem)
 
@@ -230,12 +249,12 @@ def parameters_string_to_dict(parameters):
 				paramDict[paramSplits[0]] = paramSplits[1]
 	return paramDict
 
-def addLink(name, url, mode, iconimage, duration="", plot="", genre='', text="None"):
-	u = sys.argv[0]+"?url="+quote_plus(url)+"&mode="+str(mode)+"&name="+str(name)+"&text="+str(text)
-	liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=iconimage)
-	liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": plot, "Duration": duration, "Genre": "News", "Studio": "euronews"})
-	if iconimage != icon:
-		liz.setArt({'fanart': iconimage})
+def addLink(name, url, mode, image, plot=None, duration=None, YOUTUBE_id="None"):
+	u = sys.argv[0]+"?url="+quote_plus(url)+"&mode="+str(mode)+"&YOUTUBE_id="+str(YOUTUBE_id)
+	liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=image)
+	liz.setInfo(type='Video', infoLabels={'Title': name, 'Plot': plot, 'Duration': duration, 'Genre': 'News', 'Studio': 'euronews'})
+	if image != icon:
+		liz.setArt({'fanart': image})
 	else:
 		liz.setArt({'fanart': defaultFanart})
 	liz.addStreamInfo('Video', {'Duration': duration})
@@ -243,12 +262,12 @@ def addLink(name, url, mode, iconimage, duration="", plot="", genre='', text="No
 	liz.setContentLookup(False)
 	return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz)
 
-def addDir(name, url, mode, iconimage, plot="", text="None"):
-	u = sys.argv[0]+"?url="+quote_plus(url)+"&mode="+str(mode)+'&name='+str(name)
-	liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=iconimage)
-	liz.setInfo(type="Video", infoLabels={"Title": name, "Plot": plot})
-	if iconimage != icon:
-		liz.setArt({'fanart': iconimage})
+def addDir(name, url, mode, image, plot=None, category=""):
+	u = sys.argv[0]+"?url="+quote_plus(url)+"&mode="+str(mode)+"&category="+str(category)
+	liz = xbmcgui.ListItem(name, iconImage=icon, thumbnailImage=image)
+	liz.setInfo(type='Video', infoLabels={'Title': name, 'Plot': plot})
+	if image != icon:
+		liz.setArt({'fanart': image})
 	else:
 		liz.setArt({'fanart': defaultFanart})
 	return xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=u, listitem=liz, isFolder=True)
@@ -257,18 +276,19 @@ params = parameters_string_to_dict(sys.argv[2])
 name = unquote_plus(params.get('name', ''))
 url = unquote_plus(params.get('url', ''))
 mode = unquote_plus(params.get('mode', ''))
-iconimage = unquote_plus(params.get('bild', ''))
-text = unquote_plus(params.get('text', ''))
+image = unquote_plus(params.get('image', ''))
+YOUTUBE_id = unquote_plus(params.get('YOUTUBE_id', ''))
+category = unquote_plus(params.get('category', ''))
 #offset = unquote_plus(params.get('offset', ''))
 referer = unquote_plus(params.get('referer', ''))
 
-if mode == "SubRubriken":
-	SubRubriken(url)
+if mode == "SubTopics":
+	SubTopics(url)
 elif mode == "listVideos":
-	listVideos(url)
-elif mode  == "live":
-	live(url)
+	listVideos(url, category)
+elif mode  == "liveTV":
+	liveTV(url)
 elif mode == "playVideo":
-	playVideo(url, text)
+	playVideo(url, YOUTUBE_id)
 else:
-	Rubriken()
+	TopicsIndex()
