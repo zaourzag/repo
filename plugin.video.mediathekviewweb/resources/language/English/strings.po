@@ -35,6 +35,10 @@ msgctxt "#32006"
 msgid "Low"
 msgstr ""
 
+msgctxt "#32007"
+msgid "Subtitle"
+msgstr ""
+
 
 
 
@@ -68,4 +72,12 @@ msgstr ""
 
 msgctxt "#30017"
 msgid "Search term"
+msgstr ""
+
+msgctxt "#30018"
+msgid "Last queries"
+msgstr ""
+
+msgctxt "#30019"
+msgid "Remove query"
 msgstr ""

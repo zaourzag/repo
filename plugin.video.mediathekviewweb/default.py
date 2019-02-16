@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
+import os
 from datetime import datetime
 
+import xbmc
 import xbmcgui
 
 from resources.lib.mediathekviewweb import MediathekViewWeb
 from resources.lib.simpleplugin import Plugin, Addon, ListContext
+
 
 ListContext.cache_to_disk = True
 plugin = Plugin()
@@ -14,6 +17,11 @@ _ = plugin.initialize_gettext()
 PER_PAGE = plugin.get_setting("per_page")
 FUTURE = plugin.get_setting("enable_future")
 QUALITY = plugin.get_setting("quality")
+SUBTITLE = plugin.get_setting("enable_subtitle")
+
+
+if SUBTITLE:
+    from resources.lib.subtitles import download_subtitle
 
 
 def list_videos(callback, page, query=None, channel=None):
@@ -55,7 +63,7 @@ def list_videos(callback, page, query=None, channel=None):
                 "studio": i["channel"],
             }},
             'is_playable': True,
-            'url': url,
+            'url': plugin.get_url(action='play', url=url, subtitle=i["url_subtitle"])
         })
     if len(results) == PER_PAGE:
         next_page = page + 1
@@ -81,14 +89,68 @@ def get_channel():
     return channels[index]
 
 
+def save_query(query, channel=None):
+    with plugin.get_storage() as storage:
+        if 'queries' not in storage:
+            storage['queries'] = []
+        entry = {
+            'query': query,
+            'channel': channel
+        }
+        if entry in storage['queries']:
+            storage['queries'].remove(entry)
+        storage['queries'].insert(0, entry)
+
+
+def load_queries():
+    with plugin.get_storage() as storage:
+        if 'queries' not in storage:
+            storage['queries'] = []
+        return storage['queries']
+
+
 @plugin.action()
 def root(params):
     return [
+        {'label': _("Last queries"), 'url': plugin.get_url(action='last_queries')},
         {'label': _("Search"), 'url': plugin.get_url(action='search_all')},
         {'label': _("Search by channel"), 'url': plugin.get_url(action='search_channel')},
         {'label': _("Browse"), 'url': plugin.get_url(action='browse_all')},
         {'label': _("Browse by channel"), 'url': plugin.get_url(action='browse_channel')},
     ]
+
+
+@plugin.action()
+def last_queries(params):
+    queries = load_queries()
+    listing = []
+    for index, item in enumerate(queries):
+        query = item.get('query')
+        channel = item.get('channel')
+        if channel:
+            label = u"{}: {}".format(channel, query)
+            url = plugin.get_url(action='search_channel', query=query, channel=channel)
+        else:
+            label = query
+            url = plugin.get_url(action='search_all', query=query)
+        listing.append({
+            'label': label,
+            'url': url,
+            'context_menu': [
+                [
+                    _("Remove query"),
+                    'XBMC.RunPlugin({0})'.format(plugin.get_url(action='remove_query', index=index))
+                ]
+            ]
+        })
+    return listing
+
+
+@plugin.action()
+def remove_query(params):
+    with plugin.get_storage() as storage:
+        storage['queries'].pop(int(params.index))
+    xbmc.executebuiltin('Container.Refresh')
 
 
 @plugin.action()
@@ -106,6 +168,7 @@ def search_all(params):
         query = dialog.input(_("Search term"))
     if not query:
         return
+    save_query(query)
     return list_videos("search_all", page, query=query)
 
 
@@ -134,12 +197,21 @@ def search_channel(params):
         query = dialog.input(_("Search term"))
     if not query:
         return
+    save_query(query, channel)
     return list_videos("search_channel", page, query=query, channel=channel)
 
 
 @plugin.action()
 def play(params):
-    return params.url
+    play_item = {
+        'path': params.url
+    }
+    if SUBTITLE:
+        subtitle_file = os.path.join(addon.config_dir, "subtitle.srt")
+        subtitle_downloaded = download_subtitle(params.subtitle, subtitle_file)
+        if subtitle_downloaded:
+            play_item['subtitles'] = [subtitle_file]
+    return Plugin.resolve_url(params.url, play_item=play_item)
 
 
 if __name__ == '__main__':
