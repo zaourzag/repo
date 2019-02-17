@@ -372,49 +372,55 @@ class EPG(xbmcgui.WindowXML):
         try:
           RESTART=accountData['session']['selective_recall_eligible']
         except KeyError:RESTART = False
+        try:
+          SERIE=accountData['session']['series_recording_eligible']
+        except KeyError:SERIE = False
        
         
-        #if SWISS == 'true':
-            # Swiss Account
-            # if startime is in the future -> setup recording
+       
+        # if startime is in the future -> setup recording
         if start > now :
         #if not self.premiumUser: xbmcgui.Dialog().ok('Error',' ',strings(ERROR_NO_PREMIUM))
             if RECORD:
                 #print 'SERIES:  ' + str(_zattooDB_.getSeries(program['showID']))
-                if _zattooDB_.getSeries(program['showID']):#Series record avilable
-                    ret = xbmcgui.Dialog().select(program['channel']+': '+program['title']+' '+program['start_date'].strftime('%H:%M')+' - '+program['end_date'].strftime('%H:%M'),[strings(RECORD_SHOW), strings(RECORD_SERIES)])
-                    if ret==0: #recording
-                        setup_recording({'program_id': program['showID']})
-                        return
-                    elif ret==1: #recording_series
-                        setup_recording({'program_id': program['showID'], 'series': 'true'})
-                        return
-                    else: return
+                if SERIE:
+                    if _zattooDB_.getSeries(program['showID']):#Series record avilable
+                        ret = xbmcgui.Dialog().select(program['channel']+': '+program['title']+' '+program['start_date'].strftime('%H:%M')+' - '+program['end_date'].strftime('%H:%M'),[strings(RECORD_SHOW), strings(RECORD_SERIES)])
+                        if ret==0: #recording
+                            setup_recording({'program_id': program['showID']})
+                            return
+                        elif ret==1: #recording_series
+                            setup_recording({'program_id': program['showID'], 'series': 'true'})
+                            return
+                        else: return
                 
                 elif xbmcgui.Dialog().ok(program['title'], strings(RECORD_SHOW) + "?"):
                     setup_recording({'program_id': program['showID']})
                     return
             
-            else: return
+            else: 
+                xbmcgui.Dialog().ok('Error',' ',strings(ERROR_NO_PREMIUM))
+                return
         # else if endtime is in the past -> recall
         elif end < now:
             if RECALL:
                 if __addon__.getSetting('epgPlay')=='true':
                     url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] + "&showID=" + program['showID'] + "&start=" + str(start) + "&end=" + str(end)
                 else:
-                    if _zattooDB_.getSeries(program['showID']):#Series record avilable
-                        ret = xbmcgui.Dialog().select(program['channel']+': '+program['title']+' '+program['start_date'].strftime('%H:%M')+' - '+program['end_date'].strftime('%H:%M'),[strings(PLAY_FROM_START), strings(RECORD_SHOW), strings(RECORD_SERIES)])
-                        if ret==0:  #recall
-                            url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] + "&showID=" + program['showID'] + "&start=" + str(start) + "&end=" + str(end)
-                        elif ret==1: #record
-                            #url = "plugin://"+__addonId__+"/?mode=record_p&program_id=" + program['showID']
-                            setup_recording({'program_id': program['showID']})
-                            return
-                        elif ret==2: #record series
-                            #url = "plugin://"+__addonId__+"/?mode=record_p&program_id=" + program['showID']
-                            setup_recording({'program_id': program['showID'], 'series': 'true'})
-                            return
-                        else: return
+                    if SERIE:
+                        if _zattooDB_.getSeries(program['showID']):#Series record avilable
+                            ret = xbmcgui.Dialog().select(program['channel']+': '+program['title']+' '+program['start_date'].strftime('%H:%M')+' - '+program['end_date'].strftime('%H:%M'),[strings(PLAY_FROM_START), strings(RECORD_SHOW), strings(RECORD_SERIES)])
+                            if ret==0:  #recall
+                                url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] + "&showID=" + program['showID'] + "&start=" + str(start) + "&end=" + str(end)
+                            elif ret==1: #record
+                                #url = "plugin://"+__addonId__+"/?mode=record_p&program_id=" + program['showID']
+                                setup_recording({'program_id': program['showID']})
+                                return
+                            elif ret==2: #record series
+                                #url = "plugin://"+__addonId__+"/?mode=record_p&program_id=" + program['showID']
+                                setup_recording({'program_id': program['showID'], 'series': 'true'})
+                                return
+                            else: return
                     else: 
                         ret = xbmcgui.Dialog().select(program['channel']+': '+program['title']+' '+program['start_date'].strftime('%H:%M')+' - '+program['end_date'].strftime('%H:%M'),[strings(PLAY_FROM_START), strings(RECORD_SHOW)])
                         if ret==0:  #recall
@@ -424,6 +430,9 @@ class EPG(xbmcgui.WindowXML):
                             setup_recording({'program_id': program['showID']})
                             return
                         else: return
+            else:
+                xbmcgui.Dialog().ok('Error',' ',strings(ERROR_NO_PREMIUM))
+                return
         # else currently playing
         else:
             if __addon__.getSetting('epgPlay')=='true' :
@@ -462,16 +471,19 @@ class EPG(xbmcgui.WindowXML):
                         setup_recording({'program_id': program['showID']})
                         return
                     else: return
-            else: 
-                ret = xbmcgui.Dialog().select(program['channel']+': '+program['title']+' '+program['start_date'].strftime('%H:%M')+' - '+program['end_date'].strftime('%H:%M'), [strings(WATCH_CHANNEL), strings(RECORD_SHOW)])
-                if ret==0:  #watch live
+            else:
+                if RECORD: 
+                    ret = xbmcgui.Dialog().select(program['channel']+': '+program['title']+' '+program['start_date'].strftime('%H:%M')+' - '+program['end_date'].strftime('%H:%M'), [strings(WATCH_CHANNEL), strings(RECORD_SHOW)])
+                    if ret==0:  #watch live
+                        url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] + "&showID=" + program['showID']
+                    
+                    elif ret==1: #record
+                        #url = "plugin://"+__addonId__+"/?mode=record_p&program_id=" + program['showID']
+                        setup_recording({'program_id': program['showID']})
+                        return
+                    else: return
+                else:
                     url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] + "&showID=" + program['showID']
-                
-                elif ret==1: #record
-                    #url = "plugin://"+__addonId__+"/?mode=record_p&program_id=" + program['showID']
-                    setup_recording({'program_id': program['showID']})
-                    return
-                else: return
         # German Account                
         # else:
             # #debug('German Account')
@@ -1079,6 +1091,7 @@ class EPG(xbmcgui.WindowXML):
         dialog = xbmcgui.Dialog()
         today = datetime.date.today()
         date = dialog.numeric(1, localString(31924)).replace(' ','0').replace('/','.')
+        if date == today.strftime('%d.%m.%Y'): return
         datelow = (datetime.date.today() - datetime.timedelta(days=7))
         datehigh = (datetime.date.today() + datetime.timedelta(days=14))
 

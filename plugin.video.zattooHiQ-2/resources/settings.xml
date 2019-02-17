@@ -4,7 +4,7 @@
                 <setting label="31001" id="username" type="text" default=""/>
                 <setting label="31002" id="password" type="text" option="hidden" enable="!eq(-1,)" default=""/>
                 <setting id="channellist" enabled="false"/>
-                <setting id="provider" type="enum" label="31004" default = "0" values="Zattoo|Netplus|Quickline|m-net|WALY.TV|meinewelt.cc|BBV-tv.net|VTXtv.ch|myvisiontv.ch|GLATTvision.ch|SAKtv.ch|NetCologne|EWE.de|quantum TV|Salt.tv" />
+                <setting id="provider" type="enum" label="31004" default = "0" values="Zattoo|Netplus|Quickline|m-net|WALY.TV|meinewelt.cc|BBV-tv.net|VTXtv.ch|myvisiontv.ch|GLATTvision.ch|SAKtv.ch|NetCologne|EWE.de|quantum TV|Salt.tv|1und1" />
                 <setting type="sep"/>                
                 <setting label="310033" id="dateregistered" type="date" enable="false" visible="gt(0,)"/>
                 <setting label="310038" id="country" type="text" enable="false" visible="gt(0,)"/>
@@ -29,6 +29,7 @@
         <setting label="31009" type="action" action="RunPlugin(plugin://plugin.video.zattooHiQ/?mode=selectStartChannel)" enable="eq(-1,true)"/>
 	<setting type="sep"/>
         <setting label="310099" type="bool" id="help" default="true"/>
+        <setting label="310100" type="bool" id="settings" default="false"/>
         <setting label="310096" type="bool" id="debug" default="false"/>
  
         </category>
@@ -72,6 +73,7 @@
         <setting label="32019" id="key_List" type="text" default="" enable="false" visible="gt(0,)"/>
         <setting label="32020" id="key_recordlist" type="text" default="" enable="false" visible="gt(0,)"/>
         <setting label="32021" id="key_category" type="text" default="" enable="false" visible="gt(0,)"/>
+        <setting label="32027" id="key_playerosd" type="text" default="" enable="false" visible="gt(0,)"/>
 <!--
         <setting label="32022" id="key_genre" type="text" default="" enable="false" visible="gt(0,)"/>
 -->

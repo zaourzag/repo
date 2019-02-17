@@ -454,6 +454,11 @@ msgctxt "#310099"
 msgid "Show Help in Main Menu"
 msgstr ""
 
+
+msgctxt "#310100"
+msgid "Show Settings in Main Menu"
+msgstr ""
+
 ### EPG/Aufnahmen ###
 msgctxt "#31010"
 msgid "EPG/Recordings"
@@ -803,9 +808,9 @@ msgctxt "#32021"
 msgid "show Categorylist"
 msgstr ""
 
-msgctxt "#32022"
-msgid "show Genrelist"
-msgstr ""
+#msgctxt "#32022"
+#msgid "show Genrelist"
+#msgstr ""
 
 msgctxt "#32023"
 msgid "pause"
@@ -841,4 +846,8 @@ msgstr ""
 
 msgctxt "#32026"
 msgid "Recording can not be restored"
+msgstr ""
+
+msgctxt "#32022"
+msgid "Player OSD"
 msgstr ""

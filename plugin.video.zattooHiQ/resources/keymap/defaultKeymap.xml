@@ -21,6 +21,8 @@
 			<return>RunPlugin("plugin://plugin.video.zattooHiQ/?mode=showInfo")</return>
 			<enter>RunPlugin("plugin://plugin.video.zattooHiQ/?mode=showInfo")</enter>
 			<key id="11">RunPlugin("plugin://plugin.video.zattooHiQ/?mode=showInfo")</key>
+			<!-- Show Kodi OSD -->
+			<return mod="longpress">OSD</return>
 			<!-- Teletext -->
 			<v>RunPlugin("plugin://plugin.video.zattooHiQ/?mode=teletext")</v>
 			<!-- EPG -->

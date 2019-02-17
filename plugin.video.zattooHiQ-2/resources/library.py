@@ -39,7 +39,7 @@ class library:
   
   def make_library(self):
     folder=__addon__.getSetting('library_dir')
-    if not folder: return
+    if folder == '': return
     import os
     libraryPath = xbmc.translatePath(folder)
     if not os.path.exists(libraryPath): os.makedirs(libraryPath)

@@ -1,10 +1,13 @@
 ==================================================
-[B]ZattooHiQ v1.6.8.2[/B]13.12.2018 Steffen Rolapp
+[B]ZattooHiQ v1.6.9 [/B]17.02.2019 Steffen Rolapp
 ==================================================
-- Recall fix für Reseller Accounts im EPG
-- Farben bei Aufnahmen geändert
-- Skin vom EPG geändert
-- Fix Session Renew 
+- Kodi Player OSD über Longpress Return zu erreichen
+- WidgetProblem bei Aeon Silvo behoben
+- EPG Datums Eingabe exit wenn heute
+- Settings können im Hauptmenu angezeigt werden
+- Aufnahmen nur wenn im Abo
+- 1und1 als Reseller hinzugefügt
+- EPG überarbeitet
 
 ==================================================
 [B]ZattooHiQ v1.6.8 [/B]23.09.2018 Steffen Rolapp

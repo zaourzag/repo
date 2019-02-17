@@ -34,6 +34,7 @@ if REMOTE_DBG:
 import xbmc, xbmcgui, xbmcplugin, xbmcaddon
 import sys, urlparse,  os, json
 import time, datetime, threading
+import _strptime
     
 from resources.zattooDB import ZattooDB
 from resources.library import library
@@ -94,6 +95,9 @@ def convert_date(date):
       res = datetime.datetime(*(time.strptime(date, "%Y-%m-%dT%H:%M:%SZ")[0:6]))
   res += datetime.timedelta(seconds=_timezone_)
   return str(res.strftime('%A,%d.%B %Y %H:%M'))
+
+# This is a throwaway variable to deal with a python bug
+#throwaway = datetime.datetime.strptime('20110101','%Y%m%d')
   
 ### Account Data ###
 
@@ -105,6 +109,11 @@ try:
   RESTART=accountData['session']['selective_recall_eligible']
 except KeyError:RESTART = False
 
+try:
+  SERIE=accountData['session']['series_recording_eligible']
+except KeyError:SERIE = False
+
+RECORD=accountData['session']['recording_eligible']
 if RECALL:
   __addon__.setSetting('recall', 'recall')
 elif RESTART:
@@ -265,12 +274,16 @@ def build_root(addon_uri, addon_handle):
     {'title': localString(31104), 'image': iconPath, 'isFolder': False, 'url': addon_uri + '?' + urllib.urlencode({'mode': 'epg'})},
     {'title': localString(31102), 'image': iconPath, 'isFolder': True, 'url': addon_uri + '?' + urllib.urlencode({'mode': 'channellist'})},
     {'title': localString(31105), 'image': iconPath, 'isFolder': True, 'url': addon_uri + '?' + urllib.urlencode({'mode': 'searchlist', })},
-    {'title': localString(31106), 'image': iconPath, 'isFolder': True, 'url': addon_uri + '?' + urllib.urlencode({'mode': 'recordings'})},
-    {'title': localString(31108), 'image': iconPath, 'isFolder': True, 'url': addon_uri + '?' + urllib.urlencode({'mode': 'category'})},
-
+    
   ]
+  if RECORD:
+    content.append({'title': localString(31106), 'image': iconPath, 'isFolder': True, 'url': addon_uri + '?' + urllib.urlencode({'mode': 'recordings'})},)
+  content.append({'title': localString(31108), 'image': iconPath, 'isFolder': True, 'url': addon_uri + '?' + urllib.urlencode({'mode': 'category'})},)
+
   if __addon__.getSetting('help') == "true":
     content.append({'title': '[COLOR yellow]'+local(10043)+'[/COLOR]', 'image': iconPath, 'isFolder': True, 'url': addon_uri + '?' + urllib.urlencode({'mode': 'showhelp'})})
+  if __addon__.getSetting('settings') == "true":
+    content.append({'title': '[COLOR yellow]'+localString(31107)+'[/COLOR]', 'image': iconPath, 'isFolder': False, 'url': addon_uri + '?' + urllib.urlencode({'mode': 'show_settings'})})
 
   build_directoryContent(content, addon_handle, True, False, 'files')
   
@@ -598,7 +611,9 @@ def watch_recording(addon_uri, addon_handle, recording_id, start=0):
     
     zStoptime=datetime.datetime.fromtimestamp(startTime+round(pos)-300 - _timezone_ ).strftime("%Y-%m-%dT%H:%M:%SZ")
     resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/playlist/recording', {'recording_id': recording_id, 'position': zStoptime})
-  
+    xbmc.executebuiltin('Container.Refresh')
+    debug(resultData)
+
 def setup_recording(program_id):
   #print('RECORDING: '+program_id)
   params = {'program_id': program_id}
@@ -924,17 +939,17 @@ def search_show(addon_uri, addon_handle, search):
         else:
           item['url'] = addon_uri + '?' + urllib.urlencode({'mode': 'watch_c', 'id': program['cid'], 'showID':showID})
           recall_shows.append(item)
-        if record and SWISS:
+        if record and RECALL:
           rec['url'] = addon_uri + '?' + urllib.urlencode({'mode': 'record_p', 'program_id': program['id']})
           record_shows.append(rec)
     elif startLocal < now:
-      if premiumUser and SWISS:
+      if RECALL and record:
         item['url'] = addon_uri + '?' + urllib.urlencode({'mode': 'watch_c', 'id': program['cid'], 'start': str(start+300), 'end': str(end)})
         recall_shows.append(item)      
         rec['url'] = addon_uri + '?' + urllib.urlencode({'mode': 'record_p', 'program_id': program['id']})
         record_shows.append(rec)
     else:
-      if record and SWISS:
+      if RECORD:
         rec['url'] = addon_uri + '?' + urllib.urlencode({'mode': 'record_p', 'program_id': program['id']})
         record_shows.append(rec)
     
@@ -1499,7 +1514,7 @@ def main():
     delete = xbmcgui.Dialog().yesno(__addonname__, __addon__.getLocalizedString(31911))
     if delete:
       _library_.delete_library()
-      __addon__.setSetting(id="library_dir", value="")
+      __addon__.setSetting(id='library_dir', value="")
       xbmc.executebuiltin('Container.Refresh')
   elif action == 'cleanProg':
     _zattooDB_.cleanProg()

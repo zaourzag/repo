@@ -160,6 +160,7 @@ class ZattooDB(object):
     elif PROVIDER == "12": ZAPIUrl = "https://tvonline.ewe.de"
     elif PROVIDER == "13": ZAPIUrl = "https://www.quantum-tv.com"
     elif PROVIDER == "14": ZAPIUrl = "https://tv.salt.ch"
+    elif PROVIDER == "15": ZAPIUrl = "https://www.1und1.tv"
     
     if zapiSession.init_session(__addon__.getSetting('username'), __addon__.getSetting('password'), ZAPIUrl):                                
       return zapiSession
