@@ -6,6 +6,8 @@ import urlparse
 import resources.lib.ewetv as ewetv
 import resources.lib.zattoo as zattoo
 import resources.lib.netcologne as netcologne
+import resources.lib.dnsnet as dnsnet
+
 import channellist
 
 addon = xbmcaddon.Addon()
@@ -44,6 +46,10 @@ if addon.getSetting('netcologne') == 'true':
     nc = netcologne.NetCologne(addon.getSetting('user_nc'), addon.getSetting('pass_nc'))
     if nc.login():
         tv_services.append(nc)
+if addon.getSetting('dnsnet') == 'true':
+    dnsnet = dnsnet.DnsNet(addon.getSetting('user_dnsnet'), addon.getSetting('pass_dnsnet'))
+    if ewetv.login():
+        tv_services.append(ewetv)
 if addon.getSetting('zattoo') == 'true':
     zattoo = zattoo.Zattoo(addon.getSetting('user_zattoo'), addon.getSetting('pass_zattoo'))
     if zattoo.login():
