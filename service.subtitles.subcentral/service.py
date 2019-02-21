@@ -323,9 +323,32 @@ def downloadSubtitle():
     subtitleUrl = urllib.unquote_plus(params.get('url', ''))
     downloadUrl = mainUrl + "/" + subtitleUrl
     filename = downloadUrlToDirectory(downloadUrl, subtitleDownloadDirectory)
-    fileLocation = subtitleDownloadDirectory + filename
+    #fileLocation = subtitleDownloadDirectory + filename
+    fileLocation = xbmc.translatePath(os.path.join(subtitleDownloadDirectory, filename)).decode("utf-8")
+    debug("BLU :"+fileLocation)
+    fileLocation=urllib.quote_plus(fileLocation)
+    debug("+####+"+fileLocation)
     showInfoNotification(filename)
-    xbmc.executebuiltin("XBMC.Extract(" + fileLocation + ", " + extractSubtitleDirectory + ")", True)
+    #xbmc.executebuiltin("XBMC.Extract(" + fileLocation + ", " + extractSubtitleDirectory + ")", True)
+    try:
+        liste=xbmcvfs.listdir("rar://"+fileLocation)
+        type="rar://"
+    except:    
+        liste=xbmcvfs.listdir("zip://"+fileLocation)
+        type="zip://"
+    debug(fileLocation)
+    debug(type)
+    debug(liste)
+    for element in liste:
+        debug(element)
+        if not element==[]:
+           ziel=xbmc.translatePath(os.path.join(extractSubtitleDirectory, element[0])).decode("utf-8")
+           quelle=xbmc.translatePath(os.path.join(type, fileLocation)).decode("utf-8")
+           quelle=quelle+"/"+element[0]
+           debug(ziel)
+           debug(quelle)
+           xbmcvfs.copy(quelle, ziel)
+           
     selectSubTitleFile()
 
 
