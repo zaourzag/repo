@@ -769,11 +769,12 @@ Auch die aktuelle Tabelle der 1. und 2. Bundesliga kann angezeigt werden.
     </extension>
 </addon>
 
-<addon id="service.subtitles.subcentral" name="subcentral" version="0.8.11" provider-name="L0RE">
+<addon id="service.subtitles.subcentral" name="subcentral" version="0.8.12" provider-name="L0RE">
   <requires>
     <import addon="xbmc.python" version="2.19.0"/>
     <import addon="script.module.requests" version="2.12.4"/>
     <import addon="script.module.beautifulsoup4" version="4.3.2"/>
+    <import addon="vfs.rar" version="2.0.2" />
   </requires>
   <extension point="xbmc.subtitle.module"
              library="service.py" />
@@ -4616,10 +4617,11 @@ Parental warning: The Maxdome Plattform consists of differnt types of content - 
   </extension>
 </addon>
 
-<addon id="service.subtitles.tv4user" name="Tv4user.de" version="0.8.12" provider-name="L0RE">
+<addon id="service.subtitles.tv4user" name="Tv4user.de" version="0.8.13" provider-name="L0RE">
   <requires>
     <import addon="xbmc.python" version="2.19.0"/>
     <import addon="script.module.requests" version="2.12.4"/>
+    <import addon="vfs.rar" version="2.0.2" />
   </requires>
   <extension point="xbmc.subtitle.module"
              library="service.py" />
