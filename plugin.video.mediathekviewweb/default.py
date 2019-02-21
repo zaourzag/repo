@@ -1,12 +1,21 @@
 # -*- coding: utf-8 -*-
 import os
-from datetime import datetime
+import sys
+import datetime
 
 import xbmc
 import xbmcgui
+import xbmcaddon
 
 from resources.lib.mediathekviewweb import MediathekViewWeb
 from resources.lib.simpleplugin import Plugin, Addon, ListContext
+
+# add pytz module to path
+addon_dir = xbmc.translatePath(xbmcaddon.Addon().getAddonInfo('path')).decode('utf-8')
+module_dir = os.path.join(addon_dir, "resources", "lib", "pytz")
+sys.path.insert(0, module_dir)
+
+import pytz
 
 
 ListContext.cache_to_disk = True
@@ -35,26 +44,34 @@ def list_videos(callback, page, query=None, channel=None):
 
     listing = []
     for i in results:
-        dt = datetime.fromtimestamp(i["timestamp"])
+        dt = datetime.datetime.fromtimestamp(i["timestamp"], pytz.timezone('Europe/Berlin'))
 
         if QUALITY == 0:  # Hoch
-            url = i["url_video_hd"]
+            url = i.get("url_video_hd")
             if not url:
-                url = i["url_video"]
+                url = i.get("url_video")
             if not url:
-                url = i["url_video_low"]
+                url = i.get("url_video_low")
         elif QUALITY == 1:  # Mittel
-            url = i["url_video"]
+            url = i.get("url_video")
             if not url:
-                url = i["url_video_low"]
+                url = i.get("url_video_low")
         else:  # Niedrig
-            url = i["url_video_low"]
+            url = i.get("url_video_low")
+
+        today = datetime.date.today()
+        if dt.date() == today:
+            date = _("Today")
+        elif dt.date() == today + datetime.timedelta(days=-1):
+            date = _("Yesterday")
+        else:
+            date = dt.strftime("%d.%m.%Y")
 
         listing.append({
             'label': u"[{0}] {1} - {2}".format(i["channel"], i["topic"], i["title"]),
             'info': {'video': {
                 'title': i["title"],
-                'plot': '[B]' + dt.strftime("%d.%m.%Y - %H:%M") + '[/B]\n' + i["description"],
+                'plot': '[B]' + date + ' - ' + dt.strftime("%H:%M") + '[/B]\n' + i["description"],
                 'dateadded': dt.strftime("%Y-%m-%d %H:%M:%S"),
                 'date': dt.strftime("%d.%m.%Y"),
                 'aired': dt.strftime("%d.%m.%Y"),
