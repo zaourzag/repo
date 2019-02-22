@@ -310,6 +310,7 @@ def playdash(xstream,xlink,xdrm):
                 licstring = "https://widevine.rtl.de/index/proxy|x-auth-token="+token+"&"+headerfelder+"&Content-Type=|R{SSM}|"
                 listitem.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')
                 listitem.setProperty('inputstream.adaptive.license_key', licstring)
+                listitem.setProperty("inputstream.adaptive.manifest_update_parameter", "full")
         else: 
             if xdrm == "1":
                 xbmcgui.Dialog().ok("TV-NOW / KODI-Version-Fehler", "[COLOR orangered]ACHTUNG : ... Für diese Sendung ist mindestens *KODI 18* erforderlich !!![/COLOR]", "Bitte die vorhandene KODI-Installation mindestens auf KODI-Version 18 updaten !!!")
@@ -676,6 +677,7 @@ def playfolge(url,nummer):
                 debug(licstring)
                 listitem.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')                
                 listitem.setProperty('inputstream.adaptive.license_key', licstring)                
+                listitem.setProperty("inputstream.adaptive.manifest_update_parameter", "full")
                 debug("LICENSE: " + licstring)      
           if kodi18=="true" :                
                 xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=stream+"|"+headerfelder, listitem=listitem)
@@ -711,9 +713,10 @@ def hashplay(idd):
              if not streamcode=="0":
                stream=streamcode
                debug("STREAM : #" +stream +"#")
-          content = getUrl(deeplink)
-          referer=re.compile("webLink = '(.+?)'", re.DOTALL).findall(content)[0]                
-          headerfelder="user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36&Referer="+referer
+#content = getUrl(deeplink)
+#          referer=re.compile("webLink = '(.+?)'", re.DOTALL).findall(content)[0]                
+          headerfelder="user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36" #&Referer="+referer	
+		  #headerfelder="user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36&Referer="+referer
           if kodi18=="true" :                
                 listitem = xbmcgui.ListItem(path=stream+"|"+headerfelder,label=title,iconImage=bild,thumbnailImage=bild)
           else:
@@ -733,6 +736,7 @@ def hashplay(idd):
                 debug(licstring)
                 listitem.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')                
                 listitem.setProperty('inputstream.adaptive.license_key', licstring)                
+                listitem.setProperty("inputstream.adaptive.manifest_update_parameter", "full")
                 debug("LICENSE: " + licstring)      
           if kodi18=="true" :                
                 xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]), url=stream+"|"+headerfelder, listitem=listitem)
@@ -917,6 +921,7 @@ def playchannel_dash(url,name,image):
     licstring='https://widevine.rtl.de/index/proxy|x-auth-token='+token+"&"+headerfelder+"&Content-Type=|R{SSM}|"
     listitem.setProperty('inputstream.adaptive.license_type', 'com.widevine.alpha')                
     listitem.setProperty('inputstream.adaptive.license_key', licstring)
+    listitem.setProperty('inputstream.adaptive.manifest_update_parameter',  "full")
     return listitem
 
 def playchannel(channel):
