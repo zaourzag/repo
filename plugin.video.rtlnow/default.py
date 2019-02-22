@@ -134,7 +134,8 @@ def parameters_string_to_dict(parameters):
 	return paramDict
   
 def addDir(name, url, mode, iconimage, desc="", duration="",nummer=0,bild="",title="",addtype=0,serie="",stunden=""):
-    u = sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&nummer="+str(nummer)+"&bild="+str(bild)+"&title="+str(title)+"&stunden="+str(stunden)
+    myargv=sys.argv[0].replace("|","")
+    u = myargv+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&nummer="+str(nummer)+"&bild="+str(bild)+"&title="+str(title)+"&stunden="+str(stunden)
     ok = True
     liz = xbmcgui.ListItem(name)
     liz.setArt({ 'fanart': iconimage })
