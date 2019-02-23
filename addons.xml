@@ -8958,3 +8958,133 @@ Thank you ran.de for your great service, especially for providing ranNFL reLives
     <platform>all</platform>
   </extension>
 </addon>
+
+<addon id="plugin.video.vodster" name="Vodster (dev)" version="0.1.1" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.24.0"/>
+        <import addon="script.module.requests" version="2.9.1"/>
+        <import addon="script.module.youtube.dl" version="14.810.0"/>        
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+  <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="en">Seearch over Multible Germen VIdeo on Demand Pages, Inofficial Plugin</summary>
+        <language></language>
+        <description lang="en">Seearch over Multible Germen VIdeo on Demand Pages, Inofficial Plugi</description>
+        <disclaimer lang="en">-</disclaimer>
+        <website>http://www.vodster.de</website>
+        <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.vodster</source>
+        <forum>http://www.kodinerds.net/</forum>
+        <email>Andreas at vogler dot name</email>
+  </extension>
+</addon>
+
+<addon id="service.subtitles.tv4user" name="Tv4user.de" version="0.8.13" provider-name="L0RE">
+  <requires>
+    <import addon="xbmc.python" version="2.19.0"/>
+    <import addon="script.module.requests" version="2.12.4"/>
+    <import addon="vfs.rar" version="2.0.2" />
+  </requires>
+  <extension point="xbmc.subtitle.module"
+             library="service.py" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Untertitel von board.tv4user.de fuer Serien in Deutsch und Englisch</summary>
+    <description lang="en">Subtitle in German/English for Serien from board.tv4user.de </description>
+    <disclaimer lang="en"></disclaimer>
+    <platform>all</platform>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    <forum>http://www.kodinerds.net/index.php/Thread/47097-RELEASE-Untertitel-Plugin-f%C3%BCr-http-board-tv4user-de</forum>
+    <website>http://www.br.de</website>
+    <email>andreas at vogler dot name</email>
+    <source>https://github.com/kodinerds/repo/tree/master/addons/service.subtitles.tv4user</source>
+  </extension>
+</addon>
+
+<addon id="script.module.oauthlib" name="oauthlib" version="2.0.1" provider-name="Idan Gazit">
+	<requires>
+		<import addon="xbmc.python" version="2.24.0"/>
+	</requires>
+	<extension point="xbmc.python.module" library="lib" />
+	<extension point="xbmc.addon.metadata">
+		<platform>all</platform>
+		<language></language>
+		<summary lang="en">A generic, spec-compliant, thorough implementation of the OAuth request-signing logic</summary>
+		<description lang="en">A generic, spec-compliant, thorough implementation of the OAuth request-signing logic</description>
+		<disclaimer lang="en">A generic, spec-compliant, thorough implementation of the OAuth request-signing logic</disclaimer>
+		<license>OAuthLib is yours to use and abuse according to the terms of the BSD license. Check the LICENSE file for full details</license>
+		<website>https://pypi.python.org/pypi/oauthlib</website>
+		<source>https://pypi.python.org/pypi/oauthlib</source>
+	</extension>
+</addon>
+
+<addon id="plugin.video.magine" name="Magine" version="0.3.13" provider-name="L0RE">
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+  <requires>
+      <import addon="script.module.requests" version="2.12.4"/>
+      <import addon="inputstream.adaptive" version="1.0.8"/>
+      <import addon="script.module.inputstreamhelper" version="0.2.2"/>
+  </requires>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Magine TV</summary>
+    <summary lang="de">Magine TV</summary>
+    <description lang="en">Magine TV</description>
+    <description lang="de">Magine TV</description>
+    <website></website>
+    <email>andreas at vogler dot name</email>
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="plugin.video.ran_de" name="ran" version="2.3.1" provider-name="PUR3, L0RE, Linkinsoldier">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="de">Livestreams und Videos von ran.de</summary>
+        <summary lang="en">Livestreams and videos from ran.de</summary>
+        <description lang="de">Dieses inoffizielle Addon ermöglicht es euch, die neusten Videos und Livestreams von ran.de in Kodi zu streamen.
+
+Vielen Dank an dieser Stelle an ran.de für den guten Service, insb. ranNFL mit ReLive in HD mit raus geschnittener Werbung! </description>
+        <description lang="en">This is an inofficial Addon and gives you the chance to stream livestreams and the latest videos from ran.de directly in Kodi.
+        
+Thank you ran.de for your great service, especially for providing ranNFL reLives with removed commercials in HD! </description>
+    </extension>
+</addon>
+
+<addon id="skin.destiny-k18" name="Destiny K18" version="2.1.0" provider-name="Jugger">
+    <requires>
+		<import addon="xbmc.gui" version="5.13.0"/>
+	</requires>
+	<extension point="xbmc.gui.skin" debugging="false">
+		<res width="1920" height="1080" aspect="16:9" default="true" folder="xml" />
+	</extension>
+    <extension point="xbmc.addon.metadata">
+    <summary lang="en">skin created and design by Jugger</summary> 
+    <summary lang="de">Skin Destiny von Jugger</summary>
+    <description lang="en">The skin is kept simple but Destiny Modern skin but has a lot to offer.</description>
+    <description lang="de">Der Skin Destiny ist ein schlicht gehaltener aber Moderner Skin auf Basis der LG WebOS Oberfläche.[CR]Support gibt es unter http://www.kodinerds.net</description>
+    <disclaimer lang="en">no official skin use at your own risk.</disclaimer>
+    <platform>all</platform> 
+	<license>Creative Commons Attribution-ShareAlike 3.0.</license>
+	<forum>https://www.kodinerds.net/index.php/Board/129-Destiny/</forum>
+	<source>https://github.com/kodinerds/repo/tree/master/skin.destiny</source>
+    <assets>
+		<icon>resources/icon.png</icon>
+		<fanart>resources/fanart.jpg</fanart>
+		<screenshot>resources/screenshot-01.jpg</screenshot>
+		<screenshot>resources/screenshot-02.jpg</screenshot>
+		<screenshot>resources/screenshot-03.jpg</screenshot>
+		<screenshot>resources/screenshot-04.jpg</screenshot>
+	</assets>
+  </extension>
+</addon>
+
+</addons>
