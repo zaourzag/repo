@@ -1,4 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
-	<setting id="maxVideoQuality" type="enum" label="30101" values="360p|720p" default="1"/>
+	<category label="30000">
+		<setting label="30230" type="lsep"/>
+		<setting label="30110" type="select" id="maxVideoQuality" lvalues="30111|30112" default="1"/>
+		<setting type="sep"/>
+	</category>
 </settings>
