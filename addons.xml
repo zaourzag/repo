@@ -7657,3 +7657,759 @@ oder online unter https://goo.gl/GtK41L nachlesen.
 
 </addon>
 
+<addon id="repository.kodinerds_Generic_x68_64" name="kodinerds.net Binary Addons for Generic Linux" version="1.0.3" provider-name="L0RE">
+	<extension point="xbmc.addon.repository" name="L0RE">
+		<info compressed="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/Generic_x68_64/addons.xml</info>
+		<checksum>https://raw.githubusercontent.com/kodinerds/binary-repo/master/Generic_x68_64/addons.xml.md5</checksum>
+		<datadir zip="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/Generic_x68_64/</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">Official Repository of Kodinerds</summary>
+		<summary lang="de">Offizielles Repository der Kodinerds</summary>
+		<description lang="en">This is the official Repository of the german Community 'Kodinerds' which you'll find at www.kodinerds.net. Most of the hosted Addons are supported by the members of the Community. Enjoy!</description>
+		<description lang="de">Das ist das offizielle Repository der deutschen Community 'Kodinerds', welche Du unter www.kodinerds.net findest. Die meisten der hier gehosteten Addons werden von den Mitgliedern der Community aktiv supported. Viel Spaß!</description>
+		<disclaimer></disclaimer>
+		<platform>linux</platform>
+	</extension>
+</addon>
+
+<addon id="context.kodinerds.thumpup" name="Empfehlungen für Kodinerds" version="0.6.1" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.20.0" />
+        <import addon="script.module.beautifulsoup4" version="4.3.2"/>
+        <import addon="script.module.requests" version="2.12.4"/>
+        <import addon="script.module.youtube.dl" version="14.810.0"/>
+    </requires>
+    <extension point="kodi.context.item" library="addon.py">
+        <item>
+            <label>Kodinerds Empfehlen</label>
+            <visible>Window.IsActive(10025)+!Container.Content(Addons)+!Container.Content(images)+!Container.Content(movies)+!Container.Content(songs)</visible>            
+        </item>
+    </extension>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en">Emfielt eine Serie für https://www.kodinerds.net/index.php/Thread/58034-L0RE-s-Test-thread/</summary>
+        <description lang="en">Emfielt eine Serie für https://www.kodinerds.net/index.php/Thread/58034-L0RE-s-Test-thread</description>
+        <platform>all</platform>
+        <language>en</language>
+        <license>GNU General Public License, v2</license>
+        <email></email>
+    </extension>
+</addon>
+
+<addon id="service.idle.actions" name="IDLE actions" version="1.0.4" provider-name="4lb3rtO">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+	<import addon="xbmc.addon" version="12.0.0"/>
+  </requires>
+  <extension point="xbmc.service" library="default.py" start="login"/>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Launch different actions when xbmc isn't busy</summary>
+    <description lang="en">Service to launch actions when XBMC is in IDLE-State.[CR]You can define different actions for the on-IDLE and after-IDLE event.[CR][CR]Available actions:[CR]-Minimize[CR]-Quit[CR]-Powerdown[CR]-Hibernate[CR]-Suspend[CR]-RunScript[CR]-RunAppleScript[CR]-PlayMedia[CR]-SlideShow[CR]-RecursiveSlideShow[CR]-PlayDVD[CR]-System.Exec[CR]-System.ExecWait[CR]-UpdateLibrary[CR]-CleanLibrary[CR]-ActivateScreensaver (Future XBMC Gotham(v13) addition)</description>
+    <platform>all</platform>
+	<language>en</language>
+	<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+	<forum><!--  http://www.xbmcnerds.com/index.php?page=Thread&threadID=31418  --></forum>
+    <website></website>
+    <email>4lb3rtO@gmx.de</email>
+    <source></source>
+  </extension>
+</addon>
+
+<addon id="repository.kodinerds" name="kodinerds.net Add-ons" version="6.0.0" provider-name="L0RE">
+	<extension point="xbmc.addon.repository" name="L0RE">
+		<info compressed="true">https://raw.githubusercontent.com/kodinerds/repo/master/addons.xml</info>
+		<checksum>https://raw.githubusercontent.com/kodinerds/repo/master/addons.xml.md5</checksum>
+		<datadir zip="true">https://raw.githubusercontent.com/kodinerds/repo/master/</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">Official Repository of Kodinerds</summary>
+		<summary lang="de">Offizielles Repository der Kodinerds</summary>
+		<description lang="en">This is the official Repository of the german Community 'Kodinerds' which you'll find at www.kodinerds.net. Most of the hosted Addons are supported by the members of the Community. Enjoy!</description>
+		<description lang="de">Das ist das offizielle Repository der deutschen Community 'Kodinerds', welche Du unter www.kodinerds.net findest. Die meisten der hier gehosteten Addons werden von den Mitgliedern der Community aktiv supported. Viel Spaß!</description>
+		<disclaimer></disclaimer>
+		<platform>all</platform>
+	</extension>
+</addon>
+
+<addon id="plugin.video.L0RE.fcstpauli" name="FC Stpauli Mediathek" version="0.1" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.24.0"/>
+        <import addon="script.module.requests" version="2.12.4"/>
+        <import addon="script.module.beautifulsoup4" version="4.3.2"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="de">FC Stpauli Mediathek</summary>
+    <summary lang="en">FC Stpauli Mediathek</summary>
+    <description lang="en">FC Stpauli Mediathek</description>
+    <description lang="de">FC Stpauli Mediathek</description>
+    <website></website>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.L0RE.fcstpauli</source>
+    <forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
+    <email>andreas at vogler dot name</email>
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="plugin.video.maxdome" name="maxdome" version="1.0.4.1" provider-name="frankr612, Linkinsoldier">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+	<import addon="script.module.beautifulsoup" version="3.2.1"/>
+    <import addon="script.module.requests" version="2.9.1"/>
+    <import addon="script.module.routing" version="0.2.0"/>
+    <import addon="inputstream.adaptive" version="1.0.8"/>
+    <import addon="script.module.inputstreamhelper" version="0.2.2"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="default.py">
+    <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="de">Addon für Maxdome (DE/AT)</summary>
+    <summary lang="en_gb">Addon for Maxdome (DE/AT)</summary>
+    <description lang="de">Addon für Maxdome Abonnenten um Inhalte von Maxdome anzuschauen.
+    
+Warnung an Eltern: Die Maxdome Plattform unterstützt Inhalte inkl. FSK18-Titel.
+
+***Achtung: Dies ist kein offizielles Addon und wird von der Maxdome GmbH nicht unterstützt.***</description>
+    <description lang="en_gb">Addon for Maxdome Subscribers to watch content provided by Maxdome.
+    
+Parental warning: The Maxdome Plattform consists of differnt types of content - including FSK18/PG-R Movies.
+
+***Disclaimer: This is an inofficial Addon and is not made nor supported by Maxdome GmbH.***</description>
+    <disclaimer lang="de">Achtung: Dies ist kein offizielles Addon und wird von der Maxdome GmbH nicht unterstützt.</disclaimer>
+    <disclaimer lang="en_gb">Disclaimer: This is an inofficial Addon and is not made nor supported by Maxdome GmbH.</disclaimer>
+    <language></language>
+    <platform>all</platform>
+    <license></license>
+    <forum></forum>
+    <website></website>
+    <email></email>
+    <source></source>
+  </extension>
+</addon>
+
+<addon id="service.popwindow" name="Display Popup" version="0.4.0" provider-name="L0RE">
+	<requires>
+		<import addon="xbmc.python" version="2.24.0"/>
+		<import addon="script.module.requests" version="2.9.1"/>
+	</requires>
+	<extension point="xbmc.service" library="service.py" start="login"/>
+	<extension point="xbmc.python.module" library="lib"/>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">Show Popup-Messages from other Addons</summary>
+		<summary lang="de">Popup-Meldungen von anderen Addons anzeigen</summary>
+		<description lang="en">Display pop-up messages on the screen of KODI.[CR]Do not miss any important events while e.g. watch a video or listen to music !</description>
+		<description lang="de">Popup-Meldungen auf dem Bildschirm von KODI anzeigen.[CR]Verpasse keine wichtigen Ereignisse während Du z.B. ein Video schaust oder Musik hörst !</description>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
+		<website></website>
+		<email>andreas at vogler dot name</email>
+		<source>https://github.com/kodinerds/repo/tree/master/service.popwindow</source>
+		<assets>
+			<icon>icon.png</icon>
+		</assets>
+		<news>[B][COLOR orangered]Version 0.4.0  (16.09.2018)[/COLOR][/B] by realvito[CR]
+- added: Fehlerzähler - damit der Service bei Fehlern nicht sofort abbricht
+- added: Standard-Logmeldungen - zur Kontrolle auf einwandfreie Funktion
+- optimized: Die Abstände zwischen Bildern und Text vergrössert, zur besseren Übersicht
+- forced: Standardcodierung = utf-8 wegen andauernden Encodingfehlern
+		</news>
+	</extension>
+</addon>
+
+<addon id="service.L0RE.cron" name="Crontab für andere Addons" version="1.0.1" provider-name="L0RE">
+	<requires>
+		<import addon="xbmc.python" version="2.24.0"/>
+	</requires>
+	<extension point="xbmc.service" library="service.py" start="login"/>
+	<extension point="xbmc.python.pluginsource" library="addon.py">
+		<provides>executable</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">Crontab - Action control</summary>
+		<summary lang="de">Crontab - Aktionssteuerung</summary>
+		<description lang="en">A service to call regular (hours/days) stored actions (e.g. update the addon media library) in other plugins.</description>
+		<description lang="de">Ein Service um regelmäßig (Stunden/Tage) gespeicherte Aktionen (z.B. Aktualisierung der Addon-Medienbibliothek) in anderen Plugins aufzurufen.</description>
+		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
+		<website></website>
+		<email></email>
+		<source>https://github.com/kodinerds/repo/tree/master/service.L0RE.cron</source>
+		<assets>
+			<icon>icon.png</icon>
+			<fanart>fanart.jpg</fanart>
+		</assets>
+		<news>[B][COLOR orangered]Version 1.0.1  (07.10.2018)[/COLOR][/B] by realvito[CR]
+- fixed: Bei jedem autom. Update der vom User gemachten Einträge wird nicht die aktuelle Uhrzeit übergeben
+- fixed: Ausführung/Update der vom User gemachten Einträge findet unabhängig des übergebenen Stunden-Intervalls - immer stündlich statt
+- optimized: Man kann jetzt sowohl den Eintrag in "Crontab" als auch den erstellten Ordner der Serie in der KODI-Medienbibliothek löschen (settings)
+- optimized: Script komplett überarbeitet
+- added: Direkte LOG-Meldungen sowohl bei normaler Ausführung als auch bei Fehlern (nicht Debugmodus)
+		</news>
+	</extension>
+</addon>
+
+<addon id="plugin.video.L0RE.mtv" name="MTV Mediathek" version="0.2.2" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.24.0"/>
+        <import addon="script.module.requests" version="2.12.4"/>
+        <import addon="script.module.beautifulsoup4" version="4.3.2"/>       
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="de">MTV Mediathek</summary>
+    <summary lang="en">MTV Mediathek</summary>
+    <description lang="en">MTV Mediathek</description>
+    <description lang="de">MTV Mediathek</description>
+    <website></website>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.L0RE.hsv</source>
+    <forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
+    <email>andreas at vogler dot name</email>
+    <news> v0.1.9 Patch der Playlisten (Dank an ClaudiaF)</news>
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="plugin.video.vfb_stuttgart" name="VfB-Stuttgart TV" version="1.0.1" provider-name="realvito">
+	<requires>
+		<import addon="xbmc.python" version="2.24.0"/>
+		<import addon="script.module.requests" version="2.12.4"/>
+		<import addon="script.module.beautifulsoup4" version="4.3.2"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de">Videoportal des VfB-Stuttgart</summary>
+		<summary lang="en">video portal of the VfB-Stuttgart</summary>
+		<description lang="de">Alle Bundesligaspiele des VfB-Stuttgart nach Schlusspfiff in voller Länge und im Highlights-Schnitt.[CR]Exklusive Interviews und die Pressekonferenzen. Laufend neue Facts und Features des Vereins.</description>
+		<description lang="en">All Bundesliga matches of the VfB-Stuttgart after the final whistle in full length and in highlights-editing.[CR]Exclusive interviews and the press conferences. Ongoing new facts and features of the club.</description>
+		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 3, June 2007</license>
+		<forum>https://www.kodinerds.net/index.php/Thread/64178-RELEASE-VfB-Stuttgart-TV-Videoportal-des-VfB-Stuttgart/</forum>
+		<website>https://vfbtv.vfb.de/tv/</website>
+		<email></email>
+		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.vfb_stuttgart</source>
+		<assets>
+			<icon>icon.png</icon>
+			<fanart>fanart.jpg</fanart>
+		</assets>
+		<news>[B][COLOR orangered]Version 1.0.1  (22.12.2018)[/COLOR][/B][CR]by realvito[CR]
+- Initial Release
+		</news>
+	</extension>
+</addon>
+
+<addon id="plugin.video.wakanim" name="Wakanim" version="0.7.5" provider-name="MrKrabat">
+    <requires>
+        <import addon="xbmc.python" version="2.25.0"/>
+        <import addon="script.module.beautifulsoup4" version="4.5.3"/>
+        <import addon="script.module.inputstreamhelper" version="0.3.3"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <language>en de fr ru</language>
+        <summary lang="en_GB">Wakanim.tv - Anime streaming live from japan</summary>
+        <summary lang="de_DE">Wakanim.tv - Anime Streaming live aus Japan</summary>
+        <summary lang="fr_FR">Wakanim.tv - Streaming d'animes VOSTFR en direct du Japon</summary>
+        <summary lang="ru_RU">Wakanim.tv - Прямая трансляция аниме из Японии</summary>
+        <description lang="en_GB">A constantly growing selection of subtitled animes, which can be discovered - new and popular titles.</description>
+        <description lang="de_DE">Eine stetig wachsende Auswahl deutsch untertitelter Animes, die es zu entdecken gilt - neue und beliebte Titel.</description>
+        <description lang="fr_FR">Des dizaines d'animes VOSTFR en streaming à découvrir - nouveautés et séries les plus prisées.</description>
+        <description lang="ru_RU">Ваши любимые аниме онгоинги прямо из Японии. Смотрите любимые и новые аниме онлайн в высоком качестве и без рекламы столько, сколько хотите.</description>
+        <disclaimer lang="en_GB">WARNING: You MUST be a PREMIUM member or BUY videos to use this plugin</disclaimer>
+        <disclaimer lang="de_DE">HINWEIS: Du MUSST PREMIUM Mitglied sein oder Videos KAUFEN um dieses Plugin zu benutzen</disclaimer>
+        <disclaimer lang="fr_FR">AVERTISSEMENT: VOUS DEVEZ être un membre PREMIUM ou ACHETER des vidéos pour utiliser ce plugin</disclaimer>
+        <disclaimer lang="ru_RU">ВНИМАНИЕ: Для использования этого плагина Вы должны оформить подписку или купить аниме</disclaimer>
+        <news>v0.7.5 (2018.09.27)[CR]- Small fixes</news>
+        <license>GNU Affero General Public License, v3</license>
+        <forum>https://forum.kodi.tv/showthread.php?tid=322763</forum>
+        <website>https://www.wakanim.tv/</website>
+        <source>https://github.com/MrKrabat/plugin.video.wakanim</source>
+        <email></email>
+        <assets>
+            <icon>icon.png</icon>
+            <fanart>fanart.jpg</fanart>
+            <screenshot>resources/media/screenshot-01.jpg</screenshot>
+            <screenshot>resources/media/screenshot-02.jpg</screenshot>
+            <screenshot>resources/media/screenshot-03.jpg</screenshot>
+        </assets>
+    </extension>
+</addon>
+
+<addon id="plugin.video.doku5.com" name="Doku5" version="1.0.3" provider-name="itouch5000">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="script.module.requests" version="2.7.0"/>
+        <import addon="plugin.video.youtube" version="5.1.20.6"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="en">The largest german documentary library on the net</summary>
+        <description lang="en">Over 15,000 documentaries, documentaries, reports and lectures in full length.</description>
+        <summary lang="de">Die größte Doku-Mediathek im Netz</summary>
+		<description lang="de">Über 15.000 Dokumentationen, Dokumentafilme, Reportagen und Voträge in voller Länge.</description>
+        <license>GPL 2.0</license>
+        <assets>
+            <icon>resources\icon.png</icon>
+            <fanart>resources\fanart.jpg</fanart>
+            <screenshot>resources\screenshot-01.jpg</screenshot>
+            <screenshot>resources\screenshot-02.jpg</screenshot>
+            <screenshot>resources\screenshot-03.jpg</screenshot>
+        </assets>
+    </extension>
+</addon>
+
+<addon id="repository.saxbmc" name="SaXBMC Addon Repo" version="1.0.1" provider-name="Birger Jesch">
+	<extension point="xbmc.addon.repository" name="SaXBMC Addon Repo">
+		<info compressed="true">https://raw.githubusercontent.com/b-jesch/SaXBMC/master/addons.xml</info>
+		<checksum>https://raw.githubusercontent.com/b-jesch/SaXBMC/master/addons.xml.md5</checksum>
+		<datadir zip="true">https://raw.githubusercontent.com/b-jesch/SaXBMC/master/zip/</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">Some useful services and scripts for use within Kodi</summary>
+		<description lang="en">Get some useful services and scripts that makes life with kodi easier.</description>
+		<summary lang="de">Nützliche Dienste und Programme für Kodi</summary>
+		<description lang="de">Installiere nützliche Dienste oder Programme, die Dir das Leben mit Kodi einfacher machen.</description>
+		<disclaimer></disclaimer>
+		<platform>all</platform>
+	</extension>
+</addon>
+
+<addon id="plugin.video.L0RE.bvbtotal" name="Borussia Dortmund Mediathek" version="0.1.1" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.24.0"/>
+        <import addon="script.module.requests" version="2.12.4"/>
+        <import addon="script.module.beautifulsoup4" version="4.3.2"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="de">Videoportal rund um Berussia</summary>
+    <summary lang="en">Videoportal rund um Berussia</summary>
+    <description lang="en">Videoportal rund um Berussia</description>
+    <description lang="de">Videoportal rund um Berussia</description>
+    <website></website>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.L0RE.bvbtotal</source>
+    <forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
+    <email>andreas at vogler dot name</email>
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="plugin.video.spotitube" name="Youtube Music" version="2.1.3" provider-name="realvito (inspired by L0RE)">
+	<requires>
+		<import addon="xbmc.python" version="2.24.0"/>
+		<import addon="plugin.video.youtube" version="6.1.0"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video audio</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de">Musik über Youtube abspielen</summary>
+		<summary lang="en">Play Music via Youtube</summary>
+		<description lang="de">Musik aus verschiedenen Quellen z.B. Billboard, iTunes, Spotify etc. auswählen und über Youtube abspielen.[CR][CR]Für mehr Informationen zu allen Neuerungen siehe - CHANGELOG.[CR]     TEST IT AND LIKE IT</description>
+		<description lang="en">Choose Music from different sources e.g. Billboard, iTunes, Spotify etc. and play it via Youtube.[CR][CR]For more information about all new features see - CHANGELOG.[CR]     TEST IT AND LIKE IT</description>
+		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 3, June 2007</license>
+		<forum>http://www.kodinerds.net/index.php/Thread/47087-Release-YoutubeMusic-patched/</forum>
+		<website></website>
+		<email></email>
+		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.spotitube</source>
+		<assets>
+			<icon>icon.png</icon>
+			<fanart>fanart.jpg</fanart>
+		</assets>
+		<news>[B][COLOR orangered]Version 2.1.3  (06.01.2019)[/COLOR][/B] by realvito[CR]
+- fixed: Another time Billboard-Videolists are empty (Thanks for good work on the website)
+- fixed: Double-entries of Countries in folders of "SPOTIFY - International" (VIRAL top 50/TOP Streams)
+- optimized: Title-Search-Algorithm on Youtube (Original) - THX @digaogt on Github for the hint
+		</news>
+	</extension>
+</addon>
+
+<addon id="plugin.video.filmstarts" name="Filmstarts" version="1.0.2" provider-name="L0RE">
+	<requires>
+		<import addon="xbmc.python" version="2.24.0"/>
+		<import addon="plugin.video.youtube" version="6.1.0"/>
+	</requires>
+	<extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="de">Filme und Serien (Trailer, Making of, Teaser ...)</summary>
+		<summary lang="en">Movies and Series (Trailer, Making of, Teaser ...)</summary>
+		<description lang="de">FILMSTARTS.de ist das führende Online-Magazin rund um das Medium Film.[CR]In der FILMSTARTS-Datenbank befinden sich mittlerweile Informationen zu mehr als 70.000 Filmen.[CR]Schaue Trailer, Making of, Teaser etc. von Filmen und Serien, ausgewählt und zusammengestellt von http://www.filmstarts.de/.</description>
+		<description lang="en">FILMSTARTS.de is the leading online magazine about the medium of Movie.[CR]In the meantime the FILMSTARTS database contains information of more than 70.000 movies.[CR]Watch trailer, making of, teaser, etc. of movies and series, selected and compiled by http://www.filmstarts.de/.</description>
+		<disclaimer lang="de">Die von diesem Addon dargestellten Inhalte werden von den Erstellern des Addons weder gehostet oder verbreitet, noch stehen die Ersteller in irgendeiner Beziehung zu den Anbietern des Inhalts.</disclaimer>
+		<disclaimer lang="en">The author does not host or distribute any of the content displayed by this addon. The author does not have any affiliation with the content providers.</disclaimer>
+		<language></language>
+		<platform>all</platform>
+		<license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+		<forum>https://www.kodinerds.net/index.php/Thread/53743-RERelease-filmstarts/</forum>
+		<website>http://www.filmstarts.de/</website>
+		<email></email>
+		<source>https://github.com/kodinerds/repo/tree/master/plugin.video.filmstarts</source>
+		<assets>
+			<icon>icon.png</icon>
+			<fanart>fanart.jpg</fanart>
+		</assets>
+		<news>[B][COLOR orangered]Version 1.0.2  (21.01.2019)[/COLOR][/B] by realvito[CR]
+- fixed: Hauptrubrik Trailer = sämtliche Unterordner ohne Inhalt
+- fixed: Unterordner Trailer = Anzeige der nächsten Seite
+- optimized: In der Rubrik = Kino/Starttermin nach Wochen - Aktuelle Woche farblich hervorgehoben
+		</news>
+	</extension>
+</addon>
+
+<addon id="service.fritz.automation" name="Fritz Automation" version="0.2.1" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.20.0"/>
+    </requires>
+    <extension point="xbmc.service" library="service.py" start="login" />
+	<extension point="xbmc.python.pluginsource" library="service.py" >
+	    <provides>executable</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+    <summary lang="en">Stom von einer FritzSteckdose über die Fritzbox ab/an schalten unter bestimmten bedinungen</summary>
+    <summary lang="de">Stom von einer FritzSteckdose über die Fritzbox ab/an schalten unter bestimmten bedinungen</summary>
+    <description lang="en">Stom von einer FritzSteckdose über die Fritzbox ab/an schalten unter bestimmten bedinungen</description>
+    <description lang="de">Stom von einer FritzSteckdose über die Fritzbox ab/an schalten unter bestimmten bedinungen</description>
+    <website></website>
+    <source>https://github.com/kodinerds/repo/tree/master/addons/service.fritz.automation</source>
+    <forum>http://www.kodinerds.net/index.php/Thread/46939-Repo-Lost-Found/</forum>
+    <email>andreas at vogler dot name</email>
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="plugin.video.doku-stream.org" name="Doku-Stream.org" version="1.0.1" provider-name="itouch5000">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="script.module.requests" version="2.7.0"/>
+        <import addon="script.module.beautifulsoup4" version="4.3.2"/>
+        <import addon="script.module.html5lib" version="0.999.0"/>
+        <import addon="plugin.video.youtube" version="5.1.20.6"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="en">Doku-Stream.org - your program, at any time.</summary>
+        <description lang="en">"Those who stay on the coast cannot discover new oceans." (Magellan, 1480-1521) Discover the world. With every documentary a little bit more.</description>
+        <summary lang="de">Doku-Stream.org - Dein Programm, zu jeder Zeit.</summary>
+		<description lang="de">"Wer an der Küste bleibt, kann keine neuen Ozeane entdecken." (Magellan, 1480-1521) Entdecke die Welt. Mit jeder Dokumentation ein bisschen mehr.</description>
+        <license>GPL 2.0</license>
+    </extension>
+</addon>
+
+<addon id="plugin.video.dokumonster" name="dokumonster.de" version="0.1.3" provider-name="mdmdmdmdmd">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="script.module.simplejson" version="2.0.10"/>
+        <import addon="script.module.xbmcswift2" version="1.2.0"/>
+		<import addon="script.module.beautifulsoup4" version="4.3.1"/>
+        <import addon="script.module.requests" version="2.7.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="addon.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <language>en de</language>
+        <platform>all</platform>
+        <website>http://dokumonster.de/</website>
+        <source>https://github.com/mdmdmdmdmd/plugin.video.dokumonster</source>
+        <forum></forum>
+        <email></email>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <summary lang="de">Deutsche Dokus</summary>
+        <summary lang="en">German documentaries</summary>
+        <description lang="de">Dein Online Doku Stream Archiv. Die besten deutschen Dokumentationen einfach online anschauen. Tägliche Updates!</description>
+        <description lang="en">German online documentary stream archive. The best german documentaries online. Daily updates!</description>
+    </extension>
+</addon>
+
+<addon id="script.delete.files" name="Delete Files" version="0.1.3" provider-name="mad-max">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+  </requires>
+  <extension point="xbmc.python.script" library="default.py" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Delete old files from a Directory</summary>
+	<summary lang="de">Löschen von alten Dateien aus einem Verzeichnis</summary>
+    <description lang="en">Delete old files from a Directory for maintenance purposes</description>
+	<description lang="de">Löschen von alten Dateien aus einem Verzeichnis zur Dateipflege</description>
+    <license>The MIT License</license>
+    <platform>all</platform>
+    <language></language>
+  </extension>
+</addon>
+
+<addon id="plugin.video.rtlnow" name="TV Now" version="0.6.7" provider-name="L0RE">
+ <requires>
+        <import addon="xbmc.python" version="2.1.0"/>   
+        <import addon="script.common.plugin.cache" version="2.5.5"/> # Add this    
+          <import addon="inputstream.adaptive" version="1.0.8"/>
+         <import addon="script.module.inputstreamhelper" version="0.2.2"/>
+
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Test Plugin von L0RE</summary>
+    <summary lang="de">Test Plugin von L0RE</summary>
+    <description lang="en">Test Plugin von L0RE</description>
+    <description lang="de">Test Plugin von L0RE</description>
+    <website>https://www.tvnow.de/</website>
+    <email>andreas at vogler dot name</email>
+    <platform>all</platform>
+    <news>0.4.24
+- Update Logo
+0.4.23
+-Update von frong73 um anbindung in PVR zu ermöglichen</news>
+    <assets>
+        <screenshot>resources/rtlnow1.png</screenshot>
+        <screenshot>resources/rtlnow2.png</screenshot>
+	<icon>icon.png</icon>
+    </assets>
+  </extension>
+</addon>
+
+<addon id="repository.kodinerds_Odroid_C2" name="kodinerds.net Binary Addons for Odroid_C2" version="1.0.3" provider-name="L0RE">
+	<extension point="xbmc.addon.repository" name="L0RE">
+		<info compressed="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/Odroid_C2/addons.xml</info>
+		<checksum>https://raw.githubusercontent.com/kodinerds/binary-repo/master/Odroid_C2/addons.xml.md5</checksum>
+		<datadir zip="true">https://raw.githubusercontent.com/kodinerds/binary-repo/master/Odroid_C2/</datadir>
+	</extension>
+	<extension point="xbmc.addon.metadata">
+		<summary lang="en">Official Repository of Kodinerds</summary>
+		<summary lang="de">Offizielles Repository der Kodinerds</summary>
+		<description lang="en">This is the official Repository of the german Community 'Kodinerds' which you'll find at www.kodinerds.net. Most of the hosted Addons are supported by the members of the Community. Enjoy!</description>
+		<description lang="de">Das ist das offizielle Repository der deutschen Community 'Kodinerds', welche Du unter www.kodinerds.net findest. Die meisten der hier gehosteten Addons werden von den Mitgliedern der Community aktiv supported. Viel Spaß!</description>
+		<disclaimer></disclaimer>
+		<platform>linux</platform>
+	</extension>
+</addon>
+
+<addon id="plugin.video.zattoo_com" name="Zattoo Live TV" version="1.1.2" provider-name="PUR3">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="de">Über 75 TV-Sender als Livestreams auf dem Gerät deiner Wahl ansehen.</summary>
+        <description lang="de">Fußball, Serien, Filme, Dokus und Reportagen laufen mit Zattoo im Livestream. Alles was du brauchst, ist eine Internetverbindung und schon läuft das Fernsehprogramm mit mehr als 75-TV-Sendern kostenlos auf dem Gerät deiner Wahl.</description>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+        <website>http://www.zattoo.com</website>
+    </extension>
+</addon>
+
+<addon id="script.skinhelper.ping" name="Skinhelper PING" version="1.0.0" provider-name="_Andy_">
+    <requires>
+        <import addon="xbmc.python" version="2.20.0" />
+        <import addon="script.module.pyxbmct" version="1.1.4" />		
+    </requires>
+    <extension point="xbmc.python.script" library="default.py" />
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en">Skinhelper addon that shows alive servers</summary>
+        <summary lang="de">Zeigt den Status Deiner Server im Netzwerk an</summary>
+        <description lang="en">Skinhelper addon that pings a list of servers and visualize their state. A skin integration is required. Therefore, properties are stored into the skin. Find more about this in the readme.</description>
+        <description lang="de">Dieses Addon pingt Server in Deinem Netzwerk an und visualisiert den Status dieser Server. Zur Anzeige sind Änderungen am Skin erforderlich. Dazu werden Properties im Skin gesetzt. Weitere Hinweise findest Du in der Readme dieses Addons.</description>
+        <platform>all</platform>
+        <license>GNU GENERAL PUBLIC LICENSE. Version 3, June 2007</license>
+        <source></source>
+        <forum></forum>
+        <email></email>
+        <assets>
+            <icon>icon.png</icon>
+            <fanart>fanart.jpg</fanart>
+        </assets>
+    </extension>
+</addon>
+
+<addon id="plugin.video.L0RE.hsv" name="Hamburger SV Mediathek" version="0.1" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.24.0"/>
+        <import addon="script.module.requests" version="2.12.4"/>
+        <import addon="script.module.beautifulsoup4" version="4.3.2"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="de">Hamburger SV Mediathek</summary>
+    <summary lang="en">Hamburger SV Mediathek</summary>
+    <description lang="en">Hamburger SV Mediathek</description>
+    <description lang="de">Hamburger SV Mediathek</description>
+    <website></website>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.L0RE.hsv</source>
+    <forum>https://www.kodinerds.net/index.php/Thread/55451-L0REs-Blog/</forum>
+    <email>andreas at vogler dot name</email>
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="plugin.video.vodster" name="Vodster (dev)" version="0.1.1" provider-name="L0RE">
+    <requires>
+        <import addon="xbmc.python" version="2.24.0"/>
+        <import addon="script.module.requests" version="2.9.1"/>
+        <import addon="script.module.youtube.dl" version="14.810.0"/>        
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+  <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="en">Seearch over Multible Germen VIdeo on Demand Pages, Inofficial Plugin</summary>
+        <language></language>
+        <description lang="en">Seearch over Multible Germen VIdeo on Demand Pages, Inofficial Plugi</description>
+        <disclaimer lang="en">-</disclaimer>
+        <website>http://www.vodster.de</website>
+        <source>https://github.com/kodinerds/repo/tree/master/addons/plugin.video.vodster</source>
+        <forum>http://www.kodinerds.net/</forum>
+        <email>Andreas at vogler dot name</email>
+  </extension>
+</addon>
+
+<addon id="service.subtitles.tv4user" name="Tv4user.de" version="0.8.13" provider-name="L0RE">
+  <requires>
+    <import addon="xbmc.python" version="2.19.0"/>
+    <import addon="script.module.requests" version="2.12.4"/>
+    <import addon="vfs.rar" version="2.0.2" />
+  </requires>
+  <extension point="xbmc.subtitle.module"
+             library="service.py" />
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Untertitel von board.tv4user.de fuer Serien in Deutsch und Englisch</summary>
+    <description lang="en">Subtitle in German/English for Serien from board.tv4user.de </description>
+    <disclaimer lang="en"></disclaimer>
+    <platform>all</platform>
+    <license>GNU GENERAL PUBLIC LICENSE. Version 2, June 1991</license>
+    <forum>http://www.kodinerds.net/index.php/Thread/47097-RELEASE-Untertitel-Plugin-f%C3%BCr-http-board-tv4user-de</forum>
+    <website>http://www.br.de</website>
+    <email>andreas at vogler dot name</email>
+    <source>https://github.com/kodinerds/repo/tree/master/addons/service.subtitles.tv4user</source>
+  </extension>
+</addon>
+
+<addon id="script.module.oauthlib" name="oauthlib" version="2.0.1" provider-name="Idan Gazit">
+	<requires>
+		<import addon="xbmc.python" version="2.24.0"/>
+	</requires>
+	<extension point="xbmc.python.module" library="lib" />
+	<extension point="xbmc.addon.metadata">
+		<platform>all</platform>
+		<language></language>
+		<summary lang="en">A generic, spec-compliant, thorough implementation of the OAuth request-signing logic</summary>
+		<description lang="en">A generic, spec-compliant, thorough implementation of the OAuth request-signing logic</description>
+		<disclaimer lang="en">A generic, spec-compliant, thorough implementation of the OAuth request-signing logic</disclaimer>
+		<license>OAuthLib is yours to use and abuse according to the terms of the BSD license. Check the LICENSE file for full details</license>
+		<website>https://pypi.python.org/pypi/oauthlib</website>
+		<source>https://pypi.python.org/pypi/oauthlib</source>
+	</extension>
+</addon>
+
+<addon id="plugin.video.magine" name="Magine" version="0.3.13" provider-name="L0RE">
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+  <requires>
+      <import addon="script.module.requests" version="2.12.4"/>
+      <import addon="inputstream.adaptive" version="1.0.8"/>
+      <import addon="script.module.inputstreamhelper" version="0.2.2"/>
+  </requires>
+  <extension point="xbmc.addon.metadata">
+    <summary lang="en">Magine TV</summary>
+    <summary lang="de">Magine TV</summary>
+    <description lang="en">Magine TV</description>
+    <description lang="de">Magine TV</description>
+    <website></website>
+    <email>andreas at vogler dot name</email>
+    <platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="plugin.video.ran_de" name="ran" version="2.3.1" provider-name="PUR3, L0RE, Linkinsoldier">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary lang="de">Livestreams und Videos von ran.de</summary>
+        <summary lang="en">Livestreams and videos from ran.de</summary>
+        <description lang="de">Dieses inoffizielle Addon ermöglicht es euch, die neusten Videos und Livestreams von ran.de in Kodi zu streamen.
+
+Vielen Dank an dieser Stelle an ran.de für den guten Service, insb. ranNFL mit ReLive in HD mit raus geschnittener Werbung! </description>
+        <description lang="en">This is an inofficial Addon and gives you the chance to stream livestreams and the latest videos from ran.de directly in Kodi.
+        
+Thank you ran.de for your great service, especially for providing ranNFL reLives with removed commercials in HD! </description>
+    </extension>
+</addon>
+
+<addon id="skin.destiny-k18" name="Destiny K18" version="2.1.0" provider-name="Jugger">
+    <requires>
+		<import addon="xbmc.gui" version="5.13.0"/>
+	</requires>
+	<extension point="xbmc.gui.skin" debugging="false">
+		<res width="1920" height="1080" aspect="16:9" default="true" folder="xml" />
+	</extension>
+    <extension point="xbmc.addon.metadata">
+    <summary lang="en">skin created and design by Jugger</summary> 
+    <summary lang="de">Skin Destiny von Jugger</summary>
+    <description lang="en">The skin is kept simple but Destiny Modern skin but has a lot to offer.</description>
+    <description lang="de">Der Skin Destiny ist ein schlicht gehaltener aber Moderner Skin auf Basis der LG WebOS Oberfläche.[CR]Support gibt es unter http://www.kodinerds.net</description>
+    <disclaimer lang="en">no official skin use at your own risk.</disclaimer>
+    <platform>all</platform> 
+	<license>Creative Commons Attribution-ShareAlike 3.0.</license>
+	<forum>https://www.kodinerds.net/index.php/Board/129-Destiny/</forum>
+	<source>https://github.com/kodinerds/repo/tree/master/skin.destiny</source>
+    <assets>
+		<icon>resources/icon.png</icon>
+		<fanart>resources/fanart.jpg</fanart>
+		<screenshot>resources/screenshot-01.jpg</screenshot>
+		<screenshot>resources/screenshot-02.jpg</screenshot>
+		<screenshot>resources/screenshot-03.jpg</screenshot>
+		<screenshot>resources/screenshot-04.jpg</screenshot>
+	</assets>
+  </extension>
+</addon>
+
+</addons>
