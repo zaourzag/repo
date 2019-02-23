@@ -1,8 +1,0 @@
-﻿0.8.1
-- Initial Release
-0.8.2
-- Bugfix
-0.8.3
-- Added Beschreibungen
-0.8.4
-- Bugfix einige Serien fehlten
