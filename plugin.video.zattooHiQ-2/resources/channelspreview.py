@@ -370,4 +370,8 @@ class ChannelsPreview(xbmcgui.WindowXML): #needs to be WindowXML or onInit won't
            xbmc.executebuiltin('ActivateWindow(10025,"plugin://'+__addonId__+'")')
            xbmcgui.Window(10000).setProperty('zattoo_runningView',"")
            #super(ChannelsPreview, self).close()
+           # if not self.isClosing:
+               # self.isClosing = True
+               # super(ChannelsPreview, self).close()
+        
     

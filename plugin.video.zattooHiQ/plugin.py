@@ -238,7 +238,7 @@ def build_directoryContent(content, addon_handle, cache=True, root=False, con='m
 
 def build_root(addon_uri, addon_handle):
   import urllib
-
+  debug('Build_Root')
   # check if settings are set
   name = __addon__.getSetting('username')
   if name == '':
@@ -253,12 +253,8 @@ def build_root(addon_uri, addon_handle):
     channeltitle = __addon__.getSetting('start_channel')
     if channeltitle=="lastChannel": channelid=_zattooDB_.get_playing()['channel']
     else: channelid = _zattooDB_.get_channelid(channeltitle)
-    resultData = _zattooDB_.zapi.exec_zapiCall('/zapi/watch', {'cid': channelid, 'stream_type': 'hls', 'maxrate':__addon__.getSetting('max_bandwidth')})
-    xbmc.Player().play(resultData['stream']['watch_urls'][0]['url'])
-    streamsList = []
-    for stream in resultData['stream']['watch_urls']: streamsList.append(stream['url'])
-    streamsList = '|'.join(streamsList)
-    _zattooDB_.set_playing(channelid, streamsList, 0)
+    url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + channelid
+    xbmc.executebuiltin('XBMC.RunPlugin(%s)' % url)
 
     xbmcgui.Window(10000).setProperty('ZBEplayOnStart', 'false')
 
@@ -569,7 +565,7 @@ def build_recordingsList(addon_uri, addon_handle):
 
 def watch_recording(addon_uri, addon_handle, recording_id, start=0):
   #if xbmc.Player().isPlaying(): return
-  
+  debug('Watch_R')
   if start == 0:
     startTime=int(xbmc.getInfoLabel('ListItem.Property(zStartTime)'))
     
@@ -966,6 +962,7 @@ def search_show(addon_uri, addon_handle, search):
 
 
 def showPreview(popularList=''):
+  xbmc.executebuiltin("Dialog.Close(all, true)")
   from resources.channelspreview import ChannelsPreview
   preview = ChannelsPreview()
   if popularList=='popular': preview.createPreview('popular')
@@ -973,6 +970,8 @@ def showPreview(popularList=''):
   preview.show() #doModal()
   while xbmcgui.Window(10000).getProperty('zattoo_runningView')=="preview": xbmc.sleep(10)
   del preview
+  xbmc.executebuiltin('PreviousMenu')
+  #xbmc.executebuiltin('ActivateWindow(10025,"plugin://'+__addonId__+'")')
 
 def showHelp(addon_uri, addon_handle):
   import urllib
@@ -990,6 +989,7 @@ def showHelp(addon_uri, addon_handle):
   build_directoryContent(content, addon_handle, True, False, 'files')
   
 def showEpg():
+  xbmc.executebuiltin("Dialog.Close(all, true)")
   from resources.epg.epg import EPG
   currentChannel = _zattooDB_.get_playing()['channel']
   channelList = _zattooDB_.getChannelList(_listMode_ == 'favourites')
@@ -1005,6 +1005,7 @@ def showEpg():
   epg.show() #doModal()
   while xbmcgui.Window(10000).getProperty('zattoo_runningView')=="epg": xbmc.sleep(10)
   del epg
+  #xbmc.executebuiltin('ActivateWindow(10025,"plugin://'+__addonId__+'")')
 
 def selectStartChannel():
   channels = _zattooDB_.getChannelList(_listMode_ == 'favourites')
@@ -1012,6 +1013,7 @@ def selectStartChannel():
   for chan in channels['index']: chanList.append(channels[chan]['title'])
   dialog=xbmcgui.Dialog()
   ret = dialog.select(localString(31009), chanList)
+  
   if ret==-1: return
   __addon__.setSetting('start_liveTV', 'true')
   if ret==0: __addon__.setSetting('start_channel', 'lastChannel')

@@ -413,6 +413,10 @@ msgctxt "#31009"
 msgid "select Channel"
 msgstr "Kanal auswählen"
 
+msgctxt "#310091"
+msgid "start channel"
+msgstr "Start Kanal"
+
 msgctxt "#310095"
 msgid "last played channel"
 msgstr "letzter gespielter Kanal"

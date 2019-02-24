@@ -27,6 +27,7 @@
         <setting type="sep"/>
         <setting label="31007" type="bool" id="start_liveTV" default="false"/>
         <setting label="31009" type="action" action="RunPlugin(plugin://plugin.video.zattooHiQ/?mode=selectStartChannel)" enable="eq(-1,true)"/>
+        <setting label="310091" type="text" id="start_channel" enable="false" visible="gt(0,)"/>
 	<setting type="sep"/>
         <setting label="310099" type="bool" id="help" default="true"/>
         <setting label="310100" type="bool" id="settings" default="false"/>

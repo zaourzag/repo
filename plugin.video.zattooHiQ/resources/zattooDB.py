@@ -96,9 +96,7 @@ class reloadDB(xbmcgui.WindowXMLDialog):
             os.remove(os.path.join(profilePath, 'account.cache'))
             #os.remove(os.path.join(profilePath, 'apicall.cache'))
             DB.zapiSession()
-            DB._createTables()
-            #xbmcgui.Dialog().ok(__addon__.getAddonInfo('name'), local(24074))
-            
+                        
         except:
             pass
     #DB.zapi.AccountData = None
@@ -230,13 +228,13 @@ class ZattooDB(object):
     try:
       c = self.conn.cursor()
       c.execute('CREATE TABLE channels(id TEXT, title TEXT, logo TEXT, weight INTEGER, favourite BOOLEAN, PRIMARY KEY (id) )')
-      c.execute('CREATE TABLE programs(showID TEXT, title TEXT, channel TEXT, start_date TIMESTAMP, end_date TIMESTAMP, restart BOOLEAN, series BOOLEAN, record BOOLEAN, description TEXT, description_long TEXT, year TEXT, country TEXT, genre TEXT, category TEXT, image_small TEXT, credits TEXT, PRIMARY KEY (showID), FOREIGN KEY(channel) REFERENCES channels(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED)')
+      c.execute('CREATE TABLE programs(showID TEXT, title TEXT, channel TEXT, start_date TEXT, end_date TEXT, restart BOOLEAN, series BOOLEAN, record BOOLEAN, description TEXT, description_long TEXT, year TEXT, country TEXT, genre TEXT, category TEXT, image_small TEXT, credits TEXT, PRIMARY KEY (showID), FOREIGN KEY(channel) REFERENCES channels(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED)')
 
       c.execute('CREATE INDEX program_list_idx ON programs(channel, start_date, end_date)')
       c.execute('CREATE INDEX start_date_idx ON programs(start_date)')
       c.execute('CREATE INDEX end_date_idx ON programs(end_date)')
       
-      c.execute('CREATE TABLE updates(id INTEGER, date TIMESTAMP, type TEXT, PRIMARY KEY (id) )')
+      c.execute('CREATE TABLE updates(id INTEGER, date TEXT, type TEXT, PRIMARY KEY (id) )')
       #c.execute('CREATE TABLE playing(channel TEXT, start_date TIMESTAMP, action_time TIMESTAMP, current_stream INTEGER, streams TEXT, PRIMARY KEY (channel))')
       c.execute('CREATE TABLE showinfos(showID INTEGER, info TEXT, PRIMARY KEY (showID))')
       c.execute('CREATE TABLE playing(channel TEXT, showID TEXT, current_stream INTEGER, streams TEXT, PRIMARY KEY (channel))')
@@ -259,7 +257,7 @@ class ZattooDB(object):
     if rebuild == False:
       #date = datetime.date.today().strftime('%Y-%m-%d')
       date = datetime.date.today()
-      #debug ("date: "+str(date))
+      debug ("date: "+str(date))
       c.execute('SELECT * FROM updates WHERE date=? AND type=? ', [date, 'channels'])
       if len(c.fetchall())>0:
         c.close()
