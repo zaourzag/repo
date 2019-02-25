@@ -2470,6 +2470,39 @@ To support the backport the addon will now always create the merged_epg.xml.gz
 	</extension>
 </addon>
 
+<addon id="plugin.video.ardundzdf" name="ARD und ZDF" version="0.9.9" provider-name="rols1 (rols1@gmx.de)">
+  <requires>
+   <import addon="xbmc.python" version="2.25.0"/>
+   <import addon="script.module.simplecache" version="1.0.0"/>
+ </requires>
+  <extension point="xbmc.python.pluginsource" library="ardundzdf.py">
+        <provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+	<summary lang="de">ARD- und ZDF-Mediathek</summary>
+	<description lang="de">ARD- und ZDF-Mediathek, einschließlich Live-TV mit Aufnahmefunktion, Merkliste, Live-Radio, Podcasts</description>
+	<platform>all</platform>
+         <website>http://www.shoutcast.com/</website>
+        <source>https://github.com/rols1/Kodi-Addon-ARDundZDF</source>
+        <forum>https://www.kodinerds.net/index.php/Thread/64244-RELEASE-Kodi-Addon-ARDundZDF/</forum>
+	<license>The MIT License (MIT)</license>
+	<language>"de_DE"</language>
+ 	<email>rols1@gmx.de</email>
+        <assets>
+             <icon>icon.png</icon>
+            <fanart>fanart.png</fanart>
+	    <screenshot>resources/screenshots/DownloadsShowAll.png</screenshot>
+	    <screenshot>resources/screenshots/EPG-Menue.png</screenshot>
+	    <screenshot>resources/screenshots/Podcast-Download.png</screenshot>    
+	    <screenshot>resources/screenshots/Podcastmenue.png</screenshot>    
+	    <screenshot>resources/screenshots/Startbuttons_RecordingTV-Live.png</screenshot>    
+	    <screenshot>resources/screenshots/ZDFmobile_im_Hauptmenue.png</screenshot>    
+	    <screenshot>resources/screenshots/ZDF_Menue.png</screenshot>    
+           
+     </assets>
+   </extension>
+</addon>
+
 <addon id="plugin.video.laola1tv" version="2.2.0" name="Laola1 TV" provider-name="Jin">
     <requires>
         <import addon="xbmc.python" version="2.25.0"/>
