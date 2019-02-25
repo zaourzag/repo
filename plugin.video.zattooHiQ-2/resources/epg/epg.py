@@ -220,14 +220,13 @@ class EPG(xbmcgui.WindowXML):
                 self.close()
             return None
 
-    def close(self):        
+    def close(self):
         xbmc.executebuiltin('ActivateWindow(10025,"plugin://'+__addonId__+'")')
         xbmcgui.Window(10000).setProperty('zattoo_runningView',"")
-        # debug('close epg')
-        # super(EPG, self).close()
-        # if not self.isClosing:
-           # self.isClosing = True
-           # super(EPG, self).close()
+        #super(EPG, self).close()
+        #if not self.isClosing:
+        #   self.isClosing = True
+        #   super(EPG, self).close()
 
     def onInit(self):
         self.db = ZattooDB()
@@ -366,7 +365,7 @@ class EPG(xbmcgui.WindowXML):
         end = int(time.mktime(program['end_date'].timetuple()))
         now = time.time()
         url=''
-       
+        
         accountData=_zattooDB_.zapi.get_accountData()
         RECORD=accountData['session']['recording_eligible']
         RECALL=accountData['session']['recall_eligible']
@@ -381,7 +380,6 @@ class EPG(xbmcgui.WindowXML):
        
         # if startime is in the future -> setup recording
         if start > now :
-            
         #if not self.premiumUser: xbmcgui.Dialog().ok('Error',' ',strings(ERROR_NO_PREMIUM))
             if RECORD:
                 #print 'SERIES:  ' + str(_zattooDB_.getSeries(program['showID']))
@@ -405,14 +403,12 @@ class EPG(xbmcgui.WindowXML):
                 return
         # else if endtime is in the past -> recall
         elif end < now:
-           
             if RECALL:
                 if __addon__.getSetting('epgPlay')=='true':
                     url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] + "&showID=" + program['showID'] + "&start=" + str(start) + "&end=" + str(end)
                 else:
                     if SERIE:
                         if _zattooDB_.getSeries(program['showID']):#Series record avilable
-                           
                             ret = xbmcgui.Dialog().select(program['channel']+': '+program['title']+' '+program['start_date'].strftime('%H:%M')+' - '+program['end_date'].strftime('%H:%M'),[strings(PLAY_FROM_START), strings(RECORD_SHOW), strings(RECORD_SERIES)])
                             if ret==0:  #recall
                                 url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] + "&showID=" + program['showID'] + "&start=" + str(start) + "&end=" + str(end)
@@ -425,18 +421,7 @@ class EPG(xbmcgui.WindowXML):
                                 setup_recording({'program_id': program['showID'], 'series': 'true'})
                                 return
                             else: return
-                        else: 
-                            debug('No Serie')
-                            ret = xbmcgui.Dialog().select(program['channel']+': '+program['title']+' '+program['start_date'].strftime('%H:%M')+' - '+program['end_date'].strftime('%H:%M'),[strings(PLAY_FROM_START), strings(RECORD_SHOW)])
-                            if ret==0:  #recall
-                                url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] + "&showID=" + program['showID'] + "&start=" + str(start) + "&end=" + str(end)
-                            elif ret==1: #record
-                                #url = "plugin://"+__addonId__+"/?mode=record_p&program_id=" + program['showID']
-                                setup_recording({'program_id': program['showID']})
-                                return
-                            else: return
                     else: 
-                        
                         ret = xbmcgui.Dialog().select(program['channel']+': '+program['title']+' '+program['start_date'].strftime('%H:%M')+' - '+program['end_date'].strftime('%H:%M'),[strings(PLAY_FROM_START), strings(RECORD_SHOW)])
                         if ret==0:  #recall
                             url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] + "&showID=" + program['showID'] + "&start=" + str(start) + "&end=" + str(end)

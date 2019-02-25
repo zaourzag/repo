@@ -228,7 +228,7 @@ class ZattooDB(object):
     try:
       c = self.conn.cursor()
       c.execute('CREATE TABLE channels(id TEXT, title TEXT, logo TEXT, weight INTEGER, favourite BOOLEAN, PRIMARY KEY (id) )')
-      c.execute('CREATE TABLE programs(showID TEXT, title TEXT, channel TEXT, start_date TEXT, end_date TEXT, restart BOOLEAN, series BOOLEAN, record BOOLEAN, description TEXT, description_long TEXT, year TEXT, country TEXT, genre TEXT, category TEXT, image_small TEXT, credits TEXT, PRIMARY KEY (showID), FOREIGN KEY(channel) REFERENCES channels(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED)')
+      c.execute('CREATE TABLE programs(showID TEXT, title TEXT, channel TEXT, start_date TIMESTAMP, end_date TIMESTAMP, restart BOOLEAN, series BOOLEAN, record BOOLEAN, description TEXT, description_long TEXT, year TEXT, country TEXT, genre TEXT, category TEXT, image_small TEXT, credits TEXT, PRIMARY KEY (showID), FOREIGN KEY(channel) REFERENCES channels(id) ON DELETE CASCADE DEFERRABLE INITIALLY DEFERRED)')
 
       c.execute('CREATE INDEX program_list_idx ON programs(channel, start_date, end_date)')
       c.execute('CREATE INDEX start_date_idx ON programs(start_date)')
