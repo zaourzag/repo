@@ -4512,7 +4512,7 @@ Parental warning: The Maxdome Plattform consists of differnt types of content - 
   </extension>
 </addon>
 
-<addon id="plugin.video.rtlnow" name="TV Now" version="0.6.7" provider-name="L0RE">
+<addon id="plugin.video.rtlnow" name="TV Now" version="0.6.8" provider-name="L0RE">
  <requires>
         <import addon="xbmc.python" version="2.1.0"/>   
         <import addon="script.common.plugin.cache" version="2.5.5"/> # Add this    
