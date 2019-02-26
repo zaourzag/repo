@@ -421,15 +421,15 @@ class EPG(xbmcgui.WindowXML):
                                 setup_recording({'program_id': program['showID'], 'series': 'true'})
                                 return
                             else: return
-                    else: 
-                        ret = xbmcgui.Dialog().select(program['channel']+': '+program['title']+' '+program['start_date'].strftime('%H:%M')+' - '+program['end_date'].strftime('%H:%M'),[strings(PLAY_FROM_START), strings(RECORD_SHOW)])
-                        if ret==0:  #recall
-                            url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] + "&showID=" + program['showID'] + "&start=" + str(start) + "&end=" + str(end)
-                        elif ret==1: #record
-                            #url = "plugin://"+__addonId__+"/?mode=record_p&program_id=" + program['showID']
-                            setup_recording({'program_id': program['showID']})
-                            return
-                        else: return
+                        else: 
+                            ret = xbmcgui.Dialog().select(program['channel']+': '+program['title']+' '+program['start_date'].strftime('%H:%M')+' - '+program['end_date'].strftime('%H:%M'),[strings(PLAY_FROM_START), strings(RECORD_SHOW)])
+                            if ret==0:  #recall
+                                url = "plugin://"+__addonId__+"/?mode=watch_c&id=" + program['channel'] + "&showID=" + program['showID'] + "&start=" + str(start) + "&end=" + str(end)
+                            elif ret==1: #record
+                                #url = "plugin://"+__addonId__+"/?mode=record_p&program_id=" + program['showID']
+                                setup_recording({'program_id': program['showID']})
+                                return
+                            else: return
             else:
                 xbmcgui.Dialog().ok('Error',' ',strings(ERROR_NO_PREMIUM))
                 return
