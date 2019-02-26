@@ -391,7 +391,7 @@ def staffel(idd,url) :
           debug("staffel d")
           startdate=folge["broadcastStartDate"]    
           tagline=folge["teaserText"]           
-          deeplink=folge["deeplinkUrl"] 
+          deeplink="https://www.tvnow.de/serien/" + folge["seoUrl"]+"-"+str(folge["format"]["id"])
           serienname=folge["format"]["title"]
           debug("staffel e")
           try:          
@@ -498,7 +498,8 @@ def generatefiles(url) :
           debug("staffel d")
           startdate=folge["broadcastStartDate"]    
           tagline=folge["teaserText"]           
-          deeplink=folge["deeplinkUrl"] 
+          deeplink="https://www.tvnow.de/serien/" + folge["seoUrl"]+"-"+str(folge["format"]["id"])
+          debug("DEEPLINK"+deeplink)
           serienname=folge["format"]["title"]
           folgenname=folge["title"].encode("utf-8")
           airdate=folge["broadcastStartDate"].encode("utf-8")
@@ -632,8 +633,8 @@ def playfolge(url,nummer):
           plotshort=folge["articleShort"]
           debug("staffel d")
           startdate=folge["broadcastStartDate"]    
-          tagline=folge["teaserText"]           
-          deeplink=folge["deeplinkUrl"] 
+          tagline=folge["teaserText"]                     
+          deeplink="https://www.tvnow.de/serien/" + folge["seoUrl"]+"-"+str(folge["format"]["id"])
           serienname=folge["format"]["title"]
           debug("staffel e")
           try:          
@@ -655,8 +656,8 @@ def playfolge(url,nummer):
               if not streamcode=="0":
                 stream=streamcode
               debug("STREAM : #" +stream +"#")
-          content = getUrl(deeplink)
-          referer=re.compile("webLink = '(.+?)'", re.DOTALL).findall(content)[0]                
+          #content = getUrl(deeplink)
+          referer=deeplink
           headerfelder="user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36&Referer="+referer
           stream=stream.split("?")[0]
           if kodi18=="true" :                
@@ -713,9 +714,8 @@ def hashplay(idd):
           if kodi18=="true" :
              if not streamcode=="0":
                stream=streamcode
-               debug("STREAM : #" +stream +"#")
-#content = getUrl(deeplink)
-#          referer=re.compile("webLink = '(.+?)'", re.DOTALL).findall(content)[0]                
+               debug("STREAM : #" +stream +"#")         
+          referer=deeplink        
           headerfelder="user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36" #&Referer="+referer	
 		  #headerfelder="user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36&Referer="+referer
           if kodi18=="true" :                
