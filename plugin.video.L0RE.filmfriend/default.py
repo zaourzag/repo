@@ -133,15 +133,13 @@ def geturl(url,data="x",header="",referer=""):
            cookiestring=cookiestring+cookiex.name+"="+cookiex.value+"; "        
         return content
 
-
-    
-def login_hamburg():
-    debug("login_hamburg")
+def login_by_form_id(formname):
+    debug("login_by_form_id_" + formname)
     username=addon.getSetting("username")
     password=addon.getSetting("password")
     page="https://www.filmfriend.de/customers/oauth/login/"
     content=geturl(page)
-    authurl=re.compile('form id="hamburglogin" action="(.+?)"', re.DOTALL).findall(content)[0]
+    authurl=re.compile('form id="' + formname + '" action="(.+?)"', re.DOTALL).findall(content)[0]
     values = {
         'borrower': username,
         'pin': password
@@ -169,7 +167,7 @@ def login_berlin():
   password=addon.getSetting("password")
   page="https://www.filmfriend.de/customers/oauth/login/"
   content=geturl(page)
-  newlink=re.compile('window.location="(.+?)"\' id="login-berlin"', re.DOTALL).findall(content)[0]       
+  newlink=re.compile('case \'berlin\':\s+window.location="(.+?)"', re.DOTALL|re.MULTILINE).findall(content)[0]       
   contentnew=geturl(newlink)
   page="https://www.voebb.de/oidcp/logincheck"       
   values = { 'L#AUSW' : username,
@@ -306,7 +304,9 @@ def login():
     if type=="Berlin":
        login_berlin()
     elif type=="Hamburg":
-       login_hamburg()
+       login_by_form_id("hamburglogin")
+    elif type=="München":
+       login_by_form_id("munchenlogin")
 def playit(url):      
     
     getfilm(url)
