@@ -169,7 +169,7 @@ def login_berlin():
   password=addon.getSetting("password")
   page="https://www.filmfriend.de/customers/oauth/login/"
   content=geturl(page)
-  newlink=re.compile('window.location="(.+?)"\' id="login-berlin"', re.DOTALL).findall(content)[0]       
+  newlink=re.compile('case \'berlin\':\s+window.location="(.+?)"', re.DOTALL|re.MULTILINE).findall(content)[0]       
   contentnew=geturl(newlink)
   page="https://www.voebb.de/oidcp/logincheck"       
   values = { 'L#AUSW' : username,
