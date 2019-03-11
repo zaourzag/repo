@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<addon id="plugin.video.dfb_tv" name="DFB TV" version="2.0.2" provider-name="PUR3/realvito">
+<addon id="plugin.video.dfb_tv" name="DFB TV" version="2.0.3" provider-name="PUR3/realvito">
 	<requires>
 		<import addon="xbmc.python" version="2.24.0"/>
 	</requires>
@@ -24,8 +24,8 @@
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 2.0.2  (23.02.2019)[/COLOR][/B] by realvito[CR]
-- fixed: Livestreams werden NICHT abgespielt
+		<news>[B][COLOR orangered]Version 2.0.3  (11.03.2019)[/COLOR][/B] by realvito[CR]
+- added: DEBUG-LOG-Meldungen zur Fehlersuche eingebaut
 		</news>
 	</extension>
 </addon>
