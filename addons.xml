@@ -2336,7 +2336,7 @@ To support the backport the addon will now always create the merged_epg.xml.gz
     </extension>
 </addon>
 
-<addon id="plugin.video.dfb_tv" name="DFB TV" version="2.0.3" provider-name="PUR3/realvito">
+<addon id="plugin.video.dfb_tv" name="DFB TV" version="2.0.4" provider-name="PUR3/realvito">
 	<requires>
 		<import addon="xbmc.python" version="2.24.0"/>
 	</requires>
@@ -2361,8 +2361,8 @@ To support the backport the addon will now always create the merged_epg.xml.gz
 			<icon>icon.png</icon>
 			<fanart>fanart.jpg</fanart>
 		</assets>
-		<news>[B][COLOR orangered]Version 2.0.3  (11.03.2019)[/COLOR][/B] by realvito[CR]
-- added: DEBUG-LOG-Meldungen zur Fehlersuche eingebaut
+		<news>[B][COLOR orangered]Version 2.0.4  (12.03.2019)[/COLOR][/B] by realvito[CR]
+- fixed: Wieder werden Livestreams NICHT abgespielt (Anfrage für Live- und Standardstreams im Script getrennt)
 		</news>
 	</extension>
 </addon>
