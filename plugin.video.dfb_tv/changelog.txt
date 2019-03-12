@@ -19,3 +19,6 @@
 
 [B]Version 2.0.3  (11.03.2019)[/B] by realvito[CR]
 - added: DEBUG-LOG-Meldungen zur Fehlersuche eingebaut
+
+[B]Version 2.0.4  (12.03.2019)[/B] by realvito[CR]
+- fixed: Wieder werden Livestreams NICHT abgespielt (Anfrage für Live- und Standardstreams im Script getrennt)

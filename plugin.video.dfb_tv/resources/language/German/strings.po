@@ -76,20 +76,20 @@ msgid "[COLOR red]!!! No Videos found !!![/COLOR]"
 msgstr "[COLOR red]!!! Keine Videos gefunden !!![/COLOR]"
 
 msgctxt "#30524"
-msgid "[COLOR red]... there are no livestreams in the next time[/COLOR]"
-msgstr "[COLOR red]... es gibt in nächster Zeit keine Livestreams[/COLOR]"
+msgid "[COLOR red]!!! No videos could be added !!![/COLOR]"
+msgstr "[COLOR red]!!! Es konnten keine Videos hinzugefügt werden !!![/COLOR]"
 
 msgctxt "#30525"
-msgid "[COLOR red]This stream is currently not online ![/COLOR]"
-msgstr "[COLOR red]Dieser Stream ist aktuell nicht online ![/COLOR]"
-
-msgctxt "#30526"
 msgid "[COLOR red]!!! The requested video was not found !!![/COLOR]"
 msgstr "[COLOR red]!!! Das angeforderte Video wurde nicht gefunden !!![/COLOR]"
 
+msgctxt "#30526"
+msgid "[COLOR red]... there are no livestreams in the next time[/COLOR]"
+msgstr "[COLOR red]... es gibt in nächster Zeit keine Livestreams[/COLOR]"
+
 msgctxt "#30527"
-msgid "[COLOR red]!!! No videos could be added !!![/COLOR]"
-msgstr "[COLOR red]!!! Es konnten keine Videos hinzugefügt werden !!![/COLOR]"
+msgid "[COLOR red]This stream is currently not online ![/COLOR]"
+msgstr "[COLOR red]Dieser Stream ist aktuell nicht online ![/COLOR]"
 
 #empty strings from id 30528 to 30600
 # PLUGIN-MAIN and SIDEMENU
