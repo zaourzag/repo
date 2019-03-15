@@ -603,6 +603,16 @@
                 <label>VAR Widget Label: $VAR[WidgetInProgressRow1_Label]</label>
             </control>
             <control type="label">
+                <width>auto</width>
+                <height>18</height>
+                <font>font12</font>
+                <align>left</align>
+                <textcolor>orange</textcolor>
+                <shadowcolor>black</shadowcolor>
+                <label>TITLE: $INFO[Container.ListItem.ChannelName] (Path: $INFO[Container.ListItem.Path])</label>
+				<!-- <visible>Container.ListItem.IsRecording</visible> -->
+            </control>
+            <control type="label">
                 <left>30</left>
                 <top>225</top>
                 <width>auto</width>

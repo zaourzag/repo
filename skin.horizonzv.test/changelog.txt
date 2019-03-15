@@ -1,4 +1,7 @@
-﻿v 1.18.0.21
+﻿v 1.18.0.22
+- Bugfix - PVR Bereich (Labels)
+
+v 1.18.0.21
 - Sichtbarkeit von selektierten Objekten erhöht (selectedcolor)
 
 v 1.18.0.20

@@ -1519,7 +1519,7 @@
                 <align>right</align>
                 <textcolor>grey</textcolor>
                 <label>$INFO[Container.ListItem.ChannelName]</label>
-                <visible>!String.IsEmpty(Container.ListItem.ChannelName)+Container.ListItem.HasEpg</visible>
+                <visible>!String.IsEmpty(Container.ListItem.ChannelName)</visible>
             </control>
             <control type="label">
                 <width>725</width>

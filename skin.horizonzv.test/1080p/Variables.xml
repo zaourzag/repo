@@ -434,7 +434,7 @@
         <value condition="Skin.HasSetting(tvshow_art)+[String.IsEmpty(Player.Art(tvshow.clearart))|!Skin.HasSetting(TVShowClearart)]+[String.IsEmpty(Player.Art(tvshow.characterart))|!Skin.HasSetting(TVShowCharacterart)]+Skin.HasSetting(TVShowClearlogo)+!String.IsEmpty(Player.Art(tvshow.clearlogo))">$INFO[Player.Art(tvshow.clearlogo)]</value>
         <value condition="Skin.HasSetting(tvshow_art)+[String.IsEmpty(Player.Art(tvshow.clearart))|!Skin.HasSetting(TVShowClearart)]+Skin.HasSetting(TVShowCharacterart)+!String.IsEmpty(Player.Art(tvshow.characterart))">$INFO[Player.Art(tvshow.characterart)]</value>
         <value condition="Skin.HasSetting(tvshow_art)+Skin.HasSetting(TVShowClearart)+!String.IsEmpty(Player.Art(tvshow.clearart))">$INFO[Player.Art(tvshow.clearart)]</value>
-        <value>$INFO[Player.Art(thumb)]</value>
+        <value>$INFO[Player.Icon]</value>
     </variable>
     <variable name="extraart_tvshow_player_rule_fullscreen">
         <!-- only for episodes -->
@@ -514,11 +514,6 @@
         <value>$INFO[ListItem.Plot]</value>
     </variable>
     <!-- End NOX -->
-    <variable name="PVRRecordLabel">
-        <value condition="!String.IsEmpty(ListItem.EpisodeName)">$INFO[ListItem.EpisodeName]</value>
-        <value condition="String.IsEmpty(ListItem.EpisodeName)+!String.IsEmpty(ListItem.PlotOutline)">$INFO[ListItem.PlotOutline, - ,]</value>
-        <value condition="String.IsEmpty(ListItem.EpisodeName)+String.IsEmpty(ListItem.PlotOutline)">$INFO[ListItem.Label]</value>
-    </variable>
     <variable name="WidgetsWeatherFanart">
         <value condition="!Skin.HasSetting(WeatherFanartHome)">$LOCALIZE[20439]</value>
         <value condition="Skin.HasSetting(WeatherFanartHome)">$LOCALIZE[20445]</value>
@@ -968,7 +963,7 @@
 		<value condition="String.Contains(Container.ListItem.DBType,song)">$INFO[Container.ListItem.Artist]$INFO[Container.ListItem.Title, - ,]</value>
 		<value condition="String.Contains(Container.ListItem.DBType,album)">$INFO[Container.ListItem.Artist]$INFO[Container.ListItem.Title, - ,]</value>
 		<value condition="String.Contains(Container.ListItem.DBType,artist)">$INFO[Container.ListItem.Artist]</value>
-		<value condition="!String.IsEmpty(Container.ListItem.ChannelName)+!Container.ListItem.HasEpg">$INFO[Container.ListItem.ChannelName]</value>
+		<value condition="String.Contains(Container.ListItem.Path,pvr://)+!String.Contains(Container.ListItem.Path,pvr://recordings)+Container.ListItem.HasEpg">$INFO[Container.ListItem.Title]</value>
 		<value>$INFO[Container.ListItem.Label]</value>
 	</variable>
 	<variable name="NewsCenterGTO">

@@ -63,21 +63,8 @@
 							<align>left</align>
 							<aligny>center</aligny>
 							<textcolor>grey</textcolor>
-							<label>$INFO[ListItem.Label]</label>
-							<font>ubuntu-r16b</font>
-							<visible>![String.IsEmpty(ListItem.EpisodeName)+String.IsEmpty(ListItem.PlotOutline)]</visible>
-						</control>
-						<control type="label">
-							<left>105</left>
-							<top>0</top>
-							<width>745</width>
-							<height>38</height>
-							<align>left</align>
-							<aligny>center</aligny>
-							<textcolor>grey</textcolor>
 							<label>$INFO[ListItem.ChannelName]</label>
 							<font>ubuntu-r16b</font>
-							<visible>String.IsEmpty(ListItem.EpisodeName)+String.IsEmpty(ListItem.PlotOutline)</visible>
 						</control>
 						<control type="label">
 							<left>105</left>
@@ -86,7 +73,7 @@
 							<height>30</height>
 							<align>left</align>
 							<aligny>center</aligny>
-							<label>$VAR[PVRRecordLabel]</label>
+							<label>$INFO[ListItem.Title]$INFO[ListItem.Season, - S,]$INFO[ListItem.Episode,E,]$INFO[ListItem.Duration, (,)]</label>
 							<font>ubuntu-r19b</font>
 						</control>
                         <control type="label">
@@ -163,20 +150,8 @@
                                 <height>38</height>
                                 <align>left</align>
                                 <aligny>center</aligny>
-                                <label>$INFO[ListItem.Label]</label>
-                                <font>ubuntu-r16b</font>
-								<visible>![String.IsEmpty(ListItem.EpisodeName)+String.IsEmpty(ListItem.PlotOutline)]</visible>
-                            </control>
-                            <control type="label">
-                                <left>105</left>
-                                <top>0</top>
-                                <width>745</width>
-                                <height>38</height>
-                                <align>left</align>
-                                <aligny>center</aligny>
                                 <label>$INFO[ListItem.ChannelName]</label>
                                 <font>ubuntu-r16b</font>
-								<visible>String.IsEmpty(ListItem.EpisodeName)+String.IsEmpty(ListItem.PlotOutline)</visible>
                             </control>
                             <control type="label">
                                 <left>105</left>
@@ -185,7 +160,7 @@
                                 <height>30</height>
                                 <align>left</align>
                                 <aligny>center</aligny>
-                                <label>$VAR[PVRRecordLabel]</label>
+                                <label>$INFO[ListItem.Title]$INFO[ListItem.Season, - S,]$INFO[ListItem.Episode,E,]$INFO[ListItem.Duration, (,)]</label>
                                 <font>ubuntu-r19b</font>
                             </control>
                             <control type="label">
