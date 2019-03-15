@@ -1,6 +1,11 @@
 ==================================================
 [B]ZattooHiQ v1.6.9 [/B]17.02.2019 Steffen Rolapp
 ==================================================
+- url von vorschaubild geändert
+
+==================================================
+[B]ZattooHiQ v1.6.9 [/B]17.02.2019 Steffen Rolapp
+==================================================
 - Kodi Player OSD über Longpress Return zu erreichen
 - WidgetProblem bei Aeon Silvo behoben
 - EPG Datums Eingabe exit wenn heute

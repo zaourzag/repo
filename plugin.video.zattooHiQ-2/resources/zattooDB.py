@@ -96,7 +96,9 @@ class reloadDB(xbmcgui.WindowXMLDialog):
             os.remove(os.path.join(profilePath, 'account.cache'))
             #os.remove(os.path.join(profilePath, 'apicall.cache'))
             DB.zapiSession()
-                        
+            DB._createTables()
+            #xbmcgui.Dialog().ok(__addon__.getAddonInfo('name'), local(24074))
+            
         except:
             pass
     #DB.zapi.AccountData = None
@@ -234,7 +236,7 @@ class ZattooDB(object):
       c.execute('CREATE INDEX start_date_idx ON programs(start_date)')
       c.execute('CREATE INDEX end_date_idx ON programs(end_date)')
       
-      c.execute('CREATE TABLE updates(id INTEGER, date TEXT, type TEXT, PRIMARY KEY (id) )')
+      c.execute('CREATE TABLE updates(id INTEGER, date TIMESTAMP, type TEXT, PRIMARY KEY (id) )')
       #c.execute('CREATE TABLE playing(channel TEXT, start_date TIMESTAMP, action_time TIMESTAMP, current_stream INTEGER, streams TEXT, PRIMARY KEY (channel))')
       c.execute('CREATE TABLE showinfos(showID INTEGER, info TEXT, PRIMARY KEY (showID))')
       c.execute('CREATE TABLE playing(channel TEXT, showID TEXT, current_stream INTEGER, streams TEXT, PRIMARY KEY (channel))')
@@ -257,7 +259,7 @@ class ZattooDB(object):
     if rebuild == False:
       #date = datetime.date.today().strftime('%Y-%m-%d')
       date = datetime.date.today()
-      debug ("date: "+str(date))
+      #debug ("date: "+str(date))
       c.execute('SELECT * FROM updates WHERE date=? AND type=? ', [date, 'channels'])
       if len(c.fetchall())>0:
         c.close()
@@ -369,7 +371,8 @@ class ZattooDB(object):
                 #debug ('Programm: '+str(cid)+' '+str(program))
        
                 if program['i'] != None:
-                  image = "http://images.zattic.com/" + program['i']
+                  image = "https://images.zattic.com/cms/" + program['i_t'] + "/format_480x360.jpg"
+                  #https://images.zattic.com/cms/64ab6db7f62b325f4148/original.jpg
                   #http://images.zattic.com/system/images/6dcc/8817/50d1/dfab/f21c/format_480x360.jpg
                 else: image = ""
     
