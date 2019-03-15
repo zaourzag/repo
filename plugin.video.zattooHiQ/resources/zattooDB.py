@@ -371,7 +371,8 @@ class ZattooDB(object):
                 #debug ('Programm: '+str(cid)+' '+str(program))
        
                 if program['i'] != None:
-                  image = "http://images.zattic.com/" + program['i']
+                  image = "https://images.zattic.com/cms/" + program['i_t'] + "/format_480x360.jpg"
+                  #https://images.zattic.com/cms/64ab6db7f62b325f4148/original.jpg
                   #http://images.zattic.com/system/images/6dcc/8817/50d1/dfab/f21c/format_480x360.jpg
                 else: image = ""
     

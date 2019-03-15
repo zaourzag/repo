@@ -966,6 +966,7 @@ def search_show(addon_uri, addon_handle, search):
 
 
 def showPreview(popularList=''):
+  xbmc.executebuiltin("Dialog.Close(all, true)")
   from resources.channelspreview import ChannelsPreview
   preview = ChannelsPreview()
   if popularList=='popular': preview.createPreview('popular')
