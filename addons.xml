@@ -2898,7 +2898,7 @@ V1.1.1
   	</extension>
 </addon>
 
-<addon id="skin.horizonzv.test" name="Horizonz V (Kodi 18) BETA!" version="1.18.0.22" provider-name="blauesgruen">
+<addon id="skin.horizonzv.test" name="Horizonz V (Kodi 18) BETA!" version="1.18.0.23" provider-name="blauesgruen">
 	<requires>
 		<import addon="xbmc.gui" version="5.14.0"/>
 		<import addon="script.image.resource.select" version="2.0.1"/>
