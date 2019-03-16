@@ -1180,7 +1180,22 @@
 				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)"/>
 				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Widget_LiveTVWidgetChannels)+PVR.HasTVChannels"/>
 				<param name="HomePageWidget_list_visible2" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),pvr)"/>
-				<param name="HomePageWidget_list_visible3" value="!String.IsEmpty(Skin.String(Widget_PVR_TV_WidgetChannels_Path))"/>
+				<param name="HomePageWidget_list_visible3" value="!String.IsEmpty(Skin.String(Widget_PVR_TV_WidgetChannels_Path))+!Skin.HasSetting(Widget_LiveTVWidgetChannels_inprogress)"/>
+			</include>
+			<include content="HomePageWidget_list">
+				<!-- pvr channels -->
+				<param name="HomePageWidget_content" value="pvr://channels/tv/*"/>
+				<param name="HomePageWidget_sortby" value="lastplayed"/>
+				<param name="HomePageWidget_sortorder" value="descending"/>
+				<param name="HomePageWidget_limit" value="20"/>
+				<param name="HomePageWidget_list_id" value="289"/>
+				<param name="HomePageWidget_list_width" value="729"/>
+				<param name="HomePageWidget_list_ondown" value="9000"/>
+				<param name="HomePageWidget_list_onfocus" value="SetProperty(WidgetLabel,$LOCALIZE[575],home)"/>
+				<param name="HomePageWidget_list_onunfocus" value="ClearProperty(WidgetLabel)"/>
+				<param name="HomePageWidget_list_visible" value="Skin.HasSetting(Widget_LiveTVWidgetChannels)+PVR.HasTVChannels"/>
+				<param name="HomePageWidget_list_visible2" value="String.IsEqual(Container(9000).ListItem.Property(homemenu_id),pvr)"/>
+				<param name="HomePageWidget_list_visible3" value="!String.IsEmpty(Skin.String(Widget_PVR_TV_WidgetChannels_Path))+Skin.HasSetting(Widget_LiveTVWidgetChannels_inprogress)"/>
 			</include>
         </control>
     </include>

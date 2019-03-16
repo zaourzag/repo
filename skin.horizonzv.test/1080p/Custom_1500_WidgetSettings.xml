@@ -927,13 +927,20 @@
                     <onclick>Skin.ToggleSetting(Widget_LiveTVWidgetChannels)</onclick>
                     <selected>Skin.HasSetting(Widget_LiveTVWidgetChannels)</selected>
                 </control>
+                <control type="radiobutton" id="1220">
+                    <include>dialogbutton_popup</include>
+                    <label> nach zuletzt gesehen sortieren</label>
+					<onclick>Skin.ToggleSetting(Widget_LiveTVWidgetChannels_inprogress)</onclick>
+					<selected>Skin.HasSetting(Widget_LiveTVWidgetChannels_inprogress)</selected>
+					<visible>Skin.HasSetting(Widget_LiveTVWidgetChannels)</visible>
+                </control>
                 <control type="button" id="123">
                     <description>User Channels</description>
                     <include>dialogbutton_popup</include>
                     <label> $LOCALIZE[19141]</label>
                     <label2>$INFO[Skin.String(Widget_PVR_TV_WidgetChannels_Path)]</label2>
                     <onclick>Skin.SetPath(Widget_PVR_TV_WidgetChannels_Path,pvr://channels/tv/)</onclick>
-                    <visible>Skin.HasSetting(Widget_LiveTVWidgetChannels)</visible>
+                    <visible>Skin.HasSetting(Widget_LiveTVWidgetChannels)+!Skin.HasSetting(Widget_LiveTVWidgetChannels_inprogress)</visible>
                 </control>
 				<include content="separatorlabel">
 					<param name="separatorlabel_id" value="124"/>

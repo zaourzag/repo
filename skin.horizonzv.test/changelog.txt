@@ -1,4 +1,7 @@
-﻿v 1.18.0.22
+﻿v 1.18.0.23
+- PVR Widget - zuletzt gesehen hinzugefügt
+
+v 1.18.0.22
 - Bugfix - PVR Bereich (Labels)
 
 v 1.18.0.21
