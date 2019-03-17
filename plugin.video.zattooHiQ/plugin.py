@@ -123,7 +123,7 @@ else:
 try:
   country=accountData['session']['service_region_country']
   __addon__.setSetting('country', country)
-except pass
+except: pass
 
 dateregistered=accountData['session']['user']['dateregistered']
 __addon__.setSetting('dateregistered',convert_date(dateregistered))
