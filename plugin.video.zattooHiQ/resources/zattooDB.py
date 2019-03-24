@@ -632,12 +632,8 @@ class ZattooDB(object):
     
     title = showInfo['programs'][0]['t']
     channel = showInfo['programs'][0]['cid']
-    start = datetime.datetime.fromtimestamp(showInfo['programs'][0]['s'])
-    #start = time.mktime(time.strptime(start, "%Y-%m-%dT%H:%M:%SZ"))
-    start = start.strftime("%Y-%m-%dT%H:%M:%SZ")
-    end = datetime.datetime.fromtimestamp(showInfo['programs'][0]['e'])
-    #end = int(time.mktime(time.strptime(end, "%Y-%m-%dT%H:%M:%SZ")))
-    end = end.strftime("%Y-%m-%dT%H:%M:%SZ")
+    start = showInfo['programs'][0]['s']
+    end = showInfo['programs'][0]['e']
     genre = showInfo['programs'][0]['g']
     year = showInfo['programs'][0]['year']
     country = showInfo['programs'][0]['country']

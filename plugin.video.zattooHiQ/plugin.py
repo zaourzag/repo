@@ -96,6 +96,12 @@ def convert_date(date):
   res += datetime.timedelta(seconds=_timezone_)
   return str(res.strftime('%A,%d.%B %Y %H:%M'))
 
+def formatTime(timestamp):
+  if timestamp:
+      format = xbmc.getRegion('time').replace(':%S', '').replace('%H%H', '%H')
+      return timestamp.strftime(format)
+  else:
+      return ''
 # This is a throwaway variable to deal with a python bug
 #throwaway = datetime.datetime.strptime('20110101','%Y%m%d')
   
@@ -861,10 +867,10 @@ def search_show(addon_uri, addon_handle, search):
   now = time.time()  # datetime.datetime.now()
   for program in programs:
     start = int(time.mktime(time.strptime(program['start'], "%Y-%m-%dT%H:%M:%SZ"))) + _timezone_  # local timestamp
-    startLocal = time.localtime(start)  # local timetuple
     end = int(time.mktime(time.strptime(program['end'], "%Y-%m-%dT%H:%M:%SZ"))) + _timezone_  # local timestamp
-    endLocal = time.localtime(end)
     
+    startLocal = time.localtime(start)  # local timetuple
+    endLocal = time.localtime(end)
     if program.get('episode_title', '') is not None:episode_title=program.get('episode_title', '')
     else:episode_title=''
     
@@ -884,7 +890,11 @@ def search_show(addon_uri, addon_handle, search):
     info = _zattooDB_.getShowLongDescription(str(showID))    
     if info['description'] =='':
       info = _zattooDB_.setProgram(str(showID))
-      
+    startInfo = _zattooDB_.get_showID(str(showID))
+    st = startInfo[0]['start_date']
+    debug(showID)
+    debug(st)
+    debug(startInfo[0]['image_small'])
     #debug('ShowID: '+str(showID)+'  '+str(info))
     cred=''
     director=[]
@@ -899,9 +909,9 @@ def search_show(addon_uri, addon_handle, search):
         except:pass
     
     item = {
-        'title': '[COLOR yellow]' + time.strftime("%d.%m. %H:%M ", startLocal) + '[/COLOR]' + '[COLOR lime]' + program.get('cid', '') + '[/COLOR]' + ': ' + program.get('title', '') + ' - ' + episode_title,
+        'title': '[COLOR yellow]' + st.strftime('%d.%m. ') + formatTime(st) + '[/COLOR] ' + '[COLOR lime]' + program.get('cid', '') + '[/COLOR]' + ': ' + program.get('title', '') + ' - ' + episode_title,
         'image': channels[program['cid']]['logo'],
-        'thumbnail': program.get('image_url', ''),
+        'thumbnail': 'https://images.zattic.com/cms/' + program.get('image_token') + '/format_480x360.jpg',
         'plot':  info['description'],
         'country': info['country'],
         'year': info['year'],
@@ -911,9 +921,9 @@ def search_show(addon_uri, addon_handle, search):
         'isFolder': False
       }
     rec = {
-        'title': '[COLOR yellow]' + time.strftime("%d.%m. %H:%M ", startLocal) + '[/COLOR]' + '[COLOR lime]' + program.get('cid', '') + '[/COLOR]' + ': ' + program.get('title', '') + ' - ' + episode_title,
+        'title': '[COLOR yellow]'  + st.strftime('%d.%m. ') + formatTime(st)  + '[/COLOR] ' + '[COLOR lime]' + program.get('cid', '') + '[/COLOR]' + ': ' + program.get('title', '') + ' - ' + episode_title,
         'image': channels[program['cid']]['logo'],
-        'thumbnail': program.get('image_url', ''),
+        'thumbnail': 'https://images.zattic.com/cms/' + program.get('image_token') + '/format_480x360.jpg',
         'plot':  info['description'],
         'country': info['country'],
         'year': info['year'],
