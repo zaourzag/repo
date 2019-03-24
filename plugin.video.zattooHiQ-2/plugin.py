@@ -123,7 +123,7 @@ else:
 try:
   country=accountData['session']['service_region_country']
   __addon__.setSetting('country', country)
-except pass
+except: pass
 
 dateregistered=accountData['session']['user']['dateregistered']
 __addon__.setSetting('dateregistered',convert_date(dateregistered))
@@ -482,20 +482,24 @@ def build_recordingsList(addon_uri, addon_handle):
     if not showInfo: continue
     if showInfo == "NONE": continue
     #mark if show is future, running or finished
+    
     start = int(time.mktime(time.strptime(record['start'], "%Y-%m-%dT%H:%M:%SZ"))) + _timezone_  # local timestamp
     end = int(time.mktime(time.strptime(record['end'], "%Y-%m-%dT%H:%M:%SZ"))) + _timezone_  # local timestamp
     position = int(time.mktime(time.strptime(record['position'], "%Y-%m-%dT%H:%M:%SZ"))) + _timezone_  # local timestamp
+    st = showInfo[0]['s']
+    
     now = time.time()
     duration = end - start
     color='crimson'
+  
     if (now>start): color='gold'
     if (now>end): color='lime'
     if RECREADY == "true":
       if color != "lime": continue
     if __addon__.getSetting('rec_name') == '0':
-        label=datetime.datetime.fromtimestamp(start).strftime('%Y.%m.%d. %H:%M')+' ' 
+        label=datetime.datetime.fromtimestamp(st).strftime('%Y.%m.%d. %H:%M')+' ' 
     elif __addon__.getSetting('rec_name') == '1':
-        label=datetime.datetime.fromtimestamp(start).strftime('%a %d.%m.%Y. %H:%M')+' ' 
+        label=datetime.datetime.fromtimestamp(st).strftime('%a %d.%m.%Y. %H:%M')+' ' 
     if record['episode_title']:
       label+='[COLOR '+color+']'+record['title']+'[/COLOR]: '+record['episode_title']
       title=record['title']+': '+record['episode_title']
@@ -517,11 +521,11 @@ def build_recordingsList(addon_uri, addon_handle):
     if (position>end-660):  #10min padding from zattoo +1min safety margin
         meta.update({'overlay':7, 'playcount':12})
     '''
-      
+    image_url = 'https://images.zattic.com/cms/' + record['image_token'] + '/format_480x360.jpg'
     li = xbmcgui.ListItem(label)
     li.setInfo('video',meta)
-    li.setThumbnailImage(record['image_url'])
-    li.setArt({'thumb':record['image_url'], 'fanart':record['image_url'], 'landscape':record['image_url']})
+    li.setThumbnailImage(image_url)
+    li.setArt({'thumb':image_url, 'fanart':image_url, 'landscape':image_url})
     li.setProperty('IsPlayable', 'true') 
     
     li.setProperty("TotalTime", str(end-start))
@@ -538,7 +542,7 @@ def build_recordingsList(addon_uri, addon_handle):
         for ser in resultData['recorded_tv_series']:
           if series == ser['tv_series_id']:
             seriesrec = 'true'
-            debug('SeriesID '+str(series))
+            #debug('SeriesID '+str(series))
             break
           else:
             seriesrec = 'None'

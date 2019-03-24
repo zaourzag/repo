@@ -1,4 +1,10 @@
 ===================================================
+[B]ZattooHiQ v1.6.9.8 [/B]24.03.2019 Steffen Rolapp
+===================================================
+- Url für Vorschaubilder geändert
+- Falsche Anfangszeiten bei Sommerzeit in den Aufnahmen gefixt
+
+===================================================
 [B]ZattooHiQ v1.6.9.6 [/B]17.03.2019 Steffen Rolapp
 ===================================================
 - Fehler bei Salt.Tv behoben
