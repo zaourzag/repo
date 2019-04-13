@@ -12,4 +12,6 @@
   <string id="30103">ViewID</string>
   <string id="30104">Play audio title (from 3 years)</string>
   <string id="30105">Only show 'from 3 years' content</string>
+  <string id="30106">Auto select stream format</string>
+  <string id="30107">Format to select</string>
 </strings>
