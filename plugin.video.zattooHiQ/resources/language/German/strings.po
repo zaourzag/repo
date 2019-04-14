@@ -394,8 +394,8 @@ msgid "Default Audio"
 msgstr "Standard Ton"
 
 msgctxt "#310065"
-msgid "use DASH stream (Kodi17+18)"
-msgstr "DASH stream (Kodi17+18)"
+msgid "Stream-Type"
+msgstr "Stream-Type"
 
 msgctxt "#310067"
 msgid "Only show favourite channels"

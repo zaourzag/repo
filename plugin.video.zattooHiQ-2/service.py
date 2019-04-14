@@ -151,7 +151,7 @@ class myPlayer(xbmc.Player):
       xbmc.sleep(200)
       playingFile=xbmc.getInfoLabel('Player.Filenameandpath')
       print "playingfile: " + str(playingFile)
-      if playingFile.find('dash-live')>-1 or playingFile.find('hls-live')>-1:
+      if playingFile.find('dash-live')>-1 or playingFile.find('hls-live')>-1 or playingFile.find('dashenc-live')>-1:
             self.loadKeymap()
      
       else: #start recall while playing -> unload keymap

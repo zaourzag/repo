@@ -1,4 +1,4 @@
-# coding=utf-8
+# # -*- coding: utf-8 -*-
 #
 #    copyright (C) 2017 Steffen Rolapp (github@rolapp.de)
 #
@@ -144,7 +144,7 @@ class ZattooDB(object):
   def zapiSession(self):
     zapiSession   = ZapiSession(xbmc.translatePath(__addon__.getAddonInfo('profile')).decode('utf-8'))
     PROVIDER = __addon__.getSetting('provider')
-    debug('Provider '+str(PROVIDER))
+    #debug('Provider '+str(PROVIDER))
     if PROVIDER == "0": ZAPIUrl = "https://zattoo.com"
     elif PROVIDER == "1": ZAPIUrl = "https://www.netplus.tv"
     elif PROVIDER == "2": ZAPIUrl = "https://mobiltv.quickline.com"
@@ -629,7 +629,11 @@ class ZattooDB(object):
     if showInfo is None:
         c.close()
         return "NONE"
-    
+    if not showInfo['programs']:
+        debug('Liste ist leer')
+        c.close()
+        return "NONE"
+        
     title = showInfo['programs'][0]['t']
     channel = showInfo['programs'][0]['cid']
     start = showInfo['programs'][0]['s']
@@ -677,6 +681,7 @@ class ZattooDB(object):
         programList = []
         try:
             c.execute('SELECT * FROM programs WHERE showID = ? ', [showID])
+            #debug(showID)
         except:pass
         row = c.fetchone()
         programList.append({
@@ -973,14 +978,35 @@ class ZattooDB(object):
         c.execute('INSERT INTO search(search) VALUES(?)', [search])
     except:pass
     self.conn.commit()
-    c.execute("SELECT Count(*) FROM `search`")
-    for res in c:
-        debug(res[0])
-        if res[0] > 10:
-            debug(res[0])
-            c.execute('delete  from search limit 1')
+    #c.execute("SELECT Count(*) FROM `search`")
+    # for res in c:
+        # debug(res[0])
+        # if res[0] > 10:
+            # debug(res[0])
+            # c.execute('delete  from search limit 1')
     c.close()
-            
+   
+  def del_search(self,al=False,search=''): 
+    debug('DEl-Search ' + str(al)+' ' +str(search))
+    c = self.conn.cursor()    
+    if al == 'True':
+        c.execute('DELETE FROM search')
+        debug('True')
+    else:
+        c.execute('DELETE FROM search WHERE search=?', [search])
+    self.conn.commit()
+    c.close()
+    
+  def edit_search(self,search):
+    c = self.conn.cursor()
+    item = xbmcgui.Dialog().input(__addon__.getLocalizedString(31200), defaultt=search, type=xbmcgui.INPUT_ALPHANUM)
+    try:
+       c.execute('UPDATE search SET search=? WHERE search=?', [item, search])
+    except:pass
+    self.conn.commit()  
+    c.close()
+    return item
+    
   def set_version(self, version):
     c = self.conn.cursor()
     c.execute('DELETE FROM version')

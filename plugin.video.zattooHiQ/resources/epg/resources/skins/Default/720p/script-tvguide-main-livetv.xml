@@ -444,6 +444,8 @@
                 <textcolor>ffffffff</textcolor>
                 <font>font13</font>
                 <aligny>center</aligny>
+                <scroll>true</scroll>
+				<scrollspeed>50</scrollspeed>
             </control>
             <control type="image" id="4024">
                 <description>Channel logo</description>
@@ -813,6 +815,7 @@
                 <textcolor>ffffffff</textcolor>
                 <font>font13</font>
                 <aligny>center</aligny>
+                <autoscroll time="3600" delay="6000" repeat="6000">true</autoscroll>
             </control>
             <control type="label" id="6002">
                 <description>Program time</description>

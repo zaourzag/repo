@@ -21,9 +21,9 @@
         <setting label="310067" type="bool" id="show_favourites" default="false"/>
         <setting label="31003" type="enum" id="pip"  default="0" lvalues="310098|310097"/>
         <setting type="sep"/>
-        <setting label="31005" id="max_bandwidth" type="labelenum" values="600|900|1500|3000|5000" default="5000"/>
+        <setting label="31005" id="max_bandwidth" type="labelenum" values="600|900|1500|3000|5000|8000" default="8000"/>
         <setting label="31006" id="audio_stream" type="labelenum" values="A|B" default="A"/>
-        <setting label="310065" id="dash" type="bool" default="false"/>
+        <setting label="310065" id="stream_type" type="labelenum" values="hls|dash|dash_widevine" default="hls"/>
         <setting type="sep"/>
         <setting label="31007" type="bool" id="start_liveTV" default="false"/>
         <setting label="31009" type="action" action="RunPlugin(plugin://plugin.video.zattooHiQ/?mode=selectStartChannel)" enable="eq(-1,true)"/>

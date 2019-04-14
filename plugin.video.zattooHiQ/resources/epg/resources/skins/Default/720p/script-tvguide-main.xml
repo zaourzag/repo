@@ -444,6 +444,9 @@
                 <textcolor>ffffffff</textcolor>
                 <font>font13</font>
                 <aligny>center</aligny>
+                <scroll>true</scroll>
+				<scrollspeed>50</scrollspeed>
+                
             </control>
             <control type="image" id="4024">
                 <description>Channel logo</description>
@@ -800,7 +803,8 @@
                 <label>[B]Title[/B]</label>
                 <textcolor>ffffffff</textcolor>
                 <font>font13</font>
-                <aligny>center</aligny>
+                <aligny>center</aligny> 
+                <autoscroll time="3600" delay="6000" repeat="6000">true</autoscroll>
             </control>
             <control type="label" id="6002">
                 <description>Program time</description>
@@ -814,6 +818,7 @@
                 <align>right</align>
                 <aligny>center</aligny>
             </control>
+
             <control type="textbox" id="6003">
                 <description>Program description</description>
                 <posx>30</posx>
@@ -827,6 +832,7 @@
 
                 <autoscroll time="3600" delay="6000" repeat="6000">true</autoscroll>
             </control>
+
             <control type="image" id="6004">
                 <description>Program channel logo</description>
                 <posx>1100</posx>

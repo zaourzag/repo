@@ -419,7 +419,7 @@ msgid "Default Audio"
 msgstr ""
 
 msgctxt "#310065"
-msgid "use DASH stream (Kodi17+18)"
+msgid "Stream-Type"
 msgstr ""
 
 msgctxt "#310067"
