@@ -22,6 +22,9 @@ playSound = addon.getSetting("playSound") == "true"
 forceViewMode = addon.getSetting("forceViewMode") == "true"
 useThumbAsFanart = addon.getSetting("useThumbAsFanart") == "true"
 viewMode = str(addon.getSetting("viewMode"))
+autoSelectFormat = addon.getSetting("autoSelectFormat") == "true"
+formatSetting = addon.getSetting("format")
+formatToAutoSelect = ["320x180", "480x270", "512x288", "640x360", "720x576", "960x540", "1280x720"][int(formatSetting)]
 translation = addon.getLocalizedString
 icon = xbmc.translatePath('special://home/addons/'+addonID+'/icon.png')
 urlMain = "http://kika.de"
@@ -143,30 +146,51 @@ def listEpisodes(url):
         match = re.compile('<a href="(.+?)" class="linkAll" title="(.+?)".*></a>', re.DOTALL).findall(entry)
         title = cleanTitle(match[0][1])
 
-        addDir(title, url, 'listEpisodeFormats', thumb)
+        addEpisode(title, url, thumb)
     xbmcplugin.endOfDirectory(pluginhandle)
     if forceViewMode:
         xbmc.executebuiltin('Container.SetViewMode('+viewMode+')')
 
 
+def addEpisode(title, url, thumb):
+    elementAdded = False
+
+    if autoSelectFormat:
+
+        xmlUrl = getXmlUrlForEpisode(url)
+
+        if not xmlUrl == "":
+            xbmc.log("getting preferred format from xml: "+xmlUrl)
+
+            spl = getSplitFormatContent(xmlUrl)
+
+            for i in range(1, len(spl), 1):
+                entry = spl[i]
+
+                formatTitle = getTitleFromFormatEntry(entry)
+
+                if formatToAutoSelect in formatTitle:
+                    xbmc.log("formatTitle: "+formatTitle)
+
+                    url = getUrlFromFormatEntry(entry)
+                    xbmc.log("url: "+url)
+
+                    addLink(title, url, 'playVideo', thumb)
+                    elementAdded = True
+                    break
+
+    if not elementAdded:
+        addDir(title, url, 'listEpisodeFormats', thumb)
 
 
 #lists a single episode and available options (-> "play")
 def listEpisodeFormats(url):
-    #xbmc.log("listing episode formats: "+url)
-
-    #load html site to get xml-data-url
-    content = opener.open(url).read()
-
-    match = re.compile('dataURL:\'([^\']*)\'', re.DOTALL).findall(content)
-    xmlUrl = ""
-    if match:
-        xmlUrl = match[0]
+    xmlUrl = getXmlUrlForEpisode(url)
 
     if not xmlUrl == "":
         xbmc.log("listing episode formats from xml: "+xmlUrl)
         #load final xml content (containing video urls)
-        content = opener.open(xmlUrl).read()
+        spl = getSplitFormatContent(xmlUrl)
 
         #contains a thumbnail-template, but "hash"-key is missing
         #match = re.compile('<url>(.+?)</url>', re.DOTALL).findall(entry)
@@ -176,36 +200,58 @@ def listEpisodeFormats(url):
         #thumb = thumb.replace("**width**", "600")
         thumb = ""
 
-
-        spl = content.split('<asset>')
         for i in range(1, len(spl), 1):
-            url = ""
             entry = spl[i]
-            match = re.compile('<profileName>(.+?)</profileName>', re.DOTALL).findall(entry)
-            title = cleanTitle(match[0])
+
+            title = getTitleFromFormatEntry(entry)
             xbmc.log("title: "+title)
 
-            matches = re.compile('<flashMediaServerURL>(.+?)</flash', re.DOTALL).findall(entry)
-            for match in matches:
-                url = match.split(":") #url was mp4:mp4dyn/1/FCMS-[HASH].mp4
-                if len(url) > 1:
-                    url = url[1]
-                else:
-                    url = url[0]
-                appMatch = re.compile('<flashMediaServerApplicationURL>(.+?)<', re.DOTALL).findall(entry)
-                url = appMatch[0] + "/" + url
-
-            if url == "":
-                match = re.compile('<progressiveDownloadUrl>(.+?)<', re.DOTALL).findall(entry)
-                url = match[0]
-
+            url = getUrlFromFormatEntry(entry)
             xbmc.log("url: "+url)
+
             addLink(title, url, 'playVideo', thumb)
     else:
         addLink("Kein abspielbares Video gefunden", "", 'playVideo', "")
     xbmcplugin.endOfDirectory(pluginhandle)
     if forceViewMode:
         xbmc.executebuiltin('Container.SetViewMode('+viewMode+')')
+
+
+def getXmlUrlForEpisode(url):
+    #load html site to get xml-data-url
+    content = opener.open(url).read()
+
+    match = re.compile('dataURL:\'([^\']*)\'', re.DOTALL).findall(content)
+    xmlUrl = ""
+    if match:
+        xmlUrl = match[0]
+    return xmlUrl
+
+def getSplitFormatContent(xmlUrl):
+    content = opener.open(xmlUrl).read()
+    return content.split('<asset>')
+
+def getTitleFromFormatEntry(entry):
+    match = re.compile('<profileName>(.+?)</profileName>', re.DOTALL).findall(entry)
+    return cleanTitle(match[0])
+
+def getUrlFromFormatEntry(entry):
+    url = ""
+    matches = re.compile('<flashMediaServerURL>(.+?)</flash', re.DOTALL).findall(entry)
+    for match in matches:
+        url = match.split(":") #url was mp4:mp4dyn/1/FCMS-[HASH].mp4
+        if len(url) > 1:
+            url = url[1]
+        else:
+            url = url[0]
+        appMatch = re.compile('<flashMediaServerApplicationURL>(.+?)<', re.DOTALL).findall(entry)
+        url = appMatch[0] + "/" + url
+
+    if url == "":
+        match = re.compile('<progressiveDownloadUrl>(.+?)<', re.DOTALL).findall(entry)
+        url = match[0]
+
+    return url
 
 
 
