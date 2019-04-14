@@ -42,6 +42,14 @@ msgctxt "#32008"
 msgid "Stream to play"
 msgstr ""
 
+msgctxt "#32009"
+msgid "Fetch metadata on channel start"
+msgstr ""
+
+msgctxt "#32010"
+msgid "Filter pictograms in titles"
+msgstr ""
+
 msgctxt "#32030"
 msgid "Live TV"
 msgstr ""
