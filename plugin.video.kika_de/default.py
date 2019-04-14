@@ -140,7 +140,7 @@ def listEpisodes(url):
         url = match[0].replace("sendereihe", "buendelgruppe")
         url = urlMain + url
 
-        match = re.compile('<a href="(.+?)" class="linkAll" title="(.+?)"></a>', re.DOTALL).findall(entry)
+        match = re.compile('<a href="(.+?)" class="linkAll" title="(.+?)".*></a>', re.DOTALL).findall(entry)
         title = cleanTitle(match[0][1])
 
         addDir(title, url, 'listEpisodeFormats', thumb)
