@@ -316,7 +316,7 @@ def build_searchList():
         )
         xbmcplugin.addDirectoryItem(
           handle=__addonhandle__,
-          url=__addonuri__+ '?' + urllib.urlencode({'mode': 'deletesearch', 'al': True}),
+          url=__addonuri__+ '?' + urllib.urlencode({'mode': 'deletesearch', 'al': True, 'search': '_'}),
           listitem=xbmcgui.ListItem('[B][COLOR blue]' + 'Suche löschen' +'[/B][/COLOR]'),
           isFolder=True
         )
@@ -1612,10 +1612,13 @@ def main():
     search_show(__addonuri__, __addonhandle__, search)
     
   elif action == 'deletesearch':
-    al = args.get('al')[0]
-    search = args.get('search')[0]
-    _zattooDB_.del_search(al,search)
-    xbmc.executebuiltin('Container.Refresh')
+    dialog = xbmcgui.Dialog()
+    ret = dialog.yesno('Suche löschen', 'Suche', '[COLOR gold]'+localString(32025)+'[/COLOR]', '','','[COLOR red]'+local(19291)+'[/COLOR]')
+    if ret == 1:
+      al = args.get('al')[0]
+      search = args.get('search')[0]
+      _zattooDB_.del_search(al,search)
+      xbmc.executebuiltin('Container.Refresh')
     
   elif action == 'editsearch':
     item = args.get('search')[0]
