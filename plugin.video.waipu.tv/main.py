@@ -45,6 +45,30 @@ def _T(id):
     return xbmcaddon.Addon().getLocalizedString(id)
 
 
+def load_acc_details():
+    last_check = xbmcplugin.getSetting(_handle, "accinfo_lastcheck")
+    if (int(time.time()) - int(last_check)) > 15*60:
+        # load acc details
+        acc_details = w.getAccountDetails()
+        xbmc.log("waipu accdetails: " + str(acc_details), level=xbmc.LOGDEBUG)
+        if 'error' in acc_details:
+            xbmcaddon.Addon().setSetting('accinfo_status', acc_details["error"])
+            xbmcaddon.Addon().setSetting('accinfo_account', "-")
+            xbmcaddon.Addon().setSetting('accinfo_subscription', "-")
+        else:
+            xbmcaddon.Addon().setSetting('accinfo_status', "Angemeldet")
+            xbmcaddon.Addon().setSetting('accinfo_account', acc_details["sub"])
+            xbmcaddon.Addon().setSetting('accinfo_subscription', acc_details["userAssets"]["account"]["subscription"])
+            xbmcaddon.Addon().setSetting('accinfo_lastcheck', str(int(time.time())))
+        # load network status
+        status = w.getStatus()
+        xbmc.log("waipu status: " + str(status), level=xbmc.LOGDEBUG)
+        xbmcaddon.Addon().setSetting('accinfo_network_ip', status["ip"])
+        if status["statusCode"] == 200:
+            xbmcaddon.Addon().setSetting('accinfo_network', "Waipu verfügbar")
+        else:
+            xbmcaddon.Addon().setSetting('accinfo_network', status["statusText"])
+
 def get_default():
     # Set plugin category. It is displayed in some skins as the name
     # of the current section.
@@ -77,8 +101,12 @@ def list_recordings():
     except Exception as e:
         dialog = xbmcgui.Dialog().ok("Error", str(e))
         return
+    b_episodeid = xbmcplugin.getSetting(_handle, "recordings_episode_id") == "true"
+    b_recordingdate = xbmcplugin.getSetting(_handle, "recordings_date") == "true"
     # Iterate through categories
     for recording in recordings:
+        if 'locked' in recording and recording['locked']:
+            continue
         label_dat = ''
         metadata = {
             'genre': recording['epgData']['genre'],
@@ -92,6 +120,8 @@ def list_recordings():
                 label_dat = "[B]" + recording['epgData']['title'] + "[/B] - " + recording['epgData']['episodeTitle']
             else:
                 label_dat = "[B]" + recording['epgData']['title'] + "[/B]"
+            if b_episodeid and recording['epgData']['season'] and recording['epgData']['episode']:
+                label_dat = label_dat + " (S"+recording['epgData']['season']+"E"+recording['epgData']['episode']+")"
             metadata.update({
                 'title': label_dat,
                 'season': recording['epgData']['season'],
@@ -100,6 +130,9 @@ def list_recordings():
         else:
             # movie
             label_dat = "[B]" + recording['epgData']['title'] + "[/B]"
+            if b_recordingdate and 'startTime' in recording['epgData'] and recording['epgData']['startTime']:
+                startDate = parser.parse(recording['epgData']['startTime'])
+                label_dat = label_dat + " " + startDate.strftime("(%d.%m.%Y %H:%M)")
             metadata.update({
                 'title': label_dat
             })
@@ -310,7 +343,37 @@ def play_recording(recordingid):
                 # print(path)
                 break
 
-    listitem = xbmcgui.ListItem(streamingData["epgData"]["title"], path=path)
+    b_filter = xbmcplugin.getSetting(_handle, "filter_pictograms") == "true"
+    b_episodeid = xbmcplugin.getSetting(_handle, "recordings_episode_id") == "true"
+    b_recordingdate = xbmcplugin.getSetting(_handle, "recordings_date") == "true"
+    title = ""
+    metadata = {'mediatype': 'video'}
+    if streamingData["epgData"]["title"]:
+        title = filter_pictograms(streamingData["epgData"]["title"], b_filter)
+    if streamingData["epgData"]["episodeTitle"]:
+        title = title + ": " + filter_pictograms(streamingData["epgData"]["episodeTitle"], b_filter)
+    if b_recordingdate and not streamingData["epgData"]["episodeId"] and streamingData["epgData"]["startTime"]:
+        startDate = parser.parse(streamingData['epgData']['startTime'])
+        title = title + " " + startDate.strftime("(%d.%m.%Y %H:%M)")
+    if b_episodeid and streamingData['epgData']['season'] and streamingData['epgData']['episode']:
+        title = title + " (S" + streamingData['epgData']['season'] + "E" + streamingData['epgData']['episode'] + ")"
+        metadata.update({
+            'season': streamingData['epgData']['season'],
+            'episode': streamingData['epgData']['episode'],
+        })
+
+    metadata.update({"title": title})
+
+    listitem = xbmcgui.ListItem(title, path=path)
+
+    if "epgData" in streamingData and streamingData["epgData"]["description"]:
+        metadata.update({"plot": filter_pictograms(streamingData["epgData"]["description"], b_filter)})
+
+    if "epgData" in streamingData and len(streamingData["epgData"]["previewImages"]) > 0:
+        logo_url = streamingData["epgData"]["previewImages"][0] + "?width=256&height=256"
+        listitem.setArt({'thumb': logo_url, 'icon': logo_url})
+
+    listitem.setInfo('video', metadata)
     listitem.setMimeType('application/xml+dash')
     listitem.setProperty(is_helper.inputstream_addon + ".license_type", "com.widevine.alpha")
     listitem.setProperty(is_helper.inputstream_addon + ".manifest_type", "mpd")
@@ -329,6 +392,7 @@ def router(paramstring):
         if params['action'] == "play-channel":
             play_channel(params['playouturl'], params['title'], params['logourl'])
         elif params['action'] == "list-channels":
+            load_acc_details()
             list_channels()
         elif params['action'] == "list-recordings":
             list_recordings()
@@ -342,6 +406,7 @@ def router(paramstring):
             # e.g. typos in action names.
             raise ValueError('Invalid paramstring: {0}!'.format(paramstring))
     else:
+        load_acc_details()
         get_default()
 
 
