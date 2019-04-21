@@ -998,8 +998,10 @@ class ZattooDB(object):
     c.close()
     
   def edit_search(self,search):
-    c = self.conn.cursor()
+    
     item = xbmcgui.Dialog().input(__addon__.getLocalizedString(31200), defaultt=search, type=xbmcgui.INPUT_ALPHANUM)
+    if item == "": return
+    c = self.conn.cursor()
     try:
        c.execute('UPDATE search SET search=? WHERE search=?', [item, search])
     except:pass

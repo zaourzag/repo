@@ -855,3 +855,21 @@ msgstr ""
 msgctxt "#32022"
 msgid "Player OSD"
 msgstr ""
+
+
+msgctxt "#320000"
+msgid "new search"
+msgstr ""
+
+msgctxt "#320001"
+msgid "delete search"
+msgstr ""
+
+msgctxt "#320002"
+msgid "delete entry"
+msgstr ""
+
+msgctxt "#320003"
+msgid "edit entry"
+msgstr ""
+

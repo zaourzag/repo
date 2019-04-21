@@ -827,4 +827,18 @@ msgctxt "#32022"
 msgid "Player OSD"
 msgstr "Player OSD"
 
+msgctxt "#320000"
+msgid "new search"
+msgstr "neue Suche"
 
+msgctxt "#320001"
+msgid "delete search"
+msgstr "Suche löschen"
+
+msgctxt "#320002"
+msgid "delete entry"
+msgstr "Eintrag löschen"
+
+msgctxt "#320003"
+msgid "edit entry"
+msgstr "Eintrag bearbeiten"

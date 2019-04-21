@@ -199,7 +199,7 @@ debug('Service started')
 player=myPlayer()
 
 if OLDVERSION != VERSION:
-   _zattooDB_.reloadDB(True)
+   #_zattooDB_.reloadDB(True)
    _zattooDB_.set_version(VERSION)
 
 start()

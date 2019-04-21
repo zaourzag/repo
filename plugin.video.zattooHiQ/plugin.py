@@ -173,16 +173,9 @@ else: SWISS = False
 
 stream_type = __addon__.getSetting('stream_type')
 RECREADY = __addon__.getSetting('rec_ready')
-#VERSION = __addon__.getAddonInfo('version')
-#OLDVERSION = _zattooDB_.get_version(VERSION)
+VERSION = __addon__.getAddonInfo('version')
 
 KEYMAP = __addon__.getSetting('keymap')
-
-#reload DB on Update
-
-#if OLDVERSION != VERSION:
-   #_zattooDB_.reloadDB()
-   #_zattooDB_.set_version(VERSION)
    
 if premiumUser or SWISS: 
   xbmc.executebuiltin( "Skin.SetBool(%s)" %'record')
@@ -289,8 +282,8 @@ def build_root(__addonuri__, __addonhandle__):
   if __addon__.getSetting('help') == "true":
     content.append({'title': '[COLOR yellow]'+local(10043)+'[/COLOR]', 'image': iconPath, 'isFolder': True, 'url': __addonuri__+ '?' + urllib.urlencode({'mode': 'showhelp'})})
   if __addon__.getSetting('settings') == "true":
-    content.append({'title': '[COLOR yellow]'+localString(31107)+'[/COLOR]', 'image': iconPath, 'isFolder': False, 'url': __addonuri__+ '?' + urllib.urlencode({'mode': 'show_settings'})})
-
+    content.append({'title': '[COLOR yellow]'+localString(31107)+' '+__addonname__+' '+VERSION+'[/COLOR]', 'image': iconPath, 'isFolder': False, 'url': __addonuri__+ '?' + urllib.urlencode({'mode': 'show_settings'})})
+  
   build_directoryContent(content, __addonhandle__, True, False, 'files')
   
   #update db
@@ -311,20 +304,20 @@ def build_searchList():
         xbmcplugin.addDirectoryItem(
           handle=__addonhandle__,
           url=__addonuri__+ '?' + urllib.urlencode({'mode': 'inputsearch'}),
-          listitem=xbmcgui.ListItem('[B][COLOR blue]' + 'neue Suche' +'[/B][/COLOR]'),
+          listitem=xbmcgui.ListItem('[B][COLOR blue]' + localString(320000) +'[/B][/COLOR]'),
           isFolder=True
         )
         xbmcplugin.addDirectoryItem(
           handle=__addonhandle__,
           url=__addonuri__+ '?' + urllib.urlencode({'mode': 'deletesearch', 'al': True, 'search': '_'}),
-          listitem=xbmcgui.ListItem('[B][COLOR blue]' + 'Suche löschen' +'[/B][/COLOR]'),
+          listitem=xbmcgui.ListItem('[B][COLOR blue]' + localString(320001) +'[/B][/COLOR]'),
           isFolder=True
         )
         for chan in search['index']:
             li = xbmcgui.ListItem(search[chan]['id'])
             contextMenuItems = []
-            contextMenuItems.append(('Eintrag löschen', 'RunPlugin("plugin://'+__addonId__+'/?mode=deletesearch&al=False&search='+str(chan)+'")'))
-            contextMenuItems.append(('Eintrag bearbeiten', 'RunPlugin("plugin://'+__addonId__+'/?mode=editsearch&search='+str(chan)+'")'))
+            contextMenuItems.append((localString(320002), 'RunPlugin("plugin://'+__addonId__+'/?mode=deletesearch&al=False&search='+str(chan)+'")'))
+            contextMenuItems.append((localString(320003), 'RunPlugin("plugin://'+__addonId__+'/?mode=editsearch&search='+str(chan)+'")'))
             li.addContextMenuItems(contextMenuItems, replaceItems=True)
             xbmcplugin.addDirectoryItem(
               handle=__addonhandle__,
@@ -822,6 +815,9 @@ def watch_channel(channel_id, start, end, showID="", restart=False, showOSD=Fals
     #player.seekTime(300)
     while (player.playing):xbmc.sleep(100)
     
+  playing=_zattooDB_.get_playing()
+  xbmcgui.Window(10000).setProperty('lastChannel', playing['channel']) 
+  
 def skip_channel(skipDir):
   #new ZattooDB instance because this is called from thread-timer on channel-nr input (sql connection doesn't work)
   _zattooDB_=ZattooDB()
@@ -846,6 +842,7 @@ def  toggle_channel():
   
   
   if toggleChannel=="": xbmc.executebuiltin("Action(Back)") #go back to channel selector
+    #toggleChannel = xbmcgui.Window(10000).getProperty('lastChannel') 
   else:
     watch_channel(toggleChannel, '0', '0')
     channelList = _zattooDB_.getChannelList(_listMode_ == 'favourites')
@@ -1613,7 +1610,7 @@ def main():
     
   elif action == 'deletesearch':
     dialog = xbmcgui.Dialog()
-    ret = dialog.yesno('Suche löschen', 'Suche', '[COLOR gold]'+localString(32025)+'[/COLOR]', '','','[COLOR red]'+local(19291)+'[/COLOR]')
+    ret = dialog.yesno(localString(320001), '[COLOR gold]'+localString(32025)+'[/COLOR]', '','','[COLOR red]'+local(19291)+'[/COLOR]')
     if ret == 1:
       al = args.get('al')[0]
       search = args.get('search')[0]
