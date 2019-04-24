@@ -60,7 +60,7 @@ _library_=library()
 _keymap_=KeyMap()
 _helpmy_=helpmy()
 
-
+global lastplaying
 _umlaut_ = {ord(u'ä'): u'ae', ord(u'ö'): u'oe', ord(u'ü'): u'ue', ord(u'ß'): u'ss'}
 
 localString = __addon__.getLocalizedString
@@ -714,7 +714,11 @@ def watch_channel(channel_id, start, end, showID="", restart=False, showOSD=Fals
   _zattooDB_=ZattooDB()
 
   #selected currently playing live TV
-  playing=_zattooDB_.get_playing()
+  playing = _zattooDB_.get_playing()
+   
+  #lastplaying = playing['channel']
+  xbmcgui.Window(10000).setProperty('lastChannel', playing['channel']) 
+  #debug('last play Channel '+str(xbmcgui.Window(10000).getProperty('lastChannel')))
   if (xbmc.Player().isPlaying() and channel_id == playing['channel'] and start=='0'):
     xbmc.executebuiltin("Action(FullScreen)")
 
@@ -815,8 +819,7 @@ def watch_channel(channel_id, start, end, showID="", restart=False, showOSD=Fals
     #player.seekTime(300)
     while (player.playing):xbmc.sleep(100)
     
-  playing=_zattooDB_.get_playing()
-  xbmcgui.Window(10000).setProperty('lastChannel', playing['channel']) 
+  
   
 def skip_channel(skipDir):
   #new ZattooDB instance because this is called from thread-timer on channel-nr input (sql connection doesn't work)
@@ -841,8 +844,10 @@ def  toggle_channel():
   xbmcgui.Window(10000).setProperty('toggleChannel', playing['channel']) 
   
   
-  if toggleChannel=="": xbmc.executebuiltin("Action(Back)") #go back to channel selector
-    #toggleChannel = xbmcgui.Window(10000).getProperty('lastChannel') 
+  if toggleChannel=="": #xbmc.executebuiltin("Action(Back)") #go back to channel selector
+    xbmcgui.Window(10000).setProperty('toggleChannel', xbmcgui.Window(10000).getProperty('lastChannel'))
+    debug('last Channel '+str(xbmcgui.Window(10000).getProperty('lastChannel')))    
+    showToggleImg()
   else:
     watch_channel(toggleChannel, '0', '0')
     channelList = _zattooDB_.getChannelList(_listMode_ == 'favourites')
@@ -1228,7 +1233,7 @@ class zattooPiP(xbmcgui.WindowXMLDialog):
     
     self.addControl(self.toggleImgBG)
     self.addControl(self.toggleImg)
-    
+    debug('last cannel :'+str(xbmcgui.Window(10000).getProperty('toggleChannel')))
     self.toggleChannelID=xbmcgui.Window(10000).getProperty('toggleChannel')
     #if self.toggleChannelID!="": self.showToggleImg()
 
@@ -1610,7 +1615,7 @@ def main():
     
   elif action == 'deletesearch':
     dialog = xbmcgui.Dialog()
-    ret = dialog.yesno(localString(320001), '[COLOR gold]'+localString(32025)+'[/COLOR]', '','','[COLOR red]'+local(19291)+'[/COLOR]')
+    ret = dialog.yesno(localString(320001), '[COLOR gold]'+localString(32025)+'[/COLOR]','', '','','[COLOR red]'+local(19291)+'[/COLOR]')
     if ret == 1:
       al = args.get('al')[0]
       search = args.get('search')[0]
