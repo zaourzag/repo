@@ -17,15 +17,10 @@
 		<texturefocus>-</texturefocus>
 	</control> 
 	
-	<include>CommonHomeBack</include>
-	<include>SideBladeForViews</include>			
+	<include>CommonHomeBack</include>	
+	<include>CommonHomeButton</include> 	
+	<include>BigInfosTime</include>	
 	<include>ViewsVideo</include>	
-	<include>CommonPageCount</include>
-	<include>CommonPageCountView</include>
-	<include>BigInfosTime</include>
-	<include>BigInfosDatabaseCount</include>
-	<include>BigInfosWeather</include>
-	<include>CommonHomeButton</include>
 	<include>HomePlaying</include>
 	<include>JumpBarHorizontal</include>
 	  
@@ -64,7 +59,6 @@
       </control>
       <!-- MENU ITEMS BELOW -->
       <control type="grouplist" id="9020">
-		<description>My first group list control</description>
 		<left>-482</left>
 		<top>120</top>
 		<width>400</width>

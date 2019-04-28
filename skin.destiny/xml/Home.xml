@@ -10,22 +10,20 @@
 		<height>1</height>
 		<texture>$INFO[Weather.Conditions]</texture>
 	</control>
-
+      
 	  <include>CommonHomeBack</include>	
-	  <include>HomeWidgetsHorizontal</include>	
-	  <include>HomeWidgetsVertical</include> 
+	  <include>HomeWidgetsVisible</include> 
+	  <include>HomeWidgetsNotVisible</include> 
+	  <include>HomeMainMenuHorizontal</include>	
+	  	
+	  <include>HomeMyChannel</include> 
 	  <include>HomeWidgetsSubmenu</include>
-	  <include condition="System.HasAddon(plugin.service.gto)">HomeWidgetsSubmenuAddons</include>
-	  <include>HomePlaying</include>	 	
-	  <include>HomeMainMenuHorizontal</include>		
-	  <include>CommonHomeButton</include>
-	  <include>CommonHomeWidgetControl</include>	
-	  <include>CommonHomeBigWidgetControl</include>  			
+	  <include>HomePlaying</include>	 		  	
+	  <include>CommonHomeButton</include> 			
 	  <include>BigInfosTime</include>
-	  <include>BigInfosDatabaseCount</include>
-	  <include>BigInfosWeather</include>
 	  <include>HomeSubmenu</include>
 	  <include>HomeSubmenuAddons</include>
+	 
 
   </controls>
 </window>

@@ -10,6 +10,7 @@
 	</coordinates>
 	<controls>
 		<control type="group">
+		<animation effect="fade" start="100" end="0" time="1000" tween="quadratic" easing="out" condition="Window.IsVisible(FullscreenVideo)">Conditional</animation>
 			<control type="image">
 			  <left>0</left>
 			  <top>0</top>

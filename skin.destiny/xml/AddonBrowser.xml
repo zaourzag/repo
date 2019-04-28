@@ -1,16 +1,13 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <window id="20">
-  <defaultcontrol always="true">55</defaultcontrol>
-  <views>55</views>
+  <defaultcontrol always="true">608</defaultcontrol>
+  <views>608</views>
   <controls>
-    <include>CommonHomeBack</include>	
-	<include>SideBladeForViews</include>			
+    <include>CommonHomeBack</include>				
 	<include>BigInfosTime</include>
-	<include>BigInfosDatabaseCount</include>
-	<include>BigInfosWeather</include>
 	<include>CommonHomeButton</include>
 	<include>HomePlaying</include>
-	<include>View_55_FileMode</include>	
+	<include>View_608_ListPanel</include>	
 	<include>CommonPageCount</include>	  
     <control type="group">
       <animation effect="slide" start="0,0" end="480,0" time="400" tween="quadratic" easing="out" condition="ControlGroup(9020).HasFocus | Control.HasFocus(8999)">Conditional</animation>
@@ -27,7 +24,7 @@
 		<colordiffuse>$VAR[ColorButtonDialogeBack]</colordiffuse>
         <aspectratio>stretch</aspectratio>
       </control>
-      <control type="group" id="9020">
+      <control type="grouplist" id="9020">
 		<left>-482</left>
 		<top>120</top>
 		<width>400</width>
@@ -38,94 +35,62 @@
 		<orientation>vertical</orientation>
 		<usecontrolcoords>false</usecontrolcoords>
 		<visible>true</visible>
-		<onleft>55</onleft>
-		<onright>55</onright>
+		<onleft>608</onleft>
+		<onright>608</onright>
 		<onup>9020</onup>
 		<ondown>9020</ondown>
-        <control type="button" id="2">
+        <!--<control type="button" id="2">
           <description>View As button</description>
           <left>0</left>
           <top>0</top>
 		  <width>400</width>
-          <height>50</height>
+          <height>60</height>
           <label>-</label>
-          <onleft>55</onleft>
-          <onright>55</onright>
-          <onup>8</onup>
-          <ondown>3</ondown>
-        </control>
+        </control>-->
         <control type="button" id="3">
           <description>Sort by button</description>
-          <left>0</left>
-          <top>55</top>
 		  <width>400</width>
-          <height>50</height>
-          <label>103</label>
-          <onleft>55</onleft>
-          <onright>55</onright>
-          <onup>2</onup>
-          <ondown>4</ondown>
+          <height>60</height>
+          <label>$LOCALIZE[581]</label>
+		  <visible>Control.IsEnabled(3)</visible>
         </control>
         <control type="togglebutton" id="4">
           <description>Sort asc</description>
-          <left>0</left>
-          <top>110</top>
 		  <width>400</width>
-          <height>50</height>
-          <label>31051</label>
-		  <altlabel>31050</altlabel>
-		  <usealttexture>Container.SortDirection(Ascending)</usealttexture>
-          <onleft>55</onleft>
-          <onright>55</onright>
-          <onup>3</onup>
-          <ondown>5</ondown>
+          <height>60</height>
+          <label>$LOCALIZE[580]: $LOCALIZE[584]</label>
+		  <altlabel>$LOCALIZE[580]: $LOCALIZE[585]</altlabel>
+		  <visible>Control.IsEnabled(4)</visible>
         </control>
-        <control type="label">
-          <left>0</left>
-          <top>165</top>
-          <width>400</width>
-          <height>68</height>
-          <font>primal_20</font>
-          <label>$LOCALIZE[24002]</label>
-          <textcolor>dialogheader</textcolor>
-          <align>center</align>
-          <aligny>center</aligny>
-        </control>
+		<control type="radiobutton" id="5">
+		  <width>400</width>
+          <height>60</height>
+		  <label>$LOCALIZE[21340]</label>
+		  <visible>Control.IsEnabled(5)</visible>
+	    </control>
+	    <control type="radiobutton" id="6">
+		  <width>400</width>
+          <height>60</height>
+		  <label>$LOCALIZE[25000]</label>
+		  <visible>Control.IsEnabled(6)</visible>
+	    </control>
 		<control type="radiobutton" id="7">
 		  <description>Hide foreign</description>
-		  <left>0</left>
-          <top>330</top>
           <width>400</width>
-          <height>50</height>
+          <height>60</height>
 		  <label>25001</label>
-		  <onleft>55</onleft>
-          <onright>55</onright>
-          <onup>6</onup>
-          <ondown>8</ondown>
 		</control>
 		<control type="radiobutton" id="8">
 		  <description>Hide broken</description>
-		  <left>0</left>
-          <top>385</top>
           <width>400</width>
-          <height>50</height>
+          <height>60</height>
 		  <label>24999</label>
-		  <onleft>55</onleft>
-          <onright>55</onright>
-          <onup>7</onup>
-          <ondown>9</ondown>
 		</control>
 		<control type="button" id="9">
 		  <description>Check for updates</description>
-		  <left>0</left>
-          <top>440</top>
           <width>400</width>
-          <height>50</height>
+          <height>60</height>
 		  <label>24034</label>
-		  <onleft>55</onleft>
-          <onright>55</onright>
-          <onup>8</onup>
-          <ondown>2</ondown>
 	    </control>
       </control>
     </control>

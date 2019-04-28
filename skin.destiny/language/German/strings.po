@@ -237,8 +237,8 @@ msgid "Fast forward"
 msgstr "Vorspulen"
 
 msgctxt "#50020"
-msgid "Visualisierungs-Settings"
-msgstr "Visualisierungs-Einstellungen"
+msgid "Visualisierungs"
+msgstr "Visualisierungs"
 
 msgctxt "#50021"
 msgid "Kodi lyrics"
@@ -1572,8 +1572,8 @@ msgid "choose what you want to search in YouTube Home widget."
 msgstr "wähle was gesucht werden soll im YouTube Home Widget."
 
 msgctxt "#50361"
-msgid "Home Widget Settings"
-msgstr "Home Widget Einstellungen"
+msgid "Widget Settings"
+msgstr "Widget Einstellungen"
 
 msgctxt "#50362"
 msgid "Home Widget Turn off"
@@ -1704,3 +1704,31 @@ msgstr "Endtime Anzeige bei Widgets aus"
 msgctxt "#50406"
 msgid "LiveTV icons do not have a square format .. then turn it on."
 msgstr "LiveTV Icons haben kein viereckiges Format..dann anschalten."
+
+msgctxt "#50407"
+msgid "Currently running..."
+msgstr "Aktuell Läuft..."
+
+msgctxt "#50408"
+msgid "color adjustment"
+msgstr "Farbeinstellung"
+
+msgctxt "#50409"
+msgid "disable Random Movie Widget."
+msgstr "schalte Random Movie Widget aus."
+
+msgctxt "#50410"
+msgid "Hier kannst du einige Addons installieren die in den Skin schon eingebaut wurden. Wenn dein Addon nicht dabei ist, kannst du noch weitere 10 deiner eigenen Favoriten (die du vorher angelegt haben musst) mit dem Button [ADD CHANNEL] hinzufügen. Diese Anzeige kann du auch in den Einstellungen deaktivieren wenn du alles hinzugefügt hast was du haben möchtest. Der Add Channel Button bleibt weiterhin!"
+msgstr "Hier kannst du einige Addons installieren die in den Skin schon eingebaut wurden. Wenn dein Addon nicht dabei ist, kannst du noch weitere 10 deiner eigenen Favoriten (die du vorher angelegt haben musst) mit dem Button [ADD CHANNEL] hinzufügen. Diese Anzeige kann du auch in den Einstellungen deaktivieren wenn du alles hinzugefügt hast was du haben möchtest. Der Add Channel Button bleibt weiterhin!"
+
+msgctxt "#50411"
+msgid "Visualisation im Home"
+msgstr "Visualisation im Home"
+
+msgctxt "#50412"
+msgid "Live TV Tipps"
+msgstr "Live TV Tipps"
+
+msgctxt "#50413"
+msgid "Home Widgets ever"
+msgstr "Home Widgets immer an"

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <window id="1">
-  <defaultcontrol>901</defaultcontrol>
+  <defaultcontrol>608</defaultcontrol>
   <allowoverlay>yes</allowoverlay>
   <include>ViewidAddons</include>
   <visible>!Skin.HasSetting(kiosk)</visible>
@@ -33,10 +33,7 @@
     
 	<include>CommonHomeBack</include>	
     <include>ViewsAddons</include>
-	<include>SideBladeForViews</include>
 	<include>BigInfosTime</include>
-	<include>BigInfosDatabaseCount</include>
-	<include>BigInfosWeather</include>
 	<include>CommonHomeButton</include>
 	<include>HomePlaying</include>
 	

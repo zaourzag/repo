@@ -6,11 +6,6 @@
 	<controls>
         <include>CommonHomeBack</include>
 		<include>CommonAllFront3</include>	
-		<include>SideBladeForViews</include>			
-		<include condition="!Skin.HasSetting(NoCommonHomeButton)">BigInfosTime</include>
-		<include condition="!Skin.HasSetting(NoCommonHomeButton)">BigInfosDatabaseCount</include>
-		<include condition="!Skin.HasSetting(homenoleftweather)">BigInfosWeather</include>
-		<include condition="!Skin.HasSetting(NoCommonHomeButton)">CommonHomeButton</include>
 		<include>HomePlaying</include>
 		<control type="group">
 			<description>Timers group</description>

@@ -1,12 +1,11 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <window id="503">
   <defaultcontrol allways="true">6</defaultcontrol>
+  <views>55</views>
   <allowoverlay>no</allowoverlay>
   <controls>
     <include>CommonHomeBack</include>		
 	<include>BigInfosTime</include>
-	<include>BigInfosDatabaseCount</include>
-	<include>BigInfosWeather</include>
 	<include>CommonHomeButton</include>
 	<include>HomePlaying</include>
 	<include>CommonPageCountView</include>

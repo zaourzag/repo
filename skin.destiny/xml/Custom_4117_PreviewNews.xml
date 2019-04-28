@@ -3,11 +3,7 @@
     <defaultcontrol always="true">19010</defaultcontrol>
     <controls>
 	    <include>CommonHomeBack</include>
-        <include>CommonAllFront</include>
-		<include>SideBladeForViews</include>
 		<include condition="!Skin.HasSetting(NoCommonHomeButton)">BigInfosTime</include>
-		<include condition="!Skin.HasSetting(NoCommonHomeButton)">BigInfosDatabaseCount</include>
-		<include condition="!Skin.HasSetting(homenoleftweather)">BigInfosWeather</include>
 		<include condition="!Skin.HasSetting(NoCommonHomeButton)">CommonHomeButton</include>
 		<include>HomePlaying</include>				
 		<!-- =============================================================================================-->
@@ -15,10 +11,10 @@
 		<!-- =============================================================================================-->
 		<control type="list" id="19010">
 		    <include>Animation.ZoomIn</include>
-			<left>1362</left>
-			<top>165</top>
+			<left>1450</left>
+			<top>120</top>
 			<width>501</width>
-			<height>810</height>
+			<height>900</height>
 			<onright>1860</onright>
 			<onleft condition="Container(19010).Hasfocus(80101)">19111</onleft>
 			<onleft condition="Container(19010).Hasfocus(80102)">24010</onleft>
@@ -34,95 +30,72 @@
 			<focusposition>0</focusposition>
 			<orientation>vertical</orientation>
 			<movement>1</movement>
-			<itemlayout height="81" width="250">
+			<itemlayout height="110" width="250">
 			<control type="group">
-			<control type="image">
+			<control type="group">
 			  <left>0</left>
 			  <top>0</top>
-			  <width>501</width>
-			  <height>1</height>
-			  <texture background="true">default/separator.png</texture>
-			</control>		
+			  <width>100</width>
+			  <height>100</height>
+			  <include>TizenNoFocusButton</include>
+			</control>	
 			<control type="image">
-			  <left>15</left>
-			  <top>25</top>
-			  <width>30</width>
-			  <height>30</height>
+			  <left>28</left>
+			  <top>30</top>
+			  <width>40</width>
+			  <height>40</height>
 			  <texture background="true">$INFO[ListItem.Property(MenuIcon)]</texture>
-			  <colordiffuse>$VAR[ColorFontUnfocus]</colordiffuse>
-			</control>
-			<control type="image">
-			  <left>15</left>
-			  <top>20</top>
-			  <width>30</width>
-			  <height>30</height>
-			  <texture background="true">$INFO[ListItem.Icon]</texture>
-			  <colordiffuse>$VAR[ColorFontUnfocus]</colordiffuse>
+			  <colordiffuse>$VAR[ColorFontNormal]</colordiffuse>
 			</control>
 			<control type="label">
-			  <left>70</left>
-			  <top>20</top>
+			  <left>110</left>
+			  <top>30</top>
 			  <width>450</width>
 			  <height>36</height>
-			  <font>primal_20</font>
+			  <font>primal_15</font>
 			  <label>$INFO[ListItem.Label]</label>
-			  <textcolor>$VAR[ColorFontUnfocus]</textcolor>
+			  <textcolor>$VAR[ColorFontNormal]</textcolor>
 			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 			  <align>left</align>
 			  <aligny>center</aligny>	  
 			</control>
 		   </control>
 		  </itemlayout>
-		  <focusedlayout height="81" width="250">
+		  <focusedlayout height="110" width="250">
 			<control type="image">
 			  <left>0</left>
 			  <top>0</top>
-			  <width>501</width>
-			  <height>1</height>
-			  <texture background="true">default/separator.png</texture>
-			</control>
-			<control type="image">
-			  <left>0</left>
-			  <top>1</top>
-			  <width>501</width>
-			  <height>80</height>
-			  <texture background="true">skin/button_klein.png</texture>
-			  <colordiffuse>$VAR[BackColorFront]</colordiffuse>
-			  <visible>!Control.Hasfocus(19010)</visible>
-			</control>
-			<control type="image">
-			  <left>0</left>
-			  <top>1</top>
-			  <width>501</width>
-			  <height>80</height>
-			  <texture background="true">skin/button_klein.png</texture>
+			  <width>100</width>
+			  <height>100</height>
+			  <texture background="true">home/button/submenubutton.png</texture>
 			  <colordiffuse>$VAR[BackColorButton]</colordiffuse>
-			  <visible>Control.Hasfocus(19010)</visible>
-			</control>		
+			  <visible>Control.HasFocus(19010)</visible> 
+			</control>	
 			<control type="image">
-			  <left>15</left>
-			  <top>25</top>
-			  <width>30</width>
-			  <height>30</height>
+			  <left>0</left>
+			  <top>0</top>
+			  <width>100</width>
+			  <height>100</height>
+			  <texture background="true">home/button/submenubutton.png</texture>
+			  <colordiffuse>$VAR[ColorButtonDialogeBack]</colordiffuse>
+			  <visible>!Control.HasFocus(19010)</visible> 
+			</control>	
+			<control type="image">
+			  <left>28</left>
+			  <top>30</top>
+			  <width>40</width>
+			  <height>40</height>
 			  <texture background="true">$INFO[ListItem.Property(MenuIcon)]</texture>
 			  <colordiffuse>$VAR[ColorFontSelected]</colordiffuse>
 			</control>
-			<control type="image">
-			  <left>15</left>
-			  <top>20</top>
-			  <width>30</width>
-			  <height>30</height>
-			  <texture background="true">$INFO[ListItem.Icon]</texture>
-			  <colordiffuse>$VAR[ColorFontUnfocus]</colordiffuse>
-			</control>
 			<control type="label">
-			  <left>70</left>
-			  <top>20</top>
+			  <left>110</left>
+			  <top>30</top>
 			  <width>450</width>
 			  <height>36</height>
-			  <font>primal_20</font>
+			  <font>primal_15_Title</font>
 			  <label>$INFO[ListItem.Label]</label>
-			  <textcolor>$VAR[ColorFontNormal]</textcolor>
+			  <textcolor>$VAR[ColorFontSelected]</textcolor>
 			  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 			  <align>left</align>
 			  <aligny>center</aligny>	  
@@ -134,42 +107,49 @@
 				  <onclick>RunScript(plugin.program.newscenter,?methode=show_select_dialog)</onclick>
 				  <property name="MenuIcon">home/homeicons/time2.png</property>
 				  <property name="MenuIcon_over">home/homeicons/time2.png</property>
+		          <property name="BackTizen0">home/button/submenubutton.png</property>
 				</item>
 				<item id="80102">
 				  <label>$ADDON[plugin.program.newscenter  30113]</label>
 				  <onclick>-</onclick>
 				  <property name="MenuIcon">home/homeicons/news.png</property>
 				  <property name="MenuIcon_over">home/homeicons/news.png</property>
+				  <property name="BackTizen0">home/button/submenubutton.png</property>
 				</item>
 				<item id="80108">
 				  <label>$ADDON[plugin.program.newscenter  30090]</label>
 				  <onclick>-</onclick>
 				  <property name="MenuIcon">home/homeicons/news.png</property>
 				  <property name="MenuIcon_over">home/homeicons/news.png</property>
+				  <property name="BackTizen0">home/button/submenubutton.png</property>
 				</item>
 				<item id="80103">
 				  <label>$ADDON[plugin.program.newscenter  30111]</label>
 				  <onclick>-</onclick>
 				  <property name="MenuIcon">home/homeicons/football.png</property>
 				  <property name="MenuIcon_over">home/homeicons/football.png</property>
+				  <property name="BackTizen0">home/button/submenubutton.png</property>
 				</item>
 				<item id="80104">
 				  <label>$ADDON[plugin.program.newscenter  30109]</label>
 				  <onclick>-</onclick>
 				  <property name="MenuIcon">home/homeicons/weather.png</property>
 				  <property name="MenuIcon_over">home/homeicons/weather.png</property>
+				  <property name="BackTizen0">home/button/submenubutton.png</property>
 				</item>
 				<item id="80105">
 				  <label>$ADDON[plugin.program.newscenter  30093]</label>
 				  <onclick>-</onclick>
 				  <property name="MenuIcon">home/homeicons/weather.png</property>
 				  <property name="MenuIcon_over">home/homeicons/weather.png</property>
+				  <property name="BackTizen0">home/button/submenubutton.png</property>
 				</item>
 				<item id="80106">
 				  <label>$ADDON[plugin.program.newscenter  30107]</label>
 				  <onclick>-</onclick>
 				  <property name="MenuIcon">home/homeicons/weather.png</property>
 				  <property name="MenuIcon_over">home/homeicons/weather.png</property>
+				  <property name="BackTizen0">home/button/submenubutton.png</property>
 				  <visible>!StringCompare(Window(Home).Property(NewsCenter.Unwetter.Anzahl),0)</visible>
 				</item>
 				<item id="80107">
@@ -177,6 +157,7 @@
 				  <onclick>-</onclick>
 				  <property name="MenuIcon">home/homeicons/blume.png</property>
 				  <property name="MenuIcon_over">home/homeicons/blume.png</property>
+				  <property name="BackTizen0">home/button/submenubutton.png</property>
 				</item>
 			</content>
 		</control>
@@ -544,13 +525,13 @@
 		<!-- =============================================================================================-->
 		<!-- ================================== FUSSBALL MENU ============================================-->
 		<!-- =============================================================================================-->
-		<control type="panel" id="23010">
+		<control type="list" id="23010">
 		    <visible>Container(19010).Hasfocus(80103)</visible>
 		    <include>Animation.ZoomIn</include>
-			<left>175</left>
-			<top>161</top>
-			<width>1205</width>
-			<height>220</height>
+			<left>1200</left>
+			<top>98</top>
+			<width>210</width>
+			<height>900</height>
 			<onright>19010</onright>
 			<onleft>1860</onleft>
 			<onup>19010</onup>
@@ -559,36 +540,37 @@
 			<focusposition>0</focusposition>
 			<orientation>vertical</orientation>
 			<movement>1</movement>
-			<itemlayout width="290" height="72">
+			<itemlayout width="290" height="105">
 			  <control type="image">
 				<left>10</left>
 				<top>5</top>
-				<width>286</width>
-				<height>67</height>
+				<width>200</width>
+				<height>100</height>
 				<texture background="true">skin/button_klein.png</texture>
 				<aspectratio>stretch</aspectratio>
 				<colordiffuse>$VAR[BackColorFront]</colordiffuse>
-			  </control>
-			  <control type="label">
+			  </control>	
+			  <control type="textbox">
 				<left>22</left>
-				<top>14</top>
-				<height>45</height>
-				<width>270</width>
-				<label>$INFO[ListItem.Label]</label>
+				<top>0</top>
+				<height>100</height>
+				<width>180</width>
+				<font>primal_15</font>
+				<textcolor>$VAR[ColorFontNormal]</textcolor>
+	            <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+				<selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
 				<align>center</align>
 				<aligny>center</aligny>
-				<font>primal_18</font>
-				<textcolor>$VAR[ColorFontNormal]</textcolor>
-				<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
-				<scroll>false</scroll>
-			  </control>								
+				<label>$INFO[ListItem.Label]</label>
+				<autoscroll delay="5000" time="5000" repeat="10000">!Skin.HasSetting(NoPlotScroll)</autoscroll>
+			  </control>							
 			</itemlayout>
-		    <focusedlayout width="290" height="72">
+		    <focusedlayout width="290" height="105">
 			  <control type="image">
 				<left>10</left>
 				<top>5</top>
-				<width>286</width>
-				<height>67</height>
+				<width>200</width>
+				<height>100</height>
 				<texture background="true">skin/button_klein.png</texture>
 				<aspectratio>stretch</aspectratio>
 				<colordiffuse>$VAR[BackColorButton]</colordiffuse>
@@ -597,25 +579,26 @@
 			  <control type="image">
 				<left>10</left>
 				<top>5</top>
-				<width>286</width>
-				<height>67</height>
+				<width>200</width>
+				<height>100</height>
 				<texture background="true">skin/button_klein.png</texture>
 				<aspectratio>stretch</aspectratio>
 				<colordiffuse>$VAR[BackColorFront]</colordiffuse>
 				<visible>!Control.Hasfocus(23010)</visible>
 			  </control>
-			  <control type="label">
+			  <control type="textbox">
 				<left>22</left>
-				<top>14</top>
-				<height>45</height>
-				<width>270</width>
-				<label>$INFO[ListItem.Label]</label>
+				<top>0</top>
+				<height>100</height>
+				<width>180</width>
+				<font>primal_15</font>
+				<textcolor>$VAR[ColorFontNormal]</textcolor>
+	            <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+				<selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
 				<align>center</align>
 				<aligny>center</aligny>
-				<font>primal_18</font>
-				<textcolor>$VAR[ColorFontNormal]</textcolor>
-				<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
-				<scroll>false</scroll>
+				<label>$INFO[ListItem.Label]</label>
+				<autoscroll delay="5000" time="5000" repeat="10000">!Skin.HasSetting(NoPlotScroll)</autoscroll>
 			  </control>
 			</focusedlayout>
 			<content>
@@ -661,13 +644,13 @@
 		<!-- =============================================================================================-->
 		<!-- ==================================== NEWS FEED ==============================================-->
 		<!-- =============================================================================================-->
-		<control type="wraplist" id="19111">
+		<control type="panel" id="19111">
 		  <visible>Container(19010).Hasfocus(80101)</visible>	
 		  <include>Animation.ZoomIn</include>
-		  <left>175</left>
-		  <top>159</top>
-		  <width>1170</width>
-	      <height>823</height>
+		  <left>50</left>
+		  <top>100</top>
+		  <width>1400</width>
+	      <height>915</height>
 		  <onright>19010</onright>
 		  <onleft>9020</onleft>
 		  <onup>19111</onup>
@@ -676,82 +659,39 @@
 		  <viewtype>list</viewtype>
 		  <preloaditems>1</preloaditems>
 		  <scrolltime tween="sine" easing="out">500</scrolltime>
-		  <autoscroll time="20000" delay="15000" repeat="5000">!Control.HasFocus(19111)</autoscroll>
-		  <itemlayout height="75" width="240">
+		  <!--<autoscroll time="20000" delay="15000" repeat="5000">!Control.HasFocus(19111)</autoscroll>-->
+		  <itemlayout height="305" width="655">
 		    <control type="image">
-				<left>7</left>
-				<top>3</top>
-				<width>1170</width>
-				<height>70</height>
+				<left>0</left>
+				<top>0</top>
+				<width>660</width>
+				<height>310</height>
 				<aspectratio>stretch</aspectratio>
 				<texture background="true">skin/button_klein.png</texture>
-				<colordiffuse>$VAR[BackColorFront]</colordiffuse>
-			</control>
-			<control type="image">
-				<left>15</left>
-				<top>13</top>
-				<width>280</width>
-				<height>50</height>
-				<aspectratio>keep</aspectratio>
-				<texture>$INFO[ListItem.Property(headerpic)]</texture>
-			</control>
-			<control type="label">
-				<left>330</left>
-				<top>26</top>
-				<width>800</width>
-				<height>20</height>
-				<font>primal_16_Title</font>
-				<textcolor>$VAR[ColorFontNormal]</textcolor>
-	            <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
-				<selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
-				<align>left</align>
-				<aligny>top</aligny>
-				<label>$INFO[ListItem.Label]</label>
-			</control>
-	    </itemlayout>
-	    <focusedlayout height="595" width="960">
-		    <control type="image">
-				<left>7</left>
-				<top>3</top>
-				<width>1170</width>
-				<height>590</height>
-				<aspectratio>stretch</aspectratio>
-				<texture background="true">skin/button_klein.png</texture>
-				<colordiffuse>$VAR[BackColorFront]</colordiffuse>
-				<visible>!Control.Hasfocus(19111)</visible>
-			</control>
-			<control type="image">
-				<left>7</left>
-				<top>3</top>
-				<width>1170</width>
-				<height>590</height>
-				<aspectratio>stretch</aspectratio>
-				<texture background="true">skin/button_klein.png</texture>
-				<colordiffuse>$VAR[BackColorButton]</colordiffuse>
-				<visible>Control.Hasfocus(19111)</visible>
-			</control>
-			<control type="image">
-				<left>10</left>
-				<top>6</top>
-				<width>290</width>
-				<height>210</height>
-				<aspectratio>keep</aspectratio>
-				<texture background="true">$INFO[ListItem.Icon]</texture>
 				<bordertexture border="10">ThumbShadow.png</bordertexture>
 		        <bordersize>6</bordersize>
+				<colordiffuse>$VAR[BackColorFront]</colordiffuse>
+			</control>			
+			<control type="image">
+				<left>10</left>
+				<top>10</top>
+				<width>150</width>
+				<height>150</height>
+				<texture background="true">$INFO[ListItem.Icon]</texture>
+				<aspectratio align="center" aligny="top">keep</aspectratio>
 			</control>
 			<control type="image">
-				<left>340</left>
-				<top>26</top>
-				<width>280</width>
+				<left>190</left>
+				<top>30</top>
+				<width>400</width>
 				<height>50</height>
 				<aspectratio>keep</aspectratio>
 				<texture>$INFO[ListItem.Property(headerpic)]</texture>
 			</control>
 			<control type="label">
-				<left>20</left>
-				<top>246</top>
-				<width>1140</width>
+				<left>190</left>
+				<top>100</top>
+				<width>400</width>
 				<height>20</height>
 				<font>primal_16_Title</font>
 				<textcolor>$VAR[ColorFontNormal]</textcolor>
@@ -760,27 +700,13 @@
 				<align>left</align>
 				<aligny>top</aligny>
 				<label>$INFO[ListItem.Label]</label>
-				<scroll>true</scroll>
 			</control>
-			<control type="label">
-				<left>340</left>
-				<top>86</top>
-				<width>800</width>
-				<height>20</height>
-				<font>primal_16</font>
-				<textcolor>$VAR[ColorFontNormal]</textcolor>
-	            <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
-				<selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
-				<align>left</align>
-				<aligny>top</aligny>
-				<label>$INFO[ListItem.Label2]</label>
-			</control>	
 			<control type="textbox">
 				<left>20</left>
-				<top>296</top>
-				<width>1140</width>
-				<height>270</height>
-				<font>primal_20</font>
+				<top>170</top>
+				<width>620</width>
+				<height>117</height>
+				<font>primal_15</font>
 				<textcolor>$VAR[ColorFontNormal]</textcolor>
 	            <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 				<selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
@@ -788,23 +714,63 @@
 				<aligny>top</aligny>
 				<label>$INFO[ListItem.Property(desc)]</label>
 				<autoscroll>false</autoscroll>
-				<visible>!Control.Hasfocus(19111)</visible>
-			</control>		
+			</control>	
+	    </itemlayout>
+	    <focusedlayout height="355" width="455">
+		    <control type="image">
+				<left>0</left>
+				<top>0</top>
+				<width>660</width>
+				<height>310</height>
+				<aspectratio>stretch</aspectratio>
+				<texture background="true">skin/button_klein_tranz70.png</texture>
+				<bordertexture border="10">ThumbShadow.png</bordertexture>
+		        <bordersize>6</bordersize>
+				<colordiffuse>$VAR[BackColorButton]</colordiffuse>
+			</control>			
+			<control type="image">
+				<left>10</left>
+				<top>10</top>
+				<width>150</width>
+				<height>150</height>
+				<texture background="true">$INFO[ListItem.Icon]</texture>
+				<aspectratio align="center" aligny="top">keep</aspectratio>
+			</control>
+			<control type="image">
+				<left>190</left>
+				<top>30</top>
+				<width>400</width>
+				<height>50</height>
+				<aspectratio>keep</aspectratio>
+				<texture>$INFO[ListItem.Property(headerpic)]</texture>
+			</control>
+			<control type="label">
+				<left>190</left>
+				<top>100</top>
+				<width>400</width>
+				<height>20</height>
+				<font>primal_16_Title</font>
+				<textcolor>$VAR[ColorFontNormal]</textcolor>
+	            <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+				<selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
+				<align>left</align>
+				<aligny>top</aligny>
+				<label>$INFO[ListItem.Label]</label>
+			</control>
 			<control type="textbox">
 				<left>20</left>
-				<top>296</top>
-				<width>1140</width>
-				<height>270</height>
-				<font>primal_20</font>
+				<top>170</top>
+				<width>620</width>
+				<height>117</height>
+				<font>primal_15</font>
 				<textcolor>$VAR[ColorFontNormal]</textcolor>
 	            <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 				<selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
 				<align>left</align>
 				<aligny>top</aligny>
 				<label>$INFO[ListItem.Property(desc)]</label>
-				<autoscroll time="2000" delay="15000" repeat="5000">!Skin.HasSetting(NoPlotScroll)</autoscroll>
-				<visible>Control.Hasfocus(19111)</visible>
-			</control>
+				<autoscroll>true</autoscroll>
+			</control>	
         </focusedlayout>
 		      <content>
 				<item id="1">
@@ -924,14 +890,14 @@
 		<!-- =============================== FUSSBALL TABELLE ============================================-->
 		<!-- =============================================================================================-->
 		<control type="group">
-		<top>60</top>
+		<top>0</top>
 		<visible>Container(19010).Hasfocus(80103)</visible>	
 		<visible>Container(23010).Hasfocus(23101) | Container(23010).Hasfocus(23103)</visible>	
 		<include>Animation.ZoomIn</include>
 		<control type="label">
 			<description>Platz label</description>
-			<left>255</left>
-			<top>260</top>
+			<left>105</left>
+			<top>60</top>
 			<width>1095</width>
 			<height>45</height>
 			<font>primal_15</font>
@@ -943,8 +909,8 @@
 		</control>
 		<control type="label">
 			<description>Verein label</description>
-			<left>320</left>
-			<top>260</top>
+			<left>170</left>
+			<top>60</top>
 			<width>1095</width>
 			<height>45</height>
 			<font>primal_15</font>
@@ -956,8 +922,8 @@
 		</control>
 		<control type="label">
 			<description>Spiele label</description>
-			<left>640</left>
-			<top>260</top>
+			<left>490</left>
+			<top>60</top>
 			<width>1095</width>
 			<height>45</height>
 			<font>primal_15</font>
@@ -969,8 +935,8 @@
 		</control>
 		<control type="label">
 			<description>header label</description>
-			<left>800</left>
-			<top>260</top>
+			<left>650</left>
+			<top>60</top>
 			<width>1095</width>
 			<height>45</height>
 			<font>primal_15</font>
@@ -982,8 +948,8 @@
 		</control>
 		<control type="label">
 			<description>Tore label</description>
-			<left>1005</left>
-			<top>260</top>
+			<left>855</left>
+			<top>60</top>
 			<width>1095</width>
 			<height>45</height>
 			<font>primal_15</font>
@@ -995,8 +961,8 @@
 		</control>
 		<control type="label">
 			<description>Punkte label</description>
-			<left>1155</left>
-			<top>260</top>
+			<left>1005</left>
+			<top>60</top>
 			<width>1095</width>
 			<height>45</height>
 			<font>primal_15</font>
@@ -1008,8 +974,8 @@
 		</control>
 		<control type="label">
 			<description>Statistik label</description>
-			<left>1265</left>
-			<top>260</top>
+			<left>1115</left>
+			<top>60</top>
 			<width>1095</width>
 			<height>45</height>
 			<font>primal_15</font>
@@ -1020,10 +986,10 @@
 			<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 		</control>
 		<control type="list" id="88430">
-			<left>175</left>
-			<top>298</top>
+			<left>25</left>
+			<top>98</top>
 			<width>1170</width>
-			<height>620</height>
+			<height>915</height>
 			<onleft>9020</onleft>
 			<onright>19010</onright>
 			<onup>88430</onup>
@@ -1279,10 +1245,10 @@
 		<visible>Container(23010).Hasfocus(23102) | Container(23010).Hasfocus(23104) | Container(23010).Hasfocus(23105) | Container(23010).Hasfocus(23106)</visible>
 		<include>Animation.ZoomIn</include>
 		<control type="list" id="88431">
-			<left>175</left>
-			<top>358</top>
+			<left>25</left>
+			<top>98</top>
 			<width>1170</width>
-			<height>610</height>
+			<height>915</height>
 			<onleft>9020</onleft>
 			<onright>19010</onright>
 			<onup>88431</onup>

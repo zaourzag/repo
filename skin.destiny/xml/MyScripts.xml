@@ -2,14 +2,11 @@
 <window id="20">
   <defaultcontrol always="true">55</defaultcontrol>
   <allowoverlay>no</allowoverlay>
-  <views>55,901</views>
   <controls>
     <control type="group">
 	  <include>CommonHomeBack</include>
       <include>ViewsAddons</include>			
 	  <include>BigInfosTime</include>
-	  <include>BigInfosDatabaseCount</include>
-	  <include>BigInfosWeather</include>
 	  <include>CommonHomeButton</include>
 	  <include>HomePlaying</include>
 	  <include>CommonPageCount</include>

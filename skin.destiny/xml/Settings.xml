@@ -6,19 +6,59 @@
     <control type="group">
       <left>0</left>
       <top>0</top>
-      <include>CommonHomeBack</include>	
-	  <include>SideBladeForViews</include>
-	  <include>BigInfosTime</include>
-	  <include>BigInfosDatabaseCount</include>
-	  <include>BigInfosWeather</include>
+      <include>CommonViewBack</include>	
+	  
+	  <control type="image">
+		<left>-20</left>
+		<top>-20</top>
+		<width>1240</width>
+		<height>1100</height>
+		<texture background="true">skin/button_klein_tranz90.png</texture>
+		<bordertexture border="10">ThumbShadow.png</bordertexture>
+		<bordersize>6</bordersize>
+		<colordiffuse>$VAR[ColorButtonDialogeBack]</colordiffuse>		
+	  </control>
+	  
 	  <include>CommonHomeButton</include>
+	  <include>BigInfosTime</include>
 	  <include>HomePlaying</include> 
-      <control type="panel" id="10000">
+
+	  <control type="image">
+		<left>1300</left>
+		<top>387</top>
+		<width>450</width>
+		<height>600</height>
+		<texture background="true">home/infobox.png</texture>
+		<bordertexture border="10">home/infobox_shadow.png</bordertexture>
+		<bordersize>6</bordersize>	
+		<colordiffuse>$VAR[BackColorButton]</colordiffuse>	
+	  </control>
+	  <control type="image">
+		<left>1310</left>
+		<top>400</top>
+		<width>430</width>
+		<height>250</height>
+		<texture background="true" diffuse="home/infobox_diffuse.png">home/info_settings2.png</texture>
+	  </control>
+	  <control type="textbox" id="6">
+		<description>description area</description>
+		<left>1330</left>
+		<top>662</top>
+		<width>390</width>
+		<height>305</height>
+		<font>primal_16</font>
+		<align>left</align>
+		<label>[COLOR $VAR[ColorFontSelected]]$INFO[Container(10000).ListItem.Label2][/COLOR]</label>
+		<textcolor>$VAR[ColorFontSelected]</textcolor>
+		<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+		<autoscroll time="3000" delay="10000" repeat="5000">true</autoscroll>
+	  </control>
+      <control type="list" id="10000">
 	    <include>Animation.ZoomIn</include>
-        <left>168</left>
-        <top>150</top>
-        <width>1720</width>
-        <height>820</height>
+        <left>60</left>
+        <top>70</top>
+        <width>1200</width>
+        <height>920</height>
         <onleft>9020</onleft>
         <onright>10000</onright>
         <onup>10000</onup>
@@ -28,87 +68,75 @@
         <scrolltime>300</scrolltime>
         <orientation>vertical</orientation>
         <preloaditems>2</preloaditems>
-        <itemlayout height="194" width="565">
-		  <control type="image">
-			<left>0</left>
-			<top>0</top>
-			<width>571</width>
-			<height>200</height>
-			<texture background="true">skin/button_klein_tranz50.png</texture>
-			<bordertexture border="10">ThumbShadow.png</bordertexture>
-		    <bordersize>7</bordersize>
-		    <colordiffuse>$VAR[BackColorFront]</colordiffuse>
-		  </control>
-		  <control type="label">
-			<left>120</left>
-			<top>20</top>
-			<width>350</width>
-			<height>80</height>
-			<font>primal_22</font>
-			<textcolor>$VAR[ColorFontNormal]</textcolor>
-	        <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
-			<align>left</align>
-			<aligny>center</aligny>
-			<label>[UPPERCASE]$INFO[ListItem.Label][/UPPERCASE]</label>
-		  </control>
+        <itemlayout height="134" width="565">  
 		  <control type="image">
             <left>30</left>
-			<top>25</top>
+			<top>30</top>
 			<width>60</width>
 			<height>60</height>
             <texture>$INFO[ListItem.Thumb]</texture>
 			<colordiffuse>$VAR[ColorIcons]</colordiffuse>
           </control>
-		  <control type="textbox">
-			<left>25</left>
-			<top>110</top>
-			<width>500</width>
-			<height>140</height>
-			<font>primal_13</font>
-			<align>justify</align>
-			<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
-			<label>[COLOR $VAR[ColorFontNormal]]$INFO[ListItem.Label2][/COLOR]</label>
-			<autoscroll time="2000" delay="10000" repeat="5000">false</autoscroll>
-		  </control>
-        </itemlayout>
-        <focusedlayout height="194" width="565">
-		  <control type="image">
-			<left>0</left>
-			<top>0</top>
-			<width>571</width>
-			<height>200</height>
-			<texture background="true">skin/button_klein_tranz50.png</texture>
-			<bordertexture border="10">ThumbShadow.png</bordertexture>
-		    <bordersize>7</bordersize>
-		    <colordiffuse>$VAR[BackColorButton]</colordiffuse>
-		  </control>
 		  <control type="label">
-			<left>120</left>
-			<top>20</top>
-			<width>350</width>
+			<left>150</left>
+			<top>0</top>
+			<width>1000</width>
 			<height>80</height>
-			<font>primal_22</font>
+			<font>primal_16_Title</font>
 			<textcolor>$VAR[ColorFontNormal]</textcolor>
 	        <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 			<align>left</align>
 			<aligny>center</aligny>
 			<label>[UPPERCASE]$INFO[ListItem.Label][/UPPERCASE]</label>
 		  </control>
+		  <control type="textbox">
+			<left>150</left>
+			<top>57</top>
+			<width>1000</width>
+			<height>100</height>
+			<font>primal_13</font>
+			<align>left</align>
+			<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			<label>[COLOR $VAR[ColorFontNormal]]$INFO[ListItem.Label2][/COLOR]</label>
+			<autoscroll time="2000" delay="10000" repeat="5000">false</autoscroll>
+		  </control>
+        </itemlayout>
+        <focusedlayout height="134" width="855">
+		  <control type="image">
+			<left>137</left>
+			<top>6</top>
+			<width>1017</width>
+			<height>120</height>
+			<texture background="true">skin/button_klein_tranz50.png</texture>
+		    <colordiffuse>$VAR[BackColorButton]</colordiffuse>
+		  </control>
 		  <control type="image">
             <left>30</left>
-			<top>25</top>
+			<top>30</top>
 			<width>60</width>
 			<height>60</height>
             <texture>$INFO[ListItem.Thumb]</texture>
 			<colordiffuse>$VAR[ColorFontSelected]</colordiffuse>
           </control>
+		  <control type="label">
+			<left>150</left>
+			<top>0</top>
+			<width>1000</width>
+			<height>80</height>
+			<font>primal_16_Title</font>
+			<textcolor>$VAR[ColorFontSelected]</textcolor>
+	        <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+			<align>left</align>
+			<aligny>center</aligny>
+			<label>[UPPERCASE]$INFO[ListItem.Label][/UPPERCASE]</label>
+		  </control>
 		  <control type="textbox">
-			<left>25</left>
-			<top>110</top>
-			<width>500</width>
-			<height>140</height>
+			<left>150</left>
+			<top>57</top>
+			<width>1000</width>
+			<height>100</height>
 			<font>primal_13</font>
-			<align>justify</align>
+			<align>left</align>
 			<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 			<label>[COLOR $VAR[ColorFontNormal]]$INFO[ListItem.Label2][/COLOR]</label>
 			<autoscroll time="2000" delay="10000" repeat="5000">false</autoscroll>
@@ -145,6 +173,13 @@
             <onclick>ActivateWindow(ServiceSettings)</onclick>
             <thumb>home/homeicons/network.png</thumb>
           </item>
+		  <item id="7">
+			<label>15016</label>
+			<label2>31002</label2>
+			<onclick>ActivateWindow(GameSettings)</onclick>
+			<!--<visible>System.GetBool(gamesgeneral.enable)</visible>-->
+			<thumb>home/homeicons/games.png</thumb>
+		  </item>
           <item id="9">
             <label>$LOCALIZE[24001]</label>
             <label2>$LOCALIZE[50068]</label2>
@@ -175,12 +210,12 @@
             <onclick>ActivateWindow(FileManager)</onclick>
             <thumb>home/homeicons/data.png</thumb>
           </item>
-		  <item id="14">
+		  <!--<item id="14">
             <label>$LOCALIZE[20077]</label>
             <label2>$LOCALIZE[50070]</label2>
             <onclick>ActivateWindow(SkinSettings)</onclick>
             <thumb>home/homeicons/blume.png</thumb>
-          </item>
+          </item>-->
         </content>
       </control>
     </control>

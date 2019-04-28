@@ -3,9 +3,27 @@
   <defaultcontrol always="true">20</defaultcontrol>
   <allowoverlay>no</allowoverlay>
   <controls>
-    <include>CommonAllFront2</include>
+    <control type="image">
+	  <left>0</left>
+	  <top>0</top>
+	  <width>1920</width>
+	  <height>1080</height>
+	  <texture background="true">background.png</texture>
+	</control>
     <control type="group">
-	  <include>SlideInAndOutAnimationRNL</include>
+	  <animation effect="slide" start="1725,0" end="0,0" time="400" tween="quadratic" easing="out">WindowOpen</animation>
+      <animation effect="slide" start="0,0" end="1725,0" time="400" tween="quadratic" easing="out">WindowClose</animation>
+	  <control type="image">
+		<description>background image</description>
+		<left>160</left>
+		<top>80</top>
+		<width>1720</width>
+		<height>950</height>
+		<texture background="true">skin/button_klein.png</texture>
+		<bordertexture border="10">ThumbShadow.png</bordertexture>
+		<bordersize>7</bordersize>
+		<colordiffuse>$VAR[ColorButtonDialogeBack]</colordiffuse>
+	  </control>
       <control type="button" id="4">
         <description>OK Button</description>
         <left>1445</left>
@@ -58,7 +76,8 @@
 	  <control type="group">
 	    <left>400</left>
         <top>100</top>
-		<include>SlideInAndOutAnimationRNL</include>
+		<animation effect="fade" delay="400" start="0" end="100" time="200">WindowOpen</animation>
+        <animation effect="fade" start="100" end="0" time="200">WindowClose</animation>
       <control type="radiobutton" id="7">
         <description>Channel activated</description>
         <left>402</left>

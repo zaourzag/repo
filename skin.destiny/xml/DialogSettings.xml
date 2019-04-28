@@ -11,30 +11,34 @@
             <animation effect="fade" start="100" end="0" time="150" condition="Window.Is(contentsettings) + Window.IsActive(AddonSettings)">Conditional</animation>
             <animation effect="fade" start="100" end="0" time="300" condition="[Window.Is(osdaudiosettings) | Window.Is(osdvideosettings)] + [Window.IsVisible(SliderDialog) | Window.IsVisible(OSDAudioDSPSettings) |  Window.IsVisible(FileBrowser)]">Conditional</animation>
             <animation effect="fade" start="100" end="0" time="400" condition="Window.Is(osdaudiodspsettings) + Window.IsVisible(SliderDialog)">Conditional</animation>
-            <control type="image">
-				<left>20</left>
-				<top>70</top>
-				<width>1160</width>
-				<height>630</height>
+			<control type="image">
+				<left>32</left>
+				<top>2</top>
+				<width>1136</width>
+				<height>686</height>
 				<texture background="true">skin/button_klein.png</texture>
 				<bordertexture border="10">ThumbShadow.png</bordertexture>
 				<bordersize>6</bordersize>
-				<colordiffuse>$VAR[BackColorFront]</colordiffuse>
-			</control>
-			<control type="image">
-				<left>32</left>
-				<top>82</top>
-				<width>1136</width>
-				<height>606</height>
-				<texture background="true">skin/button_klein.png</texture>
 				<colordiffuse>$VAR[ColorButtonDialogeBack]</colordiffuse>
+			</control>
+			<control type="label">
+				<left>60</left>
+				<top>35</top>
+				<width>410</width>
+				<height>35</height>
+				<font>primal_30_Title</font>
+				<align>left</align>
+				<aligny>center</aligny>
+				<textcolor>$VAR[ColorFontNormal]</textcolor>
+				<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
+				<label>[UPPERCASE]$LOCALIZE[50077][/UPPERCASE]</label>
 			</control>
             <control type="grouplist" id="5">
                 <animation effect="slide" start="0,0" end="-5,0" time="0" condition="Control.IsVisible(60)">Conditional</animation>
                 <description>control area</description>
-                <left>52</left>
-                <top>105</top>
-                <width>1095</width>
+                <left>38</left>
+                <top>100</top>
+                <width>1123</width>
                 <height>462</height>
                 <itemgap>6</itemgap>
                 <pagecontrol>60</pagecontrol>
@@ -43,7 +47,7 @@
                 <onleft>60</onleft>
                 <onright>60</onright>
             </control>
-            <control type="scrollbar" id="60">
+            <!--<control type="scrollbar" id="60">
                 <left>1147</left>
                 <top>105</top>
                 <width>10</width>
@@ -59,7 +63,7 @@
                 <onup>60</onup>
                 <showonepage>false</showonepage>
                 <orientation>vertical</orientation>
-            </control>
+            </control>-->
             <control type="button" id="7">
                 <description>Default Button</description>
                 <height>60</height>

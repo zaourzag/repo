@@ -33,7 +33,7 @@
           <top>0</top>
           <width>70</width>
           <height>70</height>
-          <label>210</label>
+          <!--<label>210</label>-->
           <font>-</font>
           <texturefocus colordiffuse="$VAR[BackColorButton]">osd/PrevTrack.png</texturefocus>
           <texturenofocus colordiffuse="$VAR[ColorIcons]">osd/PrevTrack.png</texturenofocus>
@@ -47,7 +47,7 @@
           <top>0</top>
           <width>70</width>
           <height>70</height>
-          <label>50016</label>
+          <!--<label>50016</label>-->
           <font>-</font>
           <texturefocus colordiffuse="$VAR[BackColorButton]">osd/rewind.png</texturefocus>
           <texturenofocus colordiffuse="$VAR[ColorIcons]">osd/rewind.png</texturenofocus>
@@ -61,8 +61,8 @@
           <top>0</top>
           <width>70</width>
           <height>70</height>
-          <label>31351</label>
-          <altlabel>208</altlabel>
+          <!--<label>31351</label>-->
+          <!--<altlabel>208</altlabel>-->
           <font>-</font>
           <texturefocus colordiffuse="$VAR[BackColorButton]">osd/pause.png</texturefocus>
           <texturenofocus colordiffuse="$VAR[ColorIcons]">osd/pause.png</texturenofocus>
@@ -79,7 +79,7 @@
           <top>0</top>
           <width>70</width>
           <height>70</height>
-          <label>50018</label>
+          <!--<label>50018</label>-->
           <font>-</font>
           <texturefocus colordiffuse="$VAR[BackColorButton]">osd/stop.png</texturefocus>
           <texturenofocus colordiffuse="$VAR[ColorIcons]">osd/stop.png</texturenofocus>
@@ -93,7 +93,7 @@
           <top>0</top>
           <width>70</width>
           <height>70</height>
-          <label>50019</label>
+          <!--<label>50019</label>-->
           <font>-</font>
           <texturefocus colordiffuse="$VAR[BackColorButton]">osd/forward.png</texturefocus>
           <texturenofocus colordiffuse="$VAR[ColorIcons]">osd/forward.png</texturenofocus>
@@ -107,7 +107,7 @@
           <top>0</top>
           <width>70</width>
           <height>70</height>
-          <label>209</label>
+          <!--<label>209</label>-->
           <font>-</font>
           <texturefocus colordiffuse="$VAR[BackColorButton]">osd/NextTrack.png</texturefocus>
           <texturenofocus colordiffuse="$VAR[ColorIcons]">osd/NextTrack.png</texturenofocus>
@@ -126,7 +126,7 @@
           <top>0</top>
           <width>70</width>
           <height>70</height>
-          <label>$LOCALIZE[486]$INFO[Playlist.Repeat, : ]</label>
+          <!--<label>$LOCALIZE[486]$INFO[Playlist.Repeat, : ]</label>-->
           <font>-</font>
           <texturefocus colordiffuse="$VAR[BackColorButton]">-</texturefocus>
           <texturenofocus colordiffuse="$VAR[ColorIcons]">-</texturenofocus>
@@ -194,7 +194,7 @@
           <top>0</top>
           <width>70</width>
           <height>70</height>
-          <label>$LOCALIZE[590]$INFO[Playlist.Random, : ]</label>
+          <!--<label>$LOCALIZE[590]$INFO[Playlist.Random, : ]</label>-->
           <font>-</font>
           <texturefocus colordiffuse="$VAR[BackColorButton]">osd/RandomOff.png</texturefocus>
           <texturenofocus colordiffuse="$VAR[ColorIcons]">osd/RandomOff.png</texturenofocus>
@@ -234,7 +234,7 @@
           <top>0</top>
           <width>70</width>
           <height>70</height>
-          <label>10517</label>
+          <!--<label>10517</label>-->
           <font>-</font>
           <texturefocus colordiffuse="$VAR[BackColorButton]">osd/playlist.png</texturefocus>
           <texturenofocus colordiffuse="$VAR[ColorIcons]">osd/playlist.png</texturenofocus>
@@ -249,7 +249,7 @@
           <top>0</top>
           <width>70</width>
           <height>70</height>
-          <label>12006</label>
+          <!--<label>12006</label>-->
           <font>-</font>
           <texturefocus colordiffuse="$VAR[BackColorButton]">osd/Viz.png</texturefocus>
           <texturenofocus colordiffuse="$VAR[ColorIcons]">osd/Viz.png</texturenofocus>
@@ -262,7 +262,7 @@
           <top>0</top>
           <width>70</width>
           <height>70</height>
-          <label>$LOCALIZE[250] $LOCALIZE[21417]</label>
+         <!--<label>$LOCALIZE[250] $LOCALIZE[21417]</label>-->
           <font>-</font>
           <texturefocus colordiffuse="$VAR[BackColorButton]">osd/PresetSettings.png</texturefocus>
           <texturenofocus colordiffuse="$VAR[ColorIcons]">osd/PresetSettings.png</texturenofocus>
@@ -276,7 +276,7 @@
           <top>0</top>
           <width>70</width>
           <height>70</height>
-          <label>50020</label>
+          <!--<label>50020</label>-->
           <font>-</font>
           <texturefocus colordiffuse="$VAR[BackColorButton]">osd/Pre.png</texturefocus>
           <texturenofocus colordiffuse="$VAR[ColorIcons]">osd/Pre.png</texturenofocus>
@@ -291,7 +291,7 @@
           <top>0</top>
           <width>70</width>
           <height>70</height>
-          <label>50021</label>
+          <!--<label>50021</label>-->
           <font>-</font>
           <texturefocus colordiffuse="$VAR[BackColorButton]">osd/lyrics.png</texturefocus>
           <texturenofocus colordiffuse="$VAR[ColorIcons]">osd/lyrics.png</texturenofocus>

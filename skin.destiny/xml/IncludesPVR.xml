@@ -158,29 +158,19 @@
 					<onclick>ActivateWindow(4111)</onclick>
 					<visible>System.HasAddon(service.kn.switchtimer)</visible>
 				</control>
-				<control type="label" id="201">
-					<width>250</width>
-					<height>20</height>
-					<font>font12</font>
-					<label>-</label>
-					<textcolor>$VAR[ColorFontSelected]</textcolor>
-		            <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
-					<align>center</align>
-					<aligny>center</aligny>
-				</control>
 				<control type="button" id="28">
 					<description>Channel Groups</description>
 					<left>0</left>
 					<height>50</height>
 					<textwidth>235</textwidth>
-					<label>-</label>
+					<label></label>
 				</control>
 				<control type="button" id="2">
 					<description>View As button</description>
 					<left>0</left>
 					<height>50</height>
 					<textwidth>235</textwidth>
-					<label>-</label>
+					<label></label>
 					<!-- <visible>Window.IsActive(TVGuide) | Window.IsActive(RadioGuide)</visible> -->
 				</control>
 				<control type="radiobutton" id="31">

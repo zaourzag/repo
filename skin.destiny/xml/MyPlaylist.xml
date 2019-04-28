@@ -6,13 +6,10 @@
     <controls>
         
 			<include>CommonHomeBack</include>
-			<include>SideBladeForViews</include>
 			<include>CommonPageCount</include>
 			<include>CommonPageCountView</include>	
 			<include>ViewsPlaylist</include>	
 			<include>BigInfosTime</include>
-			<include>BigInfosDatabaseCount</include>
-			<include>BigInfosWeather</include>
 			<include>CommonHomeButton</include>
 			<include>HomePlaying</include>
 			<include>JumpBarHorizontal</include>

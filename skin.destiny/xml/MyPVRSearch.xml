@@ -6,11 +6,6 @@
 	<controls>
 	    <include>CommonHomeBack</include>	
 		<include>CommonAllFront3</include>	
-		<include>SideBladeForViews</include>			
-		<include>BigInfosTime</include>
-		<include>BigInfosDatabaseCount</include>
-		<include>BigInfosWeather</include>
-		<include>CommonHomeButton</include>
 		<include>HomePlaying</include>
 		<control type="group">
 		      <include>Animation.ZoomIn</include>

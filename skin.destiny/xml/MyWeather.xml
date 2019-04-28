@@ -27,8 +27,6 @@
 	        <colordiffuse>$VAR[BackColorBackground]</colordiffuse>
 		</control>
 		<include>BigInfosTime</include>
-		<include>BigInfosDatabaseCount</include>
-		<include>BigInfosWeather</include>
 		<include>CommonHomeButton</include>	
 		<include>CommonHomeWidgetControl</include>
 		<include>HomePlaying</include>			

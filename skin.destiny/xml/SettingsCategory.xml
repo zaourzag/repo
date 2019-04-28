@@ -25,12 +25,20 @@
 		<left>0</left>
 		<top>0</top>
 		<include>CommonHomeBack</include>
-		<include>CommonAllFront2</include>
-		<include>SideBladeForViews</include>	
-		<include condition="!Skin.HasSetting(NoCommonHomeButton)">BigInfosTime</include>
-		<include condition="!Skin.HasSetting(NoCommonHomeButton)">BigInfosDatabaseCount</include>
-		<include condition="!Skin.HasSetting(homenoleftweather)">BigInfosWeather</include>
-		<include condition="!Skin.HasSetting(NoCommonHomeButton)">CommonHomeButton</include>	
+		
+		<control type="image">
+		  <left>-20</left>
+		  <top>-20</top>
+		  <width>1240</width>
+		  <height>1100</height>
+		  <texture background="true">skin/button_klein_tranz90.png</texture>
+		  <bordertexture border="10">ThumbShadow.png</bordertexture>
+		  <bordersize>6</bordersize>
+		  <colordiffuse>$VAR[ColorButtonDialogeBack]</colordiffuse>		
+		</control>
+	  	
+		<include>CommonHomeButton</include>	
+		<include>BigInfosTime</include>
 		<include>HomePlaying</include>
 	  </control>
 	  <!--<control type="label">
@@ -50,10 +58,10 @@
 	    <animation effect="zoom" end="83" center="2100,100" time="300" tween="cubic" easing="inout" condition="ControlGroup(9020).HasFocus | ControlGroup(9021).HasFocus | ControlGroup(9030).HasFocus">Conditional</animation>
 	    <include>Animation.ZoomIn</include>
         <description>control area</description>
-        <left>505</left>
-        <top>165</top>
-        <width>1337</width>
-        <height>810</height>
+        <left>365</left>
+        <top>135</top>
+        <width>837</width>
+        <height>845</height>
         <itemgap>2</itemgap>
         <pagecontrol>60</pagecontrol>
         <onleft>3</onleft>
@@ -68,8 +76,8 @@
 	  <include>Animation.ZoomIn</include>
 	  <control type="grouplist" id="3">
         <description>button area</description>
-        <left>185</left>
-        <top>165</top>
+        <left>35</left>
+        <top>135</top>
         <width>310</width>
         <height>755</height>
         <itemgap>2</itemgap>
@@ -78,11 +86,11 @@
         <onup>3</onup>
         <ondown>3</ondown>
       </control>
-      <control type="scrollbar" id="60">
+      <!--<control type="scrollbar" id="60">
         <include>Animation.ZoomIn</include>
 		<include>Animation.ZoomOut</include>
 		<left>1850</left>
-	    <top>165</top>
+	    <top>135</top>
 	    <width>10</width>
 	    <height>810</height>
 	    <texturesliderbackground>button/ScrollBarV.png</texturesliderbackground>
@@ -94,20 +102,45 @@
         <onright>3</onright>
         <showonepage>true</showonepage>
         <orientation>vertical</orientation>
-      </control>
+      </control>-->
     </control>
+	<control type="image">
+	  <left>1300</left>
+	  <top>387</top>
+	  <width>450</width>
+	  <height>600</height>
+	  <texture background="true">home/infobox.png</texture>
+	  <bordertexture border="10">home/infobox_shadow.png</bordertexture>
+	  <bordersize>6</bordersize>	
+	  <colordiffuse>$VAR[BackColorButton]</colordiffuse>	
+	</control>
+	<control type="image">
+	  <left>1310</left>
+	  <top>400</top>
+	  <width>430</width>
+	  <height>250</height>
+	  <texture background="true" diffuse="home/infobox_diffuse.png">home/info_settings.png</texture>	
+	</control>
 	<control type="textbox" id="6">
 	  <description>description area</description>
-	  <left>130</left>
-	  <top>995</top>
-	  <width>1650</width>
-	  <height>70</height>
-	  <font>primal_18</font>
-	  <align>justify</align>
+	  <left>1330</left>
+	  <top>662</top>
+	  <width>390</width>
+	  <height>305</height>
+	  <font>primal_16</font>
+	  <align>left</align>
 	  <textcolor>$VAR[ColorFontSelected]</textcolor>
 	  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 	  <autoscroll time="3000" delay="10000" repeat="5000">true</autoscroll>
 	  <include>Fade_Widgets</include>
+	</control>
+	<control type="image">
+	  <left>360</left>
+	  <top>135</top>
+	  <width>3</width>
+	  <height>845</height>
+	  <texture background="true">default/separator22.png</texture>
+	  <include>Animation.ZoomIn</include>
 	</control>
     <control type="button" id="10">
       <description>Default Category Button</description>
@@ -116,11 +149,11 @@
       <height>90</height>
       <width>310</width>
       <textoffsetx>20</textoffsetx>
-	  <texturenofocus colordiffuse="$VAR[BackColorFront]">skin/button_klein.png</texturenofocus>
-	  <texturefocus colordiffuse="$VAR[BackColorButton]">skin/button_klein.png</texturefocus>
+	  <texturenofocus colordiffuse="$VAR[BackColorFront]">-</texturenofocus>
+	  <texturefocus colordiffuse="$VAR[BackColorButton]">skin/button_klein_tranz50.png</texturefocus>
       <align>right</align>
       <aligny>center</aligny>
-      <font>primal_20</font>
+      <font>primal_16_Title</font>
       <pulseonselect>false</pulseonselect>
     </control>
     <control type="button" id="7">
@@ -129,6 +162,7 @@
       <top>0</top>
       <height>70</height>
 	  <textoffsetx>30</textoffsetx>
+	  <texturenofocus colordiffuse="$VAR[BackColorFront]">-</texturenofocus>
     </control>
     <control type="radiobutton" id="8">
       <description>Default RadioButton</description>
@@ -136,6 +170,7 @@
       <top>0</top>
       <height>70</height>
 	  <textoffsetx>30</textoffsetx>
+	  <texturenofocus colordiffuse="$VAR[BackColorFront]">-</texturenofocus>
     </control>
     <control type="spincontrolex" id="9">
       <description>Default SpinControlex</description>
@@ -145,6 +180,7 @@
 	  <textoffsetx>30</textoffsetx>
       <aligny>center</aligny>
       <reverse>yes</reverse>
+	  <texturenofocus colordiffuse="$VAR[BackColorFront]">-</texturenofocus>
     </control>
 	<control type="sliderex" id="13">
       <description>Default Slider</description>
@@ -153,6 +189,7 @@
       <height>70</height>
 	  <textoffsetx>10</textoffsetx>
       <aligny>center</aligny>
+	  <texturenofocus colordiffuse="$VAR[BackColorFront]">-</texturenofocus>
     </control>
     <control type="label" id="2">
       <description>Fake Label so we can pass it value down to the one below</description>

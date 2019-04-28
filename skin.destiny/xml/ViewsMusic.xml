@@ -85,7 +85,7 @@
 			      <selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
 			      <align>left</align>
 			      <aligny>center</aligny>	 
-			      <visible>Stringcompare(ListItem.Title,..)</visible> 
+			      <visible>String.IsEqual(ListItem.Title,..)</visible> 
 		        </control>	
 		        <control type="label">
 			      <left>145</left>
@@ -99,7 +99,7 @@
 			      <selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
 			      <align>left</align>
 			      <aligny>center</aligny>	 
-			      <visible>!Stringcompare(ListItem.Title,..)</visible> 
+			      <visible>!String.IsEqual(ListItem.Title,..)</visible> 
 		        </control>
 				<control type="label">
 				  <left>145</left>
@@ -114,7 +114,7 @@
 				  <align>left</align>
 				  <aligny>center</aligny>
 				  <label>$INFO[ListItem.Artist]</label>
-				  <visible>!Stringcompare(ListItem.label,..)</visible> 
+				  <visible>!String.IsEqual(ListItem.label,..)</visible> 
 				  <visible>!ListItem.IsCollection</visible>
 				</control>
 				<control type="label">
@@ -130,7 +130,7 @@
 				  <align>left</align>
 				  <aligny>center</aligny>
 				  <label>$INFO[ListItem.Album]</label>
-				  <visible>!Stringcompare(ListItem.label,..)</visible> 
+				  <visible>!String.IsEqual(ListItem.label,..)</visible> 
 				  <visible>!ListItem.IsCollection</visible>
 				</control>
 				<control type="label">
@@ -146,7 +146,7 @@
 				  <selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
 				  <label>$INFO[ListItem.Year]</label>
 				  <visible>!ListItem.IsCollection</visible>
-				  <visible>!Stringcompare(ListItem.label,..)</visible>
+				  <visible>!String.IsEqual(ListItem.label,..)</visible>
 			    </control>
 				<control type="label">
 				  <left>270</left>
@@ -161,7 +161,7 @@
 				  <selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
 				  <label>$INFO[ListItem.Duration]</label>
 				  <visible>!ListItem.IsCollection</visible>
-				  <visible>!Stringcompare(ListItem.label,..)</visible>
+				  <visible>!String.IsEqual(ListItem.label,..)</visible>
 			    </control>
 			</control>
 		  </itemlayout>
@@ -197,7 +197,7 @@
 			      <selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
 			      <align>left</align>
 			      <aligny>center</aligny>	 
-			      <visible>Stringcompare(ListItem.Title,..)</visible> 
+			      <visible>String.IsEqual(ListItem.Title,..)</visible> 
 		        </control>	
 		        <control type="label">
 			      <left>145</left>
@@ -211,7 +211,7 @@
 			      <selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
 			      <align>left</align>
 			      <aligny>center</aligny>	 
-			      <visible>!Stringcompare(ListItem.Title,..)</visible> 
+			      <visible>!String.IsEqual(ListItem.Title,..)</visible> 
 		        </control>
 				<control type="label">
 				  <left>145</left>
@@ -226,7 +226,7 @@
 				  <align>left</align>
 				  <aligny>center</aligny>
 				  <label>$INFO[ListItem.Artist]</label>
-				  <visible>!Stringcompare(ListItem.label,..)</visible> 
+				  <visible>!String.IsEqual(ListItem.label,..)</visible> 
 				  <visible>!ListItem.IsCollection</visible>
 				</control>
 				<control type="label">
@@ -242,7 +242,7 @@
 				  <align>left</align>
 				  <aligny>center</aligny>
 				  <label>$INFO[ListItem.Album]</label>
-				  <visible>!Stringcompare(ListItem.label,..)</visible> 
+				  <visible>!String.IsEqual(ListItem.label,..)</visible> 
 				  <visible>!ListItem.IsCollection</visible>
 				</control>
 				<control type="label">
@@ -258,7 +258,7 @@
 				  <selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
 				  <label>$INFO[ListItem.Year]</label>
 				  <visible>!ListItem.IsCollection</visible>
-				  <visible>!Stringcompare(ListItem.label,..)</visible>
+				  <visible>!String.IsEqual(ListItem.label,..)</visible>
 			    </control>
 				<control type="label">
 				  <left>270</left>
@@ -273,7 +273,7 @@
 				  <selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
 				  <label>$INFO[ListItem.Duration]</label>
 				  <visible>!ListItem.IsCollection</visible>
-				  <visible>!Stringcompare(ListItem.label,..)</visible>
+				  <visible>!String.IsEqual(ListItem.label,..)</visible>
 			    </control>
 			</control>
 			</focusedlayout>
@@ -405,7 +405,7 @@
 			  <selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
 			  <align>left</align>
 			  <aligny>center</aligny>	
-			  <visible>!Stringcompare(ListItem.label,..)</visible>   
+			  <visible>!String.IsEqual(ListItem.label,..)</visible>   
 			</control>
 			<control type="label">
 			  <left>30</left>
@@ -419,7 +419,7 @@
 			  <selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
 			  <align>left</align>
 			  <aligny>center</aligny>	
-			  <visible>Stringcompare(ListItem.label,..)</visible>   
+			  <visible>String.IsEqual(ListItem.label,..)</visible>   
 			</control>
 			<control type="label">
 			  <left>30</left>
@@ -434,7 +434,7 @@
 			  <align>left</align>
 			  <aligny>center</aligny>
 			  <visible>Container.Content(Albums)</visible>
-			  <visible>!Stringcompare(ListItem.label,..)</visible> 	  
+			  <visible>!String.IsEqual(ListItem.label,..)</visible> 	  
 			</control>
 			<control type="label">
 			  <left>30</left>
@@ -449,7 +449,7 @@
 			  <align>left</align>
 			  <aligny>center</aligny>
 			  <visible>Container.Content(Artists)</visible>	 
-			  <visible>!Stringcompare(ListItem.label,..)</visible>  
+			  <visible>!String.IsEqual(ListItem.label,..)</visible>  
 			</control>
 		   </control>
 		  </itemlayout>
@@ -503,7 +503,7 @@
 			  <selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
 			  <align>left</align>
 			  <aligny>center</aligny>
-			  <visible>!Stringcompare(ListItem.label,..)</visible> 	  
+			  <visible>!String.IsEqual(ListItem.label,..)</visible> 	  
 			</control>
 			<control type="label">
 			  <left>30</left>
@@ -517,7 +517,7 @@
 			  <selectedcolor>$VAR[ColorFontSelected]</selectedcolor>
 			  <align>left</align>
 			  <aligny>center</aligny>	
-			  <visible>Stringcompare(ListItem.label,..)</visible>   
+			  <visible>String.IsEqual(ListItem.label,..)</visible>   
 			</control>
 			<control type="label">
 			  <left>30</left>
@@ -532,7 +532,7 @@
 			  <align>left</align>
 			  <aligny>center</aligny>
 			  <visible>Container.Content(Albums)</visible>	
-			  <visible>!Stringcompare(ListItem.label,..)</visible>   
+			  <visible>!String.IsEqual(ListItem.label,..)</visible>   
 			</control>
 			<control type="label">
 			  <left>30</left>
@@ -547,7 +547,7 @@
 			  <align>left</align>
 			  <aligny>center</aligny>
 			  <visible>Container.Content(Artists)</visible>	
-			  <visible>!Stringcompare(ListItem.label,..)</visible>   
+			  <visible>!String.IsEqual(ListItem.label,..)</visible>   
 			</control>
 		  </focusedlayout>
 		  <focusedlayout condition="Skin.HasSetting(banner702)" height="100" width="250">
@@ -621,7 +621,7 @@
 			<texture background="true">skin/button_klein_tranz90.png</texture>
 			<aspectratio>stretch</aspectratio>
 			<colordiffuse>$VAR[BackColorBackground]</colordiffuse>
-			<visible>!Stringcompare(ListItem.label,..)</visible> 
+			<visible>!String.IsEqual(ListItem.label,..)</visible> 
 		 </control>
 		 <control type="image">
 			<left>185</left>
@@ -632,7 +632,7 @@
 			<bordertexture border="10">ThumbShadow.png</bordertexture>
 			<bordersize>7</bordersize>
 			<aspectratio>stretch</aspectratio>
-			<visible>!Stringcompare(ListItem.label,..)</visible> 
+			<visible>!String.IsEqual(ListItem.label,..)</visible> 
 		 </control>
 		 <control type="group">
 			<left>410</left>
@@ -651,7 +651,7 @@
 			<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 			<label>[COLOR $VAR[ColorFontNormal]]$VAR[ExtendedInfoPlot][/COLOR]</label>
 			<autoscroll time="2000" delay="15000" repeat="5000">!Skin.HasSetting(NoPlotScroll)</autoscroll>
-			<visible>!Stringcompare(ListItem.label,..)</visible> 
+			<visible>!String.IsEqual(ListItem.label,..)</visible> 
 		  </control>
 		</control>
 	  </include>
@@ -793,7 +793,7 @@
 			<align>justify</align>
 			<aligny>center</aligny>
 			<label>$INFO[ListItem.Label]</label>
-			<visible>!Stringcompare(ListItem.label,..)</visible>
+			<visible>!String.IsEqual(ListItem.label,..)</visible>
 		  </control>
 		  <control type="label">
 			<left>200</left>
@@ -807,7 +807,7 @@
 			<align>justify</align>
 			<aligny>center</aligny>
 			<label>$VAR[ExtendedInfoDirector]</label>
-			<visible>!Stringcompare(ListItem.label,..)</visible>
+			<visible>!String.IsEqual(ListItem.label,..)</visible>
 		  </control>
 		  <control type="label">
 			<left>200</left>
@@ -821,7 +821,7 @@
 			<align>justify</align>
 			<aligny>center</aligny>
 			<label>$VAR[ExtendedInfoWriter]</label>
-			<visible>!Stringcompare(ListItem.label,..)</visible>
+			<visible>!String.IsEqual(ListItem.label,..)</visible>
 		  </control>
 		  <control type="textbox">
 			<description>Movie Plot</description>
@@ -835,7 +835,7 @@
 			<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 			<label>[COLOR $VAR[ColorFontNormal]]$VAR[ExtendedInfoPlot][/COLOR]</label>
 			<autoscroll time="2000" delay="15000" repeat="5000">!Skin.HasSetting(NoPlotScroll)</autoscroll>
-			<visible>!Stringcompare(ListItem.label,..)</visible> 
+			<visible>!String.IsEqual(ListItem.label,..)</visible> 
 		  </control>
 		  <control type="textbox">
 			<description>Movie Plot</description>
@@ -848,7 +848,7 @@
 			<shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
 			<label>[COLOR $VAR[ColorFontNormal]]$VAR[ExtendedInfoMore][/COLOR]</label>
 			<autoscroll time="2000" delay="15000" repeat="5000">!Skin.HasSetting(NoPlotScroll)</autoscroll>
-			<visible>!Stringcompare(ListItem.label,..)</visible> 
+			<visible>!String.IsEqual(ListItem.label,..)</visible> 
 		  </control>
 		  <control type="image">
 			<left>1410</left>
@@ -961,7 +961,7 @@
 			<align>right</align>
 			<aligny>center</aligny>
 			<label>$INFO[ListItem.Artist]$INFO[ListItem.Label, - ]</label>
-			<visible>!Stringcompare(ListItem.label,..)</visible>
+			<visible>!String.IsEqual(ListItem.label,..)</visible>
 			<visible>Control.IsVisible(705)</visible>
 		  </control>
 	  </include>

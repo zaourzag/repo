@@ -266,6 +266,11 @@
       <filename>Title.ttf</filename>
       <size>67</size>
     </font>
+	<font>
+      <name>primal_80_Title</name>
+      <filename>Title.ttf</filename>
+      <size>86</size>
+    </font>
     <!-- Title Fonts -->
     <font>
       <name>font10_title</name>
@@ -301,6 +306,11 @@
       <name>font35_title</name>
       <filename>Tangency.ttf</filename>
       <size>52</size>
+    </font>
+	<font>
+      <name>font60_title</name>
+      <filename>Tangency.ttf</filename>
+      <size>60</size>
     </font>
     <font>
       <name>font50caps_title</name>

@@ -47,7 +47,6 @@
 				<onright>3</onright>
 				<onup>3</onup>
 				<ondown>3</ondown>
-				<visible>!Skin.HasSetting(tablet_modus)</visible>
 			</control>
 			<control type="edit" id="312">
 				<description>Edit Text</description>

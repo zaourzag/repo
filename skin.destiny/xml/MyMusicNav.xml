@@ -8,10 +8,7 @@
 	
 	<include>CommonHomeBack</include>	
     <include>ViewsAudio</include>
-	<include>SideBladeForViews</include>
 	<include>BigInfosTime</include>
-	<include>BigInfosDatabaseCount</include>
-	<include>BigInfosWeather</include>
 	<include>CommonHomeButton</include>
 	<include>HomePlaying</include>
 	<include>CommonPageCount</include>

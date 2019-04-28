@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <window id="10140">
-  <defaultcontrol always="true">9</defaultcontrol>
+  <defaultcontrol always="true">3</defaultcontrol>
   <coordinates>
     <system>1</system>
     <left>278</left>
@@ -35,12 +35,10 @@
 	</control>
 	<control type="button">
 	  <description>Close Window button</description>
-	  <left>1313</left>
-	  <top>45</top>
+	  <left>1270</left>
+	  <top>30</top>
 	  <width>48</width>
 	  <height>48</height>
-	  <label>-</label>
-	  <font>-</font>
 	  <onclick>PreviousMenu</onclick>
 	  <texturefocus>default/close.png</texturefocus>
 	  <texturenofocus>default/close.png</texturenofocus>
@@ -50,21 +48,8 @@
 	  <ondown>2</ondown>
 	  <visible>!Skin.HasSetting(tablet_modus)</visible>
 	</control>
-	<control type="label">
-	  <description>header label</description>
-	  <left>35</left>
-	  <top>20</top>
-	  <width>870</width>
-	  <height>45</height>
-      <font>primal_20</font>
-      <label>-</label>
-      <align>left</align>
-      <aligny>center</aligny>
-      <textcolor>$VAR[ColorFontNormal]</textcolor>
-	  <shadowcolor>$VAR[ColorFontShadow]</shadowcolor>
-    </control>
 	</control>
-	<control type="grouplist" id="9">
+	<control type="grouplist" id="3">
 	  <description>button area</description>
 	  <left>30</left>
 	  <top>85</top>
@@ -73,12 +58,12 @@
 	  <itemgap>2</itemgap>
 	  <align>left</align>
 	  <orientation>vertical</orientation>
-	  <onleft>2</onleft>
-	  <onright>2</onright>
-	  <onup>9</onup>
-	  <ondown>9</ondown>
+	  <onleft>5</onleft>
+	  <onright>5</onright>
+	  <onup>3</onup>
+	  <ondown>3</ondown>
     </control>
-    <control type="grouplist" id="2">
+    <control type="grouplist" id="5">
       <description>control area</description>
       <left>370</left>
       <top>85</top>
@@ -88,7 +73,7 @@
       <pagecontrol>30</pagecontrol>
       <onup>9001</onup>
       <ondown>9001</ondown>
-      <onleft>9</onleft>
+      <onleft>3</onleft>
       <onright>30</onright>
     </control>
     <control type="scrollbar" id="30">
@@ -109,7 +94,7 @@
     <control type="group" id="9001">
       <top>868</top>
       <left>370</left>
-      <control type="button" id="10">
+      <control type="button" id="28">
         <description>OK Button</description>
         <left>0</left>
         <top>0</top>
@@ -118,12 +103,12 @@
         <align>center</align>
         <aligny>center</aligny>
         <label>186</label>
-        <onleft>12</onleft>
-        <onright>11</onright>
-        <onup>2</onup>
-        <ondown>2</ondown>
+        <onleft>30</onleft>
+        <onright>29</onright>
+        <onup>28</onup>
+        <ondown>28</ondown>
       </control>
-      <control type="button" id="11">
+      <control type="button" id="29">
         <description>Cancel Button</description>
         <left>315</left>
         <top>0</top>
@@ -132,12 +117,12 @@
         <align>center</align>
         <aligny>center</aligny>
         <label>222</label>
-        <onleft>10</onleft>
-        <onright>12</onright>
-        <onup>2</onup>
-        <ondown>2</ondown>
+        <onleft>28</onleft>
+        <onright>30</onright>
+        <onup>29</onup>
+        <ondown>29</ondown>
       </control>
-      <control type="button" id="12">
+      <control type="button" id="30">
         <description>Defaults Button</description>
         <left>630</left>
         <top>0</top>
@@ -146,13 +131,13 @@
         <align>center</align>
         <aligny>center</aligny>
         <label>409</label>
-        <onleft>11</onleft>
-        <onright>10</onright>
-        <onup>2</onup>
-        <ondown>2</ondown>
+        <onleft>29</onleft>
+        <onright>28</onright>
+        <onup>30</onup>
+        <ondown>30</ondown>
       </control>
     </control>
-    <control type="button" id="13">
+    <control type="button" id="10">
       <description>Default Category Button</description>
       <height>60</height>
       <width>300</width>
@@ -162,18 +147,18 @@
       <font>primal_20</font>
       <pulseonselect>false</pulseonselect>
     </control>
-    <control type="button" id="3">
+    <control type="button" id="7">
       <description>Default Button</description>
 	  <width>80</width>
       <height>60</height>
       <font>primal_20</font>
     </control>
-    <control type="radiobutton" id="4">
+    <control type="radiobutton" id="8">
       <description>Default RadioButton</description>
       <height>60</height>
       <font>primal_20</font>
     </control>
-    <control type="spincontrolex" id="5">
+    <control type="spincontrolex" id="9">
       <description>Default spincontrolex</description>
       <height>60</height>
       <font>primal_20</font>
@@ -183,16 +168,15 @@
     <control type="label" id="7">
       <height>68</height>
       <font>primal_20</font>
-      <label>-</label>
       <align>left</align>
       <aligny>center</aligny>
     </control>
-    <control type="image" id="6">
+    <control type="image" id="11">
       <description>Default Seperator</description>
       <height>3</height>
       <texture>-</texture>
     </control>
-    <control type="sliderex" id="8">
+    <control type="sliderex" id="13">
       <description>Default Slider</description>
       <height>60</height>
       <font>primal_20</font>

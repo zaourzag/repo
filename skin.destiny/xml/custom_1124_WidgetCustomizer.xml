@@ -97,6 +97,14 @@
 					<onclick>Dialog.Close(1124)</onclick>
 				</item>
 				<item>
+					<label>$INFO[System.AddonTitle(script.skinshortcuts)]</label>
+					<onclick>RunScript(script.skinshortcuts,type=widgets&amp;showNone=False&amp;grouping=default&amp;skinWidgetPath=$INFO[Window(Home).Property(Destiny.Widget)])</onclick>
+					<onclick>Skin.SetString(ItemToEdit.WidgetLabel)</onclick>
+					<onclick>Skin.SetString(ItemToEdit.WidgetType,1)</onclick>
+					<onclick>Dialog.Close(1124)</onclick>
+					<visible>System.HasAddon(script.skinshortcuts)</visible>
+				</item>
+				<item>
 					<label>Video Playlist</label>
 					<onclick>Skin.SetFile(ItemToEdit.Widget,.xsp,special://profile/playlists/video/)</onclick>
 					<onclick>Skin.SetString(ItemToEdit.WidgetLabel)</onclick>
@@ -144,6 +152,13 @@
 					<onclick>Skin.SetString(ItemToEdit.WidgetLabel,$LOCALIZE[50133])</onclick>
 					<onclick>Skin.SetString(ItemToEdit.WidgetType,1)</onclick>
 					<onclick>Dialog.Close(1124)</onclick>
+				</item>
+				<item>
+					<label>$LOCALIZE[1036]</label>
+					<onclick>Skin.SetString(ItemToEdit.Widget,favourites://)</onclick>
+					<onclick>Skin.SetString(ItemToEdit.WidgetLabel,$LOCALIZE[1036])</onclick>
+					<onclick>Dialog.Close(1124)</onclick>
+					<onclick>Skin.SetString(ItemToEdit.WidgetType,13)</onclick>
 				</item>
 			</content>
 		</control>

@@ -6,14 +6,13 @@
     <left>0</left>
     <top>0</top>
   </coordinates>
-  <include>dialogeffect</include>
   <controls>
     <control type="group">
 	  <control type="image">
         <description>background image</description>
         <left>-30</left>
         <top>-30</top>
-        <width>580</width>
+        <width>880</width>
         <height>1120</height>
         <texture background="true">skin/button_klein_tranz90.png</texture>
 		<bordertexture border="10">ThumbShadow.png</bordertexture>
@@ -23,19 +22,17 @@
 	  <control type="image">
 		<left>-10</left>
 		<top>1</top>
-		<width>552</width>
+		<width>854</width>
 		<height>89</height>
 		<texture background="true">skin/button_klein_tranz70.png</texture>
 		<colordiffuse>$VAR[BackColorButton]</colordiffuse>
 	  </control>
       <control type="button">
         <description>Close Window button</description>
-        <left>565</left>
+        <left>765</left>
         <top>20</top>
         <width>48</width>
         <height>48</height>
-        <label>-</label>
-        <font>-</font>
         <onclick>PreviousMenu</onclick>
 		<texturefocus>default/close.png</texturefocus>
         <texturenofocus>default/close.png</texturenofocus>
@@ -49,7 +46,7 @@
         <description>header label</description>
         <left>25</left>
         <top>20</top>
-        <width>490</width>
+        <width>790</width>
         <height>45</height>
         <font>primal_20</font>
         <label>$LOCALIZE[19023] - $INFO[VideoPlayer.ChannelGroup] - ($INFO[Container(11).NumItems]) $LOCALIZE[19019] - $LOCALIZE[31024] ($INFO[Container(11).CurrentPage]/$INFO[Container(11).NumPages])</label>
@@ -64,7 +61,7 @@
         <description>header label</description>
         <left>25</left>
         <top>20</top>
-        <width>490</width>
+        <width>790</width>
         <height>45</height>
         <font>primal_20</font>
         <label>$LOCALIZE[19024] - $INFO[MusicPlayer.ChannelGroup] - ($INFO[Container(11).NumItems]) $LOCALIZE[19019] - $LOCALIZE[31024] ($INFO[Container(11).CurrentPage]/$INFO[Container(11).NumPages])</label>
@@ -77,7 +74,7 @@
       <control type="list" id="11">
         <left>-10</left>
 		<top>90</top>
-		<width>553</width>
+		<width>853</width>
 		<height>1000</height>
 		<onleft>PreviousChannelGroup</onleft>
 		<onright>NextChannelGroup</onright>
@@ -90,7 +87,7 @@
 		  <control type="image">
 			<left>-10</left>
 			<top>0</top>
-			<width>573</width>
+			<width>873</width>
 			<height>1</height>
 			<texture background="true">default/separator.png</texture>
 	        <colordiffuse>$VAR[ColorButtonDialogeBack]</colordiffuse>
@@ -98,7 +95,7 @@
 		  <control type="label">
 			<left>135</left>
 			<top>22</top>
-			<width>300</width>
+			<width>600</width>
 			<height>25</height>
 			<font>primal_20</font>
 			<textcolor>$VAR[ColorFontNormal]</textcolor>
@@ -111,7 +108,7 @@
 		  <control type="label">
 			<left>135</left>
 			<top>60</top>
-			<width>390</width>
+			<width>690</width>
 			<height>20</height>
 			<font>primal_18</font>
 			<textcolor>$VAR[ColorFontNormal]</textcolor>
@@ -125,7 +122,7 @@
 		  <control type="label">
             <left>225</left>
             <top>10</top>
-            <width>300</width>
+            <width>600</width>
             <height>45</height>
             <font>primal_20</font>
             <textcolor>$VAR[ColorFontNormal]</textcolor>
@@ -155,7 +152,7 @@
 		  <control type="image">
 			<left>20</left>
 			<top>0</top>
-			<width>540</width>
+			<width>840</width>
 			<height>1</height>
 			<texture background="true">default/separator.png</texture>
 	        <colordiffuse>$VAR[ColorButtonDialogeBack]</colordiffuse>
@@ -163,15 +160,15 @@
           <control type="image">
 			<left>-10</left>
 			<top>1</top>
-			<width>562</width>
+			<width>865</width>
 			<height>107</height>
-			<texture background="true">skin/button_klein.png</texture>
+			<texture background="true">skin/button_klein_tranz70.png</texture>
 	        <colordiffuse>$VAR[BackColorButton]</colordiffuse>
 		  </control>
           <control type="label">
 			<left>135</left>
 			<top>22</top>
-			<width>300</width>
+			<width>600</width>
 			<height>25</height>
 			<font>primal_20</font>
 			<textcolor>$VAR[ColorFontNormal]</textcolor>
@@ -184,7 +181,7 @@
 		  <control type="label">
 			<left>135</left>
 			<top>60</top>
-			<width>390</width>
+			<width>690</width>
 			<height>20</height>
 			<font>primal_18</font>
 			<textcolor>$VAR[ColorFontNormal]</textcolor>
@@ -198,7 +195,7 @@
 		  <control type="label">
             <left>225</left>
             <top>10</top>
-            <width>300</width>
+            <width>600</width>
             <height>45</height>
             <font>primal_20</font>
             <textcolor>$VAR[ColorFontNormal]</textcolor>

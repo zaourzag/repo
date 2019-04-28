@@ -7,7 +7,7 @@
   <include name="VideoCodecFlaggingConditions">
     <control type="image">
 	  <description>Video Type Image</description>
-	  <width>80</width>
+	  <width>90</width>
 	  <height>72</height>
 	  <aspectratio>keep</aspectratio>
 	  <texture>$VAR[typehackflagging,flagging/video/,.png]</texture>
@@ -16,7 +16,7 @@
 	</control>
 	<control type="image">
       <description>Video Stereoscopics Image</description>
-      <width>80</width>
+      <width>90</width>
       <height>72</height>
       <aspectratio>keep</aspectratio>
       <texture>flagging/video/3d.png</texture>
@@ -25,7 +25,7 @@
     </control>
     <control type="image">
       <description>Video rez Image</description>
-      <width>80</width>
+      <width>90</width>
       <height>72</height>
       <aspectratio>keep</aspectratio>
       <texture>$INFO[ListItem.VideoResolution,flagging/video/,.png]</texture>
@@ -33,7 +33,7 @@
     </control>
     <control type="image">
       <description>VideoCodecFlagging</description>
-      <width>80</width>
+      <width>90</width>
       <height>72</height>
       <aspectratio>keep</aspectratio>
       <texture>$INFO[ListItem.VideoCodec,flagging/video/,.png]</texture>
@@ -47,20 +47,28 @@
   <include name="AudioCodecFlaggingConditions">
     <control type="image">
       <description>AudioCodecFlagging</description>
-      <width>80</width>
-      <height>72</height>
+      <width>90</width>
+	  <height>72</height>
       <aspectratio>keep</aspectratio>
       <texture>$INFO[ListItem.AudioCodec,flagging/audio/,.png]</texture>
 	  <colordiffuse>$VAR[ColorFlaggingIcons]</colordiffuse>
     </control>
+	<control type="image">
+      <description>Audio Codex Plus</description>
+      <width>90</width>
+	  <height>72</height>
+      <aspectratio>keep</aspectratio>
+      <texture>$VAR[ListItemAudioCodecPlusFilenameFlags,flagging/audio/,.png]</texture>
+	  <colordiffuse>$VAR[ColorFlaggingIcons]</colordiffuse>
+    </control>
     <control type="image">
       <description>Audio Channels Image</description>
-      <width>80</width>
-      <height>72</height>
+      <width>90</width>
+	  <height>72</height>
       <aspectratio>keep</aspectratio>
       <texture>$INFO[ListItem.AudioChannels,flagging/audio/,.png]</texture>
 	  <colordiffuse>$VAR[ColorFlaggingIcons]</colordiffuse>
-    </control>
+    </control>	
   </include>
 
   <!--========================================================================================-->
@@ -69,8 +77,8 @@
   <include name="AspectCodecFlaggingConditions">
     <control type="image">
       <description>Aspectratio Image</description>
-      <width>112</width>
-      <height>72</height>
+      <width>90</width>
+	  <height>72</height>
       <aspectratio>keep</aspectratio>
       <texture>$INFO[ListItem.VideoAspect,flagging/aspectratio/,.png]</texture>
 	  <colordiffuse>$VAR[ColorFlaggingIcons]</colordiffuse>

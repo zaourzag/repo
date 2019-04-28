@@ -7,10 +7,7 @@
   <controls>
     <include>CommonHomeBack</include>	
     <include>ViewsPictures</include>
-	<include>SideBladeForViews</include>
     <include>BigInfosTime</include>
-	<include>BigInfosDatabaseCount</include>
-	<include>BigInfosWeather</include>
 	<include>CommonHomeButton</include>
 	<include>HomePlaying</include>
 	<include>CommonPageCountView</include>

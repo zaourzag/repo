@@ -9,13 +9,6 @@
 		<top>150</top>
 		<animation effect="fade" time="500">WindowOpen</animation>
 		<control type="image">
-		  <left>0</left>
-		  <top>-150</top>
-		  <width>1920</width>
-		  <height>1080</height>
-		  <texture background="true">background.png</texture>
-		</control>
-		<control type="image">
 		  <left>185</left>
 		  <top>46</top>
 		  <width>1580</width>

@@ -237,7 +237,7 @@ msgid "Fast forward"
 msgstr ""
 
 msgctxt "#50020"
-msgid "Visualisierungs-Settings"
+msgid "Visualisierungs"
 msgstr ""
 
 msgctxt "#50021"
@@ -1572,7 +1572,7 @@ msgid "choose what you want to search in YouTube Home widget."
 msgstr ""
 
 msgctxt "#50361"
-msgid "Home Widget Settings"
+msgid "Widget Settings"
 msgstr ""
 
 msgctxt "#50362"
@@ -1704,4 +1704,32 @@ msgstr ""
 
 msgctxt "#50406"
 msgid "LiveTV icons do not have a square format .. then turn it on."
-msgstr "LiveTV Icons haben kein viereckiges Format..dann anschalten."
+msgstr ""
+
+msgctxt "#50407"
+msgid "Currently running..."
+msgstr ""
+
+msgctxt "#50408"
+msgid "color adjustment"
+msgstr ""
+
+msgctxt "#50409"
+msgid "disable Random Movie Widget."
+msgstr ""
+
+msgctxt "#50410"
+msgid "Hier kannst du einige Addons installieren die in den Skin schon eingebaut wurden. Wenn dein Addon nicht dabei ist, kannst du noch weitere 10 deiner eigenen Favoriten (die du vorher angelegt haben musst) mit dem Button [ADD CHANNEL] hinzufügen. Diese Anzeige kann du auch in den Einstellungen deaktivieren wenn du alles hinzugefügt hast was du haben möchtest. Der Add Channel Button bleibt weiterhin!"
+msgstr "Hier kannst du einige Addons installieren die in den Skin schon eingebaut wurden. Wenn dein Addon nicht dabei ist, kannst du noch weitere 10 deiner eigenen Favoriten (die du vorher angelegt haben musst) mit dem Button [ADD CHANNEL] hinzufügen. Diese Anzeige kann du auch in den Einstellungen deaktivieren wenn du alles hinzugefügt hast was du haben möchtest. Der Add Channel Button bleibt weiterhin!"
+
+msgctxt "#50411"
+msgid "Visualisation im Home"
+msgstr ""
+
+msgctxt "#50412"
+msgid "Live TV Tipps"
+msgstr ""
+
+msgctxt "#50413"
+msgid "Home Widgets ever"
+msgstr ""
