@@ -1808,7 +1808,7 @@ To support the backport the addon will now always create the merged_epg.xml.gz
 	</extension>
 </addon>
 
-<addon id="plugin.video.waipu.tv" name="Waipu.tv" version="0.2.1" provider-name="flubshi, MiRo">
+<addon id="plugin.video.waipu.tv" name="Waipu.tv" version="0.2.2" provider-name="flubshi, MiRo">
 <requires>
   <import addon="xbmc.python" version="2.25.0"/>
   <import addon="script.module.requests" version="2.12.4"/>
@@ -1838,6 +1838,7 @@ To support the backport the addon will now always create the merged_epg.xml.gz
     <screenshot>resources/screenshots/screenshot-03.jpg</screenshot>
   </assets>
   <news>
+- 0.2.2 rework settings; display account/network status; add metadata; hide locked recordings
 - 0.2.1 improve pictogram filtering; set python krypton compatible; use program order
 - 0.2.0 Add options to remove pictograms, update disclaimer, change user_agent
 - 0.1.3 Provide metadata on channel playback
