@@ -1,1 +1,19 @@
-﻿0.1.1 - Initial Source
+﻿0.1.1 - Initial Source by L0RE[CR]
+
+...
+
+[B]Version 0.5.3  (30.06.2018)[/B] by realvito[CR]
+- fixed: Rubrik Themen - kein Inhalt nach dem Öffnen
+- added: Addon kompatibel mit PYTHON-Vers.3 gemacht (für KODI-19 >) vs. PYTHON-Vers.2
+
+[B]Version 0.5.4  (14.08.2018)[/B] by realvito[CR]
+- fixed: Sämtliche Rubriken (letzter Ordner) können NICHT geöffnet werden [Webseite verändert]
+- added: Die Laufzeit der einzelnen Videos wird jetzt angezeigt
+- added: Bei angezeigten Videos - Sortiermethode "Dauer" hinzugefügt
+- optimized: Bei angezeigten Videos - Titelbild = es wird jetzt immer höchste verfügbare Auflösung angezeigt
+
+[B]Version 0.5.5  (05.05.2019)[/B] by realvito[CR]
+- fixed: Unterordner der Rubrik = Themen (in einigen Ordnern werden keine Videos gelistet)
+- fixed: Rubrik = Programm sortiert nach Datum (keine Anzeige)
+- fixed: Rubrik = Videos sortiert nach Laufzeit (falsche Sortierung)
+- fixed: Einige Videos werden NICHT abgespielt
